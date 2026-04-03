@@ -1,12 +1,12 @@
-import { ContactInformationBillingAddress } from './FormBlocks/ContactInformationBillingAddress';
 import { FormBlockWrapper } from 'components/Forms/Form/Form';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationDeliveryAddress';
 import { ContactInformationPersonalInformation } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationPersonalInformation';
-import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import { ContactInformationBillingAddress } from './FormBlocks/ContactInformationBillingAddress';
 
 export const ContactInformationFormContent: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);

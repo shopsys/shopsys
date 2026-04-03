@@ -36,7 +36,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
                 aria-label={t('Breadcrumb navigation', { ns: 'accessibility' })}
                 className={twMergeCustom(breadcrumbsTwClass, className)}
             >
-                <ArrowIcon aria-hidden="true" className="text-icon-less size-4 rotate-90 lg:hidden" />
+                <ArrowIcon aria-hidden="true" className="size-4 rotate-90 text-icon-less lg:hidden" />
 
                 <BreadcrumbsLink href="/" skeletonType="homepage">
                     {t('Home page')}
@@ -54,7 +54,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
                 ))}
 
                 <span
-                    className="font-secondary hidden text-xs font-semibold lg:inline-block"
+                    className="hidden font-secondary font-semibold text-xs lg:inline-block"
                     data-tid={TIDs.breadcrumbs_tail}
                 >
                     {lastBreadcrumb.name}
@@ -65,7 +65,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 };
 
 export const BreadcrumbsSpan: FC = ({ tid }) => (
-    <span aria-hidden="true" className="text-border-default hidden items-center lg:flex" data-tid={tid}>
+    <span aria-hidden="true" className="hidden items-center text-border-default lg:flex" data-tid={tid}>
         <ArrowIcon className="size-4 -rotate-90" />
     </span>
 );
@@ -77,7 +77,7 @@ const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey; skeleton
     children,
 }) => (
     <ExtendedNextLink
-        className="font-secondary hidden text-xs font-semibold no-underline last-of-type:inline hover:no-underline lg:inline"
+        className="hidden font-secondary font-semibold text-xs no-underline last-of-type:inline hover:no-underline lg:inline"
         href={href}
         skeletonType={skeletonType}
         type={type}

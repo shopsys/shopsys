@@ -1,5 +1,5 @@
-import { StyleguideSection } from './StyleguideElements';
 import { Infobox } from 'components/Basic/Infobox/Infobox';
+import { StyleguideSection } from './StyleguideElements';
 
 export const StyleguideInfobox: FC = () => {
     return (

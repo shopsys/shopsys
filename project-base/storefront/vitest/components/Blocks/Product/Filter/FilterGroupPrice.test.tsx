@@ -18,11 +18,9 @@ vi.mock('framer-motion', async () => {
     return {
         AnimatePresence: ({ children }: any) => children,
         motion: {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             div: ({ children, layout, ...props }: any) => React.createElement('div', props, children),
         },
         m: {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             div: ({ children, layout, ...props }: any) => React.createElement('div', props, children),
         },
     };
@@ -31,7 +29,7 @@ vi.mock('framer-motion', async () => {
 vi.mock('utils/mappers/price', () => ({
     getPriceRounded: vi.fn((price: string) => {
         const parsed = parseFloat(price);
-        return isNaN(parsed) ? 0 : parsed;
+        return Number.isNaN(parsed) ? 0 : parsed;
     }),
 }));
 

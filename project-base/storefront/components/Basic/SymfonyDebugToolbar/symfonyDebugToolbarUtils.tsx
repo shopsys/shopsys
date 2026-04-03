@@ -42,7 +42,8 @@ export const useRequests = (tokenHeader: string, tokenLinkHeader: string) => {
 
         interceptor.apply();
         interceptor.on('response', onResponse);
-
+        // The dependency array is carefully curated to prevent stacking response listeners on the shared interceptor.
+        // `addResponse` is intentionally excluded — it creates a new reference each render, which would cause the effect to rerun and stack listeners.
         return () => {
             interceptor.off('response', onResponse);
         };

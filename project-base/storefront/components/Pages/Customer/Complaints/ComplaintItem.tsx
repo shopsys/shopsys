@@ -1,4 +1,3 @@
-import { ComplaintItemColumnInfo } from './ComplaintItemColumnInfo';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
@@ -8,6 +7,7 @@ import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragmen
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { ComplaintItemColumnInfo } from './ComplaintItemColumnInfo';
 
 type ComplaintItemProps = {
     complaintItem: TypeComplaintDetailFragment;
@@ -20,8 +20,8 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
     const [customerComplaintDetailUrl] = getInternationalizedStaticUrls(['/customer/complaint-detail'], url);
 
     return (
-        <div className="bg-background-more vl:p-6 flex flex-col gap-5 rounded-md p-4">
-            <div className="vl:flex-row vl:items-start vl:justify-between flex flex-col gap-4">
+        <div className="flex flex-col gap-5 rounded-md bg-background-more p-4 vl:p-6">
+            <div className="flex vl:flex-row flex-col vl:items-start vl:justify-between gap-4">
                 <div className="flex size-20 shrink-0" data-tid={TIDs.complaint_item_image}>
                     <Image
                         priority

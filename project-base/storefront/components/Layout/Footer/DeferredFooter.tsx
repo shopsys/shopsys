@@ -1,6 +1,6 @@
-import { useFooterArticles } from './footerUtils';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { useFooterArticles } from './footerUtils';
 
 const Footer = dynamic(() => import('./Footer').then((component) => component.Footer), {
     ssr: false,

@@ -17,7 +17,6 @@ vi.mock('next-translate/useTranslation', () => ({
 vi.mock('framer-motion', () => ({
     AnimatePresence: ({ children }: any) => children,
     motion: {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         div: ({ children, layout, ...props }: any) => <div {...props}>{children}</div>,
     },
 }));

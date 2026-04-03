@@ -3,7 +3,7 @@ import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { useLayoutEffect, useRef, useState, useEffect, useEffectEvent } from 'react';
+import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -109,7 +109,7 @@ export const Popup: React.FC<PopupProps> = ({
                         tabIndex={-1}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'z-aboveOverlay bg-background-default fixed mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md p-5 shadow-2xl',
+                            'fixed z-aboveOverlay mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl',
                             className,
                         )}
                         initial={{

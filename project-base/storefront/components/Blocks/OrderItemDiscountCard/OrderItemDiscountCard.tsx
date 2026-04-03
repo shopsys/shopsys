@@ -10,12 +10,12 @@ export const OrderItemDiscountCard: FC<OrderItemDiscountCardProps> = ({ name, pr
     const formatPrice = useFormatPrice();
 
     return (
-        <li className="bg-background-more font-secondary -mt-5 flex flex-col gap-1 rounded-b-xl px-4 pb-4">
+        <li className="-mt-5 flex flex-col gap-1 rounded-b-xl bg-background-more px-4 pb-4 font-secondary">
             <div className="flex items-center justify-between gap-2">
-                <span className="text-sm font-semibold">{name}</span>
+                <span className="font-semibold text-sm">{name}</span>
 
                 {isPriceVisible(price) && (
-                    <div className="font-secondary text-price-discounted font-bold whitespace-nowrap">
+                    <div className="whitespace-nowrap font-bold font-secondary text-price-discounted">
                         {formatPrice(mapPriceForCalculations(price))}
                     </div>
                 )}

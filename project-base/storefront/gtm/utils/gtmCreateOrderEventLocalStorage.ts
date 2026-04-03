@@ -1,7 +1,7 @@
-import { compressObjectToString, decompressStringToObject } from './objectCompression';
 import { GtmCreateOrderEventOrderPartType } from 'gtm/types/events';
 import { GtmUserInfoType } from 'gtm/types/objects';
 import { isClient } from 'utils/isClient';
+import { compressObjectToString, decompressStringToObject } from './objectCompression';
 
 const GTM_CREATE_ORDER_OBJECT_LOCAL_STORAGE_KEY = 'gtmCreateOrderEvent' as const;
 

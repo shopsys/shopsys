@@ -1,7 +1,3 @@
-import { ContactInformationFormContent } from './ContactInformationFormContent';
-import { ContactInformationSendOrderButton } from './FormBlocks/ContactInformationSendOrderButton';
-import { useContactInformationForm, useContactInformationFormMeta } from './contactInformationFormMeta';
-import { useContactInformationPageNavigation, useCreateOrder } from './contactInformationUtils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
 import { Form, FormContentWrapper } from 'components/Forms/Form/Form';
@@ -10,6 +6,10 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { FormProvider } from 'react-hook-form';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ContactInformationFormContent } from './ContactInformationFormContent';
+import { useContactInformationForm, useContactInformationFormMeta } from './contactInformationFormMeta';
+import { useContactInformationPageNavigation, useCreateOrder } from './contactInformationUtils';
+import { ContactInformationSendOrderButton } from './FormBlocks/ContactInformationSendOrderButton';
 
 export const ContactInformationContent: FC = () => {
     const { t } = useTranslation();

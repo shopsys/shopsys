@@ -6,7 +6,6 @@ export const mapParametersFilter = (parametersFilter: FilterOptionsUrlQueryType 
         return null;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (parametersFilter.parameters?.some((param) => param.parameter === undefined)) {
         return null;
     }

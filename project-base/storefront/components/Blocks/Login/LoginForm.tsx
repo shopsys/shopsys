@@ -1,4 +1,3 @@
-import { useLoginForm, useLoginFormMeta } from './loginFormMeta';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { SocialNetworkLogin } from 'components/Blocks/SocialNetworkLogin/SocialNetworkLogin';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
@@ -17,6 +16,7 @@ import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useLoginForm, useLoginFormMeta } from './loginFormMeta';
 
 export type LoginFormProps = {
     defaultEmail?: string;

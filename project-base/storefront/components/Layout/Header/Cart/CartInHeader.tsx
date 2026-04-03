@@ -1,6 +1,3 @@
-import { CartCount } from './CartCount';
-import { CartInHeaderList } from './CartInHeaderList';
-import { CartInHeaderPopover } from './CartInHeaderPopover';
 import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
@@ -18,6 +15,9 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useDebounce } from 'utils/useDebounce';
+import { CartCount } from './CartCount';
+import { CartInHeaderList } from './CartInHeaderList';
+import { CartInHeaderPopover } from './CartInHeaderPopover';
 
 const emptyCartTwClassName = [
     'bg-none text-button-primary-text-default border-button-primary-text-default',
@@ -56,6 +56,7 @@ export const CartInHeader: FC = ({ className }) => {
 
     return (
         <>
+            {/* biome-ignore lint/a11y/useSemanticElements: The cart wrapper coordinates hover state and nested interactive controls, so it cannot be replaced with a single semantic button. */}
             <div
                 aria-expanded={isActive}
                 aria-haspopup="menu"
@@ -65,7 +66,7 @@ export const CartInHeader: FC = ({ className }) => {
                 tabIndex={!cart?.items.length ? -1 : 0}
                 title={t('Cart')}
                 className={twMergeCustom(
-                    'vl:flex group relative outline-hidden',
+                    'group relative vl:flex outline-hidden',
                     isActive && 'z-aboveOverlay',
                     className,
                 )}
@@ -83,8 +84,8 @@ export const CartInHeader: FC = ({ className }) => {
                 {isCartFetchingOrUnavailable && (
                     <Loader
                         className={twJoin(
-                            'z-overlay absolute inset-0 flex h-full w-full items-center',
-                            'bg-background-more justify-center rounded-lg py-2 opacity-50',
+                            'absolute inset-0 z-overlay flex h-full w-full items-center',
+                            'justify-center rounded-lg bg-background-more py-2 opacity-50',
                         )}
                     />
                 )}
@@ -95,8 +96,8 @@ export const CartInHeader: FC = ({ className }) => {
                     tabIndex={-1}
                     tid={TIDs.header_cart_link}
                     className={twJoin(
-                        'vl:flex hidden h-11 cursor-pointer items-center justify-center gap-x-3 rounded-lg border px-3 no-underline transition-all group-hover:shadow-lg hover:no-underline',
-                        'group-focus-visible:text-text-default group-focus-visible:bg-orange-500',
+                        'vl:flex hidden h-11 cursor-pointer items-center justify-center gap-x-3 rounded-lg border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg',
+                        'group-focus-visible:bg-orange-500 group-focus-visible:text-text-default',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
                             ? 'min-w-14'
@@ -109,7 +110,7 @@ export const CartInHeader: FC = ({ className }) => {
                     </span>
 
                     {isPriceVisibleOrEmtpyCart && (
-                        <span className={twJoin('font-secondary vl:block hidden text-sm font-bold')}>
+                        <span className={twJoin('vl:block hidden font-bold font-secondary text-sm')}>
                             {cart?.items.length
                                 ? formatPrice(cart.totalItemsPrice.priceWithVat, {
                                       explicitZero: true,
@@ -119,32 +120,27 @@ export const CartInHeader: FC = ({ className }) => {
                     )}
                 </ExtendedNextLink>
 
-                <div
+                <button
                     aria-controls="cart-popup"
                     aria-expanded={isActive}
                     aria-haspopup="menu"
                     aria-label={t('Show cart popup', { ns: 'accessibility' })}
-                    role="button"
                     tabIndex={-1}
                     title={t('Cart')}
                     className={twJoin(
-                        'vl:hidden flex h-full w-full cursor-pointer items-center justify-center rounded-md border p-3 text-lg no-underline transition-colors hover:no-underline',
+                        'flex vl:hidden h-full w-full cursor-pointer items-center justify-center rounded-md border p-3 text-lg no-underline transition-colors hover:no-underline',
                         'border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',
                         isActiveDelayed &&
                             'hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
                         'active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
-                        'group-focus-visible:text-text-default group-focus-visible:bg-orange-500',
+                        'group-focus-visible:bg-orange-500 group-focus-visible:text-text-default',
                     )}
+                    type="button"
                     onClick={() => setIsActive(!isActive)}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            setIsActive(!isActive);
-                        }
-                    }}
                 >
                     <CartIcon className="size-6" />
                     <CartCount>{cart?.items.length ?? 0}</CartCount>
-                </div>
+                </button>
 
                 <Drawer isActive={isActive} setIsActive={setIsActive} title={t('Cart')}>
                     <CartInHeaderList />

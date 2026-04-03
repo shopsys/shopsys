@@ -46,7 +46,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
         <>
             <div
                 className={twJoin(
-                    'vl:flex-row vl:items-center vl:gap-5 flex flex-col gap-3 first:border-none first:pt-0 last:pb-0',
+                    'flex vl:flex-row flex-col vl:items-center gap-3 vl:gap-5 first:border-none first:pt-0 last:pb-0',
                 )}
             >
                 <div className="flex h-12 w-20 shrink-0">
@@ -58,7 +58,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         width={80}
                     />
                 </div>
-                <div className="border-b-border-less vl:flex-row vl:items-center vl:gap-5 flex w-full flex-col flex-wrap justify-between gap-3 border-b last:border-none">
+                <div className="flex w-full vl:flex-row flex-col flex-wrap vl:items-center justify-between gap-3 vl:gap-5 border-b border-b-border-less last:border-none">
                     {complaintItem.product?.isVisible ? (
                         <ExtendedNextLink className="w-fit" href={complaintItem.product.slug} type="product">
                             {complaintItem.productName}
@@ -96,59 +96,55 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                 </div>
             </div>
 
-            <div className="mt-2">
+            <div>
                 {t('Description')}: <span className="font-bold">{complaintItem.description}</span>
             </div>
 
-            <ul className="mt-2 flex w-full items-center gap-2">
-                {complaintItem.files?.map((file, index) => {
-                    const isWithAdditionalImages =
-                        index === galleryLastShownItemIndex && galleryAdditionalItemsCount > 0;
-                    if (index > galleryLastShownItemIndex) {
-                        return null;
-                    }
+            {!!complaintItem.files?.length && (
+                <ul className="flex w-full items-center gap-2">
+                    {complaintItem.files?.map((file, index) => {
+                        const isWithAdditionalImages =
+                            index === galleryLastShownItemIndex && galleryAdditionalItemsCount > 0;
+                        if (index > galleryLastShownItemIndex) {
+                            return null;
+                        }
 
-                    const imagePosition = index > 4 ? index + 1 : index;
+                        const imagePosition = index > 4 ? index + 1 : index;
 
-                    return (
-                        <li key={file.url}>
-                            <div
-                                aria-label={t('View complaint images in gallery', { ns: 'accessibility' })}
-                                role="button"
-                                tabIndex={0}
-                                title={t('Open gallery')}
-                                className={twJoin(
-                                    'outline-border-default flex w-full cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
-                                    isWithAdditionalImages && 'relative',
-                                )}
-                                onClick={() => openGallery(imagePosition)}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' || e.key === ' ') {
-                                        openGallery(imagePosition);
-                                    }
-                                }}
-                            >
-                                <div className="bg-background-more size-full rounded-md p-1">
-                                    <Image
-                                        alt={file.anchorText || `${complaintItem.productName}-${index}`}
-                                        className="aspect-square max-h-full object-contain mix-blend-multiply"
-                                        hash={file.url.split('?')[1]}
-                                        height={90}
-                                        src={file.url.split('?')[0]}
-                                        width={90}
-                                    />
-                                </div>
+                        return (
+                            <li key={file.url}>
+                                <button
+                                    aria-label={t('View complaint images in gallery', { ns: 'accessibility' })}
+                                    title={t('Open gallery')}
+                                    className={twJoin(
+                                        'flex w-full cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent outline-border-default hover:outline-1 sm:h-16',
+                                        isWithAdditionalImages && 'relative',
+                                    )}
+                                    type="button"
+                                    onClick={() => openGallery(imagePosition)}
+                                >
+                                    <span className="block size-full rounded-md bg-background-more p-1">
+                                        <Image
+                                            alt={file.anchorText || `${complaintItem.productName}-${index}`}
+                                            className="aspect-square max-h-full object-contain mix-blend-multiply"
+                                            hash={file.url.split('?')[1]}
+                                            height={90}
+                                            src={file.url.split('?')[0]}
+                                            width={90}
+                                        />
+                                    </span>
 
-                                {isWithAdditionalImages && (
-                                    <div className="bg-image-overlay absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
-                                        +{galleryAdditionalItemsCount}
-                                    </div>
-                                )}
-                            </div>
-                        </li>
-                    );
-                })}
-            </ul>
+                                    {isWithAdditionalImages && (
+                                        <span className="absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg bg-image-overlay font-bold text-lg">
+                                            +{galleryAdditionalItemsCount}
+                                        </span>
+                                    )}
+                                </button>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
         </>
     );
 };

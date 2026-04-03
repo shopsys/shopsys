@@ -1,11 +1,11 @@
-import { SearchResultSectionGroup } from './AutocompleteSearchPopup';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'components/Blocks/Product/ProductsSlider';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { SearchResultSectionGroup } from './AutocompleteSearchPopup';
 
 export const AutocompleteSkeleton: FC = () => {
     return (
-        <div className="vl:gap-6 flex flex-col gap-5">
+        <div className="flex flex-col gap-5 vl:gap-6">
             <div>
                 <Skeleton className="mb-2 h-7 w-24" />
 

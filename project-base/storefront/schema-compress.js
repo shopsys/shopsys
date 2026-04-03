@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 const introspection = require('@urql/introspection');
 
 const schemaFilePath = path.resolve(__dirname, './schema.graphql.json');

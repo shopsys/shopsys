@@ -1,4 +1,3 @@
-import { useOrderWithdrawalForm, useOrderWithdrawalFormMeta } from './orderWithdrawalFormMeta';
 import { DocumentDeleteIcon } from 'components/Basic/Icon/DocumentDeleteIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
@@ -17,6 +16,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { OrderWithdrawalFormType } from 'types/form';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useOrderWithdrawalForm, useOrderWithdrawalFormMeta } from './orderWithdrawalFormMeta';
 
 type OrderWithdrawalContentProps = {
     order: TypeOrderWithdrawalDataFragment;

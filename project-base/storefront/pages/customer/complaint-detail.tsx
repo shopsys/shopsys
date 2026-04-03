@@ -57,7 +57,7 @@ const ComplaintDetailPage: FC = () => {
                         <>
                             <PageHero
                                 icon={DocumentIcon}
-                                title={t('Your complaint') + ' ' + complaintData.complaint.number}
+                                title={`${t('Your complaint')} ${complaintData.complaint.number}`}
                                 titleTid={TIDs.complaint_detail_number_heading}
                             />
 

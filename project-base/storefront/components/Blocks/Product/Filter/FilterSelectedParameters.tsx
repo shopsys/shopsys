@@ -1,4 +1,3 @@
-import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ColorPreview } from 'components/Basic/ColorPreview/ColorPreview';
 import { Flag } from 'components/Basic/Flag/Flag';
@@ -13,6 +12,7 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
+import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 
 export type FilterSelectedParametersProps = {
     filterOptions: TypeProductFilterOptionsFragment;
@@ -45,8 +45,8 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
         <AnimatePresence initial={false}>
             {!currentFilter && !getHasDefaultFilters(defaultProductFiltersMap) ? null : (
                 <AnimateCollapseDiv className="block!" keyName="selected-parameters">
-                    <div className="vl:mb-5 vl:mt-0 mt-5" data-tid={TIDs.selected_filters}>
-                        <p className="h6 vl:mb-2 mb-5">{t('Selected filters')}</p>
+                    <div className="mt-5 vl:mt-0 vl:mb-5" data-tid={TIDs.selected_filters}>
+                        <p className="h6 mb-5 vl:mb-2">{t('Selected filters')}</p>
 
                         <div className="flex flex-wrap items-center gap-y-2">
                             {!!currentFilter?.onlyInStock && (
@@ -227,41 +227,40 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                                 <SelectedParametersIcon />
                                             </SelectedParametersListItem>
                                         )}
-                                        {selectedParameterValues &&
-                                            selectedParameterValues.map((selectedValue) => (
-                                                <SelectedParametersListItem
-                                                    key={selectedValue.uuid}
-                                                    ariaLabel={t(
-                                                        'Remove parameter {{ value }} from group {{ groupName }}',
-                                                        {
-                                                            ns: 'accessibility',
-                                                            value: selectedValue.text,
-                                                            groupName: selectedParameterOptions.name,
-                                                        },
-                                                    )}
-                                                    onClick={() =>
-                                                        updateFilterParametersQuery(
-                                                            selectedParameter.parameter,
-                                                            selectedValue.uuid,
-                                                        )
-                                                    }
-                                                >
-                                                    <ColorPreview
-                                                        className="mr-2"
-                                                        colorIcon={selectedValue.colorIcon}
-                                                        rgbHex={selectedValue.rgbHex}
-                                                    />
-                                                    {selectedValue.text}
-                                                    <SelectedParametersIcon />
-                                                </SelectedParametersListItem>
-                                            ))}
+                                        {selectedParameterValues?.map((selectedValue) => (
+                                            <SelectedParametersListItem
+                                                key={selectedValue.uuid}
+                                                ariaLabel={t(
+                                                    'Remove parameter {{ value }} from group {{ groupName }}',
+                                                    {
+                                                        ns: 'accessibility',
+                                                        value: selectedValue.text,
+                                                        groupName: selectedParameterOptions.name,
+                                                    },
+                                                )}
+                                                onClick={() =>
+                                                    updateFilterParametersQuery(
+                                                        selectedParameter.parameter,
+                                                        selectedValue.uuid,
+                                                    )
+                                                }
+                                            >
+                                                <ColorPreview
+                                                    className="mr-2"
+                                                    colorIcon={selectedValue.colorIcon}
+                                                    rgbHex={selectedValue.rgbHex}
+                                                />
+                                                {selectedValue.text}
+                                                <SelectedParametersIcon />
+                                            </SelectedParametersListItem>
+                                        ))}
                                     </SelectedParametersList>
                                 );
                             })}
 
                             <button
                                 aria-label={t('Clear all active filters', { ns: 'accessibility' })}
-                                className="font-secondary text-link-default hover:text-link-hovered cursor-pointer rounded-sm text-sm font-semibold underline"
+                                className="cursor-pointer rounded-sm font-secondary font-semibold text-link-default text-sm underline hover:text-link-hovered"
                                 data-tid={TIDs.clear_all_filters_button}
                                 tabIndex={0}
                                 type="button"
@@ -278,7 +277,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 };
 
 const SelectedParametersIcon: FC = () => (
-    <RemoveBoldIcon className="group-hover:text-icon-inverted text-icon-less ml-2 w-3 cursor-pointer" />
+    <RemoveBoldIcon className="ml-2 w-3 cursor-pointer text-icon-less group-hover:text-icon-inverted" />
 );
 
 const getCheckedFlags = (

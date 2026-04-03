@@ -29,7 +29,7 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
                 </h1>
             )}
 
-            <section className="vl:flex-row flex w-full flex-col-reverse justify-between gap-5" ref={scrollTargetRef}>
+            <section className="flex w-full vl:flex-row flex-col-reverse justify-between gap-5" ref={scrollTargetRef}>
                 {!!description && currentPage === 1 && (
                     <CollapsibleText scrollTargetRef={scrollTargetRef} text={description} />
                 )}

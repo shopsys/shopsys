@@ -12,7 +12,7 @@ export async function getFreshTranslates(locale, namespace) {
 }
 
 function fillEmptyTranslatesWithKeys(translates) {
-    for (let key in translates) {
+    for (const key in translates) {
         if (!translates[key]) {
             translates[key] = key;
         }

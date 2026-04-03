@@ -1,6 +1,6 @@
-import { compressObjectToString, decompressStringToObject } from './objectCompression';
 import { GtmPaymentEventType } from 'gtm/types/events';
 import { isClient } from 'utils/isClient';
+import { compressObjectToString, decompressStringToObject } from './objectCompression';
 
 const GTM_PAYMENT_OBJECT_LOCAL_STORAGE_KEY = 'gtmPaymentEvent' as const;
 

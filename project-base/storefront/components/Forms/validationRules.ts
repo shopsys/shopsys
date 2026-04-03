@@ -1,8 +1,8 @@
-import { VALIDATION_CONSTANTS } from './validationConstants';
 import { Translate } from 'next-translate';
 import { formatBytes } from 'utils/formaters/formatBytes';
 import * as Yup from 'yup';
 import { Schema } from 'yup';
+import { VALIDATION_CONSTANTS } from './validationConstants';
 
 export const validateEmail = (t: Translate): Schema => {
     return Yup.string()

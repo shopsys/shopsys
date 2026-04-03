@@ -37,7 +37,7 @@ export const OrderPaymentStatusBar: FC<OrderPaymentStatusBarProps> = ({
     return (
         <div
             className={twMergeCustom(
-                'text-text-inverted self-start rounded-md p-1 text-xs font-normal',
+                'self-start rounded-md p-1 font-normal text-text-inverted text-xs',
                 orderIsPaid ? 'bg-background-success' : 'bg-background-error',
                 className,
             )}

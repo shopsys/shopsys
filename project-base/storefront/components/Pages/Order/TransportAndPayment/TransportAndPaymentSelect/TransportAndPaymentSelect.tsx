@@ -1,5 +1,3 @@
-import { PaymentListItem } from './PaymentSelectListItem';
-import { TransportListItem } from './TransportSelectListItem';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
@@ -16,6 +14,8 @@ import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { PaymentListItem } from './PaymentSelectListItem';
+import { TransportListItem } from './TransportSelectListItem';
 
 type TransportAndPaymentSelectProps = {
     transports: TypeTransportWithAvailablePaymentsFragment[];
@@ -56,8 +56,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         <AnimatePresence initial={false}>
                             {!!transport && (
                                 <AnimateCollapseDiv
-                                    className="relative block!"
-                                    disableAnimation={transports.length === 1 ? true : false}
+                                    className="block! relative"
+                                    disableAnimation={transports.length === 1}
                                     keyName="transport-selected"
                                 >
                                     <TransportListItem
@@ -75,8 +75,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         <AnimatePresence initial={false}>
                             {!transport && (
                                 <AnimateCollapseDiv
-                                    className="relative block!"
-                                    disableAnimation={transports.length === 1 ? true : false}
+                                    className="block! relative"
+                                    disableAnimation={transports.length === 1}
                                     keyName="transport-list"
                                 >
                                     {transports.map((transportItem) => (
@@ -96,7 +96,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
                 <AnimatePresence initial={false}>
                     {!!transport && transports.length > 1 && (
-                        <AnimateCollapseDiv className="relative flex! flex-col" keyName="transport-reset">
+                        <AnimateCollapseDiv className="flex! relative flex-col" keyName="transport-reset">
                             <ResetButton
                                 disabled={isTransportSelectionLoading}
                                 text={t('Change transport type')}
@@ -111,7 +111,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             <AnimatePresence initial={false}>
                 {transport !== null && (
                     <AnimateCollapseDiv
-                        className="relative mt-12 flex! flex-col"
+                        className="flex! relative mt-12 flex-col"
                         keyName="payments-list"
                         tid={TIDs.pages_order_payment}
                     >
@@ -128,8 +128,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 <AnimatePresence initial={false}>
                                     {!!payment && (
                                         <AnimateCollapseDiv
-                                            className="relative block!"
-                                            disableAnimation={transport.payments.length === 1 ? true : false}
+                                            className="block! relative"
+                                            disableAnimation={transport.payments.length === 1}
                                             keyName="payment-selected"
                                         >
                                             <PaymentListItem
@@ -145,8 +145,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 <AnimatePresence initial={false}>
                                     {!payment && (
                                         <AnimateCollapseDiv
-                                            className="relative block!"
-                                            disableAnimation={transport.payments.length === 1 ? true : false}
+                                            className="block! relative"
+                                            disableAnimation={transport.payments.length === 1}
                                             keyName="payment-list"
                                         >
                                             {transport.payments.map((paymentItem) => (
@@ -165,7 +165,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
                         <AnimatePresence initial={false}>
                             {payment !== null && transport.payments.length > 1 && (
-                                <AnimateCollapseDiv className="relative flex! flex-col" keyName="payment-reset">
+                                <AnimateCollapseDiv className="flex! relative flex-col" keyName="payment-reset">
                                     <ResetButton
                                         disabled={isTransportSelectionLoading}
                                         text={t('Change payment type')}
@@ -186,7 +186,7 @@ type ResetButtonProps = { text: string; onClick: () => void; tid: string; disabl
 
 const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid, disabled }) => (
     <button
-        className="bg-background-more hover:bg-background-most flex w-full cursor-pointer items-center rounded-xl px-5 py-3 text-sm disabled:pointer-events-none disabled:opacity-50"
+        className="flex w-full cursor-pointer items-center rounded-xl bg-background-more px-5 py-3 text-sm hover:bg-background-most disabled:pointer-events-none disabled:opacity-50"
         data-tid={tid}
         disabled={disabled}
         tabIndex={0}

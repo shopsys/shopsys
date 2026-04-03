@@ -7,7 +7,7 @@ type FilteredProductsWrapperProps = {
 export const FilteredProductsWrapper: FC<FilteredProductsWrapperProps> = ({ children }) => {
     return (
         <Webline>
-            <div className="vl:flex-row vl:flex-wrap vl:gap-4 flex scroll-mt-5 flex-col">{children}</div>
+            <div className="flex scroll-mt-5 vl:flex-row flex-col vl:flex-wrap vl:gap-4">{children}</div>
         </Webline>
     );
 };

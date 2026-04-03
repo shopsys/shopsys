@@ -46,5 +46,3 @@ declare global {
         load: (key: string | null, config: SeznamMapAPILoaderConfig | null, onLoad: () => void) => void;
     };
 }
-
-export {};

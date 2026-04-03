@@ -3,8 +3,8 @@ import { ExchangeTokenHandler } from 'components/Pages/HomePage/ExchangeTokenHan
 import { HomePageContent } from 'components/Pages/HomePage/HomePageContent';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import {
-    TypeBlogArticlesQueryVariables,
     BlogArticlesQueryDocument,
+    TypeBlogArticlesQueryVariables,
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { PromotedCategoriesQueryDocument } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
 import { PromotedProductsQueryDocument } from 'graphql/requests/products/queries/PromotedProductsQuery.generated';
@@ -17,7 +17,7 @@ import { TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const HomePage: NextPage<ServerSidePropsType> = () => {
     return (

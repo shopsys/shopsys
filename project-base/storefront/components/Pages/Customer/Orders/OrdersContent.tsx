@@ -1,4 +1,3 @@
-import { OrderItem } from './OrderItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/SkeletonModuleCustomerOrders';
@@ -6,6 +5,7 @@ import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { OrderItem } from './OrderItem';
 
 type OrdersContentProps = {
     areOrdersFetching: boolean;
@@ -20,7 +20,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, order
 
     if (!orders?.length && !areOrdersFetching) {
         return (
-            <div className="vl:text-xl flex gap-2 text-lg">
+            <div className="flex gap-2 text-lg vl:text-xl">
                 <InfoIcon className="w-5" />
                 {t('You have no orders')}
             </div>

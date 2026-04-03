@@ -23,7 +23,7 @@ export const IgnoredErrorsManager: FC = () => {
 
     if (ignoredErrors.length === 0) {
         return (
-            <div className="border-border-default bg-background-accent rounded border p-4">
+            <div className="rounded border border-border-default bg-background-accent p-4">
                 <p className="text-text-inverted">
                     {t('No ignored errors. Click "Ignore this error type" on any error to add it here.')}
                 </p>
@@ -46,19 +46,19 @@ export const IgnoredErrorsManager: FC = () => {
                 {ignoredErrors.map((entry) => (
                     <div
                         key={entry.identifier}
-                        className="border-border-default bg-background-accent flex items-center justify-between gap-4 rounded border p-3"
+                        className="flex items-center justify-between gap-4 rounded border border-border-default bg-background-accent p-3"
                     >
                         <div className="min-w-0 flex-1">
-                            <p className="text-text-inverted truncate font-mono text-sm font-semibold">
+                            <p className="truncate font-mono font-semibold text-sm text-text-inverted">
                                 {entry.identifier}
                             </p>
-                            <p className="text-text-inverted truncate text-xs opacity-80">{entry.sampleMessage}</p>
+                            <p className="truncate text-text-inverted text-xs opacity-80">{entry.sampleMessage}</p>
                             <p className="text-text-inverted text-xs opacity-60">
                                 {t('Ignored')}: {new Date(entry.ignoredAt).toLocaleString()}
                             </p>
                         </div>
                         <button
-                            className="text-text-inverted shrink-0 cursor-pointer text-xs underline opacity-80 hover:opacity-100"
+                            className="shrink-0 cursor-pointer text-text-inverted text-xs underline opacity-80 hover:opacity-100"
                             type="button"
                             onClick={() => handleUnignore(entry.identifier)}
                         >

@@ -24,7 +24,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
     }
 
     return (
-        <div className="vl:col-span-1 vl:sticky vl:top-2 vl:self-start flex flex-col gap-2">
+        <div className="vl:sticky vl:top-2 vl:col-span-1 flex flex-col gap-2 vl:self-start">
             <span className="h4">{t('Your order')}</span>
 
             <div className="relative">

@@ -9,7 +9,7 @@ type ArticleDate = {
 
 const toIsoDateUTC = (dateString: string): string => {
     const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
         return '';
     }
     return date.toISOString().split('T')[0];
@@ -23,7 +23,7 @@ export const ArticleDate: FC<ArticleDate> = ({ date, tid, className }) => {
 
     return (
         <time
-            className={twJoin('font-secondary text-text-less text-sm font-semibold', className)}
+            className={twJoin('font-secondary font-semibold text-sm text-text-less', className)}
             data-tid={tid}
             dateTime={isoDateTime}
         >

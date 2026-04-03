@@ -1,5 +1,4 @@
-import { createContext, useContext } from 'react';
-import { RefObject } from 'react';
+import { createContext, RefObject, useContext } from 'react';
 
 type PaginationContextType = {
     paginationScrollTargetRef: RefObject<HTMLElement | null> | null;

@@ -1,9 +1,9 @@
-import { pushQueries } from './pushQueries';
-import { useCurrentLoadMoreQuery } from './useCurrentLoadMoreQuery';
 import { useRouter } from 'next/router';
 import { UrlQueries } from 'types/urlQueries';
 import { getQueryWithoutSlugTypeParameterFromParsedUrlQuery } from 'utils/parsing/getQueryWithoutSlugTypeParameterFromParsedUrlQuery';
 import { LOAD_MORE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
+import { pushQueries } from './pushQueries';
+import { useCurrentLoadMoreQuery } from './useCurrentLoadMoreQuery';
 
 export const useUpdateLoadMoreQuery = () => {
     const router = useRouter();

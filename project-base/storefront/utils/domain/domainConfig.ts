@@ -1,6 +1,6 @@
-import { getBaseUrlWithLocale, DEFAULT_LOCALE } from './domainUtils';
 import { DomainConfig, getPublicConfigProperty } from 'envConfig';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
+import { DEFAULT_LOCALE, getBaseUrlWithLocale } from './domainUtils';
 
 const domainsConfig = getPublicConfigProperty('domains');
 const cdnDomain = getPublicConfigProperty('cdnDomain');

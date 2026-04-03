@@ -1,7 +1,7 @@
-import { Error500Content } from './Error500Content';
 import { FallbackProps } from 'components/Basic/ErrorBoundary';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { Error500Content } from './Error500Content';
 
 export const Error500ContentWithBoundary: FC<FallbackProps> = ({ resetErrorBoundary }) => {
     const router = useRouter();

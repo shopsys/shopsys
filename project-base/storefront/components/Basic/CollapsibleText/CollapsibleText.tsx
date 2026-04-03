@@ -1,5 +1,5 @@
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { type RefObject, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -43,7 +43,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
                         'user-text',
                         !showFullDescription &&
                             shouldShowButton &&
-                            "after:from-background-default after:absolute after:bottom-0 after:left-0 after:h-6 after:w-full after:bg-linear-to-t/srgb after:to-transparent after:content-['']",
+                            "after:absolute after:bottom-0 after:left-0 after:h-6 after:w-full after:bg-linear-to-t/srgb after:from-background-default after:to-transparent after:content-['']",
                     )}
                 />
             </div>
@@ -51,7 +51,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
             <button
                 tabIndex={0}
                 className={twJoin(
-                    'hover:text-text-accent cursor-pointer underline',
+                    'cursor-pointer underline hover:text-text-accent',
                     showFullDescription && 'mt-2',
                     !shouldShowButton && 'invisible',
                 )}
@@ -59,7 +59,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
             >
                 {showFullDescription ? t('Close full description') : t('Open full description')}
                 <ArrowSecondaryIcon
-                    className={twJoin('text-text-disabled ml-2 size-3', showFullDescription && 'rotate-180')}
+                    className={twJoin('ml-2 size-3 text-text-disabled', showFullDescription && 'rotate-180')}
                 />
             </button>
         </div>

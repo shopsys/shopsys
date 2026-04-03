@@ -1,4 +1,3 @@
-import { ProductsSliderPlaceholder } from './ProductsSliderPlaceholder';
 import { SkeletonModuleProductSlider } from 'components/Blocks/Skeleton/SkeletonModuleProductSlider';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -11,6 +10,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { ProductsSliderPlaceholder } from './ProductsSliderPlaceholder';
 
 const ProductsSlider = dynamic(() => import('./ProductsSlider').then((component) => component.ProductsSlider), {
     ssr: false,

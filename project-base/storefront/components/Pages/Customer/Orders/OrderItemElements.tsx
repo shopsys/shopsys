@@ -9,9 +9,9 @@ type ElementWithImageProps = {
 
 export const ElementWithImage: FC<ElementWithImageProps> = ({ image, name }) => {
     return (
-        <div className="font-secondary flex items-center gap-4 font-semibold">
+        <div className="flex items-center gap-4 font-secondary font-semibold">
             <div
-                className="bg-background-default flex h-12 w-20 shrink-0 items-center justify-center rounded-xl"
+                className="flex h-12 w-20 shrink-0 items-center justify-center rounded-xl bg-background-default"
                 data-tid={TIDs.order_list_transport_and_payment_image}
             >
                 <Image
@@ -36,7 +36,7 @@ type OrderItemColumnInfoProps = {
 
 export const OrderItemColumnInfo: FC<OrderItemColumnInfoProps> = ({ title, children, tid }) => {
     return (
-        <div className="font-secondary flex min-w-[100px] flex-col gap-1 text-sm font-semibold">
+        <div className="flex min-w-[100px] flex-col gap-1 font-secondary font-semibold text-sm">
             <span className="text-text-less">{title}</span>
             <span data-tid={tid}>{children}</span>
         </div>
@@ -50,8 +50,8 @@ type OrderItemRowInfoProps = {
 
 export const OrderItemRowInfo: FC<OrderItemRowInfoProps> = ({ title, children }) => {
     return (
-        <div className="vl:flex-row vl:gap-3 vl:items-center flex flex-col gap-1 text-sm">
-            <span className="text-text-less font-secondary min-w-[100px] font-semibold">{title}</span>
+        <div className="flex vl:flex-row flex-col vl:items-center gap-1 vl:gap-3 text-sm">
+            <span className="min-w-[100px] font-secondary font-semibold text-text-less">{title}</span>
             {children}
         </div>
     );

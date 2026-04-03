@@ -1,10 +1,10 @@
-import { CategoryDetailProductsWrapperProps, CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
-import { CategoryDetailProductsWrapperPlaceholder } from './CategoryDetailProductsWrapperPlaceholder';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { useSessionStore } from 'store/useSessionStore';
 import { useProductsData } from 'utils/loadMore/useProductsData';
 import { getMappedProducts } from 'utils/mappers/products';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { CategoryDetailProductsWrapper, CategoryDetailProductsWrapperProps } from './CategoryDetailProductsWrapper';
+import { CategoryDetailProductsWrapperPlaceholder } from './CategoryDetailProductsWrapperPlaceholder';
 
 type DeferredCategoryDetailProductsWrapperProps = Pick<CategoryDetailProductsWrapperProps, 'category'>;
 

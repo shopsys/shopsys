@@ -1,7 +1,7 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
-    TypeLoginMutationVariables,
     TypeLoginMutation,
+    TypeLoginMutationVariables,
     useLoginMutation,
 } from 'graphql/requests/auth/mutations/LoginMutation.generated';
 import { useRouter } from 'next/router';

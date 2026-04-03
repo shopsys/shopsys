@@ -1,5 +1,5 @@
 import { PublicRuntimeConfig, serializeConfigForHtml } from 'envConfig';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { defaultTestConfig } from 'vitest/helpers/mockPublicConfig';
 
 function makeConfig(overrides: Partial<PublicRuntimeConfig> = {}): PublicRuntimeConfig {
@@ -13,7 +13,7 @@ function assertNoScriptClose(serialized: string): void {
 function assertValidJsAssignment(serialized: string): void {
     // Must parse as valid JS when embedded in window.__ENV=...;
     const js = `var __ENV=${serialized};`;
-    // eslint-disable-next-line no-new-func
+    // Intentionally using the Function constructor to verify the serialized payload stays valid JS.
     expect(() => new Function(js)).not.toThrow();
 }
 
@@ -262,7 +262,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
             const fullScript = `window.__ENV=${result};`;
 
             expect(fullScript.toLowerCase()).not.toContain('</script');
-            // eslint-disable-next-line no-new-func
+            // Intentionally using the Function constructor to verify the embedded script stays valid JS.
             expect(() => new Function(fullScript)).not.toThrow();
         });
     });

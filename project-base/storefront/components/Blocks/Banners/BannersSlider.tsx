@@ -1,6 +1,3 @@
-import { Banner } from './Banner';
-import { BannersDot } from './BannersDot';
-import { bannersReducer, getBannerOrderCSSProperty } from './bannersUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
@@ -11,6 +8,9 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getPageTypeKey } from 'utils/page/getPageTypeKey';
 import { getSkeletonTypeFromLink } from 'utils/skeleton/getSkeletonTypeFromLink';
 import { isTextSelected } from 'utils/ui/isTextSelected';
+import { Banner } from './Banner';
+import { BannersDot } from './BannersDot';
+import { bannersReducer, getBannerOrderCSSProperty } from './bannersUtils';
 
 const SLIDER_STOP_SLIDE_TIMEOUT = 300 as const;
 const SLIDER_AUTOMATIC_SLIDE_INTERVAL = 5000 as const;
@@ -116,7 +116,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     });
 
     const slidingButtonsTwClass = twJoin(
-        'snap-mandatory vl:grid vl:snap-x vl:auto-cols-[21%] vl:grid-flow-col vl:justify-start vl:overflow-x-auto vl:overscroll-x-contain hide-scrollbar',
+        'hide-scrollbar vl:grid vl:snap-x snap-mandatory vl:auto-cols-[21%] vl:grid-flow-col vl:justify-start vl:overflow-x-auto vl:overscroll-x-contain',
     );
 
     const currentBanner = sliderItems[bannerSliderState.sliderPosition];
@@ -130,7 +130,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
             <div {...handlers}>
                 <ExtendedNextLink
                     preventRedirectOnTextSelection
-                    className="group block rounded-t-xl rounded-b-none no-underline! select-text"
+                    className="group no-underline! block select-text rounded-t-xl rounded-b-none"
                     draggable={false}
                     href={currentBanner.link}
                     id={`banner-link-${bannerSliderState.sliderPosition}`}
@@ -149,13 +149,13 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                         }
                     }}
                 >
-                    <div className="vl:rounded-b-none w-full overflow-hidden rounded-xl">
+                    <div className="w-full overflow-hidden rounded-xl vl:rounded-b-none">
                         <div
                             className={twJoin(
                                 'flex',
                                 sliderItems.length > 1 &&
                                     (!bannerSliderState.isSliding
-                                        ? `translate-x-[calc(-100%)] [transition-property:translate] duration-500 ease-in-out motion-reduce:duration-0`
+                                        ? `translate-x-[calc(-100%)] duration-500 ease-in-out [transition-property:translate] motion-reduce:duration-0`
                                         : bannerSliderState.slideDirection === 'PREV'
                                           ? 'translate-x-[calc(2*(-100%))]'
                                           : 'translate-x-0'),
@@ -173,7 +173,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                                 ) : (
                                     <div
                                         key={item.uuid}
-                                        className="vl:h-[425px] h-[250px] flex-[1_0_100%] basis-full md:h-[345px]"
+                                        className="h-[250px] vl:h-[425px] flex-[1_0_100%] basis-full md:h-[345px]"
                                         style={{ order }}
                                     />
                                 );
@@ -186,7 +186,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                 className={twJoin(
                     'relative',
                     sliderItems.length > 4 &&
-                        "vl:after:absolute vl:after:right-0 vl:after:top-0 vl:after:block vl:after:h-full vl:after:w-3 vl:after:bg-background-dark vl:after:bg-linear-to-r/srgb vl:after:from-background-default vl:after:to-transparent vl:after:opacity-25 vl:after:content-['']",
+                        "vl:after:absolute vl:after:top-0 vl:after:right-0 vl:after:block vl:after:h-full vl:after:w-3 vl:after:bg-background-dark vl:after:bg-linear-to-r/srgb vl:after:from-background-default vl:after:to-transparent vl:after:opacity-25 vl:after:content-['']",
                 )}
             >
                 <div

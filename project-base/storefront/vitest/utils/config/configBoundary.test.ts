@@ -1,6 +1,6 @@
 import { buildPublicConfig } from 'buildPublicEnvConfig';
 import { PublicRuntimeConfig, serializeConfigForHtml } from 'envConfig';
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { defaultTestConfig } from 'vitest/helpers/mockPublicConfig';
 
 describe('SSR/CSR boundary', () => {

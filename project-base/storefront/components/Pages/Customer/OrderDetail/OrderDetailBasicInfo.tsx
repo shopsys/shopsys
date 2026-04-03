@@ -1,4 +1,3 @@
-import { OrderDetailOrderItem } from './OrderDetailOrderItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
@@ -18,6 +17,7 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getOrderPaymentItem, getOrderRoundingItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPriceVisible } from 'utils/mappers/price';
+import { OrderDetailOrderItem } from './OrderDetailOrderItem';
 
 type OrderDetailBasicInfoProps = {
     order: TypeOrderDetailFragment;
@@ -54,7 +54,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
     return (
         <>
-            <div className="bg-background-more vl:flex-row flex flex-col flex-wrap justify-between gap-5 rounded-xl p-5">
+            <div className="flex vl:flex-row flex-col flex-wrap justify-between gap-5 rounded-xl bg-background-more p-5">
                 <OrderItemColumnInfo title={t('Order number')}>
                     <span data-tid={TIDs.order_detail_number}>{order.number}</span>
                 </OrderItemColumnInfo>
@@ -167,7 +167,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 </OrderDetailRowInfo>
             )}
 
-            <div className="bg-background-more rounded-xl p-5">
+            <div className="rounded-xl bg-background-more p-5">
                 <div data-tid={TIDs.order_detail_items}>
                     {filteredOrderItems.map((orderItem) => (
                         <OrderDetailOrderItem
@@ -183,7 +183,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     ))}
                 </div>
 
-                <div className="font-secondary mt-8 flex flex-col gap-2 text-sm font-semibold">
+                <div className="mt-8 flex flex-col gap-2 font-secondary font-semibold text-sm">
                     <span className="text-lg">{t('Order summary')}</span>
 
                     {order.promoCode && (
@@ -206,7 +206,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 {t('Total price')}
 
                                 <div className="flex flex-col items-end gap-2">
-                                    <strong className="text-price text-lg">
+                                    <strong className="text-lg text-price">
                                         {formatPrice(order.totalPrice.priceWithVat)}
                                     </strong>
 
@@ -237,10 +237,10 @@ type OrderDetailRowInfoProps = {
 const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, children }) => {
     return (
         <div
-            className="vl:flex-row vl:gap-3 vl:items-center bg-background-more flex flex-col gap-1 rounded-xl p-5 text-sm"
+            className="flex vl:flex-row flex-col vl:items-center gap-1 vl:gap-3 rounded-xl bg-background-more p-5 text-sm"
             data-tid={tid}
         >
-            <span className="text-text-less font-secondary min-w-[100px] font-semibold">{title}</span>
+            <span className="min-w-[100px] font-secondary font-semibold text-text-less">{title}</span>
             {children}
         </div>
     );

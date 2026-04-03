@@ -1,6 +1,3 @@
-import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
-import { MenuIconicItemUserAuthenticated } from './MenuIconicItemUserAuthenticated';
-import { MenuIconicItemUserUnauthenticated } from './MenuIconicItemUserUnauthenticated';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
@@ -11,6 +8,9 @@ import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useProductListCount } from 'utils/productLists/useProductListCount';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
+import { MenuIconicItemUserAuthenticated } from './MenuIconicItemUserAuthenticated';
+import { MenuIconicItemUserUnauthenticated } from './MenuIconicItemUserUnauthenticated';
 
 export const MenuIconic: FC = () => {
     const { t } = useTranslation();

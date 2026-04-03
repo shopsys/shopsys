@@ -1,9 +1,9 @@
-import { getGtmMappedCart } from './getGtmMappedCart';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmCartInfoType } from 'gtm/types/objects';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { getGtmMappedCart } from './getGtmMappedCart';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
     const { cart, promoCodes, isCartFetchingOrUnavailable } = useCurrentCart();

@@ -1,4 +1,3 @@
-import { useNewsletterForm, useNewsletterFormMeta } from './newsletterFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
@@ -12,6 +11,7 @@ import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
+import { useNewsletterForm, useNewsletterFormMeta } from './newsletterFormMeta';
 
 export const NewsletterForm: FC = () => {
     const { t } = useTranslation();
@@ -38,8 +38,8 @@ export const NewsletterForm: FC = () => {
 
     return (
         <FooterContainer className="bg-background-accent-less">
-            <div className="vl:gap-44 grid grid-cols-1 items-center gap-5 lg:grid-cols-2">
-                <div className="font-secondary text-lg font-semibold text-balance lg:text-center">
+            <div className="grid grid-cols-1 items-center gap-5 vl:gap-44 lg:grid-cols-2">
+                <div className="text-balance font-secondary font-semibold text-lg lg:text-center">
                     {t('Sign up for our newsletter and get 35% discount on running apparel')}
                 </div>
 

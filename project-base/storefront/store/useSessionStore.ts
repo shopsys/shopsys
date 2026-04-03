@@ -1,4 +1,5 @@
-import { createCartStaleSlice, CartStaleSlice } from './slices/createCartStaleSlice';
+import { create } from 'zustand';
+import { CartStaleSlice, createCartStaleSlice } from './slices/createCartStaleSlice';
 import { createFilterPanelSlice, FilterPanelSlice } from './slices/createFilterPanelSlice';
 import { createFocusManagementSlice, FocusManagementSlice } from './slices/createFocusManagementSlice';
 import { createGeolocationSlice, GeolocationSlice } from './slices/createGeolocationSlice';
@@ -6,8 +7,7 @@ import { createNavigationOverflowSlise, NavigationOverflowSlice } from './slices
 import { createPageLoadingStateSlice, PageLoadingStateSlice } from './slices/createPageLoadingStateSlice';
 import { createPortalSlice, PortalSlice } from './slices/createPortalSlice';
 import { createSeoCategorySlice, SeoCategorySlice } from './slices/createSeoCategorySlice';
-import { UserMenuSlice, createUserMenuSlice } from './slices/createUserMenuSlice';
-import { create } from 'zustand';
+import { createUserMenuSlice, UserMenuSlice } from './slices/createUserMenuSlice';
 
 type SessionStore = CartStaleSlice &
     SeoCategorySlice &

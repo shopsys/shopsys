@@ -1,5 +1,5 @@
-import { getLoginUrlWithRedirect } from './getLoginUrlWithRedirect';
 import { GetServerSidePropsContext, Redirect } from 'next';
+import { getLoginUrlWithRedirect } from './getLoginUrlWithRedirect';
 
 export const getUnauthenticatedRedirectSSR = (
     resolvedUrl: string,

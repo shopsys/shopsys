@@ -113,16 +113,16 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
             const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
-            const brandDetailResponsePromise = client!
-                .query<TypeBrandDetailQuery, TypeBrandDetailQueryVariables>(BrandDetailQueryDocument, {
+            const brandDetailResponsePromise = client
+                ?.query<TypeBrandDetailQuery, TypeBrandDetailQueryVariables>(BrandDetailQueryDocument, {
                     urlSlug,
                     orderingMode,
                     filter,
                 })
                 .toPromise();
 
-            const brandProductsResponsePromise = client!
-                .query<TypeBrandProductsQuery, TypeBrandProductsQueryVariables>(BrandProductsQueryDocument, {
+            const brandProductsResponsePromise = client
+                ?.query<TypeBrandProductsQuery, TypeBrandProductsQueryVariables>(BrandProductsQueryDocument, {
                     endCursor: getEndCursor(page),
                     orderingMode,
                     filter,

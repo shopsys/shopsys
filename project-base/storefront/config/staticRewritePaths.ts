@@ -1,5 +1,5 @@
-import { routes } from './routes';
 import { getPublicConfigProperty } from 'envConfig';
+import { routes } from './routes';
 
 const domains = getPublicConfigProperty('domains');
 

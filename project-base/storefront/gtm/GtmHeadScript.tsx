@@ -1,7 +1,7 @@
-import { DeferredGtmHeadScriptProps } from './DeferredGtmHeadScript';
-import { useGtmContext } from './context/GtmProvider';
 import Script from 'next/script';
 import { isClient } from 'utils/isClient';
+import { useGtmContext } from './context/GtmProvider';
+import { DeferredGtmHeadScriptProps } from './DeferredGtmHeadScript';
 
 export const GtmHeadScript: FC<DeferredGtmHeadScriptProps> = ({ gtmId }) => {
     const { setIsScriptLoaded } = useGtmContext();

@@ -26,7 +26,7 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                     initial={{ translateX: '100%' }}
                     transition={{ duration: 0.2 }}
                     className={twMergeCustom(
-                        'z-aboveOverlay bg-background-default pointer-events-auto fixed top-0 right-0 h-dvh min-w-[315px] overflow-y-auto rounded-none p-5',
+                        'pointer-events-auto fixed top-0 right-0 z-aboveOverlay h-dvh min-w-[315px] overflow-y-auto rounded-none bg-background-default p-5',
                         className,
                     )}
                 >
@@ -34,7 +34,7 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                         <span className="w-full text-center text-base">{title}</span>
 
                         <button
-                            className="text-icon-less flex cursor-pointer items-center justify-center p-1"
+                            className="flex cursor-pointer items-center justify-center p-1 text-icon-less"
                             tabIndex={0}
                             title={t('Close')}
                             onClick={() => setIsActive(false)}

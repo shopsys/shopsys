@@ -31,7 +31,6 @@ const getTooltipPosition = (
                 top: triggerRect.top + (triggerRect.height - tooltipRect.height) / 2,
                 left: triggerRect.right + OFFSET,
             };
-        case 'top':
         default:
             return {
                 top: triggerRect.top - tooltipRect.height - OFFSET,
@@ -81,7 +80,7 @@ export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }
             {cloneElement(children, childProps)}
             {isOpen && label && (
                 <div
-                    className="tooltip bg-background-most fixed z-50 block rounded-md p-2 text-sm"
+                    className="tooltip fixed z-50 block rounded-md bg-background-most p-2 text-sm"
                     ref={tooltipRef}
                     role="tooltip"
                     style={{ top: position.top, left: position.left }}

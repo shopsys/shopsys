@@ -33,11 +33,11 @@ export const MinimalErrorContent: FC<MinimalErrorContentProps> = ({ statusCode, 
             <Head>
                 <title>{is404 ? 'Page Not Found' : 'Error'}</title>
             </Head>
-            <div className="bg-background-body flex min-h-screen items-center justify-center font-sans">
+            <div className="flex min-h-screen items-center justify-center bg-background-body font-sans">
                 <div className="max-w-lg p-8 text-center">
-                    <div className="mb-4 text-8xl font-bold text-red-500">{statusCode}</div>
-                    <h1 className="mb-2 text-2xl font-semibold">{is404 ? 'Page Not Found' : 'Something went wrong'}</h1>
-                    <p className="text-text-secondary mb-8">
+                    <div className="mb-4 font-bold text-8xl text-red-500">{statusCode}</div>
+                    <h1 className="mb-2 font-semibold text-2xl">{is404 ? 'Page Not Found' : 'Something went wrong'}</h1>
+                    <p className="mb-8 text-text-secondary">
                         {is404
                             ? "We couldn't find the page you're looking for."
                             : 'Please try again later or contact support.'}
@@ -54,8 +54,8 @@ export const MinimalErrorContent: FC<MinimalErrorContentProps> = ({ statusCode, 
                     {showDebugInfo && formattedError && (
                         <div
                             className={twMergeCustom(
-                                'border-border-primary bg-background-main mt-8 rounded-md border p-4 text-left',
-                                'font-mono text-xs break-all whitespace-pre-wrap',
+                                'mt-8 rounded-md border border-border-primary bg-background-main p-4 text-left',
+                                'whitespace-pre-wrap break-all font-mono text-xs',
                             )}
                         >
                             {formattedError}

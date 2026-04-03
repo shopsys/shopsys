@@ -1,4 +1,3 @@
-import { invalidateFields } from './cacheUtils';
 import { Cache, UpdatesConfig } from '@urql/exchange-graphcache';
 import { TypeLoginMutation, TypeLoginMutationVariables } from 'graphql/requests/auth/mutations/LoginMutation.generated';
 import {
@@ -35,9 +34,9 @@ import {
     TypeRemovePromoCodeFromCartMutationVariables,
 } from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
 import {
+    CartQueryDocument,
     TypeCartQuery,
     TypeCartQueryVariables,
-    CartQueryDocument,
 } from 'graphql/requests/cart/queries/CartQuery.generated';
 import {
     TypeDeleteDeliveryAddressMutation,
@@ -61,16 +60,17 @@ import {
     TypeRemoveProductListMutationVariables,
 } from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
 import {
+    ProductListCountQueryDocument,
     TypeProductListCountQuery,
     TypeProductListCountQueryVariables,
-    ProductListCountQueryDocument,
 } from 'graphql/requests/productLists/queries/ProductListCountQuery.generated';
 import {
+    ProductListQueryDocument,
     TypeProductListQuery,
     TypeProductListQueryVariables,
-    ProductListQueryDocument,
 } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
 import { MakeMaybe, TypeProductListInput } from 'graphql/types';
+import { invalidateFields } from './cacheUtils';
 
 export const cacheUpdates: UpdatesConfig = {
     Mutation: {

@@ -1,8 +1,8 @@
-import { useDomainConfig } from './DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { createContext, useContext } from 'react';
 import { CustomerUserAreaEnum } from 'types/customer';
+import { useDomainConfig } from './DomainConfigProvider';
 
 const CustomerUserRolesContext = createContext<TypeCustomerUserRoleEnum[] | null>(null);
 

@@ -1,7 +1,3 @@
-import { FilterGroupGeneric } from './FilterGroupGeneric';
-import { FilterGroupInStock } from './FilterGroupInStock';
-import { FilterGroupParameters } from './FilterGroupParameters';
-import { FilterGroupPrice } from './FilterGroupPrice';
 import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
@@ -14,6 +10,10 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
+import { FilterGroupGeneric } from './FilterGroupGeneric';
+import { FilterGroupInStock } from './FilterGroupInStock';
+import { FilterGroupParameters } from './FilterGroupParameters';
+import { FilterGroupPrice } from './FilterGroupPrice';
 
 export type FilterPanelProps = {
     productFilterOptions: TypeProductFilterOptionsFragment;
@@ -45,12 +45,11 @@ export const FilterPanel: FC<FilterPanelProps> = ({
         !!filterOptions.inStock && !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
 
     return (
-        <div
+        <section
             aria-label={t('Product filters', { ns: 'accessibility' })}
-            className="z-aboveOverlay bg-background-default vl:z-above relative flex h-full flex-col pb-1"
+            className="relative vl:z-above z-aboveOverlay flex h-full flex-col bg-background-default pb-1"
             data-tid={TIDs.filter_panel}
             id="filter-panel"
-            role="region"
         >
             <AccessibleLink
                 className="vl:block hidden rounded-md"
@@ -58,12 +57,12 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 title={t('Skip filters', { ns: 'accessibility' })}
             />
 
-            <div className="vl:hidden flex items-center justify-between p-5">
+            <div className="flex vl:hidden items-center justify-between p-5">
                 <h2 className="h5">{t('Product filter')}</h2>
 
                 <button
                     aria-label={t('Close filter panel', { ns: 'accessibility' })}
-                    className="text-icon-less hover:text-icon-default flex cursor-pointer items-center justify-center"
+                    className="flex cursor-pointer items-center justify-center text-icon-less hover:text-icon-default"
                     tabIndex={0}
                     title={t('Close filter panel')}
                     type="button"
@@ -73,10 +72,10 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 </button>
             </div>
 
-            <div className="vl:static vl:overflow-visible vl:px-0 h-full overflow-y-scroll px-5">
+            <div className="vl:static h-full vl:overflow-visible overflow-y-scroll px-5 vl:px-0">
                 {shouldDisplayInStockFilter && <FilterGroupInStock inStockCount={filterOptions.inStock} />}
 
-                <div className="divide-border-less divide-y">
+                <div className="divide-y divide-border-less">
                     {isPriceVisible(filterOptions.minimalPrice) && (
                         <FilterGroupPrice
                             ariaLabel={t('Filter by price', { ns: 'accessibility' })}
@@ -128,7 +127,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 </div>
             </div>
 
-            <div className="bg-background-more vl:hidden flex flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-4">
+            <div className="flex vl:hidden flex-wrap items-center justify-between gap-x-5 gap-y-2 bg-background-more px-5 py-4">
                 <Button className="ml:auto" size="large" onClick={() => setIsFilterPanelOpen(false)}>
                     {t('Show')} {totalCount} {t('products count', { count: totalCount })}
                 </Button>
@@ -145,6 +144,6 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                     </Button>
                 )}
             </div>
-        </div>
+        </section>
     );
 };

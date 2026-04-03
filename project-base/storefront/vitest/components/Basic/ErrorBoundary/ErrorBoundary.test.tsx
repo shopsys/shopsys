@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { ErrorBoundary, FallbackProps } from 'components/Basic/ErrorBoundary';
-import { describe, expect, test, vi, beforeAll, afterAll } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
 const ThrowError = ({ shouldThrow }: { shouldThrow: boolean }) => {
     if (shouldThrow) {

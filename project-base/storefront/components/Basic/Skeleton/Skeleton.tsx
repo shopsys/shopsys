@@ -9,7 +9,7 @@ export const Skeleton: FC<SkeletonProps> = ({ className }) => {
         <div
             role="status"
             className={twMergeCustom(
-                'custom-loading-skeleton bg-skeleton-default rounded-md motion-safe:animate-pulse',
+                'custom-loading-skeleton rounded-md bg-skeleton-default motion-safe:animate-pulse',
                 className,
             )}
         />

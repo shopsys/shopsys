@@ -1,9 +1,9 @@
-import { DeferredCountdown } from './Countdown/DeferredCountdown';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
+import { DeferredCountdown } from './Countdown/DeferredCountdown';
 
 type ProductDetailPriceProps = {
     productPrice: TypeProductPriceFragment;
@@ -25,8 +25,8 @@ export const ProductDetailPrice: FC<ProductDetailPriceProps> = ({ productPrice }
             <div className="flex flex-wrap items-center gap-x-2">
                 <div
                     className={twMergeCustom(
-                        'font-secondary text-price-default text-2xl font-bold whitespace-nowrap',
-                        isSpecialPrice && 'text-price-before text-base font-semibold line-through',
+                        'whitespace-nowrap font-bold font-secondary text-2xl text-price-default',
+                        isSpecialPrice && 'font-semibold text-base text-price-before line-through',
                     )}
                 >
                     {formatPrice(productPrice.basicPrice.priceWithVat)}
@@ -36,7 +36,7 @@ export const ProductDetailPrice: FC<ProductDetailPriceProps> = ({ productPrice }
                     <>
                         <Flag type="discount">-{productPrice.percentageDiscount}%</Flag>
 
-                        <div className="font-secondary text-price-discounted text-2xl font-bold whitespace-nowrap">
+                        <div className="whitespace-nowrap font-bold font-secondary text-2xl text-price-discounted">
                             {formatPrice(productPrice.priceWithVat)}
                         </div>
                     </>

@@ -37,7 +37,8 @@ export const CartListItem: FC<CartListItemProps> = ({
     const debouncedSpinboxValue = useDebounce(spinboxValue, 500);
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
+    const productSlug = product.__typename === 'Variant' ? product.mainVariant?.slug : product.slug;
+    const hasProductDetailLink = productSlug !== undefined;
     const isProduct = type === TypeCartItemTypeEnum.Product;
     const isProductGift = type === TypeCartItemTypeEnum.ProductGift;
 
@@ -71,24 +72,34 @@ export const CartListItem: FC<CartListItemProps> = ({
         <li>
             <section
                 aria-labelledby={`product-${uuid}-name`}
-                className="bg-background-more vl:flex-nowrap vl:p-5 relative flex flex-row flex-wrap items-center justify-between gap-4 rounded-xl p-4"
+                className="relative flex flex-row flex-wrap vl:flex-nowrap items-center justify-between gap-4 rounded-xl bg-background-more p-4 vl:p-5"
                 data-tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
             >
                 {isProductGift && (
-                    <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow-md">
+                    <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 font-semibold text-white text-xs shadow-md">
                         {t('Gift')}
                     </div>
                 )}
 
-                <div className="vl:basis-auto vl:items-center vl:pr-0 vl:pt-0 flex basis-full gap-2.5 pt-6 pr-8">
+                <div className="flex basis-full vl:basis-auto vl:items-center gap-2.5 pt-6 vl:pt-0 pr-8 vl:pr-0">
                     <div className="flex size-20 shrink-0">
-                        <ExtendedNextLink
-                            className="relative isolate"
-                            href={productSlug}
-                            tabIndex={-1}
-                            tid={TIDs.cart_list_item_image}
-                            type="product"
-                        >
+                        {hasProductDetailLink ? (
+                            <ExtendedNextLink
+                                className="relative isolate"
+                                href={productSlug}
+                                tabIndex={-1}
+                                tid={TIDs.cart_list_item_image}
+                                type="product"
+                            >
+                                <Image
+                                    alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
+                                    className="size-20 object-contain mix-blend-multiply"
+                                    height={80}
+                                    src={product.mainImage?.url}
+                                    width={80}
+                                />
+                            </ExtendedNextLink>
+                        ) : (
                             <Image
                                 alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
                                 className="size-20 object-contain mix-blend-multiply"
@@ -96,25 +107,34 @@ export const CartListItem: FC<CartListItemProps> = ({
                                 src={product.mainImage?.url}
                                 width={80}
                             />
-                        </ExtendedNextLink>
+                        )}
                     </div>
 
-                    <div className="vl:flex-1 vl:flex-row vl:items-center vl:gap-8 flex flex-col items-start gap-2 xl:gap-16">
+                    <div className="flex vl:flex-1 vl:flex-row flex-col items-start vl:items-center gap-2 vl:gap-8 xl:gap-16">
                         <div
-                            className="vl:w-48 flex flex-col gap-2 tracking-wide"
+                            className="flex vl:w-48 flex-col gap-2 tracking-wide"
                             data-tid={TIDs.pages_cart_list_item_name}
                         >
-                            <ExtendedNextLink
-                                className="font-secondary text-text-default hover:text-text-accent font-semibold no-underline hover:underline"
-                                href={productSlug}
-                                type="product"
-                            >
-                                <h3 className="text-sm lg:text-sm" id={`product-${uuid}-name`}>
+                            {hasProductDetailLink ? (
+                                <ExtendedNextLink
+                                    className="font-secondary font-semibold text-text-default no-underline hover:text-text-accent hover:underline"
+                                    href={productSlug}
+                                    type="product"
+                                >
+                                    <h3 className="text-sm lg:text-sm" id={`product-${uuid}-name`}>
+                                        {product.fullName}
+                                    </h3>
+                                </ExtendedNextLink>
+                            ) : (
+                                <h3
+                                    className="font-secondary font-semibold text-sm text-text-default lg:text-sm"
+                                    id={`product-${uuid}-name`}
+                                >
                                     {product.fullName}
                                 </h3>
-                            </ExtendedNextLink>
+                            )}
 
-                            <div className="text-text-less text-sm">
+                            <div className="text-sm text-text-less">
                                 {t('Code')}: {product.catalogNumber}
                             </div>
 
@@ -137,7 +157,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                     </div>
                 </div>
 
-                <div className="vl:flex-row vl:items-center vl:gap-8 flex w-auto flex-col justify-between gap-2 xl:gap-16">
+                <div className="flex w-auto vl:flex-row flex-col vl:items-center justify-between gap-2 vl:gap-8 xl:gap-16">
                     {isProduct ? (
                         <Spinbox
                             defaultValue={quantity}
@@ -154,15 +174,15 @@ export const CartListItem: FC<CartListItemProps> = ({
                     )}
 
                     {isProduct && isPriceVisible(product.price.priceWithVat) && (
-                        <div className="font-secondary vl:w-40 whitespace-nowrap">
+                        <div className="vl:w-40 whitespace-nowrap font-secondary">
                             <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
-                            <span className="text-text-less text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
+                            <span className="text-sm text-text-less">&nbsp;/&nbsp;{product.unit.name}</span>
                         </div>
                     )}
                     {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
-                        <div className="font-secondary vl:w-40 whitespace-nowrap">
+                        <div className="vl:w-40 whitespace-nowrap font-secondary">
                             <span className="font-semibold">{formatPrice(product.giftPrice.priceWithVat)}</span>
-                            <span className="text-text-less text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
+                            <span className="text-sm text-text-less">&nbsp;/&nbsp;{product.unit.name}</span>
                         </div>
                     )}
                 </div>

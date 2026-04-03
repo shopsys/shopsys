@@ -8,9 +8,9 @@ import { PersistStoreProvider } from 'components/providers/PersistStoreProvider'
 import { LazyMotion, MotionConfig } from 'framer-motion';
 import { GtmProvider } from 'gtm/context/GtmProvider';
 import i18nConfig from 'i18n';
-import appWithI18n from 'next-translate/appWithI18n';
 import { AppProps as NextAppProps } from 'next/app';
 import dynamic from 'next/dynamic';
+import appWithI18n from 'next-translate/appWithI18n';
 import 'nprogress/nprogress.css';
 import { ReactElement, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
@@ -119,6 +119,5 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     );
 }
 
-// eslint-disable-next-line
-// @ts-ignore
+// @ts-expect-error
 export default appWithI18n(MyApp, { ...i18nConfig });

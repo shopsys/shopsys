@@ -17,7 +17,7 @@ export const operationNameExchange: Exchange =
                     )?.name?.value ?? 'UnknownOperation';
 
                 const urlWithoutTrailingSlash = getStringWithoutTrailingSlash(operation.context.url);
-                const urlWithOperationName = urlWithoutTrailingSlash + `/${operationName}`;
+                const urlWithOperationName = `${urlWithoutTrailingSlash}/${operationName}`;
 
                 const existingFetchOptions = (() => {
                     if (!operation.context.fetchOptions) {

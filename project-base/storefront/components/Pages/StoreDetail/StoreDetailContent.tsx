@@ -80,7 +80,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     </div>
                     <div className="w-full lg:basis-1/2">
                         <div
-                            className="bg-background-more flex aspect-square w-full rounded-xl p-5"
+                            className="flex aspect-square w-full rounded-xl bg-background-more p-5"
                             data-tid={TIDs.stores_map}
                         >
                             <GoogleMap
@@ -104,7 +104,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
             {store.storeImages.length > 0 && (
                 <Webline>
                     <div
-                        className="max-vl:grid-flow-col vl:gap-8 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto lg:flex lg:flex-wrap"
+                        className="grid snap-x snap-mandatory gap-4 vl:gap-8 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto max-vl:grid-flow-col lg:flex lg:flex-wrap"
                         data-tid={TIDs.store_gallery_images}
                     >
                         {store.storeImages.map((image, index) => (

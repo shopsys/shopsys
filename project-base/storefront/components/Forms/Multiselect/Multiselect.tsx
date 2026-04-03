@@ -111,10 +111,10 @@ export function MultiSelect<T extends string | number = string>({
             <div className={twMergeCustom('relative w-full', inputWrapperClassName)} ref={ref}>
                 <div
                     className={twMergeCustom(
-                        'border-input-border-default bg-input-bg-default text-input-text-default hover:border-input-border-hovered group flex h-14 justify-between rounded-md border-2',
-                        isOpen && 'border-input-border-active justify-between rounded-b-none',
+                        'group flex h-14 justify-between rounded-md border-2 border-input-border-default bg-input-bg-default text-input-text-default hover:border-input-border-hovered',
+                        isOpen && 'justify-between rounded-b-none border-input-border-active',
                         (isDisabled || isLoading) &&
-                            'border-input-border-disabled bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
+                            'pointer-events-none cursor-no-drop border-input-border-disabled bg-input-bg-disabled text-input-text-disabled',
                         hasError && 'border-input-border-error hover:border-input-border-error',
                         inputClassName,
                     )}
@@ -137,14 +137,14 @@ export function MultiSelect<T extends string | number = string>({
                             />
                             <span
                                 className={twJoin(
-                                    'font-secondary text-input-placeholder-default group-hover:text-input-placeholder-hovered pointer-events-none absolute transition-all',
+                                    'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || comboBoxConfig.searchValue || selectedOptions.length > 0
                                         ? 'top-[9px] text-sm'
-                                        : 'top-1/2 left-3 -translate-y-1/2 text-base font-semibold',
+                                        : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-base',
                                 )}
                             >
                                 {label}
-                                {isRequired && <span className="text-text-error ml-1">*</span>}
+                                {isRequired && <span className="ml-1 text-text-error">*</span>}
                             </span>
                         </>
                     ) : (
@@ -158,18 +158,18 @@ export function MultiSelect<T extends string | number = string>({
                         >
                             <span
                                 className={twJoin(
-                                    'font-secondary text-input-placeholder-default group-hover:text-input-placeholder-hovered absolute transition-all',
+                                    'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || selectedOptions.length > 0
                                         ? 'top-[9px] text-sm'
-                                        : 'top-1/2 -translate-y-1/2 text-base font-semibold',
+                                        : 'top-1/2 -translate-y-1/2 font-semibold text-base',
                                 )}
                             >
                                 {label}
-                                {isRequired && <span className="text-text-error ml-1">*</span>}
+                                {isRequired && <span className="ml-1 text-text-error">*</span>}
                             </span>
 
                             {selectedOptions.length > 0 && (
-                                <span className="font-secondary text-input-text-default font-semibold whitespace-nowrap">
+                                <span className="whitespace-nowrap font-secondary font-semibold text-input-text-default">
                                     {`${selectedOptions.length} selected`}
                                 </span>
                             )}
@@ -213,7 +213,7 @@ export function MultiSelect<T extends string | number = string>({
                             >
                                 {selected.label}
 
-                                <RemoveBoldIcon className="group-hover/tag:text-icon-inverted text-icon-less ml-2 w-3 cursor-pointer" />
+                                <RemoveBoldIcon className="ml-2 w-3 cursor-pointer text-icon-less group-hover/tag:text-icon-inverted" />
                             </Tag>
                         ))}
                     </div>

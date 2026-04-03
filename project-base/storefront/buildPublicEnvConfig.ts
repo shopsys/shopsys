@@ -1,5 +1,5 @@
-import type { PublicRuntimeConfig } from './envConfig';
 import { CustomerUserAreaEnum } from 'types/customer';
+import type { PublicRuntimeConfig } from './envConfig';
 
 export function buildPublicConfig(): PublicRuntimeConfig {
     const sentryDsn = process.env.SENTRY_DSN?.trim() ?? '';

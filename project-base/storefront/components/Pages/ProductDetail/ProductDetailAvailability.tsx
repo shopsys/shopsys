@@ -1,4 +1,3 @@
-import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { TypeSimpleStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/SimpleStoreAvailabilityFragment.generated';
@@ -6,6 +5,7 @@ import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 
 type ProductDetailContentProps = {
     isSellingDenied: boolean;
@@ -35,7 +35,7 @@ export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
             availableStoresCount={availableStoresCount}
             isInquiryType={isInquiryType}
             className={twJoin(
-                'font-secondary mr-1 flex items-center',
+                'mr-1 flex items-center font-secondary',
                 availability.status === TypeAvailabilityStatusEnum.InStock && 'cursor-pointer hover:underline',
             )}
             onClick={() =>

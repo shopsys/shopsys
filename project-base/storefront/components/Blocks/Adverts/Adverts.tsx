@@ -1,9 +1,9 @@
-import { AdvertImage } from './AdvertImage';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useAdvertsQuery } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { AdvertImage } from './AdvertImage';
 
 type PositionNameType = 'footer' | 'header' | 'cartPreview' | 'productListSecondRow';
 

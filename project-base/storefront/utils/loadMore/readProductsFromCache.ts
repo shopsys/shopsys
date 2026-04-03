@@ -3,7 +3,7 @@ import { TypeListedProductConnectionFragment } from 'graphql/requests/products/f
 import { TypeBrandProductsQuery } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
 import { TypeCategoryProductsQuery } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { TypeFlagProductsQuery } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
-import { TypeProductOrderingModeEnum, Maybe, TypeProductFilter } from 'graphql/types';
+import { Maybe, TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
 import { Client } from 'urql';
 
 export const readProductsFromCache = (

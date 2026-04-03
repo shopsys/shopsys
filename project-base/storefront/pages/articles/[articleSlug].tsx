@@ -2,10 +2,10 @@ import { ArticleMetadata } from 'components/Basic/Head/ArticleMetadata';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
 import {
-    useArticleDetailQuery,
+    ArticleDetailQueryDocument,
     TypeArticleDetailQuery,
     TypeArticleDetailQueryVariables,
-    ArticleDetailQueryDocument,
+    useArticleDetailQuery,
 } from 'graphql/requests/articles/queries/ArticleDetailQuery.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
@@ -79,8 +79,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             const articleResponse: OperationResult<TypeArticleDetailQuery, TypeArticleDetailQueryVariables> =
-                await client!
-                    .query(ArticleDetailQueryDocument, {
+                await client
+                    ?.query(ArticleDetailQueryDocument, {
                         urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                     })
                     .toPromise();
@@ -90,8 +90,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             const parsedCatnums = parseCatnums(article?.text ?? '');
 
-            await client!
-                .query(ProductsByCatnumsDocument, {
+            await client
+                ?.query(ProductsByCatnumsDocument, {
                     catnums: parsedCatnums,
                 })
                 .toPromise();

@@ -7,7 +7,7 @@ export const mapGtmProductInterface = (
     productInterface: ProductInterfaceType,
     domainUrl: string,
 ): GtmProductInterface => {
-    let productUrl;
+    let productUrl: string;
 
     if (domainUrl.endsWith('/')) {
         productUrl = getStringWithoutTrailingSlash(domainUrl) + productInterface.slug;

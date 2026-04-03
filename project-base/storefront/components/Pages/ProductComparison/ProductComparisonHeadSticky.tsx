@@ -29,7 +29,7 @@ const ProductComparisonHeadStickyWrapper = ({ children }: { children: React.Reac
     return (
         <div
             className={twJoin(
-                'z-menu border-border-less bg-table-bg-contrast fixed top-0 left-0 w-full overflow-hidden border-b-2 px-5',
+                'fixed top-0 left-0 z-menu w-full overflow-hidden border-border-less border-b-2 bg-table-bg-contrast px-5',
                 tableStickyHeadActive ? 'flex' : 'hidden',
             )}
         >
@@ -45,11 +45,11 @@ type ProductComparisonContentProps = {
 
 const ProductComparisonHeadStickyContent = ({ comparedProducts, tableMarginLeft }: ProductComparisonContentProps) => (
     <div className="mx-auto flex w-full max-w-7xl flex-nowrap overflow-hidden">
-        <div className="vl:min-w-[290px] static flex h-full max-w-[182px] min-w-[115px] shrink-0 border-r-1 sm:w-auto sm:max-w-none sm:min-w-[220px] md:max-w-none md:min-w-[265px] lg:min-w-[270px]" />
+        <div className="static flex h-full min-w-[115px] vl:min-w-[290px] max-w-[182px] shrink-0 border-r-1 sm:w-auto sm:min-w-[220px] sm:max-w-none md:min-w-[265px] md:max-w-none lg:min-w-[270px]" />
         {comparedProducts.map((product, index) => (
             <div
                 key={`headSticky-${product.uuid}`}
-                className="flex max-w-[calc(182px+12px*2)] min-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center border-r-1 px-1 py-3 sm:max-w-[calc(205px+20px*2)] sm:min-w-[calc(205px+20px*2)]"
+                className="flex min-w-[calc(182px+12px*2)] max-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center border-r-1 px-1 py-3 sm:min-w-[calc(205px+20px*2)] sm:max-w-[calc(205px+20px*2)]"
                 style={index === 0 ? { marginLeft: -tableMarginLeft } : undefined}
             >
                 <ExtendedNextLink className="relative size-16" href={product.slug} tabIndex={0}>

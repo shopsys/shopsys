@@ -1,9 +1,9 @@
-import { useCurrentCart } from './useCurrentCart';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCurrentCart } from './useCurrentCart';
 
 export const useOrderPagesAccess = (page: 'transport-and-payment' | 'contact-information') => {
     const router = useRouter();

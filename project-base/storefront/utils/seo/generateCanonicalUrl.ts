@@ -2,9 +2,9 @@ import { NextRouter } from 'next/router';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import {
+    FILTER_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
-    FILTER_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 

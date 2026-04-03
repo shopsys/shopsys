@@ -1,6 +1,5 @@
 import { getPublicConfig, PublicRuntimeConfig, serializeConfigForHtml } from 'envConfig';
-import { Head, Html, Main, NextScript } from 'next/document';
-import Document, { DocumentContext, DocumentInitialProps } from 'next/document';
+import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document';
 import { getDomainConfig } from 'utils/domain/domainConfig';
 import { logException } from 'utils/errors/logException';
 
@@ -29,7 +28,6 @@ const BROWSER_WARNING_TRANSLATIONS: Record<string, { message: string; dismissLab
 };
 
 const getBrowserWarningTranslation = (locale: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return BROWSER_WARNING_TRANSLATIONS[locale] || BROWSER_WARNING_TRANSLATIONS.en;
 };
 

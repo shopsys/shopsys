@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useEffectEvent, ReactNode } from 'react';
+import { ReactNode, useEffect, useEffectEvent } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 
 export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ children }) => {

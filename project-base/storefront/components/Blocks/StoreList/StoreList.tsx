@@ -1,6 +1,6 @@
-import { StoreListItem } from './StoreListItem';
 import { TIDs } from 'cypress/tids';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { StoreListItem } from './StoreListItem';
 
 type StoreListProps = {
     stores: StoreOrPacketeryPoint[];

@@ -1,8 +1,8 @@
-import { CartStep } from './CartStep';
-import { CartStepSeparator } from './CartStepSeparator';
 import { useCartStepNavigation } from 'utils/cart/useCartStepNavigation';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { CartStep } from './CartStep';
+import { CartStepSeparator } from './CartStepSeparator';
 
 type CartStepsProps = {
     activeStep: number;

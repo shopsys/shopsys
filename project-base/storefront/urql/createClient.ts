@@ -1,7 +1,7 @@
 import { getServerConfigProperty } from 'envConfig';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: This file owns the approved initUrqlClient bridge for the storefront.
 import { initUrqlClient } from 'next-urql';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { Client, SSRExchange } from 'urql';

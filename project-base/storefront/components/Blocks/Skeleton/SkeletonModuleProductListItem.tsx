@@ -5,7 +5,7 @@ type SkeletonModuleProductListItemProps = {
 };
 
 export const SkeletonModuleProductListItem: FC<SkeletonModuleProductListItemProps> = ({ isSimpleCard }) => (
-    <div className="bg-skeleton-less flex w-full flex-col gap-2.5 rounded-xl px-2.5 py-5 sm:p-5">
+    <div className="flex w-full flex-col gap-2.5 rounded-xl bg-skeleton-less px-2.5 py-5 sm:p-5">
         <Skeleton className="h-[180px]" />
 
         <div className="flex flex-col gap-1">

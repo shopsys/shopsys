@@ -1,4 +1,3 @@
-import logo from '/public/images/shopsys-logo.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { getCouldNotFindUserConsentPolicyArticleUrl } from 'components/Blocks/UserConsent/userConsentUtils';
@@ -9,6 +8,7 @@ import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import logo from '/public/images/shopsys-logo.svg';
 
 export const FooterCopyright: FC = () => {
     const { t } = useTranslation();
@@ -25,13 +25,13 @@ export const FooterCopyright: FC = () => {
         <FooterContainer>
             <div className="flex flex-col items-center gap-5 lg:gap-2">
                 <div
-                    className="text-text-default flex w-full items-center justify-center text-center text-sm"
+                    className="flex w-full items-center justify-center text-center text-sm text-text-default"
                     data-tid={TIDs.footer_copyright}
                 >
                     {t('footerCopyright', { currentYear })}
                 </div>
 
-                <div className="text-text-default flex items-center justify-center gap-1.5 text-sm">
+                <div className="flex items-center justify-center gap-1.5 text-sm text-text-default">
                     {t('Customized E-shop by')}
 
                     <a

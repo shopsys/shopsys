@@ -77,7 +77,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                             )
                         }
                     >
-                        <span className="font-secondary line-clamp-4 min-h-[5rem] text-sm">{product.fullName}</span>
+                        <span className="line-clamp-4 min-h-[5rem] font-secondary text-sm">{product.fullName}</span>
                     </ExtendedNextLink>
                     <span className="text-xs">
                         {t('Code')}: {product.catalogNumber}

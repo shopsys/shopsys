@@ -52,7 +52,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
             contentClassName="overflow-y-auto"
             title={t('Great choice! We have added your item to the cart')}
         >
-            <div className="border-border-default mb-4 flex flex-col items-center rounded-sm border p-3 md:flex-row md:p-4">
+            <div className="mb-4 flex flex-col items-center rounded-sm border border-border-default p-3 md:flex-row md:p-4">
                 {!!product.mainImage && (
                     <div
                         className="mb-4 flex h-12 w-24 items-center justify-center md:mb-0"
@@ -68,7 +68,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     </div>
                 )}
                 <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
-                    <div className="block wrap-break-word" data-tid={TIDs.blocks_product_addtocartpopup_product_name}>
+                    <div className="wrap-break-word block" data-tid={TIDs.blocks_product_addtocartpopup_product_name}>
                         <ExtendedNextLink
                             href={productUrl}
                             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
@@ -78,7 +78,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     </div>
 
                     <div className="mt-2 lg:mt-0 lg:w-5/12 lg:pl-4 lg:text-right">
-                        <div className="text-price-default block">
+                        <div className="block text-price-default">
                             {`${quantity} ${product.unit.name}`}
                             {isPriceVisible(product.price.priceWithVat) &&
                                 `, ${formatPrice(quantity * mapPriceForCalculations(product.price.priceWithVat))}`}

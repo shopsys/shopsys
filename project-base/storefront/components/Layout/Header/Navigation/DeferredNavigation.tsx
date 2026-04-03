@@ -1,8 +1,8 @@
-import { Navigation } from './Navigation';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { Navigation } from './Navigation';
 
 const NavigationPlaceholder = dynamic(() =>
     import('./NavigationPlaceholder').then((component) => component.NavigationPlaceholder),

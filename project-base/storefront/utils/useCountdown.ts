@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { startTransition, useState, useEffect, useEffectEvent } from 'react';
+import { startTransition, useEffect, useEffectEvent, useState } from 'react';
 
 interface TimeState {
     days: string;
@@ -74,7 +74,7 @@ export const useCountdown = (endTime: CountdownTime, callback?: () => void, inte
             });
         };
 
-        const timeoutId = isNaN(endTimeMs)
+        const timeoutId = Number.isNaN(endTimeMs)
             ? undefined
             : setTimeout(() => {
                   tick();

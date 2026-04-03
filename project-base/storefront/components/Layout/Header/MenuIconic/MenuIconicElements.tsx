@@ -1,8 +1,7 @@
 import { AnimateAppearDiv } from 'components/Basic/Animations/AnimateAppearDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { AnimatePresence } from 'framer-motion';
-import { forwardRef } from 'react';
-import { TouchEvent as ReactTouchEvent } from 'react';
+import { forwardRef, TouchEvent as ReactTouchEvent } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
@@ -23,6 +22,8 @@ type MenuIconicItemLinkProps = {
     isActive?: boolean;
     tabIndex?: number;
     ariaLabel?: string;
+    ariaExpanded?: boolean;
+    ariaHaspopup?: 'menu' | 'dialog';
 };
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
@@ -35,7 +36,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     ariaLabel,
 }) => {
     const menuIconicSubItemLinkTwClass = twJoin(
-        'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default cursor-pointer w-full rounded-md',
+        'flex w-full cursor-pointer items-center gap-5 rounded-md px-3 py-4 font-semibold text-sm text-text-default no-underline hover:text-text-default hover:no-underline',
         isActive && 'text-text-accent!',
     );
 
@@ -69,14 +70,32 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
 };
 
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ children, className, tid, href, title, type, tabIndex, onClick, onTouchEnd }, _) => {
+    (
+        {
+            children,
+            className,
+            tid,
+            href,
+            title,
+            type,
+            tabIndex,
+            onClick,
+            onTouchEnd,
+            ariaLabel,
+            ariaExpanded,
+            ariaHaspopup,
+        },
+        _,
+    ) => {
         const menuIconicItemLinkTwClass =
             'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 text-xs rounded-sm font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
 
         if (href) {
             return (
                 <ExtendedNextLink
+                    aria-expanded={ariaExpanded}
+                    aria-haspopup={ariaHaspopup}
+                    aria-label={ariaLabel}
                     className={twMergeCustom(menuIconicItemLinkTwClass, className)}
                     href={href}
                     tid={tid}
@@ -91,6 +110,9 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
 
         return (
             <button
+                aria-expanded={ariaExpanded}
+                aria-haspopup={ariaHaspopup}
+                aria-label={ariaLabel}
                 className={twMergeCustom(menuIconicItemLinkTwClass, className)}
                 data-tid={tid}
                 tabIndex={tabIndex}
@@ -116,7 +138,7 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
 > = ({ children, isActive = false }) => (
     <li
         className={twMergeCustom(
-            'border-background-default bg-background-more h-14 rounded-xl border',
+            'h-14 rounded-xl border border-background-default bg-background-more',
             'hover:border-border-less hover:bg-background-default',
             isActive && 'border-border-less bg-background-default',
         )}
@@ -150,8 +172,8 @@ export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
             {isHovered && (
                 <AnimateAppearDiv
                     className={twMergeCustom(
-                        `z-cart pointer-events-auto absolute top-[54px] hidden origin-top`,
-                        'bg-background-default vl:block rounded-xl p-5',
+                        `pointer-events-auto absolute top-[54px] z-cart hidden origin-top`,
+                        'vl:block rounded-xl bg-background-default p-5',
                         'before:absolute before:-top-2.5 before:left-0 before:h-2.5 before:w-full',
                         positionClasses,
                     )}

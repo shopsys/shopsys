@@ -1,5 +1,3 @@
-import { SearchProductsContent } from './SearchProductsContent';
-import { useSearchProductsData } from './searchUtils';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
@@ -11,6 +9,8 @@ import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { SearchProductsContent } from './SearchProductsContent';
+import { useSearchProductsData } from './searchUtils';
 
 export const SearchProducts: FC = () => {
     const { t } = useTranslation();
@@ -45,7 +45,7 @@ export const SearchProducts: FC = () => {
                     id="product-list"
                     ref={paginationScrollTargetRef}
                 >
-                    <div className="vl:flex-col flex flex-col-reverse">
+                    <div className="flex vl:flex-col flex-col-reverse">
                         <DeferredFilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

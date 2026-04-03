@@ -1,12 +1,12 @@
-import { GoogleMapMarker } from './GoogleMapMarker';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getPublicConfigProperty } from 'envConfig';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import GoogleMapReact from 'google-map-react';
 import { TypeCoordinates } from 'graphql/types';
 import { useEffect, useRef, useState } from 'react';
 import { PointFeature } from 'supercluster';
 import { MapMarker, MapMarkerNullable } from 'types/map';
 import useSupercluster from 'use-supercluster';
+import { GoogleMapMarker } from './GoogleMapMarker';
 
 const CLUSTER_RADIUS = 75;
 const CLUSTER_MAX_ZOOM = 20;

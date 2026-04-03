@@ -18,6 +18,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
         <div className="relative flex h-6 w-11 items-center justify-center">
             <input
                 aria-label={ariaLabel}
+                aria-checked={value}
                 checked={value}
                 className="peer h-5 w-10 outline-hidden"
                 id={id}
@@ -33,7 +34,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
                 className={twJoin(
                     'absolute size-full cursor-pointer rounded-full',
                     'bg-input-border-default peer-not-checked:hover:bg-input-border-hovered',
-                    "after:bg-icon-inverted hover:after:bg-fill-accent-less after:my-0.5 after:ml-0.5 after:block after:size-5 after:rounded-full after:transition-all after:content-['']",
+                    "after:my-0.5 after:ml-0.5 after:block after:size-5 after:rounded-full after:bg-icon-inverted after:transition-all after:content-[''] hover:after:bg-fill-accent-less",
                     'peer-checked:after:ml-5.5 peer-checked:after:block',
                     'peer-checked:bg-input-fill',
                 )}

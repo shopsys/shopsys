@@ -1,4 +1,3 @@
-import { useCartPageNavigation } from './cartUtils';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { FreeTransportRange } from 'components/Blocks/FreeTransport/FreeTransportRange';
 import { Button } from 'components/Forms/Button/Button';
@@ -9,6 +8,7 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { useIntersectionObserver } from 'utils/ui/useIntersectionObserver';
+import { useCartPageNavigation } from './cartUtils';
 
 const MIN_ITEMS_FOR_STICKY_BAR = 4;
 
@@ -35,7 +35,7 @@ export const CartStickyBar: FC<CartStickyBarProps> = ({ originalButtonRef }) => 
 
     return (
         <div
-            className={`z-above bg-background-default fixed right-0 bottom-0 left-0 shadow-[0_-4px_16px_rgba(0,0,0,0.1)] transition-transform duration-300 ${
+            className={`fixed right-0 bottom-0 left-0 z-above bg-background-default shadow-[0_-4px_16px_rgba(0,0,0,0.1)] transition-transform duration-300 ${
                 isEndOfList ? 'translate-y-full' : 'translate-y-0'
             }`}
         >
@@ -47,10 +47,10 @@ export const CartStickyBar: FC<CartStickyBarProps> = ({ originalButtonRef }) => 
 
                     <div className="ml-auto flex w-full items-center justify-between gap-4 lg:justify-end">
                         {isPriceVisible(cart.totalItemsPrice.priceWithVat) && (
-                            <div className="font-secondary flex flex-col font-semibold">
+                            <div className="flex flex-col font-secondary font-semibold">
                                 <p className="text-sm">{t('Total price')}</p>
 
-                                <span className="text-price-default whitespace-nowrap">
+                                <span className="whitespace-nowrap text-price-default">
                                     {formatPrice(cart.totalItemsPrice.priceWithVat)}
                                 </span>
                             </div>

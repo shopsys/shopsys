@@ -1,4 +1,3 @@
-import { CartListItem } from './CartListItem';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -6,6 +5,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useAddToCart } from 'utils/cart/useAddToCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { CartListItem } from './CartListItem';
 
 type CartListProps = {
     items: TypeCartItemFragment[];

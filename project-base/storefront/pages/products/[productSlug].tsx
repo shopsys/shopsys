@@ -9,8 +9,8 @@ import {
     useProductDetailQuery,
 } from 'graphql/requests/products/queries/ProductDetailQuery.generated';
 import {
-    TypeRecommendedProductsQueryVariables,
     RecommendedProductsQueryDocument,
+    TypeRecommendedProductsQueryVariables,
 } from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
 import { TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
@@ -25,7 +25,7 @@ import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const ProductDetailContent = dynamic(
     () =>
@@ -96,8 +96,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             const productResponse: OperationResult<TypeProductDetailQuery, TypeProductDetailQueryVariables> =
-                await client!
-                    .query(ProductDetailQueryDocument, {
+                await client
+                    ?.query(ProductDetailQueryDocument, {
                         urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                     })
                     .toPromise();

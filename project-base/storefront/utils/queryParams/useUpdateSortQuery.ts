@@ -1,6 +1,4 @@
-import { pushQueries } from './pushQueries';
-import { useCurrentFilterQuery } from './useCurrentFilterQuery';
-import { SEO_SENSITIVE_FILTERS, DEFAULT_SORT } from 'config/constants';
+import { DEFAULT_SORT, SEO_SENSITIVE_FILTERS } from 'config/constants';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
@@ -13,7 +11,9 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
-import { useRedirectFromSeoCategory, getChangedDefaultFilters } from 'utils/seoCategories/queryParamsUtils';
+import { getChangedDefaultFilters, useRedirectFromSeoCategory } from 'utils/seoCategories/queryParamsUtils';
+import { pushQueries } from './pushQueries';
+import { useCurrentFilterQuery } from './useCurrentFilterQuery';
 
 export const useUpdateSortQuery = () => {
     const router = useRouter();

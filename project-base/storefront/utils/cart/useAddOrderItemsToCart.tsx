@@ -1,4 +1,3 @@
-import { useCurrentCart } from './useCurrentCart';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useAddOrderItemsToCartMutation } from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.generated';
 import { TypeAddOrderItemsToCartInput } from 'graphql/types';
@@ -9,6 +8,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { SkeletonEnum } from 'types/skeletons';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
+import { useCurrentCart } from './useCurrentCart';
 
 const NotAddedProductsPopup = dynamic(() =>
     import('components/Blocks/Popup/NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),

@@ -1,5 +1,5 @@
 import { buildPublicConfig } from 'buildPublicEnvConfig';
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('buildPublicConfig', () => {
     const originalEnv = process.env;

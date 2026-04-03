@@ -1,11 +1,11 @@
-import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
-import { PRODUCT_DETAIL_SECTIONS_IDS } from './ProductDetailSections';
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
+import { PRODUCT_DETAIL_SECTIONS_IDS } from './ProductDetailSections';
 
 type ProductDetailRelatedProductsSectionProps = {
     relatedProducts: TypeListedProductFragment[];

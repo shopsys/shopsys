@@ -1,5 +1,5 @@
-import { calculatePageSize } from './calculatePageSize';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { calculatePageSize } from './calculatePageSize';
 
 export const getPageSizeInfo = (
     readProductsFromCache: boolean,

@@ -18,7 +18,7 @@ export const ToggleSwitchControlled: FC<ToggleSwitchControlledProps> = ({
     formName,
 }) => {
     const { field } = useController({ name, control });
-    const toggleSwitchId = formName + '-' + name;
+    const toggleSwitchId = `${formName}-${name}`;
 
     return render(<ToggleSwitch {...field} ariaLabel={ariaLabel} id={toggleSwitchId} />);
 };

@@ -8,7 +8,7 @@ const useClickClosePopup = (refs: React.RefObject<HTMLElement | null>[], onOutsi
     useEffect(() => {
         const handleDocumentClick = (event: MouseEvent) => {
             const isClickedInsideRefs = refs.some((ref) => {
-                return ref.current && ref.current.contains(event.target as Node);
+                return ref.current?.contains(event.target as Node);
             });
 
             if (!isClickedInsideRefs) {

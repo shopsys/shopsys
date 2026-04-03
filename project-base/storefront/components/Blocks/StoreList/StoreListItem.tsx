@@ -1,4 +1,3 @@
-import { StoreContact } from './StoreContact';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Infobox } from 'components/Basic/Infobox/Infobox';
@@ -12,6 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
+import { StoreContact } from './StoreContact';
 
 type StoreListItemProps = {
     store: StoreOrPacketeryPoint;
@@ -33,7 +33,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
     useEffect(() => {
         if (isExpanded && itemRef.current) {
             const timeoutId = setTimeout(() => {
-                itemRef.current!.scrollIntoView({
+                itemRef.current?.scrollIntoView({
                     behavior: 'smooth',
                     block: 'nearest',
                     inline: 'end',
@@ -47,11 +47,12 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Enter' || e.key === ' ') {
-            setIsExpanded((isExpanded) => !isExpanded);
+            setIsExpanded((currentIsExpanded) => !currentIsExpanded);
         }
     };
 
     return (
+        /* biome-ignore lint/a11y/useSemanticElements: The store card header toggles expandable content while the expanded panel contains nested links, so the wrapper cannot be a semantic button. */
         <div
             aria-controls={storeInfoId}
             aria-expanded={isExpanded}
@@ -65,12 +66,12 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                     : t('Expand store info {{storeName}}', { ns: 'accessibility', storeName: store.name })
             }
             className={twMergeCustom(
-                'bg-background-more cursor-pointer rounded-xl border border-transparent px-5 py-2.5 text-left',
+                'cursor-pointer rounded-xl border border-transparent bg-background-more px-5 py-2.5 text-left',
                 isExpanded && 'border-border-less',
             )}
             onKeyDown={handleKeyDown}
             onClick={() => {
-                setIsExpanded((isExpanded) => !isExpanded);
+                setIsExpanded((currentIsExpanded) => !currentIsExpanded);
             }}
         >
             <div
@@ -109,7 +110,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
             <div id={storeInfoId}>
                 <AnimatePresence initial={false}>
                     {isExpanded && (
-                        <AnimateCollapseDiv className="mt-2.5 block!" keyName={storeInfoId}>
+                        <AnimateCollapseDiv className="block! mt-2.5" keyName={storeInfoId}>
                             {!!store.specialMessage && (
                                 <InfoItem>
                                     <Infobox message={store.specialMessage} />

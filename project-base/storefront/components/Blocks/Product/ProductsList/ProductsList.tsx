@@ -1,5 +1,3 @@
-import { ProductItemProps } from './ProductListItem';
-import { ProductsListContent } from './ProductsListContent';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
@@ -13,6 +11,8 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
+import { ProductItemProps } from './ProductListItem';
+import { ProductsListContent } from './ProductsListContent';
 
 type ProductsListProps = {
     products: TypeListedProductFragment[] | undefined;

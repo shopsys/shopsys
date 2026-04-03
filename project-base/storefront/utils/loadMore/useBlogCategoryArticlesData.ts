@@ -1,21 +1,21 @@
+import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
+import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
+import { DocumentNode } from 'graphql';
+import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
+import {
+    TypeBlogCategoryArticles,
+    TypeBlogCategoryArticlesVariables,
+} from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
+import { useEffect, useRef, useState } from 'react';
+import { useClient } from 'urql';
+import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
+import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { calculatePageSize } from './calculatePageSize';
 import { getPageSizeInfo } from './getPageSizeInfo';
 import { getPreviousBlogCategoryArticlesFromCache } from './getPreviousBlogCategoryArticlesFromCache';
 import { hasReadAllItemsFromCache } from './hasReadAllItemsFromCache';
 import { mergeItemEdges } from './mergeItemEdges';
 import { readBlogCategoryArticlesFromCache } from './readBlogCategoryArticlesFromCache';
-import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
-import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
-import { DocumentNode } from 'graphql';
-import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
-import {
-    TypeBlogCategoryArticlesVariables,
-    TypeBlogCategoryArticles,
-} from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
-import { useEffect, useRef, useState } from 'react';
-import { useClient } from 'urql';
-import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
-import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 
 export const useBlogCategoryArticlesData = (queryDocument: DocumentNode, uuid: string, totalArticlesCount: number) => {
     const client = useClient();

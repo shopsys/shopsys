@@ -1,5 +1,4 @@
 import { SkeletonModuleCountdown } from 'components/Blocks/Skeleton/SkeletonModuleCountdown';
-import React from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCountdown } from 'utils/useCountdown';
 
@@ -33,13 +32,13 @@ export const Countdown: FC<CountdownProps> = ({ endTime }) => {
 
 const CountdownItem: FC<{ value: string; unit: string }> = ({ value, unit }) => {
     return (
-        <div className="bg-background-default min-w-14 rounded-lg p-2 text-center shadow-md md:min-w-16">
-            <div className="text-xl font-bold md:text-2xl">{value}</div>
+        <div className="min-w-14 rounded-lg bg-background-default p-2 text-center shadow-md md:min-w-16">
+            <div className="font-bold text-xl md:text-2xl">{value}</div>
             <div className="text-xs uppercase">{unit}</div>
         </div>
     );
 };
 
 const CountdownDivider: FC = () => {
-    return <span className="text-xl font-bold md:text-2xl">:</span>;
+    return <span className="font-bold text-xl md:text-2xl">:</span>;
 };

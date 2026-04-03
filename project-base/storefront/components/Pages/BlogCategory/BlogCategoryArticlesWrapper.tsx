@@ -1,4 +1,3 @@
-import { BlogArticlesList } from './BlogArticlesList';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
@@ -9,6 +8,7 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useBlogCategoryArticlesData } from 'utils/loadMore/useBlogCategoryArticlesData';
 import { mapConnectionEdges } from 'utils/mappers/connection';
+import { BlogArticlesList } from './BlogArticlesList';
 
 type BlogCategoryArticlesWrapperProps = {
     uuid: string;

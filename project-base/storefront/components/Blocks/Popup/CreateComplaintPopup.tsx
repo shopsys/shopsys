@@ -2,13 +2,13 @@ import { AddressList } from 'components/Blocks/AddressList/AddressList';
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { DropzoneControlled } from 'components/Forms/Dropzone/DropzoneControlled';
-import { Form, FormContentWrapper, FormBlockWrapper, FormHeading, FormButtonWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
-import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useComplaintForm, useComplaintFormMeta } from 'components/Pages/Customer/Complaints/complaintFormMeta';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -104,9 +104,9 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
             },
         ];
 
-        const selectedDeliveryAddress =
-            user?.deliveryAddresses &&
-            user.deliveryAddresses.find((address) => address.uuid === complaintFormData.deliveryAddressUuid);
+        const selectedDeliveryAddress = user?.deliveryAddresses?.find(
+            (address) => address.uuid === complaintFormData.deliveryAddressUuid,
+        );
 
         const deliveryAddress =
             selectedDeliveryAddress && !isNewDeliveryAddressSelected
@@ -275,7 +275,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                             isDisabled={isSubmitting}
                                             label={formMeta.fields.resolution.label}
                                             options={complaintResolutionsAsOptions}
-                                            tid={formMeta.formName + '-' + formMeta.fields.resolution.name}
+                                            tid={`${formMeta.formName}-${formMeta.fields.resolution.name}`}
                                             activeOption={complaintResolutionsAsOptions.find(
                                                 (option) => option.value === field.value.value,
                                             )}
@@ -460,7 +460,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                                             isDisabled={isSubmitting}
                                                             label={formMeta.fields.country.label}
                                                             options={countriesAsSelectOptions}
-                                                            tid={formMeta.formName + '-' + formMeta.fields.country.name}
+                                                            tid={`${formMeta.formName}-${formMeta.fields.country.name}`}
                                                             activeOption={countriesAsSelectOptions.find(
                                                                 (option) => option.value === field.value.value,
                                                             )}

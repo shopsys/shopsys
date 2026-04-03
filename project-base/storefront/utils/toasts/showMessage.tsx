@@ -36,8 +36,6 @@ export const showMessage = (
             const errorIdentifier = getErrorIdentifierFromMessage(message);
 
             if (isErrorIgnored(errorIdentifier)) {
-                // eslint-disable-next-line no-console
-                console.debug(`[Ignored Error] ${errorIdentifier}:`, message);
                 return;
             }
 

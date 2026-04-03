@@ -1,5 +1,5 @@
 export const CartCount: FC = ({ children }) => (
-    <span className="bg-background-accent font-secondary text-text-inverted vl:-right-3 vl:-top-[6.5px] absolute top-1 right-1 flex h-5 min-w-5 items-center justify-center rounded-full px-0.5 text-xs leading-normal font-bold">
+    <span className="absolute top-1 vl:-top-[6.5px] right-1 vl:-right-3 flex h-5 min-w-5 items-center justify-center rounded-full bg-background-accent px-0.5 font-bold font-secondary text-text-inverted text-xs leading-normal">
         {children}
     </span>
 );

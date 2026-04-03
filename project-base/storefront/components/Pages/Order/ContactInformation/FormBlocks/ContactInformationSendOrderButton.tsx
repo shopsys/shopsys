@@ -51,10 +51,10 @@ export const ContactInformationSendOrderButton: FC = () => {
                 )}
             </FormBlockAgreements>
 
-            <div className="border-border-default vl:mx-20 mx-5 border-b" />
+            <div className="mx-5 vl:mx-20 border-border-default border-b" />
 
             <FormBlockAgreements className="pb-0">
-                <div className="font-secondary text-sm font-semibold">
+                <div className="font-secondary font-semibold text-sm">
                     <Trans
                         defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
                         i18nKey="ContactInformationInfo"
@@ -62,7 +62,7 @@ export const ContactInformationSendOrderButton: FC = () => {
                             lnk1: termsAndConditionsArticleUrl ? (
                                 <Link
                                     aria-label={t('Go to terms and conditions article', { ns: 'accessibility' })}
-                                    className="font-secondary inline text-sm font-semibold"
+                                    className="inline font-secondary font-semibold text-sm"
                                     href={termsAndConditionsArticleUrl}
                                     target="_blank"
                                 />
@@ -72,7 +72,7 @@ export const ContactInformationSendOrderButton: FC = () => {
                             lnk2: privacyPolicyArticleUrl ? (
                                 <Link
                                     aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                    className="font-secondary inline text-sm font-semibold"
+                                    className="inline font-secondary font-semibold text-sm"
                                     href={privacyPolicyArticleUrl}
                                     target="_blank"
                                 />

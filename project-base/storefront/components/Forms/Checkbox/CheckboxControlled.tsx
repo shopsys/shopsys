@@ -1,8 +1,8 @@
-import { Checkbox, CheckboxProps } from './Checkbox';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
+import { Checkbox, CheckboxProps } from './Checkbox';
 
 type CheckboxControlledProps = {
     name: string;
@@ -27,7 +27,7 @@ export const CheckboxControlled: FC<CheckboxControlledProps> = ({
         fieldState: { error },
         field,
     } = useController({ name, control });
-    const checkboxId = formName + '-' + name;
+    const checkboxId = `${formName}-${name}`;
 
     const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
         field.onChange(event);

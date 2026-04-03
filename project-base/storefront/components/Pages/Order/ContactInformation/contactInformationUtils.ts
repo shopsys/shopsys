@@ -1,12 +1,3 @@
-import { ContactInformationFormMetaType } from './contactInformationFormMeta';
-import {
-    getDeliveryInfoFromFormValues,
-    getDeliveryInfoFromSavedAndSelectedDeliveryAddress,
-    getDeliveryInfoFromSelectedPickupPlace,
-    getEmptyDeliveryInfo,
-    getFormValuesWithoutDeliveryInfo,
-    getSelectedDeliveryAddressForLoggedInUser,
-} from './deliveryAddressUtils';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
@@ -43,6 +34,15 @@ import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
+import { ContactInformationFormMetaType } from './contactInformationFormMeta';
+import {
+    getDeliveryInfoFromFormValues,
+    getDeliveryInfoFromSavedAndSelectedDeliveryAddress,
+    getDeliveryInfoFromSelectedPickupPlace,
+    getEmptyDeliveryInfo,
+    getFormValuesWithoutDeliveryInfo,
+    getSelectedDeliveryAddressForLoggedInUser,
+} from './deliveryAddressUtils';
 
 export const useContactInformationPageNavigation = () => {
     const { url } = useDomainConfig();

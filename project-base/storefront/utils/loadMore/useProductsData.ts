@@ -1,27 +1,21 @@
-import { calculatePageSize } from './calculatePageSize';
-import { getPageSizeInfo } from './getPageSizeInfo';
-import { getPreviousProductsFromCache } from './getPreviousProductsFromCache';
-import { hasReadAllItemsFromCache } from './hasReadAllItemsFromCache';
-import { mergeItemEdges } from './mergeItemEdges';
-import { readProductsFromCache } from './readProductsFromCache';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { DocumentNode } from 'graphql';
 import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
-    TypeBrandProductsQueryVariables,
     TypeBrandProductsQuery,
+    TypeBrandProductsQueryVariables,
 } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
 import {
-    TypeCategoryProductsQueryVariables,
     TypeCategoryProductsQuery,
+    TypeCategoryProductsQueryVariables,
 } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import {
-    TypeFlagProductsQueryVariables,
     TypeFlagProductsQuery,
+    TypeFlagProductsQueryVariables,
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { useRouter } from 'next/router';
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useClient } from 'urql';
 import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
@@ -29,6 +23,12 @@ import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { calculatePageSize } from './calculatePageSize';
+import { getPageSizeInfo } from './getPageSizeInfo';
+import { getPreviousProductsFromCache } from './getPreviousProductsFromCache';
+import { hasReadAllItemsFromCache } from './hasReadAllItemsFromCache';
+import { mergeItemEdges } from './mergeItemEdges';
+import { readProductsFromCache } from './readProductsFromCache';
 
 export const useProductsData = (
     queryDocument: DocumentNode,
@@ -161,7 +161,9 @@ export const useProductsData = (
         };
 
         fetchProducts();
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- mappedFilter is derived from currentFilter (tracked via currentFilterSerialized), totalProductCount is tracked via ref to avoid redundant re-fetches when category detail query updates the count
+        // The dependency array is carefully curated to prevent redundant re-fetches.
+        // `mappedFilter` is intentionally excluded — it creates a new reference each render, so we track filter changes via `currentFilterSerialized` instead.
+        // `totalProductCount` is tracked via ref for the same reason (category detail query updates the count without needing a re-fetch).
     }, [urlSlug, currentSort, currentFilterSerialized, currentPage, currentLoadMore, queryDocument, client]);
 
     return { ...productsData, areProductsFetching, isLoadingMoreProducts };

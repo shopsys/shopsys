@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 const withSentryConfig =
     process.env.SENTRY_BUILD_PLUGIN_DISABLED === '1'
         ? (nextConfigValue) => nextConfigValue
@@ -43,9 +42,6 @@ const nextConfig = {
         reactRemoveProperties: process.env.CYPRESS_KEEP_TID === '1' ? false : { properties: ['^data-tid$'] },
     },
 
-    eslint: {
-        ignoreDuringBuilds: true,
-    },
     // FE build error fix: "ModuleNotFoundError: Module not found: Error: Can't resolve 'net' in '/app/node_modules/@node-redis/client/dist/lib/client'"
     // https://github.com/webpack-contrib/css-loader/issues/447#issuecomment-761853289
     webpack: (config, { isServer }) => {
@@ -84,8 +80,8 @@ const sentryConfig = {
     unstable_sentryWebpackPluginOptions: {
         disable: process.env.APP_ENV === 'development',
         errorHandler: (err) => {
-            // eslint-disable-next-line no-console
-            console.warn('Sentry CLI Plugin: ' + err.message);
+            // biome-ignore lint/suspicious/noConsole: Sentry build integration intentionally reports plugin issues to the terminal.
+            console.warn(`Sentry CLI Plugin: ${err.message}`);
         },
     },
     sourcemaps: {

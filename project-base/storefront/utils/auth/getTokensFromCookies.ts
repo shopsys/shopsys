@@ -3,7 +3,7 @@ import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { OptionalTokenType } from 'urql/types';
 import { getCookieName } from 'utils/cookies/cookieNaming';
 import { DomainConfigType } from 'utils/domain/domainConfig';
-import { getProtocol, getIsHttps } from 'utils/requestProtocol';
+import { getIsHttps, getProtocol } from 'utils/requestProtocol';
 
 export const getTokensFromCookies = (
     domainConfig: DomainConfigType,

@@ -1,7 +1,7 @@
-import { Radiobutton } from './Radiobutton';
 import { ChangeEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { RadiobuttonOptionType } from 'types/radiobuttonOptions';
+import { Radiobutton } from './Radiobutton';
 
 type RadiobuttonGroupProps = {
     name: string;

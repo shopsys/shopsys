@@ -5,19 +5,19 @@ import {
     TypeAdvertsQueryVariables,
 } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import {
-    TypeArticlesQueryVariables,
     ArticlesQueryDocument,
+    TypeArticlesQueryVariables,
 } from 'graphql/requests/articlesInterface/articles/queries/ArticlesQuery.generated';
 import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { NavigationQueryDocument } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { NotificationBarsDocument } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
 import {
-    TypeSeoPageQueryVariables,
     SeoPageQueryDocument,
+    TypeSeoPageQueryVariables,
 } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
 import {
-    TypeSettingsQueryVariables,
     SettingsQueryDocument,
+    TypeSettingsQueryVariables,
 } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { TypeArticlePlacementTypeEnum, TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';

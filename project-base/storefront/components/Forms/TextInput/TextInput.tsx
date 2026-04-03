@@ -73,18 +73,18 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer rounded-input w-full border-2 px-3 pt-5 font-semibold transition [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:[color:transparent] focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop',
+                    'peer w-full rounded-input border-2 px-3 pt-5 font-semibold transition [-moz-appearance:textfield] [-webkit-appearance:none] focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop placeholder:[color:transparent]',
                     'border-input-border-default bg-input-bg-default text-input-text-default',
                     'disabled:border-input-border-disabled disabled:bg-input-bg-disabled disabled:text-input-text-disabled',
                     !hasError && 'hover:border-input-border-hovered hover:text-input-text-hovered',
                     !hasError && 'focus:border-input-border-active focus:text-input-text-active',
-                    '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-webkit-autofill]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:shadow-inner!',
+                    '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:bg-input-bg-default! [&:-webkit-autofill]:shadow-inner!',
                     '[&:-webkit-autofill]:hover:bg-input-fill! [&:-webkit-autofill]:hover:shadow-inner!',
                     '[&:-webkit-autofill]:focus:bg-input-fill! [&:-webkit-autofill]:focus:shadow-inner!',
-                    inputSize === 'small' ? 'text-small h-12' : 'h-14',
+                    inputSize === 'small' ? 'h-12 text-small' : 'h-14',
                     hasError && 'border-input-border-error bg-input-bg-default shadow-none',
                     hasWarning &&
-                        'border-input-border-warning hover:border-input-border-warning focus:border-input-border-warning bg-input-bg-default shadow-none',
+                        'border-input-border-warning bg-input-bg-default shadow-none hover:border-input-border-warning focus:border-input-border-warning',
                     type === 'password' && 'text-input-text-default',
                     className,
                 )}

@@ -10,7 +10,7 @@ const isFutureDate = (dateString: string | null): boolean => {
 
     const timestamp = new Date(dateString).getTime();
 
-    if (isNaN(timestamp)) {
+    if (Number.isNaN(timestamp)) {
         return true;
     }
 

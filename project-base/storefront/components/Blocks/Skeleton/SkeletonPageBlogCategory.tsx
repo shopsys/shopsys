@@ -1,10 +1,10 @@
-import { SkeletonModuleArticleBlog } from './SkeletonModuleArticleBlog';
-import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { SkeletonModuleArticleBlog } from './SkeletonModuleArticleBlog';
+import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 
 export const SkeletonPageBlogCategory: FC = () => (
     <>
@@ -25,7 +25,7 @@ export const SkeletonPageBlogCategory: FC = () => (
                         </VerticalStack>
                     </div>
 
-                    <Skeleton className="vl:h-[450px] h-11 rounded-xl xl:w-[300px]" />
+                    <Skeleton className="h-11 vl:h-[450px] rounded-xl xl:w-[300px]" />
                 </div>
             </Webline>
         </div>

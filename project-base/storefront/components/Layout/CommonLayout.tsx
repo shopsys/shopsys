@@ -1,10 +1,3 @@
-import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
-import { DeferredFooter } from './Footer/DeferredFooter';
-import { DeferredNewsletterForm } from './Footer/NewsletterForm/DeferredNewsletterForm';
-import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
-import { Header } from './Header/Header';
-import { DeferredNavigation } from './Header/Navigation/DeferredNavigation';
-import { NotificationBars } from './NotificationBars/NotificationBars';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
@@ -16,6 +9,13 @@ import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { OgTypeEnum } from 'types/seo';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
+import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
+import { DeferredFooter } from './Footer/DeferredFooter';
+import { DeferredNewsletterForm } from './Footer/NewsletterForm/DeferredNewsletterForm';
+import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
+import { Header } from './Header/Header';
+import { DeferredNavigation } from './Header/Navigation/DeferredNavigation';
+import { NotificationBars } from './NotificationBars/NotificationBars';
 
 export type CommonLayoutProps = {
     title?: string | null;
@@ -62,7 +62,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
                 <NotificationBars />
 
-                <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb">
+                <header className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less">
                     <Header />
                     <DeferredNavigation />
                 </header>

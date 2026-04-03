@@ -1,6 +1,6 @@
-import { ButtonBaseProps, getButtonClassName } from './Button';
 import { ExtendedNextLink, ExtendedNextLinkProps } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'utils/twMerge';
+import { ButtonBaseProps, getButtonClassName } from './Button';
 
 type LinkButtonProps = ButtonBaseProps & ExtendedNextLinkProps;
 

@@ -1,7 +1,7 @@
-import { useRedirectOnPermissionsChange } from './useRedirectOnPermissionsChange';
 import { useCustomerUserRoleGroupsQuery } from 'graphql/requests/customer/queries/CustomerUserRoleGroupsQuery.generated';
 import { TypeCustomerUserRoleGroup } from 'graphql/types';
 import { RadiobuttonOptionType } from 'types/radiobuttonOptions';
+import { useRedirectOnPermissionsChange } from './useRedirectOnPermissionsChange';
 
 export const useCustomerUserGroupsAsRadiobuttonOptions = (
     isDisabled: boolean,
@@ -19,7 +19,7 @@ export const useCustomerUserGroupsAsRadiobuttonOptions = (
         isDisabled,
     );
 
-    if (error?.networkError && error.networkError.message.includes('No Content')) {
+    if (error?.networkError?.message.includes('No Content')) {
         redirect();
     }
 

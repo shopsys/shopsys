@@ -1,7 +1,7 @@
-import { getUrlWithoutGetParameters } from './getUrlWithoutGetParameters';
-import { getStringWithoutLeadingSlash } from './stringWIthoutSlash';
 import { NextIncomingMessage } from 'next/dist/server/request-meta';
 import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
+import { getUrlWithoutGetParameters } from './getUrlWithoutGetParameters';
+import { getStringWithoutLeadingSlash } from './stringWIthoutSlash';
 
 export const getSlugFromServerSideUrl = (
     originalUrl: string,

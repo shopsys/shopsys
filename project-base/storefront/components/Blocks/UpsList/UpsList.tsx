@@ -1,4 +1,3 @@
-import { UpsListItem } from './UpsListItem';
 import { UpsFifthIcon } from 'components/Basic/Icon/UpsFifthIcon';
 import { UpsFirstIcon } from 'components/Basic/Icon/UpsFirstIcon';
 import { UpsFourthIcon } from 'components/Basic/Icon/UpsFourthIcon';
@@ -7,6 +6,7 @@ import { UpsThirdIcon } from 'components/Basic/Icon/UpsThirdIcon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
+import { UpsListItem } from './UpsListItem';
 
 export const UpsList: FC = () => {
     const { t } = useTranslation();
@@ -20,23 +20,23 @@ export const UpsList: FC = () => {
             ])}
         >
             <UpsListItem>
-                <UpsFirstIcon className="text-icon-accent size-14" />
+                <UpsFirstIcon className="size-14 text-icon-accent" />
                 <span className="h6">{t('The most reliable online store in the Czech Republic')}</span>
             </UpsListItem>
             <UpsListItem>
-                <UpsSecondIcon className="text-icon-accent size-14" />
+                <UpsSecondIcon className="size-14 text-icon-accent" />
                 <span className="h6">{t('We will deliver the goods on the day of ordering')}</span>
             </UpsListItem>
             <UpsListItem>
-                <UpsThirdIcon className="text-icon-accent size-14" />
+                <UpsThirdIcon className="size-14 text-icon-accent" />
                 <span className="h6">{t('24/7 customer support')}</span>
             </UpsListItem>
             <UpsListItem>
-                <UpsFourthIcon className="text-icon-accent size-14" />
+                <UpsFourthIcon className="size-14 text-icon-accent" />
                 <span className="h6">{t('We have 98% of all goods in stock')}</span>
             </UpsListItem>
             <UpsListItem>
-                <UpsFifthIcon className="text-icon-accent size-14" />
+                <UpsFifthIcon className="size-14 text-icon-accent" />
                 <span className="h6">{t('Stores and collection points throughout the Czech Republic')}</span>
             </UpsListItem>
         </Webline>

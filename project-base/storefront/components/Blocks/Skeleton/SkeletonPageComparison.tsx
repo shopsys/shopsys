@@ -1,7 +1,7 @@
-import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
-import { SkeletonModuleComparison } from './SkeletonModuleComparison';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
+import { SkeletonModuleComparison } from './SkeletonModuleComparison';
 
 export const SkeletonPageComparison: FC = () => (
     <>

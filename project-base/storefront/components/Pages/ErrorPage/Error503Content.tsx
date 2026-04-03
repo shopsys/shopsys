@@ -1,9 +1,9 @@
-import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useRouter } from 'next/router';
-import React, { useEffect, useEffectEvent } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
 
 export const Error503Content: FC = () => {
     const { t } = useTranslation();

@@ -1,4 +1,3 @@
-import { getLinkType } from './simpleNavigationUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
@@ -7,6 +6,7 @@ import { ListedItemPropType } from 'types/simpleNavigation';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'utils/twMerge';
+import { getLinkType } from './simpleNavigationUtils';
 
 type SimpleNavigationListItemProps = {
     listedItem: ListedItemPropType;
@@ -23,7 +23,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     const { t } = useTranslation();
     const itemImage = 'mainImage' in listedItem ? listedItem.mainImage : null;
     const icon = 'icon' in listedItem ? listedItem.icon : null;
-    const href = getStringWithoutTrailingSlash(listedItem.slug) + '/';
+    const href = `${getStringWithoutTrailingSlash(listedItem.slug)}/`;
     const linkType = linkTypeOverride ?? getLinkType(listedItem.__typename);
 
     return (
@@ -34,7 +34,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
             title={t('Go to category')}
             type={linkType}
             className={twMergeCustom(
-                'border-background-more bg-background-more relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border px-5 py-2.5 no-underline transition lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
+                'relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border border-background-more bg-background-more px-5 py-2.5 no-underline transition lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
                 'text-text-default hover:border-border-less hover:bg-background-default hover:text-text-default hover:no-underline',
                 className,
             )}
@@ -54,9 +54,9 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
 
             {icon}
 
-            <div className="z-above text-sm font-semibold">{listedItem.name}</div>
+            <div className="z-above font-semibold text-sm">{listedItem.name}</div>
             {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
-                <span className="ml-2 text-sm whitespace-nowrap">({listedItem.totalCount})</span>
+                <span className="ml-2 whitespace-nowrap text-sm">({listedItem.totalCount})</span>
             )}
         </ExtendedNextLink>
     );

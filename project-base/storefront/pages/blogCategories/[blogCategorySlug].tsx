@@ -5,10 +5,10 @@ import { DEFAULT_BLOG_PAGE_SIZE, DEFAULT_PAGE_SIZE } from 'config/constants';
 import { BlogCategoriesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoriesQuery.generated';
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import {
-    useBlogCategoryQuery,
+    BlogCategoryQueryDocument,
     TypeBlogCategoryQuery,
     TypeBlogCategoryQueryVariables,
-    BlogCategoryQueryDocument,
+    useBlogCategoryQuery,
 } from 'graphql/requests/blogCategories/queries/BlogCategoryQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -25,7 +25,7 @@ import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const Error404Content = dynamic(
     () => import('components/Pages/ErrorPage/Error404Content').then((m) => m.Error404Content),
@@ -79,14 +79,14 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
             const blogCategoryResponse: OperationResult<TypeBlogCategoryQuery, TypeBlogCategoryQueryVariables> =
-                await client!
-                    .query(BlogCategoryQueryDocument, {
+                await client
+                    ?.query(BlogCategoryQueryDocument, {
                         urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                     })
                     .toPromise();
 
-            await client!
-                .query(BlogCategoryArticlesDocument, {
+            await client
+                ?.query(BlogCategoryArticlesDocument, {
                     uuid: blogCategoryResponse.data?.blogCategory?.uuid,
                     endCursor: getEndCursor(page),
                     pageSize: DEFAULT_PAGE_SIZE,

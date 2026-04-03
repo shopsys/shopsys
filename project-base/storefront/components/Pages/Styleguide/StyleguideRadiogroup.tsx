@@ -1,10 +1,10 @@
-import { StyleguideSection } from './StyleguideElements';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { FormProvider } from 'react-hook-form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import * as Yup from 'yup';
+import { StyleguideSection } from './StyleguideElements';
 
 const getStyleguideExampleFormResolver = () =>
     yupResolver(

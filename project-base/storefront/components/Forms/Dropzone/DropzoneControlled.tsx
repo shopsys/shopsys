@@ -4,7 +4,7 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { ReactElement, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Controller, Control, useController, FieldError } from 'react-hook-form';
+import { Control, Controller, FieldError, useController } from 'react-hook-form';
 import { formatBytes } from 'utils/formaters/formatBytes';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
@@ -29,7 +29,7 @@ export const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
     disabled = false,
 }) => {
     const { t } = useTranslation();
-    const dropzoneId = formName + '-' + name;
+    const dropzoneId = `${formName}-${name}`;
     const {
         fieldState: { error },
         field: { onChange, value },
@@ -68,12 +68,12 @@ export const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
     };
 
     const wrapperTwClass = twMergeCustom(
-        'border-2 p-10 text-center rounded-md border-dashed cursor-pointer group',
+        'group cursor-pointer rounded-md border-2 border-dashed p-10 text-center',
         !isDragActive && 'border-input-border-default bg-input-bg-default hover:border-input-border-hovered',
         isDragActive && 'border-input-border-active bg-input-fill',
         error && 'border-input-border-error',
         disabled &&
-            'border-input-border-disabled bg-input-bg-disabled text-input-text-disabled hover:border-input-border-disabled cursor-not-allowed',
+            'cursor-not-allowed border-input-border-disabled bg-input-bg-disabled text-input-text-disabled hover:border-input-border-disabled',
     );
     const labelTwClass = twMergeCustom(
         'text-input-placeholder-default group-hover:text-input-placeholder-hovered',
@@ -95,7 +95,7 @@ export const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
                             <input {...getInputProps()} />
                             <p className={labelTwClass}>
                                 {label}
-                                {required && <span className="text-text-error ml-1">*</span>}
+                                {required && <span className="ml-1 text-text-error">*</span>}
                             </p>
                         </div>
                         <p className={legendTwClass}>

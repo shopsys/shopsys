@@ -62,7 +62,7 @@ const OrderDetailByHashPage: FC = () => {
                             <VerticalStack gap="sm">
                                 <PageHero
                                     icon={DocumentIcon}
-                                    title={t('Your order') + ' ' + orderData.order.number}
+                                    title={`${t('Your order')} ${orderData.order.number}`}
                                     titleTid={TIDs.order_detail_number_heading}
                                 />
 
@@ -97,8 +97,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             const orderResponse: OperationResult<TypeOrderDetailByHashQuery, TypeOrderDetailByHashQueryVariables> =
-                await client!
-                    .query(OrderDetailByHashQueryDocument, {
+                await client
+                    ?.query(OrderDetailByHashQueryDocument, {
                         urlHash: context.params.urlHash,
                     })
                     .toPromise();

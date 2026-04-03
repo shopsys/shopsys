@@ -1,4 +1,3 @@
-import { ArticleLink } from './BlogPreviewElements';
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
@@ -6,6 +5,7 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ArticleLink } from './BlogPreviewElements';
 
 type MainProps = {
     articles: TypeListedBlogArticleFragment[];
@@ -18,11 +18,11 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
     return (
         <>
             {articles.map((article) => (
-                <div key={article.uuid} className="vl:flex-1 vl:min-w-0 flex max-w-80 snap-start flex-col gap-5">
+                <div key={article.uuid} className="flex vl:min-w-0 max-w-80 vl:flex-1 snap-start flex-col gap-5">
                     <ArticleLink href={article.link} tabIndex={-1} title={t('Article page')}>
                         <Image
                             alt={article.mainImage?.name || article.name}
-                            className="vl:aspect-16/11 aspect-video size-full rounded-xl object-cover"
+                            className="aspect-video vl:aspect-16/11 size-full rounded-xl object-cover"
                             height={220}
                             sizes="(max-width: 600px) 52vw, (max-width: 768px) 35vw, (max-width: 1024px) 28vw, 320px"
                             src={article.mainImage?.url}
@@ -73,7 +73,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                             {article.name}
                         </ArticleLink>
 
-                        <p className="text-text-inverted font-normal">{article.perex}</p>
+                        <p className="font-normal text-text-inverted">{article.perex}</p>
                     </div>
                 </div>
             ))}

@@ -1,10 +1,10 @@
-import { NavigationItem } from './NavigationItem';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import useWindowDimensions from 'utils/useWindowDimensions';
+import { NavigationItem } from './NavigationItem';
 
 export type NavigationProps = {
     navigation: TypeCategoriesByColumnFragment[];
@@ -51,12 +51,13 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
 
     return (
         <nav aria-label={t('Main navigation', { ns: 'accessibility' })} className="relative" id="main-navigation">
+            {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: The navigation list needs scroll and pointer tracking without changing its list semantics. */}
             <ul
                 ref={navigationRef}
                 className={twJoin(
                     'hide-scrollbar hidden w-full overflow-x-auto overflow-y-hidden lg:flex',
                     showNavigationShadow &&
-                        'after:from-background-brand after:z-above transition-all after:absolute after:top-1/2 after:-right-1 after:h-7 after:w-20 after:-translate-y-1/2 after:bg-linear-to-l after:from-30% after:to-transparent after:to-80% after:blur-xs',
+                        'transition-all after:absolute after:top-1/2 after:-right-1 after:z-above after:h-7 after:w-20 after:-translate-y-1/2 after:bg-linear-to-l after:from-30% after:from-background-brand after:to-80% after:to-transparent after:blur-xs',
                 )}
                 onMouseLeave={handleEnableAnimation}
                 onScroll={handleScroll}

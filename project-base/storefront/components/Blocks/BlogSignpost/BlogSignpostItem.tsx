@@ -1,4 +1,3 @@
-import { Children } from './Children';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
@@ -7,6 +6,7 @@ import { twJoin } from 'tailwind-merge';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
+import { Children } from './Children';
 
 type BlogSignpostItemProps = {
     isActive: boolean;
@@ -80,7 +80,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                     >
                         <ArrowIcon
                             className={twMergeCustom(
-                                'text-text-less size-4 -rotate-90 cursor-pointer transition-all',
+                                'size-4 -rotate-90 cursor-pointer text-text-less transition-all',
                                 isActive && 'text-link',
                                 isOpen && 'rotate-0',
                             )}
@@ -91,7 +91,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                     href={blogCategory.link}
                     type="blogCategory"
                     className={twMergeCustom(
-                        'font-secondary text-text-default hover:text-link-hovered text-sm no-underline',
+                        'font-secondary text-sm text-text-default no-underline hover:text-link-hovered',
                         isFirstLevel && level1LinkTwClassName,
                         isSecondLevel && level2LinkTwClassName,
                         isThirdLevel && level3LinkTwClassName,

@@ -32,21 +32,21 @@ export const OrderItemProductPrice: FC<OrderItemProductPriceProps> = ({
         <div className="flex items-center justify-between">
             <div className="whitespace-nowrap">
                 <span className="font-semibold">{formatPrice(productPrice.priceWithVat)}</span>
-                <span className="text-text-less text-sm"> / {unit}</span>
+                <span className="text-sm text-text-less"> / {unit}</span>
             </div>
 
             <div className="flex flex-col gap-0.5 text-right">
                 <div
                     className={twMergeCustom(
-                        'font-secondary text-price-default font-bold whitespace-nowrap',
-                        isLowerPriceApplied && 'text-price-before text-xs font-semibold line-through',
+                        'whitespace-nowrap font-bold font-secondary text-price-default',
+                        isLowerPriceApplied && 'font-semibold text-price-before text-xs line-through',
                     )}
                 >
                     {formatPrice(mapPriceForCalculations(productPrice.basicPrice.priceWithVat) * quantity)}
                 </div>
 
                 {isLowerPriceApplied && (
-                    <div className="font-secondary text-price-discounted font-bold whitespace-nowrap">
+                    <div className="whitespace-nowrap font-bold font-secondary text-price-discounted">
                         {formatPrice(
                             mapPriceForCalculations(productPrice.priceWithVat) * (quantity - (freeQuantity || 0)),
                         )}

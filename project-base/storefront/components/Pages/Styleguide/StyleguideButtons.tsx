@@ -1,9 +1,8 @@
-import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
 import { Button } from 'components/Forms/Button/Button';
+import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
 
 export const StyleguideButtons: FC = () => {
     const onButtonClick = (variant: string) => {
-        // eslint-disable-next-line no-alert
         alert(`${variant} button clicked`);
     };
 

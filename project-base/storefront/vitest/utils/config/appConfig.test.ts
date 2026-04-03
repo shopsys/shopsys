@@ -2,7 +2,7 @@ import type {
     getPublicConfigProperty as GetPublicConfigPropertyFn,
     getServerConfigProperty as GetServerConfigPropertyFn,
 } from 'envConfig';
-import { describe, it, expect, beforeEach, afterEach, vi, expectTypeOf } from 'vitest';
+import { afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest';
 import { defaultTestConfig } from 'vitest/helpers/mockPublicConfig';
 
 describe('appConfig utilities', () => {

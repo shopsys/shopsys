@@ -1,6 +1,6 @@
+import { getPublicConfigProperty } from 'envConfig';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getCookies, setCookie } from 'cookies-next';
-import { getPublicConfigProperty } from 'envConfig';
 import { GetServerSidePropsContext } from 'next';
 import { useEffect } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
@@ -79,7 +79,6 @@ const removeIncorrectCookiesStoreProperties = (
 };
 
 export const useCookiesStoreSync = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { setCookiesStoreState, ...storeValues } = useCookiesStore((state) => state);
     const domainConfig = useDomainConfig();
 

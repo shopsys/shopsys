@@ -1,12 +1,10 @@
-import { ProductItemProps } from './ProductsList/ProductListItem';
-import { ProductsListContent } from './ProductsList/ProductsListContent';
 import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
-import { RefObject, createRef, useEffect, useRef, useState } from 'react';
+import { createRef, RefObject, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -15,6 +13,8 @@ import { isTextSelected } from 'utils/ui/isTextSelected';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';
+import { ProductItemProps } from './ProductsList/ProductListItem';
+import { ProductsListContent } from './ProductsList/ProductsListContent';
 
 export const VISIBLE_SLIDER_ITEMS = 5;
 export const VISIBLE_SLIDER_ITEMS_LAST_VISITED = 8;
@@ -177,7 +177,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 />
 
                 {isWithControls && (
-                    <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
+                    <div className="absolute -top-10 right-0 vl:flex hidden items-center justify-center gap-2">
                         <SliderButton
                             ariaLabel={t('Show previous products in slider', { ns: 'accessibility' })}
                             title={t('Previous products')}
@@ -209,7 +209,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                         ])}
                         productItemProps={{
                             className: twMergeCustom(
-                                'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
+                                'mx-1 snap-center first:ml-0 last:mr-0 md:mx-2 md:snap-start',
                                 productItemProps?.className,
                             ),
                             ...productItemProps,
@@ -234,7 +234,7 @@ type SliderButtonProps = {
 const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title, ariaLabel }) => (
     <button
         aria-label={ariaLabel}
-        className="text-icon hover:text-icon-accent disabled:text-text-disabled cursor-pointer rounded-sm border-none p-1 outline-hidden transition disabled:cursor-auto"
+        className="cursor-pointer rounded-sm border-none p-1 text-icon outline-hidden transition hover:text-icon-accent disabled:cursor-auto disabled:text-text-disabled"
         disabled={isDisabled}
         tabIndex={0}
         title={title}

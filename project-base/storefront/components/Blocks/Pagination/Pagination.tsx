@@ -2,7 +2,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { usePaginationContext } from 'components/providers/PaginationProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { useRouter } from 'next/router';
-import { Fragment, MouseEventHandler, forwardRef } from 'react';
+import { Fragment, forwardRef, MouseEventHandler } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
@@ -68,7 +68,7 @@ export const Pagination: FC<PaginationProps> = ({
         type === 'blog' ? t('articles count', { count: loadMoreCount }) : t('products count', { count: loadMoreCount });
 
     return (
-        <div className="vl:flex-row mt-5 flex flex-col items-center justify-between gap-5">
+        <div className="mt-5 flex vl:flex-row flex-col items-center justify-between gap-5">
             {isWithLoadMore && hasNextPage && loadMoreCount > 0 && (
                 <Button variant="inverted" onClick={loadMore}>
                     {t('Load {{ count }} more {{ items }}', { count: loadMoreCount, items: itemsLabel })}
@@ -117,7 +117,6 @@ type PaginationButtonProps = {
 };
 
 const PaginationButton: FC<PaginationButtonProps> = forwardRef(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, isActive, isDotButton, href, onClick }, _) => {
         const { t } = useTranslation();
 
@@ -136,7 +135,7 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                 aria-current={isActive ? 'page' : undefined}
                 aria-label={!isActive ? t('Go to page {{ page }}', { ns: 'accessibility', page: children }) : undefined}
                 href={href}
-                tabIndex={0}
+                tabIndex={isActive ? -1 : 0}
                 className={twMergeCustom(
                     'flex size-8 items-center justify-center rounded-lg border-2 font-bold no-underline hover:no-underline md:size-12',
                     (isActive || isDotButton) && 'border-none hover:cursor-default',

@@ -1,6 +1,6 @@
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { useCountdown } from 'utils/useCountdown';
-import { describe, expect, test, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('next/router', () => ({
     useRouter: () => ({

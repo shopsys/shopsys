@@ -1,5 +1,5 @@
-import * as Sentry from '@sentry/nextjs';
 import { getPublicConfigProperty } from 'envConfig';
+import * as Sentry from '@sentry/nextjs';
 
 const dsn = getPublicConfigProperty('sentryDsn');
 const environment = getPublicConfigProperty('sentryEnvironment');

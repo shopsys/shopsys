@@ -28,7 +28,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
                 <NotificationBars />
 
-                <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb lg:pb-6">
+                <header className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less lg:pb-6">
                     <Header simpleHeader />
                 </header>
 
@@ -48,7 +48,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
                 <footer
                     aria-label={t('Site information', { ns: 'accessibility' })}
-                    className="bg-background-accent-less mt-auto h-fit"
+                    className="mt-auto h-fit bg-background-accent-less"
                 >
                     <Footer simpleFooter />
                 </footer>

@@ -9,7 +9,7 @@ export const ProductDetailUsps: FC<ProductDetailUspsProps> = ({ usps }) => {
         <ul className="flex flex-col gap-3">
             {usps.map((usp) => (
                 <li key={usp} className="flex items-center gap-3 text-sm">
-                    <CheckmarkBadgeIcon className="text-text-success w-5" />
+                    <CheckmarkBadgeIcon className="w-5 text-text-success" />
                     <span>{usp}</span>
                 </li>
             ))}

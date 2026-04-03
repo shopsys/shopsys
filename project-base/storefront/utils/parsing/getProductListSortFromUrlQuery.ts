@@ -1,5 +1,5 @@
-import { getStringFromUrlQuery } from './getStringFromUrlQuery';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
+import { getStringFromUrlQuery } from './getStringFromUrlQuery';
 
 export const getProductListSortFromUrlQuery = (
     sortQuery: string | string[] | undefined,

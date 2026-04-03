@@ -1,4 +1,3 @@
-import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AnimatePresence } from 'framer-motion';
@@ -16,6 +15,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useDebounce } from 'utils/useDebounce';
 import { useFocusTrap } from 'utils/useFocusTrap';
+import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
 
 const AutocompleteSearchPopup = dynamic(() =>
     import('./AutocompleteSearchPopup').then((component) => component.AutocompleteSearchPopup),
@@ -97,10 +97,9 @@ export const AutocompleteSearch: FC = () => {
 
     return (
         <>
-            <div
+            <search
                 aria-label={t('Site search section', { ns: 'accessibility' })}
                 ref={searchSectionRef}
-                role="search"
                 className={twJoin(
                     'relative flex w-full transition-all',
                     isSearchResultsPopupVisible && 'z-aboveOverlay',
@@ -132,7 +131,7 @@ export const AutocompleteSearch: FC = () => {
                         />
                     )}
                 </AnimatePresence>
-            </div>
+            </search>
 
             <Overlay isActive={isSearchResultsPopupVisible} onClick={handleClosePopup} />
         </>

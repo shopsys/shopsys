@@ -1,5 +1,5 @@
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getPublicConfigProperty } from 'envConfig';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
     LastOrderQueryDocument,
     TypeLastOrderQuery,
@@ -14,9 +14,9 @@ import {
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { Maybe } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { Translate } from 'next-translate';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { Translate } from 'next-translate';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
@@ -286,7 +286,7 @@ export const useLoadTransportAndPaymentFromLastOrder = (
 
             const orderTransport = getOrderTransportItem(lastOrder.lastOrder.items);
 
-            let lastOrderPickupPlaceDataFromApi;
+            let lastOrderPickupPlaceDataFromApi: TypeStoreQuery['store'] | undefined;
             if (!isPacketeryTransport(orderTransport?.transport?.transportTypeCode)) {
                 lastOrderPickupPlaceDataFromApi = (
                     await client
@@ -314,10 +314,11 @@ export const useLoadTransportAndPaymentFromLastOrder = (
         }
 
         const { data: lastOrderData } = await client
-            .query<
-                TypeLastOrderQuery,
-                TypeLastOrderQueryVariables
-            >(LastOrderQueryDocument, {}, { requestPolicy: 'network-only' })
+            .query<TypeLastOrderQuery, TypeLastOrderQueryVariables>(
+                LastOrderQueryDocument,
+                {},
+                { requestPolicy: 'network-only' },
+            )
             .toPromise();
 
         const orderTransport = getOrderTransportItem(lastOrderData?.lastOrder?.items);

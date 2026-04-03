@@ -4,10 +4,10 @@ import {
     getEffectiveErrorCode,
     getFirstValidationErrorPerField,
     hasValidationErrors,
+    type ParsedGraphqlError,
     parseGraphqlError,
     parseGraphqlErrorExtensions,
     parseGraphqlErrorFromJson,
-    type ParsedGraphqlError,
     type RawValidationErrors,
 } from 'utils/errors/parseGraphqlError';
 import { describe, expect, test } from 'vitest';
@@ -131,9 +131,9 @@ describe('parseGraphqlErrorFromJson', () => {
         const result = parseGraphqlErrorFromJson(jsonString);
 
         expect(result).not.toBeNull();
-        expect(result!.message).toBe('Invalid credentials.');
-        expect(result!.userCode).toBe('invalid-credentials');
-        expect(result!.errorCode).toBe(401);
+        expect(result?.message).toBe('Invalid credentials.');
+        expect(result?.userCode).toBe('invalid-credentials');
+        expect(result?.errorCode).toBe(401);
     });
 
     test('should return null for invalid JSON', () => {
@@ -166,9 +166,9 @@ describe('parseGraphqlErrorFromJson', () => {
         const result = parseGraphqlErrorFromJson(jsonString);
 
         expect(result).not.toBeNull();
-        expect(result!.message).toBe('Error occurred');
-        expect(result!.userCode).toBeNull();
-        expect(result!.extensions).toBeNull();
+        expect(result?.message).toBe('Error occurred');
+        expect(result?.userCode).toBeNull();
+        expect(result?.extensions).toBeNull();
     });
 });
 

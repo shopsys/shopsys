@@ -22,7 +22,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
             isPacketeryTransport(orderTransport.transport?.transportTypeCode));
 
     return (
-        <div className="bg-background-more vl:grid-cols-3 grid grid-cols-1 gap-2.5 rounded-xl p-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-xl bg-background-more p-5 lg:grid-cols-2">
             <InformationCard heading={t('Contact information')} icon={<UserProfileCardsIcon className="size-8" />}>
                 <span>
                     {order.firstName} {order.lastName}
@@ -31,8 +31,8 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                     aria-label={t('Send email to {{ email }}', { ns: 'accessibility', email: order.email })}
                     href={`mailto:${order.email}`}
                     className={twJoin(
-                        'text-text-default overflow-x-auto text-sm whitespace-nowrap underline hover:no-underline',
-                        '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                        'overflow-x-auto whitespace-nowrap text-sm text-text-default underline hover:no-underline',
+                        '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                     )}
                 >
                     {order.email}

@@ -3,6 +3,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 
 export const SkeletonModuleBanners: FC = () => (
     <Webline width="xxl">
-        <Skeleton className="vl:h-[457px] h-80 rounded-xl" />
+        <Skeleton className="h-80 vl:h-[457px] rounded-xl" />
     </Webline>
 );

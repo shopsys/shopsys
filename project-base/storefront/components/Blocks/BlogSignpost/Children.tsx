@@ -1,5 +1,5 @@
-import { BlogSignpostItem } from './BlogSignpostItem';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
+import { BlogSignpostItem } from './BlogSignpostItem';
 
 type ChildrenProps = {
     blogCategory: ListedBlogCategoryRecursiveType;

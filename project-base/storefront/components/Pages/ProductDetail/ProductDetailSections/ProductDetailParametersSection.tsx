@@ -1,5 +1,3 @@
-import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
-import { PRODUCT_DETAIL_SECTIONS_IDS } from './ProductDetailSections';
 import { ColorPreview } from 'components/Basic/ColorPreview/ColorPreview';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -7,6 +5,8 @@ import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/Par
 import { TypeParameterTypeEnum } from 'graphql/types';
 import { Fragment, RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
+import { PRODUCT_DETAIL_SECTIONS_IDS } from './ProductDetailSections';
 
 type ProductDetailParametersSectionProps = {
     parameters: TypeParameterFragment[];
@@ -35,7 +35,6 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
         .reduce(
             (groupedParametersAccumulator, parameter) => {
                 const group = parameter.group as string;
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 groupedParametersAccumulator[group] = groupedParametersAccumulator[group] || [];
                 groupedParametersAccumulator[group].push(parameter);
                 return groupedParametersAccumulator;
@@ -62,7 +61,7 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                                 {groupParameters.map((parameter) => (
                                     <Row
                                         key={parameter.uuid}
-                                        className="bg-table-bg-default odd:bg-table-bg-contrast border-none"
+                                        className="border-none bg-table-bg-default odd:bg-table-bg-contrast"
                                     >
                                         <Cell className="hidden w-60 px-5 py-2.5 align-top lg:table-cell">
                                             <span className="h6 leading-5">{parameter.name}</span>
@@ -89,7 +88,7 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
                                 {individualParameters.map((parameter) => (
                                     <Row
                                         key={parameter.uuid}
-                                        className="bg-table-bg-default odd:bg-table-bg-contrast border-none"
+                                        className="border-none bg-table-bg-default odd:bg-table-bg-contrast"
                                     >
                                         <Cell className="hidden w-60 px-5 py-2.5 align-top lg:table-cell">
                                             <span className="h6 leading-5">{parameter.name}</span>

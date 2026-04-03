@@ -27,7 +27,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
             <CrossIcon
                 aria-hidden="true"
                 className={twJoin(
-                    'text-text-error absolute flex w-4',
+                    'absolute flex w-4 text-text-error',
                     isInputOrTextArea && `right-3.5 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isInputPassword && `right-12 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isCheckbox && 'top-1/2 right-1 -translate-y-1/2',
@@ -37,7 +37,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
             />
             {error.message !== undefined && (
                 <span
-                    className={twJoin('font-secondary text-text-error text-sm', isCheckbox && 'block pr-6')}
+                    className={twJoin('font-secondary text-sm text-text-error', isCheckbox && 'block pr-6')}
                     data-tid={TIDs.form_line_error}
                 >
                     {error.message}

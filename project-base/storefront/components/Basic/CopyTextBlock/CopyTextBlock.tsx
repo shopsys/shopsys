@@ -98,9 +98,9 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy, onIgnore }) 
     };
 
     return (
-        <div className="bg-background-default flex max-h-96 flex-col gap-3 overflow-auto rounded">
+        <div className="flex max-h-96 flex-col gap-3 overflow-auto rounded bg-background-default">
             <div className="px-3 pt-3">
-                <p className="text-text-error wrap-break-word whitespace-pre-line">
+                <p className="wrap-break-word whitespace-pre-line text-text-error">
                     {errorCode !== null && <span>{t('Error {{ errorCode }}', { errorCode })}: </span>}
                     {message}
                 </p>
@@ -111,7 +111,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy, onIgnore }) 
                     <button
                         type="button"
                         className={twMergeCustom(
-                            'border-border-less bg-background-more hover:text-button-inverted-text-hovered flex w-full cursor-pointer items-center justify-between rounded-md border p-2 text-left text-sm outline-hidden transition-[border-radius] duration-200',
+                            'flex w-full cursor-pointer items-center justify-between rounded-md border border-border-less bg-background-more p-2 text-left text-sm outline-hidden transition-[border-radius] duration-200 hover:text-button-inverted-text-hovered',
                             isDetailsExpanded && 'rounded-b-none',
                         )}
                         onClick={() => setIsDetailsExpanded(!isDetailsExpanded)}
@@ -132,7 +132,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy, onIgnore }) 
                         )}
                     >
                         <div className="overflow-hidden">
-                            <pre className="border-border-less bg-background-more overflow-auto rounded-b-md border-x border-b p-3 text-xs wrap-break-word whitespace-pre-wrap">
+                            <pre className="wrap-break-word overflow-auto whitespace-pre-wrap rounded-b-md border-border-less border-x border-b bg-background-more p-3 text-xs">
                                 {fullDetails}
                             </pre>
                         </div>
@@ -142,7 +142,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy, onIgnore }) 
 
             <div className="flex items-center justify-between gap-2 px-3 pb-2">
                 <button
-                    className="text-text-secondary hover:text-text-default cursor-pointer text-xs underline"
+                    className="cursor-pointer text-text-secondary text-xs underline hover:text-text-default"
                     title={t('Ignore errors with identifier: {{ errorIdentifier }}', { errorIdentifier })}
                     type="button"
                     onClick={handleIgnore}

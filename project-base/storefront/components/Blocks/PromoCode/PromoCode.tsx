@@ -1,4 +1,3 @@
-import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { Form } from 'components/Forms/Form/Form';
@@ -13,6 +12,7 @@ import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
 
 export const PromoCode: FC = () => {
     const { promoCodes } = useCurrentCart();

@@ -1,4 +1,3 @@
-import { BlogSignpostItem } from './BlogSignpostItem';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
@@ -7,6 +6,7 @@ import { twJoin } from 'tailwind-merge';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
 import { findActiveBlogCategoryPath } from 'utils/blogCategory/findActiveBlogCategoryPath';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { BlogSignpostItem } from './BlogSignpostItem';
 
 type BlogSingpostProps = {
     activeItem: string;
@@ -31,8 +31,8 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                         variant="secondary"
                         className={twJoin(
                             'relative w-full justify-between text-base!',
-                            'xl:text-text-default xl:pointer-events-none xl:bg-transparent xl:p-0 xl:font-semibold xl:outline-hidden',
-                            'max-xl:font-default max-xl:py-2.5',
+                            'xl:pointer-events-none xl:bg-transparent xl:p-0 xl:font-semibold xl:text-text-default xl:outline-hidden',
+                            'max-xl:py-2.5 max-xl:font-default',
                             isBlogSignpostOpen && 'max-xl:z-aboveOverlay',
                         )}
                         onClick={() => setIsBlogSignpostOpen(!isBlogSignpostOpen)}
@@ -49,7 +49,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                         className={twJoin(
                             'flex w-full flex-col gap-y-2.5',
                             isBlogSignpostOpen
-                                ? 'max-xl:z-aboveOverlay max-xl:bg-background-default max-xl:absolute max-xl:top-full max-xl:mt-1 max-xl:rounded-2xl max-xl:p-5'
+                                ? 'max-xl:absolute max-xl:top-full max-xl:z-aboveOverlay max-xl:mt-1 max-xl:rounded-2xl max-xl:bg-background-default max-xl:p-5'
                                 : 'max-xl:hidden',
                         )}
                     >

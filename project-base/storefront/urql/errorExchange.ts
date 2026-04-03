@@ -7,9 +7,8 @@ import { ParsedErrors } from 'types/error';
 import { CombinedError, Exchange, Operation } from 'urql';
 import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
+import { FlashMessageKeys, isNoLogError } from 'utils/errors/applicationErrors';
 import { ErrorOrchestrator } from 'utils/errors/ErrorOrchestrator';
-import { FlashMessageKeys } from 'utils/errors/applicationErrors';
-import { isNoLogError } from 'utils/errors/applicationErrors';
 import { getErrorMessage } from 'utils/errors/errorMessageMapper';
 import { isExpectedPriceFilterError } from 'utils/errors/expectedErrors';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
@@ -150,7 +149,7 @@ const handleErrorMessagesForMutation = (error: CombinedError, t: Translate, oper
     }
 
     if (isWithToastAndConsoleErrorDebugging) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: intentional error logging
         console.error(
             '[Mutation Error]',
             mutationName,

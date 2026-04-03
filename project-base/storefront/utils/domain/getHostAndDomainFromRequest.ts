@@ -1,7 +1,7 @@
-import { getDomainEntries, findDomainByPath } from './domainMatcher';
+import type { NextRequest } from 'next/server';
+import { findDomainByPath, getDomainEntries } from './domainMatcher';
 import { findDomainByBrowserLocale } from './localeDetector';
 import { parseRequest } from './requestParser';
-import type { NextRequest } from 'next/server';
 
 export const getHostAndDomainFromRequest = (
     request: NextRequest,
@@ -14,7 +14,7 @@ export const getHostAndDomainFromRequest = (
 
     if (matchedDomain) {
         return {
-            host: matchedDomain.domainUrl + '/',
+            host: `${matchedDomain.domainUrl}/`,
             domainId: matchedDomain.domainId,
             currentLocale: matchedDomain.locale,
         };
@@ -29,7 +29,7 @@ export const getHostAndDomainFromRequest = (
 
         // Found a domain with the same host - redirect to it
         return {
-            host: targetDomain.domainUrl + '/',
+            host: `${targetDomain.domainUrl}/`,
             domainId: targetDomain.domainId,
             currentLocale: targetDomain.locale,
             redirect: true,
@@ -39,7 +39,7 @@ export const getHostAndDomainFromRequest = (
     // Step 3: Ultimate fallback - should not happen as nginx should handle other domains
     const ultimateFallback = domainEntries[0];
     return {
-        host: ultimateFallback.domainUrl + '/',
+        host: `${ultimateFallback.domainUrl}/`,
         domainId: ultimateFallback.domainId,
         currentLocale: ultimateFallback.locale,
         redirect: true,

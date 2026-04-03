@@ -56,20 +56,20 @@ export const BannersDot: FC<BannersDotProps> = ({
             ref={dotRef}
             tabIndex={0}
             className={twMergeCustom(
-                'bg-icon-less group relative block size-4 cursor-pointer rounded-full transition',
+                'group relative block size-4 cursor-pointer rounded-full bg-icon-less transition',
                 'vl:rounded-none vl:first-of-type:rounded-bl-md vl:last-of-type:rounded-br-md',
                 'vl:flex vl:h-auto vl:w-full vl:bg-background-more vl:px-5 vl:py-2 vl:text-left vl:text-text-default',
-                'vl:after:absolute vl:after:inset-0 vl:after:border-b-[1px] vl:after:border-l-[1px] vl:after:border-t-[1px] vl:after:border-border-less vl:after:content-[""] vl:first-of-type:after:rounded-bl-md vl:last-of-type:after:rounded-br-md vl:last-of-type:after:border-r-[1px]',
+                'vl:after:absolute vl:after:inset-0 vl:after:border-border-less vl:after:border-t-[1px] vl:after:border-b-[1px] vl:after:border-l-[1px] vl:after:content-[""] vl:first-of-type:after:rounded-bl-md vl:last-of-type:after:rounded-br-md vl:last-of-type:after:border-r-[1px]',
                 isActive && 'bg-text-accent vl:bg-background-default vl:text-text-accent',
                 'hover:bg-background-most',
             )}
             onClick={() => moveToSlide(index)}
             onKeyDown={handleKeyDown}
         >
-            <span className="h6 vl:line-clamp-4 hidden wrap-anywhere">{sliderItem.name}</span>
+            <span className="h6 wrap-anywhere vl:line-clamp-4 hidden">{sliderItem.name}</span>
             <span
                 className={twMergeCustom(
-                    'z-above bg-text-accent vl:block absolute top-0 left-0 hidden h-[3px] w-0 transition-all duration-[0s] ease-linear',
+                    'absolute top-0 left-0 z-above vl:block hidden h-[3px] w-0 bg-text-accent transition-all duration-[0s] ease-linear',
                 )}
                 style={
                     isActive && totalItems > 1 && start

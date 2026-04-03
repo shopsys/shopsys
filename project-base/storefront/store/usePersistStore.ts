@@ -1,4 +1,4 @@
-import { PersistStoreContext, type PersistStore } from 'components/providers/PersistStoreProvider';
+import { type PersistStore, PersistStoreContext } from 'components/providers/PersistStoreProvider';
 import { useContext } from 'react';
 import { useStore } from 'zustand';
 

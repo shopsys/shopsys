@@ -1,7 +1,3 @@
-import { BillingAddress } from './BillingAddress';
-import { DeliveryAddress } from './DeliveryAddress';
-import { NewsletterSubscription } from './NewsletterSubscription';
-import { PersonalData } from './PersonalData';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import {
@@ -18,6 +14,10 @@ import { CustomerChangeProfileFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
+import { BillingAddress } from './BillingAddress';
+import { DeliveryAddress } from './DeliveryAddress';
+import { NewsletterSubscription } from './NewsletterSubscription';
+import { PersonalData } from './PersonalData';
 
 type EditProfileContentProps = {
     currentCustomerUser: CurrentCustomerType;

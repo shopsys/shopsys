@@ -4,7 +4,7 @@ import { TypePromoCode } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmCreateOrderEventOrderPartType, GtmCreateOrderEventType } from 'gtm/types/events';
-import { GtmUserInfoType, GtmReviewConsentsType } from 'gtm/types/objects';
+import { GtmReviewConsentsType, GtmUserInfoType } from 'gtm/types/objects';
 import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibility';
 import { getGtmUserInfo } from 'gtm/utils/getGtmUserInfo';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';

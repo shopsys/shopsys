@@ -11,7 +11,7 @@ export const PageDefer: FC = ({ children }) => {
     return (
         <>
             {children}
-            <div className="bg-background-error text-text-inverted z-maximum fixed bottom-5 left-16 rounded-sm p-2 text-sm">
+            <div className="fixed bottom-5 left-16 z-maximum rounded-sm bg-background-error p-2 text-sm text-text-inverted">
                 Defer is turned off
             </div>
         </>

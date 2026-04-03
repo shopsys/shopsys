@@ -1,6 +1,3 @@
-import { ProductComparisonBody } from './ProductComparisonBody';
-import { ProductComparisonHead } from './ProductComparisonHead';
-import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
@@ -9,6 +6,9 @@ import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
 import { twMergeCustom } from 'utils/twMerge';
+import { ProductComparisonBody } from './ProductComparisonBody';
+import { ProductComparisonHead } from './ProductComparisonHead';
+import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 
 type ProductComparisonContentProps = {
     comparedProducts: TypeProductInProductListFragment[];
@@ -34,7 +34,6 @@ const getParametersData = (comparedProducts: TypeProductInProductListFragment[])
         });
 
         for (let i = 0; i < parametersData.length; i++) {
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (parametersData[i].values[productIndex] === undefined) {
                 parametersData[i].values.push('-');
             }

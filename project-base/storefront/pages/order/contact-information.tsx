@@ -12,7 +12,7 @@ import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEve
 import { useGtmContactInformationPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmContactInformationPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact_information);

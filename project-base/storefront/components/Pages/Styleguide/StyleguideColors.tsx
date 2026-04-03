@@ -1,6 +1,6 @@
-import { StyleguideSection } from './StyleguideElements';
 import { twJoin } from 'tailwind-merge';
 import { getYIQContrastTextColor } from 'utils/colors/colors';
+import { StyleguideSection } from './StyleguideElements';
 
 const resolveColorValue = (colorValue: string, tailwindColors: Record<string, any>, depth = 0): string => {
     // prevent infinite recursion
@@ -44,7 +44,7 @@ const getYIQContrastTextColorFromValue = (colorValue: string, tailwindColors: Re
 type StyleguideColorsProps = { tailwindColors: Record<string, any> };
 export const StyleguideColors: FC<StyleguideColorsProps> = ({ tailwindColors }) => {
     return (
-        <StyleguideSection className="vl:grid-cols-4 grid grid-cols-2 gap-2 md:grid-cols-3" title="Colors">
+        <StyleguideSection className="grid grid-cols-2 vl:grid-cols-4 gap-2 md:grid-cols-3" title="Colors">
             {Object.keys(tailwindColors).map((color, index) => (
                 <div
                     key={index}

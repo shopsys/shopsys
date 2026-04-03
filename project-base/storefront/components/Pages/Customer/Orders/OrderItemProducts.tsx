@@ -19,7 +19,7 @@ export const OrderItemProducts = ({ items, orderLink }: OrderItemProductsProps) 
     const { t } = useTranslation();
 
     return (
-        <div className="vl:justify-start flex flex-wrap gap-3">
+        <div className="flex flex-wrap vl:justify-start gap-3">
             {items.slice(0, 4).map((item) => {
                 const product = item.product;
                 const quantity = item.quantity;
@@ -34,7 +34,7 @@ export const OrderItemProducts = ({ items, orderLink }: OrderItemProductsProps) 
                         key={product.link}
                         data-tid={TIDs.order_list_product_image}
                         className={twJoin(
-                            'bg-base-white relative size-16 rounded-xl border border-transparent p-2 transition-all',
+                            'relative size-16 rounded-xl border border-transparent bg-base-white p-2 transition-all',
                             isVisible && 'hover:border-border-less',
                         )}
                     >
@@ -59,7 +59,7 @@ export const OrderItemProducts = ({ items, orderLink }: OrderItemProductsProps) 
                         )}
 
                         {quantity > 1 && (
-                            <span className="bg-icon-accent-brand-less text-text-inverted absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full px-0.5 text-xs font-semibold">
+                            <span className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent-brand-less px-0.5 font-semibold text-text-inverted text-xs">
                                 {quantity}
                             </span>
                         )}
@@ -69,7 +69,7 @@ export const OrderItemProducts = ({ items, orderLink }: OrderItemProductsProps) 
 
             {items.length > 4 && (
                 <ExtendedNextLink
-                    className="bg-base-white flex size-16 items-center justify-center rounded-xl p-2 no-underline"
+                    className="flex size-16 items-center justify-center rounded-xl bg-base-white p-2 no-underline"
                     href={orderLink}
                     type="orderDetail"
                 >

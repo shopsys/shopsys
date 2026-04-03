@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { twMergeCustom } from 'utils/twMerge';
@@ -33,7 +33,7 @@ export const NotImplementedYetInject: FC = () => {
                 notImplementedBorderTwClass,
             )}
         >
-            <div className={twMergeCustom(notImplementedTagPositionedTwClass, 'top-0 -translate-y-0')}>
+            <div className={twMergeCustom(notImplementedTagPositionedTwClass, 'top-0 translate-y-0')}>
                 {notImplementedMessage}
             </div>
         </div>
@@ -51,27 +51,18 @@ export const NotImplementedYetTag: FC = () => {
 };
 
 export const NotImplementedTooltip: FC = ({ children, className }) => {
-    const [active, setActive] = useState(false);
-
-    const toggleState = () => setActive(!active);
-
     return (
-        <div
-            className={twMergeCustom('relative', notImplementedBorderTwClass, className)}
-            onMouseEnter={toggleState}
-            onMouseLeave={toggleState}
-        >
+        <div className={twMergeCustom('group relative', notImplementedBorderTwClass, className)}>
             {children}
-            {active && (
-                <div
-                    className={twJoin(
-                        'z-tooltip absolute -bottom-8 left-1/2 h-6 -translate-x-1/2 leading-4',
-                        notImplementedTagTwClass,
-                    )}
-                >
-                    {notImplementedMessage}
-                </div>
-            )}
+            <div
+                className={twJoin(
+                    'pointer-events-none invisible absolute -bottom-8 left-1/2 z-tooltip h-6 -translate-x-1/2 leading-4 opacity-0 transition-opacity',
+                    'group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100',
+                    notImplementedTagTwClass,
+                )}
+            >
+                {notImplementedMessage}
+            </div>
         </div>
     );
 };

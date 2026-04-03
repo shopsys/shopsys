@@ -1,4 +1,3 @@
-import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './personalDataOverviewFormMeta';
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
@@ -16,6 +15,7 @@ import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './personalDataOverviewFormMeta';
 
 type PersonalDataOverviewContentProps = {
     contentSiteText: string | null | undefined;

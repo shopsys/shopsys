@@ -1,10 +1,10 @@
 import { DEFAULT_SORT } from 'config/constants';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
-import { UrlQueries, FilterQueries } from 'types/urlQueries';
+import { FilterQueries, UrlQueries } from 'types/urlQueries';
 import {
-    PAGE_QUERY_PARAMETER_NAME,
-    LOAD_MORE_QUERY_PARAMETER_NAME,
     FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 

@@ -157,8 +157,7 @@ describe('useUpdateFilter().updateFilterFlags tests', () => {
     });
 
     test('changing flag should not redirect from SEO category if flags are not SEO-sensitive', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ FLAGS: false }));
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({

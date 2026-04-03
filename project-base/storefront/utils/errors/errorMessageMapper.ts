@@ -1,5 +1,5 @@
-import { FlashMessageKeys } from './applicationErrors';
 import { Translate } from 'next-translate';
+import { FlashMessageKeys } from './applicationErrors';
 
 const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Translate): string | undefined => {
     const ERROR_MESSAGES: Record<FlashMessageKeys, string> = {

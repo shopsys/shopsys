@@ -1,6 +1,6 @@
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
 import { SkeletonModulePageHero } from './SkeletonModulePageHero';
-import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonCustomerUsersTable: FC = () => (
     <div className="flex flex-col gap-1">

@@ -1,4 +1,3 @@
-import { ComplaintItem } from './ComplaintItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerComplaints } from 'components/Blocks/Skeleton/SkeletonModuleCustomerComplaints';
@@ -6,6 +5,7 @@ import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ComplaintItem } from './ComplaintItem';
 
 type ComplaintsContentProps = {
     areComplaintsFetching: boolean;

@@ -1,9 +1,9 @@
-import { PaymentFail } from './PaymentFail';
-import { PaymentInProcess } from './PaymentInProcess';
-import { PaymentSuccess } from './PaymentSuccess';
 import { TypeOrderDetailByHashQuery } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
 import { TypeOrderPaymentPageContentQuery } from 'graphql/requests/orders/queries/OrderPaymentPageContentQuery.generated';
 import { TypePaymentContentPageStatusEnum } from 'graphql/types';
+import { PaymentFail } from './PaymentFail';
+import { PaymentInProcess } from './PaymentInProcess';
+import { PaymentSuccess } from './PaymentSuccess';
 
 export const PaymentStatus: FC<{
     orderData: TypeOrderDetailByHashQuery | undefined;

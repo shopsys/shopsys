@@ -1,8 +1,8 @@
-import { SkeletonModuleCustomerComplaints } from './SkeletonModuleCustomerComplaints';
-import { SkeletonModuleCustomerOrders } from './SkeletonModuleCustomerOrders';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { SkeletonModuleCustomerComplaints } from './SkeletonModuleCustomerComplaints';
+import { SkeletonModuleCustomerOrders } from './SkeletonModuleCustomerOrders';
 
 export const SkeletonPagePersonalDataOverview: FC = () => (
     <Webline>

@@ -1,4 +1,3 @@
-import { TextInput } from './TextInput';
 import { EyeCrossedIcon } from 'components/Basic/Icon/EyeCrossedIcon';
 import { EyeIcon } from 'components/Basic/Icon/EyeIcon';
 import { FormLine } from 'components/Forms/Lib/FormLine';
@@ -7,6 +6,7 @@ import { InputHTMLAttributes, ReactElement, ReactNode, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { TextInput } from './TextInput';
 
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, never, 'name' | 'autoComplete'>;
 
@@ -39,7 +39,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         fieldState: { error },
         field: { ref: fieldRef, value, onBlur, onChange },
     } = useController({ name, control });
-    const passwordInputId = formName + '-' + name;
+    const passwordInputId = `${formName}-${name}`;
 
     const [inputType, setInputType] = useState<'text' | 'password'>('password');
     const PasswordVisibilityIcon = inputType === 'text' ? EyeCrossedIcon : EyeIcon;
@@ -77,7 +77,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                     type="button"
                     onClick={togglePasswordVisibilityHandler}
                 >
-                    <PasswordVisibilityIcon className="text-icon-less group-hover:text-icon-default size-6" />
+                    <PasswordVisibilityIcon className="size-6 text-icon-less group-hover:text-icon-default" />
                 </button>
             </TextInput>
             <FormLineError error={error} inputType="text-input-password" textInputSize={passwordInputProps.inputSize} />

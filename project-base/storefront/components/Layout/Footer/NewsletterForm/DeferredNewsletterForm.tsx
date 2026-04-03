@@ -1,6 +1,6 @@
-import { NewsletterFormPlaceholder } from './NewsletterFormPlaceholder';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { NewsletterFormPlaceholder } from './NewsletterFormPlaceholder';
 
 const NewsletterForm = dynamic(() => import('./NewsletterForm').then((component) => component.NewsletterForm), {
     ssr: false,

@@ -56,10 +56,10 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
 
         return (
             <div className="flex items-center justify-between gap-2 pb-5">
-                <span className="text-sm font-semibold">{orderItem.name}</span>
+                <span className="font-semibold text-sm">{orderItem.name}</span>
 
                 {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                    <div className="font-secondary text-price-discounted font-bold whitespace-nowrap">
+                    <div className="whitespace-nowrap font-bold font-secondary text-price-discounted">
                         {formatPrice(mapPriceForCalculations(orderItem.totalPrice.priceWithVat))}
                     </div>
                 )}
@@ -70,15 +70,15 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     return (
         <div
             className={twJoin(
-                'vl:gap-5 font-secondary relative flex items-center gap-3 font-semibold first:border-none',
-                'border-t-border-default border-t py-5 first:pt-0 last:pb-0',
+                'relative flex items-center gap-3 vl:gap-5 font-secondary font-semibold first:border-none',
+                'border-t border-t-border-default py-5 first:pt-0 last:pb-0',
             )}
         >
             {isProductGift && (
                 <div
                     className={twJoin(
                         'absolute top-5 left-0 z-10 rounded-tl-md rounded-br-md px-2 py-0.5',
-                        'bg-linear-to-r from-purple-600 to-pink-600 text-xs font-semibold text-white shadow-md',
+                        'bg-linear-to-r from-purple-600 to-pink-600 font-semibold text-white text-xs shadow-md',
                     )}
                 >
                     {t('Gift')}
@@ -87,10 +87,10 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
 
             <div
                 className={twMergeCustom(
-                    'vl:grid vl:grid-cols-[3fr_2fr_1fr_2fr] vl:gap-5 flex w-full flex-wrap items-center justify-between gap-3 border-b last:border-none',
+                    'flex vl:grid w-full vl:grid-cols-[3fr_2fr_1fr_2fr] flex-wrap items-center justify-between gap-3 vl:gap-5 border-b last:border-none',
                 )}
             >
-                <div className="vl:w-auto flex w-full items-center gap-2.5">
+                <div className="flex vl:w-auto w-full items-center gap-2.5">
                     <div className="flex size-20 shrink-0" data-tid={TIDs.order_detail_item_image}>
                         <Image
                             alt={orderItem.name}
@@ -104,7 +104,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                     <div className="flex flex-col gap-2">
                         {orderItem.product?.isVisible ? (
                             <ExtendedNextLink
-                                className="vl:w-fit text-text-default hover:text-text-hovered w-full text-sm no-underline hover:underline"
+                                className="vl:w-fit w-full text-sm text-text-default no-underline hover:text-text-hovered hover:underline"
                                 href={orderItem.product.slug}
                                 skeletonType="product"
                                 aria-label={t('Go to product {{ productName }}', {
@@ -115,13 +115,13 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                                 {orderItem.name}
                             </ExtendedNextLink>
                         ) : (
-                            <span className="text-text-default text-sm">{orderItem.name}</span>
+                            <span className="text-sm text-text-default">{orderItem.name}</span>
                         )}
 
                         {showComplaintButton && (
                             <button
                                 aria-haspopup="dialog"
-                                className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-hidden"
+                                className="cursor-pointer self-baseline whitespace-nowrap rounded-sm text-link-default text-sm underline outline-hidden hover:text-link-hovered"
                                 data-tid={TIDs.order_detail_create_complaint_button}
                                 tabIndex={0}
                                 aria-label={t('Create complaint for product {{ productName }}', {
@@ -137,7 +137,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                     </div>
                 </div>
 
-                <span className="text-text-less vl:w-auto w-full text-sm">
+                <span className="vl:w-auto w-full text-sm text-text-less">
                     {t('Code')}: {orderItem.product?.catalogNumber}
                 </span>
 

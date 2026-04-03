@@ -1,4 +1,3 @@
-import { ProductItemProps, ProductListItem } from './ProductListItem';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -8,6 +7,7 @@ import { SwipeableHandlers } from 'react-swipeable';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
+import { ProductItemProps, ProductListItem } from './ProductListItem';
 
 type ProductsListProps = {
     products: TypeListedProductFragment[];

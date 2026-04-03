@@ -1,3 +1,10 @@
+import { GtmDeviceTypes } from 'gtm/enums/GtmDeviceTypes';
+import { GtmEventType } from 'gtm/enums/GtmEventType';
+import { GtmFormType } from 'gtm/enums/GtmFormType';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmMessageType } from 'gtm/enums/GtmMessageType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 import {
     GtmCartInfoType,
     GtmCartItemType,
@@ -9,13 +16,6 @@ import {
     GtmUserEntryInfoType,
     GtmUserInfoType,
 } from './objects';
-import { GtmDeviceTypes } from 'gtm/enums/GtmDeviceTypes';
-import { GtmEventType } from 'gtm/enums/GtmEventType';
-import { GtmFormType } from 'gtm/enums/GtmFormType';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { GtmMessageType } from 'gtm/enums/GtmMessageType';
-import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 
 export type GtmEventInterface<EventType, EventContent> = {
     event: EventType;

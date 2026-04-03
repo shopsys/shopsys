@@ -43,8 +43,8 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
     };
 
     return (
-        <div className="bg-background-more vl:p-6 flex flex-col gap-5 rounded-md p-4">
-            <div className="vl:flex-row vl:items-start vl:justify-between flex flex-col gap-4">
+        <div className="flex flex-col gap-5 rounded-md bg-background-more p-4 vl:p-6">
+            <div className="flex vl:flex-row flex-col vl:items-start vl:justify-between gap-4">
                 <Image
                     priority
                     alt={orderedItem.product?.mainImage?.name || ''}

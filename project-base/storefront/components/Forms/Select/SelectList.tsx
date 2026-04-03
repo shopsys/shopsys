@@ -95,16 +95,16 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     };
 
     const SelectListItems = options.map((option, index) => (
+        /* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Listbox options intentionally handle click and keyboard interaction on the option container. */
         <li
             key={option.label}
             aria-selected={option.value === activeOption?.value}
             data-tid={`${tid}${index}`}
-            role="option"
             tabIndex={option.isDisabled ? -1 : 0}
             className={twMergeCustom(
-                'hover:bg-input-bg-hovered list-none font-semibold outline-hidden',
-                option.isDisabled && 'bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
-                'focus-visible:text-text-default focus-visible:bg-orange-500',
+                'list-none font-semibold outline-hidden hover:bg-input-bg-hovered',
+                option.isDisabled && 'pointer-events-none cursor-no-drop bg-input-bg-disabled text-input-text-disabled',
+                'focus-visible:bg-orange-500 focus-visible:text-text-default',
             )}
             onClick={!option.isDisabled ? (e) => onSelectOption(option, e) : undefined}
             onFocus={() => setFocusedIndex(index)}
@@ -112,7 +112,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
         >
             <div
                 className={twJoin(
-                    'font-secondary hover:text-input-text-hovered hover:bg-fill-accent-less flex w-full cursor-pointer items-center justify-between gap-2 p-3',
+                    'flex w-full cursor-pointer items-center justify-between gap-2 p-3 font-secondary hover:bg-fill-accent-less hover:text-input-text-hovered',
                     option.value === activeOption?.value && 'text-input-text-active',
                     option.isDisabled && 'text-input-text-disabled',
                 )}
@@ -122,7 +122,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 {option.label}
 
                 {option.count !== undefined && (
-                    <span className="font-secondary text-input-placeholder-default font-normal whitespace-nowrap">
+                    <span className="whitespace-nowrap font-normal font-secondary text-input-placeholder-default">
                         ({option.count})
                     </span>
                 )}
@@ -145,9 +145,9 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             keyName={tid}
             className={twMergeCustom(
                 'overflow-y-auto!',
-                'z-above bg-background-default absolute right-0 left-0 block! max-h-36 rounded-b-md lg:max-h-[200px]',
-                'border-input-border-default hover:border-input-border-hovered border-2 border-t-0',
-                '[&::-webkit-scrollbar-thumb]:bg-input-placeholder-default [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full',
+                'block! absolute right-0 left-0 z-above max-h-36 rounded-b-md bg-background-default lg:max-h-[200px]',
+                'border-2 border-input-border-default border-t-0 hover:border-input-border-hovered',
+                '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-input-placeholder-default [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-2',
                 listClassName,
             )}
         >

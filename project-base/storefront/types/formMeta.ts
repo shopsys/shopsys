@@ -15,7 +15,7 @@
  */
 import { ReactElement } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// biome-ignore lint/complexity/noBannedTypes: The generic default intentionally models "no extra field metadata".
 export type FormFieldMeta<TForm, TExtra = {}> = {
     [K in keyof TForm]: {
         name: K;
@@ -23,7 +23,7 @@ export type FormFieldMeta<TForm, TExtra = {}> = {
     } & TExtra;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// biome-ignore lint/complexity/noBannedTypes: The generic defaults intentionally model "no messages override" and "no extra field metadata".
 export type FormMeta<TForm, TMessages extends Record<string, string> = {}, TExtra = {}> = {
     formName: string;
     messages: TMessages;

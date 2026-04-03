@@ -1,11 +1,3 @@
-import { DeferredComparisonAndWishlistButtons } from './ComparisonAndWishlistButtons/DeferredComparisonAndWishlistButtons';
-import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
-import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
-import { ProductDetailAvailability } from './ProductDetailAvailability';
-import { ProductDetailGallery } from './ProductDetailGallery';
-import { ProductDetailInfo } from './ProductDetailInfo';
-import { ProductDetailPrice } from './ProductDetailPrice';
-import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
@@ -23,6 +15,14 @@ import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmPro
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
+import { DeferredComparisonAndWishlistButtons } from './ComparisonAndWishlistButtons/DeferredComparisonAndWishlistButtons';
+import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
+import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
+import { ProductDetailAvailability } from './ProductDetailAvailability';
+import { ProductDetailGallery } from './ProductDetailGallery';
+import { ProductDetailInfo } from './ProductDetailInfo';
+import { ProductDetailPrice } from './ProductDetailPrice';
+import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
@@ -45,7 +45,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
             <ProductMetadata product={product} />
 
             <VerticalStack gap="md">
-                <Webline className="vl:flex-row flex flex-col gap-6">
+                <Webline className="flex vl:flex-row flex-col gap-6">
                     <ProductDetailGallery
                         categoryName={product.categories[0]?.name}
                         flags={product.flags}
@@ -66,7 +66,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             usps={product.usps}
                         />
 
-                        <div className="bg-background-more flex flex-col gap-4 rounded-xl p-3 sm:p-6">
+                        <div className="flex flex-col gap-4 rounded-xl bg-background-more p-3 sm:p-6">
                             {product.gifts.length > 0 && (
                                 <>
                                     <p className="h3 mb-3">{t('Gifts')}</p>
@@ -103,8 +103,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         </div>
 
                         {product.promotionBuyQuantity !== null && product.promotionFreeQuantity !== null && (
-                            <div className="bg-background-more flex flex-col gap-4 rounded-xl p-3 sm:p-6">
-                                <div className="text-text-accent text-sm font-semibold">
+                            <div className="flex flex-col gap-4 rounded-xl bg-background-more p-3 sm:p-6">
+                                <div className="font-semibold text-sm text-text-accent">
                                     {t('Buy {{ count }} pieces', { count: product.promotionBuyQuantity })}{' '}
                                     {t('and receive {{ count }} pieces for free.', {
                                         count: product.promotionFreeQuantity,

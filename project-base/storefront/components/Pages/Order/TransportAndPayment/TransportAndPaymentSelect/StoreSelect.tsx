@@ -1,9 +1,9 @@
-import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 
 type StoreSelectProps = {
     selectedStoreUuid: string;

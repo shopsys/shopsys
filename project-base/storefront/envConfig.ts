@@ -63,7 +63,6 @@ export function getPublicConfig(): PublicRuntimeConfig {
         // Dynamic require prevents Next.js webpack from bundling buildPublicConfig (which reads
         // process.env) into the client bundle. The typeof window guard above is not sufficient
         // because Next.js Pages Router bundles both branches for the client.
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
         configCache = require('./buildPublicEnvConfig').buildPublicConfig() as PublicRuntimeConfig;
     }
 

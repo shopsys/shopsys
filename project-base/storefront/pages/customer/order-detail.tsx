@@ -60,7 +60,7 @@ const OrderDetailPage: FC = () => {
                 >
                     <PageHero
                         icon={DocumentIcon}
-                        title={t('Your order') + (orderData?.order?.number ? ' ' + orderData.order.number : '')}
+                        title={t('Your order') + (orderData?.order?.number ? ` ${orderData.order.number}` : '')}
                         titleTid={TIDs.order_detail_number_heading}
                     />
 

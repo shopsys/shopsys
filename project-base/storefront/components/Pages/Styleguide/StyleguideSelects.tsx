@@ -1,9 +1,9 @@
-import { StyleguideSection } from './StyleguideElements';
 import { MultiSelect } from 'components/Forms/Multiselect/Multiselect';
 import { Select } from 'components/Forms/Select/Select';
 import { useState } from 'react';
 import { SelectOptionType } from 'types/selectOptions';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { StyleguideSection } from './StyleguideElements';
 
 const COMBO_BOX_PAGE_SIZE = 5;
 

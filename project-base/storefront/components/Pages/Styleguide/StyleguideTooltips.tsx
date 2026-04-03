@@ -1,6 +1,5 @@
-import { StyleguideSection } from './StyleguideElements';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
-import React from 'react';
+import { StyleguideSection } from './StyleguideElements';
 
 export const StyleguideTooltips: FC = () => {
     return (
@@ -28,6 +27,6 @@ const TooltipBox: FC<{ label: string; placement?: 'top' | 'bottom' | 'left' | 'r
     children,
 }) => (
     <Tooltip label={label} placement={placement}>
-        <div className="bg-background-brand-less text-text-inverted rounded-full px-2 py-1">{children}</div>
+        <div className="rounded-full bg-background-brand-less px-2 py-1 text-text-inverted">{children}</div>
     </Tooltip>
 );

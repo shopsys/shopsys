@@ -38,7 +38,7 @@ export const OpeningStatus: FC<OpeningStatusProps> = ({ status, className }) => 
     return (
         <Flag
             ariaLabel={ariaLabel}
-            className={twMergeCustom('text-text-inverted text-nowrap', className, statusClasses[status])}
+            className={twMergeCustom('text-nowrap text-text-inverted', className, statusClasses[status])}
         >
             <div aria-hidden="true">{statusText(status)}</div>
         </Flag>

@@ -1,12 +1,12 @@
-import { DeleteAddressAction } from './Actions/DeleteAddressAction';
-import { EditAddressAction } from './Actions/EditAddressAction';
-import { SetDefaultAddressAction } from './Actions/SetDefaultAddressAction';
 import { Button } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { DeliveryAddressType } from 'types/customer';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
+import { DeleteAddressAction } from './Actions/DeleteAddressAction';
+import { EditAddressAction } from './Actions/EditAddressAction';
+import { SetDefaultAddressAction } from './Actions/SetDefaultAddressAction';
 
 type AddressCardProps = {
     address: DeliveryAddressType;
@@ -50,6 +50,7 @@ export const AddressCard: FC<AddressCardProps> = ({
     };
 
     return (
+        /* biome-ignore lint/a11y/useSemanticElements: The selectable card can also contain nested action buttons, so the wrapper cannot always be a button element. */
         <div
             data-tid={`${TIDs.blocks_addresslist_addresscard_}${addressIndex}`}
             role="button"
@@ -63,7 +64,7 @@ export const AddressCard: FC<AddressCardProps> = ({
                 'relative flex w-full justify-between rounded-md border-2 p-4 text-left',
                 'border-border-less bg-background-default',
                 orderSelectedAddress && 'border-border-brand',
-                orderSelectionMode && 'hover:border-link-hovered cursor-pointer focus-visible:bg-orange-500',
+                orderSelectionMode && 'cursor-pointer hover:border-link-hovered focus-visible:bg-orange-500',
             )}
             onClick={handleSelectDeliveryAddress}
             onKeyDown={handleSelectDeliveryAddressKeyDown}

@@ -172,8 +172,7 @@ describe('useUpdateSort() tests', () => {
     });
 
     test('sort should not redirect from SEO category if it is not SEO-sensitive', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ SORT: false }));
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({

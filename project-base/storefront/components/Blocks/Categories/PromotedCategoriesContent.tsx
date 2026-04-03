@@ -18,14 +18,14 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
     return (
         <ul
             className={twMergeCustom(
-                'vl:overflow-visible hide-scrollbar overflow-x-auto overflow-y-hidden overscroll-x-contain',
-                'vl:grid-flow-row vl:grid-cols-4 vl:gap-5 grid auto-cols-[150px] grid-flow-col gap-3 lg:auto-cols-[200px]',
+                'hide-scrollbar vl:overflow-visible overflow-x-auto overflow-y-hidden overscroll-x-contain',
+                'grid auto-cols-[150px] vl:grid-flow-row grid-flow-col vl:grid-cols-4 gap-3 vl:gap-5 lg:auto-cols-[200px]',
                 categoriesLength > 4 ? 'vl:grid-rows-2' : 'vl:grid-rows-1',
             )}
         >
             {promotedCategoriesData.promotedCategories.map((category, index) => {
                 const itemImage = 'mainImage' in category ? category.mainImage : null;
-                const href = getStringWithoutTrailingSlash(category.slug) + '/';
+                const href = `${getStringWithoutTrailingSlash(category.slug)}/`;
                 const linkType = getLinkType(category.__typename);
                 const isFirstItemLarge = categoriesLength > 4 && index === 0;
 
@@ -43,9 +43,9 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                             })}
                             className={twMergeCustom(
                                 'flex cursor-pointer flex-col items-center gap-5 rounded-xl text-center no-underline transition',
-                                'border-background-more bg-background-more text-text-default border',
+                                'border border-background-more bg-background-more text-text-default',
                                 'hover:border-border-less hover:bg-background-default hover:text-text-default hover:no-underline',
-                                'vl:px-10 px-6 py-2.5 md:py-4',
+                                'px-6 vl:px-10 py-2.5 md:py-4',
                                 'aspect-square size-full max-h-[150px] lg:max-h-[200px]',
                                 isFirstItemLarge ? 'vl:max-h-[590px] vl:py-5' : 'vl:max-h-[285px] vl:py-7',
                             )}
@@ -55,7 +55,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                                     data-tid={TIDs.simple_navigation_image}
                                     className={twJoin(
                                         'relative flex items-center justify-center',
-                                        'vl:size-full size-[60px] lg:size-[100px]',
+                                        'size-[60px] vl:size-full lg:size-[100px]',
                                         isFirstItemLarge
                                             ? 'vl:max-h-[500px] vl:max-w-[500px]'
                                             : 'lg:max-h-[180px] lg:max-w-[180px]',
@@ -75,7 +75,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                                 </div>
                             )}
 
-                            <h3 className="h4 vl:line-clamp-1 line-clamp-2">{category.name}</h3>
+                            <h3 className="h4 line-clamp-2 vl:line-clamp-1">{category.name}</h3>
                         </ExtendedNextLink>
                     </li>
                 );

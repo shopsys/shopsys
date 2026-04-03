@@ -12,7 +12,7 @@ export const AddressActionButton: FC<AddressActionButtonProps> = ({ ariaLabel, c
         <button
             aria-haspopup="dialog"
             aria-label={ariaLabel}
-            className="text-link-default font-secondary hover:text-link-hovered flex cursor-pointer items-center gap-2 self-start rounded-sm pr-1 text-sm font-semibold underline hover:no-underline"
+            className="flex cursor-pointer items-center gap-2 self-start rounded-sm pr-1 font-secondary font-semibold text-link-default text-sm underline hover:text-link-hovered hover:no-underline"
             tabIndex={0}
             type="button"
             onClick={onClick}

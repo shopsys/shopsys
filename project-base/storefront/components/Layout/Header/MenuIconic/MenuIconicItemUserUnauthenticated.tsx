@@ -1,14 +1,14 @@
-import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
-import { MenuIconicItemUserUnauthenticatedContent } from './MenuIconicItemUserUnauthenticatedContent';
 import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { TIDs } from 'cypress/tids';
-import { useState, MouseEvent as ReactMouseEvent } from 'react';
+import { MouseEvent as ReactMouseEvent, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useDebounce } from 'utils/useDebounce';
+import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
+import { MenuIconicItemUserUnauthenticatedContent } from './MenuIconicItemUserUnauthenticatedContent';
 
 const isBrowserPasswordManagerHovered = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => e.relatedTarget === window;
 
@@ -20,6 +20,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
 
     return (
         <>
+            {/* biome-ignore lint/a11y/useSemanticElements: The wrapper manages hover state for the popover while containing nested navigation controls, so it cannot be replaced with a semantic button. */}
             <div
                 aria-expanded={isActive}
                 aria-haspopup="menu"
@@ -44,7 +45,10 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
                 }}
             >
                 <MenuIconicItemLink
-                    className="group-focus-visible:text-text-default cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500 lg:w-[72px]"
+                    ariaExpanded={isActive}
+                    ariaHaspopup="menu"
+                    ariaLabel={t('Show registration and login popup', { ns: 'accessibility' })}
+                    className="cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500 group-focus-visible:text-text-default lg:w-[72px]"
                     tabIndex={-1}
                     tid={TIDs.layout_header_menuiconic_login_link_popup}
                     title={t('Login form')}

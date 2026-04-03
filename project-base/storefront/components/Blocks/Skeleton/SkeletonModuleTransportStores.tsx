@@ -2,7 +2,7 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 const SkeletonModuleStoreInPopup: FC = () => (
-    <div className="border-border-default flex items-center gap-2 border-b py-4 last:border-b-0">
+    <div className="flex items-center gap-2 border-border-default border-b py-4 last:border-b-0">
         <Skeleton className="size-5 rounded-full" />
 
         <div className="flex flex-col gap-1">

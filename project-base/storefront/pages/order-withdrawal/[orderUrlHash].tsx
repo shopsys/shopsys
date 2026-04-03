@@ -85,8 +85,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             const orderResponse: OperationResult<TypeOrderWithdrawalDataQuery, TypeOrderWithdrawalDataQueryVariables> =
-                await client!
-                    .query(OrderWithdrawalDataQueryDocument, {
+                await client
+                    ?.query(OrderWithdrawalDataQueryDocument, {
                         urlHash: context.params.orderUrlHash,
                     })
                     .toPromise();

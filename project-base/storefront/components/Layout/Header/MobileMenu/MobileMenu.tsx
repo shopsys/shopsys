@@ -1,4 +1,3 @@
-import { MobileMenuContent } from './MobileMenuContent';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';
 import { AnimatePresence, m } from 'framer-motion';
@@ -6,6 +5,7 @@ import { useNavigationQuery } from 'graphql/requests/navigation/queries/Navigati
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { MobileMenuContent } from './MobileMenuContent';
 
 export const MobileMenu: FC = () => {
     const { t } = useTranslation();
@@ -40,7 +40,7 @@ export const MobileMenu: FC = () => {
                         role="navigation"
                         transition={{ duration: 0.2, type: 'tween' }}
                         className={twJoin(
-                            'z-maximum bg-background-default pointer-events-auto fixed top-0 left-0 h-dvh w-[315px] overflow-x-hidden overflow-y-auto',
+                            'pointer-events-auto fixed top-0 left-0 z-maximum h-dvh w-[315px] overflow-y-auto overflow-x-hidden bg-background-default',
                         )}
                     >
                         <MobileMenuContent

@@ -1,12 +1,12 @@
-import { CategoryBestsellersListItem } from './CategoryBestsellersListItem';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimatePresence } from 'framer-motion';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { CategoryBestsellersListItem } from './CategoryBestsellersListItem';
 
 const NUMBER_OF_VISIBLE_ITEMS = 3;
 
@@ -67,14 +67,14 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
     useGtmSliderProductListViewEvent(shownProducts, GtmProductListNameType.bestsellers);
 
     return (
-        <div className="bg-background-more relative rounded-xl p-5">
+        <div className="relative rounded-xl bg-background-more p-5">
             <h2 className="sr-only">{t('Bestsellers')}</h2>
 
-            <div className="font-secondary mb-3 text-center text-lg font-semibold wrap-break-word">
+            <div className="wrap-break-word mb-3 text-center font-secondary font-semibold text-lg">
                 {t('Do not want to choose? Choose certainty')}
             </div>
 
-            <div className="divide-border-less mb-3 flex flex-col divide-y" id="bestsellers-list" ref={listRef}>
+            <div className="mb-3 flex flex-col divide-y divide-border-less" id="bestsellers-list" ref={listRef}>
                 <AnimatePresence initial={false}>
                     {shownProducts.map((product, index) => (
                         <AnimateCollapseDiv key={product.uuid} className={twJoin('block!')} keyName={product.uuid}>
@@ -95,7 +95,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
                         aria-controls="bestsellers-list"
                         aria-expanded={!isCollapsed}
                         aria-label={ariaLabel}
-                        className="font-secondary text-link-default hover:text-link-hovered cursor-pointer rounded-sm text-sm font-semibold underline"
+                        className="cursor-pointer rounded-sm font-secondary font-semibold text-link-default text-sm underline hover:text-link-hovered"
                         tabIndex={0}
                         title={t('Toggle bestseller list')}
                         onClick={handleShowMoreClick}

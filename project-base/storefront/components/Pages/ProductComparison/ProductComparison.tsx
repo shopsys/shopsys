@@ -1,4 +1,3 @@
-import { ProductComparisonContent } from './ProductComparisonContent';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { RemoveAllProductsPopup } from 'components/Blocks/Popup/RemoveAllProductsPopup';
@@ -14,6 +13,7 @@ import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/produ
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { ProductComparisonContent } from './ProductComparisonContent';
 
 export const ProductComparison: FC = () => {
     const { t } = useTranslation();

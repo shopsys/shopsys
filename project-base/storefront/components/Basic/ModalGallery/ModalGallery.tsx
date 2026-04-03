@@ -1,4 +1,3 @@
-import { ModalGalleryCarousel } from './ModalGalleryCarousel';
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Image } from 'components/Basic/Image/Image';
@@ -6,7 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
-import { RefObject, createRef, forwardRef, useEffect, useMemo, useRef, useState } from 'react';
+import { createRef, forwardRef, RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
@@ -14,6 +13,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { useFocusTrap } from 'utils/useFocusTrap';
 import { useKeypress } from 'utils/useKeyPress';
+import { ModalGalleryCarousel } from './ModalGalleryCarousel';
 
 type ModalGalleryProps = {
     items: (TypeVideoTokenFragment | TypeImageFragment | TypeFileFragment)[];
@@ -98,26 +98,25 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
             <div
                 aria-label={t('Gallery', { ns: 'accessibility' })}
                 aria-modal="true"
-                className="z-maximum bg-background-default focus-visible:outline-background-accent fixed inset-0 flex flex-col p-2 select-none focus-visible:outline-4 focus-visible:-outline-offset-2"
+                className="fixed inset-0 z-maximum flex select-none flex-col bg-background-default p-2 focus-visible:outline-4 focus-visible:outline-background-accent focus-visible:-outline-offset-2"
                 ref={modalRef}
                 role="dialog"
             >
-                <div
+                <section
                     className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center"
                     {...handlers}
                     aria-label={t('Gallery content', { ns: 'accessibility' })}
-                    role="region"
                 >
                     {!isLoaded && (
                         <SpinnerIcon
                             aria-hidden="true"
-                            className="-z-above text-text-inverted absolute w-16 opacity-50"
+                            className="absolute -z-above w-16 text-text-inverted opacity-50"
                         />
                     )}
                     <AnimatePresence initial={false}>
                         {isImage && (
                             <AnimateSlideDiv
-                                className="relative block! size-full"
+                                className="block! relative size-full"
                                 direction={slideDirection}
                                 keyName={`image-${selectedIndex}`}
                             >
@@ -137,7 +136,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                     <AnimatePresence initial={false}>
                         {isVideo && (
                             <AnimateSlideDiv
-                                className="relative block! size-full"
+                                className="block! relative size-full"
                                 direction={slideDirection}
                                 keyName={`video-${selectedIndex}`}
                             >
@@ -158,7 +157,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                     <AnimatePresence initial={false}>
                         {isFile && (
                             <AnimateSlideDiv
-                                className="relative block! size-full"
+                                className="block! relative size-full"
                                 direction={slideDirection}
                                 keyName={`file-${selectedIndex}`}
                             >
@@ -175,12 +174,10 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                             </AnimateSlideDiv>
                         )}
                     </AnimatePresence>
-                </div>
+                </section>
 
                 {isImage && selectedGalleryItem.name && (
-                    <div className="text-text-inverted mt-2 text-center" role="caption">
-                        {selectedGalleryItem.name}
-                    </div>
+                    <p className="mt-2 text-center text-text-inverted">{selectedGalleryItem.name}</p>
                 )}
 
                 <div
@@ -228,7 +225,7 @@ const FloatingButton = forwardRef<HTMLButtonElement, FloatingButtonProps>(
             tabIndex={0}
             type="button"
             className={twMergeCustom(
-                'bg-background-accent-less text-text-default hover:text-text-accent inline-flex cursor-pointer items-center justify-center rounded-full p-2 transition-all',
+                'inline-flex cursor-pointer items-center justify-center rounded-full bg-background-accent-less p-2 text-text-default transition-all hover:text-text-accent',
                 className,
             )}
             onClick={(e) => {

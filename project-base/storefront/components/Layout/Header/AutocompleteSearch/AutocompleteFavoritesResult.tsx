@@ -1,9 +1,9 @@
-import { SearchResultLink, SearchResultSectionGroup, SearchResultSectionTitle } from './AutocompleteSearchPopup';
 import { ProductsSlider, VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'components/Blocks/Product/ProductsSlider';
 import { TIDs } from 'cypress/tids';
 import { TypeAutocompleteFavoritesQuery } from 'graphql/requests/autocomplete/queries/AutocompleteFavoritesQuery.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { SearchResultLink, SearchResultSectionGroup, SearchResultSectionTitle } from './AutocompleteSearchPopup';
 
 type AutocompleteFavoritesResultProps = {
     favoritesData: TypeAutocompleteFavoritesQuery | undefined;

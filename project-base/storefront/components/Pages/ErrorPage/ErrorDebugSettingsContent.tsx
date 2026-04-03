@@ -15,10 +15,10 @@ export const ErrorDebugSettingsContent: FC = () => {
     return (
         <Webline className="mb-10 flex flex-col gap-10">
             <StyleguideSection className="flex flex-col gap-5" title={t('Error Debug Settings')}>
-                <div className="border-border-accent bg-background-more rounded-lg border-2 p-6">
-                    <h2 className="mb-4 text-lg font-semibold">{t('Ignored Errors Manager')}</h2>
+                <div className="rounded-lg border-2 border-border-accent bg-background-more p-6">
+                    <h2 className="mb-4 font-semibold text-lg">{t('Ignored Errors Manager')}</h2>
 
-                    <p className="text-text-secondary mb-4 text-sm">
+                    <p className="mb-4 text-sm text-text-secondary">
                         {t(
                             'Errors added to this list will not show as toasts. They will only log to console with [Ignored Error] prefix. Clear localStorage key',
                         )}{' '}

@@ -1,4 +1,3 @@
-import { useDomainConfig } from './DomainConfigProvider';
 import { createContext, ReactNode, useMemo } from 'react';
 import { broadcast } from 'store/broadcast';
 import { AuthLoadingSlice, createAuthLoadingSlice, defaultAuthLoadingState } from 'store/slices/createAuthLoadingSlice';
@@ -7,13 +6,13 @@ import {
     createContactInformationSlice,
     defaultContactInformationState,
 } from 'store/slices/createContactInformationSlice';
-import { PacketerySlice, createPacketerySlice, defaultPacketeryState } from 'store/slices/createPacketerySlice';
+import { createPacketerySlice, defaultPacketeryState, PacketerySlice } from 'store/slices/createPacketerySlice';
 import { createUserSlice, defaultUserState, UserSlice } from 'store/slices/createUserSlice';
 import { logException } from 'utils/errors/logException';
 import { isClient } from 'utils/isClient';
-import { create } from 'zustand';
-import { StoreApi } from 'zustand';
+import { create, StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useDomainConfig } from './DomainConfigProvider';
 
 export type PersistStore = AuthLoadingSlice & UserSlice & ContactInformationSlice & PacketerySlice;
 
@@ -26,13 +25,13 @@ type PersistStoreProviderProps = {
 const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
 
 const createPersistStore = (domainId: number) => {
-    const storeName = PERSIST_STORE_NAME + `-${domainId}`;
+    const storeName = `${PERSIST_STORE_NAME}-${domainId}`;
 
     // Check if a domain-specific store already exists
     const domainStoreExists = isClient && localStorage.getItem(storeName);
 
     // If a domain store doesn't exist, try to migrate from the legacy store
-    let initialState = undefined;
+    let initialState: Partial<PersistStore> | undefined;
     if (!domainStoreExists) {
         const legacyData = migrateFromLegacyStore();
         if (legacyData) {
