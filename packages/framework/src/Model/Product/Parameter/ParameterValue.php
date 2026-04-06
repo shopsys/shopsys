@@ -11,6 +11,7 @@ use Webmozart\Assert\Assert;
 
 #[ORM\Table(name: 'parameter_values')]
 #[ORM\Entity]
+#[ORM\UniqueConstraint(name: 'parameter_values_unique', columns: ['locale', 'text'])]
 #[EntityImage]
 class ParameterValue
 {
