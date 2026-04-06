@@ -1,0 +1,4 @@
+ParameterTypeEnum:
+    type: enum
+    inherits:
+        - 'ParameterTypeEnumDecorator'

@@ -4,6 +4,7 @@ import { ColorPreview } from 'components/Basic/ColorPreview/ColorPreview';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
+import { TypeParameterTypeEnum } from 'graphql/types';
 import { Fragment, RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -16,7 +17,9 @@ const renderParameterValues = (parameter: TypeParameterFragment) =>
     parameter.values.map((value, index) => (
         <div key={value.uuid} className="inline-flex items-center gap-1">
             {index > 0 && <span>|</span>}
-            <ColorPreview colorIcon={value.colorIcon} rgbHex={value.rgbHex} />
+            {parameter.type === TypeParameterTypeEnum.Color && (
+                <ColorPreview colorIcon={value.colorIcon} rgbHex={value.rgbHex} />
+            )}
             {value.text}
             {parameter.unit?.name && ` ${parameter.unit.name}`}
         </div>

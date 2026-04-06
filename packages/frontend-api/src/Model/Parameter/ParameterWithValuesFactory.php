@@ -41,6 +41,7 @@ class ParameterWithValuesFactory
             'uuid' => $product['parameter_uuid'],
             'name' => $product['parameter_name'],
             'group' => $product['parameter_group'],
+            'type' => $product['parameter_type'],
             'unit' => $product['parameter_unit'] ? ['name' => $product['parameter_unit']] : null,
             'values' => [],
         ];
