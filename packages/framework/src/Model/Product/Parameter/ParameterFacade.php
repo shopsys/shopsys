@@ -113,20 +113,18 @@ class ParameterFacade
         $this->em->flush();
     }
 
-    public function getParameterValueByValueTextNumericValueAndLocale(
+    public function getParameterValueByValueTextAndLocale(
         string $valueText,
-        ?string $numericValue,
         string $locale,
     ): ParameterValue {
-        return $this->parameterRepository->getParameterValueByValueTextNumericValueAndLocale($valueText, $numericValue, $locale);
+        return $this->parameterRepository->getParameterValueByValueTextAndLocale($valueText, $locale);
     }
 
-    public function findParameterValueByValueTextNumericValueAndLocale(
+    public function findParameterValueByValueTextAndLocale(
         string $valueText,
-        ?string $numericValue,
         string $locale,
     ): ?ParameterValue {
-        return $this->parameterRepository->findParameterValueByValueTextNumericValueAndLocale($valueText, $numericValue, $locale);
+        return $this->parameterRepository->findParameterValueByValueTextAndLocale($valueText, $locale);
     }
 
     /**

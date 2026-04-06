@@ -171,9 +171,8 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         $parameterFacade = self::getContainer()->get(ParameterFacade::class);
         $parameter = $parameterFacade->getById($this->getReference(ParameterDataFixture::PARAM_GAMING_MOUSE, Parameter::class)->getId());
 
-        $parameterValue = $parameterFacade->getParameterValueByValueTextNumericValueAndLocale(
+        $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(
             t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-            null,
             $this->firstDomainLocale,
         );
 

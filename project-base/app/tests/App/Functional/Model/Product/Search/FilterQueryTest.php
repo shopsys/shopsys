@@ -178,17 +178,14 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
             $parameterPagesCount->getId() => [
                 $this->getParameterValueIdForFirstDomain(
                     '55',
-                    true,
                 ),
                 $this->getParameterValueIdForFirstDomain(
                     '48',
-                    true,
                 ),
             ],
             $parameterWeight->getId() => [
                 $this->getParameterValueIdForFirstDomain(
                     '50',
-                    true,
                 ),
             ],
         ];
