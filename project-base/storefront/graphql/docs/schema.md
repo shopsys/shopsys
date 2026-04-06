@@ -161,6 +161,7 @@
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
+    * [ParameterTypeEnum](#parametertypeenum)
     * [PaymentContentPageStatusEnum](#paymentcontentpagestatusenum)
     * [PaymentTypeEnum](#paymenttypeenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
@@ -7448,6 +7449,15 @@ Parameter name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="parameter.type">type</strong></td>
+<td valign="top"><a href="#parametertypeenum">ParameterTypeEnum</a>!</td>
+<td>
+
+Parameter type
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="parameter.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a></td>
 <td>
@@ -13135,6 +13145,33 @@ New
 Withdrawn
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### ParameterTypeEnum
+
+Represents the type of the parameter
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>CHECKBOX</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>COLOR</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>SLIDER</strong></td>
+<td></td>
 </tr>
 </tbody>
 </table>
