@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Collector;
 use Override;
 use PharIo\Version\Version;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Context\ConsoleContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -37,21 +38,27 @@ class ShopsysFrameworkDataCollector extends DataCollector
         $this->data = [
             'version' => ShopsysFrameworkBundle::VERSION,
             'docsVersion' => $this->resolveDocsVersion(ShopsysFrameworkBundle::VERSION),
+            'docsUrl' => sprintf('https://docs.shopsys.com/en/%s/', $this->resolveDocsVersion(ShopsysFrameworkBundle::VERSION)),
             'domains' => $this->domain->getAll(),
             'systemTimeZone' => date_default_timezone_get(),
+            'inAdmin' => false,
+            'currentContext' => $this->resolveCurrentContext(),
+            'currentDomainId' => 0,
+            'currentDomainName' => 'N/A',
+            'currentDomainLocale' => 'N/A',
+            'adminLocale' => 'N/A',
+            'displayTimeZone' => 'N/A',
         ];
 
         if ($this->contextResolver->isCurrentContext(FrontendApiContext::class)) {
-            $this->data['inAdmin'] = false;
             $this->data['currentDomainId'] = $this->domain->getId();
             $this->data['currentDomainName'] = $this->domain->getName();
             $this->data['currentDomainLocale'] = $this->domain->getLocale();
             $this->data['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId())->getName();
-        } else {
-            $this->data['inAdmin'] = $this->contextResolver->isCurrentContext(AdminContext::class);
-            $this->data['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName();
+        } elseif ($this->contextResolver->isCurrentContext(AdminContext::class)) {
+            $this->data['inAdmin'] = true;
             $this->data['adminLocale'] = $this->administratorLocalizationFacade->getCurrentAdminLocaleOrDefault();
-            $this->data['currentDomainId'] = 0;
+            $this->data['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName();
         }
     }
 
@@ -97,9 +104,31 @@ class ShopsysFrameworkDataCollector extends DataCollector
         return $this->data['inAdmin'];
     }
 
+    public function getCurrentContext(): string
+    {
+        return $this->data['currentContext'];
+    }
+
     public function getAdminLocale(): string
     {
         return $this->data['adminLocale'];
+    }
+
+    protected function resolveCurrentContext(): string
+    {
+        if ($this->contextResolver->isCurrentContext(AdminContext::class)) {
+            return 'Administration';
+        }
+
+        if ($this->contextResolver->isCurrentContext(FrontendApiContext::class)) {
+            return 'Frontend API';
+        }
+
+        if ($this->contextResolver->isCurrentContext(ConsoleContext::class)) {
+            return 'Console';
+        }
+
+        return 'Unknown';
     }
 
     /**
@@ -114,6 +143,11 @@ class ShopsysFrameworkDataCollector extends DataCollector
     public function getDocsVersion(): string
     {
         return $this->data['docsVersion'];
+    }
+
+    public function getDocsUrl(): string
+    {
+        return $this->data['docsUrl'];
     }
 
     public function getSystemTimeZone(): string
