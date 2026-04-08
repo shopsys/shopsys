@@ -16,27 +16,6 @@ export const ContactInformationDeliveryAddressForm = () => {
 
     return (
         <div className="flex flex-col gap-5">
-            <PhoneNumberInputControlled
-                formName={formMeta.formName}
-                formProviderMethods={formProviderMethods}
-                isTelephoneRequired={false}
-                prefixCountryCodeName={formMeta.fields.deliveryTelephonePrefixCountryCode.name}
-                prefixName={formMeta.fields.deliveryTelephonePrefix.name}
-                telephoneLabel={formMeta.fields.deliveryTelephone.label}
-                telephoneName={formMeta.fields.deliveryTelephone.name}
-                telephoneOnChange={(event) =>
-                    updateContactInformation({
-                        deliveryTelephone: event.currentTarget.value,
-                    })
-                }
-                onPrefixChange={(dialCode, countryCode) =>
-                    updateContactInformation({
-                        deliveryTelephonePrefix: dialCode,
-                        deliveryTelephonePrefixCountryCode: countryCode,
-                    })
-                }
-            />
-
             <FormColumn>
                 <TextInputControlled
                     control={formProviderMethods.control}
@@ -73,6 +52,27 @@ export const ContactInformationDeliveryAddressForm = () => {
                     }}
                 />
             </FormColumn>
+
+            <PhoneNumberInputControlled
+                formName={formMeta.formName}
+                formProviderMethods={formProviderMethods}
+                isTelephoneRequired={false}
+                prefixCountryCodeName={formMeta.fields.deliveryTelephonePrefixCountryCode.name}
+                prefixName={formMeta.fields.deliveryTelephonePrefix.name}
+                telephoneLabel={formMeta.fields.deliveryTelephone.label}
+                telephoneName={formMeta.fields.deliveryTelephone.name}
+                telephoneOnChange={(event) =>
+                    updateContactInformation({
+                        deliveryTelephone: event.currentTarget.value,
+                    })
+                }
+                onPrefixChange={(dialCode, countryCode) =>
+                    updateContactInformation({
+                        deliveryTelephonePrefix: dialCode,
+                        deliveryTelephonePrefixCountryCode: countryCode,
+                    })
+                }
+            />
 
             {!pickupPlace && (
                 <>

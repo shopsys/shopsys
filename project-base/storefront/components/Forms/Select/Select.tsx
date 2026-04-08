@@ -12,6 +12,8 @@ import { SelectList, SelectListProps } from './SelectList';
 
 type SelectProps<T = string> = {
     ariaLabel: string;
+    ariaDescribedBy?: string;
+    ariaInvalid?: boolean;
     label?: string | ReactNode;
     placeholder?: string;
     selectClassName?: string;
@@ -41,6 +43,8 @@ type SelectProps<T = string> = {
 
 export const Select = <T extends string | number | undefined | Record<any, any> | null | boolean = string>({
     ariaLabel,
+    ariaDescribedBy,
+    ariaInvalid,
     label,
     options,
     onSelectOption,
@@ -125,6 +129,11 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 data-tid={tid}
                                 id={tid}
                                 placeholder={placeholder}
+                                // Input mounts only when the dropdown opens, so focusing on mount
+                                // lands the cursor into the search field right after the user opens it.
+                                ref={(node) => {
+                                    node?.focus();
+                                }}
                                 role="combobox"
                                 value={comboBoxConfig.searchValue}
                                 className={twMergeCustom(
@@ -160,6 +169,8 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         </>
                     ) : (
                         <button
+                            aria-describedby={ariaDescribedBy}
+                            aria-invalid={ariaInvalid}
                             className="w-full cursor-pointer px-3 pt-5 text-left outline-hidden"
                             data-tid={tid}
                             disabled={isDisabled}
@@ -207,10 +218,12 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     )}
 
                     <button
+                        aria-describedby={ariaDescribedBy}
                         aria-expanded={isOpen}
                         aria-haspopup="listbox"
+                        aria-invalid={ariaInvalid}
                         aria-label={ariaLabel}
-                        className="rounded-sm px-2.5"
+                        className="cursor-pointer rounded-sm px-2.5"
                         disabled={isDisabled}
                         tabIndex={0}
                         title={ariaLabel}

@@ -128,6 +128,17 @@ export const PhonePrefixSelect: FC<PhonePrefixSelectProps> = ({
         [isDropdownOpen],
     );
 
+    const comboBoxConfig = isDropdownOpen
+        ? {
+              inputAriaDescribedBy: describedBy,
+              inputAriaInvalid: hasError,
+              inputAriaLabel: typeof label === 'string' ? label : ariaLabel,
+              searchValue: comboBoxSearchValue,
+              setSearchValue: handleSetSearchValue,
+              searchInputClassName: 'pr-0',
+          }
+        : undefined;
+
     if (shouldBeReadonly) {
         return (
             <TextInput
@@ -146,6 +157,8 @@ export const PhonePrefixSelect: FC<PhonePrefixSelectProps> = ({
 
     return (
         <Select
+            ariaDescribedBy={describedBy}
+            ariaInvalid={hasError}
             activeOption={activeOption}
             ariaLabel={ariaLabel}
             className={className}
@@ -155,16 +168,11 @@ export const PhonePrefixSelect: FC<PhonePrefixSelectProps> = ({
             label={label}
             listClassName="right-auto min-w-full w-max [&_li>div]:whitespace-nowrap"
             options={selectOptions}
-            selectClassName={selectClassName}
+            // overflow-hidden clips the flag glyph's line when the host lacks an emoji font
+            // (e.g. Cypress Linux Chrome) that would otherwise push "+420" below h-14.
+            selectClassName={twMergeCustom('overflow-hidden [&_button>span]:whitespace-nowrap', selectClassName)}
             tid={tid}
-            comboBoxConfig={{
-                inputAriaDescribedBy: describedBy,
-                inputAriaInvalid: hasError,
-                inputAriaLabel: typeof label === 'string' ? label : ariaLabel,
-                searchValue: comboBoxSearchValue,
-                setSearchValue: handleSetSearchValue,
-                searchInputClassName: 'pr-0',
-            }}
+            comboBoxConfig={comboBoxConfig}
             onSelectOption={(option) => {
                 const selectedPrefix = prefixByCountryCode.get(option.value);
                 if (selectedPrefix) {

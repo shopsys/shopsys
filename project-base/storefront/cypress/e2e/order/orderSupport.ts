@@ -3,6 +3,14 @@ import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixt
 import { changeElementText, checkAndHideSuccessToast, checkUrl, translations, t } from 'support';
 import { TIDs } from 'tids';
 
+const getPhoneValueWithPrefix = (phone: string, dialCode: string = '+420') => {
+    if (phone.startsWith('+') || phone.startsWith('00')) {
+        return phone;
+    }
+
+    return `${dialCode}${phone}`;
+};
+
 export const fillEmailInThirdStep = (email: string) => {
     cy.get('#contact-information-form-email')
         .should('have.attr', 'placeholder', translations.placeholder.email)
@@ -12,7 +20,7 @@ export const fillEmailInThirdStep = (email: string) => {
 export const fillCustomerInformationInThirdStep = (phone: string, firstName: string, lastName: string) => {
     cy.get('#contact-information-form-telephone')
         .should('have.attr', 'placeholder', translations.placeholder.phone)
-        .type(phone);
+        .type(getPhoneValueWithPrefix(phone));
     cy.get('#contact-information-form-firstName')
         .should('have.attr', 'placeholder', translations.placeholder.firstName)
         .type(firstName);
@@ -64,7 +72,7 @@ export const clearAndFillDeliveryAdressInThirdStep = (deliveryAddress: {
     cy.get('#contact-information-form-deliveryTelephone')
         .should('have.attr', 'placeholder', translations.placeholder.phone)
         .clear()
-        .type(deliveryAddress.phone);
+        .type(getPhoneValueWithPrefix(deliveryAddress.phone));
 
     cy.get('#contact-information-form-deliveryStreet')
         .should('have.attr', 'placeholder', translations.placeholder.street)
@@ -106,7 +114,7 @@ export const clearAndFillDeliveryContactInThirdStep = (deliveryContact: {
     cy.get('#contact-information-form-deliveryTelephone')
         .should('have.attr', 'placeholder', translations.placeholder.phone)
         .clear()
-        .type(deliveryContact.phone);
+        .type(getPhoneValueWithPrefix(deliveryContact.phone));
 };
 
 export const fillRegistrationInfoAfterOrder = (password: string) => {

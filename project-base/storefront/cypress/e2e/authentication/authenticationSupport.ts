@@ -1,7 +1,6 @@
 import { url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import { checkFormLineError, checkUrl, translations } from 'support';
-import { t } from 'support/translations';
 import { TIDs } from 'tids';
 
 export const goToRegistrationPageFromHeader = () => {
@@ -62,6 +61,7 @@ export const clearAndFillInRegstrationFormEmail = (email: string, placeholderEma
 
 export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCustomer', email: string) => {
     const generatedData = generateCustomerRegistrationData(custmerType, email);
+    const phoneWithPrefix = `${generatedData.telephone.prefix}${generatedData.telephone.number}`;
 
     cy.get('#registration-form-firstName')
         .should('have.attr', 'placeholder', translations.placeholder.firstName)
@@ -73,7 +73,7 @@ export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCu
 
     cy.get('#registration-form-telephone')
         .should('have.attr', 'placeholder', translations.placeholder.phone)
-        .type(generatedData.telephone);
+        .type(phoneWithPrefix);
 
     if (
         custmerType === 'companyCustomer' &&

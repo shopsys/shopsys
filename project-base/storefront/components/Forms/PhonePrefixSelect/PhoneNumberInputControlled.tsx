@@ -3,9 +3,10 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PhonePrefixSelect } from 'components/Forms/PhonePrefixSelect/PhonePrefixSelect';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { TIDs } from 'cypress/tids';
-import { ChangeEventHandler, FocusEventHandler, ReactNode, useCallback, useEffect } from 'react';
+import { ChangeEvent, ChangeEventHandler, FocusEventHandler, ReactNode, useCallback, useEffect, useRef } from 'react';
 import { UseFormReturn, useController } from 'react-hook-form';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { parsePhoneWithPrefix } from 'utils/phonePrefix/parsePhoneWithPrefix';
 import { usePhonePrefixes } from 'utils/phonePrefix/usePhonePrefixes';
 
 type PhoneNumberInputControlledProps = {
@@ -56,22 +57,87 @@ export const PhoneNumberInputControlled: FC<PhoneNumberInputControlledProps> = (
     const telephoneInputId = `${formName}-${telephoneName}`;
     const phoneInputErrorMessageId = `${telephoneInputId}-error`;
     const prefixTid = `${formName}-${prefixName}`;
+    const onPrefixFieldChange = prefixField.onChange;
+    const onPrefixCountryCodeFieldChange = prefixCountryCodeField.onChange;
 
     const onPrefixSelectChange = useCallback(
         ({ dialCode, countryCode }: { dialCode: string; countryCode: string }) => {
-            prefixField.onChange(dialCode);
-            prefixCountryCodeField.onChange(countryCode);
+            onPrefixFieldChange(dialCode);
+            onPrefixCountryCodeFieldChange(countryCode);
             onPrefixChange?.(dialCode, countryCode);
         },
-        [prefixField, prefixCountryCodeField, onPrefixChange],
+        [onPrefixCountryCodeFieldChange, onPrefixFieldChange, onPrefixChange],
     );
 
-    const onTelephoneBlur: FocusEventHandler<HTMLInputElement> = () => {
+    const previousValueRef = useRef(telephoneField.value ?? '');
+
+    // Keep the ref in sync when the form value changes externally (e.g. form reset, server data load).
+    useEffect(() => {
+        previousValueRef.current = telephoneField.value ?? '';
+    }, [telephoneField.value]);
+
+    const applyParsedPrefix = useCallback(
+        (result: ReturnType<typeof parsePhoneWithPrefix>) => {
+            if (!result.matched) {
+                return false;
+            }
+
+            formProviderMethods.setValue(prefixName, result.dialCode, { shouldValidate: true });
+            formProviderMethods.setValue(prefixCountryCodeName, result.countryCode, { shouldValidate: true });
+            formProviderMethods.setValue(telephoneName, result.localNumber, { shouldValidate: true });
+            previousValueRef.current = result.localNumber;
+
+            onPrefixChange?.(result.dialCode, result.countryCode);
+            // Synthetic event — consumers must only access currentTarget.value
+            telephoneOnChange?.({ currentTarget: { value: result.localNumber } } as ChangeEvent<HTMLInputElement>);
+
+            return true;
+        },
+        [formProviderMethods, onPrefixChange, prefixCountryCodeName, prefixName, telephoneName, telephoneOnChange],
+    );
+
+    const onTelephoneBlur: FocusEventHandler<HTMLInputElement> = (event) => {
+        // Safety net: some password managers set the DOM value without firing onChange,
+        // so react-hook-form state may be stale. Read the actual DOM value and parse
+        // only if it differs from what RHF knows (= evidence of external DOM manipulation).
+        const domValue = event.target.value;
+        const rhfValue = telephoneField.value ?? '';
+
+        if (domValue !== rhfValue) {
+            const result = parsePhoneWithPrefix(domValue, phonePrefixes, prefixCountryCodeField.value);
+
+            if (result.matched) {
+                applyParsedPrefix(result);
+            } else {
+                formProviderMethods.setValue(telephoneName, domValue, { shouldValidate: true });
+                previousValueRef.current = domValue;
+                telephoneOnChange?.({ currentTarget: { value: domValue } } as ChangeEvent<HTMLInputElement>);
+            }
+        }
+
         telephoneField.onBlur();
         window.getSelection()?.removeAllRanges();
     };
 
     const onTelephoneChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        const newValue = event.target.value;
+        const oldValue = previousValueRef.current;
+        previousValueRef.current = newValue;
+
+        // Detect paste / autofill: value changed by more than one character at once.
+        const isPasteOrAutofill = Math.abs(newValue.length - oldValue.length) > 1;
+
+        // Detect explicit international prefix typed character by character.
+        const hasExplicitPrefix = newValue.startsWith('+') || newValue.startsWith('00');
+
+        if (isPasteOrAutofill || hasExplicitPrefix) {
+            const result = parsePhoneWithPrefix(newValue, phonePrefixes, prefixCountryCodeField.value);
+
+            if (applyParsedPrefix(result)) {
+                return;
+            }
+        }
+
         telephoneField.onChange(event);
         telephoneOnChange?.(event);
     };

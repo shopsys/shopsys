@@ -1,4 +1,5 @@
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useFormContext } from 'react-hook-form';
@@ -49,24 +50,26 @@ export const ContactInformationDeliveryPickUpForm = () => {
                 />
             </FormColumn>
 
-            <FormColumn>
-                <TextInputControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.deliveryTelephone.name}
-                    width="half"
-                    textInputProps={{
-                        label: formMeta.fields.deliveryTelephone.label,
-                        required: false,
-                        type: 'tel',
-                        autoComplete: 'tel',
-                        onChange: (event) =>
-                            updateContactInformation({
-                                deliveryTelephone: event.currentTarget.value,
-                            }),
-                    }}
-                />
-            </FormColumn>
+            <PhoneNumberInputControlled
+                formName={formMeta.formName}
+                formProviderMethods={formProviderMethods}
+                isTelephoneRequired={false}
+                prefixCountryCodeName={formMeta.fields.deliveryTelephonePrefixCountryCode.name}
+                prefixName={formMeta.fields.deliveryTelephonePrefix.name}
+                telephoneLabel={formMeta.fields.deliveryTelephone.label}
+                telephoneName={formMeta.fields.deliveryTelephone.name}
+                telephoneOnChange={(event) =>
+                    updateContactInformation({
+                        deliveryTelephone: event.currentTarget.value,
+                    })
+                }
+                onPrefixChange={(dialCode, countryCode) =>
+                    updateContactInformation({
+                        deliveryTelephonePrefix: dialCode,
+                        deliveryTelephonePrefixCountryCode: countryCode,
+                    })
+                }
+            />
         </div>
     );
 };

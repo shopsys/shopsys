@@ -75,6 +75,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 placeholder={typeof label === 'string' ? label : ' '}
                 ref={textInputForwarderRef}
                 required={required}
+                spellCheck={false}
                 type={type}
                 value={value}
                 className={twMergeCustom(

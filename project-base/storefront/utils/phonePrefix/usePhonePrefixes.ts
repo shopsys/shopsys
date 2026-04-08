@@ -9,7 +9,7 @@ const EMPTY_PHONE_PREFIXES: PhonePrefixesType = [];
 export const usePhonePrefixes = () => {
     const [{ data: phonePrefixesData }] = usePhonePrefixesQuery();
     const phonePrefixes = phonePrefixesData?.settings?.phonePrefixes ?? EMPTY_PHONE_PREFIXES;
-    const defaultPhonePrefix = phonePrefixes.at(0);
+    const defaultPhonePrefix = phonePrefixes[0] ?? null;
 
     return {
         phonePrefixes,
