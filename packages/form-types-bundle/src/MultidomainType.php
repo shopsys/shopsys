@@ -41,7 +41,6 @@ final class MultidomainType extends AbstractType
                 $domainOptions = $entryOptions;
             }
 
-            $domainOptions['attr']['data-domain-id'] = $domainId;
             $domainOptions['label'] = false;
 
             $builder->add((string)$domainId, $options['entry_type'], $domainOptions);
@@ -61,6 +60,14 @@ final class MultidomainType extends AbstractType
         ]);
 
         $resolver->setAllowedValues('display_mode', ['stacked', 'columns']);
+    }
+
+    #[Override]
+    public function finishView(FormView $view, FormInterface $form, array $options): void
+    {
+        foreach ($view->children as $domainId => $childView) {
+            $childView->vars['attr']['data-domain-id'] = $domainId;
+        }
     }
 
     /**
