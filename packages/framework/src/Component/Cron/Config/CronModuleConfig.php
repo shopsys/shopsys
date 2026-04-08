@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron\Config;
 
+use Lorisleiva\CronTranslator\CronParsingException;
+use Lorisleiva\CronTranslator\CronTranslator;
 use Override;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
@@ -20,8 +22,7 @@ class CronModuleConfig implements CronTimeInterface
     public function __construct(
         protected readonly SimpleCronModuleInterface|IteratedCronModuleInterface $service,
         protected readonly string $serviceId,
-        protected readonly string $timeHours,
-        protected readonly string $timeMinutes,
+        protected readonly string $cronExpression,
         protected readonly ?string $readableName = null,
         protected readonly ?string $readableFrequency = null,
         protected readonly int $runEveryMin = self::RUN_EVERY_MIN_DEFAULT,
@@ -41,15 +42,9 @@ class CronModuleConfig implements CronTimeInterface
     }
 
     #[Override]
-    public function getTimeMinutes(): string
+    public function getCronExpression(): string
     {
-        return $this->timeMinutes;
-    }
-
-    #[Override]
-    public function getTimeHours(): string
-    {
-        return $this->timeHours;
+        return $this->cronExpression;
     }
 
     public function getReadableName(): ?string
@@ -67,38 +62,34 @@ class CronModuleConfig implements CronTimeInterface
         $this->instanceName = $instanceName;
     }
 
-    public function getReadableFrequency(): string
+    public function getReadableFrequency(string $locale = 'en'): string
     {
         if ($this->readableFrequency !== null) {
             return $this->readableFrequency;
         }
 
-        if ($this->timeHours === '*' && $this->timeMinutes === '*') {
-            return t('On each run (usually every 5 minutes)');
+        $expression = $this->getEffectiveCronExpression();
+
+        try {
+            return CronTranslator::translate($expression, $locale, true);
+        } catch (CronParsingException) {
+            return CronTranslator::translate($expression, 'en', true);
+        }
+    }
+
+    /**
+     * Replaces wildcard minute field with the actual run interval so that
+     * the translated frequency reflects reality (e.g. "every 5 minutes" instead of "every minute").
+     */
+    protected function getEffectiveCronExpression(): string
+    {
+        $parts = explode(' ', $this->cronExpression);
+
+        if ($parts[0] === '*' && $this->runEveryMin > 1) {
+            $parts[0] = '*/' . $this->runEveryMin;
         }
 
-        if ($this->timeHours === '*' && is_numeric($this->timeMinutes)) {
-            return t('Every hour');
-        }
-
-        if (is_numeric($this->timeHours) && $this->timeMinutes === '*') {
-            return t('Every 5 minutes in %hour% hour', [
-                '%hour%' => (int)$this->timeHours,
-                '%count%' => (int)$this->timeHours,
-            ]);
-        }
-
-        if (is_numeric($this->timeHours) && is_numeric($this->timeMinutes)) {
-            return t('Everyday at %hour%:%minutes%', [
-                '%hour%' => date('H', (int)$this->timeHours * 3600),
-                '%minutes%' => date('i', (int)$this->timeMinutes * 60),
-            ]);
-        }
-
-        return t('Several times a day (%hours%h and %minutes%m)', [
-            '%hours%' => $this->timeHours,
-            '%minutes%' => $this->timeMinutes,
-        ]);
+        return implode(' ', $parts);
     }
 
     public function getRunEveryMin(): int

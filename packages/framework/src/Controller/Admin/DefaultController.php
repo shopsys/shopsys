@@ -239,7 +239,7 @@ class DefaultController extends AdminBaseController
                 'lastDuration' => $cronModule->getLastDuration(),
                 'status' => $cronModule->getStatus(),
                 'enabled' => $cronModule->isEnabled(),
-                'readableFrequency' => $cronConfig->getReadableFrequency(),
+                'readableFrequency' => $cronConfig->getReadableFrequency($this->getCurrentAdministrator()->getSelectedLocale()),
                 'scheduled' => $cronModule->isScheduled(),
                 'actions' => null,
                 'minimalDuration' => $minimalDuration,

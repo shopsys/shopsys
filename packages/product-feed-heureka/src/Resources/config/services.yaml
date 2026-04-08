@@ -26,7 +26,7 @@ services:
 
     Shopsys\ProductFeed\HeurekaBundle\HeurekaFeed:
         tags:
-            - { name: shopsys.feed, hours: '2', minutes: '0' }
+            - { name: shopsys.feed, cron: '0 2 * * *' }
 
     Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloader:
         arguments:

@@ -14,8 +14,7 @@ class FeedConfig implements CronTimeInterface
      */
     public function __construct(
         protected readonly FeedInterface $feed,
-        protected readonly string $hours,
-        protected readonly string $minutes,
+        protected readonly string $cronExpression,
         protected readonly array $domainIds,
     ) {
     }
@@ -26,15 +25,9 @@ class FeedConfig implements CronTimeInterface
     }
 
     #[Override]
-    public function getTimeMinutes(): string
+    public function getCronExpression(): string
     {
-        return $this->minutes;
-    }
-
-    #[Override]
-    public function getTimeHours(): string
-    {
-        return $this->hours;
+        return $this->cronExpression;
     }
 
     /**

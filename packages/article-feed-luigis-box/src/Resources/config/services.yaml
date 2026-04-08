@@ -9,4 +9,4 @@ services:
 
     Shopsys\ArticleFeed\LuigisBoxBundle\LuigisBoxArticleFeed:
         tags:
-            - { name: shopsys.feed, hours: '*', minutes: '30' }
+            - { name: shopsys.feed, cron: '30 * * * *' }

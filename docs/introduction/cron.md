@@ -7,15 +7,24 @@ Periodically executed Cron modules recalculate visibility, generate XML feeds an
 
 By default, you can configure your own cron configurations in `app/config/cron.yaml` file.
 
+Cron modules use **standard crontab expressions** (5 fields: minute, hour, day of month, month, day of week) for scheduling.
+This means you can use all standard cron syntax features including ranges (`1-5`), lists (`0,15,30`), steps (`*/10`), and combinations thereof.
+
+For example:
+
+```yaml
+App\Cron\MyModule:
+    tags:
+        - { name: shopsys.cron, cron: '*/15 * * * *', instanceName: default, readableName: 'My task' }
+```
+
+This would run the module every 15 minutes. See [crontab syntax](https://en.wikipedia.org/wiki/Cron#Cron_expression) for the full expression reference.
+
 If you want to show Cron overview table for non-superadmin users you need add parameter `shopsys.display_cron_overview_for_superadmin_only` set to `false` in your `config/parameters.yaml`:
 
 !!! note
 
-    All default crons are translated only to English. If you want to translate it to another language, you need to set `readableName` property for cron in `app/config/cron.yaml`.
-
-!!! note
-
-    If you have different cron frequency set using crontab and you want to set readable frequency manually, you can use `readableFrequency` property for cron in `app/config/cron.yaml`.
+    Cron frequency descriptions shown in admin are automatically translated to the logged-in administrator's locale. If you want to override the description, you can set `readableFrequency` property for cron in `app/config/cron.yaml`.
 
 ## Default Cron Commands
 
@@ -23,7 +32,7 @@ There is some prepared configuration in a file [`app/config/cron.yaml`]({{github
 
 !!! note
 
-    Hours set in [`app/config/cron.yaml`]({{github.link}}/project-base/app/config/cron.yaml) are consider to be in timezone set in `shopsys.cron_timezone` parameter in [`config/parameters_common.yaml`]({{github.link}}/project-base/app/config/parameters_common.yaml) file.
+    Times in cron expressions in [`app/config/cron.yaml`]({{github.link}}/project-base/app/config/cron.yaml) are evaluated in the timezone set in `shopsys.cron_timezone` parameter in [`config/parameters_common.yaml`]({{github.link}}/project-base/app/config/parameters_common.yaml) file.
 
 ## Running Cron Jobs
 

@@ -15,14 +15,14 @@ Product feeds are usually exported using Cron modules.
 The Cron modules are already implemented and registered, all that's needed is to run the [`cron` phing target](../introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes (can be changed in parameters) on your server and Shopsys Platform takes care of the rest.
 They can be also generated manually in the administration section _Marketing > XML Feeds_, if you're logged in as _superadministrator_.
 
-Each feed definition in `services.yaml` includes hours and minutes in cron format, when it should be generated.
+Each feed definition in `services.yaml` includes a `cron` attribute with a standard crontab expression defining when it should be generated.
 
 For example:
 
 ```yaml
 Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
     tags:
-        - { name: shopsys.feed, hours: '1', minutes: '0' }
+        - { name: shopsys.feed, cron: '0 1 * * *' }
 ```
 
 Google feed will be generated every day at 1:00 AM.
@@ -32,13 +32,13 @@ You can also set it like this:
 ```yaml
 Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
     tags:
-        - { name: shopsys.feed, hours: '*/4', minutes: '0' }
+        - { name: shopsys.feed, cron: '0 */4 * * *' }
 ```
 
 In such a case, this feed will be generated every four hours.
 
 Feeds have their default times set in their own `services.yaml` files, but can be easily changed in your project's `feed.yaml` file.
-You only need to copy service definition from feed `services.yaml` file and change the hours and minutes to expected ones.
+You only need to copy the service definition from the feed's `services.yaml` file and change the `cron` expression.
 
 ## How to run feed outside scheduled time?
 
@@ -54,13 +54,13 @@ For example, if you want to limit Google Feed to first and third domain, you wil
 ```yaml
 Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
     tags:
-        - { name: shopsys.feed, hours: '1', minutes: '0', domain_ids: '1,3' }
+        - { name: shopsys.feed, cron: '0 1 * * *', domain_ids: '1,3' }
 ```
 
 ## How to implement a custom product feed?
 
 The heart of a product feed plugin is a service implementing the [`FeedInterface`]({{github.link}}/packages/framework/src/Model/Feed/FeedInterface.php) that is tagged in a DI container with `shopsys.feed` tag.
-Tags `hours` and `minutes` are mandatory and define when the feed should be generated.
+The `cron` tag attribute is mandatory and defines when the feed should be generated using a standard crontab expression.
 
 The annotations in the feed interfaces ([`FeedInterface`]({{github.link}}/packages/framework/src/Model/Feed/FeedInterface.php), [`FeedInfoInterface`]({{github.link}}/packages/framework/src/Model/Feed/FeedInfoInterface.php) and [`FeedItemInterface`]({{github.link}}/packages/framework/src/Model/Feed/FeedItemInterface.php)) should explain a lot.
 When in doubt, you can take a look at the [already implemented product feeds](https://github.com/search?q=topic%3Aproduct-feed+org%3Ashopsys) for inspiration.

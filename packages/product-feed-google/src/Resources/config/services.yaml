@@ -13,4 +13,4 @@ services:
 
     Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
         tags:
-            - { name: shopsys.feed, hours: '1', minutes: '0' }
+            - { name: shopsys.feed, cron: '0 1 * * *' }
