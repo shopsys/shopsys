@@ -19,12 +19,14 @@ use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
 use Throwable;
 
+#[AutoconfigureTag('shopsys.admin.crud_controllers')]
 abstract class AbstractCrudController extends AdminBaseController
 {
     protected Definition $definition;

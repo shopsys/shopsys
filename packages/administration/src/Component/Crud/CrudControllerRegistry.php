@@ -11,7 +11,6 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use SplPriorityQueue;
 use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Webmozart\Assert\Assert;
 
@@ -41,7 +40,8 @@ final class CrudControllerRegistry
      */
     public function __construct(
         private readonly EntityNameResolver $entityNameResolver,
-        private readonly ContainerInterface $container,
+        #[TaggedLocator('shopsys.admin.crud_controllers')]
+        private readonly ServiceLocator $controllers,
         #[TaggedLocator('shopsys.admin.crud_handler')]
         private readonly ServiceLocator $handlers,
         private readonly array $crudControllers = [],
@@ -111,7 +111,7 @@ final class CrudControllerRegistry
         $extensions = $this->getResolvedExtensions()[$controllerClass] ?? [];
 
         /** @var \Shopsys\AdministrationBundle\Controller\AbstractCrudController $crudController */
-        $crudController = $this->container->get($controllerClass);
+        $crudController = $this->controllers->get($controllerClass);
 
         $config = new CrudConfig($meta['entityName']);
         $crudController->configure($config);
@@ -161,7 +161,7 @@ final class CrudControllerRegistry
                 }
 
                 $queueByController[$extension['controllerClass']]->insert(
-                    $this->container->get($extension['extensionClass']),
+                    $this->controllers->get($extension['extensionClass']),
                     $extension['priority'],
                 );
             }
