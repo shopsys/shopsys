@@ -13,7 +13,6 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
@@ -53,7 +52,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method array getStoreAvailabilities(\App\Model\Product\Product $product)
  * @method int|null getAvailableStoresCount(\App\Model\Product\Product $product)
  * @method array getProductVideos(\App\Model\Product\Product $product)
- * @method string getSlug(\App\Model\Product\Product $product)
+ * @method \GraphQL\Executor\Promise\Promise getSlug(\App\Model\Product\Product $product)
  * @method string getVatPercent(\App\Model\Product\Product $product)
  * @method int|null getPromotionBuyQuantity(\App\Model\Product\Product $product)
  * @method int|null getPromotionFreeQuantity(\App\Model\Product\Product $product)
@@ -85,7 +84,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         DataLoaderInterface $productsVisibleByIdsBatchLoader,
         DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
         ProductVideoTranslationsRepository $productVideoTranslationsRepository,
-        FriendlyUrlFacade $friendlyUrlFacade,
+        DataLoaderInterface $productSlugBatchLoader,
         ProductStockFacade $productStockFacade,
         ProductRepository $productRepository,
         ParameterRepository $parameterRepository,
@@ -109,7 +108,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productsVisibleByIdsBatchLoader,
             $productsVisibleCountByIdsBatchLoader,
             $productVideoTranslationsRepository,
-            $friendlyUrlFacade,
+            $productSlugBatchLoader,
             $productStockFacade,
             $productRepository,
             $parameterRepository,

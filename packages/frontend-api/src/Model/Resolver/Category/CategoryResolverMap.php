@@ -12,7 +12,6 @@ use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
@@ -23,10 +22,11 @@ class CategoryResolverMap extends ResolverMap
     public function __construct(
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly DataLoaderInterface $readyCategorySeoMixesBatchLoader,
         protected readonly DataLoaderInterface $categoryChildrenBatchLoader,
         protected readonly CategoryFacade $categoryFacade,
+        protected readonly DataLoaderInterface $categorySlugBatchLoader,
+        protected readonly DataLoaderInterface $categorySeoSlugBatchLoader,
     ) {
     }
 
@@ -69,7 +69,7 @@ class CategoryResolverMap extends ResolverMap
             'seoH1' => $category->getSeoH1($this->domain->getId()),
             'seoTitle' => $category->getSeoTitle($this->domain->getId()),
             'seoMetaDescription' => $category->getSeoMetaDescription($this->domain->getId()),
-            'slug' => $this->getSlug($category->getId(), 'front_product_list'),
+            'slug' => $this->categorySlugBatchLoader->load($category->getId()),
             'originalCategorySlug' => null,
             default => $this->mapCommonFields($fieldName, $category),
         };
@@ -85,20 +85,9 @@ class CategoryResolverMap extends ResolverMap
             'seoH1' => $readyCategorySeoMix->getH1(),
             'seoTitle' => $readyCategorySeoMix->getTitle() ?? $readyCategorySeoMix->getH1(),
             'seoMetaDescription' => $readyCategorySeoMix->getMetaDescription() ?? $category->getSeoMetaDescription($this->domain->getId()),
-            'slug' => $this->getSlug($readyCategorySeoMix->getId(), 'front_category_seo'),
-            'originalCategorySlug' => $this->getSlug($category->getId(), 'front_product_list'),
+            'slug' => $this->categorySeoSlugBatchLoader->load($readyCategorySeoMix->getId()),
+            'originalCategorySlug' => $this->categorySlugBatchLoader->load($category->getId()),
             default => $this->mapCommonFields($fieldName, $category),
         };
-    }
-
-    protected function getSlug(int $entityId, string $routeName): string
-    {
-        $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
-            $this->domain->getId(),
-            $routeName,
-            $entityId,
-        );
-
-        return '/' . $friendlyUrlSlug;
     }
 }

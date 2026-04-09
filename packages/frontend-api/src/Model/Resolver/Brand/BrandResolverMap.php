@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand;
 
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -18,7 +18,7 @@ class BrandResolverMap extends ResolverMap
         protected readonly UrlGeneratorInterface $urlGenerator,
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly DataLoaderInterface $brandSlugBatchLoader,
     ) {
     }
 
@@ -47,20 +47,9 @@ class BrandResolverMap extends ResolverMap
                     return $this->hreflangLinksFacade->getForBrand($brand, $this->domain->getId());
                 },
                 'slug' => function (Brand $brand) {
-                    return $this->getSlug($brand);
+                    return $this->brandSlugBatchLoader->load($brand->getId());
                 },
             ],
         ];
-    }
-
-    protected function getSlug(Brand $brand): string
-    {
-        $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
-            $this->domain->getId(),
-            'front_brand_detail',
-            $brand->getId(),
-        );
-
-        return '/' . $friendlyUrlSlug;
     }
 }

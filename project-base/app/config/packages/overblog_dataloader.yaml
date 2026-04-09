@@ -2,6 +2,12 @@ overblog_dataloader:
     defaults:
         promise_adapter: "overblog_dataloader.webonyx_graphql_sync_promise_adapter"
     loaders:
+        blogCategorySlugBatchLoader:
+            alias: "blog_category_slug_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadBlogCategorySlugs"
+        brandSlugBatchLoader:
+            alias: "brand_slug_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadBrandSlugs"
         brandsBatchLoader:
             alias: "brands_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Brand\\BrandsBatchLoader:loadByIds"
@@ -11,6 +17,12 @@ overblog_dataloader:
         categoryChildrenBatchLoader:
             alias: "category_children_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Category\\CategoryChildrenBatchLoader:loadByCategories"
+        categorySeoSlugBatchLoader:
+            alias: "category_seo_slug_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadCategorySeoSlugs"
+        categorySlugBatchLoader:
+            alias: "category_slug_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadCategorySlugs"
         customerUploadedFilesBatchLoader:
             alias: "customer_uploaded_files_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\CustomerUploadedFile\\CustomerUploadedFilesBatchLoader:loadByBatchData"
@@ -23,6 +35,9 @@ overblog_dataloader:
         firstImageBatchLoader:
             alias: "first_image_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Image\\FirstImageBatchLoader:loadByBatchData"
+        flagSlugBatchLoader:
+            alias: "flag_slug_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadFlagSlugs"
         flagsBatchLoader:
             alias: "flags_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Flag\\FlagsBatchLoader:loadByIds"
@@ -35,6 +50,9 @@ overblog_dataloader:
         productGiftsByMainProductIdsBatchLoader:
             alias: "product_gifts_by_main_product_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadProductGiftsByMainProductIds"
+        productSlugBatchLoader:
+            alias: "product_slug_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadProductSlugs"
         productsByEntitiesBatchLoader:
             alias: "products_by_entities_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadByEntities"
@@ -59,6 +77,9 @@ overblog_dataloader:
         readyCategorySeoMixesBatchLoader:
             alias: "ready_category_seo_mixes_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Category\\ReadyCategorySeoMixBatchLoader:loadByCategoryIds"
+        storeSlugBatchLoader:
+            alias: "store_slug_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadStoreSlugs"
         storesBatchLoader:
             alias: "stores_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Store\\StoresBatchLoader:loadByIds"
