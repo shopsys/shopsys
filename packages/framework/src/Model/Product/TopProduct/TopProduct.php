@@ -56,4 +56,12 @@ class TopProduct
     {
         return $this->product;
     }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
 }

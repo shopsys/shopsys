@@ -276,6 +276,20 @@ class FilterQueryFactory
         return $this->filterByCategory($this->createVisible(), $category);
     }
 
+    public function createPromotedOnDomainFilter(?int $limit = null): FilterQuery
+    {
+        $filterQuery = $this->createVisible()
+            ->filterOnlySellable()
+            ->filterOnlyPromoted()
+            ->applyOrderingByTopProductPosition();
+
+        if ($limit !== null) {
+            $filterQuery = $filterQuery->setLimit($limit);
+        }
+
+        return $filterQuery;
+    }
+
     protected function filterByCategory(FilterQuery $filterQuery, Category $category): FilterQuery
     {
         return $this->categoryAutomatedFilterFacade->applyFiltersByCategory($filterQuery, $category);

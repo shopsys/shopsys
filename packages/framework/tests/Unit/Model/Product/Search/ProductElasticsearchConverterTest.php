@@ -74,6 +74,8 @@ class ProductElasticsearchConverterTest extends TestCase
             'searching_seo_titles' => '',
             'searching_seo_h1s' => '',
             'searching_seo_meta_descriptions' => '',
+            'is_promoted' => false,
+            'top_product_position' => null,
         ];
 
         $converter = new ProductElasticsearchConverter();
@@ -167,6 +169,8 @@ class ProductElasticsearchConverterTest extends TestCase
             'searching_seo_titles' => '',
             'searching_seo_h1s' => '',
             'searching_seo_meta_descriptions' => '',
+            'is_promoted' => false,
+            'top_product_position' => null,
         ];
 
         $converter = new ProductElasticsearchConverter();

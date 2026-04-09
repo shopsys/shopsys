@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
@@ -38,6 +39,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 class ProductExportRepository
 {
     protected const string VARIANTS_CACHE_NAMESPACE = 'variants';
+    protected const string TOP_PRODUCTS_CACHE_NAMESPACE = 'top_products';
     protected const string VALUE_SEPARATOR = ' ';
 
     public function __construct(
@@ -60,6 +62,7 @@ class ProductExportRepository
         protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
         protected readonly ParameterValueFileResolver $parameterValueFileResolver,
         protected readonly Domain $domain,
+        protected readonly TopProductRepository $topProductRepository,
     ) {
     }
 
@@ -181,6 +184,8 @@ class ProductExportRepository
             ProductExportFieldProvider::SEARCHING_SEO_TITLES => $this->extractSearchingSeoTitles($product, $domainId),
             ProductExportFieldProvider::SEARCHING_SEO_H1S => $this->extractSearchingSeoH1s($product, $domainId),
             ProductExportFieldProvider::SEARCHING_SEO_META_DESCRIPTIONS => $this->extractSearchingSeoMetaDescriptions($product, $domainId),
+            ProductExportFieldProvider::IS_PROMOTED => $this->isProductPromoted($product, $domainId),
+            ProductExportFieldProvider::TOP_PRODUCT_POSITION => $this->getTopProductPosition($product, $domainId),
 
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
         };
@@ -457,6 +462,28 @@ class ProductExportRepository
     protected function reset(): void
     {
         $this->inMemoryCache->deleteAllItemsInNamespace(static::VARIANTS_CACHE_NAMESPACE);
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    protected function getTopProductPositionsForDomain(int $domainId): array
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::TOP_PRODUCTS_CACHE_NAMESPACE,
+            fn () => $this->topProductRepository->getTopProductPositionsIndexedByProductIdForDomain($domainId),
+            $domainId,
+        );
+    }
+
+    protected function isProductPromoted(Product $product, int $domainId): bool
+    {
+        return array_key_exists($product->getId(), $this->getTopProductPositionsForDomain($domainId));
+    }
+
+    protected function getTopProductPosition(Product $product, int $domainId): ?int
+    {
+        return $this->getTopProductPositionsForDomain($domainId)[$product->getId()] ?? null;
     }
 
     protected function extractStoreAvailabilitiesInformation(Product $product, int $domainId): array

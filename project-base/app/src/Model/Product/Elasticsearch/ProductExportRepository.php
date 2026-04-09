@@ -27,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
@@ -57,6 +58,8 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method string extractSearchingSeoTitles(\App\Model\Product\Product $product, int $domainId)
  * @method string extractSearchingSeoH1s(\App\Model\Product\Product $product, int $domainId)
  * @method string extractSearchingSeoMetaDescriptions(\App\Model\Product\Product $product, int $domainId)
+ * @method bool isProductPromoted(\App\Model\Product\Product $product, int $domainId)
+ * @method int|null getTopProductPosition(\App\Model\Product\Product $product, int $domainId)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -85,6 +88,7 @@ class ProductExportRepository extends BaseProductExportRepository
         ProductVideoTranslationsRepository $productVideoTranslationsRepository,
         ParameterValueFileResolver $parameterValueFileResolver,
         Domain $domain,
+        TopProductRepository $topProductRepository,
         private readonly BreadcrumbFacade $breadcrumbFacade,
     ) {
         parent::__construct(
@@ -107,6 +111,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $productVideoTranslationsRepository,
             $parameterValueFileResolver,
             $domain,
+            $topProductRepository,
         );
     }
 

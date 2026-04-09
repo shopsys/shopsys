@@ -80,6 +80,9 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::SEARCHING_SEO_H1S] = $product[ProductExportFieldProvider::SEARCHING_SEO_H1S] ?? '';
         $result[ProductExportFieldProvider::SEARCHING_SEO_META_DESCRIPTIONS] = $product[ProductExportFieldProvider::SEARCHING_SEO_META_DESCRIPTIONS] ?? '';
 
+        $result[ProductExportFieldProvider::IS_PROMOTED] = $product[ProductExportFieldProvider::IS_PROMOTED] ?? false;
+        $result[ProductExportFieldProvider::TOP_PRODUCT_POSITION] = $product[ProductExportFieldProvider::TOP_PRODUCT_POSITION] ?? null;
+
         return $result;
     }
 

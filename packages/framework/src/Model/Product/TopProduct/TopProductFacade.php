@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\TopProduct;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class TopProductFacade
 {
@@ -13,6 +15,7 @@ class TopProductFacade
         protected readonly EntityManagerInterface $em,
         protected readonly TopProductRepository $topProductRepository,
         protected readonly TopProductFactory $topProductFactory,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -39,7 +42,10 @@ class TopProductFacade
     {
         $oldTopProducts = $this->topProductRepository->getAll($domainId);
 
+        $affectedProductIds = [];
+
         foreach ($oldTopProducts as $oldTopProduct) {
+            $affectedProductIds[] = $oldTopProduct->getProduct()->getId();
             $this->em->remove($oldTopProduct);
         }
         $this->em->flush();
@@ -49,7 +55,13 @@ class TopProductFacade
         foreach ($products as $product) {
             $topProduct = $this->topProductFactory->create($product, $domainId, $position++);
             $this->em->persist($topProduct);
+            $affectedProductIds[] = $product->getId();
         }
         $this->em->flush();
+
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $affectedProductIds,
+            exportScopes: [ProductExportScopeConfig::SCOPE_TOP_PRODUCT],
+        );
     }
 }

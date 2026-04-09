@@ -58,6 +58,9 @@ class ProductExportFieldProvider
 
     public const string PROMOTION = 'promotion';
 
+    public const string IS_PROMOTED = 'is_promoted';
+    public const string TOP_PRODUCT_POSITION = 'top_product_position';
+
     public const string SEARCHING_SEO_TITLES = 'searching_seo_titles';
     public const string SEARCHING_SEO_H1S = 'searching_seo_h1s';
     public const string SEARCHING_SEO_META_DESCRIPTIONS = 'searching_seo_meta_descriptions';
