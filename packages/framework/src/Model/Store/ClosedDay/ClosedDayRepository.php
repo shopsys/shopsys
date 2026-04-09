@@ -41,22 +41,10 @@ class ClosedDayRepository
      */
     public function getFollowingWeekClosedDaysNotExcludedForStore(Store $store): array
     {
-        $today = $this->clock->now()
-            ->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()))
-            ->setTime(0, 0, 0);
-        $endOfFollowingWeek = $today->add(new DateInterval('P7D'))->format('Y-M-d');
-
         return $this
-            ->getClosedDayRepository()
-            ->createQueryBuilder('cd')
-            ->where('cd.domainId = :domainId')
+            ->createFollowingWeekClosedDaysQueryBuilder($store->getDomainId())
             ->andWhere(':store NOT MEMBER OF cd.excludedStores')
-            ->andWhere('cd.date >= :today')
-            ->andWhere('cd.date < :endOfFollowingWeek')
-            ->setParameter('domainId', $store->getDomainId())
             ->setParameter('store', $store)
-            ->setParameter('today', $today)
-            ->setParameter('endOfFollowingWeek', $endOfFollowingWeek)
             ->getQuery()
             ->getResult();
     }
@@ -109,6 +97,72 @@ class ClosedDayRepository
             ->setParameter('isPublicHoliday', true)
             ->setParameter('startDate', $startDate)
             ->setParameter('endDate', $endDate);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store[] $stores
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]>
+     */
+    public function getFollowingWeekClosedDaysForStoresIndexedByStoreId(int $domainId, array $stores): array
+    {
+        if ($stores === []) {
+            return [];
+        }
+
+        $closedDays = $this
+            ->createFollowingWeekClosedDaysQueryBuilder($domainId)
+            ->addSelect('es')
+            ->leftJoin('cd.excludedStores', 'es')
+            ->getQuery()
+            ->getResult();
+
+        return $this->groupClosedDaysByStoreWithExclusions($stores, $closedDays);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store[] $stores
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDays
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]>
+     */
+    protected function groupClosedDaysByStoreWithExclusions(array $stores, array $closedDays): array
+    {
+        $excludedIdsByClosedDay = [];
+
+        foreach ($closedDays as $closedDay) {
+            $excludedIdsByClosedDay[$closedDay->getId()] = array_map(
+                static fn (Store $store) => $store->getId(),
+                $closedDay->getExcludedStores(),
+            );
+        }
+
+        $result = [];
+
+        foreach ($stores as $store) {
+            $result[$store->getId()] = array_filter(
+                $closedDays,
+                static fn (ClosedDay $closedDay) => !in_array($store->getId(), $excludedIdsByClosedDay[$closedDay->getId()], true),
+            );
+        }
+
+        return $result;
+    }
+
+    protected function createFollowingWeekClosedDaysQueryBuilder(int $domainId): QueryBuilder
+    {
+        $today = $this->clock->now()
+            ->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId))
+            ->setTime(0, 0, 0);
+        $endOfFollowingWeek = $today->add(new DateInterval('P7D'));
+
+        return $this
+            ->getClosedDayRepository()
+            ->createQueryBuilder('cd')
+            ->where('cd.domainId = :domainId')
+            ->andWhere('cd.date >= :today')
+            ->andWhere('cd.date < :endOfFollowingWeek')
+            ->setParameter('domainId', $domainId)
+            ->setParameter('today', $today)
+            ->setParameter('endOfFollowingWeek', $endOfFollowingWeek);
     }
 
     protected function getClosedDayRepository(): EntityRepository

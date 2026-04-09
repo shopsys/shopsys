@@ -13,6 +13,7 @@ use Spatie\OpeningHours\OpeningHours as SpatieOpeningHours;
 class StoreOpeningHoursProvider
 {
     protected const string STORE_OPENING_HOURS_NAMESPACE = 'store_opening_hours_namespace';
+    protected const string PRELOADED_CLOSED_DAYS_NAMESPACE = 'preloaded_closed_days_namespace';
     protected const array DAY_NUMBERS_TO_ENGLISH_NAMES_MAP = [
         1 => 'monday',
         2 => 'tuesday',
@@ -39,6 +40,18 @@ class StoreOpeningHoursProvider
             ]),
             $store->getId(),
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store[] $stores
+     */
+    public function preloadClosedDaysForStores(int $domainId, array $stores): void
+    {
+        $closedDaysByStoreId = $this->closedDayFacade->getFollowingWeekClosedDaysForStoresIndexedByStoreId($domainId, $stores);
+
+        foreach ($closedDaysByStoreId as $storeId => $closedDays) {
+            $this->inMemoryCache->save(self::PRELOADED_CLOSED_DAYS_NAMESPACE, $closedDays, $storeId);
+        }
     }
 
     protected function getWeekSetting(Store $store): array
@@ -72,8 +85,13 @@ class StoreOpeningHoursProvider
      */
     protected function getExceptions(Store $store): array
     {
+        $closedDays = $this->inMemoryCache->getOrSaveValue(
+            self::PRELOADED_CLOSED_DAYS_NAMESPACE,
+            fn () => $this->closedDayFacade->getFollowingWeekClosedDaysNotExcludedForStore($store),
+            $store->getId(),
+        );
+
         $exceptions = [];
-        $closedDays = $this->closedDayFacade->getFollowingWeekClosedDaysNotExcludedForStore($store);
 
         foreach ($closedDays as $closedDay) {
             $exceptions[$closedDay->getDate()->format('Y-m-d')] = [];
