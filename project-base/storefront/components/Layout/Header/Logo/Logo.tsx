@@ -1,4 +1,4 @@
-import imageLogoInverted from '/public/images/logo-inverted.svg';
+import logo from '/public/images/logo.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { LogoMetadata } from 'components/Basic/Head/LogoMetadata';
 import { Image } from 'components/Basic/Image/Image';
@@ -21,10 +21,10 @@ export const Logo: FC = () => {
                 type="homepage"
             >
                 <Image
-                    alt="Shopsys logo"
+                    alt="Shopsys.com"
                     className={twMergeCustom('h-auto w-32 max-w-full group-focus-visible:brightness-0 lg:w-40')}
                     sizes="(max-width: 1023px) 128px, 160px"
-                    src={imageLogoInverted}
+                    src={logo}
                 />
             </ExtendedNextLink>
         </>

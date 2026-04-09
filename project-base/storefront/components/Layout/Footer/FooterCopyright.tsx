@@ -1,4 +1,4 @@
-import imageLogo from '/public/images/logo.svg';
+import logo from '/public/images/shopsys-logo.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { getCouldNotFindUserConsentPolicyArticleUrl } from 'components/Blocks/UserConsent/userConsentUtils';
@@ -42,7 +42,7 @@ export const FooterCopyright: FC = () => {
                         target="_blank"
                         title={t('Shopsys.com')}
                     >
-                        <Image alt={t('Shopsys.com')} height="24" src={imageLogo} />
+                        <Image alt={t('Shopsys.com')} height="24" src={logo} />
                     </a>
                 </div>
 

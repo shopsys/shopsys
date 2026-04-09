@@ -1,12 +1,12 @@
 import { TextInput } from './TextInput';
-import eyeIcon from '/public/svg/eye.svg';
-import { Image } from 'components/Basic/Image/Image';
+import { EyeCrossedIcon } from 'components/Basic/Icon/EyeCrossedIcon';
+import { EyeIcon } from 'components/Basic/Icon/EyeIcon';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { InputHTMLAttributes, ReactElement, ReactNode, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
-import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, never, 'name' | 'autoComplete'>;
 
@@ -34,6 +34,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
     passwordInputProps,
     formName,
 }) => {
+    const { t } = useTranslation();
     const {
         fieldState: { error },
         field: { ref: fieldRef, value, onBlur, onChange },
@@ -41,6 +42,11 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
     const passwordInputId = formName + '-' + name;
 
     const [inputType, setInputType] = useState<'text' | 'password'>('password');
+    const PasswordVisibilityIcon = inputType === 'text' ? EyeCrossedIcon : EyeIcon;
+    const passwordVisibilityLabel =
+        inputType === 'text'
+            ? t('Hide password', { ns: 'accessibility' })
+            : t('Show password', { ns: 'accessibility' });
 
     const togglePasswordVisibilityHandler = () => {
         setInputType((currentInputType) => (currentInputType === 'password' ? 'text' : 'password'));
@@ -64,15 +70,15 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                 onBlur={onBlur}
                 onChange={onChange}
             >
-                <Image
-                    alt="eye icon"
-                    src={eyeIcon}
-                    className={twJoin(
-                        'absolute top-1/2 right-4 w-6 -translate-y-1/2 cursor-pointer',
-                        inputType === 'text' && 'opacity-50',
-                    )}
+                <button
+                    aria-label={passwordVisibilityLabel}
+                    className="group absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-md p-1.5"
+                    title={passwordVisibilityLabel}
+                    type="button"
                     onClick={togglePasswordVisibilityHandler}
-                />
+                >
+                    <PasswordVisibilityIcon className="text-icon-less group-hover:text-icon-default size-6" />
+                </button>
             </TextInput>
             <FormLineError error={error} inputType="text-input-password" textInputSize={passwordInputProps.inputSize} />
         </>
