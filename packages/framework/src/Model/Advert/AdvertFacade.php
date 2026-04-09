@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Advert;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class AdvertFacade
@@ -21,6 +22,7 @@ class AdvertFacade
         protected readonly Domain $domain,
         protected readonly AdvertFactory $advertFactory,
         protected readonly AdvertPositionRegistry $advertPositionRegistry,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -49,6 +51,8 @@ class AdvertFacade
         $this->imageFacade->manageImages($advert, $advertData->mobileImage, self::IMAGE_TYPE_MOBILE);
         $this->em->flush();
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ADVERTS_QUERY_KEY_PART);
+
         return $advert;
     }
 
@@ -63,6 +67,8 @@ class AdvertFacade
         $this->imageFacade->manageImages($advert, $advertData->mobileImage, self::IMAGE_TYPE_MOBILE);
         $this->em->flush();
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ADVERTS_QUERY_KEY_PART);
+
         return $advert;
     }
 
@@ -71,5 +77,7 @@ class AdvertFacade
         $advert = $this->advertRepository->getById($advertId);
         $this->em->remove($advert);
         $this->em->flush();
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ADVERTS_QUERY_KEY_PART);
     }
 }
