@@ -8,6 +8,7 @@ use Override;
 use PharIo\Version\Version;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
+use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
@@ -40,17 +41,17 @@ class ShopsysFrameworkDataCollector extends DataCollector
             'systemTimeZone' => date_default_timezone_get(),
         ];
 
-        if ($this->contextResolver->isCurrentContext(AdminContext::class)) {
-            $this->data['inAdmin'] = true;
-            $this->data['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName();
-            $this->data['adminLocale'] = $this->administratorLocalizationFacade->getCurrentAdminLocaleOrDefault();
-            $this->data['currentDomainId'] = 0;
-        } else {
+        if ($this->contextResolver->isCurrentContext(FrontendApiContext::class)) {
             $this->data['inAdmin'] = false;
             $this->data['currentDomainId'] = $this->domain->getId();
             $this->data['currentDomainName'] = $this->domain->getName();
             $this->data['currentDomainLocale'] = $this->domain->getLocale();
             $this->data['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId())->getName();
+        } else {
+            $this->data['inAdmin'] = $this->contextResolver->isCurrentContext(AdminContext::class);
+            $this->data['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName();
+            $this->data['adminLocale'] = $this->administratorLocalizationFacade->getCurrentAdminLocaleOrDefault();
+            $this->data['currentDomainId'] = 0;
         }
     }
 
