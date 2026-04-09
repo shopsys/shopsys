@@ -341,6 +341,10 @@ class ParameterRepository
      */
     public function getParametersByUuids(array $uuids): array
     {
+        if ($uuids === []) {
+            return [];
+        }
+
         $parametersByUuid = [];
         $parameters = $this->getParameterRepository()->findBy(['uuid' => $uuids], ['orderingPriority' => 'DESC']);
 
@@ -357,6 +361,10 @@ class ParameterRepository
      */
     public function getParameterValuesByUuids(array $uuids): array
     {
+        if ($uuids === []) {
+            return [];
+        }
+
         $parameterValuesByUuid = [];
         $parameterValues = $this->getParameterValueRepository()->findBy(['uuid' => $uuids]);
 
@@ -633,6 +641,10 @@ class ParameterRepository
      */
     protected function getIdsIndexedByUuids(array $uuids, string $entityName): array
     {
+        if ($uuids === []) {
+            return [];
+        }
+
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p.id, p.uuid')
             ->from($entityName, 'p')
