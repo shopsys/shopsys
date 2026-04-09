@@ -48,6 +48,22 @@ class PaymentRepository
         return $this->getPaymentRepository()->findAll();
     }
 
+    /**
+     * @return int[]
+     */
+    public function getDomainIdsWithAnyEnabledPayment(): array
+    {
+        $rows = $this->getPaymentRepository()->createQueryBuilder('p')
+            ->select('DISTINCT pd.domainId')
+            ->join(PaymentDomain::class, 'pd', Join::WITH, 'pd.payment = p AND pd.enabled = true')
+            ->where('p.deleted = false')
+            ->andWhere('p.hidden = false')
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_map(static fn (array $row): int => (int)$row['domainId'], $rows);
+    }
+
     public function findById(int $id): ?Payment
     {
         return $this->getQueryBuilderForAll()

@@ -73,6 +73,9 @@ msgstr ""
 msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
 msgstr ""
 
+msgid "<a href=\"%url%\">Shipping or payment is not set for domain %domainName%.</a>"
+msgstr ""
+
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
 msgstr ""
 

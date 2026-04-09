@@ -12,10 +12,12 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -42,6 +44,8 @@ class RequiredSettingExtension extends AbstractExtension
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly ClockInterface $clock,
         protected readonly SeoSettingFacade $seoSettingFacade,
+        protected readonly PaymentFacade $paymentFacade,
+        protected readonly TransportFacade $transportFacade,
     ) {
     }
 
@@ -83,6 +87,29 @@ class RequiredSettingExtension extends AbstractExtension
         $this->checkAllSliderNumericValuesAreSet();
         $this->checkPublicHolidaysAreSet();
         $this->checkSeoInformationIsSet();
+        $this->checkPaymentsAndTransportsAreSet();
+    }
+
+    protected function checkPaymentsAndTransportsAreSet(): void
+    {
+        $domainIdsWithPayment = array_flip($this->paymentFacade->getDomainIdsWithAnyEnabledPayment());
+        $domainIdsWithTransport = array_flip($this->transportFacade->getDomainIdsWithAnyEnabledTransport());
+
+        foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+            if (isset($domainIdsWithPayment[$domainId], $domainIdsWithTransport[$domainId])) {
+                continue;
+            }
+
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+            $this->requiredSettingsMessages[] = t(
+                '<a href="%url%">Shipping or payment is not set for domain %domainName%.</a>',
+                [
+                    '%url%' => $this->generateUrlWithSelectedDomainTab('admin_transportandpayment_list', $domainId),
+                    '%domainName%' => $domainConfig->getName(),
+                ],
+            );
+        }
     }
 
     protected function checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled(): void
