@@ -2,24 +2,33 @@
     {% import _self as self %}
     <tr class="js-order-item js-order-item-any" id="{{ orderItemForm.vars.id }}" data-index="{{ orderItemId }}">
         <td>
-            <div class="input-group input-group-flat">
-                {{ form_widget(orderItemForm.name, {attr: { class: 'js-order-item-name'}}) }}
-                {% set errors = form_errors(orderItemForm.name) %}
+            <div class="d-flex align-items-center gap-2">
                 {% if productItem and productItem.product %}
-                    <span class="input-group-text">
-                        <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="input-group-link" target="_blank">
-                            {{ ux_icon('forward-page') }}
-                        </a>
-                    </span>
-                {% elseif productItem and not productItem.product and not errors %}
-                    <span class="input-group-text">
-                        {{ info_icon('Product not in e-shop.'|trans) }}
-                    </span>
+                    <div class="flex-shrink-0" style="width: 36px; height: 36px;">
+                        {{ image(productItem.product, { width: 36, height: 36, class: 'rounded object-contain w-100 h-100' }) }}
+                    </div>
                 {% endif %}
+                <div class="flex-grow-1">
+                    <div class="input-group input-group-flat">
+                        {{ form_widget(orderItemForm.name, {attr: { class: 'js-order-item-name'}}) }}
+                        {% set errors = form_errors(orderItemForm.name) %}
+                        {% if productItem and productItem.product %}
+                            <span class="input-group-text">
+                                <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="input-group-link" target="_blank">
+                                    {{ ux_icon('forward-page') }}
+                                </a>
+                            </span>
+                        {% elseif productItem and not productItem.product and not errors %}
+                            <span class="input-group-text">
+                                {{ info_icon('Product not in e-shop.'|trans) }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    {% if errors %}
+                        {{ errors|raw }}
+                    {% endif %}
+                </div>
             </div>
-            {% if errors %}
-                {{ errors|raw }}
-            {% endif %}
         </td>
         <td class="text-end">
             {{ form_widget(orderItemForm.catnum) }}
@@ -66,8 +75,15 @@
         data-transport-vat-percents-by-transport-id="{{ transportVatPercentsByTransportId|json_encode() }}"
     >
         <td>
-            {{ form_widget(orderTransportForm.transport) }}
-            {{ form_errors(orderTransportForm.transport) }}
+            <div class="d-flex align-items-center gap-2">
+                <div class="flex-shrink-0 text-secondary" style="width: 36px; text-align: center;">
+                    {{ ux_icon('tabler:truck', { class: 'icon' }) }}
+                </div>
+                <div class="flex-grow-1">
+                    {{ form_widget(orderTransportForm.transport) }}
+                    {{ form_errors(orderTransportForm.transport) }}
+                </div>
+            </div>
         </td>
         <td class="text-end">-</td>
         <td class="text-end">1</td>
@@ -100,9 +116,14 @@
             data-payment-vat-percents-by-payment-id="{{ paymentVatPercentsByPaymentId|json_encode() }}"
     >
         <td>
-            <div class="relative padding-left-10">
-                {{ form_widget(orderPaymentForm.payment) }}
-                {{ form_errors(orderPaymentForm.payment) }}
+            <div class="d-flex align-items-center gap-2">
+                <div class="flex-shrink-0 text-secondary" style="width: 36px; text-align: center;">
+                    {{ ux_icon('tabler:credit-card', { class: 'icon' }) }}
+                </div>
+                <div class="flex-grow-1">
+                    {{ form_widget(orderPaymentForm.payment) }}
+                    {{ form_errors(orderPaymentForm.payment) }}
+                </div>
             </div>
         </td>
         <td class="text-end">-</td>
@@ -130,15 +151,14 @@
 {% endmacro %}
 
 {% macro inputPriceWidget(priceForm) %}
-    <div class="input-group input-group-flat" style="min-width: 10em">
-      
+    <div class="input-group input-group-flat" style="min-width: 6em">
         {{ form_widget(priceForm, {attr: { class: 'text-end' }}) }}
     </div>
     {{ form_errors(priceForm) }}
 {% endmacro %}
 
 {% macro calculablePriceWidget(calculablePriceForm) %}
-    <div class="input-group input-group-flat" style="min-width: 10em">
+    <div class="input-group input-group-flat" style="min-width: 6em">
         {{ form_widget(calculablePriceForm, {attr: { class: 'text-end js-calculable-price'}}) }}
     </div>
     {{ form_errors(calculablePriceForm) }}

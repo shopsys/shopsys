@@ -20,6 +20,9 @@ services:
         tags: ['controller.service_arguments']
 
     _instanceof:
+
+        Shopsys\FrameworkBundle\Component\Admin\OrderDetail\OrderDetailTabProviderInterface:
+            tags: ['shopsys.order_detail_tab_provider']
         Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade:
             tags: ['shopsys.advanced_search_facade']
 
@@ -85,6 +88,8 @@ services:
     Shopsys\FrameworkBundle\Command\RouterMatchCommandForDomain:
         arguments:
             $routerMatchCommand: '@console.command.router_match'
+
+    Shopsys\FrameworkBundle\Component\Admin\OrderDetail\OrderDetailTabCollector: ~
 
     Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver:
         arguments: [!tagged_iterator shopsys.breadcrumb_generator]

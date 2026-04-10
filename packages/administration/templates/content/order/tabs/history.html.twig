@@ -1,0 +1,30 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title d-flex align-items-center gap-2">
+            <i class="ti ti-history"></i>
+            {{ 'Change history'|trans }}
+            {% if entityLogTotalCount > 0 %}
+                <span class="badge bg-blue-lt ms-1">{{ entityLogTotalCount }}</span>
+            {% endif %}
+        </h3>
+    </div>
+    <div class="card-body">
+        {% if entityLogTotalCount == 0 %}
+            <div class="text-secondary">{{ 'No changes recorded.'|trans }}</div>
+        {% else %}
+            <div id="js-order-history-timeline">
+                {% include '@ShopsysAdministration/content/order/partials/history_timeline.html.twig' %}
+            </div>
+
+            {% if entityLogTotalCount > entityLogEntries|length %}
+                <div class="text-center mt-3">
+                    <button type="button" class="btn btn-outline-secondary btn-sm js-order-history-show-all"
+                            data-load-url="{{ url('admin_order_history', { id: order.id }) }}"
+                            data-target="#js-order-history-timeline">
+                        {{ 'Show all (%count%)'|trans({'%count%': entityLogTotalCount}) }}
+                    </button>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

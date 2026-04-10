@@ -1,7 +1,7 @@
 {% set keys = _context|keys %}
 {% if (keys[1] is defined) and (attribute(_context[keys[1]], 'uuid') is defined) %}
     {% set uuid = _context[keys[1]].uuid %}
-    <span class="fs-6 ms-5 text-secondary cursor-pointer d-none d-md-inline" data-js-clipboard-copy="{{ uuid }}" data-js-clipboard-copy-title="{{ uuid }}">
+    <span class="fs-6 ms-2 text-secondary cursor-pointer d-none d-md-inline" data-js-clipboard-copy="{{ uuid }}" data-js-clipboard-copy-title="{{ uuid }}">
         UUID {{ ux_icon('duplicate', {class: 'w-3 h-3'}) }}
     </span>
 {% endif %}

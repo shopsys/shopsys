@@ -1,4 +1,31 @@
-{% include '@ShopsysAdministration/partial/flash_message/_messages.html.twig' with {type: 'danger', icon: 'exclamation-circle', messages: errorMessages} only %}
-{% include '@ShopsysAdministration/partial/flash_message/_messages.html.twig' with {type: 'info', icon: 'info-outlined', messages: infoMessages} only %}
-{% include '@ShopsysAdministration/partial/flash_message/_messages.html.twig' with {type: 'success', icon: 'checked', messages: successMessages} only %}
-{% include '@ShopsysAdministration/partial/flash_message/_messages.html.twig' with {type: 'warning', icon: 'warning', messages: warningMessages} only %}
+{# Flash messages are rendered as Tabler toasts (floating, top-center) instead of inline alerts.
+   Each flash type maps to a Bootstrap background color. Danger toasts stay on screen until
+   the user dismisses them; the rest auto-hide after 8s (see data-bs-autohide / data-bs-delay).
+   The toast container has the js-toast-container class so JS-created toasts (e.g. from
+   OrderModalSave after an AJAX save) can append into the same container. #}
+{% set allToasts = [] %}
+{% set toastTypes = {
+    danger: { bg: 'bg-danger', messages: errorMessages },
+    info: { bg: 'bg-info', messages: infoMessages },
+    success: { bg: 'bg-success', messages: successMessages },
+    warning: { bg: 'bg-warning', messages: warningMessages },
+} %}
+
+{% for type, config in toastTypes %}
+    {% for message in config.messages %}
+        {% set allToasts = allToasts|merge([{ bg: config.bg, message: message }]) %}
+    {% endfor %}
+{% endfor %}
+
+{% if allToasts %}
+    <div class="toast-container position-fixed start-50 translate-middle-x js-toast-container">
+        {% for toast in allToasts %}
+            <div class="toast {{ toast.bg }} text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="{{ toast.bg != 'bg-danger' ? 'true' : 'false' }}" data-bs-delay="8000" data-bs-toggle="toast">
+                <div class="toast-body d-flex justify-content-between align-items-center">
+                    <span class="toast-message">{{ toast.message|raw }}</span>
+                    <button type="button" class="btn-close btn-close-white ms-2" data-bs-dismiss="toast" aria-label="{{ 'Close'|trans }}"></button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

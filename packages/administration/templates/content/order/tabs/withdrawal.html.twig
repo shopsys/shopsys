@@ -1,0 +1,19 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title d-flex align-items-center gap-2">
+            <i class="ti ti-arrow-back-up"></i>
+            {{ 'Withdrawal request'|trans }}
+        </h3>
+        {% if canEdit %}
+            <div class="card-actions">
+                <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawalEditModal">
+                    <i class="ti ti-pencil"></i>
+                    {{ 'Edit'|trans }}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    <div class="card-body" id="js-withdrawal-view">
+        {% include '@ShopsysAdministration/content/order/partials/withdrawal_view.html.twig' %}
+    </div>
+</div>

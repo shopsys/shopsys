@@ -1,11 +1,150 @@
 {% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
 
-{% block title %}{{ 'Order Nr.'|trans }} {{ order.number }}{% endblock %}
+{% block title %}- {{ 'Order Nr.'|trans }} {{ order.number }}{% endblock %}
+
+{% block pre_title %}{{ 'Order detail'|trans }}{% endblock %}
 {% block h1 %}{{ 'Order Nr.'|trans }} {{ order.number }}{% endblock %}
 
+{% block btn %}
+    <a href="{{ findUrlByDomainId('front_customer_order_detail_unregistered', { urlHash: order.urlHash }, order.domainId) }}" target="_blank" class="btn btn-outline-primary">
+        {{ ux_icon('forward-page') }}
+        {{ 'View order on Frontend'|trans }}
+    </a>
+{% endblock %}
+
 {% block main_content %}
+    {% block order_summary_bar %}
+        <div id="js-order-summary-bar">
+            {% include '@ShopsysAdministration/content/order/partials/summary_bar.html.twig' %}
+        </div>
+    {% endblock %}
 
-    {{ form(form) }}
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                {% for identifier, tab in tabs %}
+                    {% set isActive = activeTab is defined and activeTab is not null ? activeTab == identifier : loop.first %}
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link{% if isActive %} active{% endif %}"
+                           id="nav-{{ identifier }}"
+                           data-bs-toggle="tab"
+                           href="#tab-{{ identifier }}"
+                           role="tab"
+                           aria-controls="tab-{{ identifier }}"
+                           aria-selected="{{ isActive ? 'true' : 'false' }}">
+                            {% if tab.icon %}
+                                <i class="ti ti-{{ tab.icon }} me-1"></i>
+                            {% endif %}
+                            {{ tab.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="card-body p-0">
+            <div class="tab-content">
+                {% for identifier, tab in tabs %}
+                    {% set isActive = activeTab is defined and activeTab is not null ? activeTab == identifier : loop.first %}
+                    <div class="tab-pane{% if isActive %} show active{% endif %} p-3"
+                         id="tab-{{ identifier }}"
+                         role="tabpanel"
+                         aria-labelledby="nav-{{ identifier }}">
+                        {% include tab.template %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-    {{ entityLogGridView.render() }}
+    {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_order_list') }}" class="btn btn-ghost-secondary">{{ 'Back to overview'|trans }}</a>
+        {% endblock %}
+    {% endembed %}
+
+    {% if canEdit %}
+        {% for modal in [
+            { id: 'trackingEditModal', title: 'Edit tracking'|trans, formId: 'js-tracking-modal-form', section: 'tracking' },
+            { id: 'noteEditModal', title: 'Edit note'|trans, formId: 'js-note-modal-form', section: 'note' },
+            { id: 'personalEditModal', title: 'Edit personal data'|trans, formId: 'js-personal-modal-form', section: 'personal' },
+            { id: 'addressesEditModal', title: 'Edit billing & delivery'|trans, formId: 'js-addresses-modal-form', section: 'addresses' },
+        ] %}
+            <div class="modal modal-blur fade" id="{{ modal.id }}" tabindex="-1">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ modal.title }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="{{ modal.formId }}" data-no-form-change-info
+                                  data-save-url="{{ url('admin_order_savesection', { id: order.id, section: modal.section }) }}">
+                                {% if modal.section == 'tracking' %}
+                                    {{ form_row(trackingForm.trackingNumber) }}
+                                    {{ form_row(trackingForm.deliveredAt) }}
+                                    {{ form_rest(trackingForm) }}
+                                {% elseif modal.section == 'note' %}
+                                    {{ form_row(noteForm.note) }}
+                                    {{ form_rest(noteForm) }}
+                                {% elseif modal.section == 'personal' %}
+                                    {{ form_row(personalForm.firstName) }}
+                                    {{ form_row(personalForm.lastName) }}
+                                    {{ form_row(personalForm.email) }}
+                                    {{ form_row(personalForm.telephone) }}
+                                    {{ form_rest(personalForm) }}
+                                {% elseif modal.section == 'addresses' %}
+                                    <h4>{{ 'Company details'|trans }}</h4>
+                                    {{ form_row(addressesForm.companyName) }}
+                                    {{ form_row(addressesForm.companyNumber) }}
+                                    {{ form_row(addressesForm.companyTaxNumber) }}
+                                    <hr>
+                                    <h4>{{ 'Billing address'|trans }}</h4>
+                                    {{ form_row(addressesForm.street) }}
+                                    {{ form_row(addressesForm.city) }}
+                                    {{ form_row(addressesForm.postcode) }}
+                                    {{ form_row(addressesForm.country) }}
+                                    <hr>
+                                    <h4>{{ 'Delivery address'|trans }}</h4>
+                                    {{ form_row(addressesForm.deliveryAddressSameAsBillingAddress) }}
+                                    {{ form_widget(addressesForm.deliveryAddressFields) }}
+                                    {{ form_rest(addressesForm) }}
+                                {% endif %}
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                            <button type="button" class="btn btn-primary js-modal-save" data-form="#{{ modal.formId }}">{{ 'Save'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% if withdrawalForm is defined %}
+            {# When the order isn't withdrawn yet the withdrawal tab does not exist on the page,
+               so saving via the modal must reload to render the newly available tab. #}
+            {% set isAlreadyWithdrawn = order.status.type == constant('Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_WITHDRAWN') %}
+            <div class="modal modal-blur fade" id="withdrawalEditModal" tabindex="-1">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ 'Edit withdrawal request'|trans }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="js-withdrawal-modal-form" data-no-form-change-info
+                                  data-save-url="{{ url('admin_order_savesection', { id: order.id, section: 'withdrawal' }) }}"
+                                  {% if not isAlreadyWithdrawn %}data-reload-on-success="true" data-reload-hash="#tab-withdrawal"{% endif %}>
+                                {% include '@ShopsysAdministration/content/order/partials/withdrawal_form.html.twig' with { form: withdrawalForm } %}
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                            <button type="button" class="btn btn-primary js-modal-save" data-form="#js-withdrawal-modal-form">{{ 'Save'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
 {% endblock %}

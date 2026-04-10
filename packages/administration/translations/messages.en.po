@@ -16,6 +16,9 @@ msgstr ""
 msgid "%defaultCurrency% per unit"
 msgstr ""
 
+msgid "-"
+msgstr ""
+
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr ""
 
@@ -199,6 +202,9 @@ msgstr ""
 msgid "Basic frontend currency %domainName%"
 msgstr ""
 
+msgid "Basic information"
+msgstr ""
+
 msgid "Basic price"
 msgstr ""
 
@@ -209,6 +215,9 @@ msgid "Bestsellers of the category"
 msgstr ""
 
 msgid "Bestselling products"
+msgstr ""
+
+msgid "Billing & Delivery"
 msgstr ""
 
 msgid "Billing address"
@@ -253,6 +262,9 @@ msgstr ""
 msgid "But at other addresses we have a lot for you..."
 msgstr ""
 
+msgid "By"
+msgstr ""
+
 msgid "Calculated prices"
 msgstr ""
 
@@ -284,6 +296,9 @@ msgid "Catnum"
 msgstr ""
 
 msgid "Change for"
+msgstr ""
+
+msgid "Change history"
 msgstr ""
 
 msgid "Choose"
@@ -331,6 +346,9 @@ msgstr ""
 msgid "Company detail"
 msgstr ""
 
+msgid "Company details"
+msgstr ""
+
 msgid "Company name"
 msgstr ""
 
@@ -359,6 +377,9 @@ msgid "Complaints overview"
 msgstr ""
 
 msgid "Confirm one-time passcode"
+msgstr ""
+
+msgid "Contact"
 msgstr ""
 
 msgid "Contact Form"
@@ -526,6 +547,9 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+msgid "Created by"
+msgstr ""
+
 msgid "Created on"
 msgstr ""
 
@@ -536,6 +560,9 @@ msgid "Cron detail"
 msgstr ""
 
 msgid "Currencies and rounding"
+msgstr ""
+
+msgid "Customer"
 msgstr ""
 
 msgid "Customer delivery addresses"
@@ -568,6 +595,9 @@ msgstr ""
 msgid "Customers overview"
 msgstr ""
 
+msgid "DIČ"
+msgstr ""
+
 msgid "Dashboard"
 msgstr ""
 
@@ -587,6 +617,12 @@ msgid "Delete and set"
 msgstr ""
 
 msgid "Delete file"
+msgstr ""
+
+msgid "Delivered"
+msgstr ""
+
+msgid "Delivered at"
 msgstr ""
 
 msgid "Delivery address"
@@ -688,7 +724,13 @@ msgstr ""
 msgid "Edit administrator"
 msgstr ""
 
+msgid "Edit billing & delivery"
+msgstr ""
+
 msgid "Edit domain icon"
+msgstr ""
+
+msgid "Edit note"
 msgstr ""
 
 msgid "Edit parameter"
@@ -697,10 +739,22 @@ msgstr ""
 msgid "Edit parameter group"
 msgstr ""
 
+msgid "Edit payment and transport"
+msgstr ""
+
+msgid "Edit personal data"
+msgstr ""
+
 msgid "Edit store"
 msgstr ""
 
 msgid "Edit the combination with SEO values"
+msgstr ""
+
+msgid "Edit tracking"
+msgstr ""
+
+msgid "Edit withdrawal request"
 msgstr ""
 
 msgid "Editing %entity_name%"
@@ -892,6 +946,9 @@ msgstr ""
 msgid "Feeds"
 msgstr ""
 
+msgid "Field"
+msgstr ""
+
 msgid "File"
 msgstr ""
 
@@ -967,6 +1024,9 @@ msgstr ""
 msgid "Granted"
 msgstr ""
 
+msgid "Heureka"
+msgstr ""
+
 msgid "Heureka - Verified by Customer"
 msgstr ""
 
@@ -1024,6 +1084,9 @@ msgstr ""
 msgid "Inquiry by"
 msgstr ""
 
+msgid "Internal ID"
+msgstr ""
+
 msgid "Invalid reset password hash for administrator"
 msgstr ""
 
@@ -1037,6 +1100,9 @@ msgid "It is possible to use this when creating a link: mark the text you want t
 msgstr ""
 
 msgid "Item name"
+msgstr ""
+
+msgid "IČO"
 msgstr ""
 
 msgid "Keep empty if you do not want to limit the price by products' weight"
@@ -1279,6 +1345,9 @@ msgstr ""
 msgid "No brands found. You have to create some first."
 msgstr ""
 
+msgid "No changes recorded."
+msgstr ""
+
 msgid "No combinations of SEO categories found."
 msgstr ""
 
@@ -1339,6 +1408,9 @@ msgstr ""
 msgid "No parameters found. You have to create some first."
 msgstr ""
 
+msgid "No payment transactions"
+msgstr ""
+
 msgid "No payments created so far."
 msgstr ""
 
@@ -1378,6 +1450,9 @@ msgstr ""
 msgid "No watchdog found."
 msgstr ""
 
+msgid "No withdrawal request data."
+msgstr ""
+
 msgid "Not granted"
 msgstr ""
 
@@ -1385,6 +1460,9 @@ msgid "Not refundable"
 msgstr ""
 
 msgid "Not sellable"
+msgstr ""
+
+msgid "Not sent to GoPay"
 msgstr ""
 
 msgid "Not visible"
@@ -1429,6 +1507,9 @@ msgstr ""
 msgid "Order confirmation page"
 msgstr ""
 
+msgid "Order detail"
+msgstr ""
+
 msgid "Order items"
 msgstr ""
 
@@ -1457,6 +1538,9 @@ msgid "Orders overview"
 msgstr ""
 
 msgid "Orders sold"
+msgstr ""
+
+msgid "Origin"
 msgstr ""
 
 msgid "Overview"
@@ -1492,10 +1576,16 @@ msgstr ""
 msgid "Payment"
 msgstr ""
 
+msgid "Payment & Transport"
+msgstr ""
+
 msgid "Payment instructions"
 msgstr ""
 
 msgid "Payment method name"
+msgstr ""
+
+msgid "Payment transactions updated."
 msgstr ""
 
 msgid "Payments"
@@ -1639,6 +1729,9 @@ msgstr ""
 msgid "Request a one-time passcode by email"
 msgstr ""
 
+msgid "Requested at"
+msgstr ""
+
 msgid "Reset administrator password"
 msgstr ""
 
@@ -1693,13 +1786,22 @@ msgstr ""
 msgid "Sales representatives"
 msgstr ""
 
+msgid "Same as billing address"
+msgstr ""
+
 msgid "Saturday"
+msgstr ""
+
+msgid "Save"
 msgstr ""
 
 msgid "Save changes"
 msgstr ""
 
 msgid "Save changes in order"
+msgstr ""
+
+msgid "Save items"
 msgstr ""
 
 msgid "Scaled promo code"
@@ -1852,7 +1954,16 @@ msgstr ""
 msgid "Shippings and payments"
 msgstr ""
 
+msgid "Show all (%count%)"
+msgstr ""
+
 msgid "Show all customer orders"
+msgstr ""
+
+msgid "Show less"
+msgstr ""
+
+msgid "Show more"
 msgstr ""
 
 msgid "Site"
@@ -1975,6 +2086,9 @@ msgstr ""
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr ""
 
+msgid "This order does not have any payment transactions."
+msgstr ""
+
 msgid "This phone number may not be valid. Please verify it."
 msgstr ""
 
@@ -2038,6 +2152,12 @@ msgstr ""
 msgid "Total price including VAT"
 msgstr ""
 
+msgid "Tracking"
+msgstr ""
+
+msgid "Tracking number"
+msgstr ""
+
 msgid "Transfer issues"
 msgstr ""
 
@@ -2045,6 +2165,9 @@ msgid "Transfer issues overview"
 msgstr ""
 
 msgid "Transfers"
+msgstr ""
+
+msgid "Transport"
 msgstr ""
 
 msgid "Transports and payments"
@@ -2167,6 +2290,9 @@ msgstr ""
 msgid "View allowed recipients."
 msgstr ""
 
+msgid "View order on Frontend"
+msgstr ""
+
 msgid "Visibility and sellability for unlogged customers"
 msgstr ""
 
@@ -2207,6 +2333,9 @@ msgid "When changing the default currency there is no recalculation of prices"
 msgstr ""
 
 msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
+msgstr ""
+
+msgid "Withdrawal request"
 msgstr ""
 
 msgid "XML Feeds"
@@ -2352,4 +2481,3 @@ msgstr ""
 
 msgid "yesterday"
 msgstr ""
-

@@ -19,6 +19,11 @@
     }
 }
 
+.modal-body .row>[class*="col-xl-"] {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
 .product-picker-image-avatar img {
     max-width: 40px;
     max-height: 40px;

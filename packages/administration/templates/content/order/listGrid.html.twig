@@ -14,19 +14,7 @@
 {% endblock %}
 
 {% block grid_value_cell_id_status_name %}
-    {% if row.statusType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_NEW')) %}
-        {% set status_class = 'yellow' %}
-    {% elseif row.statusType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_DONE')) %}
-        {% set status_class = 'green' %}
-    {% elseif row.statusType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_CANCELED')) %}
-        {% set status_class = 'red' %}
-    {% elseif row.statusType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_WITHDRAWN')) %}
-        {% set status_class = 'black' %}
-    {% else %}
-        {% set status_class = 'blue' %}
-    {% endif %}
-
-    <span class="status status-{{ status_class }}">
+    <span class="status status-{{ row.statusType|order_status_color }}">
         <span class="status-dot"></span>
         {{ value }}
     </span>

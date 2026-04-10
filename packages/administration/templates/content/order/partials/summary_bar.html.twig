@@ -1,0 +1,173 @@
+{% set status_class = order.status.type|order_status_color %}
+
+<div class="row row-deck row-cards mb-3">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card">
+            <div class="card-body d-flex flex-column gap-1">
+                <div class="subheader d-flex justify-content-between align-items-center mb-1">
+                    {{ 'Basic information'|trans }}
+                </div>
+                <div>
+                    {% if canEdit|default(false) and orderStatuses is defined %}
+                        <div class="dropdown d-inline-block">
+                            <a href="#" class="status status-{{ status_class }}" data-bs-toggle="dropdown" role="button" style="cursor: pointer;">
+                                <span class="status-dot"></span>
+                                {{ order.status.name }}
+                                {{ ux_icon('chevron-down', { class: 'icon icon-sm' }) }}
+                            </a>
+                            <div class="dropdown-menu js-order-status-dropdown"
+                                 data-save-url="{{ url('admin_order_changestatus', { id: order.id }) }}"
+                                 data-csrf-token="{{ csrf_token('route_admin_order_changestatus') }}">
+                                {% for status in orderStatuses %}
+                                    <a href="#" class="dropdown-item{% if order.status.id == status.id %} active{% endif %}"
+                                       data-status-id="{{ status.id }}"
+                                       data-status-type="{{ status.type }}">
+                                        <span class="status status-{{ status.type|order_status_color }}">
+                                            <span class="status-dot"></span>
+                                        </span>
+                                        {{ status.name }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <span class="status status-{{ status_class }}">
+                            <span class="status-dot"></span>
+                            {{ order.status.name }}
+                        </span>
+                    {% endif %}
+                </div>
+                <div class="text-secondary">
+                    {{ 'Created'|trans }}: {{ order.createdAt|formatDateTime }}
+                </div>
+                {% if order.createdAsAdministrator or order.createdAsAdministratorName %}
+                    <div class="text-secondary">
+                        {{ 'Created by'|trans }}: {{ order.createdAsAdministrator ? order.createdAsAdministrator.realName : order.createdAsAdministratorName }}
+                    </div>
+                {% endif %}
+                {% if order.promoCode %}
+                    <div class="text-secondary">{{ 'Promo code'|trans }}: {{ order.promoCode }}</div>
+                {% endif %}
+                <div>
+                    <span class="text-secondary">{{ 'Total'|trans }}:</span>
+                    {{ order.totalPriceWithVat|priceWithCurrencyByOrder(order) }}
+                </div>
+                {# Collapsible section START #}
+                <div class="collapse" id="basicInfoMore">
+                    <div class="d-flex flex-column gap-1">
+                        {% if isMultidomain() %}
+                            <div class="text-secondary">{{ 'Domain'|trans }}: {{ domain_icon(order.domainId) }} {{ getDomainName(order.domainId) }}</div>
+                        {% endif %}
+                        {% if order.origin %}
+                            <div class="text-secondary">{{ 'Origin'|trans }}: {{ order.origin }}</div>
+                        {% endif %}
+                        <div class="text-secondary">{{ 'Heureka'|trans }}: {{ order.heurekaAgreement ? 'Yes'|trans : 'No'|trans }}</div>
+                        <div class="text-secondary">{{ 'Internal ID'|trans }}: {{ order.id }}</div>
+                    </div>
+                </div>
+                <a href="#" class="text-secondary small d-inline-block js-toggle-text"
+                   data-bs-toggle="collapse" data-bs-target="#basicInfoMore"
+                   data-text-more="{{ 'Show more'|trans }}" data-text-less="{{ 'Show less'|trans }}"
+                   onclick="event.preventDefault(); var d=this.dataset; this.textContent = this.textContent.trim() === d.textMore ? d.textLess : d.textMore;">
+                    {{ 'Show more'|trans }}
+                </a>
+                {# Collapsible section END #}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="card">
+            <div class="card-body d-flex flex-column gap-1">
+                <div class="subheader d-flex justify-content-between align-items-center mb-1">
+                    {{ 'Customer'|trans }}
+                    {% if canEdit|default(false) %}
+                        <a href="#" class="text-secondary" data-bs-toggle="modal" data-bs-target="#personalEditModal" title="{{ 'Edit'|trans }}">
+                            {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
+                        </a>
+                    {% endif %}
+                </div>
+                {% if order.customerUser %}
+                    {% set registeredCompanyName = order.customerUser.customer.billingAddress.companyName|default(null) %}
+                    <div class="d-flex align-items-center gap-1 flex-wrap">
+                        {% if registeredCompanyName %}
+                            <a href="{{ url('admin_customer_edit', { id: order.customerUser.customer.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                                {{ registeredCompanyName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
+                            </a>
+                            -
+                        {% endif %}
+                        <a href="{{ url('admin_customer_user_edit', { id: order.customerUser.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                            {{ order.customerUser.firstName }} {{ order.customerUser.lastName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
+                        </a>
+                    </div>
+                {% endif %}
+                <div>{{ order.firstName }} {{ order.lastName }}</div>
+                <div class="text-secondary">
+                    <a href="mailto:{{ order.email }}">{{ order.email }}</a>
+                </div>
+                {% if order.telephone %}
+                    <div class="text-secondary">
+                        <a href="tel:{{ order.telephone }}">{{ order.telephone }}</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="card">
+            <div class="card-body d-flex flex-column gap-1">
+                <div class="subheader d-flex justify-content-between align-items-center mb-1">
+                    {{ 'Payment & Transport'|trans }}
+                    {% if canEdit|default(false) %}
+                        <a href="#" class="text-secondary" data-bs-toggle="modal" data-bs-target="#trackingEditModal" title="{{ 'Edit payment and transport'|trans }}">
+                            {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
+                        </a>
+                    {% endif %}
+                </div>
+                <div>
+                    <span class="text-secondary">{{ 'Payment'|trans }}:</span>
+                    {{ order.payment.name }}
+                    {% if order.payment.isGoPay %}
+                        {% set goPayTransaction = order.lastGoPayTransaction %}
+                        {% if goPayTransaction %}
+                            <span class="badge {{ goPayTransaction.externalPaymentStatus|payment_status_badge_class }}">
+                                {{ goPayTransaction.externalPaymentStatus|translate_payment_transaction_status|replace({'Payment ': '', 'Payment has ': ''})|capitalize }}
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary-lt">{{ 'Not sent to GoPay'|trans }}</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div>
+                    <span class="text-secondary">{{ 'Transport'|trans }}:</span>
+                    {{ order.transport.name }}
+                </div>
+                <div class="text-secondary">
+                    {{ 'Tracking'|trans }}: {{ order.trackingNumber ?: '-' }}
+                </div>
+                <div class="text-secondary">
+                    {{ 'Delivered'|trans }}: {{ order.deliveredAt ? order.deliveredAt|formatDateTime : '-' }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="card">
+            <div class="card-body d-flex flex-column gap-1">
+                <div class="subheader d-flex justify-content-between align-items-center mb-1">
+                    {{ 'Note'|trans }}
+                    {% if canEdit|default(false) %}
+                        <a href="#" class="text-secondary" data-bs-toggle="modal" data-bs-target="#noteEditModal" title="{{ 'Edit note'|trans }}">
+                            {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="text-secondary">
+                    {{ order.note ?: '-'|trans }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

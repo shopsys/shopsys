@@ -1,0 +1,14 @@
+<div class="datagrid">
+    <div class="datagrid-item">
+        <div class="datagrid-title">{{ 'Status'|trans }}</div>
+        <div class="datagrid-content">{{ order.status.name }}</div>
+    </div>
+    <div class="datagrid-item">
+        <div class="datagrid-title">{{ 'Tracking number'|trans }}</div>
+        <div class="datagrid-content">{{ order.trackingNumber ?: '-' }}</div>
+    </div>
+    <div class="datagrid-item">
+        <div class="datagrid-title">{{ 'Delivered at'|trans }}</div>
+        <div class="datagrid-content">{{ order.deliveredAt ? order.deliveredAt|formatDateTime : '-' }}</div>
+    </div>
+</div>

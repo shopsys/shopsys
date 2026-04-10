@@ -44,6 +44,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Length;
 
+/**
+ * @deprecated use per-section FormTypes instead (OrderStatusFormType, OrderPersonalFormType,
+ *             OrderAddressesFormType, OrderNoteFormType, OrderPaymentsFormType)
+ */
 final class OrderFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS = 'deliveryAddressSameAsBillingAddress';
@@ -60,6 +64,8 @@ final class OrderFormType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        trigger_deprecation('shopsys/framework', '19.0', 'OrderFormType is deprecated. Use per-section FormTypes instead (OrderStatusFormType, OrderPersonalFormType, OrderAddressesFormType, OrderNoteFormType, OrderPaymentsFormType).');
+
         /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
         $order = $options['order'];
         $domainId = $order->getDomainId();

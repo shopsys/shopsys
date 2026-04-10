@@ -1,0 +1,30 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title d-flex align-items-center gap-2">
+            <i class="ti ti-credit-card"></i>
+            {{ 'Payments'|trans }}
+        </h3>
+    </div>
+    <div class="card-body">
+        {# Unlike other order detail sections (personal/addresses/note/tracking) which save through
+           AJAX modals, the payments tab is a full-page form. The "Send refund and save order" button
+           triggers a synchronous GoPay API call inside OrderFacade::edit() and we want a regular
+           page reload to reflect the new transaction state. #}
+        {% if paymentsForm %}
+            {{ form_start(paymentsForm, { action: url('admin_order_savepayments', { id: order.id }), attr: { novalidate: 'novalidate' } }) }}
+                {{ form_row(paymentsForm.paymentTransactionRefunds, { label: false }) }}
+                {{ form_rest(paymentsForm) }}
+            {{ form_end(paymentsForm) }}
+        {% else %}
+            <div class="empty py-4">
+                <div class="empty-icon">
+                    {{ ux_icon('notes-off', { class: 'text-secondary' }) }}
+                </div>
+                <p class="empty-title">{{ 'No payment transactions'|trans }}</p>
+                <p class="empty-subtitle text-muted">
+                    {{ 'This order does not have any payment transactions.'|trans }}
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</div>

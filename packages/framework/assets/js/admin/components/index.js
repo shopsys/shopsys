@@ -57,3 +57,7 @@ import './PinnedMenuItem';
 import './Statistics';
 import './TransportPriceWithWeightLimitCollection';
 import './ImportPriceList';
+import './OrderDetailTabs';
+import './OrderHistoryLoader';
+import './OrderStatusDropdown';
+import './OrderModalSave';

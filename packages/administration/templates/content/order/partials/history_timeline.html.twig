@@ -1,0 +1,59 @@
+<ul class="timeline">
+    {% for entry in entityLogEntries %}
+        {% if entry.action is same as(constant('Shopsys\\FrameworkBundle\\Component\\EntityLog\\Enum\\EntityLogActionEnum::CREATE')) %}
+            {% set icon = 'plus' %}
+            {% set icon_color = 'text-green' %}
+        {% elseif entry.action is same as(constant('Shopsys\\FrameworkBundle\\Component\\EntityLog\\Enum\\EntityLogActionEnum::DELETE')) %}
+            {% set icon = 'trash' %}
+            {% set icon_color = 'text-red' %}
+        {% else %}
+            {% set icon = 'pencil' %}
+            {% set icon_color = 'text-yellow' %}
+        {% endif %}
+
+        <li class="timeline-event">
+            <div class="timeline-event-icon {{ icon_color }}">
+                {{ ux_icon(icon) }}
+            </div>
+            <div class="card timeline-event-card">
+                <div class="card-body">
+                    <div class="text-secondary float-end">
+                        {{ entry.createdAt|formatDateTime }}
+                    </div>
+                    <h4 class="mb-1">
+                        {{ entry.action|capitalize }} — {{ entry.entityName }}
+                        {% if entry.entityIdentifier %}
+                            <span class="text-secondary">({{ entry.entityIdentifier }})</span>
+                        {% endif %}
+                    </h4>
+                    <div class="text-secondary mb-1">
+                        {{ 'By'|trans }}: {{ entry.userIdentifier }}
+                        <span class="badge bg-azure-lt ms-1">{{ entry.source }}</span>
+                    </div>
+                    {% if entry.changeSet|length > 0 %}
+                        <div class="mt-2">
+                            <table class="table table-sm table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th class="w-25">{{ 'Field'|trans }}</th>
+                                        <th style="width: 37.5%">{{ 'Old value'|trans }}</th>
+                                        <th style="width: 37.5%">{{ 'New value'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for field, change in entry.changeSet %}
+                                        <tr>
+                                            <td><strong>{{ field }}</strong></td>
+                                            <td class="text-secondary">{{ change.oldReadableValue is defined and change.oldReadableValue is not null ? change.oldReadableValue : '-' }}</td>
+                                            <td>{{ change.newReadableValue is defined and change.newReadableValue is not null ? change.newReadableValue : '-' }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>

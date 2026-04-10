@@ -1,0 +1,36 @@
+<div class="row g-4">
+    <div class="col-md-6">
+        <h4>{{ 'Billing address'|trans }}</h4>
+        {% if order.companyName %}
+            <div>{{ order.companyName }}</div>
+        {% endif %}
+        {% if order.companyNumber %}
+            <div>{{ 'IČO'|trans }}: {{ order.companyNumber }}</div>
+        {% endif %}
+        {% if order.companyTaxNumber %}
+            <div>{{ 'DIČ'|trans }}: {{ order.companyTaxNumber }}</div>
+        {% endif %}
+        <div>{{ order.street }}</div>
+        <div>{{ order.postcode }} {{ order.city }}</div>
+        <div>{{ order.country.name }}</div>
+    </div>
+    <div class="col-md-6">
+        <h4>{{ 'Delivery address'|trans }}</h4>
+        {% if order.deliveryAddressSameAsBillingAddress %}
+            <span class="badge bg-blue-lt">{{ 'Same as billing address'|trans }}</span>
+        {% else %}
+            {% if order.deliveryFirstName or order.deliveryLastName %}
+                <div>{{ order.deliveryFirstName }} {{ order.deliveryLastName }}</div>
+            {% endif %}
+            {% if order.deliveryCompanyName %}
+                <div>{{ order.deliveryCompanyName }}</div>
+            {% endif %}
+            {% if order.deliveryTelephone %}
+                <div><a href="tel:{{ order.deliveryTelephone }}">{{ order.deliveryTelephone }}</a></div>
+            {% endif %}
+            <div>{{ order.deliveryStreet }}</div>
+            <div>{{ order.deliveryPostcode }} {{ order.deliveryCity }}</div>
+            <div>{{ order.deliveryCountry.name }}</div>
+        {% endif %}
+    </div>
+</div>

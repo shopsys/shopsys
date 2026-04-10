@@ -121,7 +121,8 @@ function initTab($container) {
 
 function initToast($container) {
     $container.filterAllNodes('[data-bs-toggle="toast"]').each(function () {
-        new Toast(this);
+        const toast = new Toast(this);
+        toast.show();
     });
 }
 

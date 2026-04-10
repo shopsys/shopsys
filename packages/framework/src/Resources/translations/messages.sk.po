@@ -409,6 +409,9 @@ msgstr "Najpredávanejšie"
 msgid "Bestselling products"
 msgstr "Najpredávanejšie produkty"
 
+msgid "Billing & Delivery"
+msgstr ""
+
 msgid "Billing address"
 msgstr "Fúktúračná adresa"
 
@@ -1441,9 +1444,6 @@ msgstr "Zadajte dátum a čas vo formáte dd.mm.rrrr hh:mm (napr. 31.12.2023 10:
 msgid "Entered code is not valid"
 msgstr "Zadaný kód nie je platný"
 
-msgid "Entered customer not found, please check entered data."
-msgstr "Zadaný zákazník nebol nájdený, skôntrolujte zadané údaje."
-
 msgid "Entity"
 msgstr "Entita"
 
@@ -1783,6 +1783,9 @@ msgstr "Skryť produkt"
 msgid "Hiding product"
 msgstr "Skrývanie produktu"
 
+msgid "History"
+msgstr ""
+
 msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Sviatok / interný deň <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorený"
 
@@ -1905,6 +1908,9 @@ msgstr "Interná poznámka"
 
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr "Dôrazne sa odporúča otestovať toto nastavenie na vývojovom alebo CI serveri pred tým, ako sa použije v produkčnom prostredí!"
+
+msgid "Items"
+msgstr ""
 
 msgid "Key"
 msgstr "Kľúč"
@@ -2542,6 +2548,9 @@ msgstr "Typ platby"
 msgid "Payment was not paid in full"
 msgstr "Platba nebola zaplatena v plnej výške"
 
+msgid "Payments"
+msgstr ""
+
 msgid "Percent"
 msgstr "Percento"
 
@@ -2938,6 +2947,9 @@ msgstr "Uložiť nastavenie ceny darčeka"
 msgid "Save warehouse settings"
 msgstr "Uložiť warehouse settings"
 
+msgid "Saved successfully"
+msgstr ""
+
 msgid "Schedule"
 msgstr "Rozvrh"
 
@@ -3186,6 +3198,9 @@ msgstr "Začať o"
 
 msgid "Status"
 msgstr "Stav"
+
+msgid "Status change failed. Please try again."
+msgstr ""
 
 msgid "Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed"
 msgstr "Stav reklamac­e s číslom {complaint_number} z objednávky číslo {order_number} vytvorenej dňa {date} sa zmenil"
@@ -3616,6 +3631,9 @@ msgstr "Watchdogy"
 msgid "Weight (g)"
 msgstr "Hmotnosť (g)"
 
+msgid "Withdrawal"
+msgstr ""
+
 msgid "Withdrawal Request"
 msgstr "Žiadosť o odstúpenie od zmluvy"
 
@@ -3627,6 +3645,9 @@ msgstr "Odstúpenie od zmluvy"
 
 msgid "Withdrawal instructions"
 msgstr "Pokyny po odstúpenie"
+
+msgid "Withdrawal request data is required to switch the order to this status."
+msgstr ""
 
 msgid "Withdrawal request details"
 msgstr "Detaily žiadosti o odstúpenie"

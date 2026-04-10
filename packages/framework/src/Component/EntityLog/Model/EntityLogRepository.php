@@ -31,6 +31,18 @@ class EntityLogRepository
             ->setParameter('entityId', $entityId);
     }
 
+    public function getCountByEntityNameAndEntityId(string $entityName, int $entityId): int
+    {
+        return (int)$this->getRepository()->createQueryBuilder('el')
+            ->select('COUNT(el.id)')
+            ->where('el.entityName = :entityName AND el.entityId = :entityId')
+            ->orWhere('el.parentEntityName = :entityName AND el.parentEntityId = :entityId')
+            ->setParameter('entityName', $entityName)
+            ->setParameter('entityId', $entityId)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     /**
      * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog[]
      */

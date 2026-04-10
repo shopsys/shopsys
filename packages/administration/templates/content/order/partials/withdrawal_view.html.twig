@@ -1,0 +1,22 @@
+{% if withdrawalRequest %}
+    <h4>{{ 'Contact'|trans }}</h4>
+    {% if withdrawalRequest.firstName or withdrawalRequest.lastName %}
+        <div>{{ withdrawalRequest.firstName }} {{ withdrawalRequest.lastName }}</div>
+    {% endif %}
+    {% if withdrawalRequest.email %}
+        <div><a href="mailto:{{ withdrawalRequest.email }}">{{ withdrawalRequest.email }}</a></div>
+    {% endif %}
+    {% if withdrawalRequest.telephone %}
+        <div><a href="tel:{{ withdrawalRequest.telephone }}">{{ withdrawalRequest.telephone }}</a></div>
+    {% endif %}
+
+    <h4 class="mt-3">{{ 'Requested at'|trans }}</h4>
+    <div>{{ withdrawalRequest.requestedAt ? withdrawalRequest.requestedAt|formatDateTime : '-' }}</div>
+
+    {% if withdrawalRequest.note %}
+        <h4 class="mt-3">{{ 'Note'|trans }}</h4>
+        <div>{{ withdrawalRequest.note }}</div>
+    {% endif %}
+{% else %}
+    <div class="text-secondary">{{ 'No withdrawal request data.'|trans }}</div>
+{% endif %}

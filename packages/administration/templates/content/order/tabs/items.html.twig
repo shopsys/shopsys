@@ -1,0 +1,12 @@
+{{ form_start(itemsForm, { action: url('admin_order_saveitems', { id: order.id }), attr: { novalidate: 'novalidate' } }) }}
+    {{ form_row(itemsForm.orderItems) }}
+
+    {% if canEdit %}
+        <div class="text-end mt-3">
+            <button type="submit" class="btn btn-primary">
+                <i class="ti ti-device-floppy"></i>
+                {{ 'Save items'|trans }}
+            </button>
+        </div>
+    {% endif %}
+{{ form_end(itemsForm) }}

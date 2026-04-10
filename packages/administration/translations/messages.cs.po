@@ -16,6 +16,9 @@ msgstr "%defaultCurrency% za 1 %currentCurrency%"
 msgid "%defaultCurrency% per unit"
 msgstr "%defaultCurrency% za 1 jednotku"
 
+msgid "-"
+msgstr ""
+
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Zpět</a> na přihlašovací stránku."
 
@@ -199,6 +202,9 @@ msgstr "Bannery"
 msgid "Basic frontend currency %domainName%"
 msgstr "Základní měna frontendu %domainName%"
 
+msgid "Basic information"
+msgstr "Základní informace"
+
 msgid "Basic price"
 msgstr "Základní cena"
 
@@ -210,6 +216,9 @@ msgstr "Nejprodávanější zboží kategorie"
 
 msgid "Bestselling products"
 msgstr "Nejprodávanější zboží"
+
+msgid "Billing & Delivery"
+msgstr "Fakturace a doručení"
 
 msgid "Billing address"
 msgstr "Fakturační adresa"
@@ -253,6 +262,9 @@ msgstr "Hromadné úpravy"
 msgid "But at other addresses we have a lot for you..."
 msgstr "Ale na jiných adresách toho pro Vás máme spousty..."
 
+msgid "By"
+msgstr "Provedl"
+
 msgid "Calculated prices"
 msgstr "Vypočítané ceny"
 
@@ -285,6 +297,9 @@ msgstr "Katalogové číslo"
 
 msgid "Change for"
 msgstr "Změna pro"
+
+msgid "Change history"
+msgstr "Historie změn"
 
 msgid "Choose"
 msgstr "Vybrat"
@@ -331,6 +346,9 @@ msgstr "DIČ firmy"
 msgid "Company detail"
 msgstr "Detail firmy"
 
+msgid "Company details"
+msgstr "Údaje o firmě"
+
 msgid "Company name"
 msgstr "Název firmy"
 
@@ -360,6 +378,9 @@ msgstr "Přehled reklamací"
 
 msgid "Confirm one-time passcode"
 msgstr "Potvrďte jednorázový přístupový kód"
+
+msgid "Contact"
+msgstr "Kontakt"
 
 msgid "Contact Form"
 msgstr "Kontaktní formulář"
@@ -526,6 +547,9 @@ msgstr "Vytvořit variantu"
 msgid "Created"
 msgstr "Vytvořena"
 
+msgid "Created by"
+msgstr "Vytvořil"
+
 msgid "Created on"
 msgstr "Vytvořeno dne"
 
@@ -537,6 +561,9 @@ msgstr "Detail cronu"
 
 msgid "Currencies and rounding"
 msgstr "Měny a zaokrouhlování"
+
+msgid "Customer"
+msgstr "Zákazník"
 
 msgid "Customer delivery addresses"
 msgstr "Doručovací adresa zákazníka"
@@ -568,6 +595,9 @@ msgstr "Zákazníci"
 msgid "Customers overview"
 msgstr "Přehled zákazníků"
 
+msgid "DIČ"
+msgstr "DIČ"
+
 msgid "Dashboard"
 msgstr "Nástěnka"
 
@@ -588,6 +618,12 @@ msgstr "Smazat a nastavit"
 
 msgid "Delete file"
 msgstr "Smazat soubor"
+
+msgid "Delivered"
+msgstr "Doručeno"
+
+msgid "Delivered at"
+msgstr "Doručeno dne"
 
 msgid "Delivery address"
 msgstr "Dodací adresa"
@@ -688,8 +724,14 @@ msgstr "Upravit"
 msgid "Edit administrator"
 msgstr "Úprava administrátora"
 
+msgid "Edit billing & delivery"
+msgstr "Upravit fakturaci a doručení"
+
 msgid "Edit domain icon"
 msgstr "Změnit ikonu domény"
+
+msgid "Edit note"
+msgstr "Upravit poznámku"
 
 msgid "Edit parameter"
 msgstr "Upravit parametr"
@@ -697,11 +739,23 @@ msgstr "Upravit parametr"
 msgid "Edit parameter group"
 msgstr "Upravit skupinu parametrů"
 
+msgid "Edit payment and transport"
+msgstr "Upravit platbu a dopravu"
+
+msgid "Edit personal data"
+msgstr "Upravit osobní údaje"
+
 msgid "Edit store"
 msgstr "Upravit prodejnu"
 
 msgid "Edit the combination with SEO values"
 msgstr "Editace kombinace se SEO hodnotami"
+
+msgid "Edit tracking"
+msgstr "Upravit sledování zásilky"
+
+msgid "Edit withdrawal request"
+msgstr "Upravit žádost o odstoupení"
 
 msgid "Editing %entity_name%"
 msgstr "Editace %entity_name%"
@@ -892,6 +946,9 @@ msgstr "Externí status transakce"
 msgid "Feeds"
 msgstr "XML Feedy"
 
+msgid "Field"
+msgstr "Pole"
+
 msgid "File"
 msgstr "Soubor"
 
@@ -967,11 +1024,17 @@ msgstr "Jít na pokročilé vyhledávání produktů"
 msgid "Granted"
 msgstr "Uděleno"
 
+msgid "Heureka"
+msgstr "Heureka"
+
 msgid "Heureka - Verified by Customer"
 msgstr "Heureka - Ověřeno zákazníky"
 
 msgid "Heureka setting"
 msgstr "Heureka nastavení"
+
+msgid "History"
+msgstr "Historie"
 
 msgid "Holiday / internal day"
 msgstr "Svátek / interní den"
@@ -1024,6 +1087,9 @@ msgstr "Přehled poptávek"
 msgid "Inquiry by"
 msgstr "Poptávka od"
 
+msgid "Internal ID"
+msgstr "Interní ID"
+
 msgid "Invalid reset password hash for administrator"
 msgstr "Neplatný hash pro resetování hesla administrátora"
 
@@ -1038,6 +1104,12 @@ msgstr "Lze použít při vytváření odkazu takto: myší označíte text, ze 
 
 msgid "Item name"
 msgstr "Název položky"
+
+msgid "Items"
+msgstr "Položky"
+
+msgid "IČO"
+msgstr "IČO"
 
 msgid "Keep empty if you do not want to limit the price by products' weight"
 msgstr "Pokud nechcete omezit cenu podle hmotnosti produktů, nechte pole prázdné."
@@ -1279,6 +1351,9 @@ msgstr "Nebyly nalezeny žádné články blogu."
 msgid "No brands found. You have to create some first."
 msgstr "Nebyly nalezeny žádné značky. Nejprve musíte nějaké vytvořit."
 
+msgid "No changes recorded."
+msgstr "Nebyly zaznamenány žádné změny."
+
 msgid "No combinations of SEO categories found."
 msgstr "Nebyly nalezeny žádné kombinace SEO kategorií."
 
@@ -1339,6 +1414,9 @@ msgstr "Nebyla nalezena žádná stránka."
 msgid "No parameters found. You have to create some first."
 msgstr "Nebyly nalezeny žádné parametry. Nejprve musíte nějaké vytvořit."
 
+msgid "No payment transactions"
+msgstr "Žádné platební transakce"
+
 msgid "No payments created so far."
 msgstr "Doposud nebyly vytvořeny žádné platby."
 
@@ -1378,6 +1456,9 @@ msgstr "Nebyly nalezeny žádné jednotky. Nejprve musíte nějaké vytvořit."
 msgid "No watchdog found."
 msgstr "Žádný hlídací pes nebyl nalezen"
 
+msgid "No withdrawal request data."
+msgstr "Žádná data o žádosti o odstoupení."
+
 msgid "Not granted"
 msgstr "Neuděleno"
 
@@ -1386,6 +1467,9 @@ msgstr "Nerefundovatelné"
 
 msgid "Not sellable"
 msgstr "Neprodejný"
+
+msgid "Not sent to GoPay"
+msgstr "Neodesláno do GoPay"
 
 msgid "Not visible"
 msgstr "Neviditelný"
@@ -1429,6 +1513,9 @@ msgstr "URL adresa objednávky"
 msgid "Order confirmation page"
 msgstr "Stránka s potvrzením objednávky"
 
+msgid "Order detail"
+msgstr "Detail objednávky"
+
 msgid "Order items"
 msgstr "Položky objednávky"
 
@@ -1458,6 +1545,9 @@ msgstr "Přehled objednávek"
 
 msgid "Orders sold"
 msgstr "Prodaných objednávek"
+
+msgid "Origin"
+msgstr "Původ"
 
 msgid "Overview"
 msgstr "Přehled"
@@ -1492,11 +1582,17 @@ msgstr "Přehled parametrů"
 msgid "Payment"
 msgstr "Platba"
 
+msgid "Payment & Transport"
+msgstr "Platba a doprava"
+
 msgid "Payment instructions"
 msgstr "Pokyny k platbě"
 
 msgid "Payment method name"
 msgstr "Název platební metody"
+
+msgid "Payment transactions updated."
+msgstr "Platební transakce byly aktualizovány."
 
 msgid "Payments"
 msgstr "Platby"
@@ -1639,6 +1735,9 @@ msgstr "Nahradit soubor"
 msgid "Request a one-time passcode by email"
 msgstr "Požádejte o jednorázový přístupový kód e-mailem"
 
+msgid "Requested at"
+msgstr "Požadováno dne"
+
 msgid "Reset administrator password"
 msgstr "Resetovat heslo administrátora"
 
@@ -1693,14 +1792,23 @@ msgstr "Obchodní zástupce"
 msgid "Sales representatives"
 msgstr "Obchodní zástupci"
 
+msgid "Same as billing address"
+msgstr "Stejná jako fakturační adresa"
+
 msgid "Saturday"
 msgstr "Sobota"
+
+msgid "Save"
+msgstr "Uložit"
 
 msgid "Save changes"
 msgstr "Uložit změny"
 
 msgid "Save changes in order"
 msgstr "Uložit změny v pořadí"
+
+msgid "Save items"
+msgstr "Uložit položky"
 
 msgid "Scaled promo code"
 msgstr "Škálovaný slevový kupón"
@@ -1852,8 +1960,17 @@ msgstr "Dopravy"
 msgid "Shippings and payments"
 msgstr "Dopravy a platby"
 
+msgid "Show all (%count%)"
+msgstr "Zobrazit vše (%count%)"
+
 msgid "Show all customer orders"
 msgstr "Zobrazit všechny objednávky zákazníka"
+
+msgid "Show less"
+msgstr "Zobrazit méně"
+
+msgid "Show more"
+msgstr "Zobrazit více"
 
 msgid "Site"
 msgstr "Stránka"
@@ -1975,6 +2092,9 @@ msgstr "Tento příznak nelze smazat."
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr "Toto je poslední zákaznický účet. Odstraní všechna související data. Opravdu to chcete smazat?"
 
+msgid "This order does not have any payment transactions."
+msgstr "Tato objednávka nemá žádné platební transakce."
+
 msgid "This phone number may not be valid. Please verify it."
 msgstr "Toto telefonní číslo nemusí být platné. Prosím ověřte ho."
 
@@ -2038,6 +2158,12 @@ msgstr "Celkem s DPH"
 msgid "Total price including VAT"
 msgstr "Celková cena s DPH"
 
+msgid "Tracking"
+msgstr "Sledování"
+
+msgid "Tracking number"
+msgstr "Číslo zásilky"
+
 msgid "Transfer issues"
 msgstr "Problémy v přenosech"
 
@@ -2046,6 +2172,9 @@ msgstr "Přehled problémů v přenosech"
 
 msgid "Transfers"
 msgstr "Přehled chyb v přenosech"
+
+msgid "Transport"
+msgstr "Doprava"
 
 msgid "Transports and payments"
 msgstr "Dopravy a platby"
@@ -2167,6 +2296,9 @@ msgstr "Velmi slabé"
 msgid "View allowed recipients."
 msgstr "Zobrazit povolené příjemce."
 
+msgid "View order on Frontend"
+msgstr "Zobrazit objednávku na frontendu"
+
 msgid "Visibility and sellability for unlogged customers"
 msgstr "Viditelnost a prodejnost pro neregistrované zákazníky"
 
@@ -2208,6 +2340,12 @@ msgstr "Při změně výchozí měny nedochází k žádnému přepočtu cen"
 
 msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
 msgstr "Mějte na paměti, že při vytváření cenové skupiny je nutné, aby aplikace přepočítala nové ceny pro všechny produkty. Produkty bez přepočtené ceny nebudou na e-shopu zobrazeny. Pro 2000 položek přepočet trvá asi hodinu."
+
+msgid "Withdrawal"
+msgstr "Odstoupení"
+
+msgid "Withdrawal request"
+msgstr "Žádost o odstoupení"
 
 msgid "XML Feeds"
 msgstr "XML Feedy"
@@ -2352,4 +2490,3 @@ msgstr "hlídací psi"
 
 msgid "yesterday"
 msgstr "včera"
-

@@ -1,7 +1,13 @@
 {% block payment_transactions_row %}
     {% import _self as self %}
+    {% set hasRefundable = false %}
+    {% for paymentTransaction in order.paymentTransactions %}
+        {% if paymentTransaction.refundable %}
+            {% set hasRefundable = true %}
+        {% endif %}
+    {% endfor %}
     <div class="table-responsive">
-        <table class="table table-transparent">
+        <table class="table table-transparent table-vcenter">
             <thead>
                 <tr>
                     <th>{{ 'Payment method name'|trans }}</th>
@@ -10,20 +16,22 @@
                     <th class="text-end">{{ 'Paid amount'|trans }}</th>
                     <th class="text-end">{{ 'Refunded amount'|trans }}</th>
                     <th class="text-end">{{ 'Refundable amount'|trans }}</th>
-                    <th>{{ 'Refund amount'|trans }}</th>
-                    <th></th>
+                    {% if hasRefundable %}
+                        <th>{{ 'Refund amount'|trans }}</th>
+                        <th></th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
                 {% for paymentTransaction in order.paymentTransactions %}
-                    {{ self.paymentTransaction(form[paymentTransaction.id], paymentTransaction, order) }}
+                    {{ self.paymentTransaction(form[paymentTransaction.id], paymentTransaction, order, hasRefundable) }}
                 {% endfor %}
             </tbody>
         </table>
     </div>
 {% endblock payment_transactions_row %}
 
-{% macro paymentTransaction(paymentTransactionForm, paymentTransaction, order) %}
+{% macro paymentTransaction(paymentTransactionForm, paymentTransaction, order, hasRefundable) %}
     {% import _self as self %}
     <tr id="{{ paymentTransactionForm.vars.id }}" data-index="{{ paymentTransaction.id }}">
         <td>
@@ -33,10 +41,12 @@
             {{ paymentTransaction.externalPaymentIdentifier }}
         </td>
         <td>
-            {{ paymentTransaction.externalPaymentStatus|translate_payment_transaction_status }}
+            <span class="badge {{ paymentTransaction.externalPaymentStatus|payment_status_badge_class }}">
+                {{ paymentTransaction.externalPaymentStatus|translate_payment_transaction_status }}
+            </span>
             {% if paymentTransaction.externalPaymentSubStatus %}
                 <br>
-                ({{ paymentTransaction.externalPaymentSubStatus|translate_payment_transaction_sub_status }})
+                <small class="text-secondary">({{ paymentTransaction.externalPaymentSubStatus|translate_payment_transaction_sub_status }})</small>
             {% endif %}
         </td>
         <td class="text-end">
@@ -46,7 +56,7 @@
             <span class="js-refunded-amount">
             {{ paymentTransaction.refundedAmount|priceWithCurrencyByOrder(order) }}
                 {% if paymentTransaction.refundable %}
-                    <span class="js-refunded-amount-edit cursor-pointer" title="edit">{{ ux_icon('pencil') }}</span>
+                    <span class="js-refunded-amount-edit cursor-pointer" title="edit">{{ ux_icon('pencil', {class: 'icon icon-sm'}) }}</span>
                 {% endif %}
             </span>
             <span class="js-refunded-amount d-none">
@@ -57,25 +67,31 @@
         <td class="text-end">
             {{ paymentTransaction.refundableAmount|priceWithCurrencyByOrder(order) }}
         </td>
-        <td>
-            {% if paymentTransaction.refundable %}
-                <div style="width: 150px">
-                    {{ form_widget(paymentTransactionForm.refundAmount, {symbolAfterInput: currencySymbolByCode(order.currencyCode), attr: { class: 'text-end'}}) }}
-                    {{ form_errors(paymentTransactionForm.refundAmount, {errors_attr: { inline: true }}) }}
-                </div>
-            {% else %}
-                {{ 'Not refundable'|trans }}
-                {% do paymentTransactionForm.refundAmount.setRendered %}
-            {% endif %}
-        </td>
-        <td>
-            {% if paymentTransaction.refundable %}
-                {{ form_widget(paymentTransactionForm.executeRefund, {attr: { class: 'js-execute-refund-' ~ paymentTransaction.id }}) }}
-                {{ form_widget(paymentTransactionForm.sendRefund, {label: "Send refund and save order"|trans,attr: { 'data-execute-class': 'js-execute-refund-' ~ paymentTransaction.id, class: 'js-send-refund' }}) }}
-            {% else %}
-                {% do paymentTransactionForm.executeRefund.setRendered %}
-                {% do paymentTransactionForm.sendRefund.setRendered %}
-            {% endif %}
-        </td>
+        {% if hasRefundable %}
+            <td>
+                {% if paymentTransaction.refundable %}
+                    <div style="width: 150px">
+                        {{ form_widget(paymentTransactionForm.refundAmount, {symbolAfterInput: currencySymbolByCode(order.currencyCode), attr: { class: 'text-end'}}) }}
+                        {{ form_errors(paymentTransactionForm.refundAmount, {errors_attr: { inline: true }}) }}
+                    </div>
+                {% else %}
+                    {{ 'Not refundable'|trans }}
+                    {% do paymentTransactionForm.refundAmount.setRendered %}
+                {% endif %}
+            </td>
+            <td>
+                {% if paymentTransaction.refundable %}
+                    {{ form_widget(paymentTransactionForm.executeRefund, {attr: { class: 'js-execute-refund-' ~ paymentTransaction.id }}) }}
+                    {{ form_widget(paymentTransactionForm.sendRefund, {label: "Send refund and save order"|trans, attr: { 'data-execute-class': 'js-execute-refund-' ~ paymentTransaction.id, class: 'btn btn-outline-primary js-send-refund' }}) }}
+                {% else %}
+                    {% do paymentTransactionForm.executeRefund.setRendered %}
+                    {% do paymentTransactionForm.sendRefund.setRendered %}
+                {% endif %}
+            </td>
+        {% else %}
+            {% do paymentTransactionForm.refundAmount.setRendered %}
+            {% do paymentTransactionForm.executeRefund.setRendered %}
+            {% do paymentTransactionForm.sendRefund.setRendered %}
+        {% endif %}
     </tr>
 {% endmacro %}
