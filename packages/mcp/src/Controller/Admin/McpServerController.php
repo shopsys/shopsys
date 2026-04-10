@@ -18,6 +18,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 #[SuperAdminOnly]
 class McpServerController extends AdminBaseController
 {
+    protected const string MCP_SERVER_NAME = 'shopsys-mcp';
+    protected const string BEARER_TOKEN_ENV_VAR = 'SHOPSYS_MCP_BEARER_TOKEN';
+
     public function __construct(
         protected readonly AdministratorMcpTokenFacade $administratorMcpTokenFacade,
         protected readonly UrlGeneratorInterface $urlGenerator,
@@ -32,6 +35,8 @@ class McpServerController extends AdminBaseController
 
         return $this->render('@ShopsysMcp/content/superadmin/mcpServer.html.twig', [
             'administratorMcpToken' => $administratorMcpToken,
+            'bearerTokenEnvVarName' => self::BEARER_TOKEN_ENV_VAR,
+            'mcpServerName' => self::MCP_SERVER_NAME,
             'generateForm' => $this->createGenerateForm($administratorMcpToken !== null)->createView(),
             'revokeForm' => $administratorMcpToken !== null ? $this->createRevokeForm()->createView() : null,
             'mcpEndpointUrl' => $this->urlGenerator->generate('_mcp_endpoint', [], UrlGeneratorInterface::ABSOLUTE_URL),
@@ -54,21 +59,15 @@ class McpServerController extends AdminBaseController
         }
 
         $tokenString = $this->administratorMcpTokenFacade->generateTokenForAdministrator($administrator);
+        $mcpEndpointUrl = $this->urlGenerator->generate('_mcp_endpoint', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $this->addSuccessFlashTwig(
-            t('Copy the new MCP Bearer token now. It will not be shown again:')
-            . '<div class="input-group input-group-flat mt-2">'
-            . '<input type="text" value="{{ tokenString }}" class="form-control" readonly>'
-            . '<span class="input-group-text">'
-            . '<a href="#" class="link-secondary" data-js-clipboard-copy="{{ tokenString }}" title="{{ copyLabel }}">'
-            . '{{ ux_icon("duplicate") }}'
-            . '</a>'
-            . '</span>'
-            . '</div>',
-            [
-                'copyLabel' => t('Copy token'),
+        $this->addSuccessFlash(
+            $this->renderView('@ShopsysMcp/content/superadmin/_generatedTokenFlash.html.twig', [
+                'bearerTokenEnvVarName' => self::BEARER_TOKEN_ENV_VAR,
+                'mcpServerName' => self::MCP_SERVER_NAME,
+                'mcpEndpointUrl' => $mcpEndpointUrl,
                 'tokenString' => $tokenString,
-            ],
+            ]),
         );
 
         return $this->redirectToRoute('admin_superadmin_mcp_token');

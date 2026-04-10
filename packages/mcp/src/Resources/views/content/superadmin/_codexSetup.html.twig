@@ -1,0 +1,36 @@
+{% set codexAddCommand = 'codex mcp add ' ~ mcpServerName ~ ' --url ' ~ mcpEndpointUrl ~ ' --bearer-token-env-var ' ~ bearerTokenEnvVarName %}
+{% set codexExportCommand = 'export ' ~ bearerTokenEnvVarName ~ '="' ~ (tokenString ?? '<token>') ~ '"' %}
+
+<details class="w-100 mt-4">
+    <summary class="fw-semibold cursor-pointer">
+        {{ 'View Codex CLI instructions'|trans }}
+    </summary>
+
+    <div class="mt-3">
+        <p class="mb-2">{{ 'For Codex CLI, add the MCP server once and expose the token through an environment variable before starting Codex.'|trans }}</p>
+
+        <div class="mb-3">
+            <label class="form-label">{{ 'Per-shell token command'|trans }}</label>
+            <div class="input-group input-group-flat w-100">
+                <input type="text" value="{{ codexExportCommand }}" class="form-control font-monospace" readonly>
+                <span class="input-group-text">
+                    <a href="#" class="link-secondary" data-js-clipboard-copy="{{ codexExportCommand }}" title="{{ 'Copy command'|trans }}">
+                        {{ ux_icon('duplicate') }}
+                    </a>
+                </span>
+            </div>
+        </div>
+
+        <div>
+            <label class="form-label">{{ 'One-time setup command'|trans }}</label>
+            <div class="input-group input-group-flat w-100">
+                <input type="text" value="{{ codexAddCommand }}" class="form-control font-monospace" readonly>
+                <span class="input-group-text">
+                    <a href="#" class="link-secondary" data-js-clipboard-copy="{{ codexAddCommand }}" title="{{ 'Copy command'|trans }}">
+                        {{ ux_icon('duplicate') }}
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+</details>

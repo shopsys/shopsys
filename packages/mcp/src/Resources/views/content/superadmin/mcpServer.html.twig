@@ -69,8 +69,14 @@
                 <dd class="col-sm-9"><code>Authorization: Bearer &lt;token&gt;</code></dd>
             </dl>
 
+            {{ include('@ShopsysMcp/content/superadmin/_codexSetup.html.twig', {
+                bearerTokenEnvVarName: bearerTokenEnvVarName,
+                mcpServerName: mcpServerName,
+                mcpEndpointUrl: mcpEndpointUrl,
+            }) }}
+
             <div class="alert alert-info mt-4 mb-0">
-                {{ 'Generated secrets are shown only once. Regenerating a token revokes the previous token immediately.'|trans }}
+                {{ 'Generated secrets are shown only once. Regenerating a token revokes the previous token immediately. Environment variables exported in your shell last only for the current shell session unless you add them to your shell profile.'|trans }}
             </div>
         </div>
     </div>
