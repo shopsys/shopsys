@@ -6,6 +6,7 @@ namespace Shopsys\McpBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
 use Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider;
+use Shopsys\McpBundle\Component\Logger\McpToolCallLogger;
 
 /**
  * @phpstan-import-type SchemaTableArray from \Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider
@@ -14,8 +15,10 @@ class GetDatabaseSchemaTool
 {
     protected const string TOOL_NAME = 'getDatabaseSchema';
 
-    public function __construct(protected readonly ExposedSchemaProvider $exposedSchemaProvider)
-    {
+    public function __construct(
+        protected readonly ExposedSchemaProvider $exposedSchemaProvider,
+        protected readonly McpToolCallLogger $mcpToolCallLogger,
+    ) {
     }
 
     /**
@@ -77,6 +80,17 @@ class GetDatabaseSchemaTool
     )]
     public function getDatabaseSchema(array $tableNames): array
     {
-        return $this->exposedSchemaProvider->getExposedSchema($tableNames);
+        $startedAt = microtime(true);
+        $inputContext = [
+            'requested_table_count' => count($tableNames),
+            'requested_table_names' => $tableNames,
+        ];
+        $tables = $this->exposedSchemaProvider->getExposedSchema($tableNames);
+
+        $this->mcpToolCallLogger->logSuccess(static::TOOL_NAME, $inputContext, [
+            'returned_table_count' => count($tables),
+        ], $startedAt);
+
+        return $tables;
     }
 }

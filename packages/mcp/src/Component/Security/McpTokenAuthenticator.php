@@ -23,7 +23,7 @@ class McpTokenAuthenticator extends AbstractAuthenticator implements Authenticat
 {
     protected const string HEADER_AUTHORIZATION = 'Authorization';
     protected const string BEARER_PREFIX = 'Bearer ';
-    protected const string REQUEST_ATTRIBUTE_ADMINISTRATOR_MCP_TOKEN = '_administrator_mcp_token';
+    public const string REQUEST_ATTRIBUTE_ADMINISTRATOR_MCP_TOKEN = '_administrator_mcp_token';
 
     public function __construct(
         protected readonly AdministratorMcpTokenFacade $administratorMcpTokenFacade,

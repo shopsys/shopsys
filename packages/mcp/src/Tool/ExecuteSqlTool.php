@@ -7,13 +7,16 @@ namespace Shopsys\McpBundle\Tool;
 use Mcp\Capability\Attribute\McpTool;
 use Mcp\Exception\ToolCallException;
 use Shopsys\McpBundle\Component\Database\Query\SqlExecutor;
+use Shopsys\McpBundle\Component\Logger\McpToolCallLogger;
 
 class ExecuteSqlTool
 {
     protected const string TOOL_NAME = 'executeSql';
 
-    public function __construct(protected readonly SqlExecutor $sqlExecutor)
-    {
+    public function __construct(
+        protected readonly SqlExecutor $sqlExecutor,
+        protected readonly McpToolCallLogger $mcpToolCallLogger,
+    ) {
     }
 
     /**
@@ -53,12 +56,24 @@ class ExecuteSqlTool
     )]
     public function executeSql(string $sql): array
     {
+        $startedAt = microtime(true);
+        $inputContext = [
+            'sql' => $sql,
+        ];
+
         $sqlExecutionResult = $this->sqlExecutor->execute($sql);
 
         if (!$sqlExecutionResult->isValid) {
             throw new ToolCallException($sqlExecutionResult->errorMessage ?? 'SQL query is invalid.');
         }
 
-        return $sqlExecutionResult->data ?? [];
+        $data = $sqlExecutionResult->data ?? [];
+        $resultContext = [
+            'column_count' => count($data['columnNames'] ?? []),
+            'row_count' => $data['rowCount'] ?? 0,
+        ];
+        $this->mcpToolCallLogger->logSuccess(static::TOOL_NAME, $inputContext, $resultContext, $startedAt);
+
+        return $data;
     }
 }

@@ -42,6 +42,14 @@ services:
         arguments:
             $mcpConnection: '@doctrine.dbal.mcp_connection'
 
+    Shopsys\McpBundle\Component\Logger\McpRequestLogProcessor:
+        tags:
+            - { name: monolog.processor, channel: mcp }
+
+    Shopsys\McpBundle\Component\Logger\McpToolCallLogger:
+        arguments:
+            $logger: '@monolog.logger.mcp'
+
     Shopsys\McpBundle\Controller\:
         resource: '../../Controller/'
         tags: ['controller.service_arguments']
