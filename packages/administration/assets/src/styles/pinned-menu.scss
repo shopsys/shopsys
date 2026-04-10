@@ -1,0 +1,17 @@
+@include media-breakpoint-up(lg) {
+    .nav-link-pin-button,
+    .nav-link-pinned-item .nav-link-icon {
+        opacity: 0;
+        transition: opacity 0.15s ease;
+    }
+
+    .nav-link:hover .nav-link-pin-button,
+    .dropdown-item:hover .nav-link-pin-button,
+    .nav-link-pinned-item:hover .nav-link-icon {
+        opacity: 1;
+    }
+}
+
+.nav-link-pinned-item.sortable-ghost {
+    opacity: 0.4;
+}

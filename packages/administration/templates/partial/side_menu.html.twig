@@ -18,10 +18,22 @@
     {% if item.level == 0 %}
         <ul class="sidebar navbar-nav">
             {% for item in item.children %}
-                {{ block('item') }}
+                {% if item.extra('pinned_section', false) %}
+                    {{ block('pinned_section') }}
+                {% endif %}
+            {% endfor %}
+
+            {% for item in item.children %}
+                {% if not item.extra('pinned_section', false) %}
+                    {{ block('item') }}
+                {% endif %}
             {% endfor %}
         </ul>
     {% endif %}
+{% endblock %}
+
+{% block pinned_section %}
+    {% include '@ShopsysAdministration/partial/_pinned_section.html.twig' %}
 {% endblock %}
 
 {% block item %}
@@ -38,6 +50,9 @@
     <li class="nav-item">
         <a class="{{ 'nav-link' ~ (matcher.isCurrent(item) ? ' ' ~ 'show' : '') }}" href="{{ item.uri ?? '#' }}">
             {{ block('label') }}
+            {% if item.extra('route_name') and item.uri %}
+                {% include '@ShopsysAdministration/partial/_pin_button.html.twig' with {item: item} only %}
+            {% endif %}
         </a>
     </li>
 {% endblock %}
@@ -109,7 +124,6 @@
         {% set class = class|merge(['text-red']) %}
     {% endif %}
 
-
     <a class="{{ class|join(' ') }}" href="{{ child.uri }}">
         {% if child.level > 2 %}
             <span class="nav-link-icon">
@@ -117,5 +131,8 @@
             </span>
         {% endif %}
         {{ child.label }}
+        {% if child.extra('route_name') and child.uri %}
+            {% include '@ShopsysAdministration/partial/_pin_button.html.twig' with {item: child} only %}
+        {% endif %}
     </a>
 {% endblock %}

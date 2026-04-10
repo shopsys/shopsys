@@ -1,0 +1,26 @@
+{% if item is not null and item.hasChildren %}
+    <li class="nav-item">
+        <ul class="navbar-nav"
+            data-js-nav-pinned-sortable
+            data-reorder-url="{{ url('admin_pinnedmenuitem_reorder') }}"
+        >
+            {% for pinnedChild in item.children %}
+                <li class="nav-item nav-link-pinned-item"
+                    data-js-nav-pinned-item
+                    data-route-name="{{ pinnedChild.extra('route_name') }}"
+                >
+                    <a class="nav-link{{ matcher.isCurrent(pinnedChild) ? ' show' : '' }}{{ pinnedChild.extra('superadmin', false) ? ' text-red' : '' }}" href="{{ pinnedChild.uri }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block cursor-grab text-muted" data-js-nav-pinned-drag-handle title="{{ 'Drag to reorder'|trans }}">
+                            {{ ux_icon('drag-handle', {class: 'icon icon-sm'}) }}
+                        </span>
+                        <span class="nav-link-title">{{ pinnedChild.label }}</span>
+                        {% include '@ShopsysAdministration/partial/_pin_button.html.twig' with {item: pinnedChild} only %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li class="nav-item">
+        <hr class="navbar-divider my-1">
+    </li>
+{% endif %}

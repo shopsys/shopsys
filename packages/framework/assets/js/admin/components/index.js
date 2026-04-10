@@ -53,6 +53,7 @@ import './PromoCodeLimits';
 import './RoleGroups';
 import './SelectAdminDomains';
 import './SortableValues';
+import './PinnedMenuItem';
 import './Statistics';
 import './TransportPriceWithWeightLimitCollection';
 import './ImportPriceList';

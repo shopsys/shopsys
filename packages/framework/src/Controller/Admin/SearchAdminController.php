@@ -40,6 +40,10 @@ class SearchAdminController extends AdminBaseController
 
     protected function buildResultsList(array &$results, ItemInterface $item, string $searchString): void
     {
+        if ($item->getExtra('pinned_duplicate', false)) {
+            return;
+        }
+
         if ($item->getLabel() && $item->getUri() && $this->containsLabelSearchString($item->getLabel(), $searchString)) {
             $results[] = [
                 'uri' => $item->getUri(),
