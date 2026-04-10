@@ -13,7 +13,10 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'complaints')]
 #[ORM\Entity]
 class Complaint
@@ -21,6 +24,7 @@ class Complaint
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(type: 'integer')]
@@ -29,24 +33,28 @@ class Complaint
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30, unique: true, nullable: false)]
     protected $number;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'order_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Order::class)]
     protected $order;
@@ -54,6 +62,7 @@ class Complaint
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'customer_user_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
@@ -61,60 +70,70 @@ class Complaint
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $deliveryFirstName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $deliveryLastName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $deliveryCompanyName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     protected $deliveryTelephonePrefix;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $deliveryTelephonePrefixCountryCode;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
     protected $deliveryTelephoneNumber;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $deliveryStreet;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $deliveryCity;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30)]
     protected $deliveryPostcode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'delivery_country_id', referencedColumnName: 'id', nullable: true)]
     #[ORM\ManyToOne(targetEntity: Country::class)]
     protected $deliveryCountry;
@@ -122,12 +141,14 @@ class Complaint
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: ComplaintStatus::class)]
     protected $status;
@@ -141,6 +162,7 @@ class Complaint
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'customer_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Customer::class)]
     protected $customer;
@@ -148,24 +170,28 @@ class Complaint
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $email;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $manualDocumentNumber;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 20, nullable: false)]
     protected $resolution;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 34, nullable: true)]
     protected $bankAccountNumber;
 

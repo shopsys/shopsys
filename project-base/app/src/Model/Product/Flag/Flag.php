@@ -8,11 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag as BaseFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method void setTranslations(\App\Model\Product\Flag\FlagData $flagData)
  * @method __construct(\App\Model\Product\Flag\FlagData $flagData)
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'flags')]
 #[ORM\Entity]
 class Flag extends BaseFlag

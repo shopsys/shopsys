@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidRoundingTypeException;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'currencies')]
 #[ORM\Entity]
 class Currency
@@ -28,6 +31,7 @@ class Currency
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -36,36 +40,42 @@ class Currency
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50)]
     protected $name;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 3, unique: true)]
     protected $code;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $exchangeRate;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $minFractionDigits;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 15)]
     protected $roundingType;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $roundingPlacesPriceWithoutVat;
 

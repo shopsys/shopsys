@@ -7,7 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\Product\BestsellingProduct;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'products_manual_bestselling')]
 #[ORM\UniqueConstraint(columns: ['product_id', 'category_id', 'domain_id'])]
 #[ORM\UniqueConstraint(columns: ['position', 'category_id', 'domain_id'])]
@@ -17,6 +20,7 @@ class ManualBestsellingProduct
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -25,6 +29,7 @@ class ManualBestsellingProduct
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
@@ -32,6 +37,7 @@ class ManualBestsellingProduct
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'domains')]
     protected $category;
@@ -39,12 +45,14 @@ class ManualBestsellingProduct
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $position;
 

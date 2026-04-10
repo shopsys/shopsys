@@ -8,7 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'product_domains')]
 #[ORM\UniqueConstraint(name: 'product_domain', columns: ['product_id', 'domain_id'])]
 #[ORM\Entity]
@@ -17,6 +20,7 @@ class ProductDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -25,6 +29,7 @@ class ProductDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'domains')]
     protected $product;
@@ -32,42 +37,49 @@ class ProductDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoTitle;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoMetaDescription;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $shortDescription;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoH1;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Vat::class)]
     protected $vat;
@@ -75,30 +87,35 @@ class ProductDomain
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $shortDescriptionUsp1;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $shortDescriptionUsp2;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $shortDescriptionUsp3;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $shortDescriptionUsp4;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $shortDescriptionUsp5;
 
@@ -112,30 +129,35 @@ class ProductDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $orderingPriority;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $sellingDenied;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $domainHidden;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $calculatedSellingDenied;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'promotion_xy_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: ProductPromotionXy::class)]
     protected $promotionXy;

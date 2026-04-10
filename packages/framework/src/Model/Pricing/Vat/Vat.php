@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'vats')]
 #[ORM\Entity]
 class Vat
@@ -13,6 +16,7 @@ class Vat
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -21,18 +25,21 @@ class Vat
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50)]
     protected $name;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $percent;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\ManyToOne(targetEntity: self::class)]
     protected $replaceWith;
@@ -40,6 +47,7 @@ class Vat
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 

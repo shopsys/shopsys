@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @property \App\Model\Order\Order $order
@@ -29,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
  * @method void setProductGift(\App\Model\Product\Product|null $productGift)
  * @method \App\Model\Product\Product|null getProductGift()
  */
+#[AsMcpTable]
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 #[ORM\Table(name: 'order_items')]
 #[ORM\Entity]

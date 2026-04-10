@@ -14,11 +14,14 @@ use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Form\TreeSelection\TreeSelectionEntityInterface;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method translation($locale = null): BlogCategoryTranslation
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'blog_categories')]
 #[ORM\Entity]
 #[Gedmo\Tree(type: 'nested')]
@@ -28,6 +31,7 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -44,6 +48,7 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     /**
      * @var \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'parent_id', referencedColumnName: 'id')]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     #[Gedmo\TreeParent]
@@ -59,6 +64,7 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\TreeLevel]
     protected $level;
@@ -66,6 +72,7 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\TreeLeft]
     protected $lft;
@@ -73,6 +80,7 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\TreeRight]
     protected $rgt;
@@ -86,6 +94,7 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 

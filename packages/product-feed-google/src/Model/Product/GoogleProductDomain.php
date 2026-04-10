@@ -6,7 +6,10 @@ namespace Shopsys\ProductFeed\GoogleBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'google_product_domains')]
 #[ORM\Entity]
 class GoogleProductDomain
@@ -14,6 +17,7 @@ class GoogleProductDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -22,6 +26,7 @@ class GoogleProductDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
@@ -29,12 +34,14 @@ class GoogleProductDomain
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $show;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 

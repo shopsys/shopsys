@@ -7,7 +7,10 @@ namespace Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'heureka_category')]
 #[ORM\UniqueConstraint(name: 'uq_heureka_category_heureka_id_locale', columns: ['locale', 'heureka_id'])]
 #[ORM\Entity]
@@ -16,6 +19,7 @@ class HeurekaCategory
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -24,12 +28,14 @@ class HeurekaCategory
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $name;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $fullName;
 
@@ -45,12 +51,14 @@ class HeurekaCategory
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string')]
     protected $locale;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $heurekaId;
 

@@ -10,11 +10,14 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusDeletionForbiddenException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'complaint_statuses')]
 #[ORM\Entity]
 class ComplaintStatus extends AbstractTranslatableEntity
@@ -22,6 +25,7 @@ class ComplaintStatus extends AbstractTranslatableEntity
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -38,6 +42,7 @@ class ComplaintStatus extends AbstractTranslatableEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 25)]
     protected $statusType;
 

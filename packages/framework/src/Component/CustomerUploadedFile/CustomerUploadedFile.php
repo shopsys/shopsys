@@ -9,7 +9,10 @@ use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFile;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'customer_uploaded_files')]
 #[ORM\Index(columns: ['entity_name', 'entity_id'])]
 #[ORM\Index(columns: ['id', 'slug', 'extension', 'customer_user_id'])]
@@ -22,30 +25,35 @@ class CustomerUploadedFile extends AbstractUploadedFile
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $entityName;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $entityId;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $type;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $position;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'customer_user_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
@@ -53,6 +61,7 @@ class CustomerUploadedFile extends AbstractUploadedFile
     /**
      * @var string
      */
+    #[AsMcpColumn(false)]
     #[ORM\Column(type: 'string', length: 32)]
     protected $hash;
 

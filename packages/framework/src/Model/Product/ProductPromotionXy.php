@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'product_promotion_xy')]
 #[ORM\Entity]
 class ProductPromotionXy
@@ -13,6 +16,7 @@ class ProductPromotionXy
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -21,12 +25,14 @@ class ProductPromotionXy
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: false, name: 'buy_quantity')]
     protected $buyQuantity;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: false, name: 'free_quantity')]
     protected $freeQuantity;
 

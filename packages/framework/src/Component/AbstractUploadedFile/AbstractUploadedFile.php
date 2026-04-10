@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Symfony\Component\Clock\DatePoint;
 
 #[ORM\MappedSuperclass]
@@ -23,24 +24,28 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 5)]
     protected $extension;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $modifiedAt;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $name;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -49,12 +54,14 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     /**
      * @var int|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: true)]
     protected $filesize;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $slug;
 

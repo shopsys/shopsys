@@ -11,7 +11,10 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Stock\Exception\StockDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'stocks')]
 #[ORM\Entity]
 class Stock implements OrderableEntityInterface
@@ -21,6 +24,7 @@ class Stock implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -41,24 +45,28 @@ class Stock implements OrderableEntityInterface
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $name;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
     protected $externalId;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $note;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\SortablePosition]
     protected $position;

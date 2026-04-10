@@ -24,6 +24,8 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainV
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * Product
@@ -31,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
  * @method \Shopsys\FrameworkBundle\Model\Product\ProductTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\ProductTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'products')]
 #[ORM\Index(columns: ['variant_type'])]
 #[ORM\Entity]
@@ -44,6 +47,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -60,48 +64,56 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $catnum;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $partno;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $ean;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $sellingFrom;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $sellingTo;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $sellingDenied;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $hidden;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'unit_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Unit::class)]
     protected $unit;
@@ -115,6 +127,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'brand_id', referencedColumnName: 'id', onDelete: 'SET NULL', nullable: true)]
     #[ORM\ManyToOne(targetEntity: Brand::class)]
     protected $brand;
@@ -129,6 +142,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'main_variant_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'variants', cascade: ['persist'])]
     protected $mainVariant;
@@ -136,6 +150,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 32, nullable: false)]
     protected $variantType;
 
@@ -148,12 +163,14 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var int|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: true)]
     protected $weight;
 
@@ -176,6 +193,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 32, nullable: false)]
     protected $productType;
 
@@ -188,6 +206,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $isAllowedNegativeStock;
 

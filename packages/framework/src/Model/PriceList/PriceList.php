@@ -6,8 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'price_lists')]
 #[ORM\Entity]
 class PriceList
@@ -15,6 +18,7 @@ class PriceList
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -23,30 +27,35 @@ class PriceList
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $name;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $lastUpdate;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $validFrom;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $validTo;
 

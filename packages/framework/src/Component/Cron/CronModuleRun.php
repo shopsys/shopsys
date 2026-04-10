@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'cron_module_runs')]
 #[ORM\Index(columns: ['started_at'])]
 #[ORM\Index(columns: ['finished_at'])]
@@ -16,6 +19,7 @@ class CronModuleRun
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -24,6 +28,7 @@ class CronModuleRun
     /**
      * @var \Shopsys\FrameworkBundle\Component\Cron\CronModule
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'cron_module_id', referencedColumnName: 'service_id', nullable: false, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: CronModule::class)]
     protected $cronModule;
@@ -31,24 +36,28 @@ class CronModuleRun
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string')]
     protected $status;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected $startedAt;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected $finishedAt;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: false)]
     protected $duration;
 

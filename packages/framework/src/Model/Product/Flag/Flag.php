@@ -11,11 +11,14 @@ use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'flags')]
 #[ORM\Entity]
 class Flag extends AbstractTranslatableEntity
@@ -23,6 +26,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -32,6 +36,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
@@ -45,24 +50,28 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 7)]
     protected $rgbColor;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $visible;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $lockedForDeletion;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'promotion_xy_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: ProductPromotionXy::class)]
     protected $promotionXy;

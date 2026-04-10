@@ -7,8 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Webmozart\Assert\Assert;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'parameter_values')]
 #[ORM\Entity]
 #[ORM\UniqueConstraint(name: 'parameter_values_unique', columns: ['locale', 'text'])]
@@ -20,6 +23,7 @@ class ParameterValue
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -28,30 +32,35 @@ class ParameterValue
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     protected $text;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6, nullable: true)]
     protected $numericValue;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string')]
     protected $locale;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     protected $rgbHex;
 

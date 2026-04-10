@@ -6,6 +6,7 @@ namespace App\Model\Payment;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Transport\Transport> $transports
@@ -20,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
  * @method void edit(\App\Model\Payment\PaymentData $paymentData)
  * @method void setData(\App\Model\Payment\PaymentData $paymentData)
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'payments')]
 #[ORM\Entity]
 class Payment extends BasePayment

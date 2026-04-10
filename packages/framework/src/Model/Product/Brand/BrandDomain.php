@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'brand_domains')]
 #[ORM\UniqueConstraint(name: 'brand_domain', columns: ['brand_id', 'domain_id'])]
 #[ORM\Entity]
@@ -14,6 +17,7 @@ class BrandDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -22,6 +26,7 @@ class BrandDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'brand_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Brand::class, inversedBy: 'domains')]
     protected $brand;
@@ -29,24 +34,28 @@ class BrandDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoTitle;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoMetaDescription;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoH1;
 

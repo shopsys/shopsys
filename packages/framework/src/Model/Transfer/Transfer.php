@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Transfer;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'transfers')]
 #[ORM\Entity]
 class Transfer
@@ -13,6 +16,7 @@ class Transfer
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -21,12 +25,14 @@ class Transfer
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: false, unique: true)]
     protected $identifier;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: false)]
     protected $name;
 

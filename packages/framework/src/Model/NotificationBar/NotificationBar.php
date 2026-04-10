@@ -7,7 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'notification_bars')]
 #[ORM\Entity]
 #[EntityImage]
@@ -16,6 +19,7 @@ class NotificationBar
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -24,42 +28,49 @@ class NotificationBar
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     protected $text;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $validityFrom;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $validityTo;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 7)]
     protected $rgbColor;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $hidden;
 

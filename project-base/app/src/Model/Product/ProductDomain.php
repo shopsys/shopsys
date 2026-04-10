@@ -6,6 +6,7 @@ namespace App\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @property \App\Model\Product\Product $product
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
  * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Flag\Flag> $flags
  * @method __construct(\App\Model\Product\Product $product, int $domainId)
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'product_domains')]
 #[ORM\UniqueConstraint(name: 'product_domain', columns: ['product_id', 'domain_id'])]
 #[ORM\Entity]

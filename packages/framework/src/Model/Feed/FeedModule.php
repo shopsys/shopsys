@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'feed_modules')]
 #[ORM\Entity]
 class FeedModule
@@ -13,6 +16,7 @@ class FeedModule
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     #[ORM\Id]
     protected $name;
@@ -20,6 +24,7 @@ class FeedModule
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     protected $domainId;
@@ -27,6 +32,7 @@ class FeedModule
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $scheduled;
 

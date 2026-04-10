@@ -16,10 +16,13 @@ use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'customer_users')]
 #[ORM\Index(columns: ['email'])]
 #[ORM\UniqueConstraint(name: 'email_domain', columns: ['email', 'domain_id'])]
@@ -29,6 +32,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -37,6 +41,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Customer::class)]
     protected $customer;
@@ -44,24 +49,28 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $firstName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $lastName;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $email;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn(false)]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $password;
 
@@ -73,18 +82,21 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'pricing_group_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\ManyToOne(targetEntity: PricingGroup::class)]
     protected $pricingGroup;
@@ -92,6 +104,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'sales_representative_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: SalesRepresentative::class)]
     protected $salesRepresentative;
@@ -99,36 +112,42 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var string|null
      */
+    #[AsMcpColumn(false)]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $resetPasswordHash;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn(false)]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $resetPasswordHashValidThrough;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     protected $telephonePrefix;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $telephonePrefixCountryCode;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
     protected $telephoneNumber;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'default_delivery_address_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: DeliveryAddress::class)]
     protected $defaultDeliveryAddress;
@@ -136,6 +155,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
@@ -148,6 +168,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'role_group_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\ManyToOne(targetEntity: CustomerUserRoleGroup::class)]
     protected $roleGroup;
@@ -155,6 +176,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $lastSecurityChange;
 

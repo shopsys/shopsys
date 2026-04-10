@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\ProductVideo;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'product_video_translations')]
 #[ORM\Entity]
 class ProductVideoTranslations
@@ -14,6 +17,7 @@ class ProductVideoTranslations
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -22,6 +26,7 @@ class ProductVideoTranslations
     /**
      * @var \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'product_video', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: ProductVideo::class)]
     protected $productVideo;
@@ -29,12 +34,14 @@ class ProductVideoTranslations
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', nullable: true)]
     protected $description;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string')]
     protected $locale;
 

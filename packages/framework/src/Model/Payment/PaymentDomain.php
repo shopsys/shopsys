@@ -7,7 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'payment_domains')]
 #[ORM\UniqueConstraint(name: 'payment_domain', columns: ['payment_id', 'domain_id'])]
 #[ORM\Entity]
@@ -16,6 +19,7 @@ class PaymentDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -24,6 +28,7 @@ class PaymentDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'domains')]
     protected $payment;
@@ -31,18 +36,21 @@ class PaymentDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $enabled;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Vat::class)]
     protected $vat;
@@ -50,6 +58,7 @@ class PaymentDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: GoPayPaymentMethod::class)]
     protected $goPayPaymentMethod;
@@ -57,30 +66,35 @@ class PaymentDomain
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $hiddenByGoPay;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $accountNumber;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $iban;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $bicSwift;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 20)]
     protected $orderRoundingType;
 

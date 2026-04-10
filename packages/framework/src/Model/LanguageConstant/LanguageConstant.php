@@ -9,11 +9,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'language_constants')]
 #[ORM\UniqueConstraint(name: 'language_constants_key_namespace', columns: ['key', 'namespace'])]
 #[ORM\Entity]
@@ -24,6 +27,7 @@ class LanguageConstant extends AbstractTranslatableEntity
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -33,12 +37,14 @@ class LanguageConstant extends AbstractTranslatableEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     protected $key;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $namespace;
 

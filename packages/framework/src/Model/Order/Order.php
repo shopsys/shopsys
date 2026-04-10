@@ -27,8 +27,11 @@ use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
 
+#[AsMcpTable]
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 #[ORM\Table(name: 'orders')]
 #[ORM\Entity]
@@ -48,6 +51,7 @@ class Order
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -56,18 +60,21 @@ class Order
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30, unique: true, nullable: false)]
     protected $number;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'customer_user_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: CustomerUser::class)]
     protected $customerUser;
@@ -75,12 +82,14 @@ class Order
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ExcludeLog]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $orderPaymentStatusPageValidFrom;
@@ -88,6 +97,7 @@ class Order
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $deliveredAt;
 
@@ -101,6 +111,7 @@ class Order
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: OrderStatus::class)]
     protected $status;
@@ -108,18 +119,21 @@ class Order
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $totalPriceWithVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $totalPriceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[AsMcpColumn]
     #[ExcludeLog]
     #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $totalProductPriceWithoutVat;
@@ -127,6 +141,7 @@ class Order
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[AsMcpColumn]
     #[ExcludeLog]
     #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $totalProductPriceWithVat;
@@ -134,78 +149,91 @@ class Order
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $firstName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $lastName;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $email;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     protected $telephonePrefix;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $telephonePrefixCountryCode;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30)]
     protected $telephoneNumber;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $companyName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $companyNumber;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $companyTaxNumber;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $street;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $city;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30)]
     protected $postcode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'country_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Country::class)]
     protected $country;
@@ -213,66 +241,77 @@ class Order
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $deliveryAddressSameAsBillingAddress;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $deliveryFirstName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $deliveryLastName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $deliveryCompanyName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     protected $deliveryTelephonePrefix;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $deliveryTelephonePrefixCountryCode;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
     protected $deliveryTelephoneNumber;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $deliveryStreet;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $deliveryCity;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30)]
     protected $deliveryPostcode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'delivery_country_id', referencedColumnName: 'id', nullable: true)]
     #[ORM\ManyToOne(targetEntity: Country::class)]
     protected $deliveryCountry;
@@ -280,30 +319,35 @@ class Order
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $note;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $deleted;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50, unique: true)]
     protected $urlHash;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'administrator_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Administrator::class)]
     protected $createdAsAdministrator;
@@ -311,18 +355,21 @@ class Order
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $createdAsAdministratorName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     protected $origin;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn(false)]
     #[ExcludeLog]
     #[ORM\Column(type: 'guid', nullable: true)]
     protected $orderPaymentStatusPageValidityHash;
@@ -337,36 +384,42 @@ class Order
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
     protected $goPayBankSwift;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $heurekaAgreement;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $pickupPlaceIdentifier;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $trackingNumber;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $promoCode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'customer_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Customer::class)]
     protected $customer;
@@ -374,30 +427,35 @@ class Order
     /**
      * @var bool|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $freeTransportAndPaymentApplied;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 3)]
     protected $currencyCode;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 15)]
     protected $currencyRoundingType;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $currencyRoundingPlacesPriceWithoutVat;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $currencyMinFractionDigits;
 

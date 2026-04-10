@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'product_parameter_values')]
 #[ORM\Entity]
 class ProductParameterValue
@@ -14,6 +17,7 @@ class ProductParameterValue
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Product::class)]
@@ -22,6 +26,7 @@ class ProductParameterValue
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'parameter_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Parameter::class)]
@@ -30,6 +35,7 @@ class ProductParameterValue
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'value_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: ParameterValue::class)]

@@ -8,7 +8,9 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable(false)]
 #[ORM\Table(name: 'login_as_user_exchange_tokens')]
 #[ORM\Entity]
 class LoginAsUserExchangeToken

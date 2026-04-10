@@ -7,7 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'mail_templates')]
 #[ORM\UniqueConstraint(name: 'name_domain', columns: ['name', 'domain_id'])]
 #[ORM\Entity]
@@ -21,6 +24,7 @@ class MailTemplate
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -29,42 +33,49 @@ class MailTemplate
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $name;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $bccEmail;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $subject;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $body;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $sendMail;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: OrderStatus::class)]
     protected $orderStatus;
@@ -72,6 +83,7 @@ class MailTemplate
     /**
      * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: ComplaintStatus::class)]
     protected $complaintStatus;

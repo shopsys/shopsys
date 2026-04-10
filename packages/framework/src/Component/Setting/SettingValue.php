@@ -10,10 +10,12 @@ use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueTypeNotMatchValueException;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use function get_class;
 use function gettype;
 use function is_object;
 
+#[AsMcpTable(false)]
 #[ORM\Table(name: 'setting_values')]
 #[ORM\Entity]
 class SettingValue

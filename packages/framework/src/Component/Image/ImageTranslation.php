@@ -8,7 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
+#[AsMcpColumn(fieldName: 'id')]
+#[AsMcpColumn(fieldName: 'locale')]
 #[ORM\Table(name: 'images_translations')]
 #[ORM\Entity]
 class ImageTranslation extends AbstractTranslation
@@ -16,6 +21,7 @@ class ImageTranslation extends AbstractTranslation
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Image
      */
+    #[AsMcpColumn]
     #[Prezent\Translatable(targetEntity: Image::class)]
     #[Override]
     protected $translatable;
@@ -23,6 +29,7 @@ class ImageTranslation extends AbstractTranslation
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $name;
 

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\DataFixture;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * Product
  */
+#[AsMcpTable(false)]
 #[ORM\Table(name: 'persistent_references')]
 #[ORM\Entity]
 class PersistentReference

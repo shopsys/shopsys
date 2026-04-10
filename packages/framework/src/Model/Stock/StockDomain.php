@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'stock_domains')]
 #[ORM\UniqueConstraint(name: 'stock_domain', columns: ['stock_id', 'domain_id'])]
 #[ORM\Entity]
@@ -14,6 +17,7 @@ class StockDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -22,6 +26,7 @@ class StockDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Stock\Stock
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Stock::class, inversedBy: 'domains')]
     protected $stock;
@@ -29,18 +34,21 @@ class StockDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $isEnabled;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $isDefault;
 

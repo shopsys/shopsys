@@ -9,7 +9,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'articles')]
 #[ORM\Entity]
 class Article implements OrderableEntityInterface
@@ -28,6 +31,7 @@ class Article implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -36,12 +40,14 @@ class Article implements OrderableEntityInterface
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\SortableGroup]
     protected $domainId;
@@ -49,6 +55,7 @@ class Article implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\SortablePosition]
     protected $position;
@@ -56,36 +63,42 @@ class Article implements OrderableEntityInterface
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     protected $name;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $text;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoTitle;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoMetaDescription;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoH1;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     #[Gedmo\SortableGroup]
     protected $placement;
@@ -93,30 +106,35 @@ class Article implements OrderableEntityInterface
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $hidden;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $external;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string')]
     protected $type;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', nullable: true)]
     protected $url;
 

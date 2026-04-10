@@ -6,13 +6,17 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Entity]
 class PromoCodeLimit
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, onDelete: 'cascade')]
     #[ORM\ManyToOne(targetEntity: PromoCode::class)]
     #[ORM\Id]
@@ -21,6 +25,7 @@ class PromoCodeLimit
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     #[ORM\Id]
     protected $fromPrice;
@@ -28,6 +33,7 @@ class PromoCodeLimit
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $discount;
 

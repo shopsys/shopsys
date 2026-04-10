@@ -8,7 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageDomainNotFoundException;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'seo_pages')]
 #[ORM\Entity]
 #[EntityImage]
@@ -20,6 +23,7 @@ class SeoPage
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -28,6 +32,7 @@ class SeoPage
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: false)]
     protected $pageName;
 
@@ -40,6 +45,7 @@ class SeoPage
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean', nullable: false)]
     protected $defaultPage;
 

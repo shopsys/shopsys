@@ -43,6 +43,8 @@ parameters:
         - %currentWorkingDirectory%/packages/coding-standards/*
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/ClassExtension/Source/*
+        # Exclude intentionally invalid entity test data used by MCP PHPStan rule tests
+        - %currentWorkingDirectory%/packages/mcp/tests/Unit/Phpstan/data/*
         # Exclude coding standards for generated files
         - %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/*
         # Exclude template files for generating code via maker commands
@@ -53,6 +55,7 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
     - %currentWorkingDirectory%/packages/coding-standards/extension.neon
+    - %currentWorkingDirectory%/packages/mcp/extension.neon
 rules:
     - \Shopsys\CodingStandards\Phpstan\OrmPropertyGetterAndSetterHasNoTypehintRule
     - \Shopsys\CodingStandards\Phpstan\OrmPropertyHasNoTypehintRule

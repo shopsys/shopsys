@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'product_visibilities')]
 #[ORM\Entity]
 class ProductVisibility
@@ -14,6 +17,7 @@ class ProductVisibility
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Product::class)]
@@ -22,6 +26,7 @@ class ProductVisibility
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'pricing_group_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: PricingGroup::class)]
@@ -30,6 +35,7 @@ class ProductVisibility
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
@@ -37,6 +43,7 @@ class ProductVisibility
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $visible;
 

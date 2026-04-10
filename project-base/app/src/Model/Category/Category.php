@@ -9,6 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @property \App\Model\Category\Category|null $parent
@@ -21,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  * @method void createDomains(\App\Model\Category\CategoryData $categoryData)
  * @method __construct(\App\Model\Category\CategoryData $categoryData)
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'categories')]
 #[ORM\Index(columns: ['lft'])]
 #[ORM\Index(columns: ['rgt'])]

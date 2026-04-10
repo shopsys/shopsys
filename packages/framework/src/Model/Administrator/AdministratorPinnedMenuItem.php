@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'administrator_pinned_menu_items')]
 #[ORM\Entity]
 class AdministratorPinnedMenuItem
@@ -13,6 +16,7 @@ class AdministratorPinnedMenuItem
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'administrator_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Administrator::class, inversedBy: 'pinnedMenuItems')]
@@ -21,6 +25,7 @@ class AdministratorPinnedMenuItem
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 255)]
     protected $routeName;
@@ -28,6 +33,7 @@ class AdministratorPinnedMenuItem
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $position;
 

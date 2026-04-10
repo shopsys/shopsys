@@ -11,11 +11,14 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'parameter_groups')]
 #[ORM\Entity]
 class ParameterGroup extends AbstractTranslatableEntity implements OrderableEntityInterface
@@ -25,6 +28,7 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -41,6 +45,7 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\SortablePosition]
     protected $position;

@@ -6,12 +6,14 @@ namespace App\Model\Administrator;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator as BaseAdministrator;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method __construct(\App\Model\Administrator\AdministratorData $administratorData)
  * @method void edit(\App\Model\Administrator\AdministratorData $administratorData)
  * @method void setData(\App\Model\Administrator\AdministratorData $administratorData)
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'administrators')]
 #[ORM\Index(columns: ['username'])]
 #[ORM\Entity]

@@ -8,12 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandData as BaseBrandData;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method void setTranslations(\App\Model\Product\Brand\BrandData $brandData)
  * @method void setDomains(\App\Model\Product\Brand\BrandData $brandData)
  * @method void createDomains(\App\Model\Product\Brand\BrandData $brandData)
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'brands')]
 #[ORM\Entity]
 class Brand extends BaseBrand

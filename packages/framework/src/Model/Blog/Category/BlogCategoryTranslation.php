@@ -8,11 +8,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
+#[AsMcpColumn(fieldName: 'id')]
+#[AsMcpColumn(fieldName: 'locale')]
 #[ORM\Table(name: 'blog_category_translations')]
 #[ORM\Entity]
 class BlogCategoryTranslation extends AbstractTranslation
 {
+    #[AsMcpColumn]
     #[Prezent\Translatable(targetEntity: BlogCategory::class)]
     #[Override]
     protected $translatable;
@@ -20,12 +26,14 @@ class BlogCategoryTranslation extends AbstractTranslation
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $name;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
 

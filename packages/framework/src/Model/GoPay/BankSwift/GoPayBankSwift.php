@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\GoPay\BankSwift;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'gopay_bank_swifts')]
 #[ORM\UniqueConstraint(name: 'gopay_bank_swift_unique', columns: ['payment_method', 'swift'])]
 #[ORM\Entity]
@@ -15,6 +18,7 @@ class GoPayBankSwift
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -23,12 +27,14 @@ class GoPayBankSwift
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 20)]
     protected $swift;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'payment_method', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: GoPayPaymentMethod::class)]
     protected $goPayPaymentMethod;
@@ -36,24 +42,28 @@ class GoPayBankSwift
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50)]
     protected $name;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $imageNormalUrl;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $imageLargeUrl;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $isOnline;
 

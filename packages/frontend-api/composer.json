@@ -35,6 +35,7 @@
         "overblog/dataloader-bundle": "^1.1",
         "shopsys/form-types-bundle": "19.0.x-dev",
         "shopsys/framework": "19.0.x-dev",
+        "shopsys/mcp-attributes": "19.0.x-dev",
         "shopsys/migrations": "19.0.x-dev",
         "shopsys/plugin-interface": "19.0.x-dev",
         "symfony/config": "^7.4",

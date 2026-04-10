@@ -6,7 +6,9 @@ namespace Shopsys\McpBundle\Model\Administrator\McpToken;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable(false)]
 #[ORM\Table(name: 'administrator_mcp_tokens')]
 #[ORM\Entity]
 class AdministratorMcpToken

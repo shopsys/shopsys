@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'friendly_urls')]
 #[ORM\Index(columns: ['route_name', 'entity_id'])]
 #[ORM\Index(columns: ['route_name', 'entity_id', 'domain_id', 'main'])]
@@ -15,18 +18,21 @@ class FriendlyUrl
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $routeName;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $entityId;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     protected $domainId;
@@ -34,6 +40,7 @@ class FriendlyUrl
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     #[ORM\Id]
     protected $slug;
@@ -41,24 +48,28 @@ class FriendlyUrl
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $main;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $redirectTo;
 
     /**
      * @var int|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: true)]
     protected $redirectCode;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $lastModification;
 

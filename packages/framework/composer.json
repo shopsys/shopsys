@@ -88,6 +88,7 @@
         "scheb/2fa-email": "^7.6.0",
         "scheb/2fa-google-authenticator": "^7.6.0",
         "shopsys/form-types-bundle": "19.0.x-dev",
+        "shopsys/mcp-attributes": "19.0.x-dev",
         "shopsys/migrations": "19.0.x-dev",
         "shopsys/plugin-interface": "19.0.x-dev",
         "snc/redis-bundle": "^4.8.0",

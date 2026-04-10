@@ -9,7 +9,12 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
+#[AsMcpColumn(fieldName: 'id')]
+#[AsMcpColumn(fieldName: 'locale')]
 #[ORM\Table(name: 'transport_translations')]
 #[ORM\Entity]
 class TransportTranslation extends AbstractTranslation
@@ -17,6 +22,7 @@ class TransportTranslation extends AbstractTranslation
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
+    #[AsMcpColumn]
     #[Prezent\Translatable(targetEntity: Transport::class)]
     #[Override]
     protected $translatable;
@@ -24,24 +30,28 @@ class TransportTranslation extends AbstractTranslation
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $name;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $instructions;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $trackingInstruction;
 

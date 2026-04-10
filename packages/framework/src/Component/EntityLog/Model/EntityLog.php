@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'entity_log')]
 #[ORM\Index(columns: ['entity_name'])]
 #[ORM\Index(columns: ['entity_id'])]
@@ -18,6 +21,7 @@ class EntityLog
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -26,66 +30,77 @@ class EntityLog
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $action;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $userIdentifier;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $entityName;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $entityId;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $entityIdentifier;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $source;
 
     /**
      * @var string[]
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'json')]
     protected $changeSet;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $parentEntityName;
 
     /**
      * @var int|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: true)]
     protected $parentEntityId;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50)]
     protected $logCollectionNumber;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 

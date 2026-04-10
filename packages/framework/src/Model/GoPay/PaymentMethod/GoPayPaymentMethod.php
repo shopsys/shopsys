@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'gopay_payment_methods')]
 #[ORM\UniqueConstraint(name: 'gopay_payment_method_unique', columns: ['domain_id', 'identifier'])]
 #[ORM\Entity]
@@ -18,6 +21,7 @@ class GoPayPaymentMethod
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -26,18 +30,21 @@ class GoPayPaymentMethod
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 20)]
     protected $identifier;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50)]
     protected $name;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'currency_id', referencedColumnName: 'id')]
     #[ORM\ManyToOne(targetEntity: Currency::class)]
     protected $currency;
@@ -45,30 +52,35 @@ class GoPayPaymentMethod
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $imageNormalUrl;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $imageLargeUrl;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 20)]
     protected $paymentGroup;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $available;
 

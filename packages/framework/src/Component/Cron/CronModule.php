@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'cron_modules')]
 #[ORM\Entity]
 class CronModule
@@ -18,6 +21,7 @@ class CronModule
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     #[ORM\Id]
     protected $serviceId;
@@ -25,42 +29,49 @@ class CronModule
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $scheduled;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $suspended;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $enabled;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string')]
     protected $status;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $lastStartedAt;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $lastFinishedAt;
 
     /**
      * @var int|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: true)]
     protected $lastDuration;
 

@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'transport_prices')]
 #[ORM\UniqueConstraint(name: 'unique_weight_limit_on_domain', columns: ['max_weight', 'domain_id', 'transport_id'])]
 #[ORM\Entity]
@@ -15,6 +18,7 @@ class TransportPrice
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -23,6 +27,7 @@ class TransportPrice
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Transport::class, inversedBy: 'prices')]
     protected $transport;
@@ -30,18 +35,21 @@ class TransportPrice
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $price;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: true)]
     protected $maxWeight;
 

@@ -19,11 +19,14 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'transports')]
 #[ORM\Entity]
 #[EntityImage]
@@ -34,6 +37,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -62,18 +66,21 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $hidden;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $deleted;
 
     /**
      * @var int|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: false)]
     #[Gedmo\SortablePosition]
     protected $position;
@@ -87,24 +94,28 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $daysUntilDelivery;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $trackingUrl;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 25)]
     protected $type;
 

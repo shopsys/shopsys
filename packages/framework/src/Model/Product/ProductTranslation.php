@@ -9,7 +9,12 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
+#[AsMcpColumn(fieldName: 'id')]
+#[AsMcpColumn(fieldName: 'locale')]
 #[ORM\Table(name: 'product_translations')]
 #[ORM\Entity]
 class ProductTranslation extends AbstractTranslation
@@ -17,6 +22,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[Prezent\Translatable(targetEntity: Product::class)]
     #[Override]
     protected $translatable;
@@ -24,24 +30,28 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $name;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $variantAlias;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $namePrefix;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $nameSuffix;
 
