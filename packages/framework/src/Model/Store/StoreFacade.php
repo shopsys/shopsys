@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Store;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
@@ -25,6 +26,7 @@ class StoreFacade
         protected readonly OpeningHoursFactory $openingHoursFactory,
         protected readonly OpeningHoursDataFactory $openingHoursDataFactory,
         protected readonly OpeningHoursRangeFactory $openingHoursRangeFactory,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -42,6 +44,8 @@ class StoreFacade
         $this->imageFacade->manageImages($store, $storeData->image);
         $this->productRecalculationDispatcher->dispatchAllProducts();
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::STORES_QUERY_KEY_PART);
+
         return $store;
     }
 
@@ -57,6 +61,8 @@ class StoreFacade
 
         $this->createFriendlyUrl($store);
         $this->productRecalculationDispatcher->dispatchAllProducts();
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::STORES_QUERY_KEY_PART);
 
         return $store;
     }
@@ -81,6 +87,8 @@ class StoreFacade
         $store = $this->getById($storeId);
         $this->em->remove($store);
         $this->em->flush();
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::STORES_QUERY_KEY_PART);
     }
 
     public function changeDefaultStore(Store $store): void

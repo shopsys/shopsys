@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -21,6 +22,7 @@ class BrandFacade
         protected readonly Domain $domain,
         protected readonly BrandFactory $brandFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -48,6 +50,8 @@ class BrandFacade
         $this->em->flush();
 
         $this->dispatchBrandEvent($brand, BrandEvent::CREATE);
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BRANDS_QUERY_KEY_PART);
 
         return $brand;
     }
@@ -78,6 +82,8 @@ class BrandFacade
 
         $this->dispatchBrandEvent($brand, BrandEvent::UPDATE);
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BRANDS_QUERY_KEY_PART);
+
         return $brand;
     }
 
@@ -88,6 +94,8 @@ class BrandFacade
         $this->dispatchBrandEvent($brand, BrandEvent::DELETE);
 
         $this->em->flush();
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BRANDS_QUERY_KEY_PART);
     }
 
     /**

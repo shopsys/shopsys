@@ -18,6 +18,10 @@ class CleanStorefrontCacheFacade
     public const string SLIDER_ITEMS_QUERY_KEY_PART = 'SliderItemsQuery';
     public const string NOTIFICATION_BARS_QUERY_KEY_PART = 'NotificationBars';
     public const string ADVERTS_QUERY_KEY_PART = 'AdvertsQuery';
+    public const string PROMOTED_PRODUCTS_QUERY_KEY_PART = 'PromotedProductsQuery';
+    public const string BRANDS_QUERY_KEY_PART = 'BrandsQuery';
+    public const string SEO_PAGE_QUERY_KEY_PART = 'SeoPageQuery';
+    public const string STORES_QUERY_KEY_PART = 'StoresQuery';
 
     public function __construct(
         protected readonly Redis $storefrontGraphqlQueryClient,

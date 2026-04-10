@@ -12,7 +12,7 @@ export type TypeBrandsQuery = { __typename?: 'Query', brands: Array<{ __typename
 
 
 export const BrandsQueryDocument = gql`
-    query BrandsQuery {
+    query BrandsQuery @redisCache(ttl: 3600) {
   brands {
     ...ListedBrandFragment
   }

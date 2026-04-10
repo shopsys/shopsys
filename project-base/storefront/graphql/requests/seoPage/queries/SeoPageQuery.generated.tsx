@@ -14,7 +14,7 @@ export type TypeSeoPageQuery = { __typename?: 'Query', seoPage: { __typename: 'S
 
 
 export const SeoPageQueryDocument = gql`
-    query SeoPageQuery($pageSlug: String!) {
+    query SeoPageQuery($pageSlug: String!) @redisCache(ttl: 3600) {
   seoPage(pageSlug: $pageSlug) {
     ...SeoPageFragment
   }
