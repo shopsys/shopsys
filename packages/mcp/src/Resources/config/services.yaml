@@ -1,3 +1,6 @@
+parameters:
+    shopsys_mcp.schema.file_path: '%kernel.project_dir%/mcp-schema.json'
+
 services:
     _defaults:
         autoconfigure: true
@@ -5,7 +8,23 @@ services:
         public: false
 
     Shopsys\McpBundle\:
-        resource: '../../**/*{Authenticator,DataFactory,Facade,Factory,Generator,Hasher,Lookup,Repository,Subscriber}.php'
+        resource: '../../**/*{Authenticator,DataFactory,Executor,Facade,Factory,Generator,Hasher,Loader,Lookup,Normalizer,Parser,Provider,Repository,Resolver,Subscriber,Tool,Validator}.php'
+
+    Shopsys\McpBundle\Command\:
+        resource: '../../Command/'
+
+    Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider:
+        arguments:
+            $mcpConnection: '@doctrine.dbal.mcp_connection'
+            $schemaFilePath: '%shopsys_mcp.schema.file_path%'
+
+    Shopsys\McpBundle\Component\Database\Schema\McpSchemaFileGenerator:
+        arguments:
+            $schemaFilePath: '%shopsys_mcp.schema.file_path%'
+
+    Shopsys\McpBundle\Component\Database\Schema\SchemaNameNormalizer:
+        arguments:
+            $mcpConnection: '@doctrine.dbal.mcp_connection'
 
     Shopsys\McpBundle\Controller\:
         resource: '../../Controller/'

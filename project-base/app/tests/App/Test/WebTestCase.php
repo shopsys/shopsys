@@ -87,6 +87,18 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
+    protected function isMonorepo(): bool
+    {
+        return file_exists(__DIR__ . '/../../../../../parameters_monorepo.yaml');
+    }
+
+    protected function skipTestIfNotRunningInMonorepo(): void
+    {
+        if (!$this->isMonorepo()) {
+            $this->markTestSkipped('This test is run only in monorepo.');
+        }
+    }
+
     #[Override]
     abstract public function createContainer(): ContainerInterface;
 
