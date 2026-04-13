@@ -29,6 +29,7 @@ services:
     storefront:
         restart: always
         image: storefront-image
+        pull_policy: never
         user: root
         container_name: shopsys-framework-storefront
         command:
@@ -46,6 +47,7 @@ services:
 
     php-fpm:
         image: php-fpm-image
+        pull_policy: never
         container_name: shopsys-framework-php-fpm
         environment:
             - MESSENGER_TRANSPORT_DSN=in-memory://
@@ -70,6 +72,7 @@ services:
 
     elasticsearch:
         image: elasticsearch-image
+        pull_policy: never
         container_name: shopsys-framework-elasticsearch
         ulimits:
             nofile:

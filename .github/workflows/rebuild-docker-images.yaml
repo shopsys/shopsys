@@ -31,30 +31,3 @@ jobs:
                     DOCKER_ELASTICSEARCH_REPOSITORY_TAG=ghcr.io/${{ github.repository_owner }}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}
                     .github/build-elasticsearch-image.sh ${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}
                     docker image push ${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}
-    rebuild-storefront-ci-images:
-        name: Rebuild ${{ matrix.branches }} branch Storefront CI Docker images in GitHub Container Registry
-        runs-on: ubuntu-22.04
-        strategy:
-            matrix:
-                branches: ['18.0', '19.0']
-            fail-fast: false
-        permissions:
-            contents: read
-            packages: write
-        steps:
-            -   name: GIT checkout branch - refs/heads/${{ matrix.branches }}
-                uses: actions/checkout@v6
-                with:
-                    ref: refs/heads/${{ matrix.branches }}
-            -   name: Login to GitHub Container Registry
-                uses: docker/login-action@v4
-                with:
-                    registry: ghcr.io
-                    username: ${{ github.actor }}
-                    password: ${{ secrets.GITHUB_TOKEN }}
-            -   name: Build Storefront CI image and push it to GitHub Container Registry
-                run: |
-                    DOCKER_STOREFRONT_CI_IMAGE_TAG=github-action-`find project-base/storefront/docker -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`-ci
-                    DOCKER_STOREFRONT_CI_REPOSITORY_TAG=ghcr.io/${{ github.repository_owner }}/storefront:${DOCKER_STOREFRONT_CI_IMAGE_TAG}
-                    .github/build-storefront-ci-image.sh ${DOCKER_STOREFRONT_CI_REPOSITORY_TAG}
-                    docker image push ${DOCKER_STOREFRONT_CI_REPOSITORY_TAG}
