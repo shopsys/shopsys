@@ -24,7 +24,7 @@ class LoginListenerTest extends TestCase
         $administratorMock = $this->createMock(Administrator::class);
         $administratorMock->expects($this->once())->method('setLastActivity');
 
-        $this->callOnSecurityInteractiveLogin($administratorMock);
+        $this->callOnSecurityInteractiveLogin($administratorMock, LoginListener::ADMINISTRATION_FIREWALL);
     }
 
     public function testOnSecurityInteractiveLoginAdministrator(): void
@@ -32,17 +32,30 @@ class LoginListenerTest extends TestCase
         $administratorMock = $this->createMock(Administrator::class);
         $administratorMock->expects($this->once())->method('setLoginToken');
 
-        $this->callOnSecurityInteractiveLogin($administratorMock);
+        $this->callOnSecurityInteractiveLogin($administratorMock, LoginListener::ADMINISTRATION_FIREWALL);
     }
 
-    protected function callOnSecurityInteractiveLogin(Administrator $administratorMock): LoginListener
+    public function testOnSecurityInteractiveLoginIgnoresNonAdministrationFirewall(): void
     {
-        $emStub = $this->createStub(EntityManager::class);
+        $administratorMock = $this->createMock(Administrator::class);
+        $administratorMock->expects($this->never())->method('setLastActivity');
+        $administratorMock->expects($this->never())->method('setLoginToken');
+
+        $this->callOnSecurityInteractiveLogin($administratorMock, 'mcp');
+    }
+
+    protected function callOnSecurityInteractiveLogin(
+        Administrator $administratorMock,
+        string $firewallName,
+    ): LoginListener {
+        $emStub = $this->createMock(EntityManager::class);
+        $emStub->expects($firewallName === LoginListener::ADMINISTRATION_FIREWALL ? $this->once() : $this->never())->method('flush');
 
         $tokenMock = $this->createMock(TokenInterface::class);
-        $tokenMock->expects($this->once())->method('getUser')->willReturn($administratorMock);
+        $tokenMock->expects($firewallName === LoginListener::ADMINISTRATION_FIREWALL ? $this->once() : $this->never())->method('getUser')->willReturn($administratorMock);
 
-        $administratorActivityFacadeStub = $this->createStub(AdministratorActivityFacade::class);
+        $administratorActivityFacadeStub = $this->createMock(AdministratorActivityFacade::class);
+        $administratorActivityFacadeStub->expects($firewallName === LoginListener::ADMINISTRATION_FIREWALL ? $this->once() : $this->never())->method('create');
 
         $clockStub = $this->createStub(ClockInterface::class);
 
@@ -55,7 +68,7 @@ class LoginListenerTest extends TestCase
         $responseStub = $this->createStub(Response::class);
 
         $request = new Request([], [], [], [], [], ['REMOTE_ADDR' => '127.0.0.1']);
-        $loginListener->onSecurityInteractiveLogin(new LoginSuccessEvent($authenticatorStub, $passportStub, $tokenMock, $request, $responseStub, 'test-firewall'));
+        $loginListener->onSecurityInteractiveLogin(new LoginSuccessEvent($authenticatorStub, $passportStub, $tokenMock, $request, $responseStub, $firewallName));
 
         return $loginListener;
     }
