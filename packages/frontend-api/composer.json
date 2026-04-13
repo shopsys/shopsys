@@ -28,7 +28,7 @@
     "require": {
         "php": "^8.5",
         "elasticsearch/elasticsearch": "^7.6.1",
-        "hybridauth/hybridauth": "^3.11",
+        "hybridauth/hybridauth": "^3.13.0",
         "lcobucci/jwt": "^5.4",
         "overblog/graphql-bundle": "^1.9",
         "overblog/graphiql-bundle": "^1.0",
@@ -56,11 +56,6 @@
         "shopsys/coding-standards": "19.0.x-dev"
     },
     "config": {
-        "audit": {
-            "ignore": {
-                "CVE-2026-4587": "No fix yet, see https://github.com/advisories/GHSA-r3hf-q3mf-7h6w"
-            }
-        },
         "allow-plugins": {
             "symfony/flex": true,
             "dealerdirect/phpcodesniffer-composer-installer": true

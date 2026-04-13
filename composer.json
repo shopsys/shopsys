@@ -117,7 +117,7 @@
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^13.0",
         "heureka/overeno-zakazniky": "^4.0.1",
-        "hybridauth/hybridauth": "^3.11",
+        "hybridauth/hybridauth": "^3.13.0",
         "jdorn/sql-formatter": "^1.2",
         "jms/metadata": "^2.6.1",
         "jms/serializer-bundle": "^5.0",
@@ -248,11 +248,6 @@
         }
     },
     "config": {
-        "audit": {
-            "ignore": {
-                "CVE-2026-4587": "No fix yet, see https://github.com/advisories/GHSA-r3hf-q3mf-7h6w"
-            }
-        },
         "preferred-install": "dist",
         "component-dir": "project-base/app/web/components",
         "sort-packages": true,
