@@ -189,7 +189,7 @@ class GetStoreTest extends GraphQlTestCase
     #[DataProvider('openingHoursDataProvider')]
     public function testGetStoreOpeningHours(
         array $openingRangesModifiers,
-        ?DateTimeImmutable $publicHolidayDate,
+        bool $isPublicHolidayToday,
         array $publicHolidayExcludedStoresIds,
         string $expectedStatus,
         array $expectedOpeningRangesModifiers,
@@ -197,8 +197,9 @@ class GetStoreTest extends GraphQlTestCase
         $store = $this->updateStoreOpeningHours($openingRangesModifiers);
         $dayOfWeek = $this->getCurrentDayOfWeek();
 
-        if ($publicHolidayDate !== null) {
-            $this->createClosedDay($publicHolidayDate, $publicHolidayExcludedStoresIds);
+        if ($isPublicHolidayToday) {
+            $today = (new DatePoint())->setTimezone(new DateTimeZone('Europe/Prague'))->modify('today');
+            $this->createClosedDay($today, $publicHolidayExcludedStoresIds);
         }
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreOpeningHoursQuery.graphql', [
@@ -225,7 +226,7 @@ class GetStoreTest extends GraphQlTestCase
             'openingRangesModifiers' => [
                 ['openingTime' => '-2 hour', 'closingTime' => '+2 hour'],
             ],
-            'publicHolidayDate' => null,
+            'isPublicHolidayToday' => false,
             'publicHolidayExcludedStoresIds' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_OPEN,
             'expectedOpeningRangesModifiers' => [
@@ -237,7 +238,7 @@ class GetStoreTest extends GraphQlTestCase
             'openingRangesModifiers' => [
                 ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
             ],
-            'publicHolidayDate' => static::getToday(),
+            'isPublicHolidayToday' => true,
             'publicHolidayExcludedStoresIds' => [1],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED_SOON,
             'expectedOpeningRangesModifiers' => [
@@ -249,7 +250,7 @@ class GetStoreTest extends GraphQlTestCase
             'openingRangesModifiers' => [
                 ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
             ],
-            'publicHolidayDate' => static::getToday(),
+            'isPublicHolidayToday' => true,
             'publicHolidayExcludedStoresIds' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED,
             'expectedOpeningRangesModifiers' => [],
@@ -257,7 +258,7 @@ class GetStoreTest extends GraphQlTestCase
 
         yield 'store not opened at all' => [
             'openingRangesModifiers' => [],
-            'publicHolidayDate' => null,
+            'isPublicHolidayToday' => false,
             'publicHolidayExcludedStoresIds' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED,
             'expectedOpeningRangesModifiers' => [],
@@ -267,7 +268,7 @@ class GetStoreTest extends GraphQlTestCase
             'openingRangesModifiers' => [
                 ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
             ],
-            'publicHolidayDate' => null,
+            'isPublicHolidayToday' => false,
             'publicHolidayExcludedStoresIds' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_OPEN_SOON,
             'expectedOpeningRangesModifiers' => [
@@ -279,7 +280,7 @@ class GetStoreTest extends GraphQlTestCase
             'openingRangesModifiers' => [
                 ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
             ],
-            'publicHolidayDate' => null,
+            'isPublicHolidayToday' => false,
             'publicHolidayExcludedStoresIds' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED,
             'expectedOpeningRangesModifiers' => [
@@ -291,7 +292,7 @@ class GetStoreTest extends GraphQlTestCase
             'openingRangesModifiers' => [
                 ['openingTime' => '+1 hour', 'closingTime' => '-1 hour'],
             ],
-            'publicHolidayDate' => null,
+            'isPublicHolidayToday' => false,
             'publicHolidayExcludedStoresIds' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_OPEN_SOON,
             'expectedOpeningRangesModifiers' => [
@@ -305,7 +306,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
                 ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
             ],
-            'publicHolidayDate' => null,
+            'isPublicHolidayToday' => false,
             'publicHolidayExcludedStoresIds' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_OPEN_SOON,
             'expectedOpeningRangesModifiers' => [
@@ -321,7 +322,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '-2 hour', 'closingTime' => '+1 hour'],
                 ['openingTime' => '+2 hour', 'closingTime' => '+3 hour'],
             ],
-            'publicHolidayDate' => null,
+            'isPublicHolidayToday' => false,
             'publicHolidayExcludedStoresIds' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED_SOON,
             'expectedOpeningRangesModifiers' => [
@@ -536,11 +537,6 @@ class GetStoreTest extends GraphQlTestCase
         }
 
         return $this->now;
-    }
-
-    protected static function getToday(): DateTimeImmutable
-    {
-        return (new DatePoint())->setTimezone(new DateTimeZone('Europe/Prague'))->modify('today');
     }
 
     private function getFormattedTime(?string $modifier): ?string
