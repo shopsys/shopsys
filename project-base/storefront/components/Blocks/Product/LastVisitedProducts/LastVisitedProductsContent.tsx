@@ -2,6 +2,7 @@ import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Bl
 import { SkeletonModuleLastVisitedProducts } from 'components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts';
 import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { LAST_VISITED_DISPLAYED_ITEMS } from './lastVisitedProductsUtils';
 
 type LastVisitedProductsProps = {
     productsCatnums: string[];
@@ -12,7 +13,7 @@ export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ produ
         variables: { catnums: productsCatnums },
     });
 
-    const lastVisitedProducts = productsData?.productsByCatnums;
+    const lastVisitedProducts = productsData?.productsByCatnums.slice(0, LAST_VISITED_DISPLAYED_ITEMS);
 
     if (!lastVisitedProducts && !areProductsFetching) {
         return null;
