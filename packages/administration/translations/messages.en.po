@@ -2164,6 +2164,9 @@ msgstr ""
 msgid "Very Weak"
 msgstr ""
 
+msgid "View"
+msgstr ""
+
 msgid "View allowed recipients."
 msgstr ""
 
