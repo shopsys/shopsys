@@ -653,6 +653,7 @@ describe('useUpdateFilter().updateFilterParameters tests', () => {
                 query: {
                     categorySlug: ORIGINAL_CATEGORY_URL,
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        brands: Array.from(GET_DEFAULT_SEO_CATEGORY_BRANDS()),
                         flags: Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()),
                         parameters: [
                             {
@@ -677,6 +678,7 @@ describe('useUpdateFilter().updateFilterParameters tests', () => {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        brands: Array.from(GET_DEFAULT_SEO_CATEGORY_BRANDS()),
                         flags: Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()),
                         parameters: [
                             {
@@ -703,6 +705,35 @@ describe('useUpdateFilter().updateFilterParameters tests', () => {
         );
         expect(setWasRedirectedFromSeoCategoryMock).toBeCalledTimes(1);
         expect(setWasRedirectedFromSeoCategoryMock).toBeCalledWith(true);
+    });
+
+    test('rapidly toggling the same checkbox parameter in SEO category should keep the latest state', () => {
+        (useSessionStore as unknown as Mock).mockImplementation((selector) => {
+            return selector({
+                defaultProductFiltersMap: {
+                    sort: TypeProductOrderingModeEnum.PriceAsc,
+                    flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
+                    brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
+                    parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
+                },
+                originalCategorySlug: ORIGINAL_CATEGORY_URL,
+                setWasRedirectedFromSeoCategory: setWasRedirectedFromSeoCategoryMock,
+            });
+        });
+
+        const { updateFilterParametersQuery } = useUpdateFilterQuery();
+
+        updateFilterParametersQuery('default-parameter-2', 'default-parameter-value-5');
+        updateFilterParametersQuery('default-parameter-2', 'default-parameter-value-5');
+
+        const secondPushFilterAsString = mockPush.mock.calls[1][0].query[FILTER_QUERY_PARAMETER_NAME];
+        const secondPushFilter = JSON.parse(secondPushFilterAsString);
+        const defaultParameter = secondPushFilter.parameters.find(
+            (parameter: { parameter: string }) => parameter.parameter === 'default-parameter-2',
+        );
+
+        expect(defaultParameter.values).toStrictEqual(['default-parameter-value-3', 'default-parameter-value-4']);
+        expect(defaultParameter.values).not.toContain('default-parameter-value-5');
     });
 
     test('changing slider parameter should not redirect from SEO category if slider parameters are not SEO-sensitive', () => {
