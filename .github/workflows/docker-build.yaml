@@ -894,10 +894,6 @@ jobs:
             SENTRY_ENVIRONMENT_VALUE: ci-review
             SENTRY_RELEASE_VALUE: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
         steps:
-            -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
-                with:
-                    ref: ${{ github.ref }}
             -   name: Create branch directory
                 run: |
                     rm -rf ${BRANCH_NAME_ESCAPED}
@@ -939,8 +935,14 @@ jobs:
                 with:
                     name: rabbitmq-vhost-sh
                     path: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
+            -   name: Checkout load-built-images action into scratch path
+                uses: actions/checkout@v6
+                with:
+                    ref: ${{ github.ref }}
+                    path: _load_images_action
+                    sparse-checkout: .github/actions/load-built-images
             -   name: Load images
-                uses: ./.github/actions/load-built-images
+                uses: ./_load_images_action/.github/actions/load-built-images
             -   name: Move docker-compose.review.yml to branch folder
                 if: "contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
