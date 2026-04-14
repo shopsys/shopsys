@@ -74,7 +74,7 @@
         "@graphql-codegen/typescript-urql": "~4.0.1",
         "@mswjs/interceptors": "0.41.3",
         "@tailwindcss/cli": "^4.1.18",
-        "@tailwindcss/postcss": "~4.1.18",
+        "@tailwindcss/postcss": "~4.2.2",
         "@testing-library/dom": "^10.4.1",
         "@testing-library/jest-dom": "^6.9.1",
         "@testing-library/react": "~16.3.2",
