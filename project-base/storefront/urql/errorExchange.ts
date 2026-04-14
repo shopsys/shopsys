@@ -12,6 +12,7 @@ import { ErrorOrchestrator } from 'utils/errors/ErrorOrchestrator';
 import { getErrorMessage } from 'utils/errors/errorMessageMapper';
 import { isExpectedPriceFilterError } from 'utils/errors/expectedErrors';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { isAuthError } from 'utils/errors/isAuthError';
 import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import { logException } from 'utils/errors/logException';
 import { mapGraphqlErrorForDevelopment } from 'utils/errors/mapGraphqlErrorForDevelopment';
@@ -88,8 +89,7 @@ export const getErrorExchange =
                         throw new Error('Internal Server Error');
                     }
 
-                    const isAuthError = error.response?.status === 401;
-                    if (isAuthError) {
+                    if (isAuthError(error)) {
                         removeTokensFromCookies(domainConfig, context);
 
                         return;

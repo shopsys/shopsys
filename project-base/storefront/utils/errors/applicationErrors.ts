@@ -75,6 +75,7 @@ const ApplicationErrors = {
     // No-log codes (expected errors, handled by specific code)
     'COMPARISON-product-already-in-list': 'no-log',
     'COMPARISON-product-not-in-list': 'no-log',
+    'expired-token': 'no-log',
     'invalid-account-or-password': 'no-log',
     'invalid-token': 'no-log',
     'no-result-found-for-slug': 'no-log',

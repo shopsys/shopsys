@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import { CombinedError } from 'urql';
 import { getLoginUrlWithRedirect } from 'utils/auth/getLoginUrlWithRedirect';
+import { isAuthError } from 'utils/errors/isAuthError';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { isExpectedPriceFilterError } from './expectedErrors';
 import { isWithErrorDebugging } from './isWithErrorDebugging';
@@ -13,7 +14,7 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
     domainUrl: string,
     urlSlug: string | undefined = undefined,
 ) => {
-    if (error?.response.status === 401) {
+    if (isAuthError(error)) {
         const redirectTargetUrlWithLeadingSlash = getInternationalizedStaticUrls(['/login'], domainUrl)[0];
 
         return {

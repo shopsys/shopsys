@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\ExpiredTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\NotVerifiedTokenUserMessageException;
+use Shopsys\FrontendApiBundle\Model\Token\Exception\TokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Throwable;
 
@@ -102,6 +103,10 @@ class TokenFacade
 
             return $token;
         } catch (Throwable $throwable) {
+            if ($throwable instanceof TokenUserMessageException) {
+                throw $throwable;
+            }
+
             throw new InvalidTokenUserMessageException();
         }
     }

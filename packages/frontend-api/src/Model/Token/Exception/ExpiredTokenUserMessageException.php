@@ -6,4 +6,5 @@ namespace Shopsys\FrontendApiBundle\Model\Token\Exception;
 
 class ExpiredTokenUserMessageException extends TokenUserMessageException
 {
+    protected const string CODE = 'expired-token';
 }
