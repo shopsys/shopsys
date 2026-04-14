@@ -149,14 +149,12 @@ class ParameterRepository
             ->from(Parameter::class, 'p');
     }
 
-    public function findParameterValueByValueTextNumericValueAndLocale(
+    public function findParameterValueByValueTextAndLocale(
         string $valueText,
-        ?string $numericValue,
         string $locale,
     ): ?ParameterValue {
         return $this->getParameterValueRepository()->findOneBy([
             'text' => $valueText,
-            'numericValue' => $numericValue,
             'locale' => $locale,
         ]);
     }
@@ -164,9 +162,8 @@ class ParameterRepository
     public function findOrCreateParameterValueByParameterValueData(
         ParameterValueData $parameterValueData,
     ): ParameterValue {
-        $parameterValue = $this->findParameterValueByValueTextNumericValueAndLocale(
+        $parameterValue = $this->findParameterValueByValueTextAndLocale(
             $parameterValueData->text,
-            $parameterValueData->numericValue,
             $parameterValueData->locale,
         );
 
@@ -178,7 +175,9 @@ class ParameterRepository
             $this->em->flush();
         }
 
-        if ($parameterValue->getRgbHex() !== $parameterValueData->rgbHex) {
+        if ($parameterValue->getRgbHex() !== $parameterValueData->rgbHex
+            || $parameterValue->getNumericValue() !== $parameterValueData->numericValue
+        ) {
             $parameterValue->edit($parameterValueData);
             $this->em->flush();
         }
@@ -186,12 +185,11 @@ class ParameterRepository
         return $parameterValue;
     }
 
-    public function getParameterValueByValueTextNumericValueAndLocale(
+    public function getParameterValueByValueTextAndLocale(
         string $valueText,
-        ?string $numericValue,
         string $locale,
     ): ParameterValue {
-        $parameterValue = $this->findParameterValueByValueTextNumericValueAndLocale($valueText, $numericValue, $locale);
+        $parameterValue = $this->findParameterValueByValueTextAndLocale($valueText, $locale);
 
         if ($parameterValue === null) {
             throw new ParameterValueNotFoundException();
@@ -624,7 +622,6 @@ class ParameterRepository
             ->from(ParameterValue::class, 'pv')
             ->where('pv.text = :text')
             ->andWhere('pv.locale = :locale')
-            ->andWhere('pv.numericValue IS NULL')
             ->setParameter('text', $text)
             ->setParameter('locale', $locale)
             ->getQuery()->getSingleScalarResult();

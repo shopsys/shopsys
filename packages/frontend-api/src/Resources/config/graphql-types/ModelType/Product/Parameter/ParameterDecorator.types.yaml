@@ -10,6 +10,9 @@ ParameterDecorator:
             name:
                 type: "String!"
                 description: "Parameter name"
+            type:
+                type: "ParameterTypeEnum!"
+                description: "Parameter type"
             values:
                 type: "[ParameterValue!]!"
             unit:

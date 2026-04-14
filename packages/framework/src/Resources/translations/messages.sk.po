@@ -3277,6 +3277,9 @@ msgstr "Pri uklade dšla chyba. Objednávka nie je uložená."
 msgid "Third column categories"
 msgstr "Kategórie tretieho stĺpca"
 
+msgid "This action is only available for parameter type slider."
+msgstr "Táto akcia je dostupná iba pre typ parametra slider."
+
 msgid "This currency can't be deleted, it is set as default or is saved with order."
 msgstr "Táto mena nemôže byť odstránená, je nastavená ako predvolená alebo je uložená s objednávkou."
 

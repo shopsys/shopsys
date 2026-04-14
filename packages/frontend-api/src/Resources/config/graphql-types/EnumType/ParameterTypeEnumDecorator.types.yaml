@@ -1,0 +1,12 @@
+ParameterTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Represents the type of the parameter"
+        values:
+            CHECKBOX:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COMMON")'
+            COLOR:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COLOR")'
+            SLIDER:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_SLIDER")'

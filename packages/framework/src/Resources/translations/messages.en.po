@@ -3277,6 +3277,9 @@ msgstr ""
 msgid "Third column categories"
 msgstr ""
 
+msgid "This action is only available for parameter type slider."
+msgstr ""
+
 msgid "This currency can't be deleted, it is set as default or is saved with order."
 msgstr ""
 

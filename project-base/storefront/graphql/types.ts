@@ -2238,6 +2238,8 @@ export type TypeParameter = {
   group: Maybe<Scalars['String']['output']>;
   /** Parameter name */
   name: Scalars['String']['output'];
+  /** Parameter type */
+  type: TypeParameterTypeEnum;
   /** Unit of the parameter */
   unit: Maybe<TypeUnit>;
   /** UUID */
@@ -2319,6 +2321,13 @@ export type TypeParameterSliderFilterOption = TypeParameterFilterOptionInterface
   /** The parameter UUID */
   uuid: Scalars['Uuid']['output'];
 };
+
+/** Represents the type of the parameter */
+export enum TypeParameterTypeEnum {
+  Checkbox = 'CHECKBOX',
+  Color = 'COLOR',
+  Slider = 'SLIDER'
+}
 
 /** Represents a parameter value */
 export type TypeParameterValue = {

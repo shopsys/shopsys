@@ -2,6 +2,7 @@ fragment ParameterFragment on Parameter {
     __typename
     uuid
     name
+    type
     group
     unit {
         __typename

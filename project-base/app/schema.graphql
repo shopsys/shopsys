@@ -1816,6 +1816,8 @@ type Parameter {
   group: String
   "Parameter name"
   name: String!
+  "Parameter type"
+  type: ParameterTypeEnum!
   "Unit of the parameter"
   unit: Unit
   "UUID"
@@ -1893,6 +1895,13 @@ type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
   unit: Unit
   "The parameter UUID"
   uuid: Uuid!
+}
+
+"Represents the type of the parameter"
+enum ParameterTypeEnum {
+  CHECKBOX
+  COLOR
+  SLIDER
 }
 
 "Represents a parameter value"

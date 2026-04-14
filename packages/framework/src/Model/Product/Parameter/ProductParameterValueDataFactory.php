@@ -55,7 +55,7 @@ class ProductParameterValueDataFactory
                 $productParameterValueData = $this->create();
                 $productParameterValueData->parameter = $productParameterValuesLocalizedData->parameter;
 
-                $parameterValue = $this->parameterFacade->findParameterValueByValueTextNumericValueAndLocale($valueText, $isSliderWithNumericValue ? $valueText : null, $locale);
+                $parameterValue = $this->parameterFacade->findParameterValueByValueTextAndLocale($valueText, $locale);
 
                 if ($parameterValue === null) {
                     $parameterValueData = $this->parameterValueDataFactory->create();
