@@ -27,6 +27,7 @@ services:
     php-fpm:
         restart: always
         image: php-fpm-image
+        pull_policy: never
         volumes:
             - web-volume:/var/www/html/project-base/app/web
             - postgres-conf:/var/www/html/project-base/app/docker/postgres
@@ -99,6 +100,7 @@ services:
     php-consumer:
         restart: always
         image: php-fpm-image
+        pull_policy: never
         volumes:
             - web-volume:/var/www/html/project-base/app/web
         environment:
@@ -137,6 +139,7 @@ services:
     storefront:
         restart: always
         image: storefront-image
+        pull_policy: never
         environment:
             REDIS_PREFIX: "${BRANCH_NAME_ESCAPED}"
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"

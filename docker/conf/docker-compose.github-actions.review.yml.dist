@@ -51,6 +51,7 @@ services:
     php-fpm:
         restart: always
         image: php-fpm-image
+        pull_policy: never
         volumes:
             - web-volume:/var/www/html/project-base/app/web
             - postgres-conf:/var/www/html/project-base/app/docker/postgres
@@ -120,6 +121,7 @@ services:
     php-consumer:
         restart: always
         image: php-fpm-image
+        pull_policy: never
         volumes:
             - web-volume:/var/www/html/project-base/app/web
         depends_on:
@@ -161,6 +163,7 @@ services:
     storefront:
         restart: always
         image: storefront-image
+        pull_policy: never
         environment:
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"
             GOOGLE_MAP_API_KEY: "${GOOGLE_MAP_API_KEY_VALUE}"
@@ -192,6 +195,7 @@ services:
 
     elasticsearch:
         image: elasticsearch-image
+        pull_policy: never
         ulimits:
             nofile:
                 soft: 65536

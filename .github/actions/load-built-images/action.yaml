@@ -1,0 +1,49 @@
+name: Load Built Images
+
+inputs:
+    php-fpm:
+        description: Load php-fpm image
+        required: false
+        default: "true"
+    storefront:
+        description: Load storefront image
+        required: false
+        default: "true"
+    elasticsearch:
+        description: Load elasticsearch image
+        required: false
+        default: "true"
+
+runs:
+    using: "composite"
+    steps:
+        -   name: Download php-fpm-image.tar
+            if: inputs.php-fpm == 'true'
+            uses: actions/download-artifact@v4
+            with:
+                name: php-fpm-image.tar
+                path: ${{ runner.temp }}
+        -   name: Download storefront-image.tar
+            if: inputs.storefront == 'true'
+            uses: actions/download-artifact@v4
+            with:
+                name: storefront-image.tar
+                path: ${{ runner.temp }}
+        -   name: Download elastic-image.tar
+            if: inputs.elasticsearch == 'true'
+            uses: actions/download-artifact@v4
+            with:
+                name: elastic-image.tar
+                path: ${{ runner.temp }}
+        -   name: Load images
+            shell: bash
+            run: |
+                if [ "${{ inputs.php-fpm }}" == "true" ]; then
+                    docker load --input ${{ runner.temp }}/php-fpm-image.tar
+                fi
+                if [ "${{ inputs.storefront }}" == "true" ]; then
+                    docker load --input ${{ runner.temp }}/storefront-image.tar
+                fi
+                if [ "${{ inputs.elasticsearch }}" == "true" ]; then
+                    docker load --input ${{ runner.temp }}/elastic-image.tar
+                fi

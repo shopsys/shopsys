@@ -47,6 +47,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=dependencies /tmp/build $APP_DIR
 RUN chown -R root:root $APP_DIR && chmod -R a-w $APP_DIR
 
+COPY docker/entrypoint.sh /entrypoint.sh
+
 USER node
 
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["pnpm", "start"]

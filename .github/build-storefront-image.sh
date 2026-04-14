@@ -13,5 +13,6 @@ docker image build \
     --build-arg SENTRY_ORG="${SENTRY_ORG}" \
     --build-arg SENTRY_AUTH_TOKEN="${SENTRY_AUTH_TOKEN}" \
     --build-arg SENTRY_PROJECT="${SENTRY_PROJECT}" \
+    --build-arg node_uid=1000 \
     -f project-base/storefront/docker/Dockerfile \
     ./project-base/storefront
