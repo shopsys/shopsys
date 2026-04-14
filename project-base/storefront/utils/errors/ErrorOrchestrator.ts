@@ -8,7 +8,13 @@ import {
 } from 'utils/errors/applicationErrors';
 
 export type ErrorDecision =
-    | { action: 'toast'; message: string; errorType: ApplicationErrorsType; severity: 'error' | 'warning' }
+    | {
+          action: 'toast';
+          message: string;
+          errorType: ApplicationErrorsType;
+          severity: 'error' | 'warning';
+          origin: 'validation' | 'application' | 'network';
+      }
     | { action: 'form-field'; fieldName: string; message: string }
     | { action: 'silent-log' }
     | { action: 'ignore' }
@@ -59,6 +65,7 @@ class ErrorOrchestratorImpl {
                             message: error.message,
                             errorType: 'default',
                             severity: 'error',
+                            origin: 'validation',
                         });
                     }
                 }
@@ -87,7 +94,7 @@ class ErrorOrchestratorImpl {
             } else if (isNoFlashMessageError(type)) {
                 decisions.push({ action: 'silent-log' });
             } else if (isFlashMessageError(type)) {
-                decisions.push({ action: 'toast', message, errorType: type, severity: 'error' });
+                decisions.push({ action: 'toast', message, errorType: type, severity: 'error', origin: 'application' });
             }
         }
 
@@ -99,6 +106,7 @@ class ErrorOrchestratorImpl {
                     message: parsed.networkError,
                     errorType: 'default',
                     severity: 'error',
+                    origin: 'network',
                 });
             }
         }

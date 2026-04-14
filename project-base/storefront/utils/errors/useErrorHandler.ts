@@ -48,9 +48,13 @@ export function useErrorHandler<TFormValues extends FieldValues = FieldValues>(
             for (const decision of decisions) {
                 switch (decision.action) {
                     case 'toast':
-                        showErrorMessage(customMessage ?? decision.message, context.gtmOrigin, {
-                            errorType: decision.errorType,
-                        });
+                        showErrorMessage(
+                            decision.origin === 'application' && customMessage ? customMessage : decision.message,
+                            context.gtmOrigin,
+                            {
+                                errorType: decision.errorType,
+                            },
+                        );
                         break;
 
                     case 'form-field':
