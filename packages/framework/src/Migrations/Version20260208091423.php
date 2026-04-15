@@ -14,7 +14,7 @@ class Version20260208091423 extends AbstractMigration implements CdnAwareInterfa
     protected const string CSP_FRAME_ANCESTORS_DIRECTIVE = "frame-ancestors 'self'";
     protected const string CSP_DEFAULT_SRC_VALUE = "'self' https: 'unsafe-inline' data:";
     protected const string CSP_SCRIPT_SRC_VALUE =
-        "'self' 'unsafe-inline' https://www.googletagmanager.com *.usersnap.com https://widget.packeta.com https://cdnjs.cloudflare.com https://*.gopay.com https://*.gopay.cz";
+        "'self' 'unsafe-inline' https://www.googletagmanager.com *.usersnap.com https://widget.packeta.com https://cdnjs.cloudflare.com https://*.gopay.com https://*.gopay.cz https://maps.googleapis.com";
 
     protected ?CdnFacade $cdnFacade = null;
 
