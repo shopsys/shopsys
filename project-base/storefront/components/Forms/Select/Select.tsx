@@ -1,4 +1,3 @@
-import { SelectList, SelectListProps } from './SelectList';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
@@ -9,6 +8,7 @@ import { FunctionComponentProps } from 'types/globals';
 import { SelectOptionType } from 'types/selectOptions';
 import { twMergeCustom } from 'utils/twMerge';
 import useClickClosePopup from 'utils/ui/useClickClosePopup';
+import { SelectList, SelectListProps } from './SelectList';
 
 type SelectProps<T = string> = {
     ariaLabel: string;
@@ -89,10 +89,10 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
             <div className={twMergeCustom('relative w-full', className)} ref={wrapperRef}>
                 <div
                     className={twMergeCustom(
-                        'border-input-border-default bg-input-bg-default text-input-text-default hover:border-input-border-hovered group flex h-14 rounded-md border-2',
-                        isOpen && 'border-input-border-active rounded-b-none',
+                        'group flex h-14 rounded-md border-2 border-input-border-default bg-input-bg-default text-input-text-default hover:border-input-border-hovered',
+                        isOpen && 'rounded-b-none border-input-border-active',
                         (isDisabled || isLoading) &&
-                            'border-input-border-disabled bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
+                            'pointer-events-none cursor-no-drop border-input-border-disabled bg-input-bg-disabled text-input-text-disabled',
                         selectClassName,
                     )}
                 >
@@ -113,7 +113,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             />
 
                             {activeOption?.count !== undefined && (
-                                <span className="flex items-center font-normal whitespace-nowrap">
+                                <span className="flex items-center whitespace-nowrap font-normal">
                                     ({activeOption.count})
                                 </span>
                             )}
@@ -130,15 +130,15 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         >
                             <span
                                 className={twJoin(
-                                    'font-secondary text-input-placeholder-default group-hover:text-input-placeholder-hovered absolute transition-all',
+                                    'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || activeOption
                                         ? 'top-[9px] text-sm'
-                                        : 'top-1/2 -translate-y-1/2 text-base font-semibold',
+                                        : 'top-1/2 -translate-y-1/2 font-semibold text-base',
                                 )}
                             >
                                 {label}
 
-                                {isRequired && <span className="text-text-error ml-1">*</span>}
+                                {isRequired && <span className="ml-1 text-text-error">*</span>}
                             </span>
 
                             {activeOption?.label && (
@@ -162,7 +162,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
 
                     {onResetSelect && activeOption && !isLoading && (
                         <button className="cursor-pointer" tabIndex={0} type="reset" onClick={onResetSelect}>
-                            <RemoveIcon className="hover:text-red mx-1 size-4 transition active:scale-95" />
+                            <RemoveIcon className="mx-1 size-4 transition hover:text-red active:scale-95" />
                         </button>
                     )}
 

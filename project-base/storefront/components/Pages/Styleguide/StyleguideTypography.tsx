@@ -1,6 +1,5 @@
-import { StyleguideSection } from './StyleguideElements';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import React from 'react';
+import { StyleguideSection } from './StyleguideElements';
 
 export const StyleguideTypography: FC = () => {
     return (

@@ -1,8 +1,8 @@
-import { ERROR_PAGE_ROUTE, MIDDLEWARE_STATUS_CODE_KEY, MIDDLEWARE_STATUS_MESSAGE_KEY } from './errorHandlers';
 import { NextRequest, NextResponse } from 'next/server';
-import { type FriendlyPageTypesValue, FriendlyPagesDestinations, FriendlyPagesTypes } from 'types/friendlyUrl';
+import { FriendlyPagesDestinations, FriendlyPagesTypes, type FriendlyPageTypesValue } from 'types/friendlyUrl';
 import { getBaseUrlWithLocale } from 'utils/domain/domainUtils';
 import { getPageTypeKey } from 'utils/page/getPageTypeKey';
+import { ERROR_PAGE_ROUTE, MIDDLEWARE_STATUS_CODE_KEY, MIDDLEWARE_STATUS_MESSAGE_KEY } from './errorHandlers';
 
 export const handleSlugTypeQueryParam = (
     search: string,
@@ -81,7 +81,7 @@ const rewriteDynamicPages = (
     return NextResponse.rewrite(new URL(origin + ERROR_PAGE_ROUTE), {
         headers: [
             [MIDDLEWARE_STATUS_CODE_KEY, '404'],
-            [MIDDLEWARE_STATUS_MESSAGE_KEY, 'Friendly URL page not found for ' + rewriteUrl],
+            [MIDDLEWARE_STATUS_MESSAGE_KEY, `Friendly URL page not found for ${rewriteUrl}`],
         ],
     });
 };
@@ -90,12 +90,12 @@ const createErrorResponse = (statusCode: number, request: NextRequest): NextResp
     const is400Error = isInRange(statusCode, 400, 499);
     const is500Error = isInRange(statusCode, 500, 599);
 
-    let statusMessage = 'Unknown middleware error for ' + request.url;
+    let statusMessage = `Unknown middleware error for ${request.url}`;
 
     if (is400Error) {
-        statusMessage = 'Friendly URL page not found for ' + request.url;
+        statusMessage = `Friendly URL page not found for ${request.url}`;
     } else if (is500Error) {
-        statusMessage = 'Middleware runtime error for ' + request.url;
+        statusMessage = `Middleware runtime error for ${request.url}`;
     }
 
     return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {

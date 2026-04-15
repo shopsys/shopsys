@@ -1,4 +1,3 @@
-import { useCartPageNavigation } from './cartUtils';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
@@ -11,6 +10,7 @@ import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCar
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
+import { useCartPageNavigation } from './cartUtils';
 
 type CartPreviewProps = {
     wrapperRef?: RefObject<HTMLDivElement | null>;
@@ -60,7 +60,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
     return (
         <div
             className={twJoin(
-                'bg-background-more font-secondary vl:max-w-[495px] relative flex w-full flex-col gap-4 rounded-xl px-4 py-6 font-semibold sm:p-8',
+                'relative flex w-full vl:max-w-[495px] flex-col gap-4 rounded-xl bg-background-more px-4 py-6 font-secondary font-semibold sm:p-8',
                 !isFirstStep && 'text-sm',
             )}
         >
@@ -123,8 +123,8 @@ export const CartPreview: FC<CartPreviewProps> = ({
                         <div className="flex items-center justify-between">
                             <span>{t('Amount of discount on products on sale')}</span>
 
-                            <span className="text-price-discounted whitespace-nowrap">
-                                {'-' + formatPrice(cart.totalProductPriceAdjustmentsDiscount.priceWithVat)}
+                            <span className="whitespace-nowrap text-price-discounted">
+                                {`-${formatPrice(cart.totalProductPriceAdjustmentsDiscount.priceWithVat)}`}
                             </span>
                         </div>
                     )}
@@ -142,7 +142,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
 
                             {isFirstStep && (
                                 <button
-                                    className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
+                                    className="cursor-pointer text-link-default text-xs underline hover:text-link-hovered hover:no-underline"
                                     data-tid={TIDs.blocks_promocode_remove_button}
                                     tabIndex={0}
                                     aria-label={t('Remove promo code {{ promoCode }}', {
@@ -156,18 +156,18 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             )}
 
                             {hasPromoCodeDiscount && (
-                                <span className="text-price-discounted ml-auto">
-                                    {'-' + formatPrice(promoCodes[0].discountPrice.priceWithVat)}
+                                <span className="ml-auto text-price-discounted">
+                                    {`-${formatPrice(promoCodes[0].discountPrice.priceWithVat)}`}
                                 </span>
                             )}
                         </div>
                     )}
 
                     {hasTotalDiscounts && (
-                        <div className="border-border-less flex items-center justify-between border-t-1 pt-4">
+                        <div className="flex items-center justify-between border-border-less border-t-1 pt-4">
                             <span className="text-price-discounted">{t('Save in total')}</span>
 
-                            <span className="text-price-discounted whitespace-nowrap">
+                            <span className="whitespace-nowrap text-price-discounted">
                                 {formatPrice(cart.totalDiscountPrice.priceWithVat)}
                             </span>
                         </div>
@@ -189,14 +189,14 @@ export const CartPreview: FC<CartPreviewProps> = ({
                     <div className="flex flex-col gap-2">
                         <span
                             className={twJoin(
-                                'text-price-default whitespace-nowrap',
+                                'whitespace-nowrap text-price-default',
                                 isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg',
                             )}
                         >
                             {totalPrice}
                         </span>
 
-                        <span className="text-price-before text-right text-sm whitespace-nowrap">
+                        <span className="whitespace-nowrap text-right text-price-before text-sm">
                             {totalPriceWithoutVat} {t('without VAT')}
                         </span>
                     </div>

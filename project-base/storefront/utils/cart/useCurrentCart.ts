@@ -27,7 +27,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
-    let cart = undefined;
+    let cart: CurrentCartType['cart'];
     if (isCartHydrated) {
         if (isWithCart) {
             cart = fetchedCartData?.cart;

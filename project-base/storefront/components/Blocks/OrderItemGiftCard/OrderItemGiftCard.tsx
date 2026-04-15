@@ -30,8 +30,8 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
     const { t } = useTranslation();
 
     return (
-        <li className="bg-background-more font-secondary relative flex flex-col gap-1 rounded-xl p-4">
-            <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow-md">
+        <li className="relative flex flex-col gap-1 rounded-xl bg-background-more p-4 font-secondary">
+            <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 font-semibold text-white text-xs shadow-md">
                 {t('Gift')}
             </div>
 
@@ -46,10 +46,10 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
                 />
                 <div className="flex flex-1 items-center justify-between gap-2.5">
                     <div className="flex flex-col gap-0.5">
-                        <span className="max-w-44 text-sm font-semibold">{fullName}</span>
+                        <span className="max-w-44 font-semibold text-sm">{fullName}</span>
                         <span
                             className={twJoin(
-                                'text-xs font-semibold',
+                                'font-semibold text-xs',
                                 availability.status === TypeAvailabilityStatusEnum.InStock &&
                                     'text-availability-in-stock',
                                 availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
@@ -59,7 +59,7 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
                             {availability.name}
                         </span>
                     </div>
-                    <span className="text-sm font-semibold whitespace-nowrap">
+                    <span className="whitespace-nowrap font-semibold text-sm">
                         {quantity} {unit}
                     </span>
                 </div>

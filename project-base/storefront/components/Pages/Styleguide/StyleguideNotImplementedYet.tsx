@@ -1,4 +1,3 @@
-import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
 import {
     NotImplementedTooltip,
     NotImplementedYetInject,
@@ -7,6 +6,7 @@ import {
     notImplementedYetHandler,
 } from 'components/Basic/NotImplementedYet/NotImplementedYet';
 import { Button } from 'components/Forms/Button/Button';
+import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
 
 export const StyleguideNotImplementedYet: FC = () => {
     return (

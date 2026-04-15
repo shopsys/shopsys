@@ -5,14 +5,14 @@ import { twJoin } from 'tailwind-merge';
 const ClusterMarker: FC<{ onClick: () => void }> = ({ onClick, children }) => {
     return (
         <button
-            className="text-background-brand absolute h-[30px] w-6 -translate-x-1/2 -translate-y-full"
+            className="absolute h-[30px] w-6 -translate-x-1/2 -translate-y-full text-background-brand"
             title={`Cluster of ${children} locations`}
             type="button"
             onClick={onClick}
         >
             <GoogleMapMarkerIcon className={twJoin('h-[30px] w-6')} />
 
-            <span className="text-text-inverted absolute inset-0 flex justify-center pt-1 text-xs font-bold">
+            <span className="absolute inset-0 flex justify-center pt-1 font-bold text-text-inverted text-xs">
                 {children}
             </span>
         </button>
@@ -36,7 +36,7 @@ const SingleMarker: FC<{ onClick: () => void; isActive: boolean; isDetail?: bool
             <GoogleMapMarkerIcon
                 isSingle
                 className={twJoin(
-                    'text-background-brand h-[26px] w-5',
+                    'h-[26px] w-5 text-background-brand',
                     isActive && 'origin-bottom scale-125',
                     isDetail ? 'cursor-default' : 'cursor-pointer',
                 )}

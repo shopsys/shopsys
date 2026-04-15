@@ -1,6 +1,3 @@
-import { ElementWithImage, OrderItemColumnInfo, OrderItemRowInfo } from './OrderItemElements';
-import { OrderItemProducts } from './OrderItemProducts';
-import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
@@ -14,6 +11,9 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getOrderPaymentItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { ElementWithImage, OrderItemColumnInfo, OrderItemRowInfo } from './OrderItemElements';
+import { OrderItemProducts } from './OrderItemProducts';
+import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';
 
 type OrderItemProps = {
     order: TypeListedOrderFragment;
@@ -49,9 +49,9 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
 
     return (
-        <div className="bg-background-more vl:flex-row flex flex-col flex-wrap justify-between gap-4 rounded-xl p-5">
+        <div className="flex vl:flex-row flex-col flex-wrap justify-between gap-4 rounded-xl bg-background-more p-5">
             <div className="flex flex-1 flex-col gap-2.5">
-                <div className="vl:flex-row flex flex-col gap-x-8 gap-y-2">
+                <div className="flex vl:flex-row flex-col gap-x-8 gap-y-2">
                     <OrderItemColumnInfo tid={TIDs.order_list_item_number} title={t('Order number')}>
                         <ExtendedNextLink
                             className="font-bold"

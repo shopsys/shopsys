@@ -34,7 +34,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
             </div>
 
             {/* Mobile accordion layout */}
-            <div className="bg-background-default rounded-xl px-5 py-4 lg:hidden">
+            <div className="rounded-xl bg-background-default px-5 py-4 lg:hidden">
                 <button
                     aria-controls={`footer-menu-${title.toLowerCase().replace(/\s+/g, '-')}`}
                     aria-expanded={isExpanded}
@@ -47,7 +47,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
 
                     <ArrowIcon
                         className={twMergeCustom(
-                            'text-icon-less 0 size-6 rotate-0 transition-all',
+                            '0 size-6 rotate-0 text-icon-less transition-all',
                             isExpanded && 'rotate-180',
                         )}
                     />
@@ -72,13 +72,13 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
 };
 
 const FooterMenuItemTitle: FC<{ title: string }> = ({ title }) => {
-    return <h3 className="font-secondary text-xs font-semibold tracking-wider uppercase">{title}</h3>;
+    return <h3 className="font-secondary font-semibold text-xs uppercase tracking-wider">{title}</h3>;
 };
 
 const FooterMenuItemLink: FC<{ item: TypeSimpleNotBlogArticleFragment }> = ({ item }) => {
     return (
         <ExtendedNextLink
-            className="text-text-default hover:text-text-default font-secondary block text-sm font-semibold tracking-wider no-underline hover:underline"
+            className="block font-secondary font-semibold text-sm text-text-default tracking-wider no-underline hover:text-text-default hover:underline"
             href={item.__typename === 'ArticleSite' ? item.slug : item.url}
             rel={item.external ? 'nofollow noreferrer noopener' : undefined}
             skeletonType="article"

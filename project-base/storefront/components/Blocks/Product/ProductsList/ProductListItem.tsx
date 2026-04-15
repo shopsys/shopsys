@@ -1,4 +1,3 @@
-import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
@@ -19,6 +18,7 @@ import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
+import { ProductListItemImage } from './ProductListItemImage';
 
 export type ProductVisibleItemsConfigType = {
     addToCart?: boolean;
@@ -79,7 +79,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 ref={ref}
                 className={twMergeCustom(
-                    'border-background-more bg-background-more group relative flex flex-col gap-2.5 rounded-xl border pb-5 text-left transition select-text',
+                    'group relative flex select-text flex-col gap-2.5 rounded-xl border border-background-more bg-background-more pb-5 text-left transition',
                     size === 'small' && 'gap-0 pb-0',
                     'hover:border-border-less hover:bg-background-default',
                     highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
@@ -87,14 +87,14 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
             >
                 {highlightBadgeText && (
-                    <div className="z-above absolute top-5 right-2.5 items-end sm:right-5">
+                    <div className="absolute top-5 right-2.5 z-above items-end sm:right-5">
                         <Flag type="highlight">{highlightBadgeText}</Flag>
                     </div>
                 )}
 
                 <ExtendedNextLink
                     preventRedirectOnTextSelection
-                    className="text-text-default hover:text-link-default flex grow rounded-xl no-underline select-text hover:no-underline"
+                    className="flex grow select-text rounded-xl text-text-default no-underline hover:text-link-default hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     tabIndex={allowKeyboardFocus ? 0 : -1}
@@ -119,7 +119,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 
                         <h3
                             className={twJoin(
-                                'font-secondary group-hover:text-link-default grow overflow-hidden font-semibold wrap-break-word group-hover:underline',
+                                'wrap-break-word grow overflow-hidden font-secondary font-semibold group-hover:text-link-default group-hover:underline',
                                 textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
                             )}
                         >
@@ -127,8 +127,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         </h3>
 
                         {product.__typename === 'MainVariant' && (
-                            <div className="bg-background-default font-secondary group-hover:text-text-default flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">
-                                <VariantIcon className="text-text-accent size-3" />
+                            <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
+                                <VariantIcon className="size-3 text-text-accent" />
                                 {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                             </div>
                         )}
@@ -146,7 +146,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             <ProductAvailability
                                 availability={product.availability}
                                 availableStoresCount={product.availableStoresCount}
-                                className="xs:min-h-[60px] min-h-10 sm:min-h-10"
+                                className="min-h-10 xs:min-h-[60px] sm:min-h-10"
                                 isInquiryType={product.isInquiryType}
                             />
                         )}

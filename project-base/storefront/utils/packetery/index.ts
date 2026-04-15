@@ -1,5 +1,5 @@
-import { PacketeryExtendedPoint, PacketeryPickFunction, StoreOrPacketeryPoint } from './types';
 import { TypeOpeningHours, TypeStoreOpeningStatusEnum } from 'graphql/types';
+import { PacketeryExtendedPoint, PacketeryPickFunction, StoreOrPacketeryPoint } from './types';
 
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
@@ -16,7 +16,6 @@ export const packeteryPick: PacketeryPickFunction = (apiKey, callback, opts, inE
         return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     window.Packeta?.Widget?.pick?.(apiKey, callback, opts, inElement);
 };
 

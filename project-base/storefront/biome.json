@@ -1,0 +1,140 @@
+{
+    "plugins": ["./biome/plugin-valid-interactive-content.grit"],
+    "files": {
+        "ignoreUnknown": false,
+        "includes": [
+            "**/*.js",
+            "**/*.ts",
+            "**/*.tsx",
+            "**/*.json",
+            "!biome.json",
+            "!package.json",
+            "!pnpm-lock.yaml",
+            "!tsconfig.json",
+            "!.next",
+            "!.pnpm-store",
+            "!cypress",
+            "!graphql/docs",
+            "!graphql/types.ts",
+            "!public",
+            "!schema-compressed.graphql.json",
+            "!schema.graphql.json",
+            "!vitest/biome/fixtures",
+            "!**/*.generated.*"
+        ]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 120,
+        "lineEnding": "lf"
+    },
+    "javascript": {
+        "formatter": {
+            "arrowParentheses": "always",
+            "bracketSameLine": false,
+            "bracketSpacing": true,
+            "quoteProperties": "asNeeded",
+            "quoteStyle": "single",
+            "semicolons": "always",
+            "trailingCommas": "all"
+        }
+    },
+    "assist": {
+        "actions": {
+            "source": {
+                "organizeImports": "on"
+            }
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "a11y": {
+                "noNoninteractiveElementInteractions": "error",
+                "noStaticElementInteractions": "error",
+                "noSvgWithoutTitle": "off",
+                "useAltText": "error",
+                "useAriaPropsSupportedByRole": "off",
+                "useAriaPropsForRole": "off",
+                "useButtonType": "off",
+                "useSemanticElements": "warn",
+                "useValidAnchor": "error"
+            },
+            "complexity": {
+                "noForEach": "off",
+                "noStaticOnlyClass": "off",
+                "noThisInStatic": "off"
+            },
+            "correctness": {
+                "noConstructorReturn": "off",
+                "noUnusedImports": "error",
+                "noUnusedVariables": "error",
+                "useExhaustiveDependencies": "off",
+                "useHookAtTopLevel": "error"
+            },
+            "nursery": {
+                "useSortedClasses": {
+                    "level": "error",
+                    "options": {
+                        "functions": ["twJoin", "twMergeCustom"]
+                    }
+                }
+            },
+            "performance": {
+                "noAccumulatingSpread": "off"
+            },
+            "security": {
+                "noDangerouslySetInnerHtml": "off"
+            },
+            "style": {
+                "noNonNullAssertion": "off",
+                "useNodejsImportProtocol": "off",
+                "noParameterAssign": "off",
+                "noRestrictedImports": {
+                    "level": "error",
+                    "options": {
+                        "paths": {
+                            "tailwind-merge": {
+                                "importNames": ["twMerge"],
+                                "message": "Please use twMergeCustom from utils/twMerge instead."
+                            },
+                            "react": {
+                                "importNames": ["FC"],
+                                "message": "Please remove this import and use global FC interface"
+                            },
+                            "next/link": "Please use ExtendedNextLink instead",
+                            "next-translate/useTranslation": "Please use useTranslation from utils/i18n/useTranslationWrapper instead",
+                            "urql": {
+                                "importNames": ["createClient"],
+                                "message": "Please use the custom createClient function from storefront/urql/fetcher.ts"
+                            },
+                            "next-urql": {
+                                "importNames": ["initUrqlClient"],
+                                "message": "Please use the custom createClient function from storefront/urql/fetcher.ts"
+                            }
+                        },
+                        "patterns": [
+                            {
+                                "group": ["../*", "../../*", "../../../*", "../../../../*", "../../../../../*"],
+                                "message": "Please use same-folder imports or absolute imports from the storefront baseUrl instead."
+                            }
+                        ]
+                    }
+                },
+                "useConst": "error",
+                "useImportType": "off",
+                "useTemplate": "error"
+            },
+            "suspicious": {
+                "noArrayIndexKey": "off",
+                "noConsole": "error",
+                "noExplicitAny": "off",
+                "noThenProperty": "off",
+                "useIterableCallbackReturn": "off"
+            }
+        }
+    }
+}

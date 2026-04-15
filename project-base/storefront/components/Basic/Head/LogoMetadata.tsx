@@ -4,7 +4,7 @@ import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash'
 
 export const LogoMetadata: FC = () => {
     const { url } = useDomainConfig();
-    const logoUrl = getStringWithoutTrailingSlash(url) + '/images/logo.svg';
+    const logoUrl = `${getStringWithoutTrailingSlash(url)}/images/logo.svg`;
 
     return (
         <Head>

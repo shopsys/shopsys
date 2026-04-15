@@ -1,8 +1,8 @@
-import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain, ErrorPageButtonLink } from './ErrorPageElements';
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
 
 type Error500ContentProps = {
     err?: string;
@@ -21,7 +21,7 @@ export const Error500Content: FC<Error500ContentProps> = ({ err }) => {
                 </ErrorPage>
                 {isWithToastAndConsoleErrorDebugging && err && (
                     <div className="my-3 flex justify-center">
-                        <div className="bg-background-more rounded-sm">
+                        <div className="rounded-sm bg-background-more">
                             <div className="p-3">
                                 <p>{err}</p>
                             </div>

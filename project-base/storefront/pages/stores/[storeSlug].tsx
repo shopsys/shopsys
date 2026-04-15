@@ -1,9 +1,9 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import {
-    useStoreDetailQuery,
+    StoreDetailQueryDocument,
     TypeStoreDetailQuery,
     TypeStoreDetailQueryVariables,
-    StoreDetailQueryDocument,
+    useStoreDetailQuery,
 } from 'graphql/requests/stores/queries/StoreDetailQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -63,8 +63,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            const storeResponse: OperationResult<TypeStoreDetailQuery, TypeStoreDetailQueryVariables> = await client!
-                .query(StoreDetailQueryDocument, {
+            const storeResponse: OperationResult<TypeStoreDetailQuery, TypeStoreDetailQueryVariables> = await client
+                ?.query(StoreDetailQueryDocument, {
                     urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                 })
                 .toPromise();

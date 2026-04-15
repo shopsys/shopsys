@@ -25,7 +25,6 @@
         "**/*.tsx",
         "*.js",
         "*.test.tsx",
-        "eslint.config.mjs",
         "cypress/tids.ts",
         "types/**/*.d.ts"
     ],

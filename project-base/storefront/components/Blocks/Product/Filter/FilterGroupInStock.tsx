@@ -14,7 +14,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ inStockCount }
     const { updateFilterInStockQuery } = useUpdateFilterQuery();
 
     return (
-        <div className="bg-background-more rounded-md p-5 py-2.5">
+        <div className="rounded-md bg-background-more p-5 py-2.5">
             <Checkbox
                 aria-label={t('Filter by in stock', { ns: 'accessibility' })}
                 count={inStockCount}

@@ -1,10 +1,10 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { twJoin } from 'tailwind-merge';
 import { ProductPrice } from './ProductPrice';
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductListItemPlaceholder } from './ProductsList/ProductListItemPlaceholder';
 import { ProductsSliderProps, VISIBLE_SLIDER_ITEMS } from './ProductsSlider';
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
-import { twJoin } from 'tailwind-merge';
 
 type ProductsSliderPlaceholderProps = {
     size?: ProductItemProps['size'];
@@ -19,7 +19,7 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
     return (
         <div className="relative">
             {products.length > VISIBLE_SLIDER_ITEMS && (
-                <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
+                <div className="absolute -top-10 right-0 vl:flex hidden items-center justify-center gap-2">
                     <SliderButtonPlaceholder type="prev" />
                     <SliderButtonPlaceholder type="next" />
                 </div>
@@ -28,7 +28,7 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
             <ul
                 className={twJoin(
                     'hide-scrollbar grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain',
-                    'vl:auto-cols-[25%] auto-cols-[225px] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] xl:auto-cols-[20%]',
+                    'auto-cols-[225px] vl:auto-cols-[25%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] xl:auto-cols-[20%]',
                 )}
             >
                 {products.map((product, index) =>
@@ -57,7 +57,7 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
 type SliderButtonPlaceholderProps = { type: 'prev' | 'next' };
 
 const SliderButtonPlaceholder: FC<SliderButtonPlaceholderProps> = ({ type }) => (
-    <button className="text-text-default hover:text-text-accent disabled:text-text-disabled cursor-pointer rounded-sm border-none p-1 outline-hidden transition disabled:cursor-auto">
+    <button className="cursor-pointer rounded-sm border-none p-1 text-text-default outline-hidden transition hover:text-text-accent disabled:cursor-auto disabled:text-text-disabled">
         <ArrowSecondaryIcon className={twJoin('w-5', type === 'prev' ? 'rotate-90' : '-rotate-90')} />
     </button>
 );

@@ -1,5 +1,3 @@
-import { PaymentsInOrderSelectItem } from './PaymentsInOrderSelectItem';
-import { useChangePaymentInOrder } from './paymentInOrderSelectUtils';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
@@ -10,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
+import { PaymentsInOrderSelectItem } from './PaymentsInOrderSelectItem';
+import { useChangePaymentInOrder } from './paymentInOrderSelectUtils';
 
 type PaymentsInOrderSelectProps = {
     orderUuid: string;
@@ -97,20 +97,19 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                             />
                         )}
 
-                        {availablePayments &&
-                            availablePayments.map((payment) => (
-                                <PaymentsInOrderSelectItem
-                                    key={payment.uuid}
-                                    payment={payment}
-                                    selectedPaymentForChange={selectedPaymentForChange}
-                                    selectedPaymentSwiftForChange={selectedPaymentSwiftForChange}
-                                    setSelectedPaymentForChange={setSelectedPaymentForChange}
-                                    setSelectedPaymentSwiftForChange={setSelectedPaymentSwiftForChange}
-                                />
-                            ))}
+                        {availablePayments?.map((payment) => (
+                            <PaymentsInOrderSelectItem
+                                key={payment.uuid}
+                                payment={payment}
+                                selectedPaymentForChange={selectedPaymentForChange}
+                                selectedPaymentSwiftForChange={selectedPaymentSwiftForChange}
+                                setSelectedPaymentForChange={setSelectedPaymentForChange}
+                                setSelectedPaymentSwiftForChange={setSelectedPaymentSwiftForChange}
+                            />
+                        ))}
                     </ul>
                 </div>
-                <div className="vl:justify-between vl:text-left flex w-full flex-wrap items-center justify-center gap-2 text-center">
+                <div className="flex w-full flex-wrap items-center justify-center vl:justify-between gap-2 vl:text-left text-center">
                     {isSelectedPaymentEqualsToOrderPayment ? (
                         <GoPayGateway
                             requiresAction

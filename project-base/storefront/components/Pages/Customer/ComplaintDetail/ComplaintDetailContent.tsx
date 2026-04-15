@@ -1,6 +1,6 @@
+import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { ComplaintDetailBasicInfo } from './ComplaintDetailBasicInfo';
 import { ComplaintDetailCustomerInfo } from './ComplaintDetailCustomerInfo';
-import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 
 type ComplaintDetailContentProps = {
     complaint: TypeComplaintDetailFragment;

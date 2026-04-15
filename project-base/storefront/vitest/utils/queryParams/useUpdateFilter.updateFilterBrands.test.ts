@@ -196,8 +196,7 @@ describe('useUpdateFilter().updateFilterBrands tests', () => {
     });
 
     test('changing brand should redirect from SEO category if brands are SEO-sensitive', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ BRANDS: true }));
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({

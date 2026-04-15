@@ -17,7 +17,7 @@ export const ProductGift: FC<ProductGiftProps> = ({ gift, variant = 'default' })
     return (
         <div
             className={twJoin(
-                'bg-background-more relative flex items-center rounded-xl',
+                'relative flex items-center rounded-xl bg-background-more',
                 variant === 'addToCart' ? 'gap-2 px-5 py-4' : 'mb-5 gap-6 px-10 py-3',
             )}
         >

@@ -3,8 +3,8 @@ import { LoginContent } from 'components/Pages/Login/LoginContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
-    TypeCurrentCustomerUserQuery,
     CurrentCustomerUserQueryDocument,
+    TypeCurrentCustomerUserQuery,
 } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
@@ -54,7 +54,6 @@ export const getServerSideProps = getServerSidePropsWrapper(
             );
             const isLogged =
                 customerQueryResult?.data?.currentCustomerUser !== undefined &&
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 customerQueryResult?.data?.currentCustomerUser !== null;
 
             if (isLogged) {

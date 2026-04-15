@@ -1,5 +1,4 @@
-import { CompanyCustomer } from './CompanyCustomer';
-import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
+import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -12,6 +11,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { CompanyCustomer } from './CompanyCustomer';
 
 export const BillingAddress: FC<{ companyCustomer: boolean }> = ({ companyCustomer }) => {
     const { t } = useTranslation();
@@ -97,7 +97,7 @@ export const BillingAddress: FC<{ companyCustomer: boolean }> = ({ companyCustom
                                     isDisabled={!canManageCompanyData}
                                     label={formMeta.fields.country.label}
                                     options={countriesAsSelectOptions}
-                                    tid={formMeta.formName + '-' + formMeta.fields.country.name}
+                                    tid={`${formMeta.formName}-${formMeta.fields.country.name}`}
                                     activeOption={
                                         field.value &&
                                         countriesAsSelectOptions.find((option) => option.value === field.value.value)

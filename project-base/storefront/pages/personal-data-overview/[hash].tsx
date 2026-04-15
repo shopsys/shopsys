@@ -4,8 +4,8 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/PersonalDataDetailContent';
 import {
-    usePersonalDataDetailQuery,
     TypePersonalDataDetailQueryVariables,
+    usePersonalDataDetailQuery,
 } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';

@@ -1,4 +1,3 @@
-import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
 import { ThumbUp } from 'components/Basic/Icon/ThumbUp';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
@@ -19,6 +18,7 @@ import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
+import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
 
 export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
     orderUuid,
@@ -89,7 +89,7 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
     ];
 
     return (
-        <div className="bg-background-more flex flex-col rounded-xl p-5">
+        <div className="flex flex-col rounded-xl bg-background-more p-5">
             <h2>{t('Finish registration to loyalty program.')}</h2>
 
             <p className="sr-only" id="registration-after-order-password-label">
@@ -99,7 +99,7 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
             <ul className="flex flex-col gap-2 py-5">
                 {registrationAfterOrderUsp.map((text) => (
                     <li key={text} className="flex items-center gap-2">
-                        <ThumbUp className="text-text-accent size-6" />
+                        <ThumbUp className="size-6 text-text-accent" />
                         <span className="h5 text-text-accent">{text}</span>
                     </li>
                 ))}

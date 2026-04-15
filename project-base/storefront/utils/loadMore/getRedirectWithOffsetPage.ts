@@ -1,8 +1,8 @@
-import { getOffsetPage } from './getOffsetPage';
+import { ParsedUrlQuery } from 'node:querystring';
 import { Redirect } from 'next';
-import { ParsedUrlQuery } from 'querystring';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
+import { getOffsetPage } from './getOffsetPage';
 
 export const getRedirectWithOffsetPage = (
     currentPage: number,

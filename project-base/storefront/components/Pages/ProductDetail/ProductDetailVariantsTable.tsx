@@ -38,11 +38,11 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
 
     return (
         <Webline>
-            <ul className="divide-border-default grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
+            <ul className="grid grid-cols-1 gap-2 divide-border-default md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
                 {variants.map((variant, index) => (
                     <li
                         key={variant.uuid}
-                        className="border-border-default mx-auto flex w-full max-w-sm flex-col items-center justify-between gap-2 border p-2 md:max-w-none lg:flex-row lg:border-0"
+                        className="mx-auto flex w-full max-w-sm flex-col items-center justify-between gap-2 border border-border-default p-2 md:max-w-none lg:flex-row lg:border-0"
                         data-tid={TIDs.pages_productdetail_variant_ + variant.catalogNumber}
                     >
                         <div className="relative h-48 w-full lg:h-16 lg:w-16" data-tid={TIDs.product_detail_main_image}>
@@ -56,7 +56,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                             />
                         </div>
 
-                        <div className="font-secondary group-hover:text-link line-clamp-2 min-h-[2.5rem] text-center text-sm font-semibold group-hover:underline lg:line-clamp-none lg:min-h-fit lg:w-80 lg:text-left">
+                        <div className="line-clamp-2 min-h-[2.5rem] text-center font-secondary font-semibold text-sm group-hover:text-link group-hover:underline lg:line-clamp-none lg:min-h-fit lg:w-80 lg:text-left">
                             {variant.fullName}
                         </div>
 

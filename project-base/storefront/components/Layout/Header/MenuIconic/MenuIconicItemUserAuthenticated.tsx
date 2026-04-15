@@ -1,4 +1,3 @@
-import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
 import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
@@ -9,6 +8,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useDebounce } from 'utils/useDebounce';
+import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
 
 export const MenuIconicItemUserAuthenticated: FC = () => {
     const { t } = useTranslation();
@@ -19,6 +19,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
 
     return (
         <>
+            {/* biome-ignore lint/a11y/useSemanticElements: The wrapper manages hover state for the popover while containing nested navigation controls, so it cannot be replaced with a semantic button. */}
             <div
                 aria-expanded={isUserMenuOpen}
                 aria-haspopup="menu"
@@ -43,7 +44,10 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 }}
             >
                 <MenuIconicItemLink
-                    className="group-focus-visible:text-text-default cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500"
+                    ariaExpanded={isUserMenuOpen}
+                    ariaHaspopup="menu"
+                    ariaLabel={t('Show logged in user popup')}
+                    className="cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500 group-focus-visible:text-text-default"
                     tabIndex={-1}
                     title={t('Go to my account page')}
                     onClick={() => !isDesktop && setIsUserMenuOpen(!isUserMenuOpen)}
@@ -54,7 +58,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 >
                     <div className="relative">
                         <UserIcon className="size-6" />
-                        <div className="bg-button-primary-bg-default absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full" />
+                        <div className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-button-primary-bg-default" />
                     </div>
                     <span className="hidden lg:inline-block">{t('My account')}</span>
                 </MenuIconicItemLink>

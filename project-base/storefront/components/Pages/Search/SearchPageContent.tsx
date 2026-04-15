@@ -1,5 +1,3 @@
-import { SearchProducts } from './SearchProducts';
-import { type useSearchQuery } from './searchUtils';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { SkeletonPageSearch } from 'components/Blocks/Skeleton/SkeletonPageSearch';
@@ -12,6 +10,8 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isClient } from 'utils/isClient';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { useCurrentSearchStringQuery } from 'utils/queryParams/useCurrentSearchStringQuery';
+import { SearchProducts } from './SearchProducts';
+import { type useSearchQuery } from './searchUtils';
 
 type SearchPageContentProps = {
     searchData: ReturnType<typeof useSearchQuery>['searchData'];

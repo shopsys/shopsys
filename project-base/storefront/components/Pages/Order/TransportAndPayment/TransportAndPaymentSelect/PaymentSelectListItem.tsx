@@ -1,11 +1,11 @@
-import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
-import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { usePaymentChangeInSelect } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
+import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
+import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 
 type ChangePayment = ReturnType<typeof usePaymentChangeInSelect>['changePayment'];
 

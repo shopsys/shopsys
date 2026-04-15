@@ -1,4 +1,3 @@
-import { useUpdateProductListUuid } from './useUpdateProductListUuid';
 import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
 import { useAddProductToListMutation } from 'graphql/requests/productLists/mutations/AddProductToListMutation.generated';
 import { useRemoveProductFromListMutation } from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.generated';
@@ -18,6 +17,7 @@ import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useRefetchOnTabFocus } from 'utils/useRefetchOnTabFocus';
+import { useUpdateProductListUuid } from './useUpdateProductListUuid';
 
 export const useProductList = (
     productListType: TypeProductListTypeEnum,
@@ -104,9 +104,8 @@ export const useProductList = (
             return;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         onUpdateProductListUuid(productListData?.productList?.uuid ?? null);
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- productListData omitted: we only sync when the UUID value changes, not on every data reference change
+        // Sync only when the UUID value changes, not on every productListData reference change.
     }, [productListData?.productList?.uuid, isQueryPaused]);
 
     const removeList = async () => {

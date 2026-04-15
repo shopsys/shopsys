@@ -1,10 +1,10 @@
-import { mergeItemEdges } from './mergeItemEdges';
-import { readProductsFromCache } from './readProductsFromCache';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { DocumentNode } from 'graphql';
 import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
-import { TypeProductOrderingModeEnum, Maybe, TypeProductFilter } from 'graphql/types';
+import { Maybe, TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
 import { Client } from 'urql';
+import { mergeItemEdges } from './mergeItemEdges';
+import { readProductsFromCache } from './readProductsFromCache';
 
 export const getPreviousProductsFromCache = (
     queryDocument: DocumentNode,

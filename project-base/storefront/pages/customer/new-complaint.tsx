@@ -103,7 +103,7 @@ const NewComplaintPage: FC = () => {
                     />
 
                     <SearchInput
-                        className="border-input-border-default w-full border"
+                        className="w-full border border-input-border-default"
                         label={t('Search for a product you want to complain about')}
                         shouldShowSpinnerInInput={searchOrderedItemsDataFetching}
                         value={searchQueryValue}

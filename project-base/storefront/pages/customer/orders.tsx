@@ -9,9 +9,9 @@ import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import {
-    useOrdersQuery,
-    TypeOrdersQueryVariables,
     OrdersQueryDocument,
+    TypeOrdersQueryVariables,
+    useOrdersQuery,
 } from 'graphql/requests/orders/queries/OrdersQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';

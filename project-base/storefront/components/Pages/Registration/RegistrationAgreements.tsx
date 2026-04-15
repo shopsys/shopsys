@@ -1,9 +1,9 @@
-import { useRegistrationFormMeta } from './registrationFormMeta';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { FormBlockAgreements } from 'components/Forms/Form/Form';
 import { useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useRegistrationFormMeta } from './registrationFormMeta';
 
 export const RegistrationAgreements: FC = () => {
     const { t } = useTranslation();

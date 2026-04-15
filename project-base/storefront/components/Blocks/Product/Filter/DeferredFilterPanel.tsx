@@ -1,10 +1,10 @@
-import { FilterPanelProps } from './FilterPanel';
 import { SkeletonModuleFilterPanel } from 'components/Blocks/Skeleton/SkeletonModuleFilterPanel';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { FilterPanelProps } from './FilterPanel';
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay), {
     ssr: false,
@@ -30,7 +30,7 @@ export const DeferredFilterPanel: FC<FilterPanelProps> = (props) => {
             <div
                 className={twJoin(
                     'fixed top-0 right-10 bottom-0 left-0 max-w-[400px] -translate-x-full transition',
-                    'max-vl:z-aboveOverlay vl:static vl:w-[227px] vl:translate-x-0 vl:transition-none',
+                    'vl:static vl:w-[227px] vl:translate-x-0 vl:transition-none max-vl:z-aboveOverlay',
                     isFilterPanelOpen && 'translate-x-0',
                 )}
             >

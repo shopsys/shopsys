@@ -1,5 +1,5 @@
+import { createRef, RefObject, useEffect } from 'react';
 import { ResponseInfo } from './symfonyDebugToolbarUtils';
-import { RefObject, createRef, useEffect } from 'react';
 
 type RequestsTableProps = {
     responses: ResponseInfo[];
@@ -15,7 +15,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
     }, [responsesRefs]);
 
     return (
-        <div className="bg-table-bg-default max-h-[40vh] overflow-y-scroll">
+        <div className="max-h-[40vh] overflow-y-scroll bg-table-bg-default">
             <table>
                 <thead>
                     <tr>
@@ -45,7 +45,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
 };
 
 const TableHeaderCell: FC = ({ children }) => (
-    <th className="bg-table-bg-header text-table-bg-default px-5 py-3 text-left text-xs font-semibold tracking-wider uppercase">
+    <th className="bg-table-bg-header px-5 py-3 text-left font-semibold text-table-bg-default text-xs uppercase tracking-wider">
         {children}
     </th>
 );

@@ -69,11 +69,9 @@ vi.mock('framer-motion', async () => {
         ...actual,
         AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
         motion: {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             div: ({ children, layout, ...props }: any) => <div {...props}>{children}</div>,
         },
         m: {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             div: ({ children, layout, ...props }: any) => <div {...props}>{children}</div>,
         },
     };

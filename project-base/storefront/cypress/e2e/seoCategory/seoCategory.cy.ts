@@ -83,7 +83,7 @@ describe('SEO Category Tests (SSP-1742)', () => {
                     cy.getByTID([TIDs.page_title]).should('contain.text', linkText);
                     cy.getByTID([TIDs.selected_filters]).should('be.visible');
 
-                    cy.getByTID([TIDs.selected_filters]).find('[role="button"]').first().click({ force: true });
+                    cy.getByTID([TIDs.selected_filters]).find('button').first().click({ force: true });
                     cy.waitForStableAndInteractiveDOM();
 
                     cy.url().should('not.equal', seoCategoryUrl);

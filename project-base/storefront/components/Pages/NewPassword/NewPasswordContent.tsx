@@ -1,4 +1,3 @@
-import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './recoveryPasswordFormMeta';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { LockCrossIcon } from 'components/Basic/Icon/LockCrossIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
@@ -17,6 +16,7 @@ import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
+import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './recoveryPasswordFormMeta';
 
 type NewPasswordContentProps = {
     hash: string;

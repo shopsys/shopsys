@@ -1,5 +1,3 @@
-import { RegistrationCompany } from './RegistrationCompany';
-import { RegistrationCustomer } from './RegistrationCustomer';
 import { AnimateCollapseDivWithMargin } from 'components/Basic/Animations/AnimateCollapseDivWithMargin';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
@@ -14,6 +12,8 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { RegistrationCompany } from './RegistrationCompany';
+import { RegistrationCustomer } from './RegistrationCustomer';
 
 export const RegistrationBillingAddress: FC = () => {
     const { t } = useTranslation();
@@ -104,7 +104,7 @@ export const RegistrationBillingAddress: FC = () => {
                                         ariaLabel={t('Select country', { ns: 'accessibility' })}
                                         label={formMeta.fields.country.label}
                                         options={countriesAsSelectOptions}
-                                        tid={formMeta.formName + '-' + formMeta.fields.country.name}
+                                        tid={`${formMeta.formName}-${formMeta.fields.country.name}`}
                                         activeOption={countriesAsSelectOptions.find(
                                             (option) => option.value === field.value.value,
                                         )}

@@ -21,6 +21,8 @@ export const useComparisonTable = (
     const [tableMarginLeft, setTableMarginLeft] = useState(0);
     const [tableMaxMarginLeft, setTableMaxMarginLeft] = useState(0);
     const { width } = useGetWindowSize();
+    const getProductColumnWidth = () =>
+        document.getElementById('js-table-compare-product')?.getBoundingClientRect().width ?? 0;
 
     const handleSlideLeft = () => {
         const marginLeft = tableMarginLeft;
@@ -28,7 +30,7 @@ export const useComparisonTable = (
         let productMarginLeft = 0;
 
         for (let i = 0; i < productsCompareCount; i++) {
-            productMarginLeft += document.getElementById('js-table-compare-product')!.getBoundingClientRect().width;
+            productMarginLeft += getProductColumnWidth();
             if (productMarginLeft < marginLeft) {
                 newMarginLeft = productMarginLeft;
             } else {
@@ -44,7 +46,7 @@ export const useComparisonTable = (
         let productMarginLeft = 0;
 
         for (let i = 0; i < productsCompareCount; i++) {
-            productMarginLeft += document.getElementById('js-table-compare-product')!.getBoundingClientRect().width;
+            productMarginLeft += getProductColumnWidth();
             if (productMarginLeft > marginLeft) {
                 setMargin(productMarginLeft);
                 break;
@@ -60,7 +62,6 @@ export const useComparisonTable = (
         }
 
         if (marginLeft > tableMaxMarginLeft) {
-            // eslint-disable-next-line no-param-reassign
             marginLeft = tableMaxMarginLeft;
             setArrowRightActive(false);
         } else {
@@ -71,8 +72,8 @@ export const useComparisonTable = (
     };
 
     const calcMaxMarginLeft = () => {
-        const tableWrapperWidth = document.getElementById('js-table-compare-wrap')!.getBoundingClientRect().width;
-        const columnsWidth = document.getElementById('js-table-compare')!.getBoundingClientRect().width;
+        const tableWrapperWidth = document.getElementById('js-table-compare-wrap')?.getBoundingClientRect().width ?? 0;
+        const columnsWidth = document.getElementById('js-table-compare')?.getBoundingClientRect().width ?? 0;
         setTableMaxMarginLeft(Math.max(0, columnsWidth - tableWrapperWidth));
     };
 

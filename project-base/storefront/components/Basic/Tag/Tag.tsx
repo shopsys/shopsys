@@ -39,11 +39,11 @@ export const Tag: FC<TagProps> = ({
     ariaLabel,
 }) => {
     const TagTwClassName = twMergeCustom(
-        'px-4 py-1 rounded-tag no-underline transition-all flex justify-center items-center font-semibold font-secondary cursor-pointer',
-        'bg-tag-bg-default text-tag-text-default border-tag-border-default text-sm',
-        'hover:bg-tag-bg-hovered hover:text-tag-text-hovered hover:border-tag-border-hovered hover:no-underline hover:cursor-pointer',
-        isDisabled && 'bg-tag-bg-disabled text-tag-text-disabled border-tag-border-disabled',
-        isActive && 'bg-tag-bg-active text-tag-text-active border-tag-border-active',
+        'flex cursor-pointer items-center justify-center rounded-tag px-4 py-1 font-secondary font-semibold no-underline transition-all',
+        'border-tag-border-default bg-tag-bg-default text-sm text-tag-text-default',
+        'hover:cursor-pointer hover:border-tag-border-hovered hover:bg-tag-bg-hovered hover:text-tag-text-hovered hover:no-underline',
+        isDisabled && 'border-tag-border-disabled bg-tag-bg-disabled text-tag-text-disabled',
+        isActive && 'border-tag-border-active bg-tag-bg-active text-tag-text-active',
         className,
     );
 
@@ -55,23 +55,10 @@ export const Tag: FC<TagProps> = ({
         );
     }
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === 'Enter') {
-            onClick?.();
-        }
-    };
-
     const content = (
-        <div
-            aria-label={ariaLabel}
-            className={TagTwClassName}
-            role="button"
-            tabIndex={0}
-            onClick={onClick}
-            onKeyDown={handleKeyDown}
-        >
+        <button aria-label={ariaLabel} className={TagTwClassName} tabIndex={0} type="button" onClick={onClick}>
             {children}
-        </div>
+        </button>
     );
 
     if (render) {

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Provider, SSRExchange, ssrExchange as createSsrExchange } from 'urql';
+import { ssrExchange as createSsrExchange, Provider, SSRExchange } from 'urql';
 import { createClient } from 'urql/createClient';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isClient } from 'utils/isClient';
@@ -22,8 +22,6 @@ export const UrqlWrapper: FC<{ pageProps: ServerSidePropsType }> = ({ children, 
         }
 
         return createClient({ t, ssrExchange, domainConfig: pageProps.domainConfig });
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageProps.urqlState]);
 
     return <Provider value={client}>{children}</Provider>;

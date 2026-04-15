@@ -1,6 +1,6 @@
+import { Translate, TranslationQuery } from 'next-translate';
 import { I18N_NAMESPACES } from './constants';
 import origUseTranslation from './useTranslationOriginal';
-import { Translate, TranslationQuery } from 'next-translate';
 
 type UseTranslationReturn = { t: Translate; lang: string };
 
@@ -17,7 +17,6 @@ export default function useTranslation(ns?: string): UseTranslationReturn {
         if (!opts || typeof opts !== 'object') {
             return opts;
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { ns: _, ...rest } = opts as any;
         return rest;
     };

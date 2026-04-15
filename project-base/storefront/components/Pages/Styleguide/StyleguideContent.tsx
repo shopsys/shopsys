@@ -1,3 +1,4 @@
+import { Webline } from 'components/Layout/Webline/Webline';
 import { StyleguideButtons } from './StyleguideButtons';
 import { StyleguideCheckboxes } from './StyleguideCheckboxes';
 import { StyleguideColors } from './StyleguideColors';
@@ -13,7 +14,6 @@ import { StyleguideTables } from './StyleguideTables';
 import { StyleguideToasts } from './StyleguideToasts';
 import { StyleguideTooltips } from './StyleguideTooltips';
 import { StyleguideTypography } from './StyleguideTypography';
-import { Webline } from 'components/Layout/Webline/Webline';
 
 type StyleguideContentProps = { tailwindColors?: Record<string, any> };
 

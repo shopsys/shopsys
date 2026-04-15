@@ -191,8 +191,7 @@ describe('useUpdateFilter().updateFilterPriceMinimum tests', () => {
     });
 
     test('changing minimalPrice should redirect from SEO category if price is SEO-sensitive', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ PRICE: true }));
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({

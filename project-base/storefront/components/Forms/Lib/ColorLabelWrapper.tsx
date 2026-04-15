@@ -33,8 +33,8 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
         <label
             htmlFor={htmlFor}
             className={twMergeCustom(
-                'text-input-text-default group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold',
-                disabled && 'text-input-text-disabled cursor-no-drop opacity-60',
+                'group relative flex w-full cursor-pointer items-center gap-2 font-semibold text-input-text-default text-sm',
+                disabled && 'cursor-no-drop text-input-text-disabled opacity-60',
                 'rounded-sm outline-hidden peer-focus-visible:bg-orange-500',
             )}
         >
@@ -43,8 +43,8 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
                 imageClassName="p-0.5"
                 rgbHex={bgColor}
                 className={twMergeCustom(
-                    'border-icon-default bg-input-bg-default size-7 border transition',
-                    disabled && 'outline-0 group-active:outline-0 active:scale-100',
+                    'size-7 border border-icon-default bg-input-bg-default transition',
+                    disabled && 'outline-0 active:scale-100 group-active:outline-0',
                 )}
             >
                 {imageUrl && (
@@ -66,7 +66,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             <div className="flex w-full justify-between">
                 <div className="w-full">{label}</div>
                 {!!count && !checked && (
-                    <div className="text-input-placeholder-default ml-auto font-normal">({count})</div>
+                    <div className="ml-auto font-normal text-input-placeholder-default">({count})</div>
                 )}
             </div>
         </label>

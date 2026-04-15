@@ -1,7 +1,5 @@
 import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 
-export {};
-
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
  */

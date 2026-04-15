@@ -1,4 +1,3 @@
-import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
@@ -11,6 +10,7 @@ import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
 
 type UserConsentFormProps = {
     onSetCallback?: () => void;
@@ -78,7 +78,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 />
             </p>
 
-            <div className="bg-background-more vl:p-8 flex flex-col gap-4 rounded-xl p-4">
+            <div className="flex flex-col gap-4 rounded-xl bg-background-more p-4 vl:p-8">
                 <ToggleSwitchControlled
                     ariaLabel={t('Toggle marketing consent', { ns: 'accessibility' })}
                     control={formProviderMethods.control}

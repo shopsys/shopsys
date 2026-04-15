@@ -1,11 +1,3 @@
-import {
-    FilterGroupContent,
-    FilterGroupContentItem,
-    FilterGroupTitle,
-    FilterGroupWrapper,
-    ShowAllButton,
-} from './FilterElements';
-import { useFilterShowLess } from './utils/useFilterShowLess';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { AnimatePresence } from 'framer-motion';
@@ -15,6 +7,14 @@ import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
+import {
+    FilterGroupContent,
+    FilterGroupContentItem,
+    FilterGroupTitle,
+    FilterGroupWrapper,
+    ShowAllButton,
+} from './FilterElements';
+import { useFilterShowLess } from './utils/useFilterShowLess';
 
 type FilterFieldType = 'flags' | 'brands';
 
@@ -43,7 +43,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     const { updateFilterFlagsQuery, updateFilterBrandsQuery } = useUpdateFilterQuery();
     const defaultSelectedFlags = useSessionStore((s) => s.defaultProductFiltersMap.flags);
 
-    const selectedItems = currentFilter && currentFilter[filterField];
+    const selectedItems = currentFilter?.[filterField];
 
     const { defaultOptions, isShowLessMoreShown, isWithAllItemsShown, setAreAllItemsShown } = useFilterShowLess(
         options,

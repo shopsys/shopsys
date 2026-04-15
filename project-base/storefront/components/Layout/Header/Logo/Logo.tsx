@@ -1,10 +1,10 @@
-import logo from '/public/images/logo.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { LogoMetadata } from 'components/Basic/Head/LogoMetadata';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
+import logo from '/public/images/logo.svg';
 
 export const Logo: FC = () => {
     const { t } = useTranslation();
@@ -14,7 +14,7 @@ export const Logo: FC = () => {
 
             <ExtendedNextLink
                 aria-label={t('Go to homepage', { ns: 'accessibility' })}
-                className="vl:flex-none group order-2 flex-1 rounded-md px-2 sm:px-3 lg:order-1 lg:px-0"
+                className="group order-2 flex-1 vl:flex-none rounded-md px-2 sm:px-3 lg:order-1 lg:px-0"
                 href="/"
                 tid={TIDs.header_homepage_link}
                 title={t('Homepage')}

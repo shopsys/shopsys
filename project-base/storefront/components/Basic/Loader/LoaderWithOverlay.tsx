@@ -15,7 +15,7 @@ export const LoaderWithOverlay: FC<LoaderWithOverlayProps> = ({
     <div
         tid={TIDs.loader_overlay}
         className={twMergeCustom(
-            'z-overlay bg-overlay-image flex w-full items-center justify-center backdrop-blur-xs',
+            'z-overlay flex w-full items-center justify-center bg-overlay-image backdrop-blur-xs',
             isFullScreen ? 'fixed inset-0 h-screen' : 'absolute inset-0 h-max min-h-full',
             overlayClassName,
         )}

@@ -1,5 +1,3 @@
-import { BlogPreviewMain } from './BlogPreviewMain';
-import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -9,6 +7,8 @@ import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { useMediaMin } from 'utils/ui/useMediaMin';
+import { BlogPreviewMain } from './BlogPreviewMain';
+import { BlogPreviewSide } from './BlogPreviewSide';
 
 export type BlogPreviewProps = {
     blogArticles: TypeBlogArticleConnectionFragment['edges'] | undefined;
@@ -26,14 +26,14 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     const isDesktop = useMediaMin('vl');
 
     return (
-        <Webline className="z-above relative">
+        <Webline className="relative z-above">
             <div className="mb-5 flex items-center justify-between">
                 <h2 className="h3 text-text-inverted">{t('Magazine')}</h2>
 
                 {!!blogUrl && (
                     <ExtendedNextLink
                         aria-label={t('Go to all articles page', { ns: 'accessibility' })}
-                        className="font-secondary text-text-inverted hover:text-text-inverted text-sm font-semibold tracking-wide no-underline hover:underline"
+                        className="font-secondary font-semibold text-sm text-text-inverted tracking-wide no-underline hover:text-text-inverted hover:underline"
                         href={blogUrl}
                         type="blogCategory"
                     >
@@ -47,7 +47,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
             {!fetchingArticles && !!(blogMainItems || blogSideItems) && (
                 <div
                     className={twJoin(
-                        'vl:flex vl:justify-between vl:gap-16 hide-scrollbar grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain',
+                        'hide-scrollbar vl:flex grid snap-x snap-mandatory grid-flow-col vl:justify-between gap-5 vl:gap-16 overflow-x-auto overscroll-x-contain',
                         'auto-cols-[60%] md:auto-cols-[40%] lg:auto-cols-[30%]',
                     )}
                 >

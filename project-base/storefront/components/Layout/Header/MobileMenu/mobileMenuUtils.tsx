@@ -1,5 +1,5 @@
-import { MenuItem } from './MobileMenuContent';
 import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import { MenuItem } from './MobileMenuContent';
 
 type NavigationColumnCategories = TypeNavigationQuery['navigation'][number]['categoriesByColumns'];
 

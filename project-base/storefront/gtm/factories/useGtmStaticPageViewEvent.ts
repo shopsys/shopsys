@@ -1,4 +1,3 @@
-import { getGtmPageViewEvent } from './getGtmPageViewEvent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
@@ -8,6 +7,7 @@ import { getGtmPageInfoType } from 'gtm/utils/getGtmPageInfoType';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import { usePersistStore } from 'store/usePersistStore';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
+import { getGtmPageViewEvent } from './getGtmPageViewEvent';
 
 export const useGtmStaticPageViewEvent = (
     pageType: GtmPageType,

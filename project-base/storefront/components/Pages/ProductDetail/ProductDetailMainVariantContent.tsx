@@ -1,8 +1,3 @@
-import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
-import { ProductDetailGallery } from './ProductDetailGallery';
-import { ProductDetailInfo } from './ProductDetailInfo';
-import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
-import { ProductVariantsTable } from './ProductDetailVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
@@ -15,6 +10,11 @@ import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEven
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import { useRouter } from 'next/router';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
+import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
+import { ProductDetailGallery } from './ProductDetailGallery';
+import { ProductDetailInfo } from './ProductDetailInfo';
+import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
+import { ProductVariantsTable } from './ProductDetailVariantsTable';
 
 type ProductDetailMainVariantContentProps = {
     product: TypeMainVariantDetailFragment;

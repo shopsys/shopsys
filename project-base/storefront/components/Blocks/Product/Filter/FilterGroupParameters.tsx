@@ -1,10 +1,3 @@
-import {
-    FilterGroupContent,
-    FilterGroupContentItem,
-    FilterGroupTitle,
-    FilterGroupWrapper,
-    ShowAllButton,
-} from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
@@ -17,6 +10,13 @@ import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
+import {
+    FilterGroupContent,
+    FilterGroupContentItem,
+    FilterGroupTitle,
+    FilterGroupWrapper,
+    ShowAllButton,
+} from './FilterElements';
 
 type FilterGroupParametersProps = {
     title: string;

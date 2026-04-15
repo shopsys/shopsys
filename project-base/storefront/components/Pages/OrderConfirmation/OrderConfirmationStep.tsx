@@ -1,5 +1,5 @@
-import { FlowType, FlowTypeStateEnum } from './OrderConfirmationStepperFlows';
 import { twJoin } from 'tailwind-merge';
+import { FlowType, FlowTypeStateEnum } from './OrderConfirmationStepperFlows';
 
 type OrderConfirmationStepProps = {
     step: FlowType;
@@ -14,7 +14,7 @@ export const OrderConfirmationStep: FC<OrderConfirmationStepProps> = ({ step: { 
                         'flex size-8 items-center justify-center rounded-full sm:size-11',
                         state === FlowTypeStateEnum.Active && 'bg-text-accent text-text-inverted',
                         state === FlowTypeStateEnum.Inactive &&
-                            'border-border-default bg-background-default text-text-accent border',
+                            'border border-border-default bg-background-default text-text-accent',
                         state === FlowTypeStateEnum.Error && 'bg-background-error text-text-inverted',
                     )}
                 >

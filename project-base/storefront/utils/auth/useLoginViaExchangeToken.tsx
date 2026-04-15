@@ -1,7 +1,7 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
-    TypeLoginViaExchangeTokenMutationVariables,
     TypeLoginViaExchangeTokenMutation,
+    TypeLoginViaExchangeTokenMutationVariables,
     useLoginViaExchangeTokenMutation,
 } from 'graphql/requests/auth/mutations/LoginViaExchangeTokenMutation.generated';
 import { OperationResult } from 'urql';

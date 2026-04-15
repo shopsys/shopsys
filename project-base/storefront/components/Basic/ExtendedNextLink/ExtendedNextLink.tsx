@@ -1,5 +1,6 @@
+import { UrlObject } from 'node:url';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-// eslint-disable-next-line no-restricted-imports
+// biome-ignore lint/style/noRestrictedImports: This component is the single approved wrapper around next/link.
 import NextLink, { LinkProps } from 'next/link';
 import { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
@@ -10,7 +11,6 @@ import {
     FriendlyPagesTypesKey,
     FriendlyPagesTypesKeys,
 } from 'types/friendlyUrl';
-import { UrlObject } from 'url';
 import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { isTextSelected } from 'utils/ui/isTextSelected';
 

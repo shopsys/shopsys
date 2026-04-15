@@ -5,7 +5,7 @@ type SentryExtra = { key: string; data: string };
 
 export const logMessage = (message: string, extras: Array<SentryExtra> = [], level: SeverityLevel = 'info'): void => {
     if (isEnvironment('development')) {
-        /* eslint-disable no-console */
+        // biome-ignore lint/suspicious/noConsole: intentional warning logging in development
         console.warn(message, { extras });
     }
 

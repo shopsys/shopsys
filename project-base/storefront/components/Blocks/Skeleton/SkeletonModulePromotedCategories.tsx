@@ -3,6 +3,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 
 export const SkeletonModulePromotedCategories: FC = () => (
     <Webline>
-        <Skeleton className="vl:h-[635px] h-[245px] rounded-xl" />
+        <Skeleton className="h-[245px] vl:h-[635px] rounded-xl" />
     </Webline>
 );

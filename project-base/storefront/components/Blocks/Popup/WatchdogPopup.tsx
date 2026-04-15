@@ -1,5 +1,4 @@
-import { useWatchdogFormMeta } from 'components/Blocks/Product/Watchdog/watchdogFormMeta';
-import { useWatchdogForm } from 'components/Blocks/Product/Watchdog/watchdogFormMeta';
+import { useWatchdogForm, useWatchdogFormMeta } from 'components/Blocks/Product/Watchdog/watchdogFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';

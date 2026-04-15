@@ -1,8 +1,8 @@
-import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VISIBLE_SLIDER_ITEMS } from 'components/Blocks/Product/ProductsSlider';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 
 type SkeletonModuleProductsListProps = {
     isWithSimpleCards?: boolean;
@@ -17,7 +17,7 @@ export const SkeletonModuleProductSlider: FC<SkeletonModuleProductsListProps> = 
                 <div
                     className={twJoin([
                         'hide-scrollbar grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain',
-                        'vl:auto-cols-[25%] auto-cols-[225px] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] xl:auto-cols-[20%]',
+                        'auto-cols-[225px] vl:auto-cols-[25%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] xl:auto-cols-[20%]',
                         !isWithSimpleCards && 'vl:auto-cols-[25%]',
                     ])}
                 >

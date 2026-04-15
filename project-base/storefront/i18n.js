@@ -4,7 +4,7 @@ const REDIS_UPDATE_JOB_TIMEOUT = 5; // seconds (default: 30)
 
 const logException = async (e) => {
     if (process.env.APP_ENV === 'development') {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: intentional error logging in development
         console.error(e);
     }
 
@@ -20,7 +20,7 @@ const logException = async (e) => {
         parsedException = 'Unknown exception thrown inside i18n.js loadLocaleFrom function';
     }
 
-    fetch(process.env.INTERNAL_ENDPOINT + 'api/log-exception', {
+    fetch(`${process.env.INTERNAL_ENDPOINT}api/log-exception`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -63,12 +63,12 @@ module.exports = {
 
                 const [cachedTranslates, updateJobIsRunning] = await redisClient.mGet([
                     redisKey,
-                    redisKey + '/updating',
+                    `${redisKey}/updating`,
                 ]);
 
                 if (cachedTranslates === null && updateJobIsRunning === null) {
                     const cacheToRedis = async () => {
-                        const setUpdatingFlag = await redisClient.set(redisKey + '/updating', 'true', {
+                        const setUpdatingFlag = await redisClient.set(`${redisKey}/updating`, 'true', {
                             NX: true,
                             EX: REDIS_UPDATE_JOB_TIMEOUT,
                         });

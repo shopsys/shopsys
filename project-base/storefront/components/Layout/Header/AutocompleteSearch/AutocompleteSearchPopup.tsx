@@ -1,9 +1,3 @@
-import { AutocompleteFavoritesResult } from './AutocompleteFavoritesResult';
-import { AutocompleteSearchArticlesResult } from './AutocompleteSearchArticlesResult';
-import { AutocompleteSearchBrandsResult } from './AutocompleteSearchBrandsResult';
-import { AutocompleteSearchCategoriesResult } from './AutocompleteSearchCategoriesResult';
-import { AutocompleteSearchProductsResult } from './AutocompleteSearchProductsResult';
-import { AutocompleteSkeleton } from './AutocompleteSkeleton';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { Button } from 'components/Forms/Button/Button';
@@ -20,6 +14,12 @@ import { fadeAnimation } from 'utils/animations/animationVariants';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useKeypress } from 'utils/useKeyPress';
+import { AutocompleteFavoritesResult } from './AutocompleteFavoritesResult';
+import { AutocompleteSearchArticlesResult } from './AutocompleteSearchArticlesResult';
+import { AutocompleteSearchBrandsResult } from './AutocompleteSearchBrandsResult';
+import { AutocompleteSearchCategoriesResult } from './AutocompleteSearchCategoriesResult';
+import { AutocompleteSearchProductsResult } from './AutocompleteSearchProductsResult';
+import { AutocompleteSkeleton } from './AutocompleteSkeleton';
 
 type AutocompleteProps = {
     autocompleteSearchResults: TypeAutocompleteSearchQuery | undefined;
@@ -63,8 +63,8 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                 initial="hidden"
                 variants={fadeAnimation}
                 className={twJoin(
-                    'z-aboveOverlay bg-background-default vl:w-[770px] vl:gap-6 absolute -bottom-3 left-0 flex w-full origin-top translate-y-full flex-col gap-5 overflow-auto rounded-xl p-5',
-                    'vl:max-h-[calc(98vh-120px)] max-h-[calc(85vh-169px)] md:max-h-[calc(98vh-169px)] lg:max-h-[calc(98vh-180px)]',
+                    'absolute -bottom-3 left-0 z-aboveOverlay flex vl:w-[770px] w-full origin-top translate-y-full flex-col gap-5 vl:gap-6 overflow-auto rounded-xl bg-background-default p-5',
+                    'max-h-[calc(85vh-169px)] vl:max-h-[calc(98vh-120px)] md:max-h-[calc(98vh-169px)] lg:max-h-[calc(98vh-180px)]',
                 )}
             >
                 {showFavorites && (
@@ -82,7 +82,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                     autocompleteSearchResults &&
                     !isWithResults && (
                         <div className="flex items-center">
-                            <WarningIcon className="text-icon-error mr-2 size-5" />
+                            <WarningIcon className="mr-2 size-5 text-icon-error" />
 
                             <span className="flex-1 text-sm">
                                 {t('Could not find any results for the given query.')}
@@ -150,7 +150,6 @@ export const SearchResultSectionTitle: FC = ({ children }) => {
 export const SearchResultSectionGroup: FC = ({ children }) => <ul className="flex flex-wrap gap-2">{children}</ul>;
 
 export const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPagesTypesKey }> = forwardRef(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, onClick, href, type }, _) => (
         <Tag href={href} type={type} onClick={onClick}>
             {children}

@@ -157,13 +157,13 @@ export const ContactInformationDeliveryAddressForm = () => {
                                             isRequired
                                             ariaLabel={t('Select country', { ns: 'accessibility' })}
                                             label={formMeta.fields.deliveryCountry.label}
-                                            tid={formMeta.formName + '-' + formMeta.fields.deliveryCountry.name}
+                                            tid={`${formMeta.formName}-${formMeta.fields.deliveryCountry.name}`}
                                             activeOption={countriesAsSelectOptions.find(
                                                 (option) => option.value === field.value.value,
                                             )}
                                             options={countriesAsSelectOptions.map((option) => ({
                                                 ...option,
-                                                id: option.value + '-my-id',
+                                                id: `${option.value}-my-id`,
                                             }))}
                                             onSelectOption={(...selectOnChangeEventData) => {
                                                 field.onChange(...selectOnChangeEventData);

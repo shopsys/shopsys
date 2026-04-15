@@ -1,6 +1,6 @@
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { getDomainConfig } from './domain/domainConfig';
 import { logException } from './errors/logException';
-import { GetServerSidePropsContext, NextPageContext } from 'next';
 
 type Protocol = 'http' | 'https';
 

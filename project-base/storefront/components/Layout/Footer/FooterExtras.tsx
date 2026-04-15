@@ -18,7 +18,7 @@ export const FooterExtras = () => {
             <div className="flex flex-col items-center justify-between gap-5 lg:flex-row">
                 {transportsWithImages.length > 0 && (
                     <div
-                        className="border-border-less flex flex-wrap items-center justify-center gap-4 rounded-lg border-1 px-5 py-4 lg:flex-nowrap"
+                        className="flex flex-wrap items-center justify-center gap-4 rounded-lg border-1 border-border-less px-5 py-4 lg:flex-nowrap"
                         data-tid={TIDs.footer_payment_images}
                     >
                         {transportsWithImages.map((transport, index) => (
@@ -43,6 +43,7 @@ export const FooterExtras = () => {
                         tabIndex={0}
                         target="_blank"
                         title="Instagram"
+                        rel="noopener"
                     >
                         <InstagramIcon className="size-10" />
                     </a>
@@ -52,6 +53,7 @@ export const FooterExtras = () => {
                         tabIndex={0}
                         target="_blank"
                         title="Facebook"
+                        rel="noopener"
                     >
                         <FacebookIcon className="size-10" />
                     </a>
@@ -61,6 +63,7 @@ export const FooterExtras = () => {
                         tabIndex={0}
                         target="_blank"
                         title="Youtube"
+                        rel="noopener"
                     >
                         <YoutubeIcon className="size-10" />
                     </a>

@@ -1,5 +1,5 @@
-import { getExplicitPathDomainLocaleOrDefault } from './domainUtils';
 import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
+import { getExplicitPathDomainLocaleOrDefault } from './domainUtils';
 
 export type DomainEntry = {
     domainUrl: string;
@@ -60,7 +60,7 @@ const isPathMatch = (domainPath: string, requestPath: string): boolean => {
 
     // For non-root paths, check exact match or prefix match
     return (
-        requestPath === domainPath || requestPath.startsWith(domainPath + '/') || requestPath + '/' === domainPath + '/'
+        requestPath === domainPath || requestPath.startsWith(`${domainPath}/`) || `${requestPath}/` === `${domainPath}/`
     );
 };
 

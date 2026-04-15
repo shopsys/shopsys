@@ -37,7 +37,7 @@ const getDecimalsLength = (value: number) => (value.toString().split(DELIMITER_R
 const getStep = (min: number, max: number): number => {
     const decimals = Math.max(getDecimalsLength(min), getDecimalsLength(max));
 
-    return decimals === 0 ? 1 : Math.pow(10, -decimals);
+    return decimals === 0 ? 1 : 10 ** -decimals;
 };
 
 export const RangeSlider: FC<RangeSliderProps> = ({
@@ -110,7 +110,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
 
     const onBlurMinHandler: FocusEventHandler<HTMLInputElement> = (event) => {
         const value = parseFloat(event.currentTarget.value);
-        if (value < min || isNaN(value)) {
+        if (value < min || Number.isNaN(value)) {
             setMinValueThumb(min);
             setMinValueInput(min);
             setMinValueCallback(min);
@@ -129,7 +129,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const onBlurMaxHandler: FocusEventHandler<HTMLInputElement> = (event) => {
         const value = parseFloat(event.currentTarget.value);
 
-        if (value > max || isNaN(value)) {
+        if (value > max || Number.isNaN(value)) {
             setMaxValueThumb(max);
             setMaxValueInput(max);
             setMaxValueCallback(max);
@@ -203,9 +203,9 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     onTouchEnd={handleMaxValueThumbCallback}
                 />
                 <div className="relative w-full">
-                    <div className="bg-border-less absolute z-1 h-[2px] w-full rounded-sm" />
+                    <div className="absolute z-1 h-[2px] w-full rounded-sm bg-border-less" />
                     <div className="relative mx-auto flex w-[calc(100%-32px)]">
-                        <div className="bg-input-fill absolute z-2 h-[2px]" ref={range} />
+                        <div className="absolute z-2 h-[2px] bg-input-fill" ref={range} />
                     </div>
                 </div>
             </div>

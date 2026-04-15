@@ -1,8 +1,3 @@
-import { RegistrationAgreements } from './RegistrationAgreements';
-import { RegistrationBillingAddress } from './RegistrationBillingAddress';
-import { RegistrationPassword } from './RegistrationPassword';
-import { RegistrationUser } from './RegistrationUser';
-import { useRegistrationForm, useRegistrationFormMeta } from './registrationFormMeta';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
@@ -18,6 +13,11 @@ import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { RegistrationAgreements } from './RegistrationAgreements';
+import { RegistrationBillingAddress } from './RegistrationBillingAddress';
+import { RegistrationPassword } from './RegistrationPassword';
+import { RegistrationUser } from './RegistrationUser';
+import { useRegistrationForm, useRegistrationFormMeta } from './registrationFormMeta';
 
 export const RegistrationContent: FC = () => {
     const { t } = useTranslation();

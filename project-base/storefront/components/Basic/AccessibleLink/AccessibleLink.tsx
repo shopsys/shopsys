@@ -1,4 +1,4 @@
-import { KeyboardEvent } from 'react';
+import type { KeyboardEvent } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
 type AccessibleLinkProps = {
@@ -26,8 +26,8 @@ export const AccessibleLink: FC<AccessibleLinkProps> = ({ title, href, className
             href={href}
             tabIndex={0}
             className={twMergeCustom(
-                'absolute left-0 -translate-x-[1500rem] rounded-md focus-visible:top-0 focus-visible:translate-x-0',
-                'bg-bg-orange-500 text-text-default font-secondary z-aboveOverlay w-full p-2 text-center font-semibold no-underline',
+                'absolute left-0 -translate-x-6000 rounded-md focus-visible:top-0 focus-visible:translate-x-0',
+                'z-aboveOverlay w-full bg-bg-orange-500 p-2 text-center font-secondary font-semibold text-text-default no-underline',
                 className,
             )}
             onKeyDown={handleKeyDown}

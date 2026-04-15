@@ -1,4 +1,3 @@
-import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
 import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
@@ -11,6 +10,7 @@ import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/Brand
 import { useRef } from 'react';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
 
 type BrandDetailContentProps = {
     brand: TypeBrandDetailFragment;
@@ -49,7 +49,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                     id="product-list"
                     ref={paginationScrollTargetRef}
                 >
-                    <div className="vl:flex-col flex flex-col-reverse">
+                    <div className="flex vl:flex-col flex-col-reverse">
                         <DeferredFilterSelectedParameters filterOptions={productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

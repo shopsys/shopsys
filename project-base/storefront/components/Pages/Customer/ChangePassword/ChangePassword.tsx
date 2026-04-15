@@ -7,7 +7,7 @@ import {
     useChangePasswordFormMeta,
 } from 'components/Pages/Customer/ChangePassword/changePasswordFormMeta';
 import { useChangePasswordMutation } from 'graphql/requests/customer/mutations/ChangePasswordMutation.generated';
-import { SubmitHandler, FormProvider } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { ChangePasswordFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';

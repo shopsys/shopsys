@@ -1,4 +1,3 @@
-import { ComplaintDetailComplaintItem } from './ComplaintDetailComplaintItem';
 import { ComplaintItemColumnInfo } from 'components/Pages/Customer/Complaints/ComplaintItemColumnInfo';
 import { TIDs } from 'cypress/tids';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
@@ -6,6 +5,7 @@ import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyRetur
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
+import { ComplaintDetailComplaintItem } from './ComplaintDetailComplaintItem';
 
 type ComplaintDetailBasicInfoProps = {
     complaint: TypeComplaintDetailFragment;
@@ -17,8 +17,8 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
 
     return (
         <>
-            <div className="bg-background-more vl:px-6 vl:py-4 flex items-center justify-between gap-4 rounded-md px-4 py-3">
-                <div className="vl:gap-8 flex flex-wrap gap-6 gap-y-2">
+            <div className="flex items-center justify-between gap-4 rounded-md bg-background-more px-4 vl:px-6 py-3 vl:py-4">
+                <div className="flex flex-wrap gap-6 vl:gap-8 gap-y-2">
                     <ComplaintItemColumnInfo
                         tid={TIDs.complaint_detail_number}
                         title={t('Complaint number')}
@@ -37,7 +37,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                             title={t('Bank account number')}
                             value={complaint.bankAccountNumber}
                             valueClassName={twMergeCustom(
-                                'max-w-52 xxs:max-w-64 sm:max-w-fit overflow-x-auto overflow-y-hidden whitespace-nowrap',
+                                'max-w-52 xxs:max-w-64 overflow-x-auto overflow-y-hidden whitespace-nowrap sm:max-w-fit',
                                 '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most',
                                 '[&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                             )}
@@ -45,7 +45,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     )}
                 </div>
             </div>
-            <div className="bg-background-more rounded-xl p-5">
+            <div className="flex flex-col gap-2 rounded-xl bg-background-more p-5">
                 {complaint.items.map((complaintItem) => (
                     <ComplaintDetailComplaintItem
                         key={complaintItem.uuid}

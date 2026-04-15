@@ -1,10 +1,10 @@
-import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
-import { VerticalStack } from './VerticalStack/VerticalStack';
 import { UserNavigation } from 'components/Blocks/UserNavigation/UserNavigation';
 import { CommonLayout, CommonLayoutProps } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { useRef } from 'react';
+import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
+import { VerticalStack } from './VerticalStack/VerticalStack';
 
 export const CustomerLayout: FC<CommonLayoutProps> = ({ children, breadcrumbs, ...props }) => {
     const paginationScrollTargetRef = useRef<HTMLHeadingElement>(null);

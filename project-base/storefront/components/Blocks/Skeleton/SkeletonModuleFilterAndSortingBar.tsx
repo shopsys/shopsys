@@ -2,7 +2,7 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleFilterAndSortingBar: FC = () => (
     <>
-        <div className="vl:hidden flex flex-col justify-between gap-2.5 sm:flex-row">
+        <div className="flex vl:hidden flex-col justify-between gap-2.5 sm:flex-row">
             <Skeleton className="h-10 w-full" />
             <Skeleton className="h-10 w-full" />
         </div>

@@ -1,7 +1,7 @@
 import { buildPublicConfig } from 'buildPublicEnvConfig';
-import type { PublicRuntimeConfig, getPublicConfigProperty as GetPublicConfigPropertyFn } from 'envConfig';
+import type { getPublicConfigProperty as GetPublicConfigPropertyFn, PublicRuntimeConfig } from 'envConfig';
 import { serializeConfigForHtml } from 'envConfig';
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { defaultTestConfig } from 'vitest/helpers/mockPublicConfig';
 
 describe('config robustness', () => {
@@ -55,7 +55,7 @@ describe('config robustness', () => {
             window.__ENV = mutableEnv as typeof window.__ENV;
 
             // Direct access sees the mutation
-            expect(window.__ENV!.cdnDomain).toBe('mutated');
+            expect(window.__ENV?.cdnDomain).toBe('mutated');
 
             // API access returns cached (original) value
             expect(getPublicConfigProperty('cdnDomain')).toBe(originalValue);

@@ -1,5 +1,5 @@
-import { ApplicationErrorsType } from './applicationErrors';
 import { CombinedError } from 'urql';
+import { ApplicationErrorsType } from './applicationErrors';
 
 export const isExpectedPriceFilterError = (error: CombinedError | undefined) =>
     error?.graphQLErrors.some((error) => {

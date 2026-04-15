@@ -232,7 +232,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                                     ariaLabel={t('Select country', { ns: 'accessibility' })}
                                                     label={formMeta.fields.country.label}
                                                     options={countriesAsSelectOptions}
-                                                    tid={formMeta.formName + '-' + formMeta.fields.country.name}
+                                                    tid={`${formMeta.formName}-${formMeta.fields.country.name}`}
                                                     activeOption={countriesAsSelectOptions.find(
                                                         (option) => option.value === field.value.value,
                                                     )}

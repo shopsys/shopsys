@@ -1,5 +1,3 @@
-import { FooterProps } from './Footer';
-import { FooterContainer } from './FooterContainer';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -8,6 +6,8 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { removeSpaces } from 'utils/removeSpaces';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useContacts } from 'utils/useContacts';
+import { FooterProps } from './Footer';
+import { FooterContainer } from './FooterContainer';
 
 export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticles }) => {
     const { t } = useTranslation();
@@ -21,11 +21,11 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
         <>
             {!simpleFooter && !!footerArticles?.length && (
                 <FooterContainer className="bg-background-accent-less">
-                    <nav className="vl:flex-row flex flex-col gap-7 lg:gap-6">
+                    <nav className="flex vl:flex-row flex-col gap-7 lg:gap-6">
                         <div className="flex flex-1 flex-col gap-1.5 lg:flex-row lg:gap-6">
                             {footerArticles.map((item) => (
                                 <div key={item.title} className="hidden lg:flex lg:flex-1 lg:flex-col lg:gap-6">
-                                    <h3 className="font-secondary text-xs font-semibold tracking-wider uppercase">
+                                    <h3 className="font-secondary font-semibold text-xs uppercase tracking-wider">
                                         {item.title}
                                     </h3>
 
@@ -33,7 +33,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                         {item.items.map((article) => (
                                             <li key={article.uuid}>
                                                 <ExtendedNextLink
-                                                    className="text-text-default hover:text-text-default font-secondary block text-sm font-semibold tracking-wider no-underline hover:underline"
+                                                    className="block font-secondary font-semibold text-sm text-text-default tracking-wider no-underline hover:text-text-default hover:underline"
                                                     rel={article.external ? 'nofollow noreferrer noopener' : undefined}
                                                     target={article.external ? '_blank' : undefined}
                                                     href={
@@ -53,11 +53,11 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
 
                         {/* Contacts skeleton with data for crawlers */}
                         <div className="flex flex-col gap-4">
-                            <div className="bg-background-default relative flex gap-4 rounded-lg p-4">
+                            <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
                                 <a
                                     aria-label={t('Call us', { ns: 'accessibility' })}
                                     className="sr-only"
-                                    href={'tel:' + cleanPhone}
+                                    href={`tel:${cleanPhone}`}
                                 >
                                     {phone} - {openingHours}
                                 </a>
@@ -68,11 +68,11 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                 </div>
                             </div>
 
-                            <div className="bg-background-default relative flex gap-4 rounded-lg p-4">
+                            <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
                                 <a
                                     aria-label={t('Write to us', { ns: 'accessibility' })}
                                     className="sr-only"
-                                    href={'mailto:' + email}
+                                    href={`mailto:${email}`}
                                 >
                                     {email} - {emailSubtitle}
                                 </a>
@@ -113,13 +113,13 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
             <FooterContainer>
                 <div className="flex flex-col items-center gap-5 lg:gap-2">
                     <div
-                        className="text-text-default flex w-full items-center justify-center text-center text-sm"
+                        className="flex w-full items-center justify-center text-center text-sm text-text-default"
                         data-tid={TIDs.footer_copyright}
                     >
                         {t('footerCopyright', { currentYear })}
                     </div>
 
-                    <div className="text-text-default flex items-center justify-center gap-1.5 text-sm">
+                    <div className="flex items-center justify-center gap-1.5 text-sm text-text-default">
                         <a className="sr-only" href="https://www.shopsys.com" rel="noreferrer" target="_blank">
                             {t('Customized E-shop by')} Shopsys
                         </a>

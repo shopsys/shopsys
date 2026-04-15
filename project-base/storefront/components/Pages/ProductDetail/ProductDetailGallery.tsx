@@ -52,9 +52,9 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
     };
 
     return (
-        <div key={productName} className="vl:basis-3/5 vl:flex-row flex w-full basis-1/2 flex-col items-start gap-6">
+        <div key={productName} className="flex w-full basis-1/2 vl:basis-3/5 vl:flex-row flex-col items-start gap-6">
             <div
-                className={twJoin('vl:order-2 relative flex w-full justify-center')}
+                className={twJoin('relative vl:order-2 flex w-full justify-center')}
                 data-src={mainImage?.url}
                 data-tid={TIDs.product_detail_main_image}
             >
@@ -81,7 +81,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
             </div>
 
             {!!galleryItems.length && (
-                <ul className="vl:flex-col flex gap-1.5 sm:mx-auto sm:max-w-lg sm:gap-2">
+                <ul className="flex vl:flex-col gap-1.5 sm:mx-auto sm:max-w-lg sm:gap-2">
                     {galleryItems.map((galleryItem, index) => {
                         const isImage = galleryItem.__typename === 'Image';
                         const isVideo = galleryItem.__typename === 'VideoToken';
@@ -106,7 +106,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                             productName,
                                         })}
                                         className={twJoin(
-                                            'outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16',
+                                            'flex size-12 cursor-pointer items-center justify-center rounded-lg bg-background-more outline-border-default hover:outline-1 sm:size-16',
                                             (isWithAdditionalImages || isVideo) && 'relative',
                                         )}
                                         onClick={() => openGallery(index + 1)}
@@ -133,8 +133,8 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                                     tid={TIDs.product_gallery_video}
                                                     width={64}
                                                 />
-                                                <span className="bg-overlay-image absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
-                                                    <PlayIcon className="text-text-inverted h-8 w-8 rounded-full" />
+                                                <span className="absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-overlay-image">
+                                                    <PlayIcon className="h-8 w-8 rounded-full text-text-inverted" />
                                                 </span>
                                             </>
                                         )}
@@ -144,7 +144,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                 {isWithAdditionalImages && (
                                     <li>
                                         <button
-                                            className="outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16"
+                                            className="flex size-12 cursor-pointer items-center justify-center rounded-lg bg-background-more outline-border-default hover:outline-1 sm:size-16"
                                             tabIndex={0}
                                             title={t('View product image')}
                                             aria-label={t('Open image gallery of {{ productName }}', {
@@ -153,7 +153,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                             })}
                                             onClick={() => openGallery(index + 2)}
                                         >
-                                            <span className="text-text-accent font-secondary text-sm font-semibold">
+                                            <span className="font-secondary font-semibold text-sm text-text-accent">
                                                 +{galleryAdditionalItemsCount}
                                             </span>
                                         </button>

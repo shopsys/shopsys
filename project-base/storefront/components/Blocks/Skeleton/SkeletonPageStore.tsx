@@ -1,8 +1,8 @@
-import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 
 export const SkeletonPageStore: FC = () => (
     <>
@@ -48,13 +48,13 @@ export const SkeletonPageStore: FC = () => (
                 </div>
 
                 <div className="basis-1/2">
-                    <div className="bg-skeleton-less flex aspect-square w-full rounded-xl p-5">
+                    <div className="flex aspect-square w-full rounded-xl bg-skeleton-less p-5">
                         <Skeleton className="h-full w-full" />
                     </div>
                 </div>
             </div>
 
-            <div className="max-vl:grid-flow-col vl:gap-8 mt-8 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto lg:flex lg:flex-wrap">
+            <div className="mt-8 grid snap-x snap-mandatory gap-4 vl:gap-8 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto max-vl:grid-flow-col lg:flex lg:flex-wrap">
                 {createEmptyArray(3).map((_, index) => (
                     <Skeleton key={index} className="m-0.5 flex h-[190px] w-[280px] rounded-xl" />
                 ))}

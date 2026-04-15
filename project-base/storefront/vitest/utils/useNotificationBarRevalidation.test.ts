@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { useNotificationBarsWithRevalidation } from 'utils/useNotificationBarRevalidation';
-import { describe, expect, test, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 const mockFetchNotificationBars = vi.fn();
 const mockNotificationBars = vi.fn();

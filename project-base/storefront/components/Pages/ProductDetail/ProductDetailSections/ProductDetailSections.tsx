@@ -1,8 +1,3 @@
-import { ProductDetailFilesSection } from './ProductDetailFilesSection';
-import { ProductDetailOverviewSection } from './ProductDetailOverviewSection';
-import { ProductDetailParametersSection } from './ProductDetailParametersSection';
-import { ProductDetailRelatedProductsSection } from './ProductDetailRelatedProductsSection';
-import { ProductDetailSectionNavigation } from './ProductDetailSectionNavigation';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
@@ -10,6 +5,11 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useHashNavigation } from 'utils/ui/useHashNavigation';
+import { ProductDetailFilesSection } from './ProductDetailFilesSection';
+import { ProductDetailOverviewSection } from './ProductDetailOverviewSection';
+import { ProductDetailParametersSection } from './ProductDetailParametersSection';
+import { ProductDetailRelatedProductsSection } from './ProductDetailRelatedProductsSection';
+import { ProductDetailSectionNavigation } from './ProductDetailSectionNavigation';
 
 type ProductDetailSectionsProps = {
     description: string | null;
@@ -38,7 +38,7 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     const relatedProductsRef = useRef<HTMLDivElement>(null);
     const filesRef = useRef<HTMLDivElement>(null);
 
-    // eslint-disable-next-line react-hooks/refs -- .filter() only reads isVisible, not ref.current
+    // `.filter()` only reads `isVisible`, not `ref.current`.
     const sections = [
         { id: PRODUCT_DETAIL_SECTIONS_IDS.overview, label: t('Overview'), ref: overviewRef, isVisible: true },
         {

@@ -1,6 +1,6 @@
-import { mapGtmProductInterface } from './mapGtmProductInterface';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { GtmCartItemType } from 'gtm/types/objects';
+import { mapGtmProductInterface } from './mapGtmProductInterface';
 
 export const mapGtmCartItemType = (
     cartItem: TypeCartItemFragment,

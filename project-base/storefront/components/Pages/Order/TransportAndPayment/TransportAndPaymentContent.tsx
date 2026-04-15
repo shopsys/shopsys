@@ -1,9 +1,3 @@
-import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
-import {
-    getTransportAndPaymentValidationMessages,
-    useLoadTransportAndPaymentFromLastOrder,
-    useTransportAndPaymentPageNavigation,
-} from './transportAndPaymentUtils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
 import { OrderLayout } from 'components/Layout/OrderLayout';
@@ -14,6 +8,12 @@ import { useChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
+import {
+    getTransportAndPaymentValidationMessages,
+    useLoadTransportAndPaymentFromLastOrder,
+    useTransportAndPaymentPageNavigation,
+} from './transportAndPaymentUtils';
 
 export const TransportAndPaymentContent: FC = () => {
     const { t } = useTranslation();

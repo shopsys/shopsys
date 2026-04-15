@@ -1,4 +1,3 @@
-import { CartInHeaderListItem } from './CartInHeaderListItem';
 import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { FreeTransportRange } from 'components/Blocks/FreeTransport/FreeTransportRange';
@@ -12,6 +11,7 @@ import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useFocusTrap } from 'utils/useFocusTrap';
+import { CartInHeaderListItem } from './CartInHeaderListItem';
 
 export const CartInHeaderList: FC = () => {
     const { t } = useTranslation();

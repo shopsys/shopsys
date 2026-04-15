@@ -61,16 +61,15 @@ export const OpeningHours: FC<{
         <>
             {'exceptionDays' in openingHours &&
                 openingHours.exceptionDays?.map((exceptionDay) => (
-                    <div key={exceptionDay.from} className={twMergeCustom('text-text-error mb-1 text-xs', className)}>
+                    <div key={exceptionDay.from} className={twMergeCustom('mb-1 text-text-error text-xs', className)}>
                         {formatExceptionDayText(exceptionDay)}
                     </div>
                 ))}
 
-            <div
+            <ul
                 aria-label={t('Opening hours', { ns: 'accessibility' })}
-                className={twMergeCustom('text-text-default flex flex-col gap-1 self-baseline text-xs', className)}
+                className={twMergeCustom('flex flex-col gap-1 self-baseline text-text-default text-xs', className)}
                 data-tid={TIDs.opening_hours}
-                role="list"
             >
                 {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
@@ -89,12 +88,12 @@ export const OpeningHours: FC<{
                     const dayAriaText = isClosedWholeDay ? ariaClosedText : ariaOpenText;
 
                     return (
-                        <div
+                        <li
                             key={dayOfWeek}
                             aria-current={isToday ? 'date' : undefined}
                             aria-label={dayAriaText}
                             className={twMergeCustom(
-                                'flex flex-col flex-wrap gap-x-5 gap-y-2 rounded-lg p-2 sm:flex-row sm:items-center',
+                                'flex list-none flex-col flex-wrap gap-x-5 gap-y-2 rounded-lg p-2 sm:flex-row sm:items-center',
                                 isToday ? 'bg-background-accent-less' : 'hover:bg-background-more',
                             )}
                         >
@@ -103,29 +102,27 @@ export const OpeningHours: FC<{
                             </span>
 
                             <span aria-hidden="true">
-                                {isClosedWholeDay ? (
-                                    <>{t('Closed')}</>
-                                ) : (
-                                    openingHoursRanges.map(({ openingTime, closingTime }, index) => {
-                                        const openingFormatted = formatAccessibleTime(openingTime, lang);
-                                        const closingFormatted = formatAccessibleTime(closingTime, lang);
+                                {isClosedWholeDay
+                                    ? t('Closed')
+                                    : openingHoursRanges.map(({ openingTime, closingTime }, index) => {
+                                          const openingFormatted = formatAccessibleTime(openingTime, lang);
+                                          const closingFormatted = formatAccessibleTime(closingTime, lang);
 
-                                        return (
-                                            <Fragment key={`${openingTime}-${closingTime}`}>
-                                                {index > 0 && ','} {openingFormatted} - {closingFormatted}
-                                            </Fragment>
-                                        );
-                                    })
-                                )}
+                                          return (
+                                              <Fragment key={`${openingTime}-${closingTime}`}>
+                                                  {index > 0 && ','} {openingFormatted} - {closingFormatted}
+                                              </Fragment>
+                                          );
+                                      })}
                             </span>
 
                             {isToday && (
                                 <OpeningStatus className="self-baseline sm:self-auto" status={openingHours.status} />
                             )}
-                        </div>
+                        </li>
                     );
                 })}
-            </div>
+            </ul>
         </>
     );
 };

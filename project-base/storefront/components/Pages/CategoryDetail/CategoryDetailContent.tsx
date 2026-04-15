@@ -1,4 +1,3 @@
-import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper/DeferredCategoryDetailProductsWrapper';
 import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
@@ -16,6 +15,7 @@ import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper/DeferredCategoryDetailProductsWrapper';
 
 const AdvancedSeoCategories = dynamic(() =>
     import('./AdvancedSeoCategories').then((component) => component.AdvancedSeoCategories),
@@ -71,7 +71,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <div className="flex flex-1 flex-col gap-5" id="product-list">
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <div className="vl:flex-col flex scroll-mt-5 flex-col-reverse" ref={paginationScrollTargetRef}>
+                    <div className="flex scroll-mt-5 vl:flex-col flex-col-reverse" ref={paginationScrollTargetRef}>
                         <DeferredFilterSelectedParameters filterOptions={category.products.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

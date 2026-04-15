@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useState, createContext, useEffect, useRef } from 'react';
-import { useContext } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type GtmContextType = {

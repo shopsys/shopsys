@@ -116,7 +116,8 @@ export const useSearchProductsData = (totalProductCount?: number) => {
         };
 
         fetchProducts();
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- mappedFilter and parameters are derived from currentFilter (tracked via currentFilterSerialized)
+        // The dependency array is carefully curated to prevent redundant re-fetches.
+        // `mappedFilter` and `parameters` are intentionally excluded — they create new references each render, so we track filter changes via `currentFilterSerialized` instead.
     }, [
         currentSearchString,
         currentSort,

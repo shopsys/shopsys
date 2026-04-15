@@ -45,7 +45,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 <div
                     data-tid={TIDs.transport_and_payment_list_item_image}
                     className={twJoin(
-                        'bg-background-more isolate flex h-12 w-20 items-center justify-center rounded-xl',
+                        'isolate flex h-12 w-20 items-center justify-center rounded-xl bg-background-more',
                         !image && 'hidden',
                     )}
                 >
@@ -107,7 +107,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                     )}
 
                     {daysUntilDelivery !== undefined && (
-                        <div className="text-text-success hidden text-xs md:block">
+                        <div className="hidden text-text-success text-xs md:block">
                             {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
                         </div>
                     )}
@@ -115,7 +115,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                     {showChangeButton && pickupPlaceDetail && (
                         <button
                             aria-haspopup="dialog"
-                            className="text-link-default hover:text-link-hovered cursor-pointer text-left text-xs underline hover:no-underline disabled:pointer-events-none disabled:opacity-50"
+                            className="cursor-pointer text-left text-link-default text-xs underline hover:text-link-hovered hover:no-underline disabled:pointer-events-none disabled:opacity-50"
                             disabled={disabled}
                             tabIndex={0}
                             onClick={openPickupPlacePopup}
@@ -126,7 +126,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 </div>
 
                 {price && isPriceVisible(price.priceWithVat) && (
-                    <div className={twJoin('text-text-default ml-auto', pickupPlaceDetail && 'hidden md:block')}>
+                    <div className={twJoin('ml-auto text-text-default', pickupPlaceDetail && 'hidden md:block')}>
                         {formatPrice(price.priceWithVat)}
                     </div>
                 )}
@@ -141,7 +141,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                     )}
 
                     {price && isPriceVisible(price.priceWithVat) && (
-                        <div className="text-text-default ml-auto">{formatPrice(price.priceWithVat)}</div>
+                        <div className="ml-auto text-text-default">{formatPrice(price.priceWithVat)}</div>
                     )}
                 </div>
             )}

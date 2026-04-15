@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const Feedback: FC<ServerSidePropsType> = () => {

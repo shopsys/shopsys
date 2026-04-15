@@ -1,6 +1,6 @@
-import { FilterSelectedParametersProps } from './FilterSelectedParameters';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { FilterSelectedParametersProps } from './FilterSelectedParameters';
 
 const FilterSelectedParameters = dynamic(
     () => import('./FilterSelectedParameters').then((component) => component.FilterSelectedParameters),

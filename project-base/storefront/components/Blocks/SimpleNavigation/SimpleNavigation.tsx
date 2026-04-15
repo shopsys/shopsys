@@ -1,10 +1,10 @@
-import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
+import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 
 type SimpleNavigationProps = {
     title?: string;

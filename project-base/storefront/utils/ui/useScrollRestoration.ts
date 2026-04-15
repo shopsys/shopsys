@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router';
-import { RefObject, useEffect, useEffectEvent, useRef } from 'react';
+import { type RefObject, useEffect, useEffectEvent, useRef } from 'react';
 
 type MutuallyExcludedProps = {
     scrollTargetRef: RefObject<HTMLElement | null> | null;
     scrollY: number;
 };
 
-type PickOne<T, F extends keyof T> = Pick<T, F> & { [K in keyof Omit<T, F>]?: never };
+type PickOne<T, F extends keyof T> = Pick<T, F> & {
+    [K in keyof Omit<T, F>]?: never;
+};
 
 type ScrollRestorationProps<E> = (E extends keyof MutuallyExcludedProps ? PickOne<MutuallyExcludedProps, E> : never) & {
     shouldScroll: boolean;

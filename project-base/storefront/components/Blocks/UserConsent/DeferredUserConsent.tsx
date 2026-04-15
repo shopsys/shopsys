@@ -1,7 +1,7 @@
-import { getCouldNotFindUserConsentPolicyArticleUrl } from './userConsentUtils';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { getCouldNotFindUserConsentPolicyArticleUrl } from './userConsentUtils';
 
 const UserConsent = dynamic(
     () => import('components/Blocks/UserConsent/UserConsent').then((component) => component.UserConsent),

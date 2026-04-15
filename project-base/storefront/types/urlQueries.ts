@@ -1,4 +1,3 @@
-import { FilterOptionsUrlQueryType } from './productFilter';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import {
     FILTER_QUERY_PARAMETER_NAME,
@@ -7,6 +6,7 @@ import {
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
+import { FilterOptionsUrlQueryType } from './productFilter';
 
 export type FilterQueries = FilterOptionsUrlQueryType | undefined;
 

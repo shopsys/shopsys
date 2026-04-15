@@ -45,7 +45,7 @@ export const SalesRepresentative: FC = () => {
                     <PhoneIcon className="size-6" />
                     <a
                         aria-label={t('Call sales representative', { ns: 'accessibility' })}
-                        className="text-text-default rounded-md text-sm font-semibold no-underline"
+                        className="rounded-md font-semibold text-sm text-text-default no-underline"
                         href={`tel:${telephone}`}
                         tabIndex={0}
                     >
@@ -62,8 +62,8 @@ export const SalesRepresentative: FC = () => {
                         href={`mailto:${email}`}
                         tabIndex={0}
                         className={twJoin(
-                            'text-text-default max-w-64 overflow-x-auto rounded-md text-sm font-semibold whitespace-nowrap no-underline',
-                            '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                            'max-w-64 overflow-x-auto whitespace-nowrap rounded-md font-semibold text-sm text-text-default no-underline',
+                            '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                         )}
                     >
                         {email}

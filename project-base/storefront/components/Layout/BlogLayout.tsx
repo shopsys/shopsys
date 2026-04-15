@@ -1,6 +1,6 @@
-import { Webline } from './Webline/Webline';
 import { BlogSignpost } from 'components/Blocks/BlogSignpost/BlogSignpost';
 import { useBlogCategories } from 'graphql/requests/blogCategories/queries/BlogCategoriesQuery.generated';
+import { Webline } from './Webline/Webline';
 
 type BlogLayoutProps = {
     activeCategoryUuid: string;

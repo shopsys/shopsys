@@ -1,8 +1,3 @@
-import { DeferredLoaders } from './DeferredLoaders';
-import { DeferredSecondaryLoaders } from './DeferredSecondaryLoaders';
-import { DeferredTertiaryLoaders } from './DeferredTertiaryLoaders';
-import { Fonts, ralewayFont } from './Fonts';
-import { PageHeadScripts } from './PageHeadScripts';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { DeferredSymfonyDebugToolbar } from 'components/Basic/SymfonyDebugToolbar/DeferredSymfonyDebugToolbar';
 import { DeferredUserConsent } from 'components/Blocks/UserConsent/DeferredUserConsent';
@@ -13,6 +8,11 @@ import { Slide, ToastContainer } from 'react-toastify';
 import { twJoin } from 'tailwind-merge';
 import { useCookiesStoreSync } from 'utils/cookies/cookiesStore';
 import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
+import { DeferredLoaders } from './DeferredLoaders';
+import { DeferredSecondaryLoaders } from './DeferredSecondaryLoaders';
+import { DeferredTertiaryLoaders } from './DeferredTertiaryLoaders';
+import { Fonts, ralewayFont } from './Fonts';
+import { PageHeadScripts } from './PageHeadScripts';
 
 const Error503Content = dynamic(
     () => import('components/Pages/ErrorPage/Error503Content').then((component) => component.Error503Content),

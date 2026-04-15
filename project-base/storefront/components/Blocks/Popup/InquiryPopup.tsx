@@ -1,10 +1,9 @@
-import { useInquiryForm } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
-import { useInquiryFormMeta } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
+import { useInquiryForm, useInquiryFormMeta } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
-import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateInquiryMutation } from 'graphql/requests/inquiry/mutations/CreateInquiryMutation.generated';

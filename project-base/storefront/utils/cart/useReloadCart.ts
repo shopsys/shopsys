@@ -1,5 +1,3 @@
-import { useChangePaymentInCart } from './useChangePaymentInCart';
-import { useCurrentCart } from './useCurrentCart';
 import { handleCartModifications } from 'connectors/cart/Cart';
 import {
     CartQueryDocument,
@@ -12,6 +10,8 @@ import { useClient } from 'urql';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useRefetchOnTabFocus } from 'utils/useRefetchOnTabFocus';
+import { useChangePaymentInCart } from './useChangePaymentInCart';
+import { useCurrentCart } from './useCurrentCart';
 
 export const useReloadCart = (): void => {
     const { modifications } = useCurrentCart();
@@ -27,10 +27,11 @@ export const useReloadCart = (): void => {
         }
 
         client
-            .query<
-                TypeCartQuery,
-                TypeCartQueryVariables
-            >(CartQueryDocument, { cartUuid }, { requestPolicy: 'network-only' })
+            .query<TypeCartQuery, TypeCartQueryVariables>(
+                CartQueryDocument,
+                { cartUuid },
+                { requestPolicy: 'network-only' },
+            )
             .toPromise();
     }, [client, cartUuid, isUserLoggedIn]);
 

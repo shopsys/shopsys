@@ -27,6 +27,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
         : getSkeletonTypeFromLink(navigationItem.link);
 
     return (
+        /* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Hover state belongs on the list item so the menu keeps its navigation list semantics. */
         <li
             className="group"
             onMouseLeave={() => setIsMenuOpened(false)}
@@ -41,9 +42,9 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
                 href={navigationItem.link}
                 skeletonType={skeletonType}
                 className={twJoin(
-                    'font-secondary vl:text-base relative m-0 flex items-center p-5 text-sm font-bold whitespace-nowrap group-first-of-type:pl-0',
+                    'relative m-0 flex items-center whitespace-nowrap p-5 font-bold font-secondary text-sm vl:text-base group-first-of-type:pl-0',
                     'text-link-inverted-default no-underline',
-                    'hover:text-link-inverted-hovered group-hover:text-link-inverted-hovered group-hover:no-underline hover:no-underline',
+                    'hover:text-link-inverted-hovered hover:no-underline group-hover:text-link-inverted-hovered group-hover:no-underline',
                     'active:text-link-inverted-hovered',
                     'disabled:text-link-inverted-disabled',
                 )}
@@ -58,7 +59,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
                         >
                             <ArrowIcon
                                 className={twJoin(
-                                    'text-link-inverted-default size-5',
+                                    'size-5 text-link-inverted-default',
                                     isMenuOpenedDelayed && 'group-hover:text-link-inverted-hovered',
                                 )}
                             />
@@ -70,7 +71,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
             <AnimatePresence initial={false}>
                 {hasChildren && isMenuOpenedDelayed && (
                     <AnimateNavigationMenu
-                        className="z-menu bg-background-default absolute right-0 left-0 grid! grid-cols-4 gap-11 px-10 shadow-md"
+                        className="grid! absolute right-0 left-0 z-menu grid-cols-4 gap-11 bg-background-default px-10 shadow-md"
                         disableAnimation={isAnimationDisabled || !!shouldReduceMotion}
                     >
                         <NavigationItemColumn

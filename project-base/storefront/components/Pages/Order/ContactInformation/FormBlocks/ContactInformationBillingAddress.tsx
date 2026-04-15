@@ -1,5 +1,3 @@
-import { ContactInformationCompany } from './ContactInformationCompany';
-import { ContactInformationCustomer } from './ContactInformationCustomer';
 import { AnimateCollapseDivWithMargin } from 'components/Basic/Animations/AnimateCollapseDivWithMargin';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
@@ -16,6 +14,8 @@ import { usePersistStore } from 'store/usePersistStore';
 import { SelectOptionType } from 'types/selectOptions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ContactInformationCompany } from './ContactInformationCompany';
+import { ContactInformationCustomer } from './ContactInformationCustomer';
 
 export const ContactInformationBillingAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
@@ -102,7 +102,7 @@ export const ContactInformationBillingAddress: FC = () => {
                                         ariaLabel={t('Select country', { ns: 'accessibility' })}
                                         label={formMeta.fields.country.label}
                                         options={countriesAsSelectOptions}
-                                        tid={formMeta.formName + '-' + formMeta.fields.country.name}
+                                        tid={`${formMeta.formName}-${formMeta.fields.country.name}`}
                                         activeOption={countriesAsSelectOptions.find(
                                             (option) => option.value === field.value.value,
                                         )}

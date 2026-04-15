@@ -2,10 +2,10 @@ import { ArticleMetadata } from 'components/Basic/Head/ArticleMetadata';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import {
-    useBlogArticleDetailQuery,
+    BlogArticleDetailQueryDocument,
     TypeBlogArticleDetailQuery,
     TypeBlogArticleDetailQueryVariables,
-    BlogArticleDetailQueryDocument,
+    useBlogArticleDetailQuery,
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticleDetailQuery.generated';
 import { BlogCategoriesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoriesQuery.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
@@ -23,7 +23,7 @@ import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const Error404Content = dynamic(
     () => import('components/Pages/ErrorPage/Error404Content').then((m) => m.Error404Content),
@@ -86,16 +86,16 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const blogArticleResponse: OperationResult<
                 TypeBlogArticleDetailQuery,
                 TypeBlogArticleDetailQueryVariables
-            > = await client!
-                .query(BlogArticleDetailQueryDocument, {
+            > = await client
+                ?.query(BlogArticleDetailQueryDocument, {
                     urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                 })
                 .toPromise();
 
             const parsedCatnums = parseCatnums(blogArticleResponse.data?.blogArticle?.text ?? '');
 
-            await client!
-                .query(ProductsByCatnumsDocument, {
+            await client
+                ?.query(ProductsByCatnumsDocument, {
                     catnums: parsedCatnums,
                 })
                 .toPromise();

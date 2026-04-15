@@ -1,4 +1,3 @@
-import { usePasswordResetForm, usePasswordResetFormMeta } from './passwordResetFormMeta';
 import { LockIcon } from 'components/Basic/Icon/LockIcon';
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
@@ -17,6 +16,7 @@ import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { usePasswordResetForm, usePasswordResetFormMeta } from './passwordResetFormMeta';
 
 export const ResetPasswordContent: FC = () => {
     const { t } = useTranslation();

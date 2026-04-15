@@ -1,8 +1,8 @@
-import { getInternationalizedStaticUrl } from './getInternationalizedStaticUrl';
 import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'config/staticRewritePaths';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { getQueryWithoutSlugTypeParameterFromQueryString } from 'utils/parsing/getQueryWithoutSlugTypeParameterFromQueryString';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
+import { getInternationalizedStaticUrl } from './getInternationalizedStaticUrl';
 
 export const getServerSideInternationalizedStaticUrl = (
     context: GetServerSidePropsContext | NextPageContext,

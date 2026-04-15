@@ -1,6 +1,6 @@
-import { StyleguideSection } from './StyleguideElements';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import { StyleguideSection } from './StyleguideElements';
 
 export const StyleguideSpinboxes: FC = () => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);

@@ -16,8 +16,8 @@ export const ContactInformationCustomer: FC = () => {
     const { isCompanyUser } = useAuthorization();
 
     return (
-        <fieldset className={isCompanyUser ? 'hidden' : 'bg-background-more rounded-t-xl'}>
-            <div className="border-border-less vl:flex-row vl:items-center vl:gap-8 vl:mx-20 vl:mt-8 mx-5 mt-5 flex flex-col gap-2 border-b pb-5">
+        <fieldset className={isCompanyUser ? 'hidden' : 'rounded-t-xl bg-background-more'}>
+            <div className="mx-5 vl:mx-20 mt-5 vl:mt-8 flex vl:flex-row flex-col vl:items-center gap-2 vl:gap-8 border-border-less border-b pb-5">
                 <FormHeading>{formMeta.fields.customer.label}</FormHeading>
 
                 <RadiobuttonGroup

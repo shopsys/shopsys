@@ -18,9 +18,9 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
     useFocusTrap(contentRef);
 
     return (
-        <div className="vl:flex-row vl:p-5 flex w-full flex-col gap-8 text-left" ref={contentRef}>
+        <div className="flex w-full vl:flex-row flex-col gap-8 vl:p-5 text-left" ref={contentRef}>
             <div
-                className="bg-background-brand-less text-text-inverted vl:order-1 vl:w-1/2 vl:p-9 order-2 mb-auto rounded-xl p-5"
+                className="order-2 vl:order-1 mb-auto vl:w-1/2 rounded-xl bg-background-brand-less p-5 vl:p-9 text-text-inverted"
                 id="registration-form-description"
             >
                 <span className="h4">{t('Benefits of registration')}</span>
@@ -51,7 +51,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                     <ArrowSecondaryIcon className="size-5 -rotate-90 p-1 md:size-6" />
                 </LinkButton>
             </div>
-            <div className="vl:order-2 vl:w-[364px] order-1 w-full">
+            <div className="order-1 vl:order-2 vl:w-[364px] w-full">
                 <LoginForm formHeading={t('Log in')} formWrapperClassName="p-8! w-full" />
             </div>
         </div>

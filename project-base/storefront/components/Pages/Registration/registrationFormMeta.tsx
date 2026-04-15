@@ -11,9 +11,9 @@ import {
     validateFirstName,
     validateLastName,
     validatePassword,
+    validatePasswordConfirm,
     validatePostcode,
     validatePrivacyPolicy,
-    validatePasswordConfirm,
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';

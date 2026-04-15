@@ -1,6 +1,6 @@
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmPageViewEventType } from 'gtm/types/events';
-import { GtmPageInfoType, GtmCartInfoType } from 'gtm/types/objects';
+import { GtmCartInfoType, GtmPageInfoType } from 'gtm/types/objects';
 import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
 import { getGtmDeviceType } from 'gtm/utils/getGtmDeviceType';
 import { getGtmUserInfo } from 'gtm/utils/getGtmUserInfo';

@@ -61,8 +61,8 @@ export const SearchInput: FC<SearchInputProps> = ({
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'border-input-border-default bg-input-bg-default text-input-text-default placeholder:text-input-placeholder-default peer rounded-input mb-0 h-12 w-full border pr-20 pl-11',
-                    '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-webkit-autofill]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:shadow-inner!',
+                    'peer mb-0 h-12 w-full rounded-input border border-input-border-default bg-input-bg-default pr-20 pl-11 text-input-text-default placeholder:text-input-placeholder-default',
+                    '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:bg-input-bg-default! [&:-webkit-autofill]:shadow-inner!',
                     '[&:-webkit-autofill]:hover:bg-input-bg-hovered! [&:-webkit-autofill]:hover:shadow-inner!',
                     '[&:-webkit-autofill]:focus:bg-input-fill! [&:-webkit-autofill]:focus:shadow-inner!',
                     '[&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
@@ -83,7 +83,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 type="submit"
                 onClick={onSearch}
             >
-                <SearchIcon className="text-icon-less group-hover:text-icon-accent size-6" />
+                <SearchIcon className="size-6 text-icon-less group-hover:text-icon-accent" />
             </button>
 
             {!!value && !shouldShowSpinnerInInput && (
@@ -95,13 +95,13 @@ export const SearchInput: FC<SearchInputProps> = ({
                     type="button"
                     onClick={handleClear}
                 >
-                    <CloseIcon className="text-icon-less hover:text-icon-default size-4" />
+                    <CloseIcon className="size-4 text-icon-less hover:text-icon-default" />
                 </button>
             )}
             {shouldShowSpinnerInInput && (
                 <SpinnerIcon
                     aria-label={t('Loading search results', { ns: 'accessibility' })}
-                    className="text-icon-less absolute top-1/2 right-3 size-5 -translate-y-1/2"
+                    className="absolute top-1/2 right-3 size-5 -translate-y-1/2 text-icon-less"
                 />
             )}
         </div>

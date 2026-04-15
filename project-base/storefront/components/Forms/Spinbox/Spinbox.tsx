@@ -2,7 +2,7 @@ import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { TIDs } from 'cypress/tids';
-import { FormEventHandler, KeyboardEventHandler, forwardRef, useEffect, useEffectEvent, useRef, useState } from 'react';
+import { FormEventHandler, forwardRef, KeyboardEventHandler, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
@@ -22,7 +22,7 @@ type SpinboxProps = {
     size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
-const isValidNumber = (value: number): boolean => !isNaN(value);
+const isValidNumber = (value: number): boolean => !Number.isNaN(value);
 const isWithinMaxLimit = (value: number): boolean => value <= MAX_CART_ITEM_QUANTITY;
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
@@ -180,7 +180,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         useEffect(() => {
             if (
                 debouncedValue !== undefined &&
-                !isNaN(debouncedValue) &&
+                !Number.isNaN(debouncedValue) &&
                 debouncedValue !== lastReportedValueRef.current
             ) {
                 lastReportedValueRef.current = debouncedValue;
@@ -207,12 +207,13 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             return () => {
                 clearSpinboxInterval(intervalRef.current);
             };
+            // `clearSpinboxInterval` is intentionally excluded — it creates a new reference each render, which would make the interval unstable across rerenders.
         }, [isHoldingIncrease, isHoldingDecrease, step]);
 
         return (
             <div
                 className={twJoin(
-                    'bg-input-bg-default outline-input-border-default rounded-counter inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden outline-2 -outline-offset-2',
+                    'inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden rounded-counter bg-input-bg-default outline-2 outline-input-border-default -outline-offset-2',
                     (size === 'small' || size === 'medium') && 'py-1',
                     size === 'large' && 'py-1 sm:py-1.5',
                     size === 'xlarge' && 'py-1.5 sm:py-3.5',
@@ -245,7 +246,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     tid={TIDs.spinbox_input}
                     type="number"
                     className={twJoin(
-                        'font-secondary text-input-text-default text-center text-lg font-bold outline-hidden',
+                        'text-center font-bold font-secondary text-input-text-default text-lg outline-hidden',
                         size === 'xlarge' ? 'w-10' : 'w-8',
                     )}
                     onBlur={handleBlur}
@@ -299,10 +300,10 @@ const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, tid, 
         tabIndex={disabled ? -1 : 0}
         title={title}
         className={twMergeCustom([
-            'text-icon-less hover:text-icon-default flex cursor-pointer justify-center rounded-sm border-none outline-hidden',
+            'flex cursor-pointer justify-center rounded-sm border-none text-icon-less outline-hidden hover:text-icon-default',
             size === 'xlarge' ? 'w-10' : 'w-7',
 
-            disabled && 'text-input-border-disabled pointer-events-none',
+            disabled && 'pointer-events-none text-input-border-disabled',
         ])}
         {...props}
     >

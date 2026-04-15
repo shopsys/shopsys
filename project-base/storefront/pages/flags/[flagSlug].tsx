@@ -4,15 +4,15 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
-    useFlagDetailQuery,
+    FlagDetailQueryDocument,
     TypeFlagDetailQuery,
     TypeFlagDetailQueryVariables,
-    FlagDetailQueryDocument,
+    useFlagDetailQuery,
 } from 'graphql/requests/flags/queries/FlagDetailQuery.generated';
 import {
+    FlagProductsQueryDocument,
     TypeFlagProductsQuery,
     TypeFlagProductsQueryVariables,
-    FlagProductsQueryDocument,
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -101,16 +101,16 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
             const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
-            const flagDetailResponsePromise = client!
-                .query<TypeFlagDetailQuery, TypeFlagDetailQueryVariables>(FlagDetailQueryDocument, {
+            const flagDetailResponsePromise = client
+                ?.query<TypeFlagDetailQuery, TypeFlagDetailQueryVariables>(FlagDetailQueryDocument, {
                     urlSlug,
                     filter,
                     orderingMode,
                 })
                 .toPromise();
 
-            const flagProductsResponsePromise = client!
-                .query<TypeFlagProductsQuery, TypeFlagProductsQueryVariables>(FlagProductsQueryDocument, {
+            const flagProductsResponsePromise = client
+                ?.query<TypeFlagProductsQuery, TypeFlagProductsQueryVariables>(FlagProductsQueryDocument, {
                     endCursor: getEndCursor(page),
                     orderingMode,
                     filter,

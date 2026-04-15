@@ -1,6 +1,3 @@
-import { CartList } from './CartList/CartList';
-import { CartStickyBar } from './CartStickyBar';
-import { CartSummary } from './CartSummary';
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -10,6 +7,9 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { TypeRecommendationType } from 'graphql/types';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { CartList } from './CartList/CartList';
+import { CartStickyBar } from './CartStickyBar';
+import { CartSummary } from './CartSummary';
 
 type CartContentProps = {
     cart: TypeCartFragment;

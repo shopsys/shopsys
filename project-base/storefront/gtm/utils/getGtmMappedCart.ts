@@ -1,4 +1,3 @@
-import { getGtmPriceBasedOnVisibility } from './getGtmPriceBasedOnVisibility';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypePromoCode } from 'graphql/types';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
@@ -6,6 +5,7 @@ import { GtmCartInfoType } from 'gtm/types/objects';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getStringWithoutLeadingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { getGtmPriceBasedOnVisibility } from './getGtmPriceBasedOnVisibility';
 
 export const getGtmMappedCart = (
     cart: TypeCartFragment,
@@ -37,7 +37,7 @@ const getAbandonedCartUrl = (isUserLoggedIn: boolean, domain: DomainConfigType, 
     if (isUserLoggedIn) {
         const [loginRelativeUrl, cartRelativeUrl] = getInternationalizedStaticUrls(['/login', '/cart'], domain.url);
 
-        return domain.url + getStringWithoutLeadingSlash(loginRelativeUrl) + '?r=' + cartRelativeUrl;
+        return `${domain.url + getStringWithoutLeadingSlash(loginRelativeUrl)}?r=${cartRelativeUrl}`;
     }
 
     const [abandonedCartRelativeUrl] = getInternationalizedStaticUrls(

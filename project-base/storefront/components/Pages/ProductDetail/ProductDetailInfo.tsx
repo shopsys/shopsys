@@ -1,7 +1,7 @@
-import { ProductDetailHeading, ProductDetailPrefix } from './ProductDetailElements';
-import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ProductDetailHeading, ProductDetailPrefix } from './ProductDetailElements';
+import { ProductDetailUsps } from './ProductDetailUsps';
 
 type ProductDetailContentProps = {
     namePrefix: string | null;

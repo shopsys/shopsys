@@ -22,8 +22,8 @@ import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum, TypePaymentTypeEnum } 
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';
+import Trans from 'next-translate/Trans';
 import { useEffect, useEffectEvent, useState } from 'react';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
@@ -137,8 +137,8 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
 
                     <OrderConfirmationStepper flow={stepperFlow} />
 
-                    <div className="vl:grid-cols-3 vl:gap-10 grid gap-4">
-                        <div className="vl:col-span-2 vl:flex-col flex flex-col-reverse gap-4">
+                    <div className="grid vl:grid-cols-3 gap-4 vl:gap-10">
+                        <div className="vl:col-span-2 flex vl:flex-col flex-col-reverse gap-4">
                             <OrderCustomerInfo order={orderData.order} />
 
                             <RegistrationAfterOrder

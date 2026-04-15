@@ -69,15 +69,15 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
             className={twMergeCustom('flex flex-col gap-3', className)}
             ref={contentRef}
         >
-            <div className="bg-background-accent-less flex flex-col gap-1 rounded-xl px-3 py-4">
+            <div className="flex flex-col gap-1 rounded-xl bg-background-accent-less px-3 py-4">
                 <span className="h5">
                     {user?.firstName} {user?.lastName}
                 </span>
                 {user?.companyName && <span className="h6 text-text-less">{user.companyName}</span>}
                 <span
                     className={twJoin(
-                        'max-w-64 overflow-x-auto text-sm font-semibold whitespace-nowrap',
-                        '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                        'max-w-64 overflow-x-auto whitespace-nowrap font-semibold text-sm',
+                        '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                     )}
                 >
                     {user?.email}

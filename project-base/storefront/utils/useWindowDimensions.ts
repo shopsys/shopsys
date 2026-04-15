@@ -1,4 +1,4 @@
-import { startTransition, useState, useEffect } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 
 function getWindowDimensions() {
     if (typeof window === 'undefined') {

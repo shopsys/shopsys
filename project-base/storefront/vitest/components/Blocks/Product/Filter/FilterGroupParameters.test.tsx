@@ -66,7 +66,6 @@ vi.mock('next-translate/useTranslation', () => ({
 
 vi.mock('framer-motion', async () => {
     const actual = (await vi.importActual('framer-motion')) as any;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const MotionDiv = ({ children, layout, layoutId, animate, exit, initial, transition, ...props }: any) => (
         <div {...props}>{children}</div>
     );

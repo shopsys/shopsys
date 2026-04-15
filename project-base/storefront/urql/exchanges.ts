@@ -1,6 +1,3 @@
-import { dedupExchange } from './dedupExchange';
-import { getErrorExchange } from './errorExchange';
-import { operationNameExchange } from './operationNameExchange';
 import { devtoolsExchange } from '@urql/devtools';
 import { authExchange } from '@urql/exchange-auth';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
@@ -9,6 +6,9 @@ import { ClientOptions, fetchExchange, SSRExchange } from 'urql';
 import { getAuthExchangeOptions } from 'urql/authExchange';
 import { cache } from 'urql/cache/cacheExchange';
 import { DomainConfigType } from 'utils/domain/domainConfig';
+import { dedupExchange } from './dedupExchange';
+import { getErrorExchange } from './errorExchange';
+import { operationNameExchange } from './operationNameExchange';
 
 export const getUrqlExchanges = (
     ssrExchange: SSRExchange,

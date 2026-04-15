@@ -14,7 +14,7 @@ export const ProductComparePopup: FC = () => {
     return (
         <Popup title={t('Comparison')}>
             <div className="flex flex-col" data-tid={TIDs.comparison_popup}>
-                <p className="font-semiBold mt-[15px] mb-5">{t('Product added to comparison.')}</p>
+                <p className="mt-[15px] mb-5 font-semiBold">{t('Product added to comparison.')}</p>
 
                 <LinkButton href={productComparisonUrl} tid={TIDs.comparison_popup_link} type="comparison">
                     <span>{t('Show products comparison')}</span>

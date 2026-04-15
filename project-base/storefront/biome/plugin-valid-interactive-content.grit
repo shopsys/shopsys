@@ -1,0 +1,186 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+    `<button $props>$children</button>` as $match where {
+        $match <: contains `<div $divProps>$divChildren</div>` as $invalid,
+        register_diagnostic(
+            span = $invalid,
+            message = "Button elements cannot contain div elements. Use span or other phrasing content instead."
+        )
+    },
+    `<button $props>$children</button>` as $match where {
+        $match <: contains `<p $pProps>$pChildren</p>` as $invalid,
+        register_diagnostic(
+            span = $invalid,
+            message = "Button elements cannot contain paragraph elements. Use span or other phrasing content instead."
+        )
+    },
+    `<button $props>$children</button>` as $match where {
+        $match <: contains or {
+            `<h1 $headingProps>$headingChildren</h1>` as $invalid,
+            `<h2 $headingProps>$headingChildren</h2>` as $invalid,
+            `<h3 $headingProps>$headingChildren</h3>` as $invalid,
+            `<h4 $headingProps>$headingChildren</h4>` as $invalid,
+            `<h5 $headingProps>$headingChildren</h5>` as $invalid,
+            `<h6 $headingProps>$headingChildren</h6>` as $invalid
+        },
+        register_diagnostic(
+            span = $invalid,
+            message = "Button elements cannot contain heading elements. Use span or other phrasing content instead."
+        )
+    },
+    `<button $props>$children</button>` as $match where {
+        $match <: contains or {
+            `<ul $listProps>$listChildren</ul>` as $invalid,
+            `<ol $listProps>$listChildren</ol>` as $invalid
+        },
+        register_diagnostic(
+            span = $invalid,
+            message = "Button elements cannot contain list elements. Use span or other phrasing content instead."
+        )
+    },
+    `<button $props>$children</button>` as $match where {
+        $match <: contains or {
+            `<section $sectionProps>$sectionChildren</section>` as $invalid,
+            `<article $articleProps>$articleChildren</article>` as $invalid
+        },
+        register_diagnostic(
+            span = $invalid,
+            message = "Button elements cannot contain section elements. Use span or other phrasing content instead."
+        )
+    },
+    `<button $props>$children</button>` as $match where {
+        $match <: contains `<a $anchorProps>$anchorChildren</a>` as $invalid,
+        register_diagnostic(
+            span = $invalid,
+            message = "Button elements cannot contain anchor elements. Interactive elements cannot be nested inside other interactive elements."
+        )
+    },
+    `<a $props>$children</a>` as $match where {
+        $match <: contains `<button $buttonProps>$buttonChildren</button>` as $invalid,
+        register_diagnostic(
+            span = $invalid,
+            message = "Anchor elements cannot contain button elements. Interactive elements cannot be nested inside other interactive elements."
+        )
+    },
+    `<button $props>$children</button>` as $match where {
+        $children <: contains `<button $buttonProps>$buttonChildren</button>` as $invalid,
+        register_diagnostic(
+            span = $invalid,
+            message = "Button elements cannot contain other button elements. Interactive elements cannot be nested."
+        )
+    },
+    `<ExtendedNextLink $props>$children</ExtendedNextLink>` as $invalid where {
+        $invalid <: contains `href="#"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "ExtendedNextLink components must not use placeholder href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<ExtendedNextLink $props>$children</ExtendedNextLink>` as $invalid where {
+        $invalid <: contains `href=""` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "ExtendedNextLink components must not use empty href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<ExtendedNextLink $props>$children</ExtendedNextLink>` as $invalid where {
+        $invalid <: contains `href="javascript:void(0)"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "ExtendedNextLink components must not use javascript:void(0) href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<ExtendedNextLink $props>$children</ExtendedNextLink>` as $invalid where {
+        $invalid <: contains `href="javascript:void(0);"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "ExtendedNextLink components must not use javascript:void(0) href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<ExtendedNextLink $props />` as $invalid where {
+        $invalid <: contains `href="#"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "ExtendedNextLink components must not use placeholder href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<ExtendedNextLink $props />` as $invalid where {
+        $invalid <: contains `href=""` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "ExtendedNextLink components must not use empty href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<ExtendedNextLink $props />` as $invalid where {
+        $invalid <: contains `href="javascript:void(0)"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "ExtendedNextLink components must not use javascript:void(0) href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<ExtendedNextLink $props />` as $invalid where {
+        $invalid <: contains `href="javascript:void(0);"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "ExtendedNextLink components must not use javascript:void(0) href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<Link $props>$children</Link>` as $invalid where {
+        $invalid <: contains `href="#"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "Link components must not use placeholder href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<Link $props>$children</Link>` as $invalid where {
+        $invalid <: contains `href=""` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "Link components must not use empty href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<Link $props>$children</Link>` as $invalid where {
+        $invalid <: contains `href="javascript:void(0)"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "Link components must not use javascript:void(0) href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<Link $props>$children</Link>` as $invalid where {
+        $invalid <: contains `href="javascript:void(0);"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "Link components must not use javascript:void(0) href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<Link $props />` as $invalid where {
+        $invalid <: contains `href="#"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "Link components must not use placeholder href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<Link $props />` as $invalid where {
+        $invalid <: contains `href=""` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "Link components must not use empty href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<Link $props />` as $invalid where {
+        $invalid <: contains `href="javascript:void(0)"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "Link components must not use javascript:void(0) href values. Use a button instead for actions that do not navigate."
+        )
+    },
+    `<Link $props />` as $invalid where {
+        $invalid <: contains `href="javascript:void(0);"` as $href,
+        register_diagnostic(
+            span = $invalid,
+            message = "Link components must not use javascript:void(0) href values. Use a button instead for actions that do not navigate."
+        )
+    }
+}

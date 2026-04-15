@@ -1,4 +1,3 @@
-import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
@@ -6,6 +5,7 @@ import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import { getPriceRounded } from 'utils/mappers/price';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
+import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 
 type FilterGroupPriceProps = {
     title: string;

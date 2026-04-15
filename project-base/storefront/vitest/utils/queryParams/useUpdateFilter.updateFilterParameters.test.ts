@@ -580,8 +580,7 @@ describe('useUpdateFilter().updateFilterParameters tests', () => {
     });
 
     test('changing checkbox parameter should not redirect from SEO category if checkbox parameters are not SEO-sensitive', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ PARAMETERS: { CHECKBOX: false } }));
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
@@ -631,8 +630,7 @@ describe('useUpdateFilter().updateFilterParameters tests', () => {
     });
 
     test('changing slider parameter should redirect from SEO category if slider parameters are SEO-sensitive', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ PARAMETERS: { SLIDER: true } }));
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({

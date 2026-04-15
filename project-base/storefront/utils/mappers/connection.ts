@@ -3,7 +3,7 @@ export const mapConnectionEdges = <MappedNodeType>(
     mapper?: (unmappedNode: unknown) => MappedNodeType,
 ): MappedNodeType[] | undefined =>
     connectionEdges?.reduce((mappedEdges: MappedNodeType[], edge) => {
-        if (edge && edge.node) {
+        if (edge?.node) {
             mappedEdges.push(mapper ? mapper(edge.node) : (edge.node as MappedNodeType));
         }
 

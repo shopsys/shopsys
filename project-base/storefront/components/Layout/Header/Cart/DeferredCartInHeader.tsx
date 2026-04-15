@@ -16,5 +16,5 @@ export const DeferredCartInHeader: FC = () => {
         return null;
     }
 
-    return shouldRender ? <CartInHeader className="vl:order-4 order-3" /> : <SkeletonModuleCartInHeader />;
+    return shouldRender ? <CartInHeader className="order-3 vl:order-4" /> : <SkeletonModuleCartInHeader />;
 };

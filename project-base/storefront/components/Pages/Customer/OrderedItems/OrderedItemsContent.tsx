@@ -1,4 +1,3 @@
-import { OrderedItem } from './OrderedItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerComplaints } from 'components/Blocks/Skeleton/SkeletonModuleCustomerComplaints';
@@ -6,6 +5,7 @@ import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { OrderedItem } from './OrderedItem';
 
 type OrderedItemsContentProps = {
     areOrderedItemsFetching: boolean;
@@ -19,7 +19,7 @@ export const OrderedItemsContent: FC<OrderedItemsContentProps> = ({ areOrderedIt
 
     if (!items?.length && !areOrderedItemsFetching) {
         return (
-            <div className="vl:text-xl flex gap-2 text-lg">
+            <div className="flex gap-2 text-lg vl:text-xl">
                 <InfoIcon className="w-5" />
                 {t('You have no ordered items')}
             </div>

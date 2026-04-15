@@ -1,4 +1,3 @@
-import { ArticleLink } from './BlogPreviewElements';
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
@@ -7,6 +6,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ArticleLink } from './BlogPreviewElements';
 
 type SideProps = {
     articles: TypeListedBlogArticleFragment[];
@@ -19,9 +19,9 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
     return (
         <div className="flex flex-col gap-6">
             {articles.map((article) => (
-                <div key={article.uuid} className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5">
+                <div key={article.uuid} className="flex min-w-96 max-w-[410px] snap-start vl:flex-row flex-col gap-5">
                     <ArticleLink href={article.link} tabIndex={-1} title={t('Blog article')}>
-                        <div className="vl:h-24 vl:w-36 aspect-video w-full shrink-0 overflow-hidden rounded-xl">
+                        <div className="aspect-video vl:h-24 vl:w-36 w-full shrink-0 overflow-hidden rounded-xl">
                             <Image
                                 alt={article.mainImage?.name || article.name}
                                 className="size-full object-cover"
@@ -76,7 +76,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             {article.name}
                         </ArticleLink>
 
-                        <p className={twJoin('text-text-inverted font-normal', !isPlaceholder && 'hidden')}>
+                        <p className={twJoin('font-normal text-text-inverted', !isPlaceholder && 'hidden')}>
                             {article.perex}
                         </p>
                     </div>

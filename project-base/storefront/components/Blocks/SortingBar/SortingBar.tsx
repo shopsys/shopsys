@@ -1,4 +1,3 @@
-import { SortingBarItem } from './SortingBarItem';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
@@ -13,6 +12,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useUpdateSortQuery } from 'utils/queryParams/useUpdateSortQuery';
+import { SortingBarItem } from './SortingBarItem';
 
 export type SortingBarProps = {
     totalCount: number;
@@ -67,7 +67,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                     currentSort: sortOptionsLabels[selectedSortOption] || t('default order'),
                 })}
                 className={twJoin(
-                    'vl:hidden relative w-full flex-1 justify-start sm:w-auto',
+                    'relative vl:hidden w-full flex-1 justify-start sm:w-auto',
                     isSortMenuOpen && 'z-aboveOverlay',
                 )}
                 onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
@@ -84,14 +84,13 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                 id="sort-dropdown"
                 role="listbox"
                 className={twJoin(
-                    'bg-background-default vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
+                    'vl:flex vl:flex-row flex-col vl:gap-2.5 rounded-xl bg-background-default',
                     isSortMenuOpen
-                        ? 'z-aboveOverlay divide-border-less absolute top-full right-0 mt-1 flex w-[60%] divide-y px-5 py-2.5'
+                        ? 'absolute top-full right-0 z-aboveOverlay mt-1 flex w-[60%] divide-y divide-border-less px-5 py-2.5'
                         : 'hidden',
                 )}
             >
                 {sortOptions.map((sortOption) => {
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const { page, ...queriesWithoutPage } = getUrlQueriesWithoutDynamicPageQueries(router.query);
                     const sortParams = new URLSearchParams({
                         ...queriesWithoutPage,
@@ -125,7 +124,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                 })}
             </div>
 
-            <div className="font-secondary text-input-placeholder-default vl:block hidden text-xs">
+            <div className="vl:block hidden font-secondary text-input-placeholder-default text-xs">
                 {totalCount} {t('products count', { count: totalCount })}
             </div>
 

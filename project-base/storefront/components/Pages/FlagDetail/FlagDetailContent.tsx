@@ -1,4 +1,3 @@
-import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
@@ -10,6 +9,7 @@ import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { useRef } from 'react';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
 
 type FlagDetailContentProps = {
     flag: TypeFlagDetailFragment;
@@ -43,7 +43,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                     id="product-list"
                     ref={paginationScrollTargetRef}
                 >
-                    <div className="vl:flex-col flex flex-col-reverse">
+                    <div className="flex vl:flex-col flex-col-reverse">
                         <DeferredFilterSelectedParameters filterOptions={productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

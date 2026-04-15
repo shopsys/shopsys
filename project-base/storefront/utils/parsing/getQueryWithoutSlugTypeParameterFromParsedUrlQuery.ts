@@ -1,4 +1,4 @@
-import { ParsedUrlQuery } from 'querystring';
+import { ParsedUrlQuery } from 'node:querystring';
 
 export const getQueryWithoutSlugTypeParameterFromParsedUrlQuery = (query: ParsedUrlQuery): ParsedUrlQuery => {
     const routerQueryWithoutAllParameter = { ...query };

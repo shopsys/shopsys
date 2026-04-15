@@ -1,6 +1,6 @@
+import { GtmConsentInfoType } from 'gtm/types/objects';
 import { CustomerTypeEnum, DeliveryAddressType } from './customer';
 import { SelectOptionType } from './selectOptions';
-import { GtmConsentInfoType } from 'gtm/types/objects';
 
 export type NewsletterFormType = {
     email: string;

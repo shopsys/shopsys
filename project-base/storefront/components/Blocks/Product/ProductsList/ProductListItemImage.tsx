@@ -1,11 +1,13 @@
-import { ProductItemProps } from './ProductListItem';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import dynamic from 'next/dynamic';
 import { twJoin } from 'tailwind-merge';
 import { generateProductImageAlt } from 'utils/productAltText';
+import { ProductItemProps } from './ProductListItem';
 
-const ProductFlags = dynamic(() => import('../ProductFlags').then((component) => component.ProductFlags));
+const ProductFlags = dynamic(() =>
+    import('components/Blocks/Product/ProductFlags').then((component) => component.ProductFlags),
+);
 
 type ProductListItemImageProps = {
     size: ProductItemProps['size'];

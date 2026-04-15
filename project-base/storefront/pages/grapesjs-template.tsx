@@ -1,8 +1,8 @@
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { GrapesJs } from 'components/Basic/UserText/GrapesJs';
 import { Footer } from 'components/Layout/Footer/Footer';
-import { NewsletterForm } from 'components/Layout/Footer/NewsletterForm/NewsletterForm';
 import { useFooterArticles } from 'components/Layout/Footer/footerUtils';
+import { NewsletterForm } from 'components/Layout/Footer/NewsletterForm/NewsletterForm';
 import { AccessibilityNavigation } from 'components/Layout/Header/AccessibilityNavigation/AccessibilityNavigation';
 import { AutocompleteSearch } from 'components/Layout/Header/AutocompleteSearch/AutocompleteSearch';
 import { CartInHeader } from 'components/Layout/Header/Cart/CartInHeader';
@@ -31,7 +31,7 @@ const Index: FC = () => {
                     <div className="flex flex-wrap items-center gap-x-1 gap-y-3 py-3 lg:gap-x-7 lg:pt-6 lg:pb-5">
                         <Logo />
 
-                        <div className="vl:order-2 vl:flex-1 order-6 h-12 w-full transition lg:relative lg:order-4 lg:w-full">
+                        <div className="order-6 vl:order-2 h-12 w-full vl:flex-1 transition lg:relative lg:order-4 lg:w-full">
                             <AutocompleteSearch />
                         </div>
 
@@ -39,7 +39,7 @@ const Index: FC = () => {
                             <MenuIconic />
                         </div>
 
-                        <CartInHeader className="vl:order-4 order-3" />
+                        <CartInHeader className="order-3 vl:order-4" />
                     </div>
 
                     {navigationData?.navigation && <Navigation navigation={navigationData.navigation} />}
@@ -62,7 +62,7 @@ const Index: FC = () => {
                 </VerticalStack>
             </main>
 
-            <footer className="bg-background-accent-less mt-auto h-fit">
+            <footer className="mt-auto h-fit bg-background-accent-less">
                 <NewsletterForm />
                 <Footer footerArticles={footerArticles} />
             </footer>

@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import { RouteAnnouncer } from 'components/Layout/RouteAnnouncer';
 import { useSessionStore } from 'store/useSessionStore';
-import { describe, expect, test, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 type EventCallback = (...args: any[]) => void;
 
@@ -13,7 +13,7 @@ const createRouterEvents = () => {
             if (!listeners.has(event)) {
                 listeners.set(event, new Set());
             }
-            listeners.get(event)!.add(cb);
+            listeners.get(event)?.add(cb);
         },
         off: (event: string, cb: EventCallback) => {
             listeners.get(event)?.delete(cb);

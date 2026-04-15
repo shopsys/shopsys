@@ -41,10 +41,10 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
 
     if (hasWithdrawalRequested) {
         return (
-            <div className="bg-toast-bg-warning border-toast-border-warning flex flex-col gap-2.5 rounded-xl border-1 p-5">
+            <div className="flex flex-col gap-2.5 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
                 <p className="h4">{t('Withdrawal request was submitted')}</p>
 
-                <div className="vl:flex-row flex flex-col flex-wrap gap-x-10 gap-y-5">
+                <div className="flex vl:flex-row flex-col flex-wrap gap-x-10 gap-y-5">
                     <OrderItemColumnInfo title={t('Requested on')}>
                         {formatDate(withdrawalRequest.requestedAt)}
                     </OrderItemColumnInfo>
@@ -66,7 +66,7 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
     if (canRequestWithdrawal) {
         return (
             <div className="flex flex-col items-center gap-2">
-                <p className="mx-auto max-w-[520px] text-center text-sm text-balance">
+                <p className="mx-auto max-w-[520px] text-balance text-center text-sm">
                     {t('You can withdraw from this order within 14 days of delivery.')}
                 </p>
                 <LinkButton href={withdrawalFormUrl} size="small" type="order-withdrawal" variant="inverted">
@@ -81,8 +81,8 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
     }
 
     return (
-        <div className="bg-toast-bg-warning border-toast-border-warning flex items-center gap-2 rounded-xl border-1 p-5">
-            <InfoIcon className="text-icon-warning size-5" />
+        <div className="flex items-center gap-2 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
+            <InfoIcon className="size-5 text-icon-warning" />
             <p className="text-sm">
                 {t('Withdrawal deadline expired on {{ date }}', {
                     date: formatDate(withdrawalDeadline!),
@@ -98,7 +98,7 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
                                 lnk: (
                                     <ExtendedNextLink
                                         aria-label={t('Go to create complaint page', { ns: 'accessibility' })}
-                                        className="font-secondary inline text-sm font-semibold"
+                                        className="inline font-secondary font-semibold text-sm"
                                         href={newComplaintUrl}
                                         type="complaintNew"
                                     />

@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
-import { describe, expect, test, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const { maxCartItemQuantity: MAX_CART_ITEM_QUANTITY } = VALIDATION_CONSTANTS;
 

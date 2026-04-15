@@ -1,7 +1,7 @@
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { Footer } from './Footer/Footer';
 import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
 import { Header } from './Header/Header';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ErrorLayout: FC = ({ children }) => {
     const { t } = useTranslation();
@@ -10,7 +10,7 @@ export const ErrorLayout: FC = ({ children }) => {
         <div className="flex h-full min-h-screen flex-col">
             <AccessibilityNavigation />
 
-            <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb">
+            <header className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less">
                 <Header simpleHeader />
             </header>
 
@@ -24,7 +24,7 @@ export const ErrorLayout: FC = ({ children }) => {
 
             <footer
                 aria-label={t('Site information', { ns: 'accessibility' })}
-                className="bg-background-accent-less mt-auto h-fit"
+                className="mt-auto h-fit bg-background-accent-less"
             >
                 <Footer simpleFooter />
             </footer>

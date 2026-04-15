@@ -45,8 +45,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            const settingsQueryResponse = await client!
-                .query<TypeSettingsQuery, TypeSettingsQueryVariables>(SettingsQueryDocument, {})
+            const settingsQueryResponse = await client
+                ?.query<TypeSettingsQuery, TypeSettingsQueryVariables>(SettingsQueryDocument, {})
                 .toPromise();
 
             if (getCouldNotFindUserConsentPolicyArticleUrl(settingsQueryResponse)) {

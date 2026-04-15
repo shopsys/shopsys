@@ -31,7 +31,6 @@ export const Form: FC<FormProps> = ({
         event.preventDefault();
 
         // formProviderMethods may be null probably when it is not used in FormProvider context - see https://github.com/react-hook-form/react-hook-form/discussions/3894
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!formProviderMethods?.formState.isSubmitting && onSubmit !== undefined) {
             onSubmit(event);
         }
@@ -52,7 +51,7 @@ export const Form: FC<FormProps> = ({
     useScrollToFirstError(formName, formProviderMethods);
 
     return (
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+        /* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Form submission belongs on the form element. */
         <form
             noValidate
             className={className}
@@ -77,7 +76,7 @@ export const FormContentWrapper: FC = ({ children, className }) => {
 export const FormBlockWrapper: FC = ({ children, className }) => {
     return (
         <fieldset
-            className={twMergeCustom('bg-background-more vl:px-20 flex flex-col gap-5 rounded-xl p-5 py-8', className)}
+            className={twMergeCustom('flex flex-col gap-5 rounded-xl bg-background-more p-5 vl:px-20 py-8', className)}
         >
             {children}
         </fieldset>
@@ -86,7 +85,7 @@ export const FormBlockWrapper: FC = ({ children, className }) => {
 
 export const FormBlockAgreements: FC = ({ children, className }) => {
     return (
-        <fieldset className={twMergeCustom('vl:px-20 flex flex-col gap-4 px-5 py-6', className)}>{children}</fieldset>
+        <fieldset className={twMergeCustom('flex flex-col gap-4 px-5 vl:px-20 py-6', className)}>{children}</fieldset>
     );
 };
 

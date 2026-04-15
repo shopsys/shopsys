@@ -1,6 +1,6 @@
-import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
 
 type ProductComparisonHeadProps = {
     comparedProducts: TypeProductInProductListFragment[];
@@ -12,7 +12,7 @@ export const ProductComparisonHead: FC<ProductComparisonHeadProps> = ({ compared
     return (
         <thead>
             <tr id="js-table-compare-head">
-                <td className="z-above bg-table-bg-default sticky left-0 max-w-[205px] min-w-[115px] pr-3 align-top sm:w-52 sm:min-w-[211px] md:min-w-[256px] lg:w-72" />
+                <td className="sticky left-0 z-above min-w-[115px] max-w-[205px] bg-table-bg-default pr-3 align-top sm:w-52 sm:min-w-[211px] md:min-w-[256px] lg:w-72" />
 
                 {comparedProducts.map((product, index) => (
                     <ProductComparisonHeadItem

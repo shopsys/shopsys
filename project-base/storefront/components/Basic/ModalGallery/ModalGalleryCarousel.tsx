@@ -34,24 +34,18 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
 
                 return (
                     <li key={galleryItemKey} ref={itemsRefs[index]}>
-                        <div
+                        <button
                             aria-label={t('Select image from gallery', { ns: 'accessibility' })}
-                            role="button"
-                            tabIndex={0}
-                            title={t('Select image')}
                             className={twJoin(
-                                'flex h-20 w-20 snap-center items-center justify-center px-1 transition-opacity hover:opacity-100',
+                                'flex h-20 w-20 snap-center items-center justify-center border-0 bg-transparent px-1 transition-opacity hover:opacity-100',
                                 index !== selectedIndex && 'cursor-pointer opacity-40',
                             )}
+                            tabIndex={0}
+                            title={t('Select image')}
+                            type="button"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onSelectItem(index);
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                    e.stopPropagation();
-                                    onSelectItem(index);
-                                }
                             }}
                         >
                             {isImage && (
@@ -66,7 +60,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                             )}
 
                             {isVideo && (
-                                <div className="relative">
+                                <span className="relative inline-flex">
                                     <Image
                                         alt={galleryItem.description ?? t('Product Video')}
                                         className="max-h-20 w-auto"
@@ -76,8 +70,8 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                                         width={80}
                                     />
 
-                                    <PlayIcon className="bg-overlay-default text-text-inverted absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full" />
-                                </div>
+                                    <PlayIcon className="absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-overlay-default text-text-inverted" />
+                                </span>
                             )}
 
                             {isFile && (
@@ -91,7 +85,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                                     width={80}
                                 />
                             )}
-                        </div>
+                        </button>
                     </li>
                 );
             })}

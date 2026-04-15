@@ -23,7 +23,7 @@ export const ColorPreview: FC<ColorPreviewProps> = ({ rgbHex, colorIcon, classNa
             style={{ backgroundColor: hasImage ? undefined : (rgbHex ?? undefined) }}
             className={twMergeCustom(
                 'relative flex size-4 shrink-0 justify-center overflow-hidden rounded-sm',
-                !hasImage && 'border-icon-default border',
+                !hasImage && 'border border-icon-default',
                 className,
             )}
         >

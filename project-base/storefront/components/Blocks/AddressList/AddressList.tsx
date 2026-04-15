@@ -1,8 +1,8 @@
-import { AddAddressAction } from './Actions/AddAddressAction';
-import { AddressCard } from './AddressCard';
 import { useSetDefaultDeliveryAddressMutation } from 'graphql/requests/customer/mutations/SetDefaultDeliveryAddressMutation.generated';
 import { useEffect } from 'react';
 import { DeliveryAddressType } from 'types/customer';
+import { AddAddressAction } from './Actions/AddAddressAction';
+import { AddressCard } from './AddressCard';
 
 type AddressListProps = {
     defaultDeliveryAddress: DeliveryAddressType | undefined;
@@ -30,7 +30,7 @@ export const AddressList: FC<AddressListProps> = ({
     return (
         <div className="flex flex-col gap-5">
             {deliveryAddresses.length > 0 && (
-                <div className="vl:grid-cols-2 grid w-full gap-4">
+                <div className="grid w-full vl:grid-cols-2 gap-4">
                     {deliveryAddresses.map((address) => (
                         <AddressCard
                             key={address.uuid}

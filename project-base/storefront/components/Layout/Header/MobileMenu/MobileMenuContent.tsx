@@ -1,6 +1,3 @@
-import { DropdownMenuListItem } from './MobileMenuListItem';
-import { SubMenu } from './MobileMenuSubItems';
-import { mapNavigationMenuItems } from './mobileMenuUtils';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { AnimationSequence, useAnimate, useReducedMotion } from 'framer-motion';
@@ -8,6 +5,9 @@ import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/Navigat
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { DropdownMenuListItem } from './MobileMenuListItem';
+import { SubMenu } from './MobileMenuSubItems';
+import { mapNavigationMenuItems } from './mobileMenuUtils';
 
 export type MenuItem = {
     name: string;
@@ -92,7 +92,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
             <div className="flex items-center p-5">
                 {!!historyMenuGroups?.length && (
                     <button
-                        className="text-icon-less hover:text-icon-default flex cursor-pointer items-center justify-center p-1"
+                        className="flex cursor-pointer items-center justify-center p-1 text-icon-less hover:text-icon-default"
                         tabIndex={0}
                         title={t('Back')}
                         onClick={() => handleBackClick(historyMenuGroups)}
@@ -106,7 +106,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
                 </span>
 
                 <button
-                    className="text-icon-less hover:text-icon-default flex cursor-pointer items-center justify-center p-1"
+                    className="flex cursor-pointer items-center justify-center p-1 text-icon-less hover:text-icon-default"
                     tabIndex={0}
                     title={t('Close')}
                     onClick={onMenuToggleHandler}
@@ -142,7 +142,7 @@ const MenuItems: FC<{
     onNavigate: () => void;
 }> = ({ className, id, menuItems, onExpand, onNavigate }) => {
     return (
-        <div className={twJoin('divide-border-default w-[315px] divide-y px-5', className)} id={id}>
+        <div className={twJoin('w-[315px] divide-y divide-border-default px-5', className)} id={id}>
             {menuItems.map((navigationItem) => (
                 <DropdownMenuListItem
                     key={navigationItem.link + navigationItem.name + id}

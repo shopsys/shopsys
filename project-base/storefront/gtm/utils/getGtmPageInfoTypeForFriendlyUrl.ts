@@ -1,5 +1,3 @@
-import { getCategoryOrSeoCategoryGtmPageType } from './getCategoryOrSeoCategoryGtmPageType';
-import { getGtmPageInfoType } from './getGtmPageInfoType';
 import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
 import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
@@ -13,6 +11,8 @@ import {
 } from 'gtm/types/objects';
 import { getSpecialArticleGtmType } from 'gtm/utils/getSpecialArticleGtmTypes';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
+import { getCategoryOrSeoCategoryGtmPageType } from './getCategoryOrSeoCategoryGtmPageType';
+import { getGtmPageInfoType } from './getGtmPageInfoType';
 
 export const getGtmPageInfoTypeForFriendlyUrl = (
     friendlyUrlPageData: FriendlyUrlPageType | null | undefined,

@@ -1,6 +1,6 @@
-import { StyleguideSection } from './StyleguideElements';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useState } from 'react';
+import { StyleguideSection } from './StyleguideElements';
 
 export const StyleguideCheckboxes: FC = () => {
     const [isChecked, setIsChecked] = useState(false);

@@ -1,8 +1,8 @@
-import { TextInput, TextInputProps } from './TextInput';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
+import { TextInput, TextInputProps } from './TextInput';
 
 type TextInputControlledProps = {
     name: string;
@@ -43,7 +43,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
         fieldState: { error },
         field,
     } = useController({ name, control });
-    const textInputId = formName + '-' + name;
+    const textInputId = `${formName}-${name}`;
 
     const onBlurHandler: FocusEventHandler<HTMLInputElement> = (event) => {
         field.onBlur();

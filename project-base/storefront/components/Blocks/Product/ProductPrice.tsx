@@ -38,12 +38,12 @@ export const ProductPrice: FC<ProductPriceProps> = ({
         >
             <div
                 className={twMergeCustom(
-                    'font-secondary text-price-default text-lg font-bold whitespace-nowrap',
+                    'whitespace-nowrap font-bold font-secondary text-lg text-price-default',
                     textPriceSize === 'base' ? 'text-base' : 'text-lg',
-                    isSpecialPrice && 'text-price-before text-sm font-semibold line-through',
+                    isSpecialPrice && 'font-semibold text-price-before text-sm line-through',
                 )}
             >
-                {productPrice.isPriceFrom && isPriceFromVisible && t('From') + '\u00A0'}
+                {productPrice.isPriceFrom && isPriceFromVisible && `${t('From')}\u00A0`}
                 {formatPrice(productPrice.basicPrice.priceWithVat)}
             </div>
 
@@ -53,11 +53,11 @@ export const ProductPrice: FC<ProductPriceProps> = ({
 
                     <div
                         className={twMergeCustom(
-                            'font-secondary text-price-discounted font-bold whitespace-nowrap',
+                            'whitespace-nowrap font-bold font-secondary text-price-discounted',
                             textPriceSize === 'base' ? 'text-base' : 'text-lg',
                         )}
                     >
-                        {productPrice.isPriceFrom && isPriceFromVisible && t('From') + '\u00A0'}
+                        {productPrice.isPriceFrom && isPriceFromVisible && `${t('From')}\u00A0`}
                         {formatPrice(productPrice.priceWithVat)}
                     </div>
                 </>

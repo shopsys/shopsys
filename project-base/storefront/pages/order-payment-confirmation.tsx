@@ -4,11 +4,11 @@ import { OrderCustomerInfo } from 'components/Blocks/OrderCustomerInfo/OrderCust
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentStatus } from 'components/Pages/Order/PaymentConfirmation/PaymentStatus';
-import { ShowPaymentInstructionButton } from 'components/Pages/Order/PaymentConfirmation/ShowPaymentInstructionButton';
 import {
     getPaymentSessionExpiredErrorMessage,
     useUpdatePaymentStatus,
 } from 'components/Pages/Order/PaymentConfirmation/paymentConfirmationUtils';
+import { ShowPaymentInstructionButton } from 'components/Pages/Order/PaymentConfirmation/ShowPaymentInstructionButton';
 import { OrderConfirmationProducts } from 'components/Pages/OrderConfirmation/OrderConfirmationProducts';
 import { OrderConfirmationStepper } from 'components/Pages/OrderConfirmation/OrderConfirmationStepper';
 import { FlowTypesEnum } from 'components/Pages/OrderConfirmation/OrderConfirmationStepperFlows';
@@ -117,8 +117,8 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                         }
                     />
 
-                    <div className="vl:grid-cols-3 vl:gap-10 grid gap-4">
-                        <div className="vl:col-span-2 vl:flex-col flex flex-col-reverse gap-4">
+                    <div className="grid vl:grid-cols-3 gap-4 vl:gap-10">
+                        <div className="vl:col-span-2 flex vl:flex-col flex-col-reverse gap-4">
                             {orderPaymentPageStatus === TypePaymentContentPageStatusEnum.Failed &&
                                 order.hasExternalPayment && <PaymentsInOrderSelect orderUuid={orderUuid} />}
 

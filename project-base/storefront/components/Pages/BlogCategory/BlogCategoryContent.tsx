@@ -1,5 +1,3 @@
-import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
-import { BlogCategoryHeader } from './BlogCategoryHeader';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { BlogLayout } from 'components/Layout/BlogLayout';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -7,6 +5,8 @@ import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TypeBlogCategoryDetailFragment } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.generated';
 import { useRef } from 'react';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
+import { BlogCategoryHeader } from './BlogCategoryHeader';
 
 type BlogCategoryContentProps = {
     blogCategory: TypeBlogCategoryDetailFragment;

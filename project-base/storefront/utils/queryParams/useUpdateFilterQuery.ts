@@ -1,11 +1,9 @@
-import { pushQueries } from './pushQueries';
-import { useCurrentFilterQuery } from './useCurrentFilterQuery';
 import { SEO_SENSITIVE_FILTERS } from 'config/constants';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
-import { FilterOptionsUrlQueryType, FilterOptionsParameterUrlQueryType } from 'types/productFilter';
-import { UrlQueries, FilterQueries } from 'types/urlQueries';
+import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
+import { FilterQueries, UrlQueries } from 'types/urlQueries';
 import { buildNewQueryAfterFilterChange } from 'utils/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'utils/filterOptions/getFilterWithoutEmpty';
 import { getQueryWithoutSlugTypeParameterFromParsedUrlQuery } from 'utils/parsing/getQueryWithoutSlugTypeParameterFromParsedUrlQuery';
@@ -20,6 +18,8 @@ import {
     getChangedDefaultFiltersAfterSliderParameterChange,
     useRedirectFromSeoCategory,
 } from 'utils/seoCategories/queryParamsUtils';
+import { pushQueries } from './pushQueries';
+import { useCurrentFilterQuery } from './useCurrentFilterQuery';
 
 const handleUpdateFilter = (selectedUuid: string | undefined, items: string[] | undefined): string[] | undefined => {
     if (!selectedUuid) {
@@ -27,7 +27,7 @@ const handleUpdateFilter = (selectedUuid: string | undefined, items: string[] | 
     }
 
     const newItems = [...(items || [])];
-    const checkedIndex = items?.findIndex((b) => b === selectedUuid!);
+    const checkedIndex = items?.indexOf(selectedUuid!);
 
     if (checkedIndex !== undefined && checkedIndex > -1) {
         newItems.splice(checkedIndex, 1);
@@ -225,7 +225,7 @@ export const useUpdateFilterQuery = () => {
             if (updatedParamaterIndex !== -1) {
                 const newValues = handleUpdateFilter(
                     paramaterOptionUuid,
-                    currentFilter?.parameters![updatedParamaterIndex].values,
+                    currentFilter?.parameters?.[updatedParamaterIndex].values,
                 );
 
                 newParameters[updatedParamaterIndex] = {

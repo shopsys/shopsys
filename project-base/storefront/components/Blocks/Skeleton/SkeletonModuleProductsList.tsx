@@ -1,12 +1,12 @@
-import { SkeletonModuleFilterAndSortingBar } from './SkeletonModuleFilterAndSortingBar';
-import { SkeletonModuleFilterPanel } from './SkeletonModuleFilterPanel';
-import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { productListTwClass } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { SkeletonModuleFilterAndSortingBar } from './SkeletonModuleFilterAndSortingBar';
+import { SkeletonModuleFilterPanel } from './SkeletonModuleFilterPanel';
+import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 
 type SkeletonModuleProductsListProps = {
     isWithoutDescription?: boolean;
@@ -28,14 +28,14 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
             </div>
 
             {!isWithoutNavigation && (
-                <div className="vl:grid-cols-5 grid gap-3 md:grid-cols-3 lg:grid-cols-4">
+                <div className="grid vl:grid-cols-5 gap-3 md:grid-cols-3 lg:grid-cols-4">
                     {createEmptyArray(5).map((_, index) => (
                         <Skeleton key={index} className="h-20" />
                     ))}
                 </div>
             )}
 
-            <div className="vl:flex-row vl:flex-wrap vl:gap-4 flex scroll-mt-5 flex-col">
+            <div className="flex scroll-mt-5 vl:flex-row flex-col vl:flex-wrap vl:gap-4">
                 <SkeletonModuleFilterPanel />
 
                 <div className="flex-1">

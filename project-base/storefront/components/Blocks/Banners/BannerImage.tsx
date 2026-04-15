@@ -50,7 +50,7 @@ export const BannerImage: FC<BannerImageProps> = ({
                         key="carousel_preload_mobile"
                         as="image"
                         fetchPriority="high"
-                        href={mobileImageSrc + '?width=480'}
+                        href={`${mobileImageSrc}?width=480`}
                         media="(max-width: 769px)"
                         rel="preload"
                     />
@@ -58,24 +58,24 @@ export const BannerImage: FC<BannerImageProps> = ({
                         key="carousel_preload_desktop"
                         as="image"
                         fetchPriority="high"
-                        href={desktopImageSrc + '?width=1400'}
+                        href={`${desktopImageSrc}?width=1400`}
                         media="(min-width: 770px)"
                         rel="preload"
                     />
                 </Head>
             )}
-            <div className="vl:h-[425px] relative h-[250px] w-full grow md:h-[345px]">
+            <div className="relative h-[250px] vl:h-[425px] w-full grow md:h-[345px]">
                 <picture>
-                    <source media="(min-width: 770px)" srcSet={desktopImageSrc + '?width=1400'} />
-                    <source media="(max-width: 769px)" srcSet={mobileImageSrc + '?width=480'} />
-                    {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                    <source media="(min-width: 770px)" srcSet={`${desktopImageSrc}?width=1400`} />
+                    <source media="(max-width: 769px)" srcSet={`${mobileImageSrc}?width=480`} />
                     <img
                         {...mobileImageProps}
+                        alt={mobileAlt}
                         className="h-full w-full object-cover"
                         decoding={isFirst ? 'auto' : 'async'}
                         fetchPriority={isFirst ? 'high' : undefined}
                         loading={isFirst ? 'eager' : 'lazy'}
-                        src={mobileImageSrc + '?width=480'}
+                        src={`${mobileImageSrc}?width=480`}
                     />
                 </picture>
                 {children}

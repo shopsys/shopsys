@@ -1,5 +1,5 @@
 import { formatDate, formatDateAndTime, initIntlDateTimeFormatterLocale } from 'utils/formaters/formatDate';
-import { describe, expect, test, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 
 describe('formatDate', () => {
     beforeEach(() => {

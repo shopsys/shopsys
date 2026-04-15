@@ -1,7 +1,7 @@
-import { StyleguideSection } from './StyleguideElements';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useSessionStore } from 'store/useSessionStore';
+import { StyleguideSection } from './StyleguideElements';
 
 export const StyleguidePopups: FC = () => {
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);

@@ -14,7 +14,7 @@ export const Webline: FC<WeblineProps> = ({ children, tid, wrapperClassName, cla
         xxl: 'vl:max-w-[1400px]',
     };
 
-    const weblineClassName = twJoin('px-5 vl:mx-auto vl:w-full', widthClasses[width]);
+    const weblineClassName = twJoin('vl:mx-auto vl:w-full px-5', widthClasses[width]);
 
     if (!wrapperClassName) {
         return (

@@ -66,7 +66,7 @@ export const StoresWrapper: FC = () => {
                     <StoreList selectedStoreUuid={selectedStore} stores={mappedStores} />
                 </div>
                 <div className="basis-1/2" data-tid={TIDs.stores_map}>
-                    <div className="bg-background-more flex aspect-square rounded-xl p-5 lg:sticky lg:top-5">
+                    <div className="flex aspect-square rounded-xl bg-background-more p-5 lg:sticky lg:top-5">
                         <GoogleMap
                             activeMarkerHandler={(uuid) => clickOnMarkerHandler(uuid)}
                             markers={mappedStores}

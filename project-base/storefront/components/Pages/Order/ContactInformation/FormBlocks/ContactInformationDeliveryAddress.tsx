@@ -1,6 +1,3 @@
-import { ContactInformationDeliveryAddressForm } from './ContactInformationDeliveryAddressForm';
-import { ContactInformationDeliveryPickUpAddress } from './ContactInformationDeliveryPickUpAddress';
-import { ContactInformationDeliveryPickUpForm } from './ContactInformationDeliveryPickUpForm';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AddressList } from 'components/Blocks/AddressList/AddressList';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
@@ -17,6 +14,9 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { ContactInformationDeliveryAddressForm } from './ContactInformationDeliveryAddressForm';
+import { ContactInformationDeliveryPickUpAddress } from './ContactInformationDeliveryPickUpAddress';
+import { ContactInformationDeliveryPickUpForm } from './ContactInformationDeliveryPickUpForm';
 
 export const ContactInformationDeliveryAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);

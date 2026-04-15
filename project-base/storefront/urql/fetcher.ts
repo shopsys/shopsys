@@ -103,7 +103,7 @@ export const fetcher =
             const host = headers.get('OriginalHost');
             const domainId = headers.get(DOMAIN_ID_HEADER);
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
-            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? domainId + ':' : ''}`;
+            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? `${domainId}:` : ''}`;
             const hash = `${key}${await getHash(body)}`;
             const fromCache = await redisClient.get(hash);
 

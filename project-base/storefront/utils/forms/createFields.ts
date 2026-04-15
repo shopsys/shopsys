@@ -26,11 +26,10 @@ const isFieldWithExtras = (value: unknown): value is { label: unknown } =>
  *     telephone: t('Phone'),
  * })
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export const createFields = <T, TExtra = {}>(fields: { [K in keyof T]: FieldInput<TExtra> }): FormFieldMeta<
-    T,
-    TExtra
-> =>
+// biome-ignore lint/complexity/noBannedTypes: The helper defaults to no extra field metadata when callers do not extend fields.
+export const createFields = <T, TExtra = {}>(
+    fields: { [K in keyof T]: FieldInput<TExtra> },
+): FormFieldMeta<T, TExtra> =>
     Object.fromEntries(
         Object.entries(fields).map(([key, value]) => [
             key,

@@ -190,9 +190,9 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
 
                             <div
                                 aria-label={t('Select role group', { ns: 'accessibility' })}
-                                data-tid={formMeta.formName + '-' + formMeta.fields.roleGroup.name}
+                                data-tid={`${formMeta.formName}-${formMeta.fields.roleGroup.name}`}
                                 className={twJoin(
-                                    'vl:gap-4 flex flex-col gap-2',
+                                    'flex flex-col gap-2 vl:gap-4',
                                     isRoleGroupDisabled ? 'pointer-events-none opacity-50' : undefined,
                                 )}
                             >

@@ -1,12 +1,12 @@
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { SkeletonModuleComparisonAndWishlistButtons } from './SkeletonModuleComparisonAndWishlistButtons';
 import { SkeletonModuleLastVisitedProducts } from './SkeletonModuleLastVisitedProducts';
 import { SkeletonModuleProductDetailAddToCart } from './SkeletonModuleProductDetailAddToCart';
 import { SkeletonModuleProductSlider } from './SkeletonModuleProductSlider';
-import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
-import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
-import { Webline } from 'components/Layout/Webline/Webline';
-import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonPageProductDetail: FC = () => (
     <>
@@ -14,9 +14,9 @@ export const SkeletonPageProductDetail: FC = () => (
 
         <Webline>
             <VerticalStack gap="md">
-                <div className="vl:flex-row flex flex-col gap-6">
-                    <div className="vl:basis-3/5 vl:flex-row vl:items-start flex w-full basis-1/2 flex-col-reverse items-center gap-6">
-                        <div className="vl:flex-col flex w-full flex-row gap-3.5 sm:w-auto">
+                <div className="flex vl:flex-row flex-col gap-6">
+                    <div className="flex w-full basis-1/2 vl:basis-3/5 vl:flex-row flex-col-reverse vl:items-start items-center gap-6">
+                        <div className="flex w-full flex-row vl:flex-col gap-3.5 sm:w-auto">
                             {createEmptyArray(5).map((_, index) => (
                                 <Skeleton key={index} className="size-16 rounded-lg last:hidden md:last:block" />
                             ))}
@@ -43,7 +43,7 @@ export const SkeletonPageProductDetail: FC = () => (
                             <Skeleton className="h-4 w-2/4" />
                         </div>
 
-                        <div className="bg-skeleton-less flex h-56 flex-col gap-4 rounded-xl p-3 sm:p-6">
+                        <div className="flex h-56 flex-col gap-4 rounded-xl bg-skeleton-less p-3 sm:p-6">
                             <Skeleton className="h-8 w-20" />
                             <Skeleton className="h-5 w-2/6" />
 

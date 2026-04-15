@@ -1,4 +1,3 @@
-import { ProductsSliderPlaceholder } from './ProductsSliderPlaceholder';
 import { SkeletonModulePromotedProducts } from 'components/Blocks/Skeleton/SkeletonModulePromotedProducts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
@@ -7,6 +6,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import dynamic from 'next/dynamic';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { ProductsSliderPlaceholder } from './ProductsSliderPlaceholder';
 
 const ProductsSlider = dynamic(() => import('./ProductsSlider').then((component) => component.ProductsSlider), {
     ssr: false,

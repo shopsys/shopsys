@@ -6,7 +6,7 @@ export const initIntlDateTimeFormatterLocale = (defaultLocale: string): void => 
 
 const parseDate = (date?: Date | string): Date | null => {
     const dateObj = date ? new Date(date) : new Date();
-    if (isNaN(dateObj.getTime())) {
+    if (Number.isNaN(dateObj.getTime())) {
         return null;
     }
     return dateObj;

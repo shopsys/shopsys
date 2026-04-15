@@ -17,8 +17,8 @@ export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
             {email && (
                 <a
                     aria-label={t('Mail to {{email}}', { ns: 'accessibility', email })}
-                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline"
-                    href={'mailto:' + email}
+                    className="inline-flex items-center rounded-md font-semibold text-sm text-text-default no-underline"
+                    href={`mailto:${email}`}
                     tabIndex={0}
                 >
                     <MailIcon className="size-5" />
@@ -28,8 +28,8 @@ export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
             {phone && (
                 <a
                     aria-label={t('Call to {{phone}}', { ns: 'accessibility', phone })}
-                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline"
-                    href={'tel:' + cleanPhone}
+                    className="inline-flex items-center rounded-md font-semibold text-sm text-text-default no-underline"
+                    href={`tel:${cleanPhone}`}
                     tabIndex={0}
                 >
                     <PhoneIcon className="size-5" />

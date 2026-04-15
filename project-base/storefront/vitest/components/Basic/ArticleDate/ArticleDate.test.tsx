@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
-import { describe, expect, test, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('utils/formatting/useFormatDate', () => ({
     useFormatDate: () => ({

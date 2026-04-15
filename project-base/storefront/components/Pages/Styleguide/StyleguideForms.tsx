@@ -1,4 +1,3 @@
-import { StyleguideSection } from './StyleguideElements';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
@@ -9,6 +8,7 @@ import { FormProvider } from 'react-hook-form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
+import { StyleguideSection } from './StyleguideElements';
 
 export const StyleguideForms: FC = () => {
     return (
@@ -26,12 +26,10 @@ const StyleguideFormExample: FC = () => {
     });
 
     const onValidForm = () => {
-        // eslint-disable-next-line no-alert
         alert('Valid form handler');
     };
 
     const onInvalidForm = () => {
-        // eslint-disable-next-line no-alert
         alert('Invalid form handler');
     };
 

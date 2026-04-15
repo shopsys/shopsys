@@ -4,8 +4,8 @@ import { PersonalDataOverviewContent } from 'components/Pages/PersonalData/Overv
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
-    usePersonalDataPageTextQuery,
     PersonalDataPageTextQueryDocument,
+    usePersonalDataPageTextQuery,
 } from 'graphql/requests/personalData/queries/PersonalDataPageTextQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';

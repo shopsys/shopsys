@@ -1,3 +1,4 @@
+import { ParsedUrlQuery } from 'node:querystring';
 import { AuthConfig, AuthUtilities } from '@urql/exchange-auth';
 import {
     RefreshTokensDocument,
@@ -5,7 +6,6 @@ import {
     TypeRefreshTokensVariables,
 } from 'graphql/requests/auth/mutations/RefreshTokensMutation.generated';
 import { GetServerSidePropsContext, NextPageContext, PreviewData } from 'next';
-import { ParsedUrlQuery } from 'querystring';
 import { CombinedError, makeOperation, Operation } from 'urql';
 import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
 import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
@@ -51,7 +51,7 @@ const addAuthToOperation = (
             ...fetchOptions,
             headers: {
                 ...fetchOptions.headers,
-                'X-Auth-Token': 'Bearer ' + accessToken,
+                'X-Auth-Token': `Bearer ${accessToken}`,
             },
         },
     });
@@ -110,7 +110,7 @@ const refreshAuth = async (
 
         await doTryRefreshToken(refreshToken, authUtilities.mutate, domainConfig, context);
     } catch (e) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: intentional error logging in development
         console.error(e);
     }
 };

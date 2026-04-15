@@ -22,12 +22,12 @@ export const CartItemPrice: FC<CartItemPriceProps> = ({ productPrice, quantity, 
     }
 
     return (
-        <div className="vl:w-36 flex items-center justify-end">
-            <div className="font-secondary flex flex-col gap-0.5 text-right font-bold whitespace-nowrap">
+        <div className="flex vl:w-36 items-center justify-end">
+            <div className="flex flex-col gap-0.5 whitespace-nowrap text-right font-bold font-secondary">
                 <div
                     className={twMergeCustom(
                         'text-price-default',
-                        isLowerPriceApplied && 'text-price-before text-sm font-semibold line-through',
+                        isLowerPriceApplied && 'font-semibold text-price-before text-sm line-through',
                     )}
                 >
                     {formatPrice(mapPriceForCalculations(productPrice.basicPrice.priceWithVat) * quantity)}

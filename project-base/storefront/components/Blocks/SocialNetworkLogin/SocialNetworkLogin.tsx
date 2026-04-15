@@ -1,7 +1,6 @@
-import { SocialNetworkLoginLink } from './SocialNetworkLoginLink';
 import { TypeLoginTypeEnum } from 'graphql/types';
-import React from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { SocialNetworkLoginLink } from './SocialNetworkLoginLink';
 
 type SocialNetworkLoginProps = {
     socialNetworks: TypeLoginTypeEnum[];

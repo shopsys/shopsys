@@ -1,5 +1,5 @@
-import { DomainConfigType } from './domainConfig';
 import { GetServerSidePropsContext } from 'next';
+import { DomainConfigType } from './domainConfig';
 
 export const DEFAULT_LOCALE = 'default';
 

@@ -1,7 +1,7 @@
+import { stringify } from 'node:querystring';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
-import { stringify } from 'querystring';
 import { UrlQueries } from 'types/urlQueries';
 import { getOffsetPage } from 'utils/loadMore/getOffsetPage';
 import { getOffsetPageAndLoadMore } from 'utils/loadMore/getOffsetPageAndLoadMore';

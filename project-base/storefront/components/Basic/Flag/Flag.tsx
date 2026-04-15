@@ -15,7 +15,7 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColo
     const textColor = rgbBgColor && getYIQContrastTextColor(rgbBgColor);
 
     const flagTwClass = twMergeCustom(
-        'inline-flex rounded-flag px-1.5 py-1 text-xs transition-all font-secondary font-semibold text-flag-text',
+        'inline-flex rounded-flag px-1.5 py-1 font-secondary font-semibold text-flag-text text-xs transition-all',
         textColor,
         href && 'cursor-pointer',
         type === 'blog' && 'bg-secondary-500',

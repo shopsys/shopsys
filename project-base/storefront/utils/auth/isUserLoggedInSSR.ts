@@ -1,6 +1,6 @@
 import {
-    TypeCurrentCustomerUserQuery,
     CurrentCustomerUserQueryDocument,
+    TypeCurrentCustomerUserQuery,
 } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { Client } from 'urql';
 

@@ -38,7 +38,7 @@ export const NotificationBars: FC = () => {
                     <Webline>
                         <div
                             className={twJoin(
-                                'flex items-center justify-center text-center text-sm font-bold',
+                                'flex items-center justify-center text-center font-bold text-sm',
                                 getYIQContrastTextColor(item.rgbColor),
                             )}
                         >
@@ -64,7 +64,7 @@ export const NotificationBars: FC = () => {
             {loggedAsUserEmail && (
                 <section className="bg-background-error py-2">
                     <Webline>
-                        <div className="text-text-default flex items-center justify-center text-center text-sm font-bold">
+                        <div className="flex items-center justify-center text-center font-bold text-sm text-text-default">
                             <Trans
                                 defaultTrans="Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>"
                                 i18nKey="adminLoggedInAsCustomerWarning"

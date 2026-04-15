@@ -1,3 +1,7 @@
+import { ComponentType, useEffect } from 'react';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { useSessionStore } from 'store/useSessionStore';
+import { SkeletonEnum } from 'types/skeletons';
 import { SkeletonPageArticle } from './SkeletonPageArticle';
 import { SkeletonPageBlogArticle } from './SkeletonPageBlogArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
@@ -32,10 +36,6 @@ import { SkeletonPageStores } from './SkeletonPageStores';
 import { SkeletonPageTransportAndPayment } from './SkeletonPageTransportAndPayment';
 import { SkeletonPageUserConsent } from './SkeletonPageUserConsent';
 import { SkeletonPageWishlist } from './SkeletonPageWishlist';
-import { ComponentType, useEffect } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
-import { useSessionStore } from 'store/useSessionStore';
-import { SkeletonEnum } from 'types/skeletons';
 
 const SKELETON_COMPONENT_MAP: Record<PageType, ComponentType> = {
     [SkeletonEnum.Article]: SkeletonPageArticle,
@@ -110,5 +110,5 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
 
     const SkeletonComponent = pageType ? SKELETON_COMPONENT_MAP[pageType] : null;
 
-    return SkeletonComponent ? <SkeletonComponent /> : <>{children}</>;
+    return SkeletonComponent ? <SkeletonComponent /> : children;
 };

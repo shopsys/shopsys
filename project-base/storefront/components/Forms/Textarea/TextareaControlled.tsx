@@ -1,8 +1,8 @@
-import { Textarea, TextareaProps } from './Textarea';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
+import { Textarea, TextareaProps } from './Textarea';
 
 type TextareaControlledProps = {
     name: string;
@@ -25,7 +25,7 @@ export const TextareaControlled: FC<TextareaControlledProps> = ({
         fieldState: { error },
         field,
     } = useController({ name, control });
-    const textareaId = formName + '-' + name;
+    const textareaId = `${formName}-${name}`;
 
     const onBlurHandler: FocusEventHandler<HTMLTextAreaElement> = (event) => {
         field.onBlur();

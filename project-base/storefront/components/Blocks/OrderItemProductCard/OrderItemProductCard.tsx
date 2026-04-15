@@ -1,4 +1,3 @@
-import { OrderItemProductPrice } from './OrderItemProductPrice';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
@@ -6,6 +5,7 @@ import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/Pr
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
 import { generateProductImageAlt } from 'utils/productAltText';
+import { OrderItemProductPrice } from './OrderItemProductPrice';
 
 type OrderItemProductCardProps = {
     availability: TypeAvailability;
@@ -29,7 +29,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
     availability,
 }) => {
     return (
-        <li className="bg-background-more font-secondary flex flex-col gap-1 rounded-xl p-4">
+        <li className="flex flex-col gap-1 rounded-xl bg-background-more p-4 font-secondary">
             <div className="isolate flex items-center gap-2.5">
                 <Image
                     alt={generateProductImageAlt(fullName, categoryName)}
@@ -41,10 +41,10 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
                 />
                 <div className="flex flex-1 items-center justify-between gap-2.5">
                     <div className="flex flex-col gap-0.5">
-                        <span className="max-w-44 text-sm font-semibold">{fullName}</span>
+                        <span className="max-w-44 font-semibold text-sm">{fullName}</span>
                         <span
                             className={twJoin(
-                                'text-xs font-semibold',
+                                'font-semibold text-xs',
                                 availability.status === TypeAvailabilityStatusEnum.InStock &&
                                     'text-availability-in-stock',
                                 availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
@@ -54,7 +54,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
                             {availability.name}
                         </span>
                     </div>
-                    <span className="text-sm font-semibold whitespace-nowrap">
+                    <span className="whitespace-nowrap font-semibold text-sm">
                         {quantity} {unit}
                     </span>
                 </div>

@@ -1,9 +1,8 @@
-import { StyleguideSection } from './StyleguideElements';
 import { Button } from 'components/Forms/Button/Button';
-import React from 'react';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
+import { StyleguideSection } from './StyleguideElements';
 
 export const StyleguideToasts: FC = () => {
     return (

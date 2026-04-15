@@ -10,7 +10,7 @@ export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCu
     return (
         <Popup className="w-full max-w-md" contentClassName="overflow-y-auto" title={formHeading ?? t('Login')}>
             <VerticalStack gap="sm">
-                <div className="bg-background-most mx-auto flex size-14 items-center justify-center rounded-full">
+                <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-background-most">
                     <UserIcon aria-hidden="true" className="size-7" focusable="false" />
                 </div>
 

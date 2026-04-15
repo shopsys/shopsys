@@ -13,9 +13,9 @@ import {
     TypeAdvertsQueryVariables,
 } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import {
+    CategoryDetailQueryDocument,
     TypeCategoryDetailQuery,
     TypeCategoryDetailQueryVariables,
-    CategoryDetailQueryDocument,
 } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { NextPage } from 'next';
@@ -29,16 +29,16 @@ import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import {
-    PAGE_QUERY_PARAMETER_NAME,
-    SORT_QUERY_PARAMETER_NAME,
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const Error404Content = dynamic(
     () => import('components/Pages/ErrorPage/Error404Content').then((m) => m.Error404Content),
@@ -108,16 +108,16 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
             const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
-            const categoryDetailResponsePromise = client!
-                .query<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
+            const categoryDetailResponsePromise = client
+                ?.query<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
                     urlSlug,
                     filter,
                     orderingMode,
                 })
                 .toPromise();
 
-            const categoryProductsResponsePromise = client!
-                .query(CategoryProductsQueryDocument, {
+            const categoryProductsResponsePromise = client
+                ?.query(CategoryProductsQueryDocument, {
                     endCursor: getEndCursor(page),
                     orderingMode,
                     filter,

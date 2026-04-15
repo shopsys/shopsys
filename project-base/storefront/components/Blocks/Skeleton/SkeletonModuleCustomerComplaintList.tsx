@@ -1,7 +1,7 @@
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
 import { SkeletonModuleCustomerComplaints } from './SkeletonModuleCustomerComplaints';
 import { SkeletonModulePageHero } from './SkeletonModulePageHero';
-import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleCustomerComplaintList: FC = () => (
     <SkeletonModuleCustomer>

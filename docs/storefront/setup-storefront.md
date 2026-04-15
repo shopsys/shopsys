@@ -53,31 +53,31 @@ pnpm run build
 pnpm start
 ```
 
-### Run eslint for code
+### Run Biome checks
 
 ```bash
 pnpm run lint
 ```
 
-### Run eslint and fix code
+### Run Biome checks and fix code
 
 ```bash
 pnpm run lint--fix
 ```
 
-### Run prettier format code
+### Run Biome formatter
 
 ```bash
 pnpm run format
 ```
 
-### Run TypeScript compiler (TSC typecheck), prettier, and eslint to check the code
+### Run TypeScript compiler (TSC typecheck) and Biome to check the code
 
 ```bash
 pnpm run check
 ```
 
-### Run TypeScript compiler (TSC typecheck), prettier, and eslint to check and fix the code
+### Run TypeScript compiler (TSC typecheck) and Biome to check and fix the code
 
 ```bash
 pnpm run check--fix

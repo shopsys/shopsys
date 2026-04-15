@@ -37,7 +37,7 @@ export const PageHero: FC<PageHeroProps> = ({
 }) => {
     return (
         <VerticalStack gap="xs">
-            <div className="bg-background-most mx-auto flex size-14 items-center justify-center rounded-full">
+            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-background-most">
                 <IconComponent aria-hidden="true" className="size-7" focusable="false" />
             </div>
 
@@ -49,7 +49,7 @@ export const PageHero: FC<PageHeroProps> = ({
                 <p
                     aria-atomic="true"
                     aria-live="polite"
-                    className="mx-auto max-w-[520px] text-center text-balance"
+                    className="mx-auto max-w-[520px] text-balance text-center"
                     data-tid={descriptionTid}
                     role="alert"
                 >

@@ -28,8 +28,8 @@ export const DeferredBlogPreview: FC = () => {
     }
 
     const bgImageTwClass = twJoin(
-        'xl:rounded-xl py-16 bg-cover bg-center relative bg-background-dark/80',
-        "after:content-[''] after:block after:absolute after:inset-0 after:bg-background-dark/80 after:xl:rounded-xl",
+        'relative bg-background-dark/80 bg-center bg-cover py-16 xl:rounded-xl',
+        "after:absolute after:inset-0 after:block after:bg-background-dark/80 after:content-[''] after:xl:rounded-xl",
     );
 
     return (

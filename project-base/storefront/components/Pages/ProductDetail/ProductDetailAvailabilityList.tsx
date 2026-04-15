@@ -19,7 +19,7 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                         storeAvailability.store && (
                             <li
                                 key={storeAvailability.store.slug}
-                                className="border-border-default flex w-full items-center justify-between gap-4 border-b py-4"
+                                className="flex w-full items-center justify-between gap-4 border-border-default border-b py-4"
                             >
                                 <strong className="w-36">{storeAvailability.store.storeName}</strong>
 

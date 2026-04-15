@@ -44,8 +44,8 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
             )}
 
             {isContentExpiredError && (
-                <div className="bg-toast-bg-warning border-toast-border-warning mt-4 flex items-center gap-2 rounded-xl border-1 p-5">
-                    <InfoIcon className="text-icon-warning size-5" />
+                <div className="mt-4 flex items-center gap-2 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
+                    <InfoIcon className="size-5 text-icon-warning" />
                     <p className="text-sm">
                         {isLoggedIn && orderDetailUrl ? (
                             <Trans

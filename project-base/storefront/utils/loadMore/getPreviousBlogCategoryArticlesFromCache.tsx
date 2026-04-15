@@ -1,10 +1,10 @@
-import { mergeItemEdges } from './mergeItemEdges';
-import { readBlogCategoryArticlesFromCache } from './readBlogCategoryArticlesFromCache';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { DocumentNode } from 'graphql';
 import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
 import { Client } from 'urql';
+import { mergeItemEdges } from './mergeItemEdges';
+import { readBlogCategoryArticlesFromCache } from './readBlogCategoryArticlesFromCache';
 
 export const getPreviousBlogCategoryArticlesFromCache = (
     queryDocument: DocumentNode,

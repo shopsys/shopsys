@@ -1,8 +1,8 @@
-import { CategoryDetailProductsWrapperProps } from './CategoryDetailProductsWrapper';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { ProductListItemPlaceholder } from 'components/Blocks/Product/ProductsList/ProductListItemPlaceholder';
 import { productListTwClass } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
+import { CategoryDetailProductsWrapperProps } from './CategoryDetailProductsWrapper';
 
 type CategoryDetailProductsWrapperPlaceholderProps = Pick<CategoryDetailProductsWrapperProps, 'category' | 'products'>;
 

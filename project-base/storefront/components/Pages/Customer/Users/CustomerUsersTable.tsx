@@ -99,23 +99,23 @@ export const CustomerUsersTable: FC = () => {
                 {customerUsers.map((user) => (
                     <Row
                         key={user.uuid}
-                        className="bg-table-bg-contrast vl:table-row vl:bg-table-bg-default vl:odd:bg-table-bg-contrast mb-2 flex flex-col rounded-md border-none"
+                        className="mb-2 flex vl:table-row flex-col rounded-md border-none bg-table-bg-contrast vl:bg-table-bg-default vl:odd:bg-table-bg-contrast"
                     >
-                        <Cell className="py-2 text-left text-sm leading-5 font-bold uppercase">
+                        <Cell className="py-2 text-left font-bold text-sm uppercase leading-5">
                             {user.lastName} {user.firstName} {currentCustomerUserUuid === user.uuid && `(${t('You')})`}
                         </Cell>
 
                         <Cell
                             className={twJoin(
                                 'vl:table-cell py-2 text-left text-sm leading-5',
-                                'vl:max-w-56 max-w-64 overflow-x-auto whitespace-nowrap sm:max-w-full',
-                                '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                                'max-w-64 vl:max-w-56 overflow-x-auto whitespace-nowrap sm:max-w-full',
+                                '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                             )}
                         >
                             {user.email}
                         </Cell>
                         <Cell className="vl:table-cell py-2 text-left text-sm leading-5">{user.roleGroup.name}</Cell>
-                        <Cell align="right" className="vl:flex-row vl:justify-end flex flex-row-reverse gap-2 py-2">
+                        <Cell align="right" className="flex vl:flex-row flex-row-reverse vl:justify-end gap-2 py-2">
                             <Button
                                 className="flex-1"
                                 data-tid={TIDs.customer_users_edit_button}

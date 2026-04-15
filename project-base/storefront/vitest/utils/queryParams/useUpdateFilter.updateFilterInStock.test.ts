@@ -116,8 +116,7 @@ describe('useUpdateFilter().updateFilterInStock tests', () => {
     });
 
     test('onlyInStock should redirect from SEO category if it is SEO-sensitive', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ AVAILABILITY: true }));
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({

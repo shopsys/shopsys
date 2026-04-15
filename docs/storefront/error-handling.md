@@ -327,7 +327,7 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
         showErrorMessage(err);
     }
 
-    // eslint-disable-next-line require-atomic-updates
+    // Intentionally assign the response status after logging and toast handling.
     context.res.statusCode = statusCode;
     ...
 
