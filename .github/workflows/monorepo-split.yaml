@@ -26,5 +26,5 @@ jobs:
                     sudo apt-get install -y git-filter-repo
             -   name: Split repositories
                 run: |
-                    git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+                    git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all || true
                     bash ./.github/monorepo/split-repositories.sh "${{ github.ref_name }}" "${REMOTE_TEMPLATE}"
