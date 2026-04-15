@@ -31,11 +31,15 @@ class CronModuleFacade
      */
     public function scheduleModules(array $cronModuleConfigs): void
     {
+        $allModulesIndexedByServiceId = $this->findAllIndexedByServiceId();
+
         foreach ($cronModuleConfigs as $cronModuleConfig) {
-            $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
+            $serviceId = $cronModuleConfig->getServiceId();
+            $cronModule = $allModulesIndexedByServiceId[$serviceId] ?? $this->cronModuleRepository->getCronModuleByServiceId($serviceId);
             $cronModule->schedule();
-            $this->em->flush();
         }
+
+        $this->em->flush();
     }
 
     /**
