@@ -1,0 +1,21 @@
+{{ form_row(form.companyName) }}
+<div class="row g-3">
+    <div class="col-12 col-md-6">
+        {{ form_row(form.companyNumber) }}
+    </div>
+    <div class="col-12 col-md-6">
+        {{ form_row(form.companyTaxNumber) }}
+    </div>
+</div>
+{{ form_row(form.street) }}
+<div class="row g-3">
+    <div class="col-12 col-md-6">
+        {{ form_row(form.city) }}
+    </div>
+    <div class="col-12 col-md-6">
+        {{ form_row(form.postcode) }}
+    </div>
+</div>
+{{ form_row(form.country) }}
+{{ form_rest(form) }}
+

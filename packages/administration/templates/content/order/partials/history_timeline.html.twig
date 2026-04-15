@@ -1,4 +1,26 @@
 <ul class="timeline">
+    {% if order is defined and (order.createdAsAdministrator or order.createdAsAdministratorName) %}
+        <li class="timeline-event">
+            <div class="timeline-event-icon text-blue">
+                {{ ux_icon('user') }}
+            </div>
+            <div class="card timeline-event-card">
+                <div class="card-body">
+                    <div class="text-secondary float-end">
+                        {{ order.createdAt|formatDateTime }}
+                    </div>
+                    <h4 class="mb-1">
+                        {{ 'Created'|trans }} — {{ 'Order'|trans }}
+                        <span class="text-secondary">({{ order.number }})</span>
+                    </h4>
+                    <div class="text-secondary mb-1">
+                        {{ 'By'|trans }}: {{ order.createdAsAdministrator ? order.createdAsAdministrator.realName : order.createdAsAdministratorName }}
+                    </div>
+                </div>
+            </div>
+        </li>
+    {% endif %}
+
     {% for entry in entityLogEntries %}
         {% if entry.action is same as(constant('Shopsys\\FrameworkBundle\\Component\\EntityLog\\Enum\\EntityLogActionEnum::CREATE')) %}
             {% set icon = 'plus' %}

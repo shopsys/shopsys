@@ -19,19 +19,32 @@
         </div>
     {% endblock %}
 
+    {% set filteredTabs = tabs|filter((tab, identifier) => identifier != 'customer') %}
+    {% set hasActiveFilteredTab = activeTab is defined and activeTab is not null and activeTab in filteredTabs|keys %}
+
+    <style>
+        .order-tab-disabled-like {
+            color: var(--tblr-secondary) !important;
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+    </style>
+
     <div class="card">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                {% for identifier, tab in tabs %}
-                    {% set isActive = activeTab is defined and activeTab is not null ? activeTab == identifier : loop.first %}
+                {% for identifier, tab in filteredTabs %}
+                    {% set isActive = hasActiveFilteredTab ? activeTab == identifier : loop.first %}
+                    {% set isPaymentTabEmpty = identifier == 'payments' and paymentsForm is null %}
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link{% if isActive %} active{% endif %}"
+                        <a class="nav-link{% if isActive %} active{% endif %}{% if isPaymentTabEmpty %} order-tab-disabled-like{% endif %}"
                            id="nav-{{ identifier }}"
-                           data-bs-toggle="tab"
-                           href="#tab-{{ identifier }}"
+                           {% if not isPaymentTabEmpty %}data-bs-toggle="tab"{% endif %}
+                           href="{% if isPaymentTabEmpty %}#{% else %}#tab-{{ identifier }}{% endif %}"
                            role="tab"
                            aria-controls="tab-{{ identifier }}"
-                           aria-selected="{{ isActive ? 'true' : 'false' }}">
+                           aria-selected="{{ isActive ? 'true' : 'false' }}"
+                           {% if isPaymentTabEmpty %}aria-disabled="true" tabindex="-1" onclick="return false;"{% endif %}>
                             {% if tab.icon %}
                                 <i class="ti ti-{{ tab.icon }} me-1"></i>
                             {% endif %}
@@ -43,8 +56,8 @@
         </div>
         <div class="card-body p-0">
             <div class="tab-content">
-                {% for identifier, tab in tabs %}
-                    {% set isActive = activeTab is defined and activeTab is not null ? activeTab == identifier : loop.first %}
+                {% for identifier, tab in filteredTabs %}
+                    {% set isActive = hasActiveFilteredTab ? activeTab == identifier : loop.first %}
                     <div class="tab-pane{% if isActive %} show active{% endif %} p-3"
                          id="tab-{{ identifier }}"
                          role="tabpanel"
@@ -64,13 +77,14 @@
 
     {% if canEdit %}
         {% for modal in [
-            { id: 'trackingEditModal', title: 'Edit tracking'|trans, formId: 'js-tracking-modal-form', section: 'tracking' },
-            { id: 'noteEditModal', title: 'Edit note'|trans, formId: 'js-note-modal-form', section: 'note' },
-            { id: 'personalEditModal', title: 'Edit personal data'|trans, formId: 'js-personal-modal-form', section: 'personal' },
-            { id: 'addressesEditModal', title: 'Edit billing & delivery'|trans, formId: 'js-addresses-modal-form', section: 'addresses' },
+            { id: 'trackingEditModal', title: 'Edit tracking'|trans, formId: 'js-tracking-modal-form', section: 'tracking', dialogClass: 'modal-lg' },
+            { id: 'noteEditModal', title: 'Edit note'|trans, formId: 'js-note-modal-form', section: 'note', dialogClass: 'modal-lg' },
+            { id: 'personalEditModal', title: 'Edit personal data'|trans, formId: 'js-personal-modal-form', section: 'personal', dialogClass: 'modal-lg' },
+            { id: 'billingEditModal', title: 'Edit billing details'|trans, formId: 'js-billing-modal-form', section: 'billing', dialogClass: 'modal-lg' },
+            { id: 'deliveryEditModal', title: 'Edit delivery address'|trans, formId: 'js-delivery-modal-form', section: 'delivery', dialogClass: 'modal-lg' },
         ] %}
             <div class="modal modal-blur fade" id="{{ modal.id }}" tabindex="-1">
-                <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-dialog {{ modal.dialogClass }} modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{{ modal.title }}</h5>
@@ -92,22 +106,10 @@
                                     {{ form_row(personalForm.email) }}
                                     {{ form_row(personalForm.telephone) }}
                                     {{ form_rest(personalForm) }}
-                                {% elseif modal.section == 'addresses' %}
-                                    <h4>{{ 'Company details'|trans }}</h4>
-                                    {{ form_row(addressesForm.companyName) }}
-                                    {{ form_row(addressesForm.companyNumber) }}
-                                    {{ form_row(addressesForm.companyTaxNumber) }}
-                                    <hr>
-                                    <h4>{{ 'Billing address'|trans }}</h4>
-                                    {{ form_row(addressesForm.street) }}
-                                    {{ form_row(addressesForm.city) }}
-                                    {{ form_row(addressesForm.postcode) }}
-                                    {{ form_row(addressesForm.country) }}
-                                    <hr>
-                                    <h4>{{ 'Delivery address'|trans }}</h4>
-                                    {{ form_row(addressesForm.deliveryAddressSameAsBillingAddress) }}
-                                    {{ form_widget(addressesForm.deliveryAddressFields) }}
-                                    {{ form_rest(addressesForm) }}
+                                {% elseif modal.section == 'billing' %}
+                                    {% include '@ShopsysAdministration/content/order/partials/billing_form.html.twig' with { form: billingForm } %}
+                                {% elseif modal.section == 'delivery' %}
+                                    {% include '@ShopsysAdministration/content/order/partials/delivery_form.html.twig' with { form: deliveryForm } %}
                                 {% endif %}
                             </form>
                         </div>
@@ -125,7 +127,7 @@
                so saving via the modal must reload to render the newly available tab. #}
             {% set isAlreadyWithdrawn = order.status.type == constant('Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_WITHDRAWN') %}
             <div class="modal modal-blur fade" id="withdrawalEditModal" tabindex="-1">
-                <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{{ 'Edit withdrawal request'|trans }}</h5>

@@ -1,11 +1,20 @@
 {% set status_class = order.status.type|order_status_color %}
 
-<div class="row row-deck row-cards mb-3">
-    <div class="col-sm-6 col-xl-3">
+<div class="row row-cards mb-3">
+    <div class="col-12 col-lg-6">
         <div class="card">
             <div class="card-body d-flex flex-column gap-1">
                 <div class="subheader d-flex justify-content-between align-items-center mb-1">
-                    {{ 'Basic information'|trans }}
+                    <span>{{ 'Basic information'|trans }}</span>
+                    <a href="#"
+                       class="text-secondary small d-inline-block js-toggle-text"
+                       data-bs-toggle="collapse"
+                       data-bs-target="#basicInfoMore"
+                       data-text-more="{{ 'Show more'|trans }}"
+                       data-text-less="{{ 'Show less'|trans }}"
+                       onclick="event.preventDefault(); var d=this.dataset; this.textContent = this.textContent.trim() === d.textMore ? d.textLess : d.textMore;">
+                        {{ 'Show more'|trans }}
+                    </a>
                 </div>
                 <div>
                     {% if canEdit|default(false) and orderStatuses is defined %}
@@ -40,11 +49,6 @@
                 <div class="text-secondary">
                     {{ 'Created'|trans }}: {{ order.createdAt|formatDateTime }}
                 </div>
-                {% if order.createdAsAdministrator or order.createdAsAdministratorName %}
-                    <div class="text-secondary">
-                        {{ 'Created by'|trans }}: {{ order.createdAsAdministrator ? order.createdAsAdministrator.realName : order.createdAsAdministratorName }}
-                    </div>
-                {% endif %}
                 {% if order.promoCode %}
                     <div class="text-secondary">{{ 'Promo code'|trans }}: {{ order.promoCode }}</div>
                 {% endif %}
@@ -52,7 +56,8 @@
                     <span class="text-secondary">{{ 'Total'|trans }}:</span>
                     {{ order.totalPriceWithVat|priceWithCurrencyByOrder(order) }}
                 </div>
-                {# Collapsible section START #}
+
+                {# Secondary details collapsed to keep compact card height #}
                 <div class="collapse" id="basicInfoMore">
                     <div class="d-flex flex-column gap-1">
                         {% if isMultidomain() %}
@@ -65,58 +70,9 @@
                         <div class="text-secondary">{{ 'Internal ID'|trans }}: {{ order.id }}</div>
                     </div>
                 </div>
-                <a href="#" class="text-secondary small d-inline-block js-toggle-text"
-                   data-bs-toggle="collapse" data-bs-target="#basicInfoMore"
-                   data-text-more="{{ 'Show more'|trans }}" data-text-less="{{ 'Show less'|trans }}"
-                   onclick="event.preventDefault(); var d=this.dataset; this.textContent = this.textContent.trim() === d.textMore ? d.textLess : d.textMore;">
-                    {{ 'Show more'|trans }}
-                </a>
-                {# Collapsible section END #}
-            </div>
-        </div>
-    </div>
 
-    <div class="col-sm-6 col-xl-3">
-        <div class="card">
-            <div class="card-body d-flex flex-column gap-1">
-                <div class="subheader d-flex justify-content-between align-items-center mb-1">
-                    {{ 'Customer'|trans }}
-                    {% if canEdit|default(false) %}
-                        <a href="#" class="text-secondary" data-bs-toggle="modal" data-bs-target="#personalEditModal" title="{{ 'Edit'|trans }}">
-                            {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
-                        </a>
-                    {% endif %}
-                </div>
-                {% if order.customerUser %}
-                    {% set registeredCompanyName = order.customerUser.customer.billingAddress.companyName|default(null) %}
-                    <div class="d-flex align-items-center gap-1 flex-wrap">
-                        {% if registeredCompanyName %}
-                            <a href="{{ url('admin_customer_edit', { id: order.customerUser.customer.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
-                                {{ registeredCompanyName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
-                            </a>
-                            -
-                        {% endif %}
-                        <a href="{{ url('admin_customer_user_edit', { id: order.customerUser.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
-                            {{ order.customerUser.firstName }} {{ order.customerUser.lastName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
-                        </a>
-                    </div>
-                {% endif %}
-                <div>{{ order.firstName }} {{ order.lastName }}</div>
-                <div class="text-secondary">
-                    <a href="mailto:{{ order.email }}">{{ order.email }}</a>
-                </div>
-                {% if order.telephone %}
-                    <div class="text-secondary">
-                        <a href="tel:{{ order.telephone }}">{{ order.telephone }}</a>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
+                <hr class="my-2">
 
-    <div class="col-sm-6 col-xl-3">
-        <div class="card">
-            <div class="card-body d-flex flex-column gap-1">
                 <div class="subheader d-flex justify-content-between align-items-center mb-1">
                     {{ 'Payment & Transport'|trans }}
                     {% if canEdit|default(false) %}
@@ -149,13 +105,9 @@
                 <div class="text-secondary">
                     {{ 'Delivered'|trans }}: {{ order.deliveredAt ? order.deliveredAt|formatDateTime : '-' }}
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-sm-6 col-xl-3">
-        <div class="card">
-            <div class="card-body d-flex flex-column gap-1">
+                <hr class="my-2">
+
                 <div class="subheader d-flex justify-content-between align-items-center mb-1">
                     {{ 'Note'|trans }}
                     {% if canEdit|default(false) %}
@@ -166,6 +118,61 @@
                 </div>
                 <div class="text-secondary">
                     {{ order.note ?: '-'|trans }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-body d-flex flex-column gap-1">
+                <div class="subheader d-flex justify-content-between align-items-center mb-1">
+                    {{ 'Customer'|trans }}
+                    {% if canEdit|default(false) %}
+                        <a href="#" class="text-secondary" data-bs-toggle="modal" data-bs-target="#personalEditModal" title="{{ 'Edit'|trans }}">
+                            {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
+                        </a>
+                    {% endif %}
+                </div>
+                {% if order.customerUser %}
+                    {% set registeredCompanyName = order.customerUser.customer.billingAddress.companyName|default(null) %}
+                    <div class="d-flex align-items-center gap-1 flex-wrap">
+                        {% if registeredCompanyName %}
+                            <a href="{{ url('admin_customer_edit', { id: order.customerUser.customer.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                                {{ registeredCompanyName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
+                            </a>
+                            -
+                        {% endif %}
+                        <a href="{{ url('admin_customer_user_edit', { id: order.customerUser.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                            {{ order.customerUser.firstName }} {{ order.customerUser.lastName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="fw-medium d-flex align-items-center gap-2">
+                    <span class="text-secondary d-inline-flex align-items-center">
+                        {{ ux_icon('tabler:user', { class: 'icon icon-sm' }) }}
+                    </span>
+                    <span>{{ order.firstName }} {{ order.lastName }}</span>
+                </div>
+                <div class="text-secondary d-flex align-items-center gap-2">
+                    <span class="d-inline-flex align-items-center">
+                        {{ ux_icon('tabler:mail', { class: 'icon icon-sm' }) }}
+                    </span>
+                    <a href="mailto:{{ order.email }}">{{ order.email }}</a>
+                </div>
+                {% if order.telephone %}
+                    <div class="text-secondary d-flex align-items-center gap-2">
+                        <span class="d-inline-flex align-items-center">
+                            {{ ux_icon('phone', { class: 'icon icon-sm' }) }}
+                        </span>
+                        <a href="tel:{{ order.telephone }}">{{ order.telephone }}</a>
+                    </div>
+                {% endif %}
+
+                <hr class="my-2">
+
+                <div id="js-addresses-view">
+                    {% include '@ShopsysAdministration/content/order/partials/addresses_view.html.twig' %}
                 </div>
             </div>
         </div>

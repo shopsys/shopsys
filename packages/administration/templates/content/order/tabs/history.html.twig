@@ -9,7 +9,9 @@
         </h3>
     </div>
     <div class="card-body">
-        {% if entityLogTotalCount == 0 %}
+        {% set hasCreatorHistoryEntry = order.createdAsAdministrator or order.createdAsAdministratorName %}
+
+        {% if entityLogTotalCount == 0 and not hasCreatorHistoryEntry %}
             <div class="text-secondary">{{ 'No changes recorded.'|trans }}</div>
         {% else %}
             <div id="js-order-history-timeline">

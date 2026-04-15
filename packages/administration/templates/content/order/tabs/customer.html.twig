@@ -6,9 +6,13 @@
         </h3>
         {% if canEdit %}
             <div class="card-actions">
-                <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressesEditModal">
+                <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#billingEditModal">
                     <i class="ti ti-pencil"></i>
-                    {{ 'Edit'|trans }}
+                    {{ 'Edit billing'|trans }}
+                </a>
+                <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deliveryEditModal">
+                    <i class="ti ti-truck"></i>
+                    {{ 'Edit delivery'|trans }}
                 </a>
             </div>
         {% endif %}

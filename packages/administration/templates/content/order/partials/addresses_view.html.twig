@@ -1,8 +1,25 @@
-<div class="row g-4">
-    <div class="col-md-6">
-        <h4>{{ 'Billing address'|trans }}</h4>
+<div class="row gx-4">
+    <div class="col-md-6 mb-3 mb-md-0">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <h4 class="mb-0">{{ 'Billing address'|trans }}</h4>
+            {% if canEdit|default(false) %}
+                <a href="#"
+                   class="text-secondary"
+                   data-bs-toggle="modal"
+                   data-bs-target="#billingEditModal"
+                   onclick="if (window.bootstrap) { const modalElement = document.getElementById('billingEditModal'); if (modalElement) { window.bootstrap.Modal.getOrCreateInstance(modalElement).show(); } return false; }"
+                   title="{{ 'Edit billing details'|trans }}">
+                    {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
+                </a>
+            {% endif %}
+        </div>
         {% if order.companyName %}
-            <div>{{ order.companyName }}</div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-secondary d-inline-flex align-items-center">
+                    {{ ux_icon('tabler:building', { class: 'icon icon-sm' }) }}
+                </span>
+                <span>{{ order.companyName }}</span>
+            </div>
         {% endif %}
         {% if order.companyNumber %}
             <div>{{ 'IČO'|trans }}: {{ order.companyNumber }}</div>
@@ -10,25 +27,52 @@
         {% if order.companyTaxNumber %}
             <div>{{ 'DIČ'|trans }}: {{ order.companyTaxNumber }}</div>
         {% endif %}
-        <div>{{ order.street }}</div>
+        <div class="mt-2">{{ order.street }}</div>
         <div>{{ order.postcode }} {{ order.city }}</div>
         <div>{{ order.country.name }}</div>
     </div>
     <div class="col-md-6">
-        <h4>{{ 'Delivery address'|trans }}</h4>
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <h4 class="mb-0">{{ 'Delivery address'|trans }}</h4>
+            {% if canEdit|default(false) %}
+                <a href="#"
+                   class="text-secondary"
+                   data-bs-toggle="modal"
+                   data-bs-target="#deliveryEditModal"
+                   onclick="if (window.bootstrap) { const modalElement = document.getElementById('deliveryEditModal'); if (modalElement) { window.bootstrap.Modal.getOrCreateInstance(modalElement).show(); } return false; }"
+                   title="{{ 'Edit delivery address'|trans }}">
+                    {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
+                </a>
+            {% endif %}
+        </div>
         {% if order.deliveryAddressSameAsBillingAddress %}
             <span class="badge bg-blue-lt">{{ 'Same as billing address'|trans }}</span>
         {% else %}
-            {% if order.deliveryFirstName or order.deliveryLastName %}
-                <div>{{ order.deliveryFirstName }} {{ order.deliveryLastName }}</div>
-            {% endif %}
             {% if order.deliveryCompanyName %}
-                <div>{{ order.deliveryCompanyName }}</div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="text-secondary d-inline-flex align-items-center">
+                        {{ ux_icon('tabler:building', { class: 'icon icon-sm' }) }}
+                    </span>
+                    <span>{{ order.deliveryCompanyName }}</span>
+                </div>
+            {% endif %}
+            {% if order.deliveryFirstName or order.deliveryLastName %}
+                <div class="d-flex align-items-center gap-2">
+                    <span class="text-secondary d-inline-flex align-items-center">
+                        {{ ux_icon('tabler:user', { class: 'icon icon-sm' }) }}
+                    </span>
+                    <span>{{ order.deliveryFirstName }} {{ order.deliveryLastName }}</span>
+                </div>
             {% endif %}
             {% if order.deliveryTelephone %}
-                <div><a href="tel:{{ order.deliveryTelephone }}">{{ order.deliveryTelephone }}</a></div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="text-secondary d-inline-flex align-items-center">
+                        {{ ux_icon('phone', { class: 'icon icon-sm' }) }}
+                    </span>
+                    <a href="tel:{{ order.deliveryTelephone }}">{{ order.deliveryTelephone }}</a>
+                </div>
             {% endif %}
-            <div>{{ order.deliveryStreet }}</div>
+            <div class="mt-2">{{ order.deliveryStreet }}</div>
             <div>{{ order.deliveryPostcode }} {{ order.deliveryCity }}</div>
             <div>{{ order.deliveryCountry.name }}</div>
         {% endif %}

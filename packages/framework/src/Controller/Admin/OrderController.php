@@ -22,6 +22,8 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderAddressesFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Order\OrderBillingFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Order\OrderDeliveryFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderNoteFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderPaymentsFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderPersonalFormType;
@@ -106,7 +108,7 @@ class OrderController extends AdminBaseController
             'data_class' => OrderData::class,
         ];
 
-        if (in_array($formTypeClass, [OrderStatusFormType::class, OrderAddressesFormType::class, OrderPaymentsFormType::class], true)) {
+        if (in_array($formTypeClass, [OrderStatusFormType::class, OrderAddressesFormType::class, OrderBillingFormType::class, OrderDeliveryFormType::class, OrderPaymentsFormType::class], true)) {
             $formOptions['order'] = $order;
         }
 
@@ -442,6 +444,8 @@ class OrderController extends AdminBaseController
             'withdrawal' => OrderStatusFormType::class,
             'personal' => OrderPersonalFormType::class,
             'addresses' => OrderAddressesFormType::class,
+            'billing' => OrderBillingFormType::class,
+            'delivery' => OrderDeliveryFormType::class,
             'note' => OrderNoteFormType::class,
             'tracking' => OrderTrackingFormType::class,
             'payments' => OrderPaymentsFormType::class,
@@ -456,6 +460,8 @@ class OrderController extends AdminBaseController
             'withdrawal' => '@ShopsysAdministration/content/order/partials/withdrawal_view.html.twig',
             'personal' => '@ShopsysAdministration/content/order/partials/personal_view.html.twig',
             'addresses' => '@ShopsysAdministration/content/order/partials/addresses_view.html.twig',
+            'billing' => '@ShopsysAdministration/content/order/partials/addresses_view.html.twig',
+            'delivery' => '@ShopsysAdministration/content/order/partials/addresses_view.html.twig',
             'tracking' => '@ShopsysAdministration/content/order/partials/status_view.html.twig',
             'note' => '@ShopsysAdministration/content/order/partials/note_view.html.twig',
             'payments' => '@ShopsysAdministration/content/order/partials/payments_view.html.twig',
@@ -471,6 +477,8 @@ class OrderController extends AdminBaseController
             'tracking' => '@ShopsysAdministration/content/order/partials/tracking_form.html.twig',
             'personal' => '@ShopsysAdministration/content/order/partials/personal_form.html.twig',
             'addresses' => '@ShopsysAdministration/content/order/partials/addresses_form.html.twig',
+            'billing' => '@ShopsysAdministration/content/order/partials/billing_form.html.twig',
+            'delivery' => '@ShopsysAdministration/content/order/partials/delivery_form.html.twig',
             'note' => '@ShopsysAdministration/content/order/partials/note_form.html.twig',
             'payments' => '@ShopsysAdministration/content/order/partials/payments_form.html.twig',
             default => throw $this->createNotFoundException(),
@@ -494,7 +502,8 @@ class OrderController extends AdminBaseController
 
         $statusForm = $this->createForm(OrderStatusFormType::class, $orderData, $standaloneOptions + ['order' => $order]);
         $personalForm = $this->createForm(OrderPersonalFormType::class, $orderData, $standaloneOptions);
-        $addressesForm = $this->createForm(OrderAddressesFormType::class, $orderData, $standaloneOptions + ['order' => $order]);
+        $billingForm = $this->createForm(OrderBillingFormType::class, $orderData, $standaloneOptions + ['order' => $order]);
+        $deliveryForm = $this->createForm(OrderDeliveryFormType::class, $orderData, $standaloneOptions + ['order' => $order]);
         $noteForm = $this->createForm(OrderNoteFormType::class, $orderData, $standaloneOptions);
         $trackingForm = $this->createForm(OrderTrackingFormType::class, $orderData, $standaloneOptions);
         $withdrawalForm = $this->createForm(OrderStatusFormType::class, $orderData, $standaloneOptions + ['order' => $order]);
@@ -531,7 +540,8 @@ class OrderController extends AdminBaseController
             'activeTab' => $activeTab,
             'statusForm' => $statusForm->createView(),
             'personalForm' => $personalForm->createView(),
-            'addressesForm' => $addressesForm->createView(),
+            'billingForm' => $billingForm->createView(),
+            'deliveryForm' => $deliveryForm->createView(),
             'noteForm' => $noteForm->createView(),
             'itemsForm' => $itemsForm->createView(),
             'paymentsForm' => $paymentsForm?->createView(),
@@ -561,7 +571,10 @@ class OrderController extends AdminBaseController
 
         $html = $this->renderView(
             '@ShopsysAdministration/content/order/partials/history_timeline.html.twig',
-            ['entityLogEntries' => $entityLogEntries],
+            [
+                'order' => $order,
+                'entityLogEntries' => $entityLogEntries,
+            ],
         );
 
         return new JsonResponse(['html' => $html]);

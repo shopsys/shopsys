@@ -1,0 +1,27 @@
+{{ form_row(form.deliveryAddressSameAsBillingAddress) }}
+
+<div class="js-delivery-address-fields">
+    <div class="row g-3">
+        <div class="col-12 col-md-6">
+            {{ form_row(form.deliveryAddressFields.deliveryFirstName) }}
+        </div>
+        <div class="col-12 col-md-6">
+            {{ form_row(form.deliveryAddressFields.deliveryLastName) }}
+        </div>
+    </div>
+    {{ form_row(form.deliveryAddressFields.deliveryCompanyName) }}
+    {{ form_row(form.deliveryAddressFields.deliveryTelephone) }}
+    {{ form_row(form.deliveryAddressFields.deliveryStreet) }}
+    <div class="row g-3">
+        <div class="col-12 col-md-6">
+            {{ form_row(form.deliveryAddressFields.deliveryCity) }}
+        </div>
+        <div class="col-12 col-md-6">
+            {{ form_row(form.deliveryAddressFields.deliveryPostcode) }}
+        </div>
+    </div>
+    {{ form_row(form.deliveryAddressFields.deliveryCountry) }}
+</div>
+{% do form.deliveryAddressFields.setRendered %}
+{{ form_rest(form) }}
+
