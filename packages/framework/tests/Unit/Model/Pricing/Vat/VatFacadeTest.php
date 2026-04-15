@@ -8,12 +8,12 @@ use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatSetting;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class VatFacadeTest extends TestCase
@@ -27,14 +27,14 @@ class VatFacadeTest extends TestCase
         $expected = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $emStub = $this->createStub(EntityManager::class);
 
-        $settingMock = $this->getMockBuilder(Setting::class)
-            ->onlyMethods(['getForDomain', '__construct'])
+        $vatSettingMock = $this->getMockBuilder(VatSetting::class)
+            ->onlyMethods(['getDefaultVatId'])
             ->disableOriginalConstructor()
             ->getMock();
-        $settingMock
+        $vatSettingMock
             ->expects($this->once())
-            ->method('getForDomain')
-            ->with($this->equalTo(Vat::SETTING_DEFAULT_VAT))
+            ->method('getDefaultVatId')
+            ->with($this->equalTo(Domain::FIRST_DOMAIN_ID))
             ->willReturn(1);
 
         $vatRepositoryMock = $this->getMockBuilder(VatRepository::class)
@@ -54,7 +54,7 @@ class VatFacadeTest extends TestCase
         $vatFacade = new VatFacade(
             $emStub,
             $vatRepositoryMock,
-            $settingMock,
+            $vatSettingMock,
             new VatFactory(new EntityNameResolver([])),
             $domainStub,
             $productRecalculationDispatcherStub,
@@ -76,14 +76,14 @@ class VatFacadeTest extends TestCase
             ->getMock();
         $vatMock->expects($this->once())->method('getId')->willReturn(1);
 
-        $settingMock = $this->getMockBuilder(Setting::class)
-            ->onlyMethods(['setForDomain', '__construct'])
+        $vatSettingMock = $this->getMockBuilder(VatSetting::class)
+            ->onlyMethods(['setDefaultVatId'])
             ->disableOriginalConstructor()
             ->getMock();
-        $settingMock
+        $vatSettingMock
             ->expects($this->once())
-            ->method('setForDomain')
-            ->with($this->equalTo(Vat::SETTING_DEFAULT_VAT), $this->equalTo(1));
+            ->method('setDefaultVatId')
+            ->with($this->equalTo(1), $this->equalTo(Domain::FIRST_DOMAIN_ID));
 
         $domainStub = $this->createStub(Domain::class);
 
@@ -92,7 +92,7 @@ class VatFacadeTest extends TestCase
         $vatFacade = new VatFacade(
             $emStub,
             $vatRepositoryStub,
-            $settingMock,
+            $vatSettingMock,
             new VatFactory(new EntityNameResolver([])),
             $domainStub,
             $productRecalculationDispatcherStub,

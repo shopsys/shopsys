@@ -108,12 +108,4 @@ class UnitRepository
             ->where('p.unit = :oldUnit')->setParameter('oldUnit', $oldUnit)
             ->getQuery()->execute();
     }
-
-    public function getCount(): int
-    {
-        return $this->getUnitRepository()->createQueryBuilder('u')
-            ->select('COUNT(u.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
 }

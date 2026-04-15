@@ -166,18 +166,6 @@ msgstr ""
 msgid "<div class=\"gjs-text-ckeditor\"><p>Blog article text for search testing, the search phrase is &#34;Dina&#34;.</p></div>"
 msgstr ""
 
-msgid "<h1>Your order has been cancelled</h1> Dear customer,<br/> <br/> your order has been cancelled.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
-msgstr ""
-
-msgid "<h1>Your order has been completed</h1> Dear customer,<br/> <br/> your order has been successfully completed.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
-msgstr ""
-
-msgid "<h1>Your order has been placed successfully</h1> Dear customer,<br/> <br/> you will be contacted when the order state changes.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses} <a style=\"margin:0.75rem auto;display:flex;height:fit-content;width:fit-content;cursor:pointer;align-items:center;justify-content:center;gap:0.5rem;border-radius:0.5rem;border:2px solid #00C8B7;background-color:#00C8B7;padding:7px 12px;text-align:center;font-weight:500;line-height:18px;text-decoration:none;outline:none;transition:all 0.2s ease;color:#fff;\" data-gjs-type=\"button-link\" data-link-position=\"center\" title=\"Order detail\" href=\"{order_detail_url}\" >Order detail</a>"
-msgstr ""
-
-msgid "<h1>Your order is being processed</h1> Dear customer,<br/> <br/> we have started processing your order.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
-msgstr ""
-
 msgid "<h2> Cookbook </h2> <br /> <br /> <p> What can be cooked in a steam oven? <br /> Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts. <br /> 75 pages of cookbooks Concept - cook healthy steamed - contains recipes with practical procedures. Each recipe includes: </p> <br /> <br /> <p> The list of ingredients </p> <br /> <p> Method </p> <br /> <p> How many people </p > <br /> <p> Preparation time </p> <br /> <p> The degree of difficulty </p> <br /> <p> + time + temperature </p> <br /> <br /> From under the lids give you some tips - Asparagus with tuna sauce, salmon in vermouth sauce, soup minestrone, chicken mint surprise Cabbage leaves stuffed with minced meat, grilled chop with vegetables, potatoes baked with blue cheese, pear with chocolate sauce, roasted mandelimi and ice cream, etc."
 msgstr ""
 
@@ -329,9 +317,6 @@ msgid "Active/Passive"
 msgstr ""
 
 msgid "Adaptive Sync Technology"
-msgstr ""
-
-msgid "Administrator reset password request"
 msgstr ""
 
 msgid "All kind of electronic devices."
@@ -595,22 +580,7 @@ msgstr ""
 msgid "DeLonghi ECAM 44.660 B Eletta Plus"
 msgstr ""
 
-msgid "Dear administrator,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\" tabindex=\"0\">link</a>.<br/><br/> Best regards"
-msgstr ""
-
-msgid "Dear customer,<br/> <br/> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all thepersonal details which we have in evidence in our online store {domain}.<br/> <br/> To overview your personal information please click <a href=\"{url}\" tabindex=\"0\">here</a>.<br/> The link is valid for next 24 hours.<br/> <br/> Best regards<br /> Team of {domain}"
-msgstr ""
-
 msgid "Dear customer,<br/> <br/> you can finish registration and set new password via this <a href=\"{activation_url}\" tabindex=\"0\">link</a>.<br/> <br/> Best regards"
-msgstr ""
-
-msgid "Dear customer,<br/> <br/> your registration is completed.<br/> <br/> Name: {first_name} {last_name}<br /> Email: {email}<br/> <br/> E-shop: <a href=\"{url}\" tabindex=\"0\">link</a><br /> Login page: <a href=\"{login_page}\" tabindex=\"0\">Log in</a><br/> <br/> Best regards"
-msgstr ""
-
-msgid "Dear customer,<br/> based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}.<br/> <br/> To download your personal information please click <a href=\"{url}\" tabindex=\"0\">here</a>.<br/> The link is valid for next 24 hours.<br/> <br/> Best regards<br /> Team of {domain}"
-msgstr ""
-
-msgid "Dear customer,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\" tabindex=\"0\">link</a>.<br/><br/> Best regards"
 msgstr ""
 
 msgid "Deep baking sheet ETV-2560/2860/2960 / 3160bc"
@@ -1309,12 +1279,6 @@ msgstr ""
 msgid "Personal collection"
 msgstr ""
 
-msgid "Personal information export - {domain}"
-msgstr ""
-
-msgid "Personal information overview - {domain}"
-msgstr ""
-
 msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles."
 msgstr ""
 
@@ -1429,13 +1393,7 @@ msgstr ""
 msgid "Reflective tape for safe movement on the road"
 msgstr ""
 
-msgid "Registration completed"
-msgstr ""
-
 msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
-msgstr ""
-
-msgid "Reset password request"
 msgstr ""
 
 msgid "Resolution"
@@ -1921,18 +1879,6 @@ msgstr ""
 msgid "You will be welcomed by friendly staff!"
 msgstr ""
 
-msgid "Your order no. {number} has been cancelled"
-msgstr ""
-
-msgid "Your order no. {number} has been completed"
-msgstr ""
-
-msgid "Your order no. {number} has been placed"
-msgstr ""
-
-msgid "Your order no. {number} is being processed"
-msgstr ""
-
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr ""
 
@@ -2102,9 +2048,6 @@ msgid "optical"
 msgstr ""
 
 msgid "paper"
-msgstr ""
-
-msgid "pcs"
 msgstr ""
 
 msgid "plasma"

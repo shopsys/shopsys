@@ -117,6 +117,14 @@ class TransportFacade
     }
 
     /**
+     * @return int[]
+     */
+    public function getDomainIdsWithAnyEnabledTransport(): array
+    {
+        return $this->transportRepository->getDomainIdsWithAnyEnabledTransport();
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
     public function getAllIncludingDeleted(): array

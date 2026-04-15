@@ -12,75 +12,46 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 class Version20240910054629 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
+    use MailTemplateMigrationTrait;
+
+    protected const string COMPLAINT_STATUS_1 = 'complaint_status_1';
+    protected const string COMPLAINT_STATUS_2 = 'complaint_status_2';
 
     #[Override]
     public function up(Schema $schema): void
     {
-        $this->createMailTemplateIfNotExist('complaint_status_1', true, 1);
-        $this->createMailTemplateIfNotExist('complaint_status_2', true, 2);
+        $this->insertMailTemplateIfNotExist(self::COMPLAINT_STATUS_1);
+        $this->insertMailTemplateIfNotExist(self::COMPLAINT_STATUS_2);
 
-        $this->sql('UPDATE mail_templates SET complaint_status_id = 1 WHERE name = \'complaint_status_1\'');
-        $this->sql('UPDATE mail_templates SET complaint_status_id = 2 WHERE name = \'complaint_status_2\'');
+        $this->sql('UPDATE mail_templates SET complaint_status_id = 1 WHERE name = :mailTemplateName', ['mailTemplateName' => self::COMPLAINT_STATUS_1]);
+        $this->sql('UPDATE mail_templates SET complaint_status_id = 2 WHERE name = :mailTemplateName', ['mailTemplateName' => self::COMPLAINT_STATUS_2]);
 
         foreach ($this->getAllDomainIds() as $domainId) {
             $domainLocale = $this->getDomainLocale($domainId);
 
             $this->sql(
-                'UPDATE mail_templates SET subject = :body WHERE name = \'complaint_status_1\' AND domain_id = :domainId',
+                'UPDATE mail_templates SET subject = :subject, body = :body WHERE name = :mailTemplateName AND domain_id = :domainId',
                 [
-                    'body' => t('Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale),
+                    'mailTemplateName' => self::COMPLAINT_STATUS_1,
+                    'subject' => t('Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale),
+                    'body' => $this->wrapMailTemplateBodyForGrapesJs(
+                        t('Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href="{complaint_detail_url}" tabindex="0">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href="{url}" tabindex="0">website</a>.', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale),
+                    ),
                     'domainId' => $domainId,
                 ],
             );
-            $this->sql(
-                'UPDATE mail_templates SET body = :body WHERE name = \'complaint_status_1\' AND domain_id = :domainId',
-                [
-                    'body' => '<div style="box-sizing: border-box; padding: 10px;"><div class="gjs-text-ckeditor">' .
-                        t('Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href="{complaint_detail_url}" tabindex="0">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href="{url}" tabindex="0">website</a>.', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale) .
-                        '</div></div>',
-                    'domainId' => $domainId,
-                ],
-            );
-            $this->sql(
-                'UPDATE mail_templates SET subject = :body WHERE name = \'complaint_status_2\' AND domain_id = :domainId',
-                [
-                    'body' => t('Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale),
-                    'domainId' => $domainId,
-                ],
-            );
-            $this->sql(
-                'UPDATE mail_templates SET body = :body WHERE name = \'complaint_status_2\' AND domain_id = :domainId',
-                [
-                    'body' => '<div style="box-sizing: border-box; padding: 10px;"><div class="gjs-text-ckeditor">' .
-                        t('Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been finished. For more information, visit <a href="{complaint_detail_url}" tabindex="0">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href="{url}" tabindex="0">website</a>.', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale) .
-                        '</div></div>',
-                    'domainId' => $domainId,
-                ],
-            );
-        }
-    }
 
-    private function createMailTemplateIfNotExist(
-        string $mailTemplateName,
-        bool $sendMail,
-        int $complaintStatusId,
-    ): void {
-        $mailTemplateCount = $this->sqlQuery('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName', [
-            'mailTemplateName' => $mailTemplateName,
-        ])->fetchOne();
-
-        if ($mailTemplateCount <= 0) {
-            foreach ($this->getAllDomainIds() as $domainId) {
-                $this->sql(
-                    'INSERT INTO mail_templates (name, domain_id, send_mail) VALUES (:mailTemplateName, :domainId, :sendMail)',
-                    [
-                        'mailTemplateName' => $mailTemplateName,
-                        'domainId' => $domainId,
-                        'sendMail' => $sendMail,
-                        'complaintStatus' => $complaintStatusId,
-                    ],
-                );
-            }
+            $this->sql(
+                'UPDATE mail_templates SET subject = :subject, body = :body WHERE name = :mailTemplateName AND domain_id = :domainId',
+                [
+                    'mailTemplateName' => self::COMPLAINT_STATUS_2,
+                    'subject' => t('Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale),
+                    'body' => $this->wrapMailTemplateBodyForGrapesJs(
+                        t('Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been finished. For more information, visit <a href="{complaint_detail_url}" tabindex="0">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href="{url}" tabindex="0">website</a>.', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale),
+                    ),
+                    'domainId' => $domainId,
+                ],
+            );
         }
     }
 }

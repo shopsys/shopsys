@@ -73,6 +73,22 @@ class TransportRepository
         return $this->getTransportRepository()->findAll();
     }
 
+    /**
+     * @return int[]
+     */
+    public function getDomainIdsWithAnyEnabledTransport(): array
+    {
+        $rows = $this->getTransportRepository()->createQueryBuilder('t')
+            ->select('DISTINCT td.domainId')
+            ->join('t.domains', 'td', Join::WITH, 'td.enabled = true')
+            ->where('t.deleted = false')
+            ->andWhere('t.hidden = false')
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_map(static fn (array $row): int => (int)$row['domainId'], $rows);
+    }
+
     public function findById(int $id): ?Transport
     {
         return $this->getQueryBuilderForAll()

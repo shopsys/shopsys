@@ -1997,7 +1997,7 @@ msgid "Thursday"
 msgstr "Čtvrtek"
 
 msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
-msgstr "Aby bylo možné tuto hodnotu smazat, je třeba nastavit novou, která se použije místo ní. Bohužel není za co nahrazovat, před smazáním musíte nějdřív vytvořit novou."
+msgstr "Aby bylo možné tuto hodnotu smazat, je třeba nastavit novou, která se použije místo ní. Bohužel není za co nahrazovat, před smazáním musíte nejdřív vytvořit novou."
 
 msgid "To fifty hundredths (halfs)"
 msgstr "Na padesátníky"

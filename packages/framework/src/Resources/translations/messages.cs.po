@@ -64,14 +64,17 @@ msgstr "301 (Trvalé přesměrování)"
 msgid "302 (Temporary redirect)"
 msgstr "302 (Dočasné přesměrování)"
 
-msgid "<a href=\"%url%\">Default unit is not set.</a>"
-msgstr "<a href=\"%url%\">Není nastavena výchozí jednotka.</a>"
-
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Není nastaven článek zásady ochrany osobních údajů pro doménu %domainName%.</a>"
 
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr "<a href=\"%url%\">Státní svátky pro rok %year% nejsou nastaveny.</a>"
+
+msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
+msgstr "<a href=\"%url%\">SEO informace pro hlavní stránku domény %domainName% nejsou zcela nastaveny.</a>"
+
+msgid "<a href=\"%url%\">Shipping or payment is not set for domain %domainName%.</a>"
+msgstr "<a href=\"%url%\">Doprava nebo platba nejsou nastaveny pro doménu %domainName%.</a>"
 
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
 msgstr "<a href=\"%url%\">Některé povinné e-mailové šablony nejsou vyplněny.</a>"
@@ -81,9 +84,6 @@ msgstr "<a href=\"%url%\">Není nastaven článek obchodní podmínky pro domén
 
 msgid "<a href=\"%url%\">There are no countries, you need to create some.</a>"
 msgstr "<a href=\"%url%\">Neexistují žádné státy, musíte nějaký vytvořit.</a>"
-
-msgid "<a href=\"%url%\">There are no units, you need to create some.</a>"
-msgstr "<a href=\"%url%\">Neexistují žádné jednotky, musíte nějakou vytvořit.</a>"
 
 msgid "<a href=\"%url%\">There are no warehouses, you need to create some.</a>"
 msgstr "<a href=\"%url%\">Neexistují žádné sklady, musíte nějaký vytvořit.</a>"
@@ -2077,14 +2077,14 @@ msgstr "Byla upravena položka navigace <strong><a href=\"{{ url }}\">{{ name }}
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr "Položka navigace <strong>{{ name }}</strong> byla odebrána"
 
-msgid "New"
-msgstr "Nová"
-
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
 msgid "New Withdrawal Request"
 msgstr "Nová žádost o odstoupení od smlouvy"
+
+msgid "New [adjective]"
+msgstr "Nová"
 
 msgid "New administrator"
 msgstr "Nový administrátor"

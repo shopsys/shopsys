@@ -9346,7 +9346,7 @@ Represents settings of SEO
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong id="seosetting.metadescription">metaDescription</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Description of the content of a web page
@@ -9364,7 +9364,7 @@ Robots.txt's file content
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="seosetting.title">title</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Document's title that is shown in a browser's title

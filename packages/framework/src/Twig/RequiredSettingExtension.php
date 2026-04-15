@@ -12,11 +12,12 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
-use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -38,11 +39,13 @@ class RequiredSettingExtension extends AbstractExtension
         protected readonly Setting $setting,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly ParameterFacade $parameterFacade,
-        protected readonly UnitFacade $unitFacade,
         protected readonly StockFacade $stockFacade,
         protected readonly CountryFacade $countryFacade,
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly ClockInterface $clock,
+        protected readonly SeoSettingFacade $seoSettingFacade,
+        protected readonly PaymentFacade $paymentFacade,
+        protected readonly TransportFacade $transportFacade,
     ) {
     }
 
@@ -78,13 +81,35 @@ class RequiredSettingExtension extends AbstractExtension
         $this->requiredSettingsMessages = [];
 
         $this->checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled();
-        $this->checkAtLeastOneUnitExists();
-        $this->checkDefaultUnitIsSet();
         $this->checkAtLeastOneStockExists();
         $this->checkAtLeastOneCountryExists();
         $this->checkMandatoryArticlesExist();
         $this->checkAllSliderNumericValuesAreSet();
         $this->checkPublicHolidaysAreSet();
+        $this->checkSeoInformationIsSet();
+        $this->checkPaymentsAndTransportsAreSet();
+    }
+
+    protected function checkPaymentsAndTransportsAreSet(): void
+    {
+        $domainIdsWithPayment = array_flip($this->paymentFacade->getDomainIdsWithAnyEnabledPayment());
+        $domainIdsWithTransport = array_flip($this->transportFacade->getDomainIdsWithAnyEnabledTransport());
+
+        foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+            if (isset($domainIdsWithPayment[$domainId], $domainIdsWithTransport[$domainId])) {
+                continue;
+            }
+
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+            $this->requiredSettingsMessages[] = t(
+                '<a href="%url%">Shipping or payment is not set for domain %domainName%.</a>',
+                [
+                    '%url%' => $this->generateUrlWithSelectedDomainTab('admin_transportandpayment_list', $domainId),
+                    '%domainName%' => $domainConfig->getName(),
+                ],
+            );
+        }
     }
 
     protected function checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled(): void
@@ -94,32 +119,6 @@ class RequiredSettingExtension extends AbstractExtension
                 '<a href="%url%">Some required email templates are not fully set.</a>',
                 [
                     '%url%' => $this->router->generate('admin_mail_template'),
-                ],
-            );
-        }
-    }
-
-    protected function checkAtLeastOneUnitExists(): void
-    {
-        if ($this->unitFacade->getCount() === 0) {
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">There are no units, you need to create some.</a>',
-                [
-                    '%url%' => $this->router->generate('admin_unit_list'),
-                ],
-            );
-        }
-    }
-
-    protected function checkDefaultUnitIsSet(): void
-    {
-        try {
-            $this->unitFacade->getDefaultUnit();
-        } catch (UnitNotFoundException) {
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">Default unit is not set.</a>',
-                [
-                    '%url%' => $this->router->generate('admin_unit_list'),
                 ],
             );
         }
@@ -263,6 +262,31 @@ class RequiredSettingExtension extends AbstractExtension
 
                 return;
             }
+        }
+    }
+
+    protected function checkSeoInformationIsSet(): void
+    {
+        foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+            $titleMainPage = $this->seoSettingFacade->getTitleMainPage($domainId);
+            $descriptionMainPage = $this->seoSettingFacade->getDescriptionMainPage($domainId);
+
+            $isTitleMissing = $titleMainPage === null || $titleMainPage === '';
+            $isDescriptionMissing = $descriptionMainPage === null || $descriptionMainPage === '';
+
+            if (!$isTitleMissing && !$isDescriptionMissing) {
+                continue;
+            }
+
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+            $this->requiredSettingsMessages[] = t(
+                '<a href="%url%">SEO information for main page for domain %domainName% is not fully set.</a>',
+                [
+                    '%url%' => $this->generateUrlWithSelectedDomainTab('admin_seo_index', $domainId),
+                    '%domainName%' => $domainConfig->getName(),
+                ],
+            );
         }
     }
 }

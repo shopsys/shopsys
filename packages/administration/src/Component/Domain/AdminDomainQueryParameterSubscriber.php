@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -36,6 +37,17 @@ class AdminDomainQueryParameterSubscriber implements EventSubscriberInterface
         }
 
         $this->adminDomainTabsFacade->setSelectedDomainId($domainId);
+
+        $request = $event->getRequest();
+        $request->query->remove(AdminDomainTabsFacade::QUERY_PARAMETER_NAME);
+
+        $cleanUrl = $request->getPathInfo();
+
+        if ($request->query->count() > 0) {
+            $cleanUrl .= '?' . http_build_query($request->query->all());
+        }
+
+        $event->setResponse(new RedirectResponse($cleanUrl));
     }
 
     /**

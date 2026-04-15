@@ -2735,11 +2735,11 @@ type SeoPage implements Hreflang {
 "Represents settings of SEO"
 type SeoSetting {
   "Description of the content of a web page"
-  metaDescription: String!
+  metaDescription: String
   "Robots.txt's file content"
   robotsTxtContent: String
   "Document's title that is shown in a browser's title"
-  title: String!
+  title: String
   "Complement to title"
   titleAddOn: String
 }

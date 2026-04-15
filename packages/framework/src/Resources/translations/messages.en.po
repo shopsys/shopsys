@@ -64,13 +64,16 @@ msgstr ""
 msgid "302 (Temporary redirect)"
 msgstr ""
 
-msgid "<a href=\"%url%\">Default unit is not set.</a>"
-msgstr ""
-
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
+msgstr ""
+
+msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
+msgstr ""
+
+msgid "<a href=\"%url%\">Shipping or payment is not set for domain %domainName%.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
@@ -80,9 +83,6 @@ msgid "<a href=\"%url%\">Term and conditions article for domain %domainName% is 
 msgstr ""
 
 msgid "<a href=\"%url%\">There are no countries, you need to create some.</a>"
-msgstr ""
-
-msgid "<a href=\"%url%\">There are no units, you need to create some.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">There are no warehouses, you need to create some.</a>"
@@ -2077,14 +2077,14 @@ msgstr ""
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr ""
 
-msgid "New"
-msgstr ""
-
 msgid "New SEO page"
 msgstr ""
 
 msgid "New Withdrawal Request"
 msgstr ""
+
+msgid "New [adjective]"
+msgstr "New"
 
 msgid "New administrator"
 msgstr ""

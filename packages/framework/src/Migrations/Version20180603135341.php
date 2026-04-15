@@ -29,7 +29,7 @@ class Version20180603135341 extends AbstractMigration implements DomainAwareInte
 
 
         foreach ($this->getAllLocales() as $locale) {
-            $this->createOrderStatusTranslations(1, t('New', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
+            $this->createOrderStatusTranslations(1, t('New [adjective]', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
             $this->createOrderStatusTranslations(2, t('In Progress', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
             $this->createOrderStatusTranslations(3, t('Done', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
             $this->createOrderStatusTranslations(4, t('Canceled', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);

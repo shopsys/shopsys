@@ -173,6 +173,14 @@ class PaymentFacade
     }
 
     /**
+     * @return int[]
+     */
+    public function getDomainIdsWithAnyEnabledPayment(): array
+    {
+        return $this->paymentRepository->getDomainIdsWithAnyEnabledPayment();
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[]
      */
     public function getIndependentBasePricesIndexedByDomainId(Payment $payment): array
