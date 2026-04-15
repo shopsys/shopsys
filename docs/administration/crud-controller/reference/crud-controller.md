@@ -110,24 +110,9 @@ The `CrudConfig` class is used to configure the behavior of the Crud Controller.
 
 This method allows you to set the title for the given page type. The title is displayed in the page header.
 
-#### `setMenuSection(string $menuSection, ?string $submenuSection = null)`
-
-You can specify where the Crud Controller will be displayed in the administration menu.
-
-`$menuSection` is the name of the root-level menu item.
-`$submenuSection` can be used to specify a submenu item.
-
-Examples:
-- `$config->setMenuSection('products')` will create Crud controller item under `Products` section
-- `$config->setMenuSection('customers', 'promo_codes')` will create Crud controller under `Customers -> Promo Codes` section
-
-#### `visibleInMenu(bool $visible)`
-
-Specify if the CRUD Controller should be visible or not in the administration menu. This can be useful if you want to create a controller that is not directly accessible by the user or should be accessed from another controller.
-
 #### `enableAction(ActionType|array $actions)` and `disableAction(ActionType|array $actions)`
 
-Those methods are used to enable or disable actions for the given entity. 
+Those methods are used to enable or disable actions for the given entity.
 
 If you want for example to disable the `delete` action you can simply call `$config->disableAction(ActionType::DELETE)`.
 
@@ -138,10 +123,6 @@ If you want for example to disable the `delete` action you can simply call `$con
 #### `disable(bool $disabled)`
 
 Fully disable the CRUD Controller that will not be accessible by the user.
-
-#### `setRoutePrefix(string $routePrefix)`
-
-Set a prefix for the CRUD Controller routes. The prefix is added to the base URL of the CRUD Controller.
 
 #### `setCustomRoleConstant(?string $roleConstant)`
 
@@ -155,6 +136,9 @@ By default, Menu section is used as role section. If you want to use a custom ro
 
 Role sections can be found in the `Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider` class.
 
+#### `setRoutePrefix(string $routePrefix)`
+
+Set a prefix for the CRUD Controller routes. The prefix is added to the base URL of the CRUD Controller.
 
 Example:
 
@@ -170,3 +154,32 @@ Example:
 ```
 
 The URL for the `list` action will be `/admin/new/products/` instead of `/admin/products/`.
+
+
+#### `visibleInMenu(bool $visible)`
+
+Specify if the CRUD Controller should be visible or not in the administration menu. This can be useful if you want to create a controller that is not directly accessible by the user or should be accessed from another controller.
+
+#### `setMenuSection(string $menuSection, ?string $submenuSection = null)`
+
+You can specify where the Crud Controller will be displayed in the administration menu.
+
+`$menuSection` is the name of the root-level menu item.
+`$submenuSection` can be used to specify a submenu item.
+
+Examples:
+- `$config->setMenuSection('products')` will create Crud controller item under `Products` section
+- `$config->setMenuSection('customers', 'promo_codes')` will create Crud controller under `Customers -> Promo Codes` section
+
+#### `setMenuIcon(string $icon)`
+
+Set an icon for the root-level CRUD menu item created by this controller. The icon is only applied when the controller is placed directly under the menu root (i.e. when `menuSection` is the root).
+Icons are not used for CRUD items in nested menu sections.
+
+Example:
+
+```php
+$config
+    ->setMenuIcon('cart')
+;
+```

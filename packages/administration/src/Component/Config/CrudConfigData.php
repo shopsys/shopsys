@@ -25,6 +25,7 @@ final readonly class CrudConfigData
         private ?string $customRoleConstant,
         private ?string $customRoleSection,
         private array $handlerClasses,
+        private ?string $menuIcon,
     ) {
         foreach ($this->enabledActions as $action) {
             if (array_key_exists($action->value, $this->handlerClasses) && $this->handlerClasses[$action->value] === null) {
@@ -104,5 +105,10 @@ final readonly class CrudConfigData
     public function getHandlerClasses(): array
     {
         return $this->handlerClasses;
+    }
+
+    public function getMenuIcon(): ?string
+    {
+        return $this->menuIcon;
     }
 }
