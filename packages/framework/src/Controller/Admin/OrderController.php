@@ -139,10 +139,17 @@ class OrderController extends AdminBaseController
                 ],
             );
 
+            $freshForm = $this->createForm($formTypeClass, $orderData, $formOptions);
+            $formHtml = $this->renderView(
+                $this->getSectionFormTemplate($section),
+                ['form' => $freshForm->createView(), 'order' => $order],
+            );
+
             return new JsonResponse([
                 'success' => true,
                 'viewHtml' => $viewHtml,
                 'summaryHtml' => $summaryHtml,
+                'formHtml' => $formHtml,
             ]);
         }
 

@@ -44,7 +44,7 @@ final class OrderDeliveryFormType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'data-checkbox-toggle-container-class' => 'js-delivery-address-fields',
-                    'class' => 'js-checkbox-toggle js-checkbox-toggle--inverted',
+                    'class' => 'js-checkbox-toggle js-checkbox-toggle--inverted js-checkbox-toggle--disable-container',
                 ],
             ])
             ->add(
@@ -160,7 +160,10 @@ final class OrderDeliveryFormType extends AbstractType
                         'choice_label' => 'name',
                         'choice_value' => 'id',
                         'constraints' => [
-                            new Constraints\NotBlank(message: 'Please choose country'),
+                            new Constraints\NotBlank(
+                                message: 'Please choose country',
+                                groups: [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
+                            ),
                         ],
                     ]),
             );
@@ -192,4 +195,3 @@ final class OrderDeliveryFormType extends AbstractType
             ]);
     }
 }
-

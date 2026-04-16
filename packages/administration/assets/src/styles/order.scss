@@ -1,0 +1,27 @@
+.order-address-row {
+    display: grid;
+    grid-template-columns: 1rem minmax(0, 1fr);
+    column-gap: 0.5rem;
+    align-items: center;
+}
+
+.order-address-row--multiline {
+    align-items: start;
+}
+
+.order-address-row__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2px;
+}
+
+.order-address-row__content {
+    min-width: 0;
+}
+
+.order-address-row__content--multiline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}

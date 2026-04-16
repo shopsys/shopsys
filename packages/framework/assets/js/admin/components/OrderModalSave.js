@@ -78,6 +78,11 @@ export default class OrderModalSave {
                             }
                         }
 
+                        if (response.formHtml) {
+                            $form.html(response.formHtml);
+                            new Register().registerNewContent($form);
+                        }
+
                         OrderModalSave.showSuccessToast();
                         $btn.removeClass('btn-loading').prop('disabled', false);
                     } else {

@@ -127,7 +127,7 @@
                so saving via the modal must reload to render the newly available tab. #}
             {% set isAlreadyWithdrawn = order.status.type == constant('Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_WITHDRAWN') %}
             <div class="modal modal-blur fade" id="withdrawalEditModal" tabindex="-1">
-                <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{{ 'Edit withdrawal request'|trans }}</h5>
