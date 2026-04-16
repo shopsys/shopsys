@@ -13,7 +13,7 @@ FileDecorator:
             viewUrl:
                 type: "String"
                 description: "Url to view the file in browser (available for images and PDF files)"
-            size:
+            filesize:
                 type: "Int"
                 description: "File size in bytes"
             extension:

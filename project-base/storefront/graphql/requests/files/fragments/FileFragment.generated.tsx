@@ -2,7 +2,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeFileFragment = { __typename: 'File', anchorText: string, url: string, viewUrl: string | null, size: number | null, extension: string | null };
+export type TypeFileFragment = { __typename: 'File', anchorText: string, url: string, viewUrl: string | null, filesize: number | null, extension: string | null };
 
 export const FileFragment = gql`
     fragment FileFragment on File {
@@ -10,7 +10,7 @@ export const FileFragment = gql`
   anchorText
   url
   viewUrl
-  size
+  filesize
   extension
 }
     `;

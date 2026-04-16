@@ -1081,7 +1081,7 @@ type File {
   "File extension"
   extension: String
   "File size in bytes"
-  size: Int
+  filesize: Int
   "Url to download the file"
   url: String!
   "Url to view the file in browser (available for images and PDF files)"

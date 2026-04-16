@@ -84,6 +84,15 @@ class FileUpload
         return $this->getTemporaryDirectory() . '/' . $this->transformStringHelper->safeFilename($temporaryFilename);
     }
 
+    public function getTemporaryFilesize(string $temporaryFilename): int
+    {
+        try {
+            return $this->filesystem->fileSize($this->getTemporaryFilepath($temporaryFilename));
+        } catch (FilesystemException) {
+            return 0;
+        }
+    }
+
     public function getTemporaryFilepathForMountManager(string $temporaryFilename): string
     {
         return $this->transformStringHelper->removeDriveLetterFromPath(

@@ -5267,7 +5267,7 @@ File extension
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="file.size">size</strong></td>
+<td colspan="2" valign="top"><strong id="file.filesize">filesize</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 

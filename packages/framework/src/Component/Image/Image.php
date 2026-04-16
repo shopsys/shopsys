@@ -75,6 +75,12 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     protected $position;
 
     /**
+     * @var int|null
+     */
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected $filesize;
+
+    /**
      * @var \DateTimeImmutable
      */
     #[ORM\Column(type: 'datetime_immutable')]
@@ -94,13 +100,14 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         array $namesIndexedByLocale,
         ?string $temporaryFilename,
         ?string $type,
+        int $filesize,
     ) {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
         $this->translations = new ArrayCollection();
         $this->setNames($namesIndexedByLocale);
         $this->type = $type;
-        $this->setTemporaryFilename($temporaryFilename);
+        $this->updateFile($temporaryFilename, $filesize);
         $this->position = static::DEFAULT_IMAGE_POSITION;
     }
 
@@ -180,9 +187,10 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         $this->temporaryFilename = null;
     }
 
-    public function setTemporaryFilename(?string $temporaryFilename): void
+    public function updateFile(?string $temporaryFilename, int $filesize): void
     {
         $this->temporaryFilename = $temporaryFilename;
+        $this->filesize = $filesize;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called
         $this->modifiedAt = new DatePoint();
     }
@@ -255,6 +263,15 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     public function getModifiedAt()
     {
         return $this->modifiedAt;
+    }
+
+    /**
+     * @return int|null
+     */
+    #[Override]
+    public function getFilesize()
+    {
+        return $this->filesize;
     }
 
     public function checkForDelete(string $entityName, int $entityId): void

@@ -27,7 +27,7 @@ export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFi
     };
 
     const getFileInfo = (file: TypeFileFragment): string | null => {
-        const fileSize = file.size !== null ? formatFileSize(file.size) : null;
+        const fileSize = file.filesize !== null ? formatFileSize(file.filesize) : null;
         const fileExtension = file.extension ? file.extension.toUpperCase() : null;
 
         if (fileSize === null && fileExtension === null) {
@@ -51,18 +51,6 @@ export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFi
                                 key={file.url}
                                 className="flex items-center justify-between gap-5 rounded-xl bg-background-more px-5 py-2.5"
                             >
-                                <a
-                                    href={file.url}
-                                    rel="noopener noreferrer"
-                                    target="_blank"
-                                    aria-label={t('Download {{file}}', {
-                                        ns: 'accessibility',
-                                        file: file.anchorText,
-                                    })}
-                                >
-                                    <DownloadIcon className="size-6" />
-                                </a>
-
                                 <div>
                                     {file.viewUrl ? (
                                         <a
@@ -85,6 +73,18 @@ export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFi
 
                                     {fileInfo && <p>{fileInfo}</p>}
                                 </div>
+
+                                <a
+                                    href={file.url}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                    aria-label={t('Download {{file}}', {
+                                        ns: 'accessibility',
+                                        file: file.anchorText,
+                                    })}
+                                >
+                                    <DownloadIcon className="size-6" />
+                                </a>
                             </li>
                         );
                     })}

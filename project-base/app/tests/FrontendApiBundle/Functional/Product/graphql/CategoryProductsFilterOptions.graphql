@@ -43,7 +43,7 @@ query CategoryProductsFilterOptions($categoryUuid: Uuid!, $filter: ProductFilter
                                 anchorText
                                 url
                                 viewUrl
-                                size
+                                filesize
                                 extension
                             }
                         }

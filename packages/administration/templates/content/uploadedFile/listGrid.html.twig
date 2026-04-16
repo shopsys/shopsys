@@ -9,6 +9,10 @@
     {{ parent() }}
 {% endblock %}
 
+{% block grid_value_cell_id_filesize %}
+    {{ value|formatFileSize }}
+{% endblock %}
+
 {% block grid_value_cell_id_preview %}
     <div class="file-picker-preview">
         {{ uploadedFilePreview(row.uploadedFile) }}

@@ -18,7 +18,7 @@ class UploadedFileDataExtractor
      *     url: string,
      *     anchorText: string,
      *     viewUrl: string|null,
-     *     size: int|null,
+     *     filesize: int|null,
      *     extension: string,
      * }
      */
@@ -36,7 +36,7 @@ class UploadedFileDataExtractor
             'url' => $this->uploadedFileFacade->getUploadedFileUrl($domainConfig, $file),
             'anchorText' => $translatedName ?? $file->getName(),
             'viewUrl' => $viewUrl,
-            'size' => $this->uploadedFileFacade->getUploadedFileSize($file),
+            'filesize' => $this->uploadedFileFacade->getUploadedFileFilesize($file),
             'extension' => $file->getExtension(),
         ];
     }

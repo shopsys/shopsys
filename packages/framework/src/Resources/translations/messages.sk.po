@@ -3163,6 +3163,9 @@ msgstr "Zobraziť in the category"
 msgid "Site"
 msgstr "Stránka"
 
+msgid "Size"
+msgstr "Veľkosť"
+
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Stránka slidera <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorená"
 
