@@ -38,6 +38,8 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
     * How to customize the behavior of Shopsys Platform to suit your needs.
 * [Integration](./integration/index.md)
     * Information about integrating third-party applications and services.
+* [AI](./ai/index.md)
+    * Documentation for the built-in MCP server and AI client authentication flows.
 * [Asynchronous processing](./asynchronous-processing/index.md)
     * How to use and implement asynchronous processing in Shopsys Platform.
 * [Automated Testing](./automated-testing/index.md)
