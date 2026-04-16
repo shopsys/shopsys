@@ -22,7 +22,7 @@ class UploadedFileFactoryTest extends TestCase
         $type = 'default';
 
         $fileUploadMock = $this->getMockBuilder(FileUpload::class)
-            ->onlyMethods(['getTemporaryFilePath'])
+            ->onlyMethods(['getTemporaryFilePath', 'getTemporaryFilesize'])
             ->disableOriginalConstructor()
             ->getMock();
         $fileUploadMock
@@ -30,6 +30,11 @@ class UploadedFileFactoryTest extends TestCase
             ->method('getTemporaryFilePath')
             ->with($this->equalTo($temporaryFilename))
             ->willReturn($temporaryFilepath);
+        $fileUploadMock
+            ->expects($this->once())
+            ->method('getTemporaryFilesize')
+            ->with($this->equalTo($temporaryFilename))
+            ->willReturn(0);
 
         $uploadedFileFactory = new UploadedFileFactory($fileUploadMock, new EntityNameResolver([]), new TransformStringHelper());
         $name = 'test-name';

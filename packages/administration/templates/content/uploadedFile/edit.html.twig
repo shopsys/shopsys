@@ -47,6 +47,9 @@
 
                         <div class="card-footer">
                             {{ entity.nameWithExtension }}
+                            {% if entity.filesize is not null %}
+                                <span class="text-secondary">({{ entity.filesize|formatFileSize }})</span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

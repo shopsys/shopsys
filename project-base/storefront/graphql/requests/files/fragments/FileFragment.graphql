@@ -3,6 +3,6 @@ fragment FileFragment on File {
     anchorText
     url
     viewUrl
-    size
+    filesize
     extension
 }

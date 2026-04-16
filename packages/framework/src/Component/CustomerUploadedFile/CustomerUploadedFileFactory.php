@@ -29,6 +29,7 @@ class CustomerUploadedFileFactory
         ?CustomerUser $customerUser = null,
     ): CustomerUploadedFile {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
+        $filesize = $this->fileUpload->getTemporaryFilesize($temporaryFilename);
 
         $entityClassName = $this->entityNameResolver->resolve(CustomerUploadedFile::class);
 
@@ -45,6 +46,7 @@ class CustomerUploadedFileFactory
             $this->transformStringHelper->stringToFriendlyUrlSlug($uploadedFilename),
             $position,
             $hash,
+            $filesize,
             $customerUser,
         );
     }

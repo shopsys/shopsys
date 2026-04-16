@@ -1236,7 +1236,7 @@ export type TypeFile = {
   /** File extension */
   extension: Maybe<Scalars['String']['output']>;
   /** File size in bytes */
-  size: Maybe<Scalars['Int']['output']>;
+  filesize: Maybe<Scalars['Int']['output']>;
   /** Url to download the file */
   url: Scalars['String']['output'];
   /** Url to view the file in browser (available for images and PDF files) */

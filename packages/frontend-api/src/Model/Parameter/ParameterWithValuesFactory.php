@@ -60,7 +60,7 @@ class ParameterWithValuesFactory
             'anchorText' => $anchorText,
             'url' => $url,
             'viewUrl' => $parameterArray['parameter_value_icon_view_url'],
-            'size' => $parameterArray['parameter_value_icon_size'],
+            'filesize' => $parameterArray['parameter_value_icon_filesize'],
             'extension' => $parameterArray['parameter_value_icon_extension'],
         ];
     }

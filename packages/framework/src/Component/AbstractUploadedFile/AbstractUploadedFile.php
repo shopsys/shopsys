@@ -47,6 +47,12 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     protected $id;
 
     /**
+     * @var int|null
+     */
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected $filesize;
+
+    /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 255)]
@@ -152,6 +158,15 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
         return $this->modifiedAt;
     }
 
+    /**
+     * @return int|null
+     */
+    #[Override]
+    public function getFilesize()
+    {
+        return $this->filesize;
+    }
+
     abstract protected function getUploadKey(): string;
 
     abstract protected function getFileForUploadCategory(): string;
@@ -176,9 +191,10 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
         return $files;
     }
 
-    public function setTemporaryFilename(string $temporaryFilename): void
+    public function updateFile(string $temporaryFilename, int $filesize): void
     {
         $this->temporaryFilename = $temporaryFilename;
+        $this->filesize = $filesize;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called
         $this->modifiedAt = new DatePoint();
     }

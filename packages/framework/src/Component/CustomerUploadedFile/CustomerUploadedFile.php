@@ -65,12 +65,13 @@ class CustomerUploadedFile extends AbstractUploadedFile
         string $slug,
         int $position,
         string $hash,
+        int $filesize,
         ?CustomerUser $customerUser = null,
     ) {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
         $this->type = $type;
-        $this->setTemporaryFilename($temporaryFilename);
+        $this->updateFile($temporaryFilename, $filesize);
         $this->name = $uploadedFilename;
         $this->slug = $slug;
         $this->position = $position;

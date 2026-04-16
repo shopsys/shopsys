@@ -468,7 +468,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
                 'viewUrl' => $this->uploadedFileFacade->isUploadedFileViewableInBrowser($file)
                     ? $this->uploadedFileFacade->getUploadedFileViewUrl($this->domain->getCurrentDomainConfig(), $file)
                     : null,
-                'size' => $this->uploadedFileFacade->getUploadedFileSize($file),
+                'filesize' => $this->uploadedFileFacade->getUploadedFileFilesize($file),
                 'extension' => $file->getExtension(),
             ];
         }

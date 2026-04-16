@@ -26,6 +26,7 @@ class UploadedFileFactory
         array $namesIndexedByLocale = [],
     ): UploadedFile {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
+        $filesize = $this->fileUpload->getTemporaryFilesize($temporaryFilename);
 
         $entityClassName = $this->entityNameResolver->resolve(UploadedFile::class);
 
@@ -36,6 +37,7 @@ class UploadedFileFactory
             $uploadedFilename,
             $this->transformStringHelper->stringToFriendlyUrlSlug($uploadedFilename),
             $namesIndexedByLocale,
+            $filesize,
         );
     }
 

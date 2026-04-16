@@ -7,12 +7,12 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use League\Flysystem\FilesystemOperator;
-use League\Flysystem\UnableToRetrieveMetadata;
 use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
@@ -39,6 +39,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         protected readonly UploadedFileFactory $uploadedFileFactory,
         protected readonly UploadedFileRelationFactory $uploadedFileRelationFactory,
         protected readonly UploadedFileRelationRepository $uploadedFileRelationRepository,
+        protected readonly FileUpload $fileUpload,
     ) {
         parent::__construct($filesystem, $em, $transformStringHelper);
     }
@@ -251,15 +252,9 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         return $this->uploadedFileLocator->getUploadedFileViewUrl($domainConfig, $uploadedFile);
     }
 
-    public function getUploadedFileSize(UploadedFile $uploadedFile): ?int
+    public function getUploadedFileFilesize(UploadedFile $uploadedFile): ?int
     {
-        try {
-            return $this->filesystem->fileSize(
-                $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFile),
-            );
-        } catch (UnableToRetrieveMetadata) {
-            return null;
-        }
+        return $uploadedFile->getFilesize();
     }
 
     /**
@@ -385,7 +380,10 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
 
         if ($filesCount === 1) {
             $replacementUploadedFile = array_pop($uploadedFiles);
-            $file->setTemporaryFilename($replacementUploadedFile);
+            $file->updateFile(
+                $replacementUploadedFile,
+                $this->fileUpload->getTemporaryFilesize($replacementUploadedFile),
+            );
         }
 
         $file->setTranslatedNames($uploadedFileFormData->names);

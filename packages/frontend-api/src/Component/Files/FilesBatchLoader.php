@@ -68,7 +68,7 @@ class FilesBatchLoader
      *     url: string,
      *     anchorText: string,
      *     viewUrl: string|null,
-     *     size: int|null,
+     *     filesize: int|null,
      *     extension: string,
      * }>>
      */
@@ -95,7 +95,7 @@ class FilesBatchLoader
      *     url: string,
      *     anchorText: string,
      *     viewUrl: string|null,
-     *     size: int|null,
+     *     filesize: int|null,
      *     extension: string,
      * }|null>
      */
@@ -180,7 +180,7 @@ class FilesBatchLoader
      *     url: string,
      *     anchorText: string,
      *     viewUrl: string|null,
-     *     size: int|null,
+     *     filesize: int|null,
      *     extension: string,
      * }>
      */
@@ -204,7 +204,7 @@ class FilesBatchLoader
      *     url: string,
      *     anchorText: string,
      *     viewUrl: string|null,
-     *     size: int|null,
+     *     filesize: int|null,
      *     extension: string,
      * }
      */

@@ -58,7 +58,7 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
                     anchorText
                     url
                     viewUrl
-                    size
+                    filesize
                     extension
                 }
             }
@@ -87,7 +87,7 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
             anchorText
             url
             viewUrl
-            size
+            filesize
             extension
         }
         isVisible

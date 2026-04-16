@@ -19,4 +19,9 @@ interface EntityFileUploadInterface
      * @return int|null
      */
     public function getId();
+
+    /**
+     * @return int|null
+     */
+    public function getFilesize();
 }

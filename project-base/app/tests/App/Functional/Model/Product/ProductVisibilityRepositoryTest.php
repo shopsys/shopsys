@@ -226,7 +226,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
             $namesIndexedByLocale[$locale] = $entityName . '-' . $entityId . ' (' . $locale . ')';
         }
 
-        $image = new Image($entityName, $entityId, $namesIndexedByLocale, null, null);
+        $image = new Image($entityName, $entityId, $namesIndexedByLocale, null, null, 0);
         $image->setFileAsUploaded('image', '/web/public/frontend/images/noimage.png');
         $this->em->persist($image);
         $this->em->flush();
