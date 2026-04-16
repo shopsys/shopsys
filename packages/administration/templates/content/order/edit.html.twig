@@ -19,8 +19,7 @@
         </div>
     {% endblock %}
 
-    {% set filteredTabs = tabs|filter((tab, identifier) => identifier != 'customer') %}
-    {% set hasActiveFilteredTab = activeTab is defined and activeTab is not null and activeTab in filteredTabs|keys %}
+    {% set hasActiveTab = activeTab is defined and activeTab is not null and activeTab in tabs|keys %}
 
     <style>
         .order-tab-disabled-like {
@@ -33,8 +32,8 @@
     <div class="card">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                {% for identifier, tab in filteredTabs %}
-                    {% set isActive = hasActiveFilteredTab ? activeTab == identifier : loop.first %}
+                {% for identifier, tab in tabs %}
+                    {% set isActive = hasActiveTab ? activeTab == identifier : loop.first %}
                     {% set isPaymentTabEmpty = identifier == 'payments' and paymentsForm is null %}
                     <li class="nav-item" role="presentation">
                         <a class="nav-link{% if isActive %} active{% endif %}{% if isPaymentTabEmpty %} order-tab-disabled-like{% endif %}"
@@ -56,8 +55,8 @@
         </div>
         <div class="card-body p-0">
             <div class="tab-content">
-                {% for identifier, tab in filteredTabs %}
-                    {% set isActive = hasActiveFilteredTab ? activeTab == identifier : loop.first %}
+                {% for identifier, tab in tabs %}
+                    {% set isActive = hasActiveTab ? activeTab == identifier : loop.first %}
                     <div class="tab-pane{% if isActive %} show active{% endif %} p-3"
                          id="tab-{{ identifier }}"
                          role="tabpanel"

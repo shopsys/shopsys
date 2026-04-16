@@ -9,19 +9,76 @@ import FormChangeInfo from './FormChangeInfo';
 import ProductPicker from './ProductPicker';
 
 export default class OrderItems {
-    static textDisabledClass = 'text-secondary';
+    static textDisabledClass = 'link-disabled';
 
     constructor($container) {
+        this.$container = $container;
+        this.$card = $container.filterAllNodes('.js-order-items-card');
+        this.$previewSection = this.$card.find('.js-order-items-preview');
+        this.$editSections = this.$card.find('.js-order-items-edit');
+        this.$previewOnlyControls = this.$card.find('.js-order-items-preview-only');
+        this.$editOnlyControls = $container.filterAllNodes('.js-order-items-edit-only');
+
         const $collection = $container.filterAllNodes('#js-order-items');
+        this.$collection = $collection;
+
         $collection.on('click', '.js-order-item-remove', event => this.onRemoveItemClick(event));
         $container.filterAllNodes('#js-order-item-add').on('click', event => this.onAddItemClick(event));
+        this.$card.on('click', '.js-order-items-switch-to-edit', event => this.onSwitchToEditClick(event));
+        this.$card.on('click', '.js-order-items-add-item-preview', event => this.onAddItemPreviewClick(event));
+        this.$card.on('click', '.js-order-items-add-product-preview', event => this.onAddProductPreviewClick(event));
+        this.$card.on('click', '.js-order-item-remove-preview', event => this.onRemoveItemPreviewClick(event));
 
         this.tooltip = null;
         this.refreshCount($collection);
+        this.initializeMode();
+
         // eslint-disable-next-line no-new
         new ProductPicker($container.filterAllNodes('#js-order-item-add-product'), (productId, productName) => {
             this.addProduct(productId, productName);
         });
+    }
+
+    initializeMode() {
+        if (this.$card.data('initial-mode') === 'edit') {
+            this.switchToEditMode();
+        }
+    }
+
+    onSwitchToEditClick(event) {
+        event.preventDefault();
+        this.switchToEditMode();
+    }
+
+    onAddItemPreviewClick(event) {
+        event.preventDefault();
+        this.switchToEditMode();
+        this.onAddItemClick();
+    }
+
+    onAddProductPreviewClick(event) {
+        event.preventDefault();
+        this.switchToEditMode();
+        this.$container.filterAllNodes('#js-order-item-add-product').trigger('click');
+    }
+
+    onRemoveItemPreviewClick(event) {
+        event.preventDefault();
+        this.switchToEditMode();
+
+        const index = String($(event.currentTarget).data('index'));
+        const $removeButton = this.$collection.find(`.js-order-item[data-index="${index}"] .js-order-item-remove`);
+
+        if ($removeButton.length) {
+            $removeButton.trigger('click');
+        }
+    }
+
+    switchToEditMode() {
+        this.$previewSection.addClass('d-none');
+        this.$previewOnlyControls.addClass('d-none');
+        this.$editSections.removeClass('d-none');
+        this.$editOnlyControls.removeClass('d-none');
     }
 
     refreshCount($collection) {
@@ -46,7 +103,7 @@ export default class OrderItems {
     }
 
     addProduct(productId, _productName) {
-        const $collection = $('#js-order-items');
+        const $collection = this.$collection;
         Ajax.ajax({
             url: $collection.data('order-product-add-url'),
             method: 'POST',
@@ -106,7 +163,7 @@ export default class OrderItems {
     }
 
     onAddItemClick() {
-        const $collection = $('#js-order-items');
+        const $collection = this.$collection;
 
         this.addItem($collection);
     }

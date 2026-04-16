@@ -217,9 +217,6 @@ msgstr "Nejprodávanější zboží kategorie"
 msgid "Bestselling products"
 msgstr "Nejprodávanější zboží"
 
-msgid "Billing & Delivery"
-msgstr "Fakturace a doručení"
-
 msgid "Billing address"
 msgstr "Fakturační adresa"
 
@@ -345,9 +342,6 @@ msgstr "DIČ firmy"
 
 msgid "Company detail"
 msgstr "Detail firmy"
-
-msgid "Company details"
-msgstr "Údaje o firmě"
 
 msgid "Company name"
 msgstr "Název firmy"
@@ -547,9 +541,6 @@ msgstr "Vytvořit variantu"
 msgid "Created"
 msgstr "Vytvořena"
 
-msgid "Created by"
-msgstr "Vytvořil"
-
 msgid "Created on"
 msgstr "Vytvořeno dne"
 
@@ -724,11 +715,17 @@ msgstr "Upravit"
 msgid "Edit administrator"
 msgstr "Úprava administrátora"
 
-msgid "Edit billing & delivery"
-msgstr "Upravit fakturaci a doručení"
+msgid "Edit billing details"
+msgstr "Upravit fakturační údaje"
+
+msgid "Edit delivery address"
+msgstr "Upravit doručovací adresu"
 
 msgid "Edit domain icon"
 msgstr "Změnit ikonu domény"
+
+msgid "Edit items"
+msgstr "Upravit položky"
 
 msgid "Edit note"
 msgstr "Upravit poznámku"
@@ -1033,9 +1030,6 @@ msgstr "Heureka - Ověřeno zákazníky"
 msgid "Heureka setting"
 msgstr "Heureka nastavení"
 
-msgid "History"
-msgstr "Historie"
-
 msgid "Holiday / internal day"
 msgstr "Svátek / interní den"
 
@@ -1104,9 +1098,6 @@ msgstr "Lze použít při vytváření odkazu takto: myší označíte text, ze 
 
 msgid "Item name"
 msgstr "Název položky"
-
-msgid "Items"
-msgstr "Položky"
 
 msgid "IČO"
 msgstr "IČO"
@@ -1498,8 +1489,14 @@ msgstr "Jejda! Nastala chyba."
 msgid "Open in a new tab"
 msgstr "Otevřít v novém panelu"
 
+msgid "Open product detail"
+msgstr "Otevřít detail produktu"
+
 msgid "Open user menu"
 msgstr "Otevřít menu uživatele"
+
+msgid "Order"
+msgstr "Objednávka"
 
 msgid "Order Nr."
 msgstr "Objednávka č."
@@ -1518,6 +1515,9 @@ msgstr "Detail objednávky"
 
 msgid "Order items"
 msgstr "Položky objednávky"
+
+msgid "Order must contain at least one item"
+msgstr "Objednávka musí obsahovat alespoň jednu položku"
 
 msgid "Order number"
 msgstr "Číslo objednávky"
@@ -1725,6 +1725,9 @@ msgstr "Refundovaná částka"
 
 msgid "Remove"
 msgstr "Odebrat"
+
+msgid "Remove item"
+msgstr "Odebrat položku"
 
 msgid "Remove rule"
 msgstr "Odebrat pravidlo"
@@ -2340,9 +2343,6 @@ msgstr "Při změně výchozí měny nedochází k žádnému přepočtu cen"
 
 msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
 msgstr "Mějte na paměti, že při vytváření cenové skupiny je nutné, aby aplikace přepočítala nové ceny pro všechny produkty. Produkty bez přepočtené ceny nebudou na e-shopu zobrazeny. Pro 2000 položek přepočet trvá asi hodinu."
-
-msgid "Withdrawal"
-msgstr "Odstoupení"
 
 msgid "Withdrawal request"
 msgstr "Žádost o odstoupení"

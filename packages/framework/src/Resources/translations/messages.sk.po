@@ -347,7 +347,7 @@ msgid "Avg duration"
 msgstr "Priemerné trvanie"
 
 msgid "BIC/Swift"
-msgstr ""
+msgstr "BIC/Swift"
 
 msgid "Back to category selection"
 msgstr "Späť na výber kategórie"
@@ -408,9 +408,6 @@ msgstr "Najpredávanejšie"
 
 msgid "Bestselling products"
 msgstr "Najpredávanejšie produkty"
-
-msgid "Billing & Delivery"
-msgstr ""
 
 msgid "Billing address"
 msgstr "Fúktúračná adresa"
@@ -1032,6 +1029,9 @@ msgstr "Zobraziť len produkty so špeciálnymi cenami"
 
 msgid "Do you really want to %action% %count% product?"
 msgstr "Naozaj chcete %action% %count% produkt?"
+
+msgid "Do you really want to change order status to <strong>%status%</strong>?"
+msgstr "Naozaj chcete zmeniť stav objednávky na <strong>%status%</strong>?"
 
 msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
 msgstr "Naozaj chcete odstrániť tento súbor? Bude trvalo odstránený a odpojný od príbuzných záznamov."
@@ -1784,7 +1784,7 @@ msgid "Hiding product"
 msgstr "Skrývanie produktu"
 
 msgid "History"
-msgstr ""
+msgstr "História"
 
 msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Sviatok / interný deň <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorený"
@@ -1814,7 +1814,7 @@ msgid "I buy on company behalf"
 msgstr "Nakúpujem v mene spoločnosti"
 
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 msgid "ID"
 msgstr "ID"
@@ -1910,7 +1910,7 @@ msgid "It is highly recommended to test this setting on devel or CI server befor
 msgstr "Dôrazne sa odporúča otestovať toto nastavenie na vývojovom alebo CI serveri pred tým, ako sa použije v produkčnom prostredí!"
 
 msgid "Items"
-msgstr ""
+msgstr "Položky"
 
 msgid "Key"
 msgstr "Kľúč"
@@ -2549,7 +2549,7 @@ msgid "Payment was not paid in full"
 msgstr "Platba nebola zaplatena v plnej výške"
 
 msgid "Payments"
-msgstr ""
+msgstr "Platby"
 
 msgid "Percent"
 msgstr "Percento"
@@ -2948,7 +2948,7 @@ msgid "Save warehouse settings"
 msgstr "Uložiť warehouse settings"
 
 msgid "Saved successfully"
-msgstr ""
+msgstr "Úspešne uložené"
 
 msgid "Schedule"
 msgstr "Rozvrh"
@@ -3200,7 +3200,7 @@ msgid "Status"
 msgstr "Stav"
 
 msgid "Status change failed. Please try again."
-msgstr ""
+msgstr "Zmena stavu zlyhala. Skúste to prosím znova."
 
 msgid "Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed"
 msgstr "Stav reklamac­e s číslom {complaint_number} z objednávky číslo {order_number} vytvorenej dňa {date} sa zmenil"
@@ -3632,7 +3632,7 @@ msgid "Weight (g)"
 msgstr "Hmotnosť (g)"
 
 msgid "Withdrawal"
-msgstr ""
+msgstr "Odstúpenie"
 
 msgid "Withdrawal Request"
 msgstr "Žiadosť o odstúpenie od zmluvy"
@@ -3647,7 +3647,7 @@ msgid "Withdrawal instructions"
 msgstr "Pokyny po odstúpenie"
 
 msgid "Withdrawal request data is required to switch the order to this status."
-msgstr ""
+msgstr "Na zmenu objednávky na tento stav sú vyžadované údaje žiadosti o odstúpenie."
 
 msgid "Withdrawal request details"
 msgstr "Detaily žiadosti o odstúpenie"

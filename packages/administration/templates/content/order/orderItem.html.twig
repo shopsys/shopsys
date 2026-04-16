@@ -4,8 +4,8 @@
         <td>
             <div class="d-flex align-items-center gap-2">
                 {% if productItem and productItem.product %}
-                    <div class="flex-shrink-0" style="width: 36px; height: 36px;">
-                        {{ image(productItem.product, { width: 36, height: 36, class: 'rounded object-contain w-100 h-100' }) }}
+                    <div class="order-item-thumb">
+                        {{ image(productItem.product, { width: 36, height: 36, class: 'order-item-thumb__image' }) }}
                     </div>
                 {% endif %}
                 <div class="flex-grow-1">
@@ -63,7 +63,7 @@
             </div>
         </td>
         <td class="align-middle">
-            <a href="#" class="js-order-item-remove">{{ ux_icon('trash') }}</a>
+            <a href="#" class="js-order-item-remove text-secondary">{{ ux_icon('trash', { class: 'icon icon-sm' }) }}</a>
         </td>
     </tr>
 {% endmacro %}

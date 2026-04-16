@@ -1,9 +1,10 @@
 {{ form_start(itemsForm, { action: url('admin_order_saveitems', { id: order.id }), attr: { novalidate: 'novalidate' } }) }}
-    {{ form_row(itemsForm.orderItems) }}
+    {{ form_row(itemsForm.orderItems, { canEdit: canEdit|default(false) }) }}
 
     {% if canEdit %}
+        {% set isItemsFormInvalid = itemsForm.orderItems.vars.submitted and not itemsForm.orderItems.vars.valid %}
         <div class="text-end mt-3">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary js-order-items-edit-only{% if not isItemsFormInvalid %} d-none{% endif %}">
                 <i class="ti ti-device-floppy"></i>
                 {{ 'Save items'|trans }}
             </button>

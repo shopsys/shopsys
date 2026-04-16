@@ -409,9 +409,6 @@ msgstr ""
 msgid "Bestselling products"
 msgstr ""
 
-msgid "Billing & Delivery"
-msgstr ""
-
 msgid "Billing address"
 msgstr ""
 
@@ -1031,6 +1028,9 @@ msgid "Display products with special prices only"
 msgstr ""
 
 msgid "Do you really want to %action% %count% product?"
+msgstr ""
+
+msgid "Do you really want to change order status to <strong>%status%</strong>?"
 msgstr ""
 
 msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."

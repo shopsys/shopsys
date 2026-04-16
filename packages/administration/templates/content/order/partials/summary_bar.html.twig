@@ -52,10 +52,6 @@
                 {% if order.promoCode %}
                     <div class="text-secondary">{{ 'Promo code'|trans }}: {{ order.promoCode }}</div>
                 {% endif %}
-                <div>
-                    <span class="text-secondary">{{ 'Total'|trans }}:</span>
-                    {{ order.totalPriceWithVat|priceWithCurrencyByOrder(order) }}
-                </div>
 
                 {# Secondary details collapsed to keep compact card height #}
                 <div class="collapse" id="basicInfoMore">
@@ -177,7 +173,7 @@
                         </span>
                     </div>
                 {% endif %}
-                <div class="fw-medium d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2">
                     <span class="text-secondary d-inline-flex align-items-center">
                         {{ ux_icon('tabler:user', { class: 'icon icon-sm' }) }}
                     </span>

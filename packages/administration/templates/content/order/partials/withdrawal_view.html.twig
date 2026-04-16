@@ -1,7 +1,7 @@
 {% if withdrawalRequest %}
     <h4>{{ 'Contact'|trans }}</h4>
     {% if withdrawalRequest.firstName or withdrawalRequest.lastName %}
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-2 mb-1">
             <span class="text-secondary d-inline-flex align-items-center">
                 {{ ux_icon('tabler:user', { class: 'icon icon-sm' }) }}
             </span>
@@ -9,7 +9,7 @@
         </div>
     {% endif %}
     {% if withdrawalRequest.email %}
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-2 mb-1">
             <span class="text-secondary d-inline-flex align-items-center">
                 {{ ux_icon('tabler:mail', { class: 'icon icon-sm' }) }}
             </span>

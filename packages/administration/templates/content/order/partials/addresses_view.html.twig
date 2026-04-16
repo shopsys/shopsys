@@ -1,7 +1,7 @@
 <div class="row gx-4">
     <div class="col-md-6 mb-3 mb-md-0 d-flex flex-column gap-1">
-        <div class="d-flex justify-content-between align-items-center mb-1">
-            <h4 class="mb-0">{{ 'Billing address'|trans }}</h4>
+        <div class="subheader d-flex justify-content-between align-items-center mb-1">
+            {{ 'Billing address'|trans }}
             {% if canEdit|default(false) %}
                 <a href="#"
                    class="text-secondary d-inline-flex align-items-center"
@@ -41,8 +41,8 @@
         </div>
     </div>
     <div class="col-md-6 d-flex flex-column gap-1">
-        <div class="d-flex justify-content-between align-items-center mb-1">
-            <h4 class="mb-0">{{ 'Delivery address'|trans }}</h4>
+        <div class="subheader d-flex justify-content-between align-items-center mb-1">
+            {{ 'Delivery address'|trans }}
             {% if canEdit|default(false) %}
                 <a href="#"
                    class="text-secondary d-inline-flex align-items-center"

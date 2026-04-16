@@ -33,14 +33,6 @@ class OrderDetailTabProvider implements OrderDetailTabProviderInterface
             '@ShopsysAdministration/content/order/tabs/items.html.twig',
         ));
 
-        $this->addTab(new OrderDetailTab(
-            'customer',
-            t('Billing & Delivery'),
-            300,
-            'map-pin',
-            '@ShopsysAdministration/content/order/tabs/customer.html.twig',
-        ));
-
         if ($order->getStatus()->getType() === OrderStatusTypeEnum::TYPE_WITHDRAWN) {
             $this->addTab(new OrderDetailTab(
                 'withdrawal',
