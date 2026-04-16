@@ -1,20 +1,39 @@
 {% if withdrawalRequest %}
     <h4>{{ 'Contact'|trans }}</h4>
     {% if withdrawalRequest.firstName or withdrawalRequest.lastName %}
-        <div>{{ withdrawalRequest.firstName }} {{ withdrawalRequest.lastName }}</div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-secondary d-inline-flex align-items-center">
+                {{ ux_icon('tabler:user', { class: 'icon icon-sm' }) }}
+            </span>
+            <span>{{ withdrawalRequest.firstName }} {{ withdrawalRequest.lastName }}</span>
+        </div>
     {% endif %}
     {% if withdrawalRequest.email %}
-        <div><a href="mailto:{{ withdrawalRequest.email }}">{{ withdrawalRequest.email }}</a></div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-secondary d-inline-flex align-items-center">
+                {{ ux_icon('tabler:mail', { class: 'icon icon-sm' }) }}
+            </span>
+            <a href="mailto:{{ withdrawalRequest.email }}">{{ withdrawalRequest.email }}</a>
+        </div>
     {% endif %}
     {% if withdrawalRequest.telephone %}
-        <div><a href="tel:{{ withdrawalRequest.telephone }}">{{ withdrawalRequest.telephone }}</a></div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-secondary d-inline-flex align-items-center">
+                {{ ux_icon('phone', { class: 'icon icon-sm' }) }}
+            </span>
+            <a href="tel:{{ withdrawalRequest.telephone }}">{{ withdrawalRequest.telephone }}</a>
+        </div>
     {% endif %}
 
-    <h4 class="mt-3">{{ 'Requested at'|trans }}</h4>
+    <h4 class="mt-3 d-flex align-items-center gap-2">
+        <span>{{ 'Requested at'|trans }}</span>
+    </h4>
     <div>{{ withdrawalRequest.requestedAt ? withdrawalRequest.requestedAt|formatDateTime : '-' }}</div>
 
     {% if withdrawalRequest.note %}
-        <h4 class="mt-3">{{ 'Note'|trans }}</h4>
+        <h4 class="mt-3 d-flex align-items-center gap-2">
+            <span>{{ 'Note'|trans }}</span>
+        </h4>
         <div>{{ withdrawalRequest.note }}</div>
     {% endif %}
 {% else %}

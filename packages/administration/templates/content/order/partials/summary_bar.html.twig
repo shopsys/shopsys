@@ -138,14 +138,23 @@
                     {% set registeredCompanyName = order.customerUser.customer.billingAddress.companyName|default(null) %}
                     <div class="d-flex align-items-center gap-1 flex-wrap">
                         {% if registeredCompanyName %}
-                            <a href="{{ url('admin_customer_edit', { id: order.customerUser.customer.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
-                                {{ registeredCompanyName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
-                            </a>
-                            -
+                            <span class="d-inline-flex align-items-center gap-1">
+                                <span class="text-secondary d-inline-flex align-items-center">
+                                    {{ ux_icon('company', { class: 'icon icon-sm' }) }}
+                                </span>
+                                <a href="{{ url('admin_customer_edit', { id: order.customerUser.customer.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                                    {{ registeredCompanyName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
+                                </a>
+                            </span>
                         {% endif %}
-                        <a href="{{ url('admin_customer_user_edit', { id: order.customerUser.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
-                            {{ order.customerUser.firstName }} {{ order.customerUser.lastName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
-                        </a>
+                        <span class="d-inline-flex align-items-center gap-1">
+                            <span class="text-secondary d-inline-flex align-items-center">
+                                {{ ux_icon('user', { class: 'icon icon-sm' }) }}
+                            </span>
+                            <a href="{{ url('admin_customer_user_edit', { id: order.customerUser.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                                {{ order.customerUser.firstName }} {{ order.customerUser.lastName }} {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
+                            </a>
+                        </span>
                     </div>
                 {% endif %}
                 <div class="fw-medium d-flex align-items-center gap-2">
