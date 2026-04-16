@@ -7,22 +7,32 @@ namespace Shopsys\McpBundle\Model\Administrator\McpToken;
 class AdministratorMcpTokenData
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
+     * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
     public $administrator;
 
     /**
-     * @var string|null
+     * @var string
      */
     public $publicTokenId;
 
     /**
-     * @var string|null
+     * @var string
      */
     public $secretHash;
 
     /**
-     * @var \DateTimeImmutable|null
+     * @var string
+     */
+    public $clientId;
+
+    /**
+     * @var string
+     */
+    public $clientName;
+
+    /**
+     * @var \DateTimeImmutable
      */
     public $createdAt;
 
@@ -40,4 +50,9 @@ class AdministratorMcpTokenData
      * @var \DateTimeImmutable|null
      */
     public $replacedAt;
+
+    /**
+     * @var \DateTimeImmutable
+     */
+    public $expiresAt;
 }

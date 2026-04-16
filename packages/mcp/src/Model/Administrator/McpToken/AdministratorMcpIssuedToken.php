@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Model\Administrator\McpToken;
 
-class AdministratorMcpTokenPair
+use DateTimeImmutable;
+
+class AdministratorMcpIssuedToken
 {
     public function __construct(
         public readonly string $publicTokenId,
         public readonly string $secret,
+        public readonly DateTimeImmutable $expiresAt,
     ) {
     }
 

@@ -8,14 +8,97 @@
 {% block main_content %}
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ 'Current token'|trans }}</h3>
+            <h3 class="card-title">{{ 'Authorized MCP clients'|trans }}</h3>
         </div>
         <div class="card-body">
-            {% if administratorMcpToken is null %}
-                <p class="mb-4">{{ 'No active MCP token is configured for your administrator account.'|trans }}</p>
-                {{ form_start(generateForm, { attr: { class: 'd-inline-block mb-0' } }) }}
-                    {{ form_widget(generateForm.generate, { attr: { class: 'btn btn-primary' } }) }}
-                {{ form_end(generateForm) }}
+            {% if connectedClientTokens is empty %}
+                <p class="mb-0">{{ 'No authorized MCP client is currently active for your administrator account.'|trans }}</p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-vcenter">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Client'|trans }}</th>
+                                <th>{{ 'Created at'|trans }}</th>
+                                <th>{{ 'Last used at'|trans }}</th>
+                                <th>{{ 'Expires at'|trans }}</th>
+                                <th class="text-end">{{ 'Actions'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for connectedClientToken in connectedClientTokens %}
+                                <tr>
+                                    <td>
+                                        {{ connectedClientToken.clientName }}
+                                        <div class="text-secondary small">{{ connectedClientToken.clientId }}</div>
+                                    </td>
+                                    <td>{{ connectedClientToken.createdAt|formatDateTime }}</td>
+                                    <td>
+                                        {% if connectedClientToken.lastUsedAt is null %}
+                                            {{ 'Never used'|trans }}
+                                        {% else %}
+                                            {{ connectedClientToken.lastUsedAt|formatDateTime }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ connectedClientToken.expiresAt|formatDateTime }}
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="{{ connectedClientTokenRevokeUrlsByClientId[connectedClientToken.clientId] }}"
+                                           class="btn btn-outline-danger"
+                                           data-confirm-window
+                                           data-confirm-message="{{ 'Do you really want to revoke MCP access for "%clientLabel%"?'|trans({
+                                               '%clientLabel%': connectedClientToken.clientName,
+                                           }) }}"
+                                        >
+                                            {{ 'Revoke access'|trans }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <details class="card">
+        <summary class="card-header cursor-pointer details-card-summary">
+            <span class="card-title">{{ 'Claude Code client setup'|trans }}</span>
+        </summary>
+        <div class="card-body">
+            {{ include('@ShopsysMcp/content/superadmin/_claudeSetup.html.twig', {
+                mcpServerName: mcpServerName,
+                mcpEndpointUrl: mcpEndpointUrl,
+            }) }}
+        </div>
+    </details>
+
+    <details class="card">
+        <summary class="card-header cursor-pointer details-card-summary">
+            <span class="card-title">{{ 'Other MCP clients'|trans }}</span>
+        </summary>
+        <div class="card-body">
+            <p>{{ 'Use a manual token for clients such as Codex CLI.'|trans }}</p>
+            <dl class="row mb-4">
+                <dt class="col-sm-3">{{ 'Endpoint URL'|trans }}</dt>
+                <dd class="col-sm-9"><code>{{ mcpEndpointUrl }}</code></dd>
+                <dt class="col-sm-3">{{ 'Authorization header'|trans }}</dt>
+                <dd class="col-sm-9"><code>Authorization: Bearer &lt;token&gt;</code></dd>
+            </dl>
+
+            <h4 class="mb-3">{{ 'Manual token'|trans }}</h4>
+
+            <div class="alert alert-info mb-4">
+                {{ 'Generated tokens are shown only once. Regenerating a token revokes the previous token immediately.'|trans }}
+            </div>
+
+            {% if manualMcpToken is null %}
+                <p class="mb-4">{{ 'No active manual MCP token is configured for your administrator account.'|trans }}</p>
+                {{ form_start(manualTokenGenerateForm, { attr: { class: 'd-inline-block mb-0' } }) }}
+                    {{ form_widget(manualTokenGenerateForm.generate, { attr: { class: 'btn btn-primary' } }) }}
+                {{ form_end(manualTokenGenerateForm) }}
             {% else %}
                 <div class="table-responsive mb-4">
                     <table class="table table-vcenter">
@@ -26,58 +109,46 @@
                             </tr>
                             <tr>
                                 <th>{{ 'Created at'|trans }}</th>
-                                <td>{{ administratorMcpToken.createdAt|formatDateTime }}</td>
+                                <td>{{ manualMcpToken.createdAt|formatDateTime }}</td>
                             </tr>
                             <tr>
                                 <th>{{ 'Last used at'|trans }}</th>
                                 <td>
-                                    {% if administratorMcpToken.lastUsedAt is null %}
+                                    {% if manualMcpToken.lastUsedAt is null %}
                                         {{ 'Never used'|trans }}
                                     {% else %}
-                                        {{ administratorMcpToken.lastUsedAt|formatDateTime }}
+                                        {{ manualMcpToken.lastUsedAt|formatDateTime }}
                                     {% endif %}
                                 </td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'Expires at'|trans }}</th>
+                                <td>{{ manualMcpToken.expiresAt|formatDateTime }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="d-flex flex-wrap align-items-center gap-2">
-                    {{ form_start(generateForm, { attr: { class: 'd-inline-block mb-0' } }) }}
-                        {{ form_widget(generateForm.generate, { attr: { class: 'btn btn-primary' } }) }}
-                    {{ form_end(generateForm) }}
+                    {{ form_start(manualTokenGenerateForm, { attr: { class: 'd-inline-block mb-0' } }) }}
+                        {{ form_widget(manualTokenGenerateForm.generate, { attr: { class: 'btn btn-primary' } }) }}
+                    {{ form_end(manualTokenGenerateForm) }}
 
-                    {{ form_start(revokeForm, { attr: { class: 'd-inline-block mb-0' } }) }}
-                        {{ form_widget(revokeForm.revoke, { attr: { class: 'btn btn-outline-danger' } }) }}
-                    {{ form_end(revokeForm) }}
+                    <a href="{{ manualTokenRevokeUrl }}"
+                       class="btn btn-outline-danger"
+                       data-confirm-window
+                       data-confirm-message="{{ 'Do you really want to revoke the active MCP token?'|trans }}"
+                    >
+                        {{ 'Revoke MCP token'|trans }}
+                    </a>
                 </div>
             {% endif %}
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ 'Usage guidance'|trans }}</h3>
-        </div>
-        <div class="card-body">
-            <p>{{ 'Use the endpoint below from your MCP client with Bearer token authentication.'|trans }}</p>
-
-            <dl class="row mb-0">
-                <dt class="col-sm-3">{{ 'Endpoint URL'|trans }}</dt>
-                <dd class="col-sm-9"><code>{{ mcpEndpointUrl }}</code></dd>
-                <dt class="col-sm-3">{{ 'Authorization header'|trans }}</dt>
-                <dd class="col-sm-9"><code>Authorization: Bearer &lt;token&gt;</code></dd>
-            </dl>
 
             {{ include('@ShopsysMcp/content/superadmin/_codexSetup.html.twig', {
                 bearerTokenEnvVarName: bearerTokenEnvVarName,
                 mcpServerName: mcpServerName,
                 mcpEndpointUrl: mcpEndpointUrl,
             }) }}
-
-            <div class="alert alert-info mt-4 mb-0">
-                {{ 'Generated secrets are shown only once. Regenerating a token revokes the previous token immediately. Environment variables exported in your shell last only for the current shell session unless you add them to your shell profile.'|trans }}
-            </div>
         </div>
-    </div>
+    </details>
 {% endblock %}

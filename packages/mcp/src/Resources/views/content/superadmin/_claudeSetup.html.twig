@@ -1,0 +1,25 @@
+{% set claudeAddCommand = 'claude mcp add --transport http ' ~ mcpServerName ~ ' ' ~ mcpEndpointUrl %}
+
+<p class="mb-3">{{ 'Add the server once, then authenticate it in Claude Code when prompted.'|trans }}</p>
+
+<div class="mb-4">
+    <label class="form-label">{{ 'One-time setup command'|trans }}</label>
+    <div class="input-group input-group-flat w-100">
+        <input type="text" value="{{ claudeAddCommand }}" class="form-control font-monospace" readonly>
+        <span class="input-group-text">
+            <a href="#" class="link-secondary" data-js-clipboard-copy="{{ claudeAddCommand }}" title="{{ 'Copy command'|trans }}">
+                {{ ux_icon('duplicate') }}
+            </a>
+        </span>
+    </div>
+</div>
+
+<div>
+    <label class="form-label">{{ 'Authentication steps'|trans }}</label>
+    <ol class="mb-0 ps-3">
+        <li>{{ 'Run the command above once in the shell where you use Claude Code.'|trans }}</li>
+        <li>{{ 'Start Claude Code and run /mcp.'|trans }}</li>
+        <li>{{ 'Select Authenticate for the Shopsys MCP server.'|trans }}</li>
+        <li>{{ 'Complete the browser login and approve MCP access in Shopsys administration.'|trans }}</li>
+    </ol>
+</div>

@@ -19,37 +19,73 @@ class AdministratorMcpTokenFacade
         protected readonly AdministratorMcpTokenRepository $administratorMcpTokenRepository,
         protected readonly EntityManagerInterface $entityManager,
         protected readonly ClockInterface $clock,
+        protected readonly int $accessTokenTtlSeconds,
     ) {
     }
 
-    public function generateTokenForAdministrator(Administrator $administrator): string
+    public function issueManualTokenForAdministrator(Administrator $administrator): AdministratorMcpIssuedToken
     {
+        return $this->issueTokenForAdministratorAndClient(
+            $administrator,
+            AdministratorMcpToken::MANUAL_CLIENT_ID,
+            AdministratorMcpToken::MANUAL_CLIENT_NAME,
+        );
+    }
+
+    public function issueTokenForAdministratorAndClient(
+        Administrator $administrator,
+        string $clientId,
+        string $clientName,
+    ): AdministratorMcpIssuedToken {
         $now = $this->clock->now();
-        $existingAdministratorMcpToken = $this->administratorMcpTokenRepository->findActiveByAdministrator($administrator);
+        $existingAdministratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByAdministratorAndClient($administrator, $clientId);
 
         if ($existingAdministratorMcpToken !== null) {
             $existingAdministratorMcpToken->replace($now);
             $this->entityManager->flush();
         }
 
-        $generatedTokenPair = $this->administratorMcpTokenGenerator->generateTokenPair();
+        $expiresAt = $now->modify(sprintf('+%d seconds', $this->accessTokenTtlSeconds));
+        $issuedToken = $this->administratorMcpTokenGenerator->generateIssuedToken($expiresAt);
+
         $administratorMcpTokenData = $this->administratorMcpTokenDataFactory->create();
         $administratorMcpTokenData->administrator = $administrator;
-        $administratorMcpTokenData->publicTokenId = $generatedTokenPair->publicTokenId;
-        $administratorMcpTokenData->secretHash = $this->administratorMcpTokenHasher->hash($generatedTokenPair->secret);
+        $administratorMcpTokenData->publicTokenId = $issuedToken->publicTokenId;
+        $administratorMcpTokenData->secretHash = $this->administratorMcpTokenHasher->hash($issuedToken->secret);
+        $administratorMcpTokenData->clientId = $clientId;
+        $administratorMcpTokenData->clientName = $clientName;
         $administratorMcpTokenData->createdAt = $now;
+        $administratorMcpTokenData->expiresAt = $issuedToken->expiresAt;
 
         $administratorMcpToken = $this->administratorMcpTokenFactory->create($administratorMcpTokenData);
 
         $this->entityManager->persist($administratorMcpToken);
         $this->entityManager->flush();
 
-        return $generatedTokenPair->getTokenString();
+        return $issuedToken;
     }
 
-    public function findActiveByAdministrator(Administrator $administrator): ?AdministratorMcpToken
+    public function getRemainingLifetimeInSeconds(AdministratorMcpIssuedToken $issuedToken): int
     {
-        return $this->administratorMcpTokenRepository->findActiveByAdministrator($administrator);
+        return max($issuedToken->expiresAt->getTimestamp() - $this->clock->now()->getTimestamp(), 0);
+    }
+
+    public function findActiveManualTokenByAdministrator(Administrator $administrator): ?AdministratorMcpToken
+    {
+        return $this->findActiveByAdministratorAndClient($administrator, AdministratorMcpToken::MANUAL_CLIENT_ID);
+    }
+
+    public function findActiveByAdministratorAndClient(
+        Administrator $administrator,
+        string $clientId,
+    ): ?AdministratorMcpToken {
+        $administratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByAdministratorAndClient($administrator, $clientId);
+
+        if ($administratorMcpToken === null || !$administratorMcpToken->isValidAt($this->clock->now())) {
+            return null;
+        }
+
+        return $administratorMcpToken;
     }
 
     public function findValidTokenByTokenString(string $tokenString): ?AdministratorMcpToken
@@ -57,9 +93,25 @@ class AdministratorMcpTokenFacade
         return $this->administratorMcpTokenLookup->findValidTokenByTokenString($tokenString);
     }
 
-    public function revokeTokenForAdministrator(Administrator $administrator): void
+    /**
+     * @return array<\Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken>
+     */
+    public function findActiveConnectedClientTokensByAdministrator(Administrator $administrator): array
     {
-        $administratorMcpToken = $this->administratorMcpTokenRepository->findActiveByAdministrator($administrator);
+        return $this->administratorMcpTokenRepository->findActiveConnectedClientTokensByAdministrator(
+            $administrator,
+            $this->clock->now(),
+        );
+    }
+
+    public function revokeManualTokenForAdministrator(Administrator $administrator): void
+    {
+        $this->revokeTokenForAdministratorAndClient($administrator, AdministratorMcpToken::MANUAL_CLIENT_ID);
+    }
+
+    public function revokeTokenForAdministratorAndClient(Administrator $administrator, string $clientId): void
+    {
+        $administratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByAdministratorAndClient($administrator, $clientId);
 
         if ($administratorMcpToken === null) {
             return;

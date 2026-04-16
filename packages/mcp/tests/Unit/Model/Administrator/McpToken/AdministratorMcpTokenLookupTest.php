@@ -7,6 +7,7 @@ namespace Tests\McpBundle\Unit\Model\Administrator\McpToken;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenData;
@@ -17,39 +18,49 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 
 class AdministratorMcpTokenLookupTest extends TestCase
 {
+    private const string MOCKED_NOW = '2026-03-18 13:30:00';
+    private const string VALID_PUBLIC_TOKEN_ID = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+    private const string VALID_SECRET = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb';
+    private const string OTHER_VALID_SECRET = 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc';
+
     public function testFindValidTokenByTokenStringReturnsTokenForMatchingPublicIdAndSecret(): void
     {
-        $publicTokenId = 'public-token-id';
-        $secret = 'secret-token';
         $administratorMcpTokenHasher = $this->createAdministratorMcpTokenHasher();
         $administratorMcpToken = $this->createAdministratorMcpToken(
-            $publicTokenId,
-            $administratorMcpTokenHasher->hash($secret),
+            self::VALID_PUBLIC_TOKEN_ID,
+            $administratorMcpTokenHasher->hash(self::VALID_SECRET),
         );
         $administratorMcpTokenLookup = new AdministratorMcpTokenLookup(
-            $this->createAdministratorMcpTokenRepository([$publicTokenId => $administratorMcpToken]),
+            $this->createAdministratorMcpTokenRepository([self::VALID_PUBLIC_TOKEN_ID => $administratorMcpToken]),
             $administratorMcpTokenHasher,
+            $this->createClock(),
         );
 
-        $foundAdministratorMcpToken = $administratorMcpTokenLookup->findValidTokenByTokenString($publicTokenId . '.' . $secret);
+        $foundAdministratorMcpToken = $administratorMcpTokenLookup->findValidTokenByTokenString($this->createTokenString(
+            self::VALID_PUBLIC_TOKEN_ID,
+            self::VALID_SECRET,
+        ));
 
         $this->assertSame($administratorMcpToken, $foundAdministratorMcpToken);
     }
 
     public function testFindValidTokenByTokenStringReturnsNullForInvalidSecret(): void
     {
-        $publicTokenId = 'public-token-id';
         $administratorMcpTokenHasher = $this->createAdministratorMcpTokenHasher();
         $administratorMcpToken = $this->createAdministratorMcpToken(
-            $publicTokenId,
-            $administratorMcpTokenHasher->hash('valid-secret'),
+            self::VALID_PUBLIC_TOKEN_ID,
+            $administratorMcpTokenHasher->hash(self::VALID_SECRET),
         );
         $administratorMcpTokenLookup = new AdministratorMcpTokenLookup(
-            $this->createAdministratorMcpTokenRepository([$publicTokenId => $administratorMcpToken]),
+            $this->createAdministratorMcpTokenRepository([self::VALID_PUBLIC_TOKEN_ID => $administratorMcpToken]),
             $administratorMcpTokenHasher,
+            $this->createClock(),
         );
 
-        $foundAdministratorMcpToken = $administratorMcpTokenLookup->findValidTokenByTokenString($publicTokenId . '.invalid-secret');
+        $foundAdministratorMcpToken = $administratorMcpTokenLookup->findValidTokenByTokenString($this->createTokenString(
+            self::VALID_PUBLIC_TOKEN_ID,
+            self::OTHER_VALID_SECRET,
+        ));
 
         $this->assertNull($foundAdministratorMcpToken);
     }
@@ -59,6 +70,7 @@ class AdministratorMcpTokenLookupTest extends TestCase
         $administratorMcpTokenLookup = new AdministratorMcpTokenLookup(
             $this->createAdministratorMcpTokenRepository([]),
             $this->createAdministratorMcpTokenHasher(),
+            $this->createClock(),
         );
 
         $foundAdministratorMcpToken = $administratorMcpTokenLookup->findValidTokenByTokenString('malformed-token');
@@ -66,15 +78,53 @@ class AdministratorMcpTokenLookupTest extends TestCase
         $this->assertNull($foundAdministratorMcpToken);
     }
 
-    public function testFindValidTokenByTokenStringReturnsNullWhenPublicTokenIdDoesNotExist(): void
+    public function testFindValidTokenByTokenStringReturnsNullForTokenWithInvalidCharacters(): void
     {
-        $publicTokenId = 'missing-public-token-id';
         $administratorMcpTokenLookup = new AdministratorMcpTokenLookup(
             $this->createAdministratorMcpTokenRepository([]),
             $this->createAdministratorMcpTokenHasher(),
+            $this->createClock(),
         );
 
-        $foundAdministratorMcpToken = $administratorMcpTokenLookup->findValidTokenByTokenString($publicTokenId . '.secret-token');
+        $foundAdministratorMcpToken = $administratorMcpTokenLookup->findValidTokenByTokenString('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz.' . self::VALID_SECRET);
+
+        $this->assertNull($foundAdministratorMcpToken);
+    }
+
+    public function testFindValidTokenByTokenStringReturnsNullWhenPublicTokenIdDoesNotExist(): void
+    {
+        $administratorMcpTokenLookup = new AdministratorMcpTokenLookup(
+            $this->createAdministratorMcpTokenRepository([]),
+            $this->createAdministratorMcpTokenHasher(),
+            $this->createClock(),
+        );
+
+        $foundAdministratorMcpToken = $administratorMcpTokenLookup->findValidTokenByTokenString($this->createTokenString(
+            self::VALID_PUBLIC_TOKEN_ID,
+            self::VALID_SECRET,
+        ));
+
+        $this->assertNull($foundAdministratorMcpToken);
+    }
+
+    public function testFindValidTokenByTokenStringReturnsNullForExpiredToken(): void
+    {
+        $administratorMcpTokenHasher = $this->createAdministratorMcpTokenHasher();
+        $administratorMcpToken = $this->createAdministratorMcpToken(
+            self::VALID_PUBLIC_TOKEN_ID,
+            $administratorMcpTokenHasher->hash(self::VALID_SECRET),
+            '-15 minutes',
+        );
+        $administratorMcpTokenLookup = new AdministratorMcpTokenLookup(
+            $this->createAdministratorMcpTokenRepository([self::VALID_PUBLIC_TOKEN_ID => $administratorMcpToken]),
+            $administratorMcpTokenHasher,
+            $this->createClock(),
+        );
+
+        $foundAdministratorMcpToken = $administratorMcpTokenLookup->findValidTokenByTokenString($this->createTokenString(
+            self::VALID_PUBLIC_TOKEN_ID,
+            self::VALID_SECRET,
+        ));
 
         $this->assertNull($foundAdministratorMcpToken);
     }
@@ -94,14 +144,31 @@ class AdministratorMcpTokenLookupTest extends TestCase
     private function createAdministratorMcpToken(
         string $publicTokenId,
         string $secretHash,
+        string $expiresAtModification = '+30 minutes',
     ): AdministratorMcpToken {
         $administratorMcpTokenData = new AdministratorMcpTokenData();
         $administratorMcpTokenData->administrator = $this->createStub(Administrator::class);
         $administratorMcpTokenData->publicTokenId = $publicTokenId;
         $administratorMcpTokenData->secretHash = $secretHash;
-        $administratorMcpTokenData->createdAt = new DateTimeImmutable('2026-03-18 13:00:00');
+        $administratorMcpTokenData->clientId = AdministratorMcpToken::MANUAL_CLIENT_ID;
+        $administratorMcpTokenData->clientName = AdministratorMcpToken::MANUAL_CLIENT_NAME;
+        $administratorMcpTokenData->createdAt = new DateTimeImmutable(self::MOCKED_NOW);
+        $administratorMcpTokenData->expiresAt = $administratorMcpTokenData->createdAt->modify($expiresAtModification);
 
         return new AdministratorMcpToken($administratorMcpTokenData);
+    }
+
+    private function createClock(): ClockInterface
+    {
+        $clockStub = $this->createStub(ClockInterface::class);
+        $clockStub->method('now')->willReturn(new DateTimeImmutable(self::MOCKED_NOW));
+
+        return $clockStub;
+    }
+
+    private function createTokenString(string $publicTokenId, string $secret): string
+    {
+        return $publicTokenId . '.' . $secret;
     }
 
     /**
@@ -121,7 +188,7 @@ class AdministratorMcpTokenLookupTest extends TestCase
                 parent::__construct($entityManager);
             }
 
-            public function findActiveByPublicTokenId(string $publicTokenId): ?AdministratorMcpToken
+            public function findCurrentByPublicTokenId(string $publicTokenId): ?AdministratorMcpToken
             {
                 return $this->administratorMcpTokensByPublicTokenId[$publicTokenId] ?? null;
             }

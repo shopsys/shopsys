@@ -168,6 +168,14 @@ data:
                 return 470; # send to @app
             }
 
+            location = /.well-known/oauth-authorization-server {
+                return 470; # send to @app
+            }
+
+            location ~ ^/mcp/oauth(?:/|$) {
+                return 470; # send to @app
+            }
+
             # location always using the app backend, no static files
             location ~ ^/(?:[^/]+/)?(graphql|_profiler|_wdt|_error)(?:/|$) {
                 return 470; # send to @app

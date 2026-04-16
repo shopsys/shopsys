@@ -27,9 +27,16 @@ class AdminMenuSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $superadminMenu->addChild('mcp_server', [
+        $mcpServerMenu = $superadminMenu->addChild('mcp_server', [
             'route' => 'admin_superadmin_mcp_token',
             'label' => t('MCP server'),
         ]);
+        // This page only works when the OAuth client sends the required query parameters.
+        // Do not generate a menu URI for it; use extras only so breadcrumbs and current-item matching still work.
+        $mcpServerAuthorizeMenu = $mcpServerMenu->addChild('mcp_server_authorize', [
+            'label' => t('Authorize MCP client'),
+            'display' => false,
+        ]);
+        $mcpServerAuthorizeMenu->setExtra('routes', ['admin_superadmin_mcp_oauth_authorize']);
     }
 }

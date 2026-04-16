@@ -56,7 +56,7 @@ class McpTokenAuthenticator extends AbstractAuthenticator implements Authenticat
         $administratorMcpToken = $this->administratorMcpTokenFacade->findValidTokenByTokenString($tokenString);
 
         if ($administratorMcpToken === null) {
-            throw new CustomUserMessageAuthenticationException('Invalid MCP token.');
+            throw new CustomUserMessageAuthenticationException('Invalid or expired MCP token.');
         }
 
         $request->attributes->set(static::REQUEST_ATTRIBUTE_ADMINISTRATOR_MCP_TOKEN, $administratorMcpToken);

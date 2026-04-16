@@ -1,4 +1,6 @@
 shopsys_mcp:
+    authorization:
+        access_token_ttl_seconds: 2592000
     query:
         lock_timeout_ms: 1000
         max_returned_rows: 500

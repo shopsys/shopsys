@@ -7,3 +7,7 @@ _mcp_endpoint:
     controller: mcp.server.controller::handle
     methods: [GET, POST, DELETE, OPTIONS]
     path: /_mcp
+
+shopsys_mcp_oauth:
+    resource: "@ShopsysMcpBundle/Controller/OAuth"
+    type: attribute

@@ -65,6 +65,15 @@ snc_redis:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:mcp_http_session:'
                 connection_timeout: 2
                 read_write_timeout: 5
+        mcp_oauth:
+            type: 'phpredis'
+            alias: 'mcp_oauth'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
+            options:
+                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:mcp_oauth:'
+                connection_timeout: 2
+                read_write_timeout: 5
         product_recalculation_queue:
             type: 'phpredis'
             alias: 'product_recalculation_queue'

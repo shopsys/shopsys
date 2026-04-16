@@ -7,7 +7,7 @@
     </summary>
 
     <div class="mt-3">
-        <p class="mb-2">{{ 'For Codex CLI, add the MCP server once and expose the token through an environment variable before starting Codex.'|trans }}</p>
+        <p class="mb-2">{{ 'Export the manual token in your current shell, then add the MCP server once.'|trans }}</p>
 
         <div class="mb-3">
             <label class="form-label">{{ 'Per-shell token command'|trans }}</label>
@@ -20,6 +20,8 @@
                 </span>
             </div>
         </div>
+
+        <p class="text-muted mb-3">{{ 'Environment variables exported this way are available only in the current shell session unless you add them to your shell profile.'|trans }}</p>
 
         <div>
             <label class="form-label">{{ 'One-time setup command'|trans }}</label>
