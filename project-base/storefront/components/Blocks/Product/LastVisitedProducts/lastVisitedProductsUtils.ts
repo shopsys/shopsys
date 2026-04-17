@@ -1,7 +1,8 @@
 import { useEffect, useEffectEvent } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 
-const LAST_VISITED_MAX_ITEMS = 10;
+const LAST_VISITED_STORED_ITEMS = 15;
+export const LAST_VISITED_DISPLAYED_ITEMS = 10;
 
 export const useLastVisitedProductView = (visitedProduct: string) => {
     const lastVisitedProductsCatnums = useCookiesStore((state) => state.lastVisitedProductsCatnums);
@@ -13,7 +14,7 @@ export const useLastVisitedProductView = (visitedProduct: string) => {
         );
 
         setCookiesStoreState({
-            lastVisitedProductsCatnums: newLastVisitedProductsCatnums.slice(0, LAST_VISITED_MAX_ITEMS),
+            lastVisitedProductsCatnums: newLastVisitedProductsCatnums.slice(0, LAST_VISITED_STORED_ITEMS),
         });
     });
 
