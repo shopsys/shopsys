@@ -20,6 +20,7 @@ use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
@@ -227,6 +228,9 @@ return ECSConfig::configure()
             FinalFormTypeFixer::class => [
                 __DIR__ . '/project-base',
                 __DIR__ . '/packages/framework/src/Form/Locale/LocalizedType.php',
+            ],
+            FullyQualifiedClassNameInAnnotationSniff::class => [
+                __DIR__ . '/packages/mcp/src/Component/Database/Schema/ExposedSchemaProvider.php',
             ],
         ],
     ));
