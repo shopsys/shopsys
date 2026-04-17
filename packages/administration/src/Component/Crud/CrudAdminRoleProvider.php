@@ -36,8 +36,8 @@ final class CrudAdminRoleProvider implements CoreRoleProviderInterface
     #[Override]
     public function configureRoles(RoleCollection $roleCollection): void
     {
-        foreach ($this->crudControllerRegistry->getItems() as $crudControllerDefinition) {
-            $config = $crudControllerDefinition->getConfig();
+        foreach ($this->crudControllerRegistry->getAll() as $crudControllerDefinition) {
+            $config = $crudControllerDefinition->config;
 
             if ($config->isFullDisabled() || $config->getCustomRoleConstant() !== null) {
                 continue;

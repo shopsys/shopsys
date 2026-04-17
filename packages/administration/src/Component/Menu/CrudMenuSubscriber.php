@@ -35,8 +35,8 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
     {
         $rootMenu = $event->getMenu();
 
-        foreach ($this->crudControllerRegistry->getItems() as $item) {
-            $config = $item->getConfig();
+        foreach ($this->crudControllerRegistry->getAll() as $item) {
+            $config = $item->config;
 
             if ($config->isFullDisabled()) {
                 continue;
@@ -56,7 +56,7 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
                 $menu = $menu->getChild($submenuSection);
             }
 
-            $route = $this->crudRouteProvider->generate($item, ActionType::LIST);
+            $route = $this->crudRouteProvider->getRouteItem($item->controllerClass, ActionType::LIST);
             $parent = $menu->addChild($route->getRouteName(), [
                 'route' => $route->getRouteName(),
                 'display' => $config->isVisibleInMenu(),
@@ -72,7 +72,7 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
                     continue;
                 }
 
-                $route = $this->crudRouteProvider->generate($item, $action);
+                $route = $this->crudRouteProvider->getRouteItem($item->controllerClass, $action);
 
                 $parent->addChild($route->getRouteName(), [
                     'route' => $route->getRouteName(),

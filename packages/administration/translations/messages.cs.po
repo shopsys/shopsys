@@ -16,9 +16,6 @@ msgstr "%defaultCurrency% za 1 %currentCurrency%"
 msgid "%defaultCurrency% per unit"
 msgstr "%defaultCurrency% za 1 jednotku"
 
-msgid "%entity_name% Overview"
-msgstr "Přehled %entity_name%"
-
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Zpět</a> na přihlašovací stránku."
 
@@ -1153,9 +1150,6 @@ msgstr "Název"
 msgid "Navigation"
 msgstr "Navigace"
 
-msgid "New"
-msgstr "Vytvořit"
-
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
@@ -2151,9 +2145,6 @@ msgstr "Velmi slabé"
 
 msgid "View allowed recipients."
 msgstr "Zobrazit povolené příjemce."
-
-msgid "Viewing %entity_name%"
-msgstr "Detail %entity_name%"
 
 msgid "Visibility and sellability for unlogged customers"
 msgstr "Viditelnost a prodejnost pro neregistrované zákazníky"

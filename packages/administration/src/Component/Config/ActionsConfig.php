@@ -29,7 +29,7 @@ class ActionsConfig
     {
         $this->add(
             ActionType::LIST,
-            Action::create(ActionType::CREATE->value, t('New'))
+            Action::create(ActionType::CREATE->value, t('Create new item'))
                 ->linkToCrud($controllerClass, ActionType::CREATE)
                 ->setIcon('circle-plus')
                 ->displayIf(function () use ($defaultActions): bool {

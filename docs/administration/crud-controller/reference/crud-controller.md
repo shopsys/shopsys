@@ -46,7 +46,8 @@ Configure general behavior of the controller. Customizable options are available
 protected function configure(CrudConfig $config): void
 {
     $config
-        ->setTitle(ActionType::LIST, t('Products'))
+        ->setTitle(ActionType::LIST, t('All products'))
+        ->setMenuTitle(t('Products management'))
         ->setMenuSection('products');
 }
 ```
@@ -104,11 +105,30 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 
 The `CrudConfig` class is used to configure the behavior of the Crud Controller. It is used in the `configure` method of the Crud Controller.
 
+### Default titles
+
+Page titles and the menu label are generated automatically from the entity class name using English singular/plural inflection. For example, entity `OrderItem` produces menu title "Order items", etc.
+
+These generated names are registered as translation keys automatically — no manual `t()` wrapping is needed for defaults.
+
 ### Methods
 
 #### `setTitle(ActionType $actionType, string $title)`
 
-This method allows you to set the title for the given page type. The title is displayed in the page header.
+Sets a custom title for a specific page type. The title is displayed in the page header. Overrides the auto-generated default for the given action.
+
+```php
+$config->setTitle(ActionType::LIST, t('All orders'));
+$config->setTitle(ActionType::CREATE, t('New order'));
+```
+
+#### `setMenuTitle(string $menuTitle)`
+
+Sets a custom title for the menu item. By default, the pluralized entity name is used (e.g. "Orders" for `Order` entity).
+
+```php
+$config->setMenuTitle(t('Orders management'));
+```
 
 #### `enableAction(ActionType|array $actions)` and `disableAction(ActionType|array $actions)`
 

@@ -51,7 +51,7 @@ class CrudTransformationHelperTest extends TestCase
             ],
             'ABCController with consecutive capitals' => [
                 'controllerName' => 'ABCController',
-                'expectedRouteName' => 'a_b_c',
+                'expectedRouteName' => 'abc',
             ],
             'class name without suffix' => [
                 'controllerName' => 'PriceList',
@@ -145,7 +145,7 @@ class CrudTransformationHelperTest extends TestCase
             ],
             'ABCController with consecutive capitals' => [
                 'controllerName' => 'ABCController',
-                'expectedRouteUrl' => 'a-b-c',
+                'expectedRouteUrl' => 'abc',
             ],
             'class name without suffix' => [
                 'controllerName' => 'PriceList',
@@ -154,43 +154,47 @@ class CrudTransformationHelperTest extends TestCase
         ];
     }
 
-    #[DataProvider('getCleanControllerNameDataProvider')]
-    public function testGetCleanControllerName(string $controllerName, string $expectedCleanName): void
-    {
-        $result = CrudTransformationHelper::getCleanControllerName($controllerName);
+    #[DataProvider('generateRoleConstantDataProvider')]
+    public function testGenerateRoleConstant(
+        string $controllerName,
+        ?string $customRoleConstant,
+        string $expectedRoleConstant,
+    ): void {
+        $result = CrudTransformationHelper::generateRoleConstant($controllerName, $customRoleConstant);
 
-        $this->assertSame($expectedCleanName, $result);
+        $this->assertSame($expectedRoleConstant, $result);
     }
 
     /**
-     * @return array<string, array{controllerName: string, expectedCleanName: string}>
+     * @return array<string, array{controllerName: string, customRoleConstant: string|null, expectedRoleConstant: string}>
      */
-    public static function getCleanControllerNameDataProvider(): array
+    public static function generateRoleConstantDataProvider(): array
     {
         return [
-            'removes CrudController suffix' => [
-                'controllerName' => 'ProductCrudController',
-                'expectedCleanName' => 'Product',
+            'generates from controller name' => [
+                'controllerName' => 'OrderController',
+                'customRoleConstant' => null,
+                'expectedRoleConstant' => 'ROLE_CRUD_ORDER',
             ],
-            'removes Controller suffix' => [
-                'controllerName' => 'OrdersController',
-                'expectedCleanName' => 'Orders',
-            ],
-            'prefers CrudController over Controller' => [
-                'controllerName' => 'UserRoleCrudController',
-                'expectedCleanName' => 'UserRole',
-            ],
-            'handles name without suffix' => [
-                'controllerName' => 'SimpleClass',
-                'expectedCleanName' => 'SimpleClass',
-            ],
-            'handles PriceList example' => [
+            'generates from multi-word controller name' => [
                 'controllerName' => 'PriceListController',
-                'expectedCleanName' => 'PriceList',
+                'customRoleConstant' => null,
+                'expectedRoleConstant' => 'ROLE_CRUD_PRICE_LIST',
             ],
-            'handles empty suffix removal' => [
-                'controllerName' => 'Admin',
-                'expectedCleanName' => 'Admin',
+            'generates from CrudController suffix' => [
+                'controllerName' => 'UserRoleCrudController',
+                'customRoleConstant' => null,
+                'expectedRoleConstant' => 'ROLE_CRUD_USER_ROLE',
+            ],
+            'uses custom role constant when provided' => [
+                'controllerName' => 'OrderController',
+                'customRoleConstant' => 'ROLE_CUSTOM_ORDER',
+                'expectedRoleConstant' => 'ROLE_CUSTOM_ORDER',
+            ],
+            'custom role constant takes priority' => [
+                'controllerName' => 'PriceListController',
+                'customRoleConstant' => 'ROLE_PRICING',
+                'expectedRoleConstant' => 'ROLE_PRICING',
             ],
         ];
     }

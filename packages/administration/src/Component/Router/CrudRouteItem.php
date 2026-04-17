@@ -22,9 +22,13 @@ final class CrudRouteItem
         return $this->controller;
     }
 
+    /**
+     * Returns a clone to prevent mutation of the cached original
+     * (Symfony's RouteCollection::addPrefix() mutates Route objects in place)
+     */
     public function getRoute(): Route
     {
-        return $this->route;
+        return clone $this->route;
     }
 
     public function getRouteName(): string

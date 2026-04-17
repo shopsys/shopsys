@@ -71,7 +71,7 @@ final readonly class Definition
 
     public function getRoleConstant(): string
     {
-        return $this->getConfig()->getCustomRoleConstant() ?? 'ROLE_CRUD_' . strtoupper(CrudTransformationHelper::transformToRouteName($this->controllerName));
+        return CrudTransformationHelper::generateRoleConstant($this->controllerName, $this->getConfig()->getCustomRoleConstant());
     }
 
     public function getHandlerForAction(ActionType $actionType): HandlerInterface

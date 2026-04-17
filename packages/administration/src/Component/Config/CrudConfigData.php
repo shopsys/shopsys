@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Config;
 
 use RuntimeException;
+use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 final readonly class CrudConfigData
 {
@@ -16,6 +18,7 @@ final readonly class CrudConfigData
     public function __construct(
         private array $customPageTitles,
         private ?string $menuTitle,
+        private string $entityName,
         private bool $fullDisabled,
         private array $enabledActions,
         private string $menuSection,
@@ -39,12 +42,29 @@ final readonly class CrudConfigData
 
     public function getTitle(ActionType $pageType): string
     {
-        return $this->customPageTitles[$pageType->value] ?? '';
+        if (isset($this->customPageTitles[$pageType->value])) {
+            return $this->customPageTitles[$pageType->value];
+        }
+
+        $singularEntityName = Translator::staticTrans(CrudTransformationHelper::toSingularEntityName($this->entityName));
+        $pluralEntityName = Translator::staticTrans(CrudTransformationHelper::toPluralEntityName($this->entityName));
+
+        return match ($pageType) {
+            ActionType::CREATE => t('Creating new %entity_name%', ['%entity_name%' => $singularEntityName]),
+            ActionType::EDIT => t('Editing %entity_name%', ['%entity_name%' => $singularEntityName]),
+            ActionType::LIST => $pluralEntityName,
+            ActionType::DETAIL => $singularEntityName,
+            default => '',
+        };
     }
 
     public function getMenuTitle(): string
     {
-        return $this->menuTitle;
+        if ($this->menuTitle !== null) {
+            return $this->menuTitle;
+        }
+
+        return Translator::staticTrans(CrudTransformationHelper::toPluralEntityName($this->entityName));
     }
 
     /**
@@ -66,7 +86,7 @@ final readonly class CrudConfigData
 
     public function isFullDisabled(): bool
     {
-        return $this->fullDisabled;
+        return $this->fullDisabled || count($this->enabledActions) === 0;
     }
 
     public function getMenuSection(): string

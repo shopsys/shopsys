@@ -41,6 +41,10 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Shopsys\AdministrationBundle\Component\Translation\CrudEntityNameExtractor:
+        tags:
+            - { name: jms_translation.file_visitor }
+
     Shopsys\AdministrationBundle\Controller\:
         resource: '../src/Controller/'
         tags: [ 'controller.service_arguments' ]

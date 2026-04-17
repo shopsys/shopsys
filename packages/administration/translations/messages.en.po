@@ -16,9 +16,6 @@ msgstr ""
 msgid "%defaultCurrency% per unit"
 msgstr ""
 
-msgid "%entity_name% Overview"
-msgstr ""
-
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr ""
 
@@ -1153,9 +1150,6 @@ msgstr ""
 msgid "Navigation"
 msgstr ""
 
-msgid "New"
-msgstr ""
-
 msgid "New SEO page"
 msgstr ""
 
@@ -2150,9 +2144,6 @@ msgid "Very Weak"
 msgstr ""
 
 msgid "View allowed recipients."
-msgstr ""
-
-msgid "Viewing %entity_name%"
 msgstr ""
 
 msgid "Visibility and sellability for unlogged customers"

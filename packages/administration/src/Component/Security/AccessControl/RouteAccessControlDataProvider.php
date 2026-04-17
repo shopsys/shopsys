@@ -10,7 +10,7 @@ use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use ReflectionException;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
-use Shopsys\AdministrationBundle\Component\Router\CrudControllerRouteLoader;
+use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory;
@@ -221,15 +221,15 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     ): array {
         $reflectionClass = new ReflectionClass($controllerClass);
         $attributeRules = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
-        $isCrudController = $route->getDefault(CrudControllerRouteLoader::IS_CRUD_CONTROLLER) === true;
+        $isCrudController = $route->getDefault(CrudRouteProvider::IS_CRUD_CONTROLLER) === true;
 
         if (count($attributeRules) > 0 || $isCrudController === false) {
             return $attributeRules;
         }
 
         /** @var \Shopsys\AdministrationBundle\Component\Config\ActionType $action */
-        $action = ActionType::from($route->getDefault(CrudControllerRouteLoader::CRUD_ACTION));
-        $roleConstant = $route->getDefault(CrudControllerRouteLoader::CRUD_ROLE_CONSTANT);
+        $action = ActionType::from($route->getDefault(CrudRouteProvider::CRUD_ACTION));
+        $roleConstant = $route->getDefault(CrudRouteProvider::CRUD_ROLE_CONSTANT);
 
         $crudRules = [];
 
