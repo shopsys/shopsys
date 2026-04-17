@@ -16,6 +16,7 @@
         "gql:docs": "graphql-markdown schema.graphql > graphql/docs/schema.md",
         "lint": "biome check .",
         "lint--fix": "biome check --write .",
+        "lint--fix-unsafe": "biome check --write --unsafe .",
         "start": "next start",
         "translate": "i18next --config config/i18next-parser.config.js",
         "typecheck": "tsc --pretty --noEmit --project tsconfig.json",
