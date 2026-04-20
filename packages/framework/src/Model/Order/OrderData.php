@@ -176,11 +176,6 @@ class OrderData
     public $currencyMinFractionDigits;
 
     /**
-     * @var bool|null
-     */
-    public $paymentCzkRounding;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
      */
     public $createdAsAdministrator;

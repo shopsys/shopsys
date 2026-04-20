@@ -13,8 +13,15 @@ use GoPay\Definition\Response\PaymentStatus;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -29,6 +36,26 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
      * @inject
      */
     private PaymentTransactionFacade $paymentTransactionFacade;
+
+    /**
+     * @inject
+     */
+    private PaymentFacade $paymentFacade;
+
+    /**
+     * @inject
+     */
+    private PaymentDataFactory $paymentDataFactory;
+
+    /**
+     * @inject
+     */
+    private OrderFacade $orderFacade;
+
+    /**
+     * @inject
+     */
+    private OrderDataFactory $orderDataFactory;
 
     public function testChangePaymentInOrderRespectsFreeTransportSetting(): void
     {
@@ -204,6 +231,40 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
         self::assertSame(PaymentInExistingOrder::INVALID_PAYMENT_SWIFT_ERROR, $violations['input'][0]['code']);
+    }
+
+    public function testChangePaymentInOrderCreatesRoundingItem(): void
+    {
+        if ($this->getFirstDomainCurrency()->getRoundingType() === Currency::ROUNDING_TYPE_INTEGER) {
+            $this->markTestSkipped('Rounding item cannot be created for currencies that already round to whole numbers');
+        }
+
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $goPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT, Payment::class);
+
+        $paymentData = $this->paymentDataFactory->createFromPayment($goPayBankAccount);
+        $paymentData->orderRoundingTypeByDomainId[Domain::FIRST_DOMAIN_ID] = OrderRoundingTypeEnum::WHOLE;
+        $this->paymentFacade->edit($goPayBankAccount, $paymentData);
+
+        $orderData = $this->orderDataFactory->createFromOrder($order);
+        $orderData->currencyRoundingType = Currency::ROUNDING_TYPE_HUNDREDTHS;
+        $this->orderFacade->edit($order->getId(), $orderData);
+        $this->em->clear();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
+            'input' => [
+                'orderUuid' => $order->getUuid(),
+                'paymentUuid' => $goPayBankAccount->getUuid(),
+            ],
+        ]);
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePaymentInOrder');
+
+        $roundingItems = array_filter(
+            $responseData['items'],
+            static fn (array $item) => $item['type'] === OrderItemTypeEnum::TYPE_ROUNDING,
+        );
+        $this->assertNotEmpty($roundingItems);
     }
 
     private function findPaymentItem(array $items): array

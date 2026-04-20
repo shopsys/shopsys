@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class OrderItemDataFactory
@@ -113,6 +116,19 @@ class OrderItemDataFactory
         }
 
         return true;
+    }
+
+    public function createRounding(PriceInterface $roundingPrice, DomainConfig $domainConfig): OrderItemData
+    {
+        $orderItemData = $this->create(OrderItemTypeEnum::TYPE_ROUNDING);
+
+        $orderItemData->setUnitPrice($roundingPrice);
+        $orderItemData->setTotalPrice($roundingPrice);
+        $orderItemData->vatPercent = '0';
+        $orderItemData->name = t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainConfig->getLocale());
+        $orderItemData->quantity = 1;
+
+        return $orderItemData;
     }
 
     public function createFromQuantifiedProduct(

@@ -21,9 +21,6 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 {
     private const int ORDER_ID = 10;
-    private const int PRODUCT_ITEM_ID = 45;
-    private const int TRANSPORT_ITEM_ID = 46;
-    private const int PAYMENT_ITEM_ID = 47;
 
     private Order $order;
 
@@ -62,7 +59,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->getOrderItemById($this->order, self::PRODUCT_ITEM_ID);
+        $orderItem = $this->order->getProductItems()[0];
 
         if ($this->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
@@ -95,7 +92,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->getOrderItemById($this->order, self::PRODUCT_ITEM_ID);
+        $orderItem = $this->order->getProductItems()[0];
         $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(950)));
@@ -184,7 +181,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->getOrderItemById($this->order, self::TRANSPORT_ITEM_ID);
+        $orderItem = $this->order->getTransportItem();
 
         if ($this->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
@@ -216,7 +213,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->getOrderItemById($this->order, self::TRANSPORT_ITEM_ID);
+        $orderItem = $this->order->getTransportItem();
         $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
@@ -242,7 +239,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->getOrderItemById($this->order, self::PAYMENT_ITEM_ID);
+        $orderItem = $this->order->getPaymentItem();
 
         if ($this->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
@@ -274,7 +271,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->getOrderItemById($this->order, self::PAYMENT_ITEM_ID);
+        $orderItem = $this->order->getPaymentItem();
         $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
@@ -299,20 +296,6 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         throw new OrderItemNotFoundException(sprintf(
             'Order item with the name "%s" was not found in the order.',
             $name,
-        ));
-    }
-
-    private function getOrderItemById(Order $order, int $orderItemId): OrderItem
-    {
-        foreach ($order->getItems() as $orderItem) {
-            if ($orderItem->getId() === $orderItemId) {
-                return $orderItem;
-            }
-        }
-
-        throw new OrderItemNotFoundException(sprintf(
-            'Order item id `%d` not found.',
-            $orderItemId,
         ));
     }
 

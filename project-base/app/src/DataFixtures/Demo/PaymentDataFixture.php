@@ -12,13 +12,16 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
+use Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
@@ -41,6 +44,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         private readonly PaymentFacade $paymentFacade,
         private readonly PaymentDataFactory $paymentDataFactory,
         private readonly PriceConverter $priceConverter,
+        private readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -102,7 +106,14 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             $paymentData->name[$locale] = t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $paymentData->czkRounding = true;
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            $domainCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+            if ($domainCurrency->getCode() === Currency::CODE_CZK) {
+                $paymentData->orderRoundingTypeByDomainId[$domainId] = OrderRoundingTypeEnum::WHOLE;
+            }
+        }
+        $paymentData->orderRoundingTypeByDomainId[Domain::THIRD_DOMAIN_ID] = OrderRoundingTypeEnum::FIVE_CENTS;
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::zero());
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
@@ -240,7 +251,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             $paymentData->description[$locale] = t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $paymentData->czkRounding = false;
         $paymentData->hidden = false;
         $this->createPayment(self::PAYMENT_GOPAY_BANK_ACCOUNT, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
@@ -269,8 +279,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             $paymentData->description[$locale] = '';
             $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $paymentData->czkRounding = false;
-
         $paymentData->hidden = false;
         $this->createPayment(self::PAYMENT_GOPAY_CARD, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,

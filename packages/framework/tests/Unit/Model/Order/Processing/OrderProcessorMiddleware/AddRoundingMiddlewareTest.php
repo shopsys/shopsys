@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddRoundingMiddleware;
+use Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -24,11 +25,8 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
 {
     use SetTranslatorTrait;
 
-    #[DataProvider('noRoundingAddedProvider')]
-    public function testNoRoundingIsAdded(
-        bool $czkRounding,
-        string $currencyCode,
-    ): void {
+    public function testNoRoundingIsAddedForPaymentWithoutOrderRounding(): void
+    {
         $expectedPrice = new Price(
             Money::create('100.52'),
             Money::create('121.63'),
@@ -41,35 +39,19 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         $paymentData->name = ['en' => 'payment'];
         $paymentData->enabled = [1 => true];
         $paymentData->vatsIndexedByDomainId = [1 => $this->createVat()];
-        $paymentData->czkRounding = $czkRounding;
         $payment = new Payment($paymentData);
 
         $orderItemData = new OrderItemData();
         $orderItemData->payment = $payment;
         $orderProcessingData->orderData->orderPayment = $orderItemData;
 
-        $addRoundingMiddleware = $this->createAddRoundingMiddleware($currencyCode);
+        $addRoundingMiddleware = $this->createAddRoundingMiddleware();
 
         $result = $addRoundingMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
         $actualOrderData = $result->orderData;
 
-        $actualRoundingItemsType = $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_ROUNDING);
-
-        $this->assertCount(0, $actualRoundingItemsType);
-
-        $this->assertThat(
-            $actualOrderData->totalPrice,
-            new IsPriceEqual($expectedPrice),
-        );
-    }
-
-    public static function noRoundingAddedProvider(): iterable
-    {
-        yield 'CZK currency without CZK rounding' => [false, Currency::CODE_CZK];
-
-        yield 'Non-CZK currency with CZK rounding' => [true, Currency::CODE_EUR];
-
-        yield 'Non-CZK currency without CZK rounding' => [false, Currency::CODE_EUR];
+        $this->assertCount(0, $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_ROUNDING));
+        $this->assertThat($actualOrderData->totalPrice, new IsPriceEqual($expectedPrice));
     }
 
     public function testNoRoundingIsAddedWithoutPayment(): void
@@ -87,14 +69,8 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         $result = $addRoundingMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
         $actualOrderData = $result->orderData;
 
-        $actualRoundingItemsType = $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_ROUNDING);
-
-        $this->assertCount(0, $actualRoundingItemsType);
-
-        $this->assertThat(
-            $actualOrderData->totalPrice,
-            new IsPriceEqual($expectedPrice),
-        );
+        $this->assertCount(0, $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_ROUNDING));
+        $this->assertThat($actualOrderData->totalPrice, new IsPriceEqual($expectedPrice));
     }
 
     #[DataProvider('roundingProvider')]
@@ -106,35 +82,27 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         $this->setTranslator();
 
         $orderProcessingData = $this->createOrderProcessingData();
-
         $orderProcessingData->orderData->totalPrice = $inputPrice;
 
         $paymentData = new PaymentData();
         $paymentData->name = ['en' => 'payment'];
         $paymentData->enabled = [1 => true];
         $paymentData->vatsIndexedByDomainId = [1 => $this->createVat()];
-        $paymentData->czkRounding = true;
+        $paymentData->orderRoundingTypeByDomainId = [1 => OrderRoundingTypeEnum::WHOLE];
         $payment = new Payment($paymentData);
 
         $orderItemData = new OrderItemData();
         $orderItemData->payment = $payment;
         $orderProcessingData->orderData->orderPayment = $orderItemData;
 
-        $addRoundingMiddleware = $this->createAddRoundingMiddleware(Currency::CODE_CZK);
+        $addRoundingMiddleware = $this->createAddRoundingMiddleware();
 
         $result = $addRoundingMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
         $actualOrderData = $result->orderData;
 
-        $actualRoundingItemsType = $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_ROUNDING);
-
-        $this->assertCount($expectedRoundingItemsCount, $actualRoundingItemsType);
+        $this->assertCount($expectedRoundingItemsCount, $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_ROUNDING));
         $this->assertCount($expectedRoundingItemsCount, $actualOrderData->items);
-
-        $this->assertThat(
-            $actualOrderData->totalPrice,
-            new IsPriceEqual($inputPrice->add($roundingPrice)),
-        );
-
+        $this->assertThat($actualOrderData->totalPrice, new IsPriceEqual($inputPrice->add($roundingPrice)));
         $this->assertThat(
             $actualOrderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_ROUNDING]),
             new IsPriceEqual($roundingPrice),
@@ -156,15 +124,51 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         ];
     }
 
+    public function testEurFiveCentsRoundingIsAdded(): void
+    {
+        $this->setTranslator();
+
+        $orderProcessingData = $this->createOrderProcessingData();
+        $inputPrice = new Price(Money::create('100'), Money::create('120.12'));
+        $orderProcessingData->orderData->totalPrice = $inputPrice;
+
+        $paymentData = new PaymentData();
+        $paymentData->name = ['en' => 'payment'];
+        $paymentData->enabled = [1 => true];
+        $paymentData->vatsIndexedByDomainId = [1 => $this->createVat()];
+        $paymentData->orderRoundingTypeByDomainId = [1 => OrderRoundingTypeEnum::FIVE_CENTS];
+        $payment = new Payment($paymentData);
+
+        $orderItemData = new OrderItemData();
+        $orderItemData->payment = $payment;
+        $orderProcessingData->orderData->orderPayment = $orderItemData;
+
+        $addRoundingMiddleware = $this->createAddRoundingMiddleware(
+            Currency::CODE_EUR,
+            Currency::ROUNDING_TYPE_HUNDREDTHS,
+        );
+
+        $result = $addRoundingMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
+        $actualOrderData = $result->orderData;
+
+        $this->assertCount(1, $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_ROUNDING));
+
+        $expectedRoundingPrice = new Price(Money::create('-0.02'), Money::create('-0.02'));
+        $this->assertThat(
+            $actualOrderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_ROUNDING]),
+            new IsPriceEqual($expectedRoundingPrice),
+        );
+    }
+
     private function createAddRoundingMiddleware(
         string $currencyCode = Currency::CODE_EUR,
+        string $roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS,
     ): AddRoundingMiddleware {
         $orderItemPriceCalculationStub = $this->createStub(OrderItemPriceCalculation::class);
-        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, new Rounding());
+        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, new Rounding(), new OrderRoundingTypeEnum());
 
         return new AddRoundingMiddleware(
-            $this->createCurrencyFacade($currencyCode),
-            new Rounding(),
+            $this->createCurrencyFacade($currencyCode, $roundingType),
             $this->createOrderItemDataFactory(),
             $priceCalculation,
         );

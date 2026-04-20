@@ -42,6 +42,7 @@ class PaymentDataFactory
             $paymentData->accountNumberByDomainId[$domainId] = null;
             $paymentData->ibanByDomainId[$domainId] = null;
             $paymentData->bicSwiftByDomainId[$domainId] = null;
+            $paymentData->orderRoundingTypeByDomainId[$domainId] = OrderRoundingTypeEnum::NONE;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -64,7 +65,6 @@ class PaymentDataFactory
     protected function fillFromPayment(PaymentData $paymentData, Payment $payment): void
     {
         $paymentData->hidden = $payment->isHidden();
-        $paymentData->czkRounding = $payment->isCzkRounding();
         $paymentData->transports = $payment->getTransports();
 
         $translations = $payment->getTranslations();
@@ -92,6 +92,7 @@ class PaymentDataFactory
             $paymentData->accountNumberByDomainId[$domainId] = $payment->getAccountNumber($domainId);
             $paymentData->ibanByDomainId[$domainId] = $payment->getIban($domainId);
             $paymentData->bicSwiftByDomainId[$domainId] = $payment->getBicSwift($domainId);
+            $paymentData->orderRoundingTypeByDomainId[$domainId] = $payment->getOrderRoundingTypeForDomain($domainId);
         }
 
         $paymentData->image = $this->imageUploadDataFactory->createFromEntityAndType($payment);

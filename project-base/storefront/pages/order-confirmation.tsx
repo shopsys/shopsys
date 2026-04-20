@@ -91,6 +91,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
 
     const orderPayment = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Payment);
     const orderTransport = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Transport);
+    const orderRounding = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Rounding);
 
     return (
         <>
@@ -154,6 +155,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
 
                             <OrderConfirmationSummary
                                 promoCode={orderData.order.promoCode}
+                                roundingPrice={orderRounding?.totalPrice}
                                 totalPrice={orderData.order.totalPrice}
                                 payment={{
                                     name: orderPayment?.name,

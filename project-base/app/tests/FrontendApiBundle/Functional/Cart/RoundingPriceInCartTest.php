@@ -11,7 +11,10 @@ use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Product;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -26,6 +29,16 @@ class RoundingPriceInCartTest extends GraphQlTestCase
      * @inject
      */
     private CurrencyDataFactory $currencyDataFactory;
+
+    /**
+     * @inject
+     */
+    private PaymentFacade $paymentFacade;
+
+    /**
+     * @inject
+     */
+    private PaymentDataFactory $paymentDataFactory;
 
     #[Override]
     protected function setUp(): void
@@ -90,6 +103,11 @@ class RoundingPriceInCartTest extends GraphQlTestCase
         $currencyCzk = $this->currencyFacade->edit($currencyCzk->getId(), $currencyData);
 
         $this->currencyFacade->setDomainDefaultCurrency($currencyCzk, Domain::FIRST_DOMAIN_ID);
+
+        $cashPayment = $this->getReference(PaymentDataFixture::PAYMENT_CASH, Payment::class);
+        $cashPaymentData = $this->paymentDataFactory->createFromPayment($cashPayment);
+        $cashPaymentData->orderRoundingTypeByDomainId[Domain::FIRST_DOMAIN_ID] = OrderRoundingTypeEnum::WHOLE;
+        $this->paymentFacade->edit($cashPayment, $cashPaymentData);
     }
 
     public function createCartWithProductTransportAndPayment(): string

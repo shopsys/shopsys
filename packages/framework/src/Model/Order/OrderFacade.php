@@ -39,6 +39,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFact
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
@@ -254,11 +255,11 @@ class OrderFacade
         foreach ($orderData->getNewItemsWithoutTransportAndPayment() as $newOrderItemData) {
             $this->calculateOrderItemDataPrices($newOrderItemData, $order->getDomainId(), $order->getCurrencyRoundingType(), $order->getCurrencyRoundingPlacesPriceWithoutVat());
 
-            $newOrderItem = $this->orderItemFactory->createProduct(
-                $newOrderItemData,
-                $order,
-                null,
-            );
+            $newOrderItem = match ($newOrderItemData->type) {
+                OrderItemTypeEnum::TYPE_ROUNDING => $this->orderItemFactory->createRounding($newOrderItemData, $order),
+                OrderItemTypeEnum::TYPE_DISCOUNT => $this->orderItemFactory->createDiscount($newOrderItemData, $order),
+                default => $this->orderItemFactory->createProduct($newOrderItemData, $order, $newOrderItemData->product),
+            };
 
             if ($newOrderItemData->usePriceCalculation) {
                 continue;
@@ -359,8 +360,57 @@ class OrderFacade
 
         $orderData = $this->orderDataFactory->createFromOrder($order);
         $orderData->orderPayment = $orderPaymentData;
-        $orderData->paymentCzkRounding = $payment->isCzkRounding();
+
+        $this->recalculateRoundingForOrderData($orderData, $order, $payment, $paymentPrice);
+
         $this->edit($order->getId(), $orderData);
+    }
+
+    protected function recalculateRoundingForOrderData(
+        OrderData $orderData,
+        Order $order,
+        Payment $payment,
+        PriceInterface $paymentPrice,
+    ): void {
+        $totalExcludingRoundingAndPayment = $order->getTotalPriceExcludingItemTypes([OrderItemTypeEnum::TYPE_ROUNDING, OrderItemTypeEnum::TYPE_PAYMENT]);
+        $totalForRounding = new Price(
+            $totalExcludingRoundingAndPayment->getPriceWithoutVat()->add($paymentPrice->getPriceWithoutVat()),
+            $totalExcludingRoundingAndPayment->getPriceWithVat()->add($paymentPrice->getPriceWithVat()),
+        );
+
+        $roundingPrice = $this->orderPriceCalculation->calculateOrderRoundingPrice(
+            $payment,
+            $order->getCurrencyRoundingType(),
+            $totalForRounding,
+            $order->getDomainId(),
+        );
+
+        $existingRoundingItem = array_first($orderData->getItemsByType(OrderItemTypeEnum::TYPE_ROUNDING));
+        $needsRounding = $roundingPrice !== null && !$roundingPrice->isZero();
+
+        if ($existingRoundingItem !== null && $needsRounding) {
+            $existingRoundingItem->setUnitPrice($roundingPrice);
+            $existingRoundingItem->setTotalPrice($roundingPrice);
+
+            return;
+        }
+
+        if ($existingRoundingItem !== null) {
+            $orderData->items = array_filter(
+                $orderData->items,
+                static fn (OrderItemData $item) => $item->type !== OrderItemTypeEnum::TYPE_ROUNDING,
+            );
+
+            return;
+        }
+
+        if (!$needsRounding) {
+            return;
+        }
+
+        $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
+
+        $orderData->items[OrderData::NEW_ITEM_PREFIX . 'rounding'] = $this->orderItemDataFactory->createRounding($roundingPrice, $domainConfig);
     }
 
     public function updateTrackingNumber(Order $order, string $trackingNumber): void

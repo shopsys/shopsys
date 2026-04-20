@@ -78,6 +78,12 @@ class PaymentDomain
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $bicSwift;
 
+    /**
+     * @var string
+     */
+    #[ORM\Column(type: 'string', length: 20)]
+    protected $orderRoundingType;
+
     public function __construct(
         Payment $payment,
         int $domainId,
@@ -87,6 +93,7 @@ class PaymentDomain
         ?string $accountNumber = null,
         ?string $iban = null,
         ?string $bic = null,
+        string $orderRoundingType = OrderRoundingTypeEnum::NONE,
     ) {
         $this->payment = $payment;
         $this->domainId = $domainId;
@@ -97,6 +104,7 @@ class PaymentDomain
         $this->accountNumber = $accountNumber;
         $this->iban = $iban;
         $this->bicSwift = $bic;
+        $this->orderRoundingType = $orderRoundingType;
     }
 
     /**
@@ -211,5 +219,21 @@ class PaymentDomain
     public function setBicSwift($bicSwift): void
     {
         $this->bicSwift = $bicSwift;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderRoundingType()
+    {
+        return $this->orderRoundingType;
+    }
+
+    /**
+     * @param string $orderRoundingType
+     */
+    public function setOrderRoundingType($orderRoundingType): void
+    {
+        $this->orderRoundingType = $orderRoundingType;
     }
 }
