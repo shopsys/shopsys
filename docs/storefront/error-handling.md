@@ -386,9 +386,11 @@ const MyFormComponent = () => {
 };
 ```
 
-### Login form pattern (showing actual API errors)
+`customMessage` is applied only to toasts originating from application errors. Validation and network toasts always keep their specific messages.
 
-To show the actual API error message (e.g., "Invalid credentials") instead of a generic message, omit the `customMessage` option:
+### Login form pattern (showing actual application API errors)
+
+To show the actual application API error message (e.g., "Invalid credentials") instead of a generic message, omit the `customMessage` option:
 
 ```typescript
 const handleError = useErrorHandler({
@@ -470,12 +472,12 @@ const onSubmit = async (data: FormData) => {
 
 ### Hook options reference
 
-| Option           | Type                                                 | Description                              |
-| ---------------- | ---------------------------------------------------- | ---------------------------------------- |
-| `form`           | `UseFormReturn<TFormValues>`                         | Form instance for setting field errors   |
-| `gtmOrigin`      | `GtmMessageOriginType`                               | GTM tracking origin (default: `other`)   |
-| `customMessage`  | `string`                                             | Override error message for toasts        |
-| `customHandlers` | `Partial<Record<ApplicationErrorsType, () => void>>` | Custom handlers for specific error types |
+| Option           | Type                                                 | Description                                        |
+| ---------------- | ---------------------------------------------------- | -------------------------------------------------- |
+| `form`           | `UseFormReturn<TFormValues>`                         | Form instance for setting field errors             |
+| `gtmOrigin`      | `GtmMessageOriginType`                               | GTM tracking origin (default: `other`)             |
+| `customMessage`  | `string`                                             | Override toast message for application errors only |
+| `customHandlers` | `Partial<Record<ApplicationErrorsType, () => void>>` | Custom handlers for specific error types           |
 
 ## Error Code Reference
 
