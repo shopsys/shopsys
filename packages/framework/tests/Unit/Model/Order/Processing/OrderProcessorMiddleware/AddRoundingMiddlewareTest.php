@@ -169,7 +169,6 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
 
         return new AddRoundingMiddleware(
             $this->createCurrencyFacade($currencyCode, $roundingType),
-            new Rounding(),
             $this->createOrderItemDataFactory(),
             $priceCalculation,
         );

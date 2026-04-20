@@ -38,6 +38,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
  * @property \App\Model\Payment\PaymentFacade $paymentFacade
  * @method void updatePaymentByLastPaymentTransaction(\App\Model\Order\Order $order)
  * @method void processWithdrawalRequest(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
+ * @method void recalculateRoundingForOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order, \App\Model\Payment\Payment $payment, \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $paymentPrice)
  */
 class OrderFacade extends BaseOrderFacade
 {

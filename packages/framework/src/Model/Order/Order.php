@@ -708,6 +708,25 @@ class Order
     }
 
     /**
+     * @param array<string> $excludedTypes
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPriceExcludingItemTypes(array $excludedTypes)
+    {
+        $withoutVat = $this->totalPriceWithoutVat;
+        $withVat = $this->totalPriceWithVat;
+
+        foreach ($this->getItems() as $item) {
+            if (in_array($item->getType(), $excludedTypes, true)) {
+                $withoutVat = $withoutVat->subtract($item->getUnitPriceWithoutVat()->multiply($item->getQuantity()));
+                $withVat = $withVat->subtract($item->getUnitPriceWithVat()->multiply($item->getQuantity()));
+            }
+        }
+
+        return new Price($withoutVat, $withVat);
+    }
+
+    /**
      * @return string
      */
     public function getCurrencyCode()
