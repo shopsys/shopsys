@@ -262,4 +262,33 @@ describe('useUpdateFilter().updateFilterBrands tests', () => {
         expect(setWasRedirectedFromSeoCategoryMock).toBeCalledTimes(1);
         expect(setWasRedirectedFromSeoCategoryMock).toBeCalledWith(true);
     });
+
+    test('rapidly toggling the same brand in SEO category should keep the latest state', () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ BRANDS: true }));
+        (useSessionStore as unknown as Mock).mockImplementation((selector) => {
+            return selector({
+                defaultProductFiltersMap: {
+                    sort: TypeProductOrderingModeEnum.PriceAsc,
+                    flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
+                    brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
+                    parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
+                },
+                originalCategorySlug: ORIGINAL_CATEGORY_URL,
+                setWasRedirectedFromSeoCategory: setWasRedirectedFromSeoCategoryMock,
+            });
+        });
+
+        const { updateFilterBrandsQuery } = useUpdateFilterQuery();
+
+        updateFilterBrandsQuery('test-brand');
+        updateFilterBrandsQuery('test-brand');
+
+        const secondPushFilterAsString = mockPush.mock.calls[1][0].query[FILTER_QUERY_PARAMETER_NAME];
+        const secondPushFilter = JSON.parse(secondPushFilterAsString);
+
+        expect(secondPushFilter.brands).toStrictEqual(Array.from(GET_DEFAULT_SEO_CATEGORY_BRANDS()));
+        expect(secondPushFilter.brands).not.toContain('test-brand');
+    });
 });

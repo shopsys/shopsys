@@ -262,4 +262,74 @@ describe('useUpdateFilter().updateFilterFlags tests', () => {
         expect(setWasRedirectedFromSeoCategoryMock).toBeCalledTimes(1);
         expect(setWasRedirectedFromSeoCategoryMock).toBeCalledWith(true);
     });
+
+    test('rapidly toggling the same flag in SEO category should keep the latest state', () => {
+        (useSessionStore as unknown as Mock).mockImplementation((selector) => {
+            return selector({
+                defaultProductFiltersMap: {
+                    sort: TypeProductOrderingModeEnum.PriceAsc,
+                    flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
+                    brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
+                    parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
+                },
+                originalCategorySlug: ORIGINAL_CATEGORY_URL,
+                setWasRedirectedFromSeoCategory: setWasRedirectedFromSeoCategoryMock,
+            });
+        });
+
+        const { updateFilterFlagsQuery } = useUpdateFilterQuery();
+
+        updateFilterFlagsQuery('test-flag');
+        updateFilterFlagsQuery('test-flag');
+
+        const secondPushFilterAsString = mockPush.mock.calls[1][0].query[FILTER_QUERY_PARAMETER_NAME];
+        const secondPushFilter = JSON.parse(secondPushFilterAsString);
+
+        expect(secondPushFilter.flags).toStrictEqual(Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()));
+        expect(secondPushFilter.flags).not.toContain('test-flag');
+    });
+
+    test('changing flag in SEO category should keep already selected slider parameter value', () => {
+        (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
+            asPath: CATEGORY_URL,
+            push: mockPush,
+            query: {
+                [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                    parameters: [
+                        {
+                            parameter: 'slider-parameter-1',
+                            minimalValue: 100,
+                            maximalValue: 1000,
+                        },
+                    ],
+                }),
+            },
+        }));
+        (useSessionStore as unknown as Mock).mockImplementation((selector) => {
+            return selector({
+                defaultProductFiltersMap: {
+                    sort: TypeProductOrderingModeEnum.PriceAsc,
+                    flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
+                    brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
+                    parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
+                },
+                originalCategorySlug: ORIGINAL_CATEGORY_URL,
+                setWasRedirectedFromSeoCategory: setWasRedirectedFromSeoCategoryMock,
+            });
+        });
+
+        useUpdateFilterQuery().updateFilterFlagsQuery('test-flag');
+
+        const pushedFilterAsString = mockPush.mock.calls[0][0].query[FILTER_QUERY_PARAMETER_NAME];
+        const pushedFilter = JSON.parse(pushedFilterAsString);
+
+        expect(mockPush.mock.calls[0][0].query.categorySlug).toBe(ORIGINAL_CATEGORY_URL);
+        expect(pushedFilter.flags).toStrictEqual([...Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()), 'test-flag']);
+        expect(pushedFilter.parameters).toContainEqual({
+            parameter: 'slider-parameter-1',
+            minimalValue: 100,
+            maximalValue: 1000,
+        });
+    });
 });
