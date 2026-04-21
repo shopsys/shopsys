@@ -7,6 +7,7 @@ import loadNamespaces from 'next-translate/loadNamespaces';
 import { ReactElement } from 'react';
 import { CookiesStoreState, getCookiesStoreState } from 'utils/cookies/cookiesStore';
 import { DomainConfigType, getDomainConfig } from 'utils/domain/domainConfig';
+import { getClientDomainConfig } from 'utils/domain/getClientDomainConfig';
 import { isWithErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import { logException } from 'utils/errors/logException';
 
@@ -88,7 +89,24 @@ ErrorPage.getInitialProps = async (context: NextPageContext): Promise<ErrorPageP
         }
     }
 
-    // Client-side or domain config failed: minimal props
+    // Client-side: resolve domainConfig from window.__ENV + window.location
+    if (typeof window !== 'undefined') {
+        try {
+            const domainConfig = getClientDomainConfig();
+
+            return {
+                statusCode,
+                err: errorMessage,
+                domainConfig,
+                cookiesStore: getCookiesStoreState(domainConfig),
+                customerUserRoles: [],
+            };
+        } catch {
+            // getClientDomainConfig failed - fall through to minimal rendering
+        }
+    }
+
+    // Domain config failed: minimal props
     return {
         statusCode,
         err: errorMessage,

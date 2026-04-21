@@ -122,7 +122,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 {option.label}
 
                 {option.count !== undefined && (
-                    <span className="whitespace-nowrap font-normal font-secondary text-input-placeholder-default">
+                    <span className="whitespace-nowrap font-secondary text-input-placeholder-default">
                         ({option.count})
                     </span>
                 )}

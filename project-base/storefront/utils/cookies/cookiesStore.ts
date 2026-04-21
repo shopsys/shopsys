@@ -29,7 +29,7 @@ const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30;
 
 const userSnapEnabledDefaultValue = getPublicConfigProperty('userSnapEnabledDefaultValue');
 
-const getDefaultInitState = (): CookiesStoreState => ({
+export const getDefaultCookiesStoreState = (): CookiesStoreState => ({
     lastVisitedProductsCatnums: null,
     userIdentifier: uuidV4(),
     isUserSnapEnabled: userSnapEnabledDefaultValue,
@@ -44,7 +44,7 @@ export const getCookiesStoreState = (
     const cookies = getCookies(context) as Record<string, string>;
 
     const cookiesStore = cookies[cookiesStoreName];
-    const newState = getDefaultInitState();
+    const newState = getDefaultCookiesStoreState();
 
     if (!cookiesStore) {
         return newState;

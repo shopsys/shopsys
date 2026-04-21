@@ -85,7 +85,10 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 
                                     const optionLabel =
                                         filterField === 'flags' ? (
-                                            <Flag className="flex w-fit py-0.5" rgbBgColor={option.rgbColor}>
+                                            <Flag
+                                                className="flex h-5 w-fit items-center leading-0"
+                                                rgbBgColor={option.rgbColor}
+                                            >
                                                 {option.name}
                                             </Flag>
                                         ) : (

@@ -13,7 +13,6 @@ import dynamic from 'next/dynamic';
 import appWithI18n from 'next-translate/appWithI18n';
 import 'nprogress/nprogress.css';
 import { ReactElement, useEffect } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.css';
 import { isWithErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import { logErrorBoundary } from 'utils/errors/logErrorBoundary';

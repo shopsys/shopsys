@@ -20,7 +20,13 @@ const ContactFormPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps({ context, redisClient, domainConfig, t }),
+            initServerSideProps({
+                context,
+                currentCustomerUserPrefetchMode: 'full',
+                redisClient,
+                domainConfig,
+                t,
+            }),
 );
 
 export default ContactFormPage;

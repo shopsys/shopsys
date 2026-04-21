@@ -4,20 +4,14 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PageDefer } from 'components/Layout/PageDefer';
 import {
     ProductDetailQueryDocument,
-    TypeProductDetailQuery,
-    TypeProductDetailQueryVariables,
     useProductDetailQuery,
 } from 'graphql/requests/products/queries/ProductDetailQuery.generated';
-import {
-    RecommendedProductsQueryDocument,
-    TypeRecommendedProductsQueryVariables,
-} from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
+import { RecommendedProductsQueryDocument } from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
 import { TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
-import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -25,7 +19,7 @@ import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
+import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const ProductDetailContent = dynamic(
     () =>
@@ -95,12 +89,16 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            const productResponse: OperationResult<TypeProductDetailQuery, TypeProductDetailQueryVariables> =
-                await client
-                    ?.query(ProductDetailQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
-                    })
-                    .toPromise();
+            const productPromise = client
+                .query(ProductDetailQueryDocument, {
+                    urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
+                })
+                .toPromise();
+
+            const [productResponse, layoutResult] = await Promise.all([
+                productPromise,
+                prefetchLayoutQueries({ client, context, domainConfig }),
+            ]);
 
             const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                 productResponse.error,
@@ -125,32 +123,27 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 };
             }
 
-            const initServerSideData = await initServerSideProps<TypeRecommendedProductsQueryVariables>({
-                context,
+            const productData = productResponse.data?.product;
+            if (domainConfig.isLuigisBoxActive && productData?.__typename === 'RegularProduct') {
+                await client
+                    .query(RecommendedProductsQueryDocument, {
+                        itemUuids: [productData.uuid],
+                        userIdentifier: cookiesStoreState.userIdentifier,
+                        recommendationType: TypeRecommendationType.ItemDetail,
+                        recommenderClientIdentifier: getRecommenderClientIdentifier(FriendlyPagesDestinations.product),
+                        limit: 10,
+                    })
+                    .toPromise();
+            }
+
+            return buildServerSideProps({
+                layoutResult,
                 client,
                 ssrExchange,
+                context,
                 domainConfig,
-                prefetchedQueries: [
-                    ...(domainConfig.isLuigisBoxActive && productResponse.data?.product?.__typename === 'RegularProduct'
-                        ? [
-                              {
-                                  query: RecommendedProductsQueryDocument,
-                                  variables: {
-                                      itemUuids: [productResponse.data.product.uuid],
-                                      userIdentifier: cookiesStoreState.userIdentifier,
-                                      recommendationType: TypeRecommendationType.ItemDetail,
-                                      recommenderClientIdentifier: getRecommenderClientIdentifier(
-                                          FriendlyPagesDestinations.product,
-                                      ),
-                                      limit: 10,
-                                  },
-                              },
-                          ]
-                        : []),
-                ],
+                pageQueryResults: [productResponse],
             });
-
-            return initServerSideData;
         },
 );
 

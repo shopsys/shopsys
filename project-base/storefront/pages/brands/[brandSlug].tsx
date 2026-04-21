@@ -22,7 +22,6 @@ import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
-import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
@@ -41,7 +40,7 @@ import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
 import { useResetSessionFilters } from 'utils/seo/useResetOriginalCategorySlug';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
 const BrandDetailPage: NextPage = () => {
     const { t } = useTranslation();
@@ -114,7 +113,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
             const brandDetailResponsePromise = client
-                ?.query<TypeBrandDetailQuery, TypeBrandDetailQueryVariables>(BrandDetailQueryDocument, {
+                .query<TypeBrandDetailQuery, TypeBrandDetailQueryVariables>(BrandDetailQueryDocument, {
                     urlSlug,
                     orderingMode,
                     filter,
@@ -122,7 +121,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 .toPromise();
 
             const brandProductsResponsePromise = client
-                ?.query<TypeBrandProductsQuery, TypeBrandProductsQueryVariables>(BrandProductsQueryDocument, {
+                .query<TypeBrandProductsQuery, TypeBrandProductsQueryVariables>(BrandProductsQueryDocument, {
                     endCursor: getEndCursor(page),
                     orderingMode,
                     filter,
@@ -131,45 +130,44 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 })
                 .toPromise();
 
-            const [brandDetailResponse, brandProductsResponse] = await Promise.all([
+            const [brandDetailResponse, brandProductsResponse, layoutResult] = await Promise.all([
                 brandDetailResponsePromise,
                 brandProductsResponsePromise,
+                prefetchLayoutQueries({ client, context, domainConfig }),
             ]);
 
-            if (getIsRedirectedFromSsr(context.req.headers)) {
-                const serverSideBrandDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    brandDetailResponse.error,
-                    brandDetailResponse.data?.brand,
-                    context,
-                    domainConfig.url,
-                    urlSlug,
-                );
+            const serverSideBrandDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                brandDetailResponse.error,
+                brandDetailResponse.data?.brand,
+                context,
+                domainConfig.url,
+                urlSlug,
+            );
 
-                if (serverSideBrandDetailErrorResponse) {
-                    return serverSideBrandDetailErrorResponse;
-                }
-
-                const serverSideBrandProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    brandProductsResponse.error,
-                    brandProductsResponse.data?.products,
-                    context,
-                    domainConfig.url,
-                    urlSlug,
-                );
-
-                if (serverSideBrandProductsErrorResponse) {
-                    return serverSideBrandProductsErrorResponse;
-                }
+            if (serverSideBrandDetailErrorResponse) {
+                return serverSideBrandDetailErrorResponse;
             }
 
-            const initServerSideData = await initServerSideProps({
+            const serverSideBrandProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                brandProductsResponse.error,
+                brandProductsResponse.data?.products,
                 context,
+                domainConfig.url,
+                urlSlug,
+            );
+
+            if (serverSideBrandProductsErrorResponse) {
+                return serverSideBrandProductsErrorResponse;
+            }
+
+            return buildServerSideProps({
+                layoutResult,
                 client,
                 ssrExchange,
+                context,
                 domainConfig,
+                pageQueryResults: [brandDetailResponse, brandProductsResponse],
             });
-
-            return initServerSideData;
         },
 );
 

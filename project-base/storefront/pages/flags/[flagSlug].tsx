@@ -21,7 +21,6 @@ import { useRouter } from 'next/router';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
-import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
@@ -38,7 +37,7 @@ import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useResetSessionFilters } from 'utils/seo/useResetOriginalCategorySlug';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();
@@ -102,7 +101,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
             const flagDetailResponsePromise = client
-                ?.query<TypeFlagDetailQuery, TypeFlagDetailQueryVariables>(FlagDetailQueryDocument, {
+                .query<TypeFlagDetailQuery, TypeFlagDetailQueryVariables>(FlagDetailQueryDocument, {
                     urlSlug,
                     filter,
                     orderingMode,
@@ -110,7 +109,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 .toPromise();
 
             const flagProductsResponsePromise = client
-                ?.query<TypeFlagProductsQuery, TypeFlagProductsQueryVariables>(FlagProductsQueryDocument, {
+                .query<TypeFlagProductsQuery, TypeFlagProductsQueryVariables>(FlagProductsQueryDocument, {
                     endCursor: getEndCursor(page),
                     orderingMode,
                     filter,
@@ -119,45 +118,44 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 })
                 .toPromise();
 
-            const [flagDetailResponse, flagProductsResponse] = await Promise.all([
+            const [flagDetailResponse, flagProductsResponse, layoutResult] = await Promise.all([
                 flagDetailResponsePromise,
                 flagProductsResponsePromise,
+                prefetchLayoutQueries({ client, context, domainConfig }),
             ]);
 
-            if (getIsRedirectedFromSsr(context.req.headers)) {
-                const serverSideFlagDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    flagDetailResponse.error,
-                    flagDetailResponse.data?.flag,
-                    context,
-                    domainConfig.url,
-                    urlSlug,
-                );
+            const serverSideFlagDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                flagDetailResponse.error,
+                flagDetailResponse.data?.flag,
+                context,
+                domainConfig.url,
+                urlSlug,
+            );
 
-                if (serverSideFlagDetailErrorResponse) {
-                    return serverSideFlagDetailErrorResponse;
-                }
-
-                const serverSideFlagProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    flagProductsResponse.error,
-                    flagProductsResponse.data?.products,
-                    context,
-                    domainConfig.url,
-                    urlSlug,
-                );
-
-                if (serverSideFlagProductsErrorResponse) {
-                    return serverSideFlagProductsErrorResponse;
-                }
+            if (serverSideFlagDetailErrorResponse) {
+                return serverSideFlagDetailErrorResponse;
             }
 
-            const initServerSideData = await initServerSideProps({
+            const serverSideFlagProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                flagProductsResponse.error,
+                flagProductsResponse.data?.products,
                 context,
+                domainConfig.url,
+                urlSlug,
+            );
+
+            if (serverSideFlagProductsErrorResponse) {
+                return serverSideFlagProductsErrorResponse;
+            }
+
+            return buildServerSideProps({
+                layoutResult,
                 client,
                 ssrExchange,
+                context,
                 domainConfig,
+                pageQueryResults: [flagDetailResponse, flagProductsResponse],
             });
-
-            return initServerSideData;
         },
 );
 

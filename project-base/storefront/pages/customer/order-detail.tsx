@@ -7,6 +7,7 @@ import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderD
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import {
     OrderAvailablePaymentsQueryDocument,
     TypeOrderAvailablePaymentsQueryVariables,
@@ -24,7 +25,6 @@ import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEven
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
-import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import { getBaseUrlWithLocale } from 'utils/domain/domainUtils';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
@@ -93,7 +93,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             let orderUuid = null;
 
-            if (isUserLoggedInSSR(client)) {
+            const customerResult = await client.query(CurrentCustomerUserQueryDocument, {}).toPromise();
+
+            if (customerResult.data?.currentCustomerUser) {
                 const orderResponse: OperationResult<TypeOrderDetailQuery, TypeOrderDetailQueryVariables> = await client
                     .query(OrderDetailQueryDocument, {
                         orderNumber: context.query.orderNumber,

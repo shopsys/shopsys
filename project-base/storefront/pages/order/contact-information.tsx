@@ -35,6 +35,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
         async (context) =>
             initServerSideProps<TypeAdvertsQueryVariables>({
                 context,
+                currentCustomerUserPrefetchMode: 'full',
                 redisClient,
                 domainConfig,
                 t,

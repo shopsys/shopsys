@@ -34,6 +34,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 redisClient,
                 domainConfig,
                 t,
+                currentCustomerUserPrefetchMode: 'full',
                 authenticationConfig: {
                     authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
                 },

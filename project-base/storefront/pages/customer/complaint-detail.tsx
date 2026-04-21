@@ -82,6 +82,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 
     return initServerSideProps<TypeComplaintQueryVariables>({
         context,
+        currentCustomerUserPrefetchMode: 'full',
         authenticationConfig: {
             authenticationRequired: true,
             authorizedRoles: [

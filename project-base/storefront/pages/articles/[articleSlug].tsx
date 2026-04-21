@@ -3,8 +3,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
 import {
     ArticleDetailQueryDocument,
-    TypeArticleDetailQuery,
-    TypeArticleDetailQueryVariables,
     useArticleDetailQuery,
 } from 'graphql/requests/articles/queries/ArticleDetailQuery.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
@@ -14,15 +12,13 @@ import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { OgTypeEnum } from 'types/seo';
-import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
 const Error404Content = dynamic(
     () => import('components/Pages/ErrorPage/Error404Content').then((m) => m.Error404Content),
@@ -78,45 +74,44 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            const articleResponse: OperationResult<TypeArticleDetailQuery, TypeArticleDetailQueryVariables> =
-                await client
-                    ?.query(ArticleDetailQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
-                    })
-                    .toPromise();
+            const articlePromise = client
+                .query(ArticleDetailQueryDocument, {
+                    urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
+                })
+                .toPromise();
+
+            const [articleResponse, layoutResult] = await Promise.all([
+                articlePromise,
+                prefetchLayoutQueries({ client, context, domainConfig }),
+            ]);
+
+            const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                articleResponse.error,
+                articleResponse.data?.article,
+                context,
+                domainConfig.url,
+            );
+
+            if (serverSideErrorResponse) {
+                return serverSideErrorResponse;
+            }
 
             const article =
                 articleResponse.data?.article?.__typename === 'ArticleSite' ? articleResponse.data.article : null;
 
             const parsedCatnums = parseCatnums(article?.text ?? '');
-
-            await client
-                ?.query(ProductsByCatnumsDocument, {
-                    catnums: parsedCatnums,
-                })
-                .toPromise();
-
-            if (getIsRedirectedFromSsr(context.req.headers)) {
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    articleResponse.error,
-                    articleResponse.data?.article,
-                    context,
-                    domainConfig.url,
-                );
-
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
-                }
+            if (parsedCatnums.length > 0) {
+                await client.query(ProductsByCatnumsDocument, { catnums: parsedCatnums }).toPromise();
             }
 
-            const initServerSideData = await initServerSideProps({
-                context,
+            return buildServerSideProps({
+                layoutResult,
                 client,
                 ssrExchange,
+                context,
                 domainConfig,
+                pageQueryResults: [articleResponse],
             });
-
-            return initServerSideData;
         },
 );
 

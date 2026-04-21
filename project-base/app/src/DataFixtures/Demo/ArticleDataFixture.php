@@ -189,11 +189,10 @@ class ArticleDataFixture extends AbstractReferenceFixture
                                 <h4 id="ioawsm" draggable="true">H4 Vidson</h4>
                             </div>
                             <video
-                                allowfullscreen="allowfullscreen"
                                 src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImZpbGw6IHJnYmEoMCwwLDAsMC4xNSk7IHRyYW5zZm9ybTogc2NhbGUoMC43NSkiPgogICAgICAgIDxwYXRoIGQ9Ik04LjUgMTMuNWwyLjUgMyAzLjUtNC41IDQuNSA2SDVtMTYgMVY1YTIgMiAwIDAgMC0yLTJINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMnoiPjwvcGF0aD4KICAgICAgPC9zdmc+"
-                                controls="controls"
+                                controls
                                 id="ijwm64"
-                                style="margin: 0px 0px 0 0px"
+                                style="margin: 0px 0px 0px 0px"
                             ></video>
                         </div>
                     </div>
@@ -203,10 +202,9 @@ class ArticleDataFixture extends AbstractReferenceFixture
                                 <h5 id="i4utlb" draggable="true">H5 Mapson</h5>
                             </div>
                             <iframe
-                                frameborder="0"
                                 id="in1zyi"
                                 src="https://maps.google.com/maps?&z=1&t=q&output=embed"
-                                style="height: 350px; width: 100%"
+                                style="height: 350px; width: 100%; border: 0"
                             ></iframe>
                         </div>
                     </div>
@@ -224,7 +222,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
                     </div>
                     <a
                         data-link-position="center"
-                        backgroundcolor="#00C8B7"
+                        data-backgroundcolor="#00C8B7"
                         class="gjs-button-link button-link-position-center"
                         title="More products"
                         href="' . $categoryUrl . '"
@@ -330,7 +328,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     {
         $articleData = $this->articleDataFactory->create($domainId);
         $articleData->name = $data[self::ATTRIBUTE_NAME_KEY];
-        $articleData->text = '<div class="gjs-text-ckeditor">' . $data[self::ATTRIBUTE_TEXT_KEY] . '</div>';
+        $articleData->text = $data[self::ATTRIBUTE_TEXT_KEY];
         $articleData->placement = $data[self::ATTRIBUTE_PLACEMENT_KEY];
         $articleData->seoH1 = $data[self::ATTRIBUTE_SEO_H1_KEY] ?? null;
         $articleData->seoTitle = $data[self::ATTRIBUTE_SEO_TITLE_KEY] ?? null;

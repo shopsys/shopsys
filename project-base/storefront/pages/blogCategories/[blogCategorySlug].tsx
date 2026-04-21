@@ -6,8 +6,6 @@ import { BlogCategoriesDocument } from 'graphql/requests/blogCategories/queries/
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import {
     BlogCategoryQueryDocument,
-    TypeBlogCategoryQuery,
-    TypeBlogCategoryQueryVariables,
     useBlogCategoryQuery,
 } from 'graphql/requests/blogCategories/queries/BlogCategoryQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
@@ -15,17 +13,15 @@ import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEven
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
+import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const Error404Content = dynamic(
     () => import('components/Pages/ErrorPage/Error404Content').then((m) => m.Error404Content),
@@ -78,44 +74,52 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
             const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
-            const blogCategoryResponse: OperationResult<TypeBlogCategoryQuery, TypeBlogCategoryQueryVariables> =
-                await client
-                    ?.query(BlogCategoryQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
-                    })
-                    .toPromise();
-
-            await client
-                ?.query(BlogCategoryArticlesDocument, {
-                    uuid: blogCategoryResponse.data?.blogCategory?.uuid,
-                    endCursor: getEndCursor(page),
-                    pageSize: DEFAULT_PAGE_SIZE,
+            const blogCategoryPromise = client
+                .query(BlogCategoryQueryDocument, {
+                    urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                 })
                 .toPromise();
 
-            const isRedirectedFromSsr = getIsRedirectedFromSsr(context.req.headers);
-            if (isRedirectedFromSsr) {
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    blogCategoryResponse.error,
-                    blogCategoryResponse.data?.blogCategory,
+            const [blogCategoryResponse, layoutResult] = await Promise.all([
+                blogCategoryPromise,
+                prefetchLayoutQueries({
+                    client,
                     context,
-                    domainConfig.url,
-                );
+                    domainConfig,
+                    prefetchedQueries: [{ query: BlogCategoriesDocument }],
+                }),
+            ]);
 
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
-                }
+            const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                blogCategoryResponse.error,
+                blogCategoryResponse.data?.blogCategory,
+                context,
+                domainConfig.url,
+            );
+
+            if (serverSideErrorResponse) {
+                return serverSideErrorResponse;
             }
 
-            const initServerSideData = await initServerSideProps({
-                context,
-                client,
-                domainConfig,
-                ssrExchange,
-                prefetchedQueries: [{ query: BlogCategoriesDocument }],
-            });
+            const blogCategoryUuid = blogCategoryResponse.data?.blogCategory?.uuid;
+            if (blogCategoryUuid) {
+                await client
+                    .query(BlogCategoryArticlesDocument, {
+                        uuid: blogCategoryUuid,
+                        endCursor: getEndCursor(page),
+                        pageSize: DEFAULT_PAGE_SIZE,
+                    })
+                    .toPromise();
+            }
 
-            return initServerSideData;
+            return buildServerSideProps({
+                layoutResult,
+                client,
+                ssrExchange,
+                context,
+                domainConfig,
+                pageQueryResults: [blogCategoryResponse],
+            });
         },
 );
 

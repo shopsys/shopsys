@@ -1,5 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getCookies } from 'cookies-next';
+import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { useRouter } from 'next/router';
 import { useEffect, useEffectEvent } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
@@ -19,6 +20,7 @@ export const useAuthLoader = () => {
 
     const router = useRouter();
     const isUserLoggedIn = useIsUserLoggedIn();
+    const [{ fetching: isCustomerUserFetching }] = useCurrentCustomerUserQuery();
     const slug = getUrlWithoutGetParameters(router.asPath);
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
 
@@ -27,6 +29,10 @@ export const useAuthLoader = () => {
     });
 
     useEffect(() => {
+        if (isCustomerUserFetching) {
+            return;
+        }
+
         const cookies = getCookies({ secure: getIsHttps() });
         const accessTokenName = getCookieName('accessToken', domainConfig.domainId);
         const refreshTokenName = getCookieName('refreshToken', domainConfig.domainId);
@@ -35,7 +41,7 @@ export const useAuthLoader = () => {
         if ((isUserLoggedIn && !isWithUserTokens) || (!isUserLoggedIn && isWithUserTokens)) {
             onTokenMismatchReload();
         }
-    }, [slug, domainConfig.domainId, isUserLoggedIn]);
+    }, [slug, domainConfig.domainId, isUserLoggedIn, isCustomerUserFetching]);
 
     const onShowAuthToasts = useEffectEvent(() => {
         if (typeof authLoading === 'object' && authLoading?.authLoadingStatus === 'social-login-fail') {
