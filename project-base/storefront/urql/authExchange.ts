@@ -11,6 +11,7 @@ import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
 import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
+import { isAuthError } from 'utils/errors/isAuthError';
 
 const isRefreshTokenMutation = (operation: Operation) => {
     return (
@@ -61,7 +62,7 @@ const addAuthToOperation = (
  * Check whether error returned from API is an authentication error
  */
 const didAuthError = (error: CombinedError): boolean => {
-    return error.response?.status === 401;
+    return isAuthError(error);
 };
 
 const doTryRefreshToken = async (

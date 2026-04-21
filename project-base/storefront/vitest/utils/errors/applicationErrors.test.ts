@@ -38,6 +38,7 @@ describe('isFlashMessageError', () => {
 
     test('should return false for no-log codes', () => {
         expect(isFlashMessageError('no-result-found-for-slug')).toBe(false);
+        expect(isFlashMessageError('expired-token')).toBe(false);
         expect(isFlashMessageError('invalid-token')).toBe(false);
         expect(isFlashMessageError('seo-page-not-found')).toBe(false);
     });
@@ -99,6 +100,7 @@ describe('isNoFlashMessageError', () => {
     });
 
     test('should return false for no-log codes', () => {
+        expect(isNoFlashMessageError('expired-token')).toBe(false);
         expect(isNoFlashMessageError('no-result-found-for-slug')).toBe(false);
         expect(isNoFlashMessageError('invalid-token')).toBe(false);
     });
@@ -113,6 +115,7 @@ describe('isNoLogError', () => {
     test.each([
         'COMPARISON-product-already-in-list',
         'COMPARISON-product-not-in-list',
+        'expired-token',
         'invalid-account-or-password',
         'invalid-token',
         'no-result-found-for-slug',
@@ -209,6 +212,7 @@ describe('error code classification coverage', () => {
             // No-log codes
             'COMPARISON-product-already-in-list',
             'COMPARISON-product-not-in-list',
+            'expired-token',
             'invalid-account-or-password',
             'invalid-token',
             'no-result-found-for-slug',

@@ -69,6 +69,31 @@ describe('handleServerSideErrorResponseForFriendlyUrls', () => {
         });
     });
 
+    test('returns redirect to login for graphql auth errors returned with HTTP 200', () => {
+        const error = createCombinedError({
+            graphQLErrors: [
+                {
+                    message: 'Token is expired. Please renew.',
+                    extensions: { userCode: 'expired-token' },
+                },
+            ],
+        });
+
+        const result = handleServerSideErrorResponseForFriendlyUrls(
+            error,
+            null,
+            createMockContext(),
+            'https://example.com',
+        );
+
+        expect(result).toEqual({
+            redirect: {
+                destination: '/login?r=redirect-target',
+                permanent: false,
+            },
+        });
+    });
+
     test('throws on 500 server error (debugging off)', () => {
         const error = createCombinedError({
             graphQLErrors: [{ extensions: { code: 500 } }],

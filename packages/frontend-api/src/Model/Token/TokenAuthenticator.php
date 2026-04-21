@@ -8,6 +8,7 @@ use GraphQL\Error\FormattedError;
 use Lcobucci\JWT\Token\RegisteredClaims;
 use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider;
@@ -99,13 +100,15 @@ class TokenAuthenticator extends AbstractAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $formattedError = FormattedError::createFromException($exception);
-        $formattedError['extensions']['userCode'] = 'invalid-token';
+        $formattedError['extensions']['userCode'] = $exception instanceof UserErrorWithCodeInterface
+            ? $exception->getUserErrorCode()
+            : 'invalid-token';
 
         $responseData = [
             'errors' => [$formattedError],
         ];
 
-        return new JsonResponse($responseData, Response::HTTP_UNAUTHORIZED);
+        return new JsonResponse($responseData, Response::HTTP_OK);
     }
 
     public function getCredentials(Request $request): ?string

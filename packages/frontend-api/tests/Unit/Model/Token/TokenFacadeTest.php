@@ -110,6 +110,20 @@ class TokenFacadeTest extends TestCase
         ];
     }
 
+    public function testGetTokenByStringThrowsExpiredTokenExceptionForExpiredToken(): void
+    {
+        $tokenFacade = $this->createTokenFacade();
+        $expiredToken = $this->createToken(
+            null,
+            null,
+            new DatePoint()->modify('- 5 minutes'),
+        );
+
+        $this->expectException(ExpiredTokenUserMessageException::class);
+
+        $tokenFacade->getTokenByString($expiredToken->toString());
+    }
+
     private function createTokenFacade(): TokenFacade
     {
         $domain = $this->createDomain();
