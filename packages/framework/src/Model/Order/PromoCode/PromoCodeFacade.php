@@ -102,15 +102,17 @@ class PromoCodeFacade
      */
     protected function refreshPromoCodeLimits(PromoCode $promoCode, array $limits): void
     {
-        $this->promoCodeLimitRepository->deleteByPromoCodeId($promoCode->getId());
+        $this->removeExistingPromoCodeLimits($promoCode);
 
         if ($promoCode->isFreeTransportAndPaymentType()) {
             return;
         }
 
         foreach ($limits as $limit) {
-            $limit->setPromoCode($promoCode);
-            $this->em->persist($limit);
+            $promoCodeLimit = clone $limit;
+            $promoCodeLimit->setPromoCode($promoCode);
+
+            $this->em->persist($promoCodeLimit);
         }
 
         $this->em->flush();
@@ -269,11 +271,31 @@ class PromoCodeFacade
      */
     protected function refreshPromoCodeFlags(PromoCode $promoCode, array $flags): void
     {
-        $this->promoCodeFlagRepository->deleteByPromoCodeId($promoCode->getId());
+        $this->removeExistingPromoCodeFlags($promoCode);
 
         foreach ($flags as $flag) {
-            $flag->setPromoCode($promoCode);
-            $this->em->persist($flag);
+            $promoCodeFlag = clone $flag;
+            $promoCodeFlag->setPromoCode($promoCode);
+
+            $this->em->persist($promoCodeFlag);
+        }
+
+        $this->em->flush();
+    }
+
+    protected function removeExistingPromoCodeLimits(PromoCode $promoCode): void
+    {
+        foreach ($this->promoCodeLimitRepository->getLimitsByPromoCodeId($promoCode->getId()) as $promoCodeLimit) {
+            $this->em->remove($promoCodeLimit);
+        }
+
+        $this->em->flush();
+    }
+
+    protected function removeExistingPromoCodeFlags(PromoCode $promoCode): void
+    {
+        foreach ($this->promoCodeFlagRepository->getFlagsByPromoCodeId($promoCode->getId()) as $promoCodeFlag) {
+            $this->em->remove($promoCodeFlag);
         }
 
         $this->em->flush();
