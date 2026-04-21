@@ -21,8 +21,6 @@ use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface
 
 class McpTokenAuthenticator extends AbstractAuthenticator implements AuthenticationEntryPointInterface
 {
-    protected const string HEADER_AUTHORIZATION = 'Authorization';
-    protected const string BEARER_PREFIX = 'Bearer ';
     public const string REQUEST_ATTRIBUTE_ADMINISTRATOR_MCP_TOKEN = '_administrator_mcp_token';
 
     public function __construct(
@@ -33,7 +31,7 @@ class McpTokenAuthenticator extends AbstractAuthenticator implements Authenticat
     #[Override]
     public function supports(Request $request): ?bool
     {
-        return str_starts_with($request->getPathInfo(), '/_mcp');
+        return McpRuntimeRequestMatcher::isMcpRuntimeRequest($request);
     }
 
     /**
@@ -42,17 +40,17 @@ class McpTokenAuthenticator extends AbstractAuthenticator implements Authenticat
     #[Override]
     public function authenticate(Request $request): Passport
     {
-        $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);
+        $authorizationHeader = $request->headers->get(McpBearerToken::HEADER_AUTHORIZATION);
 
         if ($authorizationHeader === null) {
             throw new CustomUserMessageAuthenticationException('Authorization: Bearer token is required.');
         }
 
-        if (!str_starts_with($authorizationHeader, static::BEARER_PREFIX)) {
+        if (!McpBearerToken::hasBearerScheme($authorizationHeader)) {
             throw new CustomUserMessageAuthenticationException('Authorization header must use the Bearer scheme.');
         }
 
-        $tokenString = substr($authorizationHeader, strlen(static::BEARER_PREFIX));
+        $tokenString = McpBearerToken::extractTokenString($authorizationHeader);
         $administratorMcpToken = $this->administratorMcpTokenFacade->findValidTokenByTokenString($tokenString);
 
         if ($administratorMcpToken === null) {

@@ -16,3 +16,6 @@ framework:
             mcp_http_session_cache:
                 adapter: cache.adapter.filesystem
                 provider: ~
+            mcp_rate_limiter_cache:
+                adapter: cache.adapter.array
+                provider: ~

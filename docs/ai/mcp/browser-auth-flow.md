@@ -36,6 +36,7 @@ When an AI client starts authentication for the configured MCP server, the flow 
 | Request | `POST` JSON payload with `redirect_uris` and optional `client_name` |
 | Response | generated `client_id`, stored `client_name`, and accepted `redirect_uris` |
 | Note | The registration is temporary and supports the later authorization and token exchange. |
+| Rate limit | The endpoint is rate-limited by client IP. |
 
 ### 3. Browser authorization request
 
@@ -64,6 +65,7 @@ When an AI client starts authentication for the configured MCP server, the flow 
 | Validation | registered client exists, `redirect_uri` matches the client registration, authorization code exists and is not expired, authorization code matches `client_id`, authorization code matches `redirect_uri`, and the PKCE verifier matches the stored challenge |
 | Response | `access_token`, `token_type=Bearer`, and `expires_in` |
 | Note | The connected-client token is stored for the concrete OAuth `client_id` together with the readable `client_name`. |
+| Rate limit | The endpoint is rate-limited by client IP. |
 
 ### 6. Authenticated MCP requests
 
@@ -72,6 +74,7 @@ When an AI client starts authentication for the configured MCP server, the flow 
 | Route name | `_mcp_endpoint` |
 | Request | HTTP MCP request with `Authorization: Bearer <access_token>` |
 | Behavior | The token is resolved to an administrator, token usage is recorded, and MCP tool access is granted for the authenticated administrator. |
+| Rate limit | Runtime MCP requests always consume an IP-based limit and also consume a token-public-ID limit when the bearer token has the generated token shape. |
 
 ## State used during the flow
 

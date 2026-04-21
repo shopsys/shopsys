@@ -23,3 +23,6 @@ framework:
             mcp_http_session_cache:
                 adapter: cache.adapter.redis
                 provider: snc_redis.mcp_http_session
+            mcp_rate_limiter_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.mcp_rate_limiter

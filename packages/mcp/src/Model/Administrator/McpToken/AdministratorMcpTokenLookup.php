@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Model\Administrator\McpToken;
 
 use Psr\Clock\ClockInterface;
+use Shopsys\McpBundle\Component\Security\McpBearerToken;
 
 class AdministratorMcpTokenLookup
 {
-    protected const string TOKEN_PATTERN = '/^(?P<publicTokenId>[a-f0-9]{32})\\.(?P<secret>[a-f0-9]{64})$/';
-
     public function __construct(
         protected readonly AdministratorMcpTokenRepository $administratorMcpTokenRepository,
         protected readonly AdministratorMcpTokenHasher $administratorMcpTokenHasher,
@@ -19,11 +18,13 @@ class AdministratorMcpTokenLookup
 
     public function findValidTokenByTokenString(string $tokenString): ?AdministratorMcpToken
     {
-        if (!preg_match(self::TOKEN_PATTERN, $tokenString, $matches)) {
+        $tokenParts = McpBearerToken::parseTokenString($tokenString);
+
+        if ($tokenParts === null) {
             return null;
         }
 
-        $administratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByPublicTokenId($matches['publicTokenId']);
+        $administratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByPublicTokenId($tokenParts['publicTokenId']);
 
         if ($administratorMcpToken === null) {
             return null;
@@ -33,7 +34,7 @@ class AdministratorMcpTokenLookup
             return null;
         }
 
-        if (!$this->administratorMcpTokenHasher->verify($administratorMcpToken->getSecretHash(), $matches['secret'])) {
+        if (!$this->administratorMcpTokenHasher->verify($administratorMcpToken->getSecretHash(), $tokenParts['secret'])) {
             return null;
         }
 

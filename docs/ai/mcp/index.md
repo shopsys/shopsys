@@ -194,4 +194,5 @@ That rule checks ORM entities in the `App\\` and `Shopsys\\` namespaces and requ
 - MCP access tokens are stored hashed in the database.
 - Both manual and connected-client tokens expire.
 - Query limits and statement timeout are configured through bundle configuration.
+- Public MCP entrypoints are rate-limited as baseline abuse protection. Dynamic client registration and token exchange are limited by client IP. MCP runtime requests always consume an IP-based limit and also consume a token-public-ID limit when the bearer token has the generated token shape.
 - MCP requests are logged to the dedicated `mcp` Monolog channel.

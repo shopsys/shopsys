@@ -54,6 +54,12 @@ services:
         resource: '../../Controller/'
         tags: ['controller.service_arguments']
 
+    Shopsys\McpBundle\EventSubscriber\McpRequestRateLimitSubscriber:
+        arguments:
+            $oauthRegisterRateLimiter: '@limiter.mcp_oauth_register'
+            $oauthTokenRateLimiter: '@limiter.mcp_oauth_token'
+            $runtimeRateLimiter: '@limiter.mcp_runtime'
+
     Shopsys\McpBundle\Form\:
         resource: '../../Form/'
 
