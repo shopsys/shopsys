@@ -15,7 +15,7 @@ class RequiredFieldsTest extends GraphQlTestCase
         $expectedViolationMessages = [
             'Field OrderInput.firstName of required type String! was not provided.',
             'Field OrderInput.lastName of required type String! was not provided.',
-            'Field OrderInput.telephone of required type String! was not provided.',
+            'Field OrderInput.telephone of required type PhoneDataInput! was not provided.',
             'Field OrderInput.onCompanyBehalf of required type Boolean! was not provided.',
             'Field OrderInput.street of required type String! was not provided.',
             'Field OrderInput.city of required type String! was not provided.',

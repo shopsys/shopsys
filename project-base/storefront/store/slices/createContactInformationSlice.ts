@@ -5,6 +5,8 @@ import { StateCreator } from 'zustand';
 export type ContactInformation = {
     email: string;
     customer: CustomerTypeEnum | undefined;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
     telephone: string;
     firstName: string;
     lastName: string;
@@ -19,6 +21,8 @@ export type ContactInformation = {
     deliveryFirstName: string;
     deliveryLastName: string;
     deliveryCompanyName: string;
+    deliveryTelephonePrefix: string;
+    deliveryTelephonePrefixCountryCode: string;
     deliveryTelephone: string;
     deliveryStreet: string;
     deliveryCity: string;
@@ -43,6 +47,8 @@ export const defaultContactInformationState: ContactInformationState = {
     contactInformation: {
         email: '',
         customer: undefined,
+        telephonePrefix: '',
+        telephonePrefixCountryCode: '',
         telephone: '',
         firstName: '',
         lastName: '',
@@ -57,6 +63,8 @@ export const defaultContactInformationState: ContactInformationState = {
         deliveryFirstName: '',
         deliveryLastName: '',
         deliveryCompanyName: '',
+        deliveryTelephonePrefix: '',
+        deliveryTelephonePrefixCountryCode: '',
         deliveryTelephone: '',
         deliveryStreet: '',
         deliveryCity: '',

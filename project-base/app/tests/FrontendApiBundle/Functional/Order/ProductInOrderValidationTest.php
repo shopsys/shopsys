@@ -22,7 +22,7 @@ class ProductInOrderValidationTest extends GraphQlTestCase
     public function testOrderWithoutProductCannotBeCreated(): void
     {
         $cartUuid = $this->addProductToCartAndRemoveIt();
-        $response = $this->createOrder($cartUuid);
+        $response = $this->getCreateOrderMutationResponseFromCart($cartUuid);
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
 
@@ -48,7 +48,7 @@ class ProductInOrderValidationTest extends GraphQlTestCase
 
         $this->productFacade->delete($product->getId());
 
-        $response = $this->createOrder($cartUuid);
+        $response = $this->getCreateOrderMutationResponseFromCart($cartUuid);
         $this->assertArrayHasKey('data', $response);
         $this->assertArrayHasKey('CreateOrder', $response['data']);
         $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
@@ -93,37 +93,5 @@ class ProductInOrderValidationTest extends GraphQlTestCase
         $this->getResponseContentForQuery($removeFromCartMutation);
 
         return $cartUuid;
-    }
-
-    private function createOrder(string $cartUuid): array
-    {
-        $mutation = 'mutation {
-                    CreateOrder(
-                        input: {
-                            cartUuid: "' . $cartUuid . '"
-                            firstName: "firstName"
-                            lastName: "lastName"
-                            email: "user@example.com"
-                            telephone: "+53 123456789"
-                            onCompanyBehalf: false
-                            street: "123 Fake Street"
-                            city: "Springfield"
-                            postcode: "12345"
-                            country: "CZ"
-                            isDeliveryAddressDifferentFromBilling: false
-                        }
-                    ) {
-                        order {
-                            uuid
-                        }
-                        cart {
-                            modifications {
-                                someProductWasRemovedFromEshop
-                            }
-                        }
-                    }
-                }';
-
-        return $this->getResponseContentForQuery($mutation);
     }
 }

@@ -6,6 +6,11 @@ fragment DeliveryAddressFragment on DeliveryAddress {
     city
     postcode
     telephone
+    telephoneData {
+        prefix
+        countryCode
+        number
+    }
     country {
         ...CountryFragment
     }

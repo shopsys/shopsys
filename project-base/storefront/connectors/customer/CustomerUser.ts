@@ -7,6 +7,9 @@ export const getCustomerUser = (customerUser: TypeSimpleCustomerUserFragment | u
         firstName: customerUser?.firstName ?? '',
         lastName: customerUser?.lastName ?? '',
         telephone: customerUser?.telephone ?? '',
+        telephonePrefix: customerUser?.telephoneData?.prefix ?? '',
+        telephonePrefixCountryCode: customerUser?.telephoneData?.countryCode ?? '',
+        telephoneNumber: customerUser?.telephoneData?.number ?? '',
         email: customerUser?.email ?? '',
     };
 };

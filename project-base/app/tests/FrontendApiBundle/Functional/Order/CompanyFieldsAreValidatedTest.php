@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CompanyFieldsAreValidatedTest extends GraphQlTestCase
@@ -32,88 +33,33 @@ class CompanyFieldsAreValidatedTest extends GraphQlTestCase
 
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->addCardPaymentToDemoCart();
-        $response = $this->getResponseContentForQuery($this->getMutation());
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CreateMinimalOrderMutation.graphql',
+            [
+                'cartUuid' => CartDataFixture::CART_UUID,
+                'firstName' => 'firstName',
+                'lastName' => 'lastName',
+                'email' => 'user@example.com',
+                'telephone' => new PhoneData('CU', '+53', '123456789'),
+                'onCompanyBehalf' => true,
+                'street' => '123 Fake Street',
+                'city' => 'Springfield',
+                'postcode' => '12345',
+                'country' => 'CZ',
+                'note' => 'Thank You',
+                'isDeliveryAddressDifferentFromBilling' => true,
+                'deliveryFirstName' => 'deliveryFirstName',
+                'deliveryLastName' => 'deliveryLastName',
+                'deliveryStreet' => 'deliveryStreet',
+                'deliveryCity' => 'deliveryCity',
+                'deliveryCountry' => 'SK',
+                'deliveryPostcode' => '13453',
+            ],
+        );
+
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
 
         $this->assertEquals($expectedValidations, $this->getErrorsExtensionValidationFromResponse($response));
-    }
-
-    private function getMutation(): string
-    {
-        return '
-            mutation {
-                CreateOrder(
-                    input: {
-                        cartUuid: "' . CartDataFixture::CART_UUID . '"
-                        firstName: "firstName"
-                        lastName: "lastName"
-                        email: "user@example.com"
-                        telephone: "+53 123456789"
-                        onCompanyBehalf: true
-                        street: "123 Fake Street"
-                        city: "Springfield"
-                        postcode: "12345"
-                        country: "CZ"
-                        note:"Thank You"
-                        isDeliveryAddressDifferentFromBilling: true
-                        deliveryFirstName: "deliveryFirstName"
-                        deliveryLastName: "deliveryLastName"
-                        deliveryStreet: "deliveryStreet"
-                        deliveryCity: "deliveryCity"
-                        deliveryCountry: "SK"
-                        deliveryPostcode: "13453"
-                    }
-                ) {
-                    order {
-                        status
-                        totalPrice {
-                            priceWithVat
-                            priceWithoutVat
-                            vatAmount
-                        }
-                        items {
-                            name
-                            unitPrice {
-                                priceWithVat
-                                priceWithoutVat
-                                vatAmount
-                            }
-                            totalPrice {
-                                priceWithVat
-                                priceWithoutVat
-                                vatAmount
-                            }
-                            quantity
-                            vatRate
-                            unit
-                        }
-                        firstName
-                        lastName
-                        email
-                        telephone
-                        companyName
-                        companyNumber
-                        companyTaxNumber
-                        street
-                        city
-                        postcode
-                        country {
-                            code
-                        }
-                        isDeliveryAddressDifferentFromBilling
-                        deliveryFirstName
-                        deliveryLastName
-                        deliveryCompanyName
-                        deliveryTelephone
-                        deliveryStreet
-                        deliveryCity
-                        deliveryPostcode
-                        deliveryCountry {
-                            code
-                        }
-                        note
-                    }
-                }
-            }';
     }
 }

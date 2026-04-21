@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 
 #[ORM\Table(name: 'withdrawal_requests')]
 #[ORM\Entity]
@@ -40,10 +41,22 @@ class WithdrawalRequest
     protected $lastName;
 
     /**
-     * @var string
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    protected $telephonePrefix;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
+    protected $telephonePrefixCountryCode;
+
+    /**
+     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    protected $telephone;
+    protected $telephoneNumber;
 
     /**
      * @var string
@@ -73,7 +86,7 @@ class WithdrawalRequest
     {
         $this->firstName = $withdrawalRequestData->firstName;
         $this->lastName = $withdrawalRequestData->lastName;
-        $this->telephone = $withdrawalRequestData->telephone;
+        $this->setTelephoneData($withdrawalRequestData->telephone);
         $this->email = $withdrawalRequestData->email;
         $this->note = $withdrawalRequestData->note;
         $this->requestedAt = $withdrawalRequestData->requestedAt ?? new DateTimeImmutable();
@@ -109,11 +122,42 @@ class WithdrawalRequest
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getTelephone()
     {
-        return $this->telephone;
+        return $this->getTelephoneData()?->toPhoneNumber();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData|null
+     */
+    public function getTelephoneData()
+    {
+        if ($this->telephoneNumber === null) {
+            return null;
+        }
+
+        return new PhoneData(
+            $this->telephonePrefixCountryCode,
+            $this->telephonePrefix,
+            $this->telephoneNumber,
+        );
+    }
+
+    public function setTelephoneData(?PhoneData $phoneData): void
+    {
+        if ($phoneData === null) {
+            $this->telephonePrefix = null;
+            $this->telephonePrefixCountryCode = null;
+            $this->telephoneNumber = null;
+
+            return;
+        }
+
+        $this->telephonePrefix = $phoneData->prefix;
+        $this->telephonePrefixCountryCode = $phoneData->countryCode;
+        $this->telephoneNumber = $phoneData->number;
     }
 
     /**

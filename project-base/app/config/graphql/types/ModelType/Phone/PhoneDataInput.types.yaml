@@ -1,0 +1,4 @@
+PhoneDataInput:
+    type: input-object
+    inherits:
+        - 'PhoneDataInputDecorator'

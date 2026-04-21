@@ -1,0 +1,24 @@
+{%- block phone_widget -%}
+    <div class="row">
+        {% for child in form %}
+            <div class="{{ loop.first ? 'col-3' : 'col' }}">
+                {% set options = loop.last and form.vars.isSuspicious ? { rawSymbolAfterInput: ux_icon('warning', {
+                    class: 'cursor-help icon icon-sm text-warning',
+                    'data-bs-toggle': "popover",
+                    'data-bs-content': 'This phone number may not be valid. Please verify it.'|trans,
+                    'data-bs-trigger': "hover",
+                    "data-bs-html": 'true',
+                }) } : {} %}
+
+                {{- form_widget(child, options) -}}
+                {{- form_errors(child) -}}
+            </div>
+        {% endfor %}
+    </div>
+    {% if form.vars.unknownPrefix is not null %}
+        <div class="mt-2 text-warning small">
+            {{ ux_icon('warning', { class: 'me-1 icon icon-sm' }) }}
+            {{ 'Unknown phone prefix "%prefix%" is stored. Please verify it.'|trans({'%prefix%': form.vars.unknownPrefix}) }}
+        </div>
+    {% endif %}
+{%- endblock -%}

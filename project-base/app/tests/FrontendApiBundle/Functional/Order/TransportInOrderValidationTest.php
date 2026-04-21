@@ -51,8 +51,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     public function testTransportNotSet(): void
     {
         $this->addCardPaymentToDemoCart();
-        $mutation = $this->getCreateOrderMutationFromDemoCart();
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getCreateOrderMutationResponseFromCart();
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
@@ -64,8 +63,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
         $this->addCardPaymentToDemoCart();
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->hidePplTransport();
-        $mutation = $this->getCreateOrderMutationFromDemoCart();
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getCreateOrderMutationResponseFromCart();
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
@@ -78,8 +76,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
         $cart = $this->cartApiFacade->findCart(null, CartDataFixture::CART_UUID);
         $transportDrone = $this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class);
         $this->cartTransportFacade->updateTransportInCart($cart, $transportDrone->getUuid(), null);
-        $mutation = $this->getCreateOrderMutationFromDemoCart();
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getCreateOrderMutationResponseFromCart();
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
@@ -91,8 +88,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
         $this->addCardPaymentToDemoCart();
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->changePplTransportPrice();
-        $mutation = $this->getCreateOrderMutationFromDemoCart();
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getCreateOrderMutationResponseFromCart();
 
         $this->assertArrayHasKey('data', $response);
         $this->assertArrayHasKey('CreateOrder', $response['data']);
@@ -110,8 +106,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
         $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $this->addTransportToCart(CartDataFixture::CART_UUID, $transportPersonal, $store->getUuid());
         $this->storeFacade->delete($store->getId());
-        $mutation = $this->getCreateOrderMutationFromDemoCart();
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getCreateOrderMutationResponseFromCart();
 
         $this->assertArrayHasKey('data', $response);
         $this->assertArrayHasKey('CreateOrder', $response['data']);
@@ -132,8 +127,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
         $demoCart = $this->cartApiFacade->findCart(null, $demoCartUuid);
         $this->cartTransportFacade->unsetPickupPlaceIdentifierFromCart($demoCart);
 
-        $mutation = $this->getCreateOrderMutationFromDemoCart();
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getCreateOrderMutationResponseFromCart();
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
@@ -145,8 +139,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
         $this->addCardPaymentToDemoCart();
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->setPplTransportWeightLimit();
-        $mutation = $this->getCreateOrderMutationFromDemoCart();
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getCreateOrderMutationResponseFromCart();
 
         $this->assertArrayHasKey('data', $response);
         $this->assertArrayHasKey('CreateOrder', $response['data']);

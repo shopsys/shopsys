@@ -19,6 +19,9 @@ SalesRepresentativeDecorator:
             telephone:
                 type: "String"
                 description: "Phone number"
+            telephoneData:
+                type: "PhoneData"
+                description: "Phone number data"
             image:
                 type: "Image"
                 description: "Sales representative image"

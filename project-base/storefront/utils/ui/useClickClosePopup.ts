@@ -6,7 +6,11 @@ const useClickClosePopup = (refs: React.RefObject<HTMLElement | null>[], onOutsi
     });
 
     useEffect(() => {
-        const handleDocumentClick = (event: MouseEvent) => {
+        // mousedown fires before React's synthetic onClick so the target is still
+        // mounted even if the click triggers a re-render that unmounts it — prevents
+        // click-outside from firing spuriously when a popup swaps its own DOM
+        // (e.g. Select replacing a button with an input on open).
+        const handleDocumentMouseDown = (event: MouseEvent) => {
             const isClickedInsideRefs = refs.some((ref) => {
                 return ref.current?.contains(event.target as Node);
             });
@@ -16,10 +20,10 @@ const useClickClosePopup = (refs: React.RefObject<HTMLElement | null>[], onOutsi
             }
         };
 
-        window.addEventListener('click', handleDocumentClick);
+        window.addEventListener('mousedown', handleDocumentMouseDown);
 
         return () => {
-            window.removeEventListener('click', handleDocumentClick);
+            window.removeEventListener('mousedown', handleDocumentMouseDown);
         };
     }, [refs]);
 };

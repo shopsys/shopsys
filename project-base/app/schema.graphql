@@ -9,8 +9,8 @@ input AddNewCustomerUserDataInput {
   newsletterSubscription: Boolean!
   "Customer user role group uuid."
   roleGroupUuid: Uuid!
-  "The customer's telephone number"
-  telephone: String!
+  "The customer's telephone"
+  telephone: PhoneDataInput!
 }
 
 input AddOrderItemsToCartInput {
@@ -251,6 +251,8 @@ interface BaseCustomerUser {
   street: String
   "Phone number"
   telephone: String
+  "Phone number data"
+  telephoneData: PhoneData
   "UUID"
   uuid: Uuid!
 }
@@ -622,8 +624,8 @@ input ChangePersonalDataInput {
   lastName: String!
   "Whether customer user should receive newsletters or not"
   newsletterSubscription: Boolean!
-  "The customer's telephone number"
-  telephone: String!
+  "The customer's telephone"
+  telephone: PhoneDataInput!
 }
 
 input ChangeTransportInCartInput {
@@ -676,6 +678,8 @@ type CompanyCustomerUser implements BaseCustomerUser {
   street: String
   "Phone number"
   telephone: String
+  "Phone number data"
+  telephoneData: PhoneData
   "UUID"
   uuid: Uuid!
 }
@@ -701,6 +705,8 @@ type Complaint {
   deliveryStreet: String!
   "Contact telephone number for delivery"
   deliveryTelephone: String!
+  "Structured delivery telephone data with prefix and number"
+  deliveryTelephoneData: PhoneData!
   "The customer's email address"
   email: String!
   "All items in the complaint"
@@ -834,8 +840,8 @@ input CreateInquiryInput {
   note: String
   "Product UUID"
   productUuid: Uuid!
-  "The customer's telephone number"
-  telephone: String!
+  "The customer's telephone"
+  telephone: PhoneDataInput!
 }
 
 type CreateOrderResult {
@@ -894,6 +900,8 @@ type CurrentCompanyCustomerUser implements BaseCustomerUser & CurrentCustomerUse
   street: String
   "Phone number"
   telephone: String
+  "Phone number data"
+  telephoneData: PhoneData
   "UUID"
   uuid: Uuid!
 }
@@ -935,6 +943,8 @@ interface CurrentCustomerUser {
   street: String
   "Phone number"
   telephone: String
+  "Phone number data"
+  telephoneData: PhoneData
   "UUID"
   uuid: Uuid!
 }
@@ -976,6 +986,8 @@ type CurrentRegularCustomerUser implements BaseCustomerUser & CurrentCustomerUse
   street: String
   "Phone number"
   telephone: String
+  "Phone number data"
+  telephoneData: PhoneData
   "UUID"
   uuid: Uuid!
 }
@@ -1020,6 +1032,8 @@ type DeliveryAddress {
   street: String
   "Delivery address telephone"
   telephone: String
+  "Delivery address phone number data"
+  telephoneData: PhoneData
   "UUID"
   uuid: Uuid!
 }
@@ -1040,7 +1054,7 @@ input DeliveryAddressInput {
   "Delivery address street name"
   street: String!
   "Delivery address telephone"
-  telephone: String = null
+  telephone: PhoneDataInput = null
   "UUID"
   uuid: Uuid = null
 }
@@ -1056,8 +1070,8 @@ input EditCustomerUserPersonalDataInput {
   newsletterSubscription: Boolean!
   "Customer user role group uuid."
   roleGroupUuid: Uuid!
-  "The customer's telephone number"
-  telephone: String!
+  "The customer's telephone"
+  telephone: PhoneDataInput!
 }
 
 "Represents a downloadable file"
@@ -1520,6 +1534,8 @@ type Order {
   deliveryStreet: String
   "Contact telephone number for delivery"
   deliveryTelephone: String
+  "Contact phone number data for delivery"
+  deliveryTelephoneData: PhoneData
   "The customer's email address"
   email: String!
   "The customer's first name"
@@ -1558,8 +1574,10 @@ type Order {
   statusType: OrderStatusEnum!
   "Billing address street name "
   street: String!
-  "The customer's telephone number"
+  "The customer's formatted telephone number"
   telephone: String!
+  "The customer's telephone number split into country code, prefix, and number"
+  telephoneData: PhoneData!
   "Total price of the order including transport and payment prices"
   totalPrice: Price!
   "The order tracking number"
@@ -1638,8 +1656,8 @@ input OrderInput {
   deliveryPostcode: String
   "Street name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
   deliveryStreet: String
-  "Contact telephone number for delivery"
-  deliveryTelephone: String
+  "Contact telephone for delivery"
+  deliveryTelephone: PhoneDataInput
   "The customer's email address"
   email: String
   "The customer's first name"
@@ -1661,7 +1679,7 @@ input OrderInput {
   "Billing address street name (will be on the tax invoice)"
   street: String!
   "The customer's phone number"
-  telephone: String!
+  telephone: PhoneDataInput!
 }
 
 "Represent one item in the order"
@@ -1778,8 +1796,10 @@ type OrderWithdrawalRequest {
   note: String
   "Date and time when the withdrawal was requested by customer"
   requestedAt: DateTime!
-  "Telephone number for withdrawal request contact"
+  "Formatted telephone number for withdrawal request contact"
   telephone: String
+  "Telephone number data split into country code, prefix, and number"
+  telephoneData: PhoneData
 }
 
 "Input for requesting withdrawal from contract for an order"
@@ -1794,8 +1814,8 @@ input OrderWithdrawalRequestInput {
   note: String = null
   "Order URL hash to identify the order"
   orderUrlHash: String!
-  "Telephone number (optional)"
-  telephone: String = null
+  "Telephone number data (optional)"
+  telephone: PhoneDataInput = null
 }
 
 "Information about pagination in a connection."
@@ -2034,6 +2054,38 @@ type PersonalDataPage {
   exportSiteContent: String
   "URL slug of export site"
   exportSiteSlug: String!
+}
+
+"Represents phone number data"
+type PhoneData {
+  "Phone prefix country code in ISO 3166-1 alpha-2"
+  countryCode: String
+  "Phone number without prefix"
+  number: String!
+  "Phone prefix (eg. +420)"
+  prefix: String
+}
+
+"Represents phone number input"
+input PhoneDataInput {
+  "Phone prefix country code in ISO 3166-1 alpha-2"
+  countryCode: String!
+  "Phone number without prefix"
+  number: String!
+  "Phone prefix (eg. +420)"
+  prefix: String!
+}
+
+"Represents phone prefix"
+type PhonePrefix {
+  "ISO 3166-1 alpha-2 country code"
+  code: String!
+  "Country name"
+  countryName: String!
+  "International dial code (eg. +420)"
+  dialCode: String!
+  "Country flag"
+  flagEmoji: String!
 }
 
 "Represents the price"
@@ -2532,8 +2584,8 @@ input RegistrationDataInput {
   productListsUuids: [Uuid!]! = []
   "Billing address street name (will be on the tax invoice)"
   street: String!
-  "The customer's telephone number"
-  telephone: String!
+  "The customer's telephone"
+  telephone: PhoneDataInput!
 }
 
 "Represents a regular customer user"
@@ -2571,6 +2623,8 @@ type RegularCustomerUser implements BaseCustomerUser {
   street: String
   "Phone number"
   telephone: String
+  "Phone number data"
+  telephoneData: PhoneData
   "UUID"
   uuid: Uuid!
 }
@@ -2692,6 +2746,8 @@ type SalesRepresentative {
   lastName: String
   "Phone number"
   telephone: String
+  "Phone number data"
+  telephoneData: PhoneData
   "UUID"
   uuid: Uuid!
 }
@@ -2756,6 +2812,8 @@ type Settings {
   heurekaEnabled: Boolean!
   "Main blog category URL and background image"
   mainBlogCategoryData: MainBlogCategoryData!
+  "Returns available phone prefixes for current domain"
+  phonePrefixes: [PhonePrefix!]!
   "Settings related to pricing"
   pricing: PricingSetting!
   "Returns privacy policy article's url"

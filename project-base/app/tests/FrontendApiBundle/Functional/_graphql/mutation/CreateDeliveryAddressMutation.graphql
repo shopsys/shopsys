@@ -6,7 +6,7 @@ mutation CreateDeliveryAddress(
     $postcode: String!,
     $country: String!,
     $companyName: String,
-    $telephone: String,
+    $telephone: PhoneDataInput,
 ) {
     CreateDeliveryAddress(input: {
         firstName: $firstName
@@ -29,5 +29,10 @@ mutation CreateDeliveryAddress(
         }
         companyName
         telephone
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
     }
 }

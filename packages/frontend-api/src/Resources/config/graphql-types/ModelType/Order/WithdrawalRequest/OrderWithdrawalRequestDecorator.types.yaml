@@ -11,7 +11,10 @@ OrderWithdrawalRequestDecorator:
                 description: "Last name for withdrawal request contact"
             telephone:
                 type: "String"
-                description: "Telephone number for withdrawal request contact"
+                description: "Formatted telephone number for withdrawal request contact"
+            telephoneData:
+                type: "PhoneData"
+                description: "Telephone number data split into country code, prefix, and number"
             email:
                 type: "String!"
                 description: "Email address for withdrawal request contact"

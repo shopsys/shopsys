@@ -1,0 +1,48 @@
+mutation CreateOrderWithModificationsMutation(
+    $cartUuid: Uuid!,
+    $firstName: String!,
+    $lastName: String!,
+    $email: String!,
+    $telephone: PhoneDataInput!,
+    $onCompanyBehalf: Boolean!,
+    $street: String!,
+    $city: String!,
+    $postcode: String!,
+    $country: String!,
+    $isDeliveryAddressDifferentFromBilling: Boolean!,
+) {
+    CreateOrder(
+        input: {
+            cartUuid: $cartUuid
+            firstName: $firstName
+            lastName: $lastName
+            email: $email
+            telephone: $telephone
+            onCompanyBehalf: $onCompanyBehalf
+            street: $street
+            city: $city
+            postcode: $postcode
+            country: $country
+            isDeliveryAddressDifferentFromBilling: $isDeliveryAddressDifferentFromBilling
+        }
+    ) {
+        order {
+            uuid
+        }
+        cart {
+            modifications {
+                paymentModifications {
+                    paymentPriceChanged
+                    paymentUnavailable
+                }
+                transportModifications {
+                    transportUnavailable
+                    transportPriceChanged
+                    personalPickupStoreUnavailable
+                    transportWeightLimitExceeded
+                }
+                someProductWasRemovedFromEshop
+            }
+        }
+    }
+}

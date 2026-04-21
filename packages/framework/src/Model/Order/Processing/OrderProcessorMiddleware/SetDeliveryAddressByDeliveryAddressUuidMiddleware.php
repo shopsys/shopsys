@@ -52,7 +52,7 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddleware implements OrderProcesso
         $orderData->deliveryFirstName = $deliveryAddress->getFirstName();
         $orderData->deliveryLastName = $deliveryAddress->getLastName();
         $orderData->deliveryCompanyName = $deliveryAddress->getCompanyName();
-        $orderData->deliveryTelephone = $deliveryAddress->getTelephone();
+        $orderData->deliveryTelephone = $deliveryAddress->getTelephoneData();
         $orderData->deliveryStreet = $deliveryAddress->getStreet();
         $orderData->deliveryCity = $deliveryAddress->getCity();
         $orderData->deliveryPostcode = $deliveryAddress->getPostcode();

@@ -7,7 +7,6 @@ import { Checkbox, CheckboxProps } from './Checkbox';
 type CheckboxControlledProps = {
     name: string;
     render?: (input: ReactElement) => ReactElement<any, any> | null;
-    gridClassName?: string;
     checkboxProps: Pick<CheckboxProps, 'count' | 'disabled' | 'label' | 'required' | 'className'>;
     control: Control<any>;
     formName: string;
@@ -17,7 +16,6 @@ type CheckboxControlledProps = {
 export const CheckboxControlled: FC<CheckboxControlledProps> = ({
     name,
     render,
-    gridClassName,
     control,
     formName,
     checkboxProps,
@@ -48,5 +46,5 @@ export const CheckboxControlled: FC<CheckboxControlledProps> = ({
         return render(element);
     }
 
-    return <ChoiceFormLine className={gridClassName}>{element}</ChoiceFormLine>;
+    return <ChoiceFormLine>{element}</ChoiceFormLine>;
 };

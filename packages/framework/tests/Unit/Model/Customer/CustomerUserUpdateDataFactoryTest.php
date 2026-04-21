@@ -30,6 +30,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $customerUserData = TestCustomerProvider::getTestCustomerUserData();
         $customerUserData->password = null;
         $customerUser = new CustomerUser($customerUserData);
+        $customerUserData->telephone = $customerUser->getTelephoneData();
 
         $customer = $customerUser->getCustomer();
 
@@ -54,10 +55,12 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
             $order,
             $deliveryAddress,
         );
+        $expectedDeliveryAddressData = TestCustomerProvider::getDeliveryAddressData($customer);
+        $expectedDeliveryAddressData->telephone = $deliveryAddress?->getTelephoneData();
 
         $this->assertEquals($customerUserData, $customerUserUpdateData->customerUserData);
         $this->assertEquals(TestCustomerProvider::getBillingAddressData($customer), $customerUserUpdateData->billingAddressData);
-        $this->assertEquals(TestCustomerProvider::getDeliveryAddressData($customer), $customerUserUpdateData->deliveryAddressData);
+        $this->assertEquals($expectedDeliveryAddressData, $customerUserUpdateData->deliveryAddressData);
     }
 
     public function testGetAmendedCustomerUserUpdateDataByOrder(): void
@@ -72,6 +75,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $customerUserData = TestCustomerProvider::getTestCustomerUserData();
         $customerUserData->password = null;
         $customerUser = new CustomerUser($customerUserData);
+        $customerUserData->telephone = $customerUser->getTelephoneData();
 
         $orderData = TestOrderProvider::getTestOrderData();
 
@@ -95,7 +99,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $deliveryAddressData->companyName = $order->getDeliveryCompanyName();
         $deliveryAddressData->firstName = $order->getDeliveryFirstName();
         $deliveryAddressData->lastName = $order->getDeliveryLastName();
-        $deliveryAddressData->telephone = $order->getDeliveryTelephone();
+        $deliveryAddressData->telephone = $order->getDeliveryTelephoneData();
         $deliveryAddressData->country = $deliveryCountry;
 
         $customerUserUpdateData = $customerUserUpdateDataFactory->createAmendedByOrder($customerUser, $order, null);
@@ -154,7 +158,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
 
         $this->assertSame($order->getFirstName(), $customerUserUpdateData->customerUserData->firstName);
         $this->assertSame($order->getLastName(), $customerUserUpdateData->customerUserData->lastName);
-        $this->assertSame($order->getTelephone(), $customerUserUpdateData->customerUserData->telephone);
+        $this->assertEquals($order->getTelephoneData(), $customerUserUpdateData->customerUserData->telephone);
 
         $this->assertSame($order->getCompanyName(), $customerUserUpdateData->billingAddressData->companyName);
         $this->assertSame($order->getCompanyNumber(), $customerUserUpdateData->billingAddressData->companyNumber);
@@ -171,7 +175,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $this->assertSame($order->getDeliveryCompanyName(), $customerUserUpdateData->deliveryAddressData->companyName);
         $this->assertSame($order->getDeliveryFirstName(), $customerUserUpdateData->deliveryAddressData->firstName);
         $this->assertSame($order->getDeliveryLastName(), $customerUserUpdateData->deliveryAddressData->lastName);
-        $this->assertSame($order->getDeliveryTelephone(), $customerUserUpdateData->deliveryAddressData->telephone);
+        $this->assertEquals($order->getDeliveryTelephoneData(), $customerUserUpdateData->deliveryAddressData->telephone);
     }
 
     private function getCustomerUserUpdateDataFactory(): CustomerUserUpdateDataFactory

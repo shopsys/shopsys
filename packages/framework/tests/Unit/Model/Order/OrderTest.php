@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Symfony\Component\Clock\DatePoint;
 use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
@@ -97,7 +98,7 @@ class OrderTest extends TestCase
         $country = new Country($countryData);
 
         $orderData->companyName = 'companyName';
-        $orderData->telephone = 'telephone';
+        $orderData->telephone = new PhoneData(number: 'telephone');
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
         $orderData->street = 'street';

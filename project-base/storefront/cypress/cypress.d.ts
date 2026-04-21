@@ -1,5 +1,5 @@
 import { CreateOrderMutationVariables } from '../graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { RegistrationDataInput } from '../graphql/types';
+import { TypePhoneDataInput } from '../graphql/types';
 import { TIDs } from 'tids';
 
 declare global {
@@ -33,7 +33,7 @@ declare global {
                 email: string;
                 firstName: string;
                 lastName: string;
-                telephone: string;
+                telephone: TypePhoneDataInput;
                 roleGroupUuid: string;
                 newsletterSubscription?: boolean;
             }): Cypress.Chainable<{ uuid: string; firstName: string; lastName: string; email: string }>;

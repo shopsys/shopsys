@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class LoggedCustomerOrderWithdrawalRequestMutationTest extends GraphQlWithLoginTestCase
@@ -21,7 +22,7 @@ class LoggedCustomerOrderWithdrawalRequestMutationTest extends GraphQlWithLoginT
             'firstName' => 'Jane',
             'lastName' => 'Smith',
             'email' => 'jane.smith@example.com',
-            'telephone' => '+420777888999',
+            'telephone' => new PhoneData('CZ', '+420', '777888999'),
             'note' => 'I found this order and want to return it as a logged customer.',
         ];
 
@@ -45,7 +46,7 @@ class LoggedCustomerOrderWithdrawalRequestMutationTest extends GraphQlWithLoginT
             'firstName' => 'Jane',
             'lastName' => 'Smith',
             'email' => 'jane.smith@example.com',
-            'telephone' => '+420777888999',
+            'telephone' => new PhoneData('CZ', '+420', '777888999'),
             'note' => 'I found this order and want to return it as a logged customer.',
         ];
 

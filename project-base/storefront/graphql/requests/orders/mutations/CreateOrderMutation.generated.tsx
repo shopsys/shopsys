@@ -9,7 +9,7 @@ export type TypeCreateOrderMutationVariables = Types.Exact<{
   firstName: Types.Scalars['String']['input'];
   lastName: Types.Scalars['String']['input'];
   email: Types.Scalars['String']['input'];
-  telephone: Types.Scalars['String']['input'];
+  telephone: Types.TypePhoneDataInput;
   onCompanyBehalf: Types.Scalars['Boolean']['input'];
   companyName?: Types.InputMaybe<Types.Scalars['String']['input']>;
   companyNumber?: Types.InputMaybe<Types.Scalars['String']['input']>;
@@ -22,7 +22,7 @@ export type TypeCreateOrderMutationVariables = Types.Exact<{
   deliveryFirstName?: Types.InputMaybe<Types.Scalars['String']['input']>;
   deliveryLastName?: Types.InputMaybe<Types.Scalars['String']['input']>;
   deliveryCompanyName?: Types.InputMaybe<Types.Scalars['String']['input']>;
-  deliveryTelephone?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  deliveryTelephone?: Types.InputMaybe<Types.TypePhoneDataInput>;
   deliveryStreet?: Types.InputMaybe<Types.Scalars['String']['input']>;
   deliveryCity?: Types.InputMaybe<Types.Scalars['String']['input']>;
   deliveryPostcode?: Types.InputMaybe<Types.Scalars['String']['input']>;
@@ -39,7 +39,7 @@ export type TypeCreateOrderMutation = { __typename?: 'Mutation', CreateOrder: { 
 
 
 export const CreateOrderMutationDocument = gql`
-    mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $isDeliveryAddressDifferentFromBilling: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid, $newsletterSubscription: Boolean, $heurekaAgreement: Boolean!) {
+    mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: PhoneDataInput!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $isDeliveryAddressDifferentFromBilling: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: PhoneDataInput, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid, $newsletterSubscription: Boolean, $heurekaAgreement: Boolean!) {
   CreateOrder(
     input: {firstName: $firstName, lastName: $lastName, email: $email, telephone: $telephone, onCompanyBehalf: $onCompanyBehalf, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, street: $street, city: $city, postcode: $postcode, country: $country, isDeliveryAddressDifferentFromBilling: $isDeliveryAddressDifferentFromBilling, deliveryFirstName: $deliveryFirstName, deliveryLastName: $deliveryLastName, deliveryCompanyName: $deliveryCompanyName, deliveryTelephone: $deliveryTelephone, deliveryStreet: $deliveryStreet, deliveryCity: $deliveryCity, deliveryPostcode: $deliveryPostcode, deliveryCountry: $deliveryCountry, deliveryAddressUuid: $deliveryAddressUuid, note: $note, heurekaAgreement: $heurekaAgreement, cartUuid: $cartUuid, newsletterSubscription: $newsletterSubscription}
   ) {

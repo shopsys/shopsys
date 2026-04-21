@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory as BaseCustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupRepository;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 
 class CustomerUserDataFactory
 {
@@ -49,6 +50,8 @@ class CustomerUserDataFactory
                 $customerUserData->{$key} = $value ?? null;
             }
         }
+
+        $customerUserData->telephone = PhoneData::fromArray($input['telephone']);
 
         $this->setRoleGroup($customerUserData, $input['roleGroupUuid']);
 

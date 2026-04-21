@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyOrderType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
@@ -51,7 +52,7 @@ final class ComplaintFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add($this->createBasicInformationGroup($builder, $options['complaint']));
-        $builder->add($this->createDeliveryAddressGroup($builder));
+        $builder->add($this->createDeliveryAddressGroup($builder, $options['complaint']));
         $builder->add('complaintItems', ComplaintItemsType::class, [
             'label' => false,
             'entry_type' => ComplaintItemFormType::class,
@@ -191,8 +192,10 @@ final class ComplaintFormType extends AbstractType
         return $builderBasicInformationGroup;
     }
 
-    private function createDeliveryAddressGroup(FormBuilderInterface $builder): FormBuilderInterface
-    {
+    private function createDeliveryAddressGroup(
+        FormBuilderInterface $builder,
+        Complaint $complaint,
+    ): FormBuilderInterface {
         $builderDeliveryAddressGroup = $builder->create('deliveryAddressGroup', GroupType::class, [
             'label' => 'Delivery address',
         ]);
@@ -230,15 +233,10 @@ final class ComplaintFormType extends AbstractType
                     ),
                 ],
             ])
-            ->add('deliveryTelephone', TextType::class, [
+            ->add('deliveryTelephone', PhoneType::class, [
                 'label' => 'Telephone',
                 'required' => false,
-                'constraints' => [
-                    new Constraints\Length(
-                        max: 30,
-                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
-                    ),
-                ],
+                'domain_id' => $complaint->getDomainId(),
             ])
             ->add('deliveryStreet', TextType::class, [
                 'label' => 'Street',

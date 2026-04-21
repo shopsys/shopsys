@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory as FrameworkCustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as FrameworkCustomerUserUpdateDataFactory;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 
 class CustomerUserUpdateDataFactory
 {
@@ -36,6 +37,8 @@ class CustomerUserUpdateDataFactory
                 $customerUserData->{$key} = $value;
             }
         }
+
+        $customerUserData->telephone = PhoneData::fromArray($input['telephone']);
 
         return $customerUserUpdateData;
     }

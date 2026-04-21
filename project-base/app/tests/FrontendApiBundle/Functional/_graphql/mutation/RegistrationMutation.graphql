@@ -3,7 +3,7 @@ mutation RegistrationMutation(
     $lastName: String!
     $email: String!
     $password: Password!
-    $telephone: String!
+    $telephone: PhoneDataInput!
     $street: String!
     $city: String!
     $postcode: String!

@@ -2,7 +2,7 @@ mutation CreateOrderMutation(
     $firstName: String!
     $lastName: String!
     $email: String!
-    $telephone: String!
+    $telephone: PhoneDataInput!
     $onCompanyBehalf: Boolean!
     $companyName: String
     $companyNumber: String
@@ -15,7 +15,7 @@ mutation CreateOrderMutation(
     $deliveryFirstName: String
     $deliveryLastName: String
     $deliveryCompanyName: String
-    $deliveryTelephone: String
+    $deliveryTelephone: PhoneDataInput
     $deliveryStreet: String
     $deliveryCity: String
     $deliveryPostcode: String

@@ -1,4 +1,4 @@
-import { FormLine } from 'components/Forms/Lib/FormLine';
+import { FormLine, FormLineWidth } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
@@ -7,7 +7,7 @@ import { TextInput, TextInputProps } from './TextInput';
 type TextInputControlledProps = {
     name: string;
     render?: (input: ReactElement) => ReactElement<any, any> | null;
-    gridClassName?: string;
+    width?: FormLineWidth;
     textInputProps: Pick<
         TextInputProps,
         | 'disabled'
@@ -33,7 +33,7 @@ type TextInputControlledProps = {
 export const TextInputControlled: FC<TextInputControlledProps> = ({
     name,
     render,
-    gridClassName,
+    width,
     control,
     textInputProps,
     formName,
@@ -84,5 +84,5 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
         return render(element);
     }
 
-    return <FormLine className={gridClassName}>{element}</FormLine>;
+    return <FormLine width={width}>{element}</FormLine>;
 };

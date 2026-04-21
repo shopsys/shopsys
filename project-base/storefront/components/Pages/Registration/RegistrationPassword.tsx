@@ -19,8 +19,8 @@ export const RegistrationPassword: FC = () => {
                 <PasswordInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.password.name}
+                    width="half"
                     passwordInputProps={{
                         label: formMeta.fields.password.label,
                         autoComplete: 'new-password',
@@ -30,8 +30,8 @@ export const RegistrationPassword: FC = () => {
                 <PasswordInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.passwordConfirm.name}
+                    width="half"
                     passwordInputProps={{
                         label: formMeta.fields.passwordConfirm.label,
                     }}

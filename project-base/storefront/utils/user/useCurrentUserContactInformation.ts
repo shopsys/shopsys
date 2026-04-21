@@ -130,7 +130,9 @@ const mapCurrentCustomerContactInformationApiData = (
             apiCurrentCustomerUserData.companyTaxNumber
                 ? apiCurrentCustomerUserData.companyTaxNumber
                 : '',
-        telephone: apiCurrentCustomerUserData.telephone ?? '',
+        telephonePrefix: apiCurrentCustomerUserData.telephoneData?.prefix ?? '',
+        telephonePrefixCountryCode: apiCurrentCustomerUserData.telephoneData?.countryCode ?? '',
+        telephone: apiCurrentCustomerUserData.telephoneData?.number ?? '',
         country: {
             value: apiCurrentCustomerUserData.country?.code ?? '',
             label: apiCurrentCustomerUserData.country?.name ?? '',

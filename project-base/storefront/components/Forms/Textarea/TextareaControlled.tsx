@@ -1,4 +1,4 @@
-import { FormLine } from 'components/Forms/Lib/FormLine';
+import { FormLine, FormLineWidth } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
@@ -7,7 +7,7 @@ import { Textarea, TextareaProps } from './Textarea';
 type TextareaControlledProps = {
     name: string;
     render?: (input: ReactElement) => ReactElement<any, any> | null;
-    gridClassName?: string;
+    width?: FormLineWidth;
     textareaProps: Pick<TextareaProps, 'disabled' | 'label' | 'required' | 'rows' | 'onBlur' | 'onChange'>;
     control: Control<any>;
     formName: string;
@@ -16,7 +16,7 @@ type TextareaControlledProps = {
 export const TextareaControlled: FC<TextareaControlledProps> = ({
     name,
     render,
-    gridClassName,
+    width,
     control,
     formName,
     textareaProps,
@@ -63,5 +63,5 @@ export const TextareaControlled: FC<TextareaControlledProps> = ({
         return render(element);
     }
 
-    return <FormLine className={gridClassName}>{element}</FormLine>;
+    return <FormLine width={width}>{element}</FormLine>;
 };

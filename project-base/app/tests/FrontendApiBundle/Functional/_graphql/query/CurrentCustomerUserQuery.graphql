@@ -4,6 +4,11 @@ query CurrentCustomerUser {
         lastName
         email
         telephone
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
         newsletterSubscription
         street
         city
@@ -18,6 +23,11 @@ query CurrentCustomerUser {
             city
             postcode
             telephone
+            telephoneData {
+                countryCode
+                prefix
+                number
+            }
             country {
                 code
             }
@@ -31,6 +41,11 @@ query CurrentCustomerUser {
             city
             postcode
             telephone
+            telephoneData {
+                countryCode
+                prefix
+                number
+            }
             country {
                 code
             }

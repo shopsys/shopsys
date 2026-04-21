@@ -3,7 +3,7 @@ mutation CreateOrder(
     $firstName: String!
     $lastName: String!
     $email: String!
-    $telephone: String!
+    $telephone: PhoneDataInput!
     $street: String!
     $city: String!
     $postcode: String!
@@ -17,7 +17,7 @@ mutation CreateOrder(
     $deliveryFirstName: String
     $deliveryLastName: String
     $deliveryCompanyName: String
-    $deliveryTelephone: String
+    $deliveryTelephone: PhoneDataInput
     $deliveryStreet: String
     $deliveryCity: String
     $deliveryPostcode: String
@@ -82,6 +82,11 @@ mutation CreateOrder(
             lastName
             email
             telephone
+            telephoneData {
+                countryCode
+                prefix
+                number
+            }
             companyName
             companyNumber
             companyTaxNumber
@@ -96,6 +101,11 @@ mutation CreateOrder(
             deliveryLastName
             deliveryCompanyName
             deliveryTelephone
+            deliveryTelephoneData {
+                countryCode
+                prefix
+                number
+            }
             deliveryStreet
             deliveryCity
             deliveryPostcode

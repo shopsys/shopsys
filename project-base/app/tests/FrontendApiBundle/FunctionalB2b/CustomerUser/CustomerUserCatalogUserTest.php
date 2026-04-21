@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CompanyDataFixture;
 use App\DataFixtures\Demo\CompanyOrderDataFixture;
 use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Functional\Order\MinimalOrderAsAuthenticatedCustomerUserTest;
 use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
@@ -163,7 +164,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
     public function testCreateOrderMutationIsNotAllowed(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/CreateMinimalOrderMutation.graphql', [
-            ...MinimalOrderAsAuthenticatedCustomerUserTest::DEFAULT_INPUT_VALUES,
+            ...MinimalOrderAsAuthenticatedCustomerUserTest::getDefaultInputValues(),
             'isDeliveryAddressDifferentFromBilling' => false,
         ]);
 
@@ -290,7 +291,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
                         'street' => 'street 1',
                         'city' => 'Ostrava',
                         'postcode' => '71200',
-                        'telephone' => '+420123456789',
+                        'telephone' => new PhoneData('CZ', '+420', '123456789'),
                         'country' => 'CZ',
                     ],
                 ],
@@ -311,7 +312,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
                 'firstName' => 'John',
                 'lastName' => 'Doe',
                 'email' => 'john.doe@example.com',
-                'telephone' => '+420123456789',
+                'telephone' => new PhoneData('CZ', '+420', '123456789'),
                 'note' => 'Test withdrawal request',
             ],
         );
@@ -323,7 +324,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
     {
         $response = $this->getResponseContentForGql(
             __DIR__ . '/../_graphql/ChangePersonalDataMutation.graphql',
-            ChangePersonalAndCompanyDataInputProvider::PERSONAL_DATA_INPUT_ARRAY,
+            ChangePersonalAndCompanyDataInputProvider::getPersonalDataInputArray(),
         );
 
         $this->assertAccessDeniedError($response);
@@ -354,7 +355,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
                 'postcode' => '12345',
                 'country' => 'CZ',
                 'companyName' => 'Shopsys',
-                'telephone' => '777777777',
+                'telephone' => new PhoneData('CZ', '+420', '777777777'),
             ],
         );
 
@@ -385,7 +386,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
                 'postcode' => '12345',
                 'country' => 'CZ',
                 'companyName' => 'Shopsys',
-                'telephone' => '777777777',
+                'telephone' => new PhoneData('CZ', '+420', '777777777'),
             ],
         );
 

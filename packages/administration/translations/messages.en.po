@@ -1510,6 +1510,12 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
+msgid "Phone prefixes"
+msgstr ""
+
+msgid "Phone prefixes settings"
+msgstr ""
+
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
 msgstr ""
 
@@ -1963,6 +1969,9 @@ msgstr ""
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr ""
 
+msgid "This phone number may not be valid. Please verify it."
+msgstr ""
+
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed."
 msgstr ""
 
@@ -2066,6 +2075,9 @@ msgid "Unit price excluding VAT"
 msgstr ""
 
 msgid "Unit price including VAT"
+msgstr ""
+
+msgid "Unknown phone prefix \"%prefix%\" is stored. Please verify it."
 msgstr ""
 
 msgid "Unlimited"

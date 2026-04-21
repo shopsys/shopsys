@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -21,21 +22,20 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
 
         $expected = [
-            'data' => [
-                'CreateOrder' => [
-                    'order' => [
-                        'deliveryFirstName' => 'firstName',
-                        'deliveryLastName' => 'lastName',
-                        'deliveryCompanyName' => 'Shopsys',
-                        'deliveryTelephone' => '+53 123456789',
-                        'deliveryStreet' => $store->getStreet(),
-                        'deliveryCity' => $store->getCity(),
-                        'deliveryPostcode' => $store->getPostcode(),
-                        'deliveryCountry' => [
-                            'code' => $store->getCountry()->getCode(),
-                        ],
-                    ],
-                ],
+            'deliveryFirstName' => 'firstName',
+            'deliveryLastName' => 'lastName',
+            'deliveryCompanyName' => 'Shopsys',
+            'deliveryTelephone' => '+53 123456789',
+            'deliveryTelephoneData' => [
+                'countryCode' => 'CU',
+                'prefix' => '+53',
+                'number' => '123456789',
+            ],
+            'deliveryStreet' => $store->getStreet(),
+            'deliveryCity' => $store->getCity(),
+            'deliveryPostcode' => $store->getPostcode(),
+            'deliveryCountry' => [
+                'code' => $store->getCountry()->getCode(),
             ],
         ];
 
@@ -51,42 +51,29 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
         $this->addPersonalPickupTransportToCart($cartUuid, $store->getUuid());
         $this->addCardPaymentToCart($cartUuid);
 
-        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
-    }
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CreateOrderWithDeliveryAddressMutation.graphql',
+            [
+                'cartUuid' => $cartUuid,
+                'firstName' => 'firstName',
+                'lastName' => 'lastName',
+                'email' => 'user@example.com',
+                'telephone' => new PhoneData('CU', '+53', '123456789'),
+                'onCompanyBehalf' => false,
+                'companyName' => 'Shopsys',
+                'street' => '123 Fake Street',
+                'city' => 'Springfield',
+                'postcode' => '12345',
+                'country' => 'CZ',
+                'isDeliveryAddressDifferentFromBilling' => false,
+            ],
+        );
 
-    private function getMutation(string $cartUuid): string
-    {
-        return 'mutation {
-                    CreateOrder(
-                        input: {
-                            cartUuid: "' . $cartUuid . '"
-                            firstName: "firstName"
-                            lastName: "lastName"
-                            companyName: "Shopsys"
-                            email: "user@example.com"
-                            telephone: "+53 123456789"
-                            onCompanyBehalf: false
-                            street: "123 Fake Street"
-                            city: "Springfield"
-                            postcode: "12345"
-                            country: "CZ"
-                            isDeliveryAddressDifferentFromBilling: false
-                        }
-                    ) {
-                        order {
-                            deliveryFirstName
-                            deliveryLastName
-                            deliveryCompanyName
-                            deliveryTelephone
-                            deliveryStreet
-                            deliveryCity
-                            deliveryPostcode
-                            deliveryCountry {
-                                code
-                            }
-                        }
-                    }
-                }';
+        $data = $this->getResponseDataForGraphQlType($response, 'CreateOrder');
+        $this->assertSame(
+            $expected,
+            $data['order'],
+        );
     }
 
     private function addPersonalPickupTransportToCart(string $cartUuid, string $pickupPlaceIdentifier): void

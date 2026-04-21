@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Symfony\Component\Clock\DatePoint;
 
@@ -148,7 +149,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Jágr',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000123',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '605000123'),
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => '7b817d8b-41a3-4fc0-8570-08c9989f6dd9',
                     self::KEY_CUSTOMER_USER_DATA_SALES_REPRESENTATIVE => $this->getReference(SalesRepresentativeDataFixture::SALES_REPRESENTATIVE_1, SalesRepresentative::class),
@@ -172,7 +173,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_CITY => 'Ostrava',
                     self::KEY_ADDRESS_POSTCODE => '70030',
                     self::KEY_ADDRESS_STREET => 'Rudná 123',
-                    self::KEY_ADDRESS_TELEPHONE => '123456789',
+                    self::KEY_ADDRESS_TELEPHONE => new PhoneData('CZ', '+420', '123456789'),
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
                     self::KEY_ADDRESS_UUID => '2339624f-10d4-43e6-80bd-6a8a4ef23186',
                 ],
@@ -202,7 +203,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.5',
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => 'ee92df79-55fd-4f09-95e5-efd4b5284fa5',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000201',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '605000201'),
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -218,7 +219,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Ton',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.9@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.9',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '606060606'),
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => '01f4a522-2eab-4719-b1fa-c098229e0f94',
                 ],
@@ -236,7 +237,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Nedvěd',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.10@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.10',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '606060606'),
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => 'e7a91811-a444-4825-a39f-4193e4d26a50',
                 ],
@@ -261,7 +262,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Vítek',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => self::USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '606060606'),
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => false,
                     self::KEY_CUSTOMER_USER_DATA_UUID => 'f34b2e26-c1af-432b-8390-12c272881944',
                 ],
@@ -283,7 +284,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_CITY => 'Ostrava',
                     self::KEY_ADDRESS_POSTCODE => '70030',
                     self::KEY_ADDRESS_STREET => 'Rudná 15',
-                    self::KEY_ADDRESS_TELEPHONE => '123456789',
+                    self::KEY_ADDRESS_TELEPHONE => new PhoneData('CZ', '+420', '123456789'),
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
                     self::KEY_ADDRESS_UUID => self::DELIVERY_ADDRESS_PERSISTENT_REFERENCE_UUID,
                 ],
@@ -294,7 +295,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Novák',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.11@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'test123',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '606060606'),
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => 'a36645b5-6a89-43d1-9010-5e350b1cefc1',
                 ],
@@ -313,7 +314,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_CITY => 'Bratislava',
                     self::KEY_ADDRESS_POSTCODE => '10100',
                     self::KEY_ADDRESS_STREET => 'Ostravská 55/65A',
-                    self::KEY_ADDRESS_TELEPHONE => '758686320',
+                    self::KEY_ADDRESS_TELEPHONE => new PhoneData('CZ', '+420', '758686320'),
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
                     self::KEY_ADDRESS_UUID => 'b296e9bc-8446-41aa-a192-fb4c2b8dd666',
                 ],
@@ -332,7 +333,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.2',
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => false,
                     self::KEY_CUSTOMER_USER_DATA_UUID => '9def746b-a639-4a26-a04e-1e289c73ead6',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000202',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '605000202'),
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -351,7 +352,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.4',
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => 'e8a46d96-0031-4cf7-a70a-73cd29fd3eeb',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000203',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '605000203'),
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -370,7 +371,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.6',
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => 'db98661c-dc33-41bc-993e-b457cd1cc662',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000204',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '605000204'),
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -399,7 +400,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.7',
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => '3ff77ae2-69f2-4a16-b93f-952a91d1509e',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000205',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '605000205'),
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -418,7 +419,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.8',
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => '5b252118-de72-41be-9716-0bc5a7fa29b8',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000206',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '605000206'),
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -435,7 +436,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'English',
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '603123456',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '603123456'),
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => 'd4304c47-64db-402a-ae70-a79d174f3911',
                 ],

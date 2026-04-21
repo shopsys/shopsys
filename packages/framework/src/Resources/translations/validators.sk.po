@@ -25,6 +25,9 @@ msgstr "Suma penáz musí byť väčšia alebo rovná nule."
 msgid "Amount of money should be greater to zero."
 msgstr "Suma penáz musí byť väčšia ako nula."
 
+msgid "At least one phone prefix is required"
+msgstr "Je vyžadovaná aspoň jedna telefónna predvoľba"
+
 msgid "At least two domains must be selected"
 msgstr "Musia byť vybrané aspoň dve domény"
 
@@ -193,9 +196,6 @@ msgstr "Číslo dielu nemôže byť dlhšie ako {{ limit }} znakov"
 msgid "Passwords do not match"
 msgstr "Heslá sa nezhodujú"
 
-msgid "Phone number cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Please choose advertisement area"
 msgstr "Prosím, vyberte reklamný priestor"
 
@@ -207,6 +207,9 @@ msgstr "Prosím, vyberte umiestnenie článku"
 
 msgid "Please choose country"
 msgstr "Prosím, vyberte krajinu"
+
+msgid "Please choose default phone prefix"
+msgstr "Prosím, vyberte predvolenú telefónnu predvoľbu"
 
 msgid "Please choose default unit"
 msgstr "Prosím, vyberte predvolenú jednotku"
@@ -433,6 +436,9 @@ msgstr "Prosím, zadajte hodnotu parametra"
 msgid "Please enter password"
 msgstr "Prosím, zadajte heslo"
 
+msgid "Please enter phone prefix"
+msgstr "Prosím, zadajte telefónnu predvoľbu"
+
 msgid "Please enter postcode"
 msgstr "Prosím, zadajte PSČ"
 
@@ -642,9 +648,6 @@ msgstr "Názov ulice nemôže byť dlhší ako {{ limit }} znakov"
 
 msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr "Daňové číslo nemôže byť dlhšie ako {{ limit }} znakov"
-
-msgid "Telephone number cannot be longer than {{ limit }} characters"
-msgstr "Telefónne číslo nemôže byť dlhšie ako {{ limit }} znakov"
 
 msgid "The \"{{ value }}\" value of \"{{ fieldName }}\" field must be unique"
 msgstr "Hodnota \"{{ value }}\" poľa \"{{ fieldName }}\" musí byť jedinečná"

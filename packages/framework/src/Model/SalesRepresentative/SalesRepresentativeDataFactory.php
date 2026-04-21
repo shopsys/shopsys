@@ -38,7 +38,7 @@ class SalesRepresentativeDataFactory
         $salesRepresentativeData->firstName = $salesRepresentative->getFirstName();
         $salesRepresentativeData->lastName = $salesRepresentative->getLastName();
         $salesRepresentativeData->email = $salesRepresentative->getEmail();
-        $salesRepresentativeData->telephone = $salesRepresentative->getTelephone();
+        $salesRepresentativeData->telephone = $salesRepresentative->getTelephoneData();
 
         $salesRepresentativeData->image = $this->imageUploadDataFactory->createFromEntityAndType($salesRepresentative);
 

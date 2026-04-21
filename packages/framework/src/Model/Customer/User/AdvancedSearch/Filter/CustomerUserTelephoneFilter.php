@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User\AdvancedSearch\Filter;
 
 use Override;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 
 class CustomerUserTelephoneFilter extends AbstractCustomerUserContainsFilter
 {
@@ -32,5 +33,11 @@ class CustomerUserTelephoneFilter extends AbstractCustomerUserContainsFilter
     protected function getFieldName(): string
     {
         return 'telephone';
+    }
+
+    #[Override]
+    protected function getDqlFieldExpression(): string
+    {
+        return PhoneNumberSearchHelper::getDqlExpression('cu');
     }
 }

@@ -12,6 +12,7 @@ import {
     validatePostcode,
     validateStreet,
     validateTelephone,
+    validateTelephonePrefix,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -37,6 +38,8 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
         Yup.object().shape<Record<keyof ContactInformation, any>>({
             email: validateEmail(t),
             customer: validateCustomer(),
+            telephonePrefix: validateTelephonePrefix(t),
+            telephonePrefixCountryCode: Yup.string(),
             telephone: validateTelephoneRequired(t),
             firstName: validateFirstName(t),
             lastName: validateLastName(t),
@@ -85,6 +88,26 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                 otherwise: (schema) => schema,
             }),
             deliveryCompanyName: Yup.string(),
+            deliveryTelephonePrefix: Yup.string().when(
+                ['isDeliveryAddressDifferentFromBilling', 'deliveryAddressUuid', 'deliveryTelephone'],
+                {
+                    is: (
+                        isDeliveryAddressDifferentFromBilling: boolean,
+                        deliveryAddressUuid: string,
+                        deliveryTelephone: string,
+                    ) =>
+                        shouldValidateDeliveryAddressField(
+                            isUserLoggedIn,
+                            isDeliveryAddressDifferentFromBilling,
+                            deliveryAddressUuid,
+                            !!pickupPlace,
+                            true,
+                        ) && deliveryTelephone.length > 0,
+                    then: () => validateTelephonePrefix(t),
+                    otherwise: (schema) => schema,
+                },
+            ),
+            deliveryTelephonePrefixCountryCode: Yup.string(),
             deliveryTelephone: Yup.string().when(['isDeliveryAddressDifferentFromBilling', 'deliveryAddressUuid'], {
                 is: (isDeliveryAddressDifferentFromBilling: boolean, deliveryAddressUuid: string) =>
                     shouldValidateDeliveryAddressField(
@@ -216,6 +239,8 @@ export const useContactInformationFormMeta = (): ContactInformationFormMetaType 
         fields: createFields<ContactInformation, { disabled?: boolean }>({
             email: { label: t('Your email'), disabled: isUserLoggedIn },
             customer: { label: t('I will shop as'), disabled: isB2B && isUserLoggedIn },
+            telephonePrefix: t('Phone prefix'),
+            telephonePrefixCountryCode: t('Country code'),
             telephone: t('Phone'),
             firstName: t('First name'),
             lastName: t('Last name'),
@@ -230,6 +255,8 @@ export const useContactInformationFormMeta = (): ContactInformationFormMetaType 
             deliveryFirstName: t('First name'),
             deliveryLastName: t('Last name'),
             deliveryCompanyName: t('Company'),
+            deliveryTelephonePrefix: t('Phone prefix'),
+            deliveryTelephonePrefixCountryCode: t('Country code'),
             deliveryTelephone: t('Phone'),
             deliveryStreet: t('Street and house no.'),
             deliveryCity: t('City'),

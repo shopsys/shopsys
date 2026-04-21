@@ -92,7 +92,7 @@ class CustomerUserDataFactory
         $customerUserData->pricingGroup = $customerUser->getPricingGroup();
         $customerUserData->salesRepresentative = $customerUser->getSalesRepresentative();
         $customerUserData->createdAt = $customerUser->getCreatedAt();
-        $customerUserData->telephone = $customerUser->getTelephone();
+        $customerUserData->telephone = $customerUser->getTelephoneData();
         $customerUserData->customer = $customerUser->getCustomer();
         $customerUserData->defaultDeliveryAddress = $customerUser->getDefaultDeliveryAddress();
         $customerUserData->newsletterSubscription = $this->newsletterFacade->isSubscribed($customerUser);

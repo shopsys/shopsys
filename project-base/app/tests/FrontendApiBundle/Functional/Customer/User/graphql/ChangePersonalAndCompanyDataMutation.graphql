@@ -1,7 +1,7 @@
 mutation ChangePersonalAndCompanyDataMutation(
     $firstName: String!
     $lastName: String!
-    $telephone: String!
+    $telephone: PhoneDataInput!
     $newsletterSubscription: Boolean!
     $street: String!
     $city: String!
@@ -21,6 +21,11 @@ mutation ChangePersonalAndCompanyDataMutation(
         firstName
         lastName,
         telephone,
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
         email
         newsletterSubscription
     }

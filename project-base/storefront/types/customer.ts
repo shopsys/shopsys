@@ -17,6 +17,9 @@ export type DeliveryAddressType = {
     street: string;
     city: string;
     postcode: string;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
+    telephoneNumber: string;
     telephone: string;
     firstName: string;
     lastName: string;
@@ -27,6 +30,9 @@ export type CustomerUserType = {
     firstName: string;
     lastName: string;
     email: string;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
+    telephoneNumber: string;
     telephone: string;
 };
 
@@ -36,6 +42,9 @@ export type CurrentCustomerType = {
     firstName: string;
     lastName: string;
     email: string;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
+    telephoneNumber: string;
     telephone: string;
     billingAddressUuid: string;
     street: string;

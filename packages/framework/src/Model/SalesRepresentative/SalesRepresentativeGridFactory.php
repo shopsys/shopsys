@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 
 class SalesRepresentativeGridFactory implements GridFactoryInterface
 {
@@ -27,6 +28,7 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
     public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->salesRepresentativeFacade->getAllQueryBuilder();
+        $queryBuilder->addSelect(PhoneNumberSearchHelper::getDqlExpression('sr') . ' as telephone');
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'sr.id');
 
         $grid = $this->gridFactory->create('salesRepresentativesList', $dataSource, $roleConstant);
@@ -35,7 +37,7 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
         $grid->addColumn('lastName', 'sr.lastName', t('Last name'), true);
         $grid->addColumn('firstName', 'sr.firstName', t('First name'), true);
         $grid->addColumn('email', 'sr.email', t('E-mail'), true);
-        $grid->addColumn('telephone', 'sr.telephone', t('Telephone'), true);
+        $grid->addColumn('telephone', 'telephone', t('Telephone'));
 
         $grid->addEditActionColumn('admin_salesrepresentative_edit', ['id' => 'sr.id']);
         $grid->addDeleteActionColumn('admin_salesrepresentative_deleteconfirm', ['id' => 'sr.id'])

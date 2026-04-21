@@ -1510,6 +1510,12 @@ msgstr "Přehled osobních údajů"
 msgid "Phone"
 msgstr "Telefon"
 
+msgid "Phone prefixes"
+msgstr "Telefonní předvolby"
+
+msgid "Phone prefixes settings"
+msgstr "Nastavení telefonních předvoleb"
+
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
 msgstr "Omlouváme se za tuto chybu, pracujeme na její opravě. V případě potřeby nás kontaktujte e-mailem nebo telefonicky."
 
@@ -1963,6 +1969,9 @@ msgstr "Tento příznak nelze smazat."
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr "Toto je poslední zákaznický účet. Odstraní všechna související data. Opravdu to chcete smazat?"
 
+msgid "This phone number may not be valid. Please verify it."
+msgstr "Toto telefonní číslo nemusí být platné. Prosím ověřte ho."
+
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje reklamace, které nebyly úspěšně vyřízeny."
 
@@ -2067,6 +2076,9 @@ msgstr "Jednotková cena bez DPH"
 
 msgid "Unit price including VAT"
 msgstr "Jednotková cena s DPH"
+
+msgid "Unknown phone prefix \"%prefix%\" is stored. Please verify it."
+msgstr "Je uložena neznámá telefonní předvolba \"%prefix%\". Ověřte ji prosím."
 
 msgid "Unlimited"
 msgstr "Neomezeně"

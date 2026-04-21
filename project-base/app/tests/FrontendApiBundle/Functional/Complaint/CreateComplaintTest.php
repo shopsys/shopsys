@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Component\Constraints\ComplaintResolution;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -203,7 +204,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
                         'street' => 'První 1',
                         'city' => 'Ostrava',
                         'postcode' => '71200',
-                        'telephone' => '+420123456789',
+                        'telephone' => new PhoneData('CZ', '+420', '123456789'),
                         'country' => 'CZ',
                     ],
                     'resolution' => $resolution,
@@ -250,7 +251,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
                         'street' => 'První 1',
                         'city' => 'Ostrava',
                         'postcode' => '71200',
-                        'telephone' => '+420123456789',
+                        'telephone' => new PhoneData('CZ', '+420', '123456789'),
                         'country' => 'CZ',
                     ],
                 ],
@@ -300,7 +301,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
                         'street' => 'První 1',
                         'city' => 'Ostrava',
                         'postcode' => '71200',
-                        'telephone' => '+420123456789',
+                        'telephone' => new PhoneData('CZ', '+420', '123456789'),
                         'country' => 'CZ',
                     ],
                 ],
@@ -340,7 +341,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
                         'street' => 'První 1',
                         'city' => 'Ostrava',
                         'postcode' => '71200',
-                        'telephone' => '+420123456789',
+                        'telephone' => new PhoneData('CZ', '+420', '123456789'),
                         'country' => 'CZ',
                     ],
                 ],

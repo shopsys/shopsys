@@ -1,0 +1,10 @@
+query SettingsQuery {
+    settings {
+        phonePrefixes {
+            code
+            dialCode
+            countryName
+            flagEmoji
+        }
+    }
+}

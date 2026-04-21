@@ -6,24 +6,28 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class DeliveryFieldsValidationTest extends GraphQlTestCase
 {
     use OrderTestTrait;
 
-    private const array DEFAULT_INPUT_VALUES = [
-        'cartUuid' => CartDataFixture::CART_UUID,
-        'firstName' => 'firstName',
-        'lastName' => 'lastName',
-        'email' => 'user@example.com',
-        'telephone' => '+53 123456789',
-        'street' => '123 Fake Street',
-        'city' => 'Springfield',
-        'postcode' => '12345',
-        'country' => 'CZ',
-        'onCompanyBehalf' => false,
-    ];
+    private function getDefaultInputValues(): array
+    {
+        return [
+            'cartUuid' => CartDataFixture::CART_UUID,
+            'firstName' => 'firstName',
+            'lastName' => 'lastName',
+            'email' => 'user@example.com',
+            'telephone' => new PhoneData('CU', '+53', '123456789'),
+            'street' => '123 Fake Street',
+            'city' => 'Springfield',
+            'postcode' => '12345',
+            'country' => 'CZ',
+            'onCompanyBehalf' => false,
+        ];
+    }
 
     public function testValidationErrorWhenIsDeliveryAddressDifferentFromBillingIsTrueAndFieldsAreMissing(): void
     {
@@ -70,7 +74,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->addCardPaymentToDemoCart();
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
-            ...self::DEFAULT_INPUT_VALUES,
+            ...$this->getDefaultInputValues(),
             'isDeliveryAddressDifferentFromBilling' => true,
         ]);
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
@@ -83,7 +87,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->addCardPaymentToDemoCart();
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
-            ...self::DEFAULT_INPUT_VALUES,
+            ...$this->getDefaultInputValues(),
             'isDeliveryAddressDifferentFromBilling' => false,
         ]);
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'CreateOrder');
@@ -94,7 +98,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->addCardPaymentToDemoCart();
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
-            ...self::DEFAULT_INPUT_VALUES,
+            ...$this->getDefaultInputValues(),
             'isDeliveryAddressDifferentFromBilling' => true,
             'deliveryAddressUuid' => '00000000-0000-0000-0000-000000000000',
         ]);

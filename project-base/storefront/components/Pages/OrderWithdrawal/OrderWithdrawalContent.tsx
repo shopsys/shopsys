@@ -2,6 +2,7 @@ import { DocumentDeleteIcon } from 'components/Basic/Icon/DocumentDeleteIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -32,14 +33,20 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
     const [, orderWithdrawalRequest] = useOrderWithdrawalRequestMutation();
 
     const onSubmitHandler: SubmitHandler<OrderWithdrawalFormType> = async (values) => {
-        const { firstName, lastName, email, telephone, note } = values;
+        const { firstName, lastName, email, note } = values;
         const result = await orderWithdrawalRequest({
             input: {
                 orderUrlHash: order.urlHash,
                 firstName,
                 lastName,
                 email,
-                telephone: telephone || null,
+                telephone: values.telephone
+                    ? {
+                          prefix: values.telephonePrefix,
+                          countryCode: values.telephonePrefixCountryCode || '',
+                          number: values.telephone,
+                      }
+                    : null,
                 note: note || null,
             },
         });
@@ -95,8 +102,8 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                     <TextInputControlled
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
-                                        gridClassName="col-span-2"
                                         name={formMeta.fields.firstName.name}
+                                        width="half"
                                         textInputProps={{
                                             label: formMeta.fields.firstName.label,
                                             required: true,
@@ -108,8 +115,8 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                     <TextInputControlled
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
-                                        gridClassName="col-span-2"
                                         name={formMeta.fields.lastName.name}
+                                        width="half"
                                         textInputProps={{
                                             label: formMeta.fields.lastName.label,
                                             required: true,
@@ -119,20 +126,15 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                     />
                                 </FormColumn>
 
-                                <FormColumn>
-                                    <TextInputControlled
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        gridClassName="col-span-2"
-                                        name={formMeta.fields.telephone.name}
-                                        textInputProps={{
-                                            label: formMeta.fields.telephone.label,
-                                            required: false,
-                                            type: 'tel',
-                                            autoComplete: 'tel',
-                                        }}
-                                    />
-                                </FormColumn>
+                                <PhoneNumberInputControlled
+                                    formName={formMeta.formName}
+                                    formProviderMethods={formProviderMethods}
+                                    isTelephoneRequired={false}
+                                    prefixCountryCodeName={formMeta.fields.telephonePrefixCountryCode.name}
+                                    prefixName={formMeta.fields.telephonePrefix.name}
+                                    telephoneLabel={formMeta.fields.telephone.label}
+                                    telephoneName={formMeta.fields.telephone.name}
+                                />
                             </FormBlockWrapper>
 
                             <FormBlockWrapper>

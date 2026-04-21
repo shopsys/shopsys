@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\Filter;
 
 use Override;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 
 class ComplaintDeliveryPhoneNumberFilter extends AbstractComplaintContainsFilter
 {
@@ -35,5 +36,14 @@ class ComplaintDeliveryPhoneNumberFilter extends AbstractComplaintContainsFilter
     protected function getFieldName(): string
     {
         return 'deliveryTelephone';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    protected function getDqlFieldExpression(): string
+    {
+        return PhoneNumberSearchHelper::getDqlExpression('cmp', 'deliveryTelephone');
     }
 }

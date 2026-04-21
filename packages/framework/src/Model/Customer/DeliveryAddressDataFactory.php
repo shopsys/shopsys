@@ -40,7 +40,7 @@ class DeliveryAddressDataFactory
         $deliveryAddressData->companyName = $deliveryAddress->getCompanyName();
         $deliveryAddressData->firstName = $deliveryAddress->getFirstName();
         $deliveryAddressData->lastName = $deliveryAddress->getLastName();
-        $deliveryAddressData->telephone = $deliveryAddress->getTelephone();
+        $deliveryAddressData->telephone = $deliveryAddress->getTelephoneData();
         $deliveryAddressData->street = $deliveryAddress->getStreet();
         $deliveryAddressData->city = $deliveryAddress->getCity();
         $deliveryAddressData->postcode = $deliveryAddress->getPostcode();

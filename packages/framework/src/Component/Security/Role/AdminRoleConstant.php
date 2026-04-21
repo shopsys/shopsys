@@ -45,6 +45,7 @@ class AdminRoleConstant
     public const string ROLE_FREE_TRANSPORT_AND_PAYMENT = 'ROLE_FREE_TRANSPORT_AND_PAYMENT';
     public const string ROLE_TRANSPORT_AND_PAYMENT = 'ROLE_TRANSPORT_AND_PAYMENT';
     public const string ROLE_COUNTRY = 'ROLE_COUNTRY';
+    public const string ROLE_PHONE_PREFIX = 'ROLE_PHONE_PREFIX';
     public const string ROLE_STORE = 'ROLE_STORE';
     public const string ROLE_CONTACT_FORM = 'ROLE_CONTACT_FORM';
     public const string ROLE_LANGUAGE_CONSTANTS = 'ROLE_LANGUAGE_CONSTANTS';

@@ -48,3 +48,7 @@ SettingsDecorator:
                 type: String!
                 resolve: "@=query('cspHeaderQuery')"
                 description: "Content Security Policy header value"
+            phonePrefixes:
+                type: "[PhonePrefix!]!"
+                resolve: "@=query('phonePrefixesQuery')"
+                description: "Returns available phone prefixes for current domain"

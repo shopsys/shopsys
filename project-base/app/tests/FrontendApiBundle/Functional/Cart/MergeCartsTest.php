@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class MergeCartsTest extends GraphQlWithLoginTestCase
@@ -138,41 +139,30 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
 
     public function testCartIsMergedAfterRegister(): void
     {
-        $testCartUuid = CartDataFixture::CART_UUID;
-
-        $registerMutationWithCartUuid = 'mutation {
-                    Register(input: {
-                        email: "test@example.com"
-                        firstName: "Test"
-                        lastName: "Test"
-                        password: "testTEST123"
-                        telephone: "145612314"
-                        newsletterSubscription: false
-                        street: "123 Fake Street"
-                        city: "Springfield"
-                        postcode: "12345"
-                        companyCustomer: false
-                        country: "CZ"
-                        cartUuid: "' . CartDataFixture::CART_UUID . '"
-                    }) {
-                        tokens{
-                          accessToken
-                          refreshToken
-                        }
-                        showCartMergeInfo
-                    }
-                }';
-
-        $response = $this->getResponseDataForGraphQlType(
-            $this->getResponseContentForQuery($registerMutationWithCartUuid),
-            'Register',
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../_graphql/mutation/RegistrationMutation.graphql',
+            [
+                'email' => 'test@example.com',
+                'firstName' => 'Test',
+                'lastName' => 'Test',
+                'password' => 'testTEST123',
+                'telephone' => new PhoneData('CZ', '+420', '145612314'),
+                'newsletterSubscription' => false,
+                'street' => '123 Fake Street',
+                'city' => 'Springfield',
+                'postcode' => '12345',
+                'companyCustomer' => false,
+                'country' => 'CZ',
+                'previousCartUuid' => CartDataFixture::CART_UUID,
+            ],
         );
+        $data = $this->getResponseDataForGraphQlType($response, 'Register');
 
         $cart = $this->findCartOfCustomerByEmail('test@example.com');
 
         self::assertNotNull($cart);
 
-        self::assertFalse($response['showCartMergeInfo']);
+        self::assertFalse($data['showCartMergeInfo']);
 
         $cartItems = $cart->getItems();
         self::assertCount(2, $cartItems);
@@ -185,7 +175,7 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         self::assertEquals($firstProduct->getFullName(), $cartItems[1]->getName(), 'Third product name mismatch');
         self::assertEquals(2, $cartItems[1]->getQuantity(), 'Third product quantity mismatch');
 
-        $oldCart = $this->cartFacade->findCartByCartIdentifier($testCartUuid);
+        $oldCart = $this->cartFacade->findCartByCartIdentifier(CartDataFixture::CART_UUID);
         self::assertNull($oldCart);
     }
 

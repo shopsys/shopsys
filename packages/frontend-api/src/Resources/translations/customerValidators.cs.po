@@ -145,11 +145,8 @@ msgstr "Zadejte prosím nové heslo"
 msgid "Please enter old password"
 msgstr "Zadejte staré heslo"
 
-msgid "Please enter only numbers and the + character"
-msgstr "Prosím, zadávejte pouze čísla a znak +"
-
-msgid "Please enter only numbers and the + sign"
-msgstr "Prosím vyplňte čísla a znak +"
+msgid "Please enter only numbers"
+msgstr "Prosím vyplňte pouze čísla"
 
 msgid "Please enter order URL hash"
 msgstr "Vyplňte prosím URL hash objednávky"
@@ -160,9 +157,6 @@ msgstr "Zadejte prosím množství"
 msgid "Please enter street"
 msgstr "Vyplňte prosím ulici"
 
-msgid "Please enter telephone number"
-msgstr "Vyplňte prosím telefon"
-
 msgid "Please enter the message"
 msgstr "Vyplňte prosím zprávu"
 
@@ -171,6 +165,9 @@ msgstr "Vyplňte prosím uuid"
 
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
+
+msgid "Please enter valid phone prefix"
+msgstr "Zadejte prosím platnou telefonní předvolbu"
 
 msgid "Please enter your city"
 msgstr "Vyplňte prosím své město"
@@ -256,8 +253,8 @@ msgstr "DIČ nesmí být delší než {{ limit }} znaků"
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr "Telefon nesmí být delší než {{ limit }} znaků"
 
-msgid "Telephone number cannot be shorter than {{ limit }} characters"
-msgstr "Telefonní číslo nesmí být kratší než {{ limit }} znaků"
+msgid "Telephone prefix cannot be longer than {{ limit }} characters"
+msgstr "Telefonní předvolba nesmí být delší než {{ limit }} znaků"
 
 msgid "The file {{ fileName }} is too big."
 msgstr "Soubor {{ fileName }} je příliš velký."

@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\Constraints\Country;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
@@ -26,7 +27,7 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
             'postcode' => '46014',
             'country' => 'CZ',
             'companyName' => 'Shopsys',
-            'telephone' => '777777777',
+            'telephone' => new PhoneData('CZ', '+420', '777777777'),
         ];
 
         $response = $this->getResponseContentForGql(
@@ -48,6 +49,12 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
                 'code' => 'CZ',
                 'name' => t('Czech republic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
+            'telephone' => $editedValues['telephone']->toPhoneNumber(),
+            'telephoneData' => [
+                'countryCode' => $editedValues['telephone']->countryCode,
+                'prefix' => $editedValues['telephone']->prefix,
+                'number' => $editedValues['telephone']->number,
+            ],
         ]);
 
         $this->assertSame($expectedValues, $deliveryAddresses[$editedAddressKey]);
@@ -67,7 +74,7 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
             'postcode' => '46014',
             'country' => 'CZ1',
             'companyName' => 'Shopsys',
-            'telephone' => '777777777',
+            'telephone' => new PhoneData('CZ', '+420', '777777777'),
         ];
 
         $response = $this->getResponseContentForGql(

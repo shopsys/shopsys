@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
@@ -20,7 +21,7 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
             'firstName' => 'firstName',
             'lastName' => 'lastName',
             'email' => 'user@example.com',
-            'telephone' => '+53 123456789',
+            'telephone' => new PhoneData('CU', '+53', '123456789'),
             'onCompanyBehalf' => false,
             'street' => '123 Fake Street',
             'city' => 'Springfield',

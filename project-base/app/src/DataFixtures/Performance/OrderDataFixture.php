@@ -30,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Component\Clock\DatePoint;
@@ -140,7 +141,7 @@ class OrderDataFixture
             $orderData->email = $customerUser->getEmail();
 
             $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-            $orderData->telephone = $customerUser->getTelephone();
+            $orderData->telephone = $customerUser->getTelephoneData();
             $orderData->street = $billingAddress->getStreet();
             $orderData->city = $billingAddress->getCity();
             $orderData->postcode = $billingAddress->getPostcode();
@@ -152,7 +153,7 @@ class OrderDataFixture
             $orderData->firstName = $this->faker->firstName;
             $orderData->lastName = $this->faker->lastName;
             $orderData->email = $this->faker->safeEmail;
-            $orderData->telephone = $this->faker->phoneNumber;
+            $orderData->telephone = new PhoneData('CZ', '+420', $this->faker->numerify('#########'));
             $orderData->street = $this->faker->streetAddress;
             $orderData->city = $this->faker->city;
             $orderData->postcode = $this->faker->postcode;
@@ -167,7 +168,7 @@ class OrderDataFixture
         $orderData->deliveryFirstName = $this->faker->firstName;
         $orderData->deliveryLastName = $this->faker->lastName;
         $orderData->deliveryCompanyName = $this->faker->company;
-        $orderData->deliveryTelephone = $this->faker->phoneNumber;
+        $orderData->deliveryTelephone = new PhoneData('CZ', '+420', $this->faker->numerify('#########'));
         $orderData->deliveryStreet = $this->faker->streetAddress;
         $orderData->deliveryCity = $this->faker->city;
         $orderData->deliveryPostcode = $this->faker->postcode;

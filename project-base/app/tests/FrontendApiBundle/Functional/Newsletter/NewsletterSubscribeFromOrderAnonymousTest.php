@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
@@ -67,7 +68,7 @@ class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
             'firstName' => 'firstName',
             'lastName' => 'lastName',
             'email' => self::ANONYMOUS_USER,
-            'telephone' => '+53 123456789',
+            'telephone' => new PhoneData('CU', '+53', '123456789'),
             'onCompanyBehalf' => false,
             'street' => '123 Fake Street',
             'city' => 'Springfield',

@@ -27,7 +27,7 @@ class SalesRepresentativeData
     public $email;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData|null
      */
     public $telephone;
 

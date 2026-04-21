@@ -15,6 +15,7 @@ use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
@@ -162,42 +163,30 @@ trait OrderTestTrait
         $this->addPaymentToCart(CartDataFixture::CART_UUID, $paymentCard);
     }
 
-    protected function getCreateOrderMutationFromDemoCart(): string
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getCreateOrderMutationResponseFromCart(?string $cartUuid = null): array
     {
-        return 'mutation {
-                    CreateOrder(
-                        input: {
-                            cartUuid: "' . CartDataFixture::CART_UUID . '"
-                            firstName: "firstName"
-                            lastName: "lastName"
-                            email: "user@example.com"
-                            telephone: "+53 123456789"
-                            onCompanyBehalf: false
-                            street: "123 Fake Street"
-                            city: "Springfield"
-                            postcode: "12345"
-                            country: "CZ"
-                            isDeliveryAddressDifferentFromBilling: false
-                        }
-                    ) {
-                        order {
-                            uuid
-                        }
-                        cart {
-                            modifications {
-                                paymentModifications {
-                                    paymentPriceChanged
-                                    paymentUnavailable
-                                }
-                                transportModifications {
-                                    transportUnavailable
-                                    transportPriceChanged
-                                    personalPickupStoreUnavailable
-                                    transportWeightLimitExceeded
-                                }
-                            }
-                        }
-                    }
-                }';
+        if ($cartUuid === null) {
+            $cartUuid = CartDataFixture::CART_UUID;
+        }
+
+        return $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CreateOrderWithModificationsMutation.graphql',
+            [
+                'cartUuid' => $cartUuid,
+                'firstName' => 'firstName',
+                'lastName' => 'lastName',
+                'email' => 'user@example.com',
+                'telephone' => new PhoneData('CU', '+53', '123456789'),
+                'onCompanyBehalf' => false,
+                'street' => '123 Fake Street',
+                'city' => 'Springfield',
+                'postcode' => '12345',
+                'country' => 'CZ',
+                'isDeliveryAddressDifferentFromBilling' => false,
+            ],
+        );
     }
 }

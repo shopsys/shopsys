@@ -1,0 +1,12 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Phone prefixes settings'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Phone prefixes'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ form(form) }}
+{% endblock %}

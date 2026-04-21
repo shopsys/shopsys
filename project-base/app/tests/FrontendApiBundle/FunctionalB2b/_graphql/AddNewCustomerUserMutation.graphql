@@ -3,7 +3,11 @@ mutation AddNewCustomerUserMutation(
     $lastName: String! = "",
     $email: String! = "",
     $roleGroupUuid: Uuid! = "00000000-0000-0000-0000-000000000000",
-    $telephone: String = ""
+    $telephone: PhoneDataInput! = {
+        countryCode: "CZ",
+        prefix: "+420",
+        number: "123456789"
+    }
 ) {
     AddNewCustomerUser(input: {
         firstName: $firstName,
@@ -21,5 +25,10 @@ mutation AddNewCustomerUserMutation(
             uuid
         }
         telephone
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
     }
 }

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 
 #[ORM\Table(name: 'complaints')]
 #[ORM\Entity]
@@ -78,8 +79,20 @@ class Complaint
     /**
      * @var string|null
      */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    protected $deliveryTelephonePrefix;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
+    protected $deliveryTelephonePrefixCountryCode;
+
+    /**
+     * @var string|null
+     */
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    protected $deliveryTelephone;
+    protected $deliveryTelephoneNumber;
 
     /**
      * @var string
@@ -256,7 +269,38 @@ class Complaint
      */
     public function getDeliveryTelephone()
     {
-        return $this->deliveryTelephone;
+        return $this->getDeliveryTelephoneData()?->toPhoneNumber();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData|null
+     */
+    public function getDeliveryTelephoneData()
+    {
+        if ($this->deliveryTelephoneNumber === null) {
+            return null;
+        }
+
+        return new PhoneData(
+            $this->deliveryTelephonePrefixCountryCode,
+            $this->deliveryTelephonePrefix,
+            $this->deliveryTelephoneNumber,
+        );
+    }
+
+    public function setDeliveryTelephoneData(?PhoneData $phoneData): void
+    {
+        if ($phoneData === null) {
+            $this->deliveryTelephonePrefix = null;
+            $this->deliveryTelephonePrefixCountryCode = null;
+            $this->deliveryTelephoneNumber = null;
+
+            return;
+        }
+
+        $this->deliveryTelephonePrefix = $phoneData->prefix;
+        $this->deliveryTelephonePrefixCountryCode = $phoneData->countryCode;
+        $this->deliveryTelephoneNumber = $phoneData->number;
     }
 
     /**
@@ -320,7 +364,7 @@ class Complaint
         $this->deliveryFirstName = $complaintData->deliveryFirstName;
         $this->deliveryLastName = $complaintData->deliveryLastName;
         $this->deliveryCompanyName = $complaintData->deliveryCompanyName;
-        $this->deliveryTelephone = $complaintData->deliveryTelephone;
+        $this->setDeliveryTelephoneData($complaintData->deliveryTelephone);
         $this->deliveryStreet = $complaintData->deliveryStreet;
         $this->deliveryCity = $complaintData->deliveryCity;
         $this->deliveryPostcode = $complaintData->deliveryPostcode;

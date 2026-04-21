@@ -4,6 +4,7 @@ import {
     validateFirstName,
     validateLastName,
     validateTelephone,
+    validateTelephonePrefix,
 } from 'components/Forms/validationRules';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeOrderWithdrawalDataFragment } from 'graphql/requests/orders/fragments/OrderWithdrawalDataFragment.generated';
@@ -27,6 +28,12 @@ export const useOrderWithdrawalForm = (
             firstName: validateFirstName(t),
             lastName: validateLastName(t),
             email: validateEmail(t),
+            telephonePrefix: Yup.string().when('telephone', {
+                is: (telephone: string) => telephone.length > 0,
+                then: () => validateTelephonePrefix(t),
+                otherwise: (schema) => schema,
+            }),
+            telephonePrefixCountryCode: Yup.string(),
             telephone: validateTelephone(t),
             note: Yup.string().optional(),
         }),
@@ -36,7 +43,9 @@ export const useOrderWithdrawalForm = (
         firstName: order?.firstName ?? user?.firstName ?? '',
         lastName: order?.lastName ?? user?.lastName ?? '',
         email: order?.email ?? user?.email ?? '',
-        telephone: order?.telephone ?? user?.telephone ?? '',
+        telephonePrefix: order?.telephoneData.prefix ?? user?.telephonePrefix ?? '',
+        telephonePrefixCountryCode: order?.telephoneData.countryCode ?? user?.telephonePrefixCountryCode ?? '',
+        telephone: order?.telephoneData.number ?? user?.telephoneNumber ?? '',
         note: '',
     };
 
@@ -58,6 +67,8 @@ export const useOrderWithdrawalFormMeta = (): FormMeta<OrderWithdrawalFormType, 
             firstName: t('First name'),
             lastName: t('Last name'),
             email: t('Email'),
+            telephonePrefix: t('Phone prefix'),
+            telephonePrefixCountryCode: t('Country code'),
             telephone: t('Phone number (optional)'),
             note: t('Note (optional)'),
         }),

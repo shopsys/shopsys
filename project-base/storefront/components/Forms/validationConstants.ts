@@ -2,7 +2,6 @@ export const VALIDATION_CONSTANTS = {
     streetMaxLength: 100,
     cityMaxLength: 100,
     emailMaxLength: 255,
-    telephoneMinLength: 9,
     telephoneMaxLength: 30,
     postcodeLength: 5,
     firstNameMaxLength: 100,

@@ -31,6 +31,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
     const [formProviderMethods] = useCustomerChangeProfileForm({
         ...currentCustomerUser,
+        telephonePrefix: currentCustomerUser.telephonePrefix,
+        telephonePrefixCountryCode: currentCustomerUser.telephonePrefixCountryCode,
+        telephone: currentCustomerUser.telephoneNumber,
         country: {
             label: currentCustomerUser.country.name,
             value: currentCustomerUser.country.code,
@@ -57,7 +60,11 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
             input: {
                 firstName: customerChangeProfileFormData.firstName,
                 lastName: customerChangeProfileFormData.lastName,
-                telephone: customerChangeProfileFormData.telephone,
+                telephone: {
+                    prefix: customerChangeProfileFormData.telephonePrefix,
+                    countryCode: customerChangeProfileFormData.telephonePrefixCountryCode || '',
+                    number: customerChangeProfileFormData.telephone,
+                },
                 newsletterSubscription: customerChangeProfileFormData.newsletterSubscription,
             },
         });

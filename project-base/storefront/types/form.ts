@@ -33,6 +33,8 @@ export type PersonalDataExportFormType = {
 export type CustomerChangeProfileFormType = {
     companyCustomer: boolean;
     email: string;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
     telephone: string;
     firstName: string;
     lastName: string;
@@ -54,6 +56,8 @@ export type ChangePasswordFormType = {
 
 export type CustomerUserManageProfileFormType = {
     email: string;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
     telephone: string;
     firstName: string;
     lastName: string;
@@ -72,6 +76,8 @@ export type RegistrationFormType = {
     password: string;
     passwordConfirm: string;
     customer: CustomerTypeEnum;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
     telephone: string;
     firstName: string;
     lastName: string;
@@ -90,6 +96,8 @@ export type OrderWithdrawalFormType = {
     firstName: string;
     lastName: string;
     email: string;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
     telephone: string;
     note: string;
 };
@@ -105,7 +113,12 @@ export type LoginFormType = {
     password: string;
 };
 
-export type DeliveryAddressFormType = Omit<DeliveryAddressType, 'uuid' | 'country'> & {
+export type DeliveryAddressFormType = Omit<
+    DeliveryAddressType,
+    'uuid' | 'country' | 'telephoneNumber' | 'telephonePrefix' | 'telephonePrefixCountryCode'
+> & {
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
     country: SelectOptionType;
 };
 
@@ -122,6 +135,8 @@ export type ComplaintFormType = {
     firstName: string;
     lastName: string;
     companyName: string;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
     telephone: string;
     street: string;
     city: string;
@@ -132,6 +147,8 @@ export type ComplaintFormType = {
 
 export type InquiryFormType = {
     email: string;
+    telephonePrefix: string;
+    telephonePrefixCountryCode: string;
     telephone: string;
     firstName: string;
     lastName: string;

@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -86,7 +87,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
         $orderData->email = 'email';
-        $orderData->telephone = 'telephone';
+        $orderData->telephone = new PhoneData(number: 'telephone');
         $orderData->companyName = null;
         $orderData->companyNumber = null;
         $orderData->companyTaxNumber = null;
@@ -98,7 +99,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->deliveryFirstName = 'deliveryFirstName';
         $orderData->deliveryLastName = 'deliveryLastName';
         $orderData->deliveryCompanyName = 'deliveryCompanyName';
-        $orderData->deliveryTelephone = 'deliveryTelephone';
+        $orderData->deliveryTelephone = new PhoneData(number: 'deliveryTelephone');
         $orderData->deliveryStreet = 'deliveryStreet';
         $orderData->deliveryCity = 'deliveryCity';
         $orderData->deliveryPostcode = 'deliveryPostcode';
@@ -125,7 +126,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($orderData->firstName, $orderFromDb->getFirstName());
         $this->assertSame($orderData->lastName, $orderFromDb->getLastName());
         $this->assertSame($orderData->email, $orderFromDb->getEmail());
-        $this->assertSame($orderData->telephone, $orderFromDb->getTelephone());
+        $this->assertSame($orderData->telephone->toPhoneNumber(), $orderFromDb->getTelephone());
         $this->assertSame($orderData->street, $orderFromDb->getStreet());
         $this->assertSame($orderData->city, $orderFromDb->getCity());
         $this->assertSame($orderData->postcode, $orderFromDb->getPostcode());
@@ -133,7 +134,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($orderData->deliveryFirstName, $orderFromDb->getDeliveryFirstName());
         $this->assertSame($orderData->deliveryLastName, $orderFromDb->getDeliveryLastName());
         $this->assertSame($orderData->deliveryCompanyName, $orderFromDb->getDeliveryCompanyName());
-        $this->assertSame($orderData->deliveryTelephone, $orderFromDb->getDeliveryTelephone());
+        $this->assertSame($orderData->deliveryTelephone->toPhoneNumber(), $orderFromDb->getDeliveryTelephone());
         $this->assertSame($orderData->deliveryStreet, $orderFromDb->getDeliveryStreet());
         $this->assertSame($orderData->deliveryCity, $orderFromDb->getDeliveryCity());
         $this->assertSame($orderData->deliveryPostcode, $orderFromDb->getDeliveryPostcode());

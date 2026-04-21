@@ -88,6 +88,8 @@
     * [PaymentSetupCreationData](#paymentsetupcreationdata)
     * [PersonalData](#personaldata)
     * [PersonalDataPage](#personaldatapage)
+    * [PhoneData](#phonedata)
+    * [PhonePrefix](#phoneprefix)
     * [Price](#price)
     * [PricingSetting](#pricingsetting)
     * [ProductConnection](#productconnection)
@@ -140,6 +142,7 @@
     * [OrderWithdrawalRequestInput](#orderwithdrawalrequestinput)
     * [ParameterFilter](#parameterfilter)
     * [PersonalDataAccessRequestInput](#personaldataaccessrequestinput)
+    * [PhoneDataInput](#phonedatainput)
     * [ProductFilter](#productfilter)
     * [ProductListInput](#productlistinput)
     * [ProductListUpdateInput](#productlistupdateinput)
@@ -4205,6 +4208,15 @@ Phone number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="companycustomeruser.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Phone number data
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="companycustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -4315,6 +4327,15 @@ Street name for delivery
 <td>
 
 Contact telephone number for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="complaint.deliverytelephonedata">deliveryTelephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a>!</td>
+<td>
+
+Structured delivery telephone data with prefix and number
 
 </td>
 </tr>
@@ -4862,6 +4883,15 @@ Phone number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Phone number data
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="currentcompanycustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -5046,6 +5076,15 @@ Phone number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Phone number data
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="currentregularcustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -5171,6 +5210,15 @@ Delivery address street name
 <td>
 
 Delivery address telephone
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="deliveryaddress.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Delivery address phone number data
 
 </td>
 </tr>
@@ -6682,6 +6730,15 @@ Contact telephone number for delivery
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.deliverytelephonedata">deliveryTelephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Contact phone number data for delivery
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6857,7 +6914,16 @@ Billing address street name
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The customer's telephone number
+The customer's formatted telephone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a>!</td>
+<td>
+
+The customer's telephone number split into country code, prefix, and number
 
 </td>
 </tr>
@@ -7356,7 +7422,16 @@ Date and time when the withdrawal was requested by customer
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Telephone number for withdrawal request contact
+Formatted telephone number for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Telephone number data split into country code, prefix, and number
 
 </td>
 </tr>
@@ -8162,6 +8237,103 @@ URL slug of export site
 </tbody>
 </table>
 
+### PhoneData
+
+Represents phone number data
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="phonedata.countrycode">countryCode</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Phone prefix country code in ISO 3166-1 alpha-2
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="phonedata.number">number</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Phone number without prefix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="phonedata.prefix">prefix</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Phone prefix (eg. +420)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PhonePrefix
+
+Represents phone prefix
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="phoneprefix.code">code</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+ISO 3166-1 alpha-2 country code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="phoneprefix.countryname">countryName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Country name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="phoneprefix.dialcode">dialCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+International dial code (eg. +420)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="phoneprefix.flagemoji">flagEmoji</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Country flag
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Price
 
 Represents the price
@@ -8760,6 +8932,15 @@ Phone number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Phone number data
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularcustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -9239,6 +9420,15 @@ Phone number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="salesrepresentative.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Phone number data
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="salesrepresentative.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -9439,6 +9629,15 @@ Returns true if Heureka is available for the current domain
 <td>
 
 Main blog category URL and background image
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="settings.phoneprefixes">phonePrefixes</strong></td>
+<td valign="top">[<a href="#phoneprefix">PhonePrefix</a>!]!</td>
+<td>
+
+Returns available phone prefixes for current domain
 
 </td>
 </tr>
@@ -10645,10 +10844,10 @@ Customer user role group uuid.
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="addnewcustomeruserdatainput.telephone">telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#phonedatainput">PhoneDataInput</a>!</td>
 <td>
 
-The customer's telephone number
+The customer's telephone
 
 </td>
 </tr>
@@ -11059,10 +11258,10 @@ Whether customer user should receive newsletters or not
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="changepersonaldatainput.telephone">telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#phonedatainput">PhoneDataInput</a>!</td>
 <td>
 
-The customer's telephone number
+The customer's telephone
 
 </td>
 </tr>
@@ -11405,10 +11604,10 @@ Product UUID
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="createinquiryinput.telephone">telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#phonedatainput">PhoneDataInput</a>!</td>
 <td>
 
-The customer's telephone number
+The customer's telephone
 
 </td>
 </tr>
@@ -11523,7 +11722,7 @@ Delivery address street name
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="deliveryaddressinput.telephone">telephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td valign="top"><a href="#phonedatainput">PhoneDataInput</a></td>
 <td>
 
 Delivery address telephone
@@ -11600,10 +11799,10 @@ Customer user role group uuid.
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="editcustomeruserpersonaldatainput.telephone">telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#phonedatainput">PhoneDataInput</a>!</td>
 <td>
 
-The customer's telephone number
+The customer's telephone
 
 </td>
 </tr>
@@ -11883,10 +12082,10 @@ Street name for delivery (required when isDeliveryAddressDifferentFromBilling is
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="orderinput.deliverytelephone">deliveryTelephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td valign="top"><a href="#phonedatainput">PhoneDataInput</a></td>
 <td>
 
-Contact telephone number for delivery
+Contact telephone for delivery
 
 </td>
 </tr>
@@ -11982,7 +12181,7 @@ Billing address street name (will be on the tax invoice)
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="orderinput.telephone">telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#phonedatainput">PhoneDataInput</a>!</td>
 <td>
 
 The customer's phone number
@@ -12122,10 +12321,10 @@ Order URL hash to identify the order
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.telephone">telephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td valign="top"><a href="#phonedatainput">PhoneDataInput</a></td>
 <td>
 
-Telephone number (optional)
+Telephone number data (optional)
 
 </td>
 </tr>
@@ -12210,6 +12409,49 @@ The customer's email address
 <td>
 
 One of two possible types for personal data access request - display or export
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PhoneDataInput
+
+Represents phone number input
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="phonedatainput.countrycode">countryCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Phone prefix country code in ISO 3166-1 alpha-2
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="phonedatainput.number">number</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Phone number without prefix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="phonedatainput.prefix">prefix</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Phone prefix (eg. +420)
 
 </td>
 </tr>
@@ -12637,10 +12879,10 @@ Billing address street name (will be on the tax invoice)
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="registrationdatainput.telephone">telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#phonedatainput">PhoneDataInput</a>!</td>
 <td>
 
-The customer's telephone number
+The customer's telephone
 
 </td>
 </tr>
@@ -13880,6 +14122,15 @@ Phone number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="basecustomeruser.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Phone number data
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="basecustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -14090,6 +14341,15 @@ street name
 <td>
 
 Phone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.telephonedata">telephoneData</strong></td>
+<td valign="top"><a href="#phonedata">PhoneData</a></td>
+<td>
+
+Phone number data
 
 </td>
 </tr>

@@ -24,6 +24,7 @@ export const useRegistration = () => {
 
     const register = async (registrationInput: Omit<TypeRegistrationDataInput, 'productListsUuids'>) => {
         blurInput();
+
         const registerResult = await registerMutation({
             input: {
                 cartUuid: registrationInput.cartUuid,

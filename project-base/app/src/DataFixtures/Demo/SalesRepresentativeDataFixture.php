@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
 
@@ -32,7 +33,7 @@ class SalesRepresentativeDataFixture extends AbstractReferenceFixture
         $salesRepresentativeData->firstName = 'Jan';
         $salesRepresentativeData->lastName = 'Dvořák';
         $salesRepresentativeData->email = 'no-reply99@shopsys.com';
-        $salesRepresentativeData->telephone = '585425321';
+        $salesRepresentativeData->telephone = new PhoneData('CZ', '+420', '585425321');
         $salesRepresentative = $this->salesRepresentativeFacade->create($salesRepresentativeData);
         $this->addReference(self::SALES_REPRESENTATIVE_1, $salesRepresentative);
 
@@ -41,7 +42,7 @@ class SalesRepresentativeDataFixture extends AbstractReferenceFixture
         $salesRepresentativeData->firstName = 'Petra';
         $salesRepresentativeData->lastName = 'Svobodová';
         $salesRepresentativeData->email = 'no-reply101@shopsys.com';
-        $salesRepresentativeData->telephone = '424232535';
+        $salesRepresentativeData->telephone = new PhoneData('CZ', '+420', '424232535');
         $salesRepresentative = $this->salesRepresentativeFacade->create($salesRepresentativeData);
         $this->addReference(self::SALES_REPRESENTATIVE_2, $salesRepresentative);
     }

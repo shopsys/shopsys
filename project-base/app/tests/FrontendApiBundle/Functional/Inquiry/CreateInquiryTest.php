@@ -12,7 +12,7 @@ class CreateInquiryTest extends GraphQlTestCase
 {
     #[DataProvider('createInquiryDataProvider')]
     public function testCreateInquiry(
-        string $telephone,
+        array $telephone,
         string $firstName,
         string $lastName,
         string $email,
@@ -44,7 +44,7 @@ class CreateInquiryTest extends GraphQlTestCase
 
     #[DataProvider('createInquiryDataProvider')]
     public function testInvalidProductUuid(
-        string $telephone,
+        array $telephone,
         string $firstName,
         string $lastName,
         string $email,
@@ -76,14 +76,22 @@ class CreateInquiryTest extends GraphQlTestCase
     public static function createInquiryDataProvider(): iterable
     {
         yield [
-            'telephone' => '+53123456789',
+            'telephone' => [
+                'countryCode' => 'CZ',
+                'prefix' => '+420',
+                'number' => '123456789',
+            ],
             'firstName' => 'firstName',
             'lastName' => 'lastName',
             'email' => 'email@example.com',
         ];
 
         yield [
-            'telephone' => '+53123456789',
+            'telephone' => [
+                'countryCode' => 'CZ',
+                'prefix' => '+420',
+                'number' => '123456789',
+            ],
             'firstName' => 'firstName',
             'lastName' => 'lastName',
             'email' => 'email@example.com',

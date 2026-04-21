@@ -11,6 +11,7 @@ use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
@@ -41,7 +42,7 @@ class DeliveryAddressIsNotStoredForPacketeryOrPersonalPickupTest extends GraphQl
             'deliveryLastName' => 'Jágr',
             'deliveryPostcode' => '78401',
             'deliveryStreet' => 'Staroměstské náměstí 93',
-            'deliveryTelephone' => '605000123',
+            'deliveryTelephone' => new PhoneData('CZ', '+420', '605000123'),
             'email' => 'no-reply@shopsys.com',
             'firstName' => 'Jaromír',
             'lastName' => 'Jágr',
@@ -52,7 +53,7 @@ class DeliveryAddressIsNotStoredForPacketeryOrPersonalPickupTest extends GraphQl
             'onCompanyBehalf' => true,
             'postcode' => '70200',
             'street' => 'Hlubinská 10',
-            'telephone' => '605000123',
+            'telephone' => new PhoneData('CZ', '+420', '605000123'),
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql', $orderVariables);

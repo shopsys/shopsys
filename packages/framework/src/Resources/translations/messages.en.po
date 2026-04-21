@@ -37,7 +37,13 @@ msgstr ""
 msgid "-- Choose brand --"
 msgstr ""
 
+msgid "-- Choose default prefix --"
+msgstr ""
+
 msgid "-- Choose group --"
+msgstr ""
+
+msgid "-- Choose prefix --"
 msgstr ""
 
 msgid "-- Choose unit --"
@@ -62,6 +68,9 @@ msgid "301 (Permanent redirect)"
 msgstr ""
 
 msgid "302 (Temporary redirect)"
+msgstr ""
+
+msgid "<a href=\"%url%\">Phone prefixes are not configured for domain %domainName%.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
@@ -907,6 +916,12 @@ msgstr ""
 msgid "Default VAT rate"
 msgstr ""
 
+msgid "Default phone prefix"
+msgstr ""
+
+msgid "Default phone prefix must be enabled"
+msgstr ""
+
 msgid "Default pricing group"
 msgstr ""
 
@@ -1403,6 +1418,9 @@ msgid "Enable whitelist"
 msgstr ""
 
 msgid "Enabled"
+msgstr ""
+
+msgid "Enabled phone prefixes"
 msgstr ""
 
 msgid "Enter 32-digit code which will be sent to server"
@@ -2548,10 +2566,22 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
+msgid "Phone number {{ value }} is too long. Maximum length is {{ limit }} characters."
+msgstr ""
+
+msgid "Phone prefix settings modified."
+msgstr ""
+
+msgid "Phone prefixes"
+msgstr ""
+
 msgid "Please check following information:"
 msgstr ""
 
 msgid "Please check the correctness of all data filled."
+msgstr ""
+
+msgid "Please enter phone prefix"
 msgstr ""
 
 msgid "Please fill all default values before creating a product"
@@ -3419,6 +3449,9 @@ msgid "Unit <strong>{{ name }}</strong> deleted and replaced by unit <strong>{{ 
 msgstr ""
 
 msgid "Unknown configuration"
+msgstr ""
+
+msgid "Unknown prefix"
 msgstr ""
 
 msgid "Unsaved changes"

@@ -21,6 +21,9 @@ DeliveryAddressDecorator:
             telephone:
                 type: "String"
                 description: "Delivery address telephone"
+            telephoneData:
+                type: "PhoneData"
+                description: "Delivery address phone number data"
             country:
                 type: "Country"
                 description: "Delivery address country"

@@ -30,8 +30,8 @@ export const ContactInformationCompany: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.companyNumber.name}
+                    width="half"
                     textInputProps={{
                         disabled: formMeta.fields.customer.disabled,
                         label: formMeta.fields.companyNumber.label,
@@ -44,8 +44,8 @@ export const ContactInformationCompany: FC = () => {
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    gridClassName="col-span-2"
                     name={formMeta.fields.companyTaxNumber.name}
+                    width="half"
                     textInputProps={{
                         disabled: formMeta.fields.customer.disabled,
                         label: formMeta.fields.companyTaxNumber.label,

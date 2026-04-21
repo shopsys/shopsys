@@ -1,7 +1,7 @@
 mutation ChangePersonalData(
     $firstName: String!
     $lastName: String!
-    $telephone: String!
+    $telephone: PhoneDataInput!
     $newsletterSubscription: Boolean!
 ) {
     ChangePersonalData(input: {
@@ -13,6 +13,11 @@ mutation ChangePersonalData(
         firstName
         lastName,
         telephone,
+        telephoneData {
+            countryCode
+            prefix
+            number
+        }
         email
         newsletterSubscription
     }

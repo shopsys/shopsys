@@ -6,6 +6,8 @@ import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHead
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
+import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
+import { CountrySelectControlled } from 'components/Forms/Select/CountrySelectControlled';
 import { Select } from 'components/Forms/Select/Select';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
@@ -18,12 +20,11 @@ import { useCreateComplaint } from 'graphql/requests/complaints/mutations/Create
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { ComplaintFormType } from 'types/form';
 import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { useComplaintResolutionsAsSelectOptions } from 'utils/complaints/useComplaintResolutionsAsSelectOptions';
-import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -58,15 +59,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
         gtmOrigin: GtmMessageOriginType.other,
         customMessage: t('There was an error while creating your complaint'),
     });
-    const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const complaintResolutionsAsOptions = useComplaintResolutionsAsSelectOptions();
     const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-
-    useEffect(() => {
-        if (countriesAsSelectOptions.length > 0) {
-            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0], { shouldValidate: true });
-        }
-    }, [countriesAsSelectOptions, formMeta.fields.country.name, setValue]);
 
     const [deliveryAddressUuid, resolution] = useWatch({
         name: [formMeta.fields.deliveryAddressUuid.name, formMeta.fields.resolution.name],
@@ -118,7 +112,13 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                       street: selectedDeliveryAddress.street,
                       city: selectedDeliveryAddress.city,
                       postcode: selectedDeliveryAddress.postcode,
-                      telephone: selectedDeliveryAddress.telephone,
+                      telephone: selectedDeliveryAddress.telephoneNumber
+                          ? {
+                                prefix: selectedDeliveryAddress.telephonePrefix,
+                                countryCode: selectedDeliveryAddress.telephonePrefixCountryCode || '',
+                                number: selectedDeliveryAddress.telephoneNumber,
+                            }
+                          : null,
                       country: selectedDeliveryAddress.country.code,
                   }
                 : {
@@ -129,7 +129,13 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                       street: complaintFormData.street,
                       city: complaintFormData.city,
                       postcode: complaintFormData.postcode,
-                      telephone: complaintFormData.telephone,
+                      telephone: complaintFormData.telephone
+                          ? {
+                                prefix: complaintFormData.telephonePrefix,
+                                countryCode: complaintFormData.telephonePrefixCountryCode || '',
+                                number: complaintFormData.telephone,
+                            }
+                          : null,
                       country: complaintFormData.country.value,
                   };
 
@@ -350,8 +356,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
-                                            gridClassName="col-span-2"
                                             name={formMeta.fields.firstName.name}
+                                            width="half"
                                             textInputProps={{
                                                 label: formMeta.fields.firstName.label,
                                                 required: true,
@@ -364,8 +370,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
-                                            gridClassName="col-span-2"
                                             name={formMeta.fields.lastName.name}
+                                            width="half"
                                             textInputProps={{
                                                 label: formMeta.fields.lastName.label,
                                                 required: true,
@@ -376,21 +382,15 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         />
                                     </FormColumn>
 
-                                    <FormColumn>
-                                        <TextInputControlled
-                                            control={formProviderMethods.control}
-                                            formName={formMeta.formName}
-                                            gridClassName="col-span-2"
-                                            name={formMeta.fields.telephone.name}
-                                            textInputProps={{
-                                                label: formMeta.fields.telephone.label,
-                                                required: true,
-                                                type: 'tel',
-                                                autoComplete: 'tel',
-                                                disabled: isSubmitting,
-                                            }}
-                                        />
-                                    </FormColumn>
+                                    <PhoneNumberInputControlled
+                                        formName={formMeta.formName}
+                                        formProviderMethods={formProviderMethods}
+                                        isDisabled={isSubmitting}
+                                        prefixCountryCodeName={formMeta.fields.telephonePrefixCountryCode.name}
+                                        prefixName={formMeta.fields.telephonePrefix.name}
+                                        telephoneLabel={formMeta.fields.telephone.label}
+                                        telephoneName={formMeta.fields.telephone.name}
+                                    />
 
                                     <TextInputControlled
                                         control={formProviderMethods.control}
@@ -421,8 +421,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
-                                            gridClassName="col-span-3"
                                             name={formMeta.fields.city.name}
+                                            width="wide"
                                             textInputProps={{
                                                 label: formMeta.fields.city.label,
                                                 required: true,
@@ -435,8 +435,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
-                                            gridClassName="col-start-4"
                                             name={formMeta.fields.postcode.name}
+                                            width="narrow"
                                             textInputProps={{
                                                 label: formMeta.fields.postcode.label,
                                                 required: true,
@@ -448,30 +448,13 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         />
                                     </FormColumn>
 
-                                    <FormColumn>
-                                        <FormLine className="col-span-3">
-                                            <Controller
-                                                name={formMeta.fields.country.name}
-                                                render={({ fieldState: { error }, field }) => (
-                                                    <>
-                                                        <Select
-                                                            isRequired
-                                                            ariaLabel={t('Select country', { ns: 'accessibility' })}
-                                                            isDisabled={isSubmitting}
-                                                            label={formMeta.fields.country.label}
-                                                            options={countriesAsSelectOptions}
-                                                            tid={`${formMeta.formName}-${formMeta.fields.country.name}`}
-                                                            activeOption={countriesAsSelectOptions.find(
-                                                                (option) => option.value === field.value.value,
-                                                            )}
-                                                            onSelectOption={field.onChange}
-                                                        />
-                                                        <FormLineError error={error} inputType="select" />
-                                                    </>
-                                                )}
-                                            />
-                                        </FormLine>
-                                    </FormColumn>
+                                    <CountrySelectControlled
+                                        formName={formMeta.formName}
+                                        formProviderMethods={formProviderMethods}
+                                        isDisabled={isSubmitting}
+                                        label={formMeta.fields.country.label}
+                                        name={formMeta.fields.country.name}
+                                    />
                                 </>
                             )}
                         </FormBlockWrapper>

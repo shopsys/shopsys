@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
@@ -155,15 +156,10 @@ final class CustomerUserFormType extends AbstractType
         }
 
         $builderPersonalDataGroup
-            ->add('telephone', TextType::class, [
-                'required' => false,
-                'constraints' => [
-                    new Constraints\Length(
-                        max: 30,
-                        maxMessage: 'Telephone number cannot be longer than {{ limit }} characters',
-                    ),
-                ],
+            ->add('telephone', PhoneType::class, [
                 'label' => 'Telephone',
+                'domain_id' => $options['domain_id'],
+                'required' => false,
             ]);
 
         if ($this->customerUser instanceof CustomerUser) {

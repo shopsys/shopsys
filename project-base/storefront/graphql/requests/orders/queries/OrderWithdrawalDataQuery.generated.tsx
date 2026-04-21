@@ -10,7 +10,7 @@ export type TypeOrderWithdrawalDataQueryVariables = Types.Exact<{
 }>;
 
 
-export type TypeOrderWithdrawalDataQuery = { __typename?: 'Query', order: { __typename: 'Order', uuid: string, number: string, urlHash: string, firstName: string | null, lastName: string | null, email: string, telephone: string, canRequestWithdrawal: boolean, customerUser: { __typename?: 'CompanyCustomerUser', billingAddressUuid: string } | { __typename?: 'CurrentCompanyCustomerUser', billingAddressUuid: string } | { __typename?: 'CurrentRegularCustomerUser', billingAddressUuid: string } | { __typename?: 'RegularCustomerUser', billingAddressUuid: string } | null } | null };
+export type TypeOrderWithdrawalDataQuery = { __typename?: 'Query', order: { __typename: 'Order', uuid: string, number: string, urlHash: string, firstName: string | null, lastName: string | null, email: string, telephone: string, canRequestWithdrawal: boolean, telephoneData: { __typename?: 'PhoneData', prefix: string | null, countryCode: string | null, number: string }, customerUser: { __typename?: 'CompanyCustomerUser', billingAddressUuid: string } | { __typename?: 'CurrentCompanyCustomerUser', billingAddressUuid: string } | { __typename?: 'CurrentRegularCustomerUser', billingAddressUuid: string } | { __typename?: 'RegularCustomerUser', billingAddressUuid: string } | null } | null };
 
 
 export const OrderWithdrawalDataQueryDocument = gql`

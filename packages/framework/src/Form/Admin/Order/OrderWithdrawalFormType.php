@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 use Override;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
+use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -76,15 +77,10 @@ final class OrderWithdrawalFormType extends AbstractType
                     ),
                 ],
             ])
-            ->add('telephone', TextType::class, [
+            ->add('telephone', PhoneType::class, [
                 'label' => 'Phone',
+                'domain_id' => $options['domain_id'],
                 'required' => false,
-                'constraints' => [
-                    new Constraints\Length(
-                        max: 30,
-                        maxMessage: 'Phone number cannot be longer than {{ limit }} characters',
-                    ),
-                ],
             ])
             ->add('note', TextareaType::class, [
                 'label' => 'Note',
@@ -106,5 +102,8 @@ final class OrderWithdrawalFormType extends AbstractType
             'data_class' => WithdrawalRequestData::class,
             'label' => false,
         ]);
+
+        $resolver->setRequired('domain_id');
+        $resolver->setAllowedTypes('domain_id', 'int');
     }
 }

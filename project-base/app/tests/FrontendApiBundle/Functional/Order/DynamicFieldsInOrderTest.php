@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class DynamicFieldsInOrderTest extends GraphQlTestCase
@@ -25,9 +26,33 @@ class DynamicFieldsInOrderTest extends GraphQlTestCase
         $cartUuid = $response['data']['AddToCart']['cart']['uuid'];
         $this->addCzechPostTransportToCart($cartUuid);
         $this->addCashOnDeliveryPaymentToCart($cartUuid);
-        $response = $this->getResponseContentForQuery($this->getMutation($cartUuid));
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CreateOrderWithDynamicFieldsMutation.graphql',
+            [
+                'cartUuid' => $cartUuid,
+                'firstName' => 'firstName',
+                'lastName' => 'lastName',
+                'email' => 'user@example.com',
+                'telephone' => new PhoneData('CU', '+53', '123456789'),
+                'onCompanyBehalf' => true,
+                'companyName' => 'Airlocks s.r.o.',
+                'companyNumber' => '1234',
+                'companyTaxNumber' => 'EU4321',
+                'street' => '123 Fake Street',
+                'city' => 'Springfield',
+                'postcode' => '12345',
+                'country' => 'CZ',
+                'note' => 'Thank You',
+                'isDeliveryAddressDifferentFromBilling' => true,
+                'deliveryFirstName' => 'deliveryFirstName',
+                'deliveryLastName' => 'deliveryLastName',
+                'deliveryStreet' => 'deliveryStreet',
+                'deliveryCity' => 'deliveryCity',
+                'deliveryCountry' => 'SK',
+                'deliveryPostcode' => '13453',
+            ],
+        );
 
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
         $this->assertArrayHasKey('order', $responseData);
         $orderData = $responseData['order'];
@@ -43,43 +68,5 @@ class DynamicFieldsInOrderTest extends GraphQlTestCase
 
         $this->assertArrayHasKey('creationDate', $orderData);
         $this->assertIsString($orderData['creationDate']);
-    }
-
-    private function getMutation(string $cartUuid): string
-    {
-        return 'mutation {
-                    CreateOrder(
-                        input: {
-                            cartUuid: "' . $cartUuid . '"
-                            firstName: "firstName"
-                            lastName: "lastName"
-                            email: "user@example.com"
-                            telephone: "+53 123456789"
-                            onCompanyBehalf: true
-                            companyName: "Airlocks s.r.o."
-                            companyNumber: "1234"
-                            companyTaxNumber: "EU4321"
-                            street: "123 Fake Street"
-                            city: "Springfield"
-                            postcode: "12345"
-                            country: "CZ"
-                            note:"Thank You"
-                            isDeliveryAddressDifferentFromBilling: true
-                            deliveryFirstName: "deliveryFirstName"
-                            deliveryLastName: "deliveryLastName"
-                            deliveryStreet: "deliveryStreet"
-                            deliveryCity: "deliveryCity"
-                            deliveryCountry: "SK"
-                            deliveryPostcode: "13453"
-                        }
-                    ) {
-                        order {
-                            uuid
-                            number
-                            urlHash
-                            creationDate
-                        }
-                    }
-                }';
     }
 }

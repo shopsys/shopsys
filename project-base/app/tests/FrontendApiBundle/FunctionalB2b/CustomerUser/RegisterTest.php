@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\FunctionalB2b\CustomerUser;
 
 use App\DataFixtures\Demo\CompanyDataFixture;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrontendApiBundle\Component\Constraints\UniqueBillingAddressApi;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainTestCase;
 
@@ -22,7 +23,7 @@ class RegisterTest extends GraphQlB2bDomainTestCase
             'firstName' => 'First',
             'lastName' => 'Last',
             'password' => 'user123',
-            'telephone' => '145612314',
+            'telephone' => new PhoneData('CZ', '+420', '145612314'),
             'newsletterSubscription' => false,
             'street' => '123 Fake Street',
             'city' => 'Springfield',

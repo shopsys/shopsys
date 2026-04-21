@@ -13,6 +13,11 @@ abstract class AbstractCustomerUserContainsFilter extends AbstractAdvancedSearch
 {
     abstract protected function getFieldName(): string;
 
+    protected function getDqlFieldExpression(): string
+    {
+        return 'cu.' . $this->getFieldName();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -24,7 +29,7 @@ abstract class AbstractCustomerUserContainsFilter extends AbstractAdvancedSearch
             $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $parameterName = $this->getFieldName() . '_' . $index;
             $queryBuilder->andWhere(
-                'NORMALIZED(cu.' . $this->getFieldName() . ') ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')',
+                'NORMALIZED(' . $this->getDqlFieldExpression() . ') ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')',
             );
             $queryBuilder->setParameter($parameterName, $searchValue);
         }

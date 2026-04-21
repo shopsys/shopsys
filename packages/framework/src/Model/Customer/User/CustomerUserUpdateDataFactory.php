@@ -98,8 +98,8 @@ class CustomerUserUpdateDataFactory
             $order->getLastName(),
         );
         $customerUserUpdateData->customerUserData->telephone = Utils::ifNull(
-            $customerUser->getTelephone(),
-            $order->getTelephone(),
+            $customerUser->getTelephoneData(),
+            $order->getTelephoneData(),
         );
         $customerUserUpdateData->billingAddressData = $this->getAmendedBillingAddressDataByOrder(
             $order,
@@ -148,13 +148,13 @@ class CustomerUserUpdateDataFactory
             $deliveryAddressData->companyName = $order->getDeliveryCompanyName();
             $deliveryAddressData->firstName = $order->getDeliveryFirstName();
             $deliveryAddressData->lastName = $order->getDeliveryLastName();
-            $deliveryAddressData->telephone = $order->getDeliveryTelephone();
+            $deliveryAddressData->telephone = $order->getDeliveryTelephoneData();
         } else {
             $deliveryAddressData = $this->deliveryAddressDataFactory->createFromDeliveryAddress($deliveryAddress);
         }
 
-        if ($deliveryAddress !== null && $deliveryAddress->getTelephone() === null) {
-            $deliveryAddressData->telephone = $order->getTelephone();
+        if ($deliveryAddress !== null && $deliveryAddress->getTelephoneData() === null) {
+            $deliveryAddressData->telephone = $order->getTelephoneData();
         }
 
         return $deliveryAddressData;
@@ -179,7 +179,7 @@ class CustomerUserUpdateDataFactory
         $customerUserData = $this->customerUserDataFactory->createForDomainId($order->getDomainId());
         $customerUserData->firstName = $order->getFirstName();
         $customerUserData->lastName = $order->getLastName();
-        $customerUserData->telephone = $order->getTelephone();
+        $customerUserData->telephone = $order->getTelephoneData();
         $customerUserData->email = $order->getEmail();
         $customerUserData->password = $password;
 

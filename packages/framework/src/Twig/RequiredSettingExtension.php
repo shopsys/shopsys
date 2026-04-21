@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\Settings\PhonePrefixSettingsFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -41,6 +42,7 @@ class RequiredSettingExtension extends AbstractExtension
         protected readonly ParameterFacade $parameterFacade,
         protected readonly StockFacade $stockFacade,
         protected readonly CountryFacade $countryFacade,
+        protected readonly PhonePrefixSettingsFacade $phonePrefixSettingsFacade,
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly ClockInterface $clock,
         protected readonly SeoSettingFacade $seoSettingFacade,
@@ -83,6 +85,7 @@ class RequiredSettingExtension extends AbstractExtension
         $this->checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled();
         $this->checkAtLeastOneStockExists();
         $this->checkAtLeastOneCountryExists();
+        $this->checkPhonePrefixIsConfigured();
         $this->checkMandatoryArticlesExist();
         $this->checkAllSliderNumericValuesAreSet();
         $this->checkPublicHolidaysAreSet();
@@ -143,6 +146,23 @@ class RequiredSettingExtension extends AbstractExtension
                 '<a href="%url%">There are no countries, you need to create some.</a>',
                 [
                     '%url%' => $this->router->generate('admin_country_list'),
+                ],
+            );
+        }
+    }
+
+    protected function checkPhonePrefixIsConfigured(): void
+    {
+        $notConfiguredDomainIds = $this->phonePrefixSettingsFacade->filterOutConfiguredDomainIds($this->domain->getAdminEnabledDomainIds());
+
+        foreach ($notConfiguredDomainIds as $domainId) {
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+            $this->requiredSettingsMessages[] = t(
+                '<a href="%url%">Phone prefixes are not configured for domain %domainName%.</a>',
+                [
+                    '%url%' => $this->generateUrlWithSelectedDomainTab('admin_phoneprefix_settings', $domainId),
+                    '%domainName%' => $domainConfig->getName(),
                 ],
             );
         }

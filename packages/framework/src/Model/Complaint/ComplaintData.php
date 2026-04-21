@@ -52,7 +52,7 @@ class ComplaintData
     public $deliveryCompanyName;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData|null
      */
     public $deliveryTelephone;
 

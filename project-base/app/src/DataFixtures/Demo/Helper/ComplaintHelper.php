@@ -67,7 +67,7 @@ class ComplaintHelper
         $complaintData->deliveryCity = $deliveryAddress?->getCity() ?? $billingAddress->getCity();
         $complaintData->deliveryPostcode = $deliveryAddress?->getPostcode() ?? $billingAddress->getPostcode();
         $complaintData->deliveryCountry = $deliveryAddress?->getCountry() ?? $billingAddress->getCountry();
-        $complaintData->deliveryTelephone = $deliveryAddress?->getTelephone();
+        $complaintData->deliveryTelephone = $deliveryAddress?->getTelephoneData();
         $complaintData->deliveryCompanyName = $deliveryAddress?->getCompanyName();
 
         $complaintData->resolution = $resolution;

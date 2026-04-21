@@ -46,7 +46,7 @@ class OrderData
     public $email;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData
      */
     public $telephone;
 
@@ -106,7 +106,7 @@ class OrderData
     public $deliveryCompanyName;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData|null
      */
     public $deliveryTelephone;
 

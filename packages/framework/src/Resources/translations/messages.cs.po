@@ -37,8 +37,14 @@ msgstr "-- Vyberte umístění článku --"
 msgid "-- Choose brand --"
 msgstr "-- Vyberte značku --"
 
+msgid "-- Choose default prefix --"
+msgstr "-- Vyberte výchozí předvolbu --"
+
 msgid "-- Choose group --"
 msgstr "-- Vyberte skupinu parametrů --"
+
+msgid "-- Choose prefix --"
+msgstr "-- Vyberte předvolbu --"
 
 msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
@@ -63,6 +69,9 @@ msgstr "301 (Trvalé přesměrování)"
 
 msgid "302 (Temporary redirect)"
 msgstr "302 (Dočasné přesměrování)"
+
+msgid "<a href=\"%url%\">Phone prefixes are not configured for domain %domainName%.</a>"
+msgstr "<a href=\"%url%\">Telefonní předvolby nejsou nakonfigurovány pro doménu %domainName%.</a>"
 
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Není nastaven článek zásady ochrany osobních údajů pro doménu %domainName%.</a>"
@@ -907,6 +916,12 @@ msgstr "Zamítnutí platby v systému 3D Secure banky zákazníka"
 msgid "Default VAT rate"
 msgstr "Výchozí sazba DPH"
 
+msgid "Default phone prefix"
+msgstr "Výchozí telefonní předvolba"
+
+msgid "Default phone prefix must be enabled"
+msgstr "Výchozí telefonní předvolba musí být mezi povolenými"
+
 msgid "Default pricing group"
 msgstr "Výchozí cenová skupina"
 
@@ -1404,6 +1419,9 @@ msgstr "Whitelist aktivní"
 
 msgid "Enabled"
 msgstr "Povoleno"
+
+msgid "Enabled phone prefixes"
+msgstr "Povolené telefonní předvolby"
 
 msgid "Enter 32-digit code which will be sent to server"
 msgstr "Zadejte 32-číselný kod, který bude odeslán na server"
@@ -2548,11 +2566,23 @@ msgstr "Osobní odběr"
 msgid "Phone"
 msgstr "Telefon"
 
+msgid "Phone number {{ value }} is too long. Maximum length is {{ limit }} characters."
+msgstr "Telefonní číslo {{ value }} je příliš dlouhé. Maximální délka je {{ limit }} znaků."
+
+msgid "Phone prefix settings modified."
+msgstr "Nastavení telefonních předvoleb bylo upraveno."
+
+msgid "Phone prefixes"
+msgstr "Telefonní předvolby"
+
 msgid "Please check following information:"
 msgstr "Prosím překontrolujte následující informace:"
 
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
+
+msgid "Please enter phone prefix"
+msgstr "Zadejte prosím telefonní předvolbu"
 
 msgid "Please fill all default values before creating a product"
 msgstr "Prosím vyplňte všechny výchozí hodnoty před vytvořením produktu"
@@ -3420,6 +3450,9 @@ msgstr "Jednotka <strong>{{ name }}</strong> byla smazána a byla nahrazena jedn
 
 msgid "Unknown configuration"
 msgstr "Neznámá konfigurace"
+
+msgid "Unknown prefix"
+msgstr "Neznámá předvolba"
 
 msgid "Unsaved changes"
 msgstr "Neuložené změny"

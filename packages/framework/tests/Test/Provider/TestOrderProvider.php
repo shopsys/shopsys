@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
@@ -31,7 +32,7 @@ class TestOrderProvider
         $country = static::getCountry();
 
         $orderData->companyName = 'companyName';
-        $orderData->telephone = 'telephone';
+        $orderData->telephone = new PhoneData(number: 'telephone');
         $orderData->email = 'telephone';
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
@@ -41,7 +42,7 @@ class TestOrderProvider
         $orderData->country = $country;
         $orderData->deliveryAddressSameAsBillingAddress = false;
         $orderData->deliveryCompanyName = 'deliveryCompanyName';
-        $orderData->deliveryTelephone = 'deliveryTelephone';
+        $orderData->deliveryTelephone = new PhoneData(number: 'deliveryTelephone');
         $orderData->deliveryFirstName = 'deliveryFirstName';
         $orderData->deliveryLastName = 'deliveryLastName';
         $orderData->deliveryStreet = 'deliveryStreet';

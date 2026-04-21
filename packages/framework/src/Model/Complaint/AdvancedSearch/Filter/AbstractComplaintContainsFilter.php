@@ -13,6 +13,11 @@ abstract class AbstractComplaintContainsFilter extends AbstractAdvancedSearchFil
 {
     abstract protected function getFieldName(): string;
 
+    protected function getDqlFieldExpression(): string
+    {
+        return 'cmp.' . $this->getFieldName();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -24,7 +29,7 @@ abstract class AbstractComplaintContainsFilter extends AbstractAdvancedSearchFil
             $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $parameterName = $this->getFieldName() . '_' . $index;
             $queryBuilder->andWhere(
-                'NORMALIZED(cmp.' . $this->getFieldName() . ') ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')',
+                'NORMALIZED(' . $this->getDqlFieldExpression() . ') ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')',
             );
             $queryBuilder->setParameter($parameterName, $searchValue);
         }

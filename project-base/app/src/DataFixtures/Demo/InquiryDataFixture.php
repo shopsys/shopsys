@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Symfony\Component\Clock\DatePoint;
 
 class InquiryDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -42,7 +43,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Mark';
         $inquiryData->lastName = 'Spencer';
         $inquiryData->email = 'mark.spencer@example.com';
-        $inquiryData->telephone = '111222333';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '111222333');
         $inquiryData->companyName = 'Weyland-Yutani Corporation';
         $inquiryData->companyNumber = '12345678';
         $inquiryData->companyTaxNumber = 'CZ12345678';
@@ -55,7 +56,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Laura';
         $inquiryData->lastName = 'Davis';
         $inquiryData->email = 'laura.davis@example.com';
-        $inquiryData->telephone = '444555666';
+        $inquiryData->telephone = new PhoneData('US', '+1', '444555666');
         $inquiryData->companyName = 'Aperture Science';
         $inquiryData->companyNumber = '98765432';
         $inquiryData->companyTaxNumber = 'US98765432';
@@ -68,7 +69,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Daniel';
         $inquiryData->lastName = 'Clark';
         $inquiryData->email = 'daniel.clark@example.com';
-        $inquiryData->telephone = '777888999';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '777888999');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -81,7 +82,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Sarah';
         $inquiryData->lastName = 'Johnson';
         $inquiryData->email = 'sarah.johnson@example.com';
-        $inquiryData->telephone = '123123123';
+        $inquiryData->telephone = new PhoneData('GB', '+44', '123123123');
         $inquiryData->companyName = 'Cyberdyne Systems';
         $inquiryData->companyNumber = '11223344';
         $inquiryData->companyTaxNumber = 'UK11223344';
@@ -94,7 +95,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Kevin';
         $inquiryData->lastName = 'Miller';
         $inquiryData->email = 'kevin.miller@example.com';
-        $inquiryData->telephone = '555666777';
+        $inquiryData->telephone = new PhoneData('DE', '+49', '555666777');
         $inquiryData->companyName = 'Umbrella Corporation';
         $inquiryData->companyNumber = '55667788';
         $inquiryData->companyTaxNumber = 'DE55667788';
@@ -107,7 +108,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Jessica';
         $inquiryData->lastName = 'Adams';
         $inquiryData->email = 'jessica.adams@example.com';
-        $inquiryData->telephone = '888999000';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '888999000');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -121,7 +122,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Brian';
         $inquiryData->lastName = 'Wilson';
         $inquiryData->email = 'brian.wilson@example.com';
-        $inquiryData->telephone = '999888777';
+        $inquiryData->telephone = new PhoneData('US', '+1', '999888777');
         $inquiryData->companyName = 'Stark Industries';
         $inquiryData->companyNumber = '66778899';
         $inquiryData->companyTaxNumber = 'US66778899';
@@ -134,7 +135,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Emma';
         $inquiryData->lastName = 'Thompson';
         $inquiryData->email = 'emma.thompson@example.com';
-        $inquiryData->telephone = '777666555';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '777666555');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -147,7 +148,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Oliver';
         $inquiryData->lastName = 'Brown';
         $inquiryData->email = 'oliver.brown@example.com';
-        $inquiryData->telephone = '222333444';
+        $inquiryData->telephone = new PhoneData('US', '+1', '222333444');
         $inquiryData->companyName = 'Black Mesa';
         $inquiryData->companyNumber = '44556677';
         $inquiryData->companyTaxNumber = 'US44556677';
@@ -160,7 +161,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Hannah';
         $inquiryData->lastName = 'White';
         $inquiryData->email = 'hannah.white@example.com';
-        $inquiryData->telephone = '555444333';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '555444333');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -173,7 +174,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Lucas';
         $inquiryData->lastName = 'King';
         $inquiryData->email = 'lucas.king@example.com';
-        $inquiryData->telephone = '111999888';
+        $inquiryData->telephone = new PhoneData('JP', '+81', '111999888');
         $inquiryData->companyName = 'Nakatomi Corporation';
         $inquiryData->companyNumber = '33445566';
         $inquiryData->companyTaxNumber = 'JP33445566';
@@ -186,7 +187,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Sophie';
         $inquiryData->lastName = 'Robinson';
         $inquiryData->email = 'sophie.robinson@example.com';
-        $inquiryData->telephone = '333222111';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '333222111');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -199,7 +200,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Nathan';
         $inquiryData->lastName = 'Green';
         $inquiryData->email = 'nathan.green@example.com';
-        $inquiryData->telephone = '888777666';
+        $inquiryData->telephone = new PhoneData('US', '+1', '888777666');
         $inquiryData->companyName = 'Oscorp Industries';
         $inquiryData->companyNumber = '55667744';
         $inquiryData->companyTaxNumber = 'US55667744';
@@ -212,7 +213,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Megan';
         $inquiryData->lastName = 'Stewart';
         $inquiryData->email = 'megan.stewart@example.com';
-        $inquiryData->telephone = '999888111';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '999888111');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -226,7 +227,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'David';
         $inquiryData->lastName = 'Scott';
         $inquiryData->email = 'david.scott@example.com';
-        $inquiryData->telephone = '444555666';
+        $inquiryData->telephone = new PhoneData('US', '+1', '444555666');
         $inquiryData->companyName = 'Omni Consumer Products';
         $inquiryData->companyNumber = '77665544';
         $inquiryData->companyTaxNumber = 'US77665544';
@@ -239,7 +240,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Grace';
         $inquiryData->lastName = 'Lewis';
         $inquiryData->email = 'grace.lewis@example.com';
-        $inquiryData->telephone = '333444555';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '333444555');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -252,7 +253,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'James';
         $inquiryData->lastName = 'Parker';
         $inquiryData->email = 'james.parker@example.com';
-        $inquiryData->telephone = '222333111';
+        $inquiryData->telephone = new PhoneData('US', '+1', '222333111');
         $inquiryData->companyName = 'InGen Corporation';
         $inquiryData->companyNumber = '55443322';
         $inquiryData->companyTaxNumber = 'US55443322';
@@ -265,7 +266,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Anna';
         $inquiryData->lastName = 'Walker';
         $inquiryData->email = 'anna.walker@example.com';
-        $inquiryData->telephone = '555666777';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '555666777');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -279,7 +280,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Liam';
         $inquiryData->lastName = 'Bell';
         $inquiryData->email = 'liam.bell@example.com';
-        $inquiryData->telephone = '777888999';
+        $inquiryData->telephone = new PhoneData('JP', '+81', '777888999');
         $inquiryData->companyName = 'Shinra Electric Power Company';
         $inquiryData->companyNumber = '99887766';
         $inquiryData->companyTaxNumber = 'JP99887766';
@@ -292,7 +293,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Emily';
         $inquiryData->lastName = 'Brooks';
         $inquiryData->email = 'emily.brooks@example.com';
-        $inquiryData->telephone = '999111222';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '999111222');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -306,7 +307,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Joshua';
         $inquiryData->lastName = 'Morgan';
         $inquiryData->email = 'joshua.morgan@example.com';
-        $inquiryData->telephone = '555999444';
+        $inquiryData->telephone = new PhoneData('US', '+1', '555999444');
         $inquiryData->companyName = 'Vault-Tec Corporation';
         $inquiryData->companyNumber = '22334455';
         $inquiryData->companyTaxNumber = 'US22334455';
@@ -319,7 +320,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Isabella';
         $inquiryData->lastName = 'Murphy';
         $inquiryData->email = 'isabella.murphy@example.com';
-        $inquiryData->telephone = '222888777';
+        $inquiryData->telephone = new PhoneData('US', '+1', '222888777');
         $inquiryData->companyName = 'Tyrell Corporation';
         $inquiryData->companyNumber = '77665588';
         $inquiryData->companyTaxNumber = 'US77665588';
@@ -332,7 +333,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Mason';
         $inquiryData->lastName = 'Reed';
         $inquiryData->email = 'mason.reed@example.com';
-        $inquiryData->telephone = '444777666';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '444777666');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -345,7 +346,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Victoria';
         $inquiryData->lastName = 'Patterson';
         $inquiryData->email = 'victoria.patterson@example.com';
-        $inquiryData->telephone = '999777111';
+        $inquiryData->telephone = new PhoneData('JP', '+81', '999777111');
         $inquiryData->companyName = 'Arasaka Corporation';
         $inquiryData->companyNumber = '99887744';
         $inquiryData->companyTaxNumber = 'JP99887744';
@@ -358,7 +359,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Ryan';
         $inquiryData->lastName = 'Mitchell';
         $inquiryData->email = 'ryan.mitchell@example.com';
-        $inquiryData->telephone = '888555666';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '888555666');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -371,7 +372,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Zoe';
         $inquiryData->lastName = 'Turner';
         $inquiryData->email = 'zoe.turner@example.com';
-        $inquiryData->telephone = '777444333';
+        $inquiryData->telephone = new PhoneData('US', '+1', '777444333');
         $inquiryData->companyName = 'Faro Automated Solutions';
         $inquiryData->companyNumber = '33445599';
         $inquiryData->companyTaxNumber = 'US33445599';
@@ -384,7 +385,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Dylan';
         $inquiryData->lastName = 'Evans';
         $inquiryData->email = 'dylan.evans@example.com';
-        $inquiryData->telephone = '999555222';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '999555222');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -397,7 +398,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Charlotte';
         $inquiryData->lastName = 'Hughes';
         $inquiryData->email = 'charlotte.hughes@example.com';
-        $inquiryData->telephone = '123333444';
+        $inquiryData->telephone = new PhoneData('US', '+1', '123333444');
         $inquiryData->companyName = 'Atlas Corporation';
         $inquiryData->companyNumber = '77665522';
         $inquiryData->companyTaxNumber = 'US77665522';
@@ -410,7 +411,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Benjamin';
         $inquiryData->lastName = 'Wood';
         $inquiryData->email = 'benjamin.wood@example.com';
-        $inquiryData->telephone = '333111999';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '333111999');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -426,7 +427,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Lily';
         $inquiryData->lastName = 'Foster';
         $inquiryData->email = 'lily.foster@example.com';
-        $inquiryData->telephone = '123555666';
+        $inquiryData->telephone = new PhoneData('US', '+1', '123555666');
         $inquiryData->companyName = 'Fragile Express';
         $inquiryData->companyNumber = '66778899';
         $inquiryData->companyTaxNumber = 'US66778899';
@@ -439,7 +440,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Gabriel';
         $inquiryData->lastName = 'Griffin';
         $inquiryData->email = 'gabriel.griffin@example.com';
-        $inquiryData->telephone = '999444333';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '999444333');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -453,7 +454,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Sophia';
         $inquiryData->lastName = 'Evans';
         $inquiryData->email = 'sophia.evans@example.com';
-        $inquiryData->telephone = '555222888';
+        $inquiryData->telephone = new PhoneData('US', '+1', '555222888');
         $inquiryData->companyName = 'Abstergo Industries';
         $inquiryData->companyNumber = '44556677';
         $inquiryData->companyTaxNumber = 'US44556677';
@@ -466,7 +467,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Ethan';
         $inquiryData->lastName = 'Bailey';
         $inquiryData->email = 'ethan.bailey@example.com';
-        $inquiryData->telephone = '777888222';
+        $inquiryData->telephone = new PhoneData('CZ', '+420', '777888222');
         $inquiryData->companyName = null;
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
@@ -479,7 +480,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->firstName = 'Madison';
         $inquiryData->lastName = 'Perry';
         $inquiryData->email = 'madison.perry@example.com';
-        $inquiryData->telephone = '888444555';
+        $inquiryData->telephone = new PhoneData('US', '+1', '888444555');
         $inquiryData->companyName = 'Halcyon Holdings Corporation';
         $inquiryData->companyNumber = '99887755';
         $inquiryData->companyTaxNumber = 'US99887755';

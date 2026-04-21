@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as FrameworkOrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
@@ -60,7 +61,15 @@ class OrderDataFactory
             $cloneOrderData->deliveryCountry = $this->countryFacade->findByCode($input['deliveryCountry']);
         }
 
-        unset($input['currency'], $input['country'], $input['deliveryCountry']);
+        $cloneOrderData->telephone = PhoneData::fromArray($input['telephone']);
+
+        $deliveryTelephoneInput = $input['deliveryTelephone'] ?? null;
+
+        if ($deliveryTelephoneInput !== null) {
+            $cloneOrderData->deliveryTelephone = PhoneData::fromArray($deliveryTelephoneInput);
+        }
+
+        unset($input['currency'], $input['country'], $input['deliveryCountry'], $input['telephone'], $input['deliveryTelephone']);
 
         foreach ($input as $key => $value) {
             if (property_exists(get_class($orderData), $key)) {
