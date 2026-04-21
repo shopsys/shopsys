@@ -96,7 +96,7 @@
         "knip": "^5.83.1",
         "license-checker": "^25.0.1",
         "postcss": "~8.5.8",
-        "tailwindcss": "~4.2.2",
+        "tailwindcss": "~4.2.3",
         "typescript": "~5.9.3",
         "vite-tsconfig-paths": "~4.3.2",
         "vitest": "~2.1.9"
