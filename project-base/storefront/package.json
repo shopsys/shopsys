@@ -95,7 +95,7 @@
         "jsdom": "~24.0.0",
         "knip": "^5.83.1",
         "license-checker": "^25.0.1",
-        "postcss": "~8.5.8",
+        "postcss": "~8.5.10",
         "tailwindcss": "~4.2.2",
         "typescript": "~5.9.3",
         "vite-tsconfig-paths": "~4.3.2",
