@@ -46,4 +46,5 @@ return [
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Shopsys\MakerBundle\ShopsysMakerBundle::class => ['dev' => true],
+    Shopsys\McpBundle\ShopsysMcpBundle::class => ['all' => true],
 ];

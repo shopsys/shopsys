@@ -29,6 +29,8 @@
             "Shopsys\\S3Bridge\\": "packages/s3-bridge/src/",
             "Shopsys\\FrameworkBundle\\": "packages/framework/src/",
             "Shopsys\\LuigisBoxBundle\\": "packages/luigis-box/src/",
+            "Shopsys\\McpAttributes\\": "packages/mcp-attributes/src/",
+            "Shopsys\\McpBundle\\": "packages/mcp/src/",
             "Sniffer\\": "project-base/app/sniffer/"
         },
         "classmap": [
@@ -49,6 +51,8 @@
             "Tests\\FrontendApiBundle\\": "packages/frontend-api/tests/",
             "Tests\\HttpSmokeTesting\\": "packages/http-smoke-testing/tests/",
             "Tests\\MakerBundle\\": "packages/maker/tests/",
+            "Tests\\McpAttributes\\": "packages/mcp-attributes/tests/",
+            "Tests\\McpBundle\\": "packages/mcp/tests/",
             "Tests\\MigrationBundle\\": "packages/migrations/tests/",
             "Tests\\ArticleFeed\\LuigisBoxBundle\\": "packages/article-feed-luigis-box/tests/",
             "Tests\\BrandFeed\\LuigisBoxBundle\\": "packages/brand-feed-luigis-box/tests/",
@@ -301,6 +305,8 @@
         "shopsys/http-smoke-testing": "self.version",
         "shopsys/luigis-box": "self.version",
         "shopsys/maker": "self.version",
+        "shopsys/mcp": "self.version",
+        "shopsys/mcp-attributes": "self.version",
         "shopsys/migrations": "self.version",
         "shopsys/plugin-interface": "self.version",
         "shopsys/product-feed-google": "self.version",

@@ -1,0 +1,61 @@
+{
+    "name": "shopsys/mcp",
+    "type": "library",
+    "description": "MCP server integration for Shopsys Platform",
+    "keywords": [
+        "Shopsys Platform",
+        "SSFW",
+        "MCP"
+    ],
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Shopsys",
+            "homepage": "https://www.shopsys.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Shopsys\\McpBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\McpBundle\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.5",
+        "ext-pg_query": "*",
+        "shopsys/form-types-bundle": "19.0.x-dev",
+        "shopsys/framework": "19.0.x-dev",
+        "shopsys/mcp-attributes": "19.0.x-dev",
+        "shopsys/migrations": "19.0.x-dev",
+        "symfony/clock": "^7.4",
+        "shopsys/plugin-interface": "19.0.x-dev",
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/mcp-bundle": "^0.6"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1.16",
+        "phpstan/phpstan-doctrine": "^2.0.3",
+        "phpstan/phpstan-phpunit": "^2.0.6",
+        "phpstan/phpstan-symfony": "^2.0.6",
+        "phpunit/phpunit": "^12.5",
+        "shopsys/coding-standards": "19.0.x-dev"
+    },
+    "extra": {
+        "symfony": {
+            "require": "^7.4",
+            "docker": false
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

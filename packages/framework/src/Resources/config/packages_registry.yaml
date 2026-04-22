@@ -12,6 +12,7 @@ parameters:
         http-smoke-testing: { path: '%shopsys.framework.root_dir%/../http-smoke-testing', namespace: 'Shopsys\HttpSmokeTesting', app_namespace: 'App\HttpSmokeTesting' }
         luigis-box: { path: '%shopsys.framework.root_dir%/../luigis-box', namespace: 'Shopsys\LuigisBoxBundle', app_namespace: 'App\LuigisBox' }
         maker: { path: '%shopsys.framework.root_dir%/../maker', namespace: 'Shopsys\MakerBundle', app_namespace: 'App\Maker' }
+        mcp: { path: '%shopsys.framework.root_dir%/../mcp', namespace: 'Shopsys\McpBundle', app_namespace: 'App\Mcp' }
         migrations: { path: '%shopsys.framework.root_dir%/../migrations', namespace: 'Shopsys\MigrationBundle', app_namespace: 'App\Migration' }
         plugin-interface: { path: '%shopsys.framework.root_dir%/../plugin-interface', namespace: 'Shopsys\Plugin', app_namespace: 'App\Plugin' }
         product-feed-google: { path: '%shopsys.framework.root_dir%/../product-feed-google', namespace: 'Shopsys\ProductFeed\GoogleBundle', app_namespace: 'App\ProductFeed\Google' }
