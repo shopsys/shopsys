@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
@@ -75,17 +76,13 @@ export const CartListItem: FC<CartListItemProps> = ({
                 className="relative flex flex-row flex-wrap vl:flex-nowrap items-center justify-between gap-4 rounded-xl bg-background-more p-4 vl:p-5"
                 data-tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
             >
-                {isProductGift && (
-                    <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 font-semibold text-white text-xs shadow-md">
-                        {t('Gift')}
-                    </div>
-                )}
+                {isProductGift && <GiftBadge />}
 
                 <div className="flex basis-full vl:basis-auto vl:items-center gap-2.5 pt-6 vl:pt-0 pr-8 vl:pr-0">
                     <div className="flex size-20 shrink-0">
                         {hasProductDetailLink ? (
                             <ExtendedNextLink
-                                className="relative isolate"
+                                className="relative"
                                 href={productSlug}
                                 tabIndex={-1}
                                 tid={TIDs.cart_list_item_image}
