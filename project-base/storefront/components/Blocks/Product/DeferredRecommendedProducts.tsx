@@ -74,7 +74,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
     };
 
     return (
-        <Webline className="mb-4">
+        <>
             {shouldRender
                 ? render(
                       <ProductsSlider
@@ -92,6 +92,6 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
                           visibleItemsConfig={productItemStyleProps.visibleItemsConfig}
                       />,
                   )}
-        </Webline>
+        </>
     );
 };

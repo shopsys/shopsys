@@ -118,10 +118,10 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         itemUuids={[product.uuid]}
                         recommendationType={TypeRecommendationType.ItemDetail}
                         render={(recommendedProductsContent) => (
-                            <section>
+                            <Webline>
                                 <h2 className="h5 mb-3">{t('Recommended for you')}</h2>
                                 {recommendedProductsContent}
-                            </section>
+                            </Webline>
                         )}
                     />
                 )}
