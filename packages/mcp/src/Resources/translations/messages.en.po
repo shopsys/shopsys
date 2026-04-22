@@ -1,0 +1,162 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Actions"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Add the server once, then authenticate it in Claude Code when prompted."
+msgstr ""
+
+msgid "Allow access"
+msgstr ""
+
+msgid "Approve MCP access"
+msgstr ""
+
+msgid "Authentication steps"
+msgstr ""
+
+msgid "Authorization header"
+msgstr ""
+
+msgid "Authorize MCP client"
+msgstr ""
+
+msgid "Authorized MCP clients"
+msgstr ""
+
+msgid "Claude Code client setup"
+msgstr ""
+
+msgid "Client"
+msgstr ""
+
+msgid "Complete the browser login and approve MCP access in Shopsys administration."
+msgstr ""
+
+msgid "Copy command"
+msgstr ""
+
+msgid "Copy the new MCP Bearer token now. It will not be shown again:"
+msgstr ""
+
+msgid "Copy token"
+msgstr ""
+
+msgid "Created at"
+msgstr ""
+
+msgid "Deny access"
+msgstr ""
+
+msgid "Do you really want to revoke MCP access for \"%clientLabel%\"?"
+msgstr ""
+
+msgid "Do you really want to revoke the active MCP token?"
+msgstr ""
+
+msgid "Endpoint URL"
+msgstr ""
+
+msgid "Environment variables exported this way are available only in the current shell session unless you add them to your shell profile."
+msgstr ""
+
+msgid "Expires at"
+msgstr ""
+
+msgid "Export the manual token in your current shell, then add the MCP server once."
+msgstr ""
+
+msgid "Generate MCP token"
+msgstr ""
+
+msgid "Generated tokens are shown only once. Regenerating a token revokes the previous token immediately."
+msgstr ""
+
+msgid "Generating a new MCP token revokes the previous one immediately. Do you want to continue?"
+msgstr ""
+
+msgid "Last used at"
+msgstr ""
+
+msgid "MCP server"
+msgstr ""
+
+msgid "MCP session revoked"
+msgstr ""
+
+msgid "MCP token revoked"
+msgstr ""
+
+msgid "Manual token"
+msgstr ""
+
+msgid "Never used"
+msgstr ""
+
+msgid "No active manual MCP token is configured for your administrator account."
+msgstr ""
+
+msgid "No authorized MCP client is currently active for your administrator account."
+msgstr ""
+
+msgid "One-time setup command"
+msgstr ""
+
+msgid "Other MCP clients"
+msgstr ""
+
+msgid "Per-shell token command"
+msgstr ""
+
+msgid "Please check the correctness of all data filled."
+msgstr ""
+
+msgid "Regenerate MCP token"
+msgstr ""
+
+msgid "Revoke MCP token"
+msgstr ""
+
+msgid "Revoke access"
+msgstr ""
+
+msgid "Run the command above once in the shell where you use Claude Code."
+msgstr ""
+
+msgid "Select Authenticate for the Shopsys MCP server."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Start Claude Code and run /mcp."
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "The selected MCP session cannot be revoked."
+msgstr ""
+
+msgid "There is no active MCP session to revoke."
+msgstr ""
+
+msgid "There is no active MCP token to revoke."
+msgstr ""
+
+msgid "This client is requesting access to the Shopsys MCP server with your administrator account."
+msgstr ""
+
+msgid "Use a manual token for clients such as Codex CLI."
+msgstr ""
+
+msgid "View Codex CLI instructions"
+msgstr ""
+

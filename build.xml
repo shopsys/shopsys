@@ -604,6 +604,16 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="jms:translation:extract"/>
+            <arg value="--bundle=ShopsysMcpBundle"/>
+            <arg value="--dir=${path.packages}/mcp/src"/>
+            <arg value="--output-format=po"/>
+            <arg value="--output-dir=${path.packages}/mcp/src/Resources/translations"/>
+            <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
+        </exec>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysAdministrationBundle"/>
             <arg value="--dir=${path.packages}/administration/src"/>
             <arg value="--dir=${path.packages}/administration/templates"/>
