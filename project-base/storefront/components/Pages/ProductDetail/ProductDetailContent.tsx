@@ -66,18 +66,9 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             usps={product.usps}
                         />
 
-                        <div className="flex flex-col gap-4 rounded-xl bg-background-more p-3 sm:p-6">
-                            {product.gifts.length > 0 && (
-                                <>
-                                    <p className="h3 mb-3">{t('Gifts')}</p>
-                                    <div>
-                                        {product.gifts.map((gift) => (
-                                            <ProductGift key={gift.uuid} gift={gift} />
-                                        ))}
-                                    </div>
-                                </>
-                            )}
+                        <ProductGift gifts={product.gifts} />
 
+                        <div className="flex flex-col gap-4 rounded-xl bg-background-more p-3 sm:p-6">
                             <ProductDetailPrice productPrice={product.price} />
 
                             <ProductDetailAvailability
