@@ -50,6 +50,18 @@ export default defineConfig({
         setupNodeEvents(on, config) {
             configureVisualRegression(on);
 
+            // Delete videos of passing specs so CI failure artifacts stay under upload limits.
+            on('after:spec', (_spec, results) => {
+                if (results?.video) {
+                    const failed = results.tests?.some((t) =>
+                        t.attempts?.some((a) => a.state === 'failed'),
+                    );
+                    if (!failed && fs.existsSync(results.video)) {
+                        fs.unlinkSync(results.video);
+                    }
+                }
+            });
+
             on('before:browser:launch', (browser, launchOptions) => {
                 if (browser.family === 'chromium' && browser.name !== 'electron') {
                     launchOptions.args.push(
