@@ -160,16 +160,24 @@ test:storefront-acceptance:
     <<: *only-default
     tags:
         - tests
-#    parallel:
-#        matrix:
-#            -   GROUP: "authentication"
-#            -   GROUP: "cart"
-#            -   GROUP: "order"
-#            -   GROUP: "transportAndPayment"
-#            -   GROUP: "visits"
-#            -   GROUP: "ssr"
-#            -   GROUP: "others"
-
+    #    parallel:
+    #        matrix:
+    #            -   GROUP: "authentication"
+    #            -   GROUP: "b2b"
+    #            -   GROUP: "cart"
+    #            -   GROUP: "comparison"
+    #            -   GROUP: "complaints"
+    #            -   GROUP: "customerUsers"
+    #            -   GROUP: "filterAndSort"
+    #            -   GROUP: "freeShipping"
+    #            -   GROUP: "limitedUser"
+    #            -   GROUP: "order"
+    #            -   GROUP: "seoCategory"
+    #            -   GROUP: "ssr"
+    #            -   GROUP: "stores"
+    #            -   GROUP: "transportAndPayment"
+    #            -   GROUP: "visits"
+    #            -   GROUP: "others"
     artifacts:
         paths:
             - ./storefront/cypress/videos/
