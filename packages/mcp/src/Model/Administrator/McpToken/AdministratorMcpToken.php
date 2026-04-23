@@ -10,7 +10,16 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable(false)]
-#[ORM\Table(name: 'administrator_mcp_tokens')]
+#[ORM\Table(
+    name: 'administrator_mcp_tokens',
+    uniqueConstraints: [
+        new ORM\UniqueConstraint(
+            name: 'uniq_administrator_mcp_tokens_active_administrator_client',
+            columns: ['administrator_id', 'client_id'],
+            options: ['where' => 'revoked_at IS NULL AND replaced_at IS NULL'],
+        ),
+    ],
+)]
 #[ORM\Entity]
 class AdministratorMcpToken
 {

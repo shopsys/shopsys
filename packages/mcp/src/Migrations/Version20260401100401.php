@@ -29,8 +29,12 @@ class Version20260401100401 extends AbstractMigration
                 PRIMARY KEY (id)
             )');
         $this->sql('CREATE UNIQUE INDEX UNIQ_5A30067464EAEB46 ON administrator_mcp_tokens (public_token_id)');
+        $this->sql('
+            CREATE UNIQUE INDEX uniq_administrator_mcp_tokens_active_administrator_client
+            ON administrator_mcp_tokens (administrator_id, client_id)
+            WHERE revoked_at IS NULL AND replaced_at IS NULL
+        ');
         $this->sql('CREATE INDEX IDX_5A3006744B09E92C ON administrator_mcp_tokens (administrator_id)');
-        $this->sql('CREATE INDEX IDX_5A300674D59439E2D5DBA490 ON administrator_mcp_tokens (administrator_id, client_id)');
         $this->sql('
             ALTER TABLE
                 administrator_mcp_tokens
