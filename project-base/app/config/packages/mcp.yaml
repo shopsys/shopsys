@@ -7,6 +7,5 @@ mcp:
     http:
         session:
             store: cache
-            cache_pool: mcp_http_session_cache
             prefix: mcp_http_session
             ttl: 3600

@@ -60,6 +60,7 @@
         "overblog/dataloader-bundle": "^1.1",
         "presta/sitemap-bundle": "^4.1",
         "prezent/doctrine-translatable-bundle": "^3.0",
+        "psr/simple-cache": "^3.0",
         "sentry/sentry-symfony": "^5.0.1",
         "sentry/sentry": "^4.10.0",
         "shopsys/deployment": "^5.0.0",
