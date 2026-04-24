@@ -10,6 +10,14 @@
 | 1-0-3 | [Register B2B] should register as a B2B (company) customer | b2b customer edit page | registration.cy.ts |
 | 1-0-4 | [Empty Form] should disallow registration with empty registration form, show flash message, then allow after filling | after invalid try | registration.cy.ts |
 
+## Snapshot Group - COMPLAINTS
+
+| Snapshot Id | Test Name | Snapshot Detail | File |
+|-------------|-----------|-----------------|------|
+| 7-0-0 | should display the complaints list page | complaints-list | complaints.cy.ts |
+| 7-0-1 | should navigate to the new complaint page | new-complaint-page | complaints.cy.ts |
+| 7-0-2 | should allow Accountant to view complaints list | complaints-list-accountant | complaints.cy.ts |
+
 ## Snapshot Group - B2B
 
 | Snapshot Id | Test Name | Snapshot Detail | File |
@@ -66,14 +74,6 @@
 | 11-0-1 | [Add From Listing] should add a product to comparison from category listing and navigate to comparison page | comparison with one product from listing | productComparison.cy.ts |
 | 11-0-2 | [Add And Navigate] should add products from listing and detail, then navigate to comparison page | comparison with two products | productComparison.cy.ts |
 | 11-0-3 | [Remove Single Product] should add two products, remove one, and verify the other remains | comparison after removing one product | productComparison.cy.ts |
-
-## Snapshot Group - COMPLAINTS
-
-| Snapshot Id | Test Name | Snapshot Detail | File |
-|-------------|-----------|-----------------|------|
-| 7-0-0 | should display the complaints list page | complaints-list | complaints.cy.ts |
-| 7-0-1 | should navigate to the new complaint page | new-complaint-page | complaints.cy.ts |
-| 7-0-2 | should allow Accountant to view complaints list | complaints-list-accountant | complaints.cy.ts |
 
 ## Snapshot Group - CUSTOMER_USERS
 

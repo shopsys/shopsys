@@ -27,6 +27,12 @@ const changeWithdrawalSuccessDynamicPartsToStaticDemodata = () => {
 const SUBGROUP_INDEX = 3;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.B2B, SUBGROUP_INDEX);
 
+// IMPORTANT — this spec creates real B2B orders via cy.createB2bOrderForTest which persist to the shared
+// DB used by serial CI (GitLab). Those orders show up in the B2B Owner's order list and shift the
+// "new-complaint-page" snapshot in e2e/b2bComplaints/complaints.cy.ts. Current folder layout relies on
+// `b2bComplaints/` sorting alphabetically before `b2bUser/` so complaints runs first and sees a clean
+// state. Do not rename this folder/file to a name that would reorder it before b2bComplaints without
+// also adjusting the complaints snapshots (or making them DB-state-independent).
 describe('Order Withdrawal (B2B) Tests', () => {
     skipIfB2bNotConfigured();
 

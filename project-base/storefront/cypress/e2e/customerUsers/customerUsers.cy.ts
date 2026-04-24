@@ -9,7 +9,7 @@ import {
     submitManageUserForm,
     visitCustomerUsersPage,
 } from './customerUsersSupport';
-import { skipIfB2bNotConfigured } from 'e2e/b2b/b2bSupport';
+import { skipIfB2bNotConfigured } from 'e2e/b2bUser/b2bSupport';
 import { b2bUrl } from 'fixtures/demodata';
 import {
     check403PageIsVisible,

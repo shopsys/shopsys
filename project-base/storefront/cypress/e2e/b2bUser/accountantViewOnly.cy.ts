@@ -4,7 +4,7 @@ import {
     loginAndVisitB2bPage,
     skipIfB2bNotConfigured,
 } from './b2bSupport';
-import { changeComplaintsListDynamicPartsToStaticDemodata } from 'e2e/complaints/complaintsSupport';
+import { changeComplaintsListDynamicPartsToStaticDemodata } from 'e2e/b2bComplaints/complaintsSupport';
 import { changeOrdersListDynamicPartsToStaticDemodata } from 'e2e/order/orderSupport';
 import { b2bUrl } from 'fixtures/demodata';
 import {
