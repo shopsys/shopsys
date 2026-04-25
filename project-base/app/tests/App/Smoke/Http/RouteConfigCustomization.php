@@ -117,7 +117,7 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info): void {
-                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)|(^admin_customeruser_loginascustomeruser$)~', $info->getRouteName())) {
+                if (preg_match('~(_delete$)|(_delete_all$)|(_revoke$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)|(^admin_customeruser_loginascustomeruser$)~', $info->getRouteName())) {
                     $debugNote = 'Add CSRF token for protected actions during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
@@ -141,7 +141,7 @@ class RouteConfigCustomization
                         $config->changeDefaultRequestDataSet('Expect redirect by 200 for any delete confirm action.')
                             ->setExpectedStatusCode(200);
                     } else {
-                        $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete action.')
+                        $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete or revoke action.')
                             ->setExpectedStatusCode(302);
                     }
                 }
@@ -162,8 +162,8 @@ class RouteConfigCustomization
                     $config->changeDefaultRequestDataSet('Only superadmin should be able to see this route.')
                         ->setExpectedStatusCode(308);
 
-                    if (preg_match('~(_delete$)~', $info->getRouteName())) {
-                        $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete action.')
+                    if (preg_match('~(_delete$)|(_revoke$)~', $info->getRouteName())) {
+                        $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete or revoke action.')
                             ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                             ->setExpectedStatusCode(302);
                     } else {
@@ -441,6 +441,9 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('First two role groups are system managed, so they can not be copied.')
                     ->setParameter('id', 3)
                     ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_superadmin_mcp_oauth_authorize', function (RouteConfig $config): void {
+                $config->skipRoute('OAuth authorization requires a registered client and redirect URI.');
             });
     }
 
