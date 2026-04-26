@@ -79,6 +79,8 @@
         "shopsys/product-feed-zbozi": "19.0.x-dev",
         "shopsys/article-feed-luigis-box": "19.0.x-dev",
         "shopsys/luigis-box": "19.0.x-dev",
+        "shopsys/mcp": "19.0.x-dev",
+        "shopsys/mcp-attributes": "19.0.x-dev",
         "shopsys/s3-bridge": "19.0.x-dev",
         "snc/redis-bundle": "^4.8.0",
         "stof/doctrine-extensions-bundle": "^1.15",

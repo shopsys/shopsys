@@ -20,6 +20,15 @@ services:
         tags:
             - { name: doctrine.middleware, connection: mcp }
 
+    Shopsys\McpBundle\Component\Database\Query\SqlExecutor:
+        arguments:
+            $mcpConnection: '@doctrine.dbal.mcp_connection'
+            $maxReturnedRows: '%shopsys_mcp.query.max_returned_rows%'
+
+    Shopsys\McpBundle\Component\Database\Query\SqlQueryValidator:
+        arguments:
+            $maxReturnedRows: '%shopsys_mcp.query.max_returned_rows%'
+
     Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider:
         arguments:
             $mcpConnection: '@doctrine.dbal.mcp_connection'
