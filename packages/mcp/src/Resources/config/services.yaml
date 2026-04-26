@@ -13,6 +13,13 @@ services:
     Shopsys\McpBundle\Command\:
         resource: '../../Command/'
 
+    Shopsys\McpBundle\Component\Database\Middleware\McpSessionSettingsMiddleware:
+        arguments:
+            $statementTimeoutMilliseconds: '%shopsys_mcp.query.statement_timeout_ms%'
+            $lockTimeoutMilliseconds: '%shopsys_mcp.query.lock_timeout_ms%'
+        tags:
+            - { name: doctrine.middleware, connection: mcp }
+
     Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider:
         arguments:
             $mcpConnection: '@doctrine.dbal.mcp_connection'

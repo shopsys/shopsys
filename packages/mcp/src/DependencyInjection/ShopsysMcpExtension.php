@@ -26,6 +26,11 @@ class ShopsysMcpExtension extends Extension implements PrependExtensionInterface
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('shopsys_mcp.query.statement_timeout_ms', $config['query']['statement_timeout_ms']);
+        $container->setParameter('shopsys_mcp.query.lock_timeout_ms', $config['query']['lock_timeout_ms']);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
     }

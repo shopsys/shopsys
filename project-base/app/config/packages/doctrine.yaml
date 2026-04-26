@@ -1,19 +1,31 @@
 doctrine:
     dbal:
-        charset: UTF8
-        dbname: "%env(DATABASE_NAME)%"
-        driver: "%database_driver%"
-        host: "%env(DATABASE_HOST)%"
-        password: "%env(DATABASE_PASSWORD)%"
-        port: "%env(DATABASE_PORT)%"
-        # Explicitly define server version to overcome the need to connect to the database in early
-        # initialization phase (during DIC service creation) for auto-detecting version from the server.
-        # See \Doctrine\DBAL\Connection::getDatabasePlatformVersion().
-        server_version: "%database_server_version%"
+        connections:
+            default:
+                charset: UTF8
+                dbname: "%env(DATABASE_NAME)%"
+                driver: "%database_driver%"
+                host: "%env(DATABASE_HOST)%"
+                password: "%env(DATABASE_PASSWORD)%"
+                port: "%env(DATABASE_PORT)%"
+                # Explicitly define server version to overcome the need to connect to the database in early
+                # initialization phase (during DIC service creation) for auto-detecting version from the server.
+                # See \Doctrine\DBAL\Connection::getDatabasePlatformVersion().
+                server_version: "%database_server_version%"
+                user: "%env(DATABASE_USER)%"
+            mcp:
+                charset: UTF8
+                dbname: "%env(DATABASE_NAME)%"
+                driver: "%database_driver%"
+                host: "%env(DATABASE_HOST)%"
+                password: "%env(MCP_DATABASE_PASSWORD)%"
+                port: "%env(DATABASE_PORT)%"
+                server_version: "%database_server_version%"
+                user: "%env(MCP_DATABASE_USER)%"
+        default_connection: default
         types:
             money:
                 class: \Shopsys\FrameworkBundle\Component\Doctrine\MoneyType
-        user: "%env(DATABASE_USER)%"
     orm:
         auto_mapping: false
         class_metadata_factory_name: Shopsys\FrameworkBundle\Component\EntityExtension\ClassMetadataFactory

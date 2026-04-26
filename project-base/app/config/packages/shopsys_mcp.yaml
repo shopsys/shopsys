@@ -1,0 +1,4 @@
+shopsys_mcp:
+    query:
+        lock_timeout_ms: 1000
+        statement_timeout_ms: 10000
