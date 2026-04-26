@@ -87,6 +87,7 @@
         "ext-openssl": "*",
         "ext-pdo": "*",
         "ext-pdo_pgsql": "*",
+        "ext-pg_query": "*",
         "ext-redis": "*",
         "ext-simplexml": "*",
         "ext-tokenizer": "*",

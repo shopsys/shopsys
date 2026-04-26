@@ -49,6 +49,7 @@ RUN apk add --no-cache --virtual .build-deps \
     autoconf \
     freetype-dev \
     g++ \
+    git \
     icu-dev \
     jpeg-dev \
     libpng-dev \
@@ -56,11 +57,15 @@ RUN apk add --no-cache --virtual .build-deps \
     libzip-dev \
     make \
     openssl-dev \
+    protobuf-c-dev \
     rabbitmq-c-dev && \
+    curl -fsSL https://github.com/php/pie/releases/latest/download/pie.phar -o /usr/local/bin/pie && \
+    chmod +x /usr/local/bin/pie && \
     pecl install redis && \
     docker-php-ext-enable redis && \
     pecl install amqp && \
     docker-php-ext-enable amqp && \
+    pie install flow-php/pg-query-ext && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install \
         bcmath \
@@ -89,6 +94,7 @@ RUN apk add --no-cache --virtual .build-deps \
         openssl \
         patch \
         postgresql18-client \
+        protobuf-c \
         rabbitmq-c \
         vim
 

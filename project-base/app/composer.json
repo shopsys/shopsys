@@ -34,6 +34,7 @@
         "ext-openssl": "*",
         "ext-pdo": "*",
         "ext-pdo_pgsql": "*",
+        "ext-pg_query": "*",
         "ext-redis": "*",
         "ext-xml": "*",
         "arvenil/ninja-mutex": "^0.6",
