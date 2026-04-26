@@ -75,6 +75,8 @@ RUN apk add --no-cache --virtual .build-deps \
         pdo_pgsql \
         pgsql \
         zip && \
+    pie install flow-php/pg-query-ext && \
+    rm /usr/local/bin/pie && \
     apk del .build-deps && \
     apk add --no-cache \
         bash \
