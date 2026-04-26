@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block grid_value_cell_id_parameters %}
-    {% for parameterNameParameterValuePair in getReadyCategoryMixCombinationParametersPairsIterator(row.selectedCategorySeoMixCombinationJson) %}
+    {% for parameterNameParameterValuePair in getReadyCategoryMixCombinationParametersPairsIterator(row.rcsmId) %}
         {{ parameterNameParameterValuePair }}<br>
     {% endfor %}
 {% endblock %}

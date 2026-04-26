@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\App\Smoke\Http;
 
+use App\DataFixtures\Demo\ReadyCategorySeoDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
@@ -344,6 +346,16 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Check route with data-fixture parameters.')
                     ->setParameter('categoryId', 8)
                     ->setParameter('selectedCategorySeoMixCombinationJson', '{"domainId":1,"categoryId":8,"flagId":1,"ordering":null,"parameterValueIdsByParameterIds":{"38":75,"40":79,"37":73,"39":77}}');
+            })
+            ->customizeByRouteName('admin_categoryseo_readycombination_edit', function (RouteConfig $config): void {
+                $readyCategorySeoMix = $this->getPersistentReference(
+                    ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION,
+                    Domain::FIRST_DOMAIN_ID,
+                    ReadyCategorySeoMix::class,
+                );
+
+                $config->changeDefaultRequestDataSet('Edit existing ready category SEO mix from fixtures.')
+                    ->setParameter('id', $readyCategorySeoMix->getId());
             })
             ->customizeByRouteName('admin_unused_friendly_url_delete', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet('Unused friendly URL may be deleted only when there is any and CSRF token is provided')
