@@ -125,10 +125,10 @@ export default defineConfig({
             } else {
                 const patternsMap: { [key: string]: string[] } = {
                     authentication: ['e2e/authentication/*.cy.ts'],
-                    b2b: ['e2e/b2b/*.cy.ts'],
+                    b2b: ['e2e/b2bUser/*.cy.ts'],
                     cart: ['e2e/cart/*.cy.ts'],
                     comparison: ['e2e/comparison/*.cy.ts'],
-                    complaints: ['e2e/complaints/*.cy.ts'],
+                    complaints: ['e2e/b2bComplaints/*.cy.ts'],
                     customerUsers: ['e2e/customerUsers/*.cy.ts'],
                     filterAndSort: ['e2e/filterAndSort/*.cy.ts'],
                     freeShipping: ['e2e/freeShipping/*.cy.ts'],

@@ -6,7 +6,7 @@ import {
     visitComplaintsListPage,
     visitNewComplaintPage,
 } from './complaintsSupport';
-import { skipIfB2bNotConfigured } from 'e2e/b2b/b2bSupport';
+import { skipIfB2bNotConfigured } from 'e2e/b2bUser/b2bSupport';
 import { b2bUrl } from 'fixtures/demodata';
 import {
     check403PageIsVisible,
@@ -23,6 +23,13 @@ import { TIDs } from 'tids';
 const SUBGROUP_INDEX = 0;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.COMPLAINTS, SUBGROUP_INDEX);
 
+// IMPORTANT — spec execution order matters for the snapshots below.
+// The "new-complaint-page" snapshot renders the full list of the B2B Owner's orders. Specs that create
+// B2B orders at runtime (e.g. e2e/b2bUser/orderWithdrawal.cy.ts via cy.createB2bOrderForTest) append items
+// to that list and will shift the snapshot. In parallel CI (GitHub) each shard gets a fresh DB so it stays
+// stable; in serial CI (GitLab) a shared DB means any order-creating spec that runs BEFORE this one breaks
+// the snapshot. This file lives in `b2bComplaints/` so it sorts alphabetically before `b2bUser/` — do not
+// rename or move it without checking spec ordering against every spec that calls createB2bOrderForTest.
 describe('Complaints (B2B) Tests', () => {
     skipIfB2bNotConfigured();
 

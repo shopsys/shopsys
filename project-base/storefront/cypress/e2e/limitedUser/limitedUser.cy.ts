@@ -4,7 +4,7 @@ import {
     checkPricesAreVisible,
     visitB2bHomepageWithProducts,
 } from './limitedUserSupport';
-import { skipIfB2bNotConfigured } from 'e2e/b2b/b2bSupport';
+import { skipIfB2bNotConfigured } from 'e2e/b2bUser/b2bSupport';
 import { changeBlogArticleDynamicPartsToStaticDemodata } from 'e2e/visits/visitsSupport';
 import { b2bUrl } from 'fixtures/demodata';
 import {
