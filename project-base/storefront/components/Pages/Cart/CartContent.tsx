@@ -37,10 +37,10 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                     itemUuids={cart.items.map((item) => item.uuid)}
                     recommendationType={TypeRecommendationType.Basket}
                     render={(recommendedProductsContent) => (
-                        <section>
+                        <Webline>
                             <p className="h3 mb-3">{t('Recommended for you')}</p>
                             {recommendedProductsContent}
-                        </section>
+                        </Webline>
                     )}
                 />
             )}

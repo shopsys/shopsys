@@ -7,9 +7,10 @@ type CartItemPriceProps = {
     productPrice: TypeProductPriceFragment;
     quantity: number;
     freeQuantity: number;
+    className?: string;
 };
 
-export const CartItemPrice: FC<CartItemPriceProps> = ({ productPrice, quantity, freeQuantity }) => {
+export const CartItemPrice: FC<CartItemPriceProps> = ({ productPrice, quantity, freeQuantity, className }) => {
     const formatPrice = useFormatPrice();
     const isSpecialPrice =
         !!productPrice.percentageDiscount &&
@@ -22,7 +23,7 @@ export const CartItemPrice: FC<CartItemPriceProps> = ({ productPrice, quantity, 
     }
 
     return (
-        <div className="flex vl:w-36 items-center justify-end">
+        <div className={twMergeCustom('flex vl:w-36 items-center justify-end', className)}>
             <div className="flex flex-col gap-0.5 whitespace-nowrap text-right font-bold font-secondary">
                 <div
                     className={twMergeCustom(

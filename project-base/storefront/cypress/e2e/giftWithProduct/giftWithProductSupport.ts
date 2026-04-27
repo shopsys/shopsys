@@ -3,16 +3,14 @@ import { t } from 'support/translations';
 import { TIDs } from 'tids';
 
 export const checkGiftIsDisplayedOnProductDetail = () => {
-    t('Gifts').then((translatedText) => {
-        cy.get('body').should('contain.text', translatedText);
-    });
     t('Gift with purchase').then((translatedText) => {
         cy.get('body').should('contain.text', translatedText);
     });
+    cy.get('body').should('contain.text', staticData.products.giftTicket100czk.name);
 };
 
 export const checkGiftIsDisplayedInAddToCartPopup = () => {
-    t('Gifts').then((translatedText) => {
+    t('Gift with purchase').then((translatedText) => {
         cy.getByTID([TIDs.layout_popup]).should('be.visible').and('contain.text', translatedText);
     });
     cy.getByTID([TIDs.layout_popup]).should('contain.text', staticData.products.giftTicket100czk.name);

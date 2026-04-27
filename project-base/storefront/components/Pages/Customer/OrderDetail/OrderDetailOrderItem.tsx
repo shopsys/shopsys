@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -74,16 +75,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                 'border-t border-t-border-default py-5 first:pt-0 last:pb-0',
             )}
         >
-            {isProductGift && (
-                <div
-                    className={twJoin(
-                        'absolute top-5 left-0 z-10 rounded-tl-md rounded-br-md px-2 py-0.5',
-                        'bg-linear-to-r from-purple-600 to-pink-600 font-semibold text-white text-xs shadow-md',
-                    )}
-                >
-                    {t('Gift')}
-                </div>
-            )}
+            {isProductGift && <GiftBadge className="top-5 rounded-tl-md" />}
 
             <div
                 className={twMergeCustom(

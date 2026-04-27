@@ -1,3 +1,4 @@
+import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { Image } from 'components/Basic/Image/Image';
 import { OrderItemProductPrice } from 'components/Blocks/OrderItemProductCard/OrderItemProductPrice';
 import { TIDs } from 'cypress/tids';
@@ -5,7 +6,6 @@ import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragme
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { generateProductImageAlt } from 'utils/productAltText';
 
 type OrderItemGiftCardProps = {
@@ -27,13 +27,9 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
     price,
     availability,
 }) => {
-    const { t } = useTranslation();
-
     return (
         <li className="relative flex flex-col gap-1 rounded-xl bg-background-more p-4 font-secondary">
-            <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 font-semibold text-white text-xs shadow-md">
-                {t('Gift')}
-            </div>
+            <GiftBadge />
 
             <div className="isolate flex items-center gap-2.5">
                 <Image

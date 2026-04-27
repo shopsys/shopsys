@@ -8,6 +8,7 @@ import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisit
 import { UpsList } from 'components/Blocks/UpsList/UpsList';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeRecommendationType } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -40,10 +41,10 @@ export const HomePageContent: FC = () => {
                         <DeferredRecommendedProducts
                             recommendationType={TypeRecommendationType.Personalized}
                             render={(recommendedProductsContent) => (
-                                <section aria-label={t('Recommended products', { ns: 'accessibility' })}>
+                                <Webline>
                                     <h2 className="h3 mb-3">{t('Recommended for you')}</h2>
                                     {recommendedProductsContent}
-                                </section>
+                                </Webline>
                             )}
                         />
                     )}
