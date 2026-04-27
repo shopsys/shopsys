@@ -196,7 +196,12 @@ class ArticleController extends AdminBaseController
     #[CanEdit]
     public function saveOrderingAction(Request $request): JsonResponse
     {
-        $this->articleFacade->saveOrdering($request->request->all('rowIdsByGridId'));
+        $rowIdsByGridId = array_map(
+            static fn (array $rowIds): array => array_map('json_decode', $rowIds),
+            $request->request->all('rowIdsByGridId'),
+        );
+
+        $this->articleFacade->saveOrdering($rowIdsByGridId);
 
         $responseData = ['success' => true];
 
