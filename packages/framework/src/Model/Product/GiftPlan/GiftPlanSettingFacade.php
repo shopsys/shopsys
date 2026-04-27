@@ -23,7 +23,6 @@ class GiftPlanSettingFacade
         protected readonly Setting $setting,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly BasePriceCalculation $basePriceCalculation,
-        protected readonly PricingSetting $pricingSetting,
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
@@ -52,7 +51,7 @@ class GiftPlanSettingFacade
 
         return $this->basePriceCalculation->calculateRoundedBasePrice(
             $inputPrice,
-            $this->pricingSetting->getInputPriceType(),
+            PricingSetting::PRICE_TYPE_WITH_VAT,
             $vat,
             $defaultCurrency->getRoundingType(),
             $defaultCurrency->getRoundingPlacesPriceWithoutVat(),
