@@ -1,4 +1,40 @@
+{% macro categoryTreeItem(loadChildrenUrl, hasChildren, isVisible, checkboxId, checkboxName, value, label, isChecked, renderClosingTags) %}
+    <li class="tree-item {% if not isVisible %}text-secondary{% endif %} js-category-tree-form-item"
+        data-load-url="{{ loadChildrenUrl }}"
+        data-has-children="{{ hasChildren }}"
+    >
+        <div class="tree-item-content">
+            <div class="tree-item-label">
+                <div class="d-flex gap-2 align-items-baseline">
+                    <div class="w-3 h-3 flex-shrink-0">
+                        <div class="js-category-tree-form-item-icon"></div>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            type="checkbox"
+                            id="{{ checkboxId }}"
+                            name="{{ checkboxName }}"
+                            value="{{ value }}"
+                            class="js-category-tree-form-item-checkbox form-check-input"
+                            {% if isChecked %}checked="checked"{% endif %}
+                        >
+                        <label for="{{ checkboxId }}" class="form-check-label">
+                            {{ label }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="js-category-tree-form-children-container tree-group">
+    {% if renderClosingTags %}
+        </ul>
+    </li>
+    {% endif %}
+{% endmacro %}
+
 {% block categories_widget %}
+    {% import _self as categoriesMacros %}
+
     {% if main_category_path is not null %}
         <div>
             {{ ux_icon('tag') }}
@@ -10,17 +46,28 @@
     {% endif %}
 
     <div class="js-category-tree-form"
-         data-prototype="{{ '<li class="tree-item js-category-tree-form-item">' ~
-         form_widget(form.vars.prototype) ~
-         '<ul class="js-category-tree-form-children-container tree-group">' ~
-         '</ul></li>' }}"
+         data-checkbox-name="{{ checkbox_name }}"
+         data-checkbox-id-prefix="{{ checkbox_id_prefix }}"
          data-hidden-item-class="text-secondary"
     >
+        <template class="js-category-tree-form-item-template">
+            {{ categoriesMacros.categoryTreeItem(
+                loadChildrenUrl='__load_children_url__',
+                hasChildren='__has_children__',
+                isVisible=true,
+                checkboxId='__checkbox_id__',
+                checkboxName='__checkbox_name__',
+                value='__value__',
+                label='__label__',
+                isChecked=false,
+                renderClosingTags=true,
+            ) }}
+        </template>
         <ul class="js-category-tree-form-children-container tree">
             {% set level = 1 %}
 
-            {% for child in form.children %}
-            {% set currentLevel = child.vars.level %}
+            {% for category in tree_categories %}
+            {% set currentLevel = category.level %}
 
             {% if not loop.first %}
             {% if currentLevel <= level %}
@@ -28,16 +75,21 @@
         {% endif %}
         {% endif %}
 
-        <li class="tree-item {% if not child.vars.visible %}text-secondary{% endif %} js-category-tree-form-item"
-            data-load-url="{{ url('admin_category_loadbranchjson', {id: child.vars.name, domainId: domain_id}) }}"
-            data-has-children="{{ child.vars.has_children ? 'true' : 'false' }}"
-        >
-            {{ form_widget(child) }}
-            <ul class="js-category-tree-form-children-container tree-group">
-                {% set level = currentLevel %}
-                {% endfor %}
+        {{ categoriesMacros.categoryTreeItem(
+            loadChildrenUrl=url('admin_category_loadbranchjson', {id: category.id, domainId: domain_id}),
+            hasChildren=category.hasChildren ? 'true' : 'false',
+            isVisible=category.isVisible(domain_id),
+            checkboxId=checkbox_id_prefix ~ '_' ~ category.id,
+            checkboxName=checkbox_name,
+            value=category.id,
+            label=category.name,
+            isChecked=category.id in selected_category_ids,
+            renderClosingTags=false,
+        ) }}
+        {% set level = currentLevel %}
+        {% endfor %}
 
-                {% for i in 1 .. level %}</ul></li>{% endfor %}
-            </ul>
+            {% for i in 1 .. level %}</ul></li>{% endfor %}
+        </ul>
     </div>
 {% endblock %}

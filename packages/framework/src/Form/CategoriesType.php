@@ -6,23 +6,21 @@ namespace Shopsys\FrameworkBundle\Form;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer;
+use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CategoriesType extends AbstractType
 {
     public function __construct(
-        private readonly CategoriesTypeTransformer $categoriesTypeTransformer,
+        private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
         private readonly CategoryFacade $categoryFacade,
         private readonly Domain $domain,
         private readonly Localization $localization,
@@ -32,25 +30,26 @@ final class CategoriesType extends AbstractType
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
+        $selectedCategories = $form->getData() ?? [];
+        $selectedCategoryIds = array_map('intval', $form->getViewData() ?? []);
+
         $view->vars['domain_id'] = $options['domain_id'];
         $view->vars['main_category_path'] = $this->getMainCategoryPath($options);
+        $view->vars['tree_categories'] = $this->categoryFacade->getAllCategoriesOfCollapsedTree($selectedCategories);
+        $view->vars['selected_category_ids'] = $selectedCategoryIds;
+        $view->vars['checkbox_name'] = $view->vars['full_name'] . '[]';
+        $view->vars['checkbox_id_prefix'] = $view->vars['id'];
     }
 
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addViewTransformer($this->categoriesTypeTransformer);
+        $builder->addModelTransformer($this->categoriesIdsToCategoriesTransformer);
     }
 
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $entryOptionsNormalizer = function (Options $options, $value) {
-            $value['domain_id'] = $value['domain_id'] ?? $options['domain_id'];
-
-            return $value;
-        };
-
         $resolver
             ->setRequired(['domain_id'])
             ->setDefined(['product'])
@@ -58,23 +57,11 @@ final class CategoriesType extends AbstractType
             ->setAllowedTypes('product', [Product::class, 'null'])
             ->setDefaults([
                 'required' => false,
-                'entry_type' => CategoryCheckboxType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'prototype' => true,
+                'compound' => false,
+                'multiple' => true,
+                'empty_data' => [],
                 'product' => null,
             ]);
-
-        $resolver->setNormalizer('entry_options', $entryOptionsNormalizer);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getParent(): string
-    {
-        return CollectionType::class;
     }
 
     private function getMainCategoryPath(array $options): ?string

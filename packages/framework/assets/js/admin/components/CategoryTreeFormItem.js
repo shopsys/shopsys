@@ -124,19 +124,26 @@ export default class CategoryTreeFormItem {
 
     createItem(itemData) {
         const $form = this.$item.closest('.js-category-tree-form');
-        let newItemHtml = $form.data('prototype');
+        const checkboxName = $form.data('checkbox-name');
+        const checkboxIdPrefix = $form.data('checkbox-id-prefix');
+        const checkboxId = `${checkboxIdPrefix}_${itemData.id}`;
+        let newItemHtml = $form.find('.js-category-tree-form-item-template:first').html().trim();
 
-        newItemHtml = newItemHtml.replace(/__name__/g, itemData.id);
-        newItemHtml = newItemHtml.replace(/__category_name__/g, itemData.categoryName);
+        newItemHtml = newItemHtml
+            .replace('__load_children_url__', () => itemData.loadUrl)
+            .replace('__has_children__', () => (itemData.hasChildren ? 'true' : 'false'))
+            .replace('__checkbox_id__', () => checkboxId)
+            .replace('__checkbox_name__', () => checkboxName)
+            .replace('__value__', () => itemData.id)
+            .replace('__label__', () => itemData.categoryName);
 
-        const $newItem = $($.parseHTML(newItemHtml));
+        const $newItem = $(newItemHtml);
+
         $newItem.data('load-url', itemData.loadUrl);
         $newItem.data('has-children', itemData.hasChildren);
         if (itemData.isVisible === false) {
             $newItem.addClass($form.data('hidden-item-class'));
         }
-
-        $newItem.find('.js-category-tree-form-item-checkbox').val(itemData.id);
 
         return $newItem;
     }

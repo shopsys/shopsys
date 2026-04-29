@@ -103,20 +103,16 @@ An array of constraints that is used for field with the same locale as administr
 
 ### [CategoriesType]({{github.link}}/packages/framework/src/Form/CategoriesType.php)
 
-Displays a tree of all categories for given `domain_id` with checkboxes for each category created by `CategoryCheckBoxType` and returns array indexed by checked category ids.
+Displays a lazily loaded tree of categories for the given `domain_id` with checkboxes for selecting categories.
+Submitted checkbox values are transformed to an array of selected `Category` entities.
 
 #### domain_id
 
 Required option that defines for what domain should the categories be listed.
 
-### [CategoryCheckboxType]({{github.link}}/packages/framework/src/Form/CategoryCheckboxType.php)
+#### product
 
-Creates checkbox and label with category name if name of the form is the same as category id.
-Adds `visible`, `category_name`, `has_children` and `level` vars from category on domain for given `domain_id` to `FormView` so you can easily work with the checkbox.
-
-#### domain_id
-
-Required option that defines from what domain should the category be listed.
+Optional `Product` used to display the current main category path above the tree in product-related forms.
 
 ### [ColorPickerType]({{github.link}}/packages/framework/src/Form/ColorPickerType.php)
 
