@@ -2,17 +2,17 @@ import IconMinus from 'icons/tabler/circle-minus.svg';
 import IconPlus from 'icons/tabler/circle-plus.svg';
 import Ajax from '../../common/utils/Ajax';
 
-export default class CategoryTreeFormItem {
+export default class TreeSelectionFormItem {
     constructor($item, parent) {
         this.$item = $item;
         this.status = null;
         this.loaded = null;
-        this.$statusIcon = $item.find('.js-category-tree-form-item-icon:first');
-        this.$checkbox = $item.find('.js-category-tree-form-item-checkbox:first');
+        this.$statusIcon = $item.find('.js-tree-selection-form-item-icon:first');
+        this.$checkbox = $item.find('.js-tree-selection-form-item-checkbox:first');
         this.parent = parent;
         this.children = [];
 
-        this.$childrenContainer = $item.find('.js-category-tree-form-children-container:first');
+        this.$childrenContainer = $item.find('.js-tree-selection-form-children-container:first');
 
         this.initChildren();
         this.initStatus();
@@ -22,8 +22,8 @@ export default class CategoryTreeFormItem {
 
     initChildren() {
         const _this = this;
-        this.$childrenContainer.find('> .js-category-tree-form-item').each(function () {
-            const childItem = new CategoryTreeFormItem($(this), _this);
+        this.$childrenContainer.find('> .js-tree-selection-form-item').each(function () {
+            const childItem = new TreeSelectionFormItem($(this), _this);
             _this.children.push(childItem);
         });
     }
@@ -34,10 +34,10 @@ export default class CategoryTreeFormItem {
             if (this.$item.data('has-children')) {
                 this.close(false);
             } else {
-                this.setStatus(CategoryTreeFormItem.STATUS_NONE);
+                this.setStatus(TreeSelectionFormItem.STATUS_NONE);
             }
             if (this.$checkbox.is(':checked')) {
-                if (this.parent instanceof CategoryTreeFormItem) {
+                if (this.parent instanceof TreeSelectionFormItem) {
                     this.parent.open(false);
                 }
             }
@@ -50,7 +50,7 @@ export default class CategoryTreeFormItem {
     close(animate) {
         if (!this.$childrenContainer.is(':animated')) {
             this.$childrenContainer.slideUp(animate === true ? 'normal' : 0);
-            this.setStatus(CategoryTreeFormItem.STATUS_CLOSED);
+            this.setStatus(TreeSelectionFormItem.STATUS_CLOSED);
         }
     }
 
@@ -61,25 +61,25 @@ export default class CategoryTreeFormItem {
 
     updateStatusIcon() {
         switch (this.status) {
-            case CategoryTreeFormItem.STATUS_OPENED:
-            case CategoryTreeFormItem.STATUS_LOADING:
+            case TreeSelectionFormItem.STATUS_OPENED:
+            case TreeSelectionFormItem.STATUS_LOADING:
                 this.$statusIcon.html(IconMinus);
                 this.$statusIcon.addClass('cursor-pointer');
                 break;
-            case CategoryTreeFormItem.STATUS_CLOSED:
+            case TreeSelectionFormItem.STATUS_CLOSED:
                 this.$statusIcon.html(IconPlus);
                 this.$statusIcon.addClass('cursor-pointer');
                 break;
-            case CategoryTreeFormItem.STATUS_NONE:
+            case TreeSelectionFormItem.STATUS_NONE:
                 this.$statusIcon.addClass('d-none');
                 break;
         }
     }
 
     statusToggle() {
-        if (this.status === CategoryTreeFormItem.STATUS_CLOSED) {
+        if (this.status === TreeSelectionFormItem.STATUS_CLOSED) {
             this.open(true);
-        } else if (this.status === CategoryTreeFormItem.STATUS_OPENED) {
+        } else if (this.status === TreeSelectionFormItem.STATUS_OPENED) {
             this.close(true);
         }
     }
@@ -89,15 +89,15 @@ export default class CategoryTreeFormItem {
             this.loadChildren();
         } else if (!this.$childrenContainer.is(':animated')) {
             this.$childrenContainer.slideDown(animate === true ? 'normal' : 0);
-            this.setStatus(CategoryTreeFormItem.STATUS_OPENED);
-            if (this.parent instanceof CategoryTreeFormItem) {
+            this.setStatus(TreeSelectionFormItem.STATUS_OPENED);
+            if (this.parent instanceof TreeSelectionFormItem) {
                 this.parent.open(animate);
             }
         }
     }
 
     loadChildren() {
-        this.setStatus(CategoryTreeFormItem.STATUS_LOADING);
+        this.setStatus(TreeSelectionFormItem.STATUS_LOADING);
         const _this = this;
         Ajax.ajax({
             loaderElement: this.$item,
@@ -115,19 +115,19 @@ export default class CategoryTreeFormItem {
                 _this.open(true);
             },
             complete: () => {
-                if (_this.status === CategoryTreeFormItem.STATUS_LOADING) {
-                    _this.setStatus(CategoryTreeFormItem.STATUS_CLOSED);
+                if (_this.status === TreeSelectionFormItem.STATUS_LOADING) {
+                    _this.setStatus(TreeSelectionFormItem.STATUS_CLOSED);
                 }
             },
         });
     }
 
     createItem(itemData) {
-        const $form = this.$item.closest('.js-category-tree-form');
+        const $form = this.$item.closest('.js-tree-selection-form');
         const checkboxName = $form.data('checkbox-name');
         const checkboxIdPrefix = $form.data('checkbox-id-prefix');
         const checkboxId = `${checkboxIdPrefix}_${itemData.id}`;
-        let newItemHtml = $form.find('.js-category-tree-form-item-template:first').html().trim();
+        let newItemHtml = $form.find('.js-tree-selection-form-item-template:first').html().trim();
 
         newItemHtml = newItemHtml
             .replace('__load_children_url__', () => itemData.loadUrl)
@@ -135,7 +135,7 @@ export default class CategoryTreeFormItem {
             .replace('__checkbox_id__', () => checkboxId)
             .replace('__checkbox_name__', () => checkboxName)
             .replace('__value__', () => itemData.id)
-            .replace('__label__', () => itemData.categoryName);
+            .replace('__label__', () => itemData.label);
 
         const $newItem = $(newItemHtml);
 
@@ -149,7 +149,7 @@ export default class CategoryTreeFormItem {
     }
 }
 
-CategoryTreeFormItem.STATUS_OPENED = 'opened';
-CategoryTreeFormItem.STATUS_CLOSED = 'closed';
-CategoryTreeFormItem.STATUS_LOADING = 'loading';
-CategoryTreeFormItem.STATUS_NONE = 'none';
+TreeSelectionFormItem.STATUS_OPENED = 'opened';
+TreeSelectionFormItem.STATUS_CLOSED = 'closed';
+TreeSelectionFormItem.STATUS_LOADING = 'loading';
+TreeSelectionFormItem.STATUS_NONE = 'none';

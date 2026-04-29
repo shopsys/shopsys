@@ -444,7 +444,7 @@ class CategoryRepository extends NestedTreeRepository
 
     /**
      * @param int[] $categoryIds
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Category\Category>
      */
     public function getCategoriesByIds(array $categoryIds): array
     {

@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
  * @property \App\Model\Category\CategoryRepository $categoryRepository
  * @method \App\Model\Category\Category getById(int $categoryId)
  * @method \App\Model\Category\Category getByUuid(string $categoryUuid)
- * @method \App\Model\Category\Category[] getAllCategoriesOfCollapsedTree(\App\Model\Category\Category[] $selectedCategories)
+ * @method \App\Model\Category\Category[] getCollapsedTree(\App\Model\Category\Category[] $selectedCategories)
  * @method \App\Model\Category\Category[] getFullPathsIndexedByIdsForDomain(int $domainId, string $locale)
  * @method \App\Model\Category\Category[] getVisibleCategoriesInPathFromRootOnDomain(\App\Model\Category\Category $category, int $domainId)
  * @method \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren[] getCategoriesWithLazyLoadedVisibleChildrenForParent(\App\Model\Category\Category $parentCategory, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
@@ -29,7 +29,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
  * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch(\App\Model\Category\Category $category, string $locale)
  * @method void createFriendlyUrlsWhenRenamed(\App\Model\Category\Category $category, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Category\Category $category, array $originalNames)
- * @method \App\Model\Category\Category[] getByIds(int[] $categoryIds)
+ * @method array<int, \App\Model\Category\Category> getByIds(int[] $categoryIds)
  * @method \App\Model\Category\Category getVisibleOnDomainByUuid(int $domainId, string $categoryUuid)
  * @method \App\Model\Category\Category getProductMainCategoryOnCurrentDomain(\App\Model\Product\Product $product)
  * @method void dispatchCategoryEvent(\App\Model\Category\Category $category, string $eventType)

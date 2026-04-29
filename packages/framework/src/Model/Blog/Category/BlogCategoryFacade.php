@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Form\TreeSelection\TreeSelectionDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade;
@@ -16,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\RootLevelBlogCategoryAlreadyExistsException;
 
-class BlogCategoryFacade
+class BlogCategoryFacade implements TreeSelectionDataProviderInterface
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -122,7 +124,8 @@ class BlogCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $selectedCategories
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
-    public function getAllBlogCategoriesOfCollapsedTree(array $selectedCategories): array
+    #[Override]
+    public function getCollapsedTree(array $selectedCategories): array
     {
         return $this->blogCategoryRepository->getAllBlogCategoriesOfCollapsedTree($selectedCategories);
     }
@@ -204,8 +207,9 @@ class BlogCategoryFacade
 
     /**
      * @param int[] $blogCategoryIds
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
      */
+    #[Override]
     public function getByIds(array $blogCategoryIds): array
     {
         return $this->blogCategoryRepository->getByIds($blogCategoryIds);

@@ -199,7 +199,7 @@ class CategoryController extends AdminBaseController
         foreach ($categories as $category) {
             $categoriesData[] = [
                 'id' => $category->getId(),
-                'categoryName' => $category->getName(),
+                'label' => $category->getName(),
                 'isVisible' => $category->isVisible($domainId),
                 'hasChildren' => $category->hasChildren(),
                 'loadUrl' => $this->generateUrl('admin_category_loadbranchjson', [

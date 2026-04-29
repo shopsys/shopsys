@@ -11,6 +11,7 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Form\TreeSelection\TreeSelectionEntityInterface;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
@@ -22,7 +23,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 #[ORM\Entity]
 #[Gedmo\Tree(type: 'nested')]
 #[EntityImage]
-class BlogCategory extends AbstractTranslatableEntity
+class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEntityInterface
 {
     /**
      * @var int
@@ -117,6 +118,7 @@ class BlogCategory extends AbstractTranslatableEntity
     /**
      * @return int
      */
+    #[Override]
     public function getId()
     {
         return $this->id;
@@ -125,6 +127,7 @@ class BlogCategory extends AbstractTranslatableEntity
     /**
      * @return string|null
      */
+    #[Override]
     public function getName(?string $locale = null)
     {
         return $this->translation($locale)->getName();
@@ -155,6 +158,7 @@ class BlogCategory extends AbstractTranslatableEntity
     /**
      * @return int
      */
+    #[Override]
     public function getLevel()
     {
         return $this->level;
@@ -165,6 +169,7 @@ class BlogCategory extends AbstractTranslatableEntity
      *
      * @return bool
      */
+    #[Override]
     public function hasChildren()
     {
         return $this->getRgt() - $this->getLft() > 1;
@@ -173,6 +178,7 @@ class BlogCategory extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
+    #[Override]
     public function getChildren()
     {
         return $this->children->getValues();
@@ -243,6 +249,7 @@ class BlogCategory extends AbstractTranslatableEntity
     /**
      * @return bool
      */
+    #[Override]
     public function isVisible(int $domainId)
     {
         return $this->getDomain($domainId)->isVisible();

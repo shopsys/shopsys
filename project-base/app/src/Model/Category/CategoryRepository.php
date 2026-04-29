@@ -30,7 +30,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Category\Category getProductMainCategoryOnDomain(\App\Model\Product\Product $product, int $domainId)
  * @method \App\Model\Category\Category[] getVisibleCategoriesInPathFromRootOnDomain(\App\Model\Category\Category $category, int $domainId)
  * @method string[] getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, string|null $locale = null)
- * @method \App\Model\Category\Category[] getCategoriesByIds(int[] $categoryIds)
+ * @method array<int, \App\Model\Category\Category> getCategoriesByIds(int[] $categoryIds)
  * @method \App\Model\Category\Category[] getCategoriesWithVisibleChildren(\App\Model\Category\Category[] $categories, int $domainId)
  * @method \App\Model\Category\Category[] getAllTranslated(string $locale)
  * @method \Doctrine\ORM\QueryBuilder getCategoriesWithVisibleChildrenQueryBuilder(\App\Model\Category\Category[] $categories, int $domainId)

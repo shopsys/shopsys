@@ -1,5 +1,5 @@
-{% macro categoryTreeItem(loadChildrenUrl, hasChildren, isVisible, checkboxId, checkboxName, value, label, isChecked, renderClosingTags) %}
-    <li class="tree-item {% if not isVisible %}text-secondary{% endif %} js-category-tree-form-item"
+{% macro treeSelectionItem(loadChildrenUrl, hasChildren, isVisible, checkboxId, checkboxName, value, label, isChecked, renderClosingTags) %}
+    <li class="tree-item {% if not isVisible %}text-secondary{% endif %} js-tree-selection-form-item"
         data-load-url="{{ loadChildrenUrl }}"
         data-has-children="{{ hasChildren }}"
     >
@@ -7,7 +7,7 @@
             <div class="tree-item-label">
                 <div class="d-flex gap-2 align-items-baseline">
                     <div class="w-3 h-3 flex-shrink-0">
-                        <div class="js-category-tree-form-item-icon"></div>
+                        <div class="js-tree-selection-form-item-icon"></div>
                     </div>
                     <div class="form-check">
                         <input
@@ -15,7 +15,7 @@
                             id="{{ checkboxId }}"
                             name="{{ checkboxName }}"
                             value="{{ value }}"
-                            class="js-category-tree-form-item-checkbox form-check-input"
+                            class="js-tree-selection-form-item-checkbox form-check-input"
                             {% if isChecked %}checked="checked"{% endif %}
                         >
                         <label for="{{ checkboxId }}" class="form-check-label">
@@ -25,17 +25,15 @@
                 </div>
             </div>
         </div>
-        <ul class="js-category-tree-form-children-container tree-group">
+        <ul class="js-tree-selection-form-children-container tree-group">
     {% if renderClosingTags %}
         </ul>
     </li>
     {% endif %}
 {% endmacro %}
 
-{% block categories_widget %}
-    {% import _self as categoriesMacros %}
-
-    {% if main_category_path is not null %}
+{% block tree_selection_widget %}
+    {% if main_category_path is defined and main_category_path is not null %}
         <div>
             {{ ux_icon('tag') }}
             <strong>{{ 'Main category'|trans }}:</strong>
@@ -45,13 +43,13 @@
         <hr class="my-2">
     {% endif %}
 
-    <div class="js-category-tree-form"
+    <div class="js-tree-selection-form"
          data-checkbox-name="{{ checkbox_name }}"
          data-checkbox-id-prefix="{{ checkbox_id_prefix }}"
          data-hidden-item-class="text-secondary"
     >
-        <template class="js-category-tree-form-item-template">
-            {{ categoriesMacros.categoryTreeItem(
+        <template class="js-tree-selection-form-item-template">
+            {{ _self.treeSelectionItem(
                 loadChildrenUrl='__load_children_url__',
                 hasChildren='__has_children__',
                 isVisible=true,
@@ -63,11 +61,11 @@
                 renderClosingTags=true,
             ) }}
         </template>
-        <ul class="js-category-tree-form-children-container tree">
+        <ul class="js-tree-selection-form-children-container tree">
             {% set level = 1 %}
 
-            {% for category in tree_categories %}
-            {% set currentLevel = category.level %}
+            {% for item in tree_items %}
+            {% set currentLevel = item.level %}
 
             {% if not loop.first %}
             {% if currentLevel <= level %}
@@ -75,21 +73,23 @@
         {% endif %}
         {% endif %}
 
-        {{ categoriesMacros.categoryTreeItem(
-            loadChildrenUrl=url('admin_category_loadbranchjson', {id: category.id, domainId: domain_id}),
-            hasChildren=category.hasChildren ? 'true' : 'false',
-            isVisible=category.isVisible(domain_id),
-            checkboxId=checkbox_id_prefix ~ '_' ~ category.id,
+        {{ _self.treeSelectionItem(
+            loadChildrenUrl=url(branch_load_route, {id: item.id, domainId: domain_id}),
+            hasChildren=item.hasChildren ? 'true' : 'false',
+            isVisible=item.isVisible(domain_id),
+            checkboxId=checkbox_id_prefix ~ '_' ~ item.id,
             checkboxName=checkbox_name,
-            value=category.id,
-            label=category.name,
-            isChecked=category.id in selected_category_ids,
+            value=item.id,
+            label=item.name,
+            isChecked=item.id in selected_ids,
             renderClosingTags=false,
         ) }}
         {% set level = currentLevel %}
         {% endfor %}
 
-            {% for i in 1 .. level %}</ul></li>{% endfor %}
+            {% if tree_items is not empty %}
+                {% for i in 1 .. level %}</ul></li>{% endfor %}
+            {% endif %}
         </ul>
     </div>
 {% endblock %}

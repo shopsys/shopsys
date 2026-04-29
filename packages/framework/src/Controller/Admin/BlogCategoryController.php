@@ -189,7 +189,7 @@ class BlogCategoryController extends AdminBaseController
         foreach ($blogCategories as $blogCategory) {
             $blogCategoriesData[] = [
                 'id' => $blogCategory->getId(),
-                'categoryName' => $blogCategory->getName(),
+                'label' => $blogCategory->getName(),
                 'isVisible' => $blogCategory->isVisible($domainId),
                 'hasChildren' => $blogCategory->hasChildren(),
                 'loadUrl' => $this->generateUrl('admin_blogcategory_loadbranchjson', [
