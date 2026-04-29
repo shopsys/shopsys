@@ -5,7 +5,9 @@
         <div class="container-fluid">
             <h1 class="navbar-brand navbar-brand-autodark">
                 <a href="{{ url('admin_default_dashboard') }}">
-                    <img class="navbar-brand-image" src="{{ asset('public/admin/images/logo.svg') }}" alt="Shopsys Platform">
+                    {% block sidebar_project_logo %}
+                        <img class="navbar-brand-image" src="{{ asset('public/admin/images/logo-project.svg') }}" alt="Your logo">
+                    {% endblock %}
                 </a>
             </h1>
             <button class="navbar-toggler collapsed"
@@ -22,6 +24,11 @@
                 {% block menu_panel %}
                     {{ knp_menu_render('admin_side_menu', {template: '@ShopsysAdministration/partial/side_menu.html.twig'}) }}
                 {% endblock %}
+                <div class="navbar-platform-brand">
+                    {% block sidebar_platform_logo %}
+                        <img class="navbar-platform-brand-image" src="{{ asset('public/admin/images/logo.svg') }}" alt="Shopsys Platform">
+                    {% endblock %}
+                </div>
             </div>
         </div>
     </aside>

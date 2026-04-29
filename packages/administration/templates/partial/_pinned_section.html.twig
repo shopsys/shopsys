@@ -10,7 +10,7 @@
                     data-route-name="{{ pinnedChild.extra('route_name') }}"
                 >
                     <a class="nav-link{{ matcher.isCurrent(pinnedChild) ? ' show' : '' }}{{ pinnedChild.extra('superadmin', false) ? ' text-red' : '' }}" href="{{ pinnedChild.uri }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block cursor-grab text-muted" data-js-nav-pinned-drag-handle title="{{ 'Drag to reorder'|trans }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block cursor-grab" data-js-nav-pinned-drag-handle title="{{ 'Drag to reorder'|trans }}">
                             {{ ux_icon('drag-handle', {class: 'icon icon-sm'}) }}
                         </span>
                         <span class="nav-link-title">{{ pinnedChild.label }}</span>
@@ -21,6 +21,6 @@
         </ul>
     </li>
     <li class="nav-item">
-        <hr class="navbar-divider my-1">
+        <hr class="navbar-divider my-0">
     </li>
 {% endif %}

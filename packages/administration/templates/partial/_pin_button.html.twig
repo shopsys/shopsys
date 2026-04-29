@@ -1,5 +1,5 @@
 {% set pinned = item.extra('pinned', false) %}
-<button class="nav-link-pin-button btn-link ms-auto cursor-pointer text-muted"
+<button class="nav-link-pin-button btn-link ms-auto cursor-pointer"
       data-js-nav-pinned
       data-route-name="{{ item.extra('route_name') }}"
       data-pinned="{{ pinned ? 'true' : 'false' }}"
@@ -7,6 +7,7 @@
       data-title-unpinned="{{ 'Pin'|trans }}"
       data-toggle-url="{{ url('admin_pinnedmenuitem_toggle') }}"
       data-bs-toggle="tooltip"
+      data-bs-custom-class="sidebar-pin-tooltip"
       title="{{ pinned ? 'Unpin'|trans : 'Pin'|trans }}"
 >
     {{ ux_icon(pinned ? 'pinned' : 'pin', {class: 'icon icon-sm'}) }}

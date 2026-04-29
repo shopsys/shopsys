@@ -1,6 +1,33 @@
 import Register from 'framework/common/utils/Register';
 
 export default class FixedBar {
+    static adjustToolbarHeightProperty() {
+        const toolbarContainer = document.querySelector('.sf-toolbar');
+
+        if (toolbarContainer === null) {
+            document.documentElement.style.removeProperty('--admin-sf-toolbar-height');
+
+            return;
+        }
+
+        const toolbarHeight = toolbarContainer.getBoundingClientRect().height;
+
+        if (toolbarHeight > 0) {
+            document.documentElement.style.setProperty('--admin-sf-toolbar-height', `${toolbarHeight}px`);
+        } else {
+            document.documentElement.style.removeProperty('--admin-sf-toolbar-height');
+        }
+    }
+
+    static adjustFixedBarsPosition($fixedBars) {
+        FixedBar.adjustToolbarHeightProperty();
+
+        $fixedBars.each(function () {
+            const $fixedBar = $(this);
+            FixedBar.adjustFixedBarPosition($fixedBar);
+        });
+    }
+
     static adjustFixedBarPosition($fixedBar) {
         const $sfToolbar = $('[id^="sfToolbarMainContent-"]');
 
@@ -12,19 +39,30 @@ export default class FixedBar {
         }
     }
 
-    static waitForToolbarAndAdjust($fixedBar, maxWaitTime = 5000, pollInterval = 100) {
+    static observeToolbarChanges($fixedBars) {
+        const toolbarContainer = document.querySelector('[id^="sfToolbarMainContent-"]')?.closest('.sf-toolbar');
+
+        if (toolbarContainer === null) {
+            return;
+        }
+
+        const mutationObserver = new MutationObserver(() => FixedBar.adjustFixedBarsPosition($fixedBars));
+        mutationObserver.observe(toolbarContainer, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+
+    static waitForToolbarAndAdjust($fixedBars, maxWaitTime = 5000, pollInterval = 100) {
         const startTime = Date.now();
 
         const checkToolbar = () => {
             const $sfToolbar = $('[id^="sfToolbarMainContent-"]');
 
-            if ($sfToolbar.length > 0 && $sfToolbar.is(':visible')) {
-                // Toolbar found, adjust position
-                FixedBar.adjustFixedBarPosition($fixedBar);
+            if ($sfToolbar.length > 0) {
+                FixedBar.adjustFixedBarsPosition($fixedBars);
+                FixedBar.observeToolbarChanges($fixedBars);
+
                 return;
             }
 
-            // Check if we've exceeded max wait time
             if (Date.now() - startTime < maxWaitTime) {
                 setTimeout(checkToolbar, pollInterval);
             }
@@ -36,33 +74,17 @@ export default class FixedBar {
     static init($container) {
         const $fixedBars = $container.filterAllNodes('[data-js-fixed-bar]');
 
-        if ($fixedBars.length === 0) {
-            return;
-        }
+        // Adjust fixed bars and sidebar offset when the Symfony toolbar is present
+        FixedBar.waitForToolbarAndAdjust($fixedBars);
 
-        // Adjust the position of fixed bars on the initial load
-        $fixedBars.each(function () {
-            const $fixedBar = $(this);
-
-            FixedBar.waitForToolbarAndAdjust($fixedBar);
-        });
-
-        // Adjust the position of fixed bars when the Symfony toolbar is toggled
+        // Adjust fixed bars and sidebar offset when the Symfony toolbar is toggled
         $(document).on('click', '[id^="sfToolbarHideButton-"], [id^="sfToolbarMiniToggler-"]', () => {
-            setTimeout(() => {
-                $fixedBars.each(function () {
-                    const $fixedBar = $(this);
-                    FixedBar.adjustFixedBarPosition($fixedBar);
-                });
-            }, 100);
+            setTimeout(() => FixedBar.adjustFixedBarsPosition($fixedBars), 100);
         });
 
-        // Adjust the position of fixed bars on the window resize
+        // Adjust fixed bars and sidebar offset on the window resize
         $(window).on('resize', () => {
-            $fixedBars.each(function () {
-                const $fixedBar = $(this);
-                FixedBar.adjustFixedBarPosition($fixedBar);
-            });
+            FixedBar.adjustFixedBarsPosition($fixedBars);
         });
     }
 }

@@ -1,13 +1,7 @@
 {% extends '@ShopsysAdministration/layout/base.html.twig' %}
 
 {% block html_body %}
-    <a href="{{ url('admin_default_dashboard') }}">
-        <img class="img ms-3 mt-3" src="{{ asset('public/admin/images/logo.svg') }}" width="200" alt="Shopsys Platform">
-    </a>
-
-    <div class="container-tight py-4">
-        <div class="empty">
-            {% block error_content %}{% endblock %}
-        </div>
+    <div class="page page-center empty">
+        {% block error_content %}{% endblock %}
     </div>
 {% endblock %}

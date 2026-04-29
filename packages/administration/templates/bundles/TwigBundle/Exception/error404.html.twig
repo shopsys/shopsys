@@ -2,10 +2,13 @@
 
 {% block error_content %}
     <div class="empty-header">404</div>
+
     <p class="empty-title">{{ 'We have nothing to show you at this url.'|trans }}</p>
+
     <p class="empty-subtitle text-secondary">
         {{ 'But at other addresses we have a lot for you...'|trans }}
     </p>
+
     <div class="empty-action">
         <a href="{{ url('admin_default_dashboard') }}" class="btn btn-primary btn-4">
             {{ ux_icon('chevron-left', {class: 'me-2'}) }}

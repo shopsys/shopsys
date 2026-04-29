@@ -24,37 +24,8 @@
 @import 'category-tree';
 @import 'pinned-menu';
 
-// wrap long menu items in sidebar
-.sidebar .dropdown-menu .dropdown-header,
-.sidebar .dropdown-menu .dropdown-item {
-    white-space: normal;
-    gap: 0;
-}
-
 .page-body {
     padding-bottom: 1.7rem;
-}
-
-.sidebar.navbar-nav {
-    gap: 0.2rem;
-    padding-bottom: 0.6em;
-}
-
-@media (min-width: 992px) {
-    .navbar-vertical.navbar-expand-lg .navbar-brand {
-        justify-content: flex-start;
-        padding: 1rem;
-    }
-}
-
-.navbar-brand-image {
-    height: 2rem;
-}
-
-@media (min-width: 992px) {
-    .navbar-brand-image {
-        height: 3rem;
-    }
 }
 
 .modal-content > .btn-close {

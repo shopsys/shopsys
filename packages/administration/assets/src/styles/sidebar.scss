@@ -1,0 +1,224 @@
+$sidebar-width: 18rem;
+
+$sidebar-bg: linear-gradient(90deg, #1A2342 0%, #243056 100%);
+$sidebar-fg: #f9fafb;
+$sidebar-hover-bg: rgba($sidebar-fg, 0.1);
+$sidebar-active-bg: rgba(0, 0, 0, 0.25);
+$sidebar-divider-color: rgba($sidebar-fg, 0.5);
+
+$sidebar-superadmin-fg: #fff;
+$sidebar-superadmin-bg: linear-gradient(90deg, #8f1d1d 0%, #b32626 100%);
+$sidebar-superadmin-hover-bg: linear-gradient(90deg, #a52727 0%, #c23434 100%);
+$sidebar-superadmin-active-bg: linear-gradient(90deg, #6f1717 0%, #961f1f 100%);
+$sidebar-mobile-offset: $navbar-height;
+
+.sidebar-pin-tooltip {
+    --tblr-tooltip-bg: #fff;
+    --tblr-tooltip-color: #111827;
+
+    .tooltip-inner {
+        border: 1px solid rgba(17, 24, 39, 0.08);
+        box-shadow: 0 0.35rem 0.85rem rgba(0, 0, 0, 0.2);
+    }
+}
+
+// Reserve $sidebar-width on desktop and offset the secondary navbar + page-wrapper
+// so they don't overlap the fixed sidebar.
+@include media-breakpoint-up(lg) {
+    .navbar-vertical.navbar-expand-lg {
+        bottom: var(--admin-sf-toolbar-height, 0);
+        width: $sidebar-width;
+
+        .navbar-brand {
+            justify-content: flex-start;
+            padding: 1rem;
+        }
+    }
+
+    .navbar-expand-lg.navbar-vertical ~ .navbar,
+    .navbar-expand-lg.navbar-vertical ~ .page-wrapper {
+        margin-left: $sidebar-width;
+    }
+
+    .navbar.navbar-vertical {
+        .navbar-collapse {
+            flex: 1 1 auto;
+        }
+
+        .navbar-platform-brand-image {
+            max-height: 2.75rem;
+        }
+    }
+}
+
+.navbar.navbar-vertical {
+    z-index: 1020 !important;
+    background: $sidebar-bg;
+
+    .navbar-brand a {
+        display: block;
+        width: 100%;
+    }
+
+    .navbar-brand-autodark .navbar-brand-image {
+        filter: none;
+    }
+
+    .navbar-brand-image {
+        width: 100%;
+        height: auto;
+        max-height: 2rem;
+        object-fit: contain;
+    }
+
+    .navbar-platform-brand {
+        flex: 0 0 auto;
+        margin-top: auto;
+        padding: 0.5rem 1rem 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .navbar-platform-brand-image {
+        width: 100%;
+        max-height: 2rem;
+        object-fit: contain;
+    }
+
+    .sidebar.navbar-nav {
+        padding-bottom: 0.6em;
+    }
+
+    .navbar-divider {
+        border-color: $sidebar-divider-color;
+        opacity: 1;
+    }
+
+    .nav-link-icon svg {
+        color: $sidebar-fg !important;
+        opacity: 0.8;
+    }
+
+    .nav-link,
+    .nav-link .nav-link-title,
+    .navbar-nav .nav-item > .nav-link,
+    .navbar-brand {
+        color: $sidebar-fg;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus {
+        color: $sidebar-fg;
+        background-color: $sidebar-hover-bg;
+    }
+
+    .nav-link.active,
+    .nav-link.show {
+        color: $sidebar-fg;
+        background-color: $sidebar-active-bg;
+        text-shadow: 0 0 currentColor;
+    }
+
+    .navbar-collapse .dropdown-menu .dropdown-item.active {
+        background-color: $sidebar-active-bg;
+        text-shadow: 0 0 currentColor;
+    }
+
+    .navbar-nav .nav-link {
+        border-radius: 0;
+    }
+
+    .navbar-collapse .navbar-nav .nav-link {
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
+    }
+
+    .navbar-collapse .dropdown-menu .dropdown-item,
+    .navbar-collapse .dropdown-menu .dropdown-header {
+        color: $sidebar-fg;
+        border-radius: 0;
+    }
+
+    .navbar-collapse .dropdown-menu .dropdown-item.disabled,
+    .navbar-collapse .dropdown-menu .dropdown-item.text-secondary {
+        color: $sidebar-fg !important;
+    }
+
+    .navbar-collapse .dropdown-menu .dropdown-item:hover,
+    .navbar-collapse .dropdown-menu .dropdown-item:focus,
+    .navbar-collapse .dropdown-menu .dropdown-item.active {
+        color: $sidebar-fg;
+    }
+
+    .navbar-collapse .dropdown-menu .dropdown-item:hover,
+    .navbar-collapse .dropdown-menu .dropdown-item:focus {
+        background-color: $sidebar-hover-bg;
+    }
+
+    .nav-link-pin-button {
+        color: rgba($sidebar-fg, 0.65);
+
+        &:hover,
+        &:focus {
+            color: $sidebar-fg;
+        }
+    }
+
+    .nav-link.text-red .nav-link-pin-button,
+    .navbar-collapse .dropdown-menu .dropdown-item.text-red .nav-link-pin-button {
+        color: rgba($sidebar-superadmin-fg, 0.82);
+
+        &:hover,
+        &:focus {
+            color: $sidebar-superadmin-fg;
+        }
+    }
+
+    .nav-link.text-red,
+    .navbar-collapse .dropdown-menu .dropdown-item.text-red {
+        color: $sidebar-superadmin-fg !important;
+        background: $sidebar-superadmin-bg;
+
+        &:hover,
+        &:focus,
+        &:active:not(.active) {
+            background: $sidebar-superadmin-hover-bg;
+        }
+
+        &.active {
+            background: $sidebar-superadmin-active-bg;
+            text-shadow: 0 0 currentColor;
+        }
+    }
+
+    .dropdown-menu {
+        background-color: transparent;
+    }
+
+    .dropdown-menu .dropdown-header,
+    .dropdown-menu .dropdown-item {
+        white-space: normal;
+    }
+
+    .navbar-collapse.collapse.show {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        overflow-y: auto;
+        top: $sidebar-mobile-offset;
+        right: 0;
+        bottom: var(--admin-sf-toolbar-height, 0);
+        left: 0;
+        background: $sidebar-bg;
+
+        .nav-link {
+            padding-inline: 1rem;
+        }
+
+        .sidebar.navbar-nav {
+            flex-shrink: 0;
+            width: 100%;
+        }
+    }
+}
