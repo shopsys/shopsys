@@ -6,6 +6,7 @@ import { logException } from 'utils/errors/logException';
 interface MyDocumentInitialProps extends DocumentInitialProps {
     htmlLang: string;
     publicConfig: PublicRuntimeConfig;
+    gtmId: string;
 }
 
 // Browser warning translations (must be simple object, no imports - this runs before React hydrates)
@@ -157,21 +158,23 @@ class MyDocument extends Document<MyDocumentInitialProps> {
         const initialProps = await Document.getInitialProps(context);
 
         let htmlLang = 'en';
+        let gtmId = '';
 
         try {
             const domainConfig = getDomainConfig(context);
             htmlLang = domainConfig.defaultLocale;
+            gtmId = domainConfig.gtmId;
         } catch (error) {
             logException(error);
         }
 
         const publicConfig = getPublicConfig();
 
-        return { ...initialProps, htmlLang, publicConfig };
+        return { ...initialProps, htmlLang, publicConfig, gtmId };
     }
 
     render() {
-        const { htmlLang, publicConfig } = this.props;
+        const { htmlLang, publicConfig, gtmId } = this.props;
         const warningTranslation = getBrowserWarningTranslation(htmlLang);
         const envJson = serializeConfigForHtml(publicConfig);
 
@@ -185,6 +188,17 @@ class MyDocument extends Document<MyDocumentInitialProps> {
                     <script dangerouslySetInnerHTML={{ __html: BROWSER_WARNING_SCRIPT }} />
                 </Head>
                 <body>
+                    {gtmId.length > 0 && (
+                        <noscript>
+                            <iframe
+                                height="0"
+                                src={`https://www.googletagmanager.com/ns.html?id=${encodeURIComponent(gtmId)}`}
+                                style={{ display: 'none', visibility: 'hidden' }}
+                                title="Google Tag Manager"
+                                width="0"
+                            />
+                        </noscript>
+                    )}
                     <div id="browser-warning-banner" role="alert">
                         <div className="bwb-content">
                             <svg
