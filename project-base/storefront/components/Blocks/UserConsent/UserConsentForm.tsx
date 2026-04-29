@@ -22,13 +22,12 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     const formMeta = useUserConsentFormMeta();
     const [{ data: settingsData }] = useSettingsQuery();
     const userConsentPolicyArticleUrl = settingsData?.settings?.userConsentPolicyArticleUrl;
-    const userConsent = usePersistStore((store) => store.userConsent);
     const updateUserConsent = usePersistStore((store) => store.updateUserConsent);
 
     const saveUserConsentChoices = () => {
         const formValues = formProviderMethods.getValues();
         updateUserConsent(formValues);
-        onGtmConsentUpdateEventHandler(getGtmConsentInfo(userConsent));
+        onGtmConsentUpdateEventHandler(getGtmConsentInfo(formValues));
 
         if (onSetCallback) {
             onSetCallback();
