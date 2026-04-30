@@ -178,6 +178,26 @@
     border-color: #009bd9;
 }
 
+.gjs-field-checkbox {
+    position: relative;
+
+    input[type='checkbox'] {
+        cursor: pointer;
+        display: block;
+        height: 100%;
+        inset: 0;
+        margin: 0;
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .gjs-chk-icon {
+        pointer-events: none;
+    }
+}
+
 .gjs-pn-btn:hover {
     color: #009bd9;
 }
