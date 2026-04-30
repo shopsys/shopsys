@@ -14,8 +14,8 @@ import {
     TypeBrandProductsQuery,
     TypeBrandProductsQueryVariables,
 } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { createClient } from 'urql/createClient';
@@ -67,8 +67,8 @@ const BrandDetailPage: NextPage = () => {
 
     const brandImageUrl = brandDetailData?.brand?.mainImage?.url;
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(brandDetailData?.brand);
-    useGtmPageViewEvent(pageViewEvent, isBrandFetching);
+    const pageReadyEvent = useGtmFriendlyPageReadyEvent(brandDetailData?.brand);
+    useGtmPageReadyEvent(pageReadyEvent, isBrandFetching);
 
     return (
         <>

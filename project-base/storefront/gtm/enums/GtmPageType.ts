@@ -3,6 +3,7 @@ export enum GtmPageType {
     category_detail = 'category detail',
     seo_category_detail = 'seo category detail',
     product_detail = 'product detail',
+    product_sold_out = 'product sold out',
     cart = 'cart',
     transport_and_payment = 'transport and payment',
     contact_information = 'contact information',
@@ -24,5 +25,6 @@ export enum GtmPageType {
     contact = 'contact',
     product_comparison = 'product comparison',
     catalog = 'catalog',
+    wishlist = 'wishlist',
     other = 'other',
 }

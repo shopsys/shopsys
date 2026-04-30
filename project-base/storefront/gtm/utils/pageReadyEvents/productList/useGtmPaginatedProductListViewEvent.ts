@@ -20,13 +20,13 @@ export const useGtmPaginatedProductListViewEvent = (
     const previousLoadMoreRef = useRef<number | undefined>(undefined);
     const { url } = useDomainConfig();
     const stringifiedProducts = JSON.stringify(paginatedProducts);
-    const { didPageViewRun, isScriptLoaded } = useGtmContext();
+    const { didPageReadyRun, isScriptLoaded } = useGtmContext();
     const { canSeePrices } = useAuthorization();
 
     useEffect(() => {
         if (
             isScriptLoaded &&
-            didPageViewRun &&
+            didPageReadyRun &&
             paginatedProducts &&
             lastViewedStringifiedProducts.current !== stringifiedProducts
         ) {
@@ -56,7 +56,7 @@ export const useGtmPaginatedProductListViewEvent = (
         currentLoadMore,
         paginatedProducts,
         stringifiedProducts,
-        didPageViewRun,
+        didPageReadyRun,
         isScriptLoaded,
         canSeePrices,
     ]);

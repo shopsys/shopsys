@@ -3,8 +3,8 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type GtmContextType = {
-    didPageViewRun: boolean;
-    setDidPageViewRun: (newState: boolean) => void;
+    didPageReadyRun: boolean;
+    setDidPageReadyRun: (newState: boolean) => void;
     isScriptLoaded: boolean;
     setIsScriptLoaded: (newState: boolean) => void;
 };
@@ -12,7 +12,7 @@ type GtmContextType = {
 const GtmContext = createContext<GtmContextType | null>(null);
 
 export const GtmProvider: FC = ({ children }) => {
-    const [didPageViewRun, setDidPageViewRun] = useState(false);
+    const [didPageReadyRun, setDidPageReadyRun] = useState(false);
     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
     const router = useRouter();
     const currentPathRef = useRef(getUrlWithoutGetParameters(router.asPath));
@@ -22,7 +22,7 @@ export const GtmProvider: FC = ({ children }) => {
             const newPath = getUrlWithoutGetParameters(url);
             if (currentPathRef.current !== newPath) {
                 currentPathRef.current = newPath;
-                setDidPageViewRun(false);
+                setDidPageReadyRun(false);
             }
         };
 
@@ -34,7 +34,7 @@ export const GtmProvider: FC = ({ children }) => {
     }, [router.events]);
 
     return (
-        <GtmContext.Provider value={{ didPageViewRun, setDidPageViewRun, isScriptLoaded, setIsScriptLoaded }}>
+        <GtmContext.Provider value={{ didPageReadyRun, setDidPageReadyRun, isScriptLoaded, setIsScriptLoaded }}>
             {children}
         </GtmContext.Provider>
     );

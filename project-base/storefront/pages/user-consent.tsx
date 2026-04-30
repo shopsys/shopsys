@@ -9,8 +9,8 @@ import {
     TypeSettingsQueryVariables,
 } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { createClient } from 'urql/createClient';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
@@ -24,8 +24,8 @@ const UserConsentPage: FC<ServerSidePropsType> = () => {
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('User consent'), slug: userConsentUrl },
     ];
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.user_consent, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.user_consent, breadcrumbs);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <CommonLayout breadcrumbs={breadcrumbs} title={t('User consent update')}>

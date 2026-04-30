@@ -3,7 +3,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AnimatePresence } from 'framer-motion';
 import { useAutocompleteFavoritesQuery } from 'graphql/requests/autocomplete/queries/AutocompleteFavoritesQuery.generated';
 import { useAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import { useGtmAutocompleteResultsViewEvent } from 'gtm/utils/pageViewEvents/useGtmAutocompleteResultsViewEvent';
+import { useGtmAutocompleteResultsViewEvent } from 'gtm/utils/pageReadyEvents/useGtmAutocompleteResultsViewEvent';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';

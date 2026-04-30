@@ -4,7 +4,7 @@ import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/Brand
 import { BrandProductsQueryDocument } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
+import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmPaginatedProductListViewEvent';
 import { useProductsData } from 'utils/loadMore/useProductsData';
 import { getMappedProducts } from 'utils/mappers/products';
 

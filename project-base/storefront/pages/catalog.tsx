@@ -5,8 +5,8 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { NavigationQueryDocument } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
@@ -18,8 +18,8 @@ const CatalogPage: FC<ServerSidePropsType> = () => {
     const [catalogUrl] = getInternationalizedStaticUrls(['/catalog'], url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Catalog'), slug: catalogUrl }];
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.catalog, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageViewEvent = useGtmStaticPageReadyEvent(GtmPageType.catalog, breadcrumbs);
+    useGtmPageReadyEvent(gtmStaticPageViewEvent);
 
     return (
         <CommonLayout breadcrumbs={breadcrumbs} title={t('Catalog')}>

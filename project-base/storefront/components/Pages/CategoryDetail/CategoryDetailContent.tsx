@@ -8,8 +8,8 @@ import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/Deferr
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -37,8 +37,8 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
     const title = useSeoTitleWithPagination(category.products.totalCount, category.name, category.seoH1);
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(category);
-    useGtmPageViewEvent(pageViewEvent, isFetchingVisible);
+    const pageReadyEvent = useGtmFriendlyPageReadyEvent(category);
+    useGtmPageReadyEvent(pageReadyEvent, isFetchingVisible);
 
     return (
         <VerticalStack gap="md">

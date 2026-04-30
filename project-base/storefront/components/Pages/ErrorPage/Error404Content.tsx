@@ -2,8 +2,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import image404 from '/public/images/404.png';
 import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
@@ -11,8 +11,8 @@ import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain
 export const Error404Content: FC = () => {
     const { t } = useTranslation();
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.not_found);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.not_found);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <CommonLayout title={t('Something wrong happened... Page not found')}>

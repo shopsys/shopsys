@@ -8,16 +8,16 @@ import {
 import { CountriesQueryDocument } from 'graphql/requests/countries/queries/CountriesQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmContactInformationPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmContactInformationPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmContactInformationViewEvent } from 'gtm/utils/pageReadyEvents/useGtmContactInformationViewEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact_information);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
-    useGtmContactInformationPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.contact_information);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
+    useGtmContactInformationViewEvent(gtmStaticPageReadyEvent);
 
     return (
         <>

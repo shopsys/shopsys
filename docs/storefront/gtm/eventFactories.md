@@ -1,6 +1,6 @@
 # GTM Event Factories
 
-These factories are responsible for creating and preparing GTM event objects. They can be written either as basic `get` methods, such as `getGtmCartViewEvent`, or as hooks, such as `useGtmStaticPageViewEvent`. The difference between them is
+These factories are responsible for creating and preparing GTM event objects. They can be written either as basic `get` methods, such as `getGtmCartViewEvent`, or as hooks, such as `useGtmStaticPageReadyEvent`. The difference between them is
 
 ## getGtmCartViewEvent
 
@@ -15,23 +15,23 @@ export const getGtmCartViewEvent = (
 }
 ```
 
-## getGtmContactInformationPageViewEvent
+## getGtmContactInformationViewEvent
 
 ```ts
-export const getGtmContactInformationPageViewEvent = (
+export const getGtmContactInformationViewEvent = (
   gtmCartInfo: GtmCartInfoType // the cart of the current user in the shape of GTM cart information
-): GtmContactInformationPageViewEventType => {
+): GtmContactInformationViewEventType => {
   // function body not included in this code block
 };
 ```
 
-## getGtmPaymentAndTransportPageViewEvent
+## getGtmPaymentAndTransportViewEvent
 
 ```ts
-export const getGtmPaymentAndTransportPageViewEvent = (
+export const getGtmPaymentAndTransportViewEvent = (
     currencyCode: string; // the code of the currency used on the domain
     gtmCartInfo: GtmCartInfoType, // the cart of the current user in the shape of GTM cart information
-): GtmPaymentAndTransportPageViewEventType => {
+): GtmPaymentAndTransportViewEventType => {
     // function body not included in this code block
 }
 ```
@@ -142,38 +142,38 @@ export const getGtmAutocompleteResultClickEvent = (
 };
 ```
 
-## useGtmStaticPageViewEvent
+## useGtmStaticPageReadyEvent
 
 ```ts
-export const useGtmStaticPageViewEvent = (
+export const useGtmStaticPageReadyEvent = (
   pageType: GtmPageType, // type of the page viewed by the user
   breadcrumbs?: BreadcrumbFragment[] // breadcrumbs for the viewed page, if available
-): GtmPageViewEventType => {
+): GtmPageReadyEventType => {
   // function body not included in this code block
 };
 ```
 
-## useGtmFriendlyPageViewEvent
+## useGtmFriendlyPageReadyEvent
 
 ```ts
-export const useGtmFriendlyPageViewEvent = (
+export const useGtmFriendlyPageReadyEvent = (
   friendlyUrlPageData: FriendlyUrlPageType | null | undefined // data for the friendly URL page
-): GtmPageViewEventType => {
+): GtmPageReadyEventType => {
   // function body not included in this code block
 };
 ```
 
-## getGtmPageViewEvent
+## getGtmPageReadyEvent
 
 ```ts
-export const getGtmPageViewEvent = (
+export const getGtmPageReadyEvent = (
   pageInfo: GtmPageInfoType, // information about the viewed page
   gtmCartInfo: GtmCartInfoType | null, // the cart of the current user in the shape of GTM cart information, if available
   isCartLoaded: boolean, // boolean pointer saying if the cart is loaded
   user: CurrentCustomerType | null | undefined, // information about the current user
   userContactInformation: ContactInformation, // contact information filled by the user during order
   domainConfig: DomainConfigType // config for the current domain
-): GtmPageViewEventType => {
+): GtmPageReadyEventType => {
   // function body not included in this code block
 };
 ```

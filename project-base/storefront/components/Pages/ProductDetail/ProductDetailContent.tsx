@@ -9,9 +9,9 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
+import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
+import { useGtmProductDetailViewEvent } from 'gtm/utils/pageReadyEvents/useGtmProductDetailViewEvent';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
@@ -35,8 +35,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
     const { isLuigisBoxActive } = useDomainConfig();
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(product);
-    useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
+    const pageReadyEvent = useGtmFriendlyPageReadyEvent(product);
+    useGtmPageReadyEvent(pageReadyEvent, isProductDetailFetching);
     useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
 

@@ -14,8 +14,8 @@ import {
     TypeFlagProductsQuery,
     TypeFlagProductsQueryVariables,
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { createClient } from 'urql/createClient';
@@ -57,8 +57,8 @@ const FlagDetailPage: NextPage = () => {
 
     const seoTitle = useSeoTitleWithPagination(flagDetailData?.flag?.products.totalCount, flagDetailData?.flag?.name);
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(flagDetailData?.flag);
-    useGtmPageViewEvent(pageViewEvent, isFlagFetching);
+    const pageReadyEvent = useGtmFriendlyPageReadyEvent(flagDetailData?.flag);
+    useGtmPageReadyEvent(pageReadyEvent, isFlagFetching);
 
     return (
         <>

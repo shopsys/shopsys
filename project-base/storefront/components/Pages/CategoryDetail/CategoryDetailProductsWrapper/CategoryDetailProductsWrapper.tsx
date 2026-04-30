@@ -4,7 +4,7 @@ import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragment
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/utils/getCategoryOrSeoCategoryGtmProductListName';
-import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
+import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmPaginatedProductListViewEvent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type CategoryDetailProductsWrapperProps = {

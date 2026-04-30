@@ -5,9 +5,9 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
+import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
+import { useGtmProductDetailViewEvent } from 'gtm/utils/pageReadyEvents/useGtmProductDetailViewEvent';
 import { useRouter } from 'next/router';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
@@ -37,8 +37,8 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
 
     const mainVariantImagesWithVariantImages = [...product.images, ...variantImages];
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(product);
-    useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
+    const pageReadyEvent = useGtmFriendlyPageReadyEvent(product);
+    useGtmPageReadyEvent(pageReadyEvent, isProductDetailFetching);
     useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
 

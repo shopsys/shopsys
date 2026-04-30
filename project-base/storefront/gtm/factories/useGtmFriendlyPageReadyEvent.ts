@@ -1,23 +1,23 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import type { GtmPageViewEventType } from 'gtm/types/events';
+import type { GtmPageReadyEventType } from 'gtm/types/events';
 import { getGtmPageInfoTypeForFriendlyUrl } from 'gtm/utils/getGtmPageInfoTypeForFriendlyUrl';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import { usePersistStore } from 'store/usePersistStore';
 import type { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
-import { getGtmPageViewEvent } from './getGtmPageViewEvent';
+import { getGtmPageReadyEvent } from './getGtmPageReadyEvent';
 
-export const useGtmFriendlyPageViewEvent = (
+export const useGtmFriendlyPageReadyEvent = (
     friendlyUrlPageData: FriendlyUrlPageType | null | undefined,
-): GtmPageViewEventType => {
+): GtmPageReadyEventType => {
     const { gtmCartInfo, isCartLoaded } = useGtmCartInfo();
     const domainConfig = useDomainConfig();
     const userContactInformation = useCurrentUserContactInformation();
     const user = useCurrentCustomerData();
     const userConsent = usePersistStore((store) => store.userConsent);
 
-    return getGtmPageViewEvent(
+    return getGtmPageReadyEvent(
         getGtmPageInfoTypeForFriendlyUrl(friendlyUrlPageData),
         gtmCartInfo,
         isCartLoaded,

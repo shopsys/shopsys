@@ -43,6 +43,16 @@ export type GtmCategoryDetailPageInfoType = GtmPageInfoInterface<
 >;
 ```
 
+## GtmProductDetailPageInfoType
+
+The object represents page information for product detail pages and unavailable product detail pages. Extends the GtmPageInfoInterface.
+
+```ts
+export type GtmProductDetailPageInfoType = GtmPageInfoInterface<
+  GtmPageType.product_detail | GtmPageType.product_sold_out
+>;
+```
+
 ## GtmBlogArticleDetailPageInfoType
 
 The object represents additional information about a web page that displays a blog article. Extends the GtmPageInfoInterface.
@@ -51,7 +61,20 @@ The object represents additional information about a web page that displays a bl
 export type GtmBlogArticleDetailPageInfoType = GtmPageInfoInterface<
   GtmPageType.blog_article_detail, // type of the page, should always be GtmPageType.blog_article_detail
   {
-    articleId: number; // unique identifier of the blog article
+    articleId: string; // unique UUID identifier of the blog article
+  }
+>;
+```
+
+## GtmArticleDetailPageInfoType
+
+The object represents additional information about a web page that displays an article. Extends the GtmPageInfoInterface.
+
+```ts
+export type GtmArticleDetailPageInfoType = GtmPageInfoInterface<
+  GtmPageType.article_detail | SpecialArticleGtmPageType,
+  {
+    articleId: string; // unique UUID identifier of the article
   }
 >;
 ```
@@ -71,12 +94,14 @@ export type GtmBrandDetailPageInfoType = GtmPageInfoInterface<
 
 ## GtmPageInfoType
 
-The union type represents all possible types of web pages. It can be either GtmCategoryDetailPageInfoType, GtmBlogArticleDetailPageInfoType, GtmBrandDetailPageInfoType, or GtmPageInfoInterface.
+The union type represents all possible types of web pages. It can be either GtmCategoryDetailPageInfoType, GtmProductDetailPageInfoType, GtmBlogArticleDetailPageInfoType, GtmArticleDetailPageInfoType, GtmBrandDetailPageInfoType, or GtmPageInfoInterface.
 
 ```ts
 export type GtmPageInfoType =
   | GtmCategoryDetailPageInfoType // page information for category detail or SEO category detail pages
+  | GtmProductDetailPageInfoType // page information for product detail pages
   | GtmBlogArticleDetailPageInfoType // page information for blog article detail pages
+  | GtmArticleDetailPageInfoType // page information for article detail pages
   | GtmBrandDetailPageInfoType // page information for brand detail pages
   | GtmPageInfoInterface; // basic page information without additional properties
 ```
@@ -229,4 +254,3 @@ const gtmType = getSpecialArticleGtmType('/regular-article'); // Returns null
 2. Add the mapping to `SPECIAL_ARTICLE_GTM_TYPES` in `gtm/types/objects.ts`
 3. Test the integration on both domains/languages
 4. Update this documentation
-

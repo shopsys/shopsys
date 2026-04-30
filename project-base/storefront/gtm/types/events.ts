@@ -22,8 +22,8 @@ export type GtmEventInterface<EventType, EventContent> = {
     _clear: boolean;
 } & EventContent;
 
-export type GtmPageViewEventType = GtmEventInterface<
-    GtmEventType.page_view,
+export type GtmPageReadyEventType = GtmEventInterface<
+    GtmEventType.page_ready,
     {
         language: string;
         currencyCode: string;
@@ -124,8 +124,8 @@ export type GtmProductDetailViewEventType = GtmEventInterface<
     }
 >;
 
-export type GtmPaymentAndTransportPageViewEventType = GtmEventInterface<
-    GtmEventType.payment_and_transport_page_view,
+export type GtmPaymentAndTransportViewEventType = GtmEventInterface<
+    GtmEventType.payment_and_transport_view,
     {
         ecommerce: {
             currencyCode: string;
@@ -179,8 +179,8 @@ export type GtmTransportChangeEventType = GtmEventInterface<
     }
 >;
 
-export type GtmContactInformationPageViewEventType = GtmEventInterface<
-    GtmEventType.contact_information_page_view,
+export type GtmContactInformationViewEventType = GtmEventInterface<
+    GtmEventType.contact_information_view,
     {
         ecommerce: {
             currencyCode: string;

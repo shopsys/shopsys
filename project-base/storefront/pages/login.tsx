@@ -3,8 +3,8 @@ import { LoginContent } from 'components/Pages/Login/LoginContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { createClient } from 'urql/createClient';
 import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
@@ -18,8 +18,8 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();
     const [loginUrl] = getInternationalizedStaticUrls(['/login'], url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Login'), slug: loginUrl }];
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <CommonLayout breadcrumbs={breadcrumbs} title={t('Login')}>

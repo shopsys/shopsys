@@ -12,16 +12,16 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeRecommendationType } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const HomePageContent: FC = () => {
     const { t } = useTranslation();
     const { isLuigisBoxActive } = useDomainConfig();
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.homepage);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.homepage);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <>
