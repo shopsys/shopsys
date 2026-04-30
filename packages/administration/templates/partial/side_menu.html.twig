@@ -26,13 +26,11 @@
 
 {% block item %}
     {% if item.displayed %}
-        <li class="nav-item active">
-            {%- if item.hasChildren -%}
-                {{ block('dropdown_element') }}
-            {%- else -%}
-                {{ block('simple_element') }}
-            {%- endif -%}
-        </li>
+        {%- if item.hasChildren -%}
+            {{ block('dropdown_element') }}
+        {%- else -%}
+            {{ block('simple_element') }}
+        {%- endif -%}
     {% endif %}
 {% endblock %}
 
