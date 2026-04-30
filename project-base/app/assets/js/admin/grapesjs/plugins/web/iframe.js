@@ -2,10 +2,13 @@ import grapesjs from 'grapesjs';
 
 const IFRAME_WIDTH_ATTRIBUTE = 'width';
 const IFRAME_HEIGHT_ATTRIBUTE = 'height';
+const VIDEO_EMBED_URL_PATTERN = /(youtube(-nocookie)?\.com\/embed|player\.vimeo\.com\/video)/;
+
+const isVideoEmbed = element => VIDEO_EMBED_URL_PATTERN.test(element.getAttribute('src') ?? '');
 
 export default grapesjs.plugins.add('iframe', editor => {
     editor.DomComponents.addType('iframe', {
-        isComponent: el => el.tagName === 'IFRAME',
+        isComponent: element => element.tagName?.toUpperCase() === 'IFRAME' && !isVideoEmbed(element),
         model: {
             init() {
                 this.on(`change:attributes:${IFRAME_WIDTH_ATTRIBUTE}`, this.handleWidthChange);
