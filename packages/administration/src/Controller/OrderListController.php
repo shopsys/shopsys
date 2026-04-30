@@ -2,145 +2,84 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Controller\Admin;
+namespace Shopsys\AdministrationBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
-use Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
-use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
-use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
-use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
+use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
-use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[ForRole(AdminRoleConstant::ROLE_ORDER)]
-class OrderController extends AdminBaseController
+class OrderListController extends AdminBaseController
 {
     protected const string ORDERS_LIST_FOR_GRID_CACHE_KEY = 'ORDERS_LIST_FOR_GRID_CACHE_KEY';
 
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly OrderAdvancedSearchFacade $orderAdvancedSearchFacade,
-        protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+        protected readonly Domain $domain,
+        protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly GridFactory $gridFactory,
-        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
-        protected readonly OrderItemFacade $orderItemFacade,
-        protected readonly Domain $domain,
-        protected readonly OrderDataFactory $orderDataFactory,
-        protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
-        protected readonly EntityLogGridFactory $entityLogGridFactory,
-        protected readonly InMemoryCache $inMemoryCache,
-        protected readonly EntityLogFacade $entityLogFacade,
-        protected readonly PricingSetting $pricingSetting,
         protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
-    #[Route(path: '/order/edit/{id}', requirements: ['id' => '\d+'])]
-    #[CanEdit(methods: [HttpMethod::POST])]
-    #[CanView(methods: [HttpMethod::GET])]
-    public function editAction(Request $request, int $id): Response
+    #[Route(path: '/order/preview/{id}', requirements: ['id' => '\d+'], name: 'admin_order_preview')]
+    #[CanView]
+    public function previewAction(int $id): Response
     {
         $order = $this->orderFacade->getById($id);
 
-        $orderData = $this->orderDataFactory->createFromOrder($order);
-
-        $form = $this->createForm(OrderFormType::class, $orderData, ['order' => $order]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $order = $this->orderFacade->edit($id, $orderData);
-
-                $this->addSuccessFlashTwig(
-                    t('Order Nr. <strong><a href="{{ url }}">{{ number }}</a></strong> modified'),
-                    [
-                        'number' => $order->getNumber(),
-                        'url' => $this->generateUrl('admin_order_edit', ['id' => $order->getId()]),
-                    ],
-                );
-
-                return $this->redirectToRoute('admin_order_list');
-            } catch (CustomerUserNotFoundException) {
-                $this->addErrorFlash(
-                    t('Entered customer not found, please check entered data.'),
-                );
-            }
-        }
-
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
-        }
-
-        $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()]),
-        );
-
-        $entityLogGrid = $this->entityLogGridFactory->createByEntityNameAndEntityId(
-            $this->entityLogFacade->getEntityNameByEntity($order),
-            $order->getId(),
-        );
-
-        return $this->render('@ShopsysAdministration/content/order/edit.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('@ShopsysAdministration/content/order/preview.html.twig', [
             'order' => $order,
-            'entityLogGridView' => $entityLogGrid->createView(),
         ]);
     }
 
-    #[Route(path: '/order/add-product/{orderId}', requirements: ['orderId' => '\d+'], condition: 'request.isXmlHttpRequest()')]
-    #[CanEdit]
-    public function addProductAction(Request $request, int $orderId): Response
+    #[Route(path: '/order/delete/{id}', requirements: ['id' => '\d+'], name: 'admin_order_delete')]
+    #[CanDelete]
+    #[CsrfProtection]
+    public function deleteAction(int $id): Response
     {
-        $productId = (int)$request->request->get('productId');
-        $orderItem = $this->orderItemFacade->addProductToOrder($orderId, $productId);
+        try {
+            $orderNumber = $this->orderFacade->getById($id)->getNumber();
 
-        $order = $this->orderFacade->getById($orderId);
+            $this->orderFacade->deleteById($id);
 
-        $orderData = $this->orderDataFactory->createFromOrder($order);
+            $this->addSuccessFlashTwig(
+                t('Order Nr. <strong>{{ number }}</strong> deleted'),
+                [
+                    'number' => $orderNumber,
+                ],
+            );
+        } catch (OrderNotFoundException) {
+            $this->addErrorFlash(t('Selected order doesn\'t exist.'));
+        }
 
-        $form = $this->createForm(OrderFormType::class, $orderData, ['order' => $order]);
-
-        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
-            $order->getItems(),
-        );
-
-        return $this->render('@ShopsysAdministration/content/order/addProduct.html.twig', [
-            'form' => $form->createView(),
-            'order' => $order,
-            'orderItem' => $orderItem,
-            'orderItemTotalPricesById' => $orderItemTotalPricesById,
-            'inputPriceType' => $this->pricingSetting->getInputPriceType(),
-        ]);
+        return $this->redirectToRoute('admin_order_list');
     }
 
-    #[Route(path: '/order/list/')]
+    #[Route(path: '/order/list/', name: 'admin_order_list')]
     #[CanView]
     public function listAction(Request $request): Response
     {
@@ -189,9 +128,6 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
-     */
     protected function getOrdersGrid(QueryBuilder $queryBuilder): Grid
     {
         $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
@@ -200,7 +136,6 @@ class OrderController extends AdminBaseController
             function ($row, $rows) {
                 return $this->addOrderEntityToDataSource($row, array_column($rows, 'id'));
             },
-            null,
         );
 
         $grid = $this->gridFactory->create('orderList', $dataSource, AdminRoleConstant::ROLE_ORDER);
@@ -211,7 +146,7 @@ class OrderController extends AdminBaseController
         $grid->addColumn('created_at', 'o.createdAt', t('Created'), true);
         $grid->addColumn('customer_name', 'customerName', t('Customer'), true);
         $grid->addColumn('status_name', 'statusName', t('Status'), true);
-        $grid->addColumn('total_price', 'o.totalPriceWithVat', t('Total price'), false)
+        $grid->addColumn('total_price', 'o.totalPriceWithVat', t('Total price'))
             ->setClassAttribute('text-end text-nowrap');
 
         if ($this->domain->isMultidomain()) {
@@ -246,39 +181,5 @@ class OrderController extends AdminBaseController
         $row['order'] = $ordersIndexedById[$row['id']];
 
         return $row;
-    }
-
-    #[Route(path: '/order/delete/{id}', requirements: ['id' => '\d+'])]
-    #[CanDelete]
-    #[CsrfProtection]
-    public function deleteAction(int $id): Response
-    {
-        try {
-            $orderNumber = $this->orderFacade->getById($id)->getNumber();
-
-            $this->orderFacade->deleteById($id);
-
-            $this->addSuccessFlashTwig(
-                t('Order Nr. <strong>{{ number }}</strong> deleted'),
-                [
-                    'number' => $orderNumber,
-                ],
-            );
-        } catch (OrderNotFoundException) {
-            $this->addErrorFlash(t('Selected order doesn\'t exist.'));
-        }
-
-        return $this->redirectToRoute('admin_order_list');
-    }
-
-    #[Route(path: '/order/preview/{id}', requirements: ['id' => '\d+'])]
-    #[CanView]
-    public function previewAction(int $id): Response
-    {
-        $order = $this->orderFacade->getById($id);
-
-        return $this->render('@ShopsysAdministration/content/order/preview.html.twig', [
-            'order' => $order,
-        ]);
     }
 }
