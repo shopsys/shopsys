@@ -68,6 +68,11 @@ data:
             "~.+"  @404;
         }
 
+        map $request_uri $static_cors {
+            default "";
+            ~^/_next/static/ "*";
+        }
+
         server {
             listen 80;
             root /var/www/html/web;
@@ -277,7 +282,7 @@ data:
 
             location @storefront {
                 internal;
-                # CORS is intentionally not exposed on storefront HTML responses
+                add_header Access-Control-Allow-Origin $static_cors always;
                 add_header VSHCDN-WEBP-QUALITY 90;
                 add_header X-Powered-By "Shopsys Platform" always;
                 add_header Referrer-Policy "strict-origin-when-cross-origin" always;
