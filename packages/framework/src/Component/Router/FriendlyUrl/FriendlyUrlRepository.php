@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class FriendlyUrlRepository
@@ -263,6 +264,7 @@ class FriendlyUrlRepository
             'front_stores_detail' => $this->entityNameResolver->resolve(Store::class),
             'front_flag_detail' => $this->entityNameResolver->resolve(Flag::class),
             'front_category_seo' => $this->entityNameResolver->resolve(ReadyCategorySeoMix::class),
+            'front_page_seo' => $this->entityNameResolver->resolve(SeoPage::class),
         ];
     }
 }

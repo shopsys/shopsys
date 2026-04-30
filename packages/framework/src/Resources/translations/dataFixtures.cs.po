@@ -49,6 +49,9 @@ msgstr "Požadavek na resetování hesla administrátora"
 msgid "Authentication code"
 msgstr "Autentifikační kód"
 
+msgid "Catalog"
+msgstr "Katalog"
+
 msgid "Dear administrator,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\" tabindex=\"0\">link</a>.<br/><br/> Best regards"
 msgstr "Vážený administrátore,<br/><br/> můžete si nastavit nové heslo pomocí tohoto <a href=\"{new_password_url}\" tabindex=\"0\">odkazu</a>.<br/><br/> S pozdravem"
 
@@ -102,6 +105,9 @@ msgstr "Vaše objednávka č. {number} se zpracovává"
 
 msgid "Your watched product is back in stock!"
 msgstr "Váš sledovaný produkt je znovu skladem!"
+
+msgid "catalog-slug"
+msgstr "katalog"
 
 msgid "pcs"
 msgstr "ks"

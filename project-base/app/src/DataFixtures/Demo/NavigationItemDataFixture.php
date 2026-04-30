@@ -34,10 +34,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
             $navigationItemData->name = t('Catalog', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
-                CategoryDataFixture::CATEGORY_ELECTRONICS,
-                $domainId,
-            );
+            $navigationItemData->url = $this->generateUrlForRoute('front_catalog', $domainId);
             $navigationItemData->domainId = $domainId;
 
             $categoriesForCatalog = [
@@ -182,5 +179,12 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             ['id' => $categoryReference->getId()],
             UrlGeneratorInterface::RELATIVE_PATH,
         );
+    }
+
+    private function generateUrlForRoute(string $routeName, int $domainId): string
+    {
+        $router = $this->domainRouterFactory->getRouter($domainId);
+
+        return $router->generate($routeName, [], UrlGeneratorInterface::RELATIVE_PATH);
     }
 }

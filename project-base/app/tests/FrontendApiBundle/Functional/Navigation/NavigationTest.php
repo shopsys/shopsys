@@ -33,8 +33,8 @@ class NavigationTest extends GraphQlTestCase
         $expectedData = [
             [
                 'name' => t('Catalog', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                'link' => $this->getLink(CategoryDataFixture::CATEGORY_ELECTRONICS),
-                'routeName' => FriendlyUrlRouteEnum::FRONT_PRODUCT_LIST->name,
+                'link' => $this->getCatalogLink(),
+                'routeName' => null,
                 'categoriesByColumns' => [
                     [
                         'columnNumber' => 1,
@@ -177,5 +177,10 @@ class NavigationTest extends GraphQlTestCase
             ],
             DomainRouter::SLUG,
         );
+    }
+
+    private function getCatalogLink(): string
+    {
+        return $this->getLocalizedPathOnFirstDomainByRouteName('front_catalog', [], DomainRouter::ABSOLUTE_PATH);
     }
 }

@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SitemapListener implements EventSubscriberInterface
 {
@@ -120,6 +121,11 @@ class SitemapListener implements EventSubscriberInterface
             $domainConfig,
             'filtersCategories',
         );
+
+        $this->addStaticPageByRoute($generator, $domainConfig, 'catalog', 'front_catalog');
+        $this->addStaticPageByRoute($generator, $domainConfig, 'stores', 'front_stores');
+        $this->addStaticPageByRoute($generator, $domainConfig, 'brands', 'front_brand_list');
+        $this->addStaticPageByRoute($generator, $domainConfig, 'contact', 'front_contact_form');
     }
 
     /**
@@ -196,5 +202,27 @@ class SitemapListener implements EventSubscriberInterface
     protected function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, string $slug): string
     {
         return $domainConfig->getUrl() . '/' . $slug;
+    }
+
+    protected function addStaticPageByRoute(
+        AbstractGenerator $generator,
+        DomainConfig $domainConfig,
+        string $section,
+        string $routeName,
+    ): void {
+        $domainRouter = $this->domainRouterFactory->getRouter($domainConfig->getId());
+        $url = $domainRouter->generate($routeName, [], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $urlConcrete = new UrlConcrete($url);
+        $multilingualUrl = new GoogleMultilangUrlDecorator($urlConcrete);
+
+        foreach ($this->seoSettingFacade->getAlternativeDomainsForDomain($domainConfig->getId()) as $altDomainId) {
+            $altDomainRouter = $this->domainRouterFactory->getRouter($altDomainId);
+            $altUrl = $altDomainRouter->generate($routeName, [], UrlGeneratorInterface::ABSOLUTE_URL);
+            $altDomain = $this->domain->getDomainConfigById($altDomainId);
+            $multilingualUrl->addLink($altUrl, $altDomain->getLocale());
+        }
+
+        $generator->addUrl($multilingualUrl, $this->sitemapFacade->getSectionNameForDomainConfig($section, $domainConfig));
     }
 }

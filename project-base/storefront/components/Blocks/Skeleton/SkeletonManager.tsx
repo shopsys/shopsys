@@ -8,6 +8,7 @@ import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
 import { SkeletonPageBrand } from './SkeletonPageBrand';
 import { SkeletonPageBrandsOverview } from './SkeletonPageBrandsOverview';
 import { SkeletonPageCart } from './SkeletonPageCart';
+import { SkeletonPageCatalog } from './SkeletonPageCatalog';
 import { SkeletonPageComparison } from './SkeletonPageComparison';
 import { SkeletonPageConfirmation } from './SkeletonPageConfirmation';
 import { SkeletonPageContact } from './SkeletonPageContact';
@@ -44,6 +45,7 @@ const SKELETON_COMPONENT_MAP: Record<PageType, ComponentType> = {
     [SkeletonEnum.Brand]: SkeletonPageBrand,
     [SkeletonEnum.BrandsOverview]: SkeletonPageBrandsOverview,
     [SkeletonEnum.Cart]: SkeletonPageCart,
+    [SkeletonEnum.Catalog]: SkeletonPageCatalog,
     [SkeletonEnum.Category]: SkeletonPageProductsList,
     [SkeletonEnum.ChangePassword]: SkeletonPageCustomerChangePassword,
     [SkeletonEnum.Comparison]: SkeletonPageComparison,

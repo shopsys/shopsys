@@ -49,6 +49,9 @@ msgstr ""
 msgid "Authentication code"
 msgstr ""
 
+msgid "Catalog"
+msgstr ""
+
 msgid "Dear administrator,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\" tabindex=\"0\">link</a>.<br/><br/> Best regards"
 msgstr ""
 
@@ -102,6 +105,9 @@ msgstr ""
 
 msgid "Your watched product is back in stock!"
 msgstr ""
+
+msgid "catalog-slug"
+msgstr "catalog"
 
 msgid "pcs"
 msgstr ""
