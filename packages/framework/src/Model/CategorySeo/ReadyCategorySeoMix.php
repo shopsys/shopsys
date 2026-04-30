@@ -265,12 +265,4 @@ class ReadyCategorySeoMix
     {
         return $this->uuid;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getSelectedCategorySeoMixCombinationJson()
-    {
-        return $this->selectedCategorySeoMixCombinationJson;
-    }
 }

@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFiltersData;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
@@ -188,25 +189,25 @@ class CategorySeoController extends AdminBaseController
             // A little hack - when you need form sent data to create that same form - need for friendly URLs
             $sentReadyCategorySeoCombinationFormData = $request->request->all('ready_category_seo_combination_form');
             $selectedCategorySeoMixCombinationJson = $sentReadyCategorySeoCombinationFormData['selectedCategorySeoMixCombinationJson'] ?? null;
+        }
 
-            $selectedCategorySeoMixCombination = $selectedCategorySeoMixCombinationJson === null ? null : $this->selectedCategorySeoMixCombinationFactory->createFromJson(
-                $selectedCategorySeoMixCombinationJson,
-            );
-        } else {
-            $selectedCategorySeoMixCombination = $this->selectedCategorySeoMixCombinationFactory->createFromJson(
-                $selectedCategorySeoMixCombinationJson,
-            );
+        $selectedCategorySeoMixCombination = $selectedCategorySeoMixCombinationJson === null ? null : $this->selectedCategorySeoMixCombinationFactory->createFromJson(
+            $selectedCategorySeoMixCombinationJson,
+        );
+
+        if ($selectedCategorySeoMixCombination !== null) {
+            $existingReadyCategorySeoMix = $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination);
+
+            if ($existingReadyCategorySeoMix !== null) {
+                return $this->redirectToRoute('admin_categoryseo_readycombination_edit', [
+                    'id' => $existingReadyCategorySeoMix->getId(),
+                ]);
+            }
         }
 
         $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixData($selectedCategorySeoMixCombination);
 
         $this->storeJsonsToReadyCategorySeoMixData($readyCategorySeoMixData, $categorySeoFilterFormTypeAllQueries, $selectedCategorySeoMixCombination);
-
-        if ($categorySeoFilterFormTypeAllQueries === null
-            && $readyCategorySeoMixData->categorySeoFilterFormTypeAllQueriesJson !== null
-        ) {
-            $categorySeoFilterFormTypeAllQueries = json_decode($readyCategorySeoMixData->categorySeoFilterFormTypeAllQueriesJson, true, 512, JSON_THROW_ON_ERROR);
-        }
 
         if ($categorySeoFilterFormTypeAllQueries !== null) {
             $newCombinationsUrl = $this->getUrlWithCategoryIdAndAllQueryParameters(
@@ -219,6 +220,60 @@ class CategorySeoController extends AdminBaseController
             $newCombinationsUrl = $this->generateUrl('admin_categoryseo_list');
         }
 
+        $selfUrl = $this->generateUrl(
+            'admin_categoryseo_readycombination',
+            [
+                'categoryId' => $categoryId,
+                'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
+                'selectedCategorySeoMixCombinationJson' => $selectedCategorySeoMixCombination !== null ? $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination) : null,
+            ],
+        );
+
+        return $this->renderReadyCombinationForm(
+            $request,
+            $selectedCategorySeoMixCombination,
+            $readyCategorySeoMixData,
+            $categorySeoFilterFormTypeAllQueries,
+            $newCombinationsUrl,
+            $selfUrl,
+        );
+    }
+
+    #[Route(path: '/seo/category/ready-combination/edit/{id}', name: 'admin_categoryseo_readycombination_edit', requirements: ['id' => '\d+'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
+    public function readyCombinationEditAction(Request $request, int $id): Response
+    {
+        try {
+            $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($id);
+        } catch (ReadyCategorySeoMixNotFoundException) {
+            throw $this->createNotFoundException();
+        }
+
+        $selectedCategorySeoMixCombination = $this->createSelectedCategorySeoMixCombinationFromReadyCategorySeoMix($readyCategorySeoMix);
+        $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixData($selectedCategorySeoMixCombination);
+
+        $newCombinationsUrl = $this->generateUrl('admin_categoryseo_list');
+        $selfUrl = $this->generateUrl('admin_categoryseo_readycombination_edit', ['id' => $id]);
+
+        return $this->renderReadyCombinationForm(
+            $request,
+            $selectedCategorySeoMixCombination,
+            $readyCategorySeoMixData,
+            null,
+            $newCombinationsUrl,
+            $selfUrl,
+        );
+    }
+
+    protected function renderReadyCombinationForm(
+        Request $request,
+        ?SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
+        ReadyCategorySeoMixData $readyCategorySeoMixData,
+        ?array $categorySeoFilterFormTypeAllQueries,
+        string $newCombinationsUrl,
+        string $selfUrl,
+    ): Response {
         $readyCategorySeoCombinationFormType = $this->createForm(ReadyCategorySeoCombinationFormType::class, $readyCategorySeoMixData, [
             'method' => 'POST',
             'new_combination_url' => $newCombinationsUrl,
@@ -233,15 +288,6 @@ class CategorySeoController extends AdminBaseController
                 $selectedCategorySeoMixCombination,
             );
 
-            $selfUrl = $this->generateUrl(
-                'admin_categoryseo_readycombination',
-                [
-                    'categoryId' => $categoryId,
-                    'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
-                    'selectedCategorySeoMixCombinationJson' => $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
-                ],
-            );
-
             try {
                 $this->readyCategorySeoMixFacade->createOrEdit(
                     $selectedCategorySeoMixCombination,
@@ -254,7 +300,7 @@ class CategorySeoController extends AdminBaseController
                     ['url' => $selfUrl],
                 );
 
-                return $this->redirect($newCombinationsUrl);
+                return $this->redirectToRoute('admin_categoryseo_list');
             } catch (ReadyCategorySeoMixUrlsContainBadDomainUrlException) {
                 $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
                 $this->addErrorFlash(t('Fill URL only for selected domain'));
@@ -274,6 +320,25 @@ class CategorySeoController extends AdminBaseController
             ),
             'selectedCategorySeoMixCombinationDomainConfig' => $this->domain->getDomainConfigById($selectedCategorySeoMixCombination->getDomainId()),
         ]);
+    }
+
+    protected function createSelectedCategorySeoMixCombinationFromReadyCategorySeoMix(
+        ReadyCategorySeoMix $readyCategorySeoMix,
+    ): SelectedCategorySeoMixCombination {
+        $parameterValueIdsByParameterIds = [];
+
+        foreach ($readyCategorySeoMix->getReadyCategorySeoMixParameterParameterValues() as $readyCategorySeoMixParameterParameterValue) {
+            $parameterValueIdsByParameterIds[$readyCategorySeoMixParameterParameterValue->getParameter()->getId()]
+                = $readyCategorySeoMixParameterParameterValue->getParameterValue()->getId();
+        }
+
+        return $this->selectedCategorySeoMixCombinationFactory->create(
+            $readyCategorySeoMix->getDomainId(),
+            $readyCategorySeoMix->getCategory()->getId(),
+            $readyCategorySeoMix->getFlag()?->getId(),
+            $readyCategorySeoMix->getOrdering(),
+            $parameterValueIdsByParameterIds,
+        );
     }
 
     #[Route(path: '/seo/category/ready-combination/delete/{id}', requirements: ['id' => '\d+'])]

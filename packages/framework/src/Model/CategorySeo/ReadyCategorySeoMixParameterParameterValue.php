@@ -31,7 +31,7 @@ class ReadyCategorySeoMixParameterParameterValue
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
-    #[ORM\JoinColumn(name: 'parameter_value_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(name: 'parameter_value_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: ParameterValue::class)]
     protected $parameterValue;

@@ -8,8 +8,6 @@ use Generator;
 use Override;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
-use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -17,10 +15,8 @@ use Twig\TwigFunction;
 class CategorySeoExtension extends AbstractExtension
 {
     public function __construct(
-        protected readonly ParameterFacade $parameterFacade,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
     ) {
     }
 
@@ -36,13 +32,12 @@ class CategorySeoExtension extends AbstractExtension
         ];
     }
 
-    public function getReadyCategoryMixCombinationParametersPairsIterator(
-        string $selectedCategorySeoMixCombinationJson,
-    ): Generator {
-        $selectedCategorySeoMixCombination = $this->selectedCategorySeoMixCombinationFactory->createFromJson($selectedCategorySeoMixCombinationJson);
+    public function getReadyCategoryMixCombinationParametersPairsIterator(int $readyCategorySeoMixId): Generator
+    {
+        $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($readyCategorySeoMixId);
 
-        foreach ($selectedCategorySeoMixCombination->getParameterValueIdsByParameterIds() as $parameterId => $parameterValueId) {
-            yield $this->parameterFacade->getById($parameterId)->getName() . ': ' . $this->parameterFacade->getParameterValueById($parameterValueId)->getText();
+        foreach ($readyCategorySeoMix->getReadyCategorySeoMixParameterParameterValues() as $readyCategorySeoMixParameterParameterValue) {
+            yield $readyCategorySeoMixParameterParameterValue->getParameter()->getName() . ': ' . $readyCategorySeoMixParameterParameterValue->getParameterValue()->getText();
         }
     }
 
