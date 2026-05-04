@@ -102,7 +102,7 @@ class ArticleFacade
     }
 
     /**
-     * @param int[][] $rowIdsByGridId
+     * @param array<string, array<int|string, int>> $rowIdsByGridId
      */
     public function saveOrdering(array $rowIdsByGridId): void
     {
