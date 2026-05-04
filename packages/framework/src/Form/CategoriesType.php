@@ -54,7 +54,7 @@ final class CategoriesType extends AbstractType
 
     private function getMainCategoryPath(array $options): ?string
     {
-        if ($options['product'] === null) {
+        if ($options['product'] === null || $options['domain_id'] === null) {
             return null;
         }
 

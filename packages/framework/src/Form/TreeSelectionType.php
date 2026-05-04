@@ -39,15 +39,17 @@ final class TreeSelectionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired(['branch_load_route', 'domain_id', 'data_provider'])
+            ->setDefined('domain_id')
+            ->setRequired(['branch_load_route', 'data_provider'])
             ->setAllowedTypes('branch_load_route', 'string')
-            ->setAllowedTypes('domain_id', 'int')
+            ->setAllowedTypes('domain_id', ['int', 'null'])
             ->setAllowedTypes('data_provider', TreeSelectionDataProviderInterface::class)
             ->setDefaults([
                 'required' => false,
                 'compound' => false,
                 'multiple' => true,
                 'empty_data' => [],
+                'domain_id' => null,
             ]);
     }
 }

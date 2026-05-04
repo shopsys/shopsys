@@ -177,9 +177,15 @@ class BlogCategoryController extends AdminBaseController
         return $this->redirectToRoute('admin_blogcategory_list');
     }
 
-    #[Route(path: '/blog/category/branch/{domainId}/{id}', name: 'admin_blogcategory_loadbranchjson', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
+    #[Route(
+        path: '/blog/category/branch/{id}/{domainId}',
+        name: 'admin_blogcategory_loadbranchjson',
+        requirements: ['id' => '\d+', 'domainId' => '\d+'],
+        defaults: ['domainId' => null],
+        condition: 'request.isXmlHttpRequest()',
+    )]
     #[CanView]
-    public function loadBranchJsonAction(int $domainId, int $id): JsonResponse
+    public function loadBranchJsonAction(int $id, ?int $domainId = null): JsonResponse
     {
         $blogParentCategory = $this->blogCategoryFacade->getById($id);
         $blogCategories = $blogParentCategory->getChildren();
@@ -190,7 +196,7 @@ class BlogCategoryController extends AdminBaseController
             $blogCategoriesData[] = [
                 'id' => $blogCategory->getId(),
                 'label' => $blogCategory->getName(),
-                'isVisible' => $blogCategory->isVisible($domainId),
+                'isVisible' => $domainId === null || $blogCategory->isVisible($domainId),
                 'hasChildren' => $blogCategory->hasChildren(),
                 'loadUrl' => $this->generateUrl('admin_blogcategory_loadbranchjson', [
                     'domainId' => $domainId,

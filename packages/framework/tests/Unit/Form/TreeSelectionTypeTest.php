@@ -89,6 +89,16 @@ final class TreeSelectionTypeTest extends TypeTestCase
         $this->assertCollapsedTopLevelTreeInView($view);
     }
 
+    public function testSubmitWithNullDomainIdKeepsTreeSelectionGeneric(): void
+    {
+        $form = $this->createTreeSelectionForm(null);
+        $form->submit([(string)self::A_FIRST_SUBITEM_ID]);
+        $view = $form->createView();
+
+        $this->assertSame([$this->itemsById[self::A_FIRST_SUBITEM_ID]], $form->getData());
+        $this->assertNull($view->vars['domain_id']);
+    }
+
     public function testSubmitWithNonExistingItemIdIsInvalid(): void
     {
         $form = $this->createTreeSelectionForm();
@@ -111,11 +121,11 @@ final class TreeSelectionTypeTest extends TypeTestCase
         ];
     }
 
-    private function createTreeSelectionForm(): FormInterface
+    private function createTreeSelectionForm(?int $domainId = self::DOMAIN_ID): FormInterface
     {
         return $this->factory->create(TreeSelectionType::class, [], [
             'branch_load_route' => 'test_branch_load_route',
-            'domain_id' => self::DOMAIN_ID,
+            'domain_id' => $domainId,
             'data_provider' => $this->treeSelectionDataProvider,
         ]);
     }

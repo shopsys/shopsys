@@ -76,7 +76,7 @@
         {{ _self.treeSelectionItem(
             loadChildrenUrl=url(branch_load_route, {id: item.id, domainId: domain_id}),
             hasChildren=item.hasChildren ? 'true' : 'false',
-            isVisible=item.isVisible(domain_id),
+            isVisible=domain_id is null ? true : item.isVisible(domain_id),
             checkboxId=checkbox_id_prefix ~ '_' ~ item.id,
             checkboxName=checkbox_name,
             value=item.id,

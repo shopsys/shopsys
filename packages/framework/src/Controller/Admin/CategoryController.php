@@ -187,9 +187,15 @@ class CategoryController extends AdminBaseController
         return $this->redirectToRoute('admin_category_list');
     }
 
-    #[Route(path: '/category/branch/{domainId}/{id}', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
+    #[Route(
+        path: '/category/branch/{id}/{domainId}',
+        name: 'admin_category_loadbranchjson',
+        requirements: ['id' => '\d+', 'domainId' => '\d+'],
+        defaults: ['domainId' => null],
+        condition: 'request.isXmlHttpRequest()',
+    )]
     #[CanView]
-    public function loadBranchJsonAction(int $domainId, int $id): Response
+    public function loadBranchJsonAction(int $id, ?int $domainId = null): Response
     {
         $parentCategory = $this->categoryFacade->getById($id);
         $categories = $parentCategory->getChildren();
@@ -200,7 +206,7 @@ class CategoryController extends AdminBaseController
             $categoriesData[] = [
                 'id' => $category->getId(),
                 'label' => $category->getName(),
-                'isVisible' => $category->isVisible($domainId),
+                'isVisible' => $domainId === null || $category->isVisible($domainId),
                 'hasChildren' => $category->hasChildren(),
                 'loadUrl' => $this->generateUrl('admin_category_loadbranchjson', [
                     'domainId' => $domainId,

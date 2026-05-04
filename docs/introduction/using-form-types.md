@@ -103,16 +103,18 @@ An array of constraints that is used for field with the same locale as administr
 
 ### [CategoriesType]({{github.link}}/packages/framework/src/Form/CategoriesType.php)
 
-Displays a lazily loaded tree of categories for the given `domain_id` with checkboxes for selecting categories.
+Displays a lazily loaded tree of categories with checkboxes for selecting categories.
 Submitted checkbox values are transformed to an array of selected `Category` entities.
 
 #### domain_id
 
-Required option that defines for what domain should the categories be listed.
+Optional domain used for visibility styling and domain-specific branch loading.
+When set to `null`, the tree works across all domains, child branches are loaded through the all-domains endpoint, and items are not styled according to per-domain visibility.
 
 #### product
 
 Optional `Product` used to display the current main category path above the tree in product-related forms.
+This path is shown only when `domain_id` is set.
 
 ### [ColorPickerType]({{github.link}}/packages/framework/src/Form/ColorPickerType.php)
 
