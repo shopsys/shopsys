@@ -4,6 +4,8 @@ import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateWatchdogMutation } from 'graphql/requests/watchDog/mutations/CreateWatchdogMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -11,24 +13,28 @@ import { onGtmCreateWatchdotEventHandler } from 'gtm/handlers/onGtmCreateWatchdo
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { WatchdogFormType } from 'types/form';
+import { WatchDogProductType } from 'types/product';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type WatchdogPopupProps = {
-    productUuid: string;
+    product: WatchDogProductType;
+    listIndex?: number;
 };
 
-export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
+export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const user = useCurrentCustomerData();
     const [, createWatchdog] = useCreateWatchdogMutation();
+    const domainConfig = useDomainConfig();
+    const { canSeePrices } = useAuthorization();
 
     const [formProviderMethods] = useWatchdogForm({
         email: user?.email ?? '',
-        productUuid,
+        productUuid: product.uuid,
         gdprAgreement: false,
     });
     const formMeta = useWatchdogFormMeta();
@@ -56,7 +62,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
         updatePortalContent(null);
         showSuccessMessage(t('Your watchdog has been created'));
 
-        onGtmCreateWatchdotEventHandler(watchdogFormData);
+        onGtmCreateWatchdotEventHandler(watchdogFormData, product, domainConfig, !canSeePrices, listIndex);
     };
 
     return (

@@ -10,3 +10,9 @@ export type ProductInterfaceType =
     | TypeCartItemFragment['product']
     | TypeListedProductFragment
     | TypeSimpleProductFragment;
+
+export type WatchDogProductType =
+    | TypeProductDetailFragment
+    | TypeMainVariantDetailFragment
+    | TypeMainVariantDetailFragment['variants'][number]
+    | TypeListedProductFragment;
