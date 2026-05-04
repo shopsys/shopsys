@@ -26,6 +26,7 @@ class AnnotationsReplacerTest extends TestCase
     {
         $replacementMap = new AnnotationsReplacementsMap([
             'Shopsys\FrameworkBundle\Model\Category\CategoryFacade' => 'App\Model\Category\CategoryFacade',
+            'Shopsys\FrameworkBundle\Model\Category\Category' => 'App\Model\Category\Category',
             'Shopsys\FrameworkBundle\Model\Product\ProductDataFactory' => 'App\Model\MyProduct\ProductDataFactory',
             'Shopsys\FrameworkBundle\Model\Article\ArticleData' => 'App\Model\Article\ArticleData',
             'Shopsys\FrontendApiBundle\Model\Product\ProductRepository' => 'App\FrontendApi\Model\Product\ProductRepository',
@@ -106,6 +107,7 @@ class AnnotationsReplacerTest extends TestCase
             [$reflectionClass->getMethod('returnsFrameworkArticleDataArray'), '\App\Model\Article\ArticleData[]'],
             [$reflectionClass->getMethod('returnsInt'), 'int'],
             [$reflectionClass->getMethod('returnsFrontendApiProductRepository'), '\App\FrontendApi\Model\Product\ProductRepository'],
+            [$reflectionClass->getMethod('returnsArrayOfFrameworkCategories'), 'array<int, \App\Model\Category\Category>'],
         ];
     }
 
@@ -123,6 +125,7 @@ class AnnotationsReplacerTest extends TestCase
             [$reflectionClass->getProperty('categoryFacadeOrNull'), '\App\Model\Category\CategoryFacade|null'],
             [$reflectionClass->getProperty('integer'), 'int'],
             [$reflectionClass->getProperty('articleDataArray'), '\App\Model\Article\ArticleData[]'],
+            [$reflectionClass->getProperty('arrayOfFrameworkCategories'), 'array<int, \App\Model\Category\Category>'],
         ];
     }
 
@@ -143,6 +146,7 @@ class AnnotationsReplacerTest extends TestCase
             [$reflectionMethod->getParameter('array'), '\App\Model\Article\ArticleData[]'],
             [$reflectionMethod->getParameter('frontendApiproductRepository'), '\App\FrontendApi\Model\Product\ProductRepository'],
             [$reflectionMethod->getParameter('integer'), 'int'],
+            [$reflectionMethod->getParameter('arrayOfFrameworkCategories'), 'array<int, \App\Model\Category\Category>'],
         ];
     }
 

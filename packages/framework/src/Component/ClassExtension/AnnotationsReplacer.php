@@ -43,7 +43,7 @@ class AnnotationsReplacer
         $replacedReturnTypes = [];
 
         foreach ($methodReturnTypes as $methodReturnType) {
-            $replacedReturnTypes[] = $this->replaceIn((string)$methodReturnType);
+            $replacedReturnTypes[] = $this->replaceInStringifiedType((string)$methodReturnType);
         }
 
         return implode('|', $replacedReturnTypes);
@@ -61,7 +61,7 @@ class AnnotationsReplacer
             return '';
         }
 
-        return $this->replaceIn((string)$type);
+        return $this->replaceInStringifiedType((string)$type);
     }
 
     public function replaceInParameterType(ReflectionParameter $reflectionParameter): string
@@ -76,6 +76,16 @@ class AnnotationsReplacer
             return '';
         }
 
-        return $this->replaceIn((string)$type);
+        return $this->replaceInStringifiedType((string)$type);
+    }
+
+    /**
+     * phpDocumentor's stringification of generics drops whitespace after commas
+     * (e.g. `array<int, X>` becomes `array<int,X>`), causing duplicate-detection
+     * via str_contains to fail against existing canonically-formatted annotations.
+     */
+    protected function replaceInStringifiedType(string $type): string
+    {
+        return $this->replaceIn(preg_replace('/,(?=\S)/', ', ', $type));
     }
 }
