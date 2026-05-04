@@ -2332,6 +2332,9 @@ msgstr "obchodní zástupci"
 msgid "subscribers"
 msgstr "odběratelé newsletteru"
 
+msgid "today"
+msgstr "dnes"
+
 msgid "type&nbsp;%key%&nbsp;to search"
 msgstr "stiskněte&nbsp;%key%&nbsp;pro hledání"
 
@@ -2346,4 +2349,7 @@ msgstr "použijte %keyTab% nebo %keyShiftTab%"
 
 msgid "watchdogs"
 msgstr "hlídací psi"
+
+msgid "yesterday"
+msgstr "včera"
 

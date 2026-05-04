@@ -2332,6 +2332,9 @@ msgstr ""
 msgid "subscribers"
 msgstr ""
 
+msgid "today"
+msgstr ""
+
 msgid "type&nbsp;%key%&nbsp;to search"
 msgstr ""
 
@@ -2345,5 +2348,8 @@ msgid "use %keyTab% or %keyShiftTab%"
 msgstr ""
 
 msgid "watchdogs"
+msgstr ""
+
+msgid "yesterday"
 msgstr ""
 
