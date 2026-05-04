@@ -6,8 +6,14 @@ export const getGtmAutocompleteResultsViewEvent = (
     searchResult: TypeAutocompleteSearchQuery,
     keyword: string,
 ): GtmAutocompleteResultsViewEventType => {
-    const category = searchResult.categoriesSearch.edges?.length ?? 0;
-    const product = searchResult.productsSearch.edges?.length ?? 0;
+    const category = getAutocompleteSectionResultsCount(
+        searchResult.categoriesSearch.totalCount,
+        searchResult.categoriesSearch.edges?.length ?? 0,
+    );
+    const product = getAutocompleteSectionResultsCount(
+        searchResult.productsSearch.totalCount,
+        searchResult.productsSearch.edges?.length ?? 0,
+    );
     const brand = searchResult.brandSearch.length;
     const article = searchResult.articlesSearch.length;
 
@@ -30,3 +36,6 @@ export const getGtmAutocompleteResultsViewEvent = (
         _clear: true,
     };
 };
+
+const getAutocompleteSectionResultsCount = (totalCount: number, displayedCount: number): number =>
+    totalCount >= 0 ? totalCount : displayedCount;
