@@ -694,6 +694,9 @@ msgstr "Proměnná {{ needle }} je povinná"
 msgid "Variant alias cannot be longer than {{ limit }} characters"
 msgstr "Alias varianty nesmí být delší než {{ limit }} znaků"
 
+msgid "Warehouse cannot be default on a domain where it is not enabled."
+msgstr "Sklad nemůže být výchozí na doméně, kde není povolen."
+
 msgid "Warehouse name cannot be longer than {{ limit }} characters"
 msgstr "Název skladu nesmí být delší než {{ limit }} znaků"
 

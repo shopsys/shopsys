@@ -12,7 +12,7 @@ class StockData
     public $name;
 
     /**
-     * @var bool[]
+     * @var array<int, bool>
      */
     public $isEnabledByDomain;
 
@@ -22,9 +22,9 @@ class StockData
     public $externalId;
 
     /**
-     * @var bool|null
+     * @var array<int, bool>
      */
-    public $isDefault;
+    public $isDefaultByDomain;
 
     /**
      * @var string|null
@@ -34,6 +34,6 @@ class StockData
     public function __construct()
     {
         $this->isEnabledByDomain = [];
-        $this->isDefault = false;
+        $this->isDefaultByDomain = [];
     }
 }

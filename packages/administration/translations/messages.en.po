@@ -2260,6 +2260,9 @@ msgstr ""
 msgid "default"
 msgstr ""
 
+msgid "default (%domainName%)"
+msgstr ""
+
 msgid "discount"
 msgstr ""
 

@@ -29,7 +29,7 @@ class Stock implements OrderableEntityInterface
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Stock\StockDomain>
      */
-    #[ORM\OneToMany(targetEntity: StockDomain::class, mappedBy: 'stock', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: StockDomain::class, mappedBy: 'stock', cascade: ['persist', 'remove'])]
     protected $domains;
 
     /**
@@ -49,12 +49,6 @@ class Stock implements OrderableEntityInterface
      */
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
     protected $externalId;
-
-    /**
-     * @var bool
-     */
-    #[ORM\Column(type: 'boolean')]
-    protected $isDefault;
 
     /**
      * @var string|null
@@ -87,7 +81,6 @@ class Stock implements OrderableEntityInterface
     {
         $this->name = $stockData->name;
         $this->externalId = $stockData->externalId;
-        $this->isDefault = $stockData->isDefault;
         $this->note = $stockData->note;
     }
 
@@ -107,9 +100,20 @@ class Stock implements OrderableEntityInterface
         return $this->name;
     }
 
-    public function isDefault(): bool
+    public function isDefault(int $domainId): bool
     {
-        return $this->isDefault;
+        return $this->getStockDomain($domainId)->isDefault();
+    }
+
+    public function isDefaultOnAnyDomain(): bool
+    {
+        foreach ($this->domains as $stockDomain) {
+            if ($stockDomain->isDefault()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -147,11 +151,6 @@ class Stock implements OrderableEntityInterface
         return $this->externalId;
     }
 
-    public function setDefault(): void
-    {
-        $this->isDefault = true;
-    }
-
     /**
      * @param int $position
      */
@@ -178,6 +177,7 @@ class Stock implements OrderableEntityInterface
         foreach ($this->domains as $stockDomain) {
             $domainId = $stockDomain->getDomainId();
             $stockDomain->setEnabled($stockData->isEnabledByDomain[$domainId]);
+            $stockDomain->setDefault($stockData->isDefaultByDomain[$domainId] ?? false);
         }
     }
 

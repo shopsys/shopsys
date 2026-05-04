@@ -9,6 +9,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Model\Stock\Exception\DefaultStockNotEnabledException;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Stock\StockData;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -45,11 +46,6 @@ final class StockFormType extends AbstractType
                 ->add('stockId', DisplayOnlyType::class, [
                     'label' => 'ID',
                     'data' => $this->stock->getId(),
-                ])
-                ->add('isDefault', DisplayOnlyType::class, [
-                    'required' => false,
-                    'data' => $this->stock->isDefault() ? t('Yes') : t('No'),
-                    'label' => 'Default warehouse',
                 ]);
         }
 
@@ -61,10 +57,6 @@ final class StockFormType extends AbstractType
                     new Constraints\Length(max: 255, maxMessage: 'Warehouse name cannot be longer than {{ limit }} characters'),
                 ],
                 'label' => 'Name',
-            ])
-            ->add('isEnabledByDomain', DomainsType::class, [
-                'required' => false,
-                'label' => 'Display on',
             ])
             ->add('externalId', TextType::class, [
                 'required' => false,
@@ -79,7 +71,24 @@ final class StockFormType extends AbstractType
                 'label' => 'Internal note',
             ]);
 
+        $stockDomainsBuilder = $builder->create('stockDomains', GroupType::class, [
+            'label' => 'Domains',
+        ]);
+
+        $stockDomainsBuilder
+            ->add('isEnabledByDomain', DomainsType::class, [
+                'required' => false,
+                'label' => 'Display on',
+                'disabled' => $options['is_first_stock'],
+            ])
+            ->add('isDefaultByDomain', DomainsType::class, [
+                'required' => false,
+                'label' => 'Default warehouse',
+                'disabled' => $options['is_first_stock'],
+            ]);
+
         $builder->add($stockDataBuilder);
+        $builder->add($stockDomainsBuilder);
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_stock_list',
             'entity' => $options['stock'],
@@ -97,7 +106,20 @@ final class StockFormType extends AbstractType
             ->setAllowedTypes('stock', [Stock::class, 'null'])
             ->setDefaults([
                 'data_class' => StockData::class,
+                'is_first_stock' => false,
+                'constraints' => [
+                    new Constraints\Callback(callback: [$this, 'validateDefaultRequiresEnabled']),
+                ],
             ]);
+    }
+
+    public function validateDefaultRequiresEnabled(StockData $stockData, ExecutionContextInterface $context): void
+    {
+        try {
+            $this->stockFacade->validateDefaultRequiresEnabled($stockData);
+        } catch (DefaultStockNotEnabledException) {
+            $context->addViolation('Warehouse cannot be default on a domain where it is not enabled.');
+        }
     }
 
     public function sameStockExternalIdValidation(?string $externalId, ExecutionContextInterface $context): void

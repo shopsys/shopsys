@@ -694,6 +694,9 @@ msgstr ""
 msgid "Variant alias cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Warehouse cannot be default on a domain where it is not enabled."
+msgstr ""
+
 msgid "Warehouse name cannot be longer than {{ limit }} characters"
 msgstr ""
 

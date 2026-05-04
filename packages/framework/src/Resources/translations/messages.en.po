@@ -70,6 +70,9 @@ msgstr ""
 msgid "302 (Temporary redirect)"
 msgstr ""
 
+msgid "<a href=\"%url%\">Domain \"%domainName%\" has no default warehouse.</a>"
+msgstr ""
+
 msgid "<a href=\"%url%\">Phone prefixes are not configured for domain %domainName%.</a>"
 msgstr ""
 
@@ -1154,6 +1157,9 @@ msgid "Domain <strong>{{ name }}</strong> modified. Try clearing your browser ca
 msgstr ""
 
 msgid "Domain name"
+msgstr ""
+
+msgid "Domains"
 msgstr ""
 
 msgid "Done"
@@ -3328,6 +3334,9 @@ msgstr ""
 msgid "This payment method is hidden by GoPay on domains: %domains%"
 msgstr ""
 
+msgid "This warehouse is default on at least one domain. You cannot delete it."
+msgstr ""
+
 msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
 msgstr ""
 
@@ -3568,13 +3577,13 @@ msgstr ""
 msgid "Warehouse"
 msgstr ""
 
+msgid "Warehouse <a href=\"%url%\">%stockName%</a> is set as default on domain \"%domainName%\" but is not enabled there."
+msgstr ""
+
 msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
 msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was set as default."
 msgstr ""
 
 msgid "Warehouse <strong>{{ name }}</strong> deleted"

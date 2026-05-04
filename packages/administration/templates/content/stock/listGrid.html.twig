@@ -2,9 +2,9 @@
 
 {% block grid_value_cell_id_name %}
     <a href="{{ url('admin_stock_edit', { id: row.s.id }) }}">{{ value }}</a>
-    {% if row.s.isDefault %}
-        <span class="badge badge-pill bg-secondary-lt">{{ 'default'|trans }}</span>
-    {% endif %}
+    {% for domainId in defaultDomainIdsByStockId[row.s.id] | default([]) %}
+        <span class="badge badge-pill bg-secondary-lt">{{ 'default (%domainName%)'|trans({'%domainName%': getDomainName(domainId)}) }}</span>
+    {% endfor %}
 {% endblock %}
 
 {% block grid_pager_totalcount %}
@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block grid_action_cell_type_delete %}
-    {% if row.s.isDefault %}
+    {% if defaultDomainIdsByStockId[row.s.id] | default([]) | length > 0 %}
         {{ info_icon('Default warehouse cannot be removed'|trans) }}
     {% else %}
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}

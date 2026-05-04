@@ -70,6 +70,9 @@ msgstr "301 (Trvalé přesměrování)"
 msgid "302 (Temporary redirect)"
 msgstr "302 (Dočasné přesměrování)"
 
+msgid "<a href=\"%url%\">Domain \"%domainName%\" has no default warehouse.</a>"
+msgstr "<a href=\"%url%\">Doména \"%domainName%\" nemá výchozí sklad.</a>"
+
 msgid "<a href=\"%url%\">Phone prefixes are not configured for domain %domainName%.</a>"
 msgstr "<a href=\"%url%\">Telefonní předvolby nejsou nakonfigurovány pro doménu %domainName%.</a>"
 
@@ -1155,6 +1158,9 @@ msgstr "Byla upravena doména <strong>{{ name }}</strong>. Nevidíte-li novou ik
 
 msgid "Domain name"
 msgstr "Název domény"
+
+msgid "Domains"
+msgstr "Domény"
 
 msgid "Done"
 msgstr "Vyřízena"
@@ -3328,6 +3334,9 @@ msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
 msgid "This payment method is hidden by GoPay on domains: %domains%"
 msgstr "Tento způsob platby je skrytý systémem GoPay na doménách: %domains%"
 
+msgid "This warehouse is default on at least one domain. You cannot delete it."
+msgstr "Tento sklad je výchozí alespoň na jedné doméně. Nelze jej smazat."
+
 msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
 msgstr "Tím se zákazníkovi odešle e-mail pro resetování hesla. Opravdu to chcete poslat?"
 
@@ -3568,14 +3577,14 @@ msgstr "Čekáme na provedení online platby"
 msgid "Warehouse"
 msgstr "Sklad"
 
+msgid "Warehouse <a href=\"%url%\">%stockName%</a> is set as default on domain \"%domainName%\" but is not enabled there."
+msgstr "Sklad <a href=\"%url%\">%stockName%</a> je nastaven jako výchozí na doméně \"%domainName%\", ale není tam povolen."
+
 msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
 
 msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
-
-msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was set as default."
-msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl nastaven jako výchozí."
 
 msgid "Warehouse <strong>{{ name }}</strong> deleted"
 msgstr "Sklad <strong>{{ name }}</strong> byl smazán"

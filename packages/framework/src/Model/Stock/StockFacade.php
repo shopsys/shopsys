@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Stock;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Stock\Exception\DefaultStockNotEnabledException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class StockFacade
@@ -21,8 +22,14 @@ class StockFacade
 
     public function create(StockData $stockData): Stock
     {
+        $this->validateDefaultRequiresEnabled($stockData);
+
         $stock = $this->stockFactory->create($stockData);
+
         $this->em->persist($stock);
+
+        $this->ensureSingleDefaultPerDomain($stock, $stockData);
+
         $this->em->flush();
 
         $this->productStockFacade->createProductStockRelationForStockId($stock->getId());
@@ -36,7 +43,12 @@ class StockFacade
 
         $hasDomainsChanged = $stock->getEnabledIndexedByDomainId() !== $stockData->isEnabledByDomain;
 
+        $this->validateDefaultRequiresEnabled($stockData);
+
         $stock->edit($stockData);
+
+        $this->ensureSingleDefaultPerDomain($stock, $stockData);
+
         $this->em->flush();
 
         $this->eventDispatcher->dispatch(new StockEvent($stock, $hasDomainsChanged), StockEvent::UPDATE);
@@ -54,9 +66,26 @@ class StockFacade
         $this->em->flush();
     }
 
-    public function changeDefaultStock(Stock $stock): void
+    public function validateDefaultRequiresEnabled(StockData $stockData): void
     {
-        $this->stockRepository->changeDefaultStock($stock);
+        foreach ($stockData->isDefaultByDomain as $domainId => $isDefault) {
+            if ($isDefault && !($stockData->isEnabledByDomain[$domainId] ?? false)) {
+                throw new DefaultStockNotEnabledException($domainId);
+            }
+        }
+    }
+
+    protected function ensureSingleDefaultPerDomain(Stock $stock, StockData $stockData): void
+    {
+        foreach ($stockData->isDefaultByDomain as $domainId => $isDefault) {
+            if ($isDefault) {
+                $otherDefaults = $this->stockRepository->getDefaultStockDomainsForDomainExcept($stock->getId(), $domainId);
+
+                foreach ($otherDefaults as $stockDomain) {
+                    $stockDomain->setDefault(false);
+                }
+            }
+        }
     }
 
     public function getById(int $stockId): Stock
@@ -109,5 +138,30 @@ class StockFacade
     public function getCount(): int
     {
         return $this->stockRepository->getCount();
+    }
+
+    /**
+     * @return array<int, int[]> stock ID => array of domain IDs where stock is default
+     */
+    public function getDefaultDomainIdsIndexedByStockId(): array
+    {
+        return $this->stockRepository->getDefaultDomainIdsIndexedByStockId();
+    }
+
+    /**
+     * @param int[] $allDomainIds
+     * @return int[] domain IDs that have no default stock
+     */
+    public function getDomainIdsWithoutDefaultStock(array $allDomainIds): array
+    {
+        return $this->stockRepository->getDomainIdsWithoutDefaultStock($allDomainIds);
+    }
+
+    /**
+     * @return array{stockId: int, stockName: string, domainId: int}[]
+     */
+    public function getDefaultButDisabledStockDomains(): array
+    {
+        return $this->stockRepository->getDefaultButDisabledStockDomains();
     }
 }
