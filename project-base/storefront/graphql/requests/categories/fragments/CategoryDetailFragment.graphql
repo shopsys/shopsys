@@ -4,6 +4,7 @@ fragment CategoryDetailFragment on Category {
     uuid
     slug
     originalCategorySlug
+    zboziCategory
     name
     description
     images {

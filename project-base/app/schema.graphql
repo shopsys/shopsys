@@ -533,6 +533,8 @@ type Category implements Breadcrumb & Slug & ProductListable {
   slug: String!
   "UUID"
   uuid: Uuid!
+  "Zbozi.cz category text assigned to the category"
+  zboziCategory: String
 }
 
 "Category automated filter types"

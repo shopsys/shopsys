@@ -1,0 +1,2 @@
+parameters:
+    shopsys.product_feed.zbozi_bundle.zbozi_category_feed_cz_url: https://www.zbozi.cz/static/categories.json

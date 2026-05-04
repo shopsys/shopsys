@@ -79,6 +79,10 @@ CategoryDecorator:
             originalCategorySlug:
                 type: "String"
                 description: "Original category URL slug (for CategorySeoMixes slug of assigned category is returned, null is returned for regular category)"
+            zboziCategory:
+                type: "String"
+                description: "Zbozi.cz category text assigned to the category"
+                resolve: '@=query("zboziCategoryByCategoryQuery", value)'
             readyCategorySeoMixLinks:
                 type: "[Link!]!"
                 description: "An array of links of prepared category SEO mixes of a given category"

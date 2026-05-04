@@ -16,3 +16,8 @@ msgstr "Offer in feed"
 msgid "Zbozi.cz product feed"
 msgstr "Zbozi.cz product feed"
 
+msgid "Zbozi.cz category"
+msgstr "Zbozi.cz category"
+
+msgid "Zbozi category"
+msgstr "Zbozi category"

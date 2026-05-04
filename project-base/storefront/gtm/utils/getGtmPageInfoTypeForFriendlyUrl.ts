@@ -66,6 +66,7 @@ const getPageInfoForCategoryDetailPage = (
     type: getCategoryOrSeoCategoryGtmPageType(categoryDetailData.originalCategorySlug),
     category: categoryDetailData.breadcrumb.map(({ name }) => name),
     categoryId: categoryDetailData.categoryHierarchy.map(({ id }) => id),
+    ...(categoryDetailData.zboziCategory !== null && { zboziCategory: categoryDetailData.zboziCategory }),
 });
 
 const getPageInfoForBlogArticleDetailPage = (

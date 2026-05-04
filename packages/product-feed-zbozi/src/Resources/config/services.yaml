@@ -12,9 +12,18 @@ services:
         tags:
             - { name: shopsys.data_fixture }
 
+    Shopsys\ProductFeed\ZboziBundle\Form\CategoryCrudExtension:
+        tags:
+            - { name: shopsys.crud_extension, type: category }
+
     Shopsys\ProductFeed\ZboziBundle\Form\ZboziProductCrudExtension:
         tags:
             - { name: shopsys.crud_extension, type: product }
+
+    Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryDownloader:
+        arguments:
+            $feedUrlsByLocale:
+                cs: '%shopsys.product_feed.zbozi_bundle.zbozi_category_feed_cz_url%'
 
     Shopsys\ProductFeed\ZboziBundle\ZboziFeed:
         tags:
