@@ -46,6 +46,9 @@ fragment CartItemFragment on CartItem {
         categories {
             name
         }
+        parameters {
+            ...ParameterFragment
+        }
         vatPercent
     }
 }
