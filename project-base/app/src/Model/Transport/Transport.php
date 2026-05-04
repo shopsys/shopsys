@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 
 /**
- * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Payment\Payment> $payments
+ * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Payment\Payment> $payments
  * @method \App\Model\Payment\Payment[] getPayments()
  * @method void setDomains(\App\Model\Transport\TransportData $transportData)
  * @method void createDomains(\App\Model\Transport\TransportData $transportData)
@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
  * @method void setPayments(\App\Model\Payment\Payment[] $payments)
  * @method void removePayment(\App\Model\Payment\Payment $payment)
  * @method \App\Model\Transport\TransportTranslation translation(?string $locale = null)
- * @property \Doctrine\Common\Collections\Collection<string,\App\Model\Transport\TransportTranslation> $translations
+ * @property \Doctrine\Common\Collections\Collection<string, \App\Model\Transport\TransportTranslation> $translations
  * @method \Doctrine\Common\Collections\Collection<string, \App\Model\Transport\TransportTranslation> getTranslations()
  * @method __construct(\App\Model\Transport\TransportData $transportData)
  * @method void edit(\App\Model\Transport\TransportData $transportData)

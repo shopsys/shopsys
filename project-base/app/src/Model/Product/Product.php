@@ -14,9 +14,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
  * @property \App\Model\Product\Brand\Brand|null $brand
- * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\Product> $variants
+ * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Product> $variants
  * @property \App\Model\Product\Product|null $mainVariant
- * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\Product> $relatedProducts
+ * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Product> $relatedProducts
  * @method static \App\Model\Product\Product create(\App\Model\Product\ProductData $productData)
  * @method static \App\Model\Product\Product createMainVariant(\App\Model\Product\ProductData $productData, \App\Model\Product\Product[] $variants)
  * @method \App\Model\Category\Category[][] getCategoriesIndexedByDomainId()
@@ -29,8 +29,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method void addNewVariants(\App\Model\Product\Product[] $currentVariants)
  * @method int[] unsetRemovedVariants(\App\Model\Product\Product[] $currentVariants)
  * @method \App\Model\Product\ProductTranslation translation(?string $locale = null)
- * @property \Doctrine\Common\Collections\Collection<string,\App\Model\Product\ProductTranslation> $translations
- * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductDomain> $domains
+ * @property \Doctrine\Common\Collections\Collection<string, \App\Model\Product\ProductTranslation> $translations
+ * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Product\ProductDomain> $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
  * @property \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
  * @method \Shopsys\FrameworkBundle\Model\Product\Unit\Unit getUnit()
@@ -38,11 +38,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method void setDomains(\App\Model\Product\ProductData $productData)
  * @method \Doctrine\Common\Collections\Collection<string, \App\Model\Product\ProductTranslation> getTranslations()
  * @method \App\Model\Product\ProductDomain[] getProductDomains()
- * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Transport\Transport> $excludedTransports
+ * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Transport\Transport> $excludedTransports
  * @method void setExcludedTransports(\App\Model\Transport\Transport[] $excludedTransports)
  * @method \App\Model\Transport\Transport[] getExcludedTransports()
  * @method void setTranslations(\App\Model\Product\ProductData $productData)
- * @method void setFlags(array<int,\App\Model\Product\Flag\Flag[]> $flagsByDomainId)
+ * @method void setFlags(array<int, \App\Model\Product\Flag\Flag[]> $flagsByDomainId)
  * @method \App\Model\Product\Product[] getRelatedProducts()
  * @method __construct(\App\Model\Product\ProductData $productData, \App\Model\Product\Product[]|null $variants = null)
  * @method void edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
 
 /**
- * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Transport\Transport> $transports
+ * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Transport\Transport> $transports
  * @method \App\Model\Transport\Transport[] getTransports()
  * @method void addTransport(\App\Model\Transport\Transport $transport)
  * @method void setTransports(\App\Model\Transport\Transport[] $transports)
