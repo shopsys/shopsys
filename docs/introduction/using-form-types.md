@@ -101,20 +101,37 @@ An array of options that is used for every inner form.
 
 An array of constraints that is used for field with the same locale as administration.
 
-### [CategoriesType]({{github.link}}/packages/framework/src/Form/CategoriesType.php)
+### [TreeSelectionType]({{github.link}}/packages/framework/src/Form/TreeSelectionType.php)
 
-Displays a lazily loaded tree of categories with checkboxes for selecting categories.
-Submitted checkbox values are transformed to an array of selected `Category` entities.
+Displays a lazily loaded tree of checkboxes.
+Submitted checkbox values are transformed to an array of selected entities.
+
+Use this type directly when integrating selection of a custom tree structure.
+Provide a `data_provider` implementing `TreeSelectionDataProviderInterface` and a `branch_load_route` for lazy loading child nodes.
 
 #### domain_id
 
 Optional domain used for visibility styling and domain-specific branch loading.
 When set to `null`, the tree works across all domains, child branches are loaded through the all-domains endpoint, and items are not styled according to per-domain visibility.
 
+### [CategoriesType]({{github.link}}/packages/framework/src/Form/CategoriesType.php)
+
+Displays a lazily loaded tree of categories with checkboxes for selecting categories.
+Submitted checkbox values are transformed to an array of selected `Category` entities.
+
+This is a category-specific wrapper around `TreeSelectionType`.
+
 #### product
 
 Optional `Product` used to display the current main category path above the tree in product-related forms.
 This path is shown only when `domain_id` is set.
+
+### [BlogCategoriesType]({{github.link}}/packages/framework/src/Form/BlogCategoriesType.php)
+
+Displays a lazily loaded tree of blog categories with checkboxes for selecting blog categories.
+Submitted checkbox values are transformed to an array of selected `BlogCategory` entities.
+
+This is a blog-category-specific wrapper around `TreeSelectionType`.
 
 ### [ColorPickerType]({{github.link}}/packages/framework/src/Form/ColorPickerType.php)
 
