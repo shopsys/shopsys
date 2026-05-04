@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\TreeSelection\TreeSelectionBranchJsonDataHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Blog\BlogCategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory;
@@ -36,6 +37,7 @@ class BlogCategoryController extends AdminBaseController
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly Localization $localization,
         protected readonly Domain $domain,
+        protected readonly TreeSelectionBranchJsonDataHelper $treeSelectionBranchJsonDataHelper,
     ) {
     }
 
@@ -188,24 +190,12 @@ class BlogCategoryController extends AdminBaseController
     public function loadBranchJsonAction(int $id, ?int $domainId = null): JsonResponse
     {
         $blogParentCategory = $this->blogCategoryFacade->getById($id);
-        $blogCategories = $blogParentCategory->getChildren();
 
-        $blogCategoriesData = [];
-
-        foreach ($blogCategories as $blogCategory) {
-            $blogCategoriesData[] = [
-                'id' => $blogCategory->getId(),
-                'label' => $blogCategory->getName(),
-                'isVisible' => $domainId === null || $blogCategory->isVisible($domainId),
-                'hasChildren' => $blogCategory->hasChildren(),
-                'loadUrl' => $this->generateUrl('admin_blogcategory_loadbranchjson', [
-                    'domainId' => $domainId,
-                    'id' => $blogCategory->getId(),
-                ]),
-            ];
-        }
-
-        return $this->json($blogCategoriesData);
+        return $this->json($this->treeSelectionBranchJsonDataHelper->createJsonData(
+            $blogParentCategory,
+            $domainId,
+            'admin_blogcategory_loadbranchjson',
+        ));
     }
 
     /**
