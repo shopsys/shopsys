@@ -46,10 +46,12 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
 
-            $convertedPrice = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(
-                Money::create(24),
+            $priceWithVat = Money::create(24)
+                ->multiply((string)(100 + (float)$vat->getPercent()))
+                ->divide(100, 6);
+            $convertedPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
+                $priceWithVat,
                 $currencyCzk,
-                $vat->getPercent(),
                 $domainId,
             );
 
