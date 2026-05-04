@@ -135,4 +135,7 @@ export type GtmUserEntryInfoType = {
     lastName?: string;
     loginType?: TypeLoginTypeEnum;
     externalId?: string | null;
+    companyName?: string;
+    companyNumber?: string;
+    companyVatNumber?: string;
 };
