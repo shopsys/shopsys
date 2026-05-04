@@ -5,6 +5,7 @@ import { WarehouseBoxPackageIcon } from 'components/Basic/Icon/WarehouseBoxPacka
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { twJoin } from 'tailwind-merge';
+import { normalizeTelephone } from 'utils/formaters/normalizeTelephone';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getOrderTransportItem } from 'utils/mappers/order';
 import { isPacketeryTransport } from 'utils/packetery';
@@ -37,7 +38,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                 >
                     {order.email}
                 </ExtendedNextLink>
-                <span>{order.telephone}</span>
+                <span>{normalizeTelephone(order.telephone)}</span>
             </InformationCard>
 
             <InformationCard
@@ -48,7 +49,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                     {order.deliveryCompanyName && `${order.deliveryCompanyName}, `} {order.deliveryFirstName}{' '}
                     {order.deliveryLastName}
                 </span>
-                <span>{order.deliveryTelephone}</span>
+                <span>{normalizeTelephone(order.deliveryTelephone)}</span>
 
                 <span>{order.deliveryStreet}</span>
 

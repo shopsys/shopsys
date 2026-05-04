@@ -7,11 +7,16 @@ type GtmContextType = {
     setDidPageReadyRun: (newState: boolean) => void;
     isScriptLoaded: boolean;
     setIsScriptLoaded: (newState: boolean) => void;
+    ipAddress?: string;
 };
 
 const GtmContext = createContext<GtmContextType | null>(null);
 
-export const GtmProvider: FC = ({ children }) => {
+type GtmProviderProps = {
+    ipAddress?: string;
+};
+
+export const GtmProvider: FC<GtmProviderProps> = ({ children, ipAddress }) => {
     const [didPageReadyRun, setDidPageReadyRun] = useState(false);
     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
     const router = useRouter();
@@ -34,7 +39,9 @@ export const GtmProvider: FC = ({ children }) => {
     }, [router.events]);
 
     return (
-        <GtmContext.Provider value={{ didPageReadyRun, setDidPageReadyRun, isScriptLoaded, setIsScriptLoaded }}>
+        <GtmContext.Provider
+            value={{ didPageReadyRun, setDidPageReadyRun, isScriptLoaded, setIsScriptLoaded, ipAddress }}
+        >
             {children}
         </GtmContext.Provider>
     );

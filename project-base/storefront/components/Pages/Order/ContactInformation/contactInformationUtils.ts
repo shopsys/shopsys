@@ -8,6 +8,7 @@ import {
     useCreateOrderMutation,
 } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import { useGtmContext } from 'gtm/context/GtmProvider';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
 import { getGtmPaymentEvent } from 'gtm/factories/getGtmPaymentEvent';
@@ -209,11 +210,12 @@ const useHandleEventsAfterOrderCreation = () => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const user = useCurrentCustomerData();
     const domainConfig = useDomainConfig();
-    const { cart, payment, promoCodes } = useCurrentCart();
+    const { cart, payment, pickupPlace, promoCodes } = useCurrentCart();
     const [{ data: settingsData }] = useSettingsQuery();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
     const { canSeePrices } = useAuthorization();
+    const { ipAddress } = useGtmContext();
 
     const handleEventsAfterOrderCreation = (orderNumber: string, formValues: ContactInformation) => {
         if (cart && payment) {
@@ -228,7 +230,12 @@ const useHandleEventsAfterOrderCreation = () => {
                 reviewConsents,
                 domainConfig,
             );
-            const gtmCreateOrderEventUserPart = getGtmCreateOrderEventUserPart(user, formValues);
+            const gtmCreateOrderEventUserPart = getGtmCreateOrderEventUserPart(
+                user,
+                formValues,
+                pickupPlace,
+                ipAddress,
+            );
             const gtmPaymentEvent = getGtmPaymentEvent(orderNumber, payment.name, false, -1);
             const isPaymentWithPaymentGate = getIsPaymentWithPaymentGate(payment.type);
             const isPaymentSuccessful = isPaymentWithPaymentGate ? undefined : true;

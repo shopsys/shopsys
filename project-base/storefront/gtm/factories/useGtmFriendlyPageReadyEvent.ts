@@ -1,5 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { useGtmContext } from 'gtm/context/GtmProvider';
 import type { GtmPageReadyEventType } from 'gtm/types/events';
 import { getGtmPageInfoTypeForFriendlyUrl } from 'gtm/utils/getGtmPageInfoTypeForFriendlyUrl';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
@@ -11,11 +12,12 @@ import { getGtmPageReadyEvent } from './getGtmPageReadyEvent';
 export const useGtmFriendlyPageReadyEvent = (
     friendlyUrlPageData: FriendlyUrlPageType | null | undefined,
 ): GtmPageReadyEventType => {
-    const { gtmCartInfo, isCartLoaded } = useGtmCartInfo();
+    const { gtmCartInfo, isCartLoaded, pickupPlace } = useGtmCartInfo();
     const domainConfig = useDomainConfig();
     const userContactInformation = useCurrentUserContactInformation();
     const user = useCurrentCustomerData();
     const userConsent = usePersistStore((store) => store.userConsent);
+    const { ipAddress } = useGtmContext();
 
     return getGtmPageReadyEvent(
         getGtmPageInfoTypeForFriendlyUrl(friendlyUrlPageData),
@@ -25,5 +27,7 @@ export const useGtmFriendlyPageReadyEvent = (
         userContactInformation,
         domainConfig,
         userConsent,
+        pickupPlace,
+        ipAddress,
     );
 };

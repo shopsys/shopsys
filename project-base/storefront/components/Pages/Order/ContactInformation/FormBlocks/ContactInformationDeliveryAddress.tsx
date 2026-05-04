@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import { DeliveryAddressType } from 'types/customer';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -32,15 +33,29 @@ export const ContactInformationDeliveryAddress: FC = () => {
     });
     const isUserLoggedIn = useIsUserLoggedIn();
     const { canManagePersonalData } = useAuthorization();
-    const { setValue } = formProviderMethods;
+    const { getValues, reset, setValue } = formProviderMethods;
     const deliveryAddressUuidFieldName = formMeta.fields.deliveryAddressUuid.name;
     const deliveryAddressUuidError = formProviderMethods.formState.errors.deliveryAddressUuid;
     const defaultDeliveryAddressUuid = user?.defaultDeliveryAddress?.uuid;
     const firstDeliveryAddressUuid = user?.deliveryAddresses[0]?.uuid;
 
-    const handleChangeDeliveryAddressForOrder = (value: string) => {
-        setValue(deliveryAddressUuidFieldName, value, { shouldValidate: true });
-        updateContactInformation({ deliveryAddressUuid: value });
+    const handleChangeDeliveryAddressForOrder = (deliveryAddressUuid: string) => {
+        const deliveryAddress = user?.deliveryAddresses.find((address) => address.uuid === deliveryAddressUuid);
+
+        if (!deliveryAddress) {
+            setValue(deliveryAddressUuidFieldName, deliveryAddressUuid, { shouldValidate: true });
+            updateContactInformation({
+                deliveryAddressUuid,
+                isDeliveryAddressDifferentFromBilling: true,
+            });
+
+            return;
+        }
+
+        const deliveryAddressContactInformation = mapSelectedDeliveryAddressToContactInformation(deliveryAddress);
+
+        reset({ ...getValues(), ...deliveryAddressContactInformation }, { keepErrors: true, keepDirty: true });
+        updateContactInformation(deliveryAddressContactInformation);
     };
 
     useEffect(() => {
@@ -145,3 +160,23 @@ export const ContactInformationDeliveryAddress: FC = () => {
         </FormBlockWrapper>
     );
 };
+
+const mapSelectedDeliveryAddressToContactInformation = (
+    deliveryAddress: DeliveryAddressType,
+): Partial<ContactInformation> => ({
+    isDeliveryAddressDifferentFromBilling: true,
+    deliveryAddressUuid: deliveryAddress.uuid,
+    deliveryFirstName: deliveryAddress.firstName,
+    deliveryLastName: deliveryAddress.lastName,
+    deliveryCompanyName: deliveryAddress.companyName,
+    deliveryTelephonePrefix: deliveryAddress.telephonePrefix,
+    deliveryTelephonePrefixCountryCode: deliveryAddress.telephonePrefixCountryCode,
+    deliveryTelephone: deliveryAddress.telephoneNumber,
+    deliveryStreet: deliveryAddress.street,
+    deliveryCity: deliveryAddress.city,
+    deliveryPostcode: deliveryAddress.postcode,
+    deliveryCountry: {
+        label: deliveryAddress.country.name,
+        value: deliveryAddress.country.code,
+    },
+});

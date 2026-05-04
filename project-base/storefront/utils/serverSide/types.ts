@@ -15,6 +15,7 @@ export type ServerSidePropsType = {
     customerUserRoles: TypeCustomerUserRoleEnum[];
     domainConfig: DomainConfigType;
     cookiesStore: CookiesStoreState;
+    ipAddress?: string;
 } & Record<string, any>;
 
 export type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: VariablesType }[];
