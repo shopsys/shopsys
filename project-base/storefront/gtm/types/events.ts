@@ -368,3 +368,12 @@ export type GtmCreateWatchdogEventType = GtmEventInterface<
         };
     }
 >;
+
+export type GtmWithdrawalEventType = GtmEventInterface<
+    GtmEventType.withdrawal,
+    {
+        ecommerce: {
+            id: string;
+        };
+    }
+>;
