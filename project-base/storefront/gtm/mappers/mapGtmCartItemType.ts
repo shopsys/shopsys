@@ -39,5 +39,8 @@ const mapGtmCartItemVariant = (product: TypeCartItemFragment['product']): string
     return variant || undefined;
 };
 
-const mapParameterValues = (parameter: TypeCartItemFragment['product']['parameters'][number]): string =>
-    parameter.values.map((value) => `${value.text}${parameter.unit?.name ? ` ${parameter.unit.name}` : ''}`).join(', ');
+const mapParameterValues = (parameter: TypeCartItemFragment['product']['parameters'][number]): string => {
+    const unitSuffix = parameter.unit?.name ? ` ${parameter.unit.name}` : '';
+
+    return parameter.values.map((value) => `${value.text}${unitSuffix}`).join(', ');
+};
