@@ -39,17 +39,7 @@ export const ProductAction: FC<ProductActionProps> = ({
     }
 
     if (product.isCurrentlyOutOfStock) {
-        return (
-            <WatchDogButton
-                availability={product.availability}
-                buttonSize="medium"
-                className="self-start"
-                isInquiryType={product.isInquiryType}
-                productIsSellingDenied={product.isSellingDenied}
-                productName={product.name}
-                productUuid={product.uuid}
-            />
-        );
+        return <WatchDogButton buttonSize="medium" className="self-start" listIndex={listIndex} product={product} />;
     }
 
     if (!product.isMainVariant && product.isInquiryType) {

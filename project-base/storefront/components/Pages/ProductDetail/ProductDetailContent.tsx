@@ -79,14 +79,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                 storeAvailabilities={product.storeAvailabilities}
                             />
 
-                            <WatchDogButton
-                                availability={product.availability}
-                                className="self-start"
-                                isInquiryType={product.isInquiryType}
-                                productIsSellingDenied={product.isSellingDenied}
-                                productName={product.name}
-                                productUuid={product.uuid}
-                            />
+                            <WatchDogButton className="self-start" product={product} />
 
                             <DeferredProductDetailAddToCart product={product} />
 

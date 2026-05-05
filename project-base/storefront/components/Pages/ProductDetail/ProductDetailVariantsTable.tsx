@@ -86,13 +86,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                             <ProductPrice className="lg:flex-col lg:items-end" productPrice={variant.price} />
 
                             <div className="flex flex-col gap-2">
-                                <WatchDogButton
-                                    availability={variant.availability}
-                                    isInquiryType={variant.isInquiryType}
-                                    productIsSellingDenied={variant.isSellingDenied}
-                                    productName={variant.fullName}
-                                    productUuid={variant.uuid}
-                                />
+                                <WatchDogButton listIndex={index} product={variant} />
 
                                 <ProductAction
                                     isWithSpinbox

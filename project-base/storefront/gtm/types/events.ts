@@ -295,5 +295,12 @@ export type GtmCreateWatchdogEventType = GtmEventInterface<
             email: string;
             productUuid: string;
         };
+        ecommerce: {
+            currencyCode: string;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
+            products: GtmCartItemType[];
+            arePricesHidden: boolean;
+        };
     }
 >;
