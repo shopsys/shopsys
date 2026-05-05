@@ -239,6 +239,21 @@ data:
                 proxy_pass {{S3_ENDPOINT}}/{{PROJECT_NAME}}/web/$1/$image_id.$image_extension;
             }
 
+            # user translation overrides are fetched server-to-server by the storefront
+            # return a plain 404 on miss so storefront does not render an error page with the internal Host header
+            location ~ ^/(?:[^/]+/)?content(-test)?/locales/ {
+                proxy_intercept_errors  on;
+                error_page              404 = @404;
+
+                proxy_http_version      1.1;
+                proxy_set_header        Authorization "";
+                proxy_buffering         off;
+                proxy_hide_header       Access-Control-Allow-Origin;
+                proxy_hide_header       Access-Control-Allow-Credentials;
+
+                proxy_pass              {{S3_ENDPOINT}}/{{PROJECT_NAME}}/web$request_uri;
+            }
+
             location ~ ^/(content)/ {
                 proxy_intercept_errors  on;
                 error_page              404 = $custom_error_target;
