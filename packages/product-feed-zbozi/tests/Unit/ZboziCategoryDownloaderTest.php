@@ -11,52 +11,36 @@ use Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryDownloader;
 
 class ZboziCategoryDownloaderTest extends TestCase
 {
-    private string $categoriesJsonFile;
+    private string $categoriesCsvFile;
 
     #[Override]
     protected function setUp(): void
     {
-        $categoriesJsonFile = tempnam(sys_get_temp_dir(), 'zbozi-categories');
-        self::assertIsString($categoriesJsonFile);
+        $categoriesCsvFile = tempnam(sys_get_temp_dir(), 'zbozi-categories');
+        self::assertIsString($categoriesCsvFile);
 
-        $this->categoriesJsonFile = $categoriesJsonFile;
+        $this->categoriesCsvFile = $categoriesCsvFile;
     }
 
     #[Override]
     protected function tearDown(): void
     {
-        unlink($this->categoriesJsonFile);
+        unlink($this->categoriesCsvFile);
     }
 
-    public function testGetZboziCategoriesExtractsLeafCategoriesWithCategoryText(): void
+    public function testGetZboziCategoriesReadsFlatCsvAndConvertsEncoding(): void
     {
-        file_put_contents($this->categoriesJsonFile, json_encode([
-            [
-                'name' => 'Foto',
-                'children' => [
-                    [
-                        'name' => 'Foto doplnky',
-                        'children' => [
-                            [
-                                'id' => 10,
-                                'name' => 'Blesky',
-                                'categoryText' => 'Foto | Foto doplnky | Blesky',
-                            ],
-                        ],
-                    ],
-                    [
-                        'id' => 11,
-                        'name' => 'Objektivy',
-                        'categoryText' => 'Foto | Objektivy',
-                    ],
-                ],
-            ],
-            [
-                'name' => 'Kategorie bez categoryText',
-            ],
-        ], JSON_THROW_ON_ERROR));
+        $csvUtf8 = "id kategorie;Název kategorie;Celá cesta\r\n"
+            . "10;Blesky;Foto | Foto doplňky | Blesky\r\n"
+            . "11;Objektivy;Foto | Objektivy\r\n"
+            . ";Kategorie bez ID;Foto | Kategorie bez ID\r\n"
+            . "broken-row-without-enough-columns\r\n";
+        $csvWindows1250 = mb_convert_encoding($csvUtf8, 'Windows-1250', 'UTF-8');
+        self::assertIsString($csvWindows1250);
+        file_put_contents($this->categoriesCsvFile, $csvWindows1250);
+
         $zboziCategoryDownloader = new ZboziCategoryDownloader(
-            ['cs' => $this->categoriesJsonFile],
+            ['cs' => $this->categoriesCsvFile],
             new ZboziCategoryDataFactory(),
         );
 
@@ -64,7 +48,7 @@ class ZboziCategoryDownloaderTest extends TestCase
 
         self::assertCount(2, $zboziCategoriesData);
         self::assertSame('Blesky', $zboziCategoriesData[10]->name);
-        self::assertSame('Foto | Foto doplnky | Blesky', $zboziCategoriesData[10]->fullName);
+        self::assertSame('Foto | Foto doplňky | Blesky', $zboziCategoriesData[10]->fullName);
         self::assertSame('cs', $zboziCategoriesData[10]->locale);
         self::assertSame('Objektivy', $zboziCategoriesData[11]->name);
         self::assertSame('Foto | Objektivy', $zboziCategoriesData[11]->fullName);
