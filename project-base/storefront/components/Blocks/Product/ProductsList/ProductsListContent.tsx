@@ -52,8 +52,20 @@ export const ProductsListContent: FC<ProductsListProps> = ({
                     listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
                     product={product}
                     ref={productRefs?.[index]}
-                    toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
-                    toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
+                    toggleProductInComparison={() =>
+                        toggleProductInComparison(
+                            product,
+                            gtmProductListName,
+                            (currentPage - 1) * DEFAULT_PAGE_SIZE + index,
+                        )
+                    }
+                    toggleProductInWishlist={() =>
+                        toggleProductInWishlist(
+                            product,
+                            gtmProductListName,
+                            (currentPage - 1) * DEFAULT_PAGE_SIZE + index,
+                        )
+                    }
                     allowKeyboardFocus={
                         !keyboardFocusableProductIndices || keyboardFocusableProductIndices.includes(index)
                     }

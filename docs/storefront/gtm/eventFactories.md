@@ -197,6 +197,26 @@ export const getGtmChangeCartItemEvent = (
 }
 ```
 
+## getGtmChangeProductListItemEvent
+
+```ts
+export const getGtmChangeProductListItemEvent = (
+    event:
+        | GtmEventType.add_to_wishlist
+        | GtmEventType.remove_from_wishlist
+        | GtmEventType.add_to_comparison
+        | GtmEventType.remove_from_comparison, // type of the event saying if we are removing or adding items to product list
+    product: ProductInterfaceType, // removed or added wishlist/comparison product
+    listIndex: number | undefined, // list index from which the item was removed/added
+    currencyCode: string; // the code of the currency used on the domain
+    gtmProductListName: GtmProductListNameType, // name of the list from which the product was removed/added
+    domainUrl: string, // URL of the current domain
+    arePricesHidden: boolean, // boolean pointer saying if prices are hidden for the current user
+): GtmChangeProductListItemEventType => {
+    // function body not included in this code block
+}
+```
+
 ## getGtmPaymentChangeEvent
 
 ```ts

@@ -24,10 +24,16 @@ export const useProductList = (
     callbacks: {
         removeSuccess: () => void;
         removeError: () => void;
-        addProductSuccess: (updatedProductList: TypeProductListFragment | null | undefined) => void;
-        addProductError: () => void;
-        removeProductSuccess: (updatedProductList: TypeProductListFragment | null | undefined) => void;
-        removeProductError: () => void;
+        addProductSuccess: (
+            updatedProductList: TypeProductListFragment | null | undefined,
+            productUuid: string,
+        ) => void;
+        addProductError: (productUuid: string) => void;
+        removeProductSuccess: (
+            updatedProductList: TypeProductListFragment | null | undefined,
+            productUuid: string,
+        ) => void;
+        removeProductError: (productUuid: string) => void;
     },
 ) => {
     const client = useClient();
@@ -148,15 +154,15 @@ export const useProductList = (
 
                 if (applicationError?.type === `${productListType}-product-already-in-list`) {
                     const freshProductListData = await refetchWithNetworkOnly();
-                    callbacks.addProductSuccess(freshProductListData?.productList);
+                    callbacks.addProductSuccess(freshProductListData?.productList, productUuid);
                 } else {
-                    callbacks.addProductError();
+                    callbacks.addProductError(productUuid);
                 }
             } else {
                 if (addProductToListResult.data?.AddProductToList) {
                     setProductListOverride(addProductToListResult.data.AddProductToList);
                 }
-                callbacks.addProductSuccess(addProductToListResult.data?.AddProductToList);
+                callbacks.addProductSuccess(addProductToListResult.data?.AddProductToList, productUuid);
             }
         } finally {
             mutatingProductUuidsRef.current.delete(productUuid);
@@ -185,15 +191,15 @@ export const useProductList = (
                     applicationError?.type === `${productListType}-product-list-not-found`
                 ) {
                     const freshProductListData = await refetchWithNetworkOnly();
-                    callbacks.removeProductSuccess(freshProductListData?.productList);
+                    callbacks.removeProductSuccess(freshProductListData?.productList, productUuid);
                 } else {
-                    callbacks.removeProductError();
+                    callbacks.removeProductError(productUuid);
                 }
             } else {
                 if (removeProductFromListResult.data?.RemoveProductFromList) {
                     setProductListOverride(removeProductFromListResult.data.RemoveProductFromList);
                 }
-                callbacks.removeProductSuccess(removeProductFromListResult.data?.RemoveProductFromList);
+                callbacks.removeProductSuccess(removeProductFromListResult.data?.RemoveProductFromList, productUuid);
             }
         } finally {
             mutatingProductUuidsRef.current.delete(productUuid);
@@ -210,12 +216,12 @@ export const useProductList = (
 
     const toggleProductInList = (productUuid: string) => {
         if (mutatingProductUuidsRef.current.has(productUuid)) {
-            return;
+            return false;
         }
 
         // Block all mutations when no list exists yet — concurrent creates would produce duplicate lists
         if (!productListUuid && mutatingProductUuidsRef.current.size > 0) {
-            return;
+            return false;
         }
 
         if (isProductInList(productUuid)) {
@@ -223,6 +229,8 @@ export const useProductList = (
         } else {
             addToList(productUuid);
         }
+
+        return true;
     };
 
     return {

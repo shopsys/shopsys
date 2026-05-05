@@ -1,4 +1,5 @@
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
 
@@ -19,7 +20,9 @@ export const ProductComparisonHead: FC<ProductComparisonHeadProps> = ({ compared
                         key={`head-${product.uuid}`}
                         listIndex={index}
                         product={product}
-                        toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
+                        toggleProductInComparison={() =>
+                            toggleProductInComparison(product, GtmProductListNameType.product_comparison_page, index)
+                        }
                     />
                 ))}
             </tr>

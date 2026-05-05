@@ -100,7 +100,9 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                         isProductInWishlist={isProductInWishlist(product.uuid)}
                         productName={product.fullName}
                         tabIndex={0}
-                        toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
+                        toggleProductInWishlist={() =>
+                            toggleProductInWishlist(product, GtmProductListNameType.product_comparison_page, listIndex)
+                        }
                     />
                 </div>
             </div>
