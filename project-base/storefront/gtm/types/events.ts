@@ -302,8 +302,11 @@ export type GtmCreateOrderEventOrderPartType = {
     vatAmount: number;
     paymentPriceWithoutVat: number | null;
     paymentPriceWithVat: number | null;
+    transportPriceWithoutVat: number | null;
+    transportPriceWithVat: number | null;
+    transportType: string;
     promoCodes?: string[];
-    discountAmount?: number;
+    discountAmount: number | null;
     paymentType: string;
     reviewConsents: GtmReviewConsentsType;
     products: GtmCartItemType[] | undefined;

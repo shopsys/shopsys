@@ -42,6 +42,12 @@ export const getGtmCreateOrderEventOrderPart = (
     vatAmount: parseFloat(cart.totalPrice.vatAmount),
     paymentPriceWithoutVat: getGtmPriceBasedOnVisibility(payment.price.priceWithoutVat),
     paymentPriceWithVat: getGtmPriceBasedOnVisibility(payment.price.priceWithVat),
+    transportPriceWithoutVat: cart.transport
+        ? getGtmPriceBasedOnVisibility(cart.transport.price.priceWithoutVat)
+        : null,
+    transportPriceWithVat: cart.transport ? getGtmPriceBasedOnVisibility(cart.transport.price.priceWithVat) : null,
+    transportType: cart.transport?.name ?? '',
+    discountAmount: getGtmPriceBasedOnVisibility(cart.totalDiscountPrice.priceWithVat),
     promoCodes: promoCodes.map(({ code }) => code),
     paymentType: payment.name,
     reviewConsents,
