@@ -22,6 +22,11 @@ class DummyClassForAnnotationsReplacer
     public $articleDataArray;
 
     /**
+     * @var array<int, \Shopsys\FrameworkBundle\Model\Category\Category>
+     */
+    public $arrayOfFrameworkCategories;
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
     public function returnsFrameworkCategoryFacade()
@@ -64,6 +69,13 @@ class DummyClassForAnnotationsReplacer
     }
 
     /**
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Category\Category>
+     */
+    public function returnsArrayOfFrameworkCategories()
+    {
+    }
+
+    /**
      * @return array
      */
     public function returnsNotTypedArray()
@@ -76,6 +88,7 @@ class DummyClassForAnnotationsReplacer
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData[] $array
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductRepository $frontendApiproductRepository
      * @param int $integer
+     * @param array<int, \Shopsys\FrameworkBundle\Model\Category\Category> $arrayOfFrameworkCategories
      */
     public function acceptsVariousParameters(
         $categoryFacade,
@@ -83,6 +96,7 @@ class DummyClassForAnnotationsReplacer
         $array,
         $frontendApiproductRepository,
         $integer,
+        $arrayOfFrameworkCategories,
     ): void {
     }
 }

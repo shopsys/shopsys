@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
 
 /**
  * @property \App\Model\Customer\DeliveryAddress|null $defaultDeliveryAddress
- * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Customer\User\CustomerUserRefreshTokenChain> $refreshTokenChain
+ * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Customer\User\CustomerUserRefreshTokenChain> $refreshTokenChain
  * @method void addRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $customerUserRefreshTokenChain)
  * @method \App\Model\Customer\DeliveryAddress|null getDefaultDeliveryAddress()
  * @method void setData(\App\Model\Customer\User\CustomerUserData $customerUserData)

@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
 
 /**
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
- * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Cart\Item\CartItem> $items
+ * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Cart\Item\CartItem> $items
  * @method void addItem(\App\Model\Cart\Item\CartItem $item)
  * @method \App\Model\Cart\Item\CartItem[] getItems()
  * @method \App\Model\Cart\Item\CartItem getItemById(int $itemId)
