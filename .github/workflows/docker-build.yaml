@@ -1281,6 +1281,10 @@ jobs:
                     chmod +x 12-set-env-variables.envsh
                     ./set-urls-for-review.sh setDomainsToDockerCompose
                     docker compose down -v --remove-orphans || true
+                    HASH_DEC=$((16#$(printf '%s' "${BRANCH_NAME_ESCAPED}" | sha1sum | head -c 8)))
+                    export CRON_OFFSET_MIN=$((HASH_DEC % 5))
+                    export CRON_OFFSET_MIN_10=$((HASH_DEC % 10))
+                    echo "Using CRON_OFFSET_MIN=${CRON_OFFSET_MIN} CRON_OFFSET_MIN_10=${CRON_OFFSET_MIN_10}"
                     docker compose up -d --wait --force-recreate
                     ./set-urls-for-review.sh setUrlsToDomainsUrls
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys demo-data warmup
