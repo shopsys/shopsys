@@ -3,8 +3,8 @@ import { Wishlist } from 'components/Pages/Wishlist/Wishlist';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { NextPage } from 'next';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
@@ -13,11 +13,11 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 const WishlistPage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
-    useGtmPageViewEvent(useGtmStaticPageViewEvent(GtmPageType.other));
     const currentDomainConfig = useDomainConfig();
-
     const [wishlistUrl] = getInternationalizedStaticUrls(['/wishlist'], currentDomainConfig.url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Wishlist'), slug: wishlistUrl }];
+
+    useGtmPageReadyEvent(useGtmStaticPageReadyEvent(GtmPageType.wishlist, breadcrumbs));
 
     return (
         <CommonLayout breadcrumbs={breadcrumbs} title={t('Wishlist')}>

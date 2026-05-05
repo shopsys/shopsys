@@ -3,8 +3,8 @@ import {
     StoreDetailQueryDocument,
     useStoreDetailQuery,
 } from 'graphql/requests/stores/queries/StoreDetailQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -28,8 +28,8 @@ const StoreDetailPage: NextPage = () => {
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(storeDetailData?.store);
-    useGtmPageViewEvent(pageViewEvent, isStoreFetching);
+    const pageReadyEvent = useGtmFriendlyPageReadyEvent(storeDetailData?.store);
+    useGtmPageReadyEvent(pageReadyEvent, isStoreFetching);
 
     const seoTitle = getPrefixedSeoTitle(storeDetailData?.store?.storeName, t('Store'));
     const storeImageUrl = storeDetailData?.store?.storeImages[0]?.url;

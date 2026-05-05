@@ -10,6 +10,8 @@ export const SPECIAL_ARTICLE_GTM_TYPES = Object.freeze({
     '/o-nas': GtmPageType.about,
 } as const);
 
+export type SpecialArticleGtmPageType = (typeof SPECIAL_ARTICLE_GTM_TYPES)[keyof typeof SPECIAL_ARTICLE_GTM_TYPES];
+
 export type GtmReviewConsentsType = {
     seznam: boolean;
     google: boolean;
@@ -33,7 +35,18 @@ export type GtmCategoryDetailPageInfoType = GtmPageInfoInterface<
 export type GtmBlogArticleDetailPageInfoType = GtmPageInfoInterface<
     GtmPageType.blog_article_detail,
     {
-        articleId: number;
+        articleId: string;
+    }
+>;
+
+export type GtmProductDetailPageInfoType = GtmPageInfoInterface<
+    GtmPageType.product_detail | GtmPageType.product_sold_out
+>;
+
+export type GtmArticleDetailPageInfoType = GtmPageInfoInterface<
+    GtmPageType.article_detail | SpecialArticleGtmPageType,
+    {
+        articleId: string;
     }
 >;
 
@@ -46,7 +59,9 @@ export type GtmBrandDetailPageInfoType = GtmPageInfoInterface<
 
 export type GtmPageInfoType =
     | GtmCategoryDetailPageInfoType
+    | GtmProductDetailPageInfoType
     | GtmBlogArticleDetailPageInfoType
+    | GtmArticleDetailPageInfoType
     | GtmBrandDetailPageInfoType
     | GtmPageInfoInterface;
 

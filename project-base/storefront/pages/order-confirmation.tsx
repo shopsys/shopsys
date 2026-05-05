@@ -20,8 +20,8 @@ import {
 } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
 import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum, TypePaymentTypeEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { useRouter } from 'next/router';
 import Trans from 'next-translate/Trans';
 import { useEffect, useEffectEvent, useState } from 'react';
@@ -51,8 +51,8 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { orderUuid, orderPaymentType, companyNumber, orderEmail, orderUrlHash, requiresAction } =
         query as OrderConfirmationUrlQuery;
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.order_confirmation);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     const [
         { data: orderSentPageContentData, fetching: isOrderSentPageContentFetching, error: orderSentPageContentError },

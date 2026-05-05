@@ -14,8 +14,8 @@ import {
 } from 'graphql/requests/complaints/queries/ComplaintQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
@@ -39,8 +39,8 @@ const ComplaintDetailPage: FC = () => {
         { __typename: 'Link', name: complaintNumber, slug: '' },
     ];
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <>

@@ -4,8 +4,8 @@ import { NewPasswordContent } from 'components/Pages/NewPassword/NewPasswordCont
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
@@ -19,8 +19,8 @@ const NewPasswordPage: FC<ServerSidePropsType> = () => {
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl },
     ];
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     const router = useRouter();
     const { hash, email } = router.query;

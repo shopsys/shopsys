@@ -43,13 +43,13 @@ export const useGtmAutocompleteResultsViewEvent = (
 };
 ```
 
-## useGtmPageViewEvent
+## useGtmPageReadyEvent
 
-Basic hook used to handle viewing of a page. It is sometimes accompanied by one of the hooks below if the page is of a special type. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent` or `useGtmFriendlyPageViewEvent` based on the page type ('static' vs. 'friendly URL').
+Basic hook used to handle viewing of a page. It is sometimes accompanied by one of the hooks below if the page is of a special type. The parameter used for this hook can be taken from `useGtmStaticPageReadyEvent` or `useGtmFriendlyPageReadyEvent` based on the page type ('static' vs. 'friendly URL').
 
 ```ts
-export const useGtmPageViewEvent = (
-    gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
+export const useGtmPageReadyEvent = (
+    gtmPageReadyEvent: GtmPageReadyEventType, // object containing information about the viewed page
     areDataFetching?: boolean, // boolean pointer saying if the results are still loading
 ): void => {
     // function body not included in this code block
@@ -58,35 +58,35 @@ export const useGtmPageViewEvent = (
 
 ## useGtmCartViewEvent
 
-Hook used to handle the viewing of the cart page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
+Hook used to handle the viewing of the cart page. The parameter used for this hook can be taken from `useGtmStaticPageReadyEvent`.
 
 ```ts
 export const useGtmCartViewEvent = (
-    gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
+    gtmPageReadyEvent: GtmPageReadyEventType, // object containing information about the viewed page
 ): void => {
     // function body not included in this code block
 };
 ```
 
-## useGtmContactInformationPageViewEvent
+## useGtmContactInformationViewEvent
 
-Hook used to handle viewing of the contact information page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
+Hook used to handle viewing of the contact information page. The parameter used for this hook can be taken from `useGtmStaticPageReadyEvent`.
 
 ```ts
-export const useGtmContactInformationPageViewEvent = (
-    gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
+export const useGtmContactInformationViewEvent = (
+    gtmPageReadyEvent: GtmPageReadyEventType, // object containing information about the viewed page
 ): void => {
     // function body not included in this code block
 };
 ```
 
-## useGtmPaymentAndTransportPageViewEvent
+## useGtmPaymentAndTransportViewEvent
 
-Hook used to handle the viewing of the transport and payment page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
+Hook used to handle the viewing of the transport and payment page. The parameter used for this hook can be taken from `useGtmStaticPageReadyEvent`.
 
 ```ts
-export const useGtmPaymentAndTransportPageViewEvent = (
-    gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
+export const useGtmPaymentAndTransportViewEvent = (
+    gtmPageReadyEvent: GtmPageReadyEventType, // object containing information about the viewed page
 ): void => {
     // function body not included in this code block
 };

@@ -4,9 +4,9 @@ import { CartContent } from 'components/Pages/Cart/CartContent';
 import { EmptyCart } from 'components/Pages/Cart/EmptyCart';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmCartViewEvent } from 'gtm/utils/pageViewEvents/useGtmCartViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmCartViewEvent } from 'gtm/utils/pageReadyEvents/useGtmCartViewEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
@@ -16,9 +16,9 @@ const CartPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.cart);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
-    useGtmCartViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.cart);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
+    useGtmCartViewEvent(gtmStaticPageReadyEvent);
 
     return (
         <>

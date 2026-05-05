@@ -1,7 +1,7 @@
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type PaymentInProcessProps = {
@@ -10,8 +10,8 @@ type PaymentInProcessProps = {
 
 export const PaymentInProcess: FC<PaymentInProcessProps> = ({ orderPaymentInProcessContent }) => {
     const { t } = useTranslation();
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_in_process);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.payment_in_process);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <ConfirmationPageContent content={orderPaymentInProcessContent} heading={t('The payment is being processed')} />

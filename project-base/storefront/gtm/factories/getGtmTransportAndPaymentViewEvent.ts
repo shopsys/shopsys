@@ -1,13 +1,13 @@
 import { GtmEventType } from 'gtm/enums/GtmEventType';
-import { GtmPaymentAndTransportPageViewEventType } from 'gtm/types/events';
+import { GtmPaymentAndTransportViewEventType } from 'gtm/types/events';
 import { GtmCartInfoType } from 'gtm/types/objects';
 
-export const getGtmTransportAndPaymentPageViewEvent = (
+export const getGtmTransportAndPaymentViewEvent = (
     currencyCode: string,
     gtmCartInfo: GtmCartInfoType,
     arePricesHidden: boolean,
-): GtmPaymentAndTransportPageViewEventType => ({
-    event: GtmEventType.payment_and_transport_page_view,
+): GtmPaymentAndTransportViewEventType => ({
+    event: GtmEventType.payment_and_transport_view,
     ecommerce: {
         currencyCode,
         valueWithoutVat: gtmCartInfo.valueWithoutVat,

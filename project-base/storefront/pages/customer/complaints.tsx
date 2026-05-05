@@ -18,8 +18,8 @@ import {
 } from 'graphql/requests/complaints/queries/ComplaintsQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { useState } from 'react';
 import { useComplaintsData } from 'utils/complaints/useComplaintsData';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -46,8 +46,8 @@ const ComplaintsPage: FC = () => {
     const { mappedComplaints, complaintsTotalCount, complaintsDataFetching, complaintsData } =
         useComplaintsData(searchQueryValue);
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <>

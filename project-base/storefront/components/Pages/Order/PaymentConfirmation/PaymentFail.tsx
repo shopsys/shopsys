@@ -1,7 +1,7 @@
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type PaymentFailProps = {
@@ -10,8 +10,8 @@ type PaymentFailProps = {
 
 export const PaymentFail: FC<PaymentFailProps> = ({ orderPaymentFailedContent }) => {
     const { t } = useTranslation();
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_fail);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.payment_fail);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <ConfirmationPageContent

@@ -5,8 +5,8 @@ import { useSearchQuery } from 'components/Pages/Search/searchUtils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { SkeletonEnum } from 'types/skeletons';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
@@ -29,8 +29,8 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.search_results, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.search_results, breadcrumbs);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <>

@@ -6,8 +6,8 @@ import {
     useArticleDetailQuery,
 } from 'graphql/requests/articles/queries/ArticleDetailQuery.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -33,8 +33,8 @@ const ArticleDetailPage: NextPage = () => {
 
     const article = articleDetailData?.article?.__typename === 'ArticleSite' ? articleDetailData.article : null;
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(article);
-    useGtmPageViewEvent(pageViewEvent, isArticleDetailFetching);
+    const pageReadyEvent = useGtmFriendlyPageReadyEvent(article);
+    useGtmPageReadyEvent(pageReadyEvent, isArticleDetailFetching);
 
     if (!articleDetailData && !isArticleDetailFetching) {
         return <Error404Content />;

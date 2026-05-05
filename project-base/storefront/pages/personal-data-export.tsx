@@ -8,8 +8,8 @@ import {
     usePersonalDataPageTextQuery,
 } from 'graphql/requests/personalData/queries/PersonalDataPageTextQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
@@ -24,8 +24,8 @@ const PersonalDataExportPage: FC = () => {
     ];
     const [personalDataPageTextResult] = usePersonalDataPageTextQuery();
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <>

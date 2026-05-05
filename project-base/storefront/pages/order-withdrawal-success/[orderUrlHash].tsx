@@ -12,8 +12,8 @@ import {
 } from 'graphql/requests/orders/queries/OrderWithdrawalInstructionsQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { useRouter } from 'next/router';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -33,8 +33,8 @@ const OrderWithdrawalSuccessPage: FC = () => {
         variables: { urlHash: orderHash },
     });
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     const [orderDetailUrl] = getInternationalizedStaticUrls([{ url: '/order-detail/:urlHash', param: orderHash }], url);
     const hasAccess = userCanRequestWithdrawal || isOrderFetching;

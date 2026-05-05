@@ -3,8 +3,8 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { BrandsContent } from 'components/Pages/Brands/BrandsContent';
 import { BrandsQueryDocument } from 'graphql/requests/brands/queries/BrandsQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
@@ -12,8 +12,8 @@ import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initS
 const BrandsOverviewPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <CommonLayout title={t('Brands')}>

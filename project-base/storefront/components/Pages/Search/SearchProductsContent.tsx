@@ -5,7 +5,7 @@ import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeSearchProductsQuery } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
+import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmPaginatedProductListViewEvent';
 import Trans from 'next-translate/Trans';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import useTranslation from 'utils/i18n/useTranslationWrapper';

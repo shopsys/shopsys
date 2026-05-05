@@ -1,12 +1,12 @@
 import { GtmEventType } from 'gtm/enums/GtmEventType';
-import { GtmContactInformationPageViewEventType } from 'gtm/types/events';
+import { GtmContactInformationViewEventType } from 'gtm/types/events';
 import { GtmCartInfoType } from 'gtm/types/objects';
 
-export const getGtmContactInformationPageViewEvent = (
+export const getGtmContactInformationViewEvent = (
     gtmCartInfo: GtmCartInfoType,
     arePricesHidden: boolean,
-): GtmContactInformationPageViewEventType => ({
-    event: GtmEventType.contact_information_page_view,
+): GtmContactInformationViewEventType => ({
+    event: GtmEventType.contact_information_view,
     ecommerce: {
         currencyCode: gtmCartInfo.currencyCode,
         valueWithoutVat: gtmCartInfo.valueWithoutVat,

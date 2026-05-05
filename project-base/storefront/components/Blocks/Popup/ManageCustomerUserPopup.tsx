@@ -44,6 +44,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
 
     const customerUserDefaultFormData = {
         ...customerUserData,
+        telephone: customerUserData.telephoneNumber,
         roleGroup: customerUser?.roleGroup.uuid ?? '',
     };
     const [formProviderMethods] = useCustomerUserManageProfileForm(customerUserDefaultFormData);

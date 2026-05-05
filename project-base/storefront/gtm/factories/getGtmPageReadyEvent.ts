@@ -1,5 +1,5 @@
 import { GtmEventType } from 'gtm/enums/GtmEventType';
-import { GtmPageViewEventType } from 'gtm/types/events';
+import { GtmPageReadyEventType } from 'gtm/types/events';
 import { GtmCartInfoType, GtmPageInfoType } from 'gtm/types/objects';
 import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
 import { getGtmDeviceType } from 'gtm/utils/getGtmDeviceType';
@@ -9,7 +9,7 @@ import { CurrentCustomerType } from 'types/customer';
 import { UserConsentFormType } from 'types/form';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 
-export const getGtmPageViewEvent = (
+export const getGtmPageReadyEvent = (
     pageInfo: GtmPageInfoType,
     gtmCartInfo: GtmCartInfoType | null,
     isCartLoaded: boolean,
@@ -17,8 +17,8 @@ export const getGtmPageViewEvent = (
     userContactInformation: ContactInformation,
     domainConfig: DomainConfigType,
     userConsent: UserConsentFormType | null,
-): GtmPageViewEventType => ({
-    event: GtmEventType.page_view,
+): GtmPageReadyEventType => ({
+    event: GtmEventType.page_ready,
     page: pageInfo,
     user: getGtmUserInfo(user, userContactInformation),
     device: getGtmDeviceType(),

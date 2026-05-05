@@ -15,8 +15,8 @@ import {
 } from 'graphql/requests/orders/queries/OrdersQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
@@ -39,8 +39,8 @@ const OrdersPage: FC = () => {
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
     ];
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <>

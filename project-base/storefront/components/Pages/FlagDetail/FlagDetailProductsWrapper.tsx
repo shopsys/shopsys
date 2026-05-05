@@ -4,7 +4,7 @@ import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDet
 import { FlagProductsQueryDocument } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
+import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmPaginatedProductListViewEvent';
 import { useProductsData } from 'utils/loadMore/useProductsData';
 import { getMappedProducts } from 'utils/mappers/products';
 

@@ -13,13 +13,13 @@ export type GtmEventInterface<EventType, EventContent> = {
 } & EventContent; // additional properties of the event;
 ```
 
-## GtmPageViewEventType
+## GtmPageReadyEventType
 
 This type is used for page view tracking.
 
 ```ts
-export type GtmPageViewEventType = GtmEventInterface<
-  GtmEventType.page_view, // the type of the event
+export type GtmPageReadyEventType = GtmEventInterface<
+  GtmEventType.page_ready, // the type of the event
   {
     language: string; // the current language of the domain
     currencyCode: string; // the code of the currency used on the domain
@@ -165,13 +165,13 @@ export type GtmProductDetailViewEventType = GtmEventInterface<
 >;
 ```
 
-## GtmPaymentAndTransportPageViewEventType
+## GtmPaymentAndTransportViewEventType
 
 This type tracks when a user views the payment and transport page.
 
 ```ts
-export type GtmPaymentAndTransportPageViewEventType = GtmEventInterface<
-  GtmEventType.payment_and_transport_page_view, // the type of the event
+export type GtmPaymentAndTransportViewEventType = GtmEventInterface<
+  GtmEventType.payment_and_transport_view, // the type of the event
   {
     ecommerce: {
       currencyCode: string; // the code of the currency used on the domain
@@ -242,13 +242,13 @@ export type GtmTransportChangeEventType = GtmEventInterface<
 >;
 ```
 
-## GtmContactInformationPageViewEventType
+## GtmContactInformationViewEventType
 
 This type is used for tracking when a user views the contact information page during checkout.
 
 ```ts
-export type GtmContactInformationPageViewEventType = GtmEventInterface<
-  GtmEventType.contact_information_page_view, // the type of the event
+export type GtmContactInformationViewEventType = GtmEventInterface<
+  GtmEventType.contact_information_view, // the type of the event
   {
     ecommerce: {
       currencyCode: string; // the code of the currency used on the domain

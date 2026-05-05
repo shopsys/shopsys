@@ -7,8 +7,8 @@ import {
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticleDetailQuery.generated';
 import { BlogCategoriesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoriesQuery.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -34,8 +34,8 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
 
     const blogArticleImageUrl = blogArticleData?.blogArticle?.mainImage?.url;
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(blogArticleData?.blogArticle);
-    useGtmPageViewEvent(pageViewEvent, isBlogArticleFetching);
+    const pageReadyEvent = useGtmFriendlyPageReadyEvent(blogArticleData?.blogArticle);
+    useGtmPageReadyEvent(pageReadyEvent, isBlogArticleFetching);
 
     if (!blogArticleData && !isBlogArticleFetching) {
         return <Error404Content />;

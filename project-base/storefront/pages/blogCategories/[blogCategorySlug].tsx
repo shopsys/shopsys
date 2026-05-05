@@ -8,8 +8,8 @@ import {
     BlogCategoryQueryDocument,
     useBlogCategoryQuery,
 } from 'graphql/requests/blogCategories/queries/BlogCategoryQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -41,8 +41,8 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
         DEFAULT_BLOG_PAGE_SIZE,
     );
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(blogCategoryData?.blogCategory);
-    useGtmPageViewEvent(pageViewEvent, isBlogCategoryFetching);
+    const pageReadyEvent = useGtmFriendlyPageReadyEvent(blogCategoryData?.blogCategory);
+    useGtmPageReadyEvent(pageReadyEvent, isBlogCategoryFetching);
 
     if (!blogCategoryData && !isBlogCategoryFetching) {
         return <Error404Content />;

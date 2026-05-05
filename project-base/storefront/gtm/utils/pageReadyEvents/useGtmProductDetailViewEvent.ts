@@ -14,13 +14,13 @@ export const useGtmProductDetailViewEvent = (
 ): void => {
     const lastViewedProductDetailSlug = useRef<string>(undefined);
     const { url, currencyCode } = useDomainConfig();
-    const { didPageViewRun, isScriptLoaded } = useGtmContext();
+    const { didPageReadyRun, isScriptLoaded } = useGtmContext();
     const { canSeePrices } = useAuthorization();
 
     useEffect(() => {
-        if (isScriptLoaded && didPageViewRun && lastViewedProductDetailSlug.current !== slug && !isProductFetching) {
+        if (isScriptLoaded && didPageReadyRun && lastViewedProductDetailSlug.current !== slug && !isProductFetching) {
             lastViewedProductDetailSlug.current = slug;
             gtmSafePushEvent(getGtmProductDetailViewEvent(productDetailData, currencyCode, url, !canSeePrices));
         }
-    }, [productDetailData, currencyCode, slug, url, isProductFetching, didPageViewRun, isScriptLoaded, canSeePrices]);
+    }, [productDetailData, currencyCode, slug, url, isProductFetching, didPageReadyRun, isScriptLoaded, canSeePrices]);
 };

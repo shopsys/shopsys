@@ -6,16 +6,16 @@ import {
 } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import { useGtmPaymentAndTransportPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPaymentAndTransportPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
+import { useGtmPaymentAndTransportViewEvent } from 'gtm/utils/pageReadyEvents/useGtmPaymentAndTransportViewEvent';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.transport_and_payment);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
-    useGtmPaymentAndTransportPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.transport_and_payment);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
+    useGtmPaymentAndTransportViewEvent(gtmStaticPageReadyEvent);
 
     return (
         <>

@@ -1,14 +1,14 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ContactContent } from 'components/Pages/Contact/ContactContent';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
+import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const ContactFormPage: FC<ServerSidePropsType> = () => {
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.contact);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <CommonLayout>

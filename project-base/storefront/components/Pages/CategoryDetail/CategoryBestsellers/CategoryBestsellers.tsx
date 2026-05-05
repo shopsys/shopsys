@@ -2,7 +2,7 @@ import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseD
 import { AnimatePresence } from 'framer-motion';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
+import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmSliderProductListViewEvent';
 import { useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
