@@ -7,6 +7,7 @@ import {
     TypeCreateOrderMutationVariables,
     useCreateOrderMutation,
 } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
 import { getGtmPaymentEvent } from 'gtm/factories/getGtmPaymentEvent';
@@ -209,18 +210,22 @@ const useHandleEventsAfterOrderCreation = () => {
     const user = useCurrentCustomerData();
     const domainConfig = useDomainConfig();
     const { cart, payment, promoCodes } = useCurrentCart();
+    const [{ data: settingsData }] = useSettingsQuery();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
     const { canSeePrices } = useAuthorization();
 
     const handleEventsAfterOrderCreation = (orderNumber: string, formValues: ContactInformation) => {
         if (cart && payment) {
+            const reviewConsents = settingsData?.settings?.heurekaEnabled
+                ? getGtmReviewConsents(!formValues.isWithoutHeurekaAgreement)
+                : undefined;
             const gtmCreateOrderEventOrderPart = getGtmCreateOrderEventOrderPart(
                 cart,
                 payment,
                 promoCodes,
                 orderNumber,
-                getGtmReviewConsents(!formValues.isWithoutHeurekaAgreement),
+                reviewConsents,
                 domainConfig,
             );
             const gtmCreateOrderEventUserPart = getGtmCreateOrderEventUserPart(user, formValues);

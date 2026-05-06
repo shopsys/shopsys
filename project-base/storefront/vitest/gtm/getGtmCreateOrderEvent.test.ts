@@ -113,4 +113,10 @@ describe('getGtmCreateOrderEventOrderPart', () => {
             heureka: false,
         });
     });
+
+    test('should omit review consents when they are not available on the current domain', () => {
+        const result = getGtmCreateOrderEventOrderPart(cart, payment, [], '202600001', undefined, domainConfig);
+
+        expect(result).not.toHaveProperty('reviewConsents');
+    });
 });

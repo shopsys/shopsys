@@ -308,7 +308,7 @@ export type GtmCreateOrderEventOrderPartType = {
     promoCodes?: string[];
     discountAmount: number | null;
     paymentType: string;
-    reviewConsents: GtmReviewConsentsType;
+    reviewConsents?: GtmReviewConsentsType;
     products: GtmCartItemType[] | undefined;
 };
 

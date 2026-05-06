@@ -32,7 +32,7 @@ export const getGtmCreateOrderEventOrderPart = (
     payment: TypeSimplePaymentFragment,
     promoCodes: TypePromoCode[],
     orderNumber: string,
-    reviewConsents: GtmReviewConsentsType,
+    reviewConsents: GtmReviewConsentsType | undefined,
     domainConfig: DomainConfigType,
 ): GtmCreateOrderEventOrderPartType => ({
     currencyCode: domainConfig.currencyCode,
@@ -50,7 +50,7 @@ export const getGtmCreateOrderEventOrderPart = (
     discountAmount: getGtmPriceBasedOnVisibility(cart.totalDiscountPrice.priceWithVat),
     promoCodes: promoCodes.map(({ code }) => code),
     paymentType: payment.name,
-    reviewConsents,
+    ...(reviewConsents !== undefined && { reviewConsents }),
     products: cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domainConfig.url, index)),
 });
 
