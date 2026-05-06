@@ -7,6 +7,8 @@ namespace Shopsys\FrameworkBundle\Model\AdminNavigation;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorPinnedMenuItem;
+use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SideMenuBuilder
@@ -191,11 +193,13 @@ class SideMenuBuilder
     public const string SECTION_HEUREKA = 'heureka';
     public const string HEUREKA_SETTINGS = 'settings';
     public const string MAIL_ALLOWED_RECIPIENTS = 'mail_whitelist_overview';
+    public const string ROOT_PINNED = 'pinned';
 
     public function __construct(
         protected readonly FactoryInterface $menuFactory,
         protected readonly Domain $domain,
         protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly CurrentAdministrator $currentAdministrator,
     ) {
     }
 
@@ -217,6 +221,9 @@ class SideMenuBuilder
         $menu->addChild($this->createIntegrationsMenu());
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_ROOT, $menu);
+
+        // has to be last
+        $this->buildPinnedSection($menu);
 
         return $menu;
     }
@@ -867,6 +874,103 @@ class SideMenuBuilder
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_INTEGRATIONS, $integrationsMenu);
 
         return $integrationsMenu;
+    }
+
+    protected function buildPinnedSection(ItemInterface $menu): void
+    {
+        $administrator = $this->currentAdministrator->getCurrentlyLoggedAdministrator();
+        $pinnedMenuItems = $administrator->getPinnedMenuItems();
+
+        if (count($pinnedMenuItems) === 0) {
+            return;
+        }
+
+        $itemsByRouteName = $this->collectItemsByRouteName($menu);
+
+        $pinnedRouteNames = array_map(
+            static fn (AdministratorPinnedMenuItem $item) => $item->getRouteName(),
+            $pinnedMenuItems,
+        );
+
+        foreach ($itemsByRouteName as $routeName => $item) {
+            $item->setExtra('pinned', in_array($routeName, $pinnedRouteNames, true));
+        }
+
+        $pinnedMenu = $this->menuFactory->createItem(static::ROOT_PINNED);
+        $pinnedMenu->setExtra('pinned_section', true);
+
+        foreach ($pinnedMenuItems as $pinnedMenuItem) {
+            $originalItem = $itemsByRouteName[$pinnedMenuItem->getRouteName()] ?? null;
+
+            if ($originalItem === null || $originalItem->getUri() === null) {
+                continue;
+            }
+
+            $pinnedItem = $pinnedMenu->addChild('pinned_' . $pinnedMenuItem->getRouteName(), [
+                'uri' => $originalItem->getUri(),
+                'label' => $originalItem->getLabel(),
+            ]);
+            $pinnedItem->setExtra('routes', $originalItem->getExtra('routes', []));
+            $pinnedItem->setExtra('superadmin', $this->isSuperadminMenuItem($originalItem));
+            $pinnedItem->setExtra('pinned_duplicate', true);
+            $pinnedItem->setExtra(RoutingExtension::ROUTE_NAME_EXTRA, $pinnedMenuItem->getRouteName());
+            $pinnedItem->setExtra('pinned', true);
+        }
+
+        $menu->addChild($pinnedMenu);
+    }
+
+    /**
+     * @return array<string, \Knp\Menu\ItemInterface>
+     */
+    protected function collectItemsByRouteName(ItemInterface $item): array
+    {
+        $result = [];
+
+        $routeName = $item->getExtra(RoutingExtension::ROUTE_NAME_EXTRA);
+
+        if ($routeName !== null) {
+            $result[$routeName] = $item;
+        }
+
+        foreach ($item->getChildren() as $child) {
+            $result += $this->collectItemsByRouteName($child);
+        }
+
+        return $result;
+    }
+
+    protected function isSuperadminMenuItem(ItemInterface $item): bool
+    {
+        do {
+            if ($item->getExtra('superadmin', false)) {
+                return true;
+            }
+
+            $item = $item->getParent();
+        } while ($item !== null);
+
+        return false;
+    }
+
+    public function isRouteNamePinnable(ItemInterface $item, string $routeName): bool
+    {
+        if ($item->getExtra('pinned_section', false) === true) {
+            return false;
+        }
+
+        if (
+            $item->getExtra(RoutingExtension::ROUTE_NAME_EXTRA) === $routeName
+            && $item->getUri() !== null
+            && $item->isDisplayed()
+        ) {
+            return true;
+        }
+
+        return array_any(
+            $item->getChildren(),
+            fn ($child) => $this->isRouteNamePinnable($child, $routeName),
+        );
     }
 
     protected function dispatchConfigureMenuEvent(string $eventName, ItemInterface $menu): ConfigureMenuEvent

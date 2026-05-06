@@ -655,6 +655,9 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
+msgid "Drag to reorder"
+msgstr ""
+
 msgid "Drag your file here"
 msgstr ""
 
@@ -1516,6 +1519,9 @@ msgstr ""
 msgid "Phone prefixes settings"
 msgstr ""
 
+msgid "Pin"
+msgstr ""
+
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
 msgstr ""
 
@@ -2081,6 +2087,9 @@ msgid "Unknown phone prefix \"%prefix%\" is stored. Please verify it."
 msgstr ""
 
 msgid "Unlimited"
+msgstr ""
+
+msgid "Unpin"
 msgstr ""
 
 msgid "Unused friendly URL list"

@@ -87,6 +87,13 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $gridLimits;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPinnedMenuItem>
+     */
+    #[ORM\OneToMany(targetEntity: AdministratorPinnedMenuItem::class, mappedBy: 'administrator', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
+    protected $pinnedMenuItems;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole>
      */
     #[ORM\OneToMany(targetEntity: AdministratorRole::class, mappedBy: 'administrator', cascade: ['persist'], orphanRemoval: true)]
@@ -163,6 +170,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     {
         $this->lastActivity = new DatePoint();
         $this->gridLimits = new ArrayCollection();
+        $this->pinnedMenuItems = new ArrayCollection();
         $this->loginToken = '';
         $this->roles = new ArrayCollection();
         $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
@@ -426,6 +434,55 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function addGridLimit(AdministratorGridLimit $administratorGridLimit): void
     {
         $this->gridLimits->add($administratorGridLimit);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPinnedMenuItem[]
+     */
+    public function getPinnedMenuItems()
+    {
+        return $this->pinnedMenuItems->getValues();
+    }
+
+    public function addPinnedMenuItem(AdministratorPinnedMenuItem $pinnedMenuItem): void
+    {
+        $this->pinnedMenuItems->add($pinnedMenuItem);
+    }
+
+    public function isMenuItemPinned(string $routeName): bool
+    {
+        foreach ($this->pinnedMenuItems as $pinnedMenuItem) {
+            if ($pinnedMenuItem->getRouteName() === $routeName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function unpinMenuItemByRouteName(string $routeName): void
+    {
+        foreach ($this->pinnedMenuItems as $pinnedMenuItem) {
+            if ($pinnedMenuItem->getRouteName() === $routeName) {
+                $this->pinnedMenuItems->removeElement($pinnedMenuItem);
+
+                return;
+            }
+        }
+    }
+
+    /**
+     * @param string[] $orderedRouteNames
+     */
+    public function reorderPinnedMenuItems(array $orderedRouteNames): void
+    {
+        foreach ($this->pinnedMenuItems as $pinnedMenuItem) {
+            $newPosition = array_search($pinnedMenuItem->getRouteName(), $orderedRouteNames, true);
+
+            if ($newPosition !== false) {
+                $pinnedMenuItem->setPosition($newPosition);
+            }
+        }
     }
 
     /**
