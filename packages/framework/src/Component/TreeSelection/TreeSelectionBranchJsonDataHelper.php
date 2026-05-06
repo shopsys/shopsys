@@ -14,7 +14,7 @@ class TreeSelectionBranchJsonDataHelper
     }
 
     /**
-     * @return array<int, array{id: int, label: string|null, isVisible: bool, hasChildren: bool, loadUrl: string}>
+     * @return array<int, array{id: int, label: string|null, isVisible: bool, isExpandable: bool, loadUrl: string}>
      */
     public function createJsonData(
         TreeSelectionEntityInterface $rootEntity,
@@ -28,7 +28,7 @@ class TreeSelectionBranchJsonDataHelper
                 'id' => $child->getId(),
                 'label' => $child->getName(),
                 'isVisible' => $domainId === null || $child->isVisible($domainId),
-                'hasChildren' => $child->hasChildren(),
+                'isExpandable' => $child->hasChildren(),
                 'loadUrl' => $this->urlGenerator->generate($routeName, [
                     'domainId' => $domainId,
                     'id' => $child->getId(),

@@ -130,50 +130,29 @@ final class TreeSelectionTypeTest extends TypeTestCase
         ]);
     }
 
-    /**
-     * @param \Tests\FrameworkBundle\Unit\Form\TreeSelectionTypeTest\TestTreeSelectionItem[] $items
-     * @return int[]
-     */
-    private function getItemIdsFromView(array $items): array
-    {
-        return array_map(
-            static fn (TestTreeSelectionItem $item): int => $item->getId(),
-            $items,
-        );
-    }
-
-    /**
-     * @param int[] $expectedItemIds
-     */
-    private function assertTreeItemIds(FormView $view, array $expectedItemIds): void
-    {
-        $this->assertSame(
-            $expectedItemIds,
-            $this->getItemIdsFromView($view->vars['tree_items']),
-        );
-    }
-
     private function assertCollapsedTopLevelTreeInView(FormView $view): void
     {
-        $this->assertTreeItemIds(
-            $view,
-            [
-                self::FIRST_LEVEL_A_ITEM_ID,
-                self::FIRST_LEVEL_B_ITEM_ID,
-            ],
-        );
+        $treeItems = $view->vars['tree_items'];
+
+        $this->assertCount(2, $treeItems);
+        $this->assertSame($this->itemsById[self::FIRST_LEVEL_A_ITEM_ID], $treeItems[0]['item']);
+        $this->assertSame([], $treeItems[0]['children']);
+        $this->assertSame($this->itemsById[self::FIRST_LEVEL_B_ITEM_ID], $treeItems[1]['item']);
+        $this->assertSame([], $treeItems[1]['children']);
     }
 
     private function assertExpandedTreeForSelectedSubitemOfFirstTopLevelItemInView(FormView $view): void
     {
-        $this->assertTreeItemIds(
-            $view,
-            [
-                self::FIRST_LEVEL_A_ITEM_ID,
-                self::A_FIRST_SUBITEM_ID,
-                self::A_SECOND_SUBITEM_ID,
-                self::FIRST_LEVEL_B_ITEM_ID,
-            ],
-        );
+        $treeItems = $view->vars['tree_items'];
+
+        $this->assertCount(2, $treeItems);
+        $this->assertSame($this->itemsById[self::FIRST_LEVEL_A_ITEM_ID], $treeItems[0]['item']);
+        $this->assertCount(2, $treeItems[0]['children']);
+        $this->assertSame($this->itemsById[self::A_FIRST_SUBITEM_ID], $treeItems[0]['children'][0]['item']);
+        $this->assertSame([], $treeItems[0]['children'][0]['children']);
+        $this->assertSame($this->itemsById[self::A_SECOND_SUBITEM_ID], $treeItems[0]['children'][1]['item']);
+        $this->assertSame([], $treeItems[0]['children'][1]['children']);
+        $this->assertSame($this->itemsById[self::FIRST_LEVEL_B_ITEM_ID], $treeItems[1]['item']);
+        $this->assertSame([], $treeItems[1]['children']);
     }
 }

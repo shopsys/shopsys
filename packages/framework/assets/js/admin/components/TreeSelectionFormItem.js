@@ -31,7 +31,7 @@ export default class TreeSelectionFormItem {
     initStatus() {
         // status could be set to "opened" by children
         if (this.status === null) {
-            if (this.$item.data('has-children')) {
+            if (this.$item.data('expandable')) {
                 this.close(false);
             } else {
                 this.setStatus(TreeSelectionFormItem.STATUS_NONE);
@@ -131,7 +131,7 @@ export default class TreeSelectionFormItem {
 
         newItemHtml = newItemHtml
             .replace('__load_children_url__', () => itemData.loadUrl)
-            .replace('__has_children__', () => (itemData.hasChildren ? 'true' : 'false'))
+            .replace('__expandable__', () => (itemData.isExpandable ? 'true' : 'false'))
             .replace('__checkbox_id__', () => checkboxId)
             .replace('__checkbox_name__', () => checkboxName)
             .replace('__value__', () => itemData.id)
@@ -140,7 +140,7 @@ export default class TreeSelectionFormItem {
         const $newItem = $(newItemHtml);
 
         $newItem.data('load-url', itemData.loadUrl);
-        $newItem.data('has-children', itemData.hasChildren);
+        $newItem.data('expandable', itemData.isExpandable);
         if (itemData.isVisible === false) {
             $newItem.addClass($form.data('hidden-item-class'));
         }
