@@ -44,6 +44,11 @@ export type GtmConsentUpdateEventType = GtmEventInterface<
 >;
 
 export type GtmChangeCartItemEventType = GtmAddToCartEventType | GtmRemoveFromCartEventType;
+export type GtmChangeWishlistItemEventType = GtmAddToWishlistEventType | GtmRemoveFromWishlistEventType;
+export type GtmChangeProductListItemEventType =
+    | GtmChangeWishlistItemEventType
+    | GtmAddToComparisonEventType
+    | GtmRemoveFromComparisonEventType;
 
 type GtmAddToCartEventType = GtmEventInterface<
     GtmEventType.add_to_cart,
@@ -72,6 +77,62 @@ type GtmRemoveFromCartEventType = GtmEventInterface<
             arePricesHidden: boolean;
         };
         cart?: GtmCartInfoType | null;
+    }
+>;
+
+type GtmAddToWishlistEventType = GtmEventInterface<
+    GtmEventType.add_to_wishlist,
+    {
+        ecommerce: {
+            listName: GtmProductListNameType;
+            currencyCode: string;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
+            products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
+        };
+    }
+>;
+
+type GtmRemoveFromWishlistEventType = GtmEventInterface<
+    GtmEventType.remove_from_wishlist,
+    {
+        ecommerce: {
+            listName: GtmProductListNameType;
+            currencyCode: string;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
+            products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
+        };
+    }
+>;
+
+type GtmAddToComparisonEventType = GtmEventInterface<
+    GtmEventType.add_to_comparison,
+    {
+        ecommerce: {
+            listName: GtmProductListNameType;
+            currencyCode: string;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
+            products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
+        };
+    }
+>;
+
+type GtmRemoveFromComparisonEventType = GtmEventInterface<
+    GtmEventType.remove_from_comparison,
+    {
+        ecommerce: {
+            listName: GtmProductListNameType;
+            currencyCode: string;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
+            products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
+        };
     }
 >;
 

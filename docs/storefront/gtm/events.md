@@ -97,6 +97,107 @@ export type GtmRemoveFromCartEventType = GtmEventInterface<
 >;
 ```
 
+## GtmChangeWishlistItemEventType
+
+This type is used for tracking both adding and removing wishlist items.
+
+```ts
+export type GtmChangeWishlistItemEventType =
+  | GtmAddToWishlistEventType
+  | GtmRemoveFromWishlistEventType;
+```
+
+## GtmChangeProductListItemEventType
+
+This type is used for tracking both adding and removing wishlist and comparison items.
+
+```ts
+export type GtmChangeProductListItemEventType =
+  | GtmChangeWishlistItemEventType
+  | GtmAddToComparisonEventType
+  | GtmRemoveFromComparisonEventType;
+```
+
+## GtmAddToWishlistEventType
+
+This type is used for tracking adding items to a wishlist.
+
+```ts
+export type GtmAddToWishlistEventType = GtmEventInterface<
+  GtmEventType.add_to_wishlist, // the type of the event
+  {
+    ecommerce: {
+      listName: GtmProductListNameType; // the name of the product list from which the product was added
+      currencyCode: string; // the code of the currency used on the domain
+      valueWithoutVat: number | null; // the value of the added product without VAT
+      valueWithVat: number | null; // the value of the added product with VAT
+      products: GtmCartItemType[] | undefined; // information about the product added to the wishlist
+      arePricesHidden: boolean; // indicates if prices are hidden for the current user
+    };
+  }
+>;
+```
+
+## GtmRemoveFromWishlistEventType
+
+This type is used for tracking removing items from a wishlist.
+
+```ts
+export type GtmRemoveFromWishlistEventType = GtmEventInterface<
+  GtmEventType.remove_from_wishlist, // the type of the event
+  {
+    ecommerce: {
+      listName: GtmProductListNameType; // the name of the product list from which the product was removed
+      currencyCode: string; // the code of the currency used on the domain
+      valueWithoutVat: number | null; // the value of the removed product without VAT
+      valueWithVat: number | null; // the value of the removed product with VAT
+      products: GtmCartItemType[] | undefined; // information about the product removed from the wishlist
+      arePricesHidden: boolean; // indicates if prices are hidden for the current user
+    };
+  }
+>;
+```
+
+## GtmAddToComparisonEventType
+
+This type is used for tracking adding items to a comparison list.
+
+```ts
+export type GtmAddToComparisonEventType = GtmEventInterface<
+  GtmEventType.add_to_comparison, // the type of the event
+  {
+    ecommerce: {
+      listName: GtmProductListNameType; // the name of the product list from which the product was added
+      currencyCode: string; // the code of the currency used on the domain
+      valueWithoutVat: number | null; // the value of the added product without VAT
+      valueWithVat: number | null; // the value of the added product with VAT
+      products: GtmCartItemType[] | undefined; // information about the product added to comparison
+      arePricesHidden: boolean; // indicates if prices are hidden for the current user
+    };
+  }
+>;
+```
+
+## GtmRemoveFromComparisonEventType
+
+This type is used for tracking removing items from a comparison list.
+
+```ts
+export type GtmRemoveFromComparisonEventType = GtmEventInterface<
+  GtmEventType.remove_from_comparison, // the type of the event
+  {
+    ecommerce: {
+      listName: GtmProductListNameType; // the name of the product list from which the product was removed
+      currencyCode: string; // the code of the currency used on the domain
+      valueWithoutVat: number | null; // the value of the removed product without VAT
+      valueWithVat: number | null; // the value of the removed product with VAT
+      products: GtmCartItemType[] | undefined; // information about the product removed from comparison
+      arePricesHidden: boolean; // indicates if prices are hidden for the current user
+    };
+  }
+>;
+```
+
 ## GtmCartViewEventType
 
 This type is used for tracking cart view events.
