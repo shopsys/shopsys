@@ -193,8 +193,8 @@ export type GtmAutocompleteResultsViewEventType = GtmEventInterface<
   {
     autocompleteResults: {
       keyword: string; // the search keyword entered by the user
-      results: number; // the number of search results displayed to the user
-      sections: { [key in GtmSectionType]: number }; // an object that maps each section of search results to the number of results in that particular section
+      results: number; // the number of search results found for the user
+      sections: { [key in GtmSectionType]: number }; // an object that maps each section of search results to the number of found results in that particular section
     };
   }
 >;
