@@ -13,6 +13,12 @@ msgstr "Maximální cena za proklik v nabídkách"
 msgid "Offer in feed"
 msgstr "Nabízet ve feedu"
 
+msgid "Zbozi category"
+msgstr "Kategorie Zboží"
+
+msgid "Zbozi.cz category"
+msgstr "Kategorie Zboží.cz"
+
 msgid "Zbozi.cz product feed"
 msgstr "XML feed Zboží.cz"
 

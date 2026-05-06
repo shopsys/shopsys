@@ -1,0 +1,6 @@
+query CategoryZboziCategoryQuery ($categoryUuid: Uuid) {
+    category(uuid: $categoryUuid) {
+        uuid
+        zboziCategory
+    }
+}

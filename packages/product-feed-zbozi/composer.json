@@ -29,7 +29,7 @@
     },
     "require": {
         "php": "^8.5",
-        "ext-json": "*",
+        "ext-iconv": "*",
         "ext-pdo": "*",
         "doctrine/dbal": "^4.4",
         "doctrine/doctrine-bundle": "^3.2",
@@ -48,7 +48,11 @@
         "twig/twig": "^3.14.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^12.5"
+        "phpunit/phpunit": "^12.5",
+        "shopsys/frontend-api": "19.0.x-dev"
+    },
+    "suggest": {
+        "shopsys/frontend-api": "Required only when you want to extend the Frontend API Category type with additional Zbozi.cz related fields."
     },
     "config": {
         "allow-plugins": {

@@ -646,6 +646,8 @@ export type TypeCategory = TypeBreadcrumb & TypeProductListable & TypeSlug & {
   slug: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  /** Zbozi.cz category text assigned to the category */
+  zboziCategory: Maybe<Scalars['String']['output']>;
 };
 
 

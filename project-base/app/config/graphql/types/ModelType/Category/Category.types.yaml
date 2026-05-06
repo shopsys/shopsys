@@ -2,3 +2,4 @@ Category:
     type: object
     inherits:
         - 'CategoryDecorator'
+        - 'ZboziCzCategoryDecorator'

@@ -1,0 +1,9 @@
+ZboziCzCategoryDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            zboziCategory:
+                type: "String"
+                description: "Zbozi.cz category text assigned to the category"
+                resolve: '@=query("zboziCategoryByCategoryQuery", value)'
