@@ -1,6 +1,3 @@
-parameters:
-    shopsys_mcp.schema.file_path: '%kernel.project_dir%/mcp-schema.json'
-
 services:
     _defaults:
         autoconfigure: true
@@ -32,11 +29,11 @@ services:
     Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider:
         arguments:
             $mcpConnection: '@doctrine.dbal.mcp_connection'
-            $schemaFilePath: '%shopsys_mcp.schema.file_path%'
+            $cacheDir: '%kernel.cache_dir%'
 
-    Shopsys\McpBundle\Component\Database\Schema\McpSchemaFileGenerator:
-        arguments:
-            $schemaFilePath: '%shopsys_mcp.schema.file_path%'
+    Shopsys\McpBundle\Component\Database\Schema\McpSchemaCacheWarmer:
+        tags:
+            - { name: kernel.cache_warmer }
 
     Shopsys\McpBundle\Component\Database\Schema\SchemaNameNormalizer:
         arguments:

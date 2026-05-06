@@ -8,38 +8,33 @@ use RuntimeException;
 
 class McpSchemaFileGenerator
 {
-    public function __construct(
-        protected readonly ExposedSchemaProvider $exposedSchemaProvider,
-        protected readonly string $schemaFilePath,
-    ) {
-    }
-
-    public function getSchemaFilePath(): string
+    public function __construct(protected readonly ExposedSchemaProvider $exposedSchemaProvider)
     {
-        return $this->schemaFilePath;
     }
 
     public function generateSchemaFile(): bool
     {
-        $generatedSchemaJson = $this->generateSchemaJson();
-        $existingSchemaJson = is_file($this->schemaFilePath) ? file_get_contents($this->schemaFilePath) : false;
+        $generatedSchemaJson = $this->exposedSchemaProvider->generateExposedSchemaJson();
+        $schemaFilePath = $this->exposedSchemaProvider->getSchemaFilePath();
+        $existingSchemaJson = is_file($schemaFilePath) ? file_get_contents($schemaFilePath) : false;
 
         if ($existingSchemaJson === $generatedSchemaJson) {
             return false;
         }
 
-        if (@file_put_contents($this->schemaFilePath, $generatedSchemaJson) === false) {
+        error_clear_last();
+
+        if (file_put_contents($schemaFilePath, $generatedSchemaJson) === false) {
+            $lastPhpError = error_get_last();
+            $errorDetail = $lastPhpError !== null ? sprintf(' Details: %s', $lastPhpError['message']) : '';
+
             throw new RuntimeException(sprintf(
-                'Generated MCP schema file could not be written: %s.',
-                $this->schemaFilePath,
+                'Generated MCP schema file could not be written: %s.%s',
+                $schemaFilePath,
+                $errorDetail,
             ));
         }
 
         return true;
-    }
-
-    public function generateSchemaJson(): string
-    {
-        return $this->exposedSchemaProvider->generateExposedSchemaJson();
     }
 }

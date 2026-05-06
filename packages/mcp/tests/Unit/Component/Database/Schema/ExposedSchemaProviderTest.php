@@ -14,6 +14,8 @@ use Shopsys\McpBundle\Component\Database\Schema\SchemaNameNormalizer;
 
 class ExposedSchemaProviderTest extends TestCase
 {
+    private const string SCHEMA_FILE_NAME = 'mcp-schema.json';
+
     /**
      * @var array<string, mixed>
      */
@@ -36,17 +38,20 @@ class ExposedSchemaProviderTest extends TestCase
         ],
     ];
 
-    /**
-     * @var array<int, string>
-     */
-    private array $temporarySchemaFilePaths = [];
+    private ?string $temporarySchemaDirectory = null;
 
     #[Override]
     protected function tearDown(): void
     {
-        foreach ($this->temporarySchemaFilePaths as $temporarySchemaFilePath) {
+        if ($this->temporarySchemaDirectory !== null) {
+            $temporarySchemaFilePath = $this->temporarySchemaDirectory . '/' . self::SCHEMA_FILE_NAME;
+
             if (is_file($temporarySchemaFilePath)) {
                 unlink($temporarySchemaFilePath);
+            }
+
+            if (is_dir($this->temporarySchemaDirectory)) {
+                rmdir($this->temporarySchemaDirectory);
             }
         }
 
@@ -86,27 +91,30 @@ class ExposedSchemaProviderTest extends TestCase
 
     private function createExposedSchemaProvider(): ExposedSchemaProvider
     {
+        $temporarySchemaDirectory = $this->createTemporarySchemaDirectoryWithSchemaFile();
+
         return new ExposedSchemaProvider(
             $this->createStub(Connection::class),
             $this->createStub(AllowedDatabaseTablesProvider::class),
             $this->createStub(AllowedDatabaseColumnsProvider::class),
             $this->createStub(SchemaNameNormalizer::class),
-            $this->createTemporarySchemaFile(),
+            $temporarySchemaDirectory,
         );
     }
 
-    private function createTemporarySchemaFile(): string
+    private function createTemporarySchemaDirectoryWithSchemaFile(): string
     {
-        $temporarySchemaFilePath = tempnam(sys_get_temp_dir(), 'mcp-schema-');
+        $temporarySchemaDirectory = sys_get_temp_dir() . '/mcp-schema-' . bin2hex(random_bytes(8));
+        mkdir($temporarySchemaDirectory);
+        $temporarySchemaFilePath = $temporarySchemaDirectory . '/' . self::SCHEMA_FILE_NAME;
 
-        self::assertNotFalse($temporarySchemaFilePath);
-        $this->temporarySchemaFilePaths[] = $temporarySchemaFilePath;
+        $this->temporarySchemaDirectory = $temporarySchemaDirectory;
 
         file_put_contents(
             $temporarySchemaFilePath,
             json_encode(self::STORED_EXPOSED_SCHEMA, JSON_THROW_ON_ERROR),
         );
 
-        return $temporarySchemaFilePath;
+        return $temporarySchemaDirectory;
     }
 }

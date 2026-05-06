@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Command;
 
 use Override;
+use Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider;
 use Shopsys\McpBundle\Component\Database\Schema\McpSchemaFileGenerator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -22,6 +23,7 @@ class GenerateSchemaCommand extends Command
 
     public function __construct(
         protected readonly McpSchemaFileGenerator $mcpSchemaFileGenerator,
+        protected readonly ExposedSchemaProvider $exposedSchemaProvider,
     ) {
         parent::__construct();
     }
@@ -33,7 +35,7 @@ class GenerateSchemaCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $schemaFilePath = $this->mcpSchemaFileGenerator->getSchemaFilePath();
+        $schemaFilePath = $this->exposedSchemaProvider->getSchemaFilePath();
 
         if (!$this->mcpSchemaFileGenerator->generateSchemaFile()) {
             $io->success(sprintf('MCP schema is up to date: %s', $schemaFilePath));

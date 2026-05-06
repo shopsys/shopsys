@@ -29,6 +29,8 @@ use Shopsys\McpBundle\Command\GenerateSchemaCommand;
  */
 class ExposedSchemaProvider
 {
+    protected const string SCHEMA_FILE_NAME = 'mcp-schema.json';
+
     /**
      * @var array<string, SchemaTableArray>|null
      */
@@ -39,7 +41,7 @@ class ExposedSchemaProvider
         protected readonly AllowedDatabaseTablesProvider $allowedDatabaseTablesProvider,
         protected readonly AllowedDatabaseColumnsProvider $allowedDatabaseColumnsProvider,
         protected readonly SchemaNameNormalizer $schemaNameNormalizer,
-        protected readonly string $schemaFilePath,
+        protected readonly string $cacheDir,
     ) {
     }
 
@@ -99,6 +101,11 @@ class ExposedSchemaProvider
         ) . "\n";
     }
 
+    public function getSchemaFilePath(): string
+    {
+        return $this->cacheDir . '/' . self::SCHEMA_FILE_NAME;
+    }
+
     /**
      * @return array<string, SchemaTableArray>
      */
@@ -108,18 +115,20 @@ class ExposedSchemaProvider
             return $this->storedExposedSchema;
         }
 
-        if (!is_file($this->schemaFilePath)) {
+        $schemaFilePath = $this->getSchemaFilePath();
+
+        if (!is_file($schemaFilePath)) {
             throw new RuntimeException(sprintf(
                 'Generated MCP schema file is missing: %s. Run "php bin/console %s".',
-                $this->schemaFilePath,
+                $schemaFilePath,
                 GenerateSchemaCommand::COMMAND_NAME,
             ));
         }
 
-        $schemaJson = file_get_contents($this->schemaFilePath);
+        $schemaJson = file_get_contents($schemaFilePath);
 
         if ($schemaJson === false) {
-            throw new RuntimeException(sprintf('Generated MCP schema file could not be read: %s.', $this->schemaFilePath));
+            throw new RuntimeException(sprintf('Generated MCP schema file could not be read: %s.', $schemaFilePath));
         }
 
         try {
@@ -127,7 +136,7 @@ class ExposedSchemaProvider
             $storedExposedSchema = json_decode($schemaJson, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $jsonException) {
             throw new RuntimeException(
-                sprintf('Generated MCP schema file is invalid JSON: %s.', $this->schemaFilePath),
+                sprintf('Generated MCP schema file is invalid JSON: %s.', $schemaFilePath),
                 previous: $jsonException,
             );
         }
