@@ -25,4 +25,5 @@ export enum GtmEventType {
     login = 'ec.login',
     registration = 'ec.registration',
     create_watchdog = 'ec.create_watchdog',
+    withdrawal = 'ec.withdrawal',
 }

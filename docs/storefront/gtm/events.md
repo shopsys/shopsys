@@ -399,6 +399,21 @@ export type GtmPaymentFailEventType = GtmEventInterface<
 >;
 ```
 
+## GtmWithdrawalEventType
+
+This type is used for tracking when a user submits an order withdrawal request.
+
+```ts
+export type GtmWithdrawalEventType = GtmEventInterface<
+  GtmEventType.withdrawal, // the type of the event
+  {
+    ecommerce: {
+      id: string; // the number of the order for which the withdrawal was requested
+    };
+  }
+>;
+```
+
 ## GtmCreateOrderEventOrderPartType
 
 This type represents the order part of the GtmCreateOrderEventType. It is stored in local storage before redirecting to the payment gate if the user has chosen to pay using a payment that requires a redirect.

@@ -11,6 +11,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderWithdrawalDataFragment } from 'graphql/requests/orders/fragments/OrderWithdrawalDataFragment.generated';
 import { useOrderWithdrawalRequestMutation } from 'graphql/requests/orders/mutations/OrderWithdrawalRequestMutation.generated';
+import { onGtmWithdrawalEventHandler } from 'gtm/handlers/onGtmWithdrawalEventHandler';
 import { useRouter } from 'next/router';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
@@ -52,6 +53,8 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
         });
 
         if (result.data?.OrderWithdrawalRequest) {
+            onGtmWithdrawalEventHandler(order.number);
+
             const [orderWithdrawalSuccessUrl] = getInternationalizedStaticUrls(
                 [{ url: '/order-withdrawal-success/:orderUrlHash', param: order.urlHash }],
                 url,
