@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Command;
+namespace Shopsys\FrameworkBundle\Component\PostDeploy\Task;
 
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemException;
@@ -14,17 +14,9 @@ use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
-use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(
-    name: 'shopsys:recalculate-file-sizes',
-    description: 'Populates file size for uploaded files and images that do not have it stored.',
-)]
-class RecalculateFileSizesCommand extends Command
+class RecalculateFileSizesTask implements PostDeployTaskInterface
 {
     protected const int BATCH_SIZE = 100;
 
@@ -35,17 +27,11 @@ class RecalculateFileSizesCommand extends Command
         protected readonly CustomerUploadedFileLocator $customerUploadedFileLocator,
         protected readonly ImageLocator $imageLocator,
     ) {
-        parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[Override]
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function run(SymfonyStyle $style): void
     {
-        $style = new SymfonyStyle($input, $output);
-
         $uploadedFilesCount = $this->recalculateUploadedFiles($style);
         $customerFilesCount = $this->recalculateCustomerUploadedFiles($style);
         $imagesCount = $this->recalculateImages($style);
@@ -54,17 +40,17 @@ class RecalculateFileSizesCommand extends Command
 
         if ($totalCount === 0) {
             $style->success('All files already have sizes stored.');
-        } else {
-            $style->success(sprintf(
-                'Recalculated sizes for %d files (%d uploaded files, %d customer files, %d images).',
-                $totalCount,
-                $uploadedFilesCount,
-                $customerFilesCount,
-                $imagesCount,
-            ));
+
+            return;
         }
 
-        return Command::SUCCESS;
+        $style->success(sprintf(
+            'Recalculated sizes for %d files (%d uploaded files, %d customer files, %d images).',
+            $totalCount,
+            $uploadedFilesCount,
+            $customerFilesCount,
+            $imagesCount,
+        ));
     }
 
     protected function recalculateUploadedFiles(SymfonyStyle $style): int
