@@ -56,7 +56,7 @@ class McpOAuthClientRegistrationFacadeTest extends TestCase
     public function testRegisterClientTruncatesOverlongClientName(): void
     {
         $registrationFacade = $this->createRegistrationFacade();
-        $overlongClientName = str_repeat('a', AdministratorMcpToken::CLIENT_NAME_MAX_LENGTH + 1);
+        $overlongClientName = str_repeat('a', AdministratorMcpToken::LABEL_MAX_LENGTH + 1);
 
         $registration = $registrationFacade->registerClient(
             ['http://localhost:8765/callback'],
@@ -64,7 +64,7 @@ class McpOAuthClientRegistrationFacadeTest extends TestCase
         );
 
         $this->assertSame(
-            str_repeat('a', AdministratorMcpToken::CLIENT_NAME_MAX_LENGTH),
+            str_repeat('a', AdministratorMcpToken::LABEL_MAX_LENGTH),
             $registration->clientName,
         );
     }

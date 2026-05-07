@@ -24,12 +24,17 @@ class AdministratorMcpTokenData
     /**
      * @var string
      */
+    public $type;
+
+    /**
+     * @var string|null
+     */
     public $clientId;
 
     /**
      * @var string
      */
-    public $clientName;
+    public $label;
 
     /**
      * @var \DateTimeImmutable
@@ -45,11 +50,6 @@ class AdministratorMcpTokenData
      * @var \DateTimeImmutable|null
      */
     public $revokedAt;
-
-    /**
-     * @var \DateTimeImmutable|null
-     */
-    public $replacedAt;
 
     /**
      * @var \DateTimeImmutable

@@ -7,6 +7,7 @@ namespace Shopsys\McpBundle\Model\Administrator\McpToken;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class AdministratorMcpTokenRepository
@@ -24,29 +25,26 @@ class AdministratorMcpTokenRepository
         return $this->em->getRepository(AdministratorMcpToken::class);
     }
 
-    public function findCurrentByAdministratorAndClient(
+    public function findActiveByIdAndAdministrator(
         Administrator $administrator,
-        string $clientId,
+        int $id,
+        DateTimeImmutable $dateTime,
     ): ?AdministratorMcpToken {
-        return $this->getAdministratorMcpTokenEntityRepository()->createQueryBuilder('amt')
-            ->where('amt.administrator = :administrator')
-            ->andWhere('amt.clientId = :clientId')
-            ->andWhere('amt.revokedAt IS NULL')
-            ->andWhere('amt.replacedAt IS NULL')
+        return $this->createActiveTokenQueryBuilder($dateTime)
+            ->andWhere('amt.id = :id')
+            ->andWhere('amt.administrator = :administrator')
+            ->setParameter('id', $id)
             ->setParameter('administrator', $administrator)
-            ->setParameter('clientId', $clientId)
-            ->orderBy('amt.createdAt', 'DESC')
-            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function findCurrentByPublicTokenId(string $publicTokenId): ?AdministratorMcpToken
-    {
-        return $this->getAdministratorMcpTokenEntityRepository()->createQueryBuilder('amt')
-            ->where('amt.publicTokenId = :publicTokenId')
-            ->andWhere('amt.revokedAt IS NULL')
-            ->andWhere('amt.replacedAt IS NULL')
+    public function findActiveByPublicTokenId(
+        string $publicTokenId,
+        DateTimeImmutable $dateTime,
+    ): ?AdministratorMcpToken {
+        return $this->createActiveTokenQueryBuilder($dateTime)
+            ->andWhere('amt.publicTokenId = :publicTokenId')
             ->setParameter('publicTokenId', $publicTokenId)
             ->setMaxResults(1)
             ->getQuery()
@@ -56,21 +54,23 @@ class AdministratorMcpTokenRepository
     /**
      * @return array<\Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken>
      */
-    public function findActiveConnectedClientTokensByAdministrator(
+    public function findActiveTokensByAdministrator(
         Administrator $administrator,
         DateTimeImmutable $dateTime,
     ): array {
-        return $this->getAdministratorMcpTokenEntityRepository()->createQueryBuilder('amt')
-            ->where('amt.administrator = :administrator')
-            ->andWhere('amt.clientId != :manualClientId')
-            ->andWhere('amt.revokedAt IS NULL')
-            ->andWhere('amt.replacedAt IS NULL')
-            ->andWhere('amt.expiresAt > :dateTime')
+        return $this->createActiveTokenQueryBuilder($dateTime)
+            ->andWhere('amt.administrator = :administrator')
             ->setParameter('administrator', $administrator)
-            ->setParameter('manualClientId', AdministratorMcpToken::MANUAL_CLIENT_ID)
-            ->setParameter('dateTime', $dateTime)
             ->orderBy('amt.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    protected function createActiveTokenQueryBuilder(DateTimeImmutable $dateTime): QueryBuilder
+    {
+        return $this->getAdministratorMcpTokenEntityRepository()->createQueryBuilder('amt')
+            ->where('amt.revokedAt IS NULL')
+            ->andWhere('amt.expiresAt > :dateTime')
+            ->setParameter('dateTime', $dateTime);
     }
 }

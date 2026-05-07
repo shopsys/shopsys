@@ -25,26 +25,71 @@ class AdministratorMcpTokenFacade
 
     public function issueManualTokenForAdministrator(Administrator $administrator): AdministratorMcpIssuedToken
     {
-        return $this->issueTokenForAdministratorAndClient(
+        return $this->issueToken(
             $administrator,
-            AdministratorMcpToken::MANUAL_CLIENT_ID,
-            AdministratorMcpToken::MANUAL_CLIENT_NAME,
+            AdministratorMcpToken::TYPE_MANUAL,
+            null,
+            AdministratorMcpToken::DEFAULT_MANUAL_TOKEN_LABEL,
         );
     }
 
     public function issueTokenForAdministratorAndClient(
         Administrator $administrator,
         string $clientId,
-        string $clientName,
+        string $label,
+    ): AdministratorMcpIssuedToken {
+        return $this->issueToken(
+            $administrator,
+            AdministratorMcpToken::TYPE_OAUTH,
+            $clientId,
+            $label,
+        );
+    }
+
+    /**
+     * @return array<\Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken>
+     */
+    public function findActiveTokensByAdministrator(Administrator $administrator): array
+    {
+        return $this->administratorMcpTokenRepository->findActiveTokensByAdministrator(
+            $administrator,
+            $this->clock->now(),
+        );
+    }
+
+    public function findValidTokenByTokenString(string $tokenString): ?AdministratorMcpToken
+    {
+        return $this->administratorMcpTokenLookup->findValidTokenByTokenString($tokenString);
+    }
+
+    public function findActiveByIdAndAdministrator(Administrator $administrator, int $id): ?AdministratorMcpToken
+    {
+        return $this->administratorMcpTokenRepository->findActiveByIdAndAdministrator(
+            $administrator,
+            $id,
+            $this->clock->now(),
+        );
+    }
+
+    public function revokeToken(AdministratorMcpToken $administratorMcpToken): void
+    {
+        $administratorMcpToken->revoke($this->clock->now());
+        $this->entityManager->flush();
+    }
+
+    public function markTokenUsed(AdministratorMcpToken $administratorMcpToken): void
+    {
+        $administratorMcpToken->markUsed($this->clock->now());
+        $this->entityManager->flush();
+    }
+
+    protected function issueToken(
+        Administrator $administrator,
+        string $type,
+        ?string $clientId,
+        string $label,
     ): AdministratorMcpIssuedToken {
         $now = $this->clock->now();
-        $existingAdministratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByAdministratorAndClient($administrator, $clientId);
-
-        if ($existingAdministratorMcpToken !== null) {
-            $existingAdministratorMcpToken->replace($now);
-            $this->entityManager->flush();
-        }
-
         $expiresAt = $now->modify(sprintf('+%d seconds', $this->accessTokenTtlSeconds));
         $issuedToken = $this->administratorMcpTokenGenerator->generateIssuedToken($expiresAt);
 
@@ -52,8 +97,9 @@ class AdministratorMcpTokenFacade
         $administratorMcpTokenData->administrator = $administrator;
         $administratorMcpTokenData->publicTokenId = $issuedToken->publicTokenId;
         $administratorMcpTokenData->secretHash = $this->administratorMcpTokenHasher->hash($issuedToken->secret);
+        $administratorMcpTokenData->type = $type;
         $administratorMcpTokenData->clientId = $clientId;
-        $administratorMcpTokenData->clientName = $clientName;
+        $administratorMcpTokenData->label = $label;
         $administratorMcpTokenData->createdAt = $now;
         $administratorMcpTokenData->expiresAt = $issuedToken->expiresAt;
 
@@ -68,62 +114,5 @@ class AdministratorMcpTokenFacade
     public function getRemainingLifetimeInSeconds(AdministratorMcpIssuedToken $issuedToken): int
     {
         return max($issuedToken->expiresAt->getTimestamp() - $this->clock->now()->getTimestamp(), 0);
-    }
-
-    public function findActiveManualTokenByAdministrator(Administrator $administrator): ?AdministratorMcpToken
-    {
-        return $this->findActiveByAdministratorAndClient($administrator, AdministratorMcpToken::MANUAL_CLIENT_ID);
-    }
-
-    public function findActiveByAdministratorAndClient(
-        Administrator $administrator,
-        string $clientId,
-    ): ?AdministratorMcpToken {
-        $administratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByAdministratorAndClient($administrator, $clientId);
-
-        if ($administratorMcpToken === null || !$administratorMcpToken->isValidAt($this->clock->now())) {
-            return null;
-        }
-
-        return $administratorMcpToken;
-    }
-
-    public function findValidTokenByTokenString(string $tokenString): ?AdministratorMcpToken
-    {
-        return $this->administratorMcpTokenLookup->findValidTokenByTokenString($tokenString);
-    }
-
-    /**
-     * @return array<\Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken>
-     */
-    public function findActiveConnectedClientTokensByAdministrator(Administrator $administrator): array
-    {
-        return $this->administratorMcpTokenRepository->findActiveConnectedClientTokensByAdministrator(
-            $administrator,
-            $this->clock->now(),
-        );
-    }
-
-    public function revokeManualTokenForAdministrator(Administrator $administrator): void
-    {
-        $this->revokeTokenForAdministratorAndClient($administrator, AdministratorMcpToken::MANUAL_CLIENT_ID);
-    }
-
-    public function revokeTokenForAdministratorAndClient(Administrator $administrator, string $clientId): void
-    {
-        $administratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByAdministratorAndClient($administrator, $clientId);
-
-        if ($administratorMcpToken === null) {
-            return;
-        }
-
-        $administratorMcpToken->revoke($this->clock->now());
-        $this->entityManager->flush();
-    }
-
-    public function markTokenUsed(AdministratorMcpToken $administratorMcpToken): void
-    {
-        $administratorMcpToken->markUsed($this->clock->now());
-        $this->entityManager->flush();
     }
 }

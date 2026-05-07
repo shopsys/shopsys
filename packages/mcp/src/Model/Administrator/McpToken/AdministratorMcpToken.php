@@ -10,22 +10,14 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable(false)]
-#[ORM\Table(
-    name: 'administrator_mcp_tokens',
-    uniqueConstraints: [
-        new ORM\UniqueConstraint(
-            name: 'uniq_administrator_mcp_tokens_active_administrator_client',
-            columns: ['administrator_id', 'client_id'],
-            options: ['where' => 'revoked_at IS NULL AND replaced_at IS NULL'],
-        ),
-    ],
-)]
+#[ORM\Table(name: 'administrator_mcp_tokens')]
 #[ORM\Entity]
 class AdministratorMcpToken
 {
-    public const string MANUAL_CLIENT_ID = 'manual';
-    public const string MANUAL_CLIENT_NAME = 'Manual token';
-    public const int CLIENT_NAME_MAX_LENGTH = 255;
+    public const string TYPE_MANUAL = 'manual';
+    public const string TYPE_OAUTH = 'oauth';
+    public const string DEFAULT_MANUAL_TOKEN_LABEL = 'Manual token';
+    public const int LABEL_MAX_LENGTH = 255;
 
     /**
      * @var int
@@ -57,14 +49,20 @@ class AdministratorMcpToken
     /**
      * @var string
      */
-    #[ORM\Column(type: 'string', length: 32)]
+    #[ORM\Column(type: 'string', length: 16)]
+    protected $type;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 32, nullable: true)]
     protected $clientId;
 
     /**
      * @var string
      */
-    #[ORM\Column(type: 'string', length: self::CLIENT_NAME_MAX_LENGTH)]
-    protected $clientName;
+    #[ORM\Column(type: 'string', length: self::LABEL_MAX_LENGTH)]
+    protected $label;
 
     /**
      * @var \DateTimeImmutable
@@ -85,12 +83,6 @@ class AdministratorMcpToken
     protected $revokedAt;
 
     /**
-     * @var \DateTimeImmutable|null
-     */
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    protected $replacedAt;
-
-    /**
      * @var \DateTimeImmutable
      */
     #[ORM\Column(type: 'datetime_immutable')]
@@ -101,13 +93,21 @@ class AdministratorMcpToken
         $this->administrator = $administratorMcpTokenData->administrator;
         $this->publicTokenId = $administratorMcpTokenData->publicTokenId;
         $this->secretHash = $administratorMcpTokenData->secretHash;
+        $this->type = $administratorMcpTokenData->type;
         $this->clientId = $administratorMcpTokenData->clientId;
-        $this->clientName = $administratorMcpTokenData->clientName;
+        $this->label = $administratorMcpTokenData->label;
         $this->createdAt = $administratorMcpTokenData->createdAt;
         $this->lastUsedAt = $administratorMcpTokenData->lastUsedAt;
         $this->revokedAt = $administratorMcpTokenData->revokedAt;
-        $this->replacedAt = $administratorMcpTokenData->replacedAt;
         $this->expiresAt = $administratorMcpTokenData->expiresAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -137,6 +137,14 @@ class AdministratorMcpToken
     /**
      * @return string
      */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getClientId()
     {
         return $this->clientId;
@@ -145,9 +153,9 @@ class AdministratorMcpToken
     /**
      * @return string
      */
-    public function getClientName()
+    public function getLabel()
     {
-        return $this->clientName;
+        return $this->label;
     }
 
     /**
@@ -179,7 +187,7 @@ class AdministratorMcpToken
      */
     public function isActive()
     {
-        return $this->revokedAt === null && $this->replacedAt === null;
+        return $this->revokedAt === null;
     }
 
     public function isValidAt(DateTimeImmutable $dateTime): bool
@@ -207,11 +215,8 @@ class AdministratorMcpToken
         $this->revokedAt = $dateTime;
     }
 
-    /**
-     * @param \DateTimeImmutable $dateTime
-     */
-    public function replace($dateTime): void
+    public function isManual(): bool
     {
-        $this->replacedAt = $dateTime;
+        return $this->type === self::TYPE_MANUAL;
     }
 }

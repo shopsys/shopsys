@@ -24,7 +24,10 @@ class AdministratorMcpTokenLookup
             return null;
         }
 
-        $administratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByPublicTokenId($tokenParts['publicTokenId']);
+        $administratorMcpToken = $this->administratorMcpTokenRepository->findActiveByPublicTokenId(
+            $tokenParts['publicTokenId'],
+            $this->clock->now(),
+        );
 
         if ($administratorMcpToken === null) {
             return null;

@@ -135,8 +135,8 @@ class McpOAuthClientRegistrationFacade
     {
         $normalizedClientName = $clientName ?? self::DEFAULT_CLIENT_NAME;
 
-        if (mb_strlen($normalizedClientName) > AdministratorMcpToken::CLIENT_NAME_MAX_LENGTH) {
-            return mb_substr($normalizedClientName, 0, AdministratorMcpToken::CLIENT_NAME_MAX_LENGTH);
+        if (mb_strlen($normalizedClientName) > AdministratorMcpToken::LABEL_MAX_LENGTH) {
+            return mb_substr($normalizedClientName, 0, AdministratorMcpToken::LABEL_MAX_LENGTH);
         }
 
         return $normalizedClientName;

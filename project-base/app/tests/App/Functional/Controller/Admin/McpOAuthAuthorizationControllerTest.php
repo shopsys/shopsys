@@ -91,7 +91,7 @@ final class McpOAuthAuthorizationControllerTest extends TransactionFunctionalTes
 
         $this->assertNotNull($issuedToken);
         $this->assertSame($registration['client_id'], $issuedToken->getClientId());
-        $this->assertSame($registration['client_name'], $issuedToken->getClientName());
+        $this->assertSame($registration['client_name'], $issuedToken->getLabel());
     }
 
     public function testDenyOauthClientAuthorization(): void

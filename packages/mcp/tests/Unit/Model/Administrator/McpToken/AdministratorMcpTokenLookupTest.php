@@ -150,8 +150,9 @@ class AdministratorMcpTokenLookupTest extends TestCase
         $administratorMcpTokenData->administrator = $this->createStub(Administrator::class);
         $administratorMcpTokenData->publicTokenId = $publicTokenId;
         $administratorMcpTokenData->secretHash = $secretHash;
-        $administratorMcpTokenData->clientId = AdministratorMcpToken::MANUAL_CLIENT_ID;
-        $administratorMcpTokenData->clientName = AdministratorMcpToken::MANUAL_CLIENT_NAME;
+        $administratorMcpTokenData->type = AdministratorMcpToken::TYPE_MANUAL;
+        $administratorMcpTokenData->clientId = null;
+        $administratorMcpTokenData->label = AdministratorMcpToken::DEFAULT_MANUAL_TOKEN_LABEL;
         $administratorMcpTokenData->createdAt = new DateTimeImmutable(self::MOCKED_NOW);
         $administratorMcpTokenData->expiresAt = $administratorMcpTokenData->createdAt->modify($expiresAtModification);
 
@@ -188,8 +189,10 @@ class AdministratorMcpTokenLookupTest extends TestCase
                 parent::__construct($entityManager);
             }
 
-            public function findCurrentByPublicTokenId(string $publicTokenId): ?AdministratorMcpToken
-            {
+            public function findActiveByPublicTokenId(
+                string $publicTokenId,
+                DateTimeImmutable $dateTime,
+            ): ?AdministratorMcpToken {
                 return $this->administratorMcpTokensByPublicTokenId[$publicTokenId] ?? null;
             }
         };
