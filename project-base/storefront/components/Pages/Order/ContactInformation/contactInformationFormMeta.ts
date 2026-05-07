@@ -266,7 +266,7 @@ export const useContactInformationFormMeta = (): ContactInformationFormMetaType 
             newsletterSubscription: t('I want to subscribe to the newsletter'),
             note: t('Note'),
             isWithoutHeurekaAgreement: t(
-                'I do not agree to send satisfaction questionnaires within the Verified by Customers program',
+                'I do not want to receive any satisfaction questionnaire (Heureka, Zbozi, Google)',
             ),
         }),
     };

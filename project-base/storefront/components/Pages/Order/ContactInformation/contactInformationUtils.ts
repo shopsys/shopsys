@@ -7,6 +7,7 @@ import {
     TypeCreateOrderMutationVariables,
     useCreateOrderMutation,
 } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
 import { getGtmPaymentEvent } from 'gtm/factories/getGtmPaymentEvent';
@@ -33,7 +34,6 @@ import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
-import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 import { ContactInformationFormMetaType } from './contactInformationFormMeta';
 import {
     getDeliveryInfoFromFormValues,
@@ -188,7 +188,7 @@ const useHandleCreateOrderResult = (
                     orderConfirmationUrl,
                 )
                 .then(() => {
-                    handleEventsAfterOrderCreation(createdOrder.number);
+                    handleEventsAfterOrderCreation(createdOrder.number, formValues);
                 });
 
             return;
@@ -209,23 +209,26 @@ const useHandleEventsAfterOrderCreation = () => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const user = useCurrentCustomerData();
     const domainConfig = useDomainConfig();
-    const userContactInformation = useCurrentUserContactInformation();
     const { cart, payment, promoCodes } = useCurrentCart();
+    const [{ data: settingsData }] = useSettingsQuery();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
     const { canSeePrices } = useAuthorization();
 
-    const handleEventsAfterOrderCreation = (orderNumber: string) => {
+    const handleEventsAfterOrderCreation = (orderNumber: string, formValues: ContactInformation) => {
         if (cart && payment) {
+            const reviewConsents = settingsData?.settings?.heurekaEnabled
+                ? getGtmReviewConsents(!formValues.isWithoutHeurekaAgreement)
+                : undefined;
             const gtmCreateOrderEventOrderPart = getGtmCreateOrderEventOrderPart(
                 cart,
                 payment,
                 promoCodes,
                 orderNumber,
-                getGtmReviewConsents(),
+                reviewConsents,
                 domainConfig,
             );
-            const gtmCreateOrderEventUserPart = getGtmCreateOrderEventUserPart(user, userContactInformation);
+            const gtmCreateOrderEventUserPart = getGtmCreateOrderEventUserPart(user, formValues);
             const gtmPaymentEvent = getGtmPaymentEvent(orderNumber, payment.name, false, -1);
             const isPaymentWithPaymentGate = getIsPaymentWithPaymentGate(payment.type);
             const isPaymentSuccessful = isPaymentWithPaymentGate ? undefined : true;
