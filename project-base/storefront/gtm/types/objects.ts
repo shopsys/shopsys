@@ -120,6 +120,7 @@ export type GtmListedProductType = GtmProductInterface & {
 
 export type GtmCartItemType = GtmListedProductType & {
     quantity: number;
+    variant?: string;
 };
 
 export type GtmShippingInfoType = {
