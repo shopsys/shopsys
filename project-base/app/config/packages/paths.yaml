@@ -22,6 +22,7 @@ parameters:
     shopsys.locale_file_dir: '/web%shopsys.locale_file_url_prefix%'
     shopsys.locale_file_url_prefix: '/%shopsys.content_dir_name%/locales/'
     shopsys.log_stream: /tmp/log-pipe
+    shopsys.post_deploy_tasks_filepath: '%kernel.project_dir%/config/post_deploy_tasks.yaml'
     shopsys.product_files_dir: '/web%shopsys.product_files_url_prefix%'
     shopsys.product_files_url_prefix: '/%shopsys.content_dir_name%/frontend/products/'
     shopsys.resources_dir: '%kernel.project_dir%/src/Resources'

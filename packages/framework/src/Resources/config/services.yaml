@@ -13,13 +13,16 @@ services:
 
     Shopsys\FrameworkBundle\:
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-        resource: '../../**/*{CategoryAutomatedFilter,Calculation,Context,Dispatcher,Enum,Executor,Extractor,Facade,Factory,Formatter,Freezer,Generator,Handler,Helper,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
+        resource: '../../**/*{CategoryAutomatedFilter,Calculation,Context,Dispatcher,Enum,Executor,Extractor,Facade,Factory,Formatter,Freezer,Generator,Handler,Helper,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Task,Transformer,DataFetcher}.php'
 
     Shopsys\FrameworkBundle\Controller\:
         resource: '../../Controller/'
         tags: ['controller.service_arguments']
 
     _instanceof:
+        Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskInterface:
+            tags: ['shopsys.post_deploy.task']
+
         Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade:
             tags: ['shopsys.advanced_search_facade']
 
@@ -391,6 +394,17 @@ services:
             $packeteryConfig: "%packetery_config%"
 
     Shopsys\FrameworkBundle\Component\Packetery\PacketeryRenderer: ~
+
+    Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfig:
+        arguments:
+            -
+                - '%shopsys.framework.root_dir%/src/Resources/config/post_deploy_tasks.yaml'
+                - '%shopsys.post_deploy_tasks_filepath%'
+        factory: ['@Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfigLoader', loadFromYamlFiles]
+
+    Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfigLoader:
+        arguments:
+            $taskServiceLocator: !tagged_locator { tag: 'shopsys.post_deploy.task' }
 
     Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade:
         arguments:
