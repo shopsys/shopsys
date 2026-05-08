@@ -1,3 +1,4 @@
 arrange:
     - index.md
-    - browser-auth-flow.md
+    - mcp-server.md
+    - mcp-browser-auth-flow.md
