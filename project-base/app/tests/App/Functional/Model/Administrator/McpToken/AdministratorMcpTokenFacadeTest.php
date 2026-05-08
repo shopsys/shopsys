@@ -19,14 +19,12 @@ class AdministratorMcpTokenFacadeTest extends TransactionFunctionalTestCase
     public function testGenerateMultipleManualTokensAndRevokeThemIndividually(): void
     {
         $administrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
-        $initialActiveTokensCount = count($this->administratorMcpTokenFacade->findActiveTokensByAdministrator($administrator));
 
         $firstIssuedToken = $this->administratorMcpTokenFacade->issueManualTokenForAdministrator($administrator);
         $secondIssuedToken = $this->administratorMcpTokenFacade->issueManualTokenForAdministrator($administrator);
 
         $this->assertNotNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($firstIssuedToken->getTokenString()));
         $this->assertNotNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($secondIssuedToken->getTokenString()));
-        $this->assertCount($initialActiveTokensCount + 2, $this->administratorMcpTokenFacade->findActiveTokensByAdministrator($administrator));
 
         $firstToken = $this->administratorMcpTokenFacade->findValidTokenByTokenString($firstIssuedToken->getTokenString());
         $this->assertNotNull($firstToken);
@@ -36,7 +34,6 @@ class AdministratorMcpTokenFacadeTest extends TransactionFunctionalTestCase
 
         $this->assertNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($firstIssuedToken->getTokenString()));
         $this->assertNotNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($secondIssuedToken->getTokenString()));
-        $this->assertCount($initialActiveTokensCount + 1, $this->administratorMcpTokenFacade->findActiveTokensByAdministrator($administrator));
         $this->assertNull($this->administratorMcpTokenFacade->findActiveByIdAndAdministrator($administrator, $firstToken->getId()));
 
         $secondToken = $this->administratorMcpTokenFacade->findValidTokenByTokenString($secondIssuedToken->getTokenString());
@@ -45,14 +42,12 @@ class AdministratorMcpTokenFacadeTest extends TransactionFunctionalTestCase
 
         $this->administratorMcpTokenFacade->revokeToken($secondToken);
         $this->assertNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($secondIssuedToken->getTokenString()));
-        $this->assertCount($initialActiveTokensCount, $this->administratorMcpTokenFacade->findActiveTokensByAdministrator($administrator));
         $this->assertNull($this->administratorMcpTokenFacade->findActiveByIdAndAdministrator($administrator, $secondToken->getId()));
     }
 
     public function testGenerateTokenForOneClientDoesNotRevokeTokenForAnotherClient(): void
     {
         $administrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
-        $initialActiveTokensCount = count($this->administratorMcpTokenFacade->findActiveTokensByAdministrator($administrator));
         $firstClientIssuedToken = $this->administratorMcpTokenFacade->issueTokenForAdministratorAndClient(
             $administrator,
             'connected-client-id-1',
@@ -64,8 +59,6 @@ class AdministratorMcpTokenFacadeTest extends TransactionFunctionalTestCase
             'Connected client 2',
         );
 
-        $activeTokens = $this->administratorMcpTokenFacade->findActiveTokensByAdministrator($administrator);
-        $this->assertCount($initialActiveTokensCount + 2, $activeTokens);
         $this->assertNotNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($firstClientIssuedToken->getTokenString()));
         $this->assertNotNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($secondClientIssuedToken->getTokenString()));
     }
@@ -73,7 +66,6 @@ class AdministratorMcpTokenFacadeTest extends TransactionFunctionalTestCase
     public function testGenerateMultipleTokensForSameClientKeepsAllActive(): void
     {
         $administrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
-        $initialActiveTokensCount = count($this->administratorMcpTokenFacade->findActiveTokensByAdministrator($administrator));
         $clientId = 'connected-client-id';
         $clientName = 'Connected client';
 
@@ -90,6 +82,5 @@ class AdministratorMcpTokenFacadeTest extends TransactionFunctionalTestCase
 
         $this->assertNotNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($firstIssuedToken->getTokenString()));
         $this->assertNotNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($secondIssuedToken->getTokenString()));
-        $this->assertCount($initialActiveTokensCount + 2, $this->administratorMcpTokenFacade->findActiveTokensByAdministrator($administrator));
     }
 }

@@ -51,19 +51,11 @@ class AdministratorMcpTokenRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @return array<\Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken>
-     */
-    public function findActiveTokensByAdministrator(
-        Administrator $administrator,
-        DateTimeImmutable $dateTime,
-    ): array {
-        return $this->createActiveTokenQueryBuilder($dateTime)
-            ->andWhere('amt.administrator = :administrator')
-            ->setParameter('administrator', $administrator)
-            ->orderBy('amt.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
+    public function createTokensByAdministratorQueryBuilder(Administrator $administrator): QueryBuilder
+    {
+        return $this->getAdministratorMcpTokenEntityRepository()->createQueryBuilder('amt')
+            ->where('amt.administrator = :administrator')
+            ->setParameter('administrator', $administrator);
     }
 
     protected function createActiveTokenQueryBuilder(DateTimeImmutable $dateTime): QueryBuilder

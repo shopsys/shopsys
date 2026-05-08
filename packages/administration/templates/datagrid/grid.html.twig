@@ -58,7 +58,7 @@
                 </div>
                 <p class="empty-title">{{ gridView.renderBlock('grid_no_data') }}</p>
                 <p class="empty-subtitle text-secondary">
-                    {{ 'Try adjusting your search or filter to find what you’re looking for, or create a new one if needed.'|trans }}
+                    {{ gridView.renderBlock('grid_no_data_subtitle') }}
                 </p>
             </div>
         {% endif %}
@@ -67,6 +67,10 @@
 
 {% block grid_no_data %}
     {{ 'No records found.'|trans }}
+{% endblock %}
+
+{% block grid_no_data_subtitle %}
+    {{ 'Try adjusting your search or filter to find what you’re looking for, or create a new one if needed.'|trans }}
 {% endblock %}
 
 {% block grid_value_cell %}

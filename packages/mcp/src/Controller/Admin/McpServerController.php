@@ -7,7 +7,9 @@ namespace Shopsys\McpBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
+use Shopsys\McpBundle\Model\Administrator\McpToken\Grid\McpTokenGridFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -20,19 +22,21 @@ class McpServerController extends AdminBaseController
 
     public function __construct(
         protected readonly AdministratorMcpTokenFacade $administratorMcpTokenFacade,
+        protected readonly McpTokenGridFactory $mcpTokenGridFactory,
+        protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
     #[Route(path: '/superadmin/mcp-server/', name: 'admin_superadmin_mcp_token', methods: ['GET'])]
-    public function indexAction(): Response
+    public function listAction(): Response
     {
         $administrator = $this->getCurrentAdministrator();
-        $activeTokens = $this->administratorMcpTokenFacade->findActiveTokensByAdministrator($administrator);
+        $grid = $this->mcpTokenGridFactory->create($administrator);
 
         return $this->render('@ShopsysMcp/content/superadmin/mcpServer.html.twig', [
-            'activeTokens' => $activeTokens,
             'bearerTokenEnvVarName' => self::BEARER_TOKEN_ENV_VAR,
+            'gridView' => $grid->createView(),
             'mcpServerName' => self::MCP_SERVER_NAME,
             'mcpEndpointUrl' => $this->urlGenerator->generate('_mcp_endpoint', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ]);

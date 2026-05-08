@@ -5,82 +5,14 @@
 {% block pre_title %}{{ 'Settings'|trans }}{% endblock %}
 {% block h1 %}{{ 'MCP server'|trans }}{% endblock %}
 
+{% block btn %}
+    <a href="{{ protectedUrl('admin_superadmin_mcp_manual_token_generate') }}" class="btn btn-primary">
+        {{ 'Generate manual token'|trans }}
+    </a>
+{% endblock %}
+
 {% block main_content %}
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ 'MCP tokens'|trans }}</h3>
-            <div class="card-actions">
-                <a href="{{ protectedUrl('admin_superadmin_mcp_manual_token_generate') }}" class="btn btn-primary">
-                    {{ 'Generate manual token'|trans }}
-                </a>
-            </div>
-        </div>
-        <div class="card-body">
-            {% if activeTokens is empty %}
-                <p class="mb-0">{{ 'No active MCP token is currently configured for your administrator account.'|trans }}</p>
-            {% else %}
-                <div class="table-responsive">
-                    <table class="table table-vcenter">
-                        <thead>
-                            <tr>
-                                <th>{{ 'Type'|trans }}</th>
-                                <th>{{ 'Label'|trans }}</th>
-                                <th>{{ 'Created at'|trans }}</th>
-                                <th>{{ 'Last used at'|trans }}</th>
-                                <th>{{ 'Expires at'|trans }}</th>
-                                <th class="text-end">{{ 'Actions'|trans }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for activeToken in activeTokens %}
-                                <tr>
-                                    <td>
-                                        {% if activeToken.manual %}
-                                            {{ 'Manual'|trans }}
-                                        {% else %}
-                                            {{ 'OAuth client'|trans }}
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {{ activeToken.label }}
-                                        <div class="text-secondary small">
-                                            {% if activeToken.manual %}
-                                                {{ 'Generated manually'|trans }}
-                                            {% else %}
-                                                {{ activeToken.clientId }}
-                                            {% endif %}
-                                        </div>
-                                    </td>
-                                    <td>{{ activeToken.createdAt|formatDateTime }}</td>
-                                    <td>
-                                        {% if activeToken.lastUsedAt is null %}
-                                            {{ 'Never used'|trans }}
-                                        {% else %}
-                                            {{ activeToken.lastUsedAt|formatDateTime }}
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {{ activeToken.expiresAt|formatDateTime }}
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="{{ protectedUrl('admin_superadmin_mcp_token_revoke', {id: activeToken.id}) }}"
-                                           class="btn btn-outline-danger"
-                                           data-confirm-window
-                                           data-confirm-message="{{ 'Do you really want to revoke MCP access for "%tokenLabel%"?'|trans({
-                                               '%tokenLabel%': activeToken.label,
-                                           }) }}"
-                                        >
-                                            {{ 'Revoke access'|trans }}
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% endif %}
-        </div>
-    </div>
+    {{ gridView.render() }}
 
     <details class="card">
         <summary class="card-header cursor-pointer details-card-summary">

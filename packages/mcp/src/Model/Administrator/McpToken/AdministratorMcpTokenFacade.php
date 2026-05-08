@@ -46,17 +46,6 @@ class AdministratorMcpTokenFacade
         );
     }
 
-    /**
-     * @return array<\Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken>
-     */
-    public function findActiveTokensByAdministrator(Administrator $administrator): array
-    {
-        return $this->administratorMcpTokenRepository->findActiveTokensByAdministrator(
-            $administrator,
-            $this->clock->now(),
-        );
-    }
-
     public function findValidTokenByTokenString(string $tokenString): ?AdministratorMcpToken
     {
         return $this->administratorMcpTokenLookup->findValidTokenByTokenString($tokenString);
