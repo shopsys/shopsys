@@ -14,6 +14,7 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 #  autoconf - Required for compiling extensions
 #  freetype-dev - Development files for FreeType (font rendering) needed for gd extension
 #  g++ - Compiler for gd extension
+#  git - Required by pie (PHP Installer for Extensions) when fetching extension sources and by composer-patches for applying patches during composer install
 #  icu-dev - Development files for ICU (International Components for Unicode) needed for intl extension
 #  jpeg-dev - Development files for JPEG (image format) needed for gd extension
 #  libpng-dev - Development files for PNG (image format) needed for gd extension
@@ -21,6 +22,7 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 #  libzip-dev - Development files for libzip needed for zip extension
 #  make - Required for compiling extensions
 #  openssl-dev - Development files for OpenSSL
+#  protobuf-c-dev - Development files for protobuf-c needed for pg_query extension (flow-php/pg-query-ext) used in MCP for parsing SQL queries
 #  rabbitmq-c-dev - Development files for RabbitMQ
 #  bcmath - Arbitrary precision mathematics
 #  gd - Image processing for gd extension
@@ -42,14 +44,16 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 #  nano - Text editor for editing files
 #  openssl - Secure communication for OpenSSL
 #  postgresql-client - PostgreSQL client for connecting to databases
+#  protobuf-c - protobuf-c runtime library needed for pg_query extension (flow-php/pg-query-ext) used in MCP for parsing SQL queries
 #  rabbitmq-c - RabbitMQ client for connecting to message broker
 #  vim - Text editor for editing files
 
-RUN apk add --no-cache --virtual .build-deps \
+RUN apk add --no-cache \
+    git && \
+    apk add --no-cache --virtual .build-deps \
     autoconf \
     freetype-dev \
     g++ \
-    git \
     icu-dev \
     jpeg-dev \
     libpng-dev \
@@ -65,7 +69,6 @@ RUN apk add --no-cache --virtual .build-deps \
     docker-php-ext-enable redis && \
     pecl install amqp && \
     docker-php-ext-enable amqp && \
-    pie install flow-php/pg-query-ext && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install \
         bcmath \
@@ -84,7 +87,6 @@ RUN apk add --no-cache --virtual .build-deps \
         ca-certificates \
         coreutils \
         freetype \
-        git \
         htop \
         icu-data-full \
         icu-libs \
