@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Model\Administrator\McpToken;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
@@ -23,13 +24,17 @@ class AdministratorMcpTokenFacade
     ) {
     }
 
-    public function issueManualTokenForAdministrator(Administrator $administrator): AdministratorMcpIssuedToken
-    {
+    public function issueManualTokenForAdministrator(
+        Administrator $administrator,
+        string $label = AdministratorMcpToken::DEFAULT_MANUAL_TOKEN_LABEL,
+        ?DateTimeImmutable $expiresAt = null,
+    ): AdministratorMcpIssuedToken {
         return $this->issueToken(
             $administrator,
             AdministratorMcpToken::TYPE_MANUAL,
             null,
-            AdministratorMcpToken::DEFAULT_MANUAL_TOKEN_LABEL,
+            $label,
+            $expiresAt ?? $this->getDefaultTokenExpiresAt(),
         );
     }
 
@@ -43,7 +48,13 @@ class AdministratorMcpTokenFacade
             AdministratorMcpToken::TYPE_OAUTH,
             $clientId,
             $label,
+            $this->getDefaultTokenExpiresAt(),
         );
+    }
+
+    protected function getDefaultTokenExpiresAt(): DateTimeImmutable
+    {
+        return $this->clock->now()->modify(sprintf('+%d seconds', $this->accessTokenTtlSeconds));
     }
 
     public function findValidTokenByTokenString(string $tokenString): ?AdministratorMcpToken
@@ -77,9 +88,9 @@ class AdministratorMcpTokenFacade
         string $type,
         ?string $clientId,
         string $label,
+        DateTimeImmutable $expiresAt,
     ): AdministratorMcpIssuedToken {
         $now = $this->clock->now();
-        $expiresAt = $now->modify(sprintf('+%d seconds', $this->accessTokenTtlSeconds));
         $issuedToken = $this->administratorMcpTokenGenerator->generateIssuedToken($expiresAt);
 
         $administratorMcpTokenData = $this->administratorMcpTokenDataFactory->create();

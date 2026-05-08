@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
@@ -21,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +38,6 @@ class MailController extends AdminBaseController
         protected readonly MailTemplateConfiguration $mailTemplateConfiguration,
         protected readonly MailTemplateDataFactory $mailTemplateDataFactory,
         protected readonly MailTemplateSenderFacade $mailTemplateSenderFacade,
-        protected readonly ErrorExtractor $errorExtractor,
     ) {
     }
 
@@ -206,24 +203,16 @@ class MailController extends AdminBaseController
                 $this->addErrorFlash(t('Error occurred while sending email.'));
                 $this->addErrorFlash($exception->getMessage());
 
-                return $this->createInvalidResponse($form);
+                return $this->createInvalidJsonResponse($form);
             }
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            return $this->createInvalidResponse($form);
+            return $this->createInvalidJsonResponse($form);
         }
 
         return $this->render('@ShopsysAdministration/content/mail/mailTemplateSend.html.twig', [
             'form' => $form->createView(),
-        ]);
-    }
-
-    protected function createInvalidResponse(FormInterface $form): JsonResponse
-    {
-        return new JsonResponse([
-            'result' => 'invalid',
-            'errors' => $this->errorExtractor->getAllErrorsAsArray($form, $this->getErrorMessages()),
         ]);
     }
 }

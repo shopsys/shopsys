@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Administrator\McpToken;
 
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use App\Model\Administrator\Administrator;
+use DateTimeImmutable;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -82,5 +83,24 @@ class AdministratorMcpTokenFacadeTest extends TransactionFunctionalTestCase
 
         $this->assertNotNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($firstIssuedToken->getTokenString()));
         $this->assertNotNull($this->administratorMcpTokenFacade->findValidTokenByTokenString($secondIssuedToken->getTokenString()));
+    }
+
+    public function testGenerateManualTokenWithCustomLabelAndExpiration(): void
+    {
+        $administrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
+        $expiresAt = new DateTimeImmutable('+14 days');
+
+        $issuedToken = $this->administratorMcpTokenFacade->issueManualTokenForAdministrator(
+            $administrator,
+            'Codex automation',
+            $expiresAt,
+        );
+
+        $token = $this->administratorMcpTokenFacade->findValidTokenByTokenString($issuedToken->getTokenString());
+
+        $this->assertNotNull($token);
+        $this->assertSame('Codex automation', $token->getLabel());
+        $this->assertSame($expiresAt->getTimestamp(), $token->getExpiresAt()->getTimestamp());
+        $this->assertTrue($token->isManual());
     }
 }

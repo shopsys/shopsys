@@ -5,7 +5,7 @@ services:
         public: false
 
     Shopsys\McpBundle\:
-        resource: '../../**/*{Authenticator,DataFactory,Executor,Facade,Factory,Generator,Hasher,Loader,Lookup,Normalizer,Parser,Provider,Repository,Resolver,Subscriber,Tool,Validator}.php'
+        resource: '../../**/*{Authenticator,DataFactory,Enum,Executor,Facade,Factory,Generator,Hasher,Loader,Lookup,Normalizer,Parser,Provider,Repository,Resolver,Subscriber,Tool,Validator}.php'
 
     Shopsys\McpBundle\Command\:
         resource: '../../Command/'

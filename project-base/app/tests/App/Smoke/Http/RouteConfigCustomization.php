@@ -27,7 +27,6 @@ class RouteConfigCustomization
 {
     protected const DEFAULT_ID_VALUE = 1;
     protected const array SUPERADMIN_MCP_REDIRECTING_ACTION_ROUTE_NAMES = [
-        'admin_superadmin_mcp_manual_token_generate',
         'admin_superadmin_mcp_token_revoke',
     ];
 

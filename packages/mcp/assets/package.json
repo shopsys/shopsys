@@ -1,0 +1,8 @@
+{
+    "name": "@shopsys/mcp",
+    "description": "Shopsys Platform MCP assets files",
+    "license": "proprietary",
+    "private": true,
+    "author": "Shopsys",
+    "repository": "https://github.com/shopsys/shopsys"
+}
