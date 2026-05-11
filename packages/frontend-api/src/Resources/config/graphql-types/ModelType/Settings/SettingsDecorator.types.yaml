@@ -52,3 +52,7 @@ SettingsDecorator:
                 type: "[PhonePrefix!]!"
                 resolve: "@=query('phonePrefixesQuery')"
                 description: "Returns available phone prefixes for current domain"
+            defaultPricingGroupId:
+                type: "Int!"
+                resolve: "@=query('defaultPricingGroupIdQuery')"
+                description: "ID of the default pricing group for the current domain"

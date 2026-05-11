@@ -13,6 +13,7 @@ class FrontendApiUser implements UserInterface
     public const CLAIM_FULL_NAME = 'fullName';
     public const CLAIM_EMAIL = 'email';
     public const CLAIM_ROLES = 'roles';
+    public const CLAIM_PRICING_GROUP_ID = 'pricingGroupId';
     public const CLAIM_SECRET_CHAIN = 'secretChain';
     public const CLAIM_DEVICE_ID = 'deviceId';
     public const CLAIM_ADMINISTRATOR_UUID = 'administratorUuid';

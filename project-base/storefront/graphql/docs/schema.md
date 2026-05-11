@@ -9642,6 +9642,15 @@ Content Security Policy header value
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="settings.defaultpricinggroupid">defaultPricingGroupId</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+ID of the default pricing group for the current domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="settings.displaytimezone">displayTimezone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>

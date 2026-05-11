@@ -2814,6 +2814,8 @@ type Settings {
   contactFormMainText: String
   "Content Security Policy header value"
   cspHeader: String!
+  "ID of the default pricing group for the current domain"
+  defaultPricingGroupId: Int!
   "Timezone that is used for displaying time"
   displayTimezone: String!
   "Returns true if Heureka is available for the current domain"
