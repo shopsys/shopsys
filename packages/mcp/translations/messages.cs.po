@@ -2,161 +2,160 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sk\n"
+"Language: cs\n"
 
 msgid "Actions"
-msgstr "Akcie"
+msgstr "Akce"
 
 msgid "Active"
-msgstr "Aktívny"
+msgstr "Aktivní"
 
 msgid "Add the server once, then authenticate it in Claude Code when prompted."
-msgstr "Pridajte server raz a potom ho v Claude Code po vyzvaní overte."
+msgstr "Přidejte server jednou a poté jej v Claude Code na vyzvání ověřte."
 
 msgid "Allow access"
-msgstr "Povoliť prístup"
+msgstr "Povolit přístup"
 
 msgid "Approve MCP access"
-msgstr "Schváliť prístup MCP"
+msgstr "Schválit přístup MCP"
 
 msgid "Authentication steps"
-msgstr "Kroky overenia"
+msgstr "Kroky ověření"
 
 msgid "Authorization header"
-msgstr "Autorizačná hlavička"
+msgstr "Autorizační hlavička"
 
 msgid "Authorize MCP client"
-msgstr "Autorizovať MCP klienta"
+msgstr "Autorizovat MCP klienta"
 
 msgid "Authorized MCP clients"
 msgstr "Autorizovaní MCP klienti"
 
 msgid "Claude Code client setup"
-msgstr "Nastavenie klienta Claude Code"
+msgstr "Nastavení klienta Claude Code"
 
 msgid "Client"
 msgstr "Klient"
 
 msgid "Complete the browser login and approve MCP access in Shopsys administration."
-msgstr "Dokončite prihlásenie v prehliadači a v administrácii Shopsysu schváľte prístup MCP."
+msgstr "Dokončete přihlášení v prohlížeči a v administraci Shopsysu schvalte přístup MCP."
 
 msgid "Copy command"
-msgstr "Kopírovať príkaz"
+msgstr "Zkopírovat příkaz"
 
 msgid "Copy the new MCP Bearer token now. It will not be shown again:"
-msgstr "Skopírujte si teraz nový Bearer token pre MCP. Už sa znovu nezobrazí:"
+msgstr "Zkopírujte si nyní nový Bearer token pro MCP. Již se znovu nezobrazí:"
 
 msgid "Copy token"
-msgstr "Kopírovať token"
+msgstr "Zkopírovat token"
 
 msgid "Created at"
-msgstr "Vytvorené"
+msgstr "Vytvořeno dne"
 
 msgid "Deny access"
-msgstr "Odmietnuť prístup"
+msgstr "Odepřít přístup"
 
 msgid "Do you really want to revoke MCP access for \"%clientLabel%\"?"
-msgstr "Naozaj chcete odvolať prístup MCP pre \"%clientLabel%\"?"
+msgstr "Opravdu chcete odvolat přístup MCP pro \"%clientLabel%\"?"
 
 msgid "Do you really want to revoke the active MCP token?"
-msgstr "Naozaj chcete odvolať aktívny MCP token?"
+msgstr "Opravdu chcete odvolat aktivní MCP token?"
 
 msgid "Endpoint URL"
 msgstr "URL endpointu"
 
 msgid "Environment variables exported this way are available only in the current shell session unless you add them to your shell profile."
-msgstr "Takto exportované premenné prostredia sú dostupné iba v aktuálnej shellovej relácii, pokiaľ ich nepridáte do profilu shellu."
+msgstr "Takto exportované proměnné prostředí jsou dostupné pouze v aktuální shellové relaci, pokud je nepřidáte do profilu shellu."
 
 msgid "Expires at"
-msgstr "Vyprší"
+msgstr "Vyprší dne"
 
 msgid "Export the manual token in your current shell, then add the MCP server once."
-msgstr "Exportujte manuálny token v aktuálnom shelli a potom raz pridajte MCP server."
+msgstr "Exportujte manuální token v aktuálním shellu a poté jednou přidejte MCP server."
 
 msgid "Generate MCP token"
-msgstr "Vygenerovať MCP token"
+msgstr "Vygenerovat MCP token"
 
 msgid "Generated tokens are shown only once. Regenerating a token revokes the previous token immediately."
-msgstr "Vygenerované tokeny sa zobrazia iba raz. Opätovné vygenerovanie tokenu okamžite zneplatní predchádzajúci token."
+msgstr "Vygenerované tokeny se zobrazují pouze jednou. Opětovné vygenerování tokenu okamžitě zneplatní předchozí token."
 
 msgid "Generating a new MCP token revokes the previous one immediately. Do you want to continue?"
-msgstr "Vygenerovaním nového MCP tokenu sa okamžite zneplatní ten predchádzajúci. Chcete pokračovať?"
+msgstr "Vygenerováním nového MCP tokenu se okamžitě zneplatní ten předchozí. Chcete pokračovat?"
 
 msgid "Last used at"
-msgstr "Naposledy použité"
+msgstr "Naposledy použito"
 
 msgid "MCP server"
 msgstr "MCP server"
 
 msgid "MCP session revoked"
-msgstr "MCP relácia bola odvolaná"
+msgstr "MCP relace byla odvolána"
 
 msgid "MCP token revoked"
-msgstr "MCP token bol odvolaný"
+msgstr "MCP token byl odvolán"
 
 msgid "Manual token"
-msgstr "Manuálny token"
+msgstr "Manuální token"
 
 msgid "Never used"
-msgstr "Nikdy nepoužité"
+msgstr "Nikdy nepoužito"
 
 msgid "No active manual MCP token is configured for your administrator account."
-msgstr "Pre váš administrátorský účet nie je nakonfigurovaný žiadny aktívny manuálny MCP token."
+msgstr "Pro váš administrátorský účet není nakonfigurován žádný aktivní manuální MCP token."
 
 msgid "No authorized MCP client is currently active for your administrator account."
-msgstr "Pre váš administrátorský účet nie je momentálne aktívny žiadny autorizovaný MCP klient."
+msgstr "Pro váš administrátorský účet není aktuálně aktivní žádný autorizovaný MCP klient."
 
 msgid "One-time setup command"
-msgstr "Jednorazový inštalačný príkaz"
+msgstr "Jednorázový instalační příkaz"
 
 msgid "Other MCP clients"
 msgstr "Ostatní MCP klienti"
 
 msgid "Per-shell token command"
-msgstr "Príkaz pre token v shelli"
+msgstr "Příkaz pro token v shellu"
 
 msgid "Please check the correctness of all data filled."
-msgstr "Prosím, skontrolujte správnosť všetkých vyplnených údajov."
+msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 
 msgid "Regenerate MCP token"
-msgstr "Znovu vygenerovať MCP token"
+msgstr "Znovu vygenerovat MCP token"
 
 msgid "Revoke MCP token"
-msgstr "Odvolať MCP token"
+msgstr "Odvolat MCP token"
 
 msgid "Revoke access"
-msgstr "Odvolať prístup"
+msgstr "Odvolat přístup"
 
 msgid "Run the command above once in the shell where you use Claude Code."
-msgstr "Vyššie uvedený príkaz spustite raz v shelli, v ktorom používate Claude Code."
+msgstr "Výše uvedený příkaz spusťte jednou v shellu, kde používáte Claude Code."
 
 msgid "Select Authenticate for the Shopsys MCP server."
-msgstr "Pri Shopsys MCP serveri zvoľte Authenticate."
+msgstr "U Shopsys MCP serveru zvolte Authenticate."
 
 msgid "Settings"
-msgstr "Nastavenia"
+msgstr "Nastavení"
 
 msgid "Start Claude Code and run /mcp."
-msgstr "Spustite Claude Code a zadajte /mcp."
+msgstr "Spusťte Claude Code a zadejte /mcp."
 
 msgid "Status"
 msgstr "Stav"
 
 msgid "The selected MCP session cannot be revoked."
-msgstr "Vybranú MCP reláciu nie je možné odvolať."
+msgstr "Vybranou MCP relaci nelze odvolat."
 
 msgid "There is no active MCP session to revoke."
-msgstr "Neexistuje žiadna aktívna MCP relácia, ktorú by bolo možné odvolať."
+msgstr "Neexistuje žádná aktivní MCP relace, kterou by bylo možné odvolat."
 
 msgid "There is no active MCP token to revoke."
-msgstr "Neexistuje žiadny aktívny MCP token, ktorý by bolo možné odvolať."
+msgstr "Neexistuje žádný aktivní MCP token, který by bylo možné odvolat."
 
 msgid "This client is requesting access to the Shopsys MCP server with your administrator account."
-msgstr "Tento klient požaduje prístup k Shopsys MCP serveru pod vaším administrátorským účtom."
+msgstr "Tento klient požaduje přístup k Shopsys MCP serveru pod vaším administrátorským účtem."
 
 msgid "Use a manual token for clients such as Codex CLI."
-msgstr "Pre klientov ako Codex CLI použite manuálny token."
+msgstr "Pro klienty jako je Codex CLI použijte manuální token."
 
 msgid "View Codex CLI instructions"
-msgstr "Zobraziť pokyny pre Codex CLI"
-
+msgstr "Zobrazit pokyny pro Codex CLI"

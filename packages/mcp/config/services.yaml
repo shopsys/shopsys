@@ -5,26 +5,18 @@ services:
         public: false
 
     Shopsys\McpBundle\:
-        resource: '../../**/*{Authenticator,DataFactory,Enum,Executor,Facade,Factory,Generator,Hasher,Loader,Lookup,Normalizer,Parser,Provider,Repository,Resolver,Subscriber,Tool,Validator}.php'
+        resource: '../src/**/*{Authenticator,DataFactory,Enum,Executor,Facade,Factory,Generator,Hasher,Loader,Lookup,Normalizer,Parser,Provider,Repository,Resolver,Subscriber,Tool,Validator}.php'
 
     Shopsys\McpBundle\Command\:
-        resource: '../../Command/'
+        resource: '../src/Command/'
 
     Shopsys\McpBundle\Component\Database\Middleware\McpSessionSettingsMiddleware:
-        arguments:
-            $statementTimeoutMilliseconds: '%shopsys_mcp.query.statement_timeout_ms%'
-            $lockTimeoutMilliseconds: '%shopsys_mcp.query.lock_timeout_ms%'
         tags:
             - { name: doctrine.middleware, connection: mcp }
 
     Shopsys\McpBundle\Component\Database\Query\SqlExecutor:
         arguments:
             $mcpConnection: '@doctrine.dbal.mcp_connection'
-            $maxReturnedRows: '%shopsys_mcp.query.max_returned_rows%'
-
-    Shopsys\McpBundle\Component\Database\Query\SqlQueryValidator:
-        arguments:
-            $maxReturnedRows: '%shopsys_mcp.query.max_returned_rows%'
 
     Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider:
         arguments:
@@ -55,7 +47,7 @@ services:
             $logger: '@monolog.logger.mcp'
 
     Shopsys\McpBundle\Controller\:
-        resource: '../../Controller/'
+        resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
     Shopsys\McpBundle\EventSubscriber\McpRequestRateLimitSubscriber:
@@ -65,11 +57,7 @@ services:
             $runtimeRateLimiter: '@limiter.mcp_runtime'
 
     Shopsys\McpBundle\Form\:
-        resource: '../../Form/'
-
-    Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade:
-        arguments:
-            $accessTokenTtlSeconds: '%shopsys_mcp.authorization.access_token_ttl_seconds%'
+        resource: '../src/Form/'
 
     Shopsys\McpBundle\Model\OAuth\McpOAuthAuthorizationCodeFacade:
         arguments:

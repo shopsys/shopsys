@@ -9,5 +9,5 @@ _mcp_endpoint:
     path: /_mcp
 
 shopsys_mcp_oauth:
-    resource: "@ShopsysMcpBundle/Controller/OAuth"
+    resource: "@ShopsysMcpBundle/src/Controller/OAuth"
     type: attribute

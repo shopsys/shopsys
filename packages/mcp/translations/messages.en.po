@@ -159,4 +159,3 @@ msgstr ""
 
 msgid "View Codex CLI instructions"
 msgstr ""
-
