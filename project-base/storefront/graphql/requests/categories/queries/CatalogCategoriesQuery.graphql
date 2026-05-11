@@ -1,0 +1,17 @@
+query CatalogCategoriesQuery {
+    categories {
+        __typename
+        uuid
+        name
+        slug
+        mainImage {
+            ...ImageFragment
+        }
+        children {
+            __typename
+            uuid
+            name
+            slug
+        }
+    }
+}
