@@ -101,16 +101,29 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 }
 ```
 
-### `configureForm(FormBuilderInterface $builder, ?object $entity = null): void`
+### `configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void`
 
 Configure the form for create and edit pages. The `$entity` parameter is `null` for create action and contains the entity being edited for edit action.
 
-You can define form fields inline:
+The `CrudFormConfigurator` provides two mutually exclusive approaches — you must pick one:
+
+**Use an existing FormType class:**
 
 ```php
-protected function configureForm(FormBuilderInterface $builder, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
 {
-    $builder
+    $formConfigurator->useFormType(BrandFormType::class, [
+        'brand' => $entity,
+    ]);
+}
+```
+
+**Or build the form inline using the builder:**
+
+```php
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+{
+    $formConfigurator->useBuilder()
         ->add('name', TextType::class, [
             'label' => t('Name'),
             'required' => true,
@@ -122,16 +135,9 @@ protected function configureForm(FormBuilderInterface $builder, ?object $entity 
 }
 ```
 
-Or use an existing FormType:
+!!! warning "Mutually exclusive modes"
 
-```php
-protected function configureForm(FormBuilderInterface $builder, ?object $entity = null): void
-{
-    $builder->add('brand', BrandFormType::class, [
-        'brand' => $entity,
-    ]);
-}
-```
+    Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
 
 ## CRUD Config
 

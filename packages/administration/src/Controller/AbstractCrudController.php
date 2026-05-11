@@ -14,8 +14,7 @@ use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudDeleteHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
-use Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface;
-use Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
@@ -25,7 +24,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +47,9 @@ abstract class AbstractCrudController extends AdminBaseController
 
     #[Required]
     public EventDispatcherInterface $eventDispatcher;
+
+    #[Required]
+    public FormFactoryInterface $formFactory;
 
     public function setDefinition(Definition $definition): void
     {
@@ -73,7 +75,7 @@ abstract class AbstractCrudController extends AdminBaseController
     /**
      * @param object|null $entity Null for create action, the existing entity for edit action
      */
-    protected function configureForm(FormBuilderInterface $builder, ?object $entity = null): void
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
     {
     }
 
@@ -113,11 +115,11 @@ abstract class AbstractCrudController extends AdminBaseController
         $entity = $handler->getById($id);
         $data = $handler->createDataFromEntity($entity);
 
-        $builder = $this->createFormBuilder($data);
-        $this->configureForm($builder, $entity);
-        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureForm($builder, $entity));
+        $formConfigurator = new CrudFormConfigurator($this->formFactory, $data);
+        $this->configureForm($formConfigurator, $entity);
+        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureForm($formConfigurator, $entity));
 
-        $form = $builder->getForm();
+        $form = $formConfigurator->buildForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -182,11 +184,11 @@ abstract class AbstractCrudController extends AdminBaseController
         $handler = $this->definition->getHandlerForAction(ActionType::CREATE);
         $data = $handler->createData();
 
-        $builder = $this->createFormBuilder($data);
-        $this->configureForm($builder, null);
-        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureForm($builder, null));
+        $formConfigurator = new CrudFormConfigurator($this->formFactory, $data);
+        $this->configureForm($formConfigurator, null);
+        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureForm($formConfigurator, null));
 
-        $form = $builder->getForm();
+        $form = $formConfigurator->buildForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

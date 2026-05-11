@@ -222,15 +222,30 @@ Read more about implementing `Presentable` interface in the [Entity Naming](../r
 
 ## 4. Configure Form
 
-To display forms on create and edit pages, override the `configureForm()` method in your CRUD controller. The method receives a Symfony `FormBuilderInterface` and the entity being edited (`null` for create).
+To display forms on create and edit pages, override the `configureForm()` method in your CRUD controller. The method receives a `CrudFormConfigurator` and the entity being edited (`null` for create).
+
+You can use an existing FormType class:
 
 ```php
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 
-protected function configureForm(FormBuilderInterface $builder, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
 {
-    $builder
+    $formConfigurator->useFormType(OrderFormType::class, [
+        'order' => $entity,
+    ]);
+}
+```
+
+Or build the form inline using the builder:
+
+```php
+use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+{
+    $formConfigurator->useBuilder()
         ->add('name', TextType::class, [
             'label' => t('Name'),
             'required' => true,
@@ -238,15 +253,4 @@ protected function configureForm(FormBuilderInterface $builder, ?object $entity 
 }
 ```
 
-You can also use an existing FormType class:
-
-```php
-protected function configureForm(FormBuilderInterface $builder, ?object $entity = null): void
-{
-    $builder->add('order', OrderFormType::class, [
-        'order' => $entity,
-    ]);
-}
-```
-
-See [configureForm reference](../reference/crud-controller.md#configureformformbuilderinterface-builder-object-entity--null-void) for more details.
+See [configureForm reference](../reference/crud-controller.md#configureformcrudformconfigurator-formconfigurator-object-entity--null-void) for more details.

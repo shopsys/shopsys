@@ -54,6 +54,30 @@ public function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
+### Extending Forms
+
+Extensions can add fields to forms using the `configureForm()` method. This works **only when the original controller uses the builder mode** (`useBuilder()`). When the controller uses `useFormType()`, the form is fully defined by the FormType class and extensions cannot add fields via the builder.
+
+```php
+// OrderControllerExtension.php
+
+use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+public function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+{
+    $formConfigurator->useBuilder()
+        ->add('internalNote', TextareaType::class, [
+            'label' => t('Internal note'),
+            'required' => false,
+        ]);
+}
+```
+
+!!! warning
+
+    Calling `useBuilder()` in an extension when the controller used `useFormType()` will throw `CrudFormAlreadyConfiguredException`. If you need to extend a form defined via FormType, use [Symfony's form extension mechanism](https://symfony.com/doc/current/form/create_form_type_extension.html) instead.
+
 ### Using Hooks
 
 Extensions can implement hook interfaces to add custom logic before, after, or on error during CRUD operations.
