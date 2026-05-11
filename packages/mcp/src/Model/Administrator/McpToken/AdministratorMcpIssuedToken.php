@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Model\Administrator\McpToken;
 
 use DateTimeImmutable;
+use Shopsys\McpBundle\Component\Security\McpBearerToken;
 
 class AdministratorMcpIssuedToken
 {
@@ -17,6 +18,6 @@ class AdministratorMcpIssuedToken
 
     public function getTokenString(): string
     {
-        return $this->publicTokenId . '.' . $this->secret;
+        return McpBearerToken::createTokenString($this->publicTokenId, $this->secret);
     }
 }
