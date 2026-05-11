@@ -3,7 +3,7 @@ import './AdministratorForm';
 import './AdvancedSearch';
 import './AjaxConfirm';
 import './Article';
-import './CategoryTreeForm';
+import './TreeSelectionForm';
 import './CategoryTreeSorting';
 import './CKEditorLinkVariableProtocol';
 import './CKEditorPreview';

@@ -1,0 +1,85 @@
+{% macro treeSelectionItem(loadChildrenUrl, isExpandable, isVisible, checkboxId, checkboxName, value, label, isChecked, childrenHtml = null) %}
+    <li class="tree-item {% if not isVisible %}text-secondary{% endif %} js-tree-selection-form-item"
+        data-load-url="{{ loadChildrenUrl }}"
+        data-expandable="{{ isExpandable }}"
+    >
+        <div class="tree-item-content">
+            <div class="tree-item-label">
+                <div class="d-flex gap-2 align-items-baseline">
+                    <div class="w-3 h-3 flex-shrink-0">
+                        <div class="js-tree-selection-form-item-icon"></div>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            type="checkbox"
+                            id="{{ checkboxId }}"
+                            name="{{ checkboxName }}"
+                            value="{{ value }}"
+                            class="js-tree-selection-form-item-checkbox form-check-input"
+                            {% if isChecked %}checked="checked"{% endif %}
+                        >
+                        <label for="{{ checkboxId }}" class="form-check-label">
+                            {{ label }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if childrenHtml is not empty or isExpandable == 'true' %}
+            <ul class="js-tree-selection-form-children-container tree-group">
+                {{ childrenHtml }}
+            </ul>
+        {% endif %}
+    </li>
+{% endmacro %}
+
+{% macro treeSelectionItems(nodes, checkboxIdPrefix, checkboxName, selectedIds, branchLoadRoute, domainId) %}
+    {% for node in nodes %}
+        {% set item = node.item %}
+        {{ _self.treeSelectionItem(
+            loadChildrenUrl=url(branchLoadRoute, {id: item.id, domainId: domainId}),
+            isExpandable=item.hasChildren ? 'true' : 'false',
+            isVisible=domainId is null ? true : item.isVisible(domainId),
+            checkboxId=checkboxIdPrefix ~ '_' ~ item.id,
+            checkboxName=checkboxName,
+            value=item.id,
+            label=item.name,
+            isChecked=item.id in selectedIds,
+            childrenHtml=_self.treeSelectionItems(node.children, checkboxIdPrefix, checkboxName, selectedIds, branchLoadRoute, domainId),
+        ) }}
+    {% endfor %}
+{% endmacro %}
+
+{% block tree_selection_widget %}
+    {% if main_category_path is defined and main_category_path is not null %}
+        <div>
+            {{ ux_icon('tag') }}
+            <strong>{{ 'Main category'|trans }}:</strong>
+            {{ main_category_path }}
+        </div>
+
+        <hr class="my-2">
+    {% endif %}
+
+    <div class="js-tree-selection-form"
+         data-checkbox-name="{{ checkbox_name }}"
+         data-checkbox-id-prefix="{{ checkbox_id_prefix }}"
+         data-hidden-item-class="text-secondary"
+    >
+        <template class="js-tree-selection-form-item-template">
+            {{ _self.treeSelectionItem(
+                loadChildrenUrl='__load_children_url__',
+                isExpandable='__expandable__',
+                isVisible=true,
+                checkboxId='__checkbox_id__',
+                checkboxName='__checkbox_name__',
+                value='__value__',
+                label='__label__',
+                isChecked=false,
+            ) }}
+        </template>
+        <ul class="js-tree-selection-form-children-container tree">
+            {{ _self.treeSelectionItems(tree_items, checkbox_id_prefix, checkbox_name, selected_ids, branch_load_route, domain_id) }}
+        </ul>
+    </div>
+{% endblock %}

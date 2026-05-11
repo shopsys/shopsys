@@ -101,22 +101,37 @@ An array of options that is used for every inner form.
 
 An array of constraints that is used for field with the same locale as administration.
 
+### [TreeSelectionType]({{github.link}}/packages/framework/src/Form/TreeSelectionType.php)
+
+Displays a lazily loaded tree of checkboxes.
+Submitted checkbox values are transformed to an array of selected entities.
+
+Use this type directly when integrating selection of a custom tree structure.
+Provide a `data_provider` implementing `TreeSelectionDataProviderInterface` and a `branch_load_route` for lazy loading child nodes.
+
+#### domain_id
+
+Optional domain used for visibility styling and domain-specific branch loading.
+When set to `null`, the tree works across all domains, child branches are loaded through the all-domains endpoint, and items are not styled according to per-domain visibility.
+
 ### [CategoriesType]({{github.link}}/packages/framework/src/Form/CategoriesType.php)
 
-Displays a tree of all categories for given `domain_id` with checkboxes for each category created by `CategoryCheckBoxType` and returns array indexed by checked category ids.
+Displays a lazily loaded tree of categories with checkboxes for selecting categories.
+Submitted checkbox values are transformed to an array of selected `Category` entities.
 
-#### domain_id
+This is a category-specific wrapper around `TreeSelectionType`.
 
-Required option that defines for what domain should the categories be listed.
+#### product
 
-### [CategoryCheckboxType]({{github.link}}/packages/framework/src/Form/CategoryCheckboxType.php)
+Optional `Product` used to display the current main category path above the tree in product-related forms.
+This path is shown only when `domain_id` is set.
 
-Creates checkbox and label with category name if name of the form is the same as category id.
-Adds `visible`, `category_name`, `has_children` and `level` vars from category on domain for given `domain_id` to `FormView` so you can easily work with the checkbox.
+### [BlogCategoriesType]({{github.link}}/packages/framework/src/Form/BlogCategoriesType.php)
 
-#### domain_id
+Displays a lazily loaded tree of blog categories with checkboxes for selecting blog categories.
+Submitted checkbox values are transformed to an array of selected `BlogCategory` entities.
 
-Required option that defines from what domain should the category be listed.
+This is a blog-category-specific wrapper around `TreeSelectionType`.
 
 ### [ColorPickerType]({{github.link}}/packages/framework/src/Form/ColorPickerType.php)
 

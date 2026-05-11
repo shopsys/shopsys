@@ -11,6 +11,7 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Form\TreeSelection\TreeSelectionEntityInterface;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -25,7 +26,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 #[ORM\Entity]
 #[Gedmo\Tree(type: 'nested')]
 #[EntityImage]
-class Category extends AbstractTranslatableEntity
+class Category extends AbstractTranslatableEntity implements TreeSelectionEntityInterface
 {
     /**
      * @var int
@@ -132,16 +133,17 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return int
      */
+    #[Override]
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param string|null $locale
      * @return string|null
      */
-    public function getName($locale = null)
+    #[Override]
+    public function getName(?string $locale = null)
     {
         return $this->translation($locale)->getName();
     }
@@ -171,6 +173,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return int
      */
+    #[Override]
     public function getLevel()
     {
         return $this->level;
@@ -181,6 +184,7 @@ class Category extends AbstractTranslatableEntity
      *
      * @return bool
      */
+    #[Override]
     public function hasChildren()
     {
         return $this->getRgt() - $this->getLft() > 1;
@@ -189,6 +193,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
+    #[Override]
     public function getChildren()
     {
         return $this->children->getValues();
@@ -259,6 +264,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return bool
      */
+    #[Override]
     public function isVisible(int $domainId)
     {
         return $this->getCategoryDomain($domainId)->isVisible();

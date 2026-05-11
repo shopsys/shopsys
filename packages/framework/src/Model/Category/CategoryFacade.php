@@ -7,11 +7,13 @@ namespace Shopsys\FrameworkBundle\Model\Category;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Parameter;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Form\TreeSelection\TreeSelectionDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -20,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class CategoryFacade
+class CategoryFacade implements TreeSelectionDataProviderInterface
 {
     protected const int INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
 
@@ -49,8 +51,9 @@ class CategoryFacade
 
     /**
      * @param int[] $categoryIds
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Category\Category>
      */
+    #[Override]
     public function getByIds(array $categoryIds): array
     {
         return $this->categoryRepository->getCategoriesByIds($categoryIds);
@@ -192,7 +195,8 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $selectedCategories
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getAllCategoriesOfCollapsedTree(array $selectedCategories): array
+    #[Override]
+    public function getCollapsedTree(array $selectedCategories): array
     {
         return $this->categoryRepository->getAllCategoriesOfCollapsedTree($selectedCategories);
     }

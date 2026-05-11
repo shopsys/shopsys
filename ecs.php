@@ -55,6 +55,7 @@ $pathsExcludedFromStrictTyping = [
     __DIR__ . '/packages/framework/src/Component/Security/ResetPasswordInterface.php',
     __DIR__ . '/packages/framework/src/Component/FileUpload/EntityFileUploadInterface.php',
     __DIR__ . '/packages/framework/src/Component/AbstractUploadedFile/UploadedFileInterface.php',
+    __DIR__ . '/packages/framework/src/Form/TreeSelection/TreeSelectionEntityInterface.php',
 ];
 
 return ECSConfig::configure()

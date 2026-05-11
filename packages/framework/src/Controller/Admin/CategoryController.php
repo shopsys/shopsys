@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\TreeSelection\TreeSelectionBranchJsonDataHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory;
@@ -39,6 +40,7 @@ class CategoryController extends AdminBaseController
         protected readonly FormBuilderHelper $formBuilderHelper,
         protected readonly ReadyCategorySeoMixFacade $categorySeoMixFacade,
         protected readonly Localization $localization,
+        protected readonly TreeSelectionBranchJsonDataHelper $treeSelectionBranchJsonDataHelper,
     ) {
     }
 
@@ -187,29 +189,23 @@ class CategoryController extends AdminBaseController
         return $this->redirectToRoute('admin_category_list');
     }
 
-    #[Route(path: '/category/branch/{domainId}/{id}', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
+    #[Route(
+        path: '/category/branch/{id}/{domainId}',
+        name: 'admin_category_loadbranchjson',
+        requirements: ['id' => '\d+', 'domainId' => '\d+'],
+        defaults: ['domainId' => null],
+        condition: 'request.isXmlHttpRequest()',
+    )]
     #[CanView]
-    public function loadBranchJsonAction(int $domainId, int $id): Response
+    public function loadBranchJsonAction(int $id, ?int $domainId = null): Response
     {
         $parentCategory = $this->categoryFacade->getById($id);
-        $categories = $parentCategory->getChildren();
 
-        $categoriesData = [];
-
-        foreach ($categories as $category) {
-            $categoriesData[] = [
-                'id' => $category->getId(),
-                'categoryName' => $category->getName(),
-                'isVisible' => $category->isVisible($domainId),
-                'hasChildren' => $category->hasChildren(),
-                'loadUrl' => $this->generateUrl('admin_category_loadbranchjson', [
-                    'domainId' => $domainId,
-                    'id' => $category->getId(),
-                ]),
-            ];
-        }
-
-        return $this->json($categoriesData);
+        return $this->json($this->treeSelectionBranchJsonDataHelper->createJsonData(
+            $parentCategory,
+            $domainId,
+            'admin_category_loadbranchjson',
+        ));
     }
 
     /**
