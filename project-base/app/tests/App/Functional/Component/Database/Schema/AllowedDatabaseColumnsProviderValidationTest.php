@@ -23,20 +23,12 @@ class AllowedDatabaseColumnsProviderValidationTest extends AbstractDatabaseSchem
      */
     public static function getInvalidEntityDirectories(): iterable
     {
-        yield 'class-level attribute without fieldName' => [
-            'directoryName' => 'MissingFieldName',
-        ];
-
-        yield 'unknown class-level fieldName' => [
+        yield 'unknown inherited fieldName' => [
             'directoryName' => 'UnknownFieldName',
         ];
 
-        yield 'duplicate class-level fieldName' => [
+        yield 'duplicate inherited fieldName' => [
             'directoryName' => 'DuplicateFieldName',
-        ];
-
-        yield 'property-level fieldName' => [
-            'directoryName' => 'PropertyLevelFieldName',
         ];
     }
 

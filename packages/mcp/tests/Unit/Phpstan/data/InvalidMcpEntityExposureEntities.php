@@ -6,11 +6,11 @@ namespace Shopsys\McpBundle\Phpstan\Fixture;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[ORM\Entity]
 #[AsMcpTable(exposed: true)]
-#[AsMcpColumn(exposed: true)]
 class InvalidMcpEntity
 {
     #[ORM\Id]
@@ -19,7 +19,6 @@ class InvalidMcpEntity
     public int $id;
 
     #[ORM\Column]
-    #[AsMcpColumn(fieldName: 'title', exposed: true)]
     public string $title;
 
     #[ORM\Column]
@@ -28,7 +27,7 @@ class InvalidMcpEntity
 
 #[ORM\Entity]
 #[AsMcpTable(exposed: true)]
-#[AsMcpColumn(fieldName: 'unknownField', exposed: true)]
+#[AsMcpInheritedColumn(fieldName: 'unknownField', exposed: true)]
 class InvalidUnknownFieldMcpEntity
 {
     #[ORM\Id]
@@ -51,15 +50,10 @@ class MissingTableExposureEntity
 
 #[ORM\Entity]
 #[AsMcpTable(exposed: true)]
-#[AsMcpColumn(fieldName: 'title', exposed: true)]
-#[AsMcpColumn(fieldName: 'title', exposed: false)]
-class DuplicateFieldNameMcpEntity
+#[AsMcpInheritedColumn(fieldName: 'id', exposed: true)]
+#[AsMcpInheritedColumn(fieldName: 'id', exposed: false)]
+class DuplicateInheritedFieldNameMcpEntity extends DuplicateInheritedFieldNameMcpEntityBase
 {
-    #[ORM\Id]
-    #[ORM\Column]
-    #[AsMcpColumn(exposed: true)]
-    public int $id;
-
     #[ORM\Column]
     #[AsMcpColumn(exposed: true)]
     public string $title;

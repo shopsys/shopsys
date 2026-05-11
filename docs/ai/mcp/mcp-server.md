@@ -123,19 +123,17 @@ protected $secretValue;
 
 Again, `false` means explicit opt-out after review.
 
-For inherited or special field mappings, `AsMcpColumn` can also be declared on the class with `fieldName`:
+For inherited fields that are mapped on a parent class and cannot be annotated directly on the local property, use `AsMcpInheritedColumn` on the entity class:
 
 ```php
-#[AsMcpColumn(fieldName: 'id')]
-#[AsMcpColumn(fieldName: 'locale')]
+#[AsMcpInheritedColumn(fieldName: 'id', exposed: true)]
+#[AsMcpInheritedColumn(fieldName: 'locale', exposed: true)]
 class ProductTranslation extends AbstractTranslation
 {
 }
 ```
 
 This is useful when the mapped property comes from a parent class that cannot be modified directly, for example translation entities extending `Prezent\Doctrine\Translatable\Entity\AbstractTranslation`.
-
-`fieldName` is valid only for the class-level attribute. It must reference an existing mapped field or owning-side association.
 
 ### Are the attributes mandatory?
 
@@ -156,6 +154,7 @@ The rule checks ORM entities in the `App\\` and `Shopsys\\` namespaces and requi
 
 - `#[AsMcpTable(exposed: bool)]` on every checked Doctrine entity
 - `#[AsMcpColumn(exposed: bool)]` on every mapped scalar field, embedded field, and relevant owning-side association of an exposed entity
+- `#[AsMcpInheritedColumn(fieldName: '...', exposed: bool)]` for inherited mapped fields that need explicit MCP exposure on the entity class
 
 ## How SQL execution stays bounded
 

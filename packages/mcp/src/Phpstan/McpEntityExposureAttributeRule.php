@@ -20,21 +20,21 @@ use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionProperty;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 class McpEntityExposureAttributeRule implements Rule
 {
     public const string IDENTIFIER_ENTITY_EXPOSURE = 'shopsys.mcpEntityExposure';
     public const string IDENTIFIER_COLUMN_EXPOSURE = 'shopsys.mcpColumnExposure';
-    public const string IDENTIFIER_COLUMN_FIELD_NAME = 'shopsys.mcpColumnFieldName';
-    public const string IDENTIFIER_COLUMN_UNKNOWN_FIELD = 'shopsys.mcpColumnUnknownField';
-    public const string IDENTIFIER_COLUMN_DUPLICATE_FIELD_NAME = 'shopsys.mcpColumnDuplicateFieldName';
-    public const string IDENTIFIER_COLUMN_PROPERTY_FIELD_NAME = 'shopsys.mcpColumnPropertyFieldName';
+    public const string IDENTIFIER_INHERITED_COLUMN_UNKNOWN_FIELD = 'shopsys.mcpInheritedColumnUnknownField';
+    public const string IDENTIFIER_INHERITED_COLUMN_DUPLICATE_FIELD_NAME = 'shopsys.mcpInheritedColumnDuplicateFieldName';
 
     protected const string APP_NAMESPACE = 'App\\';
     protected const string SHOPSYS_NAMESPACE = 'Shopsys\\';
     protected const string TABLE_ATTRIBUTE_CLASS = AsMcpTable::class;
     protected const string COLUMN_ATTRIBUTE_CLASS = AsMcpColumn::class;
+    protected const string INHERITED_COLUMN_ATTRIBUTE_CLASS = AsMcpInheritedColumn::class;
     protected const string ORM_ENTITY_ATTRIBUTE_CLASS = Entity::class;
     protected const string ORM_COLUMN_ATTRIBUTE_CLASS = Column::class;
     protected const string ORM_EMBEDDED_ATTRIBUTE_CLASS = Embedded::class;
@@ -95,7 +95,7 @@ class McpEntityExposureAttributeRule implements Rule
         }
 
         $classLevelErrors = [];
-        $classLevelColumnExposureByFieldNames = $this->collectClassLevelColumnExposures(
+        $inheritedColumnExposureByFieldNames = $this->collectInheritedColumnExposures(
             $nativeReflection,
             $className,
             $classLevelErrors,
@@ -103,7 +103,7 @@ class McpEntityExposureAttributeRule implements Rule
 
         return array_merge(
             $classLevelErrors,
-            $this->collectPropertyLevelErrors($nativeReflection, $className, $classLevelColumnExposureByFieldNames),
+            $this->collectPropertyLevelErrors($nativeReflection, $className, $inheritedColumnExposureByFieldNames),
         );
     }
 
@@ -111,82 +111,64 @@ class McpEntityExposureAttributeRule implements Rule
      * @param \PHPStan\Rules\IdentifierRuleError[] $errors
      * @return array<string, bool>
      */
-    protected function collectClassLevelColumnExposures(
+    protected function collectInheritedColumnExposures(
         ReflectionClass $nativeReflection,
         string $className,
         array &$errors,
     ): array {
-        $classLevelColumnExposureByFieldNames = [];
+        $inheritedColumnExposureByFieldNames = [];
 
-        foreach ($nativeReflection->getAttributes(static::COLUMN_ATTRIBUTE_CLASS) as $attribute) {
-            $asMcpColumn = $attribute->newInstance();
+        foreach ($nativeReflection->getAttributes(static::INHERITED_COLUMN_ATTRIBUTE_CLASS) as $attribute) {
+            $asMcpInheritedColumn = $attribute->newInstance();
 
-            if ($asMcpColumn->fieldName === null) {
+            if (!$this->hasMappedField($nativeReflection, $asMcpInheritedColumn->fieldName)) {
                 $errors[] = RuleErrorBuilder::message(sprintf(
-                    'Class-level #[AsMcpColumn] on entity "%s" must define fieldName.',
+                    'Class-level #[AsMcpInheritedColumn(fieldName: "%s")] on entity "%s" must reference an existing mapped property.',
+                    $asMcpInheritedColumn->fieldName,
                     $className,
-                ))->identifier(static::IDENTIFIER_COLUMN_FIELD_NAME)->build();
+                ))->identifier(static::IDENTIFIER_INHERITED_COLUMN_UNKNOWN_FIELD)->build();
+            }
+
+            if (array_key_exists($asMcpInheritedColumn->fieldName, $inheritedColumnExposureByFieldNames)) {
+                $errors[] = RuleErrorBuilder::message(sprintf(
+                    'Class-level #[AsMcpInheritedColumn(fieldName: "%s")] on entity "%s" must not be declared more than once.',
+                    $asMcpInheritedColumn->fieldName,
+                    $className,
+                ))->identifier(static::IDENTIFIER_INHERITED_COLUMN_DUPLICATE_FIELD_NAME)->build();
 
                 continue;
             }
 
-            if (!$this->hasMappedField($nativeReflection, $asMcpColumn->fieldName)) {
-                $errors[] = RuleErrorBuilder::message(sprintf(
-                    'Class-level #[AsMcpColumn(fieldName: "%s")] on entity "%s" must reference an existing mapped property.',
-                    $asMcpColumn->fieldName,
-                    $className,
-                ))->identifier(static::IDENTIFIER_COLUMN_UNKNOWN_FIELD)->build();
-            }
-
-            if (array_key_exists($asMcpColumn->fieldName, $classLevelColumnExposureByFieldNames)) {
-                $errors[] = RuleErrorBuilder::message(sprintf(
-                    'Class-level #[AsMcpColumn(fieldName: "%s")] on entity "%s" must not be declared more than once.',
-                    $asMcpColumn->fieldName,
-                    $className,
-                ))->identifier(static::IDENTIFIER_COLUMN_DUPLICATE_FIELD_NAME)->build();
-
-                continue;
-            }
-
-            $classLevelColumnExposureByFieldNames[$asMcpColumn->fieldName] = $asMcpColumn->exposed;
+            $inheritedColumnExposureByFieldNames[$asMcpInheritedColumn->fieldName] = $asMcpInheritedColumn->exposed;
         }
 
-        return $classLevelColumnExposureByFieldNames;
+        return $inheritedColumnExposureByFieldNames;
     }
 
     /**
-     * @param array<string, bool> $classLevelColumnExposureByFieldNames
+     * @param array<string, bool> $inheritedColumnExposureByFieldNames
      * @return \PHPStan\Rules\IdentifierRuleError[]
      */
     protected function collectPropertyLevelErrors(
         ReflectionClass $nativeReflection,
         string $className,
-        array $classLevelColumnExposureByFieldNames,
+        array $inheritedColumnExposureByFieldNames,
     ): array {
         $errors = [];
 
         foreach ($nativeReflection->getProperties() as $property) {
-            $mcpColumnAttribute = $this->getAttributeByClassName($property->getAttributes(), static::COLUMN_ATTRIBUTE_CLASS);
-
-            if ($mcpColumnAttribute !== null && $mcpColumnAttribute->newInstance()->fieldName !== null) {
-                $errors[] = RuleErrorBuilder::message(sprintf(
-                    'Property-level #[AsMcpColumn] on "%s::$%s" must not define fieldName.',
-                    $className,
-                    $property->getName(),
-                ))->identifier(static::IDENTIFIER_COLUMN_PROPERTY_FIELD_NAME)->build();
-            }
-
             if (!$this->requiresMcpColumnAttribute($property)) {
                 continue;
             }
 
-            if ($this->hasMcpColumnExposure($property, $classLevelColumnExposureByFieldNames)) {
+            if ($this->hasMcpColumnExposure($property, $inheritedColumnExposureByFieldNames)) {
                 continue;
             }
 
             $errors[] = RuleErrorBuilder::message(sprintf(
-                'Mapped property "%s::$%s" must declare #[AsMcpColumn(exposed: bool)] because the entity is exposed via MCP.',
+                'Mapped property "%s::$%s" must declare #[AsMcpColumn(exposed: bool)] or be configured via class-level #[AsMcpInheritedColumn(fieldName: "%s", exposed: bool)] because the entity is exposed via MCP.',
                 $className,
+                $property->getName(),
                 $property->getName(),
             ))->identifier(static::IDENTIFIER_COLUMN_EXPOSURE)->build();
         }
@@ -251,17 +233,17 @@ class McpEntityExposureAttributeRule implements Rule
     }
 
     /**
-     * @param array<string, bool> $classLevelColumnExposureByFieldNames
+     * @param array<string, bool> $inheritedColumnExposureByFieldNames
      */
     protected function hasMcpColumnExposure(
         ReflectionProperty $property,
-        array $classLevelColumnExposureByFieldNames,
+        array $inheritedColumnExposureByFieldNames,
     ): bool {
         if ($this->getAttributeByClassName($property->getAttributes(), static::COLUMN_ATTRIBUTE_CLASS) !== null) {
             return true;
         }
 
-        return array_key_exists($property->getName(), $classLevelColumnExposureByFieldNames);
+        return array_key_exists($property->getName(), $inheritedColumnExposureByFieldNames);
     }
 
     protected function hasMappedField(ReflectionClass $reflectionClass, string $fieldName): bool

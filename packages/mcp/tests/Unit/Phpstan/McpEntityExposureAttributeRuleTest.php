@@ -35,6 +35,7 @@ class McpEntityExposureAttributeRuleTest extends RuleTestCase
     public function testReportsInvalidMcpExposureConfiguration(): void
     {
         $fixtureFile = __DIR__ . '/data/InvalidMcpEntityExposureEntities.php';
+        require_once __DIR__ . '/data/DuplicateInheritedFieldNameMcpEntityBase.php';
         require_once $fixtureFile;
 
         $errors = $this->gatherAnalyserErrors([$fixtureFile]);
@@ -49,12 +50,11 @@ class McpEntityExposureAttributeRuleTest extends RuleTestCase
 
         $this->assertSame(
             [
-                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_EXPOSURE, 11],
-                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_FIELD_NAME, 11],
-                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_PROPERTY_FIELD_NAME, 11],
-                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_UNKNOWN_FIELD, 29],
-                [McpEntityExposureAttributeRule::IDENTIFIER_ENTITY_EXPOSURE, 44],
-                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_DUPLICATE_FIELD_NAME, 52],
+                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_EXPOSURE, 12],
+                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_EXPOSURE, 12],
+                [McpEntityExposureAttributeRule::IDENTIFIER_INHERITED_COLUMN_UNKNOWN_FIELD, 28],
+                [McpEntityExposureAttributeRule::IDENTIFIER_ENTITY_EXPOSURE, 43],
+                [McpEntityExposureAttributeRule::IDENTIFIER_INHERITED_COLUMN_DUPLICATE_FIELD_NAME, 51],
             ],
             $actualErrors,
         );
@@ -63,6 +63,7 @@ class McpEntityExposureAttributeRuleTest extends RuleTestCase
     public function testAcceptsValidMcpExposureConfiguration(): void
     {
         $fixtureFile = __DIR__ . '/data/ValidMcpEntityExposureEntity.php';
+        require_once __DIR__ . '/data/ValidMcpInheritedEntityBase.php';
         require_once $fixtureFile;
 
         $errors = $this->gatherAnalyserErrors([$fixtureFile]);

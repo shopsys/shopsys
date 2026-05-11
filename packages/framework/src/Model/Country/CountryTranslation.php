@@ -9,11 +9,12 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
-#[AsMcpColumn(fieldName: 'id')]
-#[AsMcpColumn(fieldName: 'locale')]
+#[AsMcpInheritedColumn(fieldName: 'id')]
+#[AsMcpInheritedColumn(fieldName: 'locale')]
 #[ORM\Table(name: 'country_translations')]
 #[ORM\Entity]
 class CountryTranslation extends AbstractTranslation

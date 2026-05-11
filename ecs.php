@@ -117,6 +117,8 @@ return ECSConfig::configure()
             __DIR__ . '/packages/coding-standards/tests/Unit/**/fixed/*',
             __DIR__ . '/packages/coding-standards/tests/Unit/**/Fixed/*',
             __DIR__ . '/packages/maker/templates/*',
+            __DIR__ . '/packages/mcp/tests/Unit/Phpstan/data/InvalidMcpEntityExposureEntities.php',
+            __DIR__ . '/packages/mcp/tests/Unit/Phpstan/data/ValidMcpEntityExposureEntity.php',
             AssignmentInConditionSniff::class => [
                 __DIR__ . '/project-base/app/src/Kernel.php',
             ],

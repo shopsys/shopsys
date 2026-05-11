@@ -10,11 +10,12 @@ use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
-#[AsMcpColumn(fieldName: 'id')]
-#[AsMcpColumn(fieldName: 'locale')]
+#[AsMcpInheritedColumn(fieldName: 'id')]
+#[AsMcpInheritedColumn(fieldName: 'locale')]
 #[ORM\Table(name: 'category_translations')]
 #[ORM\Entity]
 class CategoryTranslation extends AbstractTranslation

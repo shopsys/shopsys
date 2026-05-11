@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\JoinColumnMapping;
 use LogicException;
 use ReflectionProperty;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
 
 class AllowedDatabaseColumnsProvider
 {
@@ -69,33 +70,26 @@ class AllowedDatabaseColumnsProvider
     {
         $classLevelColumnExposureByFieldNames = [];
 
-        foreach ($classMetadata->getReflectionClass()->getAttributes(AsMcpColumn::class) as $attribute) {
-            $asMcpColumn = $attribute->newInstance();
+        foreach ($classMetadata->getReflectionClass()->getAttributes(AsMcpInheritedColumn::class) as $attribute) {
+            $asMcpInheritedColumn = $attribute->newInstance();
 
-            if ($asMcpColumn->fieldName === null) {
+            if (!$classMetadata->hasField($asMcpInheritedColumn->fieldName) && !$classMetadata->hasAssociation($asMcpInheritedColumn->fieldName)) {
                 throw new LogicException(sprintf(
-                    'Class-level #[AsMcpColumn] on "%s" must define fieldName.',
+                    'Class-level #[AsMcpInheritedColumn(fieldName: "%s")] on "%s" must reference an existing mapped field.',
+                    $asMcpInheritedColumn->fieldName,
                     $classMetadata->getName(),
                 ));
             }
 
-            if (!$classMetadata->hasField($asMcpColumn->fieldName) && !$classMetadata->hasAssociation($asMcpColumn->fieldName)) {
+            if (array_key_exists($asMcpInheritedColumn->fieldName, $classLevelColumnExposureByFieldNames)) {
                 throw new LogicException(sprintf(
-                    'Class-level #[AsMcpColumn(fieldName: "%s")] on "%s" must reference an existing mapped field.',
-                    $asMcpColumn->fieldName,
+                    'Class-level #[AsMcpInheritedColumn(fieldName: "%s")] on "%s" must not be declared more than once.',
+                    $asMcpInheritedColumn->fieldName,
                     $classMetadata->getName(),
                 ));
             }
 
-            if (array_key_exists($asMcpColumn->fieldName, $classLevelColumnExposureByFieldNames)) {
-                throw new LogicException(sprintf(
-                    'Class-level #[AsMcpColumn(fieldName: "%s")] on "%s" must not be declared more than once.',
-                    $asMcpColumn->fieldName,
-                    $classMetadata->getName(),
-                ));
-            }
-
-            $classLevelColumnExposureByFieldNames[$asMcpColumn->fieldName] = $asMcpColumn->exposed;
+            $classLevelColumnExposureByFieldNames[$asMcpInheritedColumn->fieldName] = $asMcpInheritedColumn->exposed;
         }
 
         return $classLevelColumnExposureByFieldNames;
@@ -166,14 +160,6 @@ class AllowedDatabaseColumnsProvider
 
         if ($asMcpColumnAttributes !== []) {
             $asMcpColumn = $asMcpColumnAttributes[0]->newInstance();
-
-            if ($asMcpColumn->fieldName !== null) {
-                throw new LogicException(sprintf(
-                    'Property-level #[AsMcpColumn] on "%s::$%s" must not define fieldName.',
-                    $property->getDeclaringClass()->getName(),
-                    $property->getName(),
-                ));
-            }
 
             return $asMcpColumn->exposed;
         }
