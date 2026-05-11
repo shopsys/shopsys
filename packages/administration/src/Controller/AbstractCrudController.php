@@ -115,7 +115,7 @@ abstract class AbstractCrudController extends AdminBaseController
         $entity = $handler->getById($id);
         $data = $handler->createDataFromEntity($entity);
 
-        $formConfigurator = new CrudFormConfigurator($this->formFactory, $data);
+        $formConfigurator = new CrudFormConfigurator($this->formFactory, $data, ActionType::EDIT);
         $this->configureForm($formConfigurator, $entity);
         $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureForm($formConfigurator, $entity));
 
@@ -184,7 +184,7 @@ abstract class AbstractCrudController extends AdminBaseController
         $handler = $this->definition->getHandlerForAction(ActionType::CREATE);
         $data = $handler->createData();
 
-        $formConfigurator = new CrudFormConfigurator($this->formFactory, $data);
+        $formConfigurator = new CrudFormConfigurator($this->formFactory, $data, ActionType::CREATE);
         $this->configureForm($formConfigurator, null);
         $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureForm($formConfigurator, null));
 

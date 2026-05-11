@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Crud\Form;
 
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Form\Exception\CrudFormAlreadyConfiguredException;
 use Shopsys\AdministrationBundle\Component\Crud\Form\Exception\CrudFormNotConfiguredException;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,6 +35,7 @@ class CrudFormConfigurator
     public function __construct(
         protected readonly FormFactoryInterface $formFactory,
         protected readonly object $data,
+        protected readonly ActionType $actionType,
     ) {
     }
 
@@ -116,5 +118,10 @@ class CrudFormConfigurator
     public function getMode(): CrudFormMode
     {
         return $this->mode;
+    }
+
+    public function getActionType(): ActionType
+    {
+        return $this->actionType;
     }
 }
