@@ -29,7 +29,7 @@ class DateTimeAgoRuntime implements RuntimeExtensionInterface
         }
 
         $today = $this->clock->now()->format('Y-m-d');
-        $yesterday = (new DatePoint('yesterday'))->format('Y-m-d');
+        $yesterday = new DatePoint('yesterday')->format('Y-m-d');
         $dateStr = $dateTime->format('Y-m-d');
 
         if ($dateStr !== $today && $dateStr !== $yesterday) {
@@ -42,8 +42,8 @@ class DateTimeAgoRuntime implements RuntimeExtensionInterface
         }
 
         $datePart = match ($dateStr) {
-            $today => 'today',
-            $yesterday => 'yesterday',
+            $today => t('today'),
+            $yesterday => t('yesterday'),
             default => throw new LogicException('Date should be either today or yesterday at this point'),
         };
 
