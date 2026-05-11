@@ -3,7 +3,7 @@
         <div>
             {{ ux_icon(icon, {class: 'icon alert-icon'}) }}
         </div>
-        <div class="flex-fill">
+        <div>
             {% for message in messages %}
                 <div>{{ message|raw }}</div>
             {% endfor %}

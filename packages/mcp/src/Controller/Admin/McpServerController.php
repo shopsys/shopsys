@@ -71,16 +71,15 @@ class McpServerController extends AdminBaseController
         );
         $mcpEndpointUrl = $this->urlGenerator->generate('_mcp_endpoint', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $this->addSuccessFlash(
-            $this->renderView('@ShopsysMcp/content/superadmin/_generatedTokenFlash.html.twig', [
+        return $this->json([
+            'result' => 'valid',
+            'content' => $this->renderView('@ShopsysMcp/content/superadmin/_generatedTokenContent.html.twig', [
                 'bearerTokenEnvVarName' => self::BEARER_TOKEN_ENV_VAR,
-                'mcpServerName' => self::MCP_SERVER_NAME,
                 'mcpEndpointUrl' => $mcpEndpointUrl,
+                'mcpServerName' => self::MCP_SERVER_NAME,
                 'tokenString' => $issuedToken->getTokenString(),
             ]),
-        );
-
-        return $this->json(['result' => 'valid']);
+        ]);
     }
 
     #[Route(path: '/superadmin/mcp-server/token/revoke/{id}/', name: 'admin_superadmin_mcp_token_revoke')]

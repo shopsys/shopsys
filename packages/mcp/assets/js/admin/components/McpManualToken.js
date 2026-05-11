@@ -26,7 +26,8 @@ export default class McpManualToken {
             success: data => {
                 const modalInstance = new ModalWindow({
                     content: data,
-                    size: 'md',
+                    size: 'lg',
+                    closeOnBackdropAndEscape: false,
                 });
 
                 new Register().registerNewContent(modalInstance.element);
@@ -39,7 +40,7 @@ export default class McpManualToken {
 
                         $form.on('submit', function (submitEvent) {
                             submitEvent.preventDefault();
-                            McpManualToken.submitForm($(this));
+                            McpManualToken.submitForm($(this), modalInstance);
 
                             return false;
                         });
@@ -78,7 +79,7 @@ export default class McpManualToken {
         toggleCustomExpiration();
     }
 
-    static submitForm($form) {
+    static submitForm($form, modalInstance) {
         const $errorsContainer = $('.js-mcp-manual-token-errors');
         $errorsContainer.hide();
 
@@ -92,7 +93,11 @@ export default class McpManualToken {
             loaderElement: $submitButton,
             success: data => {
                 if (data.result === 'valid') {
-                    document.location.reload();
+                    modalInstance.element.find('.modal-body').html(data.content);
+                    modalInstance.element.one('hidden.bs.modal', () => {
+                        document.location.reload();
+                    });
+                    new Register().registerNewContent(modalInstance.element);
                 } else if (data.result === 'invalid') {
                     const $errorsList = $errorsContainer.show().find('ul');
                     $errorsList.find('li').remove();
