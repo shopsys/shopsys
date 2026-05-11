@@ -13,10 +13,12 @@ class AdministratorMcpTokenFactory
     ) {
     }
 
-    public function create(AdministratorMcpTokenData $administratorMcpTokenData): AdministratorMcpToken
-    {
+    public function create(
+        AdministratorMcpTokenData $administratorMcpTokenData,
+        string $secretHash,
+    ): AdministratorMcpToken {
         $entityClassName = $this->entityNameResolver->resolve(AdministratorMcpToken::class);
 
-        return new $entityClassName($administratorMcpTokenData);
+        return new $entityClassName($administratorMcpTokenData, $secretHash);
     }
 }

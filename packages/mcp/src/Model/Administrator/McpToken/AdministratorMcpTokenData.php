@@ -19,11 +19,6 @@ class AdministratorMcpTokenData
     /**
      * @var string
      */
-    public $secretHash;
-
-    /**
-     * @var string
-     */
     public $type;
 
     /**

@@ -92,18 +92,18 @@ class AdministratorMcpTokenFacade
     ): AdministratorMcpIssuedToken {
         $now = $this->clock->now();
         $issuedToken = $this->administratorMcpTokenGenerator->generateIssuedToken($expiresAt);
+        $secretHash = $this->administratorMcpTokenHasher->hash($issuedToken->secret);
 
         $administratorMcpTokenData = $this->administratorMcpTokenDataFactory->create();
         $administratorMcpTokenData->administrator = $administrator;
         $administratorMcpTokenData->publicTokenId = $issuedToken->publicTokenId;
-        $administratorMcpTokenData->secretHash = $this->administratorMcpTokenHasher->hash($issuedToken->secret);
         $administratorMcpTokenData->type = $type;
         $administratorMcpTokenData->clientId = $clientId;
         $administratorMcpTokenData->label = $label;
         $administratorMcpTokenData->createdAt = $now;
         $administratorMcpTokenData->expiresAt = $issuedToken->expiresAt;
 
-        $administratorMcpToken = $this->administratorMcpTokenFactory->create($administratorMcpTokenData);
+        $administratorMcpToken = $this->administratorMcpTokenFactory->create($administratorMcpTokenData, $secretHash);
 
         $this->entityManager->persist($administratorMcpToken);
         $this->entityManager->flush();

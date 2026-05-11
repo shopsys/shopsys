@@ -149,14 +149,13 @@ class AdministratorMcpTokenLookupTest extends TestCase
         $administratorMcpTokenData = new AdministratorMcpTokenData();
         $administratorMcpTokenData->administrator = $this->createStub(Administrator::class);
         $administratorMcpTokenData->publicTokenId = $publicTokenId;
-        $administratorMcpTokenData->secretHash = $secretHash;
         $administratorMcpTokenData->type = AdministratorMcpToken::TYPE_MANUAL;
         $administratorMcpTokenData->clientId = null;
         $administratorMcpTokenData->label = AdministratorMcpToken::DEFAULT_MANUAL_TOKEN_LABEL;
         $administratorMcpTokenData->createdAt = new DateTimeImmutable(self::MOCKED_NOW);
         $administratorMcpTokenData->expiresAt = $administratorMcpTokenData->createdAt->modify($expiresAtModification);
 
-        return new AdministratorMcpToken($administratorMcpTokenData);
+        return new AdministratorMcpToken($administratorMcpTokenData, $secretHash);
     }
 
     private function createClock(): ClockInterface

@@ -88,11 +88,11 @@ class AdministratorMcpToken
     #[ORM\Column(type: 'datetime_immutable')]
     protected $expiresAt;
 
-    public function __construct(AdministratorMcpTokenData $administratorMcpTokenData)
+    public function __construct(AdministratorMcpTokenData $administratorMcpTokenData, string $secretHash)
     {
         $this->administrator = $administratorMcpTokenData->administrator;
         $this->publicTokenId = $administratorMcpTokenData->publicTokenId;
-        $this->secretHash = $administratorMcpTokenData->secretHash;
+        $this->secretHash = $secretHash;
         $this->type = $administratorMcpTokenData->type;
         $this->clientId = $administratorMcpTokenData->clientId;
         $this->label = $administratorMcpTokenData->label;
