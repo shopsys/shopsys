@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
-#[AsMcpTable(false)]
+#[AsMcpTable(exposed: false)]
 #[ORM\Table(name: 'login_as_user_exchange_tokens')]
 #[ORM\Entity]
 class LoginAsUserExchangeToken

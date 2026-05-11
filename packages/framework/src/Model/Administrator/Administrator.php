@@ -66,14 +66,14 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var string|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $password;
 
     /**
      * @var string
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 32)]
     protected $loginToken;
 
@@ -139,14 +139,14 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var string|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 16, nullable: true)]
     protected $emailAuthenticationCode;
 
     /**
      * @var string|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', nullable: true)]
     protected $googleAuthenticatorSecret;
 
@@ -175,14 +175,14 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var string|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $resetPasswordHash;
 
     /**
      * @var \DateTimeImmutable|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $resetPasswordHashValidThrough;
 

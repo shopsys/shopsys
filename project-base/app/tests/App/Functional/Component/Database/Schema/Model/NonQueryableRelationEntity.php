@@ -9,7 +9,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[ORM\Table(name: self::TABLE_NAME)]
 #[ORM\Entity]
-#[AsMcpTable(false)]
+#[AsMcpTable(exposed: false)]
 final class NonQueryableRelationEntity
 {
     public const string TABLE_NAME = 'test_mcp_non_queryable_relation_entities';

@@ -42,7 +42,7 @@ class PersonalDataAccessRequest
     /**
      * @var string
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', unique: true)]
     protected $hash;
 

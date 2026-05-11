@@ -10,7 +10,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 /**
  * Product
  */
-#[AsMcpTable(false)]
+#[AsMcpTable(exposed: false)]
 #[ORM\Table(name: 'persistent_references')]
 #[ORM\Entity]
 class PersistentReference

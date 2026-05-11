@@ -15,7 +15,7 @@ use function get_class;
 use function gettype;
 use function is_object;
 
-#[AsMcpTable(false)]
+#[AsMcpTable(exposed: false)]
 #[ORM\Table(name: 'setting_values')]
 #[ORM\Entity]
 class SettingValue

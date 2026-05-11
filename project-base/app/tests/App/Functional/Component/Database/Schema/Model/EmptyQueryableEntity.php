@@ -15,13 +15,13 @@ final class EmptyQueryableEntity
 {
     public const string TABLE_NAME = 'test_mcp_empty_queryable_entities';
 
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private int $id = 0;
 
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 255)]
     private string $hiddenValue = '';
 }

@@ -9,7 +9,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
-#[AsMcpTable(false)]
+#[AsMcpTable(exposed: false)]
 #[ORM\Table(name: 'customer_user_refresh_token_chain')]
 #[ORM\Entity]
 class CustomerUserRefreshTokenChain

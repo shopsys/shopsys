@@ -44,7 +44,7 @@ class CustomerUserLoginType
     /**
      * @var string|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $externalId;
 

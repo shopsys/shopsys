@@ -29,7 +29,7 @@ final class QueryableEntity
     #[ORM\Column(type: 'string', length: 255)]
     private string $visibleValue = '';
 
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 255)]
     private string $hiddenValue = '';
 
@@ -38,7 +38,7 @@ final class QueryableEntity
     #[ORM\ManyToOne(targetEntity: QueryableRelationEntity::class)]
     private ?QueryableRelationEntity $queryableRelation = null;
 
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\JoinColumn(name: 'blacklisted_queryable_relation_id', referencedColumnName: 'id', nullable: true)]
     #[ORM\ManyToOne(targetEntity: QueryableRelationEntity::class)]
     private ?QueryableRelationEntity $blacklistedQueryableRelation = null;

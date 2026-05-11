@@ -70,7 +70,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var string|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $password;
 
@@ -112,14 +112,14 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var string|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $resetPasswordHash;
 
     /**
      * @var \DateTimeImmutable|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $resetPasswordHashValidThrough;
 

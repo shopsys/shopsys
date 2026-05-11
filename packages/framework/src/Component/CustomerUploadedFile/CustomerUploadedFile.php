@@ -61,7 +61,7 @@ class CustomerUploadedFile extends AbstractUploadedFile
     /**
      * @var string
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 32)]
     protected $hash;
 

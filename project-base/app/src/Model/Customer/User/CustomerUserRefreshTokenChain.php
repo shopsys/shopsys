@@ -13,7 +13,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @property \App\Model\Administrator\Administrator|null $administrator
  * @method \App\Model\Administrator\Administrator|null getAdministrator()
  */
-#[AsMcpTable(false)]
+#[AsMcpTable(exposed: false)]
 #[ORM\Table(name: 'customer_user_refresh_token_chain')]
 #[ORM\Entity]
 class CustomerUserRefreshTokenChain extends BaseCustomerUserRefreshTokenChain

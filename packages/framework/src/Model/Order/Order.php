@@ -369,7 +369,7 @@ class Order
     /**
      * @var string|null
      */
-    #[AsMcpColumn(false)]
+    #[AsMcpColumn(exposed: false)]
     #[ExcludeLog]
     #[ORM\Column(type: 'guid', nullable: true)]
     protected $orderPaymentStatusPageValidityHash;
