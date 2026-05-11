@@ -3,7 +3,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { CatalogContent } from 'components/Pages/Catalog/CatalogContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { NavigationQueryDocument } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import { CatalogCategoriesQueryDocument } from 'graphql/requests/categories/queries/CatalogCategoriesQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
@@ -35,7 +35,7 @@ const CatalogPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     return initServerSideProps({
         context,
-        prefetchedQueries: [{ query: NavigationQueryDocument }],
+        prefetchedQueries: [{ query: CatalogCategoriesQueryDocument }],
         redisClient,
         domainConfig,
         t,
