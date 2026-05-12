@@ -1,4 +1,0 @@
-recalculate_file_sizes:
-    priority: 100
-    run: one_time
-    service: Shopsys\FrameworkBundle\Component\PostDeploy\Task\RecalculateFileSizesTask

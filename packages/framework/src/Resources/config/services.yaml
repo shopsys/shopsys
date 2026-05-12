@@ -395,16 +395,7 @@ services:
 
     Shopsys\FrameworkBundle\Component\Packetery\PacketeryRenderer: ~
 
-    Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfig:
-        arguments:
-            -
-                - '%shopsys.framework.root_dir%/src/Resources/config/post_deploy_tasks.yaml'
-                - '%shopsys.post_deploy_tasks_filepath%'
-        factory: ['@Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfigLoader', loadFromYamlFiles]
-
-    Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfigLoader:
-        arguments:
-            $taskServiceLocator: !tagged_locator { tag: 'shopsys.post_deploy.task' }
+    Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfig: ~
 
     Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade:
         arguments:

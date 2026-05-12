@@ -1013,7 +1013,7 @@
         </exec>
     </target>
 
-    <target name="run-post-deploy-tasks" description="Runs post-deploy tasks declared in app/config/post_deploy_tasks.yaml (one_time tasks are recorded and skipped on subsequent runs).">
+    <target name="run-post-deploy-tasks" description="Runs post-deploy tasks declared in shopsys_framework.post_deploy.tasks config (one_time tasks are recorded and skipped on subsequent runs).">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:post-deploy:run-tasks"/>

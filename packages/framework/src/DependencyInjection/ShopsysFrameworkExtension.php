@@ -11,6 +11,10 @@ use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataT
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface;
+use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfig;
+use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskDescriptor;
+use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskRunEnum;
+use Shopsys\FrameworkBundle\Component\PostDeploy\Task\RecalculateFileSizesTask;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderInterface;
@@ -21,6 +25,7 @@ use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
 use Shopsys\FrameworkBundle\Twig\VarDumperExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -91,6 +96,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
             ->addTag('shopsys.category_automated_filter');
 
         $this->setAdminContextPathPrefixes($config['admin_context_additional_path_prefixes'], $container);
+        $this->setPostDeployTasksConfig($config['post_deploy']['tasks'], $container);
     }
 
     protected function configureVarDumperTwigExtension(ContainerBuilder $container): void
@@ -112,6 +118,18 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
         $container->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => [
                 'Shopsys\FrameworkBundle\Migrations' => __DIR__ . '/../Migrations',
+            ],
+        ]);
+
+        $container->prependExtensionConfig('shopsys_framework', [
+            'post_deploy' => [
+                'tasks' => [
+                    'recalculate_file_sizes' => [
+                        'run' => PostDeployTaskRunEnum::ONE_TIME,
+                        'priority' => 100,
+                        'service' => RecalculateFileSizesTask::class,
+                    ],
+                ],
             ],
         ]);
     }
@@ -141,5 +159,54 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
     ): void {
         $container->getDefinition(AdminContext::class)
             ->setArgument('$additionalAdminPathPrefixes', $additionalAdminPathPrefixes);
+    }
+
+    /**
+     * @param array<string, array{run: string, priority: int, service: string|null}> $tasksConfig
+     */
+    protected function setPostDeployTasksConfig(array $tasksConfig, ContainerBuilder $container): void
+    {
+        $descriptors = [];
+        $order = 0;
+
+        foreach ($tasksConfig as $name => $taskConfig) {
+            $taskReference = null;
+
+            if ($taskConfig['run'] !== PostDeployTaskRunEnum::NEVER) {
+                assert(is_string($taskConfig['service']));
+                $taskReference = new Reference($taskConfig['service']);
+            }
+
+            $descriptors[] = [
+                'order' => $order++,
+                'descriptor' => new Definition(PostDeployTaskDescriptor::class, [
+                    '$name' => $name,
+                    '$run' => $taskConfig['run'],
+                    '$priority' => $taskConfig['priority'],
+                    '$task' => $taskReference,
+                ]),
+            ];
+        }
+
+        usort(
+            $descriptors,
+            static function (array $a, array $b): int {
+                /** @var \Symfony\Component\DependencyInjection\Definition $descriptorA */
+                $descriptorA = $a['descriptor'];
+                /** @var \Symfony\Component\DependencyInjection\Definition $descriptorB */
+                $descriptorB = $b['descriptor'];
+
+                $priorityComparison = $descriptorB->getArgument('$priority') <=> $descriptorA->getArgument('$priority');
+
+                if ($priorityComparison !== 0) {
+                    return $priorityComparison;
+                }
+
+                return $a['order'] <=> $b['order'];
+            },
+        );
+
+        $container->getDefinition(PostDeployTaskConfig::class)
+            ->setArgument('$descriptors', array_column($descriptors, 'descriptor'));
     }
 }

@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'shopsys:post-deploy:run-tasks',
-    description: 'Runs post-deploy tasks declared in app/config/post_deploy_tasks.yaml (one_time tasks are recorded and skipped on subsequent runs).',
+    description: 'Runs post-deploy tasks declared in shopsys_framework.post_deploy.tasks config (one_time tasks are recorded and skipped on subsequent runs).',
 )]
 class RunPostDeployTasksCommand extends Command
 {

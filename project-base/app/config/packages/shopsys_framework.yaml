@@ -18,3 +18,8 @@ shopsys_framework:
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddRoundingMiddleware'
             - 'App\Model\Order\Processing\OrderProcessorMiddleware\SetOrderDataAsAdministratorMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\SetDeliveryAddressByDeliveryAddressUuidMiddleware'
+
+    post_deploy:
+        tasks:
+            recalculate_file_sizes:
+                run: never
