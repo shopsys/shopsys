@@ -53,14 +53,15 @@ class BestsellingProductController extends AdminBaseController
         ]);
     }
 
-    #[Route(path: '/product/bestselling-product/detail/')]
+    #[Route(path: '/product/bestselling-product/detail/domain/{domainId}/category/{categoryId}/', requirements: [
+        'domainId' => '\d+',
+        'categoryId' => '\d+',
+    ])]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
-    public function detailAction(Request $request): Response
+    public function detailAction(Request $request, int $domainId, int $categoryId): Response
     {
-        $categoryId = $request->query->getInt('categoryId');
         $category = $this->categoryFacade->getById($categoryId);
-        $domainId = $request->query->getInt('domainId');
 
         $products = $this->manualBestsellingProductFacade->getProductsIndexedByPosition(
             $category,

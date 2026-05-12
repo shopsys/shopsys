@@ -57,13 +57,18 @@ class LanguageConstantController extends AdminBaseController
         ]);
     }
 
-    #[Route(path: '/constant/edit/')]
+    #[Route(
+        path: '/constant/edit/{namespace}/{key}/',
+        requirements: ['key' => '.+'],
+        defaults: ['namespace' => LanguageConstant::NAMESPACE_COMMON],
+    )]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
-    public function editAction(Request $request): Response
-    {
-        $key = $request->query->get('key');
-        $namespace = $request->query->get('namespace', LanguageConstant::NAMESPACE_COMMON);
+    public function editAction(
+        Request $request,
+        string $key,
+        string $namespace = LanguageConstant::NAMESPACE_COMMON,
+    ): Response {
         $locale = $this->getSelectedLocale();
         $translation = $this->languageConstantFacade->getOriginalTranslationsByLocaleIndexedByKey($locale, $namespace)[$key] ?? null;
 

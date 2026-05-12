@@ -248,6 +248,7 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_bestsellingproduct_detail', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet('Category with ID 1 is the root, use ID 2 instead.')
+                    ->setParameter('domainId', 1)
                     ->setParameter('categoryId', 2);
             })
             ->customizeByRouteName('admin_pricinggroup_delete', function (RouteConfig $config): void {
