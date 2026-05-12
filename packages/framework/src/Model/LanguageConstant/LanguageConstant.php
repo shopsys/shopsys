@@ -88,11 +88,18 @@ class LanguageConstant extends AbstractTranslatableEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getTranslation(?string $locale = null)
     {
-        return $this->translation($locale)->getTranslation();
+        if ($locale === null) {
+            return $this->translation()->getTranslation();
+        }
+
+        /** @var \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation|null $translation */
+        $translation = $this->findTranslation($locale);
+
+        return $translation?->getTranslation();
     }
 
     public function editTranslation(LanguageConstantData $constantData): void

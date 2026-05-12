@@ -93,10 +93,7 @@ class LanguageConstantFacade
         LanguageConstantData $languageConstantData,
         ?LanguageConstant $languageConstant,
     ): LanguageConstant {
-        $languageConstant = $languageConstant === null ? $this->create($languageConstantData) : $this->edit($languageConstantData);
-        $this->cleanStorefrontCacheFacade->cleanStorefrontTranslationCache($languageConstantData->locale, $languageConstantData->namespace);
-
-        return $languageConstant;
+        return $languageConstant === null ? $this->create($languageConstantData) : $this->edit($languageConstantData);
     }
 
     public function delete(string $key, string $locale, string $namespace): void
@@ -112,8 +109,6 @@ class LanguageConstantFacade
 
         $this->em->remove($languageConstant);
         $this->em->flush();
-
-        $this->cleanStorefrontCacheFacade->cleanStorefrontTranslationCache($locale, $namespace);
     }
 
     protected function create(LanguageConstantData $languageConstantData): LanguageConstant
@@ -150,9 +145,18 @@ class LanguageConstantFacade
         // Generate file for each configured namespace
         foreach (array_keys($this->translationNamespaces) as $namespace) {
             $userTranslations = $this->getUserTranslationsByLocaleIndexedByKey($locale, $namespace);
-            $translations = json_encode($userTranslations);
+            $translations = json_encode((object)$userTranslations, JSON_THROW_ON_ERROR);
             $fileName = $namespace . '.json';
             $this->filesystem->write($targetFilePath . '/' . $fileName, $translations);
         }
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function generateAllNamespaceFilesAndCleanStorefrontCache(string $locale, ?string $namespace = null): void
+    {
+        $this->generateAllNamespaceFiles($locale);
+        $this->cleanStorefrontCacheFacade->cleanStorefrontTranslationCache($locale, $namespace);
     }
 }

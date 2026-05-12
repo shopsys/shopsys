@@ -41,6 +41,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const serverSideProps = await initServerSideProps({
                 context,
                 client,
+                redisClient,
                 domainConfig,
                 ssrExchange,
             });

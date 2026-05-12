@@ -48,6 +48,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     return buildServerSideProps({
         layoutResult,
         client: currentClient,
+        redisClient,
         ssrExchange: currentSsrCache,
         context,
         domainConfig,

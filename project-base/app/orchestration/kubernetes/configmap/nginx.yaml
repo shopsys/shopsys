@@ -251,11 +251,11 @@ data:
                 proxy_pass {{S3_ENDPOINT}}/{{PROJECT_NAME}}/web/$1/$image_id.$image_extension;
             }
 
-            # user translation overrides are fetched server-to-server by the storefront
-            # return a plain 404 on miss so storefront does not render an error page with the internal Host header
+            # Missing user translation overrides are valid for fresh installations.
+            # Return an empty JSON object so server-side and browser fetches can treat them as an empty override layer.
             location ~ ^/(?:[^/]+/)?content(-test)?/locales/ {
                 proxy_intercept_errors  on;
-                error_page              404 = @404;
+                error_page              404 = @emptyJson;
 
                 proxy_http_version      1.1;
                 proxy_set_header        Authorization "";
@@ -370,6 +370,11 @@ data:
                 fastcgi_param HTTPS $http_x_forwarded_proto;
                 fastcgi_param HTTP_HOST $request_host;
                 fastcgi_param REQUEST_SCHEME $http_x_forwarded_proto;
+            }
+
+            location @emptyJson {
+                default_type application/json;
+                return 200 '{}';
             }
         
             # plain 404 page for missing files accessed via CDN

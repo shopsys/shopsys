@@ -123,6 +123,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     : [],
                 context,
                 client,
+                redisClient,
                 ssrExchange,
                 domainConfig,
             });

@@ -1,8 +1,10 @@
+import { Variables } from '@urql/exchange-graphcache';
 import { CurrentCustomerUserAuthQueryDocument } from 'graphql/requests/customer/queries/CurrentCustomerUserAuthQuery.generated';
 import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { Client, SSRExchange } from 'urql';
-import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { initServerSideProps as originalInitServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { InitServerSidePropsParameters } from 'utils/serverSide/types';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const {
@@ -81,6 +83,20 @@ const createMockSsrExchange = (): SSRExchange =>
     ({
         extractData: vi.fn().mockReturnValue({}),
     }) as unknown as SSRExchange;
+
+const createMockRedisClient = () =>
+    ({
+        get: vi.fn().mockResolvedValue('translation-version'),
+    }) as any;
+
+const initServerSideProps = <VariablesType extends Variables = Variables>(
+    params: Omit<InitServerSidePropsParameters<VariablesType>, 'redisClient'> &
+        Partial<Pick<InitServerSidePropsParameters<VariablesType>, 'redisClient'>>,
+) =>
+    originalInitServerSideProps({
+        redisClient: createMockRedisClient(),
+        ...params,
+    } as InitServerSidePropsParameters<VariablesType>);
 
 const createContext = (resolvedUrl = '/customer/order-detail') =>
     ({
