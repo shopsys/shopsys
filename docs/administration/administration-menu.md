@@ -57,6 +57,19 @@ To avoid throwing the `MissingMandatoryParametersException`, we have replaced th
 It simply doesn't generate a URI when the exception is thrown.
 The route is still used to resolve the current menu item.
 
+## Autocomplete search
+
+The admin autocomplete search also uses menu items as its source.
+An item is included in search results when:
+
+- it has a label
+- it has a generated URI
+
+This means hidden menu items (`display => false`) are searchable by default.
+That is useful for pages like "new" actions, which are intentionally hidden from the side menu but are still valid standalone admin pages.
+
+Routes with mandatory route parameters but without concrete values usually have no generated URI because of the custom routing extension above, so they do not appear in the autocomplete.
+
 ## Breadcrumb overriding
 
 A `BreadcrumbOverrider::overrideLastItem(string $label)` call can be used in a controller to override the last breadcrumb item.
