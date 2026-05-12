@@ -176,8 +176,20 @@ services:
             ADMINER_DEFAULT_SERVER: postgres
 
     smtp-server:
-        image: ixdotai/smtp:latest
+        image: maildev/maildev:latest
         container_name: shopsys-framework-smtp-server
+        command: ["--auto-relay"]
+        ports:
+            - "1080:1080"
+            - "1025:1025"
+        # To forward outgoing mail to real recipients, uncomment the block below.
+        # See FAQ for setup: https://docs.shopsys.com/en/latest/introduction/faq-and-common-issues/#how-do-i-deliver-emails-to-real-recipients-from-my-local-environment
+        # environment:
+        #     MAILDEV_OUTGOING_HOST: smtp.gmail.com
+        #     MAILDEV_OUTGOING_PORT: 465
+        #     MAILDEV_OUTGOING_SECURE: "true"
+        #     MAILDEV_OUTGOING_USER: your-address@gmail.com
+        #     MAILDEV_OUTGOING_PASS: ${MAILDEV_OUTGOING_PASS:-}
 
     elasticsearch:
         build:
