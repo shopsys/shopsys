@@ -1,8 +1,10 @@
+@import 'sidebar';
+
 :root {
     --page-padding-bottom: 5rem;
     font-size: 18px;
 
-    --tblr-primary: #009bd9;
+    --tblr-primary: #2478e0;
 }
 
 // fix disabled button in input group border color
@@ -20,7 +22,7 @@
 }
 
 // fix empty space on the left (https://github.com/tabler/tabler/issues/2271)
-@media (min-width: 992px) {
+@include media-breakpoint-up(lg) {
     :host,
     :root {
         margin-left: 0;
@@ -64,23 +66,6 @@ textarea.form-control.is-invalid {
 .table > :not(caption) > * > *,
 .markdown > table > :not(caption) > * > * {
     border-right-width: var(--tblr-border-width);
-}
-
-.navbar.navbar-vertical {
-    z-index: 1020 !important;
-}
-
-.navbar-collapse.collapse.show {
-    position: fixed;
-    overflow-y: scroll;
-    height: 100%;
-    padding-bottom: 5rem;
-    top: 60px;
-    left: 0;
-    right: 0;
-    background-color: var(--tblr-bg-surface);
-    padding-left: calc(var(--tblr-gutter-x) * 0.5);
-    padding-right: calc(var(--tblr-gutter-x) * 0.5);
 }
 
 .card-header {

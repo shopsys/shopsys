@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 340 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,84,56)">
+        <text x="0px" y="0px" style="font-family:'Georgia-Italic', 'Georgia', serif;font-style:italic;font-size:54px;fill:white;">Y<tspan x="32.683px 61.147px 91.667px " y="0px 0px 0px ">our</tspan></text>
+    </g>
+    <g transform="matrix(0.941466,0,0,0.941466,0,0)">
+        <path d="M28.7,47.789L9.57,28.672L28.7,9.555L33.774,14.625L19.718,28.672L33.774,42.719L28.7,47.789Z" style="fill:white;fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(0.941466,0,0,0.941466,0,0)">
+        <path d="M76.547,38.234L69.371,38.234C69.371,21.106 55.426,7.171 38.285,7.171L38.285,0C59.383,0 76.547,17.152 76.547,38.234Z" style="fill:rgb(252,189,70);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(0.941466,0,0,0.941466,0,0)">
+        <path d="M38.261,76.477C17.164,76.477 0,59.324 0,38.242L7.176,38.242C7.176,55.371 21.12,69.306 38.261,69.306L38.261,76.477Z" style="fill:rgb(252,189,70);fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(0.941466,0,0,0.941466,0,0)">
+        <path d="M47.82,66.906L42.746,61.836L56.802,47.789L42.746,33.743L47.82,28.672L66.95,47.789L47.82,66.906Z" style="fill:white;fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(1,0,0,1,206,56)">
+        <text x="0px" y="0px" style="font-family:'HelveticaNeue', 'Helvetica Neue';font-size:54px;fill:rgb(253,189,67);">l<tspan x="10.908px 40.824px 70.74px " y="0px 0px 0px ">ogo</tspan></text>
+    </g>
+</svg>
