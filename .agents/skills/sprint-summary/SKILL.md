@@ -1,21 +1,23 @@
 ---
 name: sprint-summary
-description: Generates a Czech sprint summary article from a Jira CSV export and can optionally prepare Playwright screenshots/videos as side attachments for relevant UX tasks.
+description: Generates a Czech sprint summary article from Jira sprint data, preferably via Jira MCP with CSV as a fallback, and can optionally prepare Playwright screenshots/videos as side attachments for relevant UX tasks.
 ---
 
 # Sprint Summary
 
-Generates a sprint summary from a Jira CSV export. Creates a structured article in Czech suitable for Confluence. If Playwright MCP is available, it can optionally prepare screenshots/videos for relevant UI/UX tasks as side attachments.
+Generates a sprint summary from Jira sprint data. Prefer Jira MCP as the primary source; use a Jira CSV export only as a fallback when MCP is unavailable or missing required data. Creates a structured article in Czech suitable for Confluence. If Playwright MCP is available, it can optionally prepare screenshots/videos for relevant UI/UX tasks as side attachments.
 
 ## Initial Setup
 
 When invoked without arguments, respond:
 ```
 I am ready to generate a sprint summary. Please provide:
-1. Path to the CSV file exported from Jira
-2. (Optional) Path where to save the output file
+1. Sprint number or Jira sprint identifier
+2. (Optional) Path to the CSV file exported from Jira, if Jira MCP is not available
+3. (Optional) Path where to save the output file
 
-Example: /sprint-summary /home/user/jira-export.csv
+Example: /sprint-summary 192
+Fallback CSV example: /sprint-summary /home/user/jira-export.csv
 
 You can generate the CSV here: https://shopsys.atlassian.net/issues/?filter=12564
 Before exporting, update the sprint number in the filter to the sprint you want to summarize.
@@ -32,12 +34,26 @@ Then wait for user input.
 
 ## Command Arguments
 
-- **$1** (required): Path to Jira CSV export
-- **$2** (optional): Path for output markdown file (default: same directory as CSV, filename sprint-summary.md)
+- **$1** (required): Sprint number/Jira sprint identifier, or path to Jira CSV export as fallback
+- **$2** (optional): Path for output markdown file (default: `sprint-summary.md` or same directory as CSV)
 
 ## Workflow
 
-### Step 1: Load and Parse CSV
+### Step 1: Load Source Data and Select Tasks
+
+Primarily use Jira MCP. CSV export is a fallback only when Jira MCP is unavailable or does not provide the required data.
+
+When using Jira MCP:
+1. Find the requested sprint.
+2. Include only issues that were completed in that sprint.
+3. Load issue details, PR links, and comments.
+4. Use comments especially for tasks without PRs, research tasks, and unclear changes.
+
+Only include tasks completed in the sprint. Do not include issues that were merely assigned to or present in the sprint but not completed there.
+
+Exclude operational/meta tasks such as sprint overhead, grooming, release management, coordination, or similar internal process tasks unless the user explicitly asks to include them.
+
+When using CSV fallback:
 
 1. Read the CSV file using Read tool
 2. Expected columns:
@@ -45,6 +61,8 @@ Then wait for user input.
    - Summary - Task name
    - Description - Detailed description
    - Custom field (Merge Request) - GitHub PR link
+
+If CSV data does not include comments, explicitly mention that Jira comments could not be checked unless Jira MCP is available.
 
 ### Step 2: Categorize Tasks
 
@@ -173,9 +191,17 @@ For each task:
    - Remove Jira markup (noformat blocks, image embeds, wiki links)
    - Focus on:
      - What changed
+     - What caused the issue, for bug fixes and operational incidents
+     - What was adjusted technically or behaviorally, not just that it was fixed
      - Why it changed (if relevant)
      - Impact on users/developers
    - Max 3-5 bullet points per task
+
+Additional rules:
+- Avoid vague one-line bug summaries such as "Fixed broken page" or "Fixed font loading". For fixes, include the cause and the concrete correction when the information is available from Jira, PR body, PR diff, commits, or comments.
+- If a task has no PR, do not assume it is invalid. Warn the user and inspect Jira comments for context.
+- If a no-PR task was completed as part of another task in the same sprint, merge it into the relevant main item.
+- Prefer separate article items for unrelated tasks. Merge tasks only when they form one coherent feature/workstream, such as a larger GTM/dataLayer rollout.
 
 ### Step 6: Save Markdown
 
@@ -251,10 +277,19 @@ Statistics:
 Would you like to open the file in PhpStorm?
 ```
 
-5. After the user decides whether to open the file in PhpStorm, instruct them to create the article in Confluence:
+### Step 9: Confluence Workflow
+
+Always create the Confluence article as a private review page (`isPrivate: true`) when Confluence MCP is available.
+
+Before creating the page, inform the user that the page will be created as private and that after review they should publish or make it public manually in Confluence.
+
+Place the page under the same parent/folder as the previous sprint summary.
+
+If attachment upload is not available, insert short screenshot placeholders into the article and clearly tell the user which local files need to be uploaded manually.
+
+If Confluence MCP is unavailable, instruct the user to create the article manually in Confluence here:
 
 ```
-Please create the article in Confluence here:
 https://shopsys.atlassian.net/wiki/spaces/PRG/folder/2698510337?atlOrigin=eyJpIjoiMTIzN2EwNmQyYzMyNGFiY2I1OTU1YmVkMjk4YTk1MTciLCJwIjoiYyJ9
 ```
 
