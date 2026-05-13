@@ -64,7 +64,11 @@ export default class McpManualToken {
         const $customExpirationRow = $form.find('[data-js-mcp-manual-token-custom-expiration]');
         const $customExpirationInput = $customExpirationRow.find('input');
 
-        if ($expirationPreset.length === 0 || $customExpirationRow.length === 0 || $customExpirationInput.length === 0) {
+        if (
+            $expirationPreset.length === 0 ||
+            $customExpirationRow.length === 0 ||
+            $customExpirationInput.length === 0
+        ) {
             return;
         }
 
