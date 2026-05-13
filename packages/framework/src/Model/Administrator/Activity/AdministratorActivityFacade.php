@@ -30,8 +30,9 @@ class AdministratorActivityFacade
         return $administratorActivity;
     }
 
-    public function updateCurrentActivityLastActionTime(Administrator $administrator): void
+    public function updateCurrentActivity(Administrator $administrator): void
     {
+        $administrator->setLastActivity($this->clock->now());
         $currentAdministratorActivity = $this->administratorActivityRepository->getCurrent($administrator);
         $currentAdministratorActivity->updateLastActionTime();
         $this->em->flush();

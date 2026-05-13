@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Security;
 
 use Override;
 use Psr\Clock\ClockInterface;
-use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
@@ -21,7 +20,6 @@ class AdministratorUserProvider implements UserProviderInterface
 {
     public function __construct(
         protected readonly AdministratorRepository $administratorRepository,
-        protected readonly AdministratorActivityFacade $administratorActivityFacade,
         protected readonly AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber,
         protected readonly ClockInterface $clock,
     ) {
@@ -82,17 +80,11 @@ class AdministratorUserProvider implements UserProviderInterface
             if ($this->clock->now()->getTimestamp() - $administrator->getLastActivity()->getTimestamp() > 3600 * 5) {
                 throw new AuthenticationExpiredException('Admin was too long inactive.');
             }
-
-            if ($freshAdministrator !== null) {
-                $freshAdministrator->setLastActivity($this->clock->now());
-            }
         }
 
         if ($freshAdministrator === null) {
             throw new UserNotFoundException('Unable to find an active admin');
         }
-
-        $this->administratorActivityFacade->updateCurrentActivityLastActionTime($freshAdministrator);
 
         if ($freshAdministrator->getRolesChangedAt() > $administrator->getRolesChangedAt()) {
             //In this step token does not exist, so we are not able to update user roles.
