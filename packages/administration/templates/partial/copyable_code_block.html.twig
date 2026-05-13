@@ -1,0 +1,8 @@
+{% macro render(content, copyTitle = null) %}
+    <div class="position-relative">
+        <pre class="bg-dark text-white rounded p-3 pe-5 mb-0 overflow-auto"><code>{{ content }}</code></pre>
+        <a href="#" class="position-absolute top-0 end-0 m-2 text-white" data-js-clipboard-copy="{{ content }}" title="{{ copyTitle|default('Copy to clipboard'|trans) }}">
+            {{ ux_icon('duplicate') }}
+        </a>
+    </div>
+{% endmacro %}

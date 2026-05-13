@@ -1,5 +1,11 @@
-{% set codexAddCommand = 'codex mcp add ' ~ mcpServerName ~ ' --url ' ~ mcpEndpointUrl ~ ' --bearer-token-env-var ' ~ bearerTokenEnvVarName %}
+{% import '@ShopsysAdministration/partial/copyable_code_block.html.twig' as copyableCodeBlock %}
+
 {% set codexExportCommand = 'export ' ~ bearerTokenEnvVarName ~ '="' ~ (tokenString ?? '<token>') ~ '"' %}
+{%- set codexAddCommand -%}
+codex mcp add {{ mcpServerName }} \
+--url {{ mcpEndpointUrl }} \
+--bearer-token-env-var {{ bearerTokenEnvVarName }}
+{%- endset -%}
 
 <details class="w-100 mt-4">
     <summary class="fw-semibold cursor-pointer">
@@ -11,28 +17,14 @@
 
         <div class="mb-3">
             <label class="form-label">{{ 'Per-shell token command'|trans }}</label>
-            <div class="input-group input-group-flat w-100">
-                <input type="text" value="{{ codexExportCommand }}" class="form-control font-monospace" readonly>
-                <span class="input-group-text">
-                    <a href="#" class="link-secondary" data-js-clipboard-copy="{{ codexExportCommand }}" title="{{ 'Copy command'|trans }}">
-                        {{ ux_icon('duplicate') }}
-                    </a>
-                </span>
-            </div>
+            {{ copyableCodeBlock.render(codexExportCommand, 'Copy command'|trans) }}
         </div>
 
         <p class="text-muted mb-3">{{ 'Environment variables exported this way are available only in the current shell session unless you add them to your shell profile.'|trans }}</p>
 
         <div>
             <label class="form-label">{{ 'One-time setup command'|trans }}</label>
-            <div class="input-group input-group-flat w-100">
-                <input type="text" value="{{ codexAddCommand }}" class="form-control font-monospace" readonly>
-                <span class="input-group-text">
-                    <a href="#" class="link-secondary" data-js-clipboard-copy="{{ codexAddCommand }}" title="{{ 'Copy command'|trans }}">
-                        {{ ux_icon('duplicate') }}
-                    </a>
-                </span>
-            </div>
+            {{ copyableCodeBlock.render(codexAddCommand, 'Copy command'|trans) }}
         </div>
     </div>
 </details>
