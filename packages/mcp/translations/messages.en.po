@@ -4,7 +4,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Actions"
+msgid "1 day"
+msgstr ""
+
+msgid "14 days"
+msgstr ""
+
+msgid "31 days"
+msgstr ""
+
+msgid "7 days"
 msgstr ""
 
 msgid "Active"
@@ -28,13 +37,13 @@ msgstr ""
 msgid "Authorize MCP client"
 msgstr ""
 
-msgid "Authorized MCP clients"
-msgstr ""
-
 msgid "Claude Code client setup"
 msgstr ""
 
 msgid "Client"
+msgstr ""
+
+msgid "Close"
 msgstr ""
 
 msgid "Complete the browser login and approve MCP access in Shopsys administration."
@@ -43,7 +52,7 @@ msgstr ""
 msgid "Copy command"
 msgstr ""
 
-msgid "Copy the new MCP Bearer token now. It will not be shown again:"
+msgid "Copy the new MCP Bearer token now. It will not be shown again once this window is closed:"
 msgstr ""
 
 msgid "Copy token"
@@ -52,13 +61,13 @@ msgstr ""
 msgid "Created at"
 msgstr ""
 
+msgid "Custom"
+msgstr ""
+
 msgid "Deny access"
 msgstr ""
 
-msgid "Do you really want to revoke MCP access for \"%clientLabel%\"?"
-msgstr ""
-
-msgid "Do you really want to revoke the active MCP token?"
+msgid "Do you really want to revoke this MCP token?"
 msgstr ""
 
 msgid "Endpoint URL"
@@ -67,19 +76,37 @@ msgstr ""
 msgid "Environment variables exported this way are available only in the current shell session unless you add them to your shell profile."
 msgstr ""
 
+msgid "Expiration"
+msgstr ""
+
+msgid "Expiration date must be today or in the future"
+msgstr ""
+
+msgid "Expired"
+msgstr ""
+
 msgid "Expires at"
+msgstr ""
+
+msgid "Expires on"
 msgstr ""
 
 msgid "Export the manual token in your current shell, then add the MCP server once."
 msgstr ""
 
-msgid "Generate MCP token"
+msgid "Generate manual token"
 msgstr ""
 
-msgid "Generated tokens are shown only once. Regenerating a token revokes the previous token immediately."
+msgid "Generate token"
 msgstr ""
 
-msgid "Generating a new MCP token revokes the previous one immediately. Do you want to continue?"
+msgid "Generated manually"
+msgstr ""
+
+msgid "Generated tokens are shown only once. Copy a new manual token immediately after generation."
+msgstr ""
+
+msgid "Label"
 msgstr ""
 
 msgid "Last used at"
@@ -88,22 +115,22 @@ msgstr ""
 msgid "MCP server"
 msgstr ""
 
-msgid "MCP session revoked"
+msgid "MCP token \"%tokenLabel%\" revoked"
 msgstr ""
 
-msgid "MCP token revoked"
+msgid "MCP tokens"
 msgstr ""
 
-msgid "Manual token"
+msgid "Manual"
 msgstr ""
 
 msgid "Never used"
 msgstr ""
 
-msgid "No active manual MCP token is configured for your administrator account."
+msgid "No MCP token is currently configured for your administrator account."
 msgstr ""
 
-msgid "No authorized MCP client is currently active for your administrator account."
+msgid "OAuth client"
 msgstr ""
 
 msgid "One-time setup command"
@@ -115,16 +142,13 @@ msgstr ""
 msgid "Per-shell token command"
 msgstr ""
 
-msgid "Please check the correctness of all data filled."
-msgstr ""
-
-msgid "Regenerate MCP token"
-msgstr ""
-
-msgid "Revoke MCP token"
+msgid "Please enter expiration date"
 msgstr ""
 
 msgid "Revoke access"
+msgstr ""
+
+msgid "Revoked"
 msgstr ""
 
 msgid "Run the command above once in the shell where you use Claude Code."
@@ -142,16 +166,13 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-msgid "The selected MCP session cannot be revoked."
-msgstr ""
-
-msgid "There is no active MCP session to revoke."
-msgstr ""
-
-msgid "There is no active MCP token to revoke."
+msgid "The requested active MCP token was not found."
 msgstr ""
 
 msgid "This client is requesting access to the Shopsys MCP server with your administrator account."
+msgstr ""
+
+msgid "Type"
 msgstr ""
 
 msgid "Use a manual token for clients such as Codex CLI."
@@ -159,3 +180,10 @@ msgstr ""
 
 msgid "View Codex CLI instructions"
 msgstr ""
+
+msgid "You can generate a new token manually or connect an MCP client using the instructions below."
+msgstr ""
+
+msgid "tokens"
+msgstr ""
+

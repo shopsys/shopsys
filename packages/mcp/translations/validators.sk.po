@@ -1,0 +1,12 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Please enter token label"
+msgstr "Zadajte prosím popisok tokenu"
+
+msgid "Token label cannot be longer than {{ limit }} characters"
+msgstr "Popisok tokenu nemôže byť dlhší ako {{ limit }} znakov"
+
