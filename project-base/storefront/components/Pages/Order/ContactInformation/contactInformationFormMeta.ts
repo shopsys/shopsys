@@ -167,7 +167,12 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                 then: () => validateCountry(t),
             }),
             newsletterSubscription: Yup.boolean(),
-            deliveryAddressUuid: Yup.string().optional(),
+            deliveryAddressUuid: Yup.string().when('isDeliveryAddressDifferentFromBilling', {
+                is: (isDeliveryAddressDifferentFromBilling: boolean) =>
+                    isUserLoggedIn && !pickupPlace && isDeliveryAddressDifferentFromBilling,
+                then: () => Yup.string().required(t('Please add or select a delivery address')),
+                otherwise: (schema) => schema.optional(),
+            }),
             note: Yup.string().optional().nullable(),
             isWithoutHeurekaAgreement: Yup.boolean(),
         }),
@@ -199,7 +204,7 @@ const shouldValidateDeliveryAddressField = (
     if (
         !isPickupPlaceSelected &&
         isDeliveryAddressDifferentFromBilling &&
-        (deliveryAddressUuid === 'new-delivery-address' || deliveryAddressUuid === '')
+        (deliveryAddressUuid === 'new-delivery-address' || (!isUserLoggedIn && deliveryAddressUuid === ''))
     ) {
         return true;
     }
@@ -213,7 +218,7 @@ const shouldValidateDeliveryAddressField = (
     }
 
     if (isUserLoggedIn) {
-        return deliveryAddressUuid === '';
+        return false;
     }
 
     return true;
