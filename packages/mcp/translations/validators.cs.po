@@ -4,6 +4,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "Expiration date must be today or in the future"
+msgstr "Datum platnosti musí být dnešní nebo budoucí"
+
+msgid "Please enter expiration date"
+msgstr "Zadejte prosím datum platnosti"
+
 msgid "Please enter token label"
 msgstr "Zadejte prosím popisek tokenu"
 

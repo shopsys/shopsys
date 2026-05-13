@@ -79,9 +79,6 @@ msgstr "Takto exportované proměnné prostředí jsou dostupné pouze v aktuál
 msgid "Expiration"
 msgstr "Platnost"
 
-msgid "Expiration date must be today or in the future"
-msgstr "Datum platnosti musí být dnešní nebo budoucí"
-
 msgid "Expired"
 msgstr "Vypršel"
 
@@ -141,9 +138,6 @@ msgstr "Ostatní MCP klienti"
 
 msgid "Per-shell token command"
 msgstr "Příkaz pro token v shellu"
-
-msgid "Please enter expiration date"
-msgstr "Zadejte prosím datum platnosti"
 
 msgid "Revoke access"
 msgstr "Zneplatnit přístup"

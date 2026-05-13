@@ -4,6 +4,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "Expiration date must be today or in the future"
+msgstr ""
+
+msgid "Please enter expiration date"
+msgstr ""
+
 msgid "Please enter token label"
 msgstr ""
 

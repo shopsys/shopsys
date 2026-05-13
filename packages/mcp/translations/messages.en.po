@@ -79,9 +79,6 @@ msgstr ""
 msgid "Expiration"
 msgstr ""
 
-msgid "Expiration date must be today or in the future"
-msgstr ""
-
 msgid "Expired"
 msgstr ""
 
@@ -140,9 +137,6 @@ msgid "Other MCP clients"
 msgstr ""
 
 msgid "Per-shell token command"
-msgstr ""
-
-msgid "Please enter expiration date"
 msgstr ""
 
 msgid "Revoke access"

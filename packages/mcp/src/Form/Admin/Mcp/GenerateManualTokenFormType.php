@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Override;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken;
 use Shopsys\McpBundle\Model\Administrator\McpToken\ManualTokenExpirationPresetEnum;
@@ -94,7 +95,7 @@ final class GenerateManualTokenFormType extends AbstractType
 
         if (!$expiresAt instanceof DateTimeImmutable) {
             if (count($expiresAtForm->getErrors()) === 0) {
-                $expiresAtForm->addError(new FormError(t('Please enter expiration date')));
+                $expiresAtForm->addError(new FormError(t('Please enter expiration date', domain: Translator::VALIDATOR_TRANSLATION_DOMAIN)));
             }
 
             return;
@@ -105,7 +106,7 @@ final class GenerateManualTokenFormType extends AbstractType
         $today = new DateTimeImmutable('today', $displayTimeZone);
 
         if ($selectedDateInDisplayTimeZone < $today) {
-            $expiresAtForm->addError(new FormError(t('Expiration date must be today or in the future')));
+            $expiresAtForm->addError(new FormError(t('Expiration date must be today or in the future', domain: Translator::VALIDATOR_TRANSLATION_DOMAIN)));
 
             return;
         }
