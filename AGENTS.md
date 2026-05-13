@@ -396,6 +396,13 @@ public function buildGrid(string $context, array $excludedRoles): array
 - do not use any typehints or return types in entities and data objects (no parameter types, no return types, no property types)
 - do not use `final` with one exception being FormType classes, where final is required
 
+### 11. **utils folder rules**
+
+- `utils/` (including `utils/releaser`) contains internal tooling that is **not released** to downstream Shopsys projects, so it follows the same strict rules as `project-base`
+- use `final` on classes — there is no extension surface to preserve
+- use `private` visibility instead of `protected`
+- use typehints and return types everywhere
+
 ## Code Best Practices
 
 ### Documentation Best Practices
