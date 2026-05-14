@@ -6,6 +6,9 @@ export const mapGtmUserEntryInfoFromCurrentCustomer = ({
     email,
     firstName,
     lastName,
+    companyName,
+    companyNumber,
+    companyTaxNumber,
     loginInfo: { loginType, externalId },
 }: CurrentCustomerType): GtmUserEntryInfoType => ({
     id: uuid,
@@ -14,4 +17,7 @@ export const mapGtmUserEntryInfoFromCurrentCustomer = ({
     lastName,
     loginType,
     externalId,
+    companyName,
+    companyNumber,
+    companyVatNumber: companyTaxNumber,
 });
