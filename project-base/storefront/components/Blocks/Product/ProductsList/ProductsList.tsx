@@ -48,7 +48,7 @@ export const ProductsList: FC<ProductsListProps> = ({
         return <CategoryDetailContentMessage />;
     }
 
-    if (!!products?.length && !areProductsFetching) {
+    if (products?.length && !areProductsFetching) {
         return (
             <>
                 <h2 className="sr-only">{t('Product list')}</h2>
