@@ -8,10 +8,7 @@
             "App\\": [
                 "src/"
             ],
-            "Overblog\\GraphQLBundle\\__DEFINITIONS__\\": "var/overblogCompiledClasses",
-            "Sniffer\\": [
-                "sniffer/"
-            ]
+            "Overblog\\GraphQLBundle\\__DEFINITIONS__\\": "var/overblogCompiledClasses"
         },
         "classmap": [
             "app/Environment.php"
