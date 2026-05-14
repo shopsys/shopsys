@@ -7,6 +7,7 @@ namespace Shopsys\Releaser\Packagist;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Json;
 use Shopsys\Releaser\Exception\ShouldNotHappenException;
+use Throwable;
 
 final class PackageProvider
 {
@@ -44,6 +45,17 @@ final class PackageProvider
         }
 
         return $packagesWithVersions;
+    }
+
+    public function hasVersion(string $package, string $version): bool
+    {
+        try {
+            $publishedVersions = $this->getPackageVersions($package);
+        } catch (Throwable) {
+            return false;
+        }
+
+        return in_array($version, $publishedVersions, true);
     }
 
     private function ensureIsValidResponse(array $json, string $url): void

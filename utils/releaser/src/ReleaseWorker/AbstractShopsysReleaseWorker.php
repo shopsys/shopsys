@@ -20,6 +20,8 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     public const string PHP_IMAGE_PACKAGE_NAME = 'php-image';
 
+    private const int MAX_WAIT_SECONDS = 7200;
+
     /**
      * If you modify this list, do not forget updating:
      *      /.github/monorepo/monorepo_functions.sh
@@ -103,6 +105,42 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
         $this->processRunner->run('git add .');
         $this->processRunner->run('git commit --message="' . addslashes($message) . '"');
+    }
+
+    protected function waitFor(WaitForExternalConditionInterface $condition): void
+    {
+        $description = $condition->describe();
+        $intervalSeconds = $condition->pollIntervalSeconds();
+        $maxAttempts = (int)ceil(self::MAX_WAIT_SECONDS / $intervalSeconds);
+
+        $this->symfonyStyle->note(sprintf('Waiting for: %s', $description));
+
+        for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
+            if ($condition->check()) {
+                $this->symfonyStyle->success(sprintf('Condition met: %s', $description));
+
+                return;
+            }
+
+            if ($attempt === $maxAttempts) {
+                break;
+            }
+
+            $this->symfonyStyle->writeln(sprintf(
+                'attempt %d: %s; sleeping %ds',
+                $attempt,
+                $condition->progressDescription(),
+                $intervalSeconds,
+            ));
+            sleep($intervalSeconds);
+        }
+
+        $this->symfonyStyle->warning(sprintf(
+            'Gave up after %d attempts waiting for: %s',
+            $maxAttempts,
+            $description,
+        ));
+        $this->confirm(sprintf('Continue when "%s" is satisfied', $description));
     }
 
     protected function isGitWorkingTreeEmpty(): bool

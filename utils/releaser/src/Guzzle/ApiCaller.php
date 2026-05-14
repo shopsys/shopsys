@@ -8,11 +8,23 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\Psr7\Request;
 use Nette\Utils\Json;
+use Throwable;
 
 final class ApiCaller
 {
     public function __construct(private readonly ClientInterface $client)
     {
+    }
+
+    public function urlReturnsOk(string $url): bool
+    {
+        try {
+            $response = $this->client->send(new Request('GET', $url), ['http_errors' => false]);
+
+            return $response->getStatusCode() >= 200 && $response->getStatusCode() < 300;
+        } catch (Throwable) {
+            return false;
+        }
     }
 
     /**
@@ -30,6 +42,7 @@ final class ApiCaller
 
     /**
      * @param string[] $urls
+     * @param array<string, string> $headers
      * @return string[]
      */
     public function sendGetsAsyncToStrings(array $urls, array $headers): array
