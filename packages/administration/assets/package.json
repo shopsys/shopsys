@@ -11,15 +11,16 @@
         "standards-fix": "biome check --fix --unsafe ."
     },
     "dependencies": {
+        "@melloware/coloris": "^0.25.0",
         "@tabler/core": "^1.2.0",
         "autosize": "^6.0.1",
-        "bazinga-translator": "^2.6.6",
+        "bazinga-translator": "^8.0.0",
         "bootstrap": "^5.3.3",
-        "chart.js": "^2.9.3",
+        "chart.js": "^4.5.1",
         "countup.js": "^2.8.0",
         "imask": "^7.6.1",
+        "intl-messageformat": "^11.2.5",
         "nouislider": "^15.8.1",
-        "@melloware/coloris": "^0.25.0",
         "tom-select": "^2.4.3"
     },
     "devDependencies": {

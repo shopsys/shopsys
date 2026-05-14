@@ -14,21 +14,23 @@
     "dependencies": {
         "@melloware/coloris": "^0.25.0",
         "@tabler/core": "^1.2.0",
-        "bazinga-translator": "^2.6.6",
-        "chart.js": "^2.9.3",
+        "bazinga-translator": "^8.0.0",
+        "chart.js": "^4.5.1",
         "flatpickr": "^4.6.13",
-        "jquery": "^3.4.1",
+        "intl-messageformat": "^11.2.5",
+        "jquery": "^4.0.0",
         "jquery-hoverintent": "^1.10.1",
         "nouislider": "^15.8.1",
-        "select2": "^4.0.12",
+        "select2": "^4.0.13",
         "sortablejs": "^1.15.6"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.14.4",
         "@biomejs/biome": "^2.2.0",
         "@shopsys/biome-config": "file:vendor/shopsys/biome-config",
-        "babel-jest": "^27.0.1",
+        "babel-jest": "^30.4.1",
         "core-js": "^3.13.1",
-        "jest": "^27.0.1"
+        "jest": "^30.4.2",
+        "jest-environment-jsdom": "^30.4.1"
     }
 }
