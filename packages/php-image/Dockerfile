@@ -10,30 +10,25 @@ FROM node:${NODE_MAJOR}-${LINUX_DISTRIBUTION} AS node_builder
 
 FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 
-# Build dependencies needed for installation and cleanup
-#  autoconf - Required for compiling extensions
-#  freetype-dev - Development files for FreeType (font rendering) needed for gd extension
-#  g++ - Compiler for gd extension
-#  git - Required by pie (PHP Installer for Extensions) when fetching extension sources and by composer-patches for applying patches during composer install
-#  icu-dev - Development files for ICU (International Components for Unicode) needed for intl extension
-#  jpeg-dev - Development files for JPEG (image format) needed for gd extension
-#  libpng-dev - Development files for PNG (image format) needed for gd extension
-#  libpq-dev - Development files for PostgreSQL needed for pdo_pgsql and pgsql extensions
-#  libzip-dev - Development files for libzip needed for zip extension
-#  make - Required for compiling extensions
-#  openssl-dev - Development files for OpenSSL
-#  protobuf-c-dev - Development files for protobuf-c needed for pg_query extension (flow-php/pg-query-ext) used in MCP for parsing SQL queries
-#  rabbitmq-c-dev - Development files for RabbitMQ
+# PHP extensions installed into the final image
+#  amqp - RabbitMQ extension
 #  bcmath - Arbitrary precision mathematics
+#  calendar - Calendar conversion functions
 #  gd - Image processing for gd extension
 #  intl - Internationalization for intl extension
 #  pdo_pgsql - PostgreSQL driver for PDO
 #  pgsql - PostgreSQL driver
+#  pg_query - SQL query parsing extension used in MCP for parsing SQL queries
+#  redis - Redis extension
 #  zip - Zip archive handling for zip extension
+#
+# Runtime dependencies needed in the final image
 #  bash - Shell for running scripts
+#  bash-completion - Bash completions for CLI tools
 #  ca-certificates - Certificates for secure connections
 #  coreutils - Basic file, shell and text manipulation utilities
 #  freetype - Font rendering for gd extension
+#  git - Required by pie (PHP Installer for Extensions) when fetching extension sources and by composer-patches for applying patches during composer install
 #  htop - Interactive process viewer for monitoring
 #  icu-data-full - ICU data for full locale support for intl extension
 #  icu-libs - ICU libraries for intl extension
@@ -43,26 +38,60 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 #  musl-locales - Locales for internationalization
 #  nano - Text editor for editing files
 #  openssl - Secure communication for OpenSSL
-#  postgresql-client - PostgreSQL client for connecting to databases
+#  patch - Patch utility for applying patches
+#  postgresql18-client - PostgreSQL 18 client for connecting to databases
 #  protobuf-c - protobuf-c runtime library needed for pg_query extension (flow-php/pg-query-ext) used in MCP for parsing SQL queries
 #  rabbitmq-c - RabbitMQ client for connecting to message broker
 #  vim - Text editor for editing files
+#
+# Build dependencies installed as .build-deps and removed after extension installation, so they are not present in the final image
+#  autoconf - Required for compiling extensions
+#  freetype-dev - Development files for FreeType (font rendering) needed for gd extension
+#  g++ - Compiler for gd extension
+#  icu-dev - Development files for ICU (International Components for Unicode) needed for intl extension
+#  jpeg-dev - Development files for JPEG (image format) needed for gd extension
+#  libpng-dev - Development files for PNG (image format) needed for gd extension
+#  libpq-dev - Development files for PostgreSQL needed for pdo_pgsql and pgsql extensions
+#  libzip-dev - Development files for libzip needed for zip extension
+#  make - Required for compiling extensions
+#  openssl-dev - Development files for OpenSSL
+#  protobuf-c-dev - Development files for protobuf-c needed for pg_query extension (flow-php/pg-query-ext) used in MCP for parsing SQL queries
+#  rabbitmq-c-dev - Development files for RabbitMQ
 
 RUN apk add --no-cache \
-    git && \
+        bash \
+        bash-completion \
+        ca-certificates \
+        coreutils \
+        freetype \
+        git \
+        htop \
+        icu-data-full \
+        icu-libs \
+        jpeg \
+        libpng \
+        libzip \
+        musl-locales \
+        nano \
+        openssl \
+        patch \
+        postgresql18-client \
+        protobuf-c \
+        rabbitmq-c \
+        vim && \
     apk add --no-cache --virtual .build-deps \
-    autoconf \
-    freetype-dev \
-    g++ \
-    icu-dev \
-    jpeg-dev \
-    libpng-dev \
-    libpq-dev \
-    libzip-dev \
-    make \
-    openssl-dev \
-    protobuf-c-dev \
-    rabbitmq-c-dev && \
+        autoconf \
+        freetype-dev \
+        g++ \
+        icu-dev \
+        jpeg-dev \
+        libpng-dev \
+        libpq-dev \
+        libzip-dev \
+        make \
+        openssl-dev \
+        protobuf-c-dev \
+        rabbitmq-c-dev && \
     curl -fsSL https://github.com/php/pie/releases/latest/download/pie.phar -o /usr/local/bin/pie && \
     chmod +x /usr/local/bin/pie && \
     pecl install redis && \
@@ -80,27 +109,7 @@ RUN apk add --no-cache \
         zip && \
     pie install flow-php/pg-query-ext && \
     rm /usr/local/bin/pie && \
-    apk del .build-deps && \
-    apk add --no-cache \
-        bash \
-        bash-completion \
-        ca-certificates \
-        coreutils \
-        freetype \
-        htop \
-        icu-data-full \
-        icu-libs \
-        jpeg \
-        libpng \
-        libzip \
-        musl-locales \
-        nano \
-        openssl \
-        patch \
-        postgresql18-client \
-        protobuf-c \
-        rabbitmq-c \
-        vim
+    apk del .build-deps
 
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
