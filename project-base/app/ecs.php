@@ -5,8 +5,6 @@ declare(strict_types=1);
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use Shopsys\CodingStandards\SetList\SetList as ShopsysSetList;
 use SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff;
-use Sniffer\ExtendedApiClassNamespaceSniffer;
-use Sniffer\FrontendApiNamespaceSniffer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
@@ -20,8 +18,6 @@ return ECSConfig::configure()
     ])
     ->withRules([
         DeprecatedAnnotationDeclarationSniff::class,
-        FrontendApiNamespaceSniffer::class,
-        ExtendedApiClassNamespaceSniffer::class,
     ])
     ->withConfiguredRule(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => 19,
