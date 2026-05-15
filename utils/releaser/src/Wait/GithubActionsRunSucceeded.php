@@ -67,34 +67,43 @@ final class GithubActionsRunSucceeded implements WaitForExternalConditionInterfa
             return sprintf('no GitHub Actions results reported yet for %s on %s', $this->organization, $this->branch);
         }
 
-        $failing = $this->getFailingPackages();
+        $pendingCount = 0;
+        $failing = [];
 
-        if ($failing === []) {
+        foreach ($this->lastStatuses as $package => $status) {
+            if ($status === self::STATUS_SUCCESS) {
+                continue;
+            }
+
+            if ($status === GithubActionsStatusReporter::STATUS_PENDING) {
+                $pendingCount++;
+
+                continue;
+            }
+
+            $failing[$package] = $status;
+        }
+
+        if ($pendingCount === 0 && $failing === []) {
             return sprintf('all %d packages green, awaiting confirmation', count($this->lastStatuses));
         }
 
         $parts = [];
 
-        foreach ($failing as $package => $status) {
-            $parts[] = sprintf('%s (%s)', $package, $status);
+        if ($pendingCount > 0) {
+            $parts[] = sprintf('%d pending', $pendingCount);
         }
 
-        return 'still failing: ' . implode(', ', $parts);
-    }
+        if ($failing !== []) {
+            $failingParts = [];
 
-    /**
-     * @return array<string, string>
-     */
-    private function getFailingPackages(): array
-    {
-        $failing = [];
-
-        foreach ($this->lastStatuses as $package => $status) {
-            if ($status !== self::STATUS_SUCCESS) {
-                $failing[$package] = $status;
+            foreach ($failing as $package => $status) {
+                $failingParts[] = sprintf('%s (%s)', $package, $status);
             }
+
+            $parts[] = 'failing: ' . implode(', ', $failingParts);
         }
 
-        return $failing;
+        return implode('; ', $parts);
     }
 }

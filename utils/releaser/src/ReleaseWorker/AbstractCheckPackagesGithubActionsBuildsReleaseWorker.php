@@ -51,15 +51,25 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         foreach ($statusForPackages as $package => $status) {
             if ($status === self::STATUS_SUCCESS) {
                 $this->symfonyStyle->note(sprintf('"%s" package is passing', $package));
-            } else {
-                $isPassing = false;
-                $this->symfonyStyle->error(sprintf(
-                    '"%s" package is failing. Go check why:%s%s',
-                    $package,
-                    PHP_EOL,
-                    sprintf('https://github.com/%s/actions', $package),
-                ));
+
+                continue;
             }
+
+            $isPassing = false;
+
+            if ($status === GithubActionsStatusReporter::STATUS_PENDING) {
+                $this->symfonyStyle->note(sprintf('"%s" package is still pending', $package));
+
+                continue;
+            }
+
+            $this->symfonyStyle->error(sprintf(
+                '"%s" package is failing (%s). Go check why:%s%s',
+                $package,
+                $status,
+                PHP_EOL,
+                sprintf('https://github.com/%s/actions', $package),
+            ));
         }
 
         if (count($statusForPackages) === 0) {
