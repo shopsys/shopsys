@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlSlugNormalizer;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20260207120000 extends AbstractMigration
+final class Version20260207120000 extends AbstractMigration
 {
     #[Override]
     public function up(Schema $schema): void

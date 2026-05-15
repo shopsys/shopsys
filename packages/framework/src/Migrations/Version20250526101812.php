@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20250526101812 extends AbstractMigration implements DomainAwareInterface
+final class Version20250526101812 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
     use MailTemplateMigrationTrait;

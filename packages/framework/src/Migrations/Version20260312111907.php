@@ -10,7 +10,7 @@ use libphonenumber\PhoneNumberUtil;
 use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20260312111907 extends AbstractMigration
+final class Version20260312111907 extends AbstractMigration
 {
     #[Override]
     public function up(Schema $schema): void

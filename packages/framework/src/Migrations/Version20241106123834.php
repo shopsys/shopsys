@@ -10,11 +10,11 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Exception\AdminLocaleNotFoundException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20241106123834 extends AbstractMigration implements DomainAwareInterface, AdministratorLocalizationAwareInterface
+final class Version20241106123834 extends AbstractMigration implements DomainAwareInterface, AdministratorLocalizationAwareInterface
 {
     use MultidomainMigrationTrait;
 
-    protected ?AdministratorLocalizationFacade $administratorLocalizationFacade = null;
+    private ?AdministratorLocalizationFacade $administratorLocalizationFacade = null;
 
     #[Override]
     public function up(Schema $schema): void

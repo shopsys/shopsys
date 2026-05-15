@@ -9,13 +9,13 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20240910054629 extends AbstractMigration implements DomainAwareInterface
+final class Version20240910054629 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
     use MailTemplateMigrationTrait;
 
-    protected const string COMPLAINT_STATUS_1 = 'complaint_status_1';
-    protected const string COMPLAINT_STATUS_2 = 'complaint_status_2';
+    private const string COMPLAINT_STATUS_1 = 'complaint_status_1';
+    private const string COMPLAINT_STATUS_2 = 'complaint_status_2';
 
     #[Override]
     public function up(Schema $schema): void

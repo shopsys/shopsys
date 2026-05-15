@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20240111072911 extends AbstractMigration implements DomainAwareInterface
+final class Version20240111072911 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

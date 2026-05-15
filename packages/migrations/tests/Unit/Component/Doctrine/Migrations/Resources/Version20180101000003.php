@@ -11,7 +11,7 @@ use Override;
 /**
  * @see \Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\MigrationsLockTest
  */
-class Version20180101000003 extends AbstractMigration
+final class Version20180101000003 extends AbstractMigration
 {
     #[Override]
     public function up(Schema $schema): void

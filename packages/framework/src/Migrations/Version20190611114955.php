@@ -9,9 +9,9 @@ use Override;
 use RuntimeException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20190611114955 extends AbstractMigration
+final class Version20190611114955 extends AbstractMigration
 {
-    protected const MAX_LISTED_ORDERS = 10;
+    private const MAX_LISTED_ORDERS = 10;
 
     #[Override]
     public function up(Schema $schema): void
@@ -31,7 +31,7 @@ class Version20190611114955 extends AbstractMigration
      * @see https://github.com/shopsys/shopsys/blob/v7.2.1/packages/framework/src/Model/Order/Item/OrderItemPriceCalculation.php#L60-L76
      * @see https://github.com/shopsys/shopsys/blob/v7.2.1/packages/framework/src/Model/Pricing/PriceCalculation.php#L25-L46
      */
-    protected function calculateOrderItemTotalPrices(): void
+    private function calculateOrderItemTotalPrices(): void
     {
         $this->sql('UPDATE order_items SET total_price_with_vat = price_with_vat * quantity');
         $this->sql(
@@ -42,7 +42,7 @@ class Version20190611114955 extends AbstractMigration
     /**
      * Validates that the calculated order item total prices add up to the total price of the order
      */
-    protected function validateOrderItemTotalPrices(): void
+    private function validateOrderItemTotalPrices(): void
     {
         $result = $this->connection->executeQuery(
             'SELECT o.id, o.total_price_with_vat, order_item_total_prices.with_vat, o.total_price_without_vat, order_item_total_prices.without_vat
@@ -66,7 +66,7 @@ class Version20190611114955 extends AbstractMigration
             $incorrectOrderCount,
         );
 
-        for ($i = 0; $i < min($incorrectOrderCount, static::MAX_LISTED_ORDERS); $i++) {
+        for ($i = 0; $i < min($incorrectOrderCount, self::MAX_LISTED_ORDERS); $i++) {
             $incorrectOrder = $result->fetchNumeric();
 
             $message .= sprintf(
@@ -75,7 +75,7 @@ class Version20190611114955 extends AbstractMigration
             );
         }
 
-        if ($incorrectOrderCount > static::MAX_LISTED_ORDERS) {
+        if ($incorrectOrderCount > self::MAX_LISTED_ORDERS) {
             $message .= "\n  ...";
         }
 

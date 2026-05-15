@@ -9,7 +9,7 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20231102161313 extends AbstractMigration
+final class Version20231102161313 extends AbstractMigration
 {
     #[Override]
     public function up(Schema $schema): void
