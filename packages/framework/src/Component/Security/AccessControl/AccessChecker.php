@@ -16,9 +16,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 final readonly class AccessChecker implements AccessCheckerInterface
 {
     public function __construct(
-        protected AuthorizationCheckerInterface $authorizationChecker,
-        protected RoleRegistryInterface $roleRegistry,
-        protected RouteAccessCheckerInterface $routeAccessChecker,
+        private AuthorizationCheckerInterface $authorizationChecker,
+        private RoleRegistryInterface $roleRegistry,
+        private RouteAccessCheckerInterface $routeAccessChecker,
     ) {
     }
 

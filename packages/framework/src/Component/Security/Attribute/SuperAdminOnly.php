@@ -27,7 +27,7 @@ final readonly class SuperAdminOnly
      * @param array<string|\Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod> $methods
      */
     public function __construct(
-        protected array $methods = [],
+        private array $methods = [],
     ) {
     }
 
