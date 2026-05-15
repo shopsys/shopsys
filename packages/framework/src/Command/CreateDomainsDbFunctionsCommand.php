@@ -19,8 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CreateDomainsDbFunctionsCommand extends Command
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly DomainDbFunctionsFacade $domainDbFunctionsFacade,
+        protected readonly EntityManagerInterface $em,
+        protected readonly DomainDbFunctionsFacade $domainDbFunctionsFacade,
     ) {
         parent::__construct();
     }
@@ -38,7 +38,7 @@ class CreateDomainsDbFunctionsCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function doExecute(OutputInterface $output): void
+    protected function doExecute(OutputInterface $output): void
     {
         $output->writeln('Start of creating db functions.');
 

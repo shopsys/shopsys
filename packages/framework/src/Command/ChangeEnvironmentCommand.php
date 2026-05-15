@@ -21,9 +21,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class ChangeEnvironmentCommand extends Command
 {
-    private const ARG_ENVIRONMENT = 'environment';
+    protected const ARG_ENVIRONMENT = 'environment';
 
-    public function __construct(private readonly EnvironmentFileSetting $environmentFileSetting)
+    public function __construct(protected readonly EnvironmentFileSetting $environmentFileSetting)
     {
         parent::__construct();
     }
@@ -35,7 +35,7 @@ class ChangeEnvironmentCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument(self::ARG_ENVIRONMENT, InputArgument::OPTIONAL, 'The target environment');
+            ->addArgument(static::ARG_ENVIRONMENT, InputArgument::OPTIONAL, 'The target environment');
     }
 
     /**
@@ -46,7 +46,7 @@ class ChangeEnvironmentCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $targetEnvironment = $input->getArgument(self::ARG_ENVIRONMENT);
+        $targetEnvironment = $input->getArgument(static::ARG_ENVIRONMENT);
 
         if ($targetEnvironment === null && $input->isInteractive()) {
             $targetEnvironment = $io->choice('What environment do you want to set?', EnvironmentType::ALL);

@@ -20,7 +20,7 @@ class RedisCleanCacheCommand extends Command
     /**
      * RedisCleanCacheCommand constructor.
      */
-    public function __construct(private readonly RedisFacade $redisFacade)
+    public function __construct(protected readonly RedisFacade $redisFacade)
     {
         parent::__construct();
     }

@@ -24,9 +24,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class RouterMatchCommandForDomain extends Command
 {
     public function __construct(
-        private readonly DomainChoiceHandler $domainChoiceHelper,
-        private readonly RouterMatchCommand $routerMatchCommand,
-        private readonly KernelInterface $kernel,
+        protected readonly DomainChoiceHandler $domainChoiceHelper,
+        protected readonly RouterMatchCommand $routerMatchCommand,
+        protected readonly KernelInterface $kernel,
     ) {
         parent::__construct();
     }

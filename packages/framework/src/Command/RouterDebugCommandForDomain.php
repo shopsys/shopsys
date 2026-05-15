@@ -26,9 +26,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class RouterDebugCommandForDomain extends Command
 {
     public function __construct(
-        private readonly DomainChoiceHandler $domainChoiceHelper,
-        private readonly RouterDebugCommand $routerDebugCommand,
-        private readonly KernelInterface $kernel,
+        protected readonly DomainChoiceHandler $domainChoiceHelper,
+        protected readonly RouterDebugCommand $routerDebugCommand,
+        protected readonly KernelInterface $kernel,
     ) {
         parent::__construct();
     }

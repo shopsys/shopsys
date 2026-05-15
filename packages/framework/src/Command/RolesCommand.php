@@ -33,26 +33,26 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 )]
 class RolesCommand extends Command
 {
-    private const DETAIL_VIEW_THRESHOLD = 5;
+    protected const DETAIL_VIEW_THRESHOLD = 5;
 
     /**
      * @var array<class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>, \Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\AbstractRoleHierarchyProvider>
      */
-    private array $hierarchyProviders = [];
+    protected array $hierarchyProviders = [];
 
     /**
      * @var array<class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>,\Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider>
      */
-    private array $roleSectionsProvidersByContext;
+    protected array $roleSectionsProvidersByContext;
 
     /**
      * @param iterable<\Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\AbstractRoleHierarchyProvider> $hierarchyProviders
      * @param iterable<class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>,\Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider> $roleSectionsProviders
      */
     public function __construct(
-        private readonly RoleRegistryInterface $roleRegistry,
-        private readonly ContextResolverInterface $contextResolver,
-        private readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly RoleRegistryInterface $roleRegistry,
+        protected readonly ContextResolverInterface $contextResolver,
+        protected readonly EventDispatcherInterface $eventDispatcher,
         #[AutowireIterator('shopsys.role_hierarchy_provider')]
         iterable $hierarchyProviders,
         #[AutowireIterator('shopsys.role_section_provider', defaultIndexMethod: 'getTargetContext')]
@@ -88,7 +88,7 @@ class RolesCommand extends Command
                 InputOption::VALUE_NONE,
                 'Show role hierarchy based on context',
             )
-            ->setHelp(sprintf('Displays roles organized by context. Filter by name/constant (cannot be used with --hierarchy), use --context for specific context. Shows detailed view with routes when ≤%s roles found. Use --hierarchy to display role inheritance instead of roles.', self::DETAIL_VIEW_THRESHOLD));
+            ->setHelp(sprintf('Displays roles organized by context. Filter by name/constant (cannot be used with --hierarchy), use --context for specific context. Shows detailed view with routes when ≤%s roles found. Use --hierarchy to display role inheritance instead of roles.', static::DETAIL_VIEW_THRESHOLD));
     }
 
     #[Override]
@@ -142,7 +142,7 @@ class RolesCommand extends Command
     /**
      * @return array<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>|null
      */
-    private function getContexts(?string $contextFilter, SymfonyStyle $io): ?array
+    protected function getContexts(?string $contextFilter, SymfonyStyle $io): ?array
     {
         $contexts = $this->contextResolver->getRegisteredContexts();
 
@@ -172,7 +172,7 @@ class RolesCommand extends Command
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
      * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Role>|null
      */
-    private function loadAndFilterRoles(string $contextClass, ?string $searchFilter, SymfonyStyle $io): ?array
+    protected function loadAndFilterRoles(string $contextClass, ?string $searchFilter, SymfonyStyle $io): ?array
     {
         try {
             $roles = $this->roleRegistry->getRoles($contextClass);
@@ -203,7 +203,7 @@ class RolesCommand extends Command
     /**
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
      */
-    private function displayRoles(
+    protected function displayRoles(
         SymfonyStyle $io,
         OutputInterface $output,
         AbstractContext $context,
@@ -221,7 +221,7 @@ class RolesCommand extends Command
         $collator = new Collator('en');
         usort($roles, fn (Role $a, Role $b) => $collator->compare($a->getName(), $b->getName()));
 
-        if (count($roles) < self::DETAIL_VIEW_THRESHOLD) {
+        if (count($roles) < static::DETAIL_VIEW_THRESHOLD) {
             $this->renderRoleDetails($io, $output, $roles, $context->getIdentifier());
         } else {
             $this->renderRolesTable($output, $roles, $context->getIdentifier());
@@ -234,7 +234,7 @@ class RolesCommand extends Command
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
      */
-    private function renderRolesTable(OutputInterface $output, array $roles, string $contextClass): void
+    protected function renderRolesTable(OutputInterface $output, array $roles, string $contextClass): void
     {
         $table = new Table($output);
         $table->setHeaders(['Role Constant', 'Role Name', 'Section', 'Available Permissions']);
@@ -258,7 +258,7 @@ class RolesCommand extends Command
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
      */
-    private function renderRoleDetails(
+    protected function renderRoleDetails(
         SymfonyStyle $io,
         OutputInterface $output,
         array $roles,
@@ -285,7 +285,7 @@ class RolesCommand extends Command
     /**
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
      */
-    private function dispatchDetailEvent(
+    protected function dispatchDetailEvent(
         SymfonyStyle $io,
         OutputInterface $output,
         Role $role,
@@ -302,7 +302,7 @@ class RolesCommand extends Command
     /**
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $contextClass
      */
-    private function getSection(Role $role, string $contextClass): RoleSection
+    protected function getSection(Role $role, string $contextClass): RoleSection
     {
         if (isset($this->roleSectionsProvidersByContext[$contextClass])) {
             return $this->roleSectionsProvidersByContext[$contextClass]->getById($role->getRoleSection());
@@ -314,7 +314,7 @@ class RolesCommand extends Command
     /**
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $permissions
      */
-    private function formatPermissions(array $permissions): string
+    protected function formatPermissions(array $permissions): string
     {
         if (count($permissions) === 0) {
             return '-';
@@ -326,7 +326,7 @@ class RolesCommand extends Command
         ));
     }
 
-    private function displayRoleHierarchy(SymfonyStyle $io, AbstractContext $context): void
+    protected function displayRoleHierarchy(SymfonyStyle $io, AbstractContext $context): void
     {
         $contextClass = $context->getIdentifier();
 

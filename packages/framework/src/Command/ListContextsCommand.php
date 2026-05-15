@@ -25,7 +25,7 @@ class ListContextsCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolver $contextResolver
      */
     public function __construct(
-        private readonly ContextResolverInterface $contextResolver,
+        protected readonly ContextResolverInterface $contextResolver,
     ) {
         parent::__construct();
     }
@@ -65,7 +65,7 @@ class ListContextsCommand extends Command
     /**
      * @return array<string>
      */
-    private function getRequiredContexts(AbstractContext $context): array
+    protected function getRequiredContexts(AbstractContext $context): array
     {
         $requiredContexts = [];
 

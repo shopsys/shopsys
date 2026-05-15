@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class RedisCleanCacheOldCommand extends Command
 {
-    public function __construct(private readonly RedisVersionsFacade $redisVersionsFacade)
+    public function __construct(protected readonly RedisVersionsFacade $redisVersionsFacade)
     {
         parent::__construct();
     }

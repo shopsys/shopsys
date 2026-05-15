@@ -25,13 +25,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ReplaceDomainsUrlsCommand extends Command
 {
     public function __construct(
-        private readonly Domain $domain,
-        private readonly DomainUrlReplacer $domainUrlReplacer,
-        private readonly Setting $setting,
-        private readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
-        private readonly BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
-        private readonly ArticleExportMessageDispatcher $articleExportMessageDispatcher,
-        private readonly ArticleFacade $articleFacade,
+        protected readonly Domain $domain,
+        protected readonly DomainUrlReplacer $domainUrlReplacer,
+        protected readonly Setting $setting,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
+        protected readonly ArticleExportMessageDispatcher $articleExportMessageDispatcher,
+        protected readonly ArticleFacade $articleFacade,
     ) {
         parent::__construct();
     }
