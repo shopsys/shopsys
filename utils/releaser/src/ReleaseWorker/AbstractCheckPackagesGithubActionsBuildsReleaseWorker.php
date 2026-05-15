@@ -8,6 +8,7 @@ use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\GithubActions\GithubActionsStatusReporter;
 use Shopsys\Releaser\Wait\GithubActionsRunSucceeded;
+use Throwable;
 
 /**
  * @see https://docs.github.com/en/rest/actions/workflows
@@ -40,11 +41,19 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
     ): void {
         $githubToken = $this->resolveGithubToken();
 
-        $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
-            'shopsys',
-            $initialBranchName,
-            $githubToken,
-        );
+        try {
+            $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
+                'shopsys',
+                $initialBranchName,
+                $githubToken,
+            );
+        } catch (Throwable $throwable) {
+            $this->symfonyStyle->warning(sprintf(
+                'Unable to read GitHub Actions status yet: %s',
+                $throwable->getMessage(),
+            ));
+            $statusForPackages = [];
+        }
 
         $isPassing = true;
 

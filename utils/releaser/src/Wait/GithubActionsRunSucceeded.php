@@ -7,6 +7,7 @@ namespace Shopsys\Releaser\Wait;
 use Override;
 use Shopsys\Releaser\GithubActions\GithubActionsStatusReporter;
 use Shopsys\Releaser\ReleaseWorker\WaitForExternalConditionInterface;
+use Throwable;
 
 final class GithubActionsRunSucceeded implements WaitForExternalConditionInterface
 {
@@ -17,6 +18,8 @@ final class GithubActionsRunSucceeded implements WaitForExternalConditionInterfa
      * @var array<string, string>
      */
     private array $lastStatuses = [];
+
+    private ?string $lastCheckFailureMessage = null;
 
     public function __construct(
         private readonly GithubActionsStatusReporter $statusFetcher,
@@ -35,11 +38,19 @@ final class GithubActionsRunSucceeded implements WaitForExternalConditionInterfa
     #[Override]
     public function check(): bool
     {
-        $this->lastStatuses = $this->statusFetcher->getStatusForPackagesByOrganizationAndBranch(
-            $this->organization,
-            $this->branch,
-            $this->githubToken,
-        );
+        try {
+            $this->lastStatuses = $this->statusFetcher->getStatusForPackagesByOrganizationAndBranch(
+                $this->organization,
+                $this->branch,
+                $this->githubToken,
+            );
+            $this->lastCheckFailureMessage = null;
+        } catch (Throwable $throwable) {
+            $this->lastStatuses = [];
+            $this->lastCheckFailureMessage = $throwable->getMessage();
+
+            return false;
+        }
 
         if ($this->lastStatuses === []) {
             return false;
@@ -63,6 +74,10 @@ final class GithubActionsRunSucceeded implements WaitForExternalConditionInterfa
     #[Override]
     public function progressDescription(): string
     {
+        if ($this->lastCheckFailureMessage !== null) {
+            return sprintf('last GitHub Actions check failed: %s', $this->lastCheckFailureMessage);
+        }
+
         if ($this->lastStatuses === []) {
             return sprintf('no GitHub Actions results reported yet for %s on %s', $this->organization, $this->branch);
         }
