@@ -41,7 +41,7 @@ class LoadControllersExtensionCompilerPass implements CompilerPassInterface
      *
      * @return array{extensionClass: string, controllerClass: string, priority: int}|null
      */
-    private function processService(ContainerBuilder $container, string $id): ?array
+    protected function processService(ContainerBuilder $container, string $id): ?array
     {
         $definition = $container->getDefinition($id);
         $class = $definition->getClass();
@@ -78,7 +78,7 @@ class LoadControllersExtensionCompilerPass implements CompilerPassInterface
     /**
      * Retrieves the CrudControllerExtension attribute from a reflection class.
      */
-    private function getCrudControllerExtensionAttribute(ReflectionClass $reflectionClass): ?CrudControllerExtension
+    protected function getCrudControllerExtensionAttribute(ReflectionClass $reflectionClass): ?CrudControllerExtension
     {
         $attributes = $reflectionClass->getAttributes(CrudControllerExtension::class);
 

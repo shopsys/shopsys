@@ -43,7 +43,7 @@ class InitializeControllersCompilerPass implements CompilerPassInterface
      *
      * @return array{class: string, entityClass: string}|null
      */
-    private function processService(ContainerBuilder $container, string $serviceId): ?array
+    protected function processService(ContainerBuilder $container, string $serviceId): ?array
     {
         $definition = $container->getDefinition($serviceId);
         $class = $definition->getClass();
@@ -72,7 +72,7 @@ class InitializeControllersCompilerPass implements CompilerPassInterface
     /**
      * Retrieves the CrudController attribute from a reflection class.
      */
-    private function getCrudControllerAttribute(ReflectionClass $reflectionClass): ?CrudController
+    protected function getCrudControllerAttribute(ReflectionClass $reflectionClass): ?CrudController
     {
         $attributes = $reflectionClass->getAttributes(CrudController::class);
 

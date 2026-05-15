@@ -13,7 +13,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use ReflectionClass;
 use ReflectionException;
 
-class EntityDataObjectPropertyHasNoTypehintRule implements Rule
+final class EntityDataObjectPropertyHasNoTypehintRule implements Rule
 {
     private const CHECKED_NAMESPACE = 'Shopsys\\';
 

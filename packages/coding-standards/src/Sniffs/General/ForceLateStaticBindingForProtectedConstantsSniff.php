@@ -15,7 +15,7 @@ use const T_CONST;
 use const T_PROTECTED;
 use const T_SELF;
 
-class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
+final class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
 {
     /**
      * @return array<int|string>

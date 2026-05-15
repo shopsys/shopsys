@@ -11,7 +11,7 @@ use PHPStan\Node\ClassPropertyNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
-class OrmPropertyHasNoTypehintRule implements Rule
+final class OrmPropertyHasNoTypehintRule implements Rule
 {
     private const CHECKED_NAMESPACE = 'Shopsys\\';
 

@@ -10,7 +10,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GoogleFeedInfo implements FeedInfoInterface
 {
-    public function __construct(private readonly TranslatorInterface $translator)
+    public function __construct(protected readonly TranslatorInterface $translator)
     {
     }
 

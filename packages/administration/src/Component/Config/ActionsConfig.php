@@ -9,7 +9,7 @@ use Shopsys\AdministrationBundle\Component\Action\AbstractAction;
 use Shopsys\AdministrationBundle\Component\Action\Action;
 use Webmozart\Assert\Assert;
 
-class ActionsConfig
+final class ActionsConfig
 {
     /**
      * @var \Shopsys\AdministrationBundle\Component\Action\AbstractAction[][]

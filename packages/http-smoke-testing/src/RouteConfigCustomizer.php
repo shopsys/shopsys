@@ -11,7 +11,7 @@ class RouteConfigCustomizer
     /**
      * @param \Shopsys\HttpSmokeTesting\RequestDataSetGenerator[] $requestDataSetGenerators
      */
-    public function __construct(private readonly array $requestDataSetGenerators)
+    public function __construct(protected readonly array $requestDataSetGenerators)
     {
     }
 

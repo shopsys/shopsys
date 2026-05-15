@@ -12,7 +12,7 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownl
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CategoryCrudExtension implements PluginCrudExtensionInterface
+final class CategoryCrudExtension implements PluginCrudExtensionInterface
 {
     public function __construct(
         private readonly TranslatorInterface $translator,

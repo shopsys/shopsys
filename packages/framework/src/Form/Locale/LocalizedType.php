@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LocalizedType extends AbstractType
+final class LocalizedType extends AbstractType
 {
     public function __construct(
         private readonly Localization $localization,

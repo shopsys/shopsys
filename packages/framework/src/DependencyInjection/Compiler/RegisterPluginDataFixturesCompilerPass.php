@@ -26,7 +26,7 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
         }
     }
 
-    private function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, string $serviceId): void
+    protected function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, string $serviceId): void
     {
         $pluginDataFixtureRegistryDefinition->addMethodCall('registerDataFixture', [new Reference($serviceId)]);
     }

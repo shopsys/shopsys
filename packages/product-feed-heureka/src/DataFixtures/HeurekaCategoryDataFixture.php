@@ -22,8 +22,8 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
     protected const CATEGORY_ID_FIFTH = 6;
 
     public function __construct(
-        private readonly HeurekaCategoryFacade $heurekaCategoryFacade,
-        private readonly HeurekaCategoryDataFactory $heurekaCategoryDataFactory,
+        protected readonly HeurekaCategoryFacade $heurekaCategoryFacade,
+        protected readonly HeurekaCategoryDataFactory $heurekaCategoryDataFactory,
     ) {
     }
 

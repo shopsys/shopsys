@@ -13,8 +13,8 @@ use Symfony\Component\DependencyInjection\Reference;
 class AddConstraintValidatorsPass implements CompilerPassInterface
 {
     public function __construct(
-        private readonly string $validatorFactoryServiceId = 'validator.validator_factory',
-        private readonly string $constraintValidatorTag = 'validator.constraint_validator',
+        protected readonly string $validatorFactoryServiceId = 'validator.validator_factory',
+        protected readonly string $constraintValidatorTag = 'validator.constraint_validator',
     ) {
     }
 

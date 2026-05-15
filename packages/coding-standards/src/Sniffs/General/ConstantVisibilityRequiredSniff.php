@@ -17,7 +17,7 @@ use const T_DOC_COMMENT_OPEN_TAG;
 use const T_DOC_COMMENT_STRING;
 use const T_SEMICOLON;
 
-class ConstantVisibilityRequiredSniff implements Sniff
+final class ConstantVisibilityRequiredSniff implements Sniff
 {
     /**
      * @return array<int|string>

@@ -12,7 +12,7 @@ use Twig\TwigFunction;
 class AccessCheckerExtension extends AbstractExtension
 {
     public function __construct(
-        private readonly AccessCheckerInterface $accessChecker,
+        protected readonly AccessCheckerInterface $accessChecker,
     ) {
     }
 

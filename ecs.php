@@ -204,7 +204,6 @@ return ECSConfig::configure()
             ],
             FinalFormTypeFixer::class => [
                 __DIR__ . '/project-base',
-                __DIR__ . '/packages/framework/src/Form/Locale/LocalizedType.php',
             ],
             FinalMigrationFixer::class => [
                 __DIR__ . '/project-base',

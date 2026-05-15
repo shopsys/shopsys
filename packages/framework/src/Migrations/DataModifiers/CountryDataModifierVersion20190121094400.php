@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Migrations\DataModifiers;
 
-class CountryDataModifierVersion20190121094400
+final class CountryDataModifierVersion20190121094400
 {
     /**
      * @var array<int, int>

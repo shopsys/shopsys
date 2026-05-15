@@ -59,12 +59,12 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         }
     }
 
-    private function isShopsysClassWithAlias(ContainerBuilder $container, string $serviceId, ?string $aliasId): bool
+    protected function isShopsysClassWithAlias(ContainerBuilder $container, string $serviceId, ?string $aliasId): bool
     {
         return $this->isShopsysClass($serviceId) && ($container->hasAlias($serviceId) && $this->isProjectClass($aliasId));
     }
 
-    private function isShopsysClassWithAliasRegisteredAsService(
+    protected function isShopsysClassWithAliasRegisteredAsService(
         ContainerBuilder $container,
         string $serviceId,
         ?string $aliasId,
@@ -82,12 +82,12 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         }
     }
 
-    private function isShopsysClass(string $serviceId): bool
+    protected function isShopsysClass(string $serviceId): bool
     {
         return str_starts_with($serviceId, 'Shopsys\\') !== false;
     }
 
-    private function isProjectClass(?string $serviceId): bool
+    protected function isProjectClass(?string $serviceId): bool
     {
         if ($serviceId === null) {
             return false;
@@ -96,7 +96,7 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         return str_starts_with($serviceId, 'App') !== false;
     }
 
-    private function addAllVariantsOfServiceToClassExtension(
+    protected function addAllVariantsOfServiceToClassExtension(
         ReflectionClass $shopsysClassBetterReflection,
         Definition $classExtensionRegistryDefinition,
         string $aliasId,
@@ -116,7 +116,7 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         }
     }
 
-    private function getCorrectServiceIdIfServiceIsNotExtendedByAlias(
+    protected function getCorrectServiceIdIfServiceIsNotExtendedByAlias(
         ContainerBuilder $container,
         string $serviceId,
         ?string $aliasId,

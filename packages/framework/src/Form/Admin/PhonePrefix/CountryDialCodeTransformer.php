@@ -14,8 +14,8 @@ class CountryDialCodeTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Model\PhonePrefix\CountryDialCode[] $allCountryDialCodes
      */
     public function __construct(
-        private readonly array $allCountryDialCodes,
-        private readonly bool $multiple = false,
+        protected readonly array $allCountryDialCodes,
+        protected readonly bool $multiple = false,
     ) {
     }
 

@@ -9,7 +9,7 @@ use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
 
-class CrudActionRouteData implements ActionRouteInterface
+final class CrudActionRouteData implements ActionRouteInterface
 {
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController

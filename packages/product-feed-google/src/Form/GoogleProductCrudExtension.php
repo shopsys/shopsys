@@ -11,7 +11,7 @@ use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactor
 use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainFacade;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class GoogleProductCrudExtension implements PluginCrudExtensionInterface
+final class GoogleProductCrudExtension implements PluginCrudExtensionInterface
 {
     public function __construct(
         private readonly TranslatorInterface $translator,

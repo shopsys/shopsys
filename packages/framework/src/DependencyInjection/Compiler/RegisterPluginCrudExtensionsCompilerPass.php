@@ -29,7 +29,7 @@ class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInterface
         }
     }
 
-    private function registerPluginCrudExtension(
+    protected function registerPluginCrudExtension(
         Definition $pluginCrudExtensionRegistryDefinition,
         string $serviceId,
         string $type,

@@ -21,8 +21,8 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
     protected const PRODUCT_ID_FIFTH = 5;
 
     public function __construct(
-        private readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
-        private readonly HeurekaProductDomainDataFactory $heurekaProductDomainDataFactory,
+        protected readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
+        protected readonly HeurekaProductDomainDataFactory $heurekaProductDomainDataFactory,
     ) {
     }
 

@@ -6,7 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Action\RouteData;
 
 use Closure;
 
-class UrlActionRouteData implements ActionRouteInterface
+final class UrlActionRouteData implements ActionRouteInterface
 {
     /**
      * @param string|\Closure(mixed): string $url

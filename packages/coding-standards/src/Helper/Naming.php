@@ -8,7 +8,7 @@ use PHP_CodeSniffer\Files\File;
 use SlevomatCodingStandard\Helpers\NamespaceHelper;
 use SlevomatCodingStandard\Helpers\ReferencedNameHelper;
 
-class Naming
+final class Naming
 {
     /**
      * @var string
