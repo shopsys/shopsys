@@ -160,6 +160,9 @@ msgstr "Odkaz musí byť platná URL adresa"
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr "Názov nemôže byť dlhší ako {{ limit }} znakov"
 
+msgid "Only regular spaces are allowed as whitespace characters."
+msgstr "Ako biele znaky sú povolené iba bežné medzery."
+
 msgid "Opacity must be between {{ min }} and {{ max }}"
 msgstr "Priehľadnosť musí byť medzi {{ min }} a {{ max }}"
 
