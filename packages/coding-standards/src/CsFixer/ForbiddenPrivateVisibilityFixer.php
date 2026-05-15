@@ -26,7 +26,7 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
     /**
      * @var string[]
      */
-    private array $analyzedNamespaces = [];
+    private array $analyzedNamespaces = ['Shopsys\\'];
 
     /**
      * {@inheritdoc}
@@ -34,7 +34,7 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
     #[Override]
     public function configure(?array $configuration = null): void
     {
-        if ($configuration !== null) {
+        if ($configuration !== null && array_key_exists(self::OPTION_ANALYZED_NAMESPACE, $configuration)) {
             $this->analyzedNamespaces = $this->extractNamespaces($configuration);
         }
     }
@@ -151,12 +151,18 @@ private function method()
     private function isFinalClass(Tokens $tokens): bool
     {
         foreach ($tokens as $index => $token) {
-            if ($token->isGivenKind(T_CLASS)) {
-                $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            if (!$token->isGivenKind(T_CLASS)) {
+                continue;
+            }
 
-                if ($prevIndex !== null && $tokens[$prevIndex]->isGivenKind(T_FINAL)) {
-                    return true;
-                }
+            $prevIndex = $tokens->getPrevMeaningfulToken($index);
+
+            while ($prevIndex !== null && $tokens[$prevIndex]->isGivenKind(T_READONLY)) {
+                $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
+            }
+
+            if ($prevIndex !== null && $tokens[$prevIndex]->isGivenKind(T_FINAL)) {
+                return true;
             }
         }
 
