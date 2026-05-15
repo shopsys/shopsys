@@ -1,5 +1,20 @@
 {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
+{% block grid_value_cell_id_key %}
+    {% import '@ShopsysAdministration/content/languageConstant/renderValueWithWhitespace.html.twig' as renderValueWithWhitespace %}
+    {{ renderValueWithWhitespace.renderValueWithWhitespace(value) }}
+{% endblock %}
+
+{% block grid_value_cell_id_originalTranslation %}
+    {% import '@ShopsysAdministration/content/languageConstant/renderValueWithWhitespace.html.twig' as renderValueWithWhitespace %}
+    {{ renderValueWithWhitespace.renderValueWithWhitespace(value) }}
+{% endblock %}
+
+{% block grid_value_cell_id_userTranslation %}
+    {% import '@ShopsysAdministration/content/languageConstant/renderValueWithWhitespace.html.twig' as renderValueWithWhitespace %}
+    {{ renderValueWithWhitespace.renderValueWithWhitespace(value) }}
+{% endblock %}
+
 {% block grid_action_cell_type_delete %}
     {% if row.userTranslation is not empty %}
         {{ gridView.renderBlock('grid_action_cell', { actionColumn: actionColumn, row: row}) }}
