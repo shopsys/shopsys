@@ -3,6 +3,12 @@
 Shopsys Platform uses several CSRF protection layers.  
 This guide focuses on **when to use which one** and gives practical rules for daily development.
 
+For implementation details, see:
+
+- [`packages/framework/src/Twig/CsrfExtension.php`]({{github.link}}/packages/framework/src/Twig/CsrfExtension.php)
+- [`packages/framework/src/Component/Router/Security/Attribute/CsrfProtection.php`]({{github.link}}/packages/framework/src/Component/Router/Security/Attribute/CsrfProtection.php)
+- [`packages/framework/src/Component/Router/Security/RouteCsrfProtector.php`]({{github.link}}/packages/framework/src/Component/Router/Security/RouteCsrfProtector.php)
+
 ## Quick decision guide
 
 Use this checklist when implementing UI actions:
@@ -13,6 +19,18 @@ Use this checklist when implementing UI actions:
    Use built-in Symfony form CSRF (default behavior).
 3. **Login/logout security flow?**  
    Use firewall CSRF settings from security configuration.
+
+## Do I need both `#[CsrfProtection]` and `protectedUrl(...)`?
+
+Yes, in the standard route-level flow they are **complementary**:
+
+- `#[CsrfProtection]` protects the target controller action (server-side validation).
+- `protectedUrl(...)` generates a URL that includes the required route token (client-side link generation).
+
+In practice:
+
+- For state-changing admin route actions, use both.
+- If you cannot use `protectedUrl(...)`, keep `#[CsrfProtection]` on the action and pass `routeCsrfToken` manually.
 
 ## Route-level CSRF for administration actions
 
@@ -30,16 +48,10 @@ Example:
 {{ protectedUrl('admin_store_setdefault', { id: store.id }) }}
 ```
 
-### When to use manual token passing
+### Manual token passing (only when needed)
 
 Use manual token handling only when `protectedUrl(...)` cannot be used (custom rendering or special URL construction).  
 In that case pass `routeCsrfToken` explicitly.
-
-Reference implementations:
-
-- [`packages/framework/src/Twig/CsrfExtension.php`]({{github.link}}/packages/framework/src/Twig/CsrfExtension.php)
-- [`packages/framework/src/Component/Router/Security/Attribute/CsrfProtection.php`]({{github.link}}/packages/framework/src/Component/Router/Security/Attribute/CsrfProtection.php)
-- [`packages/framework/src/Component/Router/Security/RouteCsrfProtector.php`]({{github.link}}/packages/framework/src/Component/Router/Security/RouteCsrfProtector.php)
 
 ## Existing places where route tokens are already handled for you
 
