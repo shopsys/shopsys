@@ -192,11 +192,14 @@
         "symfony/security-http": "^7.4",
         "symfony/serializer": "^7.4",
         "symfony/service-contracts": "^3.5",
+        "symfony/stimulus-bundle": "^3.0",
         "symfony/stopwatch": "^7.4",
         "symfony/string": "^7.4",
         "symfony/translation": "^7.4",
         "symfony/twig-bundle": "^7.4",
         "symfony/ux-icons": "^2.22",
+        "symfony/ux-live-component": "^3.0",
+        "symfony/ux-twig-component": "^3.0",
         "symfony/validator": "^7.4",
         "symfony/web-link": "^7.4",
         "symfony/webpack-encore-bundle": "^2.2",
@@ -283,6 +286,9 @@
             "allow-contrib": true,
             "require": "^7.4",
             "docker": false
+        },
+        "symfony/flex": {
+            "synchronize_package_json": false
         },
         "runtime": {
             "dotenv_path": "project-base/app/.env"
