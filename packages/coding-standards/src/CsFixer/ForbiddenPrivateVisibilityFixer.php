@@ -73,7 +73,7 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Properties and methods should be public or protected in defined namespace (if the class is not final).',
+            'Properties and methods should be public or protected in defined namespace (if the class is not final or abstract).',
             [
                 new CodeSample(
                     '<?php
@@ -104,7 +104,10 @@ private function method()
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
-        return !$this->isFinalClass($tokens) && $tokens->isAnyTokenKindsFound([T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE]) && $this->checkNamespace($tokens);
+        return !$this->isFinalClass($tokens)
+            && !$this->isAbstractClass($tokens)
+            && $tokens->isAnyTokenKindsFound([T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE])
+            && $this->checkNamespace($tokens);
     }
 
     private function checkNamespace(Tokens $tokens): bool
@@ -150,6 +153,16 @@ private function method()
 
     private function isFinalClass(Tokens $tokens): bool
     {
+        return $this->hasClassModifier($tokens, T_FINAL);
+    }
+
+    private function isAbstractClass(Tokens $tokens): bool
+    {
+        return $this->hasClassModifier($tokens, T_ABSTRACT);
+    }
+
+    private function hasClassModifier(Tokens $tokens, int $modifier): bool
+    {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_CLASS)) {
                 continue;
@@ -161,7 +174,7 @@ private function method()
                 $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
             }
 
-            if ($prevIndex !== null && $tokens[$prevIndex]->isGivenKind(T_FINAL)) {
+            if ($prevIndex !== null && $tokens[$prevIndex]->isGivenKind($modifier)) {
                 return true;
             }
         }
