@@ -184,7 +184,9 @@ services:
             - traefik.enable=false
 
     smtp-server:
-        image: namshi/smtp:latest
+        image: boky/postfix:latest
+        environment:
+            ALLOWED_SENDER_DOMAINS: ${ALLOWED_SENDER_DOMAINS:-shopsys.com}
         networks:
             - default
         labels:

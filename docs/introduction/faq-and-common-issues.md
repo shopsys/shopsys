@@ -121,34 +121,60 @@ See [Front-end Breadcrumb Navigation](./front-end-breadcrumb-navigation.md) arti
 
 ## Do you have any tips how to debug emails during development in Docker?
 
-Yes we have, you can easily use [`maildev/maildev`](https://github.com/maildev/maildev) library that provides you web UI where you can see the emails including their headers:
+The `smtp-server` service uses [`maildev/maildev`](https://github.com/maildev/maildev), which catches outgoing application emails and shows them in a web UI — including headers, plain text, HTML rendering, and attachments.
 
-- In your `docker-compose.yml`, change the `smtp-server` service:
+- Open the inbox at [`http://127.0.0.1:1080`](http://127.0.0.1:1080).
+- All application emails appear there immediately after they are sent.
+- You can also view outgoing emails in the Symfony profiler.
 
-```diff
+_Note: By default no emails are delivered to their original recipients — they are only captured by MailDev. See [How do I deliver emails to real recipients from my local environment?](#how-do-i-deliver-emails-to-real-recipients-from-my-local-environment) below._
+
+## How do I deliver emails to real recipients from my local environment?
+
+MailDev can be configured to act as a relay so that emails are also forwarded to the original recipients (and visible in the inbox UI). You need to provide SMTP relay credentials — the typical choice is a personal Gmail account with an App Password.
+
+### Generate a Gmail App Password
+
+1. Open <https://myaccount.google.com/security> and enable **2-Step Verification** if it is not already on (App Passwords are only available with 2FA enabled).
+2. Open <https://myaccount.google.com/apppasswords>.
+3. Create a new App Password — name it e.g. `Shopsys MailDev local` — and copy the 16-character value Google generates. It is shown only once.
+
+### Configure MailDev to relay via Gmail
+
+The `smtp-server` service in your local `docker-compose.yml` already has `--auto-relay` enabled and a pre-prepared Gmail block commented out. Uncomment it, fill in your Gmail address, and leave `MAILDEV_OUTGOING_PASS` referencing an environment variable so the App Password is **never written into the repo file**:
+
+```yaml
 smtp-server:
--        image: ixdotai/smtp:latest
-+        image: maildev/maildev
-         container_name: shopsys-framework-smtp-server
-+        ports:
-+            - "1080:1080"
-+            - "1025:1025"
+    # ...
+    environment:
+        MAILDEV_OUTGOING_HOST: smtp.gmail.com
+        MAILDEV_OUTGOING_PORT: 465
+        MAILDEV_OUTGOING_SECURE: 'true'
+        MAILDEV_OUTGOING_USER: your-address@gmail.com
+        MAILDEV_OUTGOING_PASS: ${MAILDEV_OUTGOING_PASS:-}
 ```
 
-- Run `docker compose up -d`
-- change the port in `MAILER_DSN` environment variable value (you can redefine the value in your `.env.local` file):
+**Do not paste the App Password directly into `docker-compose.yml`.** The compose file already reads `MAILDEV_OUTGOING_PASS` from your shell environment via `${MAILDEV_OUTGOING_PASS:-}`. Store the password in your OS credential store (or a password manager) and export it from your shell profile so it is available when `docker compose up` runs. Every modern OS has a native credential store you can use — macOS Keychain, Windows Credential Manager, GNOME Keyring / KWallet on Linux — pick whichever your machine offers and load the value into the environment variable from there.
 
-```diff
-- MAILER_DSN=smtp://smtp-server:25?verify_peer=false
-+ MAILER_DSN=smtp://smtp-server:1025?verify_peer=false
+#### Example: macOS Keychain
+
+```bash
+# one-time — prompts for the password interactively, stores it in Keychain
+security add-generic-password -a "$USER" -s 'shopsys-maildev-gmail' -w
+
+# add to ~/.zprofile (or ~/.bash_profile) — loaded once per login shell
+export MAILDEV_OUTGOING_PASS=$(security find-generic-password -w -s 'shopsys-maildev-gmail' -a "$USER" 2>/dev/null)
 ```
 
-- Now you are able to see all the application emails in the inbox on [`http://127.0.0.1:8025`](http://127.0.0.1:8025).
+Open a new terminal so the profile loads, then recreate the `smtp-server` container from it (docker compose reads the variable from the shell that invokes it):
 
-_Note: Beware, by using this setting, no emails are delivered to their original recipients.
-See [Outgoing emails](https://github.com/djfarrelly/MailDev#outgoing-email) in the documentation of the library for more information._
+```bash
+docker compose up -d --force-recreate smtp-server
+```
 
-_Note: You can also view the outgoing emails in the Symfony profiler._
+_Note: Gmail rewrites the `From:` header to the authenticated account, so emails will appear to come from your Gmail address rather than the application's configured sender._
+
+_Note: If you revoke the App Password at any time from your Google account settings, relaying simply stops working without affecting your main Google login._
 
 ## Can I see what is really happening in the Codeception acceptance tests when using Docker?
 
@@ -172,18 +198,6 @@ If that's not your case, you can safely remove the `config.platform.php` option 
 
 There is a phing target that automatically fixes all relevant `@var` and `@param` annotations, and adds proper `@method` and `@property` annotations to your classes so the static analysis understands the class extensions properly.
 You can read more in the ["Framework extensibility" article](../extensibility/framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).
-
-## SMTP container cannot send email with error "Helo command rejected: need fully-qualified hostname"
-
-SMTP container should have set hostname to the domain of the server, where your application is running.
-You can set this hostname in your `docker-compose` file like this:
-
-```diff
-  smtp-server:
-      restart: always
-      image: namshi/smtp:latest
-+     hostname: my-host-machine-hostname.provider.org
-```
 
 ## Why I see Enum classes in the Framework that are not actually PHP enums?
 

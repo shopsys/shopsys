@@ -48,7 +48,7 @@ You may want to set some settings in a different way (such as production, test, 
 `REDIS_PREFIX` (default: `''`)
 : separates more projects that use the same redis service
 
-`MAILER_DSN` (default: `smtp://smtp-server:25`)
+`MAILER_DSN` (default: `smtp://smtp-server:25?verify_peer=false`, overridden to `smtp://smtp-server:1025?verify_peer=false` for the `dev` environment via `.env.dev` to match the local MailDev container)
 : set to `null://null` if you don't want to send any emails, see [Symfony documentation](https://symfony.com/doc/current/mailer.html#disabling-delivery)
 
 `APP_SECRET` (default: `'ThisTokenIsNotSoSecretChangeIt'`)
