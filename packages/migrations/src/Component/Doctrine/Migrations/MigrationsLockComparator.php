@@ -29,7 +29,7 @@ class MigrationsLockComparator implements Comparator
             return 1;
         }
 
-        if ($aIndex !== false && $bIndex === false) {
+        if ($bIndex === false) {
             return -1;
         }
 
