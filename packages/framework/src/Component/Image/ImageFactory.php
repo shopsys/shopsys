@@ -28,10 +28,11 @@ class ImageFactory
     ): Image {
         $temporaryFilePath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
         $convertedFilePath = $this->imageProcessor->convertToShopFormatAndGetNewFilename($temporaryFilePath);
+        $filesize = $this->fileUpload->getTemporaryFilesize($convertedFilePath);
 
         $entityClassName = $this->entityNameResolver->resolve(Image::class);
 
-        return new $entityClassName($entityName, $entityId, $namesIndexedByLocale, $convertedFilePath, $type);
+        return new $entityClassName($entityName, $entityId, $namesIndexedByLocale, $convertedFilePath, $type, $filesize);
     }
 
     /**

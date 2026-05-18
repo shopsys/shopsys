@@ -2164,6 +2164,9 @@ msgstr "DPH"
 msgid "Very Weak"
 msgstr "Velmi slabé"
 
+msgid "View"
+msgstr "Zobrazit"
+
 msgid "View allowed recipients."
 msgstr "Zobrazit povolené příjemce."
 

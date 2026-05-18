@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\NotFoundRedirectToStorefrontException;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -55,7 +56,7 @@ class CustomerUploadedFileController
                 fclose($stream);
             }, 200, [
                 'Content-Type' => $this->filesystem->mimeType($filePath),
-                'Content-Disposition' => sprintf('inline; filename="%s"', $uploadedFile->getNameWithExtension()),
+                'Content-Disposition' => HeaderUtils::makeDisposition(HeaderUtils::DISPOSITION_INLINE, $uploadedFile->getNameWithExtension()),
             ]);
         } catch (Exception $ex) { // never disclose backend error pages
             throw new NotFoundRedirectToStorefrontException(sprintf('File "%s" not found.', $uploadedFilename), $ex);

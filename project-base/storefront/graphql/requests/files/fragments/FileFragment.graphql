@@ -2,4 +2,7 @@ fragment FileFragment on File {
     __typename
     anchorText
     url
+    viewUrl
+    filesize
+    extension
 }

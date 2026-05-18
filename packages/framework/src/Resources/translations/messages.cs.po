@@ -3163,6 +3163,9 @@ msgstr "Zobrazit v rozcestníku"
 msgid "Site"
 msgstr "Stránka"
 
+msgid "Size"
+msgstr "Velikost"
+
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Byla vytvořena stránka slideru <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 

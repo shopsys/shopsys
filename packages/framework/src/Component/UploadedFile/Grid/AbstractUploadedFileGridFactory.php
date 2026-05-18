@@ -82,6 +82,7 @@ abstract class AbstractUploadedFileGridFactory
         $grid->addColumn('filename', 'filename', t('Filename'));
         $grid->addColumn('translatedName', 'ut.name', t('Name'), true);
         $grid->addColumn('extension', 'u.extension', t('Ext.'), true);
+        $grid->addColumn('filesize', 'u.filesize', t('Size'), true);
         $grid->addColumn('preview', 'u.id', t('Preview'));
 
         return $grid;

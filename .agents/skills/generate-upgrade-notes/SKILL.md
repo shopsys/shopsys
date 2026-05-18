@@ -237,11 +237,13 @@ This command uses two specialized subagents (via general-purpose agent with deta
 
 ## Quality Checks
 
-- Focus on breaking changes requiring manual action
+- **Upgrade notes are instructions, not a changelog** — every bullet must tell the developer what to DO, not describe what was built
+- Never list new features, additions, or descriptions unless they require developer action
+- Focus exclusively on breaking changes requiring manual action
 - Avoid documenting changes caught by static analysis
 - Always include `#project-base-diff` phrase when project-base changes
 - Use FQCN (Fully Qualified Class Names) everywhere
-- Keep instructions clear and actionable
+- Before writing each line, ask: "Does the developer need to change their code because of this?" — if NO, omit it
 
 ## Example Real-World Patterns
 

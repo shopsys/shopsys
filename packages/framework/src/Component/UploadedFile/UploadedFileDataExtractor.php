@@ -14,15 +14,30 @@ class UploadedFileDataExtractor
     }
 
     /**
-     * @return array{url: string, anchorText: string}
+     * @return array{
+     *     url: string,
+     *     anchorText: string,
+     *     viewUrl: string|null,
+     *     filesize: int|null,
+     *     extension: string,
+     * }
      */
     public function extractUploadedFileData(UploadedFile $file, DomainConfig $domainConfig): array
     {
         $translatedName = $file->getTranslatedName($domainConfig->getLocale());
 
+        $viewUrl = null;
+
+        if ($this->uploadedFileFacade->isUploadedFileViewableInBrowser($file)) {
+            $viewUrl = $this->uploadedFileFacade->getUploadedFileViewUrl($domainConfig, $file);
+        }
+
         return [
             'url' => $this->uploadedFileFacade->getUploadedFileUrl($domainConfig, $file),
             'anchorText' => $translatedName ?? $file->getName(),
+            'viewUrl' => $viewUrl,
+            'filesize' => $this->uploadedFileFacade->getUploadedFileFilesize($file),
+            'extension' => $file->getExtension(),
         ];
     }
 }

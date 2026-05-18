@@ -124,25 +124,27 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
 
 ## Writing Rules
 
-**INCLUDE:**
+**INCLUDE (only if developer action is required):**
 - Methods/properties/classes removed → show replacement
 - Signatures changed → show before/after
 - Manual actions required (DB extensions, etc.)
 - Feature movements to packages
 
 **EXCLUDE:**
-- New entities/classes/methods
-- New migrations
+- New entities/classes/methods/routes/fields (additions never break existing code)
+- New migrations (auto-executed)
 - Constructor changes in autowired services
-- Feature explanations
+- Feature explanations, descriptions, or context about what was built
+- Any line that merely describes what was added/created without requiring developer action
 
 **Style:**
-- Action verbs: "use", "replace", "update"
+- **Upgrade notes are instructions, not a changelog** — every line must tell the developer what to DO, not what happened
+- Action verbs: "use", "replace", "update", "rename"
 - Always use FQCN
-- Focus on WHAT to do, not WHY — do not explain reasons behind changes, only describe what changed and what action to take
+- **Never describe new features** — if something was added and requires no action, omit it entirely
 - If a method/class was renamed (same purpose, new name), say "was renamed to", NOT "was removed, use X instead"
 - When listing alternatives, use "or" not semicolons (e.g., "use X instead or use Y to populate all at once")
-- Key test: "Will code break without manual changes?" → YES = include
+- Key test: "Does the developer need to change their code?" → YES = include, NO = omit
 
 **Code example formatting:**
 - Use ` ```diff ``` ` for code blocks (preferred styling)

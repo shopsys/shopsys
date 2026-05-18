@@ -149,6 +149,8 @@
 
     <target name="build-deploy-part-2-db-dependent" depends="check-migrate-uploaded-files,elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,migrate-uploaded-files-force,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
 
+    <target name="build-deploy-part-3-non-blocking" depends="run-post-deploy-tasks" description="Third part of application build for production. Non-blocking tasks that run after maintenance page is turned off."/>
+
     <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-recreate,elasticsearch-export,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
 
     <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
@@ -1008,6 +1010,14 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:redis:check-availability"/>
             <arg value="--verbose"/>
+        </exec>
+    </target>
+
+    <target name="run-post-deploy-tasks" description="Runs post-deploy tasks declared in shopsys_framework.post_deploy.tasks config (one_time tasks are recorded and skipped on subsequent runs).">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="deploy:post-deploy:run-tasks"/>
+            <arg value="-vv"/>
         </exec>
     </target>
 

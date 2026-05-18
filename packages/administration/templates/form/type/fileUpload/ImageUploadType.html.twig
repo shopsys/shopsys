@@ -21,20 +21,36 @@
                                     <div class="ms-auto"></div>
                                 {% endif %}
 
-                                {% if not isRemoved and not hide_delete_button %}
-                                    <button type="button" class="js-file-upload-delete-button btn btn-sm btn-ghost-danger" title="{{ 'Delete'|trans }}">
-                                        {{ ux_icon('delete', {class: 'icon mx-0'}) }}
-                                    </button>
-                                    <button type="button" class="js-file-upload-delete-revert-button btn btn-sm" style="display: none;" title="{{ 'Return back'|trans }}">
-                                        {{ ux_icon('revert') }}
-                                        {{ 'Undo delete'|trans }}
-                                    </button>
-                                {% endif %}
+                                <div class="d-flex align-items-center gap-1">
+                                    {% set currentImageUrl = imageUrl(image, image_type) %}
+                                    {% if currentImageUrl %}
+                                        <a href="{{ currentImageUrl }}" target="_blank" class="btn btn-sm btn-ghost-secondary" title="{{ 'View'|trans }}">
+                                            {{ ux_icon('forward-page', {class: 'icon mx-0'}) }}
+                                        </a>
+                                        <a href="{{ currentImageUrl }}" download class="btn btn-sm btn-ghost-secondary" title="{{ 'Download'|trans }}">
+                                            {{ ux_icon('download', {class: 'icon mx-0'}) }}
+                                        </a>
+                                    {% endif %}
+
+                                    {% if not isRemoved and not hide_delete_button %}
+                                        <button type="button" class="js-file-upload-delete-button btn btn-sm btn-ghost-danger" title="{{ 'Delete'|trans }}">
+                                            {{ ux_icon('delete', {class: 'icon mx-0'}) }}
+                                        </button>
+                                        <button type="button" class="js-file-upload-delete-revert-button btn btn-sm" style="display: none;" title="{{ 'Return back'|trans }}">
+                                            {{ ux_icon('revert') }}
+                                            {{ 'Undo delete'|trans }}
+                                        </button>
+                                    {% endif %}
+                                </div>
                             </div>
                         {% endif %}
 
                         <div class="position-relative ratio ratio-16x9 overflow-hidden">
                             {{ image(image, { type: image_type, class: 'w-100 h-100 object-contain', width: 400}) }}
+
+                            {% if image.filesize is not null %}
+                                <span class="badge bg-dark bg-opacity-50 text-white z-2 d-inline-flex" style="position: absolute; width: auto; height: auto; top: auto; left: auto; bottom: 4px; right: 4px; font-size: .7rem;">{{ image.filesize|formatFileSize }}</span>
+                            {% endif %}
 
                             <div class="position-absolute top-0 start-0 w-100 h-100 opacity-75 bg-dark z-3 d-none text-center align-items-center justify-content-center js-file-upload-file-overlay px-3">
                                 <div class="text-white">

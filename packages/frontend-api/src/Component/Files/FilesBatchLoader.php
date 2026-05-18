@@ -64,7 +64,13 @@ class FilesBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
-     * @return array<string, array<int, array{url: string, anchorText: string}>>
+     * @return array<string, array<int, array{
+     *     url: string,
+     *     anchorText: string,
+     *     viewUrl: string|null,
+     *     filesize: int|null,
+     *     extension: string,
+     * }>>
      */
     protected function getFilesByEntityNameAndTypeIndexedByDataId(
         array $filesBatchLoadData,
@@ -85,7 +91,13 @@ class FilesBatchLoader
 
     /**
      * @param \Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData[] $filesBatchLoadData
-     * @return array<string, array{url: string, anchorText: string}|null>
+     * @return array<string, array{
+     *     url: string,
+     *     anchorText: string,
+     *     viewUrl: string|null,
+     *     filesize: int|null,
+     *     extension: string,
+     * }|null>
      */
     protected function getFirstFileByEntityNameAndTypeIndexedByDataId(
         array $filesBatchLoadData,
@@ -164,7 +176,13 @@ class FilesBatchLoader
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $files
-     * @return array<int, array{url: string, anchorText: string}>
+     * @return array<int, array{
+     *     url: string,
+     *     anchorText: string,
+     *     viewUrl: string|null,
+     *     filesize: int|null,
+     *     extension: string,
+     * }>
      */
     protected function getResolvedFiles(array $files): array
     {
@@ -182,7 +200,13 @@ class FilesBatchLoader
     }
 
     /**
-     * @return array{url: string, anchorText: string}
+     * @return array{
+     *     url: string,
+     *     anchorText: string,
+     *     viewUrl: string|null,
+     *     filesize: int|null,
+     *     extension: string,
+     * }
      */
     protected function getResolvedFile(UploadedFile $file): array
     {

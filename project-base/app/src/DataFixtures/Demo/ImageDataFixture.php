@@ -355,9 +355,12 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         ?string $type = null,
         int $position = Image::DEFAULT_IMAGE_POSITION,
     ): void {
+        $imageFilepath = $this->targetImagesDirectory . $entityName . ($type !== null ? '/' . $type : '') . '/' . $imageId . '.' . self::IMAGE_TYPE;
+        $filesize = $this->filesystem->has($imageFilepath) ? $this->filesystem->fileSize($imageFilepath) : null;
+
         $this->em->getConnection()->executeStatement(
-            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at)
-            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at)',
+            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at, filesize)
+            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at, :filesize)',
             [
                 'id' => $imageId,
                 'entity_name' => $entityName,
@@ -366,6 +369,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
                 'extension' => self::IMAGE_TYPE,
                 'position' => $position,
                 'modified_at' => new DatePoint('2015-04-16 11:36:06'),
+                'filesize' => $filesize,
             ],
             [
                 'id' => Types::INTEGER,
@@ -375,6 +379,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
                 'extension' => Types::STRING,
                 'position' => Types::INTEGER,
                 'modified_at' => Types::DATETIME_IMMUTABLE,
+                'filesize' => Types::INTEGER,
             ],
         );
 

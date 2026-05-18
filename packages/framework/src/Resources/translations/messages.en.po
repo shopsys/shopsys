@@ -3163,6 +3163,9 @@ msgstr ""
 msgid "Site"
 msgstr ""
 
+msgid "Size"
+msgstr ""
+
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 

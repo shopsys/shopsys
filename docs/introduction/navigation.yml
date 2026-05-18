@@ -6,6 +6,7 @@ arrange:
     - basics-about-package-architecture.md
     - basic-and-demo-data-during-application-installation.md
     - database-migrations.md
+    - post-deploy-tasks.md
     - components.md
     - context-system.md
     - generating-code-with-symfony-makers.md

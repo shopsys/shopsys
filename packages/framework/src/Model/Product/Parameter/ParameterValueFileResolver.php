@@ -33,6 +33,9 @@ class ParameterValueFileResolver
             if ($parameterValueFiles === []) {
                 $parameterValuesData[$key]['parameter_value_icon_anchor_text'] = null;
                 $parameterValuesData[$key]['parameter_value_icon_url'] = null;
+                $parameterValuesData[$key]['parameter_value_icon_view_url'] = null;
+                $parameterValuesData[$key]['parameter_value_icon_filesize'] = null;
+                $parameterValuesData[$key]['parameter_value_icon_extension'] = null;
 
                 continue;
             }
@@ -42,6 +45,9 @@ class ParameterValueFileResolver
 
             $parameterValuesData[$key]['parameter_value_icon_anchor_text'] = $resolvedFileData['anchorText'];
             $parameterValuesData[$key]['parameter_value_icon_url'] = $resolvedFileData['url'];
+            $parameterValuesData[$key]['parameter_value_icon_view_url'] = $resolvedFileData['viewUrl'];
+            $parameterValuesData[$key]['parameter_value_icon_filesize'] = $resolvedFileData['filesize'];
+            $parameterValuesData[$key]['parameter_value_icon_extension'] = $resolvedFileData['extension'];
         }
 
         return $parameterValuesData;

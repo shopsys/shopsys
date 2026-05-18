@@ -13,7 +13,7 @@ services:
 
     Shopsys\FrameworkBundle\:
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-        resource: '../../**/*{CategoryAutomatedFilter,Calculation,Context,Dispatcher,Enum,Executor,Extractor,Facade,Factory,Formatter,Freezer,Generator,Handler,Helper,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
+        resource: '../../**/*{CategoryAutomatedFilter,Calculation,Context,Dispatcher,Enum,Executor,Extractor,Facade,Factory,Formatter,Freezer,Generator,Handler,Helper,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Task,Transformer,DataFetcher}.php'
 
     Shopsys\FrameworkBundle\Controller\:
         resource: '../../Controller/'
@@ -391,6 +391,8 @@ services:
             $packeteryConfig: "%packetery_config%"
 
     Shopsys\FrameworkBundle\Component\Packetery\PacketeryRenderer: ~
+
+    Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfig: ~
 
     Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade:
         arguments:

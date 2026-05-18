@@ -465,6 +465,11 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             $filesData[] = [
                 'anchorText' => $file->getTranslatedName($this->domain->getLocale()) ?? $file->getName(),
                 'url' => $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getCurrentDomainConfig(), $file),
+                'viewUrl' => $this->uploadedFileFacade->isUploadedFileViewableInBrowser($file)
+                    ? $this->uploadedFileFacade->getUploadedFileViewUrl($this->domain->getCurrentDomainConfig(), $file)
+                    : null,
+                'filesize' => $this->uploadedFileFacade->getUploadedFileFilesize($file),
+                'extension' => $file->getExtension(),
             ];
         }
 

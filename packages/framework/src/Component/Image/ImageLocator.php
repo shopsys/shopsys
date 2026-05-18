@@ -46,6 +46,15 @@ class ImageLocator
         return $this->imageDir . $relativePath;
     }
 
+    public function getAbsoluteImageFilepathFromAttributes(
+        int $id,
+        string $extension,
+        string $entityName,
+        ?string $type,
+    ): string {
+        return $this->imageDir . $this->getRelativeImageFilepathFromAttributes($id, $extension, $entityName, $type);
+    }
+
     public function imageExists(Image $image): bool
     {
         $imageFilepath = $this->getAbsoluteImageFilepath($image);

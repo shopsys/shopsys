@@ -59,6 +59,9 @@ class ParameterWithValuesFactory
         return [
             'anchorText' => $anchorText,
             'url' => $url,
+            'viewUrl' => $parameterArray['parameter_value_icon_view_url'],
+            'filesize' => $parameterArray['parameter_value_icon_filesize'],
+            'extension' => $parameterArray['parameter_value_icon_extension'],
         ];
     }
 }

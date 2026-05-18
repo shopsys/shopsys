@@ -1078,8 +1078,14 @@ input EditCustomerUserPersonalDataInput {
 type File {
   "Clickable text for a hyperlink"
   anchorText: String!
+  "File extension"
+  extension: String
+  "File size in bytes"
+  filesize: Int
   "Url to download the file"
   url: String!
+  "Url to view the file in browser (available for images and PDF files)"
+  viewUrl: String
 }
 
 "Represents and encapsulates a file upload"

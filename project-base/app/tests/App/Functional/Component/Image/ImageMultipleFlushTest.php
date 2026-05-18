@@ -49,6 +49,7 @@ class ImageMultipleFlushTest extends TransactionFunctionalTestCase
             ],
             $testImageName,
             null,
+            0,
         );
 
         $this->em->persist($image);

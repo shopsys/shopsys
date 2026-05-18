@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileF
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
@@ -26,6 +27,8 @@ use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData;
  */
 class UploadedFileFacade extends AbstractUploadedFileFacade
 {
+    protected const array VIEWABLE_EXTENSIONS = ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+
     public function __construct(
         FilesystemOperator $filesystem,
         EntityManagerInterface $em,
@@ -36,6 +39,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         protected readonly UploadedFileFactory $uploadedFileFactory,
         protected readonly UploadedFileRelationFactory $uploadedFileRelationFactory,
         protected readonly UploadedFileRelationRepository $uploadedFileRelationRepository,
+        protected readonly FileUpload $fileUpload,
     ) {
         parent::__construct($filesystem, $em, $transformStringHelper);
     }
@@ -243,6 +247,16 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         return $this->uploadedFileLocator->getUploadedFileUrl($domainConfig, $uploadedFile);
     }
 
+    public function getUploadedFileViewUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
+    {
+        return $this->uploadedFileLocator->getUploadedFileViewUrl($domainConfig, $uploadedFile);
+    }
+
+    public function getUploadedFileFilesize(UploadedFile $uploadedFile): ?int
+    {
+        return $uploadedFile->getFilesize();
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation[] $relations
@@ -366,7 +380,10 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
 
         if ($filesCount === 1) {
             $replacementUploadedFile = array_pop($uploadedFiles);
-            $file->setTemporaryFilename($replacementUploadedFile);
+            $file->updateFile(
+                $replacementUploadedFile,
+                $this->fileUpload->getTemporaryFilesize($replacementUploadedFile),
+            );
         }
 
         $file->setTranslatedNames($uploadedFileFormData->names);
@@ -539,5 +556,10 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): array {
         return $this->uploadedFileRepository->getAllFilesIndexedByEntityId($entityIds, $entityName, $requiredLocale, $type);
+    }
+
+    public function isUploadedFileViewableInBrowser(UploadedFile $uploadedFile): bool
+    {
+        return in_array(strtolower($uploadedFile->getExtension()), static::VIEWABLE_EXTENSIONS, true);
     }
 }
