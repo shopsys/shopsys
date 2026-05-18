@@ -10,6 +10,8 @@ use RuntimeException;
 
 class McpReadOnlyUserManager
 {
+    public const int CONNECTION_LIMIT = 10;
+
     public function __construct(
         protected readonly Connection $defaultConnection,
         protected readonly string $databaseUser,
@@ -62,10 +64,11 @@ class McpReadOnlyUserManager
         $roleStatementAction = $this->mcpUserExists() ? 'ALTER' : 'CREATE';
 
         $this->defaultConnection->executeStatement(sprintf(
-            '%s ROLE %s WITH LOGIN PASSWORD %s NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS',
+            '%s ROLE %s WITH LOGIN PASSWORD %s CONNECTION LIMIT %d NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS',
             $roleStatementAction,
             $this->defaultConnection->quoteSingleIdentifier($this->mcpDatabaseUser),
             $this->defaultConnection->quote($this->mcpDatabasePassword),
+            self::CONNECTION_LIMIT,
         ));
     }
 

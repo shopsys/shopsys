@@ -5,8 +5,13 @@ declare(strict_types=1);
 namespace Tests\McpBundle\Unit\Component\Database\Query;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\PDO\Exception as PdoDriverException;
 use Doctrine\DBAL\Exception as DbalException;
+use Doctrine\DBAL\Exception\DriverException;
+use Doctrine\DBAL\Query;
 use Doctrine\DBAL\Result;
+use PDOException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Shopsys\McpBundle\Component\Database\Query\QueryResultMcpNormalizer;
@@ -55,6 +60,44 @@ class SqlExecutorTest extends TestCase
         );
     }
 
+    #[DataProvider('getSystemUnavailableSqlStatesData')]
+    public function testExecuteReturnsSystemUnavailableResultWhenDatabaseCannotBeReached(string $sqlState): void
+    {
+        $mcpConnection = $this->createStub(Connection::class);
+        $mcpConnection->method('executeQuery')
+            ->willThrowException($this->createDriverException($sqlState));
+
+        $sqlExecutor = $this->createSqlExecutor(
+            $mcpConnection,
+            SqlQueryValidationResult::createValid(self::SIMPLE_SELECT_SQL),
+        );
+
+        $sqlExecutionResult = $sqlExecutor->execute(self::SIMPLE_SELECT_SQL);
+
+        $this->assertEquals(
+            SqlExecutionResult::createInvalid('System is temporarily unavailable, try it later.'),
+            $sqlExecutionResult,
+        );
+    }
+
+    /**
+     * @return iterable<string, array{sqlState: string}>
+     */
+    public static function getSystemUnavailableSqlStatesData(): iterable
+    {
+        yield 'too many connections' => [
+            'sqlState' => SqlExecutor::POSTGRES_TOO_MANY_CONNECTIONS_SQLSTATE,
+        ];
+
+        yield 'connection exception' => [
+            'sqlState' => '08006',
+        ];
+
+        yield 'cannot connect now' => [
+            'sqlState' => SqlExecutor::POSTGRES_CANNOT_CONNECT_NOW_SQLSTATE,
+        ];
+    }
+
     public function testExecuteReturnsAtMostConfiguredNumberOfRows(): void
     {
         $queryResult = $this->createStub(Result::class);
@@ -95,6 +138,17 @@ class SqlExecutorTest extends TestCase
             new QueryResultMcpNormalizer(),
             $sqlQueryValidator,
             self::MAX_RETURNED_ROWS,
+        );
+    }
+
+    private function createDriverException(string $sqlState): DriverException
+    {
+        $pdoException = new PDOException('Database cannot be reached.');
+        $pdoException->errorInfo = [$sqlState, 0, 'Database cannot be reached.'];
+
+        return new DriverException(
+            PdoDriverException::new($pdoException),
+            new Query(self::SIMPLE_SELECT_SQL, [], []),
         );
     }
 }

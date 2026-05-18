@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Component\Database\User;
 
 use Doctrine\DBAL\Connection;
+use Shopsys\McpBundle\Component\Database\User\McpReadOnlyUserManager;
 use Tests\App\Test\FunctionalTestCase;
 
 final class McpReadOnlyDatabaseRoleTest extends FunctionalTestCase
@@ -29,6 +30,9 @@ final class McpReadOnlyDatabaseRoleTest extends FunctionalTestCase
         $isSuperuser = $this->mcpConnection->fetchOne(
             'SELECT rolsuper FROM pg_roles WHERE rolname = current_user',
         );
+        $connectionLimit = $this->mcpConnection->fetchOne(
+            'SELECT rolconnlimit FROM pg_roles WHERE rolname = current_user',
+        );
         $hasSelectPrivilege = $this->mcpConnection->fetchOne(
             "SELECT has_table_privilege(current_user, 'public.administrator_roles', 'SELECT')",
         );
@@ -47,6 +51,7 @@ final class McpReadOnlyDatabaseRoleTest extends FunctionalTestCase
 
         $this->assertNotSame($defaultConnectionCurrentUser, $mcpUser);
         $this->assertFalse((bool)$isSuperuser);
+        $this->assertSame(McpReadOnlyUserManager::CONNECTION_LIMIT, (int)$connectionLimit);
         $this->assertTrue((bool)$hasSelectPrivilege);
         $this->assertFalse((bool)$hasInsertPrivilege);
         $this->assertFalse((bool)$hasUpdatePrivilege);
