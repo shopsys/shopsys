@@ -224,6 +224,32 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         return in_array($stage, $this->getAllowedStages(), true);
     }
 
+    protected function resolveGithubToken(): string
+    {
+        $envToken = getenv('GITHUB_TOKEN');
+
+        if (is_string($envToken) && $envToken !== '') {
+            $this->symfonyStyle->note('Using GITHUB_TOKEN from environment for GitHub API calls.');
+
+            return $envToken;
+        }
+
+        $this->symfonyStyle->note('GITHUB_TOKEN env var not set; falling back to interactive prompt.');
+
+        $question = new Question(
+            'Please enter no-scope GitHub token (https://github.com/settings/tokens/new)',
+        );
+        $question->setValidator(static function ($answer): string {
+            if (!is_string($answer) || trim($answer) === '') {
+                throw new RuntimeException('GitHub token must not be empty');
+            }
+
+            return $answer;
+        });
+
+        return $this->symfonyStyle->askQuestion($question);
+    }
+
     /**
      * @return string[]
      */

@@ -7,6 +7,7 @@ namespace Shopsys\Releaser\ReleaseWorker;
 use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\GithubActions\GithubActionsStatusReporter;
+use Shopsys\Releaser\Wait\GithubActionsRunSucceeded;
 
 /**
  * @see https://docs.github.com/en/rest/actions/workflows
@@ -37,10 +38,8 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->symfonyStyle->note('It is necessary to set Github token before checking Github Actions builds');
-        $githubToken = $this->symfonyStyle->ask(
-            'Please enter no-scope Github token (https://github.com/settings/tokens/new)',
-        );
+        $githubToken = $this->resolveGithubToken();
+
         $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
             'shopsys',
             $initialBranchName,
@@ -64,12 +63,23 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         }
 
         if (count($statusForPackages) === 0) {
-            $this->symfonyStyle->warning('No status was reported, go rather check the builds manually');
+            $this->symfonyStyle->warning('No status was reported yet; will poll.');
             $isPassing = false;
         }
 
-        if ($isPassing === false) {
-            $this->confirm('Continue after packages are resolved');
+        if ($isPassing === true) {
+            $this->success();
+
+            return;
         }
+
+        $this->waitFor(new GithubActionsRunSucceeded(
+            $this->githubActionsStatusReporter,
+            'shopsys',
+            $initialBranchName,
+            $githubToken,
+        ));
+
+        $this->success();
     }
 }
