@@ -56,6 +56,7 @@ final class OrderStatusFormType extends AbstractType
 
         $builder->add('withdrawalRequestData', OrderWithdrawalFormType::class, [
             'label' => false,
+            'domain_id' => 1,
             'row_attr' => [
                 'data-withdrawal-request-exists' => $withdrawalRequest !== null ? 'true' : 'false',
                 'style' => $withdrawalRequest === null ? 'display: none;' : '',

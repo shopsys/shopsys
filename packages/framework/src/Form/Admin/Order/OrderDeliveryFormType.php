@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 
 use Override;
+use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -96,7 +97,7 @@ final class OrderDeliveryFormType extends AbstractType
                             ),
                         ],
                     ])
-                    ->add('deliveryTelephone', TextType::class, [
+                    ->add('deliveryTelephone', PhoneType::class, [
                         'label' => 'Telephone',
                         'required' => false,
                         'constraints' => [

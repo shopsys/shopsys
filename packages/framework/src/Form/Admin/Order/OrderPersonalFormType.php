@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 
 use Override;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
+use Shopsys\FrameworkBundle\Form\PhoneType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -53,7 +54,7 @@ final class OrderPersonalFormType extends AbstractType
                     ),
                 ],
             ])
-            ->add('telephone', TextType::class, [
+            ->add('telephone', PhoneType::class, [
                 'label' => 'Telephone',
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter telephone number'),
