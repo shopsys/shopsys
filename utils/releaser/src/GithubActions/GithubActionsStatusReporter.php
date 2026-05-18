@@ -12,6 +12,7 @@ use Throwable;
 final class GithubActionsStatusReporter
 {
     public const string STATUS_PENDING = 'pending';
+    public const string STATUS_SUCCESS = 'success';
 
     private const string WORKFLOW_FILE = 'run-checks-tests.yaml';
 
@@ -53,20 +54,46 @@ final class GithubActionsStatusReporter
 
         $branchHeadShasByPackage = $this->getBranchHeadShasByPackage($packages, $branch, $githubToken);
         $responses = $this->apiCaller->sendGetsAsyncToStrings(
-            $this->createWorkflowRunsApiUrls($packages, $branch),
+            $this->createWorkflowRunsApiUrls($packages, $branch, self::WORKFLOW_FILE),
             $this->createGithubApiHeaders($githubToken),
         );
 
         foreach ($responses as $key => $response) {
             $package = $packages[$key];
 
-            $statusForPackages[$package] = $this->extractPackageStatus(
+            $statusForPackages[$package] = $this->extractWorkflowRunStatus(
                 $response,
                 $branchHeadShasByPackage[$package] ?? null,
             );
         }
 
         return $statusForPackages;
+    }
+
+    /**
+     * Returns the effective status of the latest workflow_runs[0] for the given repository, branch and workflow file.
+     * Returns STATUS_PENDING when the latest run does not match the branch HEAD SHA (so older runs from previous
+     * pushes never produce a false-positive STATUS_SUCCESS), the run is still queued/in-progress, or any upstream
+     * lookup fails.
+     */
+    public function getStatusForRepositoryWorkflow(
+        string $repository,
+        string $branch,
+        string $workflowFileName,
+        string $githubToken,
+    ): string {
+        $branchHeadSha = $this->fetchBranchHeadSha($repository, $branch, $githubToken);
+
+        if ($branchHeadSha === null) {
+            return self::STATUS_PENDING;
+        }
+
+        $responses = $this->apiCaller->sendGetsAsyncToStrings(
+            $this->createWorkflowRunsApiUrls([$repository], $branch, $workflowFileName),
+            $this->createGithubApiHeaders($githubToken),
+        );
+
+        return $this->extractWorkflowRunStatus($responses[0] ?? '', $branchHeadSha);
     }
 
     /**
@@ -98,7 +125,7 @@ final class GithubActionsStatusReporter
      * @param string[] $packages
      * @return string[]
      */
-    private function createWorkflowRunsApiUrls(array $packages, string $branch): array
+    private function createWorkflowRunsApiUrls(array $packages, string $branch, string $workflowFileName): array
     {
         $apiUrls = [];
         $encodedBranch = rawurlencode($branch);
@@ -107,12 +134,22 @@ final class GithubActionsStatusReporter
             $apiUrls[] = sprintf(
                 'https://api.github.com/repos/%s/actions/workflows/%s/runs?per_page=1&branch=%s',
                 $package,
-                self::WORKFLOW_FILE,
+                $workflowFileName,
                 $encodedBranch,
             );
         }
 
         return $apiUrls;
+    }
+
+    private function fetchBranchHeadSha(string $repository, string $branch, string $githubToken): ?string
+    {
+        $responses = $this->apiCaller->sendGetsAsyncToStrings(
+            $this->createBranchApiUrls([$repository], $branch),
+            $this->createGithubApiHeaders($githubToken),
+        );
+
+        return $this->extractBranchHeadSha($responses[0] ?? '');
     }
 
     /**
@@ -152,7 +189,7 @@ final class GithubActionsStatusReporter
         return is_string($sha) ? $sha : null;
     }
 
-    private function extractPackageStatus(string $responseJson, ?string $expectedHeadSha): string
+    private function extractWorkflowRunStatus(string $responseJson, ?string $expectedHeadSha): string
     {
         if ($expectedHeadSha === null) {
             return self::STATUS_PENDING;

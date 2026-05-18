@@ -15,11 +15,6 @@ use Throwable;
  */
 abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @var string
-     */
-    private const string STATUS_SUCCESS = 'success';
-
     public function __construct(private readonly GithubActionsStatusReporter $githubActionsStatusReporter)
     {
     }
@@ -58,7 +53,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         $isPassing = true;
 
         foreach ($statusForPackages as $package => $status) {
-            if ($status === self::STATUS_SUCCESS) {
+            if ($status === GithubActionsStatusReporter::STATUS_SUCCESS) {
                 $this->symfonyStyle->note(sprintf('"%s" package is passing', $package));
 
                 continue;

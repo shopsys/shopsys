@@ -12,7 +12,6 @@ use Throwable;
 final class GithubActionsRunSucceeded implements WaitForExternalConditionInterface
 {
     private const int POLL_INTERVAL_SECONDS = 60;
-    private const string STATUS_SUCCESS = 'success';
 
     /**
      * @var array<string, string>
@@ -57,7 +56,7 @@ final class GithubActionsRunSucceeded implements WaitForExternalConditionInterfa
         }
 
         foreach ($this->lastStatuses as $status) {
-            if ($status !== self::STATUS_SUCCESS) {
+            if ($status !== GithubActionsStatusReporter::STATUS_SUCCESS) {
                 return false;
             }
         }
@@ -86,7 +85,7 @@ final class GithubActionsRunSucceeded implements WaitForExternalConditionInterfa
         $failing = [];
 
         foreach ($this->lastStatuses as $package => $status) {
-            if ($status === self::STATUS_SUCCESS) {
+            if ($status === GithubActionsStatusReporter::STATUS_SUCCESS) {
                 continue;
             }
 
