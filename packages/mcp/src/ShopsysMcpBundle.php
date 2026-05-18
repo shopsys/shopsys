@@ -81,9 +81,8 @@ TEXT;
         $builder->prependExtensionConfig('mcp', [
             'discovery' => [
                 'scan_dirs' => [
-                    'src',
                     Path::makeRelative(
-                        Path::canonicalize(__DIR__),
+                        Path::canonicalize(__DIR__ . '/Tool'),
                         $builder->getParameter('kernel.project_dir'),
                     ),
                 ],
