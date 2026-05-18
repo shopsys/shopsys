@@ -77,6 +77,10 @@
     white-space: normal !important;
 }
 
+.white-space-pre-wrap {
+    white-space: pre-wrap;
+}
+
 .link-disabled {
     opacity: .4;
     cursor: not-allowed;
