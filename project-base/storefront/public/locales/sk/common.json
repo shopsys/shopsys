@@ -397,6 +397,7 @@
     "Phone number (optional)": "Telefónne číslo (nepovinné)",
     "Phone prefix": "Telefónna predvoľba",
     "Pickup place": "Pickup place",
+    "Please add or select a delivery address": "Pridajte alebo vyberte prosím doručovaciu adresu",
     "Please attach files": "Prosím pripojte súbory",
     "Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum files count is {{ maxFilesCount }}.": "Prosím, priložte obrázky reklamovaného tovaru vo formáte JPG alebo PNG s maximálnou veľkosťou súboru {{ max }}. Maximálny počet súborov je {{ maxFilesCount }}.",
     "Please check inserted details": "Prosím, skontrolujte zadané údaje.",

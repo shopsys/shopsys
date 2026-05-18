@@ -71,6 +71,8 @@ export const cache = cacheExchange({
         Payment: keyUuid,
         PersonalData: keyNull,
         PersonalDataPage: keyNull,
+        PhoneData: keyNull,
+        PhonePrefix: keyCode,
         Price: keyNull,
         PricingSetting: keyNull,
         Product: keyUuid,

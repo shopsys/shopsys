@@ -369,6 +369,7 @@
     "Phone number (optional)": "Phone number (optional)",
     "Phone prefix": "Phone prefix",
     "Pickup place": "Pickup place",
+    "Please add or select a delivery address": "Please add or select a delivery address",
     "Please attach files": "Please attach files",
     "Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum files count is {{ maxFilesCount }}.": "Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum files count is {{ maxFilesCount }}.",
     "Please check inserted details": "Please, check inserted details",

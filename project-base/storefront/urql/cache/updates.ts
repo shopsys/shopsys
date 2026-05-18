@@ -39,9 +39,18 @@ import {
     TypeCartQueryVariables,
 } from 'graphql/requests/cart/queries/CartQuery.generated';
 import {
+    TypeCreateDeliveryAddressMutation,
+    TypeCreateDeliveryAddressMutationVariables,
+} from 'graphql/requests/customer/mutations/CreateDeliveryAddressMutation.generated';
+import {
     TypeDeleteDeliveryAddressMutation,
     TypeDeleteDeliveryAddressMutationVariables,
 } from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.generated';
+import {
+    CurrentCustomerUserQueryDocument,
+    TypeCurrentCustomerUserQuery,
+    TypeCurrentCustomerUserQueryVariables,
+} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import {
     TypeCreateOrderMutation,
     TypeCreateOrderMutationVariables,
@@ -83,17 +92,21 @@ export const cacheUpdates: UpdatesConfig = {
             cache.invalidate('ProductPrice');
         },
         DeleteDeliveryAddress(
-            _result: TypeDeleteDeliveryAddressMutation,
+            result: TypeDeleteDeliveryAddressMutation,
             _args: TypeDeleteDeliveryAddressMutationVariables,
             cache,
         ) {
-            invalidateFields(cache, ['currentCustomerUser']);
+            manuallyUpdateCurrentCustomerUserDeliveryAddresses(cache, result.DeleteDeliveryAddress);
         },
         CreateOrder(_result: TypeCreateOrderMutation, _args: TypeCreateOrderMutationVariables, cache) {
             invalidateFields(cache, ['currentCustomerUser']);
         },
-        CreateDeliveryAddress(_result: TypeCreateOrderMutation, _args: TypeCreateOrderMutationVariables, cache) {
-            invalidateFields(cache, ['currentCustomerUser']);
+        CreateDeliveryAddress(
+            result: TypeCreateDeliveryAddressMutation,
+            _args: TypeCreateDeliveryAddressMutationVariables,
+            cache,
+        ) {
+            manuallyUpdateCurrentCustomerUserDeliveryAddresses(cache, result.CreateDeliveryAddress);
         },
         AddToCart(result: TypeAddToCartMutation, _args: TypeAddToCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.AddToCart.cart, result.AddToCart.cart.uuid);
@@ -191,6 +204,34 @@ const manuallyUpdateCartQuery = (cache: Cache, newCart: TypeCartFragment, cartUu
             __typename: 'Query',
             cart: newCart,
         }),
+    );
+};
+
+const manuallyUpdateCurrentCustomerUserDeliveryAddresses = (
+    cache: Cache,
+    deliveryAddresses: NonNullable<TypeCurrentCustomerUserQuery['currentCustomerUser']>['deliveryAddresses'],
+) => {
+    cache.updateQuery<TypeCurrentCustomerUserQuery, TypeCurrentCustomerUserQueryVariables>(
+        { query: CurrentCustomerUserQueryDocument },
+        (data) => {
+            if (data?.currentCustomerUser === null || data?.currentCustomerUser === undefined) {
+                return data;
+            }
+
+            const defaultDeliveryAddress =
+                deliveryAddresses.find((deliveryAddress) => {
+                    return deliveryAddress.uuid === data.currentCustomerUser?.defaultDeliveryAddress?.uuid;
+                }) ?? null;
+
+            return {
+                ...data,
+                currentCustomerUser: {
+                    ...data.currentCustomerUser,
+                    defaultDeliveryAddress,
+                    deliveryAddresses,
+                },
+            };
+        },
     );
 };
 
