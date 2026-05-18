@@ -237,7 +237,9 @@ If generated files are part of a larger change (e.g., you added a new GraphQL fi
 
 ## Upgrade Notes
 
-When changes include upgrade note files (typically in `upgrade/` directory or files matching `*UPGRADE*` patterns), always group them into their own separate commit.
+When changes include upgrade note files (typically in `upgrade/` directory or files matching `*UPGRADE*` patterns), group them into their own separate commit by default.
+
+If the user explicitly asks for a single commit, one commit, or to include all changes in the same commit, obey that request and include upgrade notes in the same commit as the related changes.
 
 **Commit message:** `added upgrade notes` — no body needed.
 
@@ -245,7 +247,7 @@ When changes include upgrade note files (typically in `upgrade/` directory or fi
 added upgrade notes
 ```
 
-Never combine upgrade note files with other changes. Always split them out into their own group.
+Unless the user explicitly requests a single commit, never combine upgrade note files with other changes. Split them out into their own group.
 
 ## Interaction Pattern
 
