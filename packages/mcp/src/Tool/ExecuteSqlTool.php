@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
-use Mcp\Exception\ToolCallException;
+use Mcp\Schema\Content\TextContent;
+use Mcp\Schema\Result\CallToolResult;
 use Shopsys\McpBundle\Component\Database\Query\SqlExecutor;
 use Shopsys\McpBundle\Component\Logger\McpToolCallLogger;
 
@@ -20,7 +21,7 @@ class ExecuteSqlTool
     }
 
     /**
-     * @return array{
+     * @return \Mcp\Schema\Result\CallToolResult|array{
      *     columnNames: array<string>,
      *     rows: array<int, array<string, string|int|float|bool|null>>,
      *     rowCount: int,
@@ -54,7 +55,7 @@ class ExecuteSqlTool
             'required' => ['columnNames', 'rows', 'rowCount', 'durationMs'],
         ],
     )]
-    public function executeSql(string $sql): array
+    public function executeSql(string $sql): CallToolResult|array
     {
         $startedAt = microtime(true);
         $inputContext = [
@@ -64,7 +65,11 @@ class ExecuteSqlTool
         $sqlExecutionResult = $this->sqlExecutor->execute($sql);
 
         if (!$sqlExecutionResult->isValid) {
-            throw new ToolCallException($sqlExecutionResult->errorMessage ?? 'SQL query is invalid.');
+            $errorMessage = $sqlExecutionResult->errorMessage ?? 'SQL query is invalid.';
+
+            $this->mcpToolCallLogger->logRejected(static::TOOL_NAME, $inputContext, $errorMessage, $startedAt);
+
+            return CallToolResult::error([new TextContent($errorMessage)]);
         }
 
         $data = $sqlExecutionResult->data ?? [];

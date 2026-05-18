@@ -33,4 +33,22 @@ class McpToolCallLogger
 
         $this->logger->info('MCP tool executed', $context);
     }
+
+    /**
+     * @param array<string, mixed> $inputContext
+     */
+    public function logRejected(string $toolName, array $inputContext, string $errorMessage, float $startedAt): void
+    {
+        $context = [
+            'tool' => $toolName,
+            'duration_ms' => round((microtime(true) - $startedAt) * 1000, 2),
+            'error_message' => $errorMessage,
+        ];
+
+        if ($inputContext !== []) {
+            $context['input'] = $inputContext;
+        }
+
+        $this->logger->info('MCP tool rejected', $context);
+    }
 }
