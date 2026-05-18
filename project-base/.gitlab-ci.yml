@@ -418,6 +418,32 @@ service:merge_request:
         - echo "${KUBE_CONFIG}" > /root/.kube/config
         - chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh deploy
 
+sentry-release-commits:
+    image:
+        name: getsentry/sentry-cli:latest
+        entrypoint: [""]
+    stage: deploy
+    needs: []
+    tags:
+        - deploy
+    variables:
+        GIT_DEPTH: 0
+        SENTRY_ORG: shopsys
+        SENTRY_RELEASE: ${CI_COMMIT_SHORT_SHA}
+    before_script: []
+    rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
+        -   if: '$CI_PIPELINE_SOURCE == "schedule"'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH =~ /^master-.*$/'
+        -   if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH =~ /^devel-.*$/'
+        -   if: '$CI_COMMIT_BRANCH == "alpha" || $CI_COMMIT_BRANCH =~ /^alpha-.*$/'
+    script:
+        - sentry-cli releases new "${SENTRY_RELEASE}" || sentry-cli releases info "${SENTRY_RELEASE}"
+        - sentry-cli releases set-commits "${SENTRY_RELEASE}" --auto --ignore-missing
+        - sentry-cli releases finalize "${SENTRY_RELEASE}"
+
 deploy:production:
     <<: *deploy
     resource_group: deploy_production

@@ -12,6 +12,7 @@ export function register() {
         Sentry.init({
             dsn: sentryDsn,
             environment: process.env.SENTRY_ENVIRONMENT,
+            release: process.env.SENTRY_RELEASE,
             tracesSampleRate: 0.1,
         });
     }
@@ -21,6 +22,7 @@ export function register() {
         Sentry.init({
             dsn: sentryDsn,
             environment: process.env.SENTRY_ENVIRONMENT,
+            release: process.env.SENTRY_RELEASE,
             tracesSampleRate: 0.1,
         });
     }

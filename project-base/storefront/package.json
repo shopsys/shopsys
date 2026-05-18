@@ -103,19 +103,10 @@
     },
     "pnpm": {
         "onlyBuiltDependencies": [
+            "@sentry/cli",
             "esbuild",
             "next-translate-plugin",
             "sharp"
-        ],
-        "ignoredOptionalDependencies": [
-            "@sentry/cli-darwin",
-            "@sentry/cli-linux-arm",
-            "@sentry/cli-linux-arm64",
-            "@sentry/cli-linux-i686",
-            "@sentry/cli-linux-x64",
-            "@sentry/cli-win32-arm64",
-            "@sentry/cli-win32-i686",
-            "@sentry/cli-win32-x64"
         ],
         "overrides": {
             "@urql/core": "6.0.1",
