@@ -28,6 +28,7 @@ export type PublicRuntimeConfig = {
     readonly showSymfonyToolbar: string;
     readonly sentryDsn: string;
     readonly sentryEnvironment: string;
+    readonly sentryRelease: string;
     readonly sentryFeedbackEnable: boolean;
     readonly sentryReplaysEnable: boolean;
 };
