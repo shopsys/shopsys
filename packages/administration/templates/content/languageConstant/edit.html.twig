@@ -1,8 +1,22 @@
 {% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+{% form_theme form _self %}
+{% import '@ShopsysAdministration/content/languageConstant/renderValueWithWhitespace.html.twig' as renderValueWithWhitespace %}
 
 {% block title %}- {{ 'Language constant translation'|trans }}{% endblock %}
 {% block h1 %}{{ 'Language constant translation'|trans }}{% endblock %}
 
 {% block main_content %}
     {{ form(form) }}
+{% endblock %}
+
+{% block _language_constant_form_key_widget %}
+    {% set data = renderValueWithWhitespace.renderValueWithWhitespace(data) %}
+
+    {{ block('display_only_widget') }}
+{% endblock %}
+
+{% block _language_constant_form_originalTranslation_widget %}
+    {% set data = renderValueWithWhitespace.renderValueWithWhitespace(data) %}
+
+    {{ block('display_only_widget') }}
 {% endblock %}

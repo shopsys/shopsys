@@ -1,0 +1,19 @@
+{% macro renderValueWithWhitespace(value) %}
+    {% if value starts with ' ' or value ends with ' ' %}
+        {% set trimmedValue = value|trim(' ') %}
+
+        {%- if trimmedValue is empty -%}
+            {{- value|replace({' ': '&middot;'})|raw -}}
+        {%- else -%}
+            {%- if value starts with ' ' -%}&middot;{%- endif -%}
+            {{- trimmedValue -}}
+            {%- if value ends with ' ' -%}&middot;{%- endif -%}
+        {%- endif -%}
+
+        <span>
+            {{ info_icon('String contains leading/trailing spaces represented by &middot; sign'|trans) }}
+        </span>
+    {% else %}
+        {{ value }}
+    {% endif %}
+{% endmacro %}

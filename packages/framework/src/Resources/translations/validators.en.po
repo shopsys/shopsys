@@ -160,6 +160,9 @@ msgstr ""
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Only regular spaces are allowed as whitespace characters."
+msgstr ""
+
 msgid "Opacity must be between {{ min }} and {{ max }}"
 msgstr ""
 

@@ -1891,6 +1891,9 @@ msgstr ""
 msgid "Street"
 msgstr ""
 
+msgid "String contains leading/trailing spaces represented by &middot; sign"
+msgstr ""
+
 msgid "Strong"
 msgstr ""
 

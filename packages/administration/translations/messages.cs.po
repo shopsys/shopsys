@@ -1891,6 +1891,9 @@ msgstr "Prodejny"
 msgid "Street"
 msgstr "Ulice"
 
+msgid "String contains leading/trailing spaces represented by &middot; sign"
+msgstr "Řetězec obsahuje úvodní/koncové mezery (reprezentované znakem &middot;)"
+
 msgid "Strong"
 msgstr "Silné"
 
