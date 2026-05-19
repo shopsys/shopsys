@@ -406,6 +406,44 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
+     * @param int[] $productIds
+     * @return array<int, int>
+     */
+    public function getProductMainCategoryIdsIndexedByProductId(array $productIds, int $domainId): array
+    {
+        if ($productIds === []) {
+            return [];
+        }
+
+        $rows = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->select('IDENTITY(pcd.product) AS productId', 'IDENTITY(pcd.category) AS categoryId')
+            ->join(
+                ProductCategoryDomain::class,
+                'pcd',
+                Join::WITH,
+                'pcd.category = c AND pcd.domainId = :domainId',
+            )
+            ->andWhere('pcd.product IN (:productIds)')
+            ->orderBy('c.level', 'DESC')
+            ->addOrderBy('c.lft', 'ASC')
+            ->setParameter('productIds', $productIds)
+            ->getQuery()
+            ->getScalarResult();
+
+        $mainCategoryIdsIndexedByProductId = [];
+
+        foreach ($rows as $row) {
+            if (array_key_exists((int)$row['productId'], $mainCategoryIdsIndexedByProductId)) {
+                continue;
+            }
+
+            $mainCategoryIdsIndexedByProductId[(int)$row['productId']] = (int)$row['categoryId'];
+        }
+
+        return $mainCategoryIdsIndexedByProductId;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getVisibleCategoriesInPathFromRootOnDomain(Category $category, int $domainId): array

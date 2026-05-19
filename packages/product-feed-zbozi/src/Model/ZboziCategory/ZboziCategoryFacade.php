@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ZboziCategoryFacade
 {
@@ -90,6 +92,42 @@ class ZboziCategoryFacade
     public function findFullNameByCategoryIdAndLocale(int $categoryId, string $locale): ?string
     {
         return $this->findByCategoryIdAndLocale($categoryId, $locale)?->getFullName();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return array<int, string>
+     */
+    public function getFullNamesByProductsIndexedByProductId(array $products, DomainConfig $domainConfig): array
+    {
+        $productIds = array_map(
+            static fn (Product $product) => $product->getId(),
+            $products,
+        );
+
+        $mainCategoryIdsByProductId = $this->categoryRepository->getProductMainCategoryIdsIndexedByProductId(
+            $productIds,
+            $domainConfig->getId(),
+        );
+
+        if ($mainCategoryIdsByProductId === []) {
+            return [];
+        }
+
+        $fullNamesByCategoryId = $this->zboziCategoryRepository->getFullNamesByCategoryIdsIndexedByCategoryId(
+            array_values(array_unique($mainCategoryIdsByProductId)),
+            $domainConfig->getLocale(),
+        );
+
+        $fullNamesByProductId = [];
+
+        foreach ($mainCategoryIdsByProductId as $productId => $categoryId) {
+            if (array_key_exists($categoryId, $fullNamesByCategoryId)) {
+                $fullNamesByProductId[$productId] = $fullNamesByCategoryId[$categoryId];
+            }
+        }
+
+        return $fullNamesByProductId;
     }
 
     public function removeZboziCategoryForCategoryId(int $categoryId, string $locale): void

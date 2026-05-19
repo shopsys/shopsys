@@ -11,14 +11,12 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class ZboziFeedItem implements FeedItemInterface
 {
-    protected const CATEGORY_PATH_SEPARATOR = ' | ';
-
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
         protected readonly string $url,
         protected readonly PriceInterface $price,
-        protected readonly array $pathToMainCategory,
+        protected readonly ?string $categoryText,
         protected readonly array $parametersByName,
         protected readonly ?int $mainVariantId = null,
         protected readonly ?string $description = null,
@@ -95,7 +93,7 @@ class ZboziFeedItem implements FeedItemInterface
 
     public function getCategoryText(): ?string
     {
-        return implode(static::CATEGORY_PATH_SEPARATOR, $this->pathToMainCategory);
+        return $this->categoryText;
     }
 
     /**
