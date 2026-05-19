@@ -3,6 +3,10 @@ import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibi
 import { ProductInterfaceType } from 'types/product';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 
+type ProductInterfaceWithOptionalZboziCategory = ProductInterfaceType & {
+    zboziCategory?: string | null;
+};
+
 export const mapGtmProductInterface = (
     productInterface: ProductInterfaceType,
     domainUrl: string,
@@ -14,6 +18,8 @@ export const mapGtmProductInterface = (
     } else {
         productUrl = domainUrl + productInterface.slug;
     }
+
+    const zboziCategory = getGtmProductInterfaceZboziCategory(productInterface);
 
     return {
         id: productInterface.id,
@@ -28,7 +34,16 @@ export const mapGtmProductInterface = (
         url: productUrl,
         brand: productInterface.brand?.name ?? '',
         categories: productInterface.categories.map((category) => category.name),
+        ...(zboziCategory !== undefined && { zboziCategory }),
     };
+};
+
+const getGtmProductInterfaceZboziCategory = (productInterface: ProductInterfaceType): string | undefined => {
+    if (!('zboziCategory' in productInterface)) {
+        return undefined;
+    }
+
+    return (productInterface as ProductInterfaceWithOptionalZboziCategory).zboziCategory ?? undefined;
 };
 
 const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType): string | undefined => {

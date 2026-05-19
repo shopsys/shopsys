@@ -1,0 +1,9 @@
+ZboziCzProductDecorator:
+    type: interface
+    decorator: true
+    config:
+        fields:
+            zboziCategory:
+                type: "String"
+                description: "Zbozi.cz category text assigned to the product main category"
+                resolve: '@=query("zboziCategoryByProductQuery", value)'

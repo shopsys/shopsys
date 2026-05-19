@@ -1330,6 +1330,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   "Number of visible variants"
   variantsCount: Int!
   vatPercent: String!
+  "Zbozi.cz category text assigned to the product main category"
+  zboziCategory: String
 }
 
 scalar Money
@@ -2202,6 +2204,8 @@ interface Product {
   "UUID"
   uuid: Uuid!
   vatPercent: String!
+  "Zbozi.cz category text assigned to the product main category"
+  zboziCategory: String
 }
 
 "A connection to a list of items."
@@ -2723,6 +2727,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   "UUID"
   uuid: Uuid!
   vatPercent: String!
+  "Zbozi.cz category text assigned to the product main category"
+  zboziCategory: String
 }
 
 input RemoveCustomerUserDataInput {
@@ -3093,6 +3099,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   "UUID"
   uuid: Uuid!
   vatPercent: String!
+  "Zbozi.cz category text assigned to the product main category"
+  zboziCategory: String
 }
 
 type VideoToken {

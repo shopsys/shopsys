@@ -118,6 +118,7 @@ export type GtmProductInterface = {
     url: string;
     brand: string;
     categories: string[];
+    zboziCategory?: string;
     imageUrl?: string;
 };
 

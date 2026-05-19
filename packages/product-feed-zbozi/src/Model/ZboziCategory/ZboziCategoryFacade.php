@@ -6,8 +6,10 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Category\CategoryEvent;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ZboziCategoryFacade
 {
@@ -16,6 +18,7 @@ class ZboziCategoryFacade
         protected readonly ZboziCategoryRepository $zboziCategoryRepository,
         protected readonly CategoryRepository $categoryRepository,
         protected readonly ZboziCategoryFactory $zboziCategoryFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -34,6 +37,13 @@ class ZboziCategoryFacade
                 $this->em->persist($newZboziCategory);
             } else {
                 $existingZboziCategory = $existingZboziCategories[$newZboziCategoryData->zboziId];
+
+                if ($existingZboziCategory->getFullName() !== $newZboziCategoryData->fullName) {
+                    foreach ($existingZboziCategory->getCategories() as $category) {
+                        $this->eventDispatcher->dispatch(new CategoryEvent($category), CategoryEvent::UPDATE);
+                    }
+                }
+
                 $newZboziCategoryData->categories = $existingZboziCategory->getCategories();
                 $existingZboziCategory->edit($newZboziCategoryData);
             }
@@ -58,10 +68,10 @@ class ZboziCategoryFacade
             $newZboziCategoriesIds[] = $newZboziCategoryData->zboziId;
         }
 
-        $categoryIdsToDelete = array_diff($existingZboziCategoriesIds, $newZboziCategoriesIds);
+        $zboziCategoryIdsToDelete = array_diff($existingZboziCategoriesIds, $newZboziCategoriesIds);
 
-        foreach ($categoryIdsToDelete as $categoryIdToDelete) {
-            $this->em->remove($existingZboziCategoriesIndexedByIds[$categoryIdToDelete]);
+        foreach ($zboziCategoryIdsToDelete as $zboziCategoryIdToDelete) {
+            $this->em->remove($existingZboziCategoriesIndexedByIds[$zboziCategoryIdToDelete]);
         }
     }
 
@@ -76,9 +86,11 @@ class ZboziCategoryFacade
 
         if ($oldZboziCategoryByCategoryId === null) {
             $zboziCategory->addCategory($category);
+            $this->eventDispatcher->dispatch(new CategoryEvent($category), CategoryEvent::UPDATE);
         } elseif ($oldZboziCategoryByCategoryId->getZboziId() !== $zboziCategory->getZboziId()) {
             $oldZboziCategoryByCategoryId->removeCategory($category);
             $zboziCategory->addCategory($category);
+            $this->eventDispatcher->dispatch(new CategoryEvent($category), CategoryEvent::UPDATE);
         }
 
         $this->em->flush();
@@ -142,6 +154,8 @@ class ZboziCategoryFacade
         $zboziCategory->removeCategory($category);
 
         $this->em->flush();
+
+        $this->eventDispatcher->dispatch(new CategoryEvent($category), CategoryEvent::UPDATE);
     }
 
     public function getOneByZboziIdAndLocale(int $zboziId, string $locale): ZboziCategory
