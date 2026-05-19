@@ -8,6 +8,7 @@ import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CurrentCustomerType } from 'types/customer';
 import { UserConsentFormType } from 'types/form';
 import { DomainConfigType } from 'utils/domain/domainConfig';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export const getGtmPageReadyEvent = (
     pageInfo: GtmPageInfoType,
@@ -17,10 +18,12 @@ export const getGtmPageReadyEvent = (
     userContactInformation: ContactInformation,
     domainConfig: DomainConfigType,
     userConsent: UserConsentFormType | null,
+    pickupPlace?: StoreOrPacketeryPoint | null,
+    ipAddress?: string,
 ): GtmPageReadyEventType => ({
     event: GtmEventType.page_ready,
     page: pageInfo,
-    user: getGtmUserInfo(user, userContactInformation),
+    user: getGtmUserInfo(user, userContactInformation, pickupPlace, ipAddress, 'account'),
     device: getGtmDeviceType(),
     consent: getGtmConsentInfo(userConsent),
     currencyCode: domainConfig.currencyCode,

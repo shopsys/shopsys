@@ -105,6 +105,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             }
 
             return initServerSideProps<TypeOrderAvailablePaymentsQueryVariables>({
+                currentCustomerUserPrefetchMode: 'full',
                 authenticationConfig: {
                     authenticationRequired: true,
                     authorizedRoles: [

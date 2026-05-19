@@ -98,7 +98,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
                         <PersistStoreProvider>
                             <CurrentCustomerUserProvider>
                                 <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
-                                    <GtmProvider>
+                                    <GtmProvider ipAddress={pageProps.ipAddress}>
                                         <MotionConfig reducedMotion="user">
                                             <LazyMotion features={framerMotionPlugins}>
                                                 <RouteAccessibilityManager>

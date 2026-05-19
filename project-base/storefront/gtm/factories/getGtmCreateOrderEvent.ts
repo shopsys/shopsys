@@ -10,6 +10,7 @@ import { getGtmUserInfo } from 'gtm/utils/getGtmUserInfo';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CurrentCustomerType } from 'types/customer';
 import { DomainConfigType } from 'utils/domain/domainConfig';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export const getGtmCreateOrderEvent = (
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType,
@@ -57,4 +58,6 @@ export const getGtmCreateOrderEventOrderPart = (
 export const getGtmCreateOrderEventUserPart = (
     user: CurrentCustomerType | null | undefined,
     userContactInformation: ContactInformation,
-): GtmUserInfoType => getGtmUserInfo(user, userContactInformation);
+    pickupPlace?: StoreOrPacketeryPoint | null,
+    ipAddress?: string,
+): GtmUserInfoType => getGtmUserInfo(user, userContactInformation, pickupPlace, ipAddress);

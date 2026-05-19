@@ -1,5 +1,6 @@
 import { Translate } from 'next-translate';
 import { formatBytes } from 'utils/formaters/formatBytes';
+import { streetWithHouseNumberRegex } from 'utils/parsing/parseStreetWithHouseNumber';
 import * as Yup from 'yup';
 import { Schema } from 'yup';
 import { VALIDATION_CONSTANTS } from './validationConstants';
@@ -71,10 +72,7 @@ export const validateLastName = (t: Translate): Schema => {
 export const validateStreet = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter street'))
-        .matches(
-            /^[\u00C0-\u017Fa-zA-Z].*\s\d+(\/\d+)?[\u00C0-\u017Fa-zA-Z]?$|^\d+(\/\d+)?[\u00C0-\u017Fa-zA-Z]?\s.*[\u00C0-\u017Fa-zA-Z]$/,
-            t('Please enter a valid street. Examples: Street 123, Street 123/4'),
-        )
+        .matches(streetWithHouseNumberRegex, t('Please enter a valid street. Examples: Street 123, Street 123/4'))
         .max(
             VALIDATION_CONSTANTS.streetMaxLength,
             t('Street must be at most {{ max }} characters', { max: VALIDATION_CONSTANTS.streetMaxLength }),

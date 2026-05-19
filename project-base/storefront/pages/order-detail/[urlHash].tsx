@@ -106,6 +106,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const orderUuid = orderResponse.data?.order?.uuid;
 
             return initServerSideProps<TypeOrderAvailablePaymentsQueryVariables>({
+                currentCustomerUserPrefetchMode: 'full',
                 prefetchedQueries: orderUuid
                     ? [
                           {

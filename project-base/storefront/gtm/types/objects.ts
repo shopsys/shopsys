@@ -82,15 +82,21 @@ export type GtmUserInfoType = {
     lastName?: string;
     telephone?: string;
     street?: string;
+    streetNumber?: string;
     city?: string;
     postcode?: string;
     country?: string;
+    ipAddress?: string;
+    companyName?: string;
+    companyNumber?: string;
+    companyVatNumber?: string;
     type?: GtmUserType;
     status: GtmUserStatus;
     group?: string;
     loginType?: TypeLoginTypeEnum;
     externalId?: string | null;
     newsletterSubscription?: boolean;
+    pickupSomeoneElse?: boolean;
 };
 
 export type GtmConsentInfoType = {

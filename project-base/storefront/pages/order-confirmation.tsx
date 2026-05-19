@@ -51,9 +51,6 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { orderUuid, orderPaymentType, companyNumber, orderEmail, orderUrlHash, requiresAction } =
         query as OrderConfirmationUrlQuery;
 
-    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.order_confirmation);
-    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
-
     const [
         { data: orderSentPageContentData, fetching: isOrderSentPageContentFetching, error: orderSentPageContentError },
     ] = useOrderSentPageContentQuery({
@@ -66,6 +63,9 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             uuid: orderUuid,
         },
     });
+
+    const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.order_confirmation);
+    useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     const [orderDetailUrl] = getInternationalizedStaticUrls(
         [{ url: '/order-detail/:urlHash', param: orderData?.order?.urlHash }],

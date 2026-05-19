@@ -21,6 +21,7 @@ fragment OrderDetailFragment on Order {
     country {
         __typename
         name
+        code
     }
     isDeliveryAddressDifferentFromBilling
     deliveryFirstName
@@ -33,6 +34,7 @@ fragment OrderDetailFragment on Order {
     deliveryCountry {
         __typename
         name
+        code
     }
     note
     urlHash
