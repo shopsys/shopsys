@@ -1,0 +1,9 @@
+{# @var items \Shopsys\AdministrationBundle\Component\Menu\Dropdown\AdminDropdownMenuItem[] #}
+{% for item in items %}
+    {% if item.renderDividerBefore %}
+        <div class="dropdown-divider"></div>
+    {% endif %}
+    <a href="{{ item.link }}" class="dropdown-item" title="{{ item.title }}">
+        {{ ux_icon(item.icon, {class: 'icon dropdown-item-icon'}) }} {{ item.title }}
+    </a>
+{% endfor %}

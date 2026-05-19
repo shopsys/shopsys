@@ -144,13 +144,7 @@
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <a href="{{ url('admin_administrator_myaccount') }}" class="dropdown-item" title="{{ 'My account'|trans }}">
-                                    {{ ux_icon('user-settings', {class: 'icon dropdown-item-icon'}) }} {{ 'My account'|trans }}
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="{{ url('admin_logout', { _csrf_token: csrf_token('admin_logout')}) }}" class="dropdown-item" title="{{ 'Log out'|trans }}">
-                                    {{ ux_icon('logout', {class: 'icon dropdown-item-icon'}) }} {{ 'Log out'|trans }}
-                                </a>
+                                {{ renderAdminDropdownMenuItems() }}
                             </div>
                         </div>
                     </div>

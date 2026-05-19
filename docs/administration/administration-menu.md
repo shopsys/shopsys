@@ -74,3 +74,39 @@ Routes with mandatory route parameters but without concrete values usually have 
 
 A `BreadcrumbOverrider::overrideLastItem(string $label)` call can be used in a controller to override the last breadcrumb item.
 This can be used, for example, to specify which product you're editing in the breadcrumb navigation.
+
+## Administrator dropdown menu
+
+The dropdown menu shown after clicking the administrator name in the top-right corner can be extended through `AdminDropdownMenuItemProviderInterface`.
+Implementations are autoconfigured and collected automatically, so packages can add their own items without overriding the administration layout.
+
+Each provider returns one or more `AdminDropdownMenuItem` instances:
+
+```php
+use Shopsys\AdministrationBundle\Component\Menu\Dropdown\AdminDropdownMenuItem;
+use Shopsys\AdministrationBundle\Component\Menu\Dropdown\AdminDropdownMenuItemProviderInterface;
+
+class MyAdminDropdownMenuItemProvider implements AdminDropdownMenuItemProviderInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getItems(): array
+    {
+        return [
+            new AdminDropdownMenuItem(
+                t('My custom page'),
+                'puzzle',
+                $this->urlGenerator->generate('admin_my_custom_page'),
+                0,
+            ),
+        ];
+    }
+}
+```
+
+The item consists of a title, an icon alias, a link, and a priority.
+Higher priority items are rendered first.
+If the item should be visually separated from the previous items, set the optional `renderDividerBefore` constructor argument to `true`.
+
+Access checks should be handled inside the provider itself by returning only items the current user is allowed to see.
