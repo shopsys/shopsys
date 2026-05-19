@@ -2,7 +2,7 @@ parameters:
     shopsys.monolog.formatter: "monolog.formatter.line"
     shopsys.monolog.log_level: !php/const \Monolog\Logger::NOTICE
     shopsys.monolog.cron_level: !php/const \Monolog\Logger::DEBUG
-    shopsys.monolog.mcp_level: !php/const \Monolog\Logger::DEBUG
+    shopsys.monolog.mcp_level: !php/const \Monolog\Logger::INFO
 
 when@prod:
     parameters:

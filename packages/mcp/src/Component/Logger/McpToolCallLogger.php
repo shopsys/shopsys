@@ -49,6 +49,6 @@ class McpToolCallLogger
             $context['input'] = $inputContext;
         }
 
-        $this->logger->info('MCP tool rejected', $context);
+        $this->logger->warning('MCP tool rejected', $context);
     }
 }
