@@ -29,7 +29,7 @@ class McpTokenGridFactory
 
         $grid = $this->gridFactory->create('mcpTokenList', $dataSource, SystemRole::ADMIN);
         $grid->setDefaultOrder('createdAt', DataSourceInterface::ORDER_DESC);
-        $grid->setTitle(t('MCP tokens'));
+        $grid->setTitle(t('My MCP tokens'));
 
         $grid->addColumn('status', 'amt.id', t('Status'));
         $grid->addColumn('type', 'amt.type', t('Type'), true);
