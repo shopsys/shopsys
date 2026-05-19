@@ -109,16 +109,16 @@ msgstr ""
 msgid "Last used at"
 msgstr ""
 
-msgid "My MCP server"
-msgstr ""
-
 msgid "MCP token \"%tokenLabel%\" revoked"
 msgstr ""
 
-msgid "My MCP tokens"
+msgid "Manual"
 msgstr ""
 
-msgid "Manual"
+msgid "My MCP server"
+msgstr ""
+
+msgid "My MCP tokens"
 msgstr ""
 
 msgid "Never used"

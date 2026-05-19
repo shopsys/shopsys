@@ -109,17 +109,17 @@ msgstr "Popisok"
 msgid "Last used at"
 msgstr "Naposledy použité"
 
-msgid "My MCP server"
-msgstr "Môj MCP server"
-
 msgid "MCP token \"%tokenLabel%\" revoked"
 msgstr "MCP token \"%tokenLabel%\" bol zneplatnený"
 
-msgid "My MCP tokens"
-msgstr "Moje MCP tokeny"
-
 msgid "Manual"
 msgstr "Manuálny"
+
+msgid "My MCP server"
+msgstr "Môj MCP server"
+
+msgid "My MCP tokens"
+msgstr "Moje MCP tokeny"
 
 msgid "Never used"
 msgstr "Nikdy nepoužité"
