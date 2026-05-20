@@ -29,7 +29,6 @@ class Version20260227164539 extends AbstractMigration
             FROM blog_articles ba
             WHERE bad.blog_article_id = ba.id
         ');
-        $this->sql('COMMENT ON COLUMN blog_article_domains.publish_date IS \'(DC2Type:datetime_immutable)\'');
 
         $this->sql('ALTER TABLE blog_articles DROP COLUMN publish_date');
         $this->sql('ALTER TABLE blog_articles DROP COLUMN hidden');
