@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'blog_article_domains')]
@@ -49,11 +50,33 @@ class BlogArticleDomain
     #[ORM\Column(type: 'boolean')]
     protected $visible;
 
+    /**
+     * @var string
+     */
+    #[ORM\Column(type: 'string', length: 25)]
+    protected $status;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected $publishDate;
+
     public function __construct(BlogArticle $blogArticle, int $domainId)
     {
         $this->blogArticle = $blogArticle;
         $this->domainId = $domainId;
         $this->visible = false;
+        $this->status = BlogArticleStatusEnum::STATUS_DRAFT;
+        $this->publishDate = null;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle
+     */
+    public function getBlogArticle()
+    {
+        return $this->blogArticle;
     }
 
     /**
@@ -89,6 +112,22 @@ class BlogArticleDomain
     }
 
     /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getPublishDate()
+    {
+        return $this->publishDate;
+    }
+
+    /**
      * @param string|null $seoTitle
      */
     public function setSeoTitle($seoTitle): void
@@ -113,10 +152,37 @@ class BlogArticleDomain
     }
 
     /**
+     * @param string $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @param \DateTimeImmutable|null $publishDate
+     */
+    public function setPublishDate($publishDate): void
+    {
+        $this->publishDate = $publishDate;
+    }
+
+    /**
      * @return bool
      */
     public function isVisible()
     {
         return $this->visible;
+    }
+
+    public function isAccessibleOnStorefront(): bool
+    {
+        if ($this->status === BlogArticleStatusEnum::STATUS_PREVIEW) {
+            return true;
+        }
+
+        return $this->status === BlogArticleStatusEnum::STATUS_PUBLISHED
+            && $this->visible
+            && ($this->publishDate === null || $this->publishDate <= new DateTimeImmutable());
     }
 }

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoResultException;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 
@@ -20,7 +21,8 @@ class BlogArticleElasticsearchRepository
 
     public function getByUuid(string $uuid): array
     {
-        $filterQuery = $this->filterQueryFactory->createFilteredByUuid($uuid);
+        $filterQuery = $this->filterQueryFactory->createFilteredByUuid($uuid)
+            ->excludePublishedWithFutureDate();
 
         try {
             return $this->blogArticleElasticsearchDataFetcher->getSingleResult($filterQuery);
@@ -33,6 +35,8 @@ class BlogArticleElasticsearchRepository
     {
         $filterQuery = $this->filterQueryFactory
             ->create()
+            ->filterByStatus(BlogArticleStatusEnum::STATUS_PUBLISHED)
+            ->filterByPublishDateUpToNow()
             ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
 
         return $this->blogArticleElasticsearchDataFetcher->getTotalCount($filterQuery);
@@ -42,6 +46,8 @@ class BlogArticleElasticsearchRepository
     {
         $filterQuery = $this->filterQueryFactory
             ->create($offset, $limit)
+            ->filterByStatus(BlogArticleStatusEnum::STATUS_PUBLISHED)
+            ->filterByPublishDateUpToNow()
             ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
 
         return $this->blogArticleElasticsearchDataFetcher->getAllResults($filterQuery);
@@ -64,7 +70,8 @@ class BlogArticleElasticsearchRepository
 
     protected function findBySlug(string $slug): ?array
     {
-        $filterQuery = $this->filterQueryFactory->createFilteredBySlug($slug);
+        $filterQuery = $this->filterQueryFactory->createFilteredBySlug($slug)
+            ->excludePublishedWithFutureDate();
 
         try {
             return $this->blogArticleElasticsearchDataFetcher->getSingleResult($filterQuery);
@@ -81,6 +88,8 @@ class BlogArticleElasticsearchRepository
     ): array {
         $filterQuery = $this->filterQueryFactory
             ->createFilteredByBlogCategory($blogCategory, $offset, $limit)
+            ->filterByStatus(BlogArticleStatusEnum::STATUS_PUBLISHED)
+            ->filterByPublishDateUpToNow()
             ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
 
         return $this->blogArticleElasticsearchDataFetcher->getAllResults($filterQuery);
@@ -90,6 +99,8 @@ class BlogArticleElasticsearchRepository
     {
         $filterQuery = $this->filterQueryFactory
             ->createFilteredByBlogCategory($blogCategory)
+            ->filterByStatus(BlogArticleStatusEnum::STATUS_PUBLISHED)
+            ->filterByPublishDateUpToNow()
             ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
 
         return $this->blogArticleElasticsearchDataFetcher->getTotalCount($filterQuery);

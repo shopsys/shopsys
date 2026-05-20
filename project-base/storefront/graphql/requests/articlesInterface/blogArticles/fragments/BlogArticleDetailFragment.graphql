@@ -13,6 +13,7 @@ fragment BlogArticleDetailFragment on BlogArticle {
     }
     text
     publishDate
+    status
     seoTitle
     seoMetaDescription
     seoH1

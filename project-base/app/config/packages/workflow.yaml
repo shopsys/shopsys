@@ -1,2 +1,30 @@
 framework:
-    workflows: null
+    workflows:
+        blog_article_publishing:
+            type: state_machine
+            marking_store:
+                type: method
+                property: status
+            supports:
+                - Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDomain
+            initial_marking: !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_DRAFT
+            places:
+                - !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_DRAFT
+                - !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_PREVIEW
+                - !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_PUBLISHED
+            transitions:
+                publish:
+                    from:
+                        - !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_DRAFT
+                        - !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_PREVIEW
+                    to: !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_PUBLISHED
+                to_preview:
+                    from:
+                        - !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_DRAFT
+                        - !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_PUBLISHED
+                    to: !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_PREVIEW
+                to_draft:
+                    from:
+                        - !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_PUBLISHED
+                        - !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_PREVIEW
+                    to: !php/const Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum::STATUS_DRAFT

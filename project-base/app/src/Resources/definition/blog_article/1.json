@@ -163,6 +163,9 @@
                 "type": "date",
                 "format": "yyyy-MM-dd HH:mm:ss"
             },
+            "status": {
+                "type": "keyword"
+            },
             "perex": {
                 "type": "text"
             },

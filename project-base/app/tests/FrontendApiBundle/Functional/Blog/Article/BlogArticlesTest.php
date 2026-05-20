@@ -44,7 +44,7 @@ class BlogArticlesTest extends GraphQlTestCase
             ],
             'case 4' => [
                 $this->getLastBlogArticleQuery(),
-                [['name' => t('Blog article example %counter% %locale%', ['%counter%' => 45, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
+                [['name' => t('Blog article example %counter% %locale%', ['%counter%' => 42, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
             ],
             'case 5' => [
                 $this->getHomepageBlogArticlesQuery(3),

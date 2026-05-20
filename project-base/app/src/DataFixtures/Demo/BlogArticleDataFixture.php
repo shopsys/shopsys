@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum;
 use Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData;
@@ -31,6 +32,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     public const string FIRST_DEMO_BLOG_CATEGORY = 'first_demo_blog_category';
     public const string DEMO_BLOG_ARTICLE_PREFIX = 'demo_blog_article_';
     public const string SECOND_DEMO_BLOG_SUBCATEGORY = 'second_demo_blog_subcategory';
+    public const string BLOG_ARTICLE_DRAFT = 'blog_article_draft';
+    public const string BLOG_ARTICLE_PREVIEW = 'blog_article_preview';
+    public const string BLOG_ARTICLE_PUBLISHED_FUTURE = 'blog_article_published_future';
 
     private int $articleCounter = 1;
 
@@ -66,10 +70,19 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         //only in main category
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory]);
+            $this->applyStatusDiversity($blogArticleData, $i);
             $blogArticle = $this->blogArticleFacade->create($blogArticleData);
 
             if ($i === 0) {
                 $this->addReference(self::FIRST_DEMO_BLOG_ARTICLE, $blogArticle);
+            }
+
+            if ($i === self::PAGES_IN_CATEGORY - 1) {
+                $this->addReference(self::BLOG_ARTICLE_DRAFT, $blogArticle);
+            } elseif ($i === self::PAGES_IN_CATEGORY - 2) {
+                $this->addReference(self::BLOG_ARTICLE_PREVIEW, $blogArticle);
+            } elseif ($i === self::PAGES_IN_CATEGORY - 3) {
+                $this->addReference(self::BLOG_ARTICLE_PUBLISHED_FUTURE, $blogArticle);
             }
         }
 
@@ -80,6 +93,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         //in first subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory, $firstSubcategory]);
+            $this->applyStatusDiversity($blogArticleData, $i);
 
             if ($i === self::PAGES_IN_CATEGORY - 1) {
                 $blogArticleData->visibleOnHomepage = false;
@@ -94,6 +108,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         //in second subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory, $secondSubcategory]);
+            $this->applyStatusDiversity($blogArticleData, $i);
 
             if ($i === self::PAGES_IN_CATEGORY - 1) {
                 $blogArticleData->visibleOnHomepage = false;
@@ -150,7 +165,11 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $blogArticleData = $this->blogArticleDataFactory->create();
 
         $dateTime = (new DatePoint())->modify(sprintf('-%s days', $this->articleCounter + 3));
-        $blogArticleData->publishDate = $dateTime->setTime(0, 0);
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            $blogArticleData->publishDates[$domainId] = $dateTime->setTime(0, 0);
+            $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_PUBLISHED;
+        }
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article example ' . $this->articleCounter)->toString();
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
@@ -187,11 +206,37 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         return $blogArticleData;
     }
 
+    private function applyStatusDiversity(BlogArticleData $blogArticleData, int $index): void
+    {
+        $domainIds = $this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds();
+
+        if ($index === self::PAGES_IN_CATEGORY - 1) {
+            foreach ($domainIds as $domainId) {
+                $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_DRAFT;
+                $blogArticleData->publishDates[$domainId] = null;
+            }
+        } elseif ($index === self::PAGES_IN_CATEGORY - 2) {
+            foreach ($domainIds as $domainId) {
+                $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_PREVIEW;
+                $blogArticleData->publishDates[$domainId] = null;
+            }
+        } elseif ($index === self::PAGES_IN_CATEGORY - 3) {
+            foreach ($domainIds as $domainId) {
+                $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_PUBLISHED;
+                $blogArticleData->publishDates[$domainId] = (new DatePoint())->modify('+7 days')->setTime(10, 0);
+            }
+        }
+    }
+
     private function createBlogArticleForSearchingTest(): void
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for search testing')->toString();
-        $blogArticleData->publishDate = (new DatePoint())->modify('-1 days');
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            $blogArticleData->publishDates[$domainId] = (new DatePoint())->modify('-1 days');
+            $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_PUBLISHED;
+        }
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -222,7 +267,11 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     private function createBlockArticleForProductsTest(): void
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
-        $blogArticleData->publishDate = (new DatePoint())->modify('-2 days');
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            $blogArticleData->publishDates[$domainId] = (new DatePoint())->modify('-2 days');
+            $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_PUBLISHED;
+        }
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for products testing')->toString();
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
@@ -274,7 +323,11 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     private function createBlockArticleWithGrapesJs(): void
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
-        $blogArticleData->publishDate = (new DatePoint())->modify('-3 days');
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            $blogArticleData->publishDates[$domainId] = (new DatePoint())->modify('-3 days');
+            $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_PUBLISHED;
+        }
         $firstDomainUrl = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getUrl();
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'GrapesJS page')->toString();
 

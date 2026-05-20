@@ -50,11 +50,6 @@ class BlogArticleData
     public $enabled;
 
     /**
-     * @var bool
-     */
-    public $hidden;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
      */
     public $urls;
@@ -70,9 +65,14 @@ class BlogArticleData
     public $visibleOnHomepage;
 
     /**
-     * @var \DateTimeImmutable|null
+     * @var \DateTimeImmutable[]|null[]
      */
-    public $publishDate;
+    public $publishDates;
+
+    /**
+     * @var string[]
+     */
+    public $statuses;
 
     /**
      * @var \DateTimeImmutable|null
@@ -99,11 +99,11 @@ class BlogArticleData
         $this->descriptions = [];
         $this->categories = [];
         $this->enabled = [];
-        $this->hidden = false;
         $this->urls = new UrlListData();
         $this->visibleOnHomepage = true;
         $this->perexes = [];
         $this->createdAt = new DatePoint();
-        $this->publishDate = new DatePoint();
+        $this->publishDates = [];
+        $this->statuses = [];
     }
 }

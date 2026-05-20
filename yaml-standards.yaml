@@ -33,6 +33,7 @@
         - ./packages/framework/assets/node_modules/*
         - ./project-base/app/config/cron.yaml
         - ./project-base/app/config/packages/security.yaml
+        - ./project-base/app/config/packages/workflow.yaml
         - ./project-base/app/node_modules/*
         - ./project-base/app/orchestration/kubernetes/**/*.yaml
         - ./project-base/app/var/*

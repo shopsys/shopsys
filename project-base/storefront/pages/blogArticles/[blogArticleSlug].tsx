@@ -1,4 +1,5 @@
 import { ArticleMetadata } from 'components/Basic/Head/ArticleMetadata';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import {
@@ -41,30 +42,39 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
         return <Error404Content />;
     }
 
+    const isDraft = blogArticleData?.blogArticle?.status === 'draft';
+    const isPreview = blogArticleData?.blogArticle?.status === 'preview';
+    const isFuturePublishDate =
+        !!blogArticleData?.blogArticle?.publishDate && new Date(blogArticleData.blogArticle.publishDate) > new Date();
+    const shouldNoIndex = isDraft || isPreview || isFuturePublishDate;
+
     return (
-        <CommonLayout
-            breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
-            breadcrumbsType="blogCategory"
-            canonicalQueryParams={[]}
-            description={blogArticleData?.blogArticle?.seoMetaDescription}
-            hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
-            isFetchingData={isBlogArticleFetching}
-            ogImageUrlDefault={blogArticleImageUrl}
-            ogType={OgTypeEnum.Article}
-            title={blogArticleData?.blogArticle?.seoTitle || blogArticleData?.blogArticle?.name}
-        >
-            {!!blogArticleData?.blogArticle && (
-                <>
-                    <ArticleMetadata
-                        datePublished={blogArticleData.blogArticle.publishDate}
-                        description={blogArticleData.blogArticle.seoMetaDescription}
-                        headline={blogArticleData.blogArticle.seoTitle || blogArticleData.blogArticle.name}
-                        imageUrl={blogArticleData.blogArticle.mainImage?.url}
-                    />
-                    <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
-                </>
-            )}
-        </CommonLayout>
+        <>
+            {shouldNoIndex && <MetaRobots content="noindex, nofollow" />}
+            <CommonLayout
+                breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
+                breadcrumbsType="blogCategory"
+                canonicalQueryParams={[]}
+                description={blogArticleData?.blogArticle?.seoMetaDescription}
+                hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
+                isFetchingData={isBlogArticleFetching}
+                ogImageUrlDefault={blogArticleImageUrl}
+                ogType={OgTypeEnum.Article}
+                title={blogArticleData?.blogArticle?.seoTitle || blogArticleData?.blogArticle?.name}
+            >
+                {!!blogArticleData?.blogArticle && (
+                    <>
+                        <ArticleMetadata
+                            datePublished={blogArticleData.blogArticle.publishDate}
+                            description={blogArticleData.blogArticle.seoMetaDescription}
+                            headline={blogArticleData.blogArticle.seoTitle || blogArticleData.blogArticle.name}
+                            imageUrl={blogArticleData.blogArticle.mainImage?.url}
+                        />
+                        <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
+                    </>
+                )}
+            </CommonLayout>
+        </>
     );
 };
 

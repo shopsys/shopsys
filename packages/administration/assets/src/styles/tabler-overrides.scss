@@ -12,6 +12,20 @@
     --tblr-btn-disabled-border-color: #{$border-color};
 }
 
+.inline-labeled-field__content {
+    display: flex;
+    align-items: center;
+
+    > .form-control-plaintext {
+        padding: 0;
+        border: 0;
+    }
+
+    > .form-check {
+        margin-bottom: 0;
+    }
+}
+
 // make popover and tooltip wider
 .popover {
     --tblr-popover-max-width: 30rem;
@@ -88,6 +102,21 @@ textarea.form-control.is-invalid {
     position: fixed;
     z-index: 1099;
     padding: 1.1rem;
+}
+
+.dropdown-toggle--with-badge {
+    > .badge {
+        margin-right: 10px;
+    }
+
+    &.btn-link:hover,
+    &.btn-link:focus-visible {
+        text-decoration: none;
+
+        .dropdown-toggle__label {
+            text-decoration: underline;
+        }
+    }
 }
 
 @media (min-width: 768px) {

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Expr\Join;
-use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
@@ -22,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 class BlogArticleExportRepository
 {
     public function __construct(
-        protected readonly EntityManagerInterface $em,
         protected readonly BlogArticleRepository $blogArticleRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
@@ -31,7 +27,6 @@ class BlogArticleExportRepository
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly BlogCategoryFacade $blogCategoryFacade,
-        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -44,7 +39,7 @@ class BlogArticleExportRepository
         int $limit,
         int $lastProcessedId,
     ): array {
-        return $this->blogArticleRepository->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
+        return $this->blogArticleRepository->getExportableBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
             ->andWhere('ba.id > :lastProcessedId')
             ->setParameter('lastProcessedId', $lastProcessedId)
             ->setMaxResults($limit)
@@ -62,7 +57,7 @@ class BlogArticleExportRepository
         string $locale,
         array $blogArticleIds,
     ): array {
-        return $this->blogArticleRepository->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
+        return $this->blogArticleRepository->getExportableBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
             ->andWhere('ba.id IN (:blogArticleIds)')
             ->setParameter('blogArticleIds', $blogArticleIds)
             ->getQuery()
@@ -71,17 +66,9 @@ class BlogArticleExportRepository
 
     public function getVisibleBlogArticlesCountByDomainIdAndLocale(int $domainId, string $locale): int
     {
-        return (int)($this->em->createQueryBuilder()
+        return (int)($this->blogArticleRepository->getExportableBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
             ->select('COUNT(ba)')
-            ->from(BlogArticle::class, 'ba')
-            ->join('ba.translations', 'bat', Join::WITH, 'bat.locale = :locale')
-            ->setParameter('locale', $locale)
-            ->join('ba.domains', 'bad', Join::WITH, 'bad.domainId = :domainId')
-            ->andWhere('ba.publishDate <= :now')
-            ->andWhere('bad.visible = true')
-            ->andWhere('ba.hidden = false')
-            ->setParameter('now', $this->clock->now())
-            ->setParameter('domainId', $domainId)
+            ->resetDQLPart('orderBy')
             ->getQuery()->getSingleScalarResult());
     }
 
@@ -103,7 +90,8 @@ class BlogArticleExportRepository
             'uuid' => $blogArticle->getUuid(),
             'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
             'visibleOnHomepage' => $blogArticle->isVisibleOnHomepage(),
-            'publishDate' => $blogArticle->getPublishDate()->format('Y-m-d H:i:s'),
+            'publishDate' => $blogArticle->getPublishDate($domainId)?->format('Y-m-d H:i:s'),
+            'status' => $blogArticle->getStatus($domainId),
             'perex' => $blogArticle->getPerex($locale),
             'seoTitle' => $blogArticle->getSeoTitle($domainId),
             'seoMetaDescription' => $blogArticle->getSeoMetaDescription($domainId),

@@ -42,6 +42,7 @@ const blogArticleDetail = {
     link: '/blog/test-blog-article',
     text: null,
     publishDate: '2026-04-30T10:00:00+02:00',
+    status: 'published',
     seoTitle: null,
     seoMetaDescription: null,
     seoH1: null,

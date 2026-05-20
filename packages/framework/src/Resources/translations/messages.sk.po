@@ -295,6 +295,15 @@ msgstr "Článok <strong>{{ name }}</strong> zmazaný"
 msgid "Article data"
 msgstr "Údaje článku"
 
+msgid "Article is accessible via direct URL only, with noindex/nofollow."
+msgstr "Článok je prístupný iba cez priamy odkaz, s noindex/nofollow."
+
+msgid "Article is only visible in administration."
+msgstr "Článok je viditeľný iba v administrácii."
+
+msgid "Article is ready to be displayed on the storefront."
+msgstr "Článok je pripravený na zobrazenie v storefronte."
+
 msgid "Articles in footer"
 msgstr "Články v päte"
 
@@ -1167,6 +1176,9 @@ msgstr "Hotovo"
 
 msgid "Download file"
 msgstr "Stiahnuť súbor"
+
+msgid "Draft"
+msgstr "Rozpracované"
 
 msgid "Duplicate"
 msgstr "Duplikát"
@@ -2071,6 +2083,9 @@ msgstr "Názov nebol vyplnený vo vašom aktuálnom jazyke"
 msgid "Name in the corresponding locale must be filled-in in order to display the file on the storefront"
 msgstr "Názov v príslušnom jazyku musí byť vyplnený, aby sa súbor zobrazil v obchode"
 
+msgid "Name must be defined."
+msgstr "Názov musí byť definovaný."
+
 msgid "Name prefix"
 msgstr "Predpona názvu"
 
@@ -2785,6 +2800,9 @@ msgstr "Sviatok"
 msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
 msgstr "Sviatky sa berú do úvahy pri výpočte lehoty na odstúpenie od objednávky."
 
+msgid "Published"
+msgstr "Zverejnené"
+
 msgid "QR code"
 msgstr "QR kód"
 
@@ -3438,6 +3456,9 @@ msgstr "Nemožno pridať"
 
 msgid "Unable to add product"
 msgstr "Nemožno pridať produkt"
+
+msgid "Unable to change status for domain %name%:"
+msgstr "Nepodarilo sa zmeniť stav pre doménu %name%:"
 
 msgid "Unable to deliver SMS"
 msgstr "Nemožno doručiť SMS"

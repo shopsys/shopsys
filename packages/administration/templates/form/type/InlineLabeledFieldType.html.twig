@@ -1,0 +1,14 @@
+{%- block inline_labeled_field_row -%}
+    <div {% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' mt-3 mb-3 row')|trim})} %}{{ block('attributes') }}{% endwith %}>
+        <div class="col">
+            <div class="input-group">
+                <span class="input-group-text"><strong>{{ label|trans({}, translation_domain) }}</strong></span>
+                <div class="form-control bg-white inline-labeled-field__content">
+                    {% for child in form %}
+                        {{- form_widget(child) -}}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endblock -%}

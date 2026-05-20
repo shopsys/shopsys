@@ -4,6 +4,21 @@
     {{ value|nameWithFallbackOnEmpty }}
 {% endblock %}
 
+{% block grid_value_cell_id_status %}
+    {% if row.mixedStatus|default(false) %}
+        <span class="badge bg-secondary-lt cursor-help"
+              title="{{ 'Status differs across domains. Select a domain to see details.'|trans }}"
+              data-bs-toggle="tooltip"
+        >{{ 'Mixed'|trans }}</span>
+    {% else %}
+        {% include '@ShopsysAdministration/content/blog/article/statusBadge.html.twig' with {
+            status: row.domainStatus|default(null),
+            publishDate: row.domainPublishDate|default(null),
+            visible: row.domainVisible|default(false),
+        } only %}
+    {% endif %}
+{% endblock %}
+
 {% block grid_no_data %}
     {{ 'No blog articles found.'|trans }}
 {% endblock %}

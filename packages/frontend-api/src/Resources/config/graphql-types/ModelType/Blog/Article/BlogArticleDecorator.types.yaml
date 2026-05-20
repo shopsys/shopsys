@@ -10,7 +10,7 @@ BlogArticleDecorator:
         fields:
             id:
                 type: "Int!"
-                description: "ID of category"
+                description: "ID of blog article"
             uuid:
                 type: "Uuid!"
                 description: "The blog article UUID"
@@ -27,8 +27,11 @@ BlogArticleDecorator:
                 type: "Boolean!"
                 description: "Indicates whether the blog article is displayed on homepage"
             publishDate:
-                type: "DateTime!"
+                type: "DateTime"
                 description: "Date and time of the blog article publishing"
+            status:
+                type: "String!"
+                description: "The blog article status (draft, preview, published)"
             perex:
                 type: "String"
                 description: "The blog article perex"

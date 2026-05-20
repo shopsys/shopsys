@@ -5,24 +5,30 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Blog;
 
 use Override;
-use Psr\Clock\ClockInterface;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Form\BlogCategoriesType;
-use Shopsys\FrameworkBundle\Form\DatePickerType;
+use Shopsys\FrameworkBundle\Form\DateTimeType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Form\InlineLabeledFieldType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
+use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,7 +40,9 @@ final class BlogArticleFormType extends AbstractType
     public function __construct(
         protected readonly Domain $domain,
         protected readonly SeoSettingFacade $seoSettingFacade,
-        protected readonly ClockInterface $clock,
+        protected readonly BlogArticleStatusEnum $blogArticleStatusEnum,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
     ) {
     }
 
@@ -136,10 +144,23 @@ final class BlogArticleFormType extends AbstractType
         ]);
 
         $categoriesOptionsByDomainId = [];
+        $statusesOptionsByDomainId = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoriesOptionsByDomainId[$domainId] = [
                 'domain_id' => $domainId,
+            ];
+
+            $previewUrl = $this->getArticlePreviewUrl($blogArticle, $domainId);
+            $statusDescriptions = $this->blogArticleStatusEnum->getStatusDescriptions($previewUrl);
+
+            $currentStatus = $blogArticle?->getStatus($domainId) ?? BlogArticleStatusEnum::STATUS_DRAFT;
+            $statusesOptionsByDomainId[$domainId] = [
+                'help' => $statusDescriptions[$currentStatus] ?? '',
+                'help_html' => true,
+                'attr' => [
+                    'data-js-status-description' => json_encode($statusDescriptions),
+                ],
             ];
         }
 
@@ -160,22 +181,50 @@ final class BlogArticleFormType extends AbstractType
                 'options_by_domain_id' => $categoriesOptionsByDomainId,
                 'label' => 'Assign to category',
             ])
-            ->add('hidden', YesNoType::class, [
-                'label' => 'Hide',
-            ])
-            ->add('visibleOnHomepage', YesNoType::class, [
+            ->add('visibleOnHomepage', InlineLabeledFieldType::class, [
+                'entry_type' => YesNoType::class,
                 'label' => 'Visible on homepage',
             ])
-            ->add('publishDate', DatePickerType::class, [
-                'required' => true,
-                'constraints' => [
-                    new Constraints\NotBlank(message: 'Please enter date of creation'),
+            ->add('statuses', MultidomainType::class, [
+                'entry_type' => ChoiceType::class,
+                'entry_options' => [
+                    'choices' => $this->blogArticleStatusEnum->getAllIndexedByTranslations(),
                 ],
+                'options_by_domain_id' => $statusesOptionsByDomainId,
+                'label' => 'Status',
+            ]);
+
+        if ($blogArticle !== null) {
+            $builderSettingsGroup->add('createdAt', InlineLabeledFieldType::class, [
+                'entry_type' => DisplayOnlyType::class,
+                'entry_options' => [
+                    'data' => $this->dateTimeFormatterExtension->formatDateTime($blogArticle->getCreatedAt()),
+                ],
+                'label' => 'Date of creation',
+            ]);
+        }
+
+        $builderSettingsGroup
+            ->add('publishDates', MultidomainType::class, [
+                'entry_type' => DateTimeType::class,
+                'required' => false,
                 'label' => 'Date of publication',
-                'data' => $blogArticle === null ? $this->clock->now() : $blogArticle->getPublishDate(),
             ]);
 
         return $builderSettingsGroup;
+    }
+
+    private function getArticlePreviewUrl(?BlogArticle $blogArticle, int $domainId): ?string
+    {
+        if ($blogArticle === null) {
+            return null;
+        }
+
+        try {
+            return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId());
+        } catch (FriendlyUrlNotFoundException) {
+            return null;
+        }
     }
 
     private function createDescriptionGroup(FormBuilderInterface $builder): FormBuilderInterface

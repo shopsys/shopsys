@@ -1,0 +1,6 @@
+query BlogArticleByUuidQuery($uuid: Uuid!) {
+    blogArticle(uuid: $uuid) {
+        uuid
+        status
+    }
+}

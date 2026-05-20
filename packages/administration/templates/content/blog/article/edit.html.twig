@@ -4,3 +4,42 @@
 
 {% block pre_title %}{{ 'Editing blog article'|trans }}{% endblock %}
 {% block h1 %}{{ blogArticle.name }}{% endblock %}
+
+{% block btn_wrapper %}
+    {% set statusItemsHtml %}
+        {% include '@ShopsysAdministration/content/blog/article/statusItems.html.twig' %}
+    {% endset %}
+
+    {% if isMultidomain() %}
+        {% set firstStatus = blogArticle.getStatus(domains|first.id) %}
+        {% set allSame = true %}
+
+        {% for domain in domains %}
+            {% if blogArticle.getStatus(domain.id) != firstStatus %}
+                {% set allSame = false %}
+            {% endif %}
+        {% endfor %}
+
+        <div class="dropdown"
+             data-bs-toggle="popover"
+             data-bs-trigger="click"
+             data-bs-html="true"
+             data-bs-content="{{ statusItemsHtml|e('html_attr') }}"
+             data-bs-container="body"
+             data-bs-placement="left"
+        >
+            <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle--with-badge">
+                {% if allSame %}
+                    {% include '@ShopsysAdministration/content/blog/article/statusBadge.html.twig' with {
+                        status: firstStatus,
+                        publishDate: blogArticle.getPublishDate(domains|first.id),
+                        visible: blogArticle.isVisible(domains|first.id),
+                    } only %}
+                {% endif %}
+                <span class="dropdown-toggle__label">{{ 'Preview'|trans }}</span>
+            </button>
+        </div>
+    {% else %}
+        {{ statusItemsHtml|raw }}
+    {% endif %}
+{% endblock %}

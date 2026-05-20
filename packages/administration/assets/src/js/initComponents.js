@@ -85,7 +85,20 @@ function initPopover($container) {
             this.setAttribute('data-bs-trigger', 'click');
         }
 
-        new Popover(this);
+        const popover = new Popover(this, {
+            allowList: {
+                ...Popover.Default.allowList,
+                span: ['class', 'title', 'data-bs-toggle'],
+            },
+        });
+
+        this.addEventListener('shown.bs.popover', () => {
+            if (popover.tip) {
+                popover.tip.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+                    new Tooltip(el);
+                });
+            }
+        });
     });
 }
 

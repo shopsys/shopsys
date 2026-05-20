@@ -44,6 +44,8 @@ class BlogArticleDataFactory
             $blogArticleData->seoTitles[$domainId] = null;
             $blogArticleData->seoH1s[$domainId] = null;
             $blogArticleData->enabled[$domainId] = true;
+            $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_DRAFT;
+            $blogArticleData->publishDates[$domainId] = null;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -62,9 +64,7 @@ class BlogArticleDataFactory
         }
 
         $blogArticleData->perexes = $blogArticle->getPerexes();
-        $blogArticleData->hidden = $blogArticle->isHidden();
         $blogArticleData->visibleOnHomepage = $blogArticle->isVisibleOnHomepage();
-        $blogArticleData->publishDate = $blogArticle->getPublishDate();
         $blogArticleData->createdAt = $blogArticle->getCreatedAt();
         $blogArticleData->blogCategoriesByDomainId = $blogArticle->getBlogCategoriesIndexedByDomainId();
         $blogArticleData->uuid = $blogArticle->getUuid();
@@ -75,6 +75,8 @@ class BlogArticleDataFactory
             $blogArticleData->seoMetaDescriptions[$domainId] = $blogArticle->getSeoMetaDescription($domainId);
             $blogArticleData->seoTitles[$domainId] = $blogArticle->getSeoTitle($domainId);
             $blogArticleData->seoH1s[$domainId] = $blogArticle->getSeoH1($domainId);
+            $blogArticleData->statuses[$domainId] = $blogArticle->getStatus($domainId);
+            $blogArticleData->publishDates[$domainId] = $blogArticle->getPublishDate($domainId);
 
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_blogarticle_detail', $blogArticle->getId());
             $blogArticleData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;

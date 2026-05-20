@@ -295,6 +295,15 @@ msgstr ""
 msgid "Article data"
 msgstr ""
 
+msgid "Article is accessible via direct URL only, with noindex/nofollow."
+msgstr ""
+
+msgid "Article is only visible in administration."
+msgstr ""
+
+msgid "Article is ready to be displayed on the storefront."
+msgstr ""
+
 msgid "Articles in footer"
 msgstr ""
 
@@ -1166,6 +1175,9 @@ msgid "Done"
 msgstr ""
 
 msgid "Download file"
+msgstr ""
+
+msgid "Draft"
 msgstr ""
 
 msgid "Duplicate"
@@ -2071,6 +2083,9 @@ msgstr ""
 msgid "Name in the corresponding locale must be filled-in in order to display the file on the storefront"
 msgstr ""
 
+msgid "Name must be defined."
+msgstr ""
+
 msgid "Name prefix"
 msgstr ""
 
@@ -2785,6 +2800,9 @@ msgstr ""
 msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
 msgstr ""
 
+msgid "Published"
+msgstr ""
+
 msgid "QR code"
 msgstr ""
 
@@ -3437,6 +3455,9 @@ msgid "Unable to add"
 msgstr ""
 
 msgid "Unable to add product"
+msgstr ""
+
+msgid "Unable to change status for domain %name%:"
 msgstr ""
 
 msgid "Unable to deliver SMS"

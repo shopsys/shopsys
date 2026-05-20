@@ -166,6 +166,21 @@ msgstr ""
 msgid "Article"
 msgstr ""
 
+msgid "Article is accessible via direct URL only, with noindex/nofollow."
+msgstr ""
+
+msgid "Article is fully visible on storefront."
+msgstr ""
+
+msgid "Article is only visible in administration."
+msgstr ""
+
+msgid "Article is published but not visible on storefront (missing name or category)."
+msgstr ""
+
+msgid "Article will be visible from %date%."
+msgstr ""
+
 msgid "Articles"
 msgstr ""
 
@@ -655,6 +670,9 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
+msgid "Draft"
+msgstr ""
+
 msgid "Drag to reorder"
 msgstr ""
 
@@ -1135,6 +1153,9 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
+msgid "Mixed"
+msgstr ""
+
 msgid "Modifications"
 msgstr ""
 
@@ -1603,6 +1624,12 @@ msgstr ""
 msgid "Public access"
 msgstr ""
 
+msgid "Published"
+msgstr ""
+
+msgid "Published (invisible)"
+msgstr ""
+
 msgid "Quantity"
 msgstr ""
 
@@ -1871,6 +1898,9 @@ msgid "Special price"
 msgstr ""
 
 msgid "Status"
+msgstr ""
+
+msgid "Status differs across domains. Select a domain to see details."
 msgstr ""
 
 msgid "Stops on first failure"

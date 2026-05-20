@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -228,7 +229,7 @@ class BlogArticleTest extends GraphQlTestCase
                     'text' => $description,
                     'createdAt' => $this->blogArticle->getCreatedAt()->format(DATE_ATOM),
                     'visibleOnHomepage' => true,
-                    'publishDate' => $this->blogArticle->getPublishDate()->format(DATE_ATOM),
+                    'publishDate' => $this->blogArticle->getPublishDate(Domain::FIRST_DOMAIN_ID)->format(DATE_ATOM),
                     'perex' => t('%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     'seoTitle' => t('title - Blog article example %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     'seoMetaDescription' => t('Blog article example %counter% %locale% - Meta description', ['%counter%' => 1, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),

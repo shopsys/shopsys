@@ -51,12 +51,6 @@ class BlogArticle extends AbstractTranslatableEntity
     protected $domains;
 
     /**
-     * @var bool
-     */
-    #[ORM\Column(type: 'boolean')]
-    protected $hidden;
-
-    /**
      * @var \DateTimeImmutable
      */
     #[ORM\Column(type: 'datetime_immutable')]
@@ -67,12 +61,6 @@ class BlogArticle extends AbstractTranslatableEntity
      */
     #[ORM\Column(type: 'boolean')]
     protected $visibleOnHomepage;
-
-    /**
-     * @var \DateTimeImmutable
-     */
-    #[ORM\Column(type: 'datetime_immutable')]
-    protected $publishDate;
 
     /**
      * @var string
@@ -88,10 +76,8 @@ class BlogArticle extends AbstractTranslatableEntity
 
         $this->setTranslations($blogArticleData);
 
-        $this->hidden = $blogArticleData->hidden;
         $this->createdAt = $blogArticleData->createdAt;
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
-        $this->publishDate = $blogArticleData->publishDate;
         $this->uuid = $blogArticleData->uuid ?: Uuid::uuid4()->toString();
     }
 
@@ -103,9 +89,7 @@ class BlogArticle extends AbstractTranslatableEntity
         $this->setDomains($blogArticleData);
         $this->setCategories($blogArticleBlogCategoryDomainFactory, $blogArticleData->blogCategoriesByDomainId);
 
-        $this->hidden = $blogArticleData->hidden;
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
-        $this->publishDate = $blogArticleData->publishDate;
     }
 
     /**
@@ -280,7 +264,7 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     public function getDescriptions()
     {
@@ -299,6 +283,14 @@ class BlogArticle extends AbstractTranslatableEntity
         return new BlogArticleTranslation();
     }
 
+    /**
+     * @return \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDomain>
+     */
+    public function getDomains()
+    {
+        return $this->domains;
+    }
+
     protected function setDomains(BlogArticleData $blogArticleData): void
     {
         foreach ($this->domains as $blogArticleDomain) {
@@ -306,6 +298,7 @@ class BlogArticle extends AbstractTranslatableEntity
             $blogArticleDomain->setSeoTitle($blogArticleData->seoTitles[$domainId]);
             $blogArticleDomain->setSeoH1($blogArticleData->seoH1s[$domainId]);
             $blogArticleDomain->setSeoMetaDescription($blogArticleData->seoMetaDescriptions[$domainId]);
+            $blogArticleDomain->setPublishDate($blogArticleData->publishDates[$domainId]);
         }
     }
 
@@ -322,14 +315,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @return bool
-     */
-    public function isHidden()
-    {
-        return $this->hidden;
-    }
-
-    /**
      * @return \DateTimeImmutable
      */
     public function getCreatedAt()
@@ -343,14 +328,6 @@ class BlogArticle extends AbstractTranslatableEntity
     public function isVisibleOnHomepage()
     {
         return $this->visibleOnHomepage;
-    }
-
-    /**
-     * @return \DateTimeImmutable
-     */
-    public function getPublishDate()
-    {
-        return $this->publishDate;
     }
 
     /**
@@ -381,5 +358,26 @@ class BlogArticle extends AbstractTranslatableEntity
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(int $domainId)
+    {
+        return $this->getDomain($domainId)->getStatus();
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getPublishDate(int $domainId)
+    {
+        return $this->getDomain($domainId)->getPublishDate();
+    }
+
+    public function isAccessibleOnStorefront(int $domainId): bool
+    {
+        return $this->getDomain($domainId)->isAccessibleOnStorefront();
     }
 }

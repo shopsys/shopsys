@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractElasticsearchDataFetcher;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum;
 
 class BlogArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetcher
 {
@@ -20,7 +21,8 @@ class BlogArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetch
         $result['uuid'] = $data['uuid'] ?? '';
         $result['createdAt'] = $data['createdAt'] ?? '1970-01-01 00:00:00';
         $result['visibleOnHomepage'] = $data['visibleOnHomepage'] ?? false;
-        $result['publishDate'] = $data['publishDate'] ?? '1970-01-01 00:00:00';
+        $result['publishDate'] = $data['publishDate'] ?? null;
+        $result['status'] = $data['status'] ?? BlogArticleStatusEnum::STATUS_PUBLISHED;
         $result['perex'] = $data['perex'] ?? null;
         $result['seoTitle'] = $data['seoTitle'] ?? null;
         $result['seoMetaDescription'] = $data['seoMetaDescription'] ?? null;
