@@ -27,6 +27,7 @@
         - ./config/cron.yaml
         - ./config/packages/security.yaml
         - ./config/packages/shopsys_framework.yaml
+        - ./config/packages/workflow.yaml
         - ./docker*
         - ./migrations-lock.yaml
         - ./migrations-lock.yml
