@@ -7,7 +7,7 @@ namespace Shopsys\McpBundle\EventSubscriber;
 use Override;
 use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Component\Security\McpBearerToken;
-use Shopsys\McpBundle\Component\Security\McpRuntimeRequestMatcher;
+use Shopsys\McpBundle\Component\Security\McpRequestMatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +62,7 @@ class McpRequestRateLimitSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (McpRuntimeRequestMatcher::isMcpRuntimeRequest($request)) {
+        if (McpRequestMatcher::isMcpRuntimeRequest($request)) {
             $rateLimits = $this->consumeRuntimeRateLimits($request);
         } else {
             $route = $request->attributes->getString('_route');

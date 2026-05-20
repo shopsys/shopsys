@@ -7,6 +7,7 @@ namespace Shopsys\McpBundle\EventSubscriber;
 use Override;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
+use Shopsys\McpBundle\Component\Availability\McpAvailabilityChecker;
 use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -15,6 +16,7 @@ class AdminMenuSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         protected readonly AuthorizationCheckerInterface $authorizationChecker,
+        protected readonly McpAvailabilityChecker $mcpAvailabilityChecker,
     ) {
     }
 
@@ -28,7 +30,7 @@ class AdminMenuSubscriber implements EventSubscriberInterface
 
     public function onConfigureMenu(ConfigureMenuEvent $event): void
     {
-        if (!$this->authorizationChecker->isGranted(SystemRole::SUPER_ADMIN)) {
+        if (!$this->mcpAvailabilityChecker->isAvailable() || !$this->authorizationChecker->isGranted(SystemRole::SUPER_ADMIN)) {
             return;
         }
 

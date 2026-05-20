@@ -6,6 +6,7 @@ namespace Shopsys\McpBundle\Component\Database\Schema;
 
 use Override;
 use Psr\Log\LoggerInterface;
+use Shopsys\McpBundle\Component\Availability\McpAvailabilityChecker;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 use Throwable;
@@ -15,6 +16,7 @@ class McpSchemaCacheWarmer implements CacheWarmerInterface
     public function __construct(
         protected readonly McpSchemaFileGenerator $mcpSchemaFileGenerator,
         protected readonly ExposedSchemaProvider $exposedSchemaProvider,
+        protected readonly McpAvailabilityChecker $mcpAvailabilityChecker,
         #[Autowire(service: 'monolog.logger.mcp')]
         protected readonly LoggerInterface $logger,
     ) {
@@ -26,6 +28,10 @@ class McpSchemaCacheWarmer implements CacheWarmerInterface
     #[Override]
     public function warmUp(string $cacheDir, ?string $buildDir = null): array
     {
+        if (!$this->mcpAvailabilityChecker->isAvailable()) {
+            return [];
+        }
+
         try {
             $this->mcpSchemaFileGenerator->generateSchemaFile();
         } catch (Throwable $throwable) {

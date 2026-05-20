@@ -1,3 +1,7 @@
+parameters:
+    env(MCP_DATABASE_PASSWORD): ''
+    env(MCP_DATABASE_USER): ''
+
 services:
     _defaults:
         autoconfigure: true
@@ -9,6 +13,11 @@ services:
 
     Shopsys\McpBundle\Command\:
         resource: '../src/Command/'
+
+    Shopsys\McpBundle\Component\Availability\McpAvailabilityChecker:
+        arguments:
+            $mcpDatabaseUser: '%env(MCP_DATABASE_USER)%'
+            $mcpDatabasePassword: '%env(MCP_DATABASE_PASSWORD)%'
 
     Shopsys\McpBundle\Component\Database\Middleware\McpSessionSettingsMiddleware:
         tags:

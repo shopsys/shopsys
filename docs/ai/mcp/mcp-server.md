@@ -66,6 +66,17 @@ The MCP administration page is available under:
 
 It is restricted to superadministrators and provides the MCP token overview and client setup guidance.
 
+## Runtime configuration
+
+The MCP server is enabled only when both environment variables are configured:
+
+- `MCP_DATABASE_USER`
+- `MCP_DATABASE_PASSWORD`
+
+If either value is missing or empty, MCP runtime features are disabled. In that state, MCP administration links are hidden, direct access to MCP administration URLs returns HTTP 404, OAuth/runtime entrypoints are not available, and MCP schema generation is skipped.
+
+For local development and for CI builds, Shopsys Platform provides default values in `.env`. For production deployments, set both variables explicitly. We strongly recommend using a dedicated read-only PostgreSQL user for the MCP connection.
+
 ## What developers need to configure
 
 MCP exposure is explicit. Nothing is exposed automatically just because it exists as a Doctrine entity.
@@ -185,7 +196,6 @@ php bin/console shopsys:mcp:generate-schema
 
 ## Operational notes
 
-- In production, `MCP_DATABASE_USER` and `MCP_DATABASE_PASSWORD` must point to a dedicated read-only PostgreSQL user, not to the main application database user.
 - MCP access tokens are stored hashed in the database.
 - Both manual and OAuth-issued tokens expire.
 - Query limits and statement timeout are configured through bundle configuration.

@@ -31,7 +31,7 @@ class McpTokenAuthenticator extends AbstractAuthenticator implements Authenticat
     #[Override]
     public function supports(Request $request): ?bool
     {
-        return McpRuntimeRequestMatcher::isMcpRuntimeRequest($request);
+        return McpRequestMatcher::isMcpRuntimeRequest($request);
     }
 
     /**
