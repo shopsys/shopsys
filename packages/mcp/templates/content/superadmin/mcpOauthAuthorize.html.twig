@@ -1,0 +1,27 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %} - {{ 'Authorize MCP client'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Authorize MCP client'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Approve MCP access'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            <p>{{ 'This client is requesting access to the Shopsys MCP server with your administrator account.'|trans }}</p>
+
+            <p>
+                <span class="fw-semibold">{{ 'Client'|trans }}:</span>
+                {{ clientRegistration.clientName }}
+            </p>
+
+            {{ form_start(form) }}
+                {{ form_widget(form.approve, { attr: { class: 'btn btn-primary' } }) }}
+                {{ form_widget(form.deny, { attr: { class: 'btn btn-outline-danger' } }) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

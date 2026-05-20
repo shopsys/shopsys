@@ -24,6 +24,10 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Shopsys\AdministrationBundle\Component\Menu\Dropdown\AdminDropdownMenuItemsRenderer:
+        arguments:
+            $adminDropdownMenuItemProviders: !tagged_iterator shopsys.admin.dropdown_menu_item_provider
+
     Shopsys\AdministrationBundle\Component\Router\CrudControllerRouteLoader:
         tags:
             - { name: routing.loader }

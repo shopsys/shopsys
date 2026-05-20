@@ -1,0 +1,11 @@
+mcp:
+    app: shopsys
+    client_transports:
+        http: true
+        stdio: false
+    description: 'Shopsys MCP server'
+    http:
+        session:
+            store: cache
+            prefix: mcp_http_session
+            ttl: 3600

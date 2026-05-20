@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\RoleGroup;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'administrator_role_groups')]
 #[ORM\Entity]
 class AdministratorRoleGroup
@@ -14,6 +17,7 @@ class AdministratorRoleGroup
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -22,18 +26,21 @@ class AdministratorRoleGroup
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, unique: true)]
     protected $name;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $systemManaged = false;
 
     /**
      * @var string[]
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'json')]
     protected $roles;
 

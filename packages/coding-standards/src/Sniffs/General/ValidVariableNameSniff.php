@@ -54,7 +54,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
 
         $variableName = ltrim($currentToken['content'], '$');
 
-        if (Common::isCamelCaps($variableName)) {
+        if (Common::isCamelCaps(name: $variableName, strict: false)) {
             return;
         }
 

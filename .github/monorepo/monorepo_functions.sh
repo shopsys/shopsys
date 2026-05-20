@@ -37,6 +37,8 @@ get_all_packages() {
         coding-standards \
         http-smoke-testing \
         form-types-bundle \
+        mcp \
+        mcp-attributes \
         maker \
         migrations \
         monorepo-tools \

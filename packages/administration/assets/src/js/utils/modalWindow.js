@@ -15,6 +15,7 @@ export default class ModalWindow {
      * @param {string} [options.size='sm'] - Size: sm, md, lg, xl
      * @param {Array} [options.buttons=[]] - Array of button configurations
      * @param {string|null} [options.style] - Style: primary, secondary, success, danger, warning, info
+     * @param {boolean} [options.closeOnBackdropAndEscape=true] - Whether the modal can be dismissed by backdrop click or Escape
      */
     constructor(options = {}) {
         if (options.size && !MODAL_SIZES.includes(options.size)) {
@@ -34,6 +35,7 @@ export default class ModalWindow {
             buttons: [],
             style: null,
             borderless: false,
+            closeOnBackdropAndEscape: true,
             ...options,
         };
 
@@ -41,7 +43,7 @@ export default class ModalWindow {
 
         this.element.modal('show');
 
-        this.element.on('click', 'a[href="#"]', e => {
+        this.element.on('click', 'a[data-button-index][href="#"]', e => {
             e.preventDefault();
             const buttonIndex = parseInt(e.currentTarget.getAttribute('data-button-index'), 10);
             const button = this.options.buttons[buttonIndex];
@@ -63,6 +65,7 @@ export default class ModalWindow {
                  tabindex="-1"
                  role="dialog"
                  aria-modal="true"
+                 ${this.options.closeOnBackdropAndEscape ? '' : 'data-bs-backdrop="static" data-bs-keyboard="false"'}
              >
                 <div class="modal-dialog ${sizeClass} modal-dialog-centered" role="document">
                     <div class="modal-content">

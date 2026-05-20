@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'blog_article_blog_category_domains')]
 #[ORM\Index(columns: ['blog_category_id', 'domain_id'])]
 #[ORM\Entity]
@@ -15,6 +18,7 @@ class BlogArticleBlogCategoryDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'blog_article_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: BlogArticle::class, inversedBy: 'blogArticleBlogCategoryDomains')]
@@ -23,6 +27,7 @@ class BlogArticleBlogCategoryDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'blog_category_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: BlogCategory::class)]
@@ -31,6 +36,7 @@ class BlogArticleBlogCategoryDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     protected $domainId;

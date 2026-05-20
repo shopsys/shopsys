@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\PostDeploy;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'one_time_post_deploy_tasks')]
 #[ORM\Entity]
 class OneTimePostDeployTaskRecord
@@ -14,6 +17,7 @@ class OneTimePostDeployTaskRecord
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 255)]
     protected $name;
@@ -21,6 +25,7 @@ class OneTimePostDeployTaskRecord
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $executedAt;
 

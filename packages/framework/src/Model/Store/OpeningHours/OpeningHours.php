@@ -7,7 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\Store\OpeningHours;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'store_opening_hours')]
 #[ORM\Entity]
 class OpeningHours
@@ -15,6 +18,7 @@ class OpeningHours
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -23,6 +27,7 @@ class OpeningHours
     /**
      * @var \Shopsys\FrameworkBundle\Model\Store\Store
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Store::class, inversedBy: 'openingHours')]
     protected $store;
@@ -30,6 +35,7 @@ class OpeningHours
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $dayOfWeek;
 

@@ -1,0 +1,16 @@
+{
+    "name": "@shopsys/mcp",
+    "description": "Shopsys Platform MCP assets files",
+    "license": "proprietary",
+    "private": true,
+    "author": "Shopsys",
+    "repository": "https://github.com/shopsys/shopsys",
+    "scripts": {
+        "standards-check": "biome check .",
+        "standards-fix": "biome check --fix --unsafe ."
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^2.2.0",
+        "@shopsys/biome-config": "file:vendor/shopsys/biome-config"
+    }
+}

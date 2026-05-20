@@ -8,7 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'navigation_items')]
 #[ORM\Index(name: 'domain_id_idx', columns: ['domain_id'])]
 #[ORM\Entity]
@@ -17,6 +20,7 @@ class NavigationItem implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -25,6 +29,7 @@ class NavigationItem implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\SortablePosition]
     protected $position;
@@ -32,24 +37,28 @@ class NavigationItem implements OrderableEntityInterface
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: false)]
     protected $name;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: false)]
     protected $url;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: false)]
     protected $domainId;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $routeName;
 

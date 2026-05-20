@@ -8,7 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'autocomplete_favorite_brands')]
 #[ORM\Entity]
 class AutocompleteFavoriteBrand implements OrderableEntityInterface
@@ -16,6 +19,7 @@ class AutocompleteFavoriteBrand implements OrderableEntityInterface
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Brand::class)]
     #[ORM\Id]
@@ -24,6 +28,7 @@ class AutocompleteFavoriteBrand implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     protected $domainId;
@@ -31,6 +36,7 @@ class AutocompleteFavoriteBrand implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $position;
 

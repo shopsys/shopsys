@@ -1,0 +1,2 @@
+rules:
+    - \Shopsys\McpBundle\Phpstan\McpEntityExposureAttributeRule

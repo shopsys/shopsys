@@ -3,6 +3,8 @@ security:
     role_hierarchy:
         PUBLIC_ACCESS: []
     access_control:
+        - { path: ^/_mcp(?:/|$), roles: IS_AUTHENTICATED_FULLY }
+
         # Two-factor authentication routes
         - { path: ^/%admin_url%/logout, roles: PUBLIC_ACCESS }
         - { path: ^/%admin_url%/2fa, roles: IS_AUTHENTICATED_2FA_IN_PROGRESS }
@@ -19,6 +21,8 @@ security:
     providers:
         administrators:
             id: Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider
+        mcp_administrators:
+            id: Shopsys\McpBundle\Component\Security\McpAdministratorUserProvider
 
         user_identities:
             id: Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
@@ -27,6 +31,13 @@ security:
             id: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider
 
     firewalls:
+        mcp:
+            pattern: ^/_mcp(?:/|$)
+            provider: mcp_administrators
+            stateless: true
+            custom_authenticators:
+                - Shopsys\McpBundle\Component\Security\McpTokenAuthenticator
+
         # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
         administration:
             pattern: ^/(%admin_url%/|efconnect|elfinder)

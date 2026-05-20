@@ -7,6 +7,7 @@ namespace App\Model\Transport;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Payment\Payment> $payments
@@ -24,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
  * @method void setData(\App\Model\Transport\TransportData $transportData)
  * @method void setTranslations(\App\Model\Transport\TransportData $transportData)
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'transports')]
 #[ORM\Entity]
 class Transport extends BaseTransport

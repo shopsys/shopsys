@@ -15,11 +15,14 @@ use Shopsys\FrameworkBundle\Form\TreeSelection\TreeSelectionEntityInterface;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'categories')]
 #[ORM\Index(columns: ['lft'])]
 #[ORM\Index(columns: ['rgt'])]
@@ -31,6 +34,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -40,6 +44,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
@@ -53,6 +58,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'parent_id', referencedColumnName: 'id')]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     #[Gedmo\TreeParent]
@@ -68,6 +74,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\TreeLevel]
     protected $level;
@@ -75,6 +82,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\TreeLeft]
     protected $lft;
@@ -82,6 +90,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\TreeRight]
     protected $rgt;
@@ -95,6 +104,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     /**
      * @var string[]
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'json')]
     protected $automatedFilters;
 

@@ -10,4 +10,23 @@ class ArrayHelper
     {
         return array_diff($array1, $array2) !== [] || array_diff($array2, $array1) !== [];
     }
+
+    public static function getStringOrNull(array $data, string $key): ?string
+    {
+        return self::normalizeStringOrNull($data[$key] ?? null);
+    }
+
+    public static function getArrayOrEmpty(array $data, string $key): array
+    {
+        return is_array($data[$key] ?? null) ? $data[$key] : [];
+    }
+
+    protected static function normalizeStringOrNull(mixed $value): ?string
+    {
+        if (!is_string($value) || $value === '') {
+            return null;
+        }
+
+        return $value;
+    }
 }

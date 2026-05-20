@@ -1,0 +1,24 @@
+{% import '@ShopsysAdministration/partial/copyable_code_block.html.twig' as copyableCodeBlock %}
+
+<div class="text-start">
+    <div class="w-100">
+        <div class="fw-semibold text-warning mb-2">
+            {{ 'Copy the new MCP Bearer token now. It will not be shown again once this window is closed:'|trans }}
+        </div>
+
+        {{ copyableCodeBlock.render(tokenString, 'Copy token'|trans) }}
+
+        {{ include('@ShopsysMcp/content/superadmin/_codexSetup.html.twig', {
+            bearerTokenEnvVarName: bearerTokenEnvVarName,
+            mcpServerName: mcpServerName,
+            mcpEndpointUrl: mcpEndpointUrl,
+            tokenString: tokenString,
+        }) }}
+    </div>
+
+    <div class="mt-4 text-center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+            {{ 'Close'|trans }}
+        </button>
+    </div>
+</div>

@@ -7,7 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'ready_category_seo_mix_parameter_parameter_values')]
 #[ORM\Entity]
 class ReadyCategorySeoMixParameterParameterValue
@@ -15,6 +18,7 @@ class ReadyCategorySeoMixParameterParameterValue
     /**
      * @var \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'ready_category_seo_mix_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: ReadyCategorySeoMix::class, inversedBy: 'readyCategorySeoMixParameterParameterValues', cascade: ['persist', 'remove'])]
@@ -23,6 +27,7 @@ class ReadyCategorySeoMixParameterParameterValue
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'parameter_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Parameter::class)]
@@ -31,6 +36,7 @@ class ReadyCategorySeoMixParameterParameterValue
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'parameter_value_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: ParameterValue::class)]

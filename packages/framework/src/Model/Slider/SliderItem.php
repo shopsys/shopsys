@@ -9,10 +9,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * SliderItem
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'slider_items')]
 #[ORM\Entity]
 #[EntityImage]
@@ -23,6 +26,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -31,18 +35,21 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     protected $name;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     protected $link;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\SortableGroup]
     protected $domainId;
@@ -50,6 +57,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @var int|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Gedmo\SortablePosition]
     protected $position;
@@ -57,42 +65,49 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $hidden;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 7)]
     protected $rgbBackgroundColor;
 
     /**
      * @var float
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 3, scale: 2)]
     protected $opacity;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $datetimeVisibleFrom;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $datetimeVisibleTo;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $routeName;
 

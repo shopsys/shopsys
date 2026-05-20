@@ -10,15 +10,19 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'customer_user_role_groups')]
 #[ORM\Entity]
 class CustomerUserRoleGroup extends AbstractTranslatableEntity
 {
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -35,12 +39,14 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
     /**
      * @var string[]
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'json')]
     protected $roles;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 

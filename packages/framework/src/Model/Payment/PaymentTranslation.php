@@ -9,7 +9,13 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
+#[AsMcpInheritedColumn(fieldName: 'id')]
+#[AsMcpInheritedColumn(fieldName: 'locale')]
 #[ORM\Table(name: 'payment_translations')]
 #[ORM\Entity]
 class PaymentTranslation extends AbstractTranslation
@@ -17,6 +23,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
+    #[AsMcpColumn]
     #[Prezent\Translatable(targetEntity: Payment::class)]
     #[Override]
     protected $translatable;
@@ -24,18 +31,21 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $name;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $instructions;
 

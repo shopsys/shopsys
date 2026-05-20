@@ -8,7 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'complaint_items')]
 #[ORM\Entity]
 class ComplaintItem
@@ -16,6 +19,7 @@ class ComplaintItem
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(type: 'integer')]
@@ -24,12 +28,14 @@ class ComplaintItem
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Complaint\Complaint
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'complaint_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Complaint::class, inversedBy: 'items')]
     protected $complaint;
@@ -37,6 +43,7 @@ class ComplaintItem
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'order_item_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: OrderItem::class)]
     protected $orderItem;
@@ -44,6 +51,7 @@ class ComplaintItem
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
@@ -51,24 +59,28 @@ class ComplaintItem
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string')]
     protected $productName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', nullable: true)]
     protected $catnum;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $quantity;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     protected $description;
 

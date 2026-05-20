@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'blog_article_domains')]
 #[ORM\Entity]
 class BlogArticleDomain
@@ -14,6 +17,7 @@ class BlogArticleDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'blog_article_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: BlogArticle::class, inversedBy: 'domains')]
@@ -22,6 +26,7 @@ class BlogArticleDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
@@ -29,36 +34,42 @@ class BlogArticleDomain
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoTitle;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoMetaDescription;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoH1;
 
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $visible;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 25)]
     protected $status;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $publishDate;
 

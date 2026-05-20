@@ -12,6 +12,8 @@ use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
 class LoginListener
 {
+    public const string ADMINISTRATION_FIREWALL = 'administration';
+
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorActivityFacade $administratorActivityFacade,
@@ -21,6 +23,10 @@ class LoginListener
 
     public function onSecurityInteractiveLogin(LoginSuccessEvent $event): void
     {
+        if ($event->getFirewallName() !== static::ADMINISTRATION_FIREWALL) {
+            return;
+        }
+
         $token = $event->getAuthenticatedToken();
         $user = $token->getUser();
 

@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'product_stocks')]
 #[ORM\Entity]
 class ProductStock
@@ -14,6 +17,7 @@ class ProductStock
     /**
      * @var \Shopsys\FrameworkBundle\Model\Stock\Stock
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'stock_id', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: false)]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Stock::class)]
@@ -22,6 +26,7 @@ class ProductStock
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: false)]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Product::class)]
@@ -30,6 +35,7 @@ class ProductStock
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $productQuantity;
 

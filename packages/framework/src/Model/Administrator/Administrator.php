@@ -18,10 +18,13 @@ use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'administrators')]
 #[ORM\Index(columns: ['username'])]
 #[ORM\Entity]
@@ -40,6 +43,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -48,24 +52,28 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, unique: true)]
     protected $username;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $realName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $password;
 
     /**
      * @var string
      */
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 32)]
     protected $loginToken;
 
@@ -77,6 +85,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     protected $email;
 
@@ -102,42 +111,49 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $rolesChangedAt;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $transferIssuesLastSeenDateTime;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
     protected $twoFactorAuthenticationType;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 16, nullable: true)]
     protected $emailAuthenticationCode;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', nullable: true)]
     protected $googleAuthenticatorSecret;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'role_group_id', referencedColumnName: 'id', nullable: true)]
     #[ORM\ManyToOne(targetEntity: AdministratorRoleGroup::class)]
     protected $roleGroup;
@@ -145,24 +161,28 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var int[]|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'simple_array', nullable: true)]
     protected $displayOnlyDomainIds;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 10)]
     protected $selectedLocale;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $resetPasswordHash;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn(exposed: false)]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $resetPasswordHashValidThrough;
 

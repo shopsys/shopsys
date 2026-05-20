@@ -1,0 +1,8 @@
+.details-card-summary {
+    display: list-item;
+    list-style-position: inside;
+}
+
+.details-card-summary > * {
+    display: inline;
+}

@@ -22,7 +22,10 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 #[ORM\Table(name: 'order_items')]
 #[ORM\Entity]
@@ -31,6 +34,7 @@ class OrderItem
     /**
      * @var int|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -39,18 +43,21 @@ class OrderItem
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string')]
     protected $type;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order
      */
+    #[AsMcpColumn]
     #[LoggableParentProperty]
     #[ORM\JoinColumn(name: 'order_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'items')]
@@ -59,18 +66,21 @@ class OrderItem
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     protected $name;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $unitPriceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6)]
     protected $unitPriceWithVat;
 
@@ -80,6 +90,7 @@ class OrderItem
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
     protected $totalPriceWithoutVat;
 
@@ -89,36 +100,42 @@ class OrderItem
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
     protected $totalPriceWithVat;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $vatPercent;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $quantity;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     protected $unitName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $catnum;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\ManyToOne(targetEntity: Transport::class)]
     protected $transport;
@@ -126,6 +143,7 @@ class OrderItem
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\ManyToOne(targetEntity: Payment::class)]
     protected $payment;
@@ -133,6 +151,7 @@ class OrderItem
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'product_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;

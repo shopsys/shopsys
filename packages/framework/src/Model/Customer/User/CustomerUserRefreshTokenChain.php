@@ -7,7 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable(exposed: false)]
 #[ORM\Table(name: 'customer_user_refresh_token_chain')]
 #[ORM\Entity]
 class CustomerUserRefreshTokenChain

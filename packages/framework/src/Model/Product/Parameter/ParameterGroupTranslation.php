@@ -9,7 +9,13 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
+#[AsMcpInheritedColumn(fieldName: 'id')]
+#[AsMcpInheritedColumn(fieldName: 'locale')]
 #[ORM\Table(name: 'parameter_groups_translations')]
 #[ORM\Entity]
 class ParameterGroupTranslation extends AbstractTranslation
@@ -17,6 +23,7 @@ class ParameterGroupTranslation extends AbstractTranslation
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
      */
+    #[AsMcpColumn]
     #[Prezent\Translatable(targetEntity: ParameterGroup::class)]
     #[Override]
     protected $translatable;
@@ -24,6 +31,7 @@ class ParameterGroupTranslation extends AbstractTranslation
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
     protected $name;
 

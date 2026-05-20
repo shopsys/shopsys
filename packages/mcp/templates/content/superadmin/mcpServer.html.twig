@@ -1,0 +1,53 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %} - {{ 'My MCP server'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'My MCP server'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="#" class="btn btn-primary js-mcp-open-manual-token-window" data-url="{{ manualTokenUrl }}">
+        {{ 'Generate manual token'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+
+    <details class="card">
+        <summary class="card-header cursor-pointer details-card-summary">
+            <span class="card-title">{{ 'Claude Code client setup'|trans }}</span>
+        </summary>
+        <div class="card-body">
+            {{ include('@ShopsysMcp/content/superadmin/_claudeSetup.html.twig', {
+                mcpServerName: mcpServerName,
+                mcpEndpointUrl: mcpEndpointUrl,
+            }) }}
+        </div>
+    </details>
+
+    <details class="card">
+        <summary class="card-header cursor-pointer details-card-summary">
+            <span class="card-title">{{ 'Other MCP clients'|trans }}</span>
+        </summary>
+        <div class="card-body">
+            <p>{{ 'Use a manual token for clients such as Codex CLI.'|trans }}</p>
+            <dl class="row mb-4">
+                <dt class="col-sm-3">{{ 'Endpoint URL'|trans }}</dt>
+                <dd class="col-sm-9"><code>{{ mcpEndpointUrl }}</code></dd>
+                <dt class="col-sm-3">{{ 'Authorization header'|trans }}</dt>
+                <dd class="col-sm-9"><code>Authorization: Bearer &lt;token&gt;</code></dd>
+            </dl>
+
+            <div class="alert alert-info mb-4">
+                {{ 'Generated tokens are shown only once. Copy a new manual token immediately after generation.'|trans }}
+            </div>
+
+            {{ include('@ShopsysMcp/content/superadmin/_codexSetup.html.twig', {
+                bearerTokenEnvVarName: bearerTokenEnvVarName,
+                mcpServerName: mcpServerName,
+                mcpEndpointUrl: mcpEndpointUrl,
+            }) }}
+        </div>
+    </details>
+{% endblock %}

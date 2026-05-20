@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'seo_page_domains')]
 #[ORM\UniqueConstraint(name: 'seo_page_domain', columns: ['seo_page_id', 'domain_id'])]
 #[ORM\Entity]
@@ -14,6 +17,7 @@ class SeoPageDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -22,48 +26,56 @@ class SeoPageDomain
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(name: 'domain_id', type: 'integer')]
     protected $domainId;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoTitle;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoMetaDescription;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $canonicalUrl;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoOgTitle;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $seoOgDescription;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     protected $pageSlug;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'seo_page_id', nullable: false, referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: SeoPage::class, inversedBy: 'domains')]
     protected $seoPage;

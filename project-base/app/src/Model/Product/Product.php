@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantExcep
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @property \App\Model\Product\Brand\Brand|null $brand
@@ -49,6 +51,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method void setData(\App\Model\Product\ProductData $productData)
  * @method void editRelatedProducts(\App\Model\Product\Product[] $relatedProducts)
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'products')]
 #[ORM\Entity]
 class Product extends BaseProduct
@@ -58,6 +61,7 @@ class Product extends BaseProduct
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, unique: true, nullable: false)]
     #[Override]
     protected $catnum;

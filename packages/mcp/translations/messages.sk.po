@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "1 day"
+msgstr "1 deň"
+
+msgid "14 days"
+msgstr "14 dní"
+
+msgid "31 days"
+msgstr "31 dní"
+
+msgid "7 days"
+msgstr "7 dní"
+
+msgid "Active"
+msgstr "Aktívny"
+
+msgid "Add the server once, then authenticate it in Claude Code when prompted."
+msgstr "Pridajte server raz a potom ho v Claude Code po vyzvaní overte."
+
+msgid "Allow access"
+msgstr "Povoliť prístup"
+
+msgid "Approve MCP access"
+msgstr "Schváliť prístup MCP"
+
+msgid "Authentication steps"
+msgstr "Kroky overenia"
+
+msgid "Authorization header"
+msgstr "Autorizačná hlavička"
+
+msgid "Authorize MCP client"
+msgstr "Autorizovať MCP klienta"
+
+msgid "Claude Code client setup"
+msgstr "Nastavenie klienta Claude Code"
+
+msgid "Client"
+msgstr "Klient"
+
+msgid "Close"
+msgstr "Zavrieť"
+
+msgid "Complete the browser login and approve MCP access in Shopsys administration."
+msgstr "Dokončite prihlásenie v prehliadači a v administrácii Shopsysu schváľte prístup MCP."
+
+msgid "Copy command"
+msgstr "Kopírovať príkaz"
+
+msgid "Copy the new MCP Bearer token now. It will not be shown again once this window is closed:"
+msgstr "Skopírujte si teraz nový Bearer token pre MCP. Po zatvorení tohto okna sa už znovu nezobrazí:"
+
+msgid "Copy token"
+msgstr "Kopírovať token"
+
+msgid "Created at"
+msgstr "Vytvorené"
+
+msgid "Custom"
+msgstr "Vlastné"
+
+msgid "Deny access"
+msgstr "Odmietnuť prístup"
+
+msgid "Do you really want to revoke this MCP token?"
+msgstr "Naozaj chcete zneplatniť tento MCP token?"
+
+msgid "Endpoint URL"
+msgstr "URL endpointu"
+
+msgid "Environment variables exported this way are available only in the current shell session unless you add them to your shell profile."
+msgstr "Takto exportované premenné prostredia sú dostupné iba v aktuálnej shellovej relácii, pokiaľ ich nepridáte do profilu shellu."
+
+msgid "Expiration"
+msgstr "Platnosť"
+
+msgid "Expired"
+msgstr "Vypršal"
+
+msgid "Expires at"
+msgstr "Vyprší"
+
+msgid "Expires on"
+msgstr "Vyprší dňa"
+
+msgid "Export the manual token in your current shell, then add the MCP server once."
+msgstr "Exportujte manuálny token v aktuálnom shelli a potom raz pridajte MCP server."
+
+msgid "Generate manual token"
+msgstr "Vygenerovať manuálny token"
+
+msgid "Generate token"
+msgstr "Vygenerovať token"
+
+msgid "Generated manually"
+msgstr "Vygenerovaný manuálne"
+
+msgid "Generated tokens are shown only once. Copy a new manual token immediately after generation."
+msgstr "Vygenerované tokeny sa zobrazia iba raz. Nový manuálny token si skopírujte ihneď po vygenerovaní."
+
+msgid "Label"
+msgstr "Popisok"
+
+msgid "Last used at"
+msgstr "Naposledy použité"
+
+msgid "MCP token \"%tokenLabel%\" revoked"
+msgstr "MCP token \"%tokenLabel%\" bol zneplatnený"
+
+msgid "Manual"
+msgstr "Manuálny"
+
+msgid "My MCP server"
+msgstr "Môj MCP server"
+
+msgid "My MCP tokens"
+msgstr "Moje MCP tokeny"
+
+msgid "Never used"
+msgstr "Nikdy nepoužité"
+
+msgid "No MCP token is currently configured for your administrator account."
+msgstr "Pre váš administrátorský účet nie je momentálne nakonfigurovaný žiadny MCP token."
+
+msgid "OAuth client"
+msgstr "OAuth klient"
+
+msgid "One-time setup command"
+msgstr "Jednorazový inštalačný príkaz"
+
+msgid "Other MCP clients"
+msgstr "Ostatní MCP klienti"
+
+msgid "Per-shell token command"
+msgstr "Príkaz pre token v shelli"
+
+msgid "Revoke access"
+msgstr "Zneplatniť prístup"
+
+msgid "Revoked"
+msgstr "Zneplatnený"
+
+msgid "Run the command above once in the shell where you use Claude Code."
+msgstr "Vyššie uvedený príkaz spustite raz v shelli, v ktorom používate Claude Code."
+
+msgid "Select Authenticate for the Shopsys MCP server."
+msgstr "Pri Shopsys MCP serveri zvoľte Authenticate."
+
+msgid "Settings"
+msgstr "Nastavenia"
+
+msgid "Start Claude Code and run /mcp."
+msgstr "Spustite Claude Code a zadajte /mcp."
+
+msgid "Status"
+msgstr "Stav"
+
+msgid "The requested active MCP token was not found."
+msgstr "Požadovaný aktívny MCP token nebol nájdený."
+
+msgid "This client is requesting access to the Shopsys MCP server with your administrator account."
+msgstr "Tento klient požaduje prístup k Shopsys MCP serveru pod vaším administrátorským účtom."
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Use a manual token for clients such as Codex CLI."
+msgstr "Pre klientov ako Codex CLI použite manuálny token."
+
+msgid "View Codex CLI instructions"
+msgstr "Zobraziť pokyny pre Codex CLI"
+
+msgid "You can generate a new token manually or connect an MCP client using the instructions below."
+msgstr "Nový token môžete vygenerovať manuálne alebo pripojiť MCP klienta podľa pokynov nižšie."
+
+msgid "tokens"
+msgstr "tokeny"
+

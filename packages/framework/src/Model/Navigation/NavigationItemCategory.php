@@ -9,7 +9,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'navigation_item_categories')]
 #[ORM\Entity]
 class NavigationItemCategory implements OrderableEntityInterface
@@ -17,6 +20,7 @@ class NavigationItemCategory implements OrderableEntityInterface
     /**
      * @var \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: NavigationItem::class)]
@@ -25,6 +29,7 @@ class NavigationItemCategory implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     protected $columnNumber;
@@ -32,6 +37,7 @@ class NavigationItemCategory implements OrderableEntityInterface
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[Gedmo\SortablePosition]
     protected $position;
@@ -39,6 +45,7 @@ class NavigationItemCategory implements OrderableEntityInterface
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Category::class)]

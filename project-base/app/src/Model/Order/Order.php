@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
@@ -40,6 +41,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method void setCustomerUser(\App\Model\Customer\User\CustomerUser|null $customerUser)
  * @method \App\Model\Order\Item\OrderItem[] getItemsSortedWithRelatedItems()
  */
+#[AsMcpTable]
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 #[ORM\Table(name: 'orders')]
 #[ORM\Entity]

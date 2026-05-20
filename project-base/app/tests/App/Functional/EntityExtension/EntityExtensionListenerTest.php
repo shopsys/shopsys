@@ -22,9 +22,7 @@ class EntityExtensionListenerTest extends TransactionFunctionalTestCase
     {
         parent::setUp();
 
-        if (!$this->isMonorepo()) {
-            $this->markTestSkipped('This test is run only in monorepo.');
-        }
+        $this->skipTestIfNotRunningInMonorepo();
 
         $this->entityExtensionTestHelper->registerTestEntities();
         $entityExtensionMap = [
@@ -40,10 +38,5 @@ class EntityExtensionListenerTest extends TransactionFunctionalTestCase
         $mapping = $classMetadata->getAssociationMapping('flags');
         $this->assertInstanceOf(ManyToManyOwningSideMapping::class, $mapping);
         $this->assertEquals(['id' => 'DESC'], $mapping->orderBy);
-    }
-
-    private function isMonorepo(): bool
-    {
-        return file_exists(__DIR__ . '/../../../../../../parameters_monorepo.yaml');
     }
 }

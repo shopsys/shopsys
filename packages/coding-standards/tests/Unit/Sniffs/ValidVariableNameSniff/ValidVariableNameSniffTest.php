@@ -28,9 +28,23 @@ final class ValidVariableNameSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/wrong/wrong.inc'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getCorrectFiles(): iterable
+    {
+        yield [__DIR__ . '/correct/acronyms_are_allowed.inc'];
+    }
+
     #[DataProvider('getWrongFiles')]
     public function testWrongFiles(string $fileToTest): void
     {
         $this->runWrongFilesTest($fileToTest);
+    }
+
+    #[DataProvider('getCorrectFiles')]
+    public function testCorrectFiles(string $fileToTest): void
+    {
+        $this->runCorrectFilesTest($fileToTest);
     }
 }

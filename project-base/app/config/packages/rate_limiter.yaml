@@ -1,0 +1,17 @@
+framework:
+    rate_limiter:
+        mcp_oauth_register:
+            policy: fixed_window
+            limit: 20
+            interval: '1 minute'
+            cache_pool: mcp_rate_limiter_cache
+        mcp_oauth_token:
+            policy: fixed_window
+            limit: 60
+            interval: '1 minute'
+            cache_pool: mcp_rate_limiter_cache
+        mcp_runtime:
+            policy: fixed_window
+            limit: 300
+            interval: '1 minute'
+            cache_pool: mcp_rate_limiter_cache

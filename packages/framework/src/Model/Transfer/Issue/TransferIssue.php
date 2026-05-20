@@ -7,8 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Transfer\Issue;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Model\Transfer\Transfer;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'transfer_issues')]
 #[ORM\Index(columns: ['created_at', 'deleted_at', 'transfer_id'])]
 #[ORM\Entity]
@@ -22,6 +25,7 @@ class TransferIssue
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -30,6 +34,7 @@ class TransferIssue
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transfer\Transfer
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'transfer_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Transfer::class)]
     protected $transfer;
@@ -37,24 +42,28 @@ class TransferIssue
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 10, nullable: false)]
     protected $severity;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: false)]
     protected $message;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected $createdAt;
 
     /**
      * @var \DateTimeImmutable|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(name: 'deleted_at', type: 'datetime_immutable', nullable: true)]
     protected $deletedAt;
 

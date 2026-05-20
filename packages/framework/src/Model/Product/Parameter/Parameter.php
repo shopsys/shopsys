@@ -11,11 +11,14 @@ use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'parameters')]
 #[ORM\Entity]
 class Parameter extends AbstractTranslatableEntity
@@ -32,6 +35,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -41,6 +45,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
@@ -54,18 +59,21 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: false)]
     protected $parameterType;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $orderingPriority;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'unit_id', referencedColumnName: 'id')]
     #[ORM\ManyToOne(targetEntity: Unit::class)]
     protected $unit;
@@ -73,6 +81,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'group_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: ParameterGroup::class)]
     protected $group;

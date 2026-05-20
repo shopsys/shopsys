@@ -6,6 +6,7 @@ namespace App\Model\Cart;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
@@ -27,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
  * @method \App\Model\Cart\Item\CartItem[] getProductGiftCartItems()
  * @method \App\Model\Cart\Item\CartItem[] getProductCartItems()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'carts')]
 #[ORM\Entity]
 class Cart extends BaseCart

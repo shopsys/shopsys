@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\NumberSequence;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 
 #[ORM\MappedSuperclass]
 abstract class AbstractNumberSequence
@@ -12,6 +13,7 @@ abstract class AbstractNumberSequence
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     protected $id;
@@ -19,6 +21,7 @@ abstract class AbstractNumberSequence
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 10, scale: 0, nullable: false)]
     protected $number;
 

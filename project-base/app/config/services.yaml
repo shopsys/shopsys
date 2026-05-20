@@ -499,6 +499,11 @@ services:
         class: 'App\Component\Validator\FlysystemFileValidatorDecorator'
         public: true
 
+    cache.mcp.sessions:
+        arguments:
+            - '@mcp_http_session_cache'
+        class: Symfony\Component\Cache\Psr16Cache
+
     validator.validator_factory:
         arguments:
             - ~

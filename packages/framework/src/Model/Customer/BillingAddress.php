@@ -7,7 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'billing_addresses')]
 #[ORM\Entity]
 class BillingAddress
@@ -15,6 +18,7 @@ class BillingAddress
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -23,6 +27,7 @@ class BillingAddress
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'billingAddresses')]
     protected $customer;
@@ -30,48 +35,56 @@ class BillingAddress
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean', nullable: false)]
     protected $companyCustomer;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $companyName;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $companyNumber;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $companyTaxNumber;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $street;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $city;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
     protected $postcode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'country_id', referencedColumnName: 'id', nullable: true)]
     #[ORM\ManyToOne(targetEntity: Country::class)]
     protected $country;
@@ -79,12 +92,14 @@ class BillingAddress
     /**
      * @var bool
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
     protected $activated;
 
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 

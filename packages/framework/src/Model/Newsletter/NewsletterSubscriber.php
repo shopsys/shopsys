@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Newsletter;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'newsletter_subscribers')]
 #[ORM\UniqueConstraint(name: 'newsletter_subscribers_uni', columns: ['email', 'domain_id'])]
 #[ORM\Entity]
@@ -15,6 +18,7 @@ class NewsletterSubscriber
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -23,18 +27,21 @@ class NewsletterSubscriber
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $email;
 
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 

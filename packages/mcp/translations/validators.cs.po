@@ -1,0 +1,18 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+
+msgid "Expiration date must be today or in the future"
+msgstr "Datum platnosti musí být dnešní nebo budoucí"
+
+msgid "Please enter expiration date"
+msgstr "Zadejte prosím datum platnosti"
+
+msgid "Please enter token label"
+msgstr "Zadejte prosím popisek tokenu"
+
+msgid "Token label cannot be longer than {{ limit }} characters"
+msgstr "Popisek tokenu nemůže být delší než {{ limit }} znaků"
+

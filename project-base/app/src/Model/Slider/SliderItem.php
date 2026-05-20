@@ -9,12 +9,15 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemData as BaseSliderItemData;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * SliderItem
  *
  * @method void setData(\App\Model\Slider\SliderItemData $sliderItemData)
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'slider_items')]
 #[ORM\Entity]
 class SliderItem extends BaseSliderItem
@@ -22,15 +25,18 @@ class SliderItem extends BaseSliderItem
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: false)]
     protected $gtmId;
 
     /**
      * @var string|null
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $gtmCreative;
 
+    #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
     protected string $uuid;
 

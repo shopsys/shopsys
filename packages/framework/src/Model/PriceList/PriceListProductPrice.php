@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'price_list_product_prices')]
 #[ORM\Entity]
 class PriceListProductPrice
@@ -14,6 +17,7 @@ class PriceListProductPrice
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -22,12 +26,14 @@ class PriceListProductPrice
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: false)]
     protected $priceAmount;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
@@ -35,6 +41,7 @@ class PriceListProductPrice
     /**
      * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceList
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'price_list_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: PriceList::class, inversedBy: 'priceListProductPrices')]
     protected $priceList;

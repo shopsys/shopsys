@@ -11,6 +11,7 @@ arrange:
     - storefront
     - extensibility
     - integration
+    - ai
     - asynchronous-processing
     - automated-testing
     - contributing

@@ -1,0 +1,20 @@
+{% import '@ShopsysAdministration/partial/copyable_code_block.html.twig' as copyableCodeBlock %}
+
+{% set claudeAddCommand = 'claude mcp add --transport http ' ~ mcpServerName ~ ' ' ~ mcpEndpointUrl %}
+
+<p class="mb-3">{{ 'Add the server once, then authenticate it in Claude Code when prompted.'|trans }}</p>
+
+<div class="mb-4">
+    <label class="form-label">{{ 'One-time setup command'|trans }}</label>
+    {{ copyableCodeBlock.render(claudeAddCommand, 'Copy command'|trans) }}
+</div>
+
+<div>
+    <label class="form-label">{{ 'Authentication steps'|trans }}</label>
+    <ol class="mb-0 ps-3">
+        <li>{{ 'Run the command above once in the shell where you use Claude Code.'|trans }}</li>
+        <li>{{ 'Start Claude Code and run /mcp.'|trans }}</li>
+        <li>{{ 'Select Authenticate for the Shopsys MCP server.'|trans }}</li>
+        <li>{{ 'Complete the browser login and approve MCP access in Shopsys administration.'|trans }}</li>
+    </ol>
+</div>

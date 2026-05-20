@@ -2,6 +2,7 @@ parameters:
     shopsys.monolog.formatter: "monolog.formatter.line"
     shopsys.monolog.log_level: !php/const \Monolog\Logger::NOTICE
     shopsys.monolog.cron_level: !php/const \Monolog\Logger::DEBUG
+    shopsys.monolog.mcp_level: !php/const \Monolog\Logger::INFO
 
 when@prod:
     parameters:
@@ -11,6 +12,7 @@ when@prod:
 monolog:
     channels:
         - cron
+        - mcp
         - queue
         - deprecation
     handlers:
@@ -41,6 +43,14 @@ monolog:
             path: "%shopsys.log_stream%"
             bubble: false
             channels: [ "cron", "queue" ]
+        mcp:
+            type: stream
+            level: '%shopsys.monolog.mcp_level%'
+            formatter: "%shopsys.monolog.formatter%"
+            path: "%shopsys.log_stream%"
+            bubble: false
+            include_extra: true
+            channels: [ "mcp" ]
         main:
             type: stream
             level: '%shopsys.monolog.log_level%'

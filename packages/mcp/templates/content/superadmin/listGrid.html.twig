@@ -1,0 +1,57 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_value_cell_id_status %}
+    {% if row.amt.revokedAt is not null %}
+        <span class="badge bg-red-lt text-red-lt-fg">{{ 'Revoked'|trans }}</span>
+    {% elseif row.amt.expiresAt|date('U') <= 'now'|date('U') %}
+        <span class="badge bg-yellow-lt text-yellow-lt-fg">{{ 'Expired'|trans }}</span>
+    {% else %}
+        <span class="badge bg-green-lt text-green-lt-fg">{{ 'Active'|trans }}</span>
+    {% endif %}
+{% endblock %}
+
+{% block grid_value_cell_id_type %}
+    {% if value is same as('manual') %}
+        <span class="badge bg-secondary-lt text-secondary-lt-fg">{{ 'Manual'|trans }}</span>
+    {% else %}
+        <span class="badge bg-blue-lt text-blue-lt-fg">{{ 'OAuth client'|trans }}</span>
+    {% endif %}
+{% endblock %}
+
+{% block grid_value_cell_id_label %}
+    {{ value }}
+    <div class="text-secondary small">
+        {% if row.amt.type is same as('manual') %}
+            {{ 'Generated manually'|trans }}
+        {% elseif row.amt.clientId is not null %}
+            {{ row.amt.clientId }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block grid_value_cell_id_lastUsedAt %}
+    {% if value is null %}
+        {{ 'Never used'|trans }}
+    {% else %}
+        {{ value|formatDateTime }}
+    {% endif %}
+{% endblock %}
+
+{% block grid_action_cell_type_delete %}
+    {% if row.amt.revokedAt is null and row.amt.expiresAt|date('U') > 'now'|date('U') %}
+        {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No MCP token is currently configured for your administrator account.'|trans }}
+{% endblock %}
+
+{% block grid_no_data_subtitle %}
+    {{ 'You can generate a new token manually or connect an MCP client using the instructions below.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'tokens'|trans %}
+    {{ parent() }}
+{% endblock %}

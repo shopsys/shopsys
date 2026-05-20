@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\EntityExtension;
 
-use Doctrine\Bundle\DoctrineBundle\Mapping\MappingDriver;
-use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
-use PHPUnit\Framework\Assert;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
+use Tests\App\Test\Doctrine\AttributeMappedEntityHelper;
 
 class EntityExtensionTestHelper
 {
@@ -30,21 +27,10 @@ class EntityExtensionTestHelper
 
     public function registerTestEntities(): void
     {
-        $driver = new AttributeDriver([__DIR__ . '/Model']);
-
-        $configuration = $this->em->getConfiguration();
-        $mappingDriver = $configuration->getMetadataDriverImpl();
-
-        if ($mappingDriver instanceof MappingDriver) {
-            $metadataDriverChain = $mappingDriver->getDriver();
-
-            if ($metadataDriverChain instanceof MappingDriverChain) {
-                $metadataDriverChain->addDriver($driver, 'Tests\\App\\Functional\\EntityExtension');
-            } else {
-                Assert::fail(sprintf('Metadata driver must be type of %s', MappingDriverChain::class));
-            }
-        } else {
-            Assert::fail(sprintf('Mapping driver must be type of %s, null given', MappingDriver::class));
-        }
+        AttributeMappedEntityHelper::register(
+            $this->em,
+            [__DIR__ . '/Model'],
+            'Tests\\App\\Functional\\EntityExtension',
+        );
     }
 }

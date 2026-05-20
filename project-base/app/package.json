@@ -55,6 +55,7 @@
     "dependencies": {
         "@shopsys/framework": "file:vendor/shopsys/framework/assets",
         "@shopsys/administration": "file:vendor/shopsys/administration/assets",
+        "@shopsys/mcp": "file:vendor/shopsys/mcp/assets",
         "@yaireo/tagify": "^4.25.1",
         "bazinga-translator": "^2.6.6",
         "buffer": "^6.0.3",

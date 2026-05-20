@@ -20,6 +20,7 @@ use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
@@ -116,6 +117,8 @@ return ECSConfig::configure()
             __DIR__ . '/packages/coding-standards/tests/Unit/**/fixed/*',
             __DIR__ . '/packages/coding-standards/tests/Unit/**/Fixed/*',
             __DIR__ . '/packages/maker/templates/*',
+            __DIR__ . '/packages/mcp/tests/Unit/Phpstan/data/InvalidMcpEntityExposureEntities.php',
+            __DIR__ . '/packages/mcp/tests/Unit/Phpstan/data/ValidMcpEntityExposureEntity.php',
             AssignmentInConditionSniff::class => [
                 __DIR__ . '/project-base/app/src/Kernel.php',
             ],
@@ -133,6 +136,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php',
                 __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Parameter/ParameterRepository.php',
+                __DIR__ . '/packages/mcp/src/Component/Database/Query/SqlQueryValidator.php',
                 __DIR__ . '/project-base/app/tests/App/Functional/Model/Product/ProductOnCurrentDomainElasticFacadeCountDataTest.php',
             ],
             CyclomaticComplexitySniff::class => [
@@ -190,6 +194,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/frontend-api/src/Model/Resolver/Customer/User/CustomerUserResolverMap.php',
                 __DIR__ . '/packages/frontend-api/tests/Unit/Component/HttpFoundation/GraphqlOperationTypeResolverTest.php',
                 __DIR__ . '/packages/maker/src/EntityConfig/EntityFieldsConfigurator.php',
+                __DIR__ . '/packages/mcp/tests/Unit/Component/Database/Query/SqlQueryValidatorTest.php',
                 __DIR__ . '/packages/migrations/tests/Unit/Component/Doctrine/Migrations/MigrationsLockComparatorTest.php',
                 __DIR__ . '/packages/product-feed-zbozi/src/DataFixtures/ZboziPluginDataFixture.php',
                 __DIR__ . '/utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php',
@@ -225,6 +230,9 @@ return ECSConfig::configure()
             FinalFormTypeFixer::class => [
                 __DIR__ . '/project-base',
                 __DIR__ . '/packages/framework/src/Form/Locale/LocalizedType.php',
+            ],
+            FullyQualifiedClassNameInAnnotationSniff::class => [
+                __DIR__ . '/packages/mcp/src/Component/Database/Schema/ExposedSchemaProvider.php',
             ],
         ],
     ));

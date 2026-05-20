@@ -1,0 +1,13 @@
+# We re-define the Symfony MCP endpoint here because Shopsys creates additional Router
+# instances that reload app routes (for example in DomainRouterFactory and
+# AdministrationRouterFactory). The upstream `type: mcp` loader is stateful and
+# throws `Do not add the "mcp" loader twice.` when a second Router loads it.
+_mcp_endpoint:
+    # Upstream MCP bundle handles this endpoint via Symfony\AI\McpBundle\Routing\RouteLoader.
+    controller: mcp.server.controller::handle
+    methods: [GET, POST, DELETE, OPTIONS]
+    path: /_mcp
+
+shopsys_mcp_oauth:
+    resource: "@ShopsysMcpBundle/src/Controller/OAuth"
+    type: attribute

@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Product\Accessory;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'product_accessories')]
 #[ORM\Entity]
 class ProductAccessory
@@ -14,6 +17,7 @@ class ProductAccessory
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
     #[ORM\Id]
@@ -22,6 +26,7 @@ class ProductAccessory
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'accessory_product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
     #[ORM\Id]
@@ -30,6 +35,7 @@ class ProductAccessory
     /**
      * @var int
      */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'integer', nullable: false)]
     protected $position;
 

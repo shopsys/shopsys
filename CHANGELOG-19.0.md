@@ -28,6 +28,8 @@ There is a list of all the repositories maintained by the monorepo:
 - [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
 - [shopsys/php-image](https://github.com/shopsys/php-image)
 - [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
+- [shopsys/mcp](https://github.com/shopsys/mcp)
+- [shopsys/mcp-attributes](https://github.com/shopsys/mcp-attributes)
 - [shopsys/administration](https://github.com/shopsys/administration)
 - [shopsys/maker](https://github.com/shopsys/maker)
 - [shopsys/cli](https://github.com/shopsys/cli)

@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException;
-use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
@@ -32,7 +31,6 @@ class DomainController extends AdminBaseController
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly DomainFacade $domainFacade,
-        protected readonly ErrorExtractor $errorExtractor,
         protected readonly ArrayDataSourceFactory $arrayDataSourceFactory,
     ) {
     }

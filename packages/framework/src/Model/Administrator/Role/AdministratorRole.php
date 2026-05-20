@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Role;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
+use Shopsys\McpAttributes\Attribute\AsMcpColumn;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+#[AsMcpTable]
 #[ORM\Table(name: 'administrator_roles')]
 #[ORM\Entity]
 class AdministratorRole
@@ -14,6 +17,7 @@ class AdministratorRole
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
+    #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, name: 'administrator_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Administrator::class, inversedBy: 'roles')]
@@ -22,6 +26,7 @@ class AdministratorRole
     /**
      * @var string
      */
+    #[AsMcpColumn]
     #[ORM\Id]
     #[ORM\Column(type: 'string')]
     protected $role;

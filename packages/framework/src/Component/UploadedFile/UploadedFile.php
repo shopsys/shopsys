@@ -11,11 +11,13 @@ use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\TranslatableInterface;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFile;
 use Shopsys\FrameworkBundle\Model\Localization\TranslatableEntityTrait;
+use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 /**
  * @method \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation translation(?string $locale = null)
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation> getTranslations()
  */
+#[AsMcpTable]
 #[ORM\Table(name: 'uploaded_files')]
 #[ORM\Entity]
 class UploadedFile extends AbstractUploadedFile implements TranslatableInterface

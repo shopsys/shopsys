@@ -26,6 +26,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RouteConfigCustomization
 {
     protected const DEFAULT_ID_VALUE = 1;
+    protected const array SUPERADMIN_MCP_REDIRECTING_ACTION_ROUTE_NAMES = [
+        'admin_superadmin_mcp_token_revoke',
+    ];
 
     private ContainerInterface $container;
 
@@ -117,25 +120,14 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info): void {
-                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)|(^admin_customeruser_loginascustomeruser$)~', $info->getRouteName())) {
+                if (
+                    preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)|(^admin_customeruser_loginascustomeruser$)~', $info->getRouteName())
+                    && !in_array($info->getRouteName(), self::SUPERADMIN_MCP_REDIRECTING_ACTION_ROUTE_NAMES, true)
+                ) {
                     $debugNote = 'Add CSRF token for protected actions during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
-                        ->addCallDuringTestExecution(
-                            function (RequestDataSet $requestDataSet, ContainerInterface $container): void {
-                                $container = $container->get('test.service_container');
-                                /** @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector */
-                                $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
-                                /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
-                                $csrfTokenManager = $container->get('security.csrf.token_manager');
-
-                                $tokenId = $routeCsrfProtector->getCsrfTokenId($requestDataSet->getRouteName());
-                                $token = $csrfTokenManager->getToken($tokenId);
-
-                                $parameterName = RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER;
-                                $requestDataSet->setParameter($parameterName, $token->getValue());
-                            },
-                        );
+                        ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback());
 
                     if (preg_match('~(^admin_.*_deleteconfirm$)~', $info->getRouteName())) {
                         $config->changeDefaultRequestDataSet('Expect redirect by 200 for any delete confirm action.')
@@ -158,7 +150,10 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info): void {
-                if (preg_match('~^admin_(superadmin_|translation_list$)~', $info->getRouteName())) {
+                if (
+                    preg_match('~^admin_(superadmin_|translation_list$)~', $info->getRouteName())
+                    && !in_array($info->getRouteName(), self::SUPERADMIN_MCP_REDIRECTING_ACTION_ROUTE_NAMES, true)
+                ) {
                     $config->changeDefaultRequestDataSet('Only superadmin should be able to see this route.')
                         ->setExpectedStatusCode(308);
 
@@ -184,21 +179,7 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_administrator_promote-to-superadmin', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to promote to superadmin')
-                    ->addCallDuringTestExecution(
-                        function (RequestDataSet $requestDataSet, ContainerInterface $container): void {
-                            $container = $container->get('test.service_container');
-                            /** @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector */
-                            $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
-                            /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
-                            $csrfTokenManager = $container->get('security.csrf.token_manager');
-
-                            $tokenId = $routeCsrfProtector->getCsrfTokenId($requestDataSet->getRouteName());
-                            $token = $csrfTokenManager->getToken($tokenId);
-
-                            $parameterName = RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER;
-                            $requestDataSet->setParameter($parameterName, $token->getValue());
-                        },
-                    )
+                    ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
                     ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('Superadmin can promote to superadmin')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
@@ -360,19 +341,7 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_unused_friendly_url_delete', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet('Unused friendly URL may be deleted only when there is any and CSRF token is provided')
-                    ->addCallDuringTestExecution(function (RequestDataSet $requestDataSet, ContainerInterface $container): void {
-                        $container = $container->get('test.service_container');
-                        /** @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector */
-                        $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
-                        /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
-                        $csrfTokenManager = $container->get('security.csrf.token_manager');
-
-                        $tokenId = $routeCsrfProtector->getCsrfTokenId($requestDataSet->getRouteName());
-                        $token = $csrfTokenManager->getToken($tokenId);
-
-                        $parameterName = RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER;
-                        $requestDataSet->setParameter($parameterName, $token->getValue());
-                    })
+                    ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
                     ->setParameter('domainId', Domain::FIRST_DOMAIN_ID)
                     ->setParameter('slug', 'unused-friendly-url');
             })
@@ -427,6 +396,15 @@ class RouteConfigCustomization
                     ->setParameter('id', 2)
                     ->setExpectedStatusCode(302);
             })
+            ->customizeByRouteName(self::SUPERADMIN_MCP_REDIRECTING_ACTION_ROUTE_NAMES, function (RouteConfig $config): void {
+                $config->changeDefaultRequestDataSet('Superadmin-only MCP actions are not accessible for standard admin users.')
+                    ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
+                    ->setExpectedStatusCode(308);
+                $config->addExtraRequestDataSet('Superadmin-only MCP actions should redirect when logged in as "superadmin".')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
+                    ->setExpectedStatusCode(302);
+            })
             ->customizeByRouteName('admin_searchadmin_search', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet('Use search "prod" string')
                     ->setParameter('search', 'prod')
@@ -441,6 +419,9 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('First two role groups are system managed, so they can not be copied.')
                     ->setParameter('id', 3)
                     ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_superadmin_mcp_oauth_authorize', function (RouteConfig $config): void {
+                $config->skipRoute('OAuth authorization requires a registered client and redirect URI.');
             });
     }
 
@@ -477,5 +458,25 @@ class RouteConfigCustomization
         $domain = $this->container->get(Domain::class);
 
         return count($domain->getAll()) === 1;
+    }
+
+    /**
+     * @return callable(\Shopsys\HttpSmokeTesting\RequestDataSet, \Symfony\Component\DependencyInjection\ContainerInterface): void
+     */
+    private function createAddCsrfTokenDuringTestExecutionCallback(): callable
+    {
+        return function (RequestDataSet $requestDataSet, ContainerInterface $container): void {
+            $container = $container->get('test.service_container');
+            /** @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector */
+            $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
+            /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
+            $csrfTokenManager = $container->get('security.csrf.token_manager');
+
+            $tokenId = $routeCsrfProtector->getCsrfTokenId($requestDataSet->getRouteName());
+            $token = $csrfTokenManager->getToken($tokenId);
+
+            $parameterName = RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER;
+            $requestDataSet->setParameter($parameterName, $token->getValue());
+        };
     }
 }
