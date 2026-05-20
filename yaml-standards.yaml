@@ -31,6 +31,7 @@
         - ./docker*
         - ./node_modules/*
         - ./packages/framework/assets/node_modules/*
+        # When excluding a path under ./project-base/app/, mirror the exclusion in ./project-base/app/yaml-standards.yaml
         - ./project-base/app/config/cron.yaml
         - ./project-base/app/config/packages/security.yaml
         - ./project-base/app/config/packages/workflow.yaml
