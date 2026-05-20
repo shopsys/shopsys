@@ -6,7 +6,6 @@
 {% block h1 %}{{ 'My MCP server'|trans }}{% endblock %}
 
 {% block btn %}
-    {% set manualTokenUrl = url('admin_superadmin_mcp_manual_token') %}
     <a href="#" class="btn btn-primary js-mcp-open-manual-token-window" data-url="{{ manualTokenUrl }}">
         {{ 'Generate manual token'|trans }}
     </a>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\EventSubscriber;
 
 use Override;
+use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Component\Security\McpBearerToken;
 use Shopsys\McpBundle\Component\Security\McpRuntimeRequestMatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -18,9 +19,6 @@ use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
 class McpRequestRateLimitSubscriber implements EventSubscriberInterface
 {
-    public const string ROUTE_MCP_OAUTH_REGISTER = 'mcp_oauth_register';
-    public const string ROUTE_MCP_OAUTH_TOKEN = 'mcp_oauth_token';
-    public const string ROUTE_MCP_ENDPOINT = '_mcp_endpoint';
     public const string ERROR_CODE_RATE_LIMIT_EXCEEDED = 'mcp-rate-limit-exceeded';
     public const string ERROR_MESSAGE_RATE_LIMIT_EXCEEDED = 'Too many MCP requests. Please retry later.';
     public const string HEADER_RETRY_AFTER = 'Retry-After';
@@ -70,12 +68,12 @@ class McpRequestRateLimitSubscriber implements EventSubscriberInterface
             $route = $request->attributes->getString('_route');
 
             $rateLimits = match ($route) {
-                self::ROUTE_MCP_OAUTH_REGISTER => [
+                McpRouteName::MCP_OAUTH_REGISTER => [
                     $this->oauthRegisterRateLimiter
                         ->create($this->getIpBasedKey($request, self::KEY_PREFIX_OAUTH_REGISTER))
                         ->consume(),
                 ],
-                self::ROUTE_MCP_OAUTH_TOKEN => [
+                McpRouteName::MCP_OAUTH_TOKEN => [
                     $this->oauthTokenRateLimiter
                         ->create($this->getIpBasedKey($request, self::KEY_PREFIX_OAUTH_TOKEN))
                         ->consume(),

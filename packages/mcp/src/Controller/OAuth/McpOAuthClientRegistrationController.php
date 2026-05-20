@@ -7,6 +7,7 @@ namespace Shopsys\McpBundle\Controller\OAuth;
 use InvalidArgumentException;
 use JsonException;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
+use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Model\OAuth\McpOAuthClientRegistrationFacade;
 use Shopsys\McpBundle\Model\OAuth\McpOAuthProtocol;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,7 +22,7 @@ class McpOAuthClientRegistrationController
     ) {
     }
 
-    #[Route(path: '/mcp/oauth/register', name: 'mcp_oauth_register', methods: [Request::METHOD_POST])]
+    #[Route(path: '/mcp/oauth/register', name: McpRouteName::MCP_OAUTH_REGISTER, methods: [Request::METHOD_POST])]
     public function registerAction(Request $request): JsonResponse
     {
         try {

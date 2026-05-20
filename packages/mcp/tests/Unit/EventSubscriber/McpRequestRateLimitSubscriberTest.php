@@ -7,6 +7,7 @@ namespace Tests\McpBundle\Unit\EventSubscriber;
 use Nette\Utils\Json;
 use Override;
 use PHPUnit\Framework\TestCase;
+use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\EventSubscriber\McpRequestRateLimitSubscriber;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,21 +38,21 @@ class McpRequestRateLimitSubscriberTest extends TestCase
 
     public function testOauthRegisterEndpointIsLimitedByClientIp(): void
     {
-        $this->assertRequestIsAllowed($this->createAndLimitRequest(McpRequestRateLimitSubscriber::ROUTE_MCP_OAUTH_REGISTER, '/mcp/oauth/register'));
-        $this->assertRequestIsAllowed($this->createAndLimitRequest(McpRequestRateLimitSubscriber::ROUTE_MCP_OAUTH_REGISTER, '/mcp/oauth/register'));
+        $this->assertRequestIsAllowed($this->createAndLimitRequest(McpRouteName::MCP_OAUTH_REGISTER, '/mcp/oauth/register'));
+        $this->assertRequestIsAllowed($this->createAndLimitRequest(McpRouteName::MCP_OAUTH_REGISTER, '/mcp/oauth/register'));
 
         $this->assertTooManyRequestsResponse(
-            $this->createAndLimitRequest(McpRequestRateLimitSubscriber::ROUTE_MCP_OAUTH_REGISTER, '/mcp/oauth/register'),
+            $this->createAndLimitRequest(McpRouteName::MCP_OAUTH_REGISTER, '/mcp/oauth/register'),
         );
     }
 
     public function testOauthTokenEndpointIsLimitedByClientIp(): void
     {
-        $this->assertRequestIsAllowed($this->createAndLimitRequest(McpRequestRateLimitSubscriber::ROUTE_MCP_OAUTH_TOKEN, '/mcp/oauth/token'));
-        $this->assertRequestIsAllowed($this->createAndLimitRequest(McpRequestRateLimitSubscriber::ROUTE_MCP_OAUTH_TOKEN, '/mcp/oauth/token'));
+        $this->assertRequestIsAllowed($this->createAndLimitRequest(McpRouteName::MCP_OAUTH_TOKEN, '/mcp/oauth/token'));
+        $this->assertRequestIsAllowed($this->createAndLimitRequest(McpRouteName::MCP_OAUTH_TOKEN, '/mcp/oauth/token'));
 
         $this->assertTooManyRequestsResponse(
-            $this->createAndLimitRequest(McpRequestRateLimitSubscriber::ROUTE_MCP_OAUTH_TOKEN, '/mcp/oauth/token'),
+            $this->createAndLimitRequest(McpRouteName::MCP_OAUTH_TOKEN, '/mcp/oauth/token'),
         );
     }
 
@@ -85,17 +86,17 @@ class McpRequestRateLimitSubscriberTest extends TestCase
     public function testOptionsRequestsAreNotRateLimited(): void
     {
         $this->assertRequestIsAllowed($this->createAndLimitRequest(
-            McpRequestRateLimitSubscriber::ROUTE_MCP_ENDPOINT,
+            McpRouteName::MCP_ENDPOINT,
             '/_mcp',
             Request::METHOD_OPTIONS,
         ));
         $this->assertRequestIsAllowed($this->createAndLimitRequest(
-            McpRequestRateLimitSubscriber::ROUTE_MCP_ENDPOINT,
+            McpRouteName::MCP_ENDPOINT,
             '/_mcp',
             Request::METHOD_OPTIONS,
         ));
         $this->assertRequestIsAllowed($this->createAndLimitRequest(
-            McpRequestRateLimitSubscriber::ROUTE_MCP_ENDPOINT,
+            McpRouteName::MCP_ENDPOINT,
             '/_mcp',
             Request::METHOD_OPTIONS,
         ));
@@ -115,7 +116,7 @@ class McpRequestRateLimitSubscriberTest extends TestCase
         string $authorizationHeader,
         string $clientIp = self::CLIENT_IP,
     ): RequestEvent {
-        $event = $this->createRequestEvent(McpRequestRateLimitSubscriber::ROUTE_MCP_ENDPOINT, '/_mcp', $clientIp);
+        $event = $this->createRequestEvent(McpRouteName::MCP_ENDPOINT, '/_mcp', $clientIp);
         $event->getRequest()->headers->set('Authorization', $authorizationHeader);
 
         $this->subscriber->limitMcpRequest($event);

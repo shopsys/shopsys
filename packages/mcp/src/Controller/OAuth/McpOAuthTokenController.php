@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Controller\OAuth;
 
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Shopsys\McpBundle\Model\OAuth\McpOAuthAuthorizationCodeFacade;
 use Shopsys\McpBundle\Model\OAuth\McpOAuthClientRegistrationFacade;
@@ -24,7 +25,7 @@ class McpOAuthTokenController
     ) {
     }
 
-    #[Route(path: '/mcp/oauth/token', name: 'mcp_oauth_token', methods: [Request::METHOD_POST])]
+    #[Route(path: '/mcp/oauth/token', name: McpRouteName::MCP_OAUTH_TOKEN, methods: [Request::METHOD_POST])]
     public function tokenAction(Request $request): JsonResponse
     {
         if ($request->request->get('grant_type') !== McpOAuthProtocol::GRANT_TYPE_AUTHORIZATION_CODE) {

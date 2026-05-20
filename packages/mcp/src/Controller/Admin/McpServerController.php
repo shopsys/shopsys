@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
+use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Form\Admin\Mcp\GenerateManualTokenFormType;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Shopsys\McpBundle\Model\Administrator\McpToken\Grid\McpTokenGridFactory;
@@ -30,7 +31,7 @@ class McpServerController extends AdminBaseController
     ) {
     }
 
-    #[Route(path: '/superadmin/mcp-server/', name: 'admin_superadmin_mcp_token', methods: ['GET'])]
+    #[Route(path: '/superadmin/mcp-server/', name: McpRouteName::ADMIN_MCP_TOKEN, methods: ['GET'])]
     public function listAction(): Response
     {
         $administrator = $this->getCurrentAdministrator();
@@ -39,16 +40,17 @@ class McpServerController extends AdminBaseController
         return $this->render('@ShopsysMcp/content/superadmin/mcpServer.html.twig', [
             'bearerTokenEnvVarName' => self::BEARER_TOKEN_ENV_VAR,
             'gridView' => $grid->createView(),
+            'manualTokenUrl' => $this->urlGenerator->generate(McpRouteName::ADMIN_MCP_TOKEN_MANUAL),
             'mcpServerName' => self::MCP_SERVER_NAME,
-            'mcpEndpointUrl' => $this->urlGenerator->generate('_mcp_endpoint', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'mcpEndpointUrl' => $this->urlGenerator->generate(McpRouteName::MCP_ENDPOINT, [], UrlGeneratorInterface::ABSOLUTE_URL),
         ]);
     }
 
-    #[Route(path: '/superadmin/mcp-server/manual-token/', name: 'admin_superadmin_mcp_manual_token', methods: ['GET', 'POST'], condition: 'request.isXmlHttpRequest()')]
+    #[Route(path: '/superadmin/mcp-server/manual-token/', name: McpRouteName::ADMIN_MCP_TOKEN_MANUAL, methods: ['GET', 'POST'], condition: 'request.isXmlHttpRequest()')]
     public function manualTokenAction(Request $request): Response
     {
         $form = $this->createForm(GenerateManualTokenFormType::class, null, [
-            'action' => $this->generateUrl('admin_superadmin_mcp_manual_token'),
+            'action' => $this->generateUrl(McpRouteName::ADMIN_MCP_TOKEN_MANUAL),
         ]);
         $form->handleRequest($request);
 
@@ -69,7 +71,7 @@ class McpServerController extends AdminBaseController
             $data['label'],
             $data['expiresAt'],
         );
-        $mcpEndpointUrl = $this->urlGenerator->generate('_mcp_endpoint', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $mcpEndpointUrl = $this->urlGenerator->generate(McpRouteName::MCP_ENDPOINT, [], UrlGeneratorInterface::ABSOLUTE_URL);
 
         return $this->json([
             'result' => 'valid',
@@ -82,7 +84,7 @@ class McpServerController extends AdminBaseController
         ]);
     }
 
-    #[Route(path: '/superadmin/mcp-server/token/revoke/{id}/', name: 'admin_superadmin_mcp_token_revoke')]
+    #[Route(path: '/superadmin/mcp-server/token/revoke/{id}/', name: McpRouteName::ADMIN_MCP_TOKEN_REVOKE)]
     #[CsrfProtection]
     public function revokeTokenAction(int $id): Response
     {
@@ -92,7 +94,7 @@ class McpServerController extends AdminBaseController
         if ($administratorMcpToken === null) {
             $this->addErrorFlash(t('The requested active MCP token was not found.'));
 
-            return $this->redirectToRoute('admin_superadmin_mcp_token');
+            return $this->redirectToRoute(McpRouteName::ADMIN_MCP_TOKEN);
         }
 
         $this->administratorMcpTokenFacade->revokeToken($administratorMcpToken);
@@ -100,6 +102,6 @@ class McpServerController extends AdminBaseController
             '%tokenLabel%' => $administratorMcpToken->getLabel(),
         ]));
 
-        return $this->redirectToRoute('admin_superadmin_mcp_token');
+        return $this->redirectToRoute(McpRouteName::ADMIN_MCP_TOKEN);
     }
 }

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
+use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenRepository;
 
 class McpTokenGridFactory
@@ -41,7 +42,7 @@ class McpTokenGridFactory
         $grid->addActionColumn(
             ActionColumn::TYPE_DELETE,
             t('Revoke access'),
-            'admin_superadmin_mcp_token_revoke',
+            McpRouteName::ADMIN_MCP_TOKEN_REVOKE,
             ['id' => 'amt.id'],
         )->setConfirmMessage(t('Do you really want to revoke this MCP token?'));
 

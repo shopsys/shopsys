@@ -7,6 +7,7 @@ namespace Shopsys\McpBundle\EventSubscriber;
 use Override;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
+use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -32,7 +33,7 @@ class AdminMenuSubscriber implements EventSubscriberInterface
         }
 
         $mcpServerMenu = $event->getMenu()->addChild('mcp_server', [
-            'route' => 'admin_superadmin_mcp_token',
+            'route' => McpRouteName::ADMIN_MCP_TOKEN,
             'label' => t('My MCP server'),
             'display' => false,
         ]);
@@ -42,6 +43,6 @@ class AdminMenuSubscriber implements EventSubscriberInterface
             'label' => t('Authorize MCP client'),
             'display' => false,
         ]);
-        $mcpServerAuthorizeMenu->setExtra('routes', ['admin_superadmin_mcp_oauth_authorize']);
+        $mcpServerAuthorizeMenu->setExtra('routes', [McpRouteName::ADMIN_MCP_OAUTH_AUTHORIZE]);
     }
 }

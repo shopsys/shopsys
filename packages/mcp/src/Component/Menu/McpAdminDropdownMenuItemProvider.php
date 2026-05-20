@@ -8,6 +8,7 @@ use Override;
 use Shopsys\AdministrationBundle\Component\Menu\Dropdown\AdminDropdownMenuItem;
 use Shopsys\AdministrationBundle\Component\Menu\Dropdown\AdminDropdownMenuItemProviderInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
+use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -33,7 +34,7 @@ class McpAdminDropdownMenuItemProvider implements AdminDropdownMenuItemProviderI
             new AdminDropdownMenuItem(
                 t('My MCP server'),
                 'puzzle',
-                $this->urlGenerator->generate('admin_superadmin_mcp_token'),
+                $this->urlGenerator->generate(McpRouteName::ADMIN_MCP_TOKEN),
                 0,
             ),
         ];
