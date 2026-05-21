@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\SocialNetwork;
 
+use Hybridauth\Exception\Exception as HybridauthException;
 use Hybridauth\Exception\InvalidArgumentException;
 use Hybridauth\Exception\UnexpectedValueException;
 use Hybridauth\Hybridauth;
@@ -45,6 +46,7 @@ class SocialNetworkFacade
         protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
         protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
         protected readonly Domain $domain,
+        protected readonly FedcmAdapterFactory $fedcmAdapterFactory,
     ) {
     }
 
@@ -59,32 +61,9 @@ class SocialNetworkFacade
 
             $this->validateDataFromSocialNetwork($userProfile);
 
-            $registrationData = $this->registrationDataFactory->createFromSocialNetworkProfile($userProfile);
+            $loginResultData = $this->registerOrLoginFromProfile($userProfile, $type, $session);
 
-            $isRegistration = false;
-
-            try {
-                $customerUser = $this->registrationFacade->register($registrationData);
-                $isRegistration = true;
-            } catch (DuplicateEmailException) {
-                $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($registrationData->email, $registrationData->domainId);
-            }
             $adapter->disconnect();
-
-            $productListUuids = $session->get(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
-            $loginResultData = $this->loginAsUserFacade->runLoginSteps(
-                $customerUser,
-                $type,
-                $isRegistration,
-                $productListUuids !== null ? explode(',', $productListUuids) : [],
-                $session->get(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART, false),
-                $session->get(SocialNetworkController::SESSION_CART_UUID),
-                (string)$userProfile->identifier,
-            );
-
-            $session->remove(SocialNetworkController::SESSION_CART_UUID);
-            $session->remove(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART);
-            $session->remove(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
 
             return $loginResultData;
         } catch (InvalidArgumentException | UnexpectedValueException $exception) {
@@ -93,6 +72,62 @@ class SocialNetworkFacade
 
             throw new SocialNetworkLoginException(message: $message, previous: $exception);
         }
+    }
+
+    public function loginWithCredential(string $type, string $credential, SessionInterface $session): LoginResultData
+    {
+        $adapter = $this->fedcmAdapterFactory->createForDomainAndType($this->domain->getId(), $type);
+
+        if ($adapter === null) {
+            throw new SocialNetworkLoginException(sprintf('FedCM is not enabled for %s on the current domain', $type));
+        }
+
+        try {
+            $userProfile = $adapter->getUserProfileFromFedcmCredential($credential);
+        } catch (HybridauthException $exception) {
+            $message = sprintf('FedCM login via %s failed', $type);
+            $this->logger->error($message, ['exception' => $exception]);
+
+            throw new SocialNetworkLoginException(message: $message, previous: $exception);
+        }
+
+        $this->validateDataFromSocialNetwork($userProfile);
+
+        return $this->registerOrLoginFromProfile($userProfile, $type, $session);
+    }
+
+    protected function registerOrLoginFromProfile(
+        Profile $userProfile,
+        string $type,
+        SessionInterface $session,
+    ): LoginResultData {
+        $registrationData = $this->registrationDataFactory->createFromSocialNetworkProfile($userProfile);
+
+        $isRegistration = false;
+
+        try {
+            $customerUser = $this->registrationFacade->register($registrationData);
+            $isRegistration = true;
+        } catch (DuplicateEmailException) {
+            $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($registrationData->email, $registrationData->domainId);
+        }
+
+        $productListUuids = $session->get(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
+        $loginResultData = $this->loginAsUserFacade->runLoginSteps(
+            $customerUser,
+            $type,
+            $isRegistration,
+            $productListUuids !== null ? explode(',', $productListUuids) : [],
+            $session->get(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART, false),
+            $session->get(SocialNetworkController::SESSION_CART_UUID),
+            (string)$userProfile->identifier,
+        );
+
+        $session->remove(SocialNetworkController::SESSION_CART_UUID);
+        $session->remove(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART);
+        $session->remove(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
+
+        return $loginResultData;
     }
 
     protected function validateDataFromSocialNetwork(Profile $userProfile): void
