@@ -44,6 +44,10 @@ SettingsDecorator:
                 type: "[LoginTypeEnum!]!"
                 resolve: "@=query('socialNetworkLoginConfigQuery')"
                 description: "Returns available social network logins"
+            fedcmProviders:
+                type: "[FedcmProviderConfig!]!"
+                resolve: "@=query('fedcmProvidersQuery')"
+                description: "Returns the FedCM-enabled identity providers for the current domain (empty when FedCM is globally disabled or not configured for the domain)"
             cspHeader:
                 type: String!
                 resolve: "@=query('cspHeaderQuery')"

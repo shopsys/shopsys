@@ -1,0 +1,18 @@
+FedcmProviderConfigDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "FedCM identity provider configuration exposed to the storefront"
+        fields:
+            type:
+                type: "LoginTypeEnum!"
+                description: "The social network type (e.g. google, seznam)"
+            clientId:
+                type: "String!"
+                description: "Client ID registered with the identity provider for the current domain"
+            configUrl:
+                type: "String!"
+                description: "The identity provider's FedCM configuration URL (hosted by the IdP, not by the storefront)"
+            autoSelect:
+                type: "Boolean!"
+                description: "Whether the browser may auto-select a returning user without an explicit prompt"

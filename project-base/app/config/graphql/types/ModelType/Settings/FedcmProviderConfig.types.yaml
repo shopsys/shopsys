@@ -1,0 +1,4 @@
+FedcmProviderConfig:
+    type: object
+    inherits:
+        - 'FedcmProviderConfigDecorator'
