@@ -61,7 +61,18 @@ class SocialNetworkFacade
 
             $this->validateDataFromSocialNetwork($userProfile);
 
-            $loginResultData = $this->registerOrLoginFromProfile($userProfile, $type, $session);
+            $productListUuidsRaw = $session->get(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
+            $loginResultData = $this->registerOrLoginFromProfile(
+                $userProfile,
+                $type,
+                $session->get(SocialNetworkController::SESSION_CART_UUID),
+                $productListUuidsRaw !== null ? explode(',', $productListUuidsRaw) : [],
+                $session->get(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART, false),
+            );
+
+            $session->remove(SocialNetworkController::SESSION_CART_UUID);
+            $session->remove(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART);
+            $session->remove(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
 
             $adapter->disconnect();
 
@@ -74,8 +85,16 @@ class SocialNetworkFacade
         }
     }
 
-    public function loginWithCredential(string $type, string $credential, SessionInterface $session): LoginResultData
-    {
+    /**
+     * @param string[] $productListUuids
+     */
+    public function loginWithCredential(
+        string $type,
+        string $credential,
+        ?string $cartUuid,
+        array $productListUuids,
+        bool $shouldOverwriteCustomerUserCart,
+    ): LoginResultData {
         $adapter = $this->fedcmAdapterFactory->createForDomainAndType($this->domain->getId(), $type);
 
         if ($adapter === null) {
@@ -93,13 +112,24 @@ class SocialNetworkFacade
 
         $this->validateDataFromSocialNetwork($userProfile);
 
-        return $this->registerOrLoginFromProfile($userProfile, $type, $session);
+        return $this->registerOrLoginFromProfile(
+            $userProfile,
+            $type,
+            $cartUuid,
+            $productListUuids,
+            $shouldOverwriteCustomerUserCart,
+        );
     }
 
+    /**
+     * @param string[] $productListUuids
+     */
     protected function registerOrLoginFromProfile(
         Profile $userProfile,
         string $type,
-        SessionInterface $session,
+        ?string $cartUuid,
+        array $productListUuids,
+        bool $shouldOverwriteCustomerUserCart,
     ): LoginResultData {
         $registrationData = $this->registrationDataFactory->createFromSocialNetworkProfile($userProfile);
 
@@ -112,22 +142,15 @@ class SocialNetworkFacade
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($registrationData->email, $registrationData->domainId);
         }
 
-        $productListUuids = $session->get(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
-        $loginResultData = $this->loginAsUserFacade->runLoginSteps(
+        return $this->loginAsUserFacade->runLoginSteps(
             $customerUser,
             $type,
             $isRegistration,
-            $productListUuids !== null ? explode(',', $productListUuids) : [],
-            $session->get(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART, false),
-            $session->get(SocialNetworkController::SESSION_CART_UUID),
+            $productListUuids,
+            $shouldOverwriteCustomerUserCart,
+            $cartUuid,
             (string)$userProfile->identifier,
         );
-
-        $session->remove(SocialNetworkController::SESSION_CART_UUID);
-        $session->remove(SocialNetworkController::SESSION_SHOULD_OVERWRITE_CART);
-        $session->remove(SocialNetworkController::SESSION_PRODUCT_LIST_UUIDS);
-
-        return $loginResultData;
     }
 
     protected function validateDataFromSocialNetwork(Profile $userProfile): void
