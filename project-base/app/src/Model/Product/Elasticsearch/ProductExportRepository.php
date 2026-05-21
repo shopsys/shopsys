@@ -60,6 +60,8 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method string extractSearchingSeoMetaDescriptions(\App\Model\Product\Product $product, int $domainId)
  * @method bool isProductPromoted(\App\Model\Product\Product $product, int $domainId)
  * @method int|null getTopProductPosition(\App\Model\Product\Product $product, int $domainId)
+ * @method mixed getExportedFieldValueFromProductExportDataProvider(int $domainId, \App\Model\Product\Product $product, string $locale, string $field)
+ * @method void loadProductExportDataProviders(\App\Model\Product\Product[] $products, int $domainId, string $locale, string[] $fields)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {

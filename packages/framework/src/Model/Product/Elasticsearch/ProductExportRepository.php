@@ -35,6 +35,8 @@ use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class ProductExportRepository
 {
@@ -64,6 +66,22 @@ class ProductExportRepository
         protected readonly Domain $domain,
         protected readonly TopProductRepository $topProductRepository,
     ) {
+    }
+
+    /**
+     * @var iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface>
+     */
+    protected iterable $productExportDataProviders = [];
+
+    /**
+     * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
+     */
+    #[Required]
+    public function setProductExportDataProviders(
+        #[AutowireIterator('shopsys.product_export_data_provider')]
+        iterable $productExportDataProviders,
+    ): void {
+        $this->productExportDataProviders = $productExportDataProviders;
     }
 
     /**
@@ -187,8 +205,23 @@ class ProductExportRepository
             ProductExportFieldProvider::IS_PROMOTED => $this->isProductPromoted($product, $domainId),
             ProductExportFieldProvider::TOP_PRODUCT_POSITION => $this->getTopProductPosition($product, $domainId),
 
-            default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
+            default => $this->getExportedFieldValueFromProductExportDataProvider($domainId, $product, $locale, $field),
         };
+    }
+
+    protected function getExportedFieldValueFromProductExportDataProvider(
+        int $domainId,
+        Product $product,
+        string $locale,
+        string $field,
+    ): mixed {
+        foreach ($this->productExportDataProviders as $productExportDataProvider) {
+            if (in_array($field, $productExportDataProvider->getExportFields(), true)) {
+                return $productExportDataProvider->getExportedFieldValue($product, $domainId, $locale, $field);
+            }
+        }
+
+        throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field));
     }
 
     /**
@@ -429,14 +462,36 @@ class ProductExportRepository
             $fields = $this->productExportFieldProvider->getAll();
         }
 
+        $products = $query->getResult();
+        $this->loadProductExportDataProviders($products, $domainId, $locale, $fields);
+
         $results = [];
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        foreach ($query->getResult() as $product) {
+        foreach ($products as $product) {
             $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
         }
 
         return $results;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param string[] $fields
+     */
+    protected function loadProductExportDataProviders(
+        array $products,
+        int $domainId,
+        string $locale,
+        array $fields,
+    ): void {
+        foreach ($this->productExportDataProviders as $productExportDataProvider) {
+            if (array_intersect($fields, $productExportDataProvider->getExportFields()) === []) {
+                continue;
+            }
+
+            $productExportDataProvider->loadProductExportData($products, $domainId, $locale);
+        }
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope;
 
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class ProductExportFieldProvider
 {
@@ -66,10 +67,25 @@ class ProductExportFieldProvider
     public const string SEARCHING_SEO_META_DESCRIPTIONS = 'searching_seo_meta_descriptions';
 
     /**
+     * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
+     */
+    public function __construct(
+        #[AutowireIterator('shopsys.product_export_data_provider')]
+        protected readonly iterable $productExportDataProviders = [],
+    ) {
+    }
+
+    /**
      * @return string[]
      */
     public function getAll(): array
     {
-        return ReflectionHelper::getAllPublicClassConstants(static::class);
+        $exportFields = ReflectionHelper::getAllPublicClassConstants(static::class);
+
+        foreach ($this->productExportDataProviders as $productExportDataProvider) {
+            $exportFields = [...$exportFields, ...$productExportDataProvider->getExportFields()];
+        }
+
+        return array_values(array_unique($exportFields));
     }
 }

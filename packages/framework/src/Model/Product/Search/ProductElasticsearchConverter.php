@@ -6,9 +6,27 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class ProductElasticsearchConverter
 {
+    /**
+     * @var iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface>
+     */
+    protected iterable $productExportDataProviders = [];
+
+    /**
+     * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
+     */
+    #[Required]
+    public function setProductExportDataProviders(
+        #[AutowireIterator('shopsys.product_export_data_provider')]
+        iterable $productExportDataProviders,
+    ): void {
+        $this->productExportDataProviders = $productExportDataProviders;
+    }
+
     public function fillEmptyFields(array $product): array
     {
         $result = $product;
@@ -82,6 +100,12 @@ class ProductElasticsearchConverter
 
         $result[ProductExportFieldProvider::IS_PROMOTED] = $product[ProductExportFieldProvider::IS_PROMOTED] ?? false;
         $result[ProductExportFieldProvider::TOP_PRODUCT_POSITION] = $product[ProductExportFieldProvider::TOP_PRODUCT_POSITION] ?? null;
+
+        foreach ($this->productExportDataProviders as $productExportDataProvider) {
+            foreach ($productExportDataProvider->getExportFields() as $field) {
+                $result[$field] = array_key_exists($field, $product) ? $product[$field] : $productExportDataProvider->getDefaultValue($field);
+            }
+        }
 
         return $result;
     }

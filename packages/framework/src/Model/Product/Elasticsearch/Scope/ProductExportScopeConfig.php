@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope;
 
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\Exception\ScopeRuleAlreadyExistsException;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\Exception\ScopeRuleDoesNotExistException;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class ProductExportScopeConfig
 {
@@ -40,6 +42,22 @@ class ProductExportScopeConfig
     public function __construct(
         protected ?array $productExportScopeRules = null,
     ) {
+    }
+
+    /**
+     * @var iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface>
+     */
+    protected iterable $productExportDataProviders = [];
+
+    /**
+     * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
+     */
+    #[Required]
+    public function setProductExportDataProviders(
+        #[AutowireIterator('shopsys.product_export_data_provider')]
+        iterable $productExportDataProviders,
+    ): void {
+        $this->productExportDataProviders = $productExportDataProviders;
     }
 
     /**
@@ -161,6 +179,17 @@ class ProductExportScopeConfig
             ProductExportFieldProvider::IS_PROMOTED,
             ProductExportFieldProvider::TOP_PRODUCT_POSITION,
         ]);
+
+        $this->addProductExportDataProviderFieldsToScopeRules();
+    }
+
+    protected function addProductExportDataProviderFieldsToScopeRules(): void
+    {
+        foreach ($this->productExportDataProviders as $productExportDataProvider) {
+            foreach ($productExportDataProvider->getExportFieldsByScope() as $scopeName => $exportFields) {
+                $this->addExportFieldsToExistingScopeRule($scopeName, $exportFields);
+            }
+        }
     }
 
     /**
