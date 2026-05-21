@@ -5,15 +5,20 @@ import { getCurrentCustomerUserRoles } from 'utils/auth/getCurrentCustomerUserRo
 import { getIsUserAuthorizedToViewPage } from 'utils/auth/getIsUserAuthorizedToViewPage';
 import { getUnauthenticatedRedirectSSR } from 'utils/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
+import { getTranslationVersion } from 'utils/i18n/getTranslationVersion';
 import { isEnvironment } from 'utils/isEnvironment';
+import { isFullPageRequest } from 'utils/isFullPageRequest';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getServerSideInternationalizedStaticUrl';
 import { applyStorefrontDevelopmentCspAppendices } from './cspHelpers';
 import { BuildServerSidePropsParams, ServerSidePropsType } from './types';
 
+const I18N_NAMESPACES = ['common', 'accessibility'];
+
 export const buildServerSideProps = async ({
     layoutResult,
     client,
+    redisClient,
     ssrExchange: ssrCache,
     context,
     domainConfig,
@@ -87,14 +92,29 @@ export const buildServerSideProps = async ({
     }
 
     const ipAddress = getIpAddress(context);
+    const isFullPageLoad = isFullPageRequest(context.req.headers);
+    const translationProps = isFullPageLoad
+        ? await loadNamespaces({
+              locale: domainConfig.defaultLocale,
+              pathname: trimmedUrlWithoutQueryParams,
+              namespaces: I18N_NAMESPACES,
+          })
+        : { __lang: domainConfig.defaultLocale };
+
+    const translationMetadata = {
+        __namespaceNames: I18N_NAMESPACES,
+        __translationVersion: await getTranslationVersion(redisClient),
+    };
+
+    const serializedTranslationProps = {
+        __lang: translationProps.__lang,
+        ...translationMetadata,
+        ...(isFullPageLoad ? { __namespaces: translationProps.__namespaces } : {}),
+    };
 
     return {
         props: {
-            ...(await loadNamespaces({
-                locale: domainConfig.defaultLocale,
-                pathname: trimmedUrlWithoutQueryParams,
-                namespaces: ['common', 'accessibility'],
-            })),
+            ...serializedTranslationProps,
             domainConfig,
             // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
             urqlState: JSON.parse(JSON.stringify(ssrCache.extractData())),

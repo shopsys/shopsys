@@ -163,6 +163,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             return buildServerSideProps({
                 layoutResult,
                 client,
+                redisClient,
                 ssrExchange,
                 context,
                 domainConfig,

@@ -41,7 +41,7 @@ export type InitServerSidePropsParameters<VariablesType> = {
 } & (
     | {
           client: Client;
-          redisClient?: never;
+          redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
           ssrExchange: SSRExchange;
           t?: never;
       }
@@ -64,6 +64,7 @@ export type PrefetchLayoutParams<VariablesType> = {
 export type BuildServerSidePropsParams = {
     layoutResult: LayoutQueryResult;
     client: Client;
+    redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
     ssrExchange: SSRExchange;
     context: GetServerSidePropsContext;
     domainConfig: DomainConfigType;

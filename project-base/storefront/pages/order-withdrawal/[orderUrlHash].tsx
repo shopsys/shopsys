@@ -103,6 +103,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             return initServerSideProps({
                 context,
                 client,
+                redisClient,
                 ssrExchange,
                 domainConfig,
                 currentCustomerUserPrefetchMode: 'full',

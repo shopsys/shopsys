@@ -1,16 +1,15 @@
 import { RouteAccessibilityManager } from 'components/Layout/RouteAccessibilityManager';
 import { RouteAnnouncer } from 'components/Layout/RouteAnnouncer';
 import { AuthorizationProvider } from 'components/providers/AuthorizationProvider';
+import { CachedI18nProvider } from 'components/providers/CachedI18nProvider';
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { CurrentCustomerUserProvider } from 'components/providers/CurrentCustomerUserProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { PersistStoreProvider } from 'components/providers/PersistStoreProvider';
 import { LazyMotion, MotionConfig } from 'framer-motion';
 import { GtmProvider } from 'gtm/context/GtmProvider';
-import i18nConfig from 'i18n';
 import { AppProps as NextAppProps } from 'next/app';
 import dynamic from 'next/dynamic';
-import appWithI18n from 'next-translate/appWithI18n';
 import 'nprogress/nprogress.css';
 import { ReactElement, useEffect } from 'react';
 import 'styles/globals.css';
@@ -74,49 +73,56 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     // The fallback uses MinimalErrorContent which has NO dependencies (no translations, no context).
     if (!domainConfig) {
         return (
-            <ErrorBoundary
-                fallbackRender={({ error }) => (
-                    <MinimalErrorContent err={error.message} showDebugInfo={isWithErrorDebugging} statusCode={500} />
-                )}
-                onError={logErrorBoundary}
-            >
-                <Component {...pageProps} />
-            </ErrorBoundary>
+            <CachedI18nProvider pageProps={pageProps}>
+                <ErrorBoundary
+                    fallbackRender={({ error }) => (
+                        <MinimalErrorContent
+                            err={error.message}
+                            showDebugInfo={isWithErrorDebugging}
+                            statusCode={500}
+                        />
+                    )}
+                    onError={logErrorBoundary}
+                >
+                    <Component {...pageProps} />
+                </ErrorBoundary>
+            </CachedI18nProvider>
         );
     }
 
     return (
-        <ErrorBoundary
-            fallbackRender={({ error, resetErrorBoundary }) => (
-                <Error500ContentWithBoundary error={error} resetErrorBoundary={resetErrorBoundary} />
-            )}
-            onError={logErrorBoundary}
-        >
-            <UrqlWrapper pageProps={pageProps}>
-                <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
-                    <DomainConfigProvider domainConfig={domainConfig}>
-                        <PersistStoreProvider>
-                            <CurrentCustomerUserProvider>
-                                <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
-                                    <GtmProvider ipAddress={pageProps.ipAddress}>
-                                        <MotionConfig reducedMotion="user">
-                                            <LazyMotion features={framerMotionPlugins}>
-                                                <RouteAccessibilityManager>
-                                                    <RouteAnnouncer />
-                                                    <AppPageContent Component={Component} pageProps={pageProps} />
-                                                </RouteAccessibilityManager>
-                                            </LazyMotion>
-                                        </MotionConfig>
-                                    </GtmProvider>
-                                </AuthorizationProvider>
-                            </CurrentCustomerUserProvider>
-                        </PersistStoreProvider>
-                    </DomainConfigProvider>
-                </CookiesStoreProvider>
-            </UrqlWrapper>
-        </ErrorBoundary>
+        <CachedI18nProvider pageProps={pageProps}>
+            <ErrorBoundary
+                fallbackRender={({ error, resetErrorBoundary }) => (
+                    <Error500ContentWithBoundary error={error} resetErrorBoundary={resetErrorBoundary} />
+                )}
+                onError={logErrorBoundary}
+            >
+                <UrqlWrapper pageProps={pageProps}>
+                    <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
+                        <DomainConfigProvider domainConfig={domainConfig}>
+                            <PersistStoreProvider>
+                                <CurrentCustomerUserProvider>
+                                    <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
+                                        <GtmProvider ipAddress={pageProps.ipAddress}>
+                                            <MotionConfig reducedMotion="user">
+                                                <LazyMotion features={framerMotionPlugins}>
+                                                    <RouteAccessibilityManager>
+                                                        <RouteAnnouncer />
+                                                        <AppPageContent Component={Component} pageProps={pageProps} />
+                                                    </RouteAccessibilityManager>
+                                                </LazyMotion>
+                                            </MotionConfig>
+                                        </GtmProvider>
+                                    </AuthorizationProvider>
+                                </CurrentCustomerUserProvider>
+                            </PersistStoreProvider>
+                        </DomainConfigProvider>
+                    </CookiesStoreProvider>
+                </UrqlWrapper>
+            </ErrorBoundary>
+        </CachedI18nProvider>
     );
 }
 
-// @ts-expect-error
-export default appWithI18n(MyApp, { ...i18nConfig });
+export default MyApp;

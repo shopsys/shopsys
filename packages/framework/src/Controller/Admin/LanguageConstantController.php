@@ -91,6 +91,7 @@ class LanguageConstantController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $constant = $this->languageConstantFacade->createOrEdit($form->getData(), $constant);
+                $this->languageConstantFacade->generateAllNamespaceFilesAndCleanStorefrontCache($locale, $namespace);
 
                 $this->addSuccessFlashTwig(
                     t('Language constant translation <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
@@ -107,8 +108,6 @@ class LanguageConstantController extends AdminBaseController
                     ],
                 );
             }
-
-            $this->languageConstantFacade->generateAllNamespaceFiles($locale);
 
             return $this->redirectToRoute('admin_languageconstant_list');
         }
@@ -134,7 +133,7 @@ class LanguageConstantController extends AdminBaseController
         if ($constant !== null) {
             try {
                 $this->languageConstantFacade->delete($key, $this->getSelectedLocale(), $namespace);
-                $this->languageConstantFacade->generateAllNamespaceFiles($this->getSelectedLocale());
+                $this->languageConstantFacade->generateAllNamespaceFilesAndCleanStorefrontCache($this->getSelectedLocale(), $namespace);
 
                 $this->addSuccessFlashTwig(
                     t('Language constant translation <strong>{{ name }}</strong> deleted'),

@@ -3,18 +3,20 @@ import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/quer
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { CustomerUserAreaEnum } from 'types/customer';
 import { Client, SSRExchange } from 'urql';
-import { buildServerSideProps } from 'utils/serverSide/buildServerSideProps';
-import { LayoutQueryResult } from 'utils/serverSide/types';
+import { buildServerSideProps as originalBuildServerSideProps } from 'utils/serverSide/buildServerSideProps';
+import { BuildServerSidePropsParams, LayoutQueryResult } from 'utils/serverSide/types';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const {
     mockIsEnvironment,
     mockLoadNamespaces,
+    mockGetTranslationVersion,
     mockGetServerSideInternationalizedStaticUrl,
     mockGetUnauthenticatedRedirectSSR,
 } = vi.hoisted(() => ({
     mockIsEnvironment: vi.fn(),
     mockLoadNamespaces: vi.fn(),
+    mockGetTranslationVersion: vi.fn(),
     mockGetServerSideInternationalizedStaticUrl: vi.fn(),
     mockGetUnauthenticatedRedirectSSR: vi.fn(),
 }));
@@ -25,6 +27,10 @@ vi.mock('utils/isEnvironment', () => ({
 
 vi.mock('next-translate/loadNamespaces', () => ({
     default: mockLoadNamespaces,
+}));
+
+vi.mock('utils/i18n/getTranslationVersion', () => ({
+    getTranslationVersion: mockGetTranslationVersion,
 }));
 
 vi.mock('utils/staticUrls/getServerSideInternationalizedStaticUrl', () => ({
@@ -57,9 +63,25 @@ const createMockSsrExchange = (): SSRExchange =>
         extractData: vi.fn().mockReturnValue({}),
     }) as unknown as SSRExchange;
 
-const createMockContext = (resolvedUrl = '/customer/order-detail') =>
+const createMockRedisClient = () =>
+    ({
+        get: vi.fn().mockResolvedValue('translation-version'),
+    }) as any;
+
+const buildServerSideProps = (
+    params: Omit<BuildServerSidePropsParams, 'redisClient'> & Partial<Pick<BuildServerSidePropsParams, 'redisClient'>>,
+) =>
+    originalBuildServerSideProps({
+        redisClient: createMockRedisClient(),
+        ...params,
+    });
+
+const createMockContext = (resolvedUrl = '/customer/order-detail', headers: Record<string, string> = {}) =>
     ({
         resolvedUrl,
+        req: {
+            headers,
+        },
         res: {
             statusCode: 200,
             setHeader: vi.fn(),
@@ -98,6 +120,7 @@ describe('buildServerSideProps', () => {
         vi.clearAllMocks();
         mockIsEnvironment.mockReturnValue(false);
         mockLoadNamespaces.mockResolvedValue({});
+        mockGetTranslationVersion.mockResolvedValue('translation-version');
         mockGetUnauthenticatedRedirectSSR.mockReturnValue({
             redirect: { statusCode: 302, destination: '/login?r=customer/order-detail' },
         });
@@ -369,6 +392,49 @@ describe('buildServerSideProps', () => {
             });
 
             expect((result as any).props.urqlState).toEqual({ someQuery: { data: 'test' } });
+        });
+
+        test('includes translations on regular SSR requests', async () => {
+            const redisClient = {} as any;
+            mockLoadNamespaces.mockResolvedValue({
+                __lang: 'en',
+                __namespaces: { common: { Save: 'Save' } },
+            });
+
+            const result = await buildServerSideProps({
+                layoutResult: createLayoutResult(),
+                client: createMockClient(undefined, undefined),
+                redisClient,
+                ssrExchange: createMockSsrExchange(),
+                context: createMockContext(),
+                domainConfig,
+            });
+
+            expect((result as any).props.__lang).toBe('en');
+            expect((result as any).props.__namespaces).toEqual({ common: { Save: 'Save' } });
+            expect((result as any).props.__translationVersion).toBe('translation-version');
+            expect(mockGetTranslationVersion).toHaveBeenCalledWith(redisClient);
+        });
+
+        test('omits translations and skips namespace loading on Next data requests', async () => {
+            mockLoadNamespaces.mockResolvedValue({
+                __lang: 'en',
+                __namespaces: { common: { Save: 'Save' } },
+            });
+
+            const result = await buildServerSideProps({
+                layoutResult: createLayoutResult(),
+                client: createMockClient(undefined, undefined),
+                ssrExchange: createMockSsrExchange(),
+                context: createMockContext('/cart', { 'x-nextjs-data': '1' }),
+                domainConfig,
+            });
+
+            expect((result as any).props.__lang).toBe('en');
+            expect((result as any).props.__namespaces).toBeUndefined();
+            expect((result as any).props.__namespaceNames).toEqual(['common', 'accessibility']);
+            expect((result as any).props.__translationVersion).toBe('translation-version');
+            expect(mockLoadNamespaces).not.toHaveBeenCalled();
         });
     });
 });

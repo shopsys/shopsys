@@ -5,6 +5,7 @@ import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'red
 import { SSRExchange, ssrExchange } from 'urql';
 import { CookiesStoreState, getCookiesStoreState } from 'utils/cookies/cookiesStore';
 import { DomainConfigType, getDomainConfig } from 'utils/domain/domainConfig';
+import { registerI18nConfig } from 'utils/i18n/registerI18nConfig';
 
 export const getServerSidePropsWrapper =
     (
@@ -28,6 +29,8 @@ export const getServerSidePropsWrapper =
         });
         await redisClient.connect();
 
+        // next-translate/getT reads the config from globalThis; appWithI18n used to register it implicitly.
+        registerI18nConfig();
         const t = await getT(domainConfig.defaultLocale, 'common');
         const initServerSideProps = callback({
             redisClient,

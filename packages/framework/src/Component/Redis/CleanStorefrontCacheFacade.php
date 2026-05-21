@@ -8,6 +8,8 @@ use Redis;
 
 class CleanStorefrontCacheFacade
 {
+    public const string TRANSLATION_VERSION_KEY = 'translates:version';
+
     public const string NAVIGATION_QUERY_KEY_PART = 'NavigationQuery';
     public const string BLOG_ARTICLES_QUERY_KEY_PART = 'BlogArticlesQuery';
     public const string BLOG_CATEGORIES_QUERY_KEY_PART = 'BlogCategories';
@@ -30,6 +32,12 @@ class CleanStorefrontCacheFacade
         }
 
         $this->cleanStorefrontCacheByKeyPattern($keyPattern);
+        $this->bumpStorefrontTranslationVersion();
+    }
+
+    protected function bumpStorefrontTranslationVersion(): void
+    {
+        $this->storefrontGraphqlQueryClient->set(self::TRANSLATION_VERSION_KEY, (string)microtime(true));
     }
 
     public function cleanStorefrontGraphqlQueryCache(string $queryKey = ''): void
