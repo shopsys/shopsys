@@ -1241,8 +1241,19 @@ export type TypeFedcmProviderConfig = {
   clientId: Scalars['String']['output'];
   /** The identity provider's FedCM configuration URL (hosted by the IdP, not by the storefront) */
   configUrl: Scalars['String']['output'];
+  /** IdP-specific extra parameters merged into the FedCM `params` object (e.g. `scope` for Google). The storefront-generated `nonce` is added on top of these. */
+  params: Array<TypeFedcmProviderParam>;
   /** The social network type (e.g. google, seznam) */
   type: TypeLoginTypeEnum;
+};
+
+/** A single key-value pair forwarded to the FedCM `params` object for a provider */
+export type TypeFedcmProviderParam = {
+  __typename?: 'FedcmProviderParam';
+  /** Parameter name (e.g. `scope`, `response_type`, `login_hint`) */
+  name: Scalars['String']['output'];
+  /** Parameter value */
+  value: Scalars['String']['output'];
 };
 
 /** Represents a downloadable file */

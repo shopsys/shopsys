@@ -70,7 +70,7 @@ class SocialNetworkConfigFactory
     }
 
     /**
-     * @return array<int, array{type: string, clientId: string, configUrl: string, autoSelect: bool}>
+     * @return array<int, array{type: string, clientId: string, configUrl: string, autoSelect: bool, params: array<string, string>}>
      */
     public function getEnabledFedcmProvidersForDomain(int $domainId): array
     {
@@ -85,11 +85,17 @@ class SocialNetworkConfigFactory
                 continue;
             }
 
+            $adapterClass = $providerSetting['adapter'] ?? null;
+            $providerDefaultParams = is_string($adapterClass) && is_subclass_of($adapterClass, FedcmAdapterInterface::class)
+                ? $adapterClass::getDefaultFedcmParams()
+                : [];
+
             $enabledProviders[] = [
                 'type' => $providerType,
                 'clientId' => $providerSetting['keys']['id'],
                 'configUrl' => $providerSetting['fedcm']['configUrl'],
                 'autoSelect' => ($providerSetting['fedcm']['autoSelect'] ?? false) === true,
+                'params' => $providerDefaultParams,
             ];
         }
 

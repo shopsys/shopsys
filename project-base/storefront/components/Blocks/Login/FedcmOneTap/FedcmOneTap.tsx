@@ -13,6 +13,7 @@ type FedcmProvider = {
     clientId: string;
     configUrl: string;
     autoSelect: boolean;
+    params: Array<{ name: string; value: string }>;
 };
 
 type FedcmCredential = Credential & {
@@ -24,9 +25,7 @@ type FedcmIdentityRequestOptions = {
         providers: Array<{
             configURL: string;
             clientId: string;
-            params?: {
-                nonce?: string;
-            };
+            params?: Record<string, string>;
         }>;
     };
     mediation?: CredentialMediationRequirement;
@@ -150,11 +149,15 @@ export const FedcmOneTap: FC = () => {
         const nonce = generateNonce();
         const options: FedcmIdentityRequestOptions = {
             identity: {
-                providers: fedcmProviders.map((provider) => ({
-                    configURL: provider.configUrl,
-                    clientId: provider.clientId,
-                    params: { nonce },
-                })),
+                providers: fedcmProviders.map((provider) => {
+                    const extraParams = Object.fromEntries(provider.params.map(({ name, value }) => [name, value]));
+
+                    return {
+                        configURL: provider.configUrl,
+                        clientId: provider.clientId,
+                        params: { ...extraParams, nonce },
+                    };
+                }),
             },
             mediation: allProvidersAutoSelect ? 'silent' : 'optional',
         };

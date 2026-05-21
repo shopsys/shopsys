@@ -17,10 +17,29 @@ class FedcmProvidersQuery extends AbstractQuery
     }
 
     /**
-     * @return array<int, array{type: string, clientId: string, configUrl: string, autoSelect: bool}>
+     * @return array<int, array{type: string, clientId: string, configUrl: string, autoSelect: bool, params: array<int, array{name: string, value: string}>}>
      */
     public function fedcmProvidersQuery(): array
     {
-        return $this->socialNetworkConfigFactory->getEnabledFedcmProvidersForDomain($this->domain->getId());
+        $providers = $this->socialNetworkConfigFactory->getEnabledFedcmProvidersForDomain($this->domain->getId());
+
+        return array_map(
+            static function (array $provider): array {
+                $params = [];
+
+                foreach ($provider['params'] as $name => $value) {
+                    $params[] = ['name' => (string)$name, 'value' => (string)$value];
+                }
+
+                return [
+                    'type' => $provider['type'],
+                    'clientId' => $provider['clientId'],
+                    'configUrl' => $provider['configUrl'],
+                    'autoSelect' => $provider['autoSelect'],
+                    'params' => $params,
+                ];
+            },
+            $providers,
+        );
     }
 }

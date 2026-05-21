@@ -1,0 +1,4 @@
+FedcmProviderParam:
+    type: object
+    inherits:
+        - 'FedcmProviderParamDecorator'

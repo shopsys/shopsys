@@ -25,4 +25,13 @@ interface FedcmAdapterInterface
      * credential format does not carry a nonce (e.g. OAuth authorization code) MAY ignore the parameter.
      */
     public function getUserProfileFromFedcmCredential(string $credential, ?string $expectedNonce = null): Profile;
+
+    /**
+     * Returns the IdP-specific default values for the FedCM `params` object that the storefront passes to
+     * navigator.credentials.get(). The provider class is the authoritative source for what its own IdP requires;
+     * project YAML config can still override or extend these via `fedcm.params`.
+     *
+     * @return array<string, string>
+     */
+    public static function getDefaultFedcmParams(): array;
 }

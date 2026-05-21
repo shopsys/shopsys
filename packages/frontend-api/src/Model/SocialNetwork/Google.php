@@ -32,6 +32,22 @@ class Google extends BaseGoogle implements FedcmAdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * Google's FedCM login_url fallback (used when the user is not signed in to Google in the browser) is built
+     * from the `params` payload — without `scope` it constructs an incomplete OAuth URL and surfaces
+     * "missing parameter: response_type" to the user.
+     */
+    #[Override]
+    public static function getDefaultFedcmParams(): array
+    {
+        return [
+            'scope' => 'openid email profile',
+            'response_type' => 'code',
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
      */
     #[Override]
     public function getUserProfileFromFedcmCredential(string $credential, ?string $expectedNonce = null): Profile

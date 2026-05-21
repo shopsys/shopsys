@@ -48,6 +48,7 @@
     * [CustomerUserRoleGroup](#customeruserrolegroup)
     * [DeliveryAddress](#deliveryaddress)
     * [FedcmProviderConfig](#fedcmproviderconfig)
+    * [FedcmProviderParam](#fedcmproviderparam)
     * [File](#file)
     * [Flag](#flag)
     * [FlagFilterOption](#flagfilteroption)
@@ -5310,11 +5311,55 @@ The identity provider's FedCM configuration URL (hosted by the IdP, not by the s
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="fedcmproviderconfig.params">params</strong></td>
+<td valign="top">[<a href="#fedcmproviderparam">FedcmProviderParam</a>!]!</td>
+<td>
+
+IdP-specific extra parameters merged into the FedCM `params` object (e.g. `scope` for Google). The storefront-generated `nonce` is added on top of these.
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="fedcmproviderconfig.type">type</strong></td>
 <td valign="top"><a href="#logintypeenum">LoginTypeEnum</a>!</td>
 <td>
 
 The social network type (e.g. google, seznam)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### FedcmProviderParam
+
+A single key-value pair forwarded to the FedCM `params` object for a provider
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="fedcmproviderparam.name">name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Parameter name (e.g. `scope`, `response_type`, `login_hint`)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="fedcmproviderparam.value">value</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Parameter value
 
 </td>
 </tr>

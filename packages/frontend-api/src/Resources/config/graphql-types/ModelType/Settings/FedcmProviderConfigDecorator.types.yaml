@@ -16,3 +16,6 @@ FedcmProviderConfigDecorator:
             autoSelect:
                 type: "Boolean!"
                 description: "Whether the browser may auto-select a returning user without an explicit prompt"
+            params:
+                type: "[FedcmProviderParam!]!"
+                description: "IdP-specific extra parameters merged into the FedCM `params` object (e.g. `scope` for Google). The storefront-generated `nonce` is added on top of these."

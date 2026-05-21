@@ -54,6 +54,17 @@ class Seznam extends BaseSeznam implements FedcmAdapterInterface
     /**
      * {@inheritdoc}
      *
+     * Seznam's FedCM does not require any provider-specific `params` beyond the nonce the storefront generates.
+     */
+    #[Override]
+    public static function getDefaultFedcmParams(): array
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * Seznam's FedCM flow delivers an OAuth authorization code (no JWT, no nonce claim) — the `$expectedNonce`
      * parameter is therefore intentionally ignored.
      *

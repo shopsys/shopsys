@@ -1,0 +1,12 @@
+FedcmProviderParamDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "A single key-value pair forwarded to the FedCM `params` object for a provider"
+        fields:
+            name:
+                type: "String!"
+                description: "Parameter name (e.g. `scope`, `response_type`, `login_hint`)"
+            value:
+                type: "String!"
+                description: "Parameter value"

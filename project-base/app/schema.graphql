@@ -1086,8 +1086,18 @@ type FedcmProviderConfig {
   clientId: String!
   "The identity provider's FedCM configuration URL (hosted by the IdP, not by the storefront)"
   configUrl: String!
+  "IdP-specific extra parameters merged into the FedCM `params` object (e.g. `scope` for Google). The storefront-generated `nonce` is added on top of these."
+  params: [FedcmProviderParam!]!
   "The social network type (e.g. google, seznam)"
   type: LoginTypeEnum!
+}
+
+"A single key-value pair forwarded to the FedCM `params` object for a provider"
+type FedcmProviderParam {
+  "Parameter name (e.g. `scope`, `response_type`, `login_hint`)"
+  name: String!
+  "Parameter value"
+  value: String!
 }
 
 "Represents a downloadable file"
