@@ -9,11 +9,12 @@ use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Provider\Seznam as BaseSeznam;
 use Hybridauth\User;
 use Override;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 
 /**
  * @see https://github.com/hybridauth/hybridauth/pull/1388 copy from this pull request, after accepting this pull request and updating version where are these changes applied, you can delete this file
  */
-class Seznam extends BaseSeznam
+class Seznam extends BaseSeznam implements FedcmAdapterInterface
 {
     /**
      * {@inheritdoc}
@@ -39,6 +40,36 @@ class Seznam extends BaseSeznam
         $userProfile->phone = $data->get('contact_phone');
 
         return $userProfile;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLoginType(): string
+    {
+        return LoginTypeEnum::SEZNAM;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Seznam's FedCM flow delivers an OAuth authorization code (no JWT, no nonce claim) — the `$expectedNonce`
+     * parameter is therefore intentionally ignored.
+     *
+     * Per Seznam's developer docs (https://vyvojari.seznam.cz/oauth/fedcm), `redirect_uri` MUST NOT be sent on the
+     * token endpoint for FedCM-issued codes — doing so triggers "redirect_uri mismatch". HybridAuth's OAuth2 base
+     * adds `redirect_uri` to `tokenExchangeParameters` by default during initialize(), so we strip it before the
+     * exchange call.
+     */
+    #[Override]
+    public function getUserProfileFromFedcmCredential(string $credential, ?string $expectedNonce = null): User\Profile
+    {
+        unset($expectedNonce, $this->tokenExchangeParameters['redirect_uri']);
+
+        $response = $this->exchangeCodeForAccessToken($credential);
+        $this->validateAccessTokenExchange($response);
+
+        return $this->getUserProfile();
     }
 
     protected function getEmailFromCollection(Data\Collection $data): ?string
