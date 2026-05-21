@@ -9,6 +9,7 @@ use Hybridauth\Exception\InvalidAccessTokenException;
 use Hybridauth\Exception\InvalidApplicationCredentialsException;
 use Hybridauth\Provider\Google as BaseGoogle;
 use Hybridauth\User\Profile;
+use Override;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 
 class Google extends BaseGoogle implements FedcmAdapterInterface
@@ -23,6 +24,7 @@ class Google extends BaseGoogle implements FedcmAdapterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getLoginType(): string
     {
         return LoginTypeEnum::GOOGLE;

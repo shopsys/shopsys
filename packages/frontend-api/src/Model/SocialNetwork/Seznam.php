@@ -45,6 +45,7 @@ class Seznam extends BaseSeznam implements FedcmAdapterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getLoginType(): string
     {
         return LoginTypeEnum::SEZNAM;
