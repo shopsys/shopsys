@@ -37,6 +37,7 @@ class LoginWithCredentialMutation extends AbstractMutation
                 $input['cartUuid'] ?? null,
                 $input['productListsUuids'] ?? [],
                 $input['shouldOverwriteCustomerUserCart'] ?? false,
+                $input['nonce'] ?? null,
             );
         } catch (SocialNetworkLoginException) {
             throw new InvalidCredentialsUserError('Log in via FedCM failed.');

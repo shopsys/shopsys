@@ -94,6 +94,7 @@ class SocialNetworkFacade
         ?string $cartUuid,
         array $productListUuids,
         bool $shouldOverwriteCustomerUserCart,
+        ?string $expectedNonce = null,
     ): LoginResultData {
         $adapter = $this->fedcmAdapterFactory->createForDomainAndType($this->domain->getId(), $type);
 
@@ -102,7 +103,7 @@ class SocialNetworkFacade
         }
 
         try {
-            $userProfile = $adapter->getUserProfileFromFedcmCredential($credential);
+            $userProfile = $adapter->getUserProfileFromFedcmCredential($credential, $expectedNonce);
         } catch (HybridauthException $exception) {
             $message = sprintf('FedCM login via %s failed', $type);
             $this->logger->error($message, ['exception' => $exception]);

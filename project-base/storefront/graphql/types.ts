@@ -1436,6 +1436,8 @@ export type TypeLoginWithCredentialInput = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** The credential returned by the browser's FedCM flow (JWT id_token for Google, OAuth authorization code for Seznam) */
   credential: Scalars['String']['input'];
+  /** Random nonce passed to navigator.credentials.get(); the backend verifies it against the id_token nonce claim for providers whose credential format carries one (e.g. Google). Ignored for providers without a nonce claim (e.g. Seznam) */
+  nonce: InputMaybe<Scalars['String']['input']>;
   /** Uuids of product lists that should be merged to the product lists of the user */
   productListsUuids: Array<Scalars['Uuid']['input']>;
   /** A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid */

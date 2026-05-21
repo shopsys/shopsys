@@ -23,9 +23,24 @@ type FedcmIdentityRequestOptions = {
         providers: Array<{
             configURL: string;
             clientId: string;
+            params?: {
+                nonce?: string;
+            };
         }>;
     };
     mediation?: CredentialMediationRequirement;
+};
+
+const generateNonce = (): string => {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+    }
+
+    // Fallback for environments without crypto.randomUUID — use a 16-byte random value as hex string.
+    const buffer = new Uint8Array(16);
+    crypto.getRandomValues(buffer);
+
+    return Array.from(buffer, (byte) => byte.toString(16).padStart(2, '0')).join('');
 };
 
 const BASE64_URL_PATTERN = /^[A-Za-z0-9_-]+$/;
@@ -99,11 +114,13 @@ export const FedcmOneTap: FC = () => {
         hasAttemptedRef.current = true;
 
         const allProvidersAutoSelect = fedcmProviders.every((provider) => provider.autoSelect);
+        const nonce = generateNonce();
         const options: FedcmIdentityRequestOptions = {
             identity: {
                 providers: fedcmProviders.map((provider) => ({
                     configURL: provider.configUrl,
                     clientId: provider.clientId,
+                    params: { nonce },
                 })),
             },
             mediation: allProvidersAutoSelect ? 'silent' : 'optional',
@@ -127,6 +144,7 @@ export const FedcmOneTap: FC = () => {
             await loginWithCredential({
                 type: providerType,
                 credential: credential.token,
+                nonce,
             });
         } catch (error) {
             if (isDismissError(error)) {

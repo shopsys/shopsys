@@ -12057,6 +12057,15 @@ The credential returned by the browser's FedCM flow (JWT id_token for Google, OA
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="loginwithcredentialinput.nonce">nonce</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Random nonce passed to navigator.credentials.get(); the backend verifies it against the id_token nonce claim for providers whose credential format carries one (e.g. Google). Ignored for providers without a nonce claim (e.g. Seznam)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="loginwithcredentialinput.productlistsuuids">productListsUuids</strong></td>
 <td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
 <td>
