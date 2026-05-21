@@ -1232,6 +1232,19 @@ export type TypeEditCustomerUserPersonalDataInput = {
   telephone: TypePhoneDataInput;
 };
 
+/** FedCM identity provider configuration exposed to the storefront */
+export type TypeFedcmProviderConfig = {
+  __typename?: 'FedcmProviderConfig';
+  /** Whether the browser may auto-select a returning user without an explicit prompt */
+  autoSelect: Scalars['Boolean']['output'];
+  /** Client ID registered with the identity provider for the current domain */
+  clientId: Scalars['String']['output'];
+  /** The identity provider's FedCM configuration URL (hosted by the IdP, not by the storefront) */
+  configUrl: Scalars['String']['output'];
+  /** The social network type (e.g. google, seznam) */
+  type: TypeLoginTypeEnum;
+};
+
 /** Represents a downloadable file */
 export type TypeFile = {
   __typename?: 'File';
@@ -1418,6 +1431,19 @@ export enum TypeLoginTypeEnum {
   Web = 'web'
 }
 
+export type TypeLoginWithCredentialInput = {
+  /** Uuid of the cart that should be merged to the cart of the user */
+  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  /** The credential returned by the browser's FedCM flow (JWT id_token for Google, OAuth authorization code for Seznam) */
+  credential: Scalars['String']['input'];
+  /** Uuids of product lists that should be merged to the product lists of the user */
+  productListsUuids: Array<Scalars['Uuid']['input']>;
+  /** A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid */
+  shouldOverwriteCustomerUserCart: Scalars['Boolean']['input'];
+  /** The social network the credential was issued by (e.g. google, seznam) */
+  type: TypeLoginTypeEnum;
+};
+
 export type TypeMainBlogCategoryData = {
   __typename?: 'MainBlogCategoryData';
   /** Main image of the blog main category */
@@ -1576,6 +1602,8 @@ export type TypeMutation = {
   Login: TypeLoginResult;
   /** Exchange one-time token for access and refresh tokens */
   LoginViaExchangeToken: TypeToken;
+  /** Log a user in using a credential issued by a federated identity provider via FedCM (e.g. Google id_token, Seznam authorization code) */
+  LoginWithCredential: TypeLoginResult;
   /** Logout user */
   Logout: Scalars['Boolean']['output'];
   /** Subscribe for e-mail newsletter */
@@ -1722,6 +1750,11 @@ export type TypeMutationLoginArgs = {
 
 export type TypeMutationLoginViaExchangeTokenArgs = {
   exchangeToken: Scalars['String']['input'];
+};
+
+
+export type TypeMutationLoginWithCredentialArgs = {
+  input: TypeLoginWithCredentialInput;
 };
 
 
@@ -3563,6 +3596,8 @@ export type TypeSettings = {
   defaultPricingGroupId: Scalars['Int']['output'];
   /** Timezone that is used for displaying time */
   displayTimezone: Scalars['String']['output'];
+  /** Returns the FedCM-enabled identity providers for the current domain (empty when FedCM is globally disabled or not configured for the domain) */
+  fedcmProviders: Array<TypeFedcmProviderConfig>;
   /** Returns true if Heureka is available for the current domain */
   heurekaEnabled: Scalars['Boolean']['output'];
   /** Main blog category URL and background image */

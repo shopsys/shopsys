@@ -47,6 +47,7 @@
     * [CurrentRegularCustomerUser](#currentregularcustomeruser)
     * [CustomerUserRoleGroup](#customeruserrolegroup)
     * [DeliveryAddress](#deliveryaddress)
+    * [FedcmProviderConfig](#fedcmproviderconfig)
     * [File](#file)
     * [Flag](#flag)
     * [FlagFilterOption](#flagfilteroption)
@@ -135,6 +136,7 @@
     * [DeliveryAddressInput](#deliveryaddressinput)
     * [EditCustomerUserPersonalDataInput](#editcustomeruserpersonaldatainput)
     * [LoginInput](#logininput)
+    * [LoginWithCredentialInput](#loginwithcredentialinput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
     * [OrderFilterInput](#orderfilterinput)
     * [OrderInput](#orderinput)
@@ -1691,6 +1693,20 @@ Exchange one-time token for access and refresh tokens
 <tr>
 <td colspan="2" align="right" valign="top">exchangeToken</td>
 <td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mutation.loginwithcredential">LoginWithCredential</strong></td>
+<td valign="top"><a href="#loginresult">LoginResult</a>!</td>
+<td>
+
+Log a user in using a credential issued by a federated identity provider via FedCM (e.g. Google id_token, Seznam authorization code)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#loginwithcredentialinput">LoginWithCredentialInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -5246,6 +5262,59 @@ Delivery address phone number data
 <td>
 
 UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### FedcmProviderConfig
+
+FedCM identity provider configuration exposed to the storefront
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="fedcmproviderconfig.autoselect">autoSelect</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the browser may auto-select a returning user without an explicit prompt
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="fedcmproviderconfig.clientid">clientId</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Client ID registered with the identity provider for the current domain
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="fedcmproviderconfig.configurl">configUrl</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The identity provider's FedCM configuration URL (hosted by the IdP, not by the storefront)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="fedcmproviderconfig.type">type</strong></td>
+<td valign="top"><a href="#logintypeenum">LoginTypeEnum</a>!</td>
+<td>
+
+The social network type (e.g. google, seznam)
 
 </td>
 </tr>
@@ -9687,6 +9756,15 @@ Timezone that is used for displaying time
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="settings.fedcmproviders">fedcmProviders</strong></td>
+<td valign="top">[<a href="#fedcmproviderconfig">FedcmProviderConfig</a>!]!</td>
+<td>
+
+Returns the FedCM-enabled identity providers for the current domain (empty when FedCM is globally disabled or not configured for the domain)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="settings.heurekaenabled">heurekaEnabled</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -11943,6 +12021,65 @@ Uuids of product lists that should be merged to the product lists of the user
 <td>
 
 A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### LoginWithCredentialInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="loginwithcredentialinput.cartuuid">cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Uuid of the cart that should be merged to the cart of the user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="loginwithcredentialinput.credential">credential</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The credential returned by the browser's FedCM flow (JWT id_token for Google, OAuth authorization code for Seznam)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="loginwithcredentialinput.productlistsuuids">productListsUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Uuids of product lists that should be merged to the product lists of the user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="loginwithcredentialinput.shouldoverwritecustomerusercart">shouldOverwriteCustomerUserCart</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="loginwithcredentialinput.type">type</strong></td>
+<td valign="top"><a href="#logintypeenum">LoginTypeEnum</a>!</td>
+<td>
+
+The social network the credential was issued by (e.g. google, seznam)
 
 </td>
 </tr>
