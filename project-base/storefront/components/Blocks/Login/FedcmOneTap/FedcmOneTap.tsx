@@ -1,3 +1,4 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { TypeLoginTypeEnum } from 'graphql/types';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -29,6 +30,38 @@ type FedcmIdentityRequestOptions = {
         }>;
     };
     mediation?: CredentialMediationRequirement;
+};
+
+// Cooldown after a user dismisses the FedCM prompt — keeps the experience non-intrusive across page navigations.
+// Matches the rough cadence Google's gsi/client uses internally for One Tap exponential backoff.
+const DISMISS_COOLDOWN_KEY_PREFIX = 'fedcm:dismissed:';
+const DISMISS_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+
+const getDismissCooldownKey = (domainId: number): string => `${DISMISS_COOLDOWN_KEY_PREFIX}${domainId}`;
+
+const isInDismissCooldown = (domainId: number): boolean => {
+    try {
+        const stored = window.localStorage.getItem(getDismissCooldownKey(domainId));
+
+        if (stored === null) {
+            return false;
+        }
+
+        const dismissedAt = Number.parseInt(stored, 10);
+
+        return Number.isFinite(dismissedAt) && Date.now() < dismissedAt + DISMISS_COOLDOWN_MS;
+    } catch {
+        // localStorage may be disabled (private mode, quota, security policy) — fall through and let FedCM run.
+        return false;
+    }
+};
+
+const markFedcmDismissed = (domainId: number): void => {
+    try {
+        window.localStorage.setItem(getDismissCooldownKey(domainId), Date.now().toString());
+    } catch {
+        // localStorage may be disabled or full — accept the slightly worse UX rather than blocking sign-in.
+    }
 };
 
 const generateNonce = (): string => {
@@ -148,8 +181,10 @@ export const FedcmOneTap: FC = () => {
             });
         } catch (error) {
             if (isDismissError(error)) {
-                // The user dismissed the FedCM prompt or the browser aborted the request — this is part of the
-                // normal flow, not a fault we should surface or log.
+                // The user dismissed the FedCM prompt or the browser aborted the request — record the dismissal so
+                // we don't pester them on every subsequent page navigation.
+                markFedcmDismissed(domainId);
+
                 return;
             }
 
