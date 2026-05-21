@@ -310,10 +310,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Update Storefront dependencies for security audit by @chlebektomas in https://github.com/shopsys/shopsys/pull/4611
 - add referer URL validation for social login to prevent open redirect by @liborplucnarshopsys in https://github.com/shopsys/shopsys/pull/4320
 
-### :placard: Other Changes
-
-- few simple tweaks and fixes by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/4364
-
 ## New Contributors
 
 - @rodrigoprimo made their first contribution in https://github.com/shopsys/shopsys/pull/4516
