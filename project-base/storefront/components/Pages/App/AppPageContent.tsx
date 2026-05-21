@@ -14,6 +14,11 @@ import { DeferredToastContainer } from './DeferredToastContainer';
 import { Fonts, ralewayFont } from './Fonts';
 import { PageHeadScripts } from './PageHeadScripts';
 
+const FedcmOneTap = dynamic(
+    () => import('components/Blocks/Login/FedcmOneTap/FedcmOneTap').then((component) => component.FedcmOneTap),
+    { ssr: false },
+);
+
 const Error503Content = dynamic(
     () => import('components/Pages/ErrorPage/Error503Content').then((component) => component.Error503Content),
     {
@@ -59,6 +64,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <DeferredSecondaryLoaders />
             <DeferredTertiaryLoaders />
             <DeferredToastContainer />
+            <FedcmOneTap />
             <Component {...pageProps} />
             <DeferredSymfonyDebugToolbar />
             <DeferredUserConsent url={pageProps.domainConfig.url} />
