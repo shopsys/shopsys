@@ -14,5 +14,9 @@ const ProductDetailAddToCart = dynamic(
 export const DeferredProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const shouldRender = useDeferredRender('add_to_cart');
 
-    return shouldRender ? <ProductDetailAddToCart product={product} /> : <SkeletonModuleProductDetailAddToCart />;
+    return (
+        <div className="w-full sm:max-w-60">
+            {shouldRender ? <ProductDetailAddToCart product={product} /> : <SkeletonModuleProductDetailAddToCart />}
+        </div>
+    );
 };

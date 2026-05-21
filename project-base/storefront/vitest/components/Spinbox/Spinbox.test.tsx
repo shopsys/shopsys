@@ -103,6 +103,30 @@ describe('Spinbox Component', () => {
             expect(input).toHaveValue(1);
         });
 
+        test('calls minimum value decrease callback instead of decreasing below minimum', async () => {
+            const user = userEvent.setup();
+            const onMinValueDecrease = vi.fn();
+            const { container } = render(
+                <Spinbox
+                    {...defaultProps}
+                    defaultValue={1}
+                    minValueDecreaseIcon={<span data-testid="remove-icon" />}
+                    minValueDecreaseTitle="Remove from cart"
+                    onMinValueDecrease={onMinValueDecrease}
+                />,
+            );
+
+            const input = container.querySelector('input[type="number"]') as HTMLInputElement;
+            const decreaseButton = container.querySelector('button[title="Remove from cart"]') as HTMLButtonElement;
+
+            expect(container.querySelector('[data-testid="remove-icon"]')).toBeInTheDocument();
+
+            await user.click(decreaseButton);
+
+            expect(onMinValueDecrease).toHaveBeenCalledTimes(1);
+            expect(input).toHaveValue(1);
+        });
+
         test('does not increase above maximum value', async () => {
             const user = userEvent.setup();
             const { container } = render(<Spinbox {...defaultProps} defaultValue={MAX_CART_ITEM_QUANTITY} />);
@@ -113,6 +137,20 @@ describe('Spinbox Component', () => {
             await user.click(increaseButton);
 
             expect(input).toHaveValue(MAX_CART_ITEM_QUANTITY);
+        });
+
+        test('uses max value reached title when increase button is disabled', async () => {
+            const user = userEvent.setup();
+            const { container } = render(
+                <Spinbox {...defaultProps} defaultValue={5} max={5} maxValueReachedTitle="Maximum is 5 pcs." />,
+            );
+
+            const input = container.querySelector('input[type="number"]') as HTMLInputElement;
+            const increaseButton = container.querySelector('button[title="Maximum is 5 pcs."]') as HTMLButtonElement;
+
+            await user.click(increaseButton);
+
+            expect(input).toHaveValue(5);
         });
 
         test('handles continuous button press', async () => {
@@ -127,6 +165,17 @@ describe('Spinbox Component', () => {
             await user.click(increaseButton);
 
             expect(input).toHaveValue(8);
+        });
+
+        test('updates input when default value changes', () => {
+            const { container, rerender } = render(<Spinbox {...defaultProps} defaultValue={2} />);
+
+            const input = container.querySelector('input[type="number"]') as HTMLInputElement;
+            expect(input).toHaveValue(2);
+
+            rerender(<Spinbox {...defaultProps} defaultValue={4} />);
+
+            expect(input).toHaveValue(4);
         });
     });
 
@@ -323,6 +372,7 @@ describe('Spinbox Component', () => {
 
             const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
             expect(decreaseButton.getAttribute('tabIndex')).toBe('-1');
+            expect(decreaseButton).toHaveAttribute('aria-disabled', 'true');
         });
 
         test('increase button disabled at maximum value', () => {
@@ -330,6 +380,7 @@ describe('Spinbox Component', () => {
 
             const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
             expect(increaseButton.getAttribute('tabIndex')).toBe('-1');
+            expect(increaseButton).toHaveAttribute('aria-disabled', 'true');
         });
 
         test('both buttons enabled at middle values', () => {
@@ -340,6 +391,8 @@ describe('Spinbox Component', () => {
 
             expect(decreaseButton.getAttribute('tabIndex')).toBe('0');
             expect(increaseButton.getAttribute('tabIndex')).toBe('0');
+            expect(decreaseButton).toHaveAttribute('aria-disabled', 'false');
+            expect(increaseButton).toHaveAttribute('aria-disabled', 'false');
         });
     });
 
@@ -376,6 +429,28 @@ describe('Spinbox Component', () => {
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
             expect(input.getAttribute('aria-label')).toBe('Quantity');
+        });
+
+        test('uses custom accessibility labels and live announcement', () => {
+            const { container, getByRole } = render(
+                <Spinbox
+                    {...defaultProps}
+                    decreaseAriaLabel="Decrease quantity of Product"
+                    increaseAriaLabel="Increase quantity of Product"
+                    inputAriaLabel="Quantity of Product"
+                    liveAnnouncement="Quantity of Product updated to 5 pcs"
+                />,
+            );
+
+            const input = container.querySelector('input[type="number"]') as HTMLInputElement;
+            const description = container.querySelector('#test-spinbox-quantity-input-description');
+
+            expect(input).toHaveAttribute('aria-label', 'Quantity of Product');
+            expect(input).toHaveAttribute('aria-describedby', 'test-spinbox-quantity-input-description');
+            expect(description).toBeInTheDocument();
+            expect(getByRole('button', { name: 'Decrease quantity of Product' })).toBeInTheDocument();
+            expect(getByRole('button', { name: 'Increase quantity of Product' })).toBeInTheDocument();
+            expect(getByRole('status')).toHaveTextContent('Quantity of Product updated to 5 pcs');
         });
 
         test('buttons have proper titles', () => {

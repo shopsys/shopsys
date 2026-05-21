@@ -9,7 +9,7 @@ import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 export const onGtmRemoveFromCartEventHandler = (
     removedCartItem: TypeCartItemFragment,
     currencyCode: string,
-    listIndex: number,
+    listIndex: number | undefined,
     gtmProductListName: GtmProductListNameType,
     domainUrl: string,
     arePricesHidden: boolean,

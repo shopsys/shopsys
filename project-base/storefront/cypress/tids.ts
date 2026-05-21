@@ -4,6 +4,7 @@ export enum TIDs {
     header_homepage_link = 'header_homepage_link',
     header_cart = 'header_cart',
     header_cart_link = 'header_cart_link',
+    header_cart_list_item_ = 'header_cart_list_item_',
     header_cart_list_item_image = 'header_cart_list_item_image',
     header_stores_link = 'header_stores_link',
     header_comparison_link = 'header_comparison_link',

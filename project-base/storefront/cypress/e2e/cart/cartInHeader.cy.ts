@@ -1,4 +1,4 @@
-import { openHeaderCartByMouseover, removeFirstProductFromHeaderCart } from './cartSupport';
+import { openHeaderCartByMouseover, removeProductFromHeaderCartWithSpinbox } from './cartSupport';
 import { changeBlogArticleDynamicPartsToStaticDemodata } from 'e2e/visits/visitsSupport';
 import { staticData } from 'fixtures/demodata';
 import {
@@ -26,7 +26,7 @@ describe('Cart In Header Tests', () => {
     it('[Cart Header Remove] should remove products from cart using cart in header and then display empty cart message', function () {
         changeBlogArticleDynamicPartsToStaticDemodata();
         openHeaderCartByMouseover();
-        removeFirstProductFromHeaderCart();
+        removeProductFromHeaderCartWithSpinbox(staticData.products.helloKitty.catnum, 2);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first remove', {
             blackout: [
                 { tid: TIDs.banners_slider, zIndex: 5999 },
@@ -40,7 +40,7 @@ describe('Cart In Header Tests', () => {
             ],
             preserveFixed: [TIDs.header_cart],
         });
-        removeFirstProductFromHeaderCart();
+        removeProductFromHeaderCartWithSpinbox(staticData.products.philips32PFL4308.catnum, 1);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after second remove', {
             wait: 2000,
             blackout: [
@@ -61,7 +61,12 @@ describe('Cart In Header Tests', () => {
 
         checkNumberOfApiRequestsTriggeredByActions(
             () => {
-                cy.getByTID([TIDs.pages_cart_removecartitembutton]).first().should('be.visible').focus();
+                cy.getByTID([
+                    [TIDs.header_cart_list_item_, staticData.products.philips32PFL4308.catnum],
+                    TIDs.forms_spinbox_decrease,
+                ])
+                    .should('be.visible')
+                    .focus();
                 cy.realPress('{enter}');
                 cy.realPress('{enter}');
                 cy.realPress('{enter}');
@@ -70,5 +75,25 @@ describe('Cart In Header Tests', () => {
             1,
             'RemoveFromCartMutation',
         );
+    });
+
+    it('[Cart Header Gift] should display gift item without remove controls', function () {
+        cy.addProductToCartForTest(staticData.products.delonghi.uuid);
+        cy.reloadAndWaitForStableAndInteractiveDOM();
+
+        openHeaderCartByMouseover();
+
+        cy.getByTID([[TIDs.header_cart_list_item_, staticData.products.giftTicket100czk.catnum]])
+            .scrollIntoView()
+            .should('be.visible')
+            .and('contain.text', staticData.products.giftTicket100czk.name);
+        cy.getByTID([
+            [TIDs.header_cart_list_item_, staticData.products.giftTicket100czk.catnum],
+            TIDs.pages_cart_removecartitembutton,
+        ]).should('not.exist');
+        cy.getByTID([
+            [TIDs.header_cart_list_item_, staticData.products.giftTicket100czk.catnum],
+            TIDs.forms_spinbox_decrease,
+        ]).should('not.exist');
     });
 });

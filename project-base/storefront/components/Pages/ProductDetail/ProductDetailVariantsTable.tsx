@@ -57,7 +57,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                             />
                         </div>
 
-                        <div className="line-clamp-2 min-h-[2.5rem] text-center font-secondary font-semibold text-sm group-hover:text-link group-hover:underline lg:line-clamp-none lg:min-h-fit lg:w-80 lg:text-left">
+                        <div className="line-clamp-2 min-h-10 text-center font-secondary font-semibold text-sm group-hover:text-link group-hover:underline lg:line-clamp-none lg:min-h-fit lg:w-80 lg:text-left">
                             {variant.fullName}
                         </div>
 
@@ -87,11 +87,10 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                         <div className="flex flex-col items-center justify-end gap-2.5 lg:ml-auto lg:min-w-96 lg:flex-row">
                             <ProductPrice className="lg:flex-col lg:items-end" productPrice={variant.price} />
 
-                            <div className="flex flex-col gap-2">
+                            <div className="flex w-45 flex-col gap-2">
                                 <WatchDogButton listIndex={index} product={variant} />
 
                                 <ProductAction
-                                    isWithSpinbox
                                     buttonSize="large"
                                     gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
                                     gtmProductListName={GtmProductListNameType.product_detail_variants_table}

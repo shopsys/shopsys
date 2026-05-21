@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { IconButton } from 'components/Forms/Button/IconButton';
@@ -9,13 +10,12 @@ import { CartItemPrice } from 'components/Pages/Cart/CartItemPrice';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeCartItemTypeEnum } from 'graphql/types';
-import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { generateProductImageAlt } from 'utils/productAltText';
-import { useDebounce } from 'utils/useDebounce';
 
 type CartListItemProps = {
     item: TypeCartItemFragment;
@@ -34,8 +34,7 @@ export const CartListItem: FC<CartListItemProps> = ({
 }) => {
     const spinboxRef = useRef<HTMLInputElement>(null);
     const lastSubmittedQuantityRef = useRef<number | null>(null);
-    const [spinboxValue, setSpinboxValue] = useState<number>();
-    const debouncedSpinboxValue = useDebounce(spinboxValue, 500);
+    const [quantityChangeAnnouncement, setQuantityChangeAnnouncement] = useState('');
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const productSlug = product.__typename === 'Variant' ? product.mainVariant?.slug : product.slug;
@@ -80,30 +79,44 @@ export const CartListItem: FC<CartListItemProps> = ({
         .filter(Boolean)
         .join(' ');
 
-    const onSubmitCartChange = useEffectEvent((productUuid: string, qty: number, idx: number) => {
-        if (qty === quantity) {
-            lastSubmittedQuantityRef.current = null;
-            return;
-        }
-        if (lastSubmittedQuantityRef.current === qty) {
-            return;
-        }
-        lastSubmittedQuantityRef.current = qty;
-        onAddToCart(productUuid, qty, idx, true);
-    });
+    const onSubmitCartChange = useCallback(
+        async (requestedQuantity: number) => {
+            const submittedQuantity = lastSubmittedQuantityRef.current;
+            const quantityToCompare = submittedQuantity ?? quantity;
+
+            if (requestedQuantity === quantityToCompare) {
+                lastSubmittedQuantityRef.current = null;
+
+                return;
+            }
+
+            lastSubmittedQuantityRef.current = requestedQuantity;
+            const addToCartResult = await onAddToCart(product.uuid, requestedQuantity, listIndex, true);
+
+            if (addToCartResult) {
+                setQuantityChangeAnnouncement(
+                    t('Quantity of {{ productName }} updated to {{ quantity }} {{ unit }}', {
+                        ns: 'accessibility',
+                        productName: product.fullName,
+                        quantity: requestedQuantity,
+                        unit: product.unit.name,
+                    }),
+                );
+            }
+        },
+        [listIndex, onAddToCart, product.fullName, product.unit.name, product.uuid, quantity, t],
+    );
 
     useEffect(() => {
-        if (debouncedSpinboxValue === undefined) {
+        if (lastSubmittedQuantityRef.current !== null && quantity !== lastSubmittedQuantityRef.current) {
             return;
         }
 
-        onSubmitCartChange(product.uuid, debouncedSpinboxValue, listIndex);
-    }, [debouncedSpinboxValue, listIndex, product.uuid]);
-
-    useEffect(() => {
         if (quantity > 0 && spinboxRef.current) {
             spinboxRef.current.valueAsNumber = quantity;
         }
+
+        lastSubmittedQuantityRef.current = null;
     }, [quantity]);
 
     return (
@@ -196,53 +209,40 @@ export const CartListItem: FC<CartListItemProps> = ({
                     </div>
                 </div>
 
-                <div className="flex w-auto vl:flex-row flex-col vl:items-center justify-between gap-2 vl:gap-8 xl:gap-16">
+                <div className="flex vl:flex-row flex-col vl:items-center justify-between gap-2 vl:gap-8 xl:gap-15">
                     {isProduct ? (
                         <Spinbox
                             defaultValue={quantity}
-                            id={uuid}
-                            max={product.isAllowedNegativeStock ? null : product.stockQuantity}
-                            min={1}
-                            ref={spinboxRef}
-                            size="large"
-                            step={1}
-                            ariaDescription={t(
-                                'Type in a quantity for {{ productName }} or use the buttons to change it.',
-                                {
-                                    ns: 'accessibility',
-                                    productName: product.fullName,
-                                },
-                            )}
-                            ariaLabel={t('Quantity for {{ productName }}', {
-                                ns: 'accessibility',
-                                productName: product.fullName,
-                            })}
                             decreaseAriaLabel={t('Decrease quantity of {{ productName }}', {
                                 ns: 'accessibility',
                                 productName: product.fullName,
                             })}
-                            getValueAnnouncement={(currentValue) =>
-                                t(
-                                    'Quantity for {{ productName }} changed to {{ quantity }} {{ unit }}. Item total with VAT: {{ price }}.',
-                                    {
-                                        ns: 'accessibility',
-                                        productName: product.fullName,
-                                        quantity: currentValue,
-                                        unit: product.unit.name,
-                                        price: formatPrice(
-                                            mapPriceForCalculations(product.price.priceWithVat) * currentValue,
-                                        ),
-                                    },
-                                )
-                            }
+                            id={uuid}
                             increaseAriaLabel={t('Increase quantity of {{ productName }}', {
                                 ns: 'accessibility',
                                 productName: product.fullName,
                             })}
-                            onChangeValueCallback={setSpinboxValue}
+                            inputAriaLabel={t('Quantity of {{ productName }}', {
+                                ns: 'accessibility',
+                                productName: product.fullName,
+                            })}
+                            liveAnnouncement={quantityChangeAnnouncement}
+                            max={product.isAllowedNegativeStock ? null : product.stockQuantity}
+                            min={1}
+                            minValueDecreaseAriaLabel={t('Remove from cart product {{ productName }}', {
+                                ns: 'accessibility',
+                                productName: product.fullName,
+                            })}
+                            minValueDecreaseIcon={<TrashCanIcon className="size-5" />}
+                            minValueDecreaseTitle={t('Remove product from cart')}
+                            ref={spinboxRef}
+                            className="vl:w-35"
+                            step={1}
+                            onChangeValueCallback={onSubmitCartChange}
+                            onMinValueDecrease={onRemoveFromCart}
                         />
                     ) : (
-                        <div className="min-w-[100px] text-center">{quantity}</div>
+                        <div className="min-w-35 text-center">{quantity}</div>
                     )}
 
                     {isProduct && isPriceVisible(product.price.priceWithVat) && (
@@ -251,6 +251,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                             <span className="text-sm text-text-less">&nbsp;/&nbsp;{product.unit.name}</span>
                         </div>
                     )}
+
                     {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
                         <div className="vl:w-40 whitespace-nowrap font-secondary">
                             <span className="font-semibold">{formatPrice(product.giftPrice.priceWithVat)}</span>

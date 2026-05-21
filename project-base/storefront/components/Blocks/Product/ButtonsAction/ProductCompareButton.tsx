@@ -49,8 +49,9 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
                       })
             }
             className={twMergeCustom(
-                'flex cursor-pointer items-center gap-2 text-icon-less hover:text-icon-accent',
+                'flex cursor-pointer items-center justify-center gap-2 text-icon-less hover:text-icon-accent',
                 'rounded-sm outline-hidden',
+                !isWithText && 'size-9',
                 className,
             )}
             onClick={toggleProductInComparison}

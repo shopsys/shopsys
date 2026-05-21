@@ -4,7 +4,7 @@ import { FreeTransportRange } from 'components/Blocks/FreeTransport/FreeTranspor
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
@@ -20,8 +20,46 @@ export const CartInHeaderList: FC = () => {
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const { removeFromCart, isRemovingFromCart } = useRemoveFromCart(GtmProductListNameType.cart);
     const contentRef = useRef<HTMLDivElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [hasScrollableItems, setHasScrollableItems] = useState(false);
 
     useFocusTrap(contentRef);
+
+    useEffect(() => {
+        const scrollContainer = scrollContainerRef.current;
+
+        if (!scrollContainer) {
+            setHasScrollableItems(false);
+
+            return undefined;
+        }
+
+        const updateScrollableItems = () => {
+            setHasScrollableItems(scrollContainer.scrollHeight > scrollContainer.clientHeight);
+        };
+
+        updateScrollableItems();
+
+        if (typeof ResizeObserver === 'undefined') {
+            window.addEventListener('resize', updateScrollableItems);
+
+            return () => window.removeEventListener('resize', updateScrollableItems);
+        }
+
+        const resizeObserver = new ResizeObserver(updateScrollableItems);
+        resizeObserver.observe(scrollContainer);
+
+        if (scrollContainer.firstElementChild) {
+            resizeObserver.observe(scrollContainer.firstElementChild);
+        }
+
+        window.addEventListener('resize', updateScrollableItems);
+
+        return () => {
+            resizeObserver.disconnect();
+            window.removeEventListener('resize', updateScrollableItems);
+        };
+    }, [cart?.items.length]);
 
     if (!cart?.items.length) {
         return (
@@ -35,23 +73,27 @@ export const CartInHeaderList: FC = () => {
     return (
         <div ref={contentRef}>
             {isRemovingFromCart && <LoaderWithOverlay className="w-16" overlayClassName="rounded-xl" />}
-            <ul
+            <div
+                ref={scrollContainerRef}
                 className={twJoin(
-                    'relative m-0 flex h-full list-none flex-col overflow-y-auto p-0',
-                    'overflow-auto md:w-[510px] lg:max-h-[50dvh]',
+                    'max-h-[50dvh] w-full overflow-y-auto overflow-x-hidden',
+                    hasScrollableItems && 'pr-2',
                 )}
             >
-                {cart.items.map((cartItem, listIndex) => (
-                    <CartInHeaderListItem
-                        key={cartItem.uuid}
-                        cartItem={cartItem}
-                        isRemovingFromCart={isRemovingFromCart}
-                        onRemoveFromCart={() => removeFromCart(cartItem, listIndex)}
-                    />
-                ))}
-            </ul>
+                <ul className="relative m-0 flex list-none flex-col p-0">
+                    {cart.items.map((cartItem, listIndex) => (
+                        <CartInHeaderListItem
+                            key={cartItem.uuid}
+                            cartItem={cartItem}
+                            isRemovingFromCart={isRemovingFromCart}
+                            listIndex={listIndex}
+                            onRemoveFromCart={() => removeFromCart(cartItem, listIndex)}
+                        />
+                    ))}
+                </ul>
+            </div>
             <div className={twJoin('flex items-center justify-between gap-4 pt-5')}>
-                <div className="vl:max-w-[300px] text-center md:text-left">
+                <div className="vl:max-w-65 text-left">
                     <FreeTransportRange />
                 </div>
 

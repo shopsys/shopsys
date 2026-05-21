@@ -1,16 +1,19 @@
+import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
 import { Button } from 'components/Forms/Button/Button';
-import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum, TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useRef } from 'react';
 import { useAddToCartAriaLabel } from 'utils/accessibility/useAddToCartAriaLabel';
 import { useAddToCartHandler } from 'utils/cart/useAddToCartHandler';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type ProductDetailAddToCartProps = {
@@ -20,14 +23,18 @@ export type ProductDetailAddToCartProps = {
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
-    const { t: tAccessibility } = useTranslation('accessibility');
     const { canCreateOrder } = useAuthorization();
+    const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
+    const cartItem = cart?.items.find(
+        (item) => item.type === TypeCartItemTypeEnum.Product && item.product.uuid === product.uuid,
+    );
 
     const { onAddToCartHandler, isAddingToCart } = useAddToCartHandler({
         spinboxRef,
         productUuid: product.uuid,
         gtmMessageOrigin: GtmMessageOriginType.product_detail_page,
         gtmProductListName: GtmProductListNameType.product_detail,
+        isWithSpinbox: false,
     });
 
     const { ariaLabel, onFocusHandler } = useAddToCartAriaLabel({
@@ -50,18 +57,26 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     }
 
     if (product.isInquiryType) {
-        return (
-            <ProductInquiryButton
-                buttonSize="large"
-                className="w-fit"
-                productName={product.fullName}
-                productUuid={product.uuid}
-            />
-        );
+        return <ProductInquiryButton buttonSize="xlarge" productName={product.fullName} productUuid={product.uuid} />;
     }
 
     if (!canCreateOrder) {
         return null;
+    }
+
+    if (isCartFetchingOrUnavailable) {
+        return <Skeleton className="h-14 w-full" />;
+    }
+
+    if (cartItem) {
+        return (
+            <CartItemQuantityControls
+                cartItem={cartItem}
+                gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                gtmProductListName={GtmProductListNameType.product_detail}
+                size="xlarge"
+            />
+        );
     }
 
     const isWatchdogButtonVisible =
@@ -69,44 +84,27 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         product.isSellingDenied;
 
     return (
-        <div className="flex items-center gap-2">
-            <Spinbox
-                defaultValue={1}
-                id={product.uuid}
-                max={product.isAllowedNegativeStock ? null : product.stockQuantity}
-                min={1}
-                ref={spinboxRef}
+        <div className="relative">
+            {isAddingToCart && (
+                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
+            )}
+
+            <Button
+                aria-haspopup="dialog"
+                aria-label={ariaLabel}
+                className="w-full whitespace-nowrap"
+                disabled={isAddingToCart}
+                hasDisabledLook={isAddingToCart}
                 size="xlarge"
-                step={1}
-                ariaLabel={tAccessibility('Quantity')}
-                decreaseAriaLabel={tAccessibility('Decrease quantity')}
-                getValueAnnouncement={(currentValue) =>
-                    `${tAccessibility('Quantity')}: ${currentValue} ${product.unit.name}`
-                }
-                increaseAriaLabel={tAccessibility('Increase quantity')}
-            />
-
-            <div className="relative">
-                {isAddingToCart && (
-                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
-                )}
-
-                <Button
-                    aria-haspopup="dialog"
-                    aria-label={ariaLabel}
-                    className="whitespace-nowrap"
-                    disabled={isAddingToCart}
-                    hasDisabledLook={isAddingToCart}
-                    size="xlarge"
-                    tid={TIDs.pages_productdetail_addtocart_button}
-                    title={t('Add to cart')}
-                    variant={isWatchdogButtonVisible ? 'inverted' : 'primary'}
-                    onClick={onAddToCartHandler}
-                    onFocus={onFocusHandler}
-                >
-                    {t('Add to cart')}
-                </Button>
-            </div>
+                tid={TIDs.pages_productdetail_addtocart_button}
+                title={t('Add to cart')}
+                variant={isWatchdogButtonVisible ? 'inverted' : 'primary'}
+                onClick={onAddToCartHandler}
+                onFocus={onFocusHandler}
+            >
+                <CartIcon className="size-6" />
+                {t('Add to cart')}
+            </Button>
         </div>
     );
 };

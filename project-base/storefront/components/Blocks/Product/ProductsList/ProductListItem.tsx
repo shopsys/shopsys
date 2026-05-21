@@ -6,6 +6,7 @@ import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/P
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
+import { ProductActionSkeleton } from 'components/Blocks/Skeleton/ProductActionSkeleton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -16,6 +17,7 @@ import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEve
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { ProductListItemImage } from './ProductListItemImage';
@@ -72,14 +74,23 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
     ) => {
         const { url } = useDomainConfig();
         const { t } = useTranslation();
-        const { canSeePrices } = useAuthorization();
+        const { canCreateOrder, canSeePrices } = useAuthorization();
+        const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
+        const isProductActionDependentOnCart =
+            visibleItemsConfig.addToCart &&
+            canCreateOrder &&
+            !product.isSellingDenied &&
+            !product.isCurrentlyOutOfStock &&
+            (product.isMainVariant || !product.isInquiryType) &&
+            !product.isMainVariant;
+        const shouldShowProductActionSkeleton = isProductActionDependentOnCart && isCartFetchingOrUnavailable;
 
         return (
             <li
                 data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 ref={ref}
                 className={twMergeCustom(
-                    'group relative flex select-text flex-col gap-2.5 rounded-xl border border-background-more bg-background-more pb-5 text-left transition',
+                    'group relative flex select-text flex-col rounded-xl border border-background-more bg-background-more pt-10 pb-2.5 text-left transition sm:pb-5',
                     size === 'small' && 'gap-0 pb-0',
                     'hover:border-border-less hover:bg-background-default',
                     highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
@@ -87,7 +98,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
             >
                 {highlightBadgeText && (
-                    <div className="absolute top-5 right-2.5 z-above items-end sm:right-5">
+                    <div className="absolute top-5 left-2.5 z-above sm:left-5">
                         <Flag type="highlight">{highlightBadgeText}</Flag>
                     </div>
                 )}
@@ -110,8 +121,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 >
                     <div
                         className={twMergeCustom(
-                            'flex w-full flex-col gap-2.5 px-2.5 pt-5 sm:px-5',
-                            size === 'small' && 'py-4 pt-4 pb-4',
+                            'flex w-full flex-col gap-2.5 px-2.5 sm:px-5',
+                            size === 'small' && 'py-4 pb-4',
                         )}
                     >
                         <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
@@ -145,42 +156,48 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             <ProductAvailability
                                 availability={product.availability}
                                 availableStoresCount={product.availableStoresCount}
-                                className="min-h-10 xs:min-h-[60px] sm:min-h-10"
+                                className="min-h-10 xs:min-h-15 sm:min-h-10"
                                 isInquiryType={product.isInquiryType}
                             />
                         )}
                     </div>
                 </ExtendedNextLink>
 
-                <div className="flex w-full items-center justify-between gap-1 px-2.5 md:justify-normal md:gap-2.5 md:px-5">
-                    {visibleItemsConfig.addToCart && (
+                {visibleItemsConfig.productListButtons && (
+                    <div className="absolute top-1 right-0 flex justify-end sm:top-3 sm:right-2.5">
+                        <ProductCompareButton
+                            isProductInComparison={isProductInComparison}
+                            productName={product.fullName}
+                            tabIndex={allowKeyboardFocus ? 0 : -1}
+                            toggleProductInComparison={toggleProductInComparison}
+                        />
+                        <ProductWishlistButton
+                            isProductInWishlist={isProductInWishlist}
+                            productName={product.fullName}
+                            tabIndex={allowKeyboardFocus ? 0 : -1}
+                            toggleProductInWishlist={toggleProductInWishlist}
+                        />
+                    </div>
+                )}
+
+                {visibleItemsConfig.addToCart && shouldShowProductActionSkeleton ? (
+                    <ProductActionSkeleton
+                        className="w-full px-2.5 pt-2.5 md:px-5"
+                        isWithAddToCart
+                        isWithProductListButtons={false}
+                    />
+                ) : visibleItemsConfig.addToCart ? (
+                    <div className="w-full px-2.5 pt-2.5 md:px-5">
                         <ProductAction
-                            showResponsiveCartIcon
                             gtmMessageOrigin={gtmMessageOrigin}
                             gtmProductListName={gtmProductListName}
                             listIndex={listIndex}
                             product={product}
+                            currentCart={{ cart, isCartFetchingOrUnavailable }}
                             skipKeyboardNavigation={!allowKeyboardFocus}
                         />
-                    )}
-
-                    {visibleItemsConfig.productListButtons && (
-                        <>
-                            <ProductCompareButton
-                                isProductInComparison={isProductInComparison}
-                                productName={product.fullName}
-                                tabIndex={allowKeyboardFocus ? 0 : -1}
-                                toggleProductInComparison={toggleProductInComparison}
-                            />
-                            <ProductWishlistButton
-                                isProductInWishlist={isProductInWishlist}
-                                productName={product.fullName}
-                                tabIndex={allowKeyboardFocus ? 0 : -1}
-                                toggleProductInWishlist={toggleProductInWishlist}
-                            />
-                        </>
-                    )}
-                </div>
+                    </div>
+                ) : null}
             </li>
         );
     },

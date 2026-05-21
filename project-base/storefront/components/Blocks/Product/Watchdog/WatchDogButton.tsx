@@ -17,10 +17,10 @@ const WatchdogPopup = dynamic(
 type WatchDogButtonProps = {
     product: WatchDogProductType;
     listIndex?: number;
-    buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
+    size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
-export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, className, buttonSize = 'large' }) => {
+export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, size = 'xlarge', className }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
@@ -49,13 +49,13 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, cl
                 productName: product.fullName,
             })}
             className={twJoin('whitespace-nowrap', className)}
-            size={buttonSize}
             title={t('Watchdog popup')}
+            size={size}
             variant="primary"
             onClick={openWatchDogPopup}
         >
             <WatchdogIcon className="size-6" />
-            {buttonSize === 'large' && t('Watch the goods')}
+            {t('Watch the goods')}
         </Button>
     );
 };
