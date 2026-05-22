@@ -88,6 +88,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'promotion',
             'is_promoted',
             'top_product_position',
+            'zbozi_category',
         ];
     }
 

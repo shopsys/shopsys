@@ -7,6 +7,7 @@ namespace App\Model\Product\Search;
 use App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Override;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter as BaseProductElasticsearchConverter;
+use Shopsys\ProductFeed\ZboziBundle\Model\Product\Elasticsearch\ZboziProductExportDataProvider;
 
 class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
 {
@@ -25,6 +26,7 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
 
         $result[ProductExportFieldProvider::MAIN_CATEGORY_PATH] = $product[ProductExportFieldProvider::MAIN_CATEGORY_PATH] ?? '';
         $result[ProductExportFieldProvider::BREADCRUMB] = $product[ProductExportFieldProvider::BREADCRUMB] ?? [];
+        $result[ZboziProductExportDataProvider::ZBOZI_CATEGORY] = $product[ZboziProductExportDataProvider::ZBOZI_CATEGORY] ?? null;
 
         return $result;
     }

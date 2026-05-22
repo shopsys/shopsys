@@ -30,6 +30,8 @@ class ProductTest extends GraphQlTestCase
         'hreflangLinks',
         'images',
         'mainImage',
+        // zbozi category is not filled on English domain
+        'zboziCategory',
     ];
 
     private Product $product;
