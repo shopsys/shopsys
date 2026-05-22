@@ -326,7 +326,7 @@
         </exec>
     </target>
 
-    <target name="tests-unit-single" depends="set-test-name,production-protection,clean" description="Runs custom unit test.">
+    <target name="tests-unit-single" depends="set-test-name,production-protection,clean" description="Runs specified unit test.">
         <if>
             <not><equals arg1="${test.name}" arg2="all"/></not>
             <then>
@@ -335,6 +335,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/article-feed-luigis-box/phpunit.xml"/>
                     <arg value="${path.packages}/article-feed-luigis-box/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -343,6 +344,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/brand-feed-luigis-box/phpunit.xml"/>
                     <arg value="${path.packages}/brand-feed-luigis-box/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -351,6 +353,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/category-feed-luigis-box/phpunit.xml"/>
                     <arg value="${path.packages}/category-feed-luigis-box/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -359,6 +362,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/product-feed-google/phpunit.xml"/>
                     <arg value="${path.packages}/product-feed-google/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -367,6 +371,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/product-feed-mergado/phpunit.xml"/>
                     <arg value="${path.packages}/product-feed-mergado/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -375,6 +380,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/product-feed-heureka/phpunit.xml"/>
                     <arg value="${path.packages}/product-feed-heureka/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -383,6 +389,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/product-feed-heureka-delivery/phpunit.xml"/>
                     <arg value="${path.packages}/product-feed-heureka-delivery/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -391,6 +398,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/product-feed-zbozi/phpunit.xml"/>
                     <arg value="${path.packages}/product-feed-zbozi/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -399,6 +407,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/product-feed-luigis-box/phpunit.xml"/>
                     <arg value="${path.packages}/product-feed-luigis-box/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -407,6 +416,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/http-smoke-testing/phpunit.xml"/>
                     <arg value="${path.packages}/http-smoke-testing/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -415,6 +425,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/migrations/phpunit.xml"/>
                     <arg value="${path.packages}/migrations/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -423,6 +434,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/mcp/phpunit.xml"/>
                     <arg value="${path.packages}/mcp/tests"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -431,6 +443,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/framework/phpunit.xml"/>
                     <arg value="${path.packages}/framework/tests/"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -439,6 +452,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/coding-standards/phpunit.xml"/>
                     <arg value="${path.packages}/coding-standards/tests/"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -447,6 +461,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/frontend-api/phpunit.xml"/>
                     <arg value="${path.packages}/frontend-api/tests/"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -455,6 +470,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.utils}/releaser/phpunit.xml"/>
                     <arg value="${path.utils}/releaser/tests/"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -463,6 +479,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/luigis-box/phpunit.xml"/>
                     <arg value="${path.packages}/luigis-box/tests/"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
@@ -471,6 +488,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/administration/phpunit.xml"/>
                     <arg value="${path.packages}/administration/tests/"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
