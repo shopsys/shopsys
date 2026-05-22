@@ -274,6 +274,12 @@
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--configuration"/>
+            <arg value="${path.packages}/mcp/phpunit.xml"/>
+            <arg value="${path.packages}/mcp/tests"/>
+        </exec>
+        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="--colors=always"/>
+            <arg value="--configuration"/>
             <arg value="${path.packages}/framework/phpunit.xml"/>
             <arg value="${path.packages}/framework/tests/"/>
         </exec>
@@ -409,6 +415,14 @@
                     <arg value="--configuration"/>
                     <arg value="${path.packages}/migrations/phpunit.xml"/>
                     <arg value="${path.packages}/migrations/tests"/>
+                    <arg value="--filter"/>
+                    <arg value="${test.name}"/>
+                </exec>
+                <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="--colors=always"/>
+                    <arg value="--configuration"/>
+                    <arg value="${path.packages}/mcp/phpunit.xml"/>
+                    <arg value="${path.packages}/mcp/tests"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>
                 </exec>
