@@ -16,6 +16,7 @@ NC="\e[0m"
 #   /packages/framework/src/Resources/config/packages_registry.yaml
 #   project-base/app/config/bundles.php
 #   "replace", "autoload", and "autoload-dev" sections in monorepo's composer.json
+#   if the package has unit tests, add the configuration into the "tests-unit" and "tests-unit-single" targets in monorepo's build.xml
 get_all_packages() {
     echo "administration \
         biome-config \
