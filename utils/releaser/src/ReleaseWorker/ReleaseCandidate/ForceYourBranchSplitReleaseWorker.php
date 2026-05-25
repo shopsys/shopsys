@@ -41,7 +41,12 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
     ): void {
         $githubToken = $this->resolveGithubToken();
 
-        $this->processRunner->run(sprintf('git push --set-upstream origin %s', $this->currentBranchName));
+        putenv('GITHUB_TOKEN=' . $githubToken);
+
+        $this->processRunner->run(sprintf(
+            'git -c url.https://x-access-token:$GITHUB_TOKEN@github.com/.insteadOf=https://github.com/ push --set-upstream origin %s',
+            escapeshellarg($this->currentBranchName),
+        ));
 
         $this->dispatchWorkflow($githubToken);
 
