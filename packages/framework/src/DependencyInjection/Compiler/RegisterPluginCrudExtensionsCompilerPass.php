@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInterface
+final class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void
@@ -29,7 +29,7 @@ class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInterface
         }
     }
 
-    protected function registerPluginCrudExtension(
+    private function registerPluginCrudExtension(
         Definition $pluginCrudExtensionRegistryDefinition,
         string $serviceId,
         string $type,

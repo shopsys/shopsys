@@ -10,11 +10,11 @@ use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class AddConstraintValidatorsPass implements CompilerPassInterface
+final class AddConstraintValidatorsPass implements CompilerPassInterface
 {
     public function __construct(
-        protected readonly string $validatorFactoryServiceId = 'validator.validator_factory',
-        protected readonly string $constraintValidatorTag = 'validator.constraint_validator',
+        private readonly string $validatorFactoryServiceId = 'validator.validator_factory',
+        private readonly string $constraintValidatorTag = 'validator.constraint_validator',
     ) {
     }
 

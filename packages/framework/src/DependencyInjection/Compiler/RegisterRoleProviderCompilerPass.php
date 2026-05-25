@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Security\Role\RoleProviderInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class RegisterRoleProviderCompilerPass implements CompilerPassInterface
+final class RegisterRoleProviderCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void

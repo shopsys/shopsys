@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassInterface
+final class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void
@@ -59,12 +59,12 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         }
     }
 
-    protected function isShopsysClassWithAlias(ContainerBuilder $container, string $serviceId, ?string $aliasId): bool
+    private function isShopsysClassWithAlias(ContainerBuilder $container, string $serviceId, ?string $aliasId): bool
     {
         return $this->isShopsysClass($serviceId) && ($container->hasAlias($serviceId) && $this->isProjectClass($aliasId));
     }
 
-    protected function isShopsysClassWithAliasRegisteredAsService(
+    private function isShopsysClassWithAliasRegisteredAsService(
         ContainerBuilder $container,
         string $serviceId,
         ?string $aliasId,
@@ -82,12 +82,12 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         }
     }
 
-    protected function isShopsysClass(string $serviceId): bool
+    private function isShopsysClass(string $serviceId): bool
     {
         return str_starts_with($serviceId, 'Shopsys\\') !== false;
     }
 
-    protected function isProjectClass(?string $serviceId): bool
+    private function isProjectClass(?string $serviceId): bool
     {
         if ($serviceId === null) {
             return false;
@@ -96,7 +96,7 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         return str_starts_with($serviceId, 'App') !== false;
     }
 
-    protected function addAllVariantsOfServiceToClassExtension(
+    private function addAllVariantsOfServiceToClassExtension(
         ReflectionClass $shopsysClassBetterReflection,
         Definition $classExtensionRegistryDefinition,
         string $aliasId,
@@ -116,7 +116,7 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
         }
     }
 
-    protected function getCorrectServiceIdIfServiceIsNotExtendedByAlias(
+    private function getCorrectServiceIdIfServiceIsNotExtendedByAlias(
         ContainerBuilder $container,
         string $serviceId,
         ?string $aliasId,

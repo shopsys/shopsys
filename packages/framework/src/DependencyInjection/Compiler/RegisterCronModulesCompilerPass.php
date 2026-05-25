@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class RegisterCronModulesCompilerPass implements CompilerPassInterface
+final class RegisterCronModulesCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void
@@ -48,7 +48,7 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
      * @param array<string, array{run_every_min?: int|null, timeout_iterated_cron_sec?: int|null, stop_on_failure?: bool}> $cronInstances
      * @return array{run_every_min: int, timeout_iterated_cron_sec: int}
      */
-    protected function getInstanceConfig(array $cronInstances, string $instanceName): array
+    private function getInstanceConfig(array $cronInstances, string $instanceName): array
     {
         if (array_key_exists($instanceName, $cronInstances)) {
             $runEveryMin = $cronInstances[$instanceName]['run_every_min'] ?? CronModuleConfig::RUN_EVERY_MIN_DEFAULT;

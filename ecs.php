@@ -7,6 +7,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff as PhpCsValidVariableNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
+use Shopsys\CodingStandards\CsFixer\FinalCompilerPassFixer;
 use Shopsys\CodingStandards\CsFixer\FinalFormTypeFixer;
 use Shopsys\CodingStandards\CsFixer\FinalMigrationFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
@@ -74,6 +75,7 @@ return ECSConfig::configure()
     ])
     ->withRules([
         ForceLateStaticBindingForProtectedConstantsSniff::class,
+        FinalCompilerPassFixer::class,
         FinalFormTypeFixer::class,
         FinalMigrationFixer::class,
         ForbiddenPrivateVisibilityFixer::class,

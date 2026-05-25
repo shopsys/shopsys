@@ -13,7 +13,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Search\Exception\SearchResultsProvi
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class RegisterSearchResultsProvidersCompilerPass implements CompilerPassInterface
+final class RegisterSearchResultsProvidersCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void
@@ -49,7 +49,7 @@ class RegisterSearchResultsProvidersCompilerPass implements CompilerPassInterfac
     /**
      * @return array<string, string>
      */
-    protected function getSearchResultsProviderResolversIndexedByTag(): array
+    private function getSearchResultsProviderResolversIndexedByTag(): array
     {
         return [
             'shopsys.frontend_api.products_search_results_provider' => ProductSearchResultsProviderResolver::class,

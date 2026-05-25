@@ -13,7 +13,7 @@ use Shopsys\AdministrationBundle\Controller\AbstractCrudController;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class InitializeControllersCompilerPass implements CompilerPassInterface
+final class InitializeControllersCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
@@ -43,7 +43,7 @@ class InitializeControllersCompilerPass implements CompilerPassInterface
      *
      * @return array{class: string, entityClass: string}|null
      */
-    protected function processService(ContainerBuilder $container, string $serviceId): ?array
+    private function processService(ContainerBuilder $container, string $serviceId): ?array
     {
         $definition = $container->getDefinition($serviceId);
         $class = $definition->getClass();
@@ -72,7 +72,7 @@ class InitializeControllersCompilerPass implements CompilerPassInterface
     /**
      * Retrieves the CrudController attribute from a reflection class.
      */
-    protected function getCrudControllerAttribute(ReflectionClass $reflectionClass): ?CrudController
+    private function getCrudControllerAttribute(ReflectionClass $reflectionClass): ?CrudController
     {
         $attributes = $reflectionClass->getAttributes(CrudController::class);
 

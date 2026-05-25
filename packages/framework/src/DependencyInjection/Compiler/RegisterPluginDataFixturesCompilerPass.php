@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
+final class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void
@@ -26,7 +26,7 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
         }
     }
 
-    protected function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, string $serviceId): void
+    private function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, string $serviceId): void
     {
         $pluginDataFixtureRegistryDefinition->addMethodCall('registerDataFixture', [new Reference($serviceId)]);
     }
