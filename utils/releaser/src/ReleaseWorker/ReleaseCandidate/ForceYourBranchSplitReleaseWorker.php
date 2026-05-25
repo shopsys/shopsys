@@ -41,6 +41,8 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
     ): void {
         $githubToken = $this->resolveGithubToken();
 
+        $this->processRunner->run(sprintf('git push --set-upstream origin %s', $this->currentBranchName));
+
         $this->dispatchWorkflow($githubToken);
 
         $this->waitFor(new GithubActionsWorkflowSucceeded(
@@ -87,7 +89,10 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
                 'Accept' => 'application/vnd.github+json',
                 'Content-Type' => 'application/json',
             ],
-            Json::encode(['ref' => $this->currentBranchName]),
+            Json::encode([
+                'ref' => $this->currentBranchName,
+                'inputs' => ['branch_name' => $this->currentBranchName],
+            ]),
         );
 
         $this->httpClient->send($request);
