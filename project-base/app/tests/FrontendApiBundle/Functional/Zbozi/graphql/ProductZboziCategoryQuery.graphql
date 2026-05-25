@@ -1,0 +1,5 @@
+query ProductZboziCategoryQuery($productUuid: Uuid!) {
+    product(uuid: $productUuid) {
+        zboziCategory
+    }
+}
