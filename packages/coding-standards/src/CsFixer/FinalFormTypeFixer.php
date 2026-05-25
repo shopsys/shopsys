@@ -18,12 +18,8 @@ class FinalFormTypeFixer extends AbstractFinalClassByParentFixer
     protected function getMatchingParentClasses(): array
     {
         return [
-            'AbstractType',
-            'AbstractTypeExtension',
             'Symfony\Component\Form\AbstractType',
             'Symfony\Component\Form\AbstractTypeExtension',
-            '\Symfony\Component\Form\AbstractType',
-            '\Symfony\Component\Form\AbstractTypeExtension',
         ];
     }
 

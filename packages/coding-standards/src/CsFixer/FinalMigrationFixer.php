@@ -18,11 +18,8 @@ class FinalMigrationFixer extends AbstractFinalClassByParentFixer
     protected function getMatchingParentClasses(): array
     {
         return [
-            'AbstractMigration',
             'Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration',
-            '\Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration',
             'Doctrine\Migrations\AbstractMigration',
-            '\Doctrine\Migrations\AbstractMigration',
         ];
     }
 

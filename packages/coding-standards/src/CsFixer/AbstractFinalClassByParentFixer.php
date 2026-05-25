@@ -10,8 +10,9 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceAnalysis;
+use PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis;
+use PhpCsFixer\Tokenizer\Analyzer\FullyQualifiedNameAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
-use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use SplFileInfo;
@@ -21,7 +22,7 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
     abstract protected function getDescription(): string;
 
     /**
-     * @return string[]
+     * @return array<class-string>
      */
     abstract protected function getMatchingParentClasses(): array;
 
@@ -68,8 +69,7 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
 
     protected function fixNamespace(Tokens $tokens, NamespaceAnalysis $namespace): void
     {
-        $usesAnalyzer = new NamespaceUsesAnalyzer();
-        $uses = $usesAnalyzer->getDeclarationsInNamespace($tokens, $namespace);
+        $fullyQualifiedNameAnalyzer = new FullyQualifiedNameAnalyzer($tokens);
 
         for ($index = $namespace->getScopeEndIndex(); $index >= $namespace->getScopeStartIndex(); --$index) {
             $token = $tokens[$index];
@@ -88,7 +88,7 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
                 continue;
             }
 
-            if (!$this->hasMatchingParent($tokens, $index, $classOpenIndex, $uses)) {
+            if (!$this->hasMatchingParent($tokens, $fullyQualifiedNameAnalyzer, $index, $classOpenIndex)) {
                 continue;
             }
 
@@ -111,11 +111,12 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
         return $prevIndex !== null && $tokens[$prevIndex]->isGivenKind($modifiers);
     }
 
-    /**
-     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis[] $uses
-     */
-    protected function hasMatchingParent(Tokens $tokens, int $classIndex, int $classOpenIndex, array $uses): bool
-    {
+    protected function hasMatchingParent(
+        Tokens $tokens,
+        FullyQualifiedNameAnalyzer $fullyQualifiedNameAnalyzer,
+        int $classIndex,
+        int $classOpenIndex,
+    ): bool {
         foreach ([T_EXTENDS, T_IMPLEMENTS] as $parentTokenKind) {
             $parentTokenIndex = $tokens->getNextTokenOfKind($classIndex, [[$parentTokenKind]]);
 
@@ -123,45 +124,37 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
                 continue;
             }
 
-            foreach ($this->getParentNames($tokens, $parentTokenIndex, $classOpenIndex) as $parentName) {
-                $resolvedParentName = $this->resolveClassNameWithUses($parentName, $uses);
+            $parentIndex = $tokens->getNextMeaningfulToken($parentTokenIndex);
 
-                if (in_array($resolvedParentName, $this->getMatchingParentClasses(), true)) {
+            while ($parentIndex !== null && $parentIndex < $classOpenIndex) {
+                if (!$this->isClassNameToken($tokens[$parentIndex])) {
+                    break;
+                }
+
+                $parentName = $this->getClassNameFromTokens($tokens, $parentIndex);
+                $fullyQualifiedParentName = $fullyQualifiedNameAnalyzer->getFullyQualifiedName(
+                    $parentName,
+                    $parentIndex,
+                    NamespaceUseAnalysis::TYPE_CLASS,
+                );
+
+                if (in_array($fullyQualifiedParentName, $this->getMatchingParentClasses(), true)) {
                     return true;
                 }
+
+                while ($parentIndex !== null && $parentIndex < $classOpenIndex && !$tokens[$parentIndex]->equals(',')) {
+                    $parentIndex = $tokens->getNextMeaningfulToken($parentIndex);
+                }
+
+                if ($parentIndex === null || $parentIndex >= $classOpenIndex) {
+                    break;
+                }
+
+                $parentIndex = $tokens->getNextMeaningfulToken($parentIndex);
             }
         }
 
         return false;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getParentNames(Tokens $tokens, int $parentTokenIndex, int $classOpenIndex): array
-    {
-        $parentNames = [];
-        $index = $tokens->getNextMeaningfulToken($parentTokenIndex);
-
-        while ($index !== null && $index < $classOpenIndex) {
-            if (!$this->isClassNameToken($tokens[$index])) {
-                break;
-            }
-
-            $parentNames[] = $this->getClassNameFromTokens($tokens, $index);
-
-            while ($index !== null && $index < $classOpenIndex && !$tokens[$index]->equals(',')) {
-                $index = $tokens->getNextMeaningfulToken($index);
-            }
-
-            if ($index === null || $index >= $classOpenIndex) {
-                break;
-            }
-
-            $index = $tokens->getNextMeaningfulToken($index);
-        }
-
-        return $parentNames;
     }
 
     protected function getClassNameFromTokens(Tokens $tokens, int $startIndex): string
@@ -186,27 +179,5 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
             T_NAME_QUALIFIED,
             T_NAME_RELATIVE,
         ]);
-    }
-
-    /**
-     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis[] $uses
-     */
-    protected function resolveClassNameWithUses(string $className, array $uses): string
-    {
-        if (str_starts_with($className, '\\')) {
-            return $className;
-        }
-
-        foreach ($uses as $use) {
-            if ($className === $use->getShortName()) {
-                return $use->getFullName();
-            }
-
-            if (str_starts_with($className, $use->getShortName() . '\\')) {
-                return $use->getFullName() . substr($className, strlen($use->getShortName()));
-            }
-        }
-
-        return $className;
     }
 }

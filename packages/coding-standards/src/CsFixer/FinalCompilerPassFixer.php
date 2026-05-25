@@ -18,9 +18,7 @@ class FinalCompilerPassFixer extends AbstractFinalClassByParentFixer
     protected function getMatchingParentClasses(): array
     {
         return [
-            'CompilerPassInterface',
             'Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface',
-            '\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface',
         ];
     }
 
