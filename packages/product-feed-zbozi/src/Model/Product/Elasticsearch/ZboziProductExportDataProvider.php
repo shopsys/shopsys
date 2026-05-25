@@ -9,6 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeRule;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryRepository;
 
@@ -40,10 +41,10 @@ class ZboziProductExportDataProvider implements ProductExportDataProviderInterfa
      * {@inheritdoc}
      */
     #[Override]
-    public function getExportFieldsByScope(): array
+    public function getExportScopeRules(): array
     {
         return [
-            ProductExportScopeConfig::SCOPE_CATEGORIES => [self::ZBOZI_CATEGORY],
+            ProductExportScopeConfig::SCOPE_CATEGORIES => new ProductExportScopeRule([self::ZBOZI_CATEGORY]),
         ];
     }
 

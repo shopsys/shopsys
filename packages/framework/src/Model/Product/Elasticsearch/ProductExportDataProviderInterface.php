@@ -14,9 +14,9 @@ interface ProductExportDataProviderInterface
     public function getExportFields(): array;
 
     /**
-     * @return array<string, string[]>
+     * @return array<string, \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeRule>
      */
-    public function getExportFieldsByScope(): array;
+    public function getExportScopeRules(): array;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products

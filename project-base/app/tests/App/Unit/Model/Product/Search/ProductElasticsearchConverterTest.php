@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\App\Unit\Model\Product\Search;
 
-use App\Model\Product\Search\ProductElasticsearchConverter;
+use App\Model\Product\Elasticsearch\ProductExportDataProvider;
+use InvalidArgumentException;
 use Nette\Utils\Json;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
+use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter;
+use Shopsys\ProductFeed\ZboziBundle\Model\Product\Elasticsearch\ZboziProductExportDataProvider;
 use Symfony\Component\Finder\Finder;
 
 class ProductElasticsearchConverterTest extends TestCase
@@ -15,7 +21,7 @@ class ProductElasticsearchConverterTest extends TestCase
     #[DataProvider('getProductMappingFiles')]
     public function testAllFieldsAreMentionedInConverter(string $mappingFile): void
     {
-        $productElasticsearchConverter = new ProductElasticsearchConverter();
+        $productElasticsearchConverter = new ProductElasticsearchConverter([$this->createProductExportDataProvider()]);
 
         $product = [
             'parameters' => [[]],
@@ -68,5 +74,75 @@ class ProductElasticsearchConverterTest extends TestCase
         foreach ($finder as $file) {
             yield $file->getFilename() => [$file->getRealPath()];
         }
+    }
+
+    private function createProductExportDataProvider(): ProductExportDataProviderInterface
+    {
+        return new class() implements ProductExportDataProviderInterface {
+            /**
+             * {@inheritdoc}
+             */
+            #[Override]
+            public function getExportFields(): array
+            {
+                return [
+                    ProductExportDataProvider::MAIN_CATEGORY_PATH,
+                    ProductExportDataProvider::USPS,
+                    ProductExportDataProvider::SEARCHING_NAMES,
+                    ProductExportDataProvider::SEARCHING_DESCRIPTIONS,
+                    ProductExportDataProvider::SEARCHING_CATNUMS,
+                    ProductExportDataProvider::SEARCHING_EANS,
+                    ProductExportDataProvider::SEARCHING_PARTNOS,
+                    ProductExportDataProvider::SEARCHING_SHORT_DESCRIPTIONS,
+                    ProductExportDataProvider::BREADCRUMB,
+                    ZboziProductExportDataProvider::ZBOZI_CATEGORY,
+                ];
+            }
+
+            /**
+             * {@inheritdoc}
+             */
+            #[Override]
+            public function getExportScopeRules(): array
+            {
+                return [];
+            }
+
+            /**
+             * {@inheritdoc}
+             */
+            #[Override]
+            public function loadProductExportData(array $products, int $domainId, string $locale): void
+            {
+            }
+
+            #[Override]
+            public function getExportedFieldValue(
+                Product $product,
+                int $domainId,
+                string $locale,
+                string $field,
+            ): mixed {
+                return null;
+            }
+
+            #[Override]
+            public function getDefaultValue(string $field): mixed
+            {
+                return match ($field) {
+                    ProductExportDataProvider::MAIN_CATEGORY_PATH,
+                    ProductExportDataProvider::SEARCHING_NAMES,
+                    ProductExportDataProvider::SEARCHING_DESCRIPTIONS,
+                    ProductExportDataProvider::SEARCHING_CATNUMS,
+                    ProductExportDataProvider::SEARCHING_EANS,
+                    ProductExportDataProvider::SEARCHING_PARTNOS,
+                    ProductExportDataProvider::SEARCHING_SHORT_DESCRIPTIONS => '',
+                    ProductExportDataProvider::USPS,
+                    ProductExportDataProvider::BREADCRUMB => [],
+                    ZboziProductExportDataProvider::ZBOZI_CATEGORY => null,
+                    default => throw new InvalidArgumentException(sprintf('There is no default value for "%s" Elasticsearch field', $field)),
+                };
+            }
+        };
     }
 }

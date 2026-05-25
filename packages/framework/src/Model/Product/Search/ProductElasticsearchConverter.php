@@ -7,24 +7,16 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
-use Symfony\Contracts\Service\Attribute\Required;
 
 class ProductElasticsearchConverter
 {
     /**
-     * @var iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface>
-     */
-    protected iterable $productExportDataProviders = [];
-
-    /**
      * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
      */
-    #[Required]
-    public function setProductExportDataProviders(
+    public function __construct(
         #[AutowireIterator('shopsys.product_export_data_provider')]
-        iterable $productExportDataProviders,
-    ): void {
-        $this->productExportDataProviders = $productExportDataProviders;
+        protected readonly iterable $productExportDataProviders = [],
+    ) {
     }
 
     public function fillEmptyFields(array $product): array
@@ -48,6 +40,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::SPECIAL_PRICES] = $product[ProductExportFieldProvider::SPECIAL_PRICES] ?? [];
         $result[ProductExportFieldProvider::VISIBILITY] = $product[ProductExportFieldProvider::VISIBILITY] ?? [];
         $result[ProductExportFieldProvider::ACCESSORIES] = $product[ProductExportFieldProvider::ACCESSORIES] ?? [];
+        $result[ProductExportFieldProvider::RELATED_PRODUCTS] = $product[ProductExportFieldProvider::RELATED_PRODUCTS] ?? [];
 
         $result[ProductExportFieldProvider::ORDERING_PRIORITY] = $product[ProductExportFieldProvider::ORDERING_PRIORITY] ?? 0;
 

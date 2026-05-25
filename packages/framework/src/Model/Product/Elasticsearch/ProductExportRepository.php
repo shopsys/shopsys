@@ -36,7 +36,6 @@ use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
-use Symfony\Contracts\Service\Attribute\Required;
 
 class ProductExportRepository
 {
@@ -44,6 +43,9 @@ class ProductExportRepository
     protected const string TOP_PRODUCTS_CACHE_NAMESPACE = 'top_products';
     protected const string VALUE_SEPARATOR = ' ';
 
+    /**
+     * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
+     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterRepository $parameterRepository,
@@ -65,23 +67,9 @@ class ProductExportRepository
         protected readonly ParameterValueFileResolver $parameterValueFileResolver,
         protected readonly Domain $domain,
         protected readonly TopProductRepository $topProductRepository,
-    ) {
-    }
-
-    /**
-     * @var iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface>
-     */
-    protected iterable $productExportDataProviders = [];
-
-    /**
-     * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
-     */
-    #[Required]
-    public function setProductExportDataProviders(
         #[AutowireIterator('shopsys.product_export_data_provider')]
-        iterable $productExportDataProviders,
-    ): void {
-        $this->productExportDataProviders = $productExportDataProviders;
+        protected readonly iterable $productExportDataProviders = [],
+    ) {
     }
 
     /**
@@ -273,13 +261,22 @@ class ProductExportRepository
      */
     protected function extractFlags(int $domainId, Product $product): array
     {
-        $flagIds = [];
+        $flagIds = $product->getFlagsIdsForDomain($domainId);
+        $variants = [];
 
-        foreach ($product->getFlags($domainId) as $flag) {
-            $flagIds[] = $flag->getId();
+        if ($product->isMainVariant() === true) {
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
         }
 
-        return $flagIds;
+        foreach ($variants as $variant) {
+            $flagIds = array_merge($flagIds, $variant->getFlagsIdsForDomain($domainId));
+        }
+
+        $uniqueFlagsIds = array_unique($flagIds);
+        $resultArray = array_combine($uniqueFlagsIds, $uniqueFlagsIds);
+        ksort($resultArray);
+
+        return array_values($resultArray);
     }
 
     /**
