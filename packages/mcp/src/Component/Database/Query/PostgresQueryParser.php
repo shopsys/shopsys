@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Component\Database\Query;
 
-use JsonException;
 use Shopsys\McpBundle\Component\Database\Query\Exception\SqlQueryParsingException;
 use Throwable;
 
@@ -20,7 +19,7 @@ class PostgresQueryParser
 
         try {
             $parsedAst = json_decode(pg_query_parse($singleStatementSql), true, 512, JSON_THROW_ON_ERROR);
-        } catch (JsonException $throwable) {
+        } catch (Throwable $throwable) {
             throw new SqlQueryParsingException('The SQL query could not be parsed.', 0, $throwable);
         }
 
