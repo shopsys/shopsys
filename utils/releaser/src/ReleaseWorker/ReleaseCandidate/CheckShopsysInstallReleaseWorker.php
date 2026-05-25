@@ -30,18 +30,8 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
     }
 
     #[Override]
-    protected function writeInstructionsForProjectBasePreparation(Version $version): void
+    protected function getCheckoutTarget(Version $version): string
     {
-        $branchName = $this->createBranchName($version);
-
-        $this->symfonyStyle->note(sprintf(
-            'Instructions for project base preparation:
-
-git clone https://github.com/shopsys/project-base.git
-cd project-base
-git checkout %1$s
-',
-            $branchName,
-        ));
+        return $this->createBranchName($version);
     }
 }

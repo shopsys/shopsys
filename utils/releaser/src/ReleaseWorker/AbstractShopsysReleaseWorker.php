@@ -64,6 +64,14 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     protected string $currentBranchName;
 
+    protected int $currentStep = 0;
+
+    #[Override]
+    public function setCurrentStep(int $currentStep): void
+    {
+        $this->currentStep = $currentStep;
+    }
+
     /**
      * @throws \Shopsys\Releaser\Exception\ShouldNotHappenException
      */
