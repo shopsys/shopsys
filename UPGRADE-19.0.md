@@ -1129,6 +1129,14 @@ The notes below cover Shopsys-specific changes:
 
 - see [project-base diff](https://www.github.com/shopsys/project-base/commit/30156c591ba2dd6109efb7b9651144f2478f6594) to update your project
 
+#### anchor `.idea` mutagen ignore to the project root ([#4633](https://github.com/shopsys/shopsys/pull/4633))
+
+- update `docker/conf/mutagen.yml.dist` and `project-base/docker/conf/mutagen.yml.dist` to anchor the `.idea` ignore pattern to the project root (replace `".idea"` with `"/.idea"`) — see #project-base-diff to update your project
+
+#### disable Luigi's Box in the test environment ([#4633](https://github.com/shopsys/shopsys/pull/4633))
+
+- add `LUIGIS_BOX_ENABLED_DOMAIN_IDS=''` and `LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS='{}'` to `project-base/app/.env.test` so that search tests use the local provider instead of routing to the remote Luigi's Box service — see #project-base-diff to update your project
+
 <!-- backendNotes -->
 
 ### Storefront
