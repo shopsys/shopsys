@@ -34,7 +34,7 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
     #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_EXTENDS);
+        return $tokens->isTokenKindFound(T_EXTENDS) || $tokens->isTokenKindFound(T_IMPLEMENTS);
     }
 
     #[Override]
@@ -82,22 +82,13 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
                 continue;
             }
 
-            $extendsIndex = $tokens->getNextTokenOfKind($index, [[T_EXTENDS]]);
+            $classOpenIndex = $tokens->getNextTokenOfKind($index, ['{']);
 
-            if ($extendsIndex === null) {
+            if ($classOpenIndex === null) {
                 continue;
             }
 
-            $parentClassIndex = $tokens->getNextMeaningfulToken($extendsIndex);
-
-            if ($parentClassIndex === null) {
-                continue;
-            }
-
-            $parentName = $this->getClassNameFromTokens($tokens, $parentClassIndex);
-            $resolvedParentName = $this->resolveClassNameWithUses($parentName, $uses);
-
-            if (!in_array($resolvedParentName, $this->getMatchingParentClasses(), true)) {
+            if (!$this->hasMatchingParent($tokens, $index, $classOpenIndex, $uses)) {
                 continue;
             }
 
@@ -120,17 +111,81 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
         return $prevIndex !== null && $tokens[$prevIndex]->isGivenKind($modifiers);
     }
 
+    /**
+     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis[] $uses
+     */
+    protected function hasMatchingParent(Tokens $tokens, int $classIndex, int $classOpenIndex, array $uses): bool
+    {
+        foreach ([T_EXTENDS, T_IMPLEMENTS] as $parentTokenKind) {
+            $parentTokenIndex = $tokens->getNextTokenOfKind($classIndex, [[$parentTokenKind]]);
+
+            if ($parentTokenIndex === null || $parentTokenIndex > $classOpenIndex) {
+                continue;
+            }
+
+            foreach ($this->getParentNames($tokens, $parentTokenIndex, $classOpenIndex) as $parentName) {
+                $resolvedParentName = $this->resolveClassNameWithUses($parentName, $uses);
+
+                if (in_array($resolvedParentName, $this->getMatchingParentClasses(), true)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getParentNames(Tokens $tokens, int $parentTokenIndex, int $classOpenIndex): array
+    {
+        $parentNames = [];
+        $index = $tokens->getNextMeaningfulToken($parentTokenIndex);
+
+        while ($index !== null && $index < $classOpenIndex) {
+            if (!$this->isClassNameToken($tokens[$index])) {
+                break;
+            }
+
+            $parentNames[] = $this->getClassNameFromTokens($tokens, $index);
+
+            while ($index !== null && $index < $classOpenIndex && !$tokens[$index]->equals(',')) {
+                $index = $tokens->getNextMeaningfulToken($index);
+            }
+
+            if ($index === null || $index >= $classOpenIndex) {
+                break;
+            }
+
+            $index = $tokens->getNextMeaningfulToken($index);
+        }
+
+        return $parentNames;
+    }
+
     protected function getClassNameFromTokens(Tokens $tokens, int $startIndex): string
     {
         $className = '';
         $index = $startIndex;
 
-        while ($index !== null && $tokens[$index]->isGivenKind([T_STRING, T_NS_SEPARATOR])) {
+        while ($index !== null && $this->isClassNameToken($tokens[$index])) {
             $className .= $tokens[$index]->getContent();
             $index = $tokens->getNextMeaningfulToken($index);
         }
 
         return $className;
+    }
+
+    protected function isClassNameToken(Token $token): bool
+    {
+        return $token->isGivenKind([
+            T_STRING,
+            T_NS_SEPARATOR,
+            T_NAME_FULLY_QUALIFIED,
+            T_NAME_QUALIFIED,
+            T_NAME_RELATIVE,
+        ]);
     }
 
     /**
@@ -145,6 +200,10 @@ abstract class AbstractFinalClassByParentFixer implements FixerInterface
         foreach ($uses as $use) {
             if ($className === $use->getShortName()) {
                 return $use->getFullName();
+            }
+
+            if (str_starts_with($className, $use->getShortName() . '\\')) {
+                return $use->getFullName() . substr($className, strlen($use->getShortName()));
             }
         }
 
