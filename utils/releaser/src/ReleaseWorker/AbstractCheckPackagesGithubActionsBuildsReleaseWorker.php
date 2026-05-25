@@ -35,11 +35,12 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
         $githubToken = $this->resolveGithubToken();
+        $branchName = $this->getBranchName();
 
         try {
             $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
                 'shopsys',
-                $initialBranchName,
+                $branchName,
                 $githubToken,
             );
         } catch (Throwable $throwable) {
@@ -90,7 +91,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         $this->waitFor(new GithubActionsRunSucceeded(
             $this->githubActionsStatusReporter,
             'shopsys',
-            $initialBranchName,
+            $branchName,
             $githubToken,
         ));
 
