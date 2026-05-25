@@ -51,8 +51,7 @@
         "sass-loader": "^16.0.5",
         "stylelint": "^17.11.0",
         "stylelint-webpack-plugin": "^5.1.0",
-        "webpack-livereload-plugin": "^3.0.1",
-        "webpack-notifier": "^1.13.0"
+        "webpack-livereload-plugin": "^3.0.1"
     },
     "dependencies": {
         "@shopsys/administration": "file:vendor/shopsys/administration/assets",

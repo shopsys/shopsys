@@ -28,7 +28,6 @@ Encore
         test: /\.svg/,
         type: 'asset/source'
     })
-    .enableBuildNotifications()
     .configureWatchOptions(function (watchOptions) {
         watchOptions.ignored = '**/*.json';
     })
