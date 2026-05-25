@@ -202,12 +202,6 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Order/Preview/OrderPreviewCalculation.php',
                 __DIR__ . '/packages/*/tests/*',
             ],
-            FinalFormTypeFixer::class => [
-                __DIR__ . '/project-base',
-            ],
-            FinalMigrationFixer::class => [
-                __DIR__ . '/project-base',
-            ],
             // releaser and cli are internal utilities, not extension points
             ForbiddenPrivateVisibilityFixer::class => [
                 __DIR__ . '/utils/releaser',
