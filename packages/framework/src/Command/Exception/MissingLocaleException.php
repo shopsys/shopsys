@@ -9,7 +9,7 @@ use Throwable;
 
 class MissingLocaleException extends Exception
 {
-    private string $locale;
+    protected string $locale;
 
     public function __construct(mixed $missingLocale, ?Throwable $previous = null)
     {

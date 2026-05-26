@@ -35,6 +35,12 @@ final class ForbiddenPrivateVisibilityFixerTest extends AbstractFixerTestCase
 
         yield [__DIR__ . '/correct/correct-final.php'];
 
+        yield [__DIR__ . '/correct/correct-final-readonly.php'];
+
+        yield [__DIR__ . '/correct/correct-readonly-final.php'];
+
+        yield [__DIR__ . '/correct/abstract-class.php'];
+
         yield [__DIR__ . '/correct/ignored-namespace.php'];
     }
 }

@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20250711031748 extends AbstractMigration
+final class Version20250711031748 extends AbstractMigration
 {
     #[Override]
     public function up(Schema $schema): void

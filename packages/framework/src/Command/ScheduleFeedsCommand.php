@@ -19,8 +19,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class ScheduleFeedsCommand extends Command
 {
-    private const OPTION_FEED_NAME = 'feed-name';
-    private const OPTION_ALL = 'all';
+    protected const OPTION_FEED_NAME = 'feed-name';
+    protected const OPTION_ALL = 'all';
 
     public function __construct(
         protected readonly FeedFacade $feedFacade,
@@ -35,8 +35,8 @@ class ScheduleFeedsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addOption(self::OPTION_FEED_NAME, null, InputOption::VALUE_OPTIONAL, 'name of feed to be scheduled')
-            ->addOption(self::OPTION_ALL, null, InputOption::VALUE_NONE, 'schedule all feeds');
+            ->addOption(static::OPTION_FEED_NAME, null, InputOption::VALUE_OPTIONAL, 'name of feed to be scheduled')
+            ->addOption(static::OPTION_ALL, null, InputOption::VALUE_NONE, 'schedule all feeds');
     }
 
     /**
@@ -45,8 +45,8 @@ class ScheduleFeedsCommand extends Command
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $optionAll = $input->getOption(self::OPTION_ALL);
-        $optionFeedName = $input->getOption(self::OPTION_FEED_NAME);
+        $optionAll = $input->getOption(static::OPTION_ALL);
+        $optionFeedName = $input->getOption(static::OPTION_FEED_NAME);
 
         $symfonyStyle = new SymfonyStyle($input, $output);
 

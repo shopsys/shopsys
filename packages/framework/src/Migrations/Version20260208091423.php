@@ -9,14 +9,14 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20260208091423 extends AbstractMigration implements CdnAwareInterface
+final class Version20260208091423 extends AbstractMigration implements CdnAwareInterface
 {
-    protected const string CSP_FRAME_ANCESTORS_DIRECTIVE = "frame-ancestors 'self'";
-    protected const string CSP_DEFAULT_SRC_VALUE = "'self' https: 'unsafe-inline' data:";
-    protected const string CSP_SCRIPT_SRC_VALUE =
+    private const string CSP_FRAME_ANCESTORS_DIRECTIVE = "frame-ancestors 'self'";
+    private const string CSP_DEFAULT_SRC_VALUE = "'self' https: 'unsafe-inline' data:";
+    private const string CSP_SCRIPT_SRC_VALUE =
         "'self' 'unsafe-inline' https://www.googletagmanager.com *.usersnap.com https://widget.packeta.com https://cdnjs.cloudflare.com https://*.gopay.com https://*.gopay.cz https://maps.googleapis.com";
 
-    protected ?CdnFacade $cdnFacade = null;
+    private ?CdnFacade $cdnFacade = null;
 
     #[Override]
     public function setCdnFacade(CdnFacade $cdnFacade): void
@@ -35,7 +35,7 @@ class Version20260208091423 extends AbstractMigration implements CdnAwareInterfa
         ]);
     }
 
-    protected function getDefaultCspHeaderValue(): string
+    private function getDefaultCspHeaderValue(): string
     {
         $cdnDomain = $this->cdnFacade?->getCdnDomain();
         $defaultSrcValue = self::CSP_DEFAULT_SRC_VALUE;

@@ -6,7 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Action\RouteData;
 
 use Closure;
 
-class RouteActionRouteData implements ActionRouteInterface
+final class RouteActionRouteData implements ActionRouteInterface
 {
     /**
      * @param array|\Closure(mixed): array $routeParameters

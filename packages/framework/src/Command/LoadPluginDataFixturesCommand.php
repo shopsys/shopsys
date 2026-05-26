@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class LoadPluginDataFixturesCommand extends Command
 {
-    public function __construct(private readonly PluginDataFixtureFacade $pluginDataFixtureFacade)
+    public function __construct(protected readonly PluginDataFixtureFacade $pluginDataFixtureFacade)
     {
         parent::__construct();
     }

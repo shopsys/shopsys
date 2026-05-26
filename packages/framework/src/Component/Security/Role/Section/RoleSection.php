@@ -7,10 +7,10 @@ namespace Shopsys\FrameworkBundle\Component\Security\Role\Section;
 final readonly class RoleSection
 {
     public function __construct(
-        protected string $identifier,
-        protected string $translatableName,
-        protected int $priority = 0,
-        protected ?string $icon = null,
+        private string $identifier,
+        private string $translatableName,
+        private int $priority = 0,
+        private ?string $icon = null,
     ) {
     }
 

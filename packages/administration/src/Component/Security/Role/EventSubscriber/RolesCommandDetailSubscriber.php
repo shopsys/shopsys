@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class RolesCommandDetailSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly AccessControlDataProviderInterface $routeAccessControlDataProvider,
+        protected readonly AccessControlDataProviderInterface $routeAccessControlDataProvider,
     ) {
     }
 
@@ -67,7 +67,7 @@ class RolesCommandDetailSubscriber implements EventSubscriberInterface
     /**
      * @return array<array{name: string, controller: string, permissions: string}>
      */
-    private function getRoutesUsingRole(string $roleConstant): array
+    protected function getRoutesUsingRole(string $roleConstant): array
     {
         $allRoutes = $this->routeAccessControlDataProvider->getAll();
         $routePermissions = [];

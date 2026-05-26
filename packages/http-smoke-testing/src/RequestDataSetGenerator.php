@@ -10,14 +10,14 @@ use Shopsys\HttpSmokeTesting\Attribute\Skipped;
 
 class RequestDataSetGenerator implements RouteConfig
 {
-    private RequestDataSet $defaultRequestDataSet;
+    protected RequestDataSet $defaultRequestDataSet;
 
     /**
      * @var \Shopsys\HttpSmokeTesting\RequestDataSet[]
      */
-    private array $extraRequestDataSets;
+    protected array $extraRequestDataSets;
 
-    public function __construct(private readonly RouteInfo $routeInfo)
+    public function __construct(protected readonly RouteInfo $routeInfo)
     {
         $this->defaultRequestDataSet = new RequestDataSet($this->routeInfo->getRouteName());
         $this->extraRequestDataSets = [];
@@ -34,7 +34,7 @@ class RequestDataSetGenerator implements RouteConfig
         }
     }
 
-    private function getRequestDataSetForIteration(int $index): RequestDataSet
+    protected function getRequestDataSetForIteration(int $index): RequestDataSet
     {
         if ($index === 0) {
             return $this->defaultRequestDataSet;
@@ -43,7 +43,7 @@ class RequestDataSetGenerator implements RouteConfig
         return $this->addExtraRequestDataSet();
     }
 
-    private function fulfillRequestDataSetFromAnnotation(RequestDataSet $requestDataSet, DataSet $annotation): void
+    protected function fulfillRequestDataSetFromAnnotation(RequestDataSet $requestDataSet, DataSet $annotation): void
     {
         if ($annotation->statusCode) {
             $requestDataSet->setExpectedStatusCode($annotation->statusCode);

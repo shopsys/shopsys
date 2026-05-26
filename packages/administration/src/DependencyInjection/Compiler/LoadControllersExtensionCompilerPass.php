@@ -13,7 +13,7 @@ use Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class LoadControllersExtensionCompilerPass implements CompilerPassInterface
+final class LoadControllersExtensionCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void

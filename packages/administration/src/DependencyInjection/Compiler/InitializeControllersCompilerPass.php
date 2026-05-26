@@ -13,7 +13,7 @@ use Shopsys\AdministrationBundle\Controller\AbstractCrudController;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class InitializeControllersCompilerPass implements CompilerPassInterface
+final class InitializeControllersCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}

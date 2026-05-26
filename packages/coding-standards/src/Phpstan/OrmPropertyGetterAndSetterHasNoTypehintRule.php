@@ -13,7 +13,7 @@ use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
-class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
+final class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
 {
     private const CHECKED_NAMESPACE = 'Shopsys\\';
 

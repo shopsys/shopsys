@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20240730113802 extends AbstractMigration
+final class Version20240730113802 extends AbstractMigration
 {
     #[Override]
     public function up(Schema $schema): void

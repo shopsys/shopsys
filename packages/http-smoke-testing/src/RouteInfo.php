@@ -6,7 +6,7 @@ namespace Shopsys\HttpSmokeTesting;
 
 use Symfony\Component\Routing\Route;
 
-class RouteInfo
+final class RouteInfo
 {
     public function __construct(
         private string $routeName,

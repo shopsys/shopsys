@@ -10,7 +10,7 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFact
 use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
+final class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
 {
     public function __construct(
         private readonly TranslatorInterface $translator,

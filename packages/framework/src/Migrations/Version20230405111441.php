@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20230405111441 extends AbstractMigration implements DomainAwareInterface
+final class Version20230405111441 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

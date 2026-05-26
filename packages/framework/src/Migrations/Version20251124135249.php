@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20251124135249 extends AbstractMigration implements DomainAwareInterface
+final class Version20251124135249 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

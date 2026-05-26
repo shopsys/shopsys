@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class GenerateFriendlyUrlCommand extends Command
 {
-    public function __construct(private readonly FriendlyUrlGeneratorFacade $friendlyUrlGeneratorFacade)
+    public function __construct(protected readonly FriendlyUrlGeneratorFacade $friendlyUrlGeneratorFacade)
     {
         parent::__construct();
     }

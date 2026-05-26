@@ -7,7 +7,9 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff as PhpCsValidVariableNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
+use Shopsys\CodingStandards\CsFixer\FinalCompilerPassFixer;
 use Shopsys\CodingStandards\CsFixer\FinalFormTypeFixer;
+use Shopsys\CodingStandards\CsFixer\FinalMigrationFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenDumpSniff;
@@ -73,36 +75,11 @@ return ECSConfig::configure()
     ])
     ->withRules([
         ForceLateStaticBindingForProtectedConstantsSniff::class,
+        FinalCompilerPassFixer::class,
         FinalFormTypeFixer::class,
+        FinalMigrationFixer::class,
+        ForbiddenPrivateVisibilityFixer::class,
     ])
-    ->withConfiguredRule(ForbiddenPrivateVisibilityFixer::class,
-        [
-            'analyzed_namespaces' => [
-                'Shopsys\ArticleFeed\LuigisBoxBundle\Model',
-                'Shopsys\BrandFeed\LuigisBoxBundle\Model',
-                'Shopsys\CategoryFeed\LuigisBoxBundle\Model',
-                'Shopsys\FrameworkBundle\Component',
-                'Shopsys\FrameworkBundle\Controller',
-                'Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch',
-                'Shopsys\FrameworkBundle\Form\Constraints',
-                'Shopsys\FrameworkBundle\Form\Transformer',
-                'Shopsys\FrameworkBundle\Model',
-                'Shopsys\FrameworkBundle\Twig',
-                'Shopsys\FrontendApiBundle',
-                'Shopsys\LuigisBoxBundle',
-                'Shopsys\MakerBundle',
-                'Shopsys\MigrationBundle\Command',
-                'Shopsys\MigrationBundle\Component',
-                'Shopsys\ProductFeed\GoogleBundle\Model',
-                'Shopsys\ProductFeed\MergadoBundle\Model',
-                'Shopsys\ProductFeed\HeurekaBundle\Model',
-                'Shopsys\ProductFeed\HeurekaDeliveryBundle\Model',
-                'Shopsys\ProductFeed\LuigisBoxBundle\Model',
-                'Shopsys\ProductFeed\ZboziBundle\Model',
-                'Shopsys\S3Bridge',
-            ],
-        ],
-    )
     ->withConfiguredRule(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
     ])
@@ -227,9 +204,10 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Order/Preview/OrderPreviewCalculation.php',
                 __DIR__ . '/packages/*/tests/*',
             ],
-            FinalFormTypeFixer::class => [
-                __DIR__ . '/project-base',
-                __DIR__ . '/packages/framework/src/Form/Locale/LocalizedType.php',
+            // releaser and cli are internal utilities, not extension points
+            ForbiddenPrivateVisibilityFixer::class => [
+                __DIR__ . '/utils/releaser',
+                __DIR__ . '/packages/cli',
             ],
             FullyQualifiedClassNameInAnnotationSniff::class => [
                 __DIR__ . '/packages/mcp/src/Component/Database/Schema/ExposedSchemaProvider.php',

@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class RegisterImageEntitiesCompilerPass implements CompilerPassInterface
+final class RegisterImageEntitiesCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void
@@ -37,7 +37,7 @@ class RegisterImageEntitiesCompilerPass implements CompilerPassInterface
      * @param string[] $allClasses
      * @return string[]
      */
-    protected function findClassesWithAttribute(array $allClasses): array
+    private function findClassesWithAttribute(array $allClasses): array
     {
         $classesWithAttribute = [];
 

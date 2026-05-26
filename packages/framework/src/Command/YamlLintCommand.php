@@ -30,11 +30,11 @@ use function in_array;
 )]
 class YamlLintCommand extends Command
 {
-    private ?Parser $parser = null;
+    protected ?Parser $parser = null;
 
-    private string $format;
+    protected string $format;
 
-    private bool $displayCorrectFiles;
+    protected bool $displayCorrectFiles;
 
     #[Override]
     protected function configure(): void

@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20260319120000 extends AbstractMigration
+final class Version20260319120000 extends AbstractMigration
 {
     #[Override]
     public function up(Schema $schema): void

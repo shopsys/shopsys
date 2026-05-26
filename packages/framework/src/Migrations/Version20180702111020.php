@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20180702111020 extends AbstractMigration implements DomainAwareInterface
+final class Version20180702111020 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

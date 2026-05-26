@@ -21,9 +21,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class CreateDatabaseCommand extends Command
 {
-    private ?Connection $connection = null;
+    protected ?Connection $connection = null;
 
-    private ManagerRegistry $doctrineRegistry;
+    protected ManagerRegistry $doctrineRegistry;
 
     public function __construct(
         ManagerRegistry $managerRegistry,
@@ -49,7 +49,7 @@ class CreateDatabaseCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo): void
+    protected function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo): void
     {
         $defaultConnection = $this->getDefaultConnection();
 
@@ -77,7 +77,7 @@ class CreateDatabaseCommand extends Command
         }
     }
 
-    private function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo): void
+    protected function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo): void
     {
         // Extensions are created in schema "pg_catalog" in order to be able to DROP
         // schema "public" without dropping the extension.
@@ -93,7 +93,7 @@ class CreateDatabaseCommand extends Command
         $symfonyStyleIo->success('Extension pg_trgm is created');
     }
 
-    private function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo): void
+    protected function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo): void
     {
         if (!$this->isConnectedAsSuperuser()) {
             $symfonyStyleIo->note('Current database user does not have a superuser permission');
@@ -117,7 +117,7 @@ class CreateDatabaseCommand extends Command
         }
     }
 
-    private function isConnectedAsSuperuser(): bool
+    protected function isConnectedAsSuperuser(): bool
     {
         $stmt = $this->createDatabaselessConnection()
             ->executeQuery('SELECT rolsuper FROM pg_roles WHERE rolname = current_user');
@@ -125,7 +125,7 @@ class CreateDatabaseCommand extends Command
         return $stmt->fetchOne();
     }
 
-    private function getDefaultConnection(): Connection
+    protected function getDefaultConnection(): Connection
     {
         $defaultConnectionName = $this->doctrineRegistry->getDefaultConnectionName();
 
@@ -135,7 +135,7 @@ class CreateDatabaseCommand extends Command
         return $connection;
     }
 
-    private function getConnection(): Connection
+    protected function getConnection(): Connection
     {
         if ($this->connection === null) {
             $this->connection = $this->getDefaultConnection();
@@ -144,7 +144,7 @@ class CreateDatabaseCommand extends Command
         return $this->connection;
     }
 
-    private function createDatabaselessConnection(): Connection
+    protected function createDatabaselessConnection(): Connection
     {
         $connection = $this->getConnection();
 

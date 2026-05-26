@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ImportDefaultDatabaseSchemaCommand extends Command
 {
-    public function __construct(private readonly DatabaseSchemaFacade $databaseSchemaFacade)
+    public function __construct(protected readonly DatabaseSchemaFacade $databaseSchemaFacade)
     {
         parent::__construct();
     }

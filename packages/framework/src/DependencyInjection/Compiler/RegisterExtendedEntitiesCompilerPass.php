@@ -10,7 +10,7 @@ use Override;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
+final class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void

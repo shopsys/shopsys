@@ -11,7 +11,7 @@ use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ZboziProductCrudExtension implements PluginCrudExtensionInterface
+final class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 {
     public function __construct(
         private readonly TranslatorInterface $translator,

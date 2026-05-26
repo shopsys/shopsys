@@ -26,7 +26,7 @@ final readonly class RequirePermission
     public function __construct(
         public string $role,
         public Permission $permission,
-        protected array $methods = [],
+        private array $methods = [],
     ) {
     }
 

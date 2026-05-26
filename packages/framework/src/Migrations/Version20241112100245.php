@@ -12,11 +12,11 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20241112100245 extends AbstractMigration implements DomainAwareInterface, EntityManagerAwareInterface
+final class Version20241112100245 extends AbstractMigration implements DomainAwareInterface, EntityManagerAwareInterface
 {
     use MultidomainMigrationTrait;
 
-    protected ?EntityManagerInterface $entityManager = null;
+    private ?EntityManagerInterface $entityManager = null;
 
     #[Override]
     public function setEntityManager(EntityManagerInterface $entityManager): void

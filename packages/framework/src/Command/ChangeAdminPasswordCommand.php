@@ -22,11 +22,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class ChangeAdminPasswordCommand extends Command
 {
-    private const ARG_USERNAME = 'username';
+    protected const ARG_USERNAME = 'username';
 
     public function __construct(
-        private readonly AdministratorFacade $administratorFacade,
-        private readonly AdministratorPasswordFacade $administratorPasswordFacade,
+        protected readonly AdministratorFacade $administratorFacade,
+        protected readonly AdministratorPasswordFacade $administratorPasswordFacade,
     ) {
         parent::__construct();
     }
@@ -38,7 +38,7 @@ class ChangeAdminPasswordCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument(self::ARG_USERNAME, InputArgument::REQUIRED, 'Existing administrator username');
+            ->addArgument(static::ARG_USERNAME, InputArgument::REQUIRED, 'Existing administrator username');
     }
 
     /**
@@ -49,7 +49,7 @@ class ChangeAdminPasswordCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $adminUsername = $input->getArgument(self::ARG_USERNAME);
+        $adminUsername = $input->getArgument(static::ARG_USERNAME);
         $password = $this->askRepeatedlyForNewPassword($input, $io);
 
         $administrator = $this->administratorFacade->getByUserName($adminUsername);
@@ -60,7 +60,7 @@ class ChangeAdminPasswordCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io): string
+    protected function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io): string
     {
         $question = new Question('Enter new password');
         $question->setHidden(true);

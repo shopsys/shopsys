@@ -7,7 +7,7 @@ namespace Shopsys\HttpSmokeTesting\Auth;
 use Override;
 use Symfony\Component\HttpFoundation\Request;
 
-class BasicHttpAuth implements AuthInterface
+final class BasicHttpAuth implements AuthInterface
 {
     public function __construct(private string $username, private ?string $password = null)
     {

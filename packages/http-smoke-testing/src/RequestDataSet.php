@@ -9,7 +9,7 @@ use Shopsys\HttpSmokeTesting\Auth\AuthInterface;
 use Shopsys\HttpSmokeTesting\Auth\NoAuth;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class RequestDataSet implements RequestDataSetConfig
+final class RequestDataSet implements RequestDataSetConfig
 {
     private const DEFAULT_EXPECTED_STATUS_CODE = 200;
 

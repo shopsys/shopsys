@@ -20,9 +20,9 @@ use Twig\TwigFunction;
 class ActionExtension extends AbstractExtension
 {
     public function __construct(
-        private readonly AdministrationRouter $router,
-        private readonly RouteAccessCheckerInterface $routeAccessChecker,
-        private readonly RouteCsrfProtector $csrfProtector,
+        protected readonly AdministrationRouter $router,
+        protected readonly RouteAccessCheckerInterface $routeAccessChecker,
+        protected readonly RouteCsrfProtector $csrfProtector,
     ) {
     }
 
@@ -44,7 +44,7 @@ class ActionExtension extends AbstractExtension
         ];
     }
 
-    private function generateActionUrl(?ActionRouteInterface $actionRoute, mixed $data): string
+    protected function generateActionUrl(?ActionRouteInterface $actionRoute, mixed $data): string
     {
         if ($actionRoute === null) {
             return 'javascript:void(0)';
@@ -71,7 +71,7 @@ class ActionExtension extends AbstractExtension
         throw new InvalidArgumentException('Action has invalid route type');
     }
 
-    private function checkActionAccess(?ActionRouteInterface $actionRoute): bool
+    protected function checkActionAccess(?ActionRouteInterface $actionRoute): bool
     {
         if ($actionRoute === null) {
             return true;

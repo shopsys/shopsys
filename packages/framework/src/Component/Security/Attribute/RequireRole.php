@@ -29,7 +29,7 @@ final readonly class RequireRole
      */
     public function __construct(
         string|array $roles,
-        protected array $methods = [],
+        private array $methods = [],
     ) {
         $this->roles = is_string($roles) ? [$roles] : $roles;
     }

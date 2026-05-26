@@ -17,7 +17,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class SymfonyRouterAdapter implements RouterAdapterInterface
 {
-    public function __construct(private readonly RouterInterface $router)
+    public function __construct(protected readonly RouterInterface $router)
     {
     }
 
@@ -36,7 +36,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return $allRouteInfo;
     }
 
-    private function extractAttributesForRoute(Route $route): array
+    protected function extractAttributesForRoute(Route $route): array
     {
         if ($route->hasDefault('_controller')) {
             return $this->extractAttributesForController($route->getDefault('_controller'));
@@ -45,7 +45,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return [];
     }
 
-    private function extractAttributesForController(string $controller): array
+    protected function extractAttributesForController(string $controller): array
     {
         try {
             $reflectionMethod = ReflectionMethod::createFromMethodName($controller);
@@ -59,7 +59,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     /**
      * @return array<\Shopsys\HttpSmokeTesting\Attribute\DataSet|\Shopsys\HttpSmokeTesting\Attribute\Skipped>
      */
-    private function getControllerMethodAttributes(ReflectionMethod $reflectionMethod): array
+    protected function getControllerMethodAttributes(ReflectionMethod $reflectionMethod): array
     {
         $attributes = [];
 

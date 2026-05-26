@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Migrations\DomainAwareInterface;
 use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20240702065648 extends AbstractMigration implements DomainAwareInterface
+final class Version20240702065648 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

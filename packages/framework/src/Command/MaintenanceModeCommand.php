@@ -22,7 +22,7 @@ class MaintenanceModeCommand extends Command
     /**
      * @var string
      */
-    private const string ACTION_ARGUMENT = 'action';
+    protected const string ACTION_ARGUMENT = 'action';
 
     public function __construct(
         protected readonly MaintenanceModeFacade $maintenanceModeFacade,

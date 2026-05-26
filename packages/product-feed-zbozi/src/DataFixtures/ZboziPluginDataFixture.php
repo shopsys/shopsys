@@ -21,8 +21,8 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
     protected const PRODUCT_ID_FIFTH = 5;
 
     public function __construct(
-        private readonly ZboziProductDomainFacade $zboziProductDomainFacade,
-        private readonly ZboziProductDomainDataFactory $zboziProductDomainDataFactory,
+        protected readonly ZboziProductDomainFacade $zboziProductDomainFacade,
+        protected readonly ZboziProductDomainDataFactory $zboziProductDomainDataFactory,
     ) {
     }
 

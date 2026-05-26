@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMail;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20241205094315 extends AbstractMigration implements DomainAwareInterface
+final class Version20241205094315 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
     use MailTemplateMigrationTrait;

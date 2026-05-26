@@ -18,8 +18,8 @@ use Symfony\Component\Filesystem\Filesystem;
 class ConfigureDomainsUrlsCommand extends Command
 {
     public function __construct(
-        private readonly Filesystem $localFilesystem,
-        private readonly string $configFilepath,
+        protected readonly Filesystem $localFilesystem,
+        protected readonly string $configFilepath,
     ) {
         parent::__construct();
     }

@@ -24,15 +24,15 @@ use Symfony\Component\Filesystem\Filesystem;
 class CreateApplicationDirectoriesCommand extends Command
 {
     public function __construct(
-        private readonly FilesystemOperator $filesystem,
-        private readonly Filesystem $localFilesystem,
-        private readonly ImageDirectoryStructureCreator $imageDirectoryStructureCreator,
-        private readonly UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator,
-        private readonly CustomerUploadedFileDirectoryStructureCreator $customerUploadedFileDirectoryStructureCreator,
-        private readonly array $defaultInternalDirectories,
-        private readonly array $defaultPublicDirectories,
-        private readonly ?array $internalDirectories = null,
-        private readonly ?array $publicDirectories = null,
+        protected readonly FilesystemOperator $filesystem,
+        protected readonly Filesystem $localFilesystem,
+        protected readonly ImageDirectoryStructureCreator $imageDirectoryStructureCreator,
+        protected readonly UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator,
+        protected readonly CustomerUploadedFileDirectoryStructureCreator $customerUploadedFileDirectoryStructureCreator,
+        protected readonly array $defaultInternalDirectories,
+        protected readonly array $defaultPublicDirectories,
+        protected readonly ?array $internalDirectories = null,
+        protected readonly ?array $publicDirectories = null,
     ) {
         parent::__construct();
     }
@@ -51,7 +51,7 @@ class CreateApplicationDirectoriesCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function createMiscellaneousDirectories(OutputInterface $output): void
+    protected function createMiscellaneousDirectories(OutputInterface $output): void
     {
         $publicDirectories = $this->getPublicDirectories();
         $internalDirectories = $this->getInternalDirectories();
@@ -65,14 +65,14 @@ class CreateApplicationDirectoriesCommand extends Command
         $output->writeln('<fg=green>Miscellaneous application directories were successfully created.</fg=green>');
     }
 
-    private function createImageDirectories(OutputInterface $output): void
+    protected function createImageDirectories(OutputInterface $output): void
     {
         $this->imageDirectoryStructureCreator->makeImageDirectories();
 
         $output->writeln('<fg=green>Directories for images were successfully created.</fg=green>');
     }
 
-    private function createUploadedFileDirectories(OutputInterface $output): void
+    protected function createUploadedFileDirectories(OutputInterface $output): void
     {
         $this->uploadedFileDirectoryStructureCreator->makeUploadedFileDirectories();
 
@@ -82,7 +82,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @return string[]
      */
-    private function getPublicDirectories(): array
+    protected function getPublicDirectories(): array
     {
         $directories = $this->defaultPublicDirectories;
 
@@ -93,7 +93,7 @@ class CreateApplicationDirectoriesCommand extends Command
         return $directories;
     }
 
-    private function getInternalDirectories(): array
+    protected function getInternalDirectories(): array
     {
         $directories = $this->defaultInternalDirectories;
 

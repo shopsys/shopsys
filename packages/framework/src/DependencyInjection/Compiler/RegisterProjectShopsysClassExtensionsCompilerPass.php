@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassInterface
+final class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void

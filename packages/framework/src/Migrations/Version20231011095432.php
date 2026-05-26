@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20231011095432 extends AbstractMigration
+final class Version20231011095432 extends AbstractMigration
 {
     private const WRONG_MIGRATION_VERSON = 'Shopsys\ProductFeed\GoogleBundle\Migrations\Version20230220115918';
 

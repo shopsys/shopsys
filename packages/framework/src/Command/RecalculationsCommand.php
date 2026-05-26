@@ -24,11 +24,11 @@ class RecalculationsCommand extends Command
     public const string COMMAND_NAME = 'shopsys:recalculations';
 
     public function __construct(
-        private readonly CategoryVisibilityRepository $categoryVisibilityRepository,
-        private readonly ProductVisibilityFacade $productVisibilityFacade,
-        private readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
-        private readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
-        private readonly PromotionFlagFacade $promotionFlagFacade,
+        protected readonly CategoryVisibilityRepository $categoryVisibilityRepository,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
+        protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
+        protected readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
+        protected readonly PromotionFlagFacade $promotionFlagFacade,
     ) {
         parent::__construct();
     }

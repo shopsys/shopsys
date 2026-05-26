@@ -12,7 +12,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use ReflectionClass;
 
-class EntityShouldHaveFactoryRule implements Rule
+final class EntityShouldHaveFactoryRule implements Rule
 {
     private const CHECKED_NAMESPACE = 'Shopsys\\';
     private const IGNORED_SUFFIXES = [

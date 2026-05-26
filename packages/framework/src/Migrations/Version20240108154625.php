@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20240108154625 extends AbstractMigration implements DomainAwareInterface
+final class Version20240108154625 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 

@@ -20,8 +20,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class CreateDatabaseSchemaCommand extends Command
 {
     public function __construct(
-        private readonly DatabaseSchemaFacade $databaseSchemaFacade,
-        private readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly DatabaseSchemaFacade $databaseSchemaFacade,
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
         parent::__construct();
     }

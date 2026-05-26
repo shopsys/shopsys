@@ -39,5 +39,7 @@ final class FinalFormTypeFixerTest extends AbstractFixerTestCase
         yield [__DIR__ . '/correct/abstract-form.php'];
 
         yield [__DIR__ . '/correct/not-form-type.php'];
+
+        yield [__DIR__ . '/correct/same-namespace-short-name.php'];
     }
 }

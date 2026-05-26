@@ -23,10 +23,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CreateDomainsDataCommand extends Command
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly DomainDataCreator $domainDataCreator,
-        private readonly MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade,
-        private readonly DbIndexesFacade $dbIndexesFacade,
+        protected readonly EntityManagerInterface $em,
+        protected readonly DomainDataCreator $domainDataCreator,
+        protected readonly MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade,
+        protected readonly DbIndexesFacade $dbIndexesFacade,
     ) {
         parent::__construct();
     }
@@ -52,7 +52,7 @@ class CreateDomainsDataCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function doExecute(OutputInterface $output): int
+    protected function doExecute(OutputInterface $output): int
     {
         $output->writeln('Start of creating new domains data.');
 

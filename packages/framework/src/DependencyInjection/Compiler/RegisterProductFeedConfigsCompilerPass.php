@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterface
+final class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterface
 {
     #[Override]
     public function process(ContainerBuilder $container): void
@@ -36,7 +36,7 @@ class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterface
     /**
      * @return int[]
      */
-    protected function splitDomainIdsFromString(string $domainIds): array
+    private function splitDomainIdsFromString(string $domainIds): array
     {
         return array_map('intval', explode(',', $domainIds));
     }

@@ -19,8 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class DatabaseDumpCommand extends Command
 {
-    private const ARG_OUTPUT_FILE = 'outputFile';
-    private const OPT_PGDUMP_BIN = 'pgdump-bin';
+    protected const ARG_OUTPUT_FILE = 'outputFile';
+    protected const OPT_PGDUMP_BIN = 'pgdump-bin';
 
     public function __construct(
         protected readonly DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider,
@@ -35,8 +35,8 @@ class DatabaseDumpCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument(self::ARG_OUTPUT_FILE, InputArgument::REQUIRED, 'Output SQL file')
-            ->addOption(self::OPT_PGDUMP_BIN, null, InputOption::VALUE_OPTIONAL, 'Path to pg_dump binary', 'pg_dump');
+            ->addArgument(static::ARG_OUTPUT_FILE, InputArgument::REQUIRED, 'Output SQL file')
+            ->addOption(static::OPT_PGDUMP_BIN, null, InputOption::VALUE_OPTIONAL, 'Path to pg_dump binary', 'pg_dump');
     }
 
     /**
@@ -49,7 +49,7 @@ class DatabaseDumpCommand extends Command
         // --no-owner option ensures that the dump can be imported on system with different database username
         $command = sprintf(
             '%s --host=%s --dbname=%s --no-owner --schema=public --username=%s --port=%s --no-password -Fc',
-            escapeshellcmd($input->getOption(self::OPT_PGDUMP_BIN)),
+            escapeshellcmd($input->getOption(static::OPT_PGDUMP_BIN)),
             escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseHost()),
             escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseName()),
             escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseUsername()),
@@ -67,7 +67,7 @@ class DatabaseDumpCommand extends Command
 
         [$stdin, $stdout, $stderr] = $pipes;
 
-        $outputFile = $input->getArgument(self::ARG_OUTPUT_FILE);
+        $outputFile = $input->getArgument(static::ARG_OUTPUT_FILE);
         $outputFileHandle = fopen($outputFile, 'w');
 
         while (!feof($stdout)) {
@@ -98,7 +98,7 @@ class DatabaseDumpCommand extends Command
         return proc_close($process);
     }
 
-    private function getDescriptorSpec(): array
+    protected function getDescriptorSpec(): array
     {
         return [
             0 => ['pipe', 'r'], // stdin
