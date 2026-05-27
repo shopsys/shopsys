@@ -17,8 +17,6 @@ use Shopsys\Releaser\Wait\GithubActionsWorkflowSucceeded;
 final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWorker
 {
     private const string WORKFLOW_FILE = 'monorepo-force-split-branch.yaml';
-    private const string ORGANIZATION = 'shopsys';
-    private const string REPOSITORY = 'shopsys';
 
     public function __construct(
         private readonly ClientInterface $httpClient,
@@ -52,8 +50,8 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
 
         $this->waitFor(new GithubActionsWorkflowSucceeded(
             $this->githubActionsStatusReporter,
-            self::ORGANIZATION,
-            self::REPOSITORY,
+            AbstractShopsysReleaseWorker::ORGANIZATION,
+            AbstractShopsysReleaseWorker::MONOREPO_REPOSITORY,
             $this->currentBranchName,
             self::WORKFLOW_FILE,
             $githubToken,
@@ -81,8 +79,8 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
 
         $url = sprintf(
             'https://api.github.com/repos/%s/%s/actions/workflows/%s/dispatches',
-            self::ORGANIZATION,
-            self::REPOSITORY,
+            AbstractShopsysReleaseWorker::ORGANIZATION,
+            AbstractShopsysReleaseWorker::MONOREPO_REPOSITORY,
             self::WORKFLOW_FILE,
         );
 

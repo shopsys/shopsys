@@ -18,6 +18,10 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 {
     public const string MAIN_BRANCH_NAME = 'master';
 
+    public const string ORGANIZATION = 'shopsys';
+
+    public const string MONOREPO_REPOSITORY = 'shopsys';
+
     public const string PHP_IMAGE_PACKAGE_NAME = 'php-image';
 
     private const int MAX_WAIT_SECONDS = 7200;

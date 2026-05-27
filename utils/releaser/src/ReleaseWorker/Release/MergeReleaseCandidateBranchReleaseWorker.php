@@ -6,11 +6,20 @@ namespace Shopsys\Releaser\ReleaseWorker\Release;
 
 use Override;
 use PharIo\Version\Version;
+use Shopsys\Releaser\GithubActions\GithubActionsStatusReporter;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
+use Shopsys\Releaser\Wait\GithubActionsWorkflowSucceeded;
 
 final class MergeReleaseCandidateBranchReleaseWorker extends AbstractShopsysReleaseWorker
 {
+    private const string SPLIT_WORKFLOW_FILE = 'monorepo-split.yaml';
+
+    public function __construct(
+        private readonly GithubActionsStatusReporter $githubActionsStatusReporter,
+    ) {
+    }
+
     #[Override]
     public function getDescription(
         Version $version,
@@ -42,10 +51,17 @@ final class MergeReleaseCandidateBranchReleaseWorker extends AbstractShopsysRele
         );
 
         $this->symfonyStyle->note(
-            'Rest assured, the branch is split automatically (thanks to https://github.com/shopsys/shopsys/actions/workflows/monorepo-split.yaml)',
+            'Waiting for the automatic split via https://github.com/shopsys/shopsys/actions/workflows/monorepo-split.yaml',
         );
 
-        $this->confirm('Confirm the branch is split.');
+        $this->waitFor(new GithubActionsWorkflowSucceeded(
+            $this->githubActionsStatusReporter,
+            AbstractShopsysReleaseWorker::ORGANIZATION,
+            AbstractShopsysReleaseWorker::MONOREPO_REPOSITORY,
+            $initialBranchName,
+            self::SPLIT_WORKFLOW_FILE,
+            $this->resolveGithubToken(),
+        ));
     }
 
     /**

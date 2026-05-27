@@ -39,7 +39,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $packagesWithVersions = $this->packageProvider->getPackagesWithVersionsByOrganization('shopsys', self::EXCLUDED_PACKAGES);
+        $packagesWithVersions = $this->packageProvider->getPackagesWithVersionsByOrganization(AbstractShopsysReleaseWorker::ORGANIZATION, self::EXCLUDED_PACKAGES);
 
         $packageWithoutVersion = [];
         $versionsAsString = $version->getOriginalString();

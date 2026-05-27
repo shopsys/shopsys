@@ -39,7 +39,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
 
         try {
             $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
-                'shopsys',
+                AbstractShopsysReleaseWorker::ORGANIZATION,
                 $branchName,
                 $githubToken,
             );
@@ -90,7 +90,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
 
         $this->waitFor(new GithubActionsRunSucceeded(
             $this->githubActionsStatusReporter,
-            'shopsys',
+            AbstractShopsysReleaseWorker::ORGANIZATION,
             $branchName,
             $githubToken,
         ));

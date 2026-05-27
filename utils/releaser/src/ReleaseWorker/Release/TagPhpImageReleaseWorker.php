@@ -83,12 +83,16 @@ final class TagPhpImageReleaseWorker extends AbstractShopsysReleaseWorker
 
         $this->processRunner->run('rm -r ' . $tempDirectory);
         $this->symfonyStyle->note(
-            sprintf('You can track progress on https://github.com/shopsys/%s/actions', AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME),
+            sprintf(
+                'You can track progress on https://github.com/%s/%s/actions',
+                AbstractShopsysReleaseWorker::ORGANIZATION,
+                AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
+            ),
         );
 
         $this->waitFor(new DockerHubTagAvailable(
             $this->apiCaller,
-            'shopsys',
+            AbstractShopsysReleaseWorker::ORGANIZATION,
             AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
             $versionString,
         ));

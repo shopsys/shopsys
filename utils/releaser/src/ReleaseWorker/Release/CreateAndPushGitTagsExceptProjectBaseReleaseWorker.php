@@ -41,8 +41,8 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $packages = $this->packageProvider->getPackagesByOrganization('shopsys', array_merge(parent::EXCLUDED_PACKAGES, self::EXCLUDED_PACKAGES));
-        $packageNames = str_replace('shopsys/', '', $packages);
+        $packages = $this->packageProvider->getPackagesByOrganization(AbstractShopsysReleaseWorker::ORGANIZATION, array_merge(parent::EXCLUDED_PACKAGES, self::EXCLUDED_PACKAGES));
+        $packageNames = str_replace(AbstractShopsysReleaseWorker::ORGANIZATION . '/', '', $packages);
 
         $versionString = $version->getOriginalString();
 
