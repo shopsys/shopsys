@@ -34,7 +34,14 @@ Abort with a clear error if any fail:
 
 ## Steps
 
-1. **Find previous tag.** `gh release list --limit 50 --json tagName,publishedAt`, then pick the most recent tag matching `v<major>.<minor>.*` (fall back to `v<major>.*` if no minor match). This is what GitHub's generator uses as the comparison baseline.
+1. **Find previous tag.** Pick the highest **version-sorted** tag strictly less than `<version>`, not the most-recently-published one. Shopsys maintains older majors as LTS lines (e.g. `v14.5.1` was published after `v18.0.0`), so sorting by `publishedAt` would compare a new major against an older LTS patch and produce a misleading diff. Inject `<version>` into the tag list, sort, and print the entry immediately above it (substitute `<version>` with the actual version literal — leaving the placeholder string in place will produce no output because it fails the semver regex):
+   ```sh
+   { echo "<version>"; gh api repos/shopsys/shopsys/tags --paginate --jq '.[].name'; } \
+       | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' \
+       | sort -V -u \
+       | awk -v t="<version>" '$0 == t { print prev; exit } { prev = $0 }'
+   ```
+   `sort -V` already orders semver tags ascending, so awk just walks the list and prints the line right before `<version>`. The `echo "<version>"` injection makes this work whether or not `<version>` is already in the tag list. For `v19.0.0`, this returns `v18.0.0`, not `v14.5.1`. This is what GitHub's generator uses as the comparison baseline.
 2. **Generate notes via `gh`.** Call:
    ```sh
    gh api repos/shopsys/shopsys/releases/generate-notes \
@@ -45,7 +52,7 @@ Abort with a clear error if any fail:
    ```
    This returns the same markdown the "Generate release notes" button produces on `https://github.com/shopsys/shopsys/releases/new`.
 3. **Read the CHANGELOG.** Find the first existing `## v` heading. New content goes immediately above it. If no such heading exists, insert just after the line `<!-- Add generated changelog below this line -->` (the convention used by `CHANGELOG-X.Y.md` headers); if neither exists, prepend to the top.
-4. **Build the inserted block.** A `## v<version> (YYYY-MM-DD)` heading (today's date) + a blank line + the generated markdown + a trailing blank line.
+4. **Build the inserted block.** A `## [<version>](https://github.com/shopsys/shopsys/compare/<previous-tag>...<version>) (YYYY-MM-DD)` heading (today's date) + a blank line + the generated markdown + a trailing blank line. The bracketed/linked heading form is required — `CheckChangelogForTodaysDateReleaseWorker` matches the regex `#\#\# \[<version>\]\(.*\) \(\d+-\d+-\d+\)#` and fails out of the release stage if the heading is a plain `## <version> (date)`.
 5. **Write.** Update the CHANGELOG file. Do **not** run `git add` or commit — `UpdateChangelogReleaseWorker` runs `phing markdown-fix` and commits afterwards.
 6. **Report.** Print:
    - Inserted heading.
