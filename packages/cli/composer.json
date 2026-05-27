@@ -3,7 +3,9 @@
     "type": "project",
     "description": "Shopsys CLI - Command-line tool for configuring new Shopsys Platform projects",
     "license": "MIT",
-    "bin": ["bin/shopsys"],
+    "bin": [
+        "bin/shopsys"
+    ],
     "autoload": {
         "psr-4": {
             "Shopsys\\Cli\\": "src/"

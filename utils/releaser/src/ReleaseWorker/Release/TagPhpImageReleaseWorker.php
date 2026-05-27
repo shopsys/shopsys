@@ -7,13 +7,16 @@ namespace Shopsys\Releaser\ReleaseWorker\Release;
 use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\DockerfileVersionFileManipulator;
+use Shopsys\Releaser\Guzzle\ApiCaller;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
+use Shopsys\Releaser\Wait\DockerHubTagAvailable;
 
 final class TagPhpImageReleaseWorker extends AbstractShopsysReleaseWorker
 {
     public function __construct(
         private readonly DockerfileVersionFileManipulator $dockerfileVersionFileManipulator,
+        private readonly ApiCaller $apiCaller,
     ) {
     }
 
@@ -79,13 +82,16 @@ final class TagPhpImageReleaseWorker extends AbstractShopsysReleaseWorker
 
 
         $this->processRunner->run('rm -r ' . $tempDirectory);
-        $this->symfonyStyle->note([
-            sprintf('Wait for Github Actions to build a tagged version of %s (approx 1 hour)', AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME),
+        $this->symfonyStyle->note(
             sprintf('You can track progress on https://github.com/shopsys/%s/actions', AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME),
-        ]);
-        $this->confirm(
-            sprintf('Confirm that there are new version of %s on Docker Hub (https://hub.docker.com/r/shopsys/%1$s/tags)', AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME),
         );
+
+        $this->waitFor(new DockerHubTagAvailable(
+            $this->apiCaller,
+            'shopsys',
+            AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
+            $versionString,
+        ));
 
         $this->dockerfileVersionFileManipulator->updateDockerFileVersion($versionString);
 

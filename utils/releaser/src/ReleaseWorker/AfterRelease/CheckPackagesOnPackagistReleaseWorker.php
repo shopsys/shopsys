@@ -9,6 +9,7 @@ use PharIo\Version\Version;
 use Shopsys\Releaser\Packagist\PackageProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
+use Shopsys\Releaser\Wait\AllPackagistVersionsAvailable;
 
 final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -51,15 +52,23 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
             $packageWithoutVersion[] = $package;
         }
 
-        if (count($packageWithoutVersion)) {
-            $this->symfonyStyle->error(
-                sprintf('Some packages on packagist do not have "%s" version', $versionsAsString),
-            );
-            $this->symfonyStyle->listing($packageWithoutVersion);
-
-            $this->confirm('Confirm the missing versions are fixed');
-        } else {
+        if ($packageWithoutVersion === []) {
             $this->success();
+
+            return;
         }
+
+        $this->symfonyStyle->warning(
+            sprintf('Some packages on packagist do not yet have "%s" version', $versionsAsString),
+        );
+        $this->symfonyStyle->listing($packageWithoutVersion);
+
+        $this->waitFor(new AllPackagistVersionsAvailable(
+            $this->packageProvider,
+            $packageWithoutVersion,
+            $versionsAsString,
+        ));
+
+        $this->success();
     }
 }

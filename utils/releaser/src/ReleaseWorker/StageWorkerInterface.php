@@ -25,4 +25,11 @@ interface StageWorkerInterface
     ): void;
 
     public function belongToStage(string $stage): bool;
+
+    /**
+     * Tells the worker which 1-based step it is in the stage being executed. Called by the release command
+     * before work() so workers that need to reference their own position (e.g. to build a `--resume-step`
+     * command for the next worker) can read it from $currentStep instead of re-parsing the stage config.
+     */
+    public function setCurrentStep(int $currentStep): void;
 }

@@ -7,17 +7,14 @@ namespace Shopsys\Releaser\ReleaseWorker;
 use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\GithubActions\GithubActionsStatusReporter;
+use Shopsys\Releaser\Wait\GithubActionsRunSucceeded;
+use Throwable;
 
 /**
  * @see https://docs.github.com/en/rest/actions/workflows
  */
 abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @var string
-     */
-    private const string STATUS_SUCCESS = 'success';
-
     public function __construct(private readonly GithubActionsStatusReporter $githubActionsStatusReporter)
     {
     }
@@ -37,39 +34,67 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->symfonyStyle->note('It is necessary to set Github token before checking Github Actions builds');
-        $githubToken = $this->symfonyStyle->ask(
-            'Please enter no-scope Github token (https://github.com/settings/tokens/new)',
-        );
-        $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
-            'shopsys',
-            $initialBranchName,
-            $githubToken,
-        );
+        $githubToken = $this->resolveGithubToken();
+        $branchName = $this->getBranchName();
+
+        try {
+            $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
+                'shopsys',
+                $branchName,
+                $githubToken,
+            );
+        } catch (Throwable $throwable) {
+            $this->symfonyStyle->warning(sprintf(
+                'Unable to read GitHub Actions status yet: %s',
+                $throwable->getMessage(),
+            ));
+            $statusForPackages = [];
+        }
 
         $isPassing = true;
 
         foreach ($statusForPackages as $package => $status) {
-            if ($status === self::STATUS_SUCCESS) {
+            if ($status === GithubActionsStatusReporter::STATUS_SUCCESS) {
                 $this->symfonyStyle->note(sprintf('"%s" package is passing', $package));
-            } else {
-                $isPassing = false;
-                $this->symfonyStyle->error(sprintf(
-                    '"%s" package is failing. Go check why:%s%s',
-                    $package,
-                    PHP_EOL,
-                    sprintf('https://github.com/%s/actions', $package),
-                ));
+
+                continue;
             }
+
+            $isPassing = false;
+
+            if ($status === GithubActionsStatusReporter::STATUS_PENDING) {
+                $this->symfonyStyle->note(sprintf('"%s" package is still pending', $package));
+
+                continue;
+            }
+
+            $this->symfonyStyle->error(sprintf(
+                '"%s" package is failing (%s). Go check why:%s%s',
+                $package,
+                $status,
+                PHP_EOL,
+                sprintf('https://github.com/%s/actions', $package),
+            ));
         }
 
         if (count($statusForPackages) === 0) {
-            $this->symfonyStyle->warning('No status was reported, go rather check the builds manually');
+            $this->symfonyStyle->warning('No status was reported yet; will poll.');
             $isPassing = false;
         }
 
-        if ($isPassing === false) {
-            $this->confirm('Continue after packages are resolved');
+        if ($isPassing === true) {
+            $this->success();
+
+            return;
         }
+
+        $this->waitFor(new GithubActionsRunSucceeded(
+            $this->githubActionsStatusReporter,
+            'shopsys',
+            $branchName,
+            $githubToken,
+        ));
+
+        $this->success();
     }
 }

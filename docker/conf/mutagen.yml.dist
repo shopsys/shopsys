@@ -16,7 +16,7 @@ sync:
         ignore:
             paths:
                 - ".DS_Store"
-                - ".idea"
+                - "/.idea"
                 - ".npm-global"
                 - "/project-base/app/var/postgres-data"
                 - "/project-base/storefront"

@@ -15,7 +15,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    private bool $isSuccessful = false;
+    private bool $isSuccessful = true;
 
     public function __construct(
         private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,

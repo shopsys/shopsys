@@ -20,6 +20,8 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     public const string PHP_IMAGE_PACKAGE_NAME = 'php-image';
 
+    private const int MAX_WAIT_SECONDS = 7200;
+
     /**
      * If you modify this list, do not forget updating:
      *      /.github/monorepo/monorepo_functions.sh
@@ -62,6 +64,14 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     protected string $currentBranchName;
 
+    protected int $currentStep = 0;
+
+    #[Override]
+    public function setCurrentStep(int $currentStep): void
+    {
+        $this->currentStep = $currentStep;
+    }
+
     /**
      * @throws \Shopsys\Releaser\Exception\ShouldNotHappenException
      */
@@ -103,6 +113,42 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
         $this->processRunner->run('git add .');
         $this->processRunner->run('git commit --message="' . addslashes($message) . '"');
+    }
+
+    protected function waitFor(WaitForExternalConditionInterface $condition): void
+    {
+        $description = $condition->describe();
+        $intervalSeconds = $condition->pollIntervalSeconds();
+        $maxAttempts = (int)ceil(self::MAX_WAIT_SECONDS / $intervalSeconds);
+
+        $this->symfonyStyle->note(sprintf('Waiting for: %s', $description));
+
+        for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
+            if ($condition->check()) {
+                $this->symfonyStyle->success(sprintf('Condition met: %s', $description));
+
+                return;
+            }
+
+            if ($attempt === $maxAttempts) {
+                break;
+            }
+
+            $this->symfonyStyle->writeln(sprintf(
+                'attempt %d: %s; sleeping %ds',
+                $attempt,
+                $condition->progressDescription(),
+                $intervalSeconds,
+            ));
+            sleep($intervalSeconds);
+        }
+
+        $this->symfonyStyle->warning(sprintf(
+            'Gave up after %d attempts waiting for: %s',
+            $maxAttempts,
+            $description,
+        ));
+        $this->confirm(sprintf('Continue when "%s" is satisfied', $description));
     }
 
     protected function isGitWorkingTreeEmpty(): bool
@@ -184,6 +230,32 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     public function belongToStage(string $stage): bool
     {
         return in_array($stage, $this->getAllowedStages(), true);
+    }
+
+    protected function resolveGithubToken(): string
+    {
+        $envToken = getenv('GITHUB_TOKEN');
+
+        if (is_string($envToken) && $envToken !== '') {
+            $this->symfonyStyle->note('Using GITHUB_TOKEN from environment for GitHub API calls.');
+
+            return $envToken;
+        }
+
+        $this->symfonyStyle->note('GITHUB_TOKEN env var not set; falling back to interactive prompt.');
+
+        $question = new Question(
+            'Please enter no-scope GitHub token (https://github.com/settings/tokens/new)',
+        );
+        $question->setValidator(static function ($answer): string {
+            if (!is_string($answer) || trim($answer) === '') {
+                throw new RuntimeException('GitHub token must not be empty');
+            }
+
+            return $answer;
+        });
+
+        return $this->symfonyStyle->askQuestion($question);
     }
 
     /**
