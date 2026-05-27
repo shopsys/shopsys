@@ -45,39 +45,27 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         $packageNames = str_replace(AbstractShopsysReleaseWorker::ORGANIZATION . '/', '', $packages);
 
         $versionString = $version->getOriginalString();
+        $githubToken = $this->resolveGithubToken();
+        putenv('GITHUB_TOKEN=' . $githubToken);
 
         $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
         $packageNamesWithProblems = [];
 
-        $this->symfonyStyle->note(sprintf(
-            'In case you do not have saved GIT credentials you may want to cache them temporarily so you do not need to fill them for each repository.'
-            . ' This can be done by using following command `%s`',
-            'git config --global credential.helper "cache --timeout=3600"',
-        ));
-
-        $gitCredentialsResponse = $this->symfonyStyle->ask(
-            'Do you want to enable saving GIT credentials for one hour?',
-            'yes',
-        );
-
-        if ($gitCredentialsResponse === 'yes') {
-            $this->processRunner->run('git config --global credential.helper "cache --timeout=3600"');
-        }
-
         $this->processRunner->run('git checkout ' . $initialBranchName);
-
-        $this->symfonyStyle->note(
-            'You will be asked for your Github credentials if you have not saved them yet.
-            As we require two factor authentication, you will need to provide repo scope token instead of password.
-            Token can be generated here: https://github.com/settings/tokens/new',
-        );
 
         $this->symfonyStyle->note('Cloning all packages. Please wait.');
 
         foreach ($packageNames as $packageName) {
             $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
             $this->processRunner->run(
-                sprintf('cd %s && git clone https://github.com/shopsys/%s.git', $tempDirectory, $packageName),
+                sprintf(
+                    '%s clone https://github.com/%s/%s.git %s/%s',
+                    $this->buildAuthenticatedGitPrefix(),
+                    AbstractShopsysReleaseWorker::ORGANIZATION,
+                    $packageName,
+                    $tempDirectory,
+                    $packageName,
+                ),
             );
             $this->processRunner->run(
                 sprintf(
@@ -112,9 +100,17 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         }
 
         if (count($packageNamesWithProblems) === 0) {
+            $authenticatedGit = $this->buildAuthenticatedGitPrefix();
+
             foreach ($packageNames as $packageName) {
                 $this->processRunner->run(
-                    sprintf('cd %s/%s && git push origin %s', $tempDirectory, $packageName, $versionString),
+                    sprintf(
+                        'cd %s/%s && %s push origin %s',
+                        $tempDirectory,
+                        $packageName,
+                        $authenticatedGit,
+                        $versionString,
+                    ),
                 );
             }
 
@@ -143,10 +139,16 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         }
     }
 
+    private function buildAuthenticatedGitPrefix(): string
+    {
+        return 'git -c url.https://x-access-token:$GITHUB_TOKEN@github.com/.insteadOf=https://github.com/';
+    }
+
     private function checkPackageTagExists(string $packageName, string $versionString): bool
     {
         $url = sprintf(
-            'https://github.com/shopsys/%s/releases/tag/%s',
+            'https://github.com/%s/%s/releases/tag/%s',
+            AbstractShopsysReleaseWorker::ORGANIZATION,
             $packageName,
             $versionString,
         );
