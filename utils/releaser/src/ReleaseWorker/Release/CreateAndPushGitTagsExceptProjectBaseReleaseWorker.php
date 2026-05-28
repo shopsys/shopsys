@@ -45,8 +45,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         $packageNames = str_replace(AbstractShopsysReleaseWorker::ORGANIZATION . '/', '', $packages);
 
         $versionString = $version->getOriginalString();
-        $githubToken = $this->resolveGithubToken();
-        putenv('GITHUB_TOKEN=' . $githubToken);
+        $authenticatedGit = $this->buildAuthenticatedGitPrefix();
 
         $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
         $packageNamesWithProblems = [];
@@ -60,12 +59,13 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             $this->processRunner->run(
                 sprintf(
                     '%s clone https://github.com/%s/%s.git %s/%s',
-                    $this->buildAuthenticatedGitPrefix(),
+                    $authenticatedGit,
                     AbstractShopsysReleaseWorker::ORGANIZATION,
                     $packageName,
                     $tempDirectory,
                     $packageName,
                 ),
+                ['GITHUB_TOKEN' => $this->resolveGithubToken()],
             );
             $this->processRunner->run(
                 sprintf(
@@ -100,8 +100,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         }
 
         if (count($packageNamesWithProblems) === 0) {
-            $authenticatedGit = $this->buildAuthenticatedGitPrefix();
-
             foreach ($packageNames as $packageName) {
                 $this->processRunner->run(
                     sprintf(
@@ -111,6 +109,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
                         $authenticatedGit,
                         $versionString,
                     ),
+                    ['GITHUB_TOKEN' => $this->resolveGithubToken()],
                 );
             }
 
