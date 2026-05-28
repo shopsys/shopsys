@@ -35,19 +35,15 @@ final class TagPhpImageReleaseWorker extends AbstractShopsysReleaseWorker
     ): void {
         $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
         $versionString = $version->getOriginalString();
-        $authenticatedGit = 'git -c url.https://x-access-token:$GITHUB_TOKEN@github.com/.insteadOf=https://github.com/';
 
         $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME));
-        $this->processRunner->run(
-            sprintf(
-                'cd %s && %s clone https://github.com/%s/%s.git',
-                $tempDirectory,
-                $authenticatedGit,
-                AbstractShopsysReleaseWorker::ORGANIZATION,
-                AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
-            ),
-            ['GITHUB_TOKEN' => $this->resolveGithubToken()],
-        );
+        $this->runWithGithubToken(sprintf(
+            'cd %s && %s clone https://github.com/%s/%s.git',
+            $tempDirectory,
+            AbstractShopsysReleaseWorker::AUTHENTICATED_GIT_COMMAND_PREFIX,
+            AbstractShopsysReleaseWorker::ORGANIZATION,
+            AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
+        ));
 
         $this->processRunner->run(
             sprintf(
@@ -84,16 +80,13 @@ final class TagPhpImageReleaseWorker extends AbstractShopsysReleaseWorker
             return;
         }
 
-        $this->processRunner->run(
-            sprintf(
-                'cd %s/%s && %s push origin %s',
-                $tempDirectory,
-                AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
-                $authenticatedGit,
-                $versionString,
-            ),
-            ['GITHUB_TOKEN' => $this->resolveGithubToken()],
-        );
+        $this->runWithGithubToken(sprintf(
+            'cd %s/%s && %s push origin %s',
+            $tempDirectory,
+            AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
+            AbstractShopsysReleaseWorker::AUTHENTICATED_GIT_COMMAND_PREFIX,
+            $versionString,
+        ));
 
 
         $this->processRunner->run('rm -r ' . $tempDirectory);

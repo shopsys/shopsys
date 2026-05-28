@@ -25,6 +25,8 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     public const string PHP_IMAGE_PACKAGE_NAME = 'php-image';
 
+    public const string AUTHENTICATED_GIT_COMMAND_PREFIX = 'git -c url.https://x-access-token:$GITHUB_TOKEN@github.com/.insteadOf=https://github.com/';
+
     private const int MAX_WAIT_SECONDS = 7200;
 
     /**
@@ -244,6 +246,11 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     protected function resolveGithubToken(): string
     {
         return $this->githubTokenProvider->getToken();
+    }
+
+    protected function runWithGithubToken(string $command): string
+    {
+        return $this->processRunner->run($command, ['GITHUB_TOKEN' => $this->resolveGithubToken()]);
     }
 
     /**

@@ -45,7 +45,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         $packageNames = str_replace(AbstractShopsysReleaseWorker::ORGANIZATION . '/', '', $packages);
 
         $versionString = $version->getOriginalString();
-        $authenticatedGit = $this->buildAuthenticatedGitPrefix();
 
         $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
         $packageNamesWithProblems = [];
@@ -56,17 +55,14 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
         foreach ($packageNames as $packageName) {
             $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
-            $this->processRunner->run(
-                sprintf(
-                    '%s clone https://github.com/%s/%s.git %s/%s',
-                    $authenticatedGit,
-                    AbstractShopsysReleaseWorker::ORGANIZATION,
-                    $packageName,
-                    $tempDirectory,
-                    $packageName,
-                ),
-                ['GITHUB_TOKEN' => $this->resolveGithubToken()],
-            );
+            $this->runWithGithubToken(sprintf(
+                '%s clone https://github.com/%s/%s.git %s/%s',
+                AbstractShopsysReleaseWorker::AUTHENTICATED_GIT_COMMAND_PREFIX,
+                AbstractShopsysReleaseWorker::ORGANIZATION,
+                $packageName,
+                $tempDirectory,
+                $packageName,
+            ));
             $this->processRunner->run(
                 sprintf(
                     'cd %s/%s && git checkout %s && git tag %s',
@@ -101,16 +97,13 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
         if (count($packageNamesWithProblems) === 0) {
             foreach ($packageNames as $packageName) {
-                $this->processRunner->run(
-                    sprintf(
-                        'cd %s/%s && %s push origin %s',
-                        $tempDirectory,
-                        $packageName,
-                        $authenticatedGit,
-                        $versionString,
-                    ),
-                    ['GITHUB_TOKEN' => $this->resolveGithubToken()],
-                );
+                $this->runWithGithubToken(sprintf(
+                    'cd %s/%s && %s push origin %s',
+                    $tempDirectory,
+                    $packageName,
+                    AbstractShopsysReleaseWorker::AUTHENTICATED_GIT_COMMAND_PREFIX,
+                    $versionString,
+                ));
             }
 
             $this->processRunner->run('rm -r ' . $tempDirectory);
@@ -136,11 +129,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             $this->processRunner->run('rm -r ' . $tempDirectory);
             $this->work($version);
         }
-    }
-
-    private function buildAuthenticatedGitPrefix(): string
-    {
-        return 'git -c url.https://x-access-token:$GITHUB_TOKEN@github.com/.insteadOf=https://github.com/';
     }
 
     private function checkPackageTagExists(string $packageName, string $versionString): bool
