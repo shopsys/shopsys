@@ -48,6 +48,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
         $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
         $packageNamesWithProblems = [];
+        $packageNamesToTagAndPush = [];
 
         $this->processRunner->run('git checkout ' . $initialBranchName);
 
@@ -62,18 +63,34 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
                 $tempDirectory,
                 $packageName,
             ));
+
+            $packageDirectory = sprintf('%s/%s', $tempDirectory, $packageName);
+            $existingTag = trim($this->processRunner->run(
+                sprintf('cd %s && git tag --list %s', $packageDirectory, $versionString),
+            ));
+
+            if ($existingTag === $versionString) {
+                $this->symfonyStyle->note(sprintf(
+                    'Package shopsys/%s already has tag %s on remote. Skipping.',
+                    $packageName,
+                    $versionString,
+                ));
+
+                continue;
+            }
+
             $this->processRunner->run(
                 sprintf(
-                    'cd %s/%s && git checkout %s && git tag %s',
-                    $tempDirectory,
-                    $packageName,
+                    'cd %s && git checkout %s && git tag %s',
+                    $packageDirectory,
                     $this->currentBranchName,
                     $versionString,
                 ),
             );
+            $packageNamesToTagAndPush[] = $packageName;
         }
 
-        foreach ($packageNames as $packageName) {
+        foreach ($packageNamesToTagAndPush as $packageName) {
             $output = $this->processRunner->run(
                 sprintf(
                     'cd %s/%s && git log --graph --oneline --decorate=short --color | head',
@@ -95,7 +112,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         }
 
         if (count($packageNamesWithProblems) === 0) {
-            foreach ($packageNames as $packageName) {
+            foreach ($packageNamesToTagAndPush as $packageName) {
                 $this->runAuthenticatedGit(
                     sprintf('push origin %s', $versionString),
                     sprintf('%s/%s', $tempDirectory, $packageName),
