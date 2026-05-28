@@ -53,7 +53,7 @@ final class GithubActionsStatusReporter
         $packages = array_values(array_diff(array_merge($packages, self::EXTRA_PACKAGES), self::IGNORED_PACKAGES));
         $statusForPackages = array_fill_keys($packages, self::STATUS_PENDING);
 
-        $branchHeadShasByPackage = $this->getBranchHeadShasByPackage($packages, $branch, $githubToken);
+        $refHeadShasByPackage = $this->getRefHeadShasByPackage($packages, $branch, $githubToken);
         $responses = $this->apiCaller->sendGetsAsyncToStrings(
             $this->createWorkflowRunsApiUrls($packages, $branch, self::WORKFLOW_FILE),
             $this->createGithubApiHeaders($githubToken),
@@ -64,7 +64,7 @@ final class GithubActionsStatusReporter
 
             $statusForPackages[$package] = $this->extractWorkflowRunStatus(
                 $response,
-                $branchHeadShasByPackage[$package] ?? null,
+                $refHeadShasByPackage[$package] ?? null,
             );
         }
 
@@ -72,8 +72,8 @@ final class GithubActionsStatusReporter
     }
 
     /**
-     * Returns the effective status of the latest workflow_runs[0] for the given repository, branch and workflow file.
-     * Returns STATUS_PENDING when the latest run does not match the branch HEAD SHA (so older runs from previous
+     * Returns the effective status of the latest workflow_runs[0] for the given repository, ref and workflow file.
+     * Returns STATUS_PENDING when the latest run does not match the ref HEAD SHA (so older runs from previous
      * pushes never produce a false-positive STATUS_SUCCESS), the run is still queued/in-progress, or any upstream
      * lookup fails.
      */
@@ -83,9 +83,9 @@ final class GithubActionsStatusReporter
         string $workflowFileName,
         string $githubToken,
     ): string {
-        $branchHeadSha = $this->fetchBranchHeadSha($repository, $branch, $githubToken);
+        $refHeadSha = $this->fetchRefHeadSha($repository, $branch, $githubToken);
 
-        if ($branchHeadSha === null) {
+        if ($refHeadSha === null) {
             return self::STATUS_PENDING;
         }
 
@@ -94,32 +94,32 @@ final class GithubActionsStatusReporter
             $this->createGithubApiHeaders($githubToken),
         );
 
-        return $this->extractWorkflowRunStatus($responses[0] ?? '', $branchHeadSha);
+        return $this->extractWorkflowRunStatus($responses[0] ?? '', $refHeadSha);
     }
 
     /**
      * @param string[] $packages
      * @return array<string, string>
      */
-    private function getBranchHeadShasByPackage(array $packages, string $branch, string $githubToken): array
+    private function getRefHeadShasByPackage(array $packages, string $ref, string $githubToken): array
     {
         $responses = $this->apiCaller->sendGetsAsyncToStrings(
-            $this->createBranchApiUrls($packages, $branch),
+            $this->createCommitApiUrls($packages, $ref),
             $this->createGithubApiHeaders($githubToken),
         );
-        $branchHeadShasByPackage = [];
+        $refHeadShasByPackage = [];
 
         foreach ($responses as $key => $response) {
-            $branchHeadSha = $this->extractBranchHeadSha($response);
+            $refHeadSha = $this->extractCommitSha($response);
 
-            if ($branchHeadSha === null) {
+            if ($refHeadSha === null) {
                 continue;
             }
 
-            $branchHeadShasByPackage[$packages[$key]] = $branchHeadSha;
+            $refHeadShasByPackage[$packages[$key]] = $refHeadSha;
         }
 
-        return $branchHeadShasByPackage;
+        return $refHeadShasByPackage;
     }
 
     /**
@@ -143,27 +143,27 @@ final class GithubActionsStatusReporter
         return $apiUrls;
     }
 
-    private function fetchBranchHeadSha(string $repository, string $branch, string $githubToken): ?string
+    private function fetchRefHeadSha(string $repository, string $ref, string $githubToken): ?string
     {
         $responses = $this->apiCaller->sendGetsAsyncToStrings(
-            $this->createBranchApiUrls([$repository], $branch),
+            $this->createCommitApiUrls([$repository], $ref),
             $this->createGithubApiHeaders($githubToken),
         );
 
-        return $this->extractBranchHeadSha($responses[0] ?? '');
+        return $this->extractCommitSha($responses[0] ?? '');
     }
 
     /**
      * @param string[] $packages
      * @return string[]
      */
-    private function createBranchApiUrls(array $packages, string $branch): array
+    private function createCommitApiUrls(array $packages, string $ref): array
     {
         $apiUrls = [];
-        $encodedBranch = rawurlencode($branch);
+        $encodedRef = rawurlencode($ref);
 
         foreach ($packages as $package) {
-            $apiUrls[] = sprintf('https://api.github.com/repos/%s/branches/%s', $package, $encodedBranch);
+            $apiUrls[] = sprintf('https://api.github.com/repos/%s/commits/%s', $package, $encodedRef);
         }
 
         return $apiUrls;
@@ -177,7 +177,7 @@ final class GithubActionsStatusReporter
         return ['Authorization' => sprintf('token %s', $githubToken)];
     }
 
-    private function extractBranchHeadSha(string $responseJson): ?string
+    private function extractCommitSha(string $responseJson): ?string
     {
         try {
             $arrayResponse = json_decode($responseJson, true, 512, JSON_THROW_ON_ERROR);
@@ -185,7 +185,7 @@ final class GithubActionsStatusReporter
             return null;
         }
 
-        $sha = $arrayResponse['commit']['sha'] ?? null;
+        $sha = $arrayResponse['sha'] ?? null;
 
         return is_string($sha) ? $sha : null;
     }
