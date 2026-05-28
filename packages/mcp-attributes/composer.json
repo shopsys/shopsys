@@ -31,7 +31,7 @@
         "phpstan/phpstan": "^2.1.16",
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpunit/phpunit": "^12.5",
-        "shopsys/coding-standards": "19.0.0"
+        "shopsys/coding-standards": "20.0.x-dev"
     },
     "config": {
         "allow-plugins": {
