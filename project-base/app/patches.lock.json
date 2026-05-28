@@ -1,0 +1,27 @@
+{
+    "_hash": "81840fab3275a1125a53dfe81492eab5b7f58f5617be99aed66030b891b67d4c",
+    "patches": {
+        "overblog/graphql-bundle": [
+            {
+                "package": "overblog/graphql-bundle",
+                "description": "Remove kernel.reset tag from Executor to prevent schema clearing",
+                "url": "patch/overblog-executor-reset.patch",
+                "sha256": "383692d49e6a0f1814008600ee529b78ba3cdf6e36271225bf604730bfa1f6e1",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            },
+            {
+                "package": "overblog/graphql-bundle",
+                "description": "Use customerValidators translation domain in InputValidator",
+                "url": "patch/overblog-validator.patch",
+                "sha256": "864bc2cfdc4a3085641107b6d69c67612eac2c55af6012ed584bc2699f895c1e",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ]
+    }
+}

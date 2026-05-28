@@ -684,6 +684,9 @@
     "shopsys/maker": {
         "version": "17.0.0"
     },
+    "shopsys/mcp": {
+        "version": "v19.0.0"
+    },
     "shopsys/migrations": {
         "version": "v9.1.1"
     },
@@ -926,6 +929,9 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/mcp-bundle": {
+        "version": "v0.8.0"
+    },
     "symfony/messenger": {
         "version": "5.4",
         "recipe": {
@@ -1075,6 +1081,15 @@
             "config/routes/dev/twig.yaml",
             "templates/base.html.twig"
         ]
+    },
+    "symfony/uid": {
+        "version": "7.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "7.0",
+            "ref": "0df5844274d871b37fc3816c57a768ffc60a43a5"
+        }
     },
     "symfony/ux-icons": {
         "version": "2.22",
