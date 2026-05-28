@@ -47,6 +47,6 @@ class McpSchemaCacheWarmer implements CacheWarmerInterface
     #[Override]
     public function isOptional(): bool
     {
-        return true;
+        return false;
     }
 }
