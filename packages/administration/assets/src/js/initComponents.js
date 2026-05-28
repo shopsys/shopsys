@@ -1,4 +1,4 @@
-import { Dropdown, Modal, Popover, Tab, Toast, Tooltip } from '@tabler/core';
+import { Dropdown, Modal, Popover, Tab, Tooltip } from '@tabler/core';
 import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
 import TomSelect from 'tom-select';
@@ -132,12 +132,6 @@ function initTab($container) {
         });
 }
 
-function initToast($container) {
-    $container.filterAllNodes('[data-bs-toggle="toast"]').each(function () {
-        new Toast(this);
-    });
-}
-
 export function initComponents($container) {
     initSelect($container);
     initTooltip($container);
@@ -146,7 +140,6 @@ export function initComponents($container) {
     initAutosize($container);
     initModal($container);
     initTab($container);
-    initToast($container);
     registerTooltip();
 }
 

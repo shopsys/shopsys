@@ -1,0 +1,15 @@
+<div {{ attributes }}>
+    <div class="toast-container position-fixed start-50 translate-middle-x"
+         data-controller="flash-messages"
+         data-flash-messages-live-value="true"
+         data-flash-messages-target="stack"
+         data-live-ignore>
+        {% include '@ShopsysAdministration/partial/flash_message/_toasts.html.twig' with {
+            errorMessages: this.errorMessages,
+            infoMessages: this.infoMessages,
+            successMessages: this.successMessages,
+            warningMessages: this.warningMessages,
+            showOnRender: true,
+        } only %}
+    </div>
+</div>

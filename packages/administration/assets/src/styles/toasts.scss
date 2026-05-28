@@ -1,0 +1,23 @@
+.toast-container {
+    z-index: 1090;
+    top: 45px;
+}
+
+.toast {
+    --tblr-toast-max-width: 500px;
+}
+
+.toast .toast-body {
+    color: #fff !important;
+}
+
+.toast-message,
+.toast-message a,
+.toast-message strong {
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.toast-message a {
+    text-decoration: underline;
+}
