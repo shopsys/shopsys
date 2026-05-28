@@ -27,13 +27,13 @@
     "require": {
         "php": "^8.5",
         "ext-pg_query": "*",
-        "shopsys/administration": "19.0.x-dev",
-        "shopsys/form-types-bundle": "19.0.x-dev",
-        "shopsys/framework": "19.0.x-dev",
-        "shopsys/mcp-attributes": "19.0.x-dev",
-        "shopsys/migrations": "19.0.x-dev",
+        "shopsys/administration": "20.0.x-dev",
+        "shopsys/form-types-bundle": "20.0.x-dev",
+        "shopsys/framework": "20.0.x-dev",
+        "shopsys/mcp-attributes": "20.0.x-dev",
+        "shopsys/migrations": "20.0.x-dev",
         "symfony/clock": "^7.4",
-        "shopsys/plugin-interface": "19.0.x-dev",
+        "shopsys/plugin-interface": "20.0.x-dev",
         "symfony/config": "^7.4",
         "symfony/dependency-injection": "^7.4",
         "symfony/http-foundation": "^7.4",
@@ -50,7 +50,7 @@
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpunit/phpunit": "^12.5",
-        "shopsys/coding-standards": "19.0.x-dev"
+        "shopsys/coding-standards": "20.0.x-dev"
     },
     "extra": {
         "symfony": {
