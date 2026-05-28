@@ -18,11 +18,9 @@ class ProcessRunner
     }
 
     /**
-     * @param array<string, string> $env Extra environment variables to expose to the subprocess on top of
-     *     the inherited parent environment. Use this to pass secrets (e.g. GITHUB_TOKEN) that the command
-     *     consumes via shell-variable expansion, so the secret never appears in the printed command string.
+     * @param array<string, string> $env
      */
-    public function run(string $command, array $env = []): string
+    public function run(string $command, array $env = [], ?string $cwd = null): string
     {
         $symfonyStyle = $this->symfonyStyleFactory->getPreviouslyCreatedSymfonyStyle();
 
@@ -30,7 +28,7 @@ class ProcessRunner
             $symfonyStyle->note('Running process: ' . $command);
         }
 
-        $process = Process::fromShellCommandline($command, timeout: self::PROCESS_TIMEOUT, env: $env);
+        $process = Process::fromShellCommandline($command, cwd: $cwd, timeout: self::PROCESS_TIMEOUT, env: $env);
         $process->run();
 
         if (!$process->isSuccessful()) {

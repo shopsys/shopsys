@@ -37,13 +37,14 @@ final class TagPhpImageReleaseWorker extends AbstractShopsysReleaseWorker
         $versionString = $version->getOriginalString();
 
         $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME));
-        $this->runWithGithubToken(sprintf(
-            'cd %s && %s clone https://github.com/%s/%s.git',
+        $this->runAuthenticatedGit(
+            sprintf(
+                'clone https://github.com/%s/%s.git',
+                AbstractShopsysReleaseWorker::ORGANIZATION,
+                AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
+            ),
             $tempDirectory,
-            AbstractShopsysReleaseWorker::AUTHENTICATED_GIT_COMMAND_PREFIX,
-            AbstractShopsysReleaseWorker::ORGANIZATION,
-            AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
-        ));
+        );
 
         $this->processRunner->run(
             sprintf(
@@ -80,13 +81,10 @@ final class TagPhpImageReleaseWorker extends AbstractShopsysReleaseWorker
             return;
         }
 
-        $this->runWithGithubToken(sprintf(
-            'cd %s/%s && %s push origin %s',
-            $tempDirectory,
-            AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
-            AbstractShopsysReleaseWorker::AUTHENTICATED_GIT_COMMAND_PREFIX,
-            $versionString,
-        ));
+        $this->runAuthenticatedGit(
+            sprintf('push origin %s', $versionString),
+            sprintf('%s/%s', $tempDirectory, AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME),
+        );
 
 
         $this->processRunner->run('rm -r ' . $tempDirectory);

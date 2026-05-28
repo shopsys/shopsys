@@ -55,9 +55,8 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
         foreach ($packageNames as $packageName) {
             $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
-            $this->runWithGithubToken(sprintf(
-                '%s clone https://github.com/%s/%s.git %s/%s',
-                AbstractShopsysReleaseWorker::AUTHENTICATED_GIT_COMMAND_PREFIX,
+            $this->runAuthenticatedGit(sprintf(
+                'clone https://github.com/%s/%s.git %s/%s',
                 AbstractShopsysReleaseWorker::ORGANIZATION,
                 $packageName,
                 $tempDirectory,
@@ -97,13 +96,10 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
         if (count($packageNamesWithProblems) === 0) {
             foreach ($packageNames as $packageName) {
-                $this->runWithGithubToken(sprintf(
-                    'cd %s/%s && %s push origin %s',
-                    $tempDirectory,
-                    $packageName,
-                    AbstractShopsysReleaseWorker::AUTHENTICATED_GIT_COMMAND_PREFIX,
-                    $versionString,
-                ));
+                $this->runAuthenticatedGit(
+                    sprintf('push origin %s', $versionString),
+                    sprintf('%s/%s', $tempDirectory, $packageName),
+                );
             }
 
             $this->processRunner->run('rm -r ' . $tempDirectory);
