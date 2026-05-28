@@ -27,7 +27,7 @@ class ShopsysFrameworkBundle extends Bundle
     /**
      * @var string
      */
-    public const string VERSION = '19.0.0-dev';
+    public const string VERSION = '20.0.0-dev';
 
     #[Override]
     public function build(ContainerBuilder $container): void
