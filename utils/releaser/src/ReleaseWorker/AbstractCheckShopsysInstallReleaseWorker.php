@@ -41,7 +41,7 @@ abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysR
         $nextStep = $this->currentStep + 1;
 
         $resumeCommand = sprintf(
-            'docker compose exec -T -e GITHUB_TOKEN="$(gh auth token)" php-fpm php bin/console monorepo:release %s --stage %s --initial-branch %s -v --resume-step %d',
+            'docker compose exec -T php-fpm php bin/console monorepo:release %s --stage %s --initial-branch %s --github-token "$(gh auth token)" -v --resume-step %d',
             $escapedVersion,
             $escapedStage,
             $escapedInitialBranchName,

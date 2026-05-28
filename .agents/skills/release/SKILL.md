@@ -32,7 +32,7 @@ Run all of these; abort with the specific fix instruction if any fail. **Never s
 
 1. `git status --porcelain` empty AND `git rev-parse --abbrev-ref HEAD` equals `<initial-branch>` (release-candidate stage) or the rc branch (release / after-release stages — the branch name is `rc-<webalized-version>`; if unsure, surface it to the operator).
 2. **Container git status matches host's**: `docker compose exec -T php-fpm git status --porcelain` is empty too. Host and container can diverge when mutagen ignore patterns affect tracked files, or when files are globally-gitignored on the host but not in the repo. If the container reports changes the host doesn't, fix the divergence first — otherwise the releaser's `git add .` calls inside the container will commit unintended files. For per-clone fixes that don't touch tracked state, append paths to `.git/info/exclude` (mutagen syncs `.git/` so the container sees the same rules).
-3. `GITHUB_TOKEN` available. Either `[ -n "$GITHUB_TOKEN" ]` in the operator's shell, or fetched inline via `$(gh auth token)` and passed to `docker compose exec` with `-e GITHUB_TOKEN=…` (recommended — works without the operator having to export it).
+3. `gh auth token` returns a non-empty token (the value is passed to the releaser via the `--github-token` CLI option, see Phase 2). If `gh auth token` fails, surface and abort.
 4. `docker compose ps --status running --format '{{.Service}}'` contains `php-fpm` and `postgres`.
 5. macOS only: `mutagen sync list 2>/dev/null | grep -q Watching`.
 6. `docker compose exec -T php-fpm test -f /home/www-data/.gitconfig`.
@@ -53,9 +53,10 @@ mkfifo "$PIPE"
 # keep the pipe open for writing so the releaser doesn't see EOF
 ( while sleep 86400; do :; done ) > "$PIPE" &
 KEEPALIVE=$!
-docker compose exec -T -e GITHUB_TOKEN="$(gh auth token)" php-fpm \
+docker compose exec -T php-fpm \
     php bin/console monorepo:release <version> \
-        --stage <stage> --initial-branch <initial-branch> -v \
+        --stage <stage> --initial-branch <initial-branch> \
+        --github-token "$(gh auth token)" -v \
         [--resume-step N] [--dry-run] \
     < "$PIPE" > "$LOG" 2>&1
 ```

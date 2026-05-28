@@ -7,6 +7,7 @@ namespace Shopsys\Releaser\Command;
 use InvalidArgumentException;
 use Override;
 use PharIo\Version\Version;
+use Shopsys\Releaser\GithubActions\GithubTokenProvider;
 use Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider;
 use Shopsys\Releaser\ReleaseWorker\StageWorkerInterface;
 use Shopsys\Releaser\Stage;
@@ -29,10 +30,12 @@ final class ReleaseCommand extends Command
     private const string VERSION = 'version';
     private const string DRY_RUN = 'dry-run';
     private const string STAGE = 'stage';
+    private const string GITHUB_TOKEN = 'github-token';
 
     public function __construct(
         private readonly ReleaseWorkerProvider $releaseWorkerProvider,
         private readonly SymfonyStyleFactory $symfonyStyleFactory,
+        private readonly GithubTokenProvider $githubTokenProvider,
     ) {
         parent::__construct();
     }
@@ -56,6 +59,13 @@ final class ReleaseCommand extends Command
         $this->addOption(self::STAGE, null, InputOption::VALUE_REQUIRED, 'Name of stage to perform');
         $this->addOption(self::RESUME_STEP, null, InputOption::VALUE_REQUIRED, 'Number of step to start from');
         $this->addOption(self::INITIAL_BRANCH_NAME, null, InputOption::VALUE_REQUIRED, 'Name of branch you are releasing version on');
+        $this->addOption(
+            self::GITHUB_TOKEN,
+            null,
+            InputOption::VALUE_REQUIRED,
+            'GitHub token used for API calls and authenticating git push/clone operations. '
+            . 'Falls back to an interactive prompt when not provided (TTY required).',
+        );
     }
 
     #[Override]
@@ -67,6 +77,8 @@ final class ReleaseCommand extends Command
         $stage = $this->resolveStage($input);
         $step = $this->resolveStep($input);
         $initialBranchName = $this->resolveInitialBranchName($input);
+        $githubTokenOption = $input->getOption(self::GITHUB_TOKEN);
+        $this->githubTokenProvider->setTokenFromOption(is_string($githubTokenOption) ? $githubTokenOption : null);
 
         $this->checkStage($stage);
 

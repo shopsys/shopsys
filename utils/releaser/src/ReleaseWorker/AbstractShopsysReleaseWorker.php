@@ -9,6 +9,7 @@ use Override;
 use PharIo\Version\Version;
 use RuntimeException;
 use Shopsys\Releaser\Command\SymfonyStyleFactory;
+use Shopsys\Releaser\GithubActions\GithubTokenProvider;
 use Shopsys\Releaser\Process\ProcessRunner;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -70,6 +71,8 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     protected int $currentStep = 0;
 
+    protected GithubTokenProvider $githubTokenProvider;
+
     #[Override]
     public function setCurrentStep(int $currentStep): void
     {
@@ -83,9 +86,11 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     public function setup(
         SymfonyStyleFactory $symfonyStyleFactory,
         ProcessRunner $processRunner,
+        GithubTokenProvider $githubTokenProvider,
     ): void {
         $this->symfonyStyle = $symfonyStyleFactory->getPreviouslyCreatedSymfonyStyle();
         $this->processRunner = $processRunner;
+        $this->githubTokenProvider = $githubTokenProvider;
         $this->currentBranchName = $this->processRunner->run('git rev-parse --abbrev-ref HEAD');
     }
 
@@ -238,28 +243,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     protected function resolveGithubToken(): string
     {
-        $envToken = getenv('GITHUB_TOKEN');
-
-        if (is_string($envToken) && $envToken !== '') {
-            $this->symfonyStyle->note('Using GITHUB_TOKEN from environment for GitHub API calls.');
-
-            return $envToken;
-        }
-
-        $this->symfonyStyle->note('GITHUB_TOKEN env var not set; falling back to interactive prompt.');
-
-        $question = new Question(
-            'Please enter no-scope GitHub token (https://github.com/settings/tokens/new)',
-        );
-        $question->setValidator(static function ($answer): string {
-            if (!is_string($answer) || trim($answer) === '') {
-                throw new RuntimeException('GitHub token must not be empty');
-            }
-
-            return $answer;
-        });
-
-        return $this->symfonyStyle->askQuestion($question);
+        return $this->githubTokenProvider->getToken();
     }
 
     /**
