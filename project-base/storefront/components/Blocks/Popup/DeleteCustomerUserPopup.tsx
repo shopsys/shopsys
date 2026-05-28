@@ -10,7 +10,7 @@ type DeleteCustomerUserPopupProps = {
 
 export const DeleteCustomerUserPopup: FC<DeleteCustomerUserPopupProps> = ({ deleteCustomerUserHandler }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
     return (
         <Popup
@@ -22,9 +22,7 @@ export const DeleteCustomerUserPopup: FC<DeleteCustomerUserPopupProps> = ({ dele
                 <Button
                     data-tid={TIDs.customer_users_delete_cancel_button}
                     variant="inverted"
-                    onClick={() => {
-                        updatePortalContent(null);
-                    }}
+                    onClick={closePortalContent}
                 >
                     {t('No')}
                 </Button>

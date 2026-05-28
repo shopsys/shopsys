@@ -133,7 +133,6 @@ export const ContactContent: FC = () => {
 
                                     <FormButtonWrapper>
                                         <SubmitButton
-                                            aria-label={t('Submit form to send your message', { ns: 'accessibility' })}
                                             data-tid={TIDs.contact_form_submit_button}
                                             hasDisabledCursor={!formProviderMethods.formState.isValid}
                                         >

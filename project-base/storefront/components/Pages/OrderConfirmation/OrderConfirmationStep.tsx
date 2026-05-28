@@ -23,7 +23,7 @@ export const OrderConfirmationStep: FC<OrderConfirmationStepProps> = ({ step: { 
 
                 <span
                     className={twJoin(
-                        'h5 text-center text-xs sm:text-sm lg:text-base',
+                        'h5 text-center text-xs sm:text-sm lg:text-md',
                         state === FlowTypeStateEnum.Error && 'text-text-error',
                     )}
                 >

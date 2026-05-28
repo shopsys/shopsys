@@ -10,11 +10,12 @@ export const ProductComparePopup: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
+    const successMessage = t('Product added to comparison.');
 
     return (
-        <Popup title={t('Comparison')}>
+        <Popup ariaDescription={successMessage} role="alertdialog" title={t('Comparison')}>
             <div className="flex flex-col" data-tid={TIDs.comparison_popup}>
-                <p className="mt-[15px] mb-5 font-semiBold">{t('Product added to comparison.')}</p>
+                <p className="mt-[15px] mb-5 font-semiBold">{successMessage}</p>
 
                 <LinkButton href={productComparisonUrl} tid={TIDs.comparison_popup_link} type="comparison">
                     <span>{t('Show products comparison')}</span>

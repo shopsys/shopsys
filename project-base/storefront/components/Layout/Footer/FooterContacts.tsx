@@ -13,7 +13,11 @@ export const FooterContacts: FC = () => {
     return (
         <div className="flex flex-col gap-4">
             <FooterContact
-                ariaLabel={t('Call us', { ns: 'accessibility' })}
+                ariaLabel={t('Call us at {{ phone }}. {{ openingHours }}', {
+                    ns: 'accessibility',
+                    phone,
+                    openingHours,
+                })}
                 href={`tel:${cleanPhone}`}
                 icon={<PhoneSecondaryIcon className="size-6" />}
                 subtitle={openingHours}
@@ -21,7 +25,11 @@ export const FooterContacts: FC = () => {
             />
 
             <FooterContact
-                ariaLabel={t('Write to us', { ns: 'accessibility' })}
+                ariaLabel={t('Write to us at {{ email }}. {{ emailSubtitle }}', {
+                    ns: 'accessibility',
+                    email,
+                    emailSubtitle,
+                })}
                 href="mailto:info@shopsys.cz"
                 icon={<MailSecondaryIcon className="size-6" />}
                 subtitle={emailSubtitle}

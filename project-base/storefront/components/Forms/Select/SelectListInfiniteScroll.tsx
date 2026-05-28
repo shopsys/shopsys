@@ -5,8 +5,9 @@ import InfiniteScroll, { Props as InfiniteScrollProps } from 'react-infinite-scr
 
 type SelectListInfiniteScrollProps = {
     infinityScrollConfig: Pick<InfiniteScrollProps, 'hasMore' | 'next' | 'dataLength'> & { pageSize: number };
-    listRef: RefObject<HTMLUListElement | null>;
+    listRef: RefObject<HTMLDivElement | null>;
     children: ReactNode;
+    listId?: string;
 };
 
 export const SelectListInfiniteScroll: FC<SelectListInfiniteScrollProps> = ({
@@ -14,6 +15,7 @@ export const SelectListInfiniteScroll: FC<SelectListInfiniteScrollProps> = ({
     infinityScrollConfig,
     listRef,
     children,
+    listId,
 }) => {
     return (
         <AnimateCollapseDiv
@@ -36,7 +38,9 @@ export const SelectListInfiniteScroll: FC<SelectListInfiniteScrollProps> = ({
                     </>
                 }
             >
-                <ul ref={listRef}>{children}</ul>
+                <div id={listId} ref={listRef} role="listbox">
+                    {children}
+                </div>
             </InfiniteScroll>
         </AnimateCollapseDiv>
     );

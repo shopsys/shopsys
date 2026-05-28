@@ -71,12 +71,12 @@
 
     h4,
     .h4 {
-        @apply text-base lg:text-lg;
+        @apply text-md lg:text-lg;
     }
 
     h5,
     .h5 {
-        @apply text-sm lg:text-base;
+        @apply text-sm lg:text-md;
     }
 
     h6,
@@ -102,11 +102,11 @@
     }
 
     p {
-        @apply text-sm wrap-break-word lg:text-base;
+        @apply text-sm wrap-break-word lg:text-md;
     }
 
     a {
-        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm text-sm underline hover:underline lg:text-base;
+        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm text-sm underline hover:underline lg:text-md;
     }
 
     b,

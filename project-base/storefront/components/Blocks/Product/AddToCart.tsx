@@ -63,6 +63,12 @@ export const AddToCart: FC<AddToCartProps> = ({
         priceWithVat: ariaPrice,
         unitName: ariaUnit,
     });
+    const fallbackAriaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }}', {
+        ns: 'accessibility',
+        productName: ariaProductName,
+        quantity: minQuantity,
+        unit: ariaUnit,
+    });
 
     return (
         <div className={twMergeCustom('flex items-center justify-between gap-2', className)}>
@@ -75,6 +81,30 @@ export const AddToCart: FC<AddToCartProps> = ({
                     ref={spinboxRef}
                     size={buttonSize}
                     step={1}
+                    ariaDescription={t('Type in a quantity for {{ productName }} or use the buttons to change it.', {
+                        ns: 'accessibility',
+                        productName: ariaProductName,
+                    })}
+                    ariaLabel={t('Quantity for {{ productName }}', {
+                        ns: 'accessibility',
+                        productName: ariaProductName,
+                    })}
+                    decreaseAriaLabel={t('Decrease quantity of {{ productName }}', {
+                        ns: 'accessibility',
+                        productName: ariaProductName,
+                    })}
+                    getValueAnnouncement={(currentValue) =>
+                        t('Quantity for {{ productName }} changed to {{ quantity }} {{ unit }}', {
+                            ns: 'accessibility',
+                            productName: ariaProductName,
+                            quantity: currentValue,
+                            unit: ariaUnit,
+                        })
+                    }
+                    increaseAriaLabel={t('Increase quantity of {{ productName }}', {
+                        ns: 'accessibility',
+                        productName: ariaProductName,
+                    })}
                 />
             )}
 
@@ -85,7 +115,7 @@ export const AddToCart: FC<AddToCartProps> = ({
 
                 <Button
                     aria-haspopup="dialog"
-                    aria-label={ariaLabel}
+                    aria-label={ariaLabel ?? fallbackAriaLabel}
                     disabled={isAddingToCart}
                     hasDisabledLook={isAddingToCart}
                     name="add-to-cart"

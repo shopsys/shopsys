@@ -79,6 +79,7 @@ export const useTransportChangeInSelect = (
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
     const { transport: currentTransport } = useCurrentCart();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
     const resetTransportAndPayment = async () => {
         await changeTransportHandler(null, null);
@@ -198,7 +199,7 @@ export const useTransportChangeInSelect = (
             clearPacketeryPickupPoint();
         }
 
-        updatePortalContent(null);
+        closePortalContent();
     };
 
     return {

@@ -3,11 +3,12 @@ import { twMergeCustom } from 'utils/twMerge';
 
 type WeblineProps = {
     wrapperClassName?: string;
-    width?: 'lg' | 'vl' | 'xl' | 'xxl';
+    width?: 'sm' | 'lg' | 'vl' | 'xl' | 'xxl';
 };
 
 export const Webline: FC<WeblineProps> = ({ children, tid, wrapperClassName, className, width = 'xl' }) => {
     const widthClasses = {
+        sm: 'vl:max-w-screen-sm',
         lg: 'vl:max-w-screen-lg',
         vl: 'vl:max-w-[840px]',
         xl: 'vl:max-w-screen-xl',

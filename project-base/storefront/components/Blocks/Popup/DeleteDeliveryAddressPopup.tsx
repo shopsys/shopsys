@@ -9,7 +9,7 @@ type DeleteDeliveryAddressPopupProps = {
 
 export const DeleteDeliveryAddressPopup: FC<DeleteDeliveryAddressPopupProps> = ({ deleteDeliveryAddressHandler }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
     return (
         <Popup
@@ -18,12 +18,7 @@ export const DeleteDeliveryAddressPopup: FC<DeleteDeliveryAddressPopupProps> = (
             title={t('Do you really want to delete this delivery address?')}
         >
             <div className="flex flex-row flex-nowrap justify-between">
-                <Button
-                    variant="inverted"
-                    onClick={() => {
-                        updatePortalContent(null);
-                    }}
-                >
+                <Button variant="inverted" onClick={closePortalContent}>
                     {t('No')}
                 </Button>
                 <Button onClick={deleteDeliveryAddressHandler}>{t('Yes')}</Button>

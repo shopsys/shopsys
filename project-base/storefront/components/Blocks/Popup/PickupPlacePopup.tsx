@@ -19,7 +19,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
     const { t } = useTranslation();
     const { pickupPlace } = useCurrentCart();
     const [selectedStoreUuid, setSelectedStoreUuid] = useState(pickupPlace?.identifier ?? '');
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const [{ data: transportStoresData, fetching: isFetchingTransportStores }] = useTransportStoresQuery({
         variables: { uuid: transportUuid },
     });
@@ -53,7 +53,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
             )}
 
             <div className="sticky -inset-4 mt-auto flex justify-between bg-background-default pt-3">
-                <Button variant="inverted" onClick={() => updatePortalContent(null)}>
+                <Button variant="inverted" onClick={closePortalContent}>
                     {t('Close')}
                 </Button>
 

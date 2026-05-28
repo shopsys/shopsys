@@ -120,10 +120,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                             </FormBlockWrapper>
 
                             <FormButtonWrapper>
-                                <SubmitButton
-                                    aria-label={t('Submit form to set your new password', { ns: 'accessibility' })}
-                                    hasDisabledCursor={!!error || newPasswordValue.length === 0}
-                                >
+                                <SubmitButton hasDisabledCursor={!!error || newPasswordValue.length === 0}>
                                     {t('Set new password')}
                                 </SubmitButton>
                             </FormButtonWrapper>

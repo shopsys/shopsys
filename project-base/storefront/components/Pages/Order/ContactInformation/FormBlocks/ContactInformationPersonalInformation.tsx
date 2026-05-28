@@ -38,13 +38,7 @@ export const ContactInformationPersonalInformation: FC = () => {
     });
 
     const openLoginPopup = () => {
-        updatePortalContent(
-            <LoginPopup
-                shouldOverwriteCustomerUserCart
-                defaultEmail={emailValue}
-                formHeading={t('Log in and continue with order')}
-            />,
-        );
+        updatePortalContent(<LoginPopup shouldOverwriteCustomerUserCart defaultEmail={emailValue} />);
     };
 
     const isEmailAlreadyRegistered =

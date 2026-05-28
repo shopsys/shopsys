@@ -26,7 +26,7 @@ type WatchdogPopupProps = {
 
 export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const user = useCurrentCustomerData();
     const [, createWatchdog] = useCreateWatchdogMutation();
     const domainConfig = useDomainConfig();
@@ -59,7 +59,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
             return;
         }
 
-        updatePortalContent(null);
+        closePortalContent();
         showSuccessMessage(t('Your watchdog has been created'));
 
         onGtmCreateWatchdotEventHandler(watchdogFormData, product, domainConfig, !canSeePrices, listIndex);
@@ -102,7 +102,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton aria-label={t('Submit form to send your watchdog', { ns: 'accessibility' })}>
+                            <SubmitButton aria-label={t('Send. Submit watchdog request', { ns: 'accessibility' })}>
                                 {t('Send')}
                             </SubmitButton>
                         </FormButtonWrapper>

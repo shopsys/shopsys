@@ -4,15 +4,18 @@ import { Popup } from 'components/Layout/Popup/Popup';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
-export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCustomerUserCart, formHeading }) => {
+export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCustomerUserCart }) => {
     const { t } = useTranslation();
+    const title = t('Log in and continue with order');
 
     return (
-        <Popup className="w-full max-w-md" contentClassName="overflow-y-auto" title={formHeading ?? t('Login')}>
-            <VerticalStack gap="sm">
+        <Popup className="w-full max-w-md" contentClassName="overflow-y-auto" isTitleHidden title={title}>
+            <VerticalStack gap="xs">
                 <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-background-most">
                     <UserIcon aria-hidden="true" className="size-7" focusable="false" />
                 </div>
+
+                <h4 className="text-center">{title}</h4>
 
                 <LoginForm
                     defaultEmail={defaultEmail}

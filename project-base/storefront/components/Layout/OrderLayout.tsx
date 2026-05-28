@@ -28,7 +28,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
                 <NotificationBars />
 
-                <header className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less lg:pb-6">
+                <header className="bg-background-brand lg:pb-6" id="site-header" tabIndex={-1}>
                     <Header simpleHeader />
                 </header>
 
@@ -36,6 +36,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     aria-label={t('Order process main content', { ns: 'accessibility' })}
                     className="mt-4 mb-10 flex flex-col"
                     id="main-content"
+                    tabIndex={-1}
                 >
                     <SkeletonManager
                         isFetchingData={!canContentBeDisplayed || isFetchingData}
@@ -46,10 +47,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     </SkeletonManager>
                 </main>
 
-                <footer
-                    aria-label={t('Site information', { ns: 'accessibility' })}
-                    className="mt-auto h-fit bg-background-accent-less"
-                >
+                <footer aria-label={t('Site information', { ns: 'accessibility' })} className="mt-auto h-fit">
                     <Footer simpleFooter />
                 </footer>
             </div>

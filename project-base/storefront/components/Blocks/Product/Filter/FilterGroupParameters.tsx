@@ -57,20 +57,23 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 
     const shownOptions = isCheckboxType ? parameter.values.slice(0, defaultNumberOfShownParameters) : [];
     const defaultOptions = isCheckboxType ? (isWithAllItemsShown ? parameter.values : shownOptions) : [];
+    const titleWithUnit = title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '');
+    const contentId = createAriaParameter('filter-group', titleWithUnit);
 
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
                 ariaLabel={t('Filter by parameter {{ parameterName }}', { ns: 'accessibility', parameterName: title })}
+                contentId={contentId}
                 isActive={isActive}
                 isOpen={!isGroupCollapsed}
-                title={title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '')}
+                title={titleWithUnit}
                 onClick={() => setIsGroupCollapsed(!isGroupCollapsed)}
             />
 
             <AnimatePresence initial={false}>
                 {!isGroupCollapsed && (
-                    <FilterGroupContent id={createAriaParameter('filter-group', title)}>
+                    <FilterGroupContent id={contentId}>
                         {isCheckboxType && (
                             <>
                                 {defaultOptions.map((parameterValueOption, index) => {
@@ -153,7 +156,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 maxValue={selectedParameter?.maximalValue ?? parameter.maximalValue}
                                 min={parameter.minimalValue}
                                 minValue={selectedParameter?.minimalValue ?? parameter.minimalValue}
-                                title={title}
+                                title={titleWithUnit}
                                 setMaxValueCallback={(value) =>
                                     updateFilterParametersQuery(
                                         parameter.uuid,

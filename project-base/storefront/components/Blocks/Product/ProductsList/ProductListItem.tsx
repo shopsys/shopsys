@@ -98,7 +98,6 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     draggable={false}
                     href={product.slug}
                     tabIndex={allowKeyboardFocus ? 0 : -1}
-                    title={t('Go to product page')}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     aria-label={t('Go to product page of {{ productName }}', {
                         ns: 'accessibility',

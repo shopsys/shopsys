@@ -63,7 +63,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     components={{
                         link: userConsentPolicyArticleUrl ? (
                             <ExtendedNextLink
-                                aria-labelledby="user-consent-policy-link"
+                                aria-describedby="user-consent-policy-link"
                                 href={userConsentPolicyArticleUrl}
                                 rel="noreferrer"
                                 tabIndex={0}
@@ -110,28 +110,15 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
             </div>
 
             <div className="flex flex-wrap justify-end gap-3">
-                <Button
-                    aria-label={t('Submit form to save your choices', { ns: 'accessibility' })}
-                    size="small"
-                    onClick={saveUserConsentChoices}
-                >
+                <Button size="small" onClick={saveUserConsentChoices}>
                     {t('Save choices')}
                 </Button>
 
-                <Button
-                    aria-label={t('Submit form to accept all choices', { ns: 'accessibility' })}
-                    size="small"
-                    onClick={giveFullUserConsent}
-                >
+                <Button size="small" onClick={giveFullUserConsent}>
                     {t('Accept all')}
                 </Button>
 
-                <Button
-                    aria-label={t('Submit form to reject all choices', { ns: 'accessibility' })}
-                    size="small"
-                    variant="inverted"
-                    onClick={rejectUserConsent}
-                >
+                <Button size="small" variant="inverted" onClick={rejectUserConsent}>
                     {t('Reject all')}
                 </Button>
             </div>

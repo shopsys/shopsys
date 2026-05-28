@@ -1,5 +1,19 @@
 import { useEffect } from 'react';
 
+const focusableElementsSelector = [
+    'button:not([disabled]):not([tabindex="-1"])',
+    'a[href]:not([tabindex="-1"])',
+    'input:not([disabled]):not([tabindex="-1"])',
+    'select:not([disabled]):not([tabindex="-1"])',
+    'textarea:not([disabled]):not([tabindex="-1"])',
+    '[tabindex]:not([tabindex="-1"])',
+].join(', ');
+
+const getFocusableElements = (container: HTMLElement): HTMLElement[] =>
+    Array.from(container.querySelectorAll<HTMLElement>(focusableElementsSelector)).filter(
+        (element) => !element.closest('[aria-hidden="true"]'),
+    );
+
 // prevents Tab/Shift+Tab from escaping modal, keeps focus within modal, essential for accessibility
 export const useFocusTrap = (containerRef: React.RefObject<HTMLElement | null> | undefined) => {
     useEffect(() => {
@@ -14,12 +28,15 @@ export const useFocusTrap = (containerRef: React.RefObject<HTMLElement | null> |
                 return;
             }
 
-            const focusableElements = container.querySelectorAll(
-                'button:not([tabindex="-1"]), a[href]:not([tabindex="-1"]), input:not([tabindex="-1"]), select:not([tabindex="-1"]), textarea:not([tabindex="-1"]), li:not([tabindex="-1"])',
-            );
+            if (!container.contains(document.activeElement)) {
+                e.preventDefault();
+                (getFocusableElements(container)[0] ?? container).focus();
+                return;
+            }
 
-            const firstElement = focusableElements[0] as HTMLElement | undefined;
-            const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement | undefined;
+            const focusableElements = getFocusableElements(container);
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
 
             if (!firstElement || !lastElement) {
                 return;
@@ -38,10 +55,20 @@ export const useFocusTrap = (containerRef: React.RefObject<HTMLElement | null> |
             }
         };
 
+        const keepFocusInside = (e: FocusEvent) => {
+            if (e.target instanceof Node && container.contains(e.target)) {
+                return;
+            }
+
+            (getFocusableElements(container)[0] ?? container).focus();
+        };
+
         document.addEventListener('keydown', trapFocus);
+        document.addEventListener('focusin', keepFocusInside);
 
         return () => {
             document.removeEventListener('keydown', trapFocus);
+            document.removeEventListener('focusin', keepFocusInside);
         };
     }, [containerRef]);
 };

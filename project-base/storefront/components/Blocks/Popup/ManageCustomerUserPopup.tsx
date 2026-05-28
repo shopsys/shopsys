@@ -35,7 +35,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     const { t } = useTranslation();
     const [, customerEditUser] = useEditCustomerUserPersonalDataMutation();
     const [, customerAddUser] = useAddNewCustomerUserMutation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const { canManageCompanyData, currentCustomerUserUuid: uuid } = useAuthorization();
     const customerUserData = getCustomerUser(customerUser);
     const isRoleGroupDisabled = !canManageCompanyData || (mode === 'edit' && customerUser?.uuid === uuid);
@@ -80,11 +80,11 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                 },
             });
 
-            updatePortalContent(null);
+            closePortalContent();
 
             if (editUserResult.data?.EditCustomerUserPersonalData !== undefined) {
                 showSuccessMessage(formMeta.messages.success);
-                updatePortalContent(null);
+                closePortalContent();
             }
 
             handleError(editUserResult.error);
@@ -109,7 +109,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
 
         if (addUserResult.data?.AddNewCustomerUser !== undefined) {
             showSuccessMessage(formMeta.messages.success);
-            updatePortalContent(null);
+            closePortalContent();
         }
 
         handleError(addUserResult.error);
@@ -218,14 +218,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton
-                                data-tid={TIDs.customer_users_manage_submit_button}
-                                aria-label={
-                                    mode === 'edit'
-                                        ? t('Submit form to save user changes', { ns: 'accessibility' })
-                                        : t('Submit form to add new user', { ns: 'accessibility' })
-                                }
-                            >
+                            <SubmitButton data-tid={TIDs.customer_users_manage_submit_button}>
                                 {mode === 'edit' ? t('Save user') : t('Add user')}
                             </SubmitButton>
                         </FormButtonWrapper>

@@ -3,7 +3,7 @@ type FooterContactProps = {
     title: string;
     subtitle: string;
     href: string;
-    ariaLabel: string;
+    ariaLabel?: string;
 };
 
 export const FooterContact: FC<FooterContactProps> = ({ icon, title, subtitle, href, ariaLabel }) => {

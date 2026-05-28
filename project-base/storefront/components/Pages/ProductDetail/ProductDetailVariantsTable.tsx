@@ -31,6 +31,7 @@ type ProductVariantsTableProps = {
 export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
 
     if (variants.length === 0) {
         return <p>{t('Currently, it is not possible to purchase any variant of this product.')}</p>;
@@ -72,6 +73,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                                 )}
                                 onClick={() => {
                                     if (variant.availability.status === TypeAvailabilityStatusEnum.InStock) {
+                                        storeCurrentFocus();
                                         updatePortalContent(
                                             <ProductVariantsAvailabilityPopup
                                                 storeAvailabilities={variant.storeAvailabilities}

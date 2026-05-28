@@ -21,6 +21,7 @@ type TextInputControlledProps = {
         | 'autoComplete'
         | 'className'
         | 'inputMode'
+        | 'aria-describedby'
         | 'aria-label'
         | 'aria-labelledby'
         | 'hasWarning'
@@ -44,6 +45,8 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
         field,
     } = useController({ name, control });
     const textInputId = `${formName}-${name}`;
+    const errorId = `${textInputId}-error`;
+    const describedBy = [textInputProps['aria-describedby'], error ? errorId : undefined].filter(Boolean).join(' ');
 
     const onBlurHandler: FocusEventHandler<HTMLInputElement> = (event) => {
         field.onBlur();
@@ -68,6 +71,8 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
             <TextInput
                 {...textInputProps}
                 {...field}
+                aria-describedby={describedBy || undefined}
+                aria-invalid={error ? true : undefined}
                 hasError={!!error}
                 hasWarning={textInputProps.hasWarning}
                 id={textInputId}
@@ -75,7 +80,12 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
                 onChange={onChangeHandler}
             />
             {!isWithoutFormLineError && (
-                <FormLineError error={error} inputType="text-input" textInputSize={textInputProps.inputSize} />
+                <FormLineError
+                    error={error}
+                    id={errorId}
+                    inputType="text-input"
+                    textInputSize={textInputProps.inputSize}
+                />
             )}
         </>
     );

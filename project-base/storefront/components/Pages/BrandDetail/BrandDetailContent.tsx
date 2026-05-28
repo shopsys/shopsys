@@ -48,6 +48,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                     className="flex flex-1 scroll-mt-5 flex-col gap-5"
                     id="product-list"
                     ref={paginationScrollTargetRef}
+                    tabIndex={-1}
                 >
                     <div className="flex vl:flex-col flex-col-reverse">
                         <DeferredFilterSelectedParameters filterOptions={productFilterOptions} />

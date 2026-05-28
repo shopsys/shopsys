@@ -11,10 +11,13 @@ export const createFocusManagementSlice: StateCreator<FocusManagementSlice> = (s
     storedFocusElement: null,
 
     storeCurrentFocus: () => {
-        const currentElement = document.activeElement as HTMLElement;
+        const currentElement = document.activeElement;
 
-        // Only store focus if the current element is a button
-        if (currentElement.tagName === 'BUTTON') {
+        if (
+            currentElement instanceof HTMLElement &&
+            currentElement !== document.body &&
+            !currentElement.closest('[role="dialog"], [role="alertdialog"]')
+        ) {
             set(() => ({
                 storedFocusElement: currentElement,
             }));
@@ -23,14 +26,14 @@ export const createFocusManagementSlice: StateCreator<FocusManagementSlice> = (s
 
     restoreStoredFocus: () => {
         const { storedFocusElement } = get();
-        if (storedFocusElement) {
+        if (storedFocusElement?.isConnected) {
             storedFocusElement.focus();
-
-            // Clear the stored focus after restoring
-            set(() => ({
-                storedFocusElement: null,
-            }));
         }
+
+        // Clear the stored focus after restoring
+        set(() => ({
+            storedFocusElement: null,
+        }));
     },
 
     clearStoredFocus: () => {

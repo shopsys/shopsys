@@ -30,7 +30,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
     const { t } = useTranslation();
     const [, editDeliveryAddress] = useEditDeliveryAddressMutation();
     const [, createDeliveryAddress] = useCreateDeliveryAddressMutation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
     const [formProviderMethods] = useDeliveryAddressForm({
         companyName: deliveryAddress?.companyName ?? '',
@@ -87,7 +87,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                 },
             });
 
-            updatePortalContent(null);
+            closePortalContent();
 
             if (editDeliveryAddressResult.error !== undefined) {
                 handleEditError(editDeliveryAddressResult.error);
@@ -106,7 +106,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
             },
         });
 
-        updatePortalContent(null);
+        closePortalContent();
 
         if (createDeliveryAddressResult.error !== undefined) {
             handleCreateError(createDeliveryAddressResult.error);
@@ -221,7 +221,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
 
                         <FormButtonWrapper>
                             <SubmitButton
-                                aria-label={t('Submit form to save delivery address', { ns: 'accessibility' })}
+                                aria-label={t('Save. Save delivery address', { ns: 'accessibility' })}
                                 tid={TIDs.delivery_address_form_submit_button}
                             >
                                 {t('Save')}

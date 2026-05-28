@@ -10,7 +10,7 @@ export const ErrorLayout: FC = ({ children }) => {
         <div className="flex h-full min-h-screen flex-col">
             <AccessibilityNavigation />
 
-            <header className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less">
+            <header className="bg-background-brand">
                 <Header simpleHeader />
             </header>
 
@@ -18,6 +18,7 @@ export const ErrorLayout: FC = ({ children }) => {
                 aria-label={t('Error page content', { ns: 'accessibility' })}
                 className="mt-4 mb-10 flex flex-col gap-4"
                 id="main-content"
+                tabIndex={-1}
             >
                 {children}
             </main>

@@ -34,7 +34,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 // see https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-sibling-state
                 className={twMergeCustom(
                     inputType === 'text-input' &&
-                        'pointer-events-none top-2 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:font-normal peer-focus:text-sm',
+                        'pointer-events-none top-2 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-md peer-focus:top-2 peer-focus:font-normal peer-focus:text-sm',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
                         'peer-focus:translate-none absolute left-3 z-2 block transform-none text-input-placeholder-default peer-placeholder-shown:-translate-y-1/2 peer-hover:text-input-placeholder-hovered peer-focus:text-input-placeholder-active peer-disabled:text-input-placeholder-disabled motion-safe:transition-all',
                     (inputType === 'checkbox' || inputType === 'radio') && [
@@ -52,7 +52,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         disabled && 'text-input-placeholder-disabled!',
                     ],
                     inputType === 'textarea' &&
-                        'top-1 bg-background-default pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:font-normal peer-focus:text-sm',
+                        'top-1 bg-background-default pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-md peer-focus:top-1 peer-focus:font-normal peer-focus:text-sm',
                     disabled && 'text-input-text-disabled',
                     className,
                 )}
@@ -101,9 +101,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         )}
                     </span>
 
-                    {!!count && !checked && (
-                        <span className="ml-auto font-normal text-input-placeholder-default">({count})</span>
-                    )}
+                    {!!count && !checked && <span className="ml-auto font-normal text-text-less">({count})</span>}
                 </span>
             </label>
         )}

@@ -158,10 +158,6 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                 <SubmitButton
                                     hasDisabledCursor={!formProviderMethods.formState.isValid}
                                     tid={TIDs.order_withdrawal_submit_button}
-                                    aria-label={t('Submit withdrawal request for order {{ orderNumber }}', {
-                                        ns: 'accessibility',
-                                        orderNumber: order.number,
-                                    })}
                                 >
                                     {t('Confirm withdrawal from contract')}
                                 </SubmitButton>

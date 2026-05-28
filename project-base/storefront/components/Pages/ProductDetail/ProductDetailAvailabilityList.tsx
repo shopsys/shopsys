@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { TypeSimpleStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/SimpleStoreAvailabilityFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductDetailAvailabilityListProps = {
@@ -14,41 +15,48 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
     return (
         <div className="vl:max-w-xl">
             <ul>
-                {storeAvailabilities.map(
-                    (storeAvailability) =>
-                        storeAvailability.store && (
-                            <li
-                                key={storeAvailability.store.slug}
-                                className="flex w-full items-center justify-between gap-4 border-border-default border-b py-4"
+                {storeAvailabilities.map((storeAvailability) => {
+                    if (!storeAvailability.store) {
+                        return null;
+                    }
+
+                    const availabilityId = createAriaParameter('store-availability', storeAvailability.store.storeName);
+
+                    return (
+                        <li
+                            key={storeAvailability.store.slug}
+                            className="flex w-full items-center justify-between gap-4 border-border-default border-b py-4"
+                        >
+                            <strong className="w-36">{storeAvailability.store.storeName}</strong>
+
+                            <span
+                                id={availabilityId}
+                                className={twJoin(
+                                    'flex-1 pr-3 text-sm',
+                                    storeAvailability.availabilityStatus === TypeAvailabilityStatusEnum.InStock &&
+                                        'text-availability-in-stock',
+                                    storeAvailability.availabilityStatus === TypeAvailabilityStatusEnum.OutOfStock &&
+                                        'text-availability-out-of-stock',
+                                )}
                             >
-                                <strong className="w-36">{storeAvailability.store.storeName}</strong>
+                                {storeAvailability.availabilityInformation}
+                            </span>
 
-                                <span
-                                    className={twJoin(
-                                        'flex-1 pr-3 text-sm',
-                                        storeAvailability.availabilityStatus === TypeAvailabilityStatusEnum.InStock &&
-                                            'text-availability-in-stock',
-                                        storeAvailability.availabilityStatus ===
-                                            TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
-                                    )}
-                                >
-                                    {storeAvailability.availabilityInformation}
-                                </span>
-
-                                <ExtendedNextLink
-                                    className="ml-auto flex items-center"
-                                    href={storeAvailability.store.slug}
-                                    type="store"
-                                    aria-label={t('Store detail for {{storeName}}', {
-                                        ns: 'accessibility',
-                                        storeName: storeAvailability.store.storeName,
-                                    })}
-                                >
-                                    {t('Store detail')}
-                                </ExtendedNextLink>
-                            </li>
-                        ),
-                )}
+                            <ExtendedNextLink
+                                aria-describedby={availabilityId}
+                                aria-label={t('Store detail for {{storeName}}', {
+                                    ns: 'accessibility',
+                                    storeName: storeAvailability.store.storeName,
+                                })}
+                                className="ml-auto flex items-center"
+                                href={storeAvailability.store.slug}
+                                type="store"
+                            >
+                                {t('Store detail')}
+                            </ExtendedNextLink>
+                        </li>
+                    );
+                })}
             </ul>
         </div>
     );

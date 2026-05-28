@@ -15,7 +15,7 @@ export const SocialNetworkLogin: FC<SocialNetworkLoginProps> = ({
     const productListUuids: string[] = Object.values(usePersistStore((store) => store.productListUuids));
 
     return (
-        <div className="flex gap-4">
+        <div className="flex w-full flex-col gap-3">
             {socialNetworks.map((socialNetwork) => {
                 const url = {
                     pathname: `/social-network/login/${socialNetwork}`,

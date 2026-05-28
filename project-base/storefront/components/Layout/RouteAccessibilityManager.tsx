@@ -29,6 +29,15 @@ export const RouteAccessibilityManager: FC<{ children: ReactNode }> = ({ childre
         updatePageLoadingState({
             isPageLoading: false,
         });
+
+        window.setTimeout(() => {
+            const pageStartElement =
+                document.getElementById('skip-navigation') ??
+                document.getElementById('site-header') ??
+                document.getElementById('main-content');
+
+            pageStartElement?.focus({ preventScroll: true });
+        });
     });
 
     const handleRouteChangeError = useEffectEvent((_err: Error, _url: string, options: { shallow: boolean }) => {

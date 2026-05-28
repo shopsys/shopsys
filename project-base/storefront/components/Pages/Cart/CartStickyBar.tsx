@@ -41,7 +41,7 @@ export const CartStickyBar: FC<CartStickyBarProps> = ({ originalButtonRef }) => 
         >
             <Webline>
                 <div className="flex items-center justify-between gap-4 py-4">
-                    <div className="hidden w-full lg:block lg:max-w-[424px]">
+                    <div className="hidden w-full lg:block lg:max-w-106">
                         <FreeTransportRange />
                     </div>
 

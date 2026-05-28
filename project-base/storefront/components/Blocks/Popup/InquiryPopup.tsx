@@ -23,7 +23,7 @@ type InquiryPopupProps = {
 
 export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const user = useCurrentCustomerData();
     const [, createInquiry] = useCreateInquiryMutation();
 
@@ -68,7 +68,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
             },
         });
 
-        updatePortalContent(null);
+        closePortalContent();
 
         if (createInquiryResult.error !== undefined) {
             handleError(createInquiryResult.error);
@@ -187,7 +187,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton aria-label={t('Submit form to send your inquiry', { ns: 'accessibility' })}>
+                            <SubmitButton aria-label={t('Send. Submit inquiry request', { ns: 'accessibility' })}>
                                 {t('Send')}
                             </SubmitButton>
                         </FormButtonWrapper>

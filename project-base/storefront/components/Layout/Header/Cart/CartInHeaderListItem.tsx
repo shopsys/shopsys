@@ -41,7 +41,6 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                             href={productSlug}
                             tabIndex={-1}
                             tid={TIDs.header_cart_list_item_image}
-                            title={t('Go to product page')}
                             type="product"
                             aria-label={t('Go to product page of {{ productName }}', {
                                 ns: 'accessibility',
@@ -61,7 +60,6 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                             className="flex-1 cursor-pointer font-secondary font-semibold text-sm text-text-default no-underline outline-hidden hover:text-link-default hover:underline"
                             href={productSlug}
                             tabIndex={0}
-                            title={t('Go to product page')}
                             type="product"
                             aria-label={t('Go to product page of {{ productName }}', {
                                 ns: 'accessibility',

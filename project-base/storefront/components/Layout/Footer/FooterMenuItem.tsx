@@ -4,6 +4,7 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { AnimatePresence } from 'framer-motion';
 import { TypeSimpleNotBlogArticleFragment } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.generated';
 import { useState } from 'react';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import { twMergeCustom } from 'utils/twMerge';
 
 type FooterMenuItemProps = {
@@ -13,6 +14,7 @@ type FooterMenuItemProps = {
 
 export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const contentId = createAriaParameter('footer-menu', title);
 
     const toggleExpanded = () => {
         setIsExpanded(!isExpanded);
@@ -36,7 +38,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
             {/* Mobile accordion layout */}
             <div className="rounded-xl bg-background-default px-5 py-4 lg:hidden">
                 <button
-                    aria-controls={`footer-menu-${title.toLowerCase().replace(/\s+/g, '-')}`}
+                    aria-controls={contentId}
                     aria-expanded={isExpanded}
                     className="flex w-full cursor-pointer items-center justify-between"
                     tabIndex={0}
@@ -53,26 +55,28 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
                     />
                 </button>
 
-                <AnimatePresence initial={false}>
-                    {isExpanded && (
-                        <AnimateCollapseDiv className="block!" keyName={`footer-menu-${title}`}>
-                            <ul className="space-y-5 pt-5">
-                                {items.map((item) => (
-                                    <li key={item.uuid}>
-                                        <FooterMenuItemLink item={item} />
-                                    </li>
-                                ))}
-                            </ul>
-                        </AnimateCollapseDiv>
-                    )}
-                </AnimatePresence>
+                <div id={contentId}>
+                    <AnimatePresence initial={false}>
+                        {isExpanded && (
+                            <AnimateCollapseDiv className="block!" keyName={`footer-menu-${title}`}>
+                                <ul className="space-y-5 pt-5">
+                                    {items.map((item) => (
+                                        <li key={item.uuid}>
+                                            <FooterMenuItemLink item={item} />
+                                        </li>
+                                    ))}
+                                </ul>
+                            </AnimateCollapseDiv>
+                        )}
+                    </AnimatePresence>
+                </div>
             </div>
         </>
     );
 };
 
 const FooterMenuItemTitle: FC<{ title: string }> = ({ title }) => {
-    return <h3 className="font-secondary font-semibold text-xs uppercase tracking-wider">{title}</h3>;
+    return <span className="font-secondary font-semibold text-xs uppercase tracking-wider">{title}</span>;
 };
 
 const FooterMenuItemLink: FC<{ item: TypeSimpleNotBlogArticleFragment }> = ({ item }) => {

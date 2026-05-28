@@ -61,7 +61,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer mb-0 h-12 w-full rounded-input border border-input-border-default bg-input-bg-default pr-20 pl-11 text-input-text-default placeholder:text-input-placeholder-default',
+                    'peer mb-0 h-12 w-full rounded-input border-2 border-input-border-default bg-input-bg-default pr-20 pl-11 text-input-text-default placeholder:text-input-placeholder-default',
                     '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:bg-input-bg-default! [&:-webkit-autofill]:shadow-inner!',
                     '[&:-webkit-autofill]:hover:bg-input-bg-hovered! [&:-webkit-autofill]:hover:shadow-inner!',
                     '[&:-webkit-autofill]:focus:bg-input-fill! [&:-webkit-autofill]:focus:shadow-inner!',

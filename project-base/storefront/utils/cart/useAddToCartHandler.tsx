@@ -28,11 +28,14 @@ export const useAddToCartHandler = ({
 }: UseAddToCartHandlerProps) => {
     const { addToCart, isAddingToCart } = useAddToCart(gtmMessageOrigin, gtmProductListName);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
 
     const onAddToCartHandler = async () => {
         if (isWithSpinbox && spinboxRef.current === null) {
             return;
         }
+
+        storeCurrentFocus();
 
         const spinboxElement = spinboxRef.current;
         let addedQuantity = 1;

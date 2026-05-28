@@ -62,7 +62,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
                 <NotificationBars />
 
-                <header className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less">
+                <header className="bg-background-brand" id="site-header" tabIndex={-1}>
                     <Header />
                     <DeferredNavigation />
                 </header>
@@ -70,6 +70,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 <main
                     className="mt-4 mb-10 flex flex-col"
                     id="main-content"
+                    tabIndex={-1}
                     aria-label={
                         title
                             ? t('Main content: {{pageTitle}}', { ns: 'accessibility', pageTitle: title })

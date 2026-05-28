@@ -44,6 +44,7 @@ export const SearchProducts: FC = () => {
                     className="flex flex-1 scroll-mt-5 flex-col gap-5"
                     id="product-list"
                     ref={paginationScrollTargetRef}
+                    tabIndex={-1}
                 >
                     <div className="flex vl:flex-col flex-col-reverse">
                         <DeferredFilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />

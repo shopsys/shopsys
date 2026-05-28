@@ -19,6 +19,7 @@ export const useComparison = () => {
     const { t } = useTranslation();
     const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
     const {
         clearProductListGtmContext,
         pushAddProductListGtmEvent,
@@ -62,6 +63,7 @@ export const useComparison = () => {
         gtmProductListName: GtmProductListNameType,
         listIndex?: number,
     ) => {
+        storeCurrentFocus();
         toggleProductInListWithGtm(product, gtmProductListName, listIndex, toggleProductInList);
     };
 

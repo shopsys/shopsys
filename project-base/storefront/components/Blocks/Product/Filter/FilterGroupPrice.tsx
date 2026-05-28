@@ -30,6 +30,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({
 
     const minPriceOption = getPriceRounded(initialMinPrice);
     const maxPriceOption = getPriceRounded(initialMaxPrice);
+    const contentId = createAriaParameter('filter-group', title);
 
     const setMinimalPrice = (value: number) => {
         if (minimalPrice !== value) {
@@ -47,6 +48,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({
         <FilterGroupWrapper>
             <FilterGroupTitle
                 ariaLabel={ariaLabel}
+                contentId={contentId}
                 isActive={isActive}
                 isOpen={isGroupOpen}
                 title={title}
@@ -54,7 +56,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({
             />
             <AnimatePresence initial={false}>
                 {isGroupOpen && (
-                    <FilterGroupContent id={createAriaParameter('filter-group', title)}>
+                    <FilterGroupContent id={contentId}>
                         <RangeSlider
                             max={maxPriceOption}
                             maxValue={maximalPrice || maxPriceOption}

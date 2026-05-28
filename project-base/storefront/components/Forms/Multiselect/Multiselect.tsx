@@ -107,7 +107,7 @@ export function MultiSelect<T extends string | number = string>({
 
     return (
         <div className={twMergeCustom('flex w-full flex-col gap-4', className)}>
-            {!comboBoxConfig && tooltip && <div className="mr-4 flex items-center text-sm lg:text-base">{tooltip}</div>}
+            {!comboBoxConfig && tooltip && <div className="mr-4 flex items-center text-sm lg:text-md">{tooltip}</div>}
             <div className={twMergeCustom('relative w-full', inputWrapperClassName)} ref={ref}>
                 <div
                     className={twMergeCustom(
@@ -128,7 +128,7 @@ export function MultiSelect<T extends string | number = string>({
                                 ref={inputRef}
                                 value={comboBoxConfig.searchValue}
                                 className={twJoin(
-                                    'size-full bg-transparent px-3 text-base! outline-hidden',
+                                    'size-full bg-transparent px-3 text-md! outline-hidden',
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
@@ -140,7 +140,7 @@ export function MultiSelect<T extends string | number = string>({
                                     'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || comboBoxConfig.searchValue || selectedOptions.length > 0
                                         ? 'top-[9px] text-sm'
-                                        : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-base',
+                                        : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                 )}
                             >
                                 {label}
@@ -161,7 +161,7 @@ export function MultiSelect<T extends string | number = string>({
                                     'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || selectedOptions.length > 0
                                         ? 'top-[9px] text-sm'
-                                        : 'top-1/2 -translate-y-1/2 font-semibold text-base',
+                                        : 'top-1/2 -translate-y-1/2 font-semibold text-md',
                                 )}
                             >
                                 {label}

@@ -13,6 +13,7 @@ type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputEl
 type PasswordInputProps = NativeProps & {
     label: ReactNode;
     inputSize?: 'small' | 'default';
+    'aria-describedby'?: string;
     'aria-label'?: string;
     'aria-labelledby'?: string;
 };
@@ -40,6 +41,8 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         field: { ref: fieldRef, value, onBlur, onChange },
     } = useController({ name, control });
     const passwordInputId = `${formName}-${name}`;
+    const errorId = `${passwordInputId}-error`;
+    const describedBy = [passwordInputProps['aria-describedby'], error ? errorId : undefined].filter(Boolean).join(' ');
 
     const [inputType, setInputType] = useState<'text' | 'password'>('password');
     const PasswordVisibilityIcon = inputType === 'text' ? EyeCrossedIcon : EyeIcon;
@@ -56,6 +59,8 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         <>
             <TextInput
                 required
+                aria-describedby={describedBy || undefined}
+                aria-invalid={error ? true : undefined}
                 aria-label={passwordInputProps['aria-label']}
                 aria-labelledby={passwordInputProps['aria-labelledby']}
                 autoComplete={passwordInputProps.autoComplete}
@@ -80,7 +85,12 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                     <PasswordVisibilityIcon className="size-6 text-icon-less group-hover:text-icon-default" />
                 </button>
             </TextInput>
-            <FormLineError error={error} inputType="text-input-password" textInputSize={passwordInputProps.inputSize} />
+            <FormLineError
+                error={error}
+                id={errorId}
+                inputType="text-input-password"
+                textInputSize={passwordInputProps.inputSize}
+            />
         </>
     );
 

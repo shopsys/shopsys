@@ -1,23 +1,32 @@
-import type { KeyboardEvent } from 'react';
+import type { KeyboardEvent, MouseEvent } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
 type AccessibleLinkProps = {
     title: string;
     href: string;
+    className?: string;
 };
 
 export const AccessibleLink: FC<AccessibleLinkProps> = ({ title, href, className }) => {
+    const focusTarget = () => {
+        const targetId = href.replace('#', '');
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+            targetElement.focus();
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
+    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        focusTarget();
+    };
+
     const handleKeyDown = (event: KeyboardEvent<HTMLAnchorElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-
-            const targetId = href.replace('#', '');
-            const targetElement = document.getElementById(targetId);
-
-            if (targetElement) {
-                targetElement.focus();
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            focusTarget();
         }
     };
 
@@ -26,10 +35,11 @@ export const AccessibleLink: FC<AccessibleLinkProps> = ({ title, href, className
             href={href}
             tabIndex={0}
             className={twMergeCustom(
-                'absolute left-0 -translate-x-6000 rounded-md focus-visible:top-0 focus-visible:translate-x-0',
-                'z-aboveOverlay w-full bg-bg-orange-500 p-2 text-center font-secondary font-semibold text-text-default no-underline',
+                'absolute top-0 left-0 z-aboveOverlay w-full translate-x-[-200vw] rounded-md bg-background-warning p-2 text-center font-secondary font-semibold text-text-default no-underline transition-transform',
+                'focus:translate-x-0 focus-visible:translate-x-0',
                 className,
             )}
+            onClick={handleClick}
             onKeyDown={handleKeyDown}
         >
             {title}

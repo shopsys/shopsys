@@ -463,10 +463,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton
-                                aria-label={t('Submit your complaint', { ns: 'accessibility' })}
-                                data-tid={TIDs.complaint_create_submit_button}
-                            >
+                            <SubmitButton data-tid={TIDs.complaint_create_submit_button}>
                                 {t('Send complaint')}
                             </SubmitButton>
                         </FormButtonWrapper>

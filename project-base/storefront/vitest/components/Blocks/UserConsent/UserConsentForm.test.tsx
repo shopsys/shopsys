@@ -62,7 +62,7 @@ describe('UserConsentForm', () => {
         render(<UserConsentForm />);
 
         fireEvent.click(screen.getByRole('switch', { name: 'Toggle marketing consent' }));
-        fireEvent.click(screen.getByRole('button', { name: 'Submit form to save your choices' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Save choices' }));
 
         expect(updateUserConsentMock).toHaveBeenCalledWith({
             marketing: true,

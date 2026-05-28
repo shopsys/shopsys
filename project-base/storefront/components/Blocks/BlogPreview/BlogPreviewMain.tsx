@@ -41,7 +41,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                             ) : (
                                 <>
                                     <ArticleDate
-                                        className="mr-3.5"
+                                        className="mr-3.5 text-secondary-300!"
                                         date={article.publishDate}
                                         tid={TIDs.blog_article_publication_date}
                                     />

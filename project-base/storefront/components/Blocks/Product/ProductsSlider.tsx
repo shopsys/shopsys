@@ -218,7 +218,9 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 </div>
             </div>
 
-            <div className="sr-only" id={ariaAnchorName} />
+            <span className="sr-only" id={ariaAnchorName} tabIndex={-1}>
+                {t('End of product slider', { ns: 'accessibility' })}
+            </span>
         </>
     );
 };

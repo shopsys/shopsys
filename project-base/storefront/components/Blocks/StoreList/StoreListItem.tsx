@@ -134,6 +134,10 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                             </InfoItem>
 
                             <LinkButton
+                                aria-label={t('Store detail for {{storeName}}', {
+                                    ns: 'accessibility',
+                                    storeName: store.name,
+                                })}
                                 href={store.slug}
                                 size="small"
                                 tid={TIDs.store_detail_link}

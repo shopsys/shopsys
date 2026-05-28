@@ -9,7 +9,7 @@ export const AccessibilityNavigation: FC<AccessibilityNavigationProps> = ({ simp
     const { t } = useTranslation();
 
     return (
-        <nav aria-label={t('Skip navigation', { ns: 'accessibility' })}>
+        <nav aria-label={t('Skip navigation', { ns: 'accessibility' })} id="skip-navigation" tabIndex={-1}>
             <ul>
                 <li>
                     <AccessibleLink href="#main-content" title={t('Skip to main content', { ns: 'accessibility' })} />
