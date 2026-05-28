@@ -63,7 +63,13 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
             $isPassing = false;
 
             if ($status === GithubActionsStatusReporter::STATUS_PENDING) {
-                $this->symfonyStyle->note(sprintf('"%s" package is still pending', $package));
+                $this->symfonyStyle->note(sprintf('"%s" package has no run yet for the current branch HEAD', $package));
+
+                continue;
+            }
+
+            if ($status === GithubActionsStatusReporter::STATUS_IN_PROGRESS) {
+                $this->symfonyStyle->note(sprintf('"%s" package is running on the current branch HEAD', $package));
 
                 continue;
             }

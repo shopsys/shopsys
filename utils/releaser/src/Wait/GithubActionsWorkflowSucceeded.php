@@ -78,7 +78,11 @@ final class GithubActionsWorkflowSucceeded implements WaitForExternalConditionIn
         }
 
         if ($this->lastStatus === GithubActionsStatusReporter::STATUS_PENDING) {
-            return 'workflow is pending or running on a stale SHA';
+            return 'no run yet for the current branch HEAD (either no run started, or the latest run is for an older commit)';
+        }
+
+        if ($this->lastStatus === GithubActionsStatusReporter::STATUS_IN_PROGRESS) {
+            return 'workflow is running on the current branch HEAD';
         }
 
         return sprintf('workflow concluded with "%s"', $this->lastStatus);

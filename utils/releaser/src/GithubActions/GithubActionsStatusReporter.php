@@ -12,6 +12,7 @@ use Throwable;
 final class GithubActionsStatusReporter
 {
     public const string STATUS_PENDING = 'pending';
+    public const string STATUS_IN_PROGRESS = 'in_progress';
     public const string STATUS_SUCCESS = 'success';
 
     private const string WORKFLOW_FILE = 'run-checks-tests.yaml';
@@ -214,7 +215,7 @@ final class GithubActionsStatusReporter
         $conclusion = $lastRun['conclusion'] ?? null;
 
         if (!is_string($conclusion) || $conclusion === '') {
-            return self::STATUS_PENDING;
+            return self::STATUS_IN_PROGRESS;
         }
 
         return $conclusion;

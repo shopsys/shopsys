@@ -82,6 +82,7 @@ final class GithubActionsRunSucceeded implements WaitForExternalConditionInterfa
         }
 
         $pendingCount = 0;
+        $inProgressCount = 0;
         $failing = [];
 
         foreach ($this->lastStatuses as $package => $status) {
@@ -95,17 +96,27 @@ final class GithubActionsRunSucceeded implements WaitForExternalConditionInterfa
                 continue;
             }
 
+            if ($status === GithubActionsStatusReporter::STATUS_IN_PROGRESS) {
+                $inProgressCount++;
+
+                continue;
+            }
+
             $failing[$package] = $status;
         }
 
-        if ($pendingCount === 0 && $failing === []) {
+        if ($pendingCount === 0 && $inProgressCount === 0 && $failing === []) {
             return sprintf('all %d packages green, awaiting confirmation', count($this->lastStatuses));
         }
 
         $parts = [];
 
         if ($pendingCount > 0) {
-            $parts[] = sprintf('%d pending', $pendingCount);
+            $parts[] = sprintf('%d awaiting new run for current SHA', $pendingCount);
+        }
+
+        if ($inProgressCount > 0) {
+            $parts[] = sprintf('%d running on current SHA', $inProgressCount);
         }
 
         if ($failing !== []) {
