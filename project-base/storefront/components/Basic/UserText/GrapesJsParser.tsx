@@ -18,8 +18,8 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = ({ text, visibleSliderIte
 
     return (
         <div className="[&>*:last-child_*:last-child]:mb-0">
-            {dividedParts.map((part) => {
-                const partKey = `part-${part.slice(0, 50)}`;
+            {dividedParts.map((part, index) => {
+                const partKey = `part-${index}-${part.slice(0, 50)}`;
 
                 if (part.match(/\[gjc-comp-(.*?)\]/g)) {
                     return (

@@ -71,6 +71,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                     </div>
                 )}
             </div>
+
             {isBlogSignpostOpen && (
                 <Overlay isHiddenOnDesktop isActive={isBlogSignpostOpen} onClick={() => setIsBlogSignpostOpen(false)} />
             )}
