@@ -9,11 +9,15 @@ const NavigationPlaceholder = dynamic(() =>
 );
 
 export const DeferredNavigation: FC = () => {
-    const [{ data: navigationData }] = useNavigationQuery();
+    const [{ data: navigationData, fetching: isNavigationFetching }] = useNavigationQuery();
     const shouldRender = useDeferredRender('navigation');
 
     if (!navigationData?.navigation.length) {
-        return null;
+        return isNavigationFetching ? (
+            <Webline className="relative">
+                <NavigationPlaceholder />
+            </Webline>
+        ) : null;
     }
 
     return (
