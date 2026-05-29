@@ -25,6 +25,59 @@
         {% endblock %}
     {% endembed %}
 
+    {% if orderDetailTabs %}
+        <div class="card" data-controller="order-detail-tabs">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                    {% for tab in orderDetailTabs %}
+                        {% set isActive = activeTab == tab.id %}
+                        {% set isDisabled = tab.isDisabled(order) %}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link {% if isActive %} active{% endif %}"
+                                    id="nav-{{ tab.id }}"
+                                    type="button"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#tab-{{ tab.id }}"
+                                    data-tab-id="{{ tab.id }}"
+                                    role="tab"
+                                    aria-controls="tab-{{ tab.id }}"
+                                    aria-selected="{{ isActive ? 'true' : 'false' }}"
+                                    {% if isDisabled %}disabled aria-disabled="true"{% endif %}
+                            >
+                                {{ tab.label }}
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-body p-0">
+                <div class="tab-content">
+                    {% for tab in orderDetailTabs %}
+                        {% set isActive = activeTab == tab.id %}
+                        {% set isDisabled = tab.isDisabled(order) %}
+                        <div class="tab-pane js-order-detail-tab-pane{% if isActive %} show active{% endif %} p-3"
+                             id="tab-{{ tab.id }}"
+                             role="tabpanel"
+                             aria-labelledby="nav-{{ tab.id }}"
+                                {% if not isDisabled %}
+                                    data-order-detail-tabs-target="pane"
+                                    data-order-detail-tabs-loaded-value="{{ isActive ? '1' : '0' }}"
+                                    data-order-detail-tabs-content-url-value="{{ url('admin_order_detail_tab_content', { id: order.id, tabId: tab.id }) }}"
+                                {% endif %}
+                        >
+                            {% if not isDisabled and isActive %}
+                                {% include '@ShopsysAdministration/content/order/detail/components/_tab_component.html.twig' with {
+                                    order: order,
+                                    tab: tab,
+                                } only %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     {% block order_detail_modals %}
         {% if canEdit %}
             {{ component('OrderDetail:SectionEditor', { orderId: order.id }) }}
