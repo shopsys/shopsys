@@ -1,0 +1,60 @@
+<div {{ attributes }}>
+    {% set canEdit = can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_ORDER')) %}
+
+    <div class="row row-cards mb-3">
+        <div class="col-12 col-lg-6 d-flex">
+            <div class="card h-100 w-100">
+                <div class="card-body d-flex flex-column gap-1">
+                    {% include '@ShopsysAdministration/content/order/detail/sections/basic_information_view.html.twig' with {
+                        order: this.order,
+                        orderStatuses: this.orderStatuses,
+                        canEdit: canEdit,
+                    } only %}
+
+                    <hr class="my-2">
+
+                    {{ component('OrderDetail:Section', {
+                        order: this.order,
+                        sectionId: 'tracking',
+                    }) }}
+
+                    <hr class="my-2">
+
+                    {{ component('OrderDetail:Section', {
+                        order: this.order,
+                        sectionId: 'note',
+                    }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6 d-flex">
+            <div class="card h-100 w-100">
+                <div class="card-body d-flex flex-column gap-1">
+                    {{ component('OrderDetail:Section', {
+                        order: this.order,
+                        sectionId: 'personal',
+                    }) }}
+
+                    <hr class="my-2">
+
+                    <div class="row gx-4">
+                        <div class="col-md-6 mb-3 mb-md-0 d-flex flex-column gap-1">
+                            {{ component('OrderDetail:Section', {
+                                order: this.order,
+                                sectionId: 'billingAddress',
+                            }) }}
+                        </div>
+
+                        <div class="col-md-6 d-flex flex-column gap-1">
+                            {{ component('OrderDetail:Section', {
+                                order: this.order,
+                                sectionId: 'deliveryAddress',
+                            }) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

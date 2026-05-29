@@ -1,0 +1,47 @@
+{% block section_content %}
+    <div class="subheader d-flex justify-content-between align-items-center mb-1">
+        {{ 'Payment & Transport'|trans }}
+        {{ component('OrderDetail:SectionEditButton', {
+            section: section,
+            canEdit: canEdit,
+        }) }}
+    </div>
+    <div>
+        <span class="text-secondary">{{ 'Payment'|trans }}:</span>
+        {{ order.payment.name }}
+
+        {% if order.payment.isGoPay %}
+            {% set goPayTransaction = order.lastGoPayTransaction %}
+            {% if goPayTransaction %}
+                <span class="ms-1 badge {{ goPayTransaction.externalPaymentStatus|gopay_payment_status_badge_class }}">
+                    {{ goPayTransaction.externalPaymentStatus|translate_payment_transaction_status }}
+                </span>
+                {% if goPayTransaction.externalPaymentSubStatus %}
+                    <span class="text-secondary small">
+                        {{ goPayTransaction.externalPaymentSubStatus|translate_payment_transaction_sub_status }}
+                    </span>
+                {% endif %}
+            {% else %}
+                <span class="badge bg-secondary-lt">{{ 'Order has not been sent to GoPay'|trans }}</span>
+            {% endif %}
+        {% endif %}
+
+        {% block basic_info_payment_extra %}
+            {# This block can be used to add more payment details #}
+        {% endblock %}
+    </div>
+    <div>
+        <span class="text-secondary">{{ 'Transport'|trans }}:</span>
+        {{ order.transport.name }}
+    </div>
+    <div class="text-secondary">
+        {{ 'Tracking'|trans }}: {{ order.trackingNumber ?: '-' }}
+    </div>
+    <div class="text-secondary">
+        {{ 'Delivered'|trans }}: {{ order.deliveredAt ? order.deliveredAt|formatDateTime : '-' }}
+    </div>
+
+    {% block basic_info_transport_extra %}
+        {# This block can be used to add more transport details #}
+    {% endblock %}
+{% endblock %}

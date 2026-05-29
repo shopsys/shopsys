@@ -1,0 +1,33 @@
+.switch-text {
+    display: inline-grid !important;
+
+    .switch-text-a,
+    .switch-text-b {
+        grid-area: 1 / 1;
+        transition: opacity .5s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .switch-text-a,
+        .switch-text-b {
+            transition: none;
+        }
+    }
+
+    .switch-text-b {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    &[aria-expanded='true'] {
+        .switch-text-a {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .switch-text-b {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}

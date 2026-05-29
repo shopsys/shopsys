@@ -439,19 +439,12 @@ final class OrderFormType extends AbstractType
             ->add('deliveryAddressSameAsBillingAddress', CheckboxType::class, [
                 'label' => 'Delivery address is the same as billing address',
                 'required' => false,
-                'attr' => [
-                    'data-checkbox-toggle-container-class' => 'js-delivery-address-fields',
-                    'class' => 'js-checkbox-toggle js-checkbox-toggle--inverted',
-                ],
             ])
             ->add(
                 $builderShippingAddressGroup
                     ->create('deliveryAddressFields', FormType::class, [
                         'inherit_data' => true,
                         'label' => false,
-                        'attr' => [
-                            'class' => 'js-delivery-address-fields',
-                        ],
                     ])
                     ->add('deliveryFirstName', TextType::class, [
                         'label' => 'First name',

@@ -1,0 +1,19 @@
+{% block section_content %}
+    <div class="subheader d-flex justify-content-between align-items-center mb-1">
+        {{ 'Note'|trans }}
+        {{ component('OrderDetail:SectionEditButton', {
+            section: section,
+            canEdit: canEdit,
+        }) }}
+    </div>
+
+    {% if order.note %}
+        <div class="text-secondary">
+            {{ order.note }}
+        </div>
+    {% endif %}
+
+    {% block basic_info_note_extra %}
+        {# This block can be used to add more details after the note #}
+    {% endblock %}
+{% endblock %}

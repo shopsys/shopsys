@@ -1,0 +1,33 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Order Nr.'|trans }} {{ order.number }}{% endblock %}
+
+{% block pre_title %}{{ 'Order detail'|trans }}{% endblock %}
+{% block h1 %}{{ 'Order Nr.'|trans }} {{ order.number }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ findUrlByDomainId('front_customer_order_detail_unregistered', { urlHash: order.urlHash }, order.domainId) }}" target="_blank" class="btn btn-outline-primary">
+        {{ ux_icon('forward-page') }}
+        {{ 'View order on Frontend'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {% set canEdit = can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_ORDER')) %}
+
+    {% block order_summary_bar %}
+        {{ component('OrderDetail:SummaryBar', { order: order }) }}
+    {% endblock %}
+
+    {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_order_list') }}" class="btn btn-ghost-secondary">{{ 'Back to overview'|trans }}</a>
+        {% endblock %}
+    {% endembed %}
+
+    {% block order_detail_modals %}
+        {% if canEdit %}
+            {{ component('OrderDetail:SectionEditor', { orderId: order.id }) }}
+        {% endif %}
+    {% endblock %}
+{% endblock %}
