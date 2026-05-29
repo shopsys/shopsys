@@ -1,0 +1,12 @@
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            id: 'js-order-detail-section-editor-form',
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'save',
+            'data-no-form-change-info': '',
+        }
+    }) }}
+        {% include this.formTemplate with { form: form } only %}
+    {{ form_end(form, { render_rest: false }) }}
+</div>
