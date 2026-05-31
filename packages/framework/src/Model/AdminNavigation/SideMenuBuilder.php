@@ -19,6 +19,7 @@ class SideMenuBuilder
     public const string LIST_TRANSFER_ISSUE = 'transferIssueList';
     public const string LIST_ORDER = 'orders';
     public const string EDIT_ORDER = 'edit';
+    public const string EDIT_ORDER_WITHDRAWAL_STATUS = 'edit_withdrawal_status';
     public const string LIST_INQUIRY = 'inquiries';
     public const string DETAIL_INQUIRY = 'detail';
     public const string ROOT_CUSTOMER = 'customers';
@@ -277,6 +278,11 @@ class SideMenuBuilder
 
         $menu->addChild(static::EDIT_ORDER, [
             'route' => 'admin_order_edit',
+            'label' => t('Editing order'),
+            'display' => false,
+        ]);
+        $menu->addChild(static::EDIT_ORDER_WITHDRAWAL_STATUS, [
+            'route' => 'admin_order_edit_withdrawal_status',
             'label' => t('Editing order'),
             'display' => false,
         ]);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 
 class WithdrawalRequestDataFactory
@@ -39,6 +40,23 @@ class WithdrawalRequestDataFactory
         $withdrawalRequestData->telephone = $withdrawalRequest->getTelephoneData();
         $withdrawalRequestData->note = $withdrawalRequest->getNote();
         $withdrawalRequestData->requestedAt = $withdrawalRequest->getRequestedAt();
+
+        return $withdrawalRequestData;
+    }
+
+    public function createFromWithdrawalRequestOrPrefilledFromOrder(
+        Order $order,
+        ?WithdrawalRequest $withdrawalRequest,
+    ): WithdrawalRequestData {
+        if ($withdrawalRequest !== null) {
+            return $this->createFromWithdrawalRequest($withdrawalRequest);
+        }
+
+        $withdrawalRequestData = $this->createInstance();
+        $withdrawalRequestData->firstName = $order->getFirstName();
+        $withdrawalRequestData->lastName = $order->getLastName();
+        $withdrawalRequestData->email = $order->getEmail();
+        $withdrawalRequestData->telephone = $order->getTelephoneData();
 
         return $withdrawalRequestData;
     }

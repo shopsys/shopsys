@@ -1,0 +1,55 @@
+{% block section_content %}
+    <div class="subheader d-flex justify-content-between align-items-center mb-3">
+        {{ 'Withdrawal request'|trans }}
+        {{ component('OrderDetail:SectionEditButton', {
+            section: section,
+            canEdit: canEdit,
+        }) }}
+    </div>
+
+    <div class="d-flex flex-column gap-4">
+        <section>
+            <h3 class="card-title mb-3">{{ 'Contact'|trans }}</h3>
+            <div class="d-flex flex-column gap-2">
+                {% if withdrawalRequest.firstName or withdrawalRequest.lastName %}
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-secondary d-inline-flex align-items-center">
+                            {{ ux_icon('person-man', { class: 'icon icon-sm' }) }}
+                        </span>
+                        <span>{{ withdrawalRequest.firstName }} {{ withdrawalRequest.lastName }}</span>
+                    </div>
+                {% endif %}
+
+                {% if withdrawalRequest.email %}
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-secondary d-inline-flex align-items-center">
+                            {{ ux_icon('letter-outline', { class: 'icon icon-sm' }) }}
+                        </span>
+                        <a href="mailto:{{ withdrawalRequest.email }}">{{ withdrawalRequest.email }}</a>
+                    </div>
+                {% endif %}
+
+                {% if withdrawalRequest.telephone %}
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-secondary d-inline-flex align-items-center">
+                            {{ ux_icon('phone', { class: 'icon icon-sm' }) }}
+                        </span>
+                        <a href="tel:{{ withdrawalRequest.telephone }}">{{ withdrawalRequest.telephone }}</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <section>
+            <h3 class="card-title mb-2">{{ 'Requested at'|trans }}</h3>
+            <div>{{ withdrawalRequest.requestedAt ? withdrawalRequest.requestedAt|formatDateTime : '-' }}</div>
+        </section>
+
+        {% if withdrawalRequest.note %}
+            <section>
+                <h3 class="card-title mb-2">{{ 'Note'|trans }}</h3>
+                <div>{{ withdrawalRequest.note|nl2br }}</div>
+            </section>
+        {% endif %}
+    </div>
+{% endblock %}

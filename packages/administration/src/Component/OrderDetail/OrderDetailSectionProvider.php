@@ -53,5 +53,13 @@ class OrderDetailSectionProvider implements OrderDetailSectionProviderInterface
             t('Edit delivery address'),
             t('Delivery address saved.'),
         );
+
+        yield new OrderDetailSection(
+            'withdrawal',
+            '@ShopsysAdministration/content/order/detail/sections/withdrawal_view.html.twig',
+            '@ShopsysAdministration/content/order/detail/sections/withdrawal_form.html.twig',
+            t('Edit withdrawal request'),
+            t('Withdrawal request saved.'),
+        );
     }
 }

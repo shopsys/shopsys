@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -50,6 +50,36 @@ class OrderDetailController extends AdminBaseController
             'orderDetailTabs' => $orderDetailTabs,
             'order' => $order,
             'activeTab' => $this->getActiveTabId($orderDetailTabs, $request->query->getString('activeTab'), $order),
+        ]);
+    }
+
+    #[Route(
+        path: '/order/edit/{id}/change-status/{statusId}/withdrawal',
+        requirements: ['id' => '\d+', 'statusId' => '\d+'],
+        methods: ['GET'],
+        name: 'admin_order_edit_withdrawal_status',
+    )]
+    #[CanEdit]
+    public function editWithdrawalStatusAction(Request $request, int $id, int $statusId): Response
+    {
+        $order = $this->orderFacade->getById($id);
+        $status = $this->orderStatusFacade->getById($statusId);
+
+        if ($status->getType() !== OrderStatusTypeEnum::TYPE_WITHDRAWN) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()]),
+        );
+
+        $orderDetailTabs = $this->orderDetailTabRegistry->getTabs($order);
+
+        return $this->render('@ShopsysAdministration/content/order/detail/edit_withdrawal_status.html.twig', [
+            'orderDetailTabs' => $orderDetailTabs,
+            'order' => $order,
+            'activeTab' => $this->getActiveTabId($orderDetailTabs, $request->query->getString('activeTab'), $order),
+            'withdrawalStatusId' => $statusId,
         ]);
     }
 
@@ -104,9 +134,20 @@ class OrderDetailController extends AdminBaseController
     #[CsrfProtection]
     public function changeStatusAction(int $id, int $statusId): Response
     {
+        $order = $this->orderFacade->getById($id);
         $status = $this->orderStatusFacade->getById($statusId);
 
-        $orderData = $this->orderDataFactory->createFromOrder($this->orderFacade->getById($id));
+        if ($status->getType() === OrderStatusTypeEnum::TYPE_WITHDRAWN) {
+            return $this->redirectToRoute(
+                'admin_order_edit_withdrawal_status',
+                [
+                    'id' => $id,
+                    'statusId' => $statusId,
+                ],
+            );
+        }
+
+        $orderData = $this->orderDataFactory->createFromOrder($order);
         $orderData->status = $status;
         $this->orderFacade->edit($id, $orderData);
         $this->addSuccessFlash(t('Order status has been changed.'));

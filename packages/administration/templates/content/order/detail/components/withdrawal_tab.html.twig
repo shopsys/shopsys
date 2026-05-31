@@ -1,0 +1,15 @@
+{% set withdrawalRequest = this.withdrawalRequest %}
+
+<div {{ attributes }}>
+    {% if withdrawalRequest %}
+        {{ component('OrderDetail:Section', {
+            orderId: this.orderId,
+            sectionId: 'withdrawal',
+            context: {
+                withdrawalRequest: withdrawalRequest,
+            },
+        }) }}
+    {% else %}
+        <div class="text-secondary">{{ 'No withdrawal request data.'|trans }}</div>
+    {% endif %}
+</div>

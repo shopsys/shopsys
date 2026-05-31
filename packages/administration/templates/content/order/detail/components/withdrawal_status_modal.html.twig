@@ -1,0 +1,47 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+<div {{ attributes }}>
+    {% embed '@ShopsysAdministration/content/order/detail/components/_modal.html.twig' with {
+        title: 'Withdrawal request'|trans,
+        dialogClass: 'modal-xl',
+    } %}
+        {% block close %}
+            <a href="{{ url('admin_order_edit', { id: this.orderId }) }}" class="btn-close" aria-label="{{ 'Close'|trans }}"></a>
+        {% endblock %}
+
+        {% block content %}
+            {{ form_start(form, {
+                attr: {
+                    'data-model': 'on(change)|*',
+                    'data-action': 'live#action:prevent',
+                    'data-live-action-param': 'save',
+                    'data-no-form-change-info': '',
+                }
+            }) }}
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        <div>
+                            <h4 class="alert-heading">{{ 'Order status is not changed yet!'|trans }}</h4>
+                            <div class="alert-description">
+                                {{ 'Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status.'|trans }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% include '@ShopsysAdministration/content/order/detail/sections/withdrawal_form.html.twig' with {
+                        withdrawalRequestDataForm: form,
+                    } only %}
+                    {{ form_rest(form) }}
+                </div>
+
+                <div class="modal-footer">
+                    <a href="{{ url('admin_order_edit', { id: this.orderId }) }}" class="btn btn-ghost-secondary">
+                        {{ 'Cancel'|trans }}
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        {{ 'Save'|trans }}
+                    </button>
+                </div>
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+</div>
