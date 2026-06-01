@@ -15,9 +15,6 @@ parameters:
         -
             identifier: symfonyContainer.privateService
             path: %currentWorkingDirectory%/packages/framework/src/DependencyInjection/Compiler/RegisterImageEntitiesCompilerPass.php
-        -
-            identifier: symfonyContainer.privateService
-            path: %currentWorkingDirectory%/packages/framework/src/Component/FlashMessage/FlashMessageTrait.php
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
         -
             message: '#^Unsafe usage of new static\(\).#'

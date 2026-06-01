@@ -77,6 +77,7 @@ ux_icons:
         question: 'tabler:question-mark'
         radius-bottom-left: 'tabler:radius-bottom-left'
         receipt-tax: 'tabler:receipt-tax'
+        refund: 'tabler:credit-card-refund'
         revert: 'tabler:arrow-back-up'
         schedule: 'tabler:clock-filled'
         search: 'tabler:search'

@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -36,9 +35,6 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
@@ -118,9 +114,6 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createStub(PaymentPriceCalculation::class),
             $this->createStub(TransportPriceCalculation::class),
             $this->createStub(OrderItemFactory::class),
-            $this->createStub(PaymentTransactionFacade::class),
-            $this->createStub(PaymentTransactionDataFactory::class),
-            $this->createStub(PaymentServiceFacade::class),
             $this->createStub(OrderItemDataFactory::class),
             $this->createStub(OrderDataFactory::class),
             $this->createStub(PricingSetting::class),
@@ -142,13 +135,10 @@ class OrderFacadeHeurekaTest extends TestCase
     private function createDomain(): Domain
     {
         $domainConfig = DomainConfigHelper::getDomainConfig();
-        $currentAdministratorStub = $this->createStub(CurrentAdministrator::class);
+        $domain = $this->createStub(Domain::class);
+        $domain->method('getDomainConfigById')->willReturn($domainConfig);
 
-        return new Domain(
-            [$domainConfig],
-            $this->createStub(Setting::class),
-            $currentAdministratorStub,
-        );
+        return $domain;
     }
 
     /**

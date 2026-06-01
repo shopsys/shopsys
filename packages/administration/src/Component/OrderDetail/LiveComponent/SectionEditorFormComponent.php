@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -61,11 +60,7 @@ class SectionEditorFormComponent
     #[CanEdit]
     public function save(): void
     {
-        try {
-            $this->submitForm();
-        } catch (UnprocessableEntityHttpException) {
-            return;
-        }
+        $this->submitForm();
 
         if ($this->orderData === null) {
             return;

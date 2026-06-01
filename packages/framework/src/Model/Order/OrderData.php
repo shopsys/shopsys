@@ -206,11 +206,6 @@ class OrderData
     public $goPayBankSwift;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData[]
-     */
-    public $paymentTransactionRefunds;
-
-    /**
      * @var bool
      */
     public $heurekaAgreement;
@@ -288,7 +283,6 @@ class OrderData
     public function __construct()
     {
         $this->deliveryAddressSameAsBillingAddress = false;
-        $this->paymentTransactionRefunds = [];
         $this->heurekaAgreement = false;
         $this->isCompanyCustomer = false;
         $this->freeTransportAndPaymentApplied = false;

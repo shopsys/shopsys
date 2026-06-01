@@ -7,8 +7,6 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionsType;
-use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionType;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCompanyNameType;
@@ -75,10 +73,6 @@ final class OrderFormType extends AbstractType
             ->add('orderItems', OrderItemsType::class, [
                 'order' => $order,
             ]);
-
-        if ($order->getPaymentTransactionsCount() > 0) {
-            $builder->add($this->createPaymentTransactionsGroup($builder, $order));
-        }
 
         $builder
             ->add('actionBar', ActionBarType::class, [
@@ -566,24 +560,6 @@ final class OrderFormType extends AbstractType
             ]);
 
         return $builderNoteGroup;
-    }
-
-    private function createPaymentTransactionsGroup(FormBuilderInterface $builder, Order $order): FormBuilderInterface
-    {
-        $builderPaymentGroup = $builder->create('paymentTransactionsGroup', GroupType::class, [
-            'label' => 'Payment transactions',
-        ]);
-
-        $builderPaymentGroup->add('paymentTransactionRefunds', PaymentTransactionsType::class, [
-            'entry_type' => PaymentTransactionType::class,
-            'error_bubbling' => false,
-            'allow_add' => false,
-            'allow_delete' => false,
-            'required' => false,
-            'order' => $order,
-        ]);
-
-        return $builderPaymentGroup;
     }
 
     private function createWithdrawalRequestGroup(

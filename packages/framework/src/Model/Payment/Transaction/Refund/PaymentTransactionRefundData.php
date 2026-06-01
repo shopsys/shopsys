@@ -15,14 +15,4 @@ class PaymentTransactionRefundData
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     public $refundedAmount;
-
-    /**
-     * @var bool
-     */
-    public $executeRefund;
-
-    public function __construct()
-    {
-        $this->executeRefund = false;
-    }
 }

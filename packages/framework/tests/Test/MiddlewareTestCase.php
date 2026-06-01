@@ -11,13 +11,12 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -41,7 +40,6 @@ class MiddlewareTestCase extends TestCase
     protected function createOrderProcessingData(): OrderProcessingData
     {
         $orderItemTypeEnum = new OrderItemTypeEnum();
-        $paymentTransactionRefundDataFactory = $this->createStub(PaymentTransactionRefundDataFactory::class);
         $orderItemDataFactory = $this->createStub(OrderItemDataFactory::class);
         $clockStub = $this->createStub(ClockInterface::class);
 
@@ -50,7 +48,6 @@ class MiddlewareTestCase extends TestCase
 
         $orderDataFactory = new OrderDataFactory(
             $orderItemDataFactory,
-            $paymentTransactionRefundDataFactory,
             $orderItemTypeEnum,
             $withdrawalRequestDataFactory,
             $withdrawalRequestFacade,
@@ -58,7 +55,7 @@ class MiddlewareTestCase extends TestCase
         );
         $orderData = $orderDataFactory->create();
 
-        $orderInput = new OrderInput($this->createDomainConfigStub());
+        $orderInput = (new OrderInputFactory())->create($this->createDomainConfigStub());
 
         return new OrderProcessingData($orderInput, $orderData);
     }

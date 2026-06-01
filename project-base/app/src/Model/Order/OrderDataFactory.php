@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as BaseOrderDataFactory
 
 /**
  * @property \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
- * @method __construct(\App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory, \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum, \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory, \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade, \Psr\Clock\ClockInterface $clock)
+ * @method __construct(\App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum, \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory, \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade, \Psr\Clock\ClockInterface $clock)
  * @method \App\Model\Order\OrderData create()
  * @method \App\Model\Order\OrderData createFromOrder(\App\Model\Order\Order $order)
  * @method \App\Model\Order\OrderData fillZeroPrices(\App\Model\Order\OrderData $orderData)
