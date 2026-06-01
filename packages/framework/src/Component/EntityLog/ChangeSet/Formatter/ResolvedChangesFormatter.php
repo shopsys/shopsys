@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter;
 
-class ResolvedChangesFormatter
+class ResolvedChangesFormatter extends AbstractChangeSetFormatter
 {
     public function __construct(
         protected readonly CollectionChangesFormatter $collectionChangesFormatter,
@@ -24,7 +24,7 @@ class ResolvedChangesFormatter
                 $formattedChanges[] = t(
                     'Collection %collectionAttribute% was changed:<br> %changes%',
                     [
-                        '%collectionAttribute%' => $attribute,
+                        '%collectionAttribute%' => $this->formatCode($attribute),
                         '%changes%' => $this->collectionChangesFormatter->formatChanges($changes),
                     ],
                 );
@@ -36,7 +36,7 @@ class ResolvedChangesFormatter
                 $formattedChanges[] = t(
                     'Attribute %attribute% was changed %changes%',
                     [
-                        '%attribute%' => $attribute,
+                        '%attribute%' => $this->formatCode($attribute),
                         '%changes%' => $this->dateTimeDataTypeFormatter->formatChanges($changes),
                     ],
                 );
@@ -48,7 +48,7 @@ class ResolvedChangesFormatter
                 $formattedChanges[] = t(
                     'Attribute %attribute% was changed %changes%',
                     [
-                        '%attribute%' => $attribute,
+                        '%attribute%' => $this->formatCode($attribute),
                         '%changes%' => $this->moneyDataTypeFormatter->formatChanges($changes),
                     ],
                 );
@@ -60,7 +60,7 @@ class ResolvedChangesFormatter
                 $formattedChanges[] = t(
                     'Attribute %attribute% was changed %changes%',
                     [
-                        '%attribute%' => $attribute,
+                        '%attribute%' => $this->formatCode($attribute),
                         '%changes%' => $this->booleanDataTypeFormatter->formatChanges($changes),
                     ],
                 );
@@ -71,7 +71,7 @@ class ResolvedChangesFormatter
             $formattedChanges[] = t(
                 'Attribute %attribute% was changed %changes%',
                 [
-                    '%attribute%' => $attribute,
+                    '%attribute%' => $this->formatCode($attribute),
                     '%changes%' => $this->scalarDataTypeFormatter->formatChanges($changes),
                 ],
             );

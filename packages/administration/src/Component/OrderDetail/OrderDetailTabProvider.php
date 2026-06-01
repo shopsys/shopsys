@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\OrderDetail;
 
 use Override;
+use Shopsys\AdministrationBundle\Component\OrderDetail\LiveComponent\HistoryTabComponent;
 use Shopsys\AdministrationBundle\Component\OrderDetail\LiveComponent\WithdrawalTabComponent;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
@@ -28,6 +29,13 @@ class OrderDetailTabProvider implements OrderDetailTabProviderInterface
             WithdrawalTabComponent::COMPONENT_NAME,
             10,
             visibleWhen: fn (Order $order): bool => $this->withdrawalRequestFacade->findByOrder($order) !== null,
+        );
+
+        yield new OrderDetailTab(
+            'history',
+            t('History'),
+            HistoryTabComponent::COMPONENT_NAME,
+            40,
         );
     }
 }

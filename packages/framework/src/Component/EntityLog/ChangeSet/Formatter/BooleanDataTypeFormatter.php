@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter;
 
-class BooleanDataTypeFormatter
+class BooleanDataTypeFormatter extends AbstractChangeSetFormatter
 {
     /**
      * @param array{oldReadableValue: bool, newReadableValue: bool, oldValue: bool, newValue: bool} $changes
      */
     public function formatChanges(array $changes): string
     {
-        $changes['oldReadableValue'] = $changes['oldValue'] ? t('Yes') : t('No');
-        $changes['newReadableValue'] = $changes['newValue'] ? t('Yes') : t('No');
+        $changes['oldReadableValue'] = $this->formatCode($changes['oldValue'] ? t('Yes') : t('No'));
+        $changes['newReadableValue'] = $this->formatCode($changes['newValue'] ? t('Yes') : t('No'));
 
-        return t('from "oldReadableValue" to "newReadableValue"', $changes);
+        return t('from oldReadableValue to newReadableValue', $changes);
     }
 }

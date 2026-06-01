@@ -194,7 +194,12 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $entityId = $orderFromDb->getId();
         $entityName = $this->entityLogFacade->getEntityNameByEntity($orderFromDb);
 
-        $this->orderItemFacade->addProductToOrder($entityId, 72);
+        $orderData = $this->orderDataFactory->createFromOrder($orderFromDb);
+        /** @var \App\Model\Order\Item\OrderItemData $orderItemData */
+        $orderItemData = $this->orderItemFacade->createProductOrderItemData($orderFromDb, 72);
+        $orderData->addItem($orderItemData);
+
+        $this->orderFacade->edit($entityId, $orderData);
 
         $logs = $this->entityLogRepository->getEntityLogsFromLastLogCollection($entityName, $entityId);
         $orderLogs = array_filter($logs, fn (EntityLog $log) => $log->getEntityName() === 'Order');
