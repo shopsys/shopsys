@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Payment\Transaction;
 use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
@@ -81,6 +82,7 @@ class PaymentTransaction
      * @var string|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $externalPaymentUrl;
 
