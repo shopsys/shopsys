@@ -15,7 +15,7 @@ export type TypeAdvertsQuery = { __typename?: 'Query', adverts: Array<{ __typena
 
 
 export const AdvertsQueryDocument = gql`
-    query AdvertsQuery($categoryUuid: Uuid, $positionNames: [String!]) {
+    query AdvertsQuery($categoryUuid: Uuid, $positionNames: [String!]) @redisCache(ttl: 3600) {
   adverts(categoryUuid: $categoryUuid, positionNames: $positionNames) {
     ...AdvertsFragment
   }

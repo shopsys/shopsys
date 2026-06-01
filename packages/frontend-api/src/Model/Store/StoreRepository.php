@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Store;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class StoreRepository
@@ -14,6 +15,7 @@ class StoreRepository
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+        protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
     ) {
     }
 
@@ -81,6 +83,8 @@ class StoreRepository
         $results = $queryBuilder->getQuery()->getResult();
 
         if ($storesFilterOptions->getCoordinates() === null) {
+            $this->eagerLoadRelations($domainId, $results);
+
             return $results;
         }
 
@@ -100,6 +104,32 @@ class StoreRepository
             $stores[$store->getId()] = $store;
         }
 
+        $this->eagerLoadRelations($domainId, array_values($stores));
+
         return $stores;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store[] $stores
+     */
+    protected function eagerLoadRelations(int $domainId, array $stores): void
+    {
+        if ($stores === []) {
+            return;
+        }
+
+        $storeIds = array_map(static fn (Store $store) => $store->getId(), $stores);
+
+        $this->entityManager->createQueryBuilder()
+            ->select('s, oh, ohr')
+            ->from(Store::class, 's')
+            ->leftJoin('s.openingHours', 'oh')
+            ->leftJoin('oh.openingHoursRanges', 'ohr')
+            ->where('s.id IN (:storeIds)')
+            ->setParameter('storeIds', $storeIds)
+            ->getQuery()
+            ->getResult();
+
+        $this->storeOpeningHoursProvider->preloadClosedDaysForStores($domainId, $stores);
     }
 }

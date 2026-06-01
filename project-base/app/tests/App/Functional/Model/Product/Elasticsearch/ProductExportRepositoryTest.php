@@ -86,6 +86,8 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'selling_from',
             'vat_percent',
             'promotion',
+            'is_promoted',
+            'top_product_position',
         ];
     }
 

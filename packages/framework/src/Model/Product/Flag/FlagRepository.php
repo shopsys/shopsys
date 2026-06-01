@@ -111,6 +111,10 @@ class FlagRepository
      */
     public function getFlagIdsByUuids(array $flagUuids): array
     {
+        if ($flagUuids === []) {
+            return [];
+        }
+
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('f.id')
             ->from(Flag::class, 'f')

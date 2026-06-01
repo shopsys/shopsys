@@ -11,6 +11,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[AsMcpTable]
 #[ORM\Table(name: 'seo_page_domains')]
 #[ORM\UniqueConstraint(name: 'seo_page_domain', columns: ['seo_page_id', 'domain_id'])]
+#[ORM\UniqueConstraint(name: 'idx_seo_page_domain_slug', columns: ['domain_id', 'page_slug'])]
 #[ORM\Entity]
 class SeoPageDomain
 {

@@ -15,7 +15,7 @@ export type TypeStoresQuery = { __typename?: 'Query', stores: { __typename: 'Sto
 
 
 export const StoresQueryDocument = gql`
-    query StoresQuery($searchText: String = null, $coordinates: Coordinates = null) {
+    query StoresQuery($searchText: String = null, $coordinates: Coordinates = null) @redisCache(ttl: 3600) {
   stores(searchText: $searchText, coordinates: $coordinates) {
     ...ListedStoreConnectionFragment
   }

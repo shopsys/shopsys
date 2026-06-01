@@ -37,9 +37,29 @@ services:
     Shopsys\FrontendApiBundle\Controller\SocialNetworkController:
         tags: [ 'controller.service_arguments' ]
 
+    Shopsys\FrontendApiBundle\Model\Blog\Category\BlogCategoryResolverMap:
+        arguments:
+            $blogCategorySlugBatchLoader: '@blog_category_slug_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
+    Shopsys\FrontendApiBundle\Model\Category\ReadyCategorySeoMixBatchLoader:
+        arguments:
+            $mainFriendlyUrlSlugCache: '@main_friendly_url_slug_cache'
+
     Shopsys\FrontendApiBundle\Model\Error\ErrorHandlerListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20 }
+
+    Shopsys\FrontendApiBundle\Model\Flag\FlagResolverMap:
+        arguments:
+            $flagSlugBatchLoader: '@flag_slug_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
+    Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlSlugBatchLoader:
+        arguments:
+            $mainFriendlyUrlSlugCache: '@main_friendly_url_slug_cache'
 
     Shopsys\FrontendApiBundle\Model\GraphqlConfigurator: ~
 
@@ -68,6 +88,12 @@ services:
         arguments:
             $articlesSearchResultsProviders: !tagged_iterator 'shopsys.frontend_api.articles_search_results_provider'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolverMap:
+        arguments:
+            $brandSlugBatchLoader: '@brand_slug_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
     Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProvider:
         tags:
             - { name: 'shopsys.frontend_api.brands_search_results_provider', priority: 1 }
@@ -80,6 +106,8 @@ services:
         arguments:
             $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
             $categoryChildrenBatchLoader: '@category_children_batch_loader'
+            $categorySlugBatchLoader: '@category_slug_batch_loader'
+            $categorySeoSlugBatchLoader: '@category_seo_slug_batch_loader'
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
@@ -161,6 +189,7 @@ services:
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
             $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
             $productsVisibleCountByIdsBatchLoader: '@products_visible_count_by_ids_batch_loader'
+            $productSlugBatchLoader: '@product_slug_batch_loader'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ParameterValueFilesQuery:
         arguments:
@@ -190,6 +219,12 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreAvailabilityResolverMap:
         arguments:
             $storesBatchLoader: '@stores_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreResolverMap:
+        arguments:
+            $storeSlugBatchLoader: '@store_slug_batch_loader'
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 

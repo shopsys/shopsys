@@ -571,6 +571,12 @@
                         "type": "integer"
                     }
                 }
+            },
+            "is_promoted": {
+                "type": "boolean"
+            },
+            "top_product_position": {
+                "type": "integer"
             }
         }
     }

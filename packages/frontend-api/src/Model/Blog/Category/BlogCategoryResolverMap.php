@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Blog\Category;
 
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -21,6 +22,7 @@ class BlogCategoryResolverMap extends ResolverMap
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
+        protected readonly DataLoaderInterface $blogCategorySlugBatchLoader,
     ) {
     }
 
@@ -42,7 +44,7 @@ class BlogCategoryResolverMap extends ResolverMap
                     return $blogCategory->getParent();
                 },
                 'slug' => function (BlogCategory $blogCategory) {
-                    return '/' . $this->friendlyUrlFacade->getMainFriendlyUrlSlug($this->domain->getId(), 'front_blogcategory_detail', $blogCategory->getId());
+                    return $this->blogCategorySlugBatchLoader->load($blogCategory->getId());
                 },
                 'link' => function (BlogCategory $blogCategory) {
                     return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain('front_blogcategory_detail', $blogCategory->getId());

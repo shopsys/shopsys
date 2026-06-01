@@ -9,14 +9,54 @@ const getHash = async (data: string): Promise<string> => {
     return crypto.createHash('md5').update(data).digest('hex').substring(0, 7);
 };
 
+const defaultPricingGroupByDomain = new Map<string, number>();
+
+const observeSettingsResponseForDefaultPricingGroup = (domainId: string | null, data: unknown): void => {
+    if (!domainId || typeof data !== 'object' || data === null) {
+        return;
+    }
+
+    const id = (data as { settings?: { defaultPricingGroupId?: unknown } }).settings?.defaultPricingGroupId;
+
+    if (typeof id === 'number') {
+        defaultPricingGroupByDomain.set(domainId, id);
+    }
+};
+
+const getAuthBucketFromHeaders = async (headers: Headers, domainId: string | null): Promise<string> => {
+    const authToken = headers.get('X-Auth-Token')?.replace(/^Bearer\s+/i, '');
+    const defaultPricingGroupId = (domainId && defaultPricingGroupByDomain.get(domainId)) ?? 0;
+    let pricingGroupId: number | string = defaultPricingGroupId;
+    let roles: string[] = [];
+
+    if (authToken) {
+        try {
+            const [, payloadSegment] = authToken.split('.');
+            const payload = JSON.parse(Buffer.from(payloadSegment, 'base64url').toString('utf8'));
+            pricingGroupId = payload?.pricingGroupId ?? defaultPricingGroupId;
+            roles = payload?.roles ?? [];
+        } catch {
+            // Malformed token — keep defaults.
+        }
+    }
+
+    const rolesHash = await getHash([...roles].sort().join(','));
+
+    return `pg${pricingGroupId}_r${rolesHash}`;
+};
+
 const FRIENDLY_URL_REGEXP = `@friendlyUrl` as const;
-const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)` as const;
+const CACHE_REGEXP = `@redisCache(?:PerPricingGroup)?\\(\\s?ttl:\\s?([0-9]*)\\s?\\)` as const;
+const PER_PRICING_GROUP_CACHE_REGEXP = `@redisCachePerPricingGroup\\(`;
 const QUERY_NAME_REGEXP = `query\\s([A-z]*)(\\([A-z:!0-9$,\\s]*\\))?\\s@redisCache`;
 const getRedisPrefixPattern = () => `${process.env.REDIS_PREFIX}:fe:queryCache:`;
 
 // For URL-encoded: %40redisCache%28ttl%3A%203600%29 -> %40redisCache followed by optional %28...%29
 // For unencoded: @redisCache(ttl: 3600) -> @redisCache followed by optional (...)
-const URL_CACHE_REGEXP = /%40redisCache%28.*?%29|@redisCache\([^)]*\)|%40redisCache|@redisCache/g;
+// Order matters: the variants that consume `(...)` must come before the bare ones so
+// `@redisCachePerPricingGroup(...)` is stripped whole instead of leaving `(ttl: ...)` behind.
+const URL_CACHE_REGEXP =
+    /%40redisCache(?:PerPricingGroup)?%28.*?%29|@redisCache(?:PerPricingGroup)?\([^)]*\)|%40redisCache(?:PerPricingGroup)?|@redisCache(?:PerPricingGroup)?/g;
 const URL_FRIENDLY_URL_REGEXP = /%40friendlyUrl|@friendlyUrl/g;
 
 const removeDirectiveFromQuery = (
@@ -102,13 +142,21 @@ export const fetcher =
             const headers = init.headers ? new Headers(init.headers) : new Headers();
             const host = headers.get('OriginalHost');
             const domainId = headers.get(DOMAIN_ID_HEADER);
+            const isPerPricingGroup = init.body.match(PER_PRICING_GROUP_CACHE_REGEXP) !== null;
+            const authBucket = isPerPricingGroup ? `${await getAuthBucketFromHeaders(headers, domainId)}:` : '';
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
-            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? `${domainId}:` : ''}`;
+            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? `${domainId}:` : ''}${authBucket}`;
             const hash = `${key}${await getHash(body)}`;
             const fromCache = await redisClient.get(hash);
 
             if (fromCache !== null) {
-                const response = new Response(JSON.stringify({ data: JSON.parse(fromCache) }), {
+                const data = JSON.parse(fromCache);
+
+                if (queryName === 'SettingsQuery') {
+                    observeSettingsResponseForDefaultPricingGroup(domainId, data);
+                }
+
+                const response = new Response(JSON.stringify({ data }), {
                     statusText: 'OK',
                     status: 200,
                     headers: { 'Content-Type': 'application/json' },
@@ -137,6 +185,10 @@ export const fetcher =
 
             if (res.data !== undefined && res.error === undefined) {
                 await redisClient.set(hash, JSON.stringify(res.data), { EX: ttl });
+
+                if (queryName === 'SettingsQuery') {
+                    observeSettingsResponseForDefaultPricingGroup(domainId, res.data);
+                }
             }
 
             return Promise.resolve(

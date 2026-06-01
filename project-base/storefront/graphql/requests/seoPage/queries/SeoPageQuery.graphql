@@ -1,4 +1,4 @@
-query SeoPageQuery($pageSlug: String!) {
+query SeoPageQuery($pageSlug: String!) @redisCache(ttl: 3600) {
     seoPage(pageSlug: $pageSlug) {
         ...SeoPageFragment
     }

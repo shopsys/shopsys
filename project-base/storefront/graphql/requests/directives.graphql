@@ -1,2 +1,6 @@
-# directive to cache the query server side in Redis, ttl is set in seconds
+# directive to cache the query server side in Redis, ttl is set in seconds.
+# Use @redisCache for queries whose response is identical for every user (no role-conditional
+# or pricing-group-conditional fields). Use @redisCachePerPricingGroup when the response varies
+# per customer (e.g. prices) — the cache key will be scoped by pricingGroup + roles.
 directive @redisCache(ttl: Int) on QUERY
+directive @redisCachePerPricingGroup(ttl: Int) on QUERY

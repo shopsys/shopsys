@@ -1,4 +1,4 @@
-query BrandsQuery {
+query BrandsQuery @redisCache(ttl: 3600) {
     brands {
         ...ListedBrandFragment
     }

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\DefaultSeoPageCannotBeDeletedException;
 
@@ -21,6 +22,7 @@ class SeoPageFacade
         protected readonly SeoPageRepository $seoPageRepository,
         protected readonly ImageFacade $imageFacade,
         protected readonly SeoPageFactory $seoPageFactory,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -32,6 +34,8 @@ class SeoPageFacade
         $this->em->flush();
 
         $this->imageFacade->manageImages($seoPage, $seoPageData->seoOgImage, self::IMAGE_TYPE_OG);
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SEO_PAGE_QUERY_KEY_PART);
 
         return $seoPage;
     }
@@ -46,6 +50,8 @@ class SeoPageFacade
 
         $this->imageFacade->manageImages($seoPage, $seoPageData->seoOgImage, self::IMAGE_TYPE_OG);
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SEO_PAGE_QUERY_KEY_PART);
+
         return $seoPage;
     }
 
@@ -59,6 +65,8 @@ class SeoPageFacade
 
         $this->em->remove($seoPage);
         $this->em->flush();
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SEO_PAGE_QUERY_KEY_PART);
     }
 
     public function getById(int $seoPageId): SeoPage

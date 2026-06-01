@@ -65,16 +65,21 @@ class SeoPageRepository
 
     public function findByDomainIdAndPageSlug(int $domainId, string $pageSlug): ?SeoPage
     {
-        $seoPage = $this->getSeoPageRepository()
+        $matchingSeoPageIdSubQueryDql = $this->em->createQueryBuilder()
+            ->select('IDENTITY(matchingSeoPageDomain.seoPage)')
+            ->from(SeoPageDomain::class, 'matchingSeoPageDomain')
+            ->where('matchingSeoPageDomain.domainId = :domainId')
+            ->andWhere('matchingSeoPageDomain.pageSlug = :pageSlug')
+            ->getDQL();
+
+        return $this->getSeoPageRepository()
             ->createQueryBuilder('sp')
+            ->select('sp, spd')
             ->join('sp.domains', 'spd')
-            ->where('spd.domainId = :domainId')
-            ->andWhere('spd.pageSlug = :pageSlug')
+            ->where('sp.id IN (' . $matchingSeoPageIdSubQueryDql . ')')
             ->setParameter('domainId', $domainId)
             ->setParameter('pageSlug', $pageSlug)
             ->getQuery()
-            ->getResult();
-
-        return array_first($seoPage);
+            ->getOneOrNullResult();
     }
 }

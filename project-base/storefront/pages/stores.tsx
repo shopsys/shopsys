@@ -15,7 +15,9 @@ const StoresWrapper = dynamic(() =>
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
-    const [{ data: storesData, fetching: isStoresFetching }] = useStoresQuery();
+    const [{ data: storesData, fetching: isStoresFetching }] = useStoresQuery({
+        variables: { searchText: null, coordinates: null },
+    });
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
 
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.stores, breadcrumbs);
@@ -33,7 +35,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
         async (context) =>
             initServerSideProps({
                 context,
-                prefetchedQueries: [{ query: StoresQueryDocument }],
+                prefetchedQueries: [{ query: StoresQueryDocument, variables: { searchText: null, coordinates: null } }],
                 redisClient,
                 domainConfig,
                 t,

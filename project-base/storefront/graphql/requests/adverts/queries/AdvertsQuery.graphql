@@ -1,4 +1,4 @@
-query AdvertsQuery($categoryUuid: Uuid, $positionNames: [String!]) {
+query AdvertsQuery($categoryUuid: Uuid, $positionNames: [String!]) @redisCache(ttl: 3600) {
     adverts(categoryUuid: $categoryUuid, positionNames: $positionNames) {
         ...AdvertsFragment
     }

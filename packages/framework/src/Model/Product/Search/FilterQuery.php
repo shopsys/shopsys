@@ -1137,6 +1137,33 @@ class FilterQuery
         return $clone;
     }
 
+    public function filterOnlyPromoted(): static
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'term' => [
+                'is_promoted' => true,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    public function applyOrderingByTopProductPosition(): static
+    {
+        $clone = clone $this;
+
+        $clone->sorting = [
+            'top_product_position' => [
+                'order' => 'asc',
+                'missing' => '_last',
+            ],
+        ];
+
+        return $clone;
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $sliderParametersData
      */

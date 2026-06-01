@@ -34,6 +34,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
  * @method \App\Model\Product\Search\FilterQuery filterByCategory(\App\Model\Product\Search\FilterQuery $filterQuery, \App\Model\Category\Category $category)
  * @method \App\Model\Product\Search\FilterQuery createSellableProductGiftsByProductIdsFilter(int[] $productIds, int|null $limit = null)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByProductIdsFilter(int[] $productIds, int|null $limit = null)
+ * @method \App\Model\Product\Search\FilterQuery createPromotedOnDomainFilter(int|null $limit = null)
  */
 class FilterQueryFactory extends BaseFilterQueryFactory
 {

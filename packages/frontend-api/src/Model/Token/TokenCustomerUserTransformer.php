@@ -9,6 +9,9 @@ use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 
 class TokenCustomerUserTransformer
 {
+    /**
+     * @return array{uuid: string, email: string, fullName: string, roles: string[], pricingGroupId: int}
+     */
     public function transform(CustomerUser $user): array
     {
         return [
@@ -16,6 +19,7 @@ class TokenCustomerUserTransformer
             FrontendApiUser::CLAIM_EMAIL => $user->getEmail(),
             FrontendApiUser::CLAIM_FULL_NAME => $user->getFullName(),
             FrontendApiUser::CLAIM_ROLES => $user->getRoles(),
+            FrontendApiUser::CLAIM_PRICING_GROUP_ID => $user->getPricingGroup()->getId(),
         ];
     }
 }

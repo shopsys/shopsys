@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Flag;
 
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
@@ -15,7 +15,7 @@ class FlagResolverMap extends ResolverMap
 {
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly DataLoaderInterface $flagSlugBatchLoader,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
     ) {
     }
@@ -32,23 +32,12 @@ class FlagResolverMap extends ResolverMap
                     return $flag->getName($this->domain->getLocale()) ?? '';
                 },
                 'slug' => function (Flag $flag) {
-                    return $this->getSlug($flag);
+                    return $this->flagSlugBatchLoader->load($flag->getId());
                 },
                 'hreflangLinks' => function (Flag $flag) {
                     return $this->hreflangLinksFacade->getForFlag($flag, $this->domain->getId());
                 },
             ],
         ];
-    }
-
-    protected function getSlug(Flag $flag): string
-    {
-        $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
-            $this->domain->getId(),
-            'front_flag_detail',
-            $flag->getId(),
-        );
-
-        return '/' . $friendlyUrlSlug;
     }
 }
