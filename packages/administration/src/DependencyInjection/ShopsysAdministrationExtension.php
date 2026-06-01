@@ -97,7 +97,13 @@ class ShopsysAdministrationExtension extends Extension implements PrependExtensi
         $themes = [];
 
         if (is_dir($themeDir)) {
-            foreach ($finder->files()->in($themeDir)->name('*.html.twig') as $file) {
+            $files = $finder
+                ->files()
+                ->in($themeDir)
+                ->name('*.html.twig')
+                ->notName('vertical.html.twig');
+
+            foreach ($files as $file) {
                 $themes[] = sprintf('@ShopsysAdministration/form/%s', $file->getRelativePathname());
             }
         }

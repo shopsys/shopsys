@@ -2,7 +2,7 @@
     {% set withdrawalRequestDataForm = form.basicInformationGroup.withdrawalRequestGroup.withdrawalRequestData %}
 {% endif %}
 
-{% form_theme withdrawalRequestDataForm 'bootstrap_5_layout.html.twig' %}
+{% form_theme withdrawalRequestDataForm '@ShopsysAdministration/form/vertical.html.twig' %}
 
 {% block section_content %}
     {{ form_row(withdrawalRequestDataForm.firstName) }}
