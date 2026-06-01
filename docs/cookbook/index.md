@@ -16,3 +16,4 @@
 - [Dump variables](./dump-variables.md)
 - [Create Asynchronous Notifier](./create-asynchronous-notifier.md)
 - [Adding a New Order Item Type](./adding-a-new-order-item-type.md)
+- [Extending Order Detail Page](./extending-order-detail-page.md)
