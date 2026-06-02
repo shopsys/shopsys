@@ -68,7 +68,7 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
             }
 
             foreach ($config->getActions() as $action) {
-                if ($action === ActionType::DELETE) {
+                if ($action->isSubMenuRouteItem() === false) {
                     continue;
                 }
 

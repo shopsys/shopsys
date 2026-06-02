@@ -51,6 +51,14 @@ enum ActionType: string
         };
     }
 
+    public function isSubMenuRouteItem(): bool
+    {
+        return match ($this) {
+            self::DETAIL, self::CREATE, self::EDIT => true,
+            self::LIST, self::DELETE => false,
+        };
+    }
+
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface> $handlerClass
      * @return array<\Shopsys\AdministrationBundle\Component\Config\ActionType>
