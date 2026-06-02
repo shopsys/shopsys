@@ -6,10 +6,11 @@ import registerTooltip from './utils/registerTooltip';
 
 function initSelect($container) {
     $container.filterAllNodes('select').each((_key, el) => {
+        const modalContent = el.closest('.modal-content');
         const settings = {
             allowEmptyOption: true,
             maxOptions: null,
-            dropdownParent: el.closest('.modal') ? null : 'body',
+            dropdownParent: modalContent ?? 'body',
             plugins: {
                 dropdown_input: {},
                 no_backspace_delete: {},
@@ -23,6 +24,10 @@ function initSelect($container) {
 
         const ts = new TomSelect(el, settings);
 
+        if (modalContent) {
+            positionModalSelectDropdown(ts);
+        }
+
         ts.control_input.addEventListener('keydown', evt => {
             if (evt.key === 'Tab') {
                 evt.preventDefault();
@@ -30,6 +35,27 @@ function initSelect($container) {
             }
         });
     });
+}
+
+function positionModalSelectDropdown(ts) {
+    ts.positionDropdown = () => {
+        const controlRect = ts.control.getBoundingClientRect();
+        const viewportPadding = 8;
+        const dropdownHeight = ts.dropdown.offsetHeight;
+        const spaceBelow = window.innerHeight - controlRect.bottom - viewportPadding;
+        const spaceAbove = controlRect.top - viewportPadding;
+        const shouldOpenUp = dropdownHeight > spaceBelow && spaceAbove > spaceBelow;
+        const top = shouldOpenUp
+            ? Math.max(viewportPadding, controlRect.top - Math.min(dropdownHeight, spaceAbove))
+            : controlRect.bottom;
+
+        Object.assign(ts.dropdown.style, {
+            position: 'fixed',
+            width: `${controlRect.width}px`,
+            left: `${controlRect.left}px`,
+            top: `${top}px`,
+        });
+    };
 }
 
 function focusNextTabableElement(referenceElement, reverse) {
