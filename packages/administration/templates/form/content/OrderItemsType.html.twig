@@ -12,27 +12,29 @@
                     <button type="button"
                             class="btn btn-sm btn-outline-primary js-order-items-add-product"
                             data-product-picker-url="{{ url('admin_productpicker_picksingle', { allowMainVariants: false }) }}"
+                            data-loading="addAttribute(disabled)"
                     >
                         {{ 'Add product'|trans }}
                     </button>
                     <button type="button"
                             class="btn btn-sm btn-outline-primary js-order-items-add-item"
+                            data-loading="addAttribute(disabled)"
                     >
                         {{ 'Add item'|trans }}
                     </button>
-                    <button type="button"
-                            class="btn btn-sm btn-outline-primary"
-                            data-action="live#action"
-                            data-live-action-param="switchToEdit"
-                    >
-                        {{ 'Edit items'|trans }}
-                    </button>
+                    {{ component('Admin:LiveActionButton', {
+                        action: 'switchToEdit',
+                        label: 'Edit items'|trans,
+                        buttonClass: 'btn btn-sm btn-outline-primary',
+                        preventDefault: false,
+                    }) }}
                 </div>
                 <div class="btn-list js-order-items-edit{% if not isEditMode %} d-none{% endif %}">
                     <button type="button"
                             id="js-order-item-add-product"
                             class="btn btn-sm btn-outline-primary js-order-items-add-product"
                             data-product-picker-url="{{ url('admin_productpicker_picksingle', { allowMainVariants: false }) }}"
+                            data-loading="addAttribute(disabled)"
                     >
                         {{ ux_icon('plus') }}
                         {{ 'Add product'|trans }}
@@ -40,6 +42,7 @@
                     <button type="button"
                             id="js-order-item-add"
                             class="btn btn-sm btn-outline-primary js-order-items-add-item"
+                            data-loading="addAttribute(disabled)"
                     >
                         {{ ux_icon('plus') }}
                         {{ 'Add item'|trans }}

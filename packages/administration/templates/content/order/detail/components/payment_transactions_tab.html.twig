@@ -61,14 +61,16 @@
                                 {% if canEdit %}
                                     <td class="text-end">
                                         {% if paymentTransaction.isRefundable %}
-                                            <button type="button"
-                                                    class="btn btn-outline-primary btn-sm"
-                                                    data-action="live#action"
-                                                    data-live-action-param="openRefundModal"
-                                                    data-live-payment-transaction-id-param="{{ paymentTransaction.id }}">
-                                                {{ ux_icon('refund') }}
-                                                {{ 'Manage refund'|trans }}
-                                            </button>
+                                            {{ component('Admin:LiveActionButton', {
+                                                action: 'openRefundModal',
+                                                label: 'Manage refund'|trans,
+                                                icon: 'refund',
+                                                buttonClass: 'btn btn-outline-primary btn-sm',
+                                                preventDefault: false,
+                                                liveParams: {
+                                                    'payment-transaction-id': paymentTransaction.id,
+                                                },
+                                            }) }}
                                         {% endif %}
                                     </td>
                                 {% endif %}
@@ -84,7 +86,8 @@
         <div class="modal modal-blur fade"
              tabindex="-1"
              data-controller="form-modal"
-             data-form-modal-open-value="{{ this.refundModalPaymentTransactionId ? '1' : '0' }}">
+             data-form-modal-open-value="{{ this.refundModalPaymentTransactionId ? '1' : '0' }}"
+             data-form-modal-pending-actions-value="{{ ['executeOnlineRefund', 'saveManualRefundedAmount']|json_encode }}">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     {% if this.refundModalPaymentTransactionId %}
@@ -156,11 +159,13 @@
 
                                 <div class="input-group input-group-flat">
                                     {{ form_widget(form.refundAmount) }}
-                                    <button type="submit"
-                                            class="btn btn-primary">
-                                        {{ ux_icon('revert') }}
-                                        {{ 'Send refund'|trans }}
-                                    </button>
+                                    {{ component('Admin:LiveActionButton', {
+                                        type: 'submit',
+                                        action: 'executeOnlineRefund',
+                                        label: 'Send refund'|trans,
+                                        loadingLabel: 'Sending refund...'|trans,
+                                        icon: 'revert',
+                                    }) }}
                                 </div>
                                 {{ form_errors(form.refundAmount) }}
                             </div>
@@ -170,12 +175,12 @@
                                 {{ form_label(form.refundedAmount, null, { label_attr: { class: 'form-label' } }) }}
                                 <div class="input-group input-group-flat">
                                     {{ form_widget(form.refundedAmount) }}
-                                    <button type="button"
-                                            class="btn btn-outline-primary"
-                                            data-action="live#action:prevent"
-                                            data-live-action-param="saveManualRefundedAmount">
-                                        {{ 'Save correction'|trans }}
-                                    </button>
+                                    {{ component('Admin:LiveActionButton', {
+                                        action: 'saveManualRefundedAmount',
+                                        label: 'Save correction'|trans,
+                                        loadingLabel: 'Saving correction...'|trans,
+                                        buttonClass: 'btn btn-outline-primary',
+                                    }) }}
                                 </div>
                                 {{ form_errors(form.refundedAmount) }}
                             </details>
@@ -188,12 +193,13 @@
                                     data-form-modal-target="closeTrigger"
                                     data-action="live#action"
                                     data-live-action-param="closeRefundModal"></button>
-                            <button type="button"
-                                    class="btn btn-ghost-secondary"
-                                    data-action="live#action"
-                                    data-live-action-param="closeRefundModal">
-                                {{ 'Close'|trans }}
-                            </button>
+                            {{ component('Admin:LiveActionButton', {
+                                action: 'closeRefundModal',
+                                label: 'Close'|trans,
+                                buttonClass: 'btn btn-ghost-secondary',
+                                loading: null,
+                                preventDefault: false,
+                            }) }}
                         </div>
                     {% endif %}
                 </div>

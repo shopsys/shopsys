@@ -69,6 +69,7 @@
             <a href="#"
                class="js-order-item-remove text-secondary{% if not canRemoveItem %} link-disabled{% endif %}"
                data-order-item-index="{{ orderItemId }}"
+               data-loading="addClass(disabled)"
             >
                 {{ ux_icon('trash', { class: 'icon icon-sm' }) }}
             </a>
@@ -86,7 +87,7 @@
         data-transport-vat-percents-by-transport-id="{{ transportVatPercentsByTransportId|json_encode() }}"
     >
         <td>
-            {{ form_widget(orderTransportForm.transport) }}
+            {{ form_widget(orderTransportForm.transport, { attr: { 'data-loading': 'addAttribute(disabled)' } }) }}
             {{ form_errors(orderTransportForm.transport) }}
         </td>
         <td class="text-end">-</td>
@@ -122,7 +123,7 @@
         data-payment-vat-percents-by-payment-id="{{ paymentVatPercentsByPaymentId|json_encode() }}"
     >
         <td>
-            {{ form_widget(orderPaymentForm.payment) }}
+            {{ form_widget(orderPaymentForm.payment, { attr: { 'data-loading': 'addAttribute(disabled)' } }) }}
             {{ form_errors(orderPaymentForm.payment) }}
         </td>
         <td class="text-end">-</td>

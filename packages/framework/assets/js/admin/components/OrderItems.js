@@ -17,6 +17,7 @@ export default class OrderItems {
         this.$form = this.$card.closest('form');
         this.$liveComponent = this.$card.closest('[data-controller~="live"]');
         this.liveComponentPromise = null;
+        this.pendingAction = false;
 
         if (this.$liveComponent.length === 0) {
             return;
@@ -68,9 +69,9 @@ export default class OrderItems {
             element.dataset.orderItemsProductPickerInitialized = '1';
             // eslint-disable-next-line no-new
             new ProductPicker($(element), async productId => {
-                const component = await this.getLiveComponent();
-                await component.action('addProduct', { productId: Number(productId) });
-                FormChangeInfo.showInfo();
+                if (await this.runLiveAction('addProduct', { productId: Number(productId) })) {
+                    FormChangeInfo.showInfo();
+                }
             });
         });
     }
@@ -78,24 +79,21 @@ export default class OrderItems {
     async addItem(event) {
         event.preventDefault();
 
-        const component = await this.getLiveComponent();
-
-        await component.action('addItem');
-        FormChangeInfo.showInfo();
+        if (await this.runLiveAction('addItem')) {
+            FormChangeInfo.showInfo();
+        }
     }
 
     async prefillTransport(event) {
-        const component = await this.getLiveComponent();
-
-        await component.action('prefillTransport', { transportId: Number($(event.currentTarget).val()) });
-        FormChangeInfo.showInfo();
+        if (await this.runLiveAction('prefillTransport', { transportId: Number($(event.currentTarget).val()) })) {
+            FormChangeInfo.showInfo();
+        }
     }
 
     async prefillPayment(event) {
-        const component = await this.getLiveComponent();
-
-        await component.action('prefillPayment', { paymentId: Number($(event.currentTarget).val()) });
-        FormChangeInfo.showInfo();
+        if (await this.runLiveAction('prefillPayment', { paymentId: Number($(event.currentTarget).val()) })) {
+            FormChangeInfo.showInfo();
+        }
     }
 
     onRemoveItemClick(event) {
@@ -103,7 +101,7 @@ export default class OrderItems {
 
         const $removeButton = $(event.currentTarget);
 
-        if ($removeButton.hasClass('link-disabled')) {
+        if (this.pendingAction || $removeButton.hasClass('link-disabled') || $removeButton.hasClass('disabled')) {
             return;
         }
 
@@ -114,12 +112,35 @@ export default class OrderItems {
                 itemName: itemName,
             }),
             continueEvent: async () => {
-                const component = await this.getLiveComponent();
+                if (
+                    !(await this.runLiveAction('removeItem', {
+                        itemIndex: $removeButton.data('order-item-index').toString(),
+                    }))
+                ) {
+                    return;
+                }
 
-                await component.action('removeItem', { itemIndex: $removeButton.data('order-item-index').toString() });
                 FormChangeInfo.showInfo();
             },
         });
+    }
+
+    async runLiveAction(actionName, actionArgs = {}) {
+        if (this.pendingAction) {
+            return false;
+        }
+
+        this.pendingAction = true;
+
+        try {
+            const component = await this.getLiveComponent();
+
+            await component.action(actionName, actionArgs);
+
+            return true;
+        } finally {
+            this.pendingAction = false;
+        }
     }
 
     getLiveComponent() {

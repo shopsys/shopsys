@@ -5,7 +5,10 @@
         dialogClass: 'modal-xl',
     } %}
         {% block close %}
-            <a href="{{ url('admin_order_edit', { id: this.orderId }) }}" class="btn-close" aria-label="{{ 'Close'|trans }}"></a>
+            <a href="{{ url('admin_order_edit', { id: this.orderId }) }}"
+               class="btn-close"
+               aria-label="{{ 'Close'|trans }}"
+            ></a>
         {% endblock %}
 
         {% block content %}
@@ -34,12 +37,17 @@
                 </div>
 
                 <div class="modal-footer">
-                    <a href="{{ url('admin_order_edit', { id: this.orderId }) }}" class="btn btn-ghost-secondary">
+                    <a href="{{ url('admin_order_edit', { id: this.orderId }) }}"
+                       class="btn btn-ghost-secondary"
+                    >
                         {{ 'Cancel'|trans }}
                     </a>
-                    <button type="submit" class="btn btn-primary">
-                        {{ 'Save'|trans }}
-                    </button>
+                    {{ component('Admin:LiveActionButton', {
+                        type: 'submit',
+                        action: 'save',
+                        label: 'Save'|trans,
+                        loadingLabel: 'Saving...'|trans,
+                    }) }}
                 </div>
             {{ form_end(form) }}
         {% endblock %}
