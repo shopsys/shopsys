@@ -1,167 +1,227 @@
 import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
-import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
+import { getComponent } from '@symfony/ux-live-component';
 import { Tooltip } from '@tabler/core';
 import Translator from 'bazinga-translator';
-import Ajax from '../../common/utils/Ajax';
 import { escapeHtml } from '../../common/utils/escapeHtml';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';
 import ProductPicker from './ProductPicker';
 
 export default class OrderItems {
-    static textDisabledClass = 'text-secondary';
+    static savedEventBound = false;
+    static liveComponentsWithRenderHook = new WeakSet();
 
     constructor($container) {
-        const $collection = $container.filterAllNodes('#js-order-items');
-        $collection.on('click', '.js-order-item-remove', event => this.onRemoveItemClick(event));
-        $container.filterAllNodes('#js-order-item-add').on('click', event => this.onAddItemClick(event));
+        this.$container = $container;
+        this.$card = $container.filterAllNodes('.js-order-items-card');
+        this.$form = this.$card.closest('form');
+        this.$liveComponent = this.$card.closest('[data-controller~="live"]');
+        this.liveComponentPromise = null;
 
-        this.tooltip = null;
-        this.refreshCount($collection);
-        // eslint-disable-next-line no-new
-        new ProductPicker($container.filterAllNodes('#js-order-item-add-product'), (productId, productName) => {
-            this.addProduct(productId, productName);
-        });
-    }
-
-    refreshCount($collection) {
-        const $items = $collection.find('.js-order-item');
-
-        if ($items.length === 1) {
-            const $orderItemRemoveButton = $items.find('.js-order-item-remove');
-
-            $orderItemRemoveButton.addClass(OrderItems.textDisabledClass);
-
-            this.tooltip = new Tooltip($orderItemRemoveButton, {
-                title: Translator.trans('Order must contain at least one item'),
-            });
-        } else {
-            $items.find('.js-order-item-remove').removeClass(OrderItems.textDisabledClass);
-
-            if (this.tooltip) {
-                this.tooltip.dispose();
-                this.tooltip = null;
-            }
+        if (this.$liveComponent.length === 0) {
+            return;
         }
+
+        this.bindEventHandlers();
+        this.initializeProductPickers();
+        this.registerLiveRenderHook();
+        OrderItems.initializeDynamicElements(this.$card);
     }
 
-    addProduct(productId, _productName) {
-        const $collection = $('#js-order-items');
-        Ajax.ajax({
-            url: $collection.data('order-product-add-url'),
-            method: 'POST',
-            data: {
-                productId: productId,
-            },
-            success: data => {
-                const $data = $($.parseHTML(data));
+    bindEventHandlers() {
+        this.$form.off('change.orderItems').on('change.orderItems', event => this.onFormChange(event));
+        this.$card
+            .off('click.orderItems', '.js-order-items-add-item')
+            .on('click.orderItems', '.js-order-items-add-item', event => this.addItem(event));
+        this.$card
+            .off('click.orderItems', '.js-order-item-remove')
+            .on('click.orderItems', '.js-order-item-remove', event => this.onRemoveItemClick(event));
+        this.$card
+            .off('change.orderItems', '.js-set-prices-manually')
+            .on('change.orderItems', '.js-set-prices-manually', event => {
+                OrderItems.onPriceCalculationChange($(event.currentTarget).closest('.js-order-item-any'));
+            });
+        this.$card
+            .off('change.orderItems', '.js-order-transport-row select')
+            .on('change.orderItems', '.js-order-transport-row select', event => this.prefillTransport(event));
+        this.$card
+            .off('change.orderItems', '.js-order-payment-row select')
+            .on('change.orderItems', '.js-order-payment-row select', event => this.prefillPayment(event));
+    }
 
-                const $orderItem = $data.filter('.js-order-item');
+    onFormChange(event) {
+        const $target = $(event.target);
 
-                $collection.append($orderItem);
-                new Register().registerNewContent($orderItem);
+        if ($target.is('.js-order-transport-row select, .js-order-payment-row select')) {
+            return;
+        }
+
+        FormChangeInfo.showInfo();
+    }
+
+    initializeProductPickers() {
+        this.$card.find('.js-order-items-add-product').each((_, element) => {
+            if (element.dataset.orderItemsProductPickerInitialized === '1') {
+                return;
+            }
+
+            element.dataset.orderItemsProductPickerInitialized = '1';
+            // eslint-disable-next-line no-new
+            new ProductPicker($(element), async productId => {
+                const component = await this.getLiveComponent();
+                await component.action('addProduct', { productId: Number(productId) });
                 FormChangeInfo.showInfo();
-
-                this.refreshCount($collection);
-
-                // eslint-disable-next-line no-new
-                new ModalWindow({
-                    content: Translator.trans('Product saved in order'),
-                });
-            },
-            error: () => {
-                // eslint-disable-next-line no-new
-                new ModalWindow({
-                    content: Translator.trans('Unable to add product'),
-                });
-            },
+            });
         });
+    }
+
+    async addItem(event) {
+        event.preventDefault();
+
+        const component = await this.getLiveComponent();
+
+        await component.action('addItem');
+        FormChangeInfo.showInfo();
+    }
+
+    async prefillTransport(event) {
+        const component = await this.getLiveComponent();
+
+        await component.action('prefillTransport', { transportId: Number($(event.currentTarget).val()) });
+        FormChangeInfo.showInfo();
+    }
+
+    async prefillPayment(event) {
+        const component = await this.getLiveComponent();
+
+        await component.action('prefillPayment', { paymentId: Number($(event.currentTarget).val()) });
+        FormChangeInfo.showInfo();
     }
 
     onRemoveItemClick(event) {
-        if (!$(event.currentTarget).hasClass(OrderItems.textDisabledClass)) {
-            const $item = $(event.currentTarget).closest('.js-order-item');
-            const $itemNameElement = $item.find('.js-order-item-name');
-            const itemName = escapeHtml($itemNameElement.val());
-
-            ConfirmWindow.show({
-                content: Translator.trans('Do you really want to remove item "<i>%itemName%</i>" from the order?', {
-                    itemName: itemName,
-                }),
-                continueEvent: () => {
-                    this.removeItem($item);
-                },
-            });
-        }
         event.preventDefault();
-    }
 
-    removeItem($item) {
-        const $collection = $item.closest('#js-order-items');
+        const $removeButton = $(event.currentTarget);
 
-        $item.remove();
+        if ($removeButton.hasClass('link-disabled')) {
+            return;
+        }
 
-        FormChangeInfo.showInfo();
-        this.refreshCount($collection);
-    }
+        const itemName = escapeHtml($removeButton.closest('.js-order-item').find('.js-order-item-name').val());
 
-    onAddItemClick() {
-        const $collection = $('#js-order-items');
+        ConfirmWindow.show({
+            content: Translator.trans('Do you really want to remove item "<i>%itemName%</i>" from the order?', {
+                itemName: itemName,
+            }),
+            continueEvent: async () => {
+                const component = await this.getLiveComponent();
 
-        this.addItem($collection);
-    }
-
-    addItem($collection) {
-        const prototype = $collection.data('prototype');
-        const index = this.getNewIndex($collection);
-
-        const item = prototype.replace(/__name__/g, index);
-        const $item = $($.parseHTML(item));
-        $item.data('index', index);
-
-        $collection.append($item);
-        new Register().registerNewContent($item);
-        FormChangeInfo.showInfo();
-
-        this.refreshCount($collection);
-    }
-
-    getNewIndex($collection) {
-        let maxIndex = 0;
-        const newItemIndex = 'new_';
-
-        $collection.find('.js-order-item').each(function () {
-            const indexStr = $(this).data('index').toString();
-            if (indexStr.indexOf(newItemIndex) === 0) {
-                const index = parseInt(indexStr.slice(4), 10);
-                if (index > maxIndex) {
-                    maxIndex = index;
-                }
-            }
+                await component.action('removeItem', { itemIndex: $removeButton.data('order-item-index').toString() });
+                FormChangeInfo.showInfo();
+            },
         });
+    }
 
-        return newItemIndex + (maxIndex + 1);
+    getLiveComponent() {
+        if (this.liveComponentPromise === null) {
+            this.liveComponentPromise = getComponent(this.$liveComponent[0]);
+        }
+
+        return this.liveComponentPromise;
+    }
+
+    async registerLiveRenderHook() {
+        const component = await this.getLiveComponent();
+
+        if (OrderItems.liveComponentsWithRenderHook.has(component.element)) {
+            return;
+        }
+
+        component.on('render:started', () => {
+            const $orderItemsCard = $(component.element).find('.js-order-items-card');
+            OrderItems.disposeSelects($orderItemsCard);
+            OrderItems.disposeTooltips($orderItemsCard);
+        });
+        component.on('render:finished', () => {
+            new Register().registerNewContent($(component.element));
+        });
+        OrderItems.liveComponentsWithRenderHook.add(component.element);
     }
 
     static onPriceCalculationChange($orderItem) {
         const setPricesManually = $orderItem.find('.js-set-prices-manually').is(':checked');
+        const $settingPricesManuallyWarning = $orderItem.find('.js-setting-prices-manually-warning');
 
         $orderItem.find('.js-calculable-price').prop('readonly', !setPricesManually);
-        $orderItem.find('.js-setting-prices-manually-warning').css('display', setPricesManually ? 'block' : 'none');
+
+        if (setPricesManually) {
+            $settingPricesManuallyWarning.removeClass('d-none');
+            OrderItems.initializeTooltips($settingPricesManuallyWarning);
+
+            return;
+        }
+
+        OrderItems.disposeTooltips($settingPricesManuallyWarning);
+        $settingPricesManuallyWarning.addClass('d-none');
+    }
+
+    static disposeTooltips($container) {
+        $container.filterAllNodes('[data-bs-toggle="tooltip"]').each(function () {
+            Tooltip.getInstance(this)?.dispose();
+        });
+    }
+
+    static disposeSelects($container) {
+        $container.filterAllNodes('select').each(function () {
+            this.tomselect?.destroy();
+        });
+    }
+
+    static initializeTooltips($container) {
+        $container.filterAllNodes('[data-bs-toggle="tooltip"]').each(function () {
+            Tooltip.getInstance(this)?.dispose();
+
+            const originalTitle = this.getAttribute('data-bs-original-title');
+
+            if (!this.getAttribute('title') && originalTitle) {
+                this.setAttribute('title', originalTitle);
+            }
+
+            new Tooltip(this);
+        });
+    }
+
+    static initializeDynamicElements($container) {
+        OrderItems.initializeTooltips($container);
+
+        $container.filterAllNodes('.js-order-item-any').each(function () {
+            OrderItems.onPriceCalculationChange($(this));
+        });
+    }
+
+    static bindSavedEvent() {
+        if (OrderItems.savedEventBound) {
+            return;
+        }
+
+        window.addEventListener('order-detail-items:saved', () => {
+            FormChangeInfo.removeInfo();
+        });
+        window.addEventListener('order-detail-items:cancelled', () => {
+            FormChangeInfo.removeInfo();
+        });
+        OrderItems.savedEventBound = true;
     }
 
     static init($container) {
+        OrderItems.bindSavedEvent();
+
+        if ($container.filterAllNodes('.js-order-items-card').length === 0) {
+            return;
+        }
+
         // eslint-disable-next-line no-new
         new OrderItems($container);
-
-        $container.filterAllNodes('.js-order-item-any').each(function () {
-            const $orderItem = $(this);
-
-            OrderItems.onPriceCalculationChange($orderItem);
-            $orderItem.find('.js-set-prices-manually').change(() => {
-                OrderItems.onPriceCalculationChange($orderItem);
-            });
-        });
     }
 }
 

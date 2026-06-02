@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\MessageType;
-use Shopsys\FrameworkBundle\Form\OrderItemsType;
 use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -69,10 +68,7 @@ final class OrderFormType extends AbstractType
             ->add($this->createCompanyDataGroup($builder))
             ->add($this->createBillingDataGroup($builder, $countries))
             ->add($this->createShippingAddressGroup($builder, $countries, $domainId))
-            ->add($this->createNoteGroup($builder))
-            ->add('orderItems', OrderItemsType::class, [
-                'order' => $order,
-            ]);
+            ->add($this->createNoteGroup($builder));
 
         $builder
             ->add('actionBar', ActionBarType::class, [
@@ -89,7 +85,9 @@ final class OrderFormType extends AbstractType
             ->setAllowedTypes('order', Order::class)
             ->setDefaults([
                 'data_class' => OrderData::class,
-                'attr' => ['novalidate' => 'novalidate'],
+                'attr' => [
+                    'novalidate' => 'novalidate',
+                ],
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 

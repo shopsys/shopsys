@@ -3,6 +3,7 @@ import { getComponent } from '@symfony/ux-live-component';
 import { Toast } from '@tabler/core';
 
 const flashMessagesHeader = 'X-Admin-Flash-Messages';
+const processedLiveResponses = new WeakSet();
 
 export default class extends Controller {
     static targets = ['stack'];
@@ -71,11 +72,19 @@ export default class extends Controller {
     }
 
     registerLiveComponentHooks(component) {
-        if (this.liveComponentHooks.has(component)) {
+        const componentElement = component.element;
+
+        if (this.liveComponentHooks.has(componentElement)) {
             return;
         }
 
         const renderStartedCallback = (_html, backendResponse) => {
+            if (processedLiveResponses.has(backendResponse.response)) {
+                return;
+            }
+
+            processedLiveResponses.add(backendResponse.response);
+
             const encodedToastHtml = backendResponse.response.headers.get(flashMessagesHeader);
 
             if (!encodedToastHtml) {
@@ -85,12 +94,12 @@ export default class extends Controller {
             this.addToastsFromHtml(this.decodeHeaderValue(encodedToastHtml));
         };
 
-        this.liveComponentHooks.set(component, renderStartedCallback);
+        this.liveComponentHooks.set(componentElement, { component, renderStartedCallback });
         component.on('render:started', renderStartedCallback);
     }
 
     unregisterLiveComponentHooks() {
-        this.liveComponentHooks.forEach((renderStartedCallback, component) => {
+        this.liveComponentHooks.forEach(({ component, renderStartedCallback }) => {
             component.off('render:started', renderStartedCallback);
         });
         this.liveComponentHooks.clear();
