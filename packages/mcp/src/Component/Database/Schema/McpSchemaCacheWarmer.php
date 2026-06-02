@@ -35,7 +35,7 @@ class McpSchemaCacheWarmer implements CacheWarmerInterface
         try {
             $this->mcpSchemaFileGenerator->generateSchemaFile();
         } catch (Throwable $throwable) {
-            $this->logger->warning('MCP schema generation during cache warmup failed.', [
+            $this->logger->error('MCP schema generation during cache warmup failed.', [
                 'schema_file_path' => $this->exposedSchemaProvider->getSchemaFilePath(),
                 'exception' => $throwable,
             ]);
