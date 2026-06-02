@@ -733,13 +733,10 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-msgid "Created %dataType%: \"%readableValue%\""
+msgid "Created %dataType%: %readableValue%"
 msgstr ""
 
 msgid "Created at"
-msgstr ""
-
-msgid "Created by administrator"
 msgstr ""
 
 msgid "Created on"
@@ -869,9 +866,6 @@ msgid "Date and time of order creation"
 msgstr ""
 
 msgid "Date of creation"
-msgstr ""
-
-msgid "Date of creation and privacy policy agreement"
 msgstr ""
 
 msgid "Date of publication"
@@ -1070,9 +1064,6 @@ msgid "Do you really want to remove status of complaint \"%name%\" permanently? 
 msgstr ""
 
 msgid "Do you really want to remove status of orders \"%name%\" permanently? It is not used anywhere."
-msgstr ""
-
-msgid "Do you really want to remove the order?"
 msgstr ""
 
 msgid "Do you really want to remove this SEO page?"
@@ -1345,9 +1336,6 @@ msgstr ""
 msgid "Editing order"
 msgstr ""
 
-msgid "Editing order - Nr. %number%"
-msgstr ""
-
 msgid "Editing page"
 msgstr ""
 
@@ -1454,9 +1442,6 @@ msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 1
 msgstr ""
 
 msgid "Entered code is not valid"
-msgstr ""
-
-msgid "Entered customer not found, please check entered data."
 msgstr ""
 
 msgid "Entity"
@@ -1741,13 +1726,7 @@ msgstr ""
 msgid "GoPay"
 msgstr ""
 
-msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
-msgstr ""
-
 msgid "GoPay payment method"
-msgstr ""
-
-msgid "GoPay payment status"
 msgstr ""
 
 msgid "Group"
@@ -1769,9 +1748,6 @@ msgid "Heureka"
 msgstr ""
 
 msgid "Heureka Widget code"
-msgstr ""
-
-msgid "Heureka agreement"
 msgstr ""
 
 msgid "Hidden"
@@ -1847,9 +1823,6 @@ msgid "If the slug contains non-ASCII characters (e.g. \"café\"), encode it as 
 msgstr ""
 
 msgid "If you allow negative stock, it is possible to order more items than are currently in stock."
-msgstr ""
-
-msgid "If you want execute refund, you have to setup refund amount."
 msgstr ""
 
 msgid "Image"
@@ -2320,12 +2293,6 @@ msgstr ""
 msgid "Order Nr."
 msgstr ""
 
-msgid "Order Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
-msgstr ""
-
-msgid "Order Nr. <strong>{{ number }}</strong> deleted"
-msgstr ""
-
 msgid "Order confirmation page"
 msgstr ""
 
@@ -2335,19 +2302,10 @@ msgstr ""
 msgid "Order date"
 msgstr ""
 
-msgid "Order detail"
-msgstr ""
-
 msgid "Order detail URL address"
 msgstr ""
 
-msgid "Order has not been sent to GoPay"
-msgstr ""
-
 msgid "Order information"
-msgstr ""
-
-msgid "Order must contain at least one item"
 msgstr ""
 
 msgid "Order number"
@@ -2381,9 +2339,6 @@ msgid "Orders"
 msgstr ""
 
 msgid "Orders value"
-msgstr ""
-
-msgid "Origin"
 msgstr ""
 
 msgid "Original translation"
@@ -2552,12 +2507,6 @@ msgid "Payment refunded"
 msgstr ""
 
 msgid "Payment successful page content"
-msgstr ""
-
-msgid "Payment transactions"
-msgstr ""
-
-msgid "Payment type"
 msgstr ""
 
 msgid "Payment was not paid in full"
@@ -2743,9 +2692,6 @@ msgstr ""
 msgid "Product question sent to customer"
 msgstr ""
 
-msgid "Product saved in order"
-msgstr ""
-
 msgid "Product settings on the main page successfully changed"
 msgstr ""
 
@@ -2830,6 +2776,12 @@ msgstr ""
 msgid "Redirect type"
 msgstr ""
 
+msgid "Refund amount"
+msgstr ""
+
+msgid "Refunded amount"
+msgstr ""
+
 msgid "Registration confirmation"
 msgstr ""
 
@@ -2839,7 +2791,7 @@ msgstr ""
 msgid "Remaining number of uses"
 msgstr ""
 
-msgid "Removed %dataType%: \"%readableValue%\""
+msgid "Removed %dataType%: %readableValue%"
 msgstr ""
 
 msgid "Replace file"
@@ -3059,9 +3011,6 @@ msgid "Selected navigation item does not exist."
 msgstr ""
 
 msgid "Selected notification bar does not exist"
-msgstr ""
-
-msgid "Selected order doesn't exist."
 msgstr ""
 
 msgid "Selected order status doesn't exist."
@@ -3347,9 +3296,6 @@ msgid "The selected country is not valid."
 msgstr ""
 
 msgid "The stock quantities are set for the product variants separately."
-msgstr ""
-
-msgid "There is a withdrawal request for this order."
 msgstr ""
 
 msgid "There was an error while saving. The order isn't saved."
@@ -3697,9 +3643,6 @@ msgstr ""
 msgid "You are allowed to set up two factor authentication only to yourself."
 msgstr ""
 
-msgid "You can refund only %refundableAmount%."
-msgstr ""
-
 msgid "You can set the categories on product detail of the main variant"
 msgstr ""
 
@@ -3772,7 +3715,7 @@ msgstr ""
 msgid "exists"
 msgstr ""
 
-msgid "from \"oldReadableValue\" to \"newReadableValue\""
+msgid "from oldReadableValue to newReadableValue"
 msgstr ""
 
 msgid "full"

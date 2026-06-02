@@ -1,0 +1,21 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Payment transaction is not refundable."
+msgstr ""
+
+msgid "Refund amount must be greater than zero."
+msgstr ""
+
+msgid "Refunded amount cannot be negative."
+msgstr ""
+
+msgid "You can refund only %refundableAmount%."
+msgstr ""
+
+msgid "You can set refunded amount only up to %paidAmount%."
+msgstr ""
+

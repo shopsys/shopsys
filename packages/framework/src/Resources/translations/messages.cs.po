@@ -733,14 +733,11 @@ msgstr "Vytvořit variantu"
 msgid "Created"
 msgstr "Vytvořena"
 
-msgid "Created %dataType%: \"%readableValue%\""
-msgstr "Vytvořen %dataType%: \"%readableValue%\""
+msgid "Created %dataType%: %readableValue%"
+msgstr "Vytvořen %dataType%: %readableValue%"
 
 msgid "Created at"
 msgstr "Vytvořeno dne"
-
-msgid "Created by administrator"
-msgstr "Vytvořeno administrátorem"
 
 msgid "Created on"
 msgstr "Vytvořeno dne"
@@ -870,9 +867,6 @@ msgstr "Datum a čas vytvoření objednávky"
 
 msgid "Date of creation"
 msgstr "Datum vytvoření"
-
-msgid "Date of creation and privacy policy agreement"
-msgstr "Datum vytvoření a dohody o ochraně osobních údajů"
 
 msgid "Date of publication"
 msgstr "Datum publikace"
@@ -1071,9 +1065,6 @@ msgstr "Opravdu si přejete trvale odstranit stav reklamace \"%name%\"? Nikde ne
 
 msgid "Do you really want to remove status of orders \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit stav objednávek \"%name%\"? Nikde není použitý."
-
-msgid "Do you really want to remove the order?"
-msgstr "Opravdu si přejete objednávku smazat?"
 
 msgid "Do you really want to remove this SEO page?"
 msgstr "Opravdu chcete smazat tuto SEO stránku?"
@@ -1345,9 +1336,6 @@ msgstr "Editace notifikační lišty"
 msgid "Editing order"
 msgstr "Editace objednávky"
 
-msgid "Editing order - Nr. %number%"
-msgstr "Editace objednávky - č. %number%"
-
 msgid "Editing page"
 msgstr "Editace stránky"
 
@@ -1455,9 +1443,6 @@ msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 10:
 
 msgid "Entered code is not valid"
 msgstr "Zadaný kód není platný"
-
-msgid "Entered customer not found, please check entered data."
-msgstr "Zadaný zákazník nebyl nalezen, prosím překontrolujte zadané údaje"
 
 msgid "Entity"
 msgstr "Entita"
@@ -1741,14 +1726,8 @@ msgstr "Dárkový produkt"
 msgid "GoPay"
 msgstr "GoPay"
 
-msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
-msgstr "GoPay API vrátilo chybu - jděte do administrace GoPay, najděte transakci %paymentId% a zkontrolujte, zda je vše v pořádku."
-
 msgid "GoPay payment method"
 msgstr "Platební metoda GoPay"
-
-msgid "GoPay payment status"
-msgstr "Stav platby GoPay"
 
 msgid "Group"
 msgstr "Skupina"
@@ -1770,9 +1749,6 @@ msgstr "Heureka"
 
 msgid "Heureka Widget code"
 msgstr "Kód Heureka Widgetu"
-
-msgid "Heureka agreement"
-msgstr "Souhlas s Heureka Ověřeno zákazníky"
 
 msgid "Hidden"
 msgstr "Skryté"
@@ -1848,9 +1824,6 @@ msgstr "Pokud slug obsahuje jiné než ASCII znaky (např. \"café\"), zakódujt
 
 msgid "If you allow negative stock, it is possible to order more items than are currently in stock."
 msgstr "Pokud povolíte nákup do mínusu, je možné objednat více položek, než je aktuálně na skladě."
-
-msgid "If you want execute refund, you have to setup refund amount."
-msgstr "Pokud chcete provést refundaci, musíte nastavit její výši."
 
 msgid "Image"
 msgstr "Obrázek"
@@ -2320,12 +2293,6 @@ msgstr "ID objednávky"
 msgid "Order Nr."
 msgstr "Objednávka č."
 
-msgid "Order Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
-msgstr "Byla upravena objednávka č. <strong><a href=\"{{ url }}\">{{ number }}</a></strong>"
-
-msgid "Order Nr. <strong>{{ number }}</strong> deleted"
-msgstr "Objednávka č. <strong>{{ number }}</strong> byla smazána"
-
 msgid "Order confirmation page"
 msgstr "Stránka s potvrzením objednávky"
 
@@ -2335,20 +2302,11 @@ msgstr "Nastavení obsahu stránky s potvrzením objednávky bylo upraveno"
 msgid "Order date"
 msgstr "Datum objednávky"
 
-msgid "Order detail"
-msgstr "Detail objednávky"
-
 msgid "Order detail URL address"
 msgstr "URL adresa detailu objednávky"
 
-msgid "Order has not been sent to GoPay"
-msgstr "Objednávka nebyla odeslána do GoPay"
-
 msgid "Order information"
 msgstr "Informace o objednávce"
-
-msgid "Order must contain at least one item"
-msgstr "Objednávka musí obsahovat alespoň jednu položku"
 
 msgid "Order number"
 msgstr "Číslo objednávky"
@@ -2382,9 +2340,6 @@ msgstr "Objednávky"
 
 msgid "Orders value"
 msgstr "Hodnota objednávek"
-
-msgid "Origin"
-msgstr "Původ"
 
 msgid "Original translation"
 msgstr "Původní překlad"
@@ -2553,12 +2508,6 @@ msgstr "Refundovaná platba"
 
 msgid "Payment successful page content"
 msgstr "Obsah stránky po dokončené platbě"
-
-msgid "Payment transactions"
-msgstr "Platební transakce"
-
-msgid "Payment type"
-msgstr "Typ platby"
 
 msgid "Payment was not paid in full"
 msgstr "Platba nebyla uhrazena v plné výši"
@@ -2743,9 +2692,6 @@ msgstr "Dotaz k produktu odeslaný administrátorovi"
 msgid "Product question sent to customer"
 msgstr "Dotaz k produktu odeslaný zákazníkovi"
 
-msgid "Product saved in order"
-msgstr "Zboží bylo uloženo do objednávky"
-
 msgid "Product settings on the main page successfully changed"
 msgstr "Nastavení zboží na titulce bylo úspěšně změněno."
 
@@ -2830,6 +2776,12 @@ msgstr "Cíl přesměrování"
 msgid "Redirect type"
 msgstr "Typ přesměrování"
 
+msgid "Refund amount"
+msgstr "Částka k refundaci"
+
+msgid "Refunded amount"
+msgstr "Refundovaná částka"
+
 msgid "Registration confirmation"
 msgstr "Potvrzení registrace"
 
@@ -2839,8 +2791,8 @@ msgstr "Související produkty"
 msgid "Remaining number of uses"
 msgstr "Zbývající počet použití"
 
-msgid "Removed %dataType%: \"%readableValue%\""
-msgstr "Smazáno %dataType%: \"%readableValue%\""
+msgid "Removed %dataType%: %readableValue%"
+msgstr "Smazáno %dataType%: %readableValue%"
 
 msgid "Replace file"
 msgstr "Nahradit soubor"
@@ -3060,9 +3012,6 @@ msgstr "Zvolená položka navigace neexistuje."
 
 msgid "Selected notification bar does not exist"
 msgstr "Vybraná notifikační lišta neexistuje"
-
-msgid "Selected order doesn't exist."
-msgstr "Zvolená objednávka neexistuje"
 
 msgid "Selected order status doesn't exist."
 msgstr "Zvolený stav objednávek neexistuje"
@@ -3348,9 +3297,6 @@ msgstr "Zvolená země není platná."
 
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
-
-msgid "There is a withdrawal request for this order."
-msgstr "Pro tuto objednávku evidujeme žádost o odstoupení od smlouvy."
 
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
@@ -3697,9 +3643,6 @@ msgstr "Můžete si vypnout dvoufaktorové ověření pouze pro sebe."
 msgid "You are allowed to set up two factor authentication only to yourself."
 msgstr "Můžete si zapnout dvoufaktorové ověření pouze pro sebe."
 
-msgid "You can refund only %refundableAmount%."
-msgstr "Mužete refundovat pouze %refundableAmount%."
-
 msgid "You can set the categories on product detail of the main variant"
 msgstr "Kategorie můžete nastavit na kartě hlavní varianty"
 
@@ -3772,8 +3715,8 @@ msgstr "prázdná hodnota"
 msgid "exists"
 msgstr "existuje"
 
-msgid "from \"oldReadableValue\" to \"newReadableValue\""
-msgstr "z \"oldReadableValue\" na \"newReadableValue\""
+msgid "from oldReadableValue to newReadableValue"
+msgstr "z oldReadableValue na newReadableValue"
 
 msgid "full"
 msgstr "Vše"
