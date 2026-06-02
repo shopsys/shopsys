@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-22.04
         strategy:
             matrix:
-                branches: ['12.0', '18.0', '19.0', '20.0']
+                branches: ['18.0', '19.0', '20.0']
             fail-fast: false
         steps:
             -   name: GIT checkout branch - ${{ matrix.branches }}
