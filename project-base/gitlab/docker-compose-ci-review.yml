@@ -55,6 +55,8 @@ services:
             GOOGLE_CLIENT_SECRET: ~
             SEZNAM_CLIENT_ID: ~
             SEZNAM_CLIENT_SECRET: ~
+            MCP_DATABASE_USER: shopsys_mcp
+            MCP_DATABASE_PASSWORD: shopsys_mcp
         labels:
             - traefik.enable=false
         networks:
@@ -83,6 +85,8 @@ services:
             GOOGLE_CLIENT_SECRET: ~
             SEZNAM_CLIENT_ID: ~
             SEZNAM_CLIENT_SECRET: ~
+            MCP_DATABASE_USER: shopsys_mcp
+            MCP_DATABASE_PASSWORD: shopsys_mcp
         networks:
             - default
             - services-network

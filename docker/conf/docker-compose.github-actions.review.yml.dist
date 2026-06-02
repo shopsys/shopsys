@@ -72,6 +72,8 @@ services:
             GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENTSECRET}"
             SEZNAM_CLIENT_ID: "${SEZNAM_CLIENTID}"
             SEZNAM_CLIENT_SECRET: "${SEZNAM_CLIENTSECRET}"
+            MCP_DATABASE_USER: shopsys_mcp
+            MCP_DATABASE_PASSWORD: shopsys_mcp
         networks:
             - default
         labels:
