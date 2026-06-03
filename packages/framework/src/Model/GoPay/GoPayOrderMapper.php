@@ -43,7 +43,6 @@ class GoPayOrderMapper
                     'front_order_paid',
                     [
                         'orderIdentifier' => $order->getUuid(),
-                        'orderPaymentStatusPageValidityHash' => $order->getOrderPaymentStatusPageValidityHash(),
                         'orderEmail' => $order->getEmail(),
                         'orderUrlHash' => $order->getUrlHash(),
                     ],

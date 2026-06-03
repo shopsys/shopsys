@@ -1,3 +1,0 @@
-mutation SetOrderPaymentStatusPageValidityHashMutation($orderUuid: Uuid!, $orderPaymentStatusPageValidityHash: String!) {
-    SetOrderPaymentStatusPageValidityHashMutation(orderUuid: $orderUuid, orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash)
-}

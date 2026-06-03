@@ -29,7 +29,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
-use Symfony\Component\Clock\DatePoint;
 
 #[AsMcpTable]
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
@@ -85,14 +84,6 @@ class Order
     #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
-
-    /**
-     * @var \DateTimeImmutable|null
-     */
-    #[AsMcpColumn]
-    #[ExcludeLog]
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    protected $orderPaymentStatusPageValidFrom;
 
     /**
      * @var \DateTimeImmutable|null
@@ -367,14 +358,6 @@ class Order
     protected $origin;
 
     /**
-     * @var string|null
-     */
-    #[AsMcpColumn(exposed: false)]
-    #[ExcludeLog]
-    #[ORM\Column(type: 'guid', nullable: true)]
-    protected $orderPaymentStatusPageValidityHash;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction>
      */
     #[ORM\OneToMany(targetEntity: PaymentTransaction::class, mappedBy: 'order', cascade: ['persist'])]
@@ -482,7 +465,6 @@ class Order
         $this->origin = $orderData->origin;
         $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
         $this->setTotalPrices(Price::zero(), Price::zero());
-        $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
@@ -906,19 +888,6 @@ class Order
     /**
      * @return \DateTimeImmutable|null
      */
-    public function getOrderPaymentStatusPageValidFrom()
-    {
-        return $this->orderPaymentStatusPageValidFrom;
-    }
-
-    public function setOrderPaymentStatusPageValidFromNow(): void
-    {
-        $this->orderPaymentStatusPageValidFrom = new DatePoint();
-    }
-
-    /**
-     * @return \DateTimeImmutable|null
-     */
     public function getDeliveredAt()
     {
         return $this->deliveredAt;
@@ -1304,19 +1273,6 @@ class Order
         return new OrderEditResult($statusChanged);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getOrderPaymentStatusPageValidityHash()
-    {
-        return $this->orderPaymentStatusPageValidityHash;
-    }
-
-    public function setOrderPaymentStatusPageValidityHashToNull(): void
-    {
-        $this->orderPaymentStatusPageValidityHash = null;
-    }
-
     public function getTotalProductsPrice(): PriceInterface
     {
         return new Price($this->totalProductPriceWithoutVat, $this->totalProductPriceWithVat);
@@ -1391,19 +1347,6 @@ class Order
     public function getCustomer()
     {
         return $this->customer;
-    }
-
-    public function resetOrderPaymentStatusPageValidityHash(): void
-    {
-        $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
-    }
-
-    /**
-     * @param string $orderPaymentStatusPageValidityHash
-     */
-    public function setOrderPaymentStatusPageValidityHash($orderPaymentStatusPageValidityHash): void
-    {
-        $this->orderPaymentStatusPageValidityHash = $orderPaymentStatusPageValidityHash;
     }
 
     public function isCompanyCustomer(): bool

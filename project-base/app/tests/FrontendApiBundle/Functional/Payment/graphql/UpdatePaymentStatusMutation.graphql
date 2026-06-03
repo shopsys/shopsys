@@ -1,5 +1,5 @@
-mutation UpdatePaymentStatus($orderUuid: Uuid!, $orderPaymentStatusPageValidityHash: String = null) {
-    UpdatePaymentStatus(orderUuid: $orderUuid, orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash) {
+mutation UpdatePaymentStatus($orderUuid: Uuid!) {
+    UpdatePaymentStatus(orderUuid: $orderUuid) {
         isPaid
         items {
             type

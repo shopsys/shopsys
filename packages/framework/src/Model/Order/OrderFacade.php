@@ -326,13 +326,6 @@ class OrderFacade
         }
     }
 
-    public function setOrderPaymentStatusPageValidFromNow(Order $order): void
-    {
-        $order->setOrderPaymentStatusPageValidFromNow();
-        $order->setOrderPaymentStatusPageValidityHashToNull();
-        $this->em->flush();
-    }
-
     public function changeOrderPayment(Order $order, Payment $payment, bool $updatePaymentPrice = true): void
     {
         $previousPaymentItems = $order->getItemsByType(OrderItemTypeEnum::TYPE_PAYMENT);

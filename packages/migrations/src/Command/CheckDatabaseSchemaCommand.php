@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CheckDatabaseSchemaCommand extends Command
 {
     public function __construct(
-        protected readonly DatabaseSchemaFacade $databaseSchemaFacade
+        protected readonly DatabaseSchemaFacade $databaseSchemaFacade,
     ) {
         parent::__construct();
     }

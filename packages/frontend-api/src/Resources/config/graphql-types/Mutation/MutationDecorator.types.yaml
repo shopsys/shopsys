@@ -122,19 +122,7 @@ MutationDecorator:
                 args:
                     orderUuid:
                         type: "Uuid!"
-                    orderPaymentStatusPageValidityHash:
-                        type: "String"
                 resolve: "@=mutation('updatePaymentStatusMutation', args)"
-                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
-            SetOrderPaymentStatusPageValidityHashMutation:
-                type: "String!"
-                description: "set order payment status page validity hash, so it's possible to safely return to the payment status page"
-                args:
-                    orderUuid:
-                        type: "Uuid!"
-                    orderPaymentStatusPageValidityHash:
-                        type: "String!"
-                resolve: "@=mutation('setOrderPaymentStatusPageValidityHashMutation', args)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             ChangePaymentInOrder:
                 type: "Order!"

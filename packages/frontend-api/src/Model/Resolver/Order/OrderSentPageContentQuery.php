@@ -27,8 +27,6 @@ class OrderSentPageContentQuery extends AbstractQuery
     {
         $order = $this->orderApiFacade->getByUuid($orderUuid);
 
-        $this->assertDateTimeIsRecent($order->getOrderPaymentStatusPageValidFrom());
-
         if ($order->isPaid()) {
             return $this->paymentContentPageFactory->createSuccessful(
                 $this->orderContentPageFacade->getPaymentSuccessfulPageContent($order),
