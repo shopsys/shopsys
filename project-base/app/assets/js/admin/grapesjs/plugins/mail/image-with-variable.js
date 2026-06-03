@@ -1,4 +1,5 @@
 import grapesjs from 'grapesjs';
+import { imageBlockIcon } from '../shared/blockIcons';
 
 export default grapesjs.plugins.add('mail-custom-image-with-variable', editor => {
     editor.Blocks.add('mail-custom-image-with-variable', {
@@ -6,6 +7,7 @@ export default grapesjs.plugins.add('mail-custom-image-with-variable', editor =>
         activate: true,
         category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-image' },
+        media: imageBlockIcon,
         content: {
             type: 'mail-custom-image-with-variable',
             tagName: 'img',

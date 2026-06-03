@@ -1,4 +1,5 @@
 import grapesjs from 'grapesjs';
+import { imageBlockIcon } from '../shared/blockIcons';
 import { LINK_POSITION_DATA_ATTRIBUTE } from './link';
 
 const IMAGE_POSITION_DATA_ATTRIBUTE = 'data-image-position';
@@ -9,6 +10,7 @@ export default grapesjs.plugins.add('custom-image', editor => {
         activate: true,
         category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-image' },
+        media: imageBlockIcon,
         content: {
             type: 'image',
             attributes: {

@@ -1,9 +1,11 @@
 import grapesjs from 'grapesjs';
+import { column2BlockIcon } from '../shared/blockIcons';
 
 export default grapesjs.plugins.add('column2', (editor, _options) => {
     editor.Blocks.add('column2', {
         category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-b2' },
+        media: column2BlockIcon,
         content: `
             <div class="row" data-gjs-droppable=".column">
                 <div class="column"></div>

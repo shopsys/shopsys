@@ -1,11 +1,35 @@
 import Translator from 'bazinga-translator';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js/auto';
 import Register from '../../common/utils/Register';
+
+const cronTimeoutLinePlugin = {
+    id: 'cronTimeoutLine',
+    afterDraw: (chart, _args, options) => {
+        if (!options?.value) {
+            return;
+        }
+
+        const { ctx } = chart;
+        const xAxis = chart.scales.x;
+        const yAxis = chart.scales.y;
+        const yPosition = yAxis.getPixelForValue(options.value);
+
+        ctx.save();
+        ctx.fillStyle = options.color;
+        ctx.fillText(options.label, 35, yPosition - 5);
+        ctx.beginPath();
+        ctx.moveTo(xAxis.left, yPosition);
+        ctx.strokeStyle = options.color;
+        ctx.lineTo(xAxis.right, yPosition);
+        ctx.stroke();
+        ctx.restore();
+    },
+};
 
 export default class Statistics {
     constructor($chartCanvas) {
         // eslint-disable-next-line no-new
-        new Chart($chartCanvas, {
+        new Chart($chartCanvas[0], {
             type: 'bar',
             data: {
                 labels: $chartCanvas.data('chart-labels'),
@@ -20,62 +44,27 @@ export default class Statistics {
             },
             options: {
                 scales: {
-                    yAxes: [
-                        {
-                            ticks: {
-                                beginAtZero: true,
-                            },
+                    y: {
+                        ticks: {
+                            beginAtZero: true,
                         },
-                    ],
+                    },
                 },
-                legend: {
-                    display: false,
-                },
-                title: {
-                    display: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    title: {
+                        display: false,
+                    },
                 },
             },
         });
     }
 
     static lineChartForCron($chartCanvas) {
-        const originalLineDraw = Chart.controllers.line.prototype.draw;
-        Chart.helpers.extend(Chart.controllers.line.prototype, {
-            draw: function (...args) {
-                originalLineDraw.apply(this, args);
-
-                const chart = this.chart;
-                const ctx = chart.chart.ctx;
-
-                const xaxis = chart.scales['x-axis-0'];
-                const yaxis = chart.scales['y-axis-0'];
-
-                const limits = [];
-
-                const max = [];
-                max.value = $chartCanvas.data('chart-timeout-secs');
-                max.label = Translator.trans('Expected maximum duration');
-                max.color = 'rgb(220, 61, 61)';
-                limits.push(max);
-
-                for (let i = 0; i < limits.length; i++) {
-                    limits[i].value = yaxis.getPixelForValue(limits[i].value, undefined);
-                    ctx.fillStyle = 'rgb(220, 61, 61)';
-                    ctx.fillText(limits[i].label, 35, limits[i].value - 5);
-
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.moveTo(xaxis.left, limits[i].value);
-                    ctx.strokeStyle = limits[i].color;
-                    ctx.lineTo(xaxis.right, limits[i].value);
-                    ctx.stroke();
-                    ctx.restore();
-                }
-            },
-        });
-
         // eslint-disable-next-line no-new
-        new Chart($chartCanvas, {
+        new Chart($chartCanvas[0], {
             type: 'line',
             data: {
                 labels: $chartCanvas.data('chart-labels'),
@@ -90,22 +79,28 @@ export default class Statistics {
             },
             options: {
                 scales: {
-                    yAxes: [
-                        {
-                            ticks: {
-                                beginAtZero: true,
-                            },
+                    y: {
+                        ticks: {
+                            beginAtZero: true,
                         },
-                    ],
+                    },
                 },
-                legend: {
-                    display: false,
-                },
-                title: {
-                    display: true,
-                    text: $chartCanvas.data('chart-title'),
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    title: {
+                        display: true,
+                        text: $chartCanvas.data('chart-title'),
+                    },
+                    cronTimeoutLine: {
+                        value: $chartCanvas.data('chart-timeout-secs'),
+                        label: Translator.trans('Expected maximum duration'),
+                        color: 'rgb(220, 61, 61)',
+                    },
                 },
             },
+            plugins: [cronTimeoutLinePlugin],
         });
     }
 
