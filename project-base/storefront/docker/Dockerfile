@@ -46,7 +46,10 @@ ENV APP_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=dependencies /tmp/build $APP_DIR
-RUN chown -R root:root $APP_DIR && chmod -R a-w $APP_DIR
+RUN chown -R root:root $APP_DIR \
+    && chmod -R a-w $APP_DIR \
+    && mkdir -p $APP_DIR/.next/cache \
+    && chown -R node:node $APP_DIR/.next/cache
 
 USER node
 
