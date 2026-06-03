@@ -1,0 +1,12 @@
+OrderConfirmationPageContentStatusEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Represents the status of the order confirmation page content."
+        values:
+            SUCCESSFUL:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Order\\ConfirmationPageContent\\ConfirmationPageContentStatusEnum::STATUS_SUCCESSFUL")'
+            FAILED:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Order\\ConfirmationPageContent\\ConfirmationPageContentStatusEnum::STATUS_FAILED")'
+            IN_PROCESS:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Order\\ConfirmationPageContent\\ConfirmationPageContentStatusEnum::STATUS_IN_PROCESS")'

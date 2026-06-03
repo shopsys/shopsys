@@ -1,4 +1,0 @@
-OrderPaymentPageContent:
-    type: object
-    inherits:
-        - 'OrderPaymentPageContentDecorator'

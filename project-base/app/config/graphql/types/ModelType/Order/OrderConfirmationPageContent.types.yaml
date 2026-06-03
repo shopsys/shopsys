@@ -1,0 +1,4 @@
+OrderConfirmationPageContent:
+    type: object
+    inherits:
+        - 'OrderConfirmationPageContentDecorator'

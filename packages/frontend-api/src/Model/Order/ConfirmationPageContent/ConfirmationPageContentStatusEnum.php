@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage;
+namespace Shopsys\FrontendApiBundle\Model\Order\ConfirmationPageContent;
 
 use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
 
-class PaymentContentPageStatusEnum extends AbstractEnum
+class ConfirmationPageContentStatusEnum extends AbstractEnum
 {
     public const string STATUS_SUCCESSFUL = 'successful';
     public const string STATUS_FAILED = 'failed';

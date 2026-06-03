@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage;
+namespace Shopsys\FrontendApiBundle\Model\Order\ConfirmationPageContent;
 
-class PaymentContentPage
+class ConfirmationPageContent
 {
     public function __construct(
         public readonly string $content,

@@ -1,6 +1,0 @@
-query OrderPaymentPageContent ($orderUuid: Uuid!) {
-    orderPaymentPageContent(orderUuid: $orderUuid) {
-        content
-        status
-    }
-}

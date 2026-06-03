@@ -151,3 +151,7 @@ OrderDecorator:
             withdrawalDeadline:
                 type: "DateTime"
                 description: "Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)"
+            confirmationPageContent:
+                type: "OrderConfirmationPageContent!"
+                description: "Returns content to be displayed on the order confirmation page after placing the order"
+                resolve: '@=query("orderConfirmationPageContentQuery", value)'

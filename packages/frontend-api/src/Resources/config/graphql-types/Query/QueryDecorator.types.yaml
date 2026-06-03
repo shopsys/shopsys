@@ -426,22 +426,6 @@ QueryDecorator:
                 resolve: "@=query('lastOrderQuery')"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || isGranted('ROLE_API_COMPANY_ORDERS_VIEW'))"
                 description: "Returns last order of the user or null if no order was placed yet"
-            orderSentPageContent:
-                type: "String!"
-                resolve: "@=query('orderSentPageContentQuery', args['orderUuid'])"
-                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
-                args:
-                    orderUuid:
-                        type: "Uuid!"
-                description: "Returns HTML content for order sent page."
-            orderPaymentPageContent:
-                type: "OrderPaymentPageContent!"
-                resolve: "@=query('orderPaymentPageContentQuery', args['orderUuid'])"
-                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
-                args:
-                    orderUuid:
-                        type: "Uuid!"
-                description: "Returns HTML content for order payment page depending on the state of the payment."
             personalDataPage:
                 type: "PersonalDataPage"
                 resolve: "@=query('personalDataPageQuery')"

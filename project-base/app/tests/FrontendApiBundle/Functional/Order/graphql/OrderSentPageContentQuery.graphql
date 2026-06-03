@@ -1,3 +1,0 @@
-query OrderSentPageContent ($orderUuid: Uuid!) {
-    orderSentPageContent(orderUuid: $orderUuid)
-}

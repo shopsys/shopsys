@@ -1,0 +1,9 @@
+query OrderConfirmationPageContent($urlHash: String!) {
+    order(urlHash: $urlHash) {
+        confirmationPageContent {
+            __typename
+            content
+            status
+        }
+    }
+}
