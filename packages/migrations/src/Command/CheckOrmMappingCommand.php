@@ -18,11 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CheckOrmMappingCommand extends Command
 {
-    protected const RETURN_CODE_OK = 0;
-    protected const RETURN_CODE_ERROR = 1;
-
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
         parent::__construct();
     }
 
@@ -48,11 +46,11 @@ class CheckOrmMappingCommand extends Command
                 $output->writeln('');
             }
 
-            return static::RETURN_CODE_ERROR;
+            return Command::FAILURE;
         }
 
         $output->writeln('<info>ORM mapping is valid.</info>');
 
-        return static::RETURN_CODE_OK;
+        return Command::SUCCESS;
     }
 }
