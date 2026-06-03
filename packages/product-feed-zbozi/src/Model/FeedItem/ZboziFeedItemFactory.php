@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\ZboziBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
@@ -20,7 +19,6 @@ class ZboziFeedItemFactory
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
-        protected readonly CategoryFacade $categoryFacade,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
     }
@@ -29,22 +27,23 @@ class ZboziFeedItemFactory
         Product $product,
         ?ZboziProductDomain $zboziProductDomain,
         DomainConfig $domainConfig,
+        ?string $zboziCategoryText = null,
     ): ZboziFeedItem {
         $mainVariantId = $product->isVariant() ? $product->getMainVariant()->getId() : null;
-        $cpc = $zboziProductDomain !== null ? $zboziProductDomain->getCpc() : null;
-        $cpcSearch = $zboziProductDomain !== null ? $zboziProductDomain->getCpcSearch() : null;
+        $cpc = $zboziProductDomain?->getCpc();
+        $cpcSearch = $zboziProductDomain?->getCpcSearch();
 
         return new ZboziFeedItem(
             $product->getId(),
             $product->getFullName($domainConfig->getLocale()),
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
             $this->getPrice($product, $domainConfig),
-            $this->getPathToMainCategory($product, $domainConfig),
+            $zboziCategoryText,
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
             $mainVariantId,
             $product->getDescriptionAsPlainText($domainConfig->getId()),
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
-            $this->getBrandName($product),
+            $product->getBrand()?->getName(),
             $product->getEan(),
             $product->getPartno(),
             $this->productAvailabilityFacade->getProductAvailabilityDaysForFeedsByDomainId($product, $domainConfig->getId()),
@@ -53,29 +52,11 @@ class ZboziFeedItemFactory
         );
     }
 
-    protected function getBrandName(Product $product): ?string
-    {
-        $brand = $product->getBrand();
-
-        return $brand !== null ? $brand->getName() : null;
-    }
-
     protected function getPrice(Product $product, DomainConfig $domainConfig): PriceInterface
     {
         return $this->productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
         )->sellingProductPrice->getPrice();
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getPathToMainCategory(Product $product, DomainConfig $domainConfig): array
-    {
-        return $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
-            $product,
-            $domainConfig,
-        );
     }
 }

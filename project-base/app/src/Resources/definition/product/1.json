@@ -577,6 +577,9 @@
             },
             "top_product_position": {
                 "type": "integer"
+            },
+            "zbozi_category": {
+                "type": "text"
             }
         }
     }

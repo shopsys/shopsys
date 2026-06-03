@@ -2,6 +2,7 @@ Product:
     type: interface
     inherits:
         - 'ProductDecorator'
+        - 'ZboziCzProductDecorator'
     config:
         fields:
             slug:

@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixtu
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectShopsysClassExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterRoleProviderCompilerPass;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -45,6 +46,7 @@ class ShopsysFrameworkBundle extends Bundle
         $container->addCompilerPass(new RegisterImageEntitiesCompilerPass());
 
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
+        $container->registerForAutoconfiguration(ProductExportDataProviderInterface::class)->addTag('shopsys.product_export_data_provider');
 
         $environment = $container->getParameter('kernel.environment');
 

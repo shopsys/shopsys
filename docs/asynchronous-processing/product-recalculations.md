@@ -135,7 +135,7 @@ For example, when launching a new domain, you need to export just the product UR
 On the other hand, it might be hard to keep in mind all the dependencies (e.g., you need to know you need to recalculate visibility after you change `Product::$sellingFrom`,
 or you need to keep in mind that with a change of product URL, you always need to export `hreflang_links` into Elasticsearch as well, etc.).
 
-For this purpose, recalculation scopes are defined as an associative array in the `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade` class.
+For this purpose, recalculation scopes are defined as an associative array in the `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig` class.
 The scopes are represented by instances of the `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeRule` class and indexed by their names.
 Each scope rule defines which fields should be exported to Elasticsearch together (`$productExportFields` property) and whether some actions (recalculations) should be done before the export (`$productExportPreconditions` property).
 
@@ -158,13 +158,22 @@ public function dispatchAffectedByBrand(BrandEvent $brandEvent): void
 
 Thanks to the usage of `SCOPE_BRAND` here, no visibility or selling denied recalculations are done after a brand is updated, only the brand-related fields (brand ID, name, and URL) are exported to Elasticsearch for the affected products.
 
-There are several methods that allow you to modify the scope configuration further to suit your project needs.
+Custom fields from services implementing `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface` are added to the scope configuration through `getExportScopeRules()`.
+When multiple providers return the same scope name, their fields and preconditions are merged into one rule.
+
+Choose the scope behavior according to how the field needs to be refreshed:
+
+- **No scope**: Return the field from `getExportFields()` and do not include it in `getExportScopeRules()`. The field is exported during full exports and full recalculations, but it is not refreshed by any scoped recalculation.
+- **Existing scope**: Return an existing scope name from `getExportScopeRules()`, for example `ProductExportScopeConfig::SCOPE_CATEGORIES`, with a `ProductExportScopeRule` containing your field. The field is merged into that scope and exported whenever that scope is requested.
+- **New scope**: Return a new scope name from `getExportScopeRules()` with a `ProductExportScopeRule` containing your field and any needed preconditions. The scope becomes available for `ProductRecalculationDispatcher` and `shopsys:dispatch:recalculations --scope=...`.
+
+There are also protected methods that allow you to modify the built-in scope configuration further when a provider is not enough:
 
 - `addExportFieldsToExistingScopeRule()`
 - `addNewExportScopeRule()`
 - `overwriteExportScopeRule()`
 
-You can use the methods in the overridden `App\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig::loadProductExportScopeRules()`.
+You can use the methods in the overridden `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig::loadProductExportScopeRules()`.
 
 !!! note
 

@@ -13,6 +13,12 @@ msgstr "Maximum price per click in offers"
 msgid "Offer in feed"
 msgstr "Offer in feed"
 
+msgid "Zbozi category"
+msgstr "Zbozi category"
+
+msgid "Zbozi.cz category"
+msgstr "Zbozi.cz category"
+
 msgid "Zbozi.cz product feed"
 msgstr "Zbozi.cz product feed"
 

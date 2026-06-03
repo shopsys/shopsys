@@ -51,6 +51,10 @@ services:
         tags:
             - { name: shopsys.cron, cron: '0 3 * * *', instanceName: service, readableName: 'Download Heureka categories' }
 
+    Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryCronModule:
+        tags:
+            - { name: shopsys.cron, cron: '15 3 * * *', instanceName: service, readableName: 'Download Zbozi.cz categories' }
+
     Shopsys\FrameworkBundle\Model\Product\List\RemoveOldProductListsCronModule:
         tags:
             - { name: shopsys.cron, cron: '0 3 * * *', instanceName: service, readableName: 'Delete old product lists' }

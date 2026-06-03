@@ -6,9 +6,19 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class ProductElasticsearchConverter
 {
+    /**
+     * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
+     */
+    public function __construct(
+        #[AutowireIterator('shopsys.product_export_data_provider')]
+        protected readonly iterable $productExportDataProviders = [],
+    ) {
+    }
+
     public function fillEmptyFields(array $product): array
     {
         $result = $product;
@@ -30,6 +40,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::SPECIAL_PRICES] = $product[ProductExportFieldProvider::SPECIAL_PRICES] ?? [];
         $result[ProductExportFieldProvider::VISIBILITY] = $product[ProductExportFieldProvider::VISIBILITY] ?? [];
         $result[ProductExportFieldProvider::ACCESSORIES] = $product[ProductExportFieldProvider::ACCESSORIES] ?? [];
+        $result[ProductExportFieldProvider::RELATED_PRODUCTS] = $product[ProductExportFieldProvider::RELATED_PRODUCTS] ?? [];
 
         $result[ProductExportFieldProvider::ORDERING_PRIORITY] = $product[ProductExportFieldProvider::ORDERING_PRIORITY] ?? 0;
 
@@ -82,6 +93,12 @@ class ProductElasticsearchConverter
 
         $result[ProductExportFieldProvider::IS_PROMOTED] = $product[ProductExportFieldProvider::IS_PROMOTED] ?? false;
         $result[ProductExportFieldProvider::TOP_PRODUCT_POSITION] = $product[ProductExportFieldProvider::TOP_PRODUCT_POSITION] ?? null;
+
+        foreach ($this->productExportDataProviders as $productExportDataProvider) {
+            foreach ($productExportDataProvider->getExportFields() as $field) {
+                $result[$field] = array_key_exists($field, $product) ? $product[$field] : $productExportDataProvider->getDefaultValue($field);
+            }
+        }
 
         return $result;
     }

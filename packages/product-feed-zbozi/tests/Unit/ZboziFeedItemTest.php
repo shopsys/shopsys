@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -35,8 +34,6 @@ class ZboziFeedItemTest extends TestCase
 
     private Stub|ProductParametersBatchLoader $productParametersBatchLoaderStub;
 
-    private CategoryFacade|MockObject $categoryFacadeMock;
-
     private ZboziFeedItemFactory $zboziFeedItemFactory;
 
     private DomainConfig $defaultDomain;
@@ -51,7 +48,6 @@ class ZboziFeedItemTest extends TestCase
         );
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
         $this->productParametersBatchLoaderStub = $this->createStub(ProductParametersBatchLoader::class);
-        $this->categoryFacadeMock = $this->createMock(CategoryFacade::class);
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
         $productAvailabilityFacadeStub->method('getProductAvailabilityDaysForFeedsByDomainId')->willReturn(0);
 
@@ -59,7 +55,6 @@ class ZboziFeedItemTest extends TestCase
             $this->productPriceCalculationForCustomerUserMock,
             $this->productUrlsBatchLoaderMock,
             $this->productParametersBatchLoaderStub,
-            $this->categoryFacadeMock,
             $productAvailabilityFacadeStub,
         );
 
@@ -76,11 +71,6 @@ class ZboziFeedItemTest extends TestCase
 
         $this->productUrlsBatchLoaderMock->expects($this->any())->method('getProductUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/product-1');
-
-        $this->categoryFacadeMock->expects($this->any())->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')
-            ->with($this->defaultProduct, $this->defaultDomain)->willReturn(
-                ['category A', 'category B', 'category C'],
-            );
     }
 
     private function createDomainConfigStub(int $id, string $url, string $locale): DomainConfig
@@ -111,10 +101,25 @@ class ZboziFeedItemTest extends TestCase
         self::assertNull($zboziFeedItem->getProductno());
         self::assertEquals(0, $zboziFeedItem->getDeliveryDate());
         self::assertNull($zboziFeedItem->getManufacturer());
-        self::assertEquals('category A | category B | category C', $zboziFeedItem->getCategoryText());
+        self::assertNull($zboziFeedItem->getCategoryText());
         self::assertEquals([], $zboziFeedItem->getParams());
         self::assertNull($zboziFeedItem->getMaxCpc());
         self::assertNull($zboziFeedItem->getMaxCpcSearch());
+    }
+
+    public function testZboziFeedItemWithZboziCategoryText(): void
+    {
+        $zboziFeedItem = $this->zboziFeedItemFactory->create(
+            $this->defaultProduct,
+            null,
+            $this->defaultDomain,
+            'Foto | Foto doplňky a příslušenství | Blesky',
+        );
+
+        self::assertSame(
+            'Foto | Foto doplňky a příslušenství | Blesky',
+            $zboziFeedItem->getCategoryText(),
+        );
     }
 
     public function testZboziFeedItemWithGroupId(): void

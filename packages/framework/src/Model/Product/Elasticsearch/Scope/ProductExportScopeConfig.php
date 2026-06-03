@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope;
 
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\Exception\ScopeRuleAlreadyExistsException;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\Exception\ScopeRuleDoesNotExistException;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class ProductExportScopeConfig
 {
@@ -36,9 +37,12 @@ class ProductExportScopeConfig
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeRule[]|null $productExportScopeRules
+     * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
      */
     public function __construct(
         protected ?array $productExportScopeRules = null,
+        #[AutowireIterator('shopsys.product_export_data_provider')]
+        protected readonly iterable $productExportDataProviders = [],
     ) {
     }
 
@@ -161,6 +165,34 @@ class ProductExportScopeConfig
             ProductExportFieldProvider::IS_PROMOTED,
             ProductExportFieldProvider::TOP_PRODUCT_POSITION,
         ]);
+
+        $this->addProductExportDataProviderFieldsToScopeRules();
+    }
+
+    protected function addProductExportDataProviderFieldsToScopeRules(): void
+    {
+        foreach ($this->productExportDataProviders as $productExportDataProvider) {
+            foreach ($productExportDataProvider->getExportScopeRules() as $scopeName => $productExportScopeRule) {
+                $this->addOrMergeExportScopeRule($scopeName, $productExportScopeRule);
+            }
+        }
+    }
+
+    protected function addOrMergeExportScopeRule(
+        string $scopeName,
+        ProductExportScopeRule $productExportScopeRule,
+    ): void {
+        if (!array_key_exists($scopeName, $this->productExportScopeRules)) {
+            $this->productExportScopeRules[$scopeName] = $productExportScopeRule;
+
+            return;
+        }
+
+        $scopeRule = $this->productExportScopeRules[$scopeName];
+        $this->productExportScopeRules[$scopeName] = new ProductExportScopeRule(
+            array_values(array_unique([...$scopeRule->productExportFields, ...$productExportScopeRule->productExportFields])),
+            array_values(array_unique([...$scopeRule->productExportPreconditions, ...$productExportScopeRule->productExportPreconditions])),
+        );
     }
 
     /**

@@ -284,16 +284,73 @@ For more information about the API, refer to [the frontend-api docs](../frontend
 
 ## Export data to elasticsearch index
 
-To export your new `extId` field to the elasticsearch index, you need to modify the [`ProductExportRepository`]({{github.link}}/project-base/app/src/Model/Product/Elasticsearch/ProductExportRepository.php) class:
+To export your new `extId` field to the elasticsearch index, add it to a product export data provider implementing [`ProductExportDataProviderInterface`]({{github.link}}/packages/framework/src/Model/Product/Elasticsearch/ProductExportDataProviderInterface.php).
+In most projects, this means updating the existing [`ProductExportDataProvider`]({{github.link}}/project-base/app/src/Model/Product/Elasticsearch/ProductExportDataProvider.php).
+Create a separate provider only when the field belongs to a separate package/integration or needs its own dependencies and batch loading logic.
 
 ```diff
-protected function getExportedFieldValue(int $domainId, BaseProduct $product, string $locale, string $field): mixed
+final class ProductExportDataProvider implements ProductExportDataProviderInterface
 {
-    // ...
-+   'extId' => $product->getExtId(),
-    default => parent::getExportedFieldValue($domainId, $product, $locale, $field),
++    public const string EXT_ID = 'extId';
++    public const string EXT_ID_SCOPE = 'product_ext_id_scope';
+
+     /**
+      * {@inheritdoc}
+      */
+     #[Override]
+     public function getExportFields(): array
+     {
+         return [
+             // ...
++            self::EXT_ID,
+         ];
+     }
+
+     /**
+      * {@inheritdoc}
+      */
+     #[Override]
+     public function getExportScopeRules(): array
+     {
+         return [
+             // ...
++            self::EXT_ID_SCOPE => new ProductExportScopeRule([self::EXT_ID]),
+         ];
+     }
+
+     /**
+      * {@inheritdoc}
+      */
+     #[Override]
+     public function getExportedFieldValue(BaseProduct $product, int $domainId, string $locale, string $field): mixed
+     {
+         if (!$product instanceof Product) {
+             throw new InvalidArgumentException(sprintf('Product must be instance of "%s"', Product::class));
+         }
+
+         return match ($field) {
+             // ...
++            self::EXT_ID => $product->getExtId(),
+             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
+         };
+     }
+
+     #[Override]
+     public function getDefaultValue(string $field): mixed
+     {
+         return match ($field) {
+             // ...
++            self::EXT_ID => null,
+             default => throw new InvalidArgumentException(sprintf('There is no default value for "%s" Elasticsearch field', $field)),
+         };
+     }
 }
 ```
+
+If the new field is needed only during full exports and full recalculations, it's not necessary to mention it in `getExportScopeRules()`.
+If it belongs to an existing scoped recalculation, use the existing scope name in `getExportScopeRules()`.
+If it needs to be refreshed independently, create a new scope as shown above.
+When you create a new provider class, the service is autoconfigured automatically when it implements `ProductExportDataProviderInterface`.
 
 For more information about the elasticsearch usage in Shopsys Platform, check the [Elasticsearch documentation section](../model/elasticsearch.md).
 

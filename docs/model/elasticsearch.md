@@ -65,12 +65,24 @@ Following product attributes are exported into Elasticsearch (i.e. the search or
 - main_variant (true/false value whether the product is main variant or not. You can find more about behavior of variants [here](../functional/behavior-of-product-variants.md))
 - slug (relative url to page with products detail)
 - visibility (all visibilities for all pricing groups and domains)
-- and more, see `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository` for more information
+- and more, see `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider` and services implementing `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface` for more information
 
-Data of all products are exported into Elasticsearch by CRON module (`ProductExportCronModule.php`) every 5 minutes.
-Alternatively, you can force the export manually using `elasticsearch-export -D elasticsearch.index=product` Phing target.
+Product data are exported into Elasticsearch by asynchronous product recalculations.
+The `ProductRecalculationCronModule` dispatches all products for recalculation and export once a day as a consistency check.
+You can also force a full export manually using `elasticsearch-export -D elasticsearch.index=product` Phing target.
 
-If you need to change the data that are exported into Elasticsearch, overwrite appropriate methods in `ProductExportRepository` and `ProductElasticsearchConverter` classes.
+If you need to add new product data that are exported into Elasticsearch, add them to a service implementing `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface`.
+There is already a prepared `ProductExportDataProvider` implementing this interface in `project-base` by default.
+Such services are registered automatically and are used by the product export, product field provider, product scope configuration, and `ProductElasticsearchConverter` that defines default values for the new fields.
+Override `ProductExportRepository` only when you need to change the export behavior of an existing framework field.
+
+The data provider must define:
+
+- fields exported by the provider in `getExportFields()`
+- scope rules in `getExportScopeRules()` when the fields should be available for scoped recalculations
+- optional batch preloading in `loadProductExportData()`
+- value extraction in `getExportedFieldValue()`
+- default values for missing Elasticsearch fields in `getDefaultValue()`
 
 ## Use of Elasticsearch
 

@@ -646,6 +646,8 @@ export type TypeCategory = TypeBreadcrumb & TypeProductListable & TypeSlug & {
   slug: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  /** Zbozi.cz category text assigned to the category */
+  zboziCategory: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -1512,6 +1514,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   /** Number of visible variants */
   variantsCount: Scalars['Int']['output'];
   vatPercent: Scalars['String']['output'];
+  /** Zbozi.cz category text assigned to the product main category */
+  zboziCategory: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -2651,6 +2655,8 @@ export type TypeProduct = {
   /** UUID */
   uuid: Scalars['Uuid']['output'];
   vatPercent: Scalars['String']['output'];
+  /** Zbozi.cz category text assigned to the product main category */
+  zboziCategory: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -3436,6 +3442,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   /** UUID */
   uuid: Scalars['Uuid']['output'];
   vatPercent: Scalars['String']['output'];
+  /** Zbozi.cz category text assigned to the product main category */
+  zboziCategory: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -3871,6 +3879,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   /** UUID */
   uuid: Scalars['Uuid']['output'];
   vatPercent: Scalars['String']['output'];
+  /** Zbozi.cz category text assigned to the product main category */
+  zboziCategory: Maybe<Scalars['String']['output']>;
 };
 
 

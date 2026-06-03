@@ -35,6 +35,7 @@ use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class ProductExportRepository
 {
@@ -42,6 +43,9 @@ class ProductExportRepository
     protected const string TOP_PRODUCTS_CACHE_NAMESPACE = 'top_products';
     protected const string VALUE_SEPARATOR = ' ';
 
+    /**
+     * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
+     */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterRepository $parameterRepository,
@@ -63,6 +67,8 @@ class ProductExportRepository
         protected readonly ParameterValueFileResolver $parameterValueFileResolver,
         protected readonly Domain $domain,
         protected readonly TopProductRepository $topProductRepository,
+        #[AutowireIterator('shopsys.product_export_data_provider')]
+        protected readonly iterable $productExportDataProviders = [],
     ) {
     }
 
@@ -187,8 +193,23 @@ class ProductExportRepository
             ProductExportFieldProvider::IS_PROMOTED => $this->isProductPromoted($product, $domainId),
             ProductExportFieldProvider::TOP_PRODUCT_POSITION => $this->getTopProductPosition($product, $domainId),
 
-            default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
+            default => $this->getExportedFieldValueFromProductExportDataProvider($domainId, $product, $locale, $field),
         };
+    }
+
+    protected function getExportedFieldValueFromProductExportDataProvider(
+        int $domainId,
+        Product $product,
+        string $locale,
+        string $field,
+    ): mixed {
+        foreach ($this->productExportDataProviders as $productExportDataProvider) {
+            if (in_array($field, $productExportDataProvider->getExportFields(), true)) {
+                return $productExportDataProvider->getExportedFieldValue($product, $domainId, $locale, $field);
+            }
+        }
+
+        throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field));
     }
 
     /**
@@ -240,13 +261,22 @@ class ProductExportRepository
      */
     protected function extractFlags(int $domainId, Product $product): array
     {
-        $flagIds = [];
+        $flagIds = $product->getFlagsIdsForDomain($domainId);
+        $variants = [];
 
-        foreach ($product->getFlags($domainId) as $flag) {
-            $flagIds[] = $flag->getId();
+        if ($product->isMainVariant() === true) {
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
         }
 
-        return $flagIds;
+        foreach ($variants as $variant) {
+            $flagIds = array_merge($flagIds, $variant->getFlagsIdsForDomain($domainId));
+        }
+
+        $uniqueFlagsIds = array_unique($flagIds);
+        $resultArray = array_combine($uniqueFlagsIds, $uniqueFlagsIds);
+        ksort($resultArray);
+
+        return array_values($resultArray);
     }
 
     /**
@@ -429,14 +459,36 @@ class ProductExportRepository
             $fields = $this->productExportFieldProvider->getAll();
         }
 
+        $products = $query->getResult();
+        $this->loadProductExportDataProviders($products, $domainId, $locale, $fields);
+
         $results = [];
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        foreach ($query->getResult() as $product) {
+        foreach ($products as $product) {
             $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
         }
 
         return $results;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param string[] $fields
+     */
+    protected function loadProductExportDataProviders(
+        array $products,
+        int $domainId,
+        string $locale,
+        array $fields,
+    ): void {
+        foreach ($this->productExportDataProviders as $productExportDataProvider) {
+            if (array_intersect($fields, $productExportDataProvider->getExportFields()) === []) {
+                continue;
+            }
+
+            $productExportDataProvider->loadProductExportData($products, $domainId, $locale);
+        }
     }
 
     /**

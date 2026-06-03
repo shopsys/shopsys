@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product\Elasticsearch;
 
+use App\DataFixtures\Demo\FlagDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Flag\Flag;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductExportRepositoryTest extends TransactionFunctionalTestCase
@@ -27,6 +32,27 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
         sort($expectedStructure);
 
         $this->assertSame($expectedStructure, $structure);
+    }
+
+    public function testMainVariantExportsFlagsFromSellableVariants(): void
+    {
+        $variant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '75', Product::class);
+        $mainVariant = $variant->getMainVariant();
+
+        $data = $this->repository->getProductsDataForIds(
+            $this->domain->getId(),
+            $this->domain->getLocale(),
+            [$mainVariant->getId()],
+            [ProductExportFieldProvider::FLAGS],
+        );
+
+        $expectedFlags = [
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId(),
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ, Flag::class)->getId(),
+        ];
+        sort($expectedFlags);
+
+        $this->assertSame($expectedFlags, $data[$mainVariant->getId()][ProductExportFieldProvider::FLAGS]);
     }
 
     /**
@@ -88,6 +114,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'promotion',
             'is_promoted',
             'top_product_position',
+            'zbozi_category',
         ];
     }
 

@@ -3902,6 +3902,15 @@ UUID
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="category.zbozicategory">zboziCategory</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Zbozi.cz category text assigned to the category
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -6262,6 +6271,15 @@ Number of visible variants
 <td colspan="2" valign="top"><strong id="mainvariant.vatpercent">vatPercent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.zbozicategory">zboziCategory</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Zbozi.cz category text assigned to the product main category
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -9388,6 +9406,15 @@ UUID
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="regularproduct.zbozicategory">zboziCategory</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Zbozi.cz category text assigned to the product main category
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -10800,6 +10827,15 @@ UUID
 <td colspan="2" valign="top"><strong id="variant.vatpercent">vatPercent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.zbozicategory">zboziCategory</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Zbozi.cz category text assigned to the product main category
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -14958,6 +14994,15 @@ UUID
 <td colspan="2" valign="top"><strong id="product.vatpercent">vatPercent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.zbozicategory">zboziCategory</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Zbozi.cz category text assigned to the product main category
+
+</td>
 </tr>
 </tbody>
 </table>

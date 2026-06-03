@@ -1,0 +1,10 @@
+# Optional services configuration for Frontend API. Automatically registered if Frontend API is installed.
+
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    Shopsys\ProductFeed\ZboziBundle\FrontendApi\:
+        resource: '../../FrontendApi/**/*'

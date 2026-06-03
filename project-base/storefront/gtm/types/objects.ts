@@ -29,6 +29,7 @@ export type GtmCategoryDetailPageInfoType = GtmPageInfoInterface<
     {
         category: string[];
         categoryId: number[];
+        zboziCategory?: string;
     }
 >;
 
@@ -117,6 +118,7 @@ export type GtmProductInterface = {
     url: string;
     brand: string;
     categories: string[];
+    zboziCategory?: string;
     imageUrl?: string;
 };
 
