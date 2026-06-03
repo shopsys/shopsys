@@ -34,7 +34,7 @@ importers:
     dependencies:
       '@hookform/resolvers':
         specifier: ~2.6.1
-        version: 2.6.1(react-hook-form@7.71.2(react@19.2.6))
+        version: 2.6.1(react-hook-form@7.77.0(react@19.2.6))
       '@next/bundle-analyzer':
         specifier: ~15.5.18
         version: 15.5.18
@@ -99,8 +99,8 @@ importers:
         specifier: ^14.4.1
         version: 14.4.1(react@19.2.6)
       react-hook-form:
-        specifier: ~7.71.2
-        version: 7.71.2(react@19.2.6)
+        specifier: ~7.77.0
+        version: 7.77.0(react@19.2.6)
       react-infinite-scroll-component:
         specifier: ~6.1.1
         version: 6.1.1(react@19.2.6)
@@ -212,7 +212,7 @@ importers:
         version: 1.2.1(graphql@16.14.0)
       '@vitejs/plugin-react':
         specifier: 4.2.1
-        version: 4.2.1(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3))
+        version: 4.2.1(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3))
       babel-plugin-react-compiler:
         specifier: 1.0.0
         version: 1.0.0
@@ -245,10 +245,10 @@ importers:
         version: 5.9.3
       vite-tsconfig-paths:
         specifier: ~4.3.2
-        version: 4.3.2(typescript@5.9.3)(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3))
+        version: 4.3.2(typescript@5.9.3)(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3))
       vitest:
         specifier: ~2.1.9
-        version: 2.1.9(@types/node@20.19.39)(jiti@2.7.0)(jsdom@24.0.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3)
+        version: 2.1.9(@types/node@20.19.39)(jiti@2.7.0)(jsdom@24.0.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3)
 
 packages:
 
@@ -2403,6 +2403,9 @@ packages:
   '@types/node@20.19.39':
     resolution: {integrity: sha512-orrrD74MBUyK8jOAD/r0+lfa1I2MO6I+vAkmAWzMYbCcgrN4lCrmK52gRFQq/JRxfYPfonkr4b0jcY7Olqdqbw==}
 
+  '@types/node@20.19.41':
+    resolution: {integrity: sha512-ECymXOukMnOoVkC2bb1Vc/w/836DXncOg5m8Xj1RH7xSHZJWNYY6Zh7EH477vcnD5egKNNfy2RpNOmuChhFPgQ==}
+
   '@types/node@25.7.0':
     resolution: {integrity: sha512-z+pdZyxE+RTQE9AcboAZCb4otwcrvgHD+GlBpPgn0emDVt0ohrTMhAwlr2Wd9nZ+nihhYFxO2pThz3C5qSu2Eg==}
 
@@ -3147,6 +3150,10 @@ packages:
 
   enhanced-resolve@5.21.3:
     resolution: {integrity: sha512-QyL119InA+XXEkNLNTPCXPugSvOfhwv0JOlGNzvxs0hZaiHLNvXSpudUWsOlsXGWJh8G6ckCScEkVHfX3kw/2Q==}
+    engines: {node: '>=10.13.0'}
+
+  enhanced-resolve@5.22.1:
+    resolution: {integrity: sha512-6QEuw3zoX1SJQc7b87aBXke/no+mG2bTBgw29gWMQonLmpEkWoCAVkl+M49e48AZlWzxiDzDZzYdp6kobcyLww==}
     engines: {node: '>=10.13.0'}
 
   ensure-posix-path@1.1.1:
@@ -4401,8 +4408,8 @@ packages:
     peerDependencies:
       react: '>= 16.8 || 18.0.0'
 
-  react-hook-form@7.71.2:
-    resolution: {integrity: sha512-1CHvcDYzuRUNOflt4MOq3ZM46AronNJtQ1S7tnX6YN4y72qhgiUItpacZUAQ0TyWYci3yz1X+rXaSxiuEm86PA==}
+  react-hook-form@7.77.0:
+    resolution: {integrity: sha512-Sslh9YDYc0GDlWT/lxasnIduNo4v3yyvqRGvmGKUre5AFjDs/HV9/OafHGD8d+sB2yoL4UIL9L8X9i0WlZZebg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -4856,8 +4863,8 @@ packages:
   teex@1.0.1:
     resolution: {integrity: sha512-eYE6iEI62Ni1H8oIa7KlDU6uQBtqr4Eajni3wX7rpfXD8ysFx8z0+dri+KWEPWpBsxXfxu58x/0jvTVT1ekOSg==}
 
-  terser-webpack-plugin@5.6.0:
-    resolution: {integrity: sha512-Eum+5ajkaOhf5KbM26osvv21kLD7BaGqQ1UA4Ami4arYwylmGUQTgHFpHDdmJod1q4QXa66p0to/FBKID+J1vA==}
+  terser-webpack-plugin@5.6.1:
+    resolution: {integrity: sha512-201R5j+sJpK8nFWwKVyNfZot8FaJbLZDq5evriVzbV1wDtSXDjRUDRfJzHpAaxFDMEhsZL1QkeqM61wgsS3KaQ==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       '@minify-html/node': '*'
@@ -4899,8 +4906,8 @@ packages:
       uglify-js:
         optional: true
 
-  terser@5.47.1:
-    resolution: {integrity: sha512-tPbLXTI6ohPASb/1YViL428oEHu6/qv1OxqYnfaonVCFHqx4+wCd95pHrQWsL5X4pl90CTyW9piSAsS2L0VoMw==}
+  terser@5.48.0:
+    resolution: {integrity: sha512-J/9An6vs9Us6wKRriSFXBWdRZapREHqFzdNUKk0pmu804EMR6dr6winwo7e5JDxN4xahxQsuysyYFwlwj4XN/Q==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -5275,8 +5282,8 @@ packages:
     engines: {node: '>= 10.13.0'}
     hasBin: true
 
-  webpack-sources@3.4.1:
-    resolution: {integrity: sha512-eACpxRN02yaawnt+uUNIF7Qje6A9zArxBbcAJjK1PK3S9Ycg5jIuJ8pW4q8EMnwNZCEGltcjkRx1QzOxOkKD8A==}
+  webpack-sources@3.5.0:
+    resolution: {integrity: sha512-HPuy+uuoTCaaoEoI1LQ3JN9+vrPBvEesnnX1jADHy728cHSMlq4wUc4afYqahq2B1mhQVZxCXOkNTnXltr+2vQ==}
     engines: {node: '>=10.13.0'}
 
   webpack@5.106.2:
@@ -6685,9 +6692,9 @@ snapshots:
     dependencies:
       is-negated-glob: 1.0.0
 
-  '@hookform/resolvers@2.6.1(react-hook-form@7.71.2(react@19.2.6))':
+  '@hookform/resolvers@2.6.1(react-hook-form@7.77.0(react@19.2.6))':
     dependencies:
-      react-hook-form: 7.71.2(react@19.2.6)
+      react-hook-form: 7.77.0(react@19.2.6)
 
   '@img/colour@1.1.0':
     optional: true
@@ -7756,6 +7763,10 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
+  '@types/node@20.19.41':
+    dependencies:
+      undici-types: 6.21.0
+
   '@types/node@25.7.0':
     dependencies:
       undici-types: 7.21.0
@@ -7826,14 +7837,14 @@ snapshots:
     dependencies:
       graphql: 16.14.0
 
-  '@vitejs/plugin-react@4.2.1(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3))':
+  '@vitejs/plugin-react@4.2.1(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3))':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
       '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.29.0)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3)
+      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -7844,13 +7855,13 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 1.2.0
 
-  '@vitest/mocker@2.1.9(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3))':
+  '@vitest/mocker@2.1.9(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3)
+      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3)
 
   '@vitest/pretty-format@2.1.9':
     dependencies:
@@ -8563,6 +8574,11 @@ snapshots:
       graceful-fs: 4.2.11
       tapable: 2.3.3
 
+  enhanced-resolve@5.22.1:
+    dependencies:
+      graceful-fs: 4.2.11
+      tapable: 2.3.3
+
   ensure-posix-path@1.1.1: {}
 
   entities@4.5.0: {}
@@ -9217,7 +9233,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.19.39
+      '@types/node': 20.19.41
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -9873,7 +9889,7 @@ snapshots:
       prop-types: 15.8.1
       react: 19.2.6
 
-  react-hook-form@7.71.2(react@19.2.6):
+  react-hook-form@7.77.0(react@19.2.6):
     dependencies:
       react: 19.2.6
 
@@ -10382,18 +10398,18 @@ snapshots:
       - bare-abort-controller
       - react-native-b4a
 
-  terser-webpack-plugin@5.6.0(lightningcss@1.32.0)(postcss@8.5.14)(webpack@5.106.2(lightningcss@1.32.0)(postcss@8.5.14)):
+  terser-webpack-plugin@5.6.1(lightningcss@1.32.0)(postcss@8.5.14)(webpack@5.106.2(lightningcss@1.32.0)(postcss@8.5.14)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.3.3
-      terser: 5.47.1
+      terser: 5.48.0
       webpack: 5.106.2(lightningcss@1.32.0)(postcss@8.5.14)
     optionalDependencies:
       lightningcss: 1.32.0
       postcss: 8.5.14
 
-  terser@5.47.1:
+  terser@5.48.0:
     dependencies:
       '@jridgewell/source-map': 0.3.11
       acorn: 8.16.0
@@ -10641,13 +10657,13 @@ snapshots:
       - bare-abort-controller
       - react-native-b4a
 
-  vite-node@2.1.9(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3):
+  vite-node@2.1.9(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 1.1.2
-      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3)
+      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -10662,18 +10678,18 @@ snapshots:
       - tsx
       - yaml
 
-  vite-tsconfig-paths@4.3.2(typescript@5.9.3)(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3)):
+  vite-tsconfig-paths@4.3.2(typescript@5.9.3)(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3)):
     dependencies:
       debug: 4.4.3
       globrex: 0.1.2
       tsconfck: 3.1.6(typescript@5.9.3)
     optionalDependencies:
-      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3)
+      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3):
+  vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.4)
@@ -10686,13 +10702,13 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.7.0
       lightningcss: 1.32.0
-      terser: 5.47.1
+      terser: 5.48.0
       yaml: 2.8.3
 
-  vitest@2.1.9(@types/node@20.19.39)(jiti@2.7.0)(jsdom@24.0.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3):
+  vitest@2.1.9(@types/node@20.19.39)(jiti@2.7.0)(jsdom@24.0.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3))
+      '@vitest/mocker': 2.1.9(vite@6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
@@ -10708,8 +10724,8 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.1.1
       tinyrainbow: 1.2.0
-      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3)
-      vite-node: 2.1.9(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.8.3)
+      vite: 6.4.2(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3)
+      vite-node: 2.1.9(@types/node@20.19.39)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.8.3)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 20.19.39
@@ -10775,7 +10791,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  webpack-sources@3.4.1: {}
+  webpack-sources@3.5.0: {}
 
   webpack@5.106.2(lightningcss@1.32.0)(postcss@8.5.14):
     dependencies:
@@ -10789,7 +10805,7 @@ snapshots:
       acorn-import-phases: 1.0.4(acorn@8.16.0)
       browserslist: 4.28.2
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.21.3
+      enhanced-resolve: 5.22.1
       es-module-lexer: 2.1.0
       eslint-scope: 5.1.1
       events: 3.3.0
@@ -10800,9 +10816,9 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.3
-      terser-webpack-plugin: 5.6.0(lightningcss@1.32.0)(postcss@8.5.14)(webpack@5.106.2(lightningcss@1.32.0)(postcss@8.5.14))
+      terser-webpack-plugin: 5.6.1(lightningcss@1.32.0)(postcss@8.5.14)(webpack@5.106.2(lightningcss@1.32.0)(postcss@8.5.14))
       watchpack: 2.5.1
-      webpack-sources: 3.4.1
+      webpack-sources: 3.5.0
     transitivePeerDependencies:
       - '@minify-html/node'
       - '@swc/core'
