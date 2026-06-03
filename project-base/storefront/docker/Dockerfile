@@ -40,10 +40,12 @@ RUN rm -rf ./.next/cache
 FROM base AS production
 
 ARG APP_DIR=/home/node/app
+ARG SENTRY_RELEASE
 WORKDIR $APP_DIR
 
 ENV APP_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 COPY --from=dependencies /tmp/build $APP_DIR
 RUN chown -R root:root $APP_DIR \

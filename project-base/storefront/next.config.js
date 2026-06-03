@@ -1,7 +1,4 @@
-const withSentryConfig =
-    process.env.SENTRY_BUILD_PLUGIN_DISABLED === '1'
-        ? (nextConfigValue) => nextConfigValue
-        : require('@sentry/nextjs').withSentryConfig;
+const withSentryConfig = require('@sentry/nextjs').withSentryConfig;
 const nextTranslate = require('next-translate-plugin');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
@@ -9,8 +6,11 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 // Sentry feature flags
 const isSentryReplaysEnabled = process.env.SENTRY_REPLAYS_ENABLE === '1';
-const sentryDsn = process.env.SENTRY_DSN?.trim() ?? '';
-const isSentryEnabled = sentryDsn !== '';
+const isSentryBuildPluginEnabled =
+    process.env.SENTRY_BUILD_PLUGIN_DISABLED !== '1' &&
+    !!process.env.SENTRY_AUTH_TOKEN &&
+    !!process.env.SENTRY_ORG &&
+    !!process.env.SENTRY_PROJECT;
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -75,8 +75,14 @@ const nextConfig = {
  * @type {import('@sentry/nextjs/build/types/config/types').SentryBuildOptions}
  */
 const sentryConfig = {
+    org: process.env.SENTRY_ORG,
+    project: process.env.SENTRY_PROJECT,
     authToken: process.env.SENTRY_AUTH_TOKEN,
+    sentryUrl: process.env.SENTRY_URL,
     telemetry: false,
+    release: {
+        name: process.env.SENTRY_RELEASE,
+    },
     unstable_sentryWebpackPluginOptions: {
         disable: process.env.APP_ENV === 'development',
         errorHandler: (err) => {
@@ -104,7 +110,7 @@ const sentryConfig = {
 };
 
 const translatedNextConfig = nextTranslate(nextConfig);
-const nextConfigWithSentryIfEnabled = isSentryEnabled
+const nextConfigWithSentryIfEnabled = isSentryBuildPluginEnabled
     ? withSentryConfig(translatedNextConfig, sentryConfig)
     : translatedNextConfig;
 
