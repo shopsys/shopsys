@@ -8,9 +8,12 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
+use Shopsys\FrameworkBundle\Model\Payment\ReturnHash\PaymentReturnHashFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
+use Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClient;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
+use Uri\Rfc3986\Uri;
 
 class PaymentMutationTest extends GraphQlTestCase
 {
@@ -23,6 +26,11 @@ class PaymentMutationTest extends GraphQlTestCase
      * @inject
      */
     private PaymentTransactionDataFactory $paymentTransactionDataFactory;
+
+    /**
+     * @inject
+     */
+    private PaymentReturnHashFacade $paymentReturnHashFacade;
 
     public function testPayOrderWithGoPay(): void
     {
@@ -40,6 +48,22 @@ class PaymentMutationTest extends GraphQlTestCase
         $this->assertArrayHasKey('embedJs', $content['goPayCreatePaymentSetup']);
         $this->assertSame('https://example.com?supertoken=xyz123456', $content['goPayCreatePaymentSetup']['gatewayUrl']);
         $this->assertSame('987654321', $content['goPayCreatePaymentSetup']['goPayId']);
+
+        $this->assertNotNull(GoPayClient::$lastRawPayment);
+        $this->assertArrayHasKey('callback', GoPayClient::$lastRawPayment, 'Mocked GoPay client did not set payment data properly - missing callback key');
+        $this->assertArrayHasKey('return_url', GoPayClient::$lastRawPayment['callback'], 'Mocked GoPay client did not set payment data properly - missing callback->return_url key');
+
+        $returnUrl = GoPayClient::$lastRawPayment['callback']['return_url'];
+        $queryParams = new Uri($returnUrl)->getQuery();
+        parse_str($queryParams, $parsedQueryParams);
+
+        $this->assertArrayHasKey('returnHash', $parsedQueryParams);
+
+        $returnHash = $parsedQueryParams['returnHash'];
+        $paymentReturnHash = $this->paymentReturnHashFacade->findValidByHash($returnHash);
+
+        $this->assertNotNull($paymentReturnHash);
+        $this->assertSame($order->getUrlHash(), $paymentReturnHash->getOrder()->getUrlHash());
     }
 
     public function testUpdatePaymentStatusWithGoPay(): void

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Payment\ReturnHash\PaymentReturnHashFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
@@ -25,6 +26,7 @@ class OrderQuery extends AbstractQuery
         protected readonly Domain $domain,
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly Security $security,
+        protected readonly PaymentReturnHashFacade $paymentReturnHashFacade,
     ) {
     }
 
@@ -52,6 +54,21 @@ class OrderQuery extends AbstractQuery
         }
 
         throw new RequestError('You need to be logged in or provide argument \'urlHash\'.');
+    }
+
+    public function orderUrlHashByReturnHashQuery(string $returnHash): ?string
+    {
+        $paymentReturnHash = $this->paymentReturnHashFacade->findValidByHash($returnHash);
+
+        if ($paymentReturnHash === null) {
+            return null;
+        }
+
+        if ($paymentReturnHash->getOrder()->getDomainId() !== $this->domain->getId()) {
+            return null;
+        }
+
+        return $paymentReturnHash->getOrder()->getUrlHash();
     }
 
     protected function getOrderForCustomerUserByUuid(CustomerUser $customerUser, string $uuid): Order

@@ -11,9 +11,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayClient extends BaseGoPayClient
 {
+    /**
+     * @var array<string, mixed>|null
+     */
+    public static ?array $lastRawPayment = null;
+
     #[Override]
     public function sendPaymentToGoPay(array $rawPayment): Response
     {
+        self::$lastRawPayment = $rawPayment;
+
         $response = new Response();
         $response->json = [
             'gw_url' => 'https://example.com?supertoken=xyz123456',
