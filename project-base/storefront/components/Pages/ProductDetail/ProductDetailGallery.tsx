@@ -1,11 +1,11 @@
 import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { Image } from 'components/Basic/Image/Image';
-import { ModalGallery } from 'components/Basic/ModalGallery/ModalGallery';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { TIDs } from 'cypress/tids';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
+import dynamic from 'next/dynamic';
 import { Fragment } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
@@ -22,6 +22,11 @@ type ProductDetailGalleryProps = {
 };
 
 const GALLERY_SHOWN_ITEMS_COUNT = 5;
+
+const ModalGallery = dynamic(
+    () => import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
+    { ssr: false },
+);
 
 export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
     flags,
@@ -70,10 +75,14 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                     src={mainImage?.url}
                     width={500}
                     className={twJoin(
-                        'vl:size-[500px] h-80 w-full object-contain lg:h-[500px]',
+                        'vl:size-125 h-80 w-full object-contain lg:h-125',
                         !!galleryItems.length && 'cursor-pointer',
                     )}
-                    onClickCapture={() => !!galleryItems.length && openGallery(0)}
+                    onClickCapture={() => {
+                        if (galleryItems.length) {
+                            openGallery(0);
+                        }
+                    }}
                 />
 
                 <ProductFlags
