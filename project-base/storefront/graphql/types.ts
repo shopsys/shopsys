@@ -1608,8 +1608,6 @@ export type TypeMutation = {
   RequestPersonalDataAccess: TypePersonalDataPage;
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: TypeCurrentCustomerUser;
-  /** set order payment status page validity hash, so it's possible to safely return to the payment status page */
-  SetOrderPaymentStatusPageValidityHashMutation: Scalars['String']['output'];
   /** check payment status of order after callback from payment service */
   UpdatePaymentStatus: TypeOrder;
 };
@@ -1800,14 +1798,7 @@ export type TypeMutationSetDefaultDeliveryAddressArgs = {
 };
 
 
-export type TypeMutationSetOrderPaymentStatusPageValidityHashMutationArgs = {
-  orderPaymentStatusPageValidityHash: Scalars['String']['input'];
-  orderUuid: Scalars['Uuid']['input'];
-};
-
-
 export type TypeMutationUpdatePaymentStatusArgs = {
-  orderPaymentStatusPageValidityHash: InputMaybe<Scalars['String']['input']>;
   orderUuid: Scalars['Uuid']['input'];
 };
 
@@ -1934,6 +1925,8 @@ export type TypeOrder = {
   companyNumber: Maybe<Scalars['String']['output']>;
   /** The customer’s company tax number (only when ordered on the company behalf) */
   companyTaxNumber: Maybe<Scalars['String']['output']>;
+  /** Returns content to be displayed on the order confirmation page after placing the order */
+  confirmationPageContent: TypeOrderConfirmationPageContent;
   /** Billing address country */
   country: TypeCountry;
   /** Date and time when the order was created */
@@ -1984,6 +1977,10 @@ export type TypeOrder = {
   note: Maybe<Scalars['String']['output']>;
   /** Unique order number */
   number: Scalars['String']['output'];
+  /** Current status of the last external payment transaction */
+  paymentStatus: Maybe<Scalars['String']['output']>;
+  /** Number of payment transactions created for the order */
+  paymentTransactionsCount: Scalars['Int']['output'];
   /** Selected pickup place identifier */
   pickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
   /** Billing address zip code */
@@ -2019,6 +2016,21 @@ export type TypeOrder = {
   /** Returns withdrawal request information for the order, null if no withdrawal was requested */
   withdrawalRequest: Maybe<TypeOrderWithdrawalRequest>;
 };
+
+export type TypeOrderConfirmationPageContent = {
+  __typename?: 'OrderConfirmationPageContent';
+  /** HTML content for status page after payment. The content is determined by the payment status. */
+  content: Scalars['String']['output'];
+  /** Status indicating the current state of the payment page content. */
+  status: TypeOrderConfirmationPageContentStatusEnum;
+};
+
+/** Represents the status of the order confirmation page content. */
+export enum TypeOrderConfirmationPageContentStatusEnum {
+  Failed = 'FAILED',
+  InProcess = 'IN_PROCESS',
+  Successful = 'SUCCESSFUL'
+}
 
 /** A connection to a list of items. */
 export type TypeOrderConnection = {
@@ -2184,14 +2196,6 @@ export type TypeOrderItemsFilterInput = {
   productUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Filter order items by type */
   type: InputMaybe<TypeOrderItemTypeEnum>;
-};
-
-export type TypeOrderPaymentPageContent = {
-  __typename?: 'OrderPaymentPageContent';
-  /** HTML content for status page after payment. The content is determined by the payment status. */
-  content: Scalars['String']['output'];
-  /** Status indicating the current state of the payment page content. */
-  status: TypePaymentContentPageStatusEnum;
 };
 
 export type TypeOrderPaymentsConfig = {
@@ -2453,13 +2457,6 @@ export type TypePaymentMainImageArgs = {
 export type TypePaymentPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
-
-/** Represents the status of a payment content page after the payment process */
-export enum TypePaymentContentPageStatusEnum {
-  Failed = 'FAILED',
-  InProcess = 'IN_PROCESS',
-  Successful = 'SUCCESSFUL'
-}
 
 export type TypePaymentSetupCreationData = {
   __typename?: 'PaymentSetupCreationData';
@@ -2931,12 +2928,10 @@ export type TypeQuery = {
   orderItems: TypeOrderItemConnection;
   /** Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded */
   orderItemsSearch: TypeOrderItemConnection;
-  /** Returns HTML content for order payment page depending on the state of the payment. */
-  orderPaymentPageContent: TypeOrderPaymentPageContent;
   /** Returns payments available for the given order */
   orderPayments: TypeOrderPaymentsConfig;
-  /** Returns HTML content for order sent page. */
-  orderSentPageContent: Scalars['String']['output'];
+  /** Returns order URL hash resolved from a short-lived payment return hash */
+  orderUrlHashByReturnHash: Maybe<Scalars['String']['output']>;
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
   orders: Maybe<TypeOrderConnection>;
   /** Returns payment filtered using UUID */
@@ -3126,18 +3121,13 @@ export type TypeQueryOrderItemsSearchArgs = {
 };
 
 
-export type TypeQueryOrderPaymentPageContentArgs = {
-  orderUuid: Scalars['Uuid']['input'];
-};
-
-
 export type TypeQueryOrderPaymentsArgs = {
   orderUuid: Scalars['Uuid']['input'];
 };
 
 
-export type TypeQueryOrderSentPageContentArgs = {
-  orderUuid: Scalars['Uuid']['input'];
+export type TypeQueryOrderUrlHashByReturnHashArgs = {
+  returnHash: Scalars['String']['input'];
 };
 
 

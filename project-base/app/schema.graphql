@@ -1413,10 +1413,8 @@ type Mutation {
   RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
   "Set default delivery address by Uuid"
   SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CurrentCustomerUser!
-  "set order payment status page validity hash, so it's possible to safely return to the payment status page"
-  SetOrderPaymentStatusPageValidityHashMutation(orderPaymentStatusPageValidityHash: String!, orderUuid: Uuid!): String!
   "check payment status of order after callback from payment service"
-  UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): Order!
+  UpdatePaymentStatus(orderUuid: Uuid!): Order!
 }
 
 "Represents a navigation structure item"
@@ -1522,6 +1520,8 @@ type Order {
   companyNumber: String
   "The customer’s company tax number (only when ordered on the company behalf)"
   companyTaxNumber: String
+  "Returns content to be displayed on the order confirmation page after placing the order"
+  confirmationPageContent: OrderConfirmationPageContent!
   "Billing address country"
   country: Country!
   "Date and time when the order was created"
@@ -1572,6 +1572,10 @@ type Order {
   note: String
   "Unique order number"
   number: String!
+  "Current status of the last external payment transaction"
+  paymentStatus: String
+  "Number of payment transactions created for the order"
+  paymentTransactionsCount: Int!
   "Selected pickup place identifier"
   pickupPlaceIdentifier: String
   "Billing address zip code"
@@ -1606,6 +1610,20 @@ type Order {
   withdrawalInstructions: String!
   "Returns withdrawal request information for the order, null if no withdrawal was requested"
   withdrawalRequest: OrderWithdrawalRequest
+}
+
+type OrderConfirmationPageContent {
+  "HTML content for status page after payment. The content is determined by the payment status."
+  content: String!
+  "Status indicating the current state of the payment page content."
+  status: OrderConfirmationPageContentStatusEnum!
+}
+
+"Represents the status of the order confirmation page content."
+enum OrderConfirmationPageContentStatusEnum {
+  FAILED
+  IN_PROCESS
+  SUCCESSFUL
 }
 
 "A connection to a list of items."
@@ -1767,13 +1785,6 @@ enum OrderItemTypeEnum {
   promotion
   rounding
   transport
-}
-
-type OrderPaymentPageContent {
-  "HTML content for status page after payment. The content is determined by the payment status."
-  content: String!
-  "Status indicating the current state of the payment page content."
-  status: PaymentContentPageStatusEnum!
 }
 
 type OrderPaymentsConfig {
@@ -2008,13 +2019,6 @@ type Payment {
   "UUID"
   uuid: Uuid!
   vatPercent: String!
-}
-
-"Represents the status of a payment content page after the payment process"
-enum PaymentContentPageStatusEnum {
-  FAILED
-  IN_PROCESS
-  SUCCESSFUL
 }
 
 type PaymentSetupCreationData {
@@ -2454,14 +2458,12 @@ type Query {
   orderItems(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int): OrderItemConnection!
   "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded"
   orderItemsSearch(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int, searchInput: SearchInput!): OrderItemConnection!
-  "Returns HTML content for order payment page depending on the state of the payment."
-  orderPaymentPageContent(orderUuid: Uuid!): OrderPaymentPageContent!
   "Returns payments available for the given order"
   orderPayments(orderUuid: Uuid!): OrderPaymentsConfig!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
   orders(after: String, before: String, filter: OrderFilterInput, first: Int, last: Int): OrderConnection
-  "Returns HTML content for order sent page."
-  orderSentPageContent(orderUuid: Uuid!): String!
+  "Returns order URL hash resolved from a short-lived payment return hash"
+  orderUrlHashByReturnHash(returnHash: String!): String
   ParameterCheckboxFilterOption: ParameterCheckboxFilterOption
   ParameterColorFilterOption: ParameterColorFilterOption
   ParameterSliderFilterOption: ParameterSliderFilterOption
