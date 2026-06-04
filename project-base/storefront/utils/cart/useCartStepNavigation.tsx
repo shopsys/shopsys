@@ -1,12 +1,19 @@
-import { ErrorPopup } from 'components/Blocks/Popup/ErrorPopup';
-import { getTransportAndPaymentValidationMessages } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
+import { getTransportAndPaymentValidationMessages } from 'utils/cart/getTransportAndPaymentValidationMessages';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+
+const ErrorPopup = dynamic(
+    () => import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
+    {
+        ssr: false,
+    },
+);
 
 type StepClickHandler = (step: number, url: string, redirectPageType: PageType) => (currentStep: number) => void;
 

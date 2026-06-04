@@ -1,34 +1,30 @@
-import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { Form } from 'components/Forms/Form/Form';
-import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { PromoCodeFormType } from 'types/form';
-import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
+
+const PromoCodeForm = dynamic(() => import('./PromoCodeForm').then((component) => component.PromoCodeForm), {
+    ssr: false,
+});
 
 export const PromoCode: FC = () => {
     const { promoCodes } = useCurrentCart();
-    const [formProviderMethods, defaultValues] = usePromoCodeForm();
-    const formMeta = usePromoCodeFormMeta();
     const { t } = useTranslation();
-    const { applyPromoCodeToCart } = useApplyPromoCodeToCart({
-        success: t('Promo code was added to the order.'),
-    });
+    const hasAppliedPromoCode = promoCodes.length > 0;
+    const [isContentVisible, setIsContentVisible] = useState(hasAppliedPromoCode);
+    const [wasContentRequested, setWasContentRequested] = useState(hasAppliedPromoCode);
 
-    const [isContentVisible, setIsContentVisible] = useState(!!defaultValues.promoCode);
+    const togglePromoCodeVisibility = () => {
+        if (!isContentVisible) {
+            setWasContentRequested(true);
+        }
 
-    const onApplyPromoCodeHandler: SubmitHandler<PromoCodeFormType> = async (promoCodeFormData) => {
-        blurInput();
-        await applyPromoCodeToCart(promoCodeFormData.promoCode);
+        setIsContentVisible(!isContentVisible);
     };
 
-    if (promoCodes.length > 0) {
+    if (hasAppliedPromoCode) {
         return null;
     }
 
@@ -42,42 +38,11 @@ export const PromoCode: FC = () => {
                     data-tid={TIDs.blocks_promocode_add_button}
                     label={t('I have a discount coupon')}
                     value={isContentVisible}
-                    onChange={() => setIsContentVisible(!isContentVisible)}
+                    onChange={togglePromoCodeVisibility}
                 />
             </div>
-            {isContentVisible && (
-                <FormProvider {...formProviderMethods}>
-                    <Form
-                        className="flex flex-col gap-2.5 sm:flex-row"
-                        formName={formMeta.formName}
-                        onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
-                    >
-                        <div className="max-w-60">
-                            <TextInputControlled
-                                isWithoutFormLineError
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.promoCode.name}
-                                textInputProps={{
-                                    label: formMeta.fields.promoCode.label,
-                                    required: true,
-                                }}
-                            />
-                        </div>
 
-                        <SubmitButton
-                            aria-label={t('Apply code. Apply promo code', { ns: 'accessibility' })}
-                            className="self-start"
-                            hasDisabledCursor={!formProviderMethods.formState.isValid}
-                            size="xlarge"
-                            tid={TIDs.blocks_promocode_apply_button}
-                            variant="inverted"
-                        >
-                            {t('Apply code')}
-                        </SubmitButton>
-                    </Form>
-                </FormProvider>
-            )}
+            {wasContentRequested && <PromoCodeForm isContentVisible={isContentVisible} />}
         </div>
     );
 };
