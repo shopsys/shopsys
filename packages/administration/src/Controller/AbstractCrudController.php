@@ -11,7 +11,10 @@ use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
+use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudDeleteHookExtensionInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
@@ -21,7 +24,9 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
 use Throwable;
@@ -43,6 +48,9 @@ abstract class AbstractCrudController extends AdminBaseController
     #[Required]
     public EventDispatcherInterface $eventDispatcher;
 
+    #[Required]
+    public FormFactoryInterface $formFactory;
+
     public function setDefinition(Definition $definition): void
     {
         $this->definition = $definition;
@@ -61,6 +69,13 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     protected function configureQuery(QueryBuilder $queryBuilder): void
+    {
+    }
+
+    /**
+     * @param object|null $entity Null for create action, the existing entity for edit action
+     */
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
     {
     }
 
@@ -93,19 +108,136 @@ abstract class AbstractCrudController extends AdminBaseController
         ]);
     }
 
-    public function editAction(int $id): Response
+    public function editAction(Request $request, int $id): Response
     {
+        /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface $handler */
+        $handler = $this->definition->getHandlerForAction(ActionType::EDIT);
+        $entity = $handler->getById($id);
+        $data = $handler->createDataFromEntity($entity);
+
+        $formConfigurator = new CrudFormConfigurator($this->formFactory, $data, ActionType::EDIT);
+        $this->configureForm($formConfigurator, $entity);
+        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureForm($formConfigurator, $entity));
+
+        $form = $formConfigurator->buildForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->executeExtensions(fn (CrudEditHookExtensionInterface $extension) => $extension->beforeEdit($entity, $data), CrudEditHookExtensionInterface::class);
+                $handler->edit($entity, $data);
+                $this->executeExtensions(fn (CrudEditHookExtensionInterface $extension) => $extension->afterEdit($entity, $data), CrudEditHookExtensionInterface::class);
+
+                if ($this->isFlashMessageBagEmpty()) {
+                    $this->addSuccessFlashTwig(
+                        t('<strong>{{ objectName }}</strong> was saved successfully.'),
+                        [
+                            'objectName' => $entity->toHumanReadable(),
+                        ],
+                    );
+                }
+
+                return $this->redirect(
+                    $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
+                );
+            } catch (Throwable $exception) {
+                $this->executeExtensions(fn (CrudEditHookExtensionInterface $extension) => $extension->onEditError($entity, $data, $exception), CrudEditHookExtensionInterface::class);
+                $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
+
+                if ($this->hasErrorMessages() === false) {
+                    $this->addErrorFlashTwig(
+                        t('An error occurred while saving <strong>{{ objectName }}</strong>.'),
+                        [
+                            'objectName' => $entity->toHumanReadable(),
+                        ],
+                    );
+                }
+
+                $this->logger->error(
+                    'Error from CrudController while running edit action',
+                    [
+                        'message' => $exception->getMessage(),
+                        'controllerClass' => static::class,
+                        'action' => ActionType::EDIT,
+                        'exception' => $exception,
+                        'entityClass' => $this->definition->entityClass,
+                        'entityId' => $id,
+                    ],
+                );
+            }
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
         return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
             'title' => $this->definition->getConfig()->getTitle(ActionType::EDIT),
             'topActions' => $this->getConfiguredActions(ActionType::EDIT),
+            'form' => $form->createView(),
         ]);
     }
 
-    public function createAction(): Response
+    public function createAction(Request $request): Response
     {
+        /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface $handler */
+        $handler = $this->definition->getHandlerForAction(ActionType::CREATE);
+        $data = $handler->createData();
+
+        $formConfigurator = new CrudFormConfigurator($this->formFactory, $data, ActionType::CREATE);
+        $this->configureForm($formConfigurator, null);
+        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureForm($formConfigurator, null));
+
+        $form = $formConfigurator->buildForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->executeExtensions(fn (CrudCreateHookExtensionInterface $extension) => $extension->beforeCreate($data), CrudCreateHookExtensionInterface::class);
+                $entity = $handler->create($data);
+                $this->executeExtensions(fn (CrudCreateHookExtensionInterface $extension) => $extension->afterCreate($entity, $data), CrudCreateHookExtensionInterface::class);
+
+                if ($this->isFlashMessageBagEmpty()) {
+                    $this->addSuccessFlashTwig(
+                        t('<strong>{{ objectName }}</strong> was created successfully.'),
+                        [
+                            'objectName' => $entity->toHumanReadable(),
+                        ],
+                    );
+                }
+
+                return $this->redirect(
+                    $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
+                );
+            } catch (Throwable $exception) {
+                $this->executeExtensions(fn (CrudCreateHookExtensionInterface $extension) => $extension->onCreateError($data, $exception), CrudCreateHookExtensionInterface::class);
+                $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
+
+                if ($this->hasErrorMessages() === false) {
+                    $this->addErrorFlashTwig(t('An error occurred while creating.'));
+                }
+
+                $this->logger->error(
+                    'Error from CrudController while running create action',
+                    [
+                        'message' => $exception->getMessage(),
+                        'controllerClass' => static::class,
+                        'action' => ActionType::CREATE,
+                        'exception' => $exception,
+                        'entityClass' => $this->definition->entityClass,
+                    ],
+                );
+            }
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
         return $this->render('@ShopsysAdministration/crud/new.html.twig', [
             'title' => $this->definition->getConfig()->getTitle(ActionType::CREATE),
             'topActions' => $this->getConfiguredActions(ActionType::CREATE),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -151,7 +283,6 @@ abstract class AbstractCrudController extends AdminBaseController
                     'exception' => $exception,
                     'entityClass' => $this->definition->entityClass,
                     'entityId' => $id,
-                    'entityName' => $entity->toHumanReadable(),
                 ],
             );
         }

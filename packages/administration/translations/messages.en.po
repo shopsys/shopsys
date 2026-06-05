@@ -19,7 +19,13 @@ msgstr ""
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr ""
 
+msgid "<strong>{{ objectName }}</strong> was created successfully."
+msgstr ""
+
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."
+msgstr ""
+
+msgid "<strong>{{ objectName }}</strong> was saved successfully."
 msgstr ""
 
 msgid "Action"
@@ -148,7 +154,13 @@ msgstr ""
 msgid "An authentication exception occurred."
 msgstr ""
 
+msgid "An error occurred while creating."
+msgstr ""
+
 msgid "An error occurred while deleting <strong>{{ objectName }}</strong>."
+msgstr ""
+
+msgid "An error occurred while saving <strong>{{ objectName }}</strong>."
 msgstr ""
 
 msgid "Applicable variables"
@@ -1541,6 +1553,9 @@ msgid "Phone prefixes settings"
 msgstr ""
 
 msgid "Pin"
+msgstr ""
+
+msgid "Please check the correctness of all data filled."
 msgstr ""
 
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."

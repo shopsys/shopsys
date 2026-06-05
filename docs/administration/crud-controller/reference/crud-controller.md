@@ -88,7 +88,7 @@ protected function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
-#### `configureQuery(QueryBuilder $queryBuilder): void`
+### `configureQuery(QueryBuilder $queryBuilder): void`
 
 Modify the query used to fetch entities for the list page.
 
@@ -100,6 +100,44 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
         ->setParameter('deleted', false);
 }
 ```
+
+### `configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void`
+
+Configure the form for create and edit pages. The `$entity` parameter is `null` for create action and contains the entity being edited for edit action.
+
+The `CrudFormConfigurator` provides two mutually exclusive approaches — you must pick one:
+
+**Use an existing FormType class:**
+
+```php
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+{
+    $formConfigurator->useFormType(BrandFormType::class, [
+        'brand' => $entity,
+    ]);
+}
+```
+
+**Or build the form inline using the builder:**
+
+```php
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+{
+    $formConfigurator->useBuilder()
+        ->add('name', TextType::class, [
+            'label' => t('Name'),
+            'required' => true,
+        ])
+        ->add('description', TextareaType::class, [
+            'label' => t('Description'),
+            'required' => false,
+        ]);
+}
+```
+
+!!! warning "Mutually exclusive modes"
+
+    Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
 
 ## CRUD Config
 

@@ -19,8 +19,14 @@ msgstr "%defaultCurrency% za jednotku"
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Späť</a> na prihlasovaciu stránku."
 
+msgid "<strong>{{ objectName }}</strong> was created successfully."
+msgstr "Položka „<strong>{{ objectName }}</strong>\" bola úspešne vytvorená."
+
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."
 msgstr "Položka \"<strong>{{ objectName }}</strong>\" bola úspešne vymazaná."
+
+msgid "<strong>{{ objectName }}</strong> was saved successfully."
+msgstr "Položka „<strong>{{ objectName }}</strong>\" bola úspešne uložená."
 
 msgid "Action"
 msgstr "Akcia"
@@ -148,8 +154,14 @@ msgstr "Suma"
 msgid "An authentication exception occurred."
 msgstr "Vyskytla sa výnimka overenia."
 
+msgid "An error occurred while creating."
+msgstr "Pri vytváraní došlo k chybe."
+
 msgid "An error occurred while deleting <strong>{{ objectName }}</strong>."
 msgstr "Pri odstraňovaní položky „<strong>{{ objectName }}</strong>\" došlo k chybe."
+
+msgid "An error occurred while saving <strong>{{ objectName }}</strong>."
+msgstr "Pri ukladaní položky „<strong>{{ objectName }}</strong>\" došlo k chybe."
 
 msgid "Applicable variables"
 msgstr "Použiteľné premenné"
@@ -1542,6 +1554,9 @@ msgstr "Nastavenia telefónnych predvolieb"
 
 msgid "Pin"
 msgstr "Pripnúť"
+
+msgid "Please check the correctness of all data filled."
+msgstr "Prosím skontrolujte správnosť všetkých vyplnených údajov."
 
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
 msgstr "Ospravedlňujeme sa za túto chybu, pracujeme na jej oprave. V prípade potreby nás kontaktujte e-mailom alebo telefonicky."

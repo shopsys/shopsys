@@ -54,11 +54,83 @@ public function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
-!!! tip "Using Hooks"
+### Extending Forms
 
-    Extensions can implement hook interfaces to add custom logic before, after, or on error during CRUD operations.
+Extensions can add fields to forms using the `configureForm()` method. This works **only when the original controller uses the builder mode** (`useBuilder()`). When the controller uses `useFormType()`, the form is fully defined by the FormType class and extensions cannot add fields via the builder.
 
-    See [Hooks System Reference](../reference/handlers.md#hooks-system) for complete documentation.
+```php
+// OrderControllerExtension.php
+
+use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+public function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+{
+    $formConfigurator->useBuilder()
+        ->add('internalNote', TextareaType::class, [
+            'label' => t('Internal note'),
+            'required' => false,
+        ]);
+}
+```
+
+!!! warning
+
+    Calling `useBuilder()` in an extension when the controller used `useFormType()` will throw `CrudFormAlreadyConfiguredException`. If you need to extend a form defined via FormType, use [Symfony's form extension mechanism](https://symfony.com/doc/current/form/create_form_type_extension.html) instead.
+
+### Using Hooks
+
+Extensions can implement hook interfaces to add custom logic before, after, or on error during CRUD operations.
+See [Hooks System Reference](../reference/handlers.md#hooks-system) for complete documentation.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller\Admin;
+
+use Shopsys\AdministrationBundle\Component\Attributes\CrudControllerExtension;
+use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
+use Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension;
+use Shopsys\FrameworkBundle\Controller\Admin\OrderCrudController;
+use Throwable;
+
+#[CrudControllerExtension(crudController: OrderCrudController::class)]
+class OrderControllerExtension extends AbstractCrudControllerExtension implements CrudEditHookExtensionInterface, CrudCreateHookExtensionInterface
+{
+    public function beforeEdit(object $entity, object $data): void
+    {
+        // Custom logic before saving edited entity
+    }
+
+    public function afterEdit(object $entity, object $data): void
+    {
+        // Custom logic after successful edit (e.g., clear cache, send notification)
+    }
+
+    public function onEditError(object $entity, object $data, Throwable $exception): void
+    {
+        // Custom error handling for edit failures
+    }
+
+    public function beforeCreate(object $data): void
+    {
+        // Custom logic before creating new entity
+    }
+
+    public function afterCreate(object $entity, object $data): void
+    {
+        // Custom logic after successful creation
+    }
+
+    public function onCreateError(object $data, Throwable $exception): void
+    {
+        // Custom error handling for create failures
+    }
+}
+```
 
 ## Multiple extensions for one CRUD Controller
 

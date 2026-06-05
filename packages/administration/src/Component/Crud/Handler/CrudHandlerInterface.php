@@ -10,6 +10,6 @@ namespace Shopsys\AdministrationBundle\Component\Crud\Handler;
  * This interface serves as a semantic marker that indicates a handler is intended to support
  * all CRUD operations (Create, Read, Update, Delete).
  */
-interface CrudHandlerInterface extends DeleteHandlerInterface
+interface CrudHandlerInterface extends DeleteHandlerInterface, EditHandlerInterface, CreateHandlerInterface
 {
 }
