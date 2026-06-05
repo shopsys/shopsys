@@ -279,11 +279,11 @@ Would you like to open the file in PhpStorm?
 
 ### Step 9: Confluence Workflow
 
-Always create the Confluence article as a private review page (`isPrivate: true`) when Confluence MCP is available.
+Always create the Confluence article as a published page that is open to everyone in the space (`isPrivate: false`) when Confluence MCP is available.
 
-Before creating the page, inform the user that the page will be created as private and that after review they should publish or make it public manually in Confluence.
+Place the page under the same parent/folder as the previous sprint summary so it inherits the space's default permissions (visible to everyone in the space).
 
-Place the page under the same parent/folder as the previous sprint summary.
+After creating the page, give the user its link and tell them it is already published and visible to everyone in the space, so they can review and edit it directly.
 
 If attachment upload is not available, insert short screenshot placeholders into the article and clearly tell the user which local files need to be uploaded manually.
 
@@ -293,12 +293,13 @@ If Confluence MCP is unavailable, instruct the user to create the article manual
 https://shopsys.atlassian.net/wiki/spaces/PRG/folder/2698510337?atlOrigin=eyJpIjoiMTIzN2EwNmQyYzMyNGFiY2I1OTU1YmVkMjk4YTk1MTciLCJwIjoiYyJ9
 ```
 
-6. Always include the following link with instructions for sending the summary to the maillist:
+### Step 10: Distribution Instructions
 
-```
-For instructions on sending this summary to the maillist, see:
-https://docs.google.com/document/d/172xIeT30FWxKYBh-ZedV5CRxsCv86ZkXMPdiyDuE0jU/edit?pli=1&tab=t.0
-```
+Once the article is ready, always instruct the user with the following steps:
+
+1. Verify the article contents (and optionally have a colleague review it).
+2. Once satisfied with the contents, create a public link for the Confluence page.
+3. Send that public link to the marketing department so they distribute the summary by e-mail to the subscribers.
 
 ## Rules for Describing Changes
 
