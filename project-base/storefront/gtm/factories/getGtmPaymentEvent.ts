@@ -6,6 +6,7 @@ export const getGtmPaymentEvent = (
     paymentName: string,
     isPaymentSuccessful: boolean,
     paymentRetryCount: number,
+    paymentStatus?: string | null,
     paymentFalseReason?: string,
 ): GtmPaymentEventType => ({
     event: GtmEventType.payment,
@@ -13,6 +14,7 @@ export const getGtmPaymentEvent = (
         id: orderNumber,
         isPaymentSuccessful,
         paymentRetryCount,
+        paymentStatus,
         PaymentFalseReason: paymentFalseReason,
         paymentType: paymentName,
     },

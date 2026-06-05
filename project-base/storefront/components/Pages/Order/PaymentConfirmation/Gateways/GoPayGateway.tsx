@@ -39,9 +39,7 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
 
     const autoTriggeredOrderRef = useRef<string | null>(null);
 
-    const handlePayOrder = async () => {
-        setInitiatedPaymentGate(true);
-
+    const markPaymentActionRequired = async () => {
         const query = {
             ...router.query,
             requiresAction: true,
@@ -60,6 +58,10 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
                 { shallow: true },
             );
         }
+    };
+
+    const handlePayOrder = async () => {
+        setInitiatedPaymentGate(true);
 
         const payOrderResult = await payOrder({ orderUuid });
 
@@ -80,7 +82,13 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
             return;
         }
 
-        setGoPayPaymentSetup(payOrderResult.data?.PayOrder.goPayCreatePaymentSetup ?? undefined);
+        const goPayCreatePaymentSetup = payOrderResult.data?.PayOrder.goPayCreatePaymentSetup ?? undefined;
+
+        if (goPayCreatePaymentSetup) {
+            await markPaymentActionRequired();
+        }
+
+        setGoPayPaymentSetup(goPayCreatePaymentSetup);
     };
 
     const initGoPayCheckout = (gatewayUrl: string) => () => {

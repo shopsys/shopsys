@@ -190,6 +190,7 @@ const getOrderWithUpdatedPaymentStatus = (
         hasPaymentInProcess: paymentStatusOrder.hasPaymentInProcess,
         isPaid: paymentStatusOrder.isPaid,
         lastExternalPaymentUrl: paymentStatusOrder.lastExternalPaymentUrl,
+        paymentStatus: paymentStatusOrder.paymentStatus,
         paymentTransactionsCount: paymentStatusOrder.paymentTransactionsCount,
     };
 };

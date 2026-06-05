@@ -1,10 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useChangePaymentInOrderMutation } from 'graphql/requests/orders/mutations/ChangePaymentInOrderMutation.generated';
 import { onGtmPaymentTryEventHandler } from 'gtm/handlers/onGtmPaymentEventHandler';
-import {
-    getGtmPaymentEventFromLocalStorage,
-    removeGtmPaymentEventFromLocalStorage,
-} from 'gtm/utils/gtmPaymentEventLocalStorage';
 import { useRouter } from 'next/router';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -60,10 +56,13 @@ export const useChangePaymentInOrder = () => {
         }
 
         redirectPromise.then(() => {
-            const { gtmPaymentEvent } = getGtmPaymentEventFromLocalStorage();
-            const retryCount = gtmPaymentEvent ? gtmPaymentEvent.ecommerce.paymentRetryCount + 1 : 0;
-            onGtmPaymentTryEventHandler(editedOrder.number, paymentName, true, undefined, retryCount);
-            removeGtmPaymentEventFromLocalStorage();
+            onGtmPaymentTryEventHandler(
+                editedOrder.number,
+                paymentName,
+                true,
+                undefined,
+                editedOrder.paymentTransactionsCount,
+            );
         });
 
         return changePaymentInOrderData;

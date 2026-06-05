@@ -1,17 +1,11 @@
 import { useUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
-import { getGtmPaymentEvent } from 'gtm/factories/getGtmPaymentEvent';
 import {
     getGtmCreateOrderEventFromLocalStorage,
     removeGtmCreateOrderEventFromLocalStorage,
 } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
-import {
-    getGtmPaymentEventFromLocalStorage,
-    removeGtmPaymentEventFromLocalStorage,
-    saveGtmPaymentEventInLocalStorage,
-} from 'gtm/utils/gtmPaymentEventLocalStorage';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
+import { getGtmPaymentEventFromOrder } from 'gtm/utils/paymentGtmEventUtils';
 import { useEffect, useRef } from 'react';
-import { getOrderPaymentItem } from 'utils/mappers/order';
 
 export const useUpdatePaymentStatus = (
     orderUuid: string | undefined,
@@ -57,20 +51,7 @@ export const useUpdatePaymentStatus = (
 
     useEffect(() => {
         if (paymentStatusData) {
-            const { isPaid, items, number } = paymentStatusData.UpdatePaymentStatus;
-            const paymentItem = getOrderPaymentItem(items);
-            const { gtmPaymentEvent } = getGtmPaymentEventFromLocalStorage();
-
-            const retryCount = gtmPaymentEvent ? gtmPaymentEvent.ecommerce.paymentRetryCount + 1 : 0;
-            const newGtmPaymentEvent = getGtmPaymentEvent(number, paymentItem?.payment?.name || '', isPaid, retryCount);
-
-            gtmSafePushEvent(newGtmPaymentEvent);
-
-            if (!isPaid) {
-                saveGtmPaymentEventInLocalStorage(newGtmPaymentEvent);
-            } else {
-                removeGtmPaymentEventFromLocalStorage();
-            }
+            gtmSafePushEvent(getGtmPaymentEventFromOrder(paymentStatusData.UpdatePaymentStatus));
         }
     }, [paymentStatusData]);
 

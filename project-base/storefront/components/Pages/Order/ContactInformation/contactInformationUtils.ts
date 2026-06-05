@@ -11,12 +11,10 @@ import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuer
 import { useGtmContext } from 'gtm/context/GtmProvider';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
-import { getGtmPaymentEvent } from 'gtm/factories/getGtmPaymentEvent';
 import { onGtmCreateOrderEventHandler } from 'gtm/handlers/onGtmCreateOrderEventHandler';
 import { onGtmPaymentTryEventHandler } from 'gtm/handlers/onGtmPaymentEventHandler';
 import { getGtmReviewConsents } from 'gtm/utils/getGtmReviewConsents';
 import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
-import { saveGtmPaymentEventInLocalStorage } from 'gtm/utils/gtmPaymentEventLocalStorage';
 import { useRouter } from 'next/router';
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
@@ -215,7 +213,6 @@ const useHandleEventsAfterOrderCreation = () => {
                 pickupPlace,
                 ipAddress,
             );
-            const gtmPaymentEvent = getGtmPaymentEvent(orderNumber, payment.name, false, -1);
             const isPaymentWithPaymentGate = getIsPaymentWithPaymentGate(payment.type);
             const isPaymentSuccessful = isPaymentWithPaymentGate ? undefined : true;
 
@@ -228,7 +225,6 @@ const useHandleEventsAfterOrderCreation = () => {
 
             if (isPaymentWithPaymentGate) {
                 saveGtmCreateOrderEventInLocalStorage(gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart);
-                saveGtmPaymentEventInLocalStorage(gtmPaymentEvent);
             } else {
                 onGtmPaymentTryEventHandler(orderNumber, payment.name, true);
             }
