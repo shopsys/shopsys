@@ -18,7 +18,6 @@ import { getGtmReviewConsents } from 'gtm/utils/getGtmReviewConsents';
 import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
 import { saveGtmPaymentEventInLocalStorage } from 'gtm/utils/gtmPaymentEventLocalStorage';
 import { useRouter } from 'next/router';
-import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
@@ -29,8 +28,8 @@ import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { getOrderPaymentItem } from 'utils/mappers/order';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
+import { saveOrderConfirmationContext } from 'utils/order/orderConfirmationContextStorage';
 import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -144,7 +143,6 @@ const useHandleCreateOrderResult = (
     formMeta: ContactInformationFormMetaType,
 ) => {
     const { t } = useTranslation();
-    const user = useCurrentCustomerData();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const domainConfig = useDomainConfig();
     const { changePaymentInCart } = useChangePaymentInCart();
@@ -165,32 +163,13 @@ const useHandleCreateOrderResult = (
         const modifiedCartAfterUnsuccessfulOrderCreation = createOrderResult.data?.CreateOrder.cart;
 
         if (wasOrderCreated && createdOrder) {
-            const orderPayment = getOrderPaymentItem(createdOrder.items);
-            const orderConfirmationUrlQuery: OrderConfirmationUrlQuery = {
-                orderUuid: createdOrder.uuid,
-                companyNumber: user?.companyNumber ?? formValues.companyNumber,
-                orderEmail: user?.email ?? formValues.email,
-                orderPaymentType: orderPayment?.payment?.type,
-                orderPaymentStatusPageValidityHash: undefined,
-            };
-
-            if (!user) {
-                orderConfirmationUrlQuery.orderUrlHash = createdOrder.urlHash;
-            }
+            saveOrderConfirmationContext(createdOrder.urlHash, domainConfig.url);
 
             const [orderConfirmationUrl] = getInternationalizedStaticUrls(['/order-confirmation'], domainConfig.url);
 
-            router
-                .replace(
-                    {
-                        pathname: orderConfirmationUrl,
-                        query: orderConfirmationUrlQuery,
-                    },
-                    orderConfirmationUrl,
-                )
-                .then(() => {
-                    handleEventsAfterOrderCreation(createdOrder.number, formValues);
-                });
+            router.replace(orderConfirmationUrl).then(() => {
+                handleEventsAfterOrderCreation(createdOrder.number, formValues);
+            });
 
             return;
         }

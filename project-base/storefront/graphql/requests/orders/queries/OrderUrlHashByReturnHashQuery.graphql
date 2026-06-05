@@ -1,0 +1,3 @@
+query OrderUrlHashByReturnHashQuery($returnHash: String!) {
+    orderUrlHashByReturnHash(returnHash: $returnHash)
+}

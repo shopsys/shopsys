@@ -21,7 +21,7 @@ final class Version20231101182132 extends AbstractMigration implements DomainAwa
                 'paymentSuccessfulText',
                 t(
                     '
-                <p>Payment for order number {number} has been successful. <br /><br />
+                <p>Payment for order number {number} has been successful. <br />
                 <a href="{order_detail_url}" tabindex="0">Track</a> the status of your order. <br />
                 {transport_instructions}</p>',
                     [],
@@ -35,7 +35,7 @@ final class Version20231101182132 extends AbstractMigration implements DomainAwa
                 'paymentFailedText',
                 t(
                     '
-                <p>Payment for order number {number} has failed. <br /><br />
+                <p>Payment for order number {number} has failed. <br />
                 Please contact us to resolve the issue.</p>',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,

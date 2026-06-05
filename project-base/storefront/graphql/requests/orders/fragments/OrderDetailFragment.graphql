@@ -48,6 +48,10 @@ fragment OrderDetailFragment on Order {
     hasExternalPayment
     hasPaymentInProcess
     lastExternalPaymentUrl
+    confirmationPageContent {
+        content
+        status
+    }
     deliveredAt
     withdrawalRequest {
         ...OrderWithdrawalRequestFragment

@@ -10,5 +10,11 @@ fragment UpdatePaymentStatusFragment on Order {
         }
     }
     hasPaymentInProcess
+    lastExternalPaymentUrl
+    confirmationPageContent {
+        __typename
+        content
+        status
+    }
     urlHash
 }

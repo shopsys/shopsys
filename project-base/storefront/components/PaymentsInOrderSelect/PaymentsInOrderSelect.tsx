@@ -109,7 +109,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                         ))}
                     </ul>
                 </div>
-                <div className="flex w-full flex-wrap items-center justify-center vl:justify-between gap-2 vl:text-left text-center">
+                <div className="flex w-full flex-col vl:items-end items-center gap-2">
                     {isSelectedPaymentEqualsToOrderPayment ? (
                         <GoPayGateway
                             requiresAction

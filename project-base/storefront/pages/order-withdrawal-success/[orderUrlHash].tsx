@@ -1,4 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import { CommonLayout } from 'components/Layout/CommonLayout';
@@ -48,6 +49,8 @@ const OrderWithdrawalSuccessPage: FC = () => {
                         <ConfirmationPageContent
                             content={orderData?.order?.withdrawalInstructions}
                             heading={t('Your withdrawal request has been submitted')}
+                            headingIcon={CheckmarkIcon}
+                            headingVariant="success"
                         />
                     </Webline>
                 </CommonLayout>

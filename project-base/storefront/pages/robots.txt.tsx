@@ -73,7 +73,6 @@ const getRobotsTxtContent = (
         '/new-password',
         '/search',
         '/order-confirmation',
-        '/order-payment-confirmation',
         '/personal-data-export',
         '/personal-data-overview',
         '/order/contact-information',

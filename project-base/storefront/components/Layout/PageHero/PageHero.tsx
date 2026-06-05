@@ -2,6 +2,9 @@ import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { ReactNode } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { twJoin } from 'tailwind-merge';
+
+export type PageHeroVariant = 'default' | 'error' | 'info' | 'success';
 
 type BasePageHeroProps = {
     icon: React.ElementType;
@@ -9,6 +12,7 @@ type BasePageHeroProps = {
     titleTid?: string;
     description?: string | ReactNode;
     descriptionTid?: string;
+    variant?: PageHeroVariant;
 };
 
 type PageHeroProps = BasePageHeroProps &
@@ -34,10 +38,23 @@ export const PageHero: FC<PageHeroProps> = ({
     actionHref,
     actionTitle,
     actionSkeletonType,
+    variant = 'default',
 }) => {
+    const variantClasses: Record<PageHeroVariant, string> = {
+        default: 'bg-background-most text-icon-default',
+        error: 'bg-toast-bg-error text-icon-error',
+        info: 'bg-background-accent-less text-icon-accent',
+        success: 'bg-toast-bg-success text-icon-success',
+    };
+
     return (
         <VerticalStack gap="xs">
-            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-background-most">
+            <div
+                className={twJoin(
+                    'mx-auto flex size-14 items-center justify-center rounded-full',
+                    variantClasses[variant],
+                )}
+            >
                 <IconComponent aria-hidden="true" className="size-7" focusable="false" />
             </div>
 
@@ -49,7 +66,7 @@ export const PageHero: FC<PageHeroProps> = ({
                 <p
                     aria-atomic="true"
                     aria-live="polite"
-                    className="mx-auto max-w-[520px] text-balance text-center"
+                    className="mx-auto max-w-130 text-balance text-center"
                     data-tid={descriptionTid}
                     role="alert"
                 >
