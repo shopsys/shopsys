@@ -568,6 +568,14 @@ class Order
         return $this->getLastGoPayTransaction()?->getExternalPaymentUrl();
     }
 
+    /**
+     * @return string|null
+     */
+    public function getLastExternalPaymentStatus()
+    {
+        return $this->getLastGoPayTransaction()?->getExternalPaymentStatus();
+    }
+
     public function addPaymentTransaction(PaymentTransaction $paymentTransaction): void
     {
         $this->paymentTransactions->add($paymentTransaction);
