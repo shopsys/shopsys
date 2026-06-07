@@ -6,14 +6,13 @@ namespace Shopsys\LuigisBoxBundle\Model\Batch;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
-use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult;
+use Shopsys\LuigisBoxBundle\Model\Article\LuigisBoxArticleSearchResultsMapper;
+use Shopsys\LuigisBoxBundle\Model\Brand\LuigisBoxBrandSearchResultsMapper;
+use Shopsys\LuigisBoxBundle\Model\Category\LuigisBoxCategorySearchResultsMapper;
 use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
@@ -36,10 +35,9 @@ class LuigisBoxBatchLoader
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
         protected readonly FilterQueryFactory $filterQueryFactory,
-        protected readonly CategoryFacade $categoryFacade,
-        protected readonly Domain $domain,
-        protected readonly CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade,
-        protected readonly BrandFacade $brandFacade,
+        protected readonly LuigisBoxCategorySearchResultsMapper $luigisBoxCategorySearchResultsMapper,
+        protected readonly LuigisBoxArticleSearchResultsMapper $luigisBoxArticleSearchResultsMapper,
+        protected readonly LuigisBoxBrandSearchResultsMapper $luigisBoxBrandSearchResultsMapper,
     ) {
     }
 
@@ -95,15 +93,15 @@ class LuigisBoxBatchLoader
             }
 
             if ($type === TypeInLuigisBoxEnum::CATEGORY) {
-                $mappedDataOfCurrentType = $this->mapCategoryData($luigisBoxResults[$type]);
+                $mappedDataOfCurrentType = $this->luigisBoxCategorySearchResultsMapper->mapCategoryData($luigisBoxResults[$type]);
             }
 
             if ($type === TypeInLuigisBoxEnum::ARTICLE) {
-                $mappedDataOfCurrentType = $this->mapArticleData($luigisBoxResults[$type]);
+                $mappedDataOfCurrentType = $this->luigisBoxArticleSearchResultsMapper->mapArticleData($luigisBoxResults[$type]);
             }
 
             if ($type === TypeInLuigisBoxEnum::BRAND) {
-                $mappedDataOfCurrentType = $this->mapBrandData($luigisBoxResults[$type]);
+                $mappedDataOfCurrentType = $this->luigisBoxBrandSearchResultsMapper->mapBrandData($luigisBoxResults[$type]);
             }
 
             if ($endpoint === LuigisBoxEndpointEnum::SEARCH && $type === $this->getMainType()) {
@@ -124,44 +122,6 @@ class LuigisBoxBatchLoader
         $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($luigisBoxResult->getIds(), $limit);
 
         return $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery)->getHits();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    protected function mapCategoryData(LuigisBoxResult $luigisBoxResult): array
-    {
-        $categoryArray = $this->categoryFacade->getVisibleCategoriesByIds([$luigisBoxResult->getIds()], $this->domain->getCurrentDomainConfig());
-
-        return array_first($categoryArray);
-    }
-
-    protected function mapArticleData(LuigisBoxResult $luigisBoxResult): array
-    {
-        if (count($luigisBoxResult->getIdsWithPrefix()) === 0) {
-            return [];
-        }
-
-        $idsByType = [];
-
-        foreach ($luigisBoxResult->getIdsWithPrefix() as $idWithPrefix) {
-            [$type, $id] = explode('-', $idWithPrefix);
-            $idsByType[$type][] = $id;
-        }
-
-        return $this->combinedArticleElasticsearchFacade->getArticlesByIds(
-            $idsByType,
-            $this->domain->getId(),
-            count($luigisBoxResult->getIds()),
-        );
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
-     */
-    protected function mapBrandData(LuigisBoxResult $luigisBoxResult): array
-    {
-        return $this->brandFacade->getBrandsByIds($luigisBoxResult->getIds());
     }
 
     protected function getMainBatchLoadData(array $luigisBoxBatchLoadData): LuigisBoxBatchLoadData

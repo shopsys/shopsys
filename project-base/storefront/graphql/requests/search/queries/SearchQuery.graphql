@@ -38,10 +38,8 @@ query SearchQuery(
     ) {
         ...ListedCategoryConnectionFragment
     }
-    # This is here for Luigi's Box to correctly relate categories, articles, and brands to
-    # products displayed on search page. It has to exactly match the query definition inside
-    # SearchProductsQuery.graphql, as then that query is loaded from cache and not re-fetched
-    # unnecessarily.
+    # This has to exactly match the query definition inside SearchProductsQuery.graphql,
+    # as then that query is loaded from cache and not re-fetched unnecessarily.
     productsSearch(
         after: $endCursor
         orderingMode: $orderingMode

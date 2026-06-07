@@ -11,6 +11,7 @@ use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Override;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderInterface;
+use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoader;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
@@ -22,6 +23,8 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
         string $enabledDomainIds,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,
         protected readonly LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory,
+        protected readonly LuigisBoxClient $luigisBoxClient,
+        protected readonly LuigisBoxCategorySearchResultsMapper $luigisBoxCategorySearchResultsMapper,
     ) {
         parent::__construct($enabledDomainIds);
     }
@@ -30,6 +33,31 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
     public function getCategoriesSearchResults(
         Argument $argument,
     ): Promise|ConnectionInterface {
+        if ($argument['searchInput']['isAutocomplete'] !== true) {
+            $totalCount = 0;
+            $paginator = new Paginator(
+                function ($offset, $limit) use ($argument, &$totalCount) {
+                    $luigisBoxBatchLoadData = $this->luigisBoxBatchLoadDataFactory->createForSearch(
+                        TypeInLuigisBoxEnum::CATEGORY,
+                        $limit,
+                        $offset,
+                        $argument,
+                    );
+                    $luigisBoxResults = $this->luigisBoxClient->getData($luigisBoxBatchLoadData, [
+                        TypeInLuigisBoxEnum::CATEGORY => $limit,
+                    ]);
+                    $luigisBoxResult = $luigisBoxResults[TypeInLuigisBoxEnum::CATEGORY];
+                    $totalCount = $luigisBoxResult->getItemsCount();
+
+                    return $this->luigisBoxCategorySearchResultsMapper->mapCategoryData($luigisBoxResult);
+                },
+            );
+
+            return $paginator->auto($argument, static function () use (&$totalCount): int {
+                return $totalCount;
+            });
+        }
+
         $paginator = new Paginator(
             function ($offset, $limit) use ($argument) {
                 return $this->luigisBoxBatchLoader->load(
