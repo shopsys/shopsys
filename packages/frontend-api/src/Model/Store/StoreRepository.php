@@ -42,7 +42,7 @@ class StoreRepository
             ->andWhere('s.domainId = :domainId')
             ->setParameter('domainId', $domainId);
 
-        if ($storesFilterOptions->getSearchText() !== null) {
+        if ($storesFilterOptions->getSearchText() !== null && $storesFilterOptions->getCoordinates() === null) {
             $queryBuilder
                 ->andWhere('(normalized(s.city) LIKE normalized(:searchText) OR normalized(s.postcode) LIKE normalized(:searchText))')
                 ->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($storesFilterOptions->getSearchText()));
