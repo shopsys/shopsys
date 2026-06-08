@@ -9,7 +9,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeSettingsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeSettingsQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string | null, displayTimezone: string, heurekaEnabled: boolean, privacyPolicyArticleUrl: string | null, termsAndConditionsArticleUrl: string | null, userConsentPolicyArticleUrl: string | null, socialNetworkLoginConfig: Array<Types.TypeLoginTypeEnum>, cspHeader: string, defaultPricingGroupId: number, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string | null, titleAddOn: string | null, metaDescription: string | null }, mainBlogCategoryData: { __typename?: 'MainBlogCategoryData', mainBlogCategoryUrl: string | null, mainBlogCategoryMainImage: { __typename?: 'Image', url: string } | null } } | null };
+export type TypeSettingsQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string | null, displayTimezone: string, heurekaEnabled: boolean, privacyPolicyArticleUrl: string | null, termsAndConditionsArticleUrl: string | null, userConsentPolicyArticleUrl: string | null, socialNetworkLoginConfig: Array<Types.TypeLoginTypeEnum>, cspHeader: string, defaultPricingGroupId: number, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string | null, titleAddOn: string | null, metaDescription: string | null }, mainBlogCategoryData: { __typename?: 'MainBlogCategoryData', mainBlogCategoryUrl: string | null, mainBlogCategoryMainImage: { __typename?: 'Image', url: string } | null }, fedcmProviders: Array<{ __typename?: 'FedcmProviderConfig', type: Types.TypeLoginTypeEnum, clientId: string, configUrl: string, autoSelect: boolean, params: Array<{ __typename?: 'FedcmProviderParam', name: string, value: string }> }> } | null };
 
 
 export const SettingsQueryDocument = gql`
@@ -34,6 +34,16 @@ export const SettingsQueryDocument = gql`
     termsAndConditionsArticleUrl
     userConsentPolicyArticleUrl
     socialNetworkLoginConfig
+    fedcmProviders {
+      type
+      clientId
+      configUrl
+      autoSelect
+      params {
+        name
+        value
+      }
+    }
     cspHeader
     defaultPricingGroupId
   }
