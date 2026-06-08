@@ -28,15 +28,15 @@ class GoogleAddressCoordinatesFacade
             return null;
         }
 
+        $query = $this->createAddressQuery($street, $city, $countryCode, $postcode);
+
+        if ($query === null) {
+            return null;
+        }
+
         try {
             $response = $this->httpClient->request('GET', static::GEOCODE_ADDRESS_URL, [
-                'query' => [
-                    'key' => $this->googleMapApiKey,
-                    'address.addressLines' => $street,
-                    'address.locality' => $city,
-                    'address.regionCode' => strtoupper($countryCode),
-                    'address.postalCode' => $postcode,
-                ],
+                'query' => $query,
                 'headers' => [
                     'X-Goog-FieldMask' => 'results.location',
                 ],
@@ -59,5 +59,37 @@ class GoogleAddressCoordinatesFacade
         }
 
         return new AddressCoordinatesData((float)$latitude, (float)$longitude);
+    }
+
+    /**
+     * @return array<string, string>|null
+     */
+    protected function createAddressQuery(
+        string $street,
+        string $city,
+        string $countryCode,
+        string $postcode,
+    ): ?array {
+        $query = [
+            'key' => $this->googleMapApiKey,
+        ];
+
+        if ($street !== '') {
+            $query['address.addressLines'] = $street;
+        }
+
+        if ($city !== '') {
+            $query['address.locality'] = $city;
+        }
+
+        if ($countryCode !== '') {
+            $query['address.regionCode'] = strtoupper($countryCode);
+        }
+
+        if ($postcode !== '') {
+            $query['address.postalCode'] = $postcode;
+        }
+
+        return count($query) > 1 ? $query : null;
     }
 }
