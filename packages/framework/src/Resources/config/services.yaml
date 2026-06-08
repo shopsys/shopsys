@@ -103,6 +103,10 @@ services:
         arguments:
             $cdnDomain: '%env(CDN_DOMAIN)%'
 
+    Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade:
+        arguments:
+            $googleMapApiKey: '%env(GOOGLE_MAP_API_KEY)%'
+
     Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder: ~
 
     Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap:

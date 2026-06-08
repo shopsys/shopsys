@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
@@ -179,13 +180,19 @@ final class StoreFormType extends AbstractType
             ->add('latitude', NumberType::class, [
                 'required' => false,
                 'scale' => 10,
+                'attr' => [
+                    'class' => 'js-store-coordinate-latitude',
+                ],
             ])
             ->add('longitude', NumberType::class, [
                 'required' => false,
                 'scale' => 10,
+                'attr' => [
+                    'class' => 'js-store-coordinate-longitude',
+                ],
             ])
             ->add('loadCoordinates', ButtonType::class, [
-                'label' => 'Load Coordinates',
+                'label' => 'Load coordinates by address',
                 'attr' => [
                     'class' => 'btn btn-primary js-load-store-coordinates',
                     'data-load-coordinates-url' => $this->urlGenerator->generate('admin_store_loadcoordinates'),
@@ -251,6 +258,9 @@ final class StoreFormType extends AbstractType
                 'choices' => $this->countryFacade->getAll(),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'choice_attr' => static fn (Country $country) => [
+                    'data-country-code' => $country->getCode(),
+                ],
                 'attr' => [
                     'class' => 'js-store-address-country',
                 ],

@@ -712,6 +712,12 @@ msgstr "Hlavička Content-Security-Policy byla nastavena."
 msgid "Convert values associated with parameter - %name%"
 msgstr "Převeďte hodnoty spojené s parametrem - %name%"
 
+msgid "Coordinates could not be loaded for the entered address."
+msgstr "Pro zadanou adresu se nepodařilo načíst souřadnice."
+
+msgid "Coordinates loaded"
+msgstr "Souřadnice načteny"
+
 msgid "Copy administrator role group"
 msgstr "Zkopírovat skupinu práv administrátora"
 

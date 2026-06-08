@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -35,6 +36,7 @@ class StoreController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly GoogleAddressCoordinatesFacade $addressCoordinatesFacade,
     ) {
     }
 
@@ -147,17 +149,23 @@ class StoreController extends AdminBaseController
         methods: ['post'],
         condition: 'request.isXmlHttpRequest()',
     )]
-    #[CanView]
+    #[CanView(methods: [HttpMethod::POST])]
     public function loadCoordinatesAction(Request $request): JsonResponse
     {
+        $addressCoordinatesData = $this->addressCoordinatesFacade->getCoordinatesByAddress(
+            $request->request->getString('street'),
+            $request->request->getString('city'),
+            $request->request->getString('countryCode'),
+            $request->request->getString('postcode'),
+        );
+
+        if ($addressCoordinatesData === null) {
+            return new JsonResponse();
+        }
+
         return new JsonResponse([
-            'address' => [
-                'street' => $request->request->getString('street'),
-                'city' => $request->request->getString('city'),
-                'postcode' => $request->request->getString('postcode'),
-                'country' => $request->request->getString('country'),
-            ],
-            'success' => true,
+            'latitude' => $addressCoordinatesData->latitude,
+            'longitude' => $addressCoordinatesData->longitude,
         ]);
     }
 

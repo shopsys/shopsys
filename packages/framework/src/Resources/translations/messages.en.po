@@ -712,6 +712,12 @@ msgstr ""
 msgid "Convert values associated with parameter - %name%"
 msgstr ""
 
+msgid "Coordinates could not be loaded for the entered address."
+msgstr "Coordinates could not be loaded for the entered address."
+
+msgid "Coordinates loaded"
+msgstr "Coordinates loaded"
+
 msgid "Copy administrator role group"
 msgstr ""
 
