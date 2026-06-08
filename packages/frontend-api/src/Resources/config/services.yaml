@@ -244,6 +244,10 @@ services:
         arguments:
             $logger: '@monolog.logger'
 
+    Shopsys\FrontendApiBundle\Model\Store\StoreSearchTextCoordinatesProvider:
+        arguments:
+            $storeSearchCoordinatesCache: '@store_search_coordinates_cache'
+
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator: ~
 
     Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider: ~

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Store;
 
+use Closure;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\AddressCoordinatesData;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class StoreSearchTextCoordinatesProvider
 {
@@ -15,6 +17,7 @@ class StoreSearchTextCoordinatesProvider
     public function __construct(
         protected readonly GoogleAddressCoordinatesFacade $googleAddressCoordinatesFacade,
         protected readonly Domain $domain,
+        protected readonly CacheInterface $storeSearchCoordinatesCache,
     ) {
     }
 
@@ -30,13 +33,16 @@ class StoreSearchTextCoordinatesProvider
         }
 
         $postcode = $this->getPostcode($normalizedSearchText);
+        $defaultCountryCode = $this->getDefaultCountryCode();
 
         if ($postcode !== null) {
-            return $this->formatCoordinatesData(
-                $this->googleAddressCoordinatesFacade->getCoordinatesByAddress(
+            return $this->getCachedCoordinatesBySearchText(
+                $normalizedSearchText,
+                $defaultCountryCode,
+                fn () => $this->googleAddressCoordinatesFacade->getCoordinatesByAddress(
                     '',
                     '',
-                    $this->getDefaultCountryCode(),
+                    $defaultCountryCode,
                     $postcode,
                 ),
             );
@@ -46,11 +52,13 @@ class StoreSearchTextCoordinatesProvider
             return null;
         }
 
-        return $this->formatCoordinatesData(
-            $this->googleAddressCoordinatesFacade->getCoordinatesByAddress(
+        return $this->getCachedCoordinatesBySearchText(
+            $normalizedSearchText,
+            $defaultCountryCode,
+            fn () => $this->googleAddressCoordinatesFacade->getCoordinatesByAddress(
                 '',
                 $normalizedSearchText,
-                $this->getDefaultCountryCode(),
+                $defaultCountryCode,
                 '',
             ),
         );
@@ -94,6 +102,21 @@ class StoreSearchTextCoordinatesProvider
     }
 
     /**
+     * @param \Closure(): ?\Shopsys\FrameworkBundle\Component\AddressCoordinates\AddressCoordinatesData $coordinatesProvider
+     * @return array{latitude: string, longitude: string}|null
+     */
+    protected function getCachedCoordinatesBySearchText(
+        string $searchText,
+        string $countryCode,
+        Closure $coordinatesProvider,
+    ): ?array {
+        return $this->storeSearchCoordinatesCache->get(
+            $this->getCacheId($searchText, $countryCode),
+            fn () => $this->formatCoordinatesData($coordinatesProvider()),
+        );
+    }
+
+    /**
      * @return array{latitude: string, longitude: string}|null
      */
     protected function formatCoordinatesData(?AddressCoordinatesData $addressCoordinatesData): ?array
@@ -114,5 +137,10 @@ class StoreSearchTextCoordinatesProvider
             'sk' => 'SK',
             default => 'CZ',
         };
+    }
+
+    protected function getCacheId(string $searchText, string $countryCode): string
+    {
+        return hash('sha256', sprintf('%s:%s', strtoupper($countryCode), mb_strtolower($searchText)));
     }
 }

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\AddressCoordinates\AddressCoordinatesData;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Store\StoreSearchTextCoordinatesProvider;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class StoreSearchTextCoordinatesProviderTest extends TestCase
 {
@@ -96,6 +97,75 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
         $this->assertNull($coordinates);
     }
 
+    public function testUsesCachedNullCoordinatesBySearchText(): void
+    {
+        $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
+        $googleAddressCoordinatesFacadeMock->expects($this->once())
+            ->method('getCoordinatesByAddress')
+            ->with('', 'Neexistující', 'CZ', '')
+            ->willReturn(null);
+        $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs');
+
+        $firstCoordinates = $provider->getCoordinatesFromSearchText('Neexistující');
+        $secondCoordinates = $provider->getCoordinatesFromSearchText('Neexistující');
+
+        $this->assertNull($firstCoordinates);
+        $this->assertNull($secondCoordinates);
+    }
+
+    public function testUsesCachedCoordinatesBySearchText(): void
+    {
+        $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
+        $googleAddressCoordinatesFacadeMock->expects($this->once())
+            ->method('getCoordinatesByAddress')
+            ->with('', 'Havířov', 'CZ', '')
+            ->willReturn(new AddressCoordinatesData(49.7798, 18.4369));
+        $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs');
+
+        $firstCoordinates = $provider->getCoordinatesFromSearchText('Havířov');
+        $secondCoordinates = $provider->getCoordinatesFromSearchText('Havířov');
+
+        $this->assertSame($firstCoordinates, $secondCoordinates);
+        $this->assertSame([
+            'latitude' => '49.7798',
+            'longitude' => '18.4369',
+        ], $secondCoordinates);
+    }
+
+    public function testUsesDifferentCacheKeyForDifferentCountry(): void
+    {
+        $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
+        $googleAddressCoordinatesFacadeMock->expects($this->exactly(2))
+            ->method('getCoordinatesByAddress')
+            ->willReturnCallback(static function (
+                string $street,
+                string $city,
+                string $countryCode,
+                string $postcode,
+            ): AddressCoordinatesData {
+                return match ($countryCode) {
+                    'CZ' => new AddressCoordinatesData(50.0755, 14.4378),
+                    'SK' => new AddressCoordinatesData(48.1486, 17.1077),
+                    default => new AddressCoordinatesData(0, 0),
+                };
+            });
+        $cache = new ArrayAdapter();
+        $czechProvider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs', $cache);
+        $slovakProvider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'sk', $cache);
+
+        $czechCoordinates = $czechProvider->getCoordinatesFromSearchText('Praha');
+        $slovakCoordinates = $slovakProvider->getCoordinatesFromSearchText('Praha');
+
+        $this->assertSame([
+            'latitude' => '50.0755',
+            'longitude' => '14.4378',
+        ], $czechCoordinates);
+        $this->assertSame([
+            'latitude' => '48.1486',
+            'longitude' => '17.1077',
+        ], $slovakCoordinates);
+    }
+
     #[DataProvider('getInvalidSearchTextDataProvider')]
     public function testDoesNotCallGoogleForInvalidSearchText(?string $searchText): void
     {
@@ -142,6 +212,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     private function createProvider(
         GoogleAddressCoordinatesFacade|MockObject $googleAddressCoordinatesFacadeMock,
         string $locale,
+        ?ArrayAdapter $cache = null,
     ): StoreSearchTextCoordinatesProvider {
         $domainStub = $this->createStub(Domain::class);
         $domainStub->method('getLocale')->willReturn($locale);
@@ -149,6 +220,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
         return new StoreSearchTextCoordinatesProvider(
             $googleAddressCoordinatesFacadeMock,
             $domainStub,
+            $cache ?? new ArrayAdapter(),
         );
     }
 
