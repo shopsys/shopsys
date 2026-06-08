@@ -18,6 +18,7 @@ type FedcmProvider = {
 
 type FedcmCredential = Credential & {
     token: string;
+    configURL: string;
 };
 
 type FedcmIdentityRequestOptions = {
@@ -75,25 +76,13 @@ const generateNonce = (): string => {
     return Array.from(buffer, (byte) => byte.toString(16).padStart(2, '0')).join('');
 };
 
-const BASE64_URL_PATTERN = /^[A-Za-z0-9_-]+$/;
-
-const isLikelyJwt = (token: string): boolean => {
-    const parts = token.split('.');
-
-    return parts.length === 3 && parts.every((part) => part.length > 0 && BASE64_URL_PATTERN.test(part));
-};
-
-// FedCM's `IdentityCredential` does not (yet) expose which provider issued the token, so we have to infer it from
-// the token shape: Google delivers a JWT id_token (header.payload.signature), Seznam delivers a plain OAuth
-// authorization code. This is good enough while Google is the only JWT-issuing FedCM provider we support; revisit
-// if Apple or another JWT-based IdP is added.
-const inferProviderTypeFromToken = (token: string, fedcmProviders: FedcmProvider[]): TypeLoginTypeEnum | null => {
-    if (isLikelyJwt(token)) {
-        return fedcmProviders.find((provider) => provider.type === TypeLoginTypeEnum.Google)?.type ?? null;
-    }
-
-    return fedcmProviders.find((provider) => provider.type !== TypeLoginTypeEnum.Google)?.type ?? null;
-};
+// The browser populates `configURL` on the returned `IdentityCredential` with the exact URL of the IdP that issued
+// the token — the same string we passed in `providers[].configURL`. Matching it back against the configured
+// providers gives us a deterministic provider type with no need to inspect the token payload.
+const matchProviderTypeByConfigUrl = (
+    configURL: string,
+    fedcmProviders: FedcmProvider[],
+): TypeLoginTypeEnum | null => fedcmProviders.find((provider) => provider.configUrl === configURL)?.type ?? null;
 
 const isDismissError = (error: unknown): boolean => {
     if (!(error instanceof DOMException)) {
@@ -171,7 +160,7 @@ export const FedcmOneTap: FC = () => {
                 return;
             }
 
-            const providerType = inferProviderTypeFromToken(credential.token, fedcmProviders);
+            const providerType = matchProviderTypeByConfigUrl(credential.configURL, fedcmProviders);
 
             if (providerType === null) {
                 return;
