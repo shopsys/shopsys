@@ -30,6 +30,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -42,6 +43,7 @@ final class StoreFormType extends AbstractType
         private readonly StoreFacade $storeFacade,
         private readonly CountryFacade $countryFacade,
         private readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -184,7 +186,10 @@ final class StoreFormType extends AbstractType
             ])
             ->add('loadCoordinates', ButtonType::class, [
                 'label' => 'Load Coordinates',
-                'attr' => ['class' => 'btn btn-primary js-load-store-coordinates'],
+                'attr' => [
+                    'class' => 'btn btn-primary js-load-store-coordinates',
+                    'data-load-coordinates-url' => $this->urlGenerator->generate('admin_store_loadcoordinates'),
+                ],
             ])
         ;
 
@@ -201,6 +206,9 @@ final class StoreFormType extends AbstractType
             ->add('street', TextType::class, [
                 'label' => 'Street',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-store-address-street',
+                ],
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter street'),
                     new Constraints\Length(
@@ -212,6 +220,9 @@ final class StoreFormType extends AbstractType
             ->add('city', TextType::class, [
                 'label' => 'City',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-store-address-city',
+                ],
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter city'),
                     new Constraints\Length(
@@ -223,6 +234,9 @@ final class StoreFormType extends AbstractType
             ->add('postcode', TextType::class, [
                 'label' => 'Postcode',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-store-address-postcode',
+                ],
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter zip code'),
                     new Constraints\Length(
@@ -237,6 +251,9 @@ final class StoreFormType extends AbstractType
                 'choices' => $this->countryFacade->getAll(),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'attr' => [
+                    'class' => 'js-store-address-country',
+                ],
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please choose country'),
                 ],

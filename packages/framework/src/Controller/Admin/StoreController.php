@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -137,6 +138,26 @@ class StoreController extends AdminBaseController
         return $this->render('@ShopsysAdministration/content/store/edit.html.twig', [
             'form' => $form->createView(),
             'store' => $store,
+        ]);
+    }
+
+    #[Route(
+        path: '/store/load-coordinates',
+        name: 'admin_store_loadcoordinates',
+        methods: ['post'],
+        condition: 'request.isXmlHttpRequest()',
+    )]
+    #[CanView]
+    public function loadCoordinatesAction(Request $request): JsonResponse
+    {
+        return new JsonResponse([
+            'address' => [
+                'street' => $request->request->getString('street'),
+                'city' => $request->request->getString('city'),
+                'postcode' => $request->request->getString('postcode'),
+                'country' => $request->request->getString('country'),
+            ],
+            'success' => true,
         ]);
     }
 
