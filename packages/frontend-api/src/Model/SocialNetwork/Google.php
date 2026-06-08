@@ -58,7 +58,9 @@ class Google extends BaseGoogle implements FedcmAdapterInterface
             throw new InvalidApplicationCredentialsException('Google client ID is not configured');
         }
 
-        $this->httpClient->request(self::TOKENINFO_URL, 'GET', ['id_token' => $credential]);
+        $idToken = $this->extractIdToken($credential);
+
+        $this->httpClient->request(self::TOKENINFO_URL, 'GET', ['id_token' => $idToken]);
 
         $httpStatus = $this->httpClient->getResponseHttpCode();
 
@@ -102,5 +104,26 @@ class Google extends BaseGoogle implements FedcmAdapterInterface
         $profile->photoURL = $data->get('picture');
 
         return $profile;
+    }
+
+    /**
+     * Google's FedCM `id_assertion_endpoint` returns either a bare JWT id_token or — when OAuth-style `scope`
+     * params are requested — a JSON wrapper of shape `{ iss, id_token, authuser, hd, prompt }`. Both shapes carry
+     * the same JWT under `id_token`; the wrapper just adds extra metadata. We unwrap defensively so the rest of
+     * the verification stays a single code path.
+     */
+    protected function extractIdToken(string $credential): string
+    {
+        if (!str_starts_with(ltrim($credential), '{')) {
+            return $credential;
+        }
+
+        $decoded = json_decode($credential, true);
+
+        if (!is_array($decoded) || !isset($decoded['id_token']) || !is_string($decoded['id_token'])) {
+            throw new InvalidAccessTokenException('Google FedCM credential JSON wrapper is missing an id_token field');
+        }
+
+        return $decoded['id_token'];
     }
 }
