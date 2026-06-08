@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFriendlyUrlProvider;
 use Spatie\OpeningHours\Exceptions\Exception;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -180,7 +181,12 @@ final class StoreFormType extends AbstractType
             ->add('longitude', NumberType::class, [
                 'required' => false,
                 'scale' => 10,
-            ]);
+            ])
+            ->add('loadCoordinates', ButtonType::class, [
+                'label' => 'Load Coordinates',
+                'attr' => ['class' => 'btn btn-primary js-load-store-coordinates'],
+            ])
+        ;
 
         return $builderMapGroup;
     }
