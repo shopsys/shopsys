@@ -1,0 +1,15 @@
+{% if is_granted(constant('\\Shopsys\\FrameworkBundle\\Component\\Security\\Role\\SystemRole::SUPER_ADMIN')) %}
+    <button class="btn btn-sm btn-link text-secondary d-none d-md-inline text-decoration-none"
+            data-js-elasticsearch-entity-data-open
+            data-url="{{ url('admin_elasticsearch_entity_data', {
+                indexName: indexName,
+                id: entityId,
+                domainId: initialDomainId|default(null),
+                hideDomainSwitch: hideDomainSwitch|default(false),
+            }) }}"
+    >
+        {{ ux_icon('brand-elastic') }}
+        {{ 'Indexed data'|trans }}
+    </button>
+
+{% endif %}

@@ -60,7 +60,11 @@
                         </div>
                         <h2 class="page-title">
                             {% block h1 %}{{ 'Administration'|trans }}{% endblock %}
-                            {% include '@ShopsysAdministration/partial/display_uuid.html.twig' %}
+                            <span class="ms-5 btn-list d-inline-flex">
+                                {% block links_after_title %}
+                                    {% include '@ShopsysAdministration/partial/display_uuid.html.twig' %}
+                                {% endblock %}
+                            </span>
                         </h2>
                         <div class="page-subtitle">
                             {% block sub_title %}{% endblock %}

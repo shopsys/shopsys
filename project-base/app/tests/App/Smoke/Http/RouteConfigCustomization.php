@@ -295,6 +295,15 @@ class RouteConfigCustomization
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
             })
+            ->customizeByRouteName('admin_elasticsearch_entity_data', function (RouteConfig $config): void {
+                $config->changeDefaultRequestDataSet('Indexed data modal is available only to superadmin.')
+                    ->setParameter('indexName', 'product')
+                    ->setExpectedStatusCode(308);
+                $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
+                    ->setParameter('indexName', 'product')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(200);
+            })
             ->customizeByRouteName('admin_default_crondetail', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet('Use correct ID of cron module.')
                     ->setParameter('serviceId', VatDeletionCronModule::class);

@@ -4,3 +4,14 @@
 
 {% block pre_title %}{{ 'Editing article'|trans }}{% endblock %}
 {% block h1 %}{{ article.name }}{% endblock %}
+
+{% block links_after_title %}
+    {{ parent() }}
+
+    {% include '@ShopsysAdministration/content/elasticsearch/_entityDataButton.html.twig' with {
+        indexName: 'article',
+        entityId: article.id,
+        initialDomainId: article.domainId,
+        hideDomainSwitch: true,
+    } only %}
+{% endblock %}

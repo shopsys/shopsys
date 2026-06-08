@@ -10,6 +10,9 @@ msgstr ""
 msgid "%categoryName% - Filters"
 msgstr ""
 
+msgid "%count% item|%count% items"
+msgstr ""
+
 msgid "%defaultCurrency% per 1 %currentCurrency%"
 msgstr ""
 
@@ -418,7 +421,16 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
+msgid "Copy JSON"
+msgstr ""
+
+msgid "Copy the entire JSON document"
+msgstr ""
+
 msgid "Copy to clipboard"
+msgstr ""
+
+msgid "Could not load Elasticsearch data."
 msgstr ""
 
 msgid "Countries"
@@ -880,6 +892,9 @@ msgstr ""
 msgid "Enter one-time passcode."
 msgstr ""
 
+msgid "Entity ID"
+msgstr ""
+
 msgid "Error"
 msgstr ""
 
@@ -1040,6 +1055,12 @@ msgid "In a particular domain tab it is not possible to adjust the order and plu
 msgstr ""
 
 msgid "Incl. VAT"
+msgstr ""
+
+msgid "Index alias"
+msgstr ""
+
+msgid "Indexed data"
 msgstr ""
 
 msgid "Inquired product"
@@ -1658,6 +1679,9 @@ msgid "Quick search"
 msgstr ""
 
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
+msgstr ""
+
+msgid "Record is not present in the Elasticsearch for the selected entity and domain."
 msgstr ""
 
 msgid "Refund amount"
@@ -2324,6 +2348,9 @@ msgid "default (%domainName%)"
 msgstr ""
 
 msgid "discount"
+msgstr ""
+
+msgid "empty"
 msgstr ""
 
 msgid "files"

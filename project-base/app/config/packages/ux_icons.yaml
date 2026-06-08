@@ -9,6 +9,7 @@ ux_icons:
         arrow-strong: 'tabler:chevron-right'
         arrow-thin: 'tabler:chevron-compact-right'
         arrow-up: 'tabler:arrow-big-up-filled'
+        brand-elastic: 'tabler:brand-elastic'
         calendar-3: 'tabler:calendar-week'
         cart: 'tabler:basket-filled'
         cart-off: 'tabler:basket-off'
