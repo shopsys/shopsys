@@ -85,7 +85,7 @@ class GetFilteredStoresTest extends GraphQlTestCase
     public function testGetFilteredStoresByCoordinatesAndSearchText(): void
     {
         $edges = $this->getResponseEdges(searchText: 'B', coordinates: ['latitude' => 50.538331, 'longitude' => 14.485953]);
-        $this->assertCount(3, $edges);
+        $this->assertCount(8, $edges);
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 
@@ -95,12 +95,32 @@ class GetFilteredStoresTest extends GraphQlTestCase
                 'distance' => 47573,
             ],
             [
+                'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 51140,
+            ],
+            [
+                'name' => t('Hradec Králové', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 102295,
+            ],
+            [
                 'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'distance' => 107087,
             ],
             [
+                'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 118174,
+            ],
+            [
                 'name' => t('Brno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'distance' => 213179,
+            ],
+            [
+                'name' => t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 223409,
+            ],
+            [
+                'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 280015,
             ],
         ];
 
