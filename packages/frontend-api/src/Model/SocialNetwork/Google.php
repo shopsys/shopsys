@@ -42,7 +42,7 @@ class Google extends BaseGoogle implements FedcmAdapterInterface
     {
         return [
             'scope' => 'openid email profile',
-            'response_type' => 'code',
+            'response_type' => 'id_token',
         ];
     }
 
