@@ -129,7 +129,6 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                     <div className="flex aspect-square rounded-xl bg-background-more p-5 lg:sticky lg:top-5">
                         <GoogleMap
                             activeMarkerHandler={(uuid) => clickOnMarkerHandler(uuid)}
-                            markers={mappedStores}
                             shouldCenterToUserCoordinates={searchTextValue === ''}
                             userCoordinates={resolvedUserCoordinates}
                         />

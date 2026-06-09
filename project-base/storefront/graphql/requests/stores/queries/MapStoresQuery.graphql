@@ -1,0 +1,9 @@
+query MapStoresQuery($searchText: String = null, $coordinates: Coordinates = null) @redisCache(ttl: 3600) {
+    stores(searchText: $searchText, coordinates: $coordinates) {
+        edges {
+            node {
+                ...MapStoreFragment
+            }
+        }
+    }
+}

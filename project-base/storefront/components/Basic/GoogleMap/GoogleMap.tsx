@@ -1,11 +1,14 @@
 import { getPublicConfigProperty } from 'envConfig';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import GoogleMapReact from 'google-map-react';
+import { TypeMapStoreFragment } from 'graphql/requests/stores/fragments/MapStoreFragment.generated';
+import { useMapStoresQuery } from 'graphql/requests/stores/queries/MapStoresQuery.generated';
 import { TypeCoordinates } from 'graphql/types';
 import { useEffect, useRef, useState } from 'react';
 import { PointFeature } from 'supercluster';
 import { MapMarker, MapMarkerNullable } from 'types/map';
 import useSupercluster from 'use-supercluster';
+import { mapConnectionEdges } from 'utils/mappers/connection';
 import { GoogleMapMarker } from './GoogleMapMarker';
 
 const CLUSTER_RADIUS = 75;
@@ -66,7 +69,10 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     const mapRef = useRef<any>(null);
     const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false);
 
-    const validMarkers = (markers?.filter((marker) => marker.latitude !== null && marker.longitude !== null) ??
+    const [{ data: mapStoresData }] = useMapStoresQuery({ pause: !!markers });
+    const effectiveMarkers = markers ?? mapConnectionEdges<TypeMapStoreFragment>(mapStoresData?.stores.edges);
+
+    const validMarkers = (effectiveMarkers?.filter((marker) => marker.latitude !== null && marker.longitude !== null) ??
         []) as MapMarker[];
     const markersClusterConfig: PointFeature<MarkerProperties>[] = validMarkers.map(markerMapper);
 

@@ -1,0 +1,6 @@
+fragment MapStoreFragment on Store {
+    __typename
+    identifier: uuid
+    latitude
+    longitude
+}
