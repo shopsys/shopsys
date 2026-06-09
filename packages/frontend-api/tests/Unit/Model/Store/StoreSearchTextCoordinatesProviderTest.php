@@ -193,7 +193,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
         ];
 
         yield 'short city fragment' => [
-            'searchText' => 'Ost',
+            'searchText' => 'O',
         ];
 
         yield 'numeric text that is not postcode' => [

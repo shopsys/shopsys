@@ -12,7 +12,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class StoreSearchTextCoordinatesProvider
 {
-    protected const int MIN_CITY_SEARCH_TEXT_LENGTH_FOR_GOOGLE_REQUEST = 4;
+    protected const int MIN_CITY_SEARCH_TEXT_LENGTH_FOR_GOOGLE_REQUEST = 2;
 
     public function __construct(
         protected readonly GoogleAddressCoordinatesFacade $googleAddressCoordinatesFacade,
