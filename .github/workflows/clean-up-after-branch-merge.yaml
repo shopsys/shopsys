@@ -24,6 +24,7 @@ jobs:
                 with:
                     ref: 'refs/heads/${{ github.event.repository.default_branch }}'
                     path: cancel-review-after-branch-merge
+                    persist-credentials: false
             -   name: Cancel review
                 working-directory: cancel-review-after-branch-merge
                 run: |
@@ -37,10 +38,10 @@ jobs:
                 uses: actions/checkout@v6
                 with:
                     ref: 'refs/heads/${{ github.event.repository.default_branch }}'
+                    persist-credentials: false
             -   name: Prepare variables for removing split branches from packages
                 run: |
                     echo "REMOTE_TEMPLATE=https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/" >> $GITHUB_ENV
             -   name: Remove split branches from packages
                 run: |
-                    git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -r -L1 git config --unset-all
                     bash ./.github/monorepo/remove_branch.sh "${{ needs.variables.outputs.BRANCH_NAME }}" "${REMOTE_TEMPLATE}"
