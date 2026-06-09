@@ -1,5 +1,9 @@
 fragment ListedStoreConnectionFragment on StoreConnection {
     __typename
+    pageInfo {
+        hasNextPage
+        endCursor
+    }
     edges {
         __typename
         node {

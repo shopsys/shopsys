@@ -6,6 +6,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { TypeCoordinates } from 'graphql/types';
 import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -14,9 +15,12 @@ import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 type StoresWrapperProps = {
     stores: TypeListedStoreConnectionFragment;
     isFetchingStores?: boolean;
+    isLoadingMoreStores?: boolean;
     searchTextValue: string;
     selectedStoreUuid?: string | null;
     userCoordinates?: TypeCoordinates | null;
+    scrollableTargetId?: string;
+    onLoadMoreStoresCallback?: () => void;
     onSearchTextCallback: (searchText: string) => void;
     onUserCoordinatesCallback?: (coordinates: TypeCoordinates | null) => void;
     onSelectStoreCallback?: (storeUuid: string | null) => void;
@@ -27,9 +31,12 @@ type StoresWrapperProps = {
 export const StoresWrapper: FC<StoresWrapperProps> = ({
     stores,
     isFetchingStores = false,
+    isLoadingMoreStores = false,
     searchTextValue,
     selectedStoreUuid,
     userCoordinates,
+    scrollableTargetId,
+    onLoadMoreStoresCallback,
     onSearchTextCallback,
     onUserCoordinatesCallback,
     onSelectStoreCallback,
@@ -46,6 +53,11 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     const isControlledSelection = selectedStoreUuid !== undefined;
     const selectedStore = isControlledSelection ? (selectedStoreUuid ?? null) : internalSelectedStoreUuid;
     const shouldAllowStoreSelection = onSelectStoreCallback !== undefined;
+    const shouldLoadMoreStores =
+        stores.pageInfo.hasNextPage &&
+        !isFetchingStores &&
+        !isLoadingMoreStores &&
+        onLoadMoreStoresCallback !== undefined;
 
     const edges = stores.edges || [];
     const mappedStores = mapConnectionEdges<StoreOrPacketeryPoint>(edges);
@@ -97,11 +109,21 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                         onChange={(e) => onSearchTextCallback(e.currentTarget.value)}
                         onClear={() => onSearchTextCallback('')}
                     />
-                    <StoreList
-                        selectedStoreUuid={selectedStore}
-                        stores={mappedStores}
-                        onSelectStoreCallback={shouldAllowStoreSelection ? selectStoreHandler : undefined}
-                    />
+                    <InfiniteScroll
+                        dataLength={mappedStores.length}
+                        hasMore={shouldLoadMoreStores}
+                        loader={<StoreListLoader />}
+                        next={onLoadMoreStoresCallback ?? (() => undefined)}
+                        scrollableTarget={scrollableTargetId}
+                        style={{ overflow: 'visible' }}
+                    >
+                        <StoreList
+                            selectedStoreUuid={selectedStore}
+                            stores={mappedStores}
+                            onSelectStoreCallback={shouldAllowStoreSelection ? selectStoreHandler : undefined}
+                        />
+                    </InfiniteScroll>
+                    {isLoadingMoreStores && <StoreListLoader />}
                 </div>
                 <div className="basis-1/2" data-tid={TIDs.stores_map}>
                     <div className="flex aspect-square rounded-xl bg-background-more p-5 lg:sticky lg:top-5">
@@ -122,4 +144,10 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     }
 
     return <Webline>{content}</Webline>;
+};
+
+const StoreListLoader: FC = () => {
+    const { t } = useTranslation();
+
+    return <div className="mt-2.5 text-center text-sm text-text-less">{t('Loading more stores')}</div>;
 };

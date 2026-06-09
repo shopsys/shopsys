@@ -1,7 +1,7 @@
 fragment TransportStoresFragment on Transport {
     __typename
     uuid
-    stores (searchText: $searchText, coordinates: $coordinates) {
+    stores(searchText: $searchText, coordinates: $coordinates, first: $first, after: $after) {
         ...ListedStoreConnectionFragment
     }
 }
