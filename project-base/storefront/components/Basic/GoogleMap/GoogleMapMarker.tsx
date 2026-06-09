@@ -1,6 +1,7 @@
 import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
 import { AnyProps, PointFeature } from 'supercluster';
 import { twJoin } from 'tailwind-merge';
+import { MapMarker } from 'types/map';
 
 const ClusterMarker: FC<{ onClick: () => void }> = ({ onClick, children }) => {
     return (
@@ -49,7 +50,7 @@ type GoogleMapMarkerProps = {
     activeMarkerIdentifier: string;
     cluster: PointFeature<AnyProps>;
     isDetail?: boolean;
-    onMarkerClicked: (identifier: string) => void;
+    onMarkerClicked: (marker: MapMarker) => void;
     onClusterClicked: (cluster: any) => void;
 };
 
@@ -60,12 +61,16 @@ export const GoogleMapMarker: FC<GoogleMapMarkerProps> = ({
     onMarkerClicked,
     onClusterClicked,
 }) => {
-    const { cluster: isCluster, point_count: pointCount, markerIdentifier } = cluster.properties;
+    const { cluster: isCluster, marker, markerIdentifier, point_count: pointCount } = cluster.properties;
     const isActive = markerIdentifier === activeMarkerIdentifier;
 
     if (isCluster) {
         return <ClusterMarker onClick={() => onClusterClicked(cluster)}>{pointCount}</ClusterMarker>;
     }
 
-    return <SingleMarker isActive={isActive} isDetail={isDetail} onClick={() => onMarkerClicked(markerIdentifier)} />;
+    if (!marker) {
+        return null;
+    }
+
+    return <SingleMarker isActive={isActive} isDetail={isDetail} onClick={() => onMarkerClicked(marker)} />;
 };

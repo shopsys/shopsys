@@ -28,6 +28,17 @@ type PickupPlacePopupProps = {
 
 const PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID = 'pickup-place-popup-stores-scroll';
 
+const findStoreByUuid = (
+    stores: TypeListedStoreConnectionFragment | null,
+    storeUuid: string | null,
+): StoreOrPacketeryPoint | null => {
+    if (storeUuid === null) {
+        return null;
+    }
+
+    return stores?.edges?.find((storeEdge) => storeEdge?.node?.identifier === storeUuid)?.node ?? null;
+};
+
 export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onChangePickupPlaceCallback }) => {
     const { t } = useTranslation();
     const client = useClient();
@@ -73,15 +84,26 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
         }
     }, [transportStoresData?.transport?.stores]);
 
+    useEffect(() => {
+        if (selectedStoreUuid === '') {
+            setSelectedPickupPlace(null);
+
+            return;
+        }
+
+        const selectedStore = findStoreByUuid(transportStores, selectedStoreUuid);
+
+        if (selectedStore) {
+            setSelectedPickupPlace(selectedStore);
+        }
+    }, [selectedStoreUuid, transportStores]);
+
     const onSelectStoreHandler = useCallback(
         (newStoreUuid: string | null) => {
             setSelectedStoreUuid(newStoreUuid ?? '');
-            const selectedStore = transportStores?.edges?.find(
-                (storeEdge) => storeEdge?.node?.identifier === newStoreUuid,
-            )?.node;
-            setSelectedPickupPlace(selectedStore ?? null);
+            setSelectedPickupPlace(findStoreByUuid(transportStores, newStoreUuid));
         },
-        [transportStores?.edges],
+        [transportStores],
     );
 
     const onSearchTextHandler = useCallback((searchText: string) => {
@@ -176,7 +198,8 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
                 </Button>
 
                 <Button
-                    hasDisabledLook={selectedStoreUuid === ''}
+                    disabled={selectedPickupPlace === null}
+                    hasDisabledLook={selectedPickupPlace === null}
                     tid={TIDs.pages_order_pickupplace_popup_confirm}
                     onClick={onConfirmPickupPlaceHandler}
                 >

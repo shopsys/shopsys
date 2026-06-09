@@ -8,6 +8,7 @@ import { TypeCoordinates } from 'graphql/types';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSessionStore } from 'store/useSessionStore';
+import { MapMarker } from 'types/map';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
@@ -87,8 +88,35 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
         onSelectStoreCallback?.(uuid);
     };
 
-    const clickOnMarkerHandler = (uuid: string) => {
-        selectStoreHandler(uuid === '' ? null : uuid);
+    const clickOnMarkerHandler = (marker: MapMarker | null) => {
+        if (marker === null) {
+            selectStoreHandler(null);
+
+            return;
+        }
+
+        const selectedStoreUuid = marker.identifier ?? null;
+        selectStoreHandler(selectedStoreUuid);
+
+        if (
+            selectedStoreUuid === null ||
+            (mappedStores?.some((store) => store.identifier === selectedStoreUuid) ?? false) ||
+            onUserCoordinatesCallback === undefined
+        ) {
+            return;
+        }
+
+        const markerCoordinates = {
+            latitude: parseFloat(marker.latitude),
+            longitude: parseFloat(marker.longitude),
+        };
+
+        setInternalUserCoordinates(markerCoordinates);
+        onUserCoordinatesCallback(markerCoordinates);
+
+        if (searchTextValue !== '') {
+            onSearchTextCallback('');
+        }
     };
 
     if (!mappedStores) {
@@ -128,7 +156,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                 <div className="basis-1/2" data-tid={TIDs.stores_map}>
                     <div className="flex aspect-square rounded-xl bg-background-more p-5 lg:sticky lg:top-5">
                         <GoogleMap
-                            activeMarkerHandler={(uuid) => clickOnMarkerHandler(uuid)}
+                            activeMarkerHandler={clickOnMarkerHandler}
                             shouldCenterToUserCoordinates={searchTextValue === ''}
                             userCoordinates={resolvedUserCoordinates}
                         />

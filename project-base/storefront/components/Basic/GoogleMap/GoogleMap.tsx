@@ -22,7 +22,7 @@ type GoogleMapProps = {
     longitude?: string | null;
     defaultZoom?: number | null;
     markers?: MapMarkerNullable[];
-    activeMarkerHandler?: (id: string) => void;
+    activeMarkerHandler?: (marker: MapMarker | null) => void;
     isDetail?: boolean;
     userCoordinates?: TypeCoordinates | null;
     shouldCenterToUserCoordinates?: boolean;
@@ -30,6 +30,7 @@ type GoogleMapProps = {
 
 type MarkerProperties = {
     cluster: boolean;
+    marker?: MapMarker;
     markerIdentifier: string;
 };
 
@@ -41,6 +42,7 @@ const markerMapper = (marker: MapMarker): PointFeature<MarkerProperties> => ({
     type: 'Feature' as const,
     properties: {
         cluster: false,
+        marker,
         markerIdentifier: getMarkerIdentifier(marker),
     },
     geometry: {
@@ -69,7 +71,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     const mapRef = useRef<any>(null);
     const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false);
 
-    const [{ data: mapStoresData }] = useMapStoresQuery({ pause: !!markers });
+    const [{ data: mapStoresData }] = useMapStoresQuery({ pause: markers !== undefined });
     const effectiveMarkers = markers ?? mapConnectionEdges<TypeMapStoreFragment>(mapStoresData?.stores.edges);
 
     const validMarkers = (effectiveMarkers?.filter((marker) => marker.latitude !== null && marker.longitude !== null) ??
@@ -83,11 +85,12 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         options: { radius: CLUSTER_RADIUS, minZoom: CLUSTER_MIN_ZOOM, maxZoom: CLUSTER_MAX_ZOOM },
     });
 
-    const selectMarkerHandler = (identifier: string) => {
+    const selectMarkerHandler = (marker: MapMarker) => {
         if (!isDetail) {
+            const identifier = getMarkerIdentifier(marker);
             const newActiveMarkerIdentifier = activeMarkerIdentifier === identifier ? '' : identifier;
             setActiveMarkerIdentifier(newActiveMarkerIdentifier);
-            activeMarkerHandler?.(newActiveMarkerIdentifier);
+            activeMarkerHandler?.(newActiveMarkerIdentifier === '' ? null : marker);
         }
     };
 
