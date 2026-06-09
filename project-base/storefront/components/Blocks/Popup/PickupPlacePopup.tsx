@@ -65,27 +65,29 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
     return (
         <Popup
             className="min-h-[min(600px,80dvh)] w-11/12 max-w-6xl md:min-h-auto"
-            contentClassName="overflow-y-auto flex flex-col flex-1"
+            contentClassName="flex min-h-0 flex-1 flex-col overflow-hidden"
             title={t('Choose the store where you are going to pick up your order')}
         >
-            {isFetchingTransportStores && transportStores === null && <SkeletonModuleTransportStores />}
+            <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+                {isFetchingTransportStores && transportStores === null && <SkeletonModuleTransportStores />}
 
-            {transportStores && (
-                <StoresWrapper
-                    isFetchingStores={isFetchingTransportStores}
-                    searchTextValue={searchTextValue}
-                    selectedStoreUuid={selectedStoreUuid}
-                    stores={transportStores}
-                    shouldShowTitle={false}
-                    shouldWrapInWebline={false}
-                    userCoordinates={userCoordinates}
-                    onSearchTextCallback={onSearchTextHandler}
-                    onSelectStoreCallback={onSelectStoreHandler}
-                    onUserCoordinatesCallback={onUserCoordinatesHandler}
-                />
-            )}
+                {transportStores && (
+                    <StoresWrapper
+                        isFetchingStores={isFetchingTransportStores}
+                        searchTextValue={searchTextValue}
+                        selectedStoreUuid={selectedStoreUuid}
+                        stores={transportStores}
+                        shouldShowTitle={false}
+                        shouldWrapInWebline={false}
+                        userCoordinates={userCoordinates}
+                        onSearchTextCallback={onSearchTextHandler}
+                        onSelectStoreCallback={onSelectStoreHandler}
+                        onUserCoordinatesCallback={onUserCoordinatesHandler}
+                    />
+                )}
+            </div>
 
-            <div className="sticky -inset-4 mt-auto flex justify-between bg-background-default pt-3">
+            <div className="mt-3 flex shrink-0 justify-between border-border-less border-t bg-background-default pt-3">
                 <Button variant="inverted" onClick={closePortalContent}>
                     {t('Close')}
                 </Button>
