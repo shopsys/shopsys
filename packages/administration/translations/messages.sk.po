@@ -958,8 +958,8 @@ msgstr "Doprava a platba zadarmo"
 msgid "Friday"
 msgstr "Piatok"
 
-msgid "From"
-msgstr "Od"
+msgid "From (with VAT)"
+msgstr "Od (s DPH)"
 
 msgid "Future"
 msgstr "Budúcnosť"

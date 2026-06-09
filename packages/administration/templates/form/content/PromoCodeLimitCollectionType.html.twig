@@ -1,7 +1,7 @@
 {% macro limitRow(limit, index) %}
     <div class="js-limits-item js-form-group row align-items-center mb-3 pb-3 border-bottom" data-index="{{ index }}">
         <div class="col-11 col-md-5 mb-2 mb-md-0">
-            <label class="d-md-none col-form-label" for="{{ limit.fromPrice.vars.id }}">{{ 'From'|trans }} {{ priceVatLabel() }}</label>
+            <label class="d-md-none col-form-label" for="{{ limit.fromPrice.vars.id }}">{{ 'From (with VAT)'|trans }}</label>
             {{ form_widget(limit.fromPrice) }}
             {{ form_errors(limit.fromPrice) }}
         </div>
@@ -9,7 +9,7 @@
             {{ ux_icon('arrow-simple') }}
         </div>
         <div class="col-11 col-md-5">
-            <label class="d-md-none col-form-label" for="{{ limit.discount.vars.id }}">{{ 'Discount'|trans }} {{ priceVatLabel() }}</label>
+            <label class="d-md-none col-form-label" for="{{ limit.discount.vars.id }}">{{ 'Discount'|trans }}</label>
             {{ form_widget(limit.discount) }}
             {{ form_errors(limit.discount) }}
         </div>
@@ -25,10 +25,10 @@
         <div id="promo_code_limits">
             <div class="row mb-3 text-uppercase fs-5 bg-surface-tertiary text-secondary p-2 border-bottom d-none d-md-flex">
                 <div class="col-6">
-                    <strong>{{ 'From'|trans }} {{ priceVatLabel() }}</strong>
+                    <strong>{{ 'From (with VAT)'|trans }}</strong>
                 </div>
                 <div class="col-6">
-                    <strong>{{ 'Discount'|trans }} {{ priceVatLabel() }}</strong>
+                    <strong>{{ 'Discount'|trans }}</strong>
                 </div>
             </div>
             <div class="js-limits" data-prototype="{{ self.limitRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
