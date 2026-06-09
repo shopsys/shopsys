@@ -97,10 +97,10 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
         $this->assertNull($coordinates);
     }
 
-    public function testUsesCachedNullCoordinatesBySearchText(): void
+    public function testDoesNotUseCachedNullCoordinatesBySearchText(): void
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
-        $googleAddressCoordinatesFacadeMock->expects($this->once())
+        $googleAddressCoordinatesFacadeMock->expects($this->exactly(2))
             ->method('getCoordinatesByAddress')
             ->with('', 'Neexistující', 'CZ', '')
             ->willReturn(null);

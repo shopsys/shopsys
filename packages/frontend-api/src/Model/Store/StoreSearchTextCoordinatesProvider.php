@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Store;
 
 use Closure;
+use Psr\Cache\CacheItemInterface;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\AddressCoordinatesData;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -112,7 +113,15 @@ class StoreSearchTextCoordinatesProvider
     ): ?array {
         return $this->storeSearchCoordinatesCache->get(
             $this->getCacheId($searchText, $countryCode),
-            fn () => $this->formatCoordinatesData($coordinatesProvider()),
+            function (CacheItemInterface $cacheItem, bool &$save) use ($coordinatesProvider): ?array {
+                $coordinates = $this->formatCoordinatesData($coordinatesProvider());
+
+                if ($coordinates === null) {
+                    $save = false;
+                }
+
+                return $coordinates;
+            },
         );
     }
 
