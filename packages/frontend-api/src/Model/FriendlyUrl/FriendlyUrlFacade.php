@@ -18,6 +18,8 @@ class FriendlyUrlFacade
 
     public function getFriendlyUrlByRouteNameAndSlug(int $domainId, string $routeName, string $slug): FriendlyUrl
     {
+        $slug = ltrim($slug, '/');
+
         $friendlyUrl = $this->friendlyUrlRepository->findFriendlyUrlBySlugAndRouteName($domainId, $routeName, $slug);
 
         if ($friendlyUrl === null) {
