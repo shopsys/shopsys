@@ -4,6 +4,7 @@ import { Infobox } from 'components/Basic/Infobox/Infobox';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import OpeningHoursToday from 'components/Blocks/OpeningHours/OpeningHoursToday';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
+import { Button } from 'components/Forms/Button/Button';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
@@ -16,9 +17,10 @@ import { StoreContact } from './StoreContact';
 type StoreListItemProps = {
     store: StoreOrPacketeryPoint;
     isSelected: boolean;
+    onSelectStoreCallback?: (storeUuid: string | null) => void;
 };
 
-export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => {
+export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected, onSelectStoreCallback }) => {
     const [isExpanded, setIsExpanded] = useState(isSelected);
     const { t } = useTranslation();
     const itemRef = useRef<HTMLDivElement>(null);
@@ -132,6 +134,22 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                                 <p className="h5 mb-2">{t('Opening hours', { ns: 'accessibility' })}</p>
                                 <OpeningHours openingHours={store.openingHours} />
                             </InfoItem>
+
+                            {onSelectStoreCallback && (
+                                <Button
+                                    className="mr-2.5"
+                                    hasDisabledLook={isSelected}
+                                    size="small"
+                                    variant={isSelected ? 'inverted' : 'primary'}
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                        onSelectStoreCallback(store.identifier);
+                                    }}
+                                    onKeyDown={(event) => event.stopPropagation()}
+                                >
+                                    {isSelected ? t('Selected store') : t('Select store')}
+                                </Button>
+                            )}
 
                             <LinkButton
                                 aria-label={t('Store detail for {{storeName}}', {

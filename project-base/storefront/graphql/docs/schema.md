@@ -10723,6 +10723,44 @@ Stores available for personal pickup
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">coordinates</td>
+<td valign="top"><a href="#coordinates">Coordinates</a></td>
+<td>
+
+Returns stores with distance from given coordinates
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">searchText</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Search for city or post code
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="transport.transporttypecode">transportTypeCode</strong></td>
 <td valign="top"><a href="#transporttypeenum">TransportTypeEnum</a>!</td>
 <td>

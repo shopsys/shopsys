@@ -1,14 +1,17 @@
 import { SkeletonModuleTransportStores } from 'components/Blocks/Skeleton/SkeletonModuleTransportStores';
+import { StoresWrapper } from 'components/Blocks/StoreList/StoresWrapper';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { StoreSelect } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/StoreSelect';
 import { TIDs } from 'cypress/tids';
+import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { useTransportStoresQuery } from 'graphql/requests/transports/queries/TransportStoresQuery.generated';
-import { useState } from 'react';
+import { TypeCoordinates } from 'graphql/types';
+import { useCallback, useEffect, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { useDebounce } from 'utils/useDebounce';
 
 type PickupPlacePopupProps = {
     transportUuid: string;
@@ -19,36 +22,66 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
     const { t } = useTranslation();
     const { pickupPlace } = useCurrentCart();
     const [selectedStoreUuid, setSelectedStoreUuid] = useState(pickupPlace?.identifier ?? '');
+    const [selectedPickupPlace, setSelectedPickupPlace] = useState<StoreOrPacketeryPoint | null>(pickupPlace ?? null);
+    const [searchTextValue, setSearchTextValue] = useState<string>('');
+    const defaultUserCoordinates = useSessionStore((s) => s.coordinates);
+    const [userCoordinates, setUserCoordinates] = useState<TypeCoordinates | null>(defaultUserCoordinates);
+    const [transportStores, setTransportStores] = useState<TypeListedStoreConnectionFragment | null>(null);
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
+    const debouncedSearchTextValue = useDebounce(searchTextValue, 700);
     const [{ data: transportStoresData, fetching: isFetchingTransportStores }] = useTransportStoresQuery({
-        variables: { uuid: transportUuid },
+        variables: { uuid: transportUuid, searchText: debouncedSearchTextValue || null, coordinates: userCoordinates },
     });
 
     const onConfirmPickupPlaceHandler = () => {
-        const selectedPickupPlace = transportStoresData?.transport?.stores?.edges?.find(
-            (storeEdge) => storeEdge?.node?.identifier === selectedStoreUuid,
-        )?.node;
-
-        onChangePickupPlaceCallback(transportUuid, selectedPickupPlace === undefined ? null : selectedPickupPlace);
+        onChangePickupPlaceCallback(transportUuid, selectedPickupPlace);
     };
 
-    const onSelectStoreHandler = (newStoreUuid: string | null) => {
-        setSelectedStoreUuid(newStoreUuid ?? '');
-    };
+    useEffect(() => {
+        if (transportStoresData?.transport?.stores) {
+            setTransportStores(transportStoresData.transport.stores);
+        }
+    }, [transportStoresData?.transport?.stores]);
+
+    const onSelectStoreHandler = useCallback(
+        (newStoreUuid: string | null) => {
+            setSelectedStoreUuid(newStoreUuid ?? '');
+            const selectedStore = transportStoresData?.transport?.stores?.edges?.find(
+                (storeEdge) => storeEdge?.node?.identifier === newStoreUuid,
+            )?.node;
+            setSelectedPickupPlace(selectedStore ?? null);
+        },
+        [transportStoresData?.transport?.stores?.edges],
+    );
+
+    const onSearchTextHandler = useCallback((searchText: string) => {
+        setSearchTextValue(searchText);
+    }, []);
+
+    const onUserCoordinatesHandler = useCallback((coordinates: TypeCoordinates | null) => {
+        setUserCoordinates(coordinates);
+    }, []);
 
     return (
         <Popup
-            className="min-h-[min(600px,80dvh)] w-11/12 max-w-4xl md:min-h-auto"
+            className="min-h-[min(600px,80dvh)] w-11/12 max-w-6xl md:min-h-auto"
             contentClassName="overflow-y-auto flex flex-col flex-1"
             title={t('Choose the store where you are going to pick up your order')}
         >
-            {isFetchingTransportStores && <SkeletonModuleTransportStores />}
+            {isFetchingTransportStores && transportStores === null && <SkeletonModuleTransportStores />}
 
-            {transportStoresData?.transport?.stores && (
-                <StoreSelect
+            {transportStores && (
+                <StoresWrapper
+                    isFetchingStores={isFetchingTransportStores}
+                    searchTextValue={searchTextValue}
                     selectedStoreUuid={selectedStoreUuid}
-                    stores={transportStoresData.transport.stores}
+                    stores={transportStores}
+                    shouldShowTitle={false}
+                    shouldWrapInWebline={false}
+                    userCoordinates={userCoordinates}
+                    onSearchTextCallback={onSearchTextHandler}
                     onSelectStoreCallback={onSelectStoreHandler}
+                    onUserCoordinatesCallback={onUserCoordinatesHandler}
                 />
             )}
 

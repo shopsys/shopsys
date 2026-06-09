@@ -22,7 +22,7 @@ export const TransportStoresFragment = gql`
     fragment TransportStoresFragment on Transport {
   __typename
   uuid
-  stores {
+  stores(searchText: $searchText, coordinates: $coordinates) {
     ...ListedStoreConnectionFragment
   }
 }
