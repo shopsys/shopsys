@@ -2002,6 +2002,9 @@ msgstr ""
 msgid "Lists and nomenclatures"
 msgstr ""
 
+msgid "Load coordinates by address"
+msgstr "Load coordinates by address"
+
 msgid "Locale \"%locale%\" is not supported. You can choose only from the following locales: \"%supportedLocales%\"."
 msgstr ""
 

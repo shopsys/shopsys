@@ -2002,6 +2002,9 @@ msgstr "Seznam produktů v objednávce (obrázek, název, množství, cena za je
 msgid "Lists and nomenclatures"
 msgstr "Seznamy a číselníky"
 
+msgid "Load coordinates by address"
+msgstr "Načíst souřadnice podle adresy"
+
 msgid "Locale \"%locale%\" is not supported. You can choose only from the following locales: \"%supportedLocales%\"."
 msgstr "Lokalizace \"%locale%\" není podporovaná. Můžete si vybrat pouze z následujících lokalizací: \"%supportedLocales%\"."
 
