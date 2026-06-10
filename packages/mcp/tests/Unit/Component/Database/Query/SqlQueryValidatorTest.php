@@ -417,6 +417,41 @@ class SqlQueryValidatorTest extends TestCase
             'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
         ];
 
+        yield 'hidden column with output alias is rejected' => [
+            'sql' => 'SELECT password AS password_alias FROM administrators LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column in cte body is rejected' => [
+            'sql' => 'WITH administrator_passwords AS (SELECT password FROM administrators) SELECT password FROM administrator_passwords LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column in where clause is rejected' => [
+            'sql' => 'SELECT id FROM administrators WHERE password IS NOT NULL LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column in order by clause is rejected' => [
+            'sql' => 'SELECT id FROM administrators ORDER BY password LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column in allowed function argument is rejected' => [
+            'sql' => 'SELECT LENGTH(password) FROM administrators LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column in union branch is rejected' => [
+            'sql' => 'SELECT username FROM administrators UNION ALL SELECT password FROM administrators LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column in case expression is rejected' => [
+            'sql' => 'SELECT CASE WHEN password LIKE \'$2y$%\' THEN username ELSE email END FROM administrators LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
         yield 'hidden qualified column is rejected' => [
             'sql' => 'SELECT pt.secret_hash FROM products p JOIN product_translations pt ON pt.translatable_id = p.id LIMIT 10',
             'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
