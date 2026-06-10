@@ -65,7 +65,7 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         chooseTransportPersonalCollectionAndStore(
-            staticData.transport.personalCollection.storePardubice.name,
+            staticData.transport.personalCollection.storePardubice.uuid,
             translations.transport.personalCollection,
             translations.transportGroup.pickupPoint,
         );

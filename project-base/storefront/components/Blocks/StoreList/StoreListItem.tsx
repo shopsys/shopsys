@@ -58,6 +58,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected, onSel
         <div
             aria-controls={storeInfoId}
             aria-expanded={isExpanded}
+            data-tid={`${TIDs.store_list_item_}${store.identifier}`}
             ref={itemRef}
             role="button"
             tabIndex={0}
@@ -140,6 +141,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected, onSel
                                     className="mr-2.5"
                                     hasDisabledLook={isSelected}
                                     size="small"
+                                    tid={TIDs.store_select_button}
                                     variant={isSelected ? 'inverted' : 'primary'}
                                     onClick={(event) => {
                                         event.stopPropagation();

@@ -51,7 +51,7 @@ describe('Transport Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         chooseTransportPersonalCollectionAndStore(
-            staticData.transport.personalCollection.storeOstrava.name,
+            staticData.transport.personalCollection.storeOstrava.uuid,
             translations.transport.personalCollection,
             translations.transportGroup.pickupPoint,
         );

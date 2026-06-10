@@ -24,14 +24,19 @@ export const openTransportGroupByName = (transportGroupName: string) => {
 };
 
 export const chooseTransportPersonalCollectionAndStore = (
-    storeName: string,
+    storeUuid: string,
     transportName: string,
     transportGroupName?: string,
 ) => {
     changeSelectionOfTransportByName(transportName, transportGroupName);
-    cy.getByTID([TIDs.layout_popup]);
-    cy.getByTID([TIDs.pages_order_selectitem_label_name]).contains(storeName).click();
-    cy.getByTID([TIDs.pages_order_pickupplace_popup_confirm]).scrollIntoView().click();
+    cy.getByTID([TIDs.layout_popup]).should('be.visible');
+    cy.getByTID([[TIDs.store_list_item_, storeUuid]]).then(($storeItem) => {
+        if ($storeItem.attr('aria-expanded') === 'false') {
+            cy.wrap($storeItem).click();
+        }
+    });
+    cy.getByTID([[TIDs.store_list_item_, storeUuid], TIDs.store_select_button]).click();
+    cy.getByTID([TIDs.pages_order_pickupplace_popup_confirm]).should('not.be.disabled').scrollIntoView().click();
 };
 
 export const changeSelectionOfTransportByName = (transportName: string, transportGroupName?: string) => {

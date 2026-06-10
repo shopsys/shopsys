@@ -186,6 +186,8 @@ export enum TIDs {
     // Stores
     stores_map = 'stores_map',
     store_list = 'store_list',
+    store_list_item_ = 'store_list_item_',
+    store_select_button = 'store_select_button',
     store_detail_link = 'store_detail_link',
     store_opening_hours = 'store_opening_hours',
     store_opening_status = 'store_opening_status',
