@@ -13,9 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory as FrontendApiProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider;
-use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoader;
 use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
-use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class ProductConnectionFactory
 {
@@ -26,14 +24,20 @@ class ProductConnectionFactory
     ) {
     }
 
+    /**
+     * @param callable(): \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadResult|null $batchLoadResultProvider
+     */
     public function createConnectionPromiseForSearch(
         Closure $retrieveProductClosure,
         Argument $argument,
         ProductFilterData $productFilterData,
         ?string $orderingMode,
+        ?callable $batchLoadResultProvider = null,
     ): Promise {
-        $productFilterOptionsClosure = function () use ($productFilterData) {
-            return $this->luigisBoxFacetsToProductFilterConfigMapper->map(LuigisBoxBatchLoader::getFacets(), $productFilterData);
+        $productFilterOptionsClosure = function () use ($productFilterData, $batchLoadResultProvider) {
+            $batchLoadResult = $batchLoadResultProvider !== null ? $batchLoadResultProvider() : null;
+
+            return $this->luigisBoxFacetsToProductFilterConfigMapper->map($batchLoadResult?->getFacets() ?? [], $productFilterData);
         };
         $orderingMode = $orderingMode ?? $this->productOrderingModeProvider->getDefaultOrderingModeForSearch();
 
@@ -43,23 +47,30 @@ class ProductConnectionFactory
             $argument,
             $orderingMode,
             $this->productOrderingModeProvider->getDefaultOrderingModeForSearch(),
+            $batchLoadResultProvider,
         );
     }
 
+    /**
+     * @param callable(): \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadResult|null $batchLoadResultProvider
+     */
     protected function getConnectionPromise(
         callable $retrieveClosure,
         Closure $productFilterOptionsClosure,
         Argument $argument,
         string $orderingMode,
         string $defaultOrderingMode,
+        ?callable $batchLoadResultProvider = null,
     ): Promise {
         $paginator = $this->createPaginator($retrieveClosure, $productFilterOptionsClosure, $orderingMode, $defaultOrderingMode);
 
         /** @var \GraphQL\Executor\Promise\Promise $promise */
         $promise = $paginator->auto($argument, 0);
 
-        $promise->then(function (ProductConnection $productConnection): void {
-            $productConnection->setTotalCount(LuigisBoxBatchLoader::getTotalByType(TypeInLuigisBoxEnum::PRODUCT));
+        $promise->then(function (ProductConnection $productConnection) use ($batchLoadResultProvider): void {
+            $batchLoadResult = $batchLoadResultProvider !== null ? $batchLoadResultProvider() : null;
+
+            $productConnection->setTotalCount($batchLoadResult?->getTotalCount() ?? 0);
         });
 
         return $promise;

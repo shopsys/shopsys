@@ -19,7 +19,9 @@ use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterO
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 use Throwable;
+use UnexpectedValueException;
 
 class LuigisBoxClient
 {
@@ -60,10 +62,79 @@ class LuigisBoxClient
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
         array $limitsByType,
     ): array {
-        $endpoint = $luigisBoxBatchLoadData->getEndpoint();
         $this->checkNecessaryConfigurationIsSet();
+
+        try {
+            $response = $this->sendRequest($luigisBoxBatchLoadData, $limitsByType);
+        } catch (Throwable $e) {
+            $this->logRequestFailure($e, $luigisBoxBatchLoadData);
+
+            return $this->getEmptyResults(array_keys($limitsByType));
+        }
+
+        return $this->processResponse($response, $luigisBoxBatchLoadData, $limitsByType);
+    }
+
+    /**
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData[] $luigisBoxBatchLoadDataItems
+     * @return array<int|string, \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]>
+     */
+    public function getDataForMultiple(array $luigisBoxBatchLoadDataItems): array
+    {
+        $this->checkNecessaryConfigurationIsSet();
+
+        $responses = [];
+        $resultsByKey = [];
+
+        foreach ($luigisBoxBatchLoadDataItems as $key => $luigisBoxBatchLoadDataItem) {
+            $limitsByType = [$luigisBoxBatchLoadDataItem->getType() => $luigisBoxBatchLoadDataItem->getLimit()];
+
+            try {
+                $responses[$key] = $this->sendRequest($luigisBoxBatchLoadDataItem, $limitsByType);
+            } catch (Throwable $e) {
+                $this->logRequestFailure($e, $luigisBoxBatchLoadDataItem);
+                $resultsByKey[$key] = $this->getEmptyResults(array_keys($limitsByType));
+            }
+        }
+
+        foreach ($responses as $key => $response) {
+            $luigisBoxBatchLoadDataItem = $luigisBoxBatchLoadDataItems[$key];
+
+            $resultsByKey[$key] = $this->processResponse(
+                $response,
+                $luigisBoxBatchLoadDataItem,
+                [$luigisBoxBatchLoadDataItem->getType() => $luigisBoxBatchLoadDataItem->getLimit()],
+            );
+        }
+
+        return $resultsByKey;
+    }
+
+    /**
+     * @param array<string, int> $limitsByType
+     */
+    protected function sendRequest(
+        LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
+        array $limitsByType,
+    ): ResponseInterface {
+        $endpoint = $luigisBoxBatchLoadData->getEndpoint();
         $this->luigisBoxEndpointEnum->validateCase($endpoint);
 
+        return $this->httpClient->request(
+            $endpoint === LuigisBoxEndpointEnum::RECOMMENDATIONS ? 'POST' : 'GET',
+            $this->getLuigisBoxApiUrl(
+                $luigisBoxBatchLoadData,
+                $limitsByType,
+            ),
+            $this->getRequestOptions($luigisBoxBatchLoadData),
+        );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getRequestOptions(LuigisBoxBatchLoadData $luigisBoxBatchLoadData): array
+    {
         $options = [
             'headers' => [
                 'Content-Type' => 'application/json; charset=utf-8',
@@ -76,40 +147,129 @@ class LuigisBoxClient
             $options['body'] = json_encode([$body], JSON_THROW_ON_ERROR);
         }
 
-        try {
-            $response = $this->httpClient->request(
-                $endpoint === LuigisBoxEndpointEnum::RECOMMENDATIONS ? 'POST' : 'GET',
-                $this->getLuigisBoxApiUrl(
-                    $luigisBoxBatchLoadData,
-                    $limitsByType,
-                ),
-                $options,
-            );
+        return $options;
+    }
 
+    protected function logRequestFailure(
+        Throwable $exception,
+        LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
+        ?ResponseInterface $response = null,
+    ): void {
+        $this->logger->error(
+            'Luigi\'s Box API request failed.',
+            [
+                'exception' => $exception,
+                'luigisBoxBatchLoadData' => $luigisBoxBatchLoadData,
+                'options' => $this->getRequestOptions($luigisBoxBatchLoadData),
+                'response' => $response !== null ? $this->getResponseDataForLogging($response) : null,
+            ],
+        );
+    }
+
+    /**
+     * @param array<string, int> $limitsByType
+     * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
+     */
+    protected function processResponse(
+        ResponseInterface $response,
+        LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
+        array $limitsByType,
+    ): array {
+        $endpoint = $luigisBoxBatchLoadData->getEndpoint();
+
+        try {
             $data = $response->toArray();
+
+            if ($endpoint === LuigisBoxEndpointEnum::SEARCH) {
+                $data = $this->getSearchResultsData($data);
+            }
+
+            if ($endpoint === LuigisBoxEndpointEnum::RECOMMENDATIONS) {
+                $data = $this->getRecommendationsData($data);
+            }
+
+            $this->validateResponseData($data, $endpoint);
+
+            return $this->getResultsIndexedByItemType($data, $endpoint, array_keys($limitsByType));
         } catch (Throwable $e) {
-            $this->logger->error(
-                'Luigi\'s Box API request failed.',
-                [
-                    'exception' => $e,
-                    'luigisBoxBatchLoadData' => $luigisBoxBatchLoadData,
-                    'options' => $options,
-                    'response' => isset($response) ? $response->toArray(false) : null,
-                ],
-            );
+            $this->logRequestFailure($e, $luigisBoxBatchLoadData, $response);
 
             return $this->getEmptyResults(array_keys($limitsByType));
         }
+    }
 
-        if ($endpoint === LuigisBoxEndpointEnum::SEARCH) {
-            $data = $data['results'];
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    protected function getSearchResultsData(array $data): array
+    {
+        if (!array_key_exists('results', $data) || !is_array($data['results'])) {
+            throw new UnexpectedValueException('Missing search results payload.');
         }
 
-        if ($endpoint === LuigisBoxEndpointEnum::RECOMMENDATIONS) {
-            $data = array_first($data);
+        return $data['results'];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    protected function getRecommendationsData(array $data): array
+    {
+        $result = array_first($data);
+
+        if (!is_array($result)) {
+            throw new UnexpectedValueException('Missing recommendations payload.');
         }
 
-        return $this->getResultsIndexedByItemType($data, $endpoint, array_keys($limitsByType));
+        return $result;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    protected function validateResponseData(array $data, string $endpoint): void
+    {
+        if (!array_key_exists('hits', $data) || !is_array($data['hits'])) {
+            throw new UnexpectedValueException('Missing hits payload.');
+        }
+
+        foreach ($data['hits'] as $hit) {
+            if (!is_array($hit) || !array_key_exists('url', $hit) || !is_string($hit['url'])) {
+                throw new UnexpectedValueException('Missing hit URL payload.');
+            }
+        }
+
+        if (
+            $endpoint === LuigisBoxEndpointEnum::AUTOCOMPLETE
+            && (
+                !array_key_exists('exact_match_hits_count', $data)
+                || !array_key_exists('partial_match_hits_count', $data)
+            )
+        ) {
+            throw new UnexpectedValueException('Missing autocomplete total count payload.');
+        }
+
+        if (
+            $endpoint !== LuigisBoxEndpointEnum::AUTOCOMPLETE
+            && $endpoint !== LuigisBoxEndpointEnum::RECOMMENDATIONS
+            && !array_key_exists('total_hits', $data)
+        ) {
+            throw new UnexpectedValueException('Missing total hits payload.');
+        }
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    protected function getResponseDataForLogging(ResponseInterface $response): ?array
+    {
+        try {
+            return $response->toArray(false);
+        } catch (Throwable) {
+            return null;
+        }
     }
 
     /**
@@ -127,10 +287,13 @@ class LuigisBoxClient
         return $resultsByType;
     }
 
-    protected function getTotalHitsFromData(array $data, string $endpoint): int
+    /**
+     * @param array<string, int[]> $idsByType
+     */
+    protected function getTotalHitsFromDataByType(array $data, string $endpoint, string $type, array $idsByType): int
     {
         if ($endpoint === LuigisBoxEndpointEnum::AUTOCOMPLETE) {
-            return (int)$data['exact_match_hits_count'] + (int)$data['partial_match_hits_count'];
+            return count($idsByType[$type] ?? []);
         }
 
         if ($endpoint === LuigisBoxEndpointEnum::RECOMMENDATIONS) {
@@ -150,7 +313,7 @@ class LuigisBoxClient
         $url = $this->getUrlWithBasicParameters($luigisBoxBatchLoadData);
 
         if ($luigisBoxBatchLoadData instanceof LuigisBoxSearchBatchLoadData) {
-            $url = $this->addSearchSpecificParametersToUrl($url, $luigisBoxBatchLoadData, $limitsByType);
+            $url = $this->addSearchSpecificParametersToUrl($url, $luigisBoxBatchLoadData);
             $url = $this->addAutocompleteSpecificParametersToUrl($url, $luigisBoxBatchLoadData, $limitsByType);
         }
 
@@ -168,27 +331,21 @@ class LuigisBoxClient
 
     /**
      * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData
-     * @param array<string, int> $limitsByType
      */
     protected function addSearchSpecificParametersToUrl(
         string $url,
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
-        array $limitsByType,
     ): string {
         if ($luigisBoxBatchLoadData->getEndpoint() === LuigisBoxEndpointEnum::SEARCH) {
-            $quicksearchTypesWithLimits = $this->getQuicksearchTypesWithLimits($limitsByType);
-
             $url .=
                 '&q=' . urlencode($luigisBoxBatchLoadData->getQuery()) .
                 '&remove_fields=nested' .
-                '&size=' . $this->getMainTypeLimit($limitsByType) .
+                '&size=' . $luigisBoxBatchLoadData->getLimit() .
                 '&dynamic_facets_size=' . $this->getNumberOfDynamicalFacetsWithoutAppliedFilterFacets($luigisBoxBatchLoadData);
 
             if ($luigisBoxBatchLoadData->getPage() > 0) {
                 $url .= '&from=' . $luigisBoxBatchLoadData->getPage();
             }
-
-            $url .= $quicksearchTypesWithLimits !== '' ? '&quicksearch_types=' . $quicksearchTypesWithLimits : '';
 
             if (count($luigisBoxBatchLoadData->getFacetNames()) > 0) {
                 $url .= '&facets=' . implode(',', $luigisBoxBatchLoadData->getFacetNames());
@@ -291,36 +448,6 @@ class LuigisBoxClient
         );
     }
 
-    protected function getMainType(array $types): string
-    {
-        if (in_array(TypeInLuigisBoxEnum::PRODUCT, $types, true)) {
-            return TypeInLuigisBoxEnum::PRODUCT;
-        }
-
-        return array_first($types);
-    }
-
-    /**
-     * @param array<string, int> $typesWithLimits
-     */
-    protected function getQuicksearchTypesWithLimits(array $typesWithLimits): string
-    {
-        $quicksearchTypesWithLimit = [];
-
-        foreach ($typesWithLimits as $type => $limit) {
-            if ($type !== $this->getMainType(array_keys($typesWithLimits))) {
-                $quicksearchTypesWithLimit[] = $type . ':' . $limit;
-            }
-        }
-
-        return implode(',', $quicksearchTypesWithLimit);
-    }
-
-    protected function getMainTypeLimit(array $limitsByType): int
-    {
-        return $limitsByType[$this->getMainType(array_keys($limitsByType))];
-    }
-
     /**
      * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
      */
@@ -329,7 +456,7 @@ class LuigisBoxClient
         $idsByType = [];
         $idsWithPrefixByType = [];
         $resultsByType = [];
-        $hits = array_merge($data['hits'], $data['quicksearch_hits'] ?? []);
+        $hits = $data['hits'];
 
         foreach ($hits as $hit) {
             $idsWithPrefixByType[$this->getTypeFromHitUrl($hit['url'])][] = $hit['url'];
@@ -340,7 +467,7 @@ class LuigisBoxClient
             $resultsByType[$type] = new LuigisBoxResult(
                 $idsByType[$type] ?? [],
                 $idsWithPrefixByType[$type] ?? [],
-                $this->getTotalHitsFromData($data, $endpoint),
+                $this->getTotalHitsFromDataByType($data, $endpoint, $type, $idsByType),
                 $data['facets'] ?? [],
             );
         }
