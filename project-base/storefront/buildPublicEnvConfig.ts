@@ -25,6 +25,7 @@ export function buildPublicConfig(): PublicRuntimeConfig {
         cdnDomain: process.env.CDN_DOMAIN ?? '',
         sentryDsn,
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
+        sentryRelease: process.env.SENTRY_RELEASE ?? '',
         sentryFeedbackEnable: process.env.SENTRY_FEEDBACK_ENABLE === '1',
         sentryReplaysEnable: process.env.SENTRY_REPLAYS_ENABLE === '1',
         errorDebuggingLevel: process.env.ERROR_DEBUGGING_LEVEL ?? '',

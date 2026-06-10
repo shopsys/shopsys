@@ -12,6 +12,18 @@ breadcrumbs, suspect commits, and Jira context in a single flow.
 This document explains how to enable the MCP servers and walks through two real workflows:
 investigating a production bug and reviewing performance / Web Vitals issues.
 
+## Storefront distributed tracing
+
+The storefront and backend use the same `0.1` tracing sample rate. Frontend GraphQL requests
+propagate Sentry tracing headers only to configured GraphQL endpoints:
+
+- Browser requests match the public GraphQL endpoint host from the domain configuration.
+- Server-side storefront requests match `INTERNAL_ENDPOINT`, which is used for internal GraphQL
+  communication.
+
+This keeps frontend and backend spans in one Sentry trace without sending `sentry-trace` and
+`baggage` headers to unrelated third-party services.
+
 ## MCP server setup
 
 ### Sentry MCP

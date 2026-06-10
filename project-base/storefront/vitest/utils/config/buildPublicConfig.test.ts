@@ -142,6 +142,7 @@ describe('buildPublicConfig', () => {
             delete process.env.CDN_DOMAIN;
             delete process.env.SENTRY_DSN;
             delete process.env.SENTRY_ENVIRONMENT;
+            delete process.env.SENTRY_RELEASE;
             delete process.env.ERROR_DEBUGGING_LEVEL;
             delete process.env.SHOW_SYMFONY_TOOLBAR;
             delete process.env.USERSNAP_PROJECT_API_KEY;
@@ -153,6 +154,7 @@ describe('buildPublicConfig', () => {
             expect(config.cdnDomain).toBe('');
             expect(config.sentryDsn).toBe('');
             expect(config.sentryEnvironment).toBe('');
+            expect(config.sentryRelease).toBe('');
             expect(config.errorDebuggingLevel).toBe('');
             expect(config.showSymfonyToolbar).toBe('');
             expect(config.userSnapApiKey).toBe('');
@@ -179,6 +181,22 @@ describe('buildPublicConfig', () => {
             const config = buildPublicConfig();
 
             expect(config.sentryDsn).toBe('');
+        });
+    });
+
+    describe('sentry release', () => {
+        it('exposes SENTRY_RELEASE to public runtime config', () => {
+            process.env.SENTRY_RELEASE = 'abc123';
+            const config = buildPublicConfig();
+
+            expect(config.sentryRelease).toBe('abc123');
+        });
+
+        it('produces empty string when SENTRY_RELEASE is missing', () => {
+            delete process.env.SENTRY_RELEASE;
+            const config = buildPublicConfig();
+
+            expect(config.sentryRelease).toBe('');
         });
     });
 

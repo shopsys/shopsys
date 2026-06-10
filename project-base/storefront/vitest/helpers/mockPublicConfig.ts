@@ -67,6 +67,7 @@ export const defaultTestConfig: PublicRuntimeConfig = {
     showSymfonyToolbar: '',
     sentryDsn: '',
     sentryEnvironment: '',
+    sentryRelease: '',
     sentryFeedbackEnable: false,
     sentryReplaysEnable: false,
 };
