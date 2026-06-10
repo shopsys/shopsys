@@ -12,14 +12,46 @@ type DomainConfigResolutionResult = {
     hostWithLocale: string;
 };
 
+const getFirstHeaderValue = (headerValue: string | string[] | undefined): string | undefined => {
+    const value = Array.isArray(headerValue) ? headerValue[0] : headerValue;
+
+    return value?.split(',')[0]?.trim() || undefined;
+};
+
+const getRequestProtocol = (context: GetServerSidePropsContext | NextPageContext): string => {
+    return getFirstHeaderValue(context.req?.headers['x-forwarded-proto'])?.toLowerCase() === 'https' ? 'https' : 'http';
+};
+
+const normalizeDomainHost = (domainUrl: string, protocol: string): string => {
+    const normalizedDomain = domainUrl.replace(/:3000$/, ':8000');
+    const requestUrl = normalizedDomain.includes('://')
+        ? new URL(normalizedDomain)
+        : new URL(`${protocol}://${normalizedDomain}`);
+
+    return requestUrl.host;
+};
+
+const findDomainConfigByHost = (host: string): DomainConfigType | undefined => {
+    const matchingDomainConfigs = domainsConfig.filter((domainConfig) => new URL(domainConfig.url || '').host === host);
+
+    return (
+        matchingDomainConfigs.find((domainConfig) => {
+            const configDomainPath = new URL(domainConfig.url || '').pathname;
+
+            return configDomainPath === '/' || configDomainPath === '';
+        }) || matchingDomainConfigs[0]
+    );
+};
+
 export const resolveDomainConfigByHost = (
     domainUrl: string,
     locale: string = DEFAULT_LOCALE,
+    protocol: string = 'http',
 ): DomainConfigResolutionResult => {
-    const normalizedDomain = domainUrl.replace(':3000', ':8000');
+    const normalizedDomain = normalizeDomainHost(domainUrl, protocol);
     const hostWithLocale = getBaseUrlWithLocale(normalizedDomain, locale);
     const isDefaultLocale = locale === DEFAULT_LOCALE;
-    const requestUrl = new URL(`http://${normalizedDomain}`);
+    const requestUrl = new URL(`${protocol}://${normalizedDomain}`);
 
     for (const domainConfig of domainsConfig) {
         const configDomainUrl = new URL(domainConfig.url || '');
@@ -53,16 +85,11 @@ export const resolveDomainConfigByHost = (
         }
     }
 
-    // Fallback for default locale when only locale-suffixed domains exist
-    if (isDefaultLocale) {
-        const fallbackDomain = domainsConfig.find((domainConfig) => {
-            const configDomainHost = new URL(domainConfig.url || '').host;
-            return configDomainHost === requestUrl.host;
-        });
-
-        if (fallbackDomain) {
-            return { domainConfig: fallbackDomain, hostWithLocale };
-        }
+    // Unsupported locale paths should still use the configured domain for the host
+    // and continue through the standard storefront routing/error handling.
+    const hostFallbackDomain = findDomainConfigByHost(requestUrl.host);
+    if (hostFallbackDomain) {
+        return { domainConfig: hostFallbackDomain, hostWithLocale };
     }
 
     if (cdnDomain.length > 0) {
@@ -76,11 +103,18 @@ export const resolveDomainConfigByHost = (
 };
 
 export function getDomainConfig(context: GetServerSidePropsContext | NextPageContext): DomainConfigType {
-    if (!context.req?.headers.host) {
+    const requestHost =
+        getFirstHeaderValue(context.req?.headers['x-forwarded-host']) ?? getFirstHeaderValue(context.req?.headers.host);
+
+    if (!requestHost) {
         throw new Error('getDomainConfig requires server-side context with req.headers.host');
     }
 
-    const { domainConfig, hostWithLocale } = resolveDomainConfigByHost(context.req.headers.host, context.locale);
+    const { domainConfig, hostWithLocale } = resolveDomainConfigByHost(
+        requestHost,
+        context.locale,
+        getRequestProtocol(context),
+    );
 
     if (domainConfig) {
         return domainConfig;

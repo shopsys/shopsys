@@ -7,6 +7,7 @@ const createMockRequest = (
     url: string,
     xForwardedProto?: string,
     acceptLanguage?: string,
+    xForwardedHost?: string,
 ): NextRequest => {
     const headers = new Headers();
 
@@ -20,6 +21,10 @@ const createMockRequest = (
 
     if (acceptLanguage) {
         headers.set('accept-language', acceptLanguage);
+    }
+
+    if (xForwardedHost) {
+        headers.set('x-forwarded-host', xForwardedHost);
     }
 
     return {
@@ -38,6 +43,34 @@ describe('parseRequest', () => {
             expect(result.requestBaseUrl).toBe('https://127.0.0.1:8000');
         });
 
+        test('prefers forwarded host before internal host header', () => {
+            const request = createMockRequest(
+                'webserver-php-fpm:8080',
+                'https://secure.example.com/products/123',
+                'https',
+                undefined,
+                'secure.example.com',
+            );
+
+            const result = parseRequest(request);
+
+            expect(result.requestBaseUrl).toBe('https://secure.example.com');
+        });
+
+        test('uses the first forwarded host value', () => {
+            const request = createMockRequest(
+                'webserver-php-fpm:8080',
+                'https://secure.example.com/products/123',
+                'https',
+                undefined,
+                'secure.example.com, proxy.internal',
+            );
+
+            const result = parseRequest(request);
+
+            expect(result.requestBaseUrl).toBe('https://secure.example.com');
+        });
+
         test('throws error when host header is missing', () => {
             const request = createMockRequest(null, 'https://example.com/path');
 
@@ -54,12 +87,20 @@ describe('parseRequest', () => {
             expect(result.requestBaseUrl).toBe('https://example.com');
         });
 
-        test('defaults to http when x-forwarded-proto header is missing', () => {
+        test('uses request URL protocol when x-forwarded-proto header is missing', () => {
             const request = createMockRequest('example.com', 'https://example.com/path');
 
             const result = parseRequest(request);
 
-            expect(result.requestBaseUrl).toBe('http://example.com');
+            expect(result.requestBaseUrl).toBe('https://example.com');
+        });
+
+        test('uses the first forwarded proto value', () => {
+            const request = createMockRequest('example.com', 'http://example.com/path', 'https, http');
+
+            const result = parseRequest(request);
+
+            expect(result.requestBaseUrl).toBe('https://example.com');
         });
     });
 

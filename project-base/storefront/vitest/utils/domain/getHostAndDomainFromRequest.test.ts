@@ -10,12 +10,16 @@ vi.mock('config/staticRewritePaths', () => ({
     },
 }));
 
-const createMockRequest = (host: string, path: string): NextRequest => {
-    const url = `https://${host}${path}`;
+const createMockRequest = (host: string, path: string, forwardedHost?: string): NextRequest => {
+    const url = `https://${forwardedHost ?? host}${path}`;
     const headers = new Headers({
         host,
         'x-forwarded-proto': 'https',
     });
+
+    if (forwardedHost) {
+        headers.set('x-forwarded-host', forwardedHost);
+    }
 
     return {
         headers,
@@ -28,6 +32,17 @@ describe('getHostAndDomainFromRequest', () => {
     describe('Basic domain resolution', () => {
         test('resolves root domain for base host and root path', () => {
             const request = createMockRequest('127.0.0.1:8000', '/');
+            const result = getHostAndDomainFromRequest(request);
+
+            expect(result).toEqual({
+                host: 'http://127.0.0.1:8000/',
+                domainId: 1,
+                currentLocale: 'default',
+            });
+        });
+
+        test('resolves domain by forwarded host before internal host header', () => {
+            const request = createMockRequest('webserver-php-fpm:8080', '/products', '127.0.0.1:8000');
             const result = getHostAndDomainFromRequest(request);
 
             expect(result).toEqual({

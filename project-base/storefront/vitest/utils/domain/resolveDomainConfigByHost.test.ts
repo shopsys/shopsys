@@ -1,4 +1,4 @@
-import { resolveDomainConfigByHost } from 'utils/domain/domainConfig';
+import { getDomainConfig, resolveDomainConfigByHost } from 'utils/domain/domainConfig';
 import { describe, expect, test, vi } from 'vitest';
 
 vi.mock('envConfig', () => ({
@@ -19,6 +19,21 @@ vi.mock('envConfig', () => ({
                     url: 'http://shop.example.com',
                     defaultLocale: 'en',
                     domainId: 3,
+                },
+                {
+                    url: 'https://secure.example.com',
+                    defaultLocale: 'en',
+                    domainId: 4,
+                },
+                {
+                    url: 'http://plain.example.com',
+                    defaultLocale: 'en',
+                    domainId: 5,
+                },
+                {
+                    url: 'https://cz.example.com',
+                    defaultLocale: 'cs',
+                    domainId: 6,
                 },
             ];
         }
@@ -48,6 +63,20 @@ describe('resolveDomainConfigByHost', () => {
 
             expect(result.domainConfig?.domainId).toBe(3);
         });
+
+        test('normalizes https default port', () => {
+            const result = resolveDomainConfigByHost('secure.example.com:443', 'default', 'https');
+
+            expect(result.domainConfig?.domainId).toBe(4);
+            expect(result.hostWithLocale).toBe('secure.example.com');
+        });
+
+        test('normalizes http default port', () => {
+            const result = resolveDomainConfigByHost('plain.example.com:80', 'default', 'http');
+
+            expect(result.domainConfig?.domainId).toBe(5);
+            expect(result.hostWithLocale).toBe('plain.example.com');
+        });
     });
 
     describe('non-default locale matching', () => {
@@ -76,6 +105,13 @@ describe('resolveDomainConfigByHost', () => {
 
             expect(result.hostWithLocale).toBe('unknown-host.com/cs');
         });
+
+        test('falls back to host match when locale is not configured for an existing host', () => {
+            const result = resolveDomainConfigByHost('cz.example.com', 'en', 'https');
+
+            expect(result.domainConfig?.domainId).toBe(6);
+            expect(result.hostWithLocale).toBe('cz.example.com/en');
+        });
     });
 
     describe('CDN fallback', () => {
@@ -92,5 +128,52 @@ describe('resolveDomainConfigByHost', () => {
 
             expect(result.domainConfig?.domainId).toBe(1);
         });
+    });
+});
+
+describe('getDomainConfig', () => {
+    test('uses forwarded host before internal request host', () => {
+        const result = getDomainConfig({
+            locale: 'default',
+            req: {
+                headers: {
+                    host: 'webserver-php-fpm:8080',
+                    'x-forwarded-host': 'secure.example.com',
+                    'x-forwarded-proto': 'https',
+                },
+            },
+        } as any);
+
+        expect(result.domainId).toBe(4);
+    });
+
+    test('uses the first forwarded host value', () => {
+        const result = getDomainConfig({
+            locale: 'default',
+            req: {
+                headers: {
+                    host: 'webserver-php-fpm:8080',
+                    'x-forwarded-host': 'secure.example.com, proxy.internal',
+                    'x-forwarded-proto': 'https',
+                },
+            },
+        } as any);
+
+        expect(result.domainId).toBe(4);
+    });
+
+    test('uses the first forwarded host value from an array header', () => {
+        const result = getDomainConfig({
+            locale: 'default',
+            req: {
+                headers: {
+                    host: 'webserver-php-fpm:8080',
+                    'x-forwarded-host': ['secure.example.com', 'proxy.internal'],
+                    'x-forwarded-proto': 'https',
+                },
+            },
+        } as any);
+
+        expect(result.domainId).toBe(4);
     });
 });
