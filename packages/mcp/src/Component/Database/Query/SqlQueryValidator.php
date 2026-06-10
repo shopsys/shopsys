@@ -452,6 +452,11 @@ class SqlQueryValidator
             );
         }
 
+        if ($wrappedNodeTag === self::NODE_TAG_RANGE_SUBSELECT) {
+            // Range subselects are validated in collectRelationsFromRangeSubselect(), before their derived alias is visible.
+            return null;
+        }
+
         if ($wrappedNodeTag === self::NODE_TAG_FUNC_CALL && !$this->isAllowedFunctionCall($wrappedNode)) {
             return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
         }
@@ -502,6 +507,8 @@ class SqlQueryValidator
             return $this->collectRelationsFromRangeSubselect(
                 $fromNode[self::NODE_TAG_RANGE_SUBSELECT] ?? [],
                 $relationsIndexedByAliases,
+                $cteRelationsIndexedByNames,
+                $allowedColumnsSetIndexedByTableNames,
             );
         }
 
@@ -584,11 +591,32 @@ class SqlQueryValidator
     /**
      * @param array<string, mixed> $rangeSubselect
      * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $cteRelationsIndexedByNames
+     * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
     protected function collectRelationsFromRangeSubselect(
         array $rangeSubselect,
         array &$relationsIndexedByAliases,
+        array $cteRelationsIndexedByNames,
+        array $allowedColumnsSetIndexedByTableNames,
     ): ?string {
+        $subquery = $rangeSubselect['subquery'] ?? null;
+
+        if (!is_array($subquery) || $this->getWrappedNodeTag($subquery) !== self::NODE_TAG_SELECT_STMT) {
+            return self::ERROR_ONLY_SELECT_SUPPORTED;
+        }
+
+        $validationErrorMessage = $this->validateSelectStatement(
+            $subquery[self::NODE_TAG_SELECT_STMT],
+            $allowedColumnsSetIndexedByTableNames,
+            false,
+            $cteRelationsIndexedByNames,
+        );
+
+        if ($validationErrorMessage !== null) {
+            return $validationErrorMessage;
+        }
+
         $aliasName = $this->getAliasName($rangeSubselect['alias'] ?? null);
 
         if ($aliasName === null) {

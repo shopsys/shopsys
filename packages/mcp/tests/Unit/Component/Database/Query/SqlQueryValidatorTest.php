@@ -120,6 +120,10 @@ class SqlQueryValidatorTest extends TestCase
             'sql' => 'SELECT sub.id2 FROM (SELECT id FROM products) AS sub(id2) LIMIT 10',
         ];
 
+        yield 'derived table with exposed column is allowed' => [
+            'sql' => 'SELECT sub.id FROM (SELECT id FROM administrators) sub LIMIT 10',
+        ];
+
         yield 'order by aggregate alias is allowed' => [
             'sql' => 'SELECT customer_id, COUNT(id) AS order_count FROM orders GROUP BY customer_id ORDER BY order_count DESC, customer_id ASC LIMIT 10',
         ];
@@ -359,8 +363,38 @@ class SqlQueryValidatorTest extends TestCase
         ];
 
         yield 'non exposed table is rejected' => [
-            'sql' => 'SELECT id FROM administrators LIMIT 10',
+            'sql' => 'SELECT id FROM administrator_mcp_tokens LIMIT 10',
             'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column behind derived table is rejected' => [
+            'sql' => 'SELECT x.password FROM (SELECT password FROM administrators) x LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column behind derived table with column alias is rejected' => [
+            'sql' => 'SELECT x.password FROM (SELECT password FROM administrators) AS x(password) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column behind derived table disguised as exposed column alias is rejected' => [
+            'sql' => 'SELECT x.id FROM (SELECT password FROM administrators) AS x(id) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'non exposed table hidden behind derived table is rejected' => [
+            'sql' => 'SELECT x.secret_hash FROM (SELECT secret_hash FROM administrator_mcp_tokens) x LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column in scalar subquery select list is rejected' => [
+            'sql' => 'SELECT (SELECT username FROM administrators LIMIT 1) AS visible_username, (SELECT password FROM administrators LIMIT 1) AS hidden_password LIMIT 1',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'hidden column behind nested derived tables is rejected' => [
+            'sql' => 'SELECT x.username FROM (SELECT username FROM (SELECT username, password FROM administrators) y) x LIMIT 1',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
         ];
 
         yield 'non public schema table is rejected' => [
@@ -450,6 +484,10 @@ class SqlQueryValidatorTest extends TestCase
     private function getAllowedColumnsSetIndexedByTableNames(): array
     {
         return [
+            'administrators' => [
+                'id' => true,
+                'username' => true,
+            ],
             'currencies' => [
                 'code' => true,
                 'exchange_rate' => true,
