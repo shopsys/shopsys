@@ -8,6 +8,7 @@ use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesGithubActionsBuilds
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesOnPackagistReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckShopsysInstallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnableMergingReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnsureMajorMinorBranchExistsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnsureReleaseHighlightsPostIsReleasedReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnsureRoadmapIsUpdatedReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\PostInfoToSlackReleaseWorker;
@@ -36,6 +37,7 @@ return [
     EnsureReleaseHighlightsPostIsReleasedReleaseWorker::class,
     PostInfoToSlackReleaseWorker::class,
     CheckDocsReleaseWorker::class,
+    EnsureMajorMinorBranchExistsReleaseWorker::class,
     EnsureRoadmapIsUpdatedReleaseWorker::class,
     BeHappyReleaseWorker::class,
 ];
