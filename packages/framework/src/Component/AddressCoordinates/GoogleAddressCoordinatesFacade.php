@@ -21,11 +21,6 @@ class GoogleAddressCoordinatesFacade
     }
 
     /**
-     * @param string $street
-     * @param string $city
-     * @param string $countryCode
-     * @param string $postcode
-     * @return \Shopsys\FrameworkBundle\Component\AddressCoordinates\AddressCoordinatesData|null
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
@@ -46,6 +41,31 @@ class GoogleAddressCoordinatesFacade
             return null;
         }
 
+        return $this->getCoordinatesByQuery($query);
+    }
+
+    /**
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     */
+    public function getCoordinatesByUnstructuredAddress(string $address): ?AddressCoordinatesData
+    {
+        if (!$this->isGoogleApiAvailable() || $address === '') {
+            return null;
+        }
+
+        return $this->getCoordinatesByQuery([
+            'key' => $this->googleMapApiKey,
+            'addressQuery' => $address,
+        ]);
+    }
+
+    /**
+     * @param array<string, string> $query
+     */
+    protected function getCoordinatesByQuery(array $query): ?AddressCoordinatesData
+    {
         try {
             $response = $this->httpClient->request('GET', static::GEOCODE_ADDRESS_URL, [
                 'query' => $query,
