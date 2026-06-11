@@ -72,6 +72,7 @@ services:
             GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENTSECRET}"
             SEZNAM_CLIENT_ID: "${SEZNAM_CLIENTID}"
             SEZNAM_CLIENT_SECRET: "${SEZNAM_CLIENTSECRET}"
+            GOOGLE_MAP_API_KEY: "${GOOGLE_MAP_API_KEY}"
             MCP_DATABASE_USER: shopsys_mcp
             MCP_DATABASE_PASSWORD: shopsys_mcp
         networks:
@@ -140,6 +141,7 @@ services:
             FACEBOOK_CLIENT_SECRET: "${FACEBOOK_CLIENTSECRET}"
             GOOGLE_CLIENT_ID: "${GOOGLE_CLIENTID}"
             GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENTSECRET}"
+            GOOGLE_MAP_API_KEY : "${GOOGLE_MAP_API_KEY}"
             SEZNAM_CLIENT_ID: "${SEZNAM_CLIENTID}"
             SEZNAM_CLIENT_SECRET: "${SEZNAM_CLIENTSECRET}"
         networks:
