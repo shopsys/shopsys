@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\AddressCoordinates;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -15,6 +16,7 @@ class GoogleAddressCoordinatesFacade
     public function __construct(
         protected readonly HttpClientInterface $httpClient,
         protected readonly string $googleMapApiKey,
+        protected readonly LoggerInterface $logger,
     ) {
     }
 
@@ -42,12 +44,22 @@ class GoogleAddressCoordinatesFacade
                 ],
             ]);
 
-            if ($response->getStatusCode() !== 200) {
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode !== 200) {
+                $this->logger->error('Google Geocode API returned unsuccessful status code.', [
+                    'statusCode' => $statusCode,
+                ]);
+
                 return null;
             }
 
             $data = $response->toArray(false);
-        } catch (TransportExceptionInterface | DecodingExceptionInterface) {
+        } catch (TransportExceptionInterface | DecodingExceptionInterface $exception) {
+            $this->logger->error('Getting address coordinates from Google Geocode API failed.', [
+                'exception' => $exception,
+            ]);
+
             return null;
         }
 
