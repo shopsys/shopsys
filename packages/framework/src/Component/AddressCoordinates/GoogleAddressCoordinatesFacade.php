@@ -24,7 +24,7 @@ class GoogleAddressCoordinatesFacade
         string $countryCode,
         string $postcode,
     ): ?AddressCoordinatesData {
-        if ($this->googleMapApiKey === '') {
+        if (!$this->isGoogleApiAvailable()) {
             return null;
         }
 
@@ -91,5 +91,10 @@ class GoogleAddressCoordinatesFacade
         }
 
         return count($query) > 1 ? $query : null;
+    }
+
+    public function isGoogleApiAvailable(): bool
+    {
+        return $this->googleMapApiKey !== '';
     }
 }

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Store;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours\OpeningHoursRangeCollectionFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
@@ -45,6 +46,7 @@ final class StoreFormType extends AbstractType
         private readonly CountryFacade $countryFacade,
         private readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
         private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly GoogleAddressCoordinatesFacade $googleAddressCoordinatesFacade,
     ) {
     }
 
@@ -190,15 +192,17 @@ final class StoreFormType extends AbstractType
                 'attr' => [
                     'class' => 'js-store-coordinate-longitude',
                 ],
-            ])
-            ->add('loadCoordinates', ButtonType::class, [
+            ]);
+
+        if ($this->googleAddressCoordinatesFacade->isGoogleApiAvailable()) {
+            $builderMapGroup->add('loadCoordinates', ButtonType::class, [
                 'label' => 'Load coordinates by address',
                 'attr' => [
                     'class' => 'btn btn-primary js-load-store-coordinates',
                     'data-load-coordinates-url' => $this->urlGenerator->generate('admin_store_loadcoordinates'),
                 ],
-            ])
-        ;
+            ]);
+        }
 
         return $builderMapGroup;
     }
