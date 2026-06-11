@@ -1,5 +1,7 @@
 parameters:
     social_network_login_config:
+        fedcm:
+            enabled: true
         providers:
             facebook:
                 enabledOnDomains: [1,2,3]
@@ -11,6 +13,11 @@ parameters:
                 keys:
                     id: '%env(GOOGLE_CLIENT_ID)%'
                     secret: '%env(GOOGLE_CLIENT_SECRET)%'
+                adapter: Shopsys\FrontendApiBundle\Model\SocialNetwork\Google
+                fedcm:
+                    enabled: true
+                    configUrl: 'https://accounts.google.com/gsi/fedcm.json'
+                    autoSelect: false
             seznam:
                 enabledOnDomains: [1,2,3]
                 keys:
@@ -18,3 +25,7 @@ parameters:
                     secret: '%env(SEZNAM_CLIENT_SECRET)%'
                 scope: 'identity'
                 adapter: Shopsys\FrontendApiBundle\Model\SocialNetwork\Seznam
+                fedcm:
+                    enabled: true
+                    configUrl: 'https://login.szn.cz/fedcm/config.json'
+                    autoSelect: false

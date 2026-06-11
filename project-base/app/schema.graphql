@@ -1078,6 +1078,28 @@ input EditCustomerUserPersonalDataInput {
   telephone: PhoneDataInput!
 }
 
+"FedCM identity provider configuration exposed to the storefront"
+type FedcmProviderConfig {
+  "Whether the browser may auto-select a returning user without an explicit prompt"
+  autoSelect: Boolean!
+  "Client ID registered with the identity provider for the current domain"
+  clientId: String!
+  "The identity provider's FedCM configuration URL (hosted by the IdP, not by the storefront)"
+  configUrl: String!
+  "IdP-specific extra parameters merged into the FedCM `params` object (e.g. `scope` for Google). The storefront-generated `nonce` is added on top of these."
+  params: [FedcmProviderParam!]!
+  "The social network type (e.g. google, seznam)"
+  type: LoginTypeEnum!
+}
+
+"A single key-value pair forwarded to the FedCM `params` object for a provider"
+type FedcmProviderParam {
+  "Parameter name (e.g. `scope`, `response_type`, `login_hint`)"
+  name: String!
+  "Parameter value"
+  value: String!
+}
+
 "Represents a downloadable file"
 type File {
   "Clickable text for a hyperlink"
@@ -1236,6 +1258,21 @@ enum LoginTypeEnum {
   web
 }
 
+input LoginWithCredentialInput {
+  "Uuid of the cart that should be merged to the cart of the user"
+  cartUuid: Uuid = null
+  "The credential returned by the browser's FedCM flow (JWT id_token for Google, OAuth authorization code for Seznam)"
+  credential: String!
+  "Random nonce passed to navigator.credentials.get(); the backend verifies it against the id_token nonce claim for providers whose credential format carries one (e.g. Google). Ignored for providers without a nonce claim (e.g. Seznam)"
+  nonce: String = null
+  "Uuids of product lists that should be merged to the product lists of the user"
+  productListsUuids: [Uuid!]! = []
+  "A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid"
+  shouldOverwriteCustomerUserCart: Boolean! = false
+  "The social network the credential was issued by (e.g. google, seznam)"
+  type: LoginTypeEnum!
+}
+
 type MainBlogCategoryData {
   "Main image of the blog main category"
   mainBlogCategoryMainImage: Image
@@ -1381,6 +1418,8 @@ type Mutation {
   Login(input: LoginInput!): LoginResult!
   "Exchange one-time token for access and refresh tokens"
   LoginViaExchangeToken(exchangeToken: String!): Token!
+  "Log a user in using a credential issued by a federated identity provider via FedCM (e.g. Google id_token, Seznam authorization code)"
+  LoginWithCredential(input: LoginWithCredentialInput!): LoginResult!
   "Logout user"
   Logout: Boolean!
   "Subscribe for e-mail newsletter"
@@ -2826,6 +2865,8 @@ type Settings {
   defaultPricingGroupId: Int!
   "Timezone that is used for displaying time"
   displayTimezone: String!
+  "Returns the FedCM-enabled identity providers for the current domain (empty when FedCM is globally disabled or not configured for the domain)"
+  fedcmProviders: [FedcmProviderConfig!]!
   "Returns true if Heureka is available for the current domain"
   heurekaEnabled: Boolean!
   "Main blog category URL and background image"

@@ -41,6 +41,7 @@ export const cache = cacheExchange({
         CurrentCompanyCustomerUser: keyUuid,
         CurrentRegularCustomerUser: keyUuid,
         DeliveryAddress: keyUuid,
+        FedcmProviderConfig: keyNull,
         File: keyUuid,
         Flag: keyUuid,
         FlagFilterOption: keyNull,

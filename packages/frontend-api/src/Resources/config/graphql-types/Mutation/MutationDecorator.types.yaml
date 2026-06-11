@@ -19,6 +19,13 @@ MutationDecorator:
                     input:
                         type: LoginInput!
                 resolve: "@=mutation('loginMutation', args)"
+            LoginWithCredential:
+                type: LoginResult!
+                description: "Log a user in using a credential issued by a federated identity provider via FedCM (e.g. Google id_token, Seznam authorization code)"
+                args:
+                    input:
+                        type: LoginWithCredentialInput!
+                resolve: "@=mutation('loginWithCredentialMutation', args)"
             Logout:
                 type: Boolean!
                 description: "Logout user"

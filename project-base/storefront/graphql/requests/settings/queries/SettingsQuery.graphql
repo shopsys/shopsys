@@ -19,6 +19,16 @@ query SettingsQuery @redisCache(ttl: 3600) {
         termsAndConditionsArticleUrl
         userConsentPolicyArticleUrl
         socialNetworkLoginConfig
+        fedcmProviders {
+            type
+            clientId
+            configUrl
+            autoSelect
+            params {
+                name
+                value
+            }
+        }
         cspHeader
         defaultPricingGroupId
     }
