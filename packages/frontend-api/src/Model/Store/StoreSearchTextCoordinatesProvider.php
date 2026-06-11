@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Store;
 
-use Closure;
 use Psr\Cache\CacheItemInterface;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\AddressCoordinatesData;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
@@ -13,8 +12,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class StoreSearchTextCoordinatesProvider
 {
-    protected const int MIN_CITY_SEARCH_TEXT_LENGTH_FOR_GOOGLE_REQUEST = 2;
-
     public function __construct(
         protected readonly GoogleAddressCoordinatesFacade $googleAddressCoordinatesFacade,
         protected readonly Domain $domain,
@@ -33,36 +30,9 @@ class StoreSearchTextCoordinatesProvider
             return null;
         }
 
-        $postcode = $this->getPostcode($normalizedSearchText);
         $defaultCountryCode = $this->getDefaultCountryCode();
 
-        if ($postcode !== null) {
-            return $this->getCachedCoordinatesBySearchText(
-                $normalizedSearchText,
-                $defaultCountryCode,
-                fn () => $this->googleAddressCoordinatesFacade->getCoordinatesByStructuredAddress(
-                    '',
-                    '',
-                    $defaultCountryCode,
-                    $postcode,
-                ),
-            );
-        }
-
-        if (!$this->isCitySearchTextUsable($normalizedSearchText)) {
-            return null;
-        }
-
-        return $this->getCachedCoordinatesBySearchText(
-            $normalizedSearchText,
-            $defaultCountryCode,
-            fn () => $this->googleAddressCoordinatesFacade->getCoordinatesByStructuredAddress(
-                '',
-                $normalizedSearchText,
-                $defaultCountryCode,
-                '',
-            ),
-        );
+        return $this->getCachedCoordinatesBySearchText($normalizedSearchText, $defaultCountryCode);
     }
 
     protected function normalizeSearchText(?string $searchText): ?string
@@ -76,45 +46,19 @@ class StoreSearchTextCoordinatesProvider
         return $searchText !== '' ? $searchText : null;
     }
 
-    protected function getPostcode(string $searchText): ?string
-    {
-        if (preg_match('/^\d{3}\s?\d{2}$/', $searchText) !== 1) {
-            return null;
-        }
-
-        return str_replace(' ', '', $searchText);
-    }
-
-    protected function isCitySearchTextUsable(string $searchText): bool
-    {
-        if (preg_match('/\d/', $searchText) === 1) {
-            return false;
-        }
-
-        if (preg_match('/[[:alpha:]]/u', $searchText) !== 1) {
-            return false;
-        }
-
-        if (preg_match('/^[\p{L}\s.\'-]+$/u', $searchText) !== 1) {
-            return false;
-        }
-
-        return mb_strlen(str_replace(' ', '', $searchText)) >= static::MIN_CITY_SEARCH_TEXT_LENGTH_FOR_GOOGLE_REQUEST;
-    }
-
     /**
-     * @param \Closure(): ?\Shopsys\FrameworkBundle\Component\AddressCoordinates\AddressCoordinatesData $coordinatesProvider
      * @return array{latitude: string, longitude: string}|null
      */
-    protected function getCachedCoordinatesBySearchText(
-        string $searchText,
-        string $countryCode,
-        Closure $coordinatesProvider,
-    ): ?array {
+    protected function getCachedCoordinatesBySearchText(string $searchText, string $countryCode): ?array
+    {
         return $this->storeSearchCoordinatesCache->get(
             $this->getCacheId($searchText, $countryCode),
-            function (CacheItemInterface $cacheItem, bool &$save) use ($coordinatesProvider): ?array {
-                $coordinates = $this->formatCoordinatesData($coordinatesProvider());
+            function (CacheItemInterface $cacheItem, bool &$save) use ($searchText, $countryCode): ?array {
+                $coordinates = $this->formatCoordinatesData(
+                    $this->googleAddressCoordinatesFacade->getCoordinatesByUnstructuredAddress(
+                        $this->formatUnstructuredAddress($searchText, $countryCode),
+                    ),
+                );
 
                 if ($coordinates === null) {
                     $save = false;
@@ -146,6 +90,11 @@ class StoreSearchTextCoordinatesProvider
             'sk' => 'SK',
             default => 'CZ',
         };
+    }
+
+    protected function formatUnstructuredAddress(string $searchText, string $countryCode): string
+    {
+        return sprintf('%s, %s', $searchText, strtoupper($countryCode));
     }
 
     protected function getCacheId(string $searchText, string $countryCode): string
