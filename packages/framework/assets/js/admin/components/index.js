@@ -34,7 +34,6 @@ import './MassActionConfirm';
 import './NumberSlider';
 import './OpeningHoursCollection';
 import './OrderItems';
-import './OrderWithdrawal';
 import './Parameters';
 import './Payment';
 import './Product';

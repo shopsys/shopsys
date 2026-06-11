@@ -5,29 +5,16 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 
 use Override;
-use Shopsys\FormTypesBundle\ActionBarType;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
-use Shopsys\FrameworkBundle\Form\DisplayOnlyCompanyNameType;
-use Shopsys\FrameworkBundle\Form\DisplayOnlyCustomerType;
-use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
-use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
-use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\GroupType;
-use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
-use Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
-use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
-use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -47,9 +34,6 @@ final class OrderFormType extends AbstractType
 
     public function __construct(
         private readonly CountryFacade $countryFacade,
-        private readonly OrderStatusFacade $orderStatusFacade,
-        private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
-        private readonly Domain $domain,
         private readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
@@ -69,12 +53,6 @@ final class OrderFormType extends AbstractType
             ->add($this->createBillingDataGroup($builder, $countries))
             ->add($this->createShippingAddressGroup($builder, $countries, $domainId))
             ->add($this->createNoteGroup($builder));
-
-        $builder
-            ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_order_list',
-                'entity' => $options['order'],
-            ]);
     }
 
     #[Override]
@@ -95,7 +73,7 @@ final class OrderFormType extends AbstractType
                     $orderData = $form->getData();
 
                     if (!$orderData->deliveryAddressSameAsBillingAddress) {
-                        $validationGroups[] = static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS;
+                        $validationGroups[] = self::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS;
                     }
 
                     /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
@@ -116,139 +94,13 @@ final class OrderFormType extends AbstractType
 
     private function createBasicInformationGroup(FormBuilderInterface $builder, Order $order): FormBuilderInterface
     {
-        $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => 'Basic information',
         ]);
-        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
 
-        if ($withdrawalRequest !== null) {
-            $builderBasicInformationGroup
-                ->add('withdrawalWarning', MessageType::class, [
-                    'message_level' => MessageType::MESSAGE_LEVEL_WARNING,
-                    'data' => t('There is a withdrawal request for this order.'),
-                ]);
-        }
+        $builderBasicInformationGroup->add($this->createWithdrawalRequestGroup($builderBasicInformationGroup, $order->getDomainId()));
 
         $builderBasicInformationGroup
-            ->add('id', DisplayOnlyType::class, [
-                'label' => 'ID',
-                'data' => $order->getId(),
-            ])
-            ->add('orderDetail', DisplayOnlyUrlType::class, [
-                'label' => 'Order detail',
-                'route' => 'front_customer_order_detail_unregistered',
-                'route_params' => [
-                    'urlHash' => $order->getUrlHash(),
-                ],
-                'domain_id' => $order->getDomainId(),
-            ]);
-
-        if ($this->domain->isMultidomain()) {
-            $builderBasicInformationGroup
-                ->add('domainIcon', DisplayOnlyDomainIconType::class, [
-                    'label' => 'Domain',
-                    'data' => $order->getDomainId(),
-                ]);
-        }
-
-        $builderBasicInformationGroup
-            ->add('orderNumber', DisplayOnlyType::class, [
-                'label' => 'Order number',
-                'data' => $order->getNumber(),
-            ])
-            ->add('dateOfCreation', DisplayOnlyType::class, [
-                'label' => 'Date of creation and privacy policy agreement',
-                'data' => $this->dateTimeFormatterExtension->formatDateTime($order->getCreatedAt()),
-            ])
-            ->add('status', ChoiceType::class, [
-                'label' => 'Status',
-                'required' => true,
-                'choices' => $this->orderStatusFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'choice_attr' => function (OrderStatus $orderStatus) {
-                    return [
-                        'data-js-order-status-type' => $orderStatus->getType(),
-                    ];
-                },
-                'multiple' => false,
-                'expanded' => false,
-                'attr' => [
-                    'data-js-order-status-select' => null,
-                ],
-            ]);
-
-        $builderBasicInformationGroup->add($this->createWithdrawalRequestGroup($builderBasicInformationGroup, $withdrawalRequest, $order->getDomainId()));
-
-        if ($order->getCreatedAsAdministrator() || $order->getCreatedAsAdministratorName()) {
-            $builderBasicInformationGroup
-                ->add('createdAsAdministrator', DisplayOnlyType::class, [
-                    'label' => 'Created by administrator',
-                    'data' => $order->getCreatedAsAdministrator() === null ? $order->getCreatedAsAdministratorName() : $order->getCreatedAsAdministrator()->getRealName(),
-                ]);
-        }
-
-        $builderBasicInformationGroup
-            ->add('user', DisplayOnlyCustomerType::class, [
-                'label' => 'Customer',
-                'user' => $order->getCustomerUser(),
-            ]);
-
-        if ($domainConfig->isB2b() && $order->getCustomer()?->getBillingAddress()->getCompanyNumber() !== null) {
-            $builderBasicInformationGroup
-                ->add('company', DisplayOnlyCompanyNameType::class, [
-                    'label' => 'Company',
-                    'customer' => $order->getCustomer(),
-                ]);
-        }
-
-        $builderBasicInformationGroup
-            ->add('heurekaAgreement', DisplayOnlyType::class, [
-                'label' => 'Heureka agreement',
-                'data' => $order->isHeurekaAgreement() ? t('Yes') : t('No'),
-            ]);
-
-        if ($order->getOrigin() !== null) {
-            $builderBasicInformationGroup
-                ->add('origin', DisplayOnlyType::class, [
-                    'label' => 'Origin',
-                    'data' => $order->getOrigin(),
-                ]);
-        }
-
-        $builderBasicInformationGroup
-            ->add('payment', DisplayOnlyType::class, [
-                'label' => 'Payment type',
-                'data' => $order->getPayment()->getName(),
-            ]);
-
-        if ($order->getPayment()->isGoPay() === true) {
-            $goPayPaymentTransaction = $order->getLastGoPayTransaction();
-
-            if ($goPayPaymentTransaction !== null) {
-                $translatedGoPayStatus = GoPayOrderStatus::getTranslatedGoPayStatus($goPayPaymentTransaction->getExternalPaymentStatus());
-                $translatedGoPaySubStatus = GoPayOrderStatus::getTranslatedGoPaySubStatus($goPayPaymentTransaction->getExternalPaymentSubStatus());
-
-                if ($translatedGoPaySubStatus !== null) {
-                    $translatedGoPayStatus .= ' - ' . $translatedGoPaySubStatus;
-                }
-            } else {
-                $translatedGoPayStatus = t('Order has not been sent to GoPay');
-            }
-
-            $builderBasicInformationGroup
-                ->add('gopayStatus', DisplayOnlyType::class, [
-                    'label' => 'GoPay payment status',
-                    'data' => $translatedGoPayStatus,
-                ]);
-        }
-
-        $builderBasicInformationGroup
-            ->add('transport', DisplayOnlyType::class, [
-                'label' => 'Transport type',
-                'data' => $order->getTransport()->getName(),
-            ])
             ->add('trackingNumber', TextType::class, [
                 'label' => 'Tracking number',
                 'required' => false,
@@ -260,16 +112,6 @@ final class OrderFormType extends AbstractType
                 'label' => 'Delivered at',
                 'required' => false,
             ]);
-
-        $promoCode = $order->getPromoCode();
-
-        if ($promoCode !== null) {
-            $builderBasicInformationGroup
-                ->add('promoCode', DisplayOnlyType::class, [
-                    'label' => 'Promo code',
-                    'data' => $promoCode,
-                ]);
-        }
 
         return $builderBasicInformationGroup;
     }
@@ -562,20 +404,10 @@ final class OrderFormType extends AbstractType
 
     private function createWithdrawalRequestGroup(
         FormBuilderInterface $builder,
-        ?WithdrawalRequest $withdrawalRequest,
         int $domainId,
     ): FormBuilderInterface {
-        $rowAttr = [
-            'data-withdrawal-request-exists' => $withdrawalRequest !== null ? 'true' : 'false',
-        ];
-
-        if ($withdrawalRequest === null) {
-            $rowAttr['style'] = 'display: none;';
-        }
-
         $builderWithdrawalRequestGroup = $builder->create('withdrawalRequestGroup', GroupType::class, [
             'label' => 'Withdrawal Request',
-            'row_attr' => $rowAttr,
         ]);
 
         $builderWithdrawalRequestGroup
