@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\AddressCoordinates;
 
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\AddressCoordinates\Exception\GoogleAddressCoordinatesException;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -24,6 +25,7 @@ class GoogleAddressCoordinatesFacade
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Shopsys\FrameworkBundle\Component\AddressCoordinates\Exception\GoogleAddressCoordinatesException
      */
     public function getCoordinatesByStructuredAddress(
         string $street,
@@ -44,11 +46,6 @@ class GoogleAddressCoordinatesFacade
         return $this->getCoordinatesByQuery($query);
     }
 
-    /**
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     */
     public function getCoordinatesByUnstructuredAddress(string $address): ?AddressCoordinatesData
     {
         if (!$this->isGoogleApiAvailable() || $address === '') {
@@ -81,7 +78,10 @@ class GoogleAddressCoordinatesFacade
                     'statusCode' => $statusCode,
                 ]);
 
-                return null;
+                throw new GoogleAddressCoordinatesException(sprintf(
+                    'Google Geocode API returned unsuccessful status code "%d".',
+                    $statusCode,
+                ));
             }
 
             $data = $response->toArray(false);
@@ -90,7 +90,10 @@ class GoogleAddressCoordinatesFacade
                 'exception' => $exception,
             ]);
 
-            return null;
+            throw new GoogleAddressCoordinatesException(
+                'Getting address coordinates from Google Geocode API failed.',
+                $exception,
+            );
         }
 
         $latitude = $data['results'][0]['location']['latitude'] ?? null;

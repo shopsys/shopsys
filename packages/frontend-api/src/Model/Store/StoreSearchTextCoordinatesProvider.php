@@ -6,15 +6,16 @@ namespace Shopsys\FrontendApiBundle\Model\Store;
 
 use Psr\Cache\CacheItemInterface;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\AddressCoordinatesData;
+use Shopsys\FrameworkBundle\Component\AddressCoordinates\Exception\GoogleAddressCoordinatesException;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class StoreSearchTextCoordinatesProvider
 {
     public function __construct(
         protected readonly GoogleAddressCoordinatesFacade $googleAddressCoordinatesFacade,
-        protected readonly Domain $domain,
+        protected readonly CountryFacade $countryFacade,
         protected readonly CacheInterface $storeSearchCoordinatesCache,
     ) {
     }
@@ -31,6 +32,10 @@ class StoreSearchTextCoordinatesProvider
         }
 
         $defaultCountryCode = $this->getDefaultCountryCode();
+
+        if ($defaultCountryCode === null) {
+            return null;
+        }
 
         return $this->getCachedCoordinatesBySearchText($normalizedSearchText, $defaultCountryCode);
     }
@@ -54,17 +59,17 @@ class StoreSearchTextCoordinatesProvider
         return $this->storeSearchCoordinatesCache->get(
             $this->getCacheId($searchText, $countryCode),
             function (CacheItemInterface $cacheItem, bool &$save) use ($searchText, $countryCode): ?array {
-                $coordinates = $this->formatCoordinatesData(
-                    $this->googleAddressCoordinatesFacade->getCoordinatesByUnstructuredAddress(
-                        $this->formatUnstructuredAddress($searchText, $countryCode),
-                    ),
-                );
-
-                if ($coordinates === null) {
+                try {
+                    return $this->formatCoordinatesData(
+                        $this->googleAddressCoordinatesFacade->getCoordinatesByUnstructuredAddress(
+                            $this->formatUnstructuredAddress($searchText, $countryCode),
+                        ),
+                    );
+                } catch (GoogleAddressCoordinatesException) {
                     $save = false;
-                }
 
-                return $coordinates;
+                    return null;
+                }
             },
         );
     }
@@ -84,12 +89,16 @@ class StoreSearchTextCoordinatesProvider
         ];
     }
 
-    protected function getDefaultCountryCode(): string
+    protected function getDefaultCountryCode(): ?string
     {
-        return match ($this->domain->getLocale()) {
-            'sk' => 'SK',
-            default => 'CZ',
-        };
+        $countries = $this->countryFacade->getAllEnabledOnCurrentDomain();
+        $country = $countries[0] ?? null;
+
+        if ($country === null) {
+            return null;
+        }
+
+        return $country->getCode();
     }
 
     protected function formatUnstructuredAddress(string $searchText, string $countryCode): string

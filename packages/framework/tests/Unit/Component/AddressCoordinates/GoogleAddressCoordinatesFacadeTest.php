@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Component\AddressCoordinates;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
+use Shopsys\FrameworkBundle\Component\AddressCoordinates\Exception\GoogleAddressCoordinatesException;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
@@ -68,6 +69,35 @@ final class GoogleAddressCoordinatesFacadeTest extends TestCase
         $coordinates = $facade->getCoordinatesByUnstructuredAddress('');
 
         $this->assertNull($coordinates);
+    }
+
+    public function testReturnsNullWhenGoogleDoesNotReturnCoordinates(): void
+    {
+        $httpClient = new MockHttpClient(new MockResponse(json_encode([
+            'results' => [
+                [
+                    'location' => [],
+                ],
+            ],
+        ], JSON_THROW_ON_ERROR)));
+        $facade = $this->createGoogleAddressCoordinatesFacade($httpClient);
+
+        $coordinates = $facade->getCoordinatesByUnstructuredAddress('Nonexistent address');
+
+        $this->assertNull($coordinates);
+    }
+
+    public function testThrowsExceptionForUnsuccessfulGoogleApiResponse(): void
+    {
+        $httpClient = new MockHttpClient(new MockResponse('', [
+            'http_code' => 500,
+        ]));
+        $facade = $this->createGoogleAddressCoordinatesFacade($httpClient);
+
+        $this->expectException(GoogleAddressCoordinatesException::class);
+        $this->expectExceptionMessage('Google Geocode API returned unsuccessful status code "500".');
+
+        $facade->getCoordinatesByUnstructuredAddress('Křižíkova 148/34, Praha 8');
     }
 
     private function createGoogleAddressCoordinatesFacade(
