@@ -19,7 +19,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
         $googleAddressCoordinatesFacadeMock->expects($this->once())
-            ->method('getCoordinatesByAddress')
+            ->method('getCoordinatesByStructuredAddress')
             ->with('', '', 'CZ', '70800')
             ->willReturn(new AddressCoordinatesData(49.8209, 18.2625));
         $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs');
@@ -36,7 +36,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
         $googleAddressCoordinatesFacadeMock->expects($this->once())
-            ->method('getCoordinatesByAddress')
+            ->method('getCoordinatesByStructuredAddress')
             ->with('', '', 'CZ', '70800')
             ->willReturn(new AddressCoordinatesData(49.8209, 18.2625));
         $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs');
@@ -53,7 +53,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
         $googleAddressCoordinatesFacadeMock->expects($this->once())
-            ->method('getCoordinatesByAddress')
+            ->method('getCoordinatesByStructuredAddress')
             ->with('', 'Havířov', 'CZ', '')
             ->willReturn(new AddressCoordinatesData(49.7798, 18.4369));
         $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs');
@@ -70,7 +70,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
         $googleAddressCoordinatesFacadeMock->expects($this->once())
-            ->method('getCoordinatesByAddress')
+            ->method('getCoordinatesByStructuredAddress')
             ->with('', 'Žilina', 'SK', '')
             ->willReturn(new AddressCoordinatesData(49.2231, 18.7394));
         $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'sk');
@@ -87,7 +87,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
         $googleAddressCoordinatesFacadeMock->expects($this->once())
-            ->method('getCoordinatesByAddress')
+            ->method('getCoordinatesByStructuredAddress')
             ->with('', 'Neexistující', 'CZ', '')
             ->willReturn(null);
         $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs');
@@ -101,7 +101,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
         $googleAddressCoordinatesFacadeMock->expects($this->exactly(2))
-            ->method('getCoordinatesByAddress')
+            ->method('getCoordinatesByStructuredAddress')
             ->with('', 'Neexistující', 'CZ', '')
             ->willReturn(null);
         $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs');
@@ -117,7 +117,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
         $googleAddressCoordinatesFacadeMock->expects($this->once())
-            ->method('getCoordinatesByAddress')
+            ->method('getCoordinatesByStructuredAddress')
             ->with('', 'Havířov', 'CZ', '')
             ->willReturn(new AddressCoordinatesData(49.7798, 18.4369));
         $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs');
@@ -136,7 +136,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
         $googleAddressCoordinatesFacadeMock->expects($this->exactly(2))
-            ->method('getCoordinatesByAddress')
+            ->method('getCoordinatesByStructuredAddress')
             ->willReturnCallback(static function (
                 string $street,
                 string $city,
@@ -171,7 +171,7 @@ class StoreSearchTextCoordinatesProviderTest extends TestCase
     {
         $googleAddressCoordinatesFacadeMock = $this->createGoogleAddressCoordinatesFacadeMock();
         $googleAddressCoordinatesFacadeMock->expects($this->never())
-            ->method('getCoordinatesByAddress');
+            ->method('getCoordinatesByStructuredAddress');
         $provider = $this->createProvider($googleAddressCoordinatesFacadeMock, 'cs');
 
         $coordinates = $provider->getCoordinatesFromSearchText($searchText);

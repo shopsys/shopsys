@@ -40,7 +40,7 @@ class StoreSearchTextCoordinatesProvider
             return $this->getCachedCoordinatesBySearchText(
                 $normalizedSearchText,
                 $defaultCountryCode,
-                fn () => $this->googleAddressCoordinatesFacade->getCoordinatesByAddress(
+                fn () => $this->googleAddressCoordinatesFacade->getCoordinatesByStructuredAddress(
                     '',
                     '',
                     $defaultCountryCode,
@@ -56,7 +56,7 @@ class StoreSearchTextCoordinatesProvider
         return $this->getCachedCoordinatesBySearchText(
             $normalizedSearchText,
             $defaultCountryCode,
-            fn () => $this->googleAddressCoordinatesFacade->getCoordinatesByAddress(
+            fn () => $this->googleAddressCoordinatesFacade->getCoordinatesByStructuredAddress(
                 '',
                 $normalizedSearchText,
                 $defaultCountryCode,

@@ -152,7 +152,7 @@ class StoreController extends AdminBaseController
     #[CanView(methods: [HttpMethod::POST])]
     public function loadCoordinatesAction(Request $request): JsonResponse
     {
-        $addressCoordinatesData = $this->addressCoordinatesFacade->getCoordinatesByAddress(
+        $addressCoordinatesData = $this->addressCoordinatesFacade->getCoordinatesByStructuredAddress(
             $request->request->getString('street'),
             $request->request->getString('city'),
             $request->request->getString('countryCode'),

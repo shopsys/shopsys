@@ -20,7 +20,17 @@ class GoogleAddressCoordinatesFacade
     ) {
     }
 
-    public function getCoordinatesByAddress(
+    /**
+     * @param string $street
+     * @param string $city
+     * @param string $countryCode
+     * @param string $postcode
+     * @return \Shopsys\FrameworkBundle\Component\AddressCoordinates\AddressCoordinatesData|null
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     */
+    public function getCoordinatesByStructuredAddress(
         string $street,
         string $city,
         string $countryCode,
