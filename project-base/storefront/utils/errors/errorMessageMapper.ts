@@ -26,6 +26,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'register-by-order-is-not-possible': t('It was not possible to create register new user from the order'),
         'store-not-found': t('Store not found.'),
         'too-many-login-attempts': t('Too many login attempts. Try again later.'),
+        'too-many-store-search-attempts': t('Too many store search attempts. Try again later.'),
         // Cart mutation errors
         'add-order-items-error': t('Could not prefill your cart.'),
         'add-to-cart-error': t('Unable to add product to cart.'),

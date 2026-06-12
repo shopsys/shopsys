@@ -236,6 +236,10 @@ services:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Store\StoresQuery:
+        arguments:
+            $storesSearchRateLimiter: '@limiter.frontend_api_stores_search'
+
     Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory:
         arguments:
             $socialNetworkLoginConfig: '%social_network_login_config%'

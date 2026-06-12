@@ -1,5 +1,9 @@
 framework:
     rate_limiter:
+        frontend_api_stores_search:
+            policy: fixed_window
+            limit: 10
+            interval: '1 minute'
         mcp_oauth_register:
             policy: fixed_window
             limit: 20

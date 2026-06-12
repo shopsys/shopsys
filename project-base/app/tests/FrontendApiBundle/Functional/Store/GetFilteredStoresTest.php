@@ -9,6 +9,8 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetFilteredStoresTest extends GraphQlTestCase
 {
+    private const int STORES_SEARCH_RATE_LIMIT = 10;
+
     public function testGetFilteredStoresByCity(): void
     {
         $searchTextName = t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain());
@@ -203,6 +205,28 @@ class GetFilteredStoresTest extends GraphQlTestCase
         foreach ($edges as $storeNode) {
             self::assertSame(array_shift($expectedResultsData), $storeNode['node']);
         }
+    }
+
+    public function testStoresSearchRateLimitIsConsumedOnlyWhenSearchTextIsFilled(): void
+    {
+        $this->configureCurrentClient(null, null, [
+            'CONTENT_TYPE' => 'application/graphql',
+            'REMOTE_ADDR' => sprintf('10.255.%d.%d', random_int(0, 255), random_int(1, 254)),
+        ]);
+
+        for ($attempt = 0; $attempt < self::STORES_SEARCH_RATE_LIMIT; $attempt++) {
+            $this->getResponseEdges(searchText: '');
+        }
+
+        for ($attempt = 0; $attempt < self::STORES_SEARCH_RATE_LIMIT; $attempt++) {
+            $this->getResponseEdges(searchText: 'Praha');
+        }
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoresFilterQuery.graphql', [
+            'searchText' => 'Praha',
+        ]);
+
+        $this->assertUserError($response, 'too-many-store-search-attempts');
     }
 
     /**

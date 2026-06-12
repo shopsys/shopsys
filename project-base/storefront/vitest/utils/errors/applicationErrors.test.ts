@@ -26,6 +26,7 @@ describe('isFlashMessageError', () => {
         'register-by-order-is-not-possible',
         'store-not-found',
         'too-many-login-attempts',
+        'too-many-store-search-attempts',
     ])('should return true for flash-message code: %s', (code) => {
         expect(isFlashMessageError(code)).toBe(true);
     });
@@ -171,6 +172,7 @@ describe('error code classification coverage', () => {
             'register-by-order-is-not-possible',
             'store-not-found',
             'too-many-login-attempts',
+            'too-many-store-search-attempts',
             // No-flash-message codes (logged but no toast)
             'advert-position-without-category',
             'article-not-found',
