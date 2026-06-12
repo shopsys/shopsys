@@ -4,6 +4,7 @@
     "{{ count }} error type(s) being ignored_few": "{{ count }} typy chýb sú ignorované",
     "{{ count }} error type(s) being ignored_many": "{{ count }} typov chýb je ignorovaných",
     "{{ count }} error type(s) being ignored_other": "{{ count }} typov chýb je ignorovaných",
+    "{{ distance }} km away": "vzdialené {{ distance }} km",
     "{{ distance }} km from you": "{{ distance }} km od vás",
     "{{ slideName }}, slide {{ current }} of {{ total }}": "{{ slideName }}, snímek {{ current }} zo {{ total }}",
     "+ show {{ count }} more_one": "+ zobraziť {{ count }} ďalší",

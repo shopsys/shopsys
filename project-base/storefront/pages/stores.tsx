@@ -36,6 +36,7 @@ const StoresPage: FC<ServerSidePropsType> = () => {
     const [isLoadingMoreStores, setIsLoadingMoreStores] = useState(false);
     const debouncedSearchTextValue = useDebounce(searchTextValue, 700);
     const isSearchTextDebouncing = searchTextValue !== debouncedSearchTextValue;
+    const isDistanceFromSearchText = debouncedSearchTextValue.trim() !== '';
     const storesQueryVariables = useMemo(
         () => ({
             searchText: debouncedSearchTextValue || null,
@@ -122,6 +123,7 @@ const StoresPage: FC<ServerSidePropsType> = () => {
         <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={isInitialStoresFetching} title={t('Stores')}>
             {stores && (
                 <StoresWrapper
+                    isDistanceFromSearchText={isDistanceFromSearchText}
                     isFetchingStores={isStoresFetching || isSearchTextDebouncing}
                     isLoadingMoreStores={isLoadingMoreStores}
                     searchTextValue={searchTextValue}

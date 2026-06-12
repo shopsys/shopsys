@@ -53,6 +53,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const debouncedSearchTextValue = useDebounce(searchTextValue, 700);
     const isSearchTextDebouncing = searchTextValue !== debouncedSearchTextValue;
+    const isDistanceFromSearchText = debouncedSearchTextValue.trim() !== '';
     const transportStoresQueryVariables = useMemo(
         () => ({
             uuid: transportUuid,
@@ -175,6 +176,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
 
                 {transportStores && (
                     <StoresWrapper
+                        isDistanceFromSearchText={isDistanceFromSearchText}
                         isFetchingStores={isFetchingTransportStores || isSearchTextDebouncing}
                         isLoadingMoreStores={isLoadingMoreTransportStores}
                         scrollableTargetId={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID}

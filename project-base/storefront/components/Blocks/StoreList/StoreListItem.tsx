@@ -17,10 +17,16 @@ import { StoreContact } from './StoreContact';
 type StoreListItemProps = {
     store: StoreOrPacketeryPoint;
     isSelected: boolean;
+    isDistanceFromSearchText: boolean;
     onSelectStoreCallback?: (storeUuid: string | null) => void;
 };
 
-export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected, onSelectStoreCallback }) => {
+export const StoreListItem: FC<StoreListItemProps> = ({
+    store,
+    isSelected,
+    isDistanceFromSearchText,
+    onSelectStoreCallback,
+}) => {
     const [isExpanded, setIsExpanded] = useState(isSelected);
     const { t } = useTranslation();
     const itemRef = useRef<HTMLDivElement>(null);
@@ -92,9 +98,13 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected, onSel
 
                     {store.distance && (
                         <p className="text-input-placeholder-default text-xs max-xl:hidden">
-                            {t('{{ distance }} km from you', {
-                                distance: (store.distance / 1000).toFixed(0),
-                            })}
+                            {isDistanceFromSearchText
+                                ? t('{{ distance }} km away', {
+                                      distance: (store.distance / 1000).toFixed(0),
+                                  })
+                                : t('{{ distance }} km from you', {
+                                      distance: (store.distance / 1000).toFixed(0),
+                                  })}
                         </p>
                     )}
                     <div

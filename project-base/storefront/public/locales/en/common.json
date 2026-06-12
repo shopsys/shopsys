@@ -2,6 +2,7 @@
     "404": "404",
     "{{ count }} error type(s) being ignored_one": "{{ count }} error type is being ignored",
     "{{ count }} error type(s) being ignored_other": "{{ count }} error types are being ignored",
+    "{{ distance }} km away": "{{ distance }} km away",
     "{{ distance }} km from you": "{{ distance }} km from you",
     "{{ slideName }}, slide {{ current }} of {{ total }}": "{{ slideName }}, slide {{ current }} of {{ total }}",
     "+ show {{ count }} more_one": "+ show {{ count }} more",

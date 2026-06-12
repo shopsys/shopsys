@@ -15,6 +15,7 @@ import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type StoresWrapperProps = {
     stores: TypeListedStoreConnectionFragment;
+    isDistanceFromSearchText: boolean;
     isFetchingStores?: boolean;
     isLoadingMoreStores?: boolean;
     searchTextValue: string;
@@ -31,6 +32,7 @@ type StoresWrapperProps = {
 
 export const StoresWrapper: FC<StoresWrapperProps> = ({
     stores,
+    isDistanceFromSearchText,
     isFetchingStores = false,
     isLoadingMoreStores = false,
     searchTextValue,
@@ -146,6 +148,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                         style={{ overflow: 'visible' }}
                     >
                         <StoreList
+                            isDistanceFromSearchText={isDistanceFromSearchText}
                             selectedStoreUuid={selectedStore}
                             stores={mappedStores}
                             onSelectStoreCallback={shouldAllowStoreSelection ? selectStoreHandler : undefined}
