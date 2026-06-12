@@ -176,6 +176,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
 
                 {transportStores && (
                     <StoresWrapper
+                        appliedSearchTextValue={debouncedSearchTextValue}
                         isDistanceFromSearchText={isDistanceFromSearchText}
                         isFetchingStores={isFetchingTransportStores || isSearchTextDebouncing}
                         isLoadingMoreStores={isLoadingMoreTransportStores}

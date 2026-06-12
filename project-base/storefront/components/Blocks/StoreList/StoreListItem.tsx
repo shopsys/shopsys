@@ -32,6 +32,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({
     const itemRef = useRef<HTMLDivElement>(null);
     const storeInfoId = `store-info-${store.slug.replace(/\//g, '-')}`;
     const [prevIsSelected, setPrevIsSelected] = useState(isSelected);
+    const distance = store.distance;
 
     if (isSelected !== prevIsSelected) {
         setPrevIsSelected(isSelected);
@@ -96,14 +97,14 @@ export const StoreListItem: FC<StoreListItemProps> = ({
                         </p>
                     </div>
 
-                    {store.distance && (
+                    {distance !== null && distance !== undefined && (
                         <p className="text-input-placeholder-default text-xs max-xl:hidden">
                             {isDistanceFromSearchText
                                 ? t('{{ distance }} km away', {
-                                      distance: (store.distance / 1000).toFixed(0),
+                                      distance: (distance / 1000).toFixed(0),
                                   })
                                 : t('{{ distance }} km from you', {
-                                      distance: (store.distance / 1000).toFixed(0),
+                                      distance: (distance / 1000).toFixed(0),
                                   })}
                         </p>
                     )}

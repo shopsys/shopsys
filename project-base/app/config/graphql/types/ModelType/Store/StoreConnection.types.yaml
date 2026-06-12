@@ -6,5 +6,8 @@ StoreConnection:
             totalCount:
                 type: "Int!"
                 description: "Total number of stores"
+            searchCoordinates:
+                type: "StoreSearchCoordinates"
+                description: "Coordinates found by the store search text"
     inherits:
         - 'StoreConnectionDecorator'

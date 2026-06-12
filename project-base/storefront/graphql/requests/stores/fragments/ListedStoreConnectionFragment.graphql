@@ -1,5 +1,9 @@
 fragment ListedStoreConnectionFragment on StoreConnection {
     __typename
+    searchCoordinates {
+        latitude
+        longitude
+    }
     pageInfo {
         hasNextPage
         endCursor

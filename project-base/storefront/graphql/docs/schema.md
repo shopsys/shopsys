@@ -115,6 +115,7 @@
     * [StoreAvailability](#storeavailability)
     * [StoreConnection](#storeconnection)
     * [StoreEdge](#storeedge)
+    * [StoreSearchCoordinates](#storesearchcoordinates)
     * [Token](#token)
     * [Transport](#transport)
     * [TransportGroup](#transportgroup)
@@ -10500,6 +10501,15 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="storeconnection.searchcoordinates">searchCoordinates</strong></td>
+<td valign="top"><a href="#storesearchcoordinates">StoreSearchCoordinates</a></td>
+<td>
+
+Coordinates found by the store search text
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="storeconnection.totalcount">totalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -10540,6 +10550,39 @@ A cursor for use in pagination.
 <td>
 
 The item at the end of the edge.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### StoreSearchCoordinates
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="storesearchcoordinates.latitude">latitude</strong></td>
+<td valign="top"><a href="#float">Float</a>!</td>
+<td>
+
+Search result latitude
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="storesearchcoordinates.longitude">longitude</strong></td>
+<td valign="top"><a href="#float">Float</a>!</td>
+<td>
+
+Search result longitude
 
 </td>
 </tr>

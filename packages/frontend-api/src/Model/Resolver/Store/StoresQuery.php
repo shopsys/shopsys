@@ -11,6 +11,7 @@ use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Store\StoreConnection;
 use Shopsys\FrontendApiBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Model\Store\StoreSearchTextCoordinatesProvider;
 use Shopsys\FrontendApiBundle\Model\Store\StoresFilterOptions;
@@ -26,7 +27,7 @@ class StoresQuery extends AbstractQuery
 
     public function storesQuery(
         Argument $argument,
-    ): Connection|Promise {
+    ): StoreConnection|Promise {
         $this->pageSizeValidator->checkMaxPageSize($argument);
         $domainId = $this->domain->getId();
 
@@ -55,8 +56,14 @@ class StoresQuery extends AbstractQuery
         });
 
         $storesCount = $this->storeFacade->getFilteredStoresCount($domainId, $filterOptions);
+        $connection = $paginator->auto($argument, $storesCount);
 
-        return $paginator->auto($argument, $storesCount);
+        return new StoreConnection(
+            $connection->getEdges(),
+            $connection->getPageInfo(),
+            $searchCoordinates,
+            $connection->getTotalCount(),
+        );
     }
 
     public function storesByTransportQuery(

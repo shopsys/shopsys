@@ -12,12 +12,14 @@ import { MapMarker } from 'types/map';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { getStoreListMapFocus } from './getStoreListMapFocus';
 
 type StoresWrapperProps = {
     stores: TypeListedStoreConnectionFragment;
     isDistanceFromSearchText: boolean;
     isFetchingStores?: boolean;
     isLoadingMoreStores?: boolean;
+    appliedSearchTextValue: string;
     searchTextValue: string;
     selectedStoreUuid?: string | null;
     userCoordinates?: TypeCoordinates | null;
@@ -35,6 +37,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     isDistanceFromSearchText,
     isFetchingStores = false,
     isLoadingMoreStores = false,
+    appliedSearchTextValue,
     searchTextValue,
     selectedStoreUuid,
     userCoordinates,
@@ -65,6 +68,25 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     const edges = stores.edges || [];
     const mappedStores = mapConnectionEdges<StoreOrPacketeryPoint>(edges);
     const resolvedUserCoordinates = userCoordinates ?? internalUserCoordinates;
+    const firstStore = mappedStores?.[0] ?? null;
+    const searchCoordinatesForMapFocus =
+        isDistanceFromSearchText && stores.searchCoordinates !== null
+            ? {
+                  latitude: stores.searchCoordinates.latitude,
+                  longitude: stores.searchCoordinates.longitude,
+              }
+            : null;
+    const mapFocus = getStoreListMapFocus(searchCoordinatesForMapFocus, firstStore);
+    const additionalMapMarker = mapFocus?.searchCoordinatesMarker
+        ? {
+              name: appliedSearchTextValue.trim(),
+              latitude: String(mapFocus.searchCoordinatesMarker.latitude),
+              longitude: String(mapFocus.searchCoordinatesMarker.longitude),
+          }
+        : null;
+    const mapLatitude = mapFocus !== null ? String(mapFocus.latitude) : null;
+    const mapLongitude = mapFocus !== null ? String(mapFocus.longitude) : null;
+    const shouldCenterMapToUserCoordinates = mapFocus === null && searchTextValue === '';
 
     useEffect(() => {
         if (!navigator.geolocation) {
@@ -160,7 +182,11 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                     <div className="flex aspect-square rounded-xl bg-background-more p-5 lg:sticky lg:top-5">
                         <GoogleMap
                             activeMarkerHandler={clickOnMarkerHandler}
-                            shouldCenterToUserCoordinates={searchTextValue === ''}
+                            additionalMarker={additionalMapMarker}
+                            defaultZoom={mapFocus?.defaultZoom}
+                            latitude={mapLatitude}
+                            longitude={mapLongitude}
+                            shouldCenterToUserCoordinates={shouldCenterMapToUserCoordinates}
                             userCoordinates={resolvedUserCoordinates}
                         />
                     </div>

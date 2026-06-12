@@ -3708,6 +3708,8 @@ export type TypeStoreConnection = {
   edges: Maybe<Array<Maybe<TypeStoreEdge>>>;
   /** Information to aid in pagination. */
   pageInfo: TypePageInfo;
+  /** Coordinates found by the store search text */
+  searchCoordinates: Maybe<TypeStoreSearchCoordinates>;
   /** Total number of stores */
   totalCount: Scalars['Int']['output'];
 };
@@ -3732,6 +3734,14 @@ export enum TypeStoreOpeningStatusEnum {
   /** Store will be opened soon */
   OpenSoon = 'OPEN_SOON'
 }
+
+export type TypeStoreSearchCoordinates = {
+  __typename?: 'StoreSearchCoordinates';
+  /** Search result latitude */
+  latitude: Scalars['Float']['output'];
+  /** Search result longitude */
+  longitude: Scalars['Float']['output'];
+};
 
 export type TypeToken = {
   __typename?: 'Token';

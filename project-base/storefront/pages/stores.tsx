@@ -123,6 +123,7 @@ const StoresPage: FC<ServerSidePropsType> = () => {
         <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={isInitialStoresFetching} title={t('Stores')}>
             {stores && (
                 <StoresWrapper
+                    appliedSearchTextValue={debouncedSearchTextValue}
                     isDistanceFromSearchText={isDistanceFromSearchText}
                     isFetchingStores={isStoresFetching || isSearchTextDebouncing}
                     isLoadingMoreStores={isLoadingMoreStores}

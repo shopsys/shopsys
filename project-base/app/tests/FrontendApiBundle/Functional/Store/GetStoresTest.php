@@ -61,14 +61,20 @@ class GetStoresTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'stores');
         $this->assertSame(
             [
-                [
-                    'node' => [
-                        'city' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                        'distance' => 0,
+                'searchCoordinates' => [
+                    'latitude' => 50.0802931,
+                    'longitude' => 14.4208994,
+                ],
+                'edges' => [
+                    [
+                        'node' => [
+                            'city' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                            'distance' => 0,
+                        ],
                     ],
                 ],
             ],
-            $responseData['edges'],
+            $responseData,
         );
     }
 

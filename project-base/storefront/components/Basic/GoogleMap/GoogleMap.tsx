@@ -9,7 +9,8 @@ import { PointFeature } from 'supercluster';
 import { MapMarker, MapMarkerNullable } from 'types/map';
 import useSupercluster from 'use-supercluster';
 import { mapConnectionEdges } from 'utils/mappers/connection';
-import { GoogleMapMarker } from './GoogleMapMarker';
+import useTranslation from '../../../utils/i18n/useTranslationWrapper';
+import { GoogleMapMarker, GoogleMapSearchMarker } from './GoogleMapMarker';
 
 const CLUSTER_RADIUS = 75;
 const CLUSTER_MAX_ZOOM = 20;
@@ -26,6 +27,7 @@ type GoogleMapProps = {
     isDetail?: boolean;
     userCoordinates?: TypeCoordinates | null;
     shouldCenterToUserCoordinates?: boolean;
+    additionalMarker?: MapMarkerNullable | null;
 };
 
 type MarkerProperties = {
@@ -60,6 +62,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     isDetail,
     userCoordinates = null,
     shouldCenterToUserCoordinates = true,
+    additionalMarker = null,
 }) => {
     const googleMapApiKey = getPublicConfigProperty('googleMapApiKey');
     const { mapSetting } = useDomainConfig();
@@ -70,6 +73,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     const [bounds, setBounds] = useState<GeoJSON.BBox>();
     const mapRef = useRef<any>(null);
     const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false);
+    const { t } = useTranslation();
 
     const [{ data: mapStoresData }] = useMapStoresQuery({ pause: markers !== undefined });
     const effectiveMarkers = markers ?? mapConnectionEdges<TypeMapStoreFragment>(mapStoresData?.stores.edges);
@@ -84,6 +88,17 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         bounds,
         options: { radius: CLUSTER_RADIUS, minZoom: CLUSTER_MIN_ZOOM, maxZoom: CLUSTER_MAX_ZOOM },
     });
+    const additionalMarkerCoordinates =
+        additionalMarker !== null &&
+        additionalMarker.latitude !== null &&
+        additionalMarker.latitude !== undefined &&
+        additionalMarker.longitude !== null &&
+        additionalMarker.longitude !== undefined
+            ? {
+                  lat: parseFloat(additionalMarker.latitude),
+                  lng: parseFloat(additionalMarker.longitude),
+              }
+            : null;
 
     const selectMarkerHandler = (marker: MapMarker) => {
         if (!isDetail) {
@@ -120,6 +135,16 @@ export const GoogleMap: FC<GoogleMapProps> = ({
             return;
         }
 
+        if (latitude !== undefined && latitude !== null && longitude !== undefined && longitude !== null) {
+            mapRef.current?.setZoom(defaultZoom ?? mapSetting.zoom);
+            mapRef.current?.panTo({
+                lat: defaultLatitude,
+                lng: defaultLongitude,
+            });
+
+            return;
+        }
+
         if (markersClusterConfig.length > 1 && mapRef.current !== null && google !== undefined) {
             const newBounds = new google.maps.LatLngBounds();
 
@@ -150,7 +175,18 @@ export const GoogleMap: FC<GoogleMapProps> = ({
                 });
             }
         }
-    }, [markersClusterConfig, isGoogleApiLoaded, userCoordinates, shouldCenterToUserCoordinates]);
+    }, [
+        markersClusterConfig,
+        isGoogleApiLoaded,
+        userCoordinates,
+        shouldCenterToUserCoordinates,
+        latitude,
+        longitude,
+        defaultLatitude,
+        defaultLongitude,
+        defaultZoom,
+        mapSetting.zoom,
+    ]);
 
     return (
         <div className="w-full">
@@ -193,6 +229,14 @@ export const GoogleMap: FC<GoogleMapProps> = ({
                         />
                     );
                 })}
+
+                {additionalMarkerCoordinates !== null && (
+                    <GoogleMapSearchMarker
+                        lat={additionalMarkerCoordinates.lat}
+                        lng={additionalMarkerCoordinates.lng}
+                        title={additionalMarker?.name || t('Search location marker')}
+                    />
+                )}
             </GoogleMapReact>
         </div>
     );

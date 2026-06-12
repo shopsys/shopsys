@@ -3046,6 +3046,8 @@ type StoreConnection {
   edges: [StoreEdge]
   "Information to aid in pagination."
   pageInfo: PageInfo!
+  "Coordinates found by the store search text"
+  searchCoordinates: StoreSearchCoordinates
   "Total number of stores"
   totalCount: Int!
 }
@@ -3068,6 +3070,13 @@ enum StoreOpeningStatusEnum {
   OPEN
   "Store will be opened soon"
   OPEN_SOON
+}
+
+type StoreSearchCoordinates {
+  "Search result latitude"
+  latitude: Float!
+  "Search result longitude"
+  longitude: Float!
 }
 
 type Token {

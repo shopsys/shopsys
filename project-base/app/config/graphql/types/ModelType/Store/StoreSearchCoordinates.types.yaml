@@ -1,0 +1,4 @@
+StoreSearchCoordinates:
+    type: object
+    inherits:
+        - 'StoreSearchCoordinatesDecorator'
