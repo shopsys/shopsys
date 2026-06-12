@@ -20,10 +20,12 @@ final class GoogleAddressCoordinatesFacadeTest extends TestCase
             $this->assertSame('GET', $method);
             $this->assertSame('https://geocode.googleapis.com/v4/geocode/address', strtok($url, '?'));
             $this->assertSame(
-                'key=google-api-key&addressQuery=Křižíkova 148/34, Praha 8',
+                'addressQuery=Křižíkova 148/34, Praha 8',
                 rawurldecode((string)parse_url($url, PHP_URL_QUERY)),
             );
             $this->assertContains('X-Goog-FieldMask: results.location', $options['headers']);
+            $this->assertContains('X-Goog-Api-Key: google-api-key', $options['headers']);
+            $this->assertRequestTimeout($options);
 
             return $this->createCoordinatesResponse(50.0921, 14.4456);
         });
@@ -42,11 +44,13 @@ final class GoogleAddressCoordinatesFacadeTest extends TestCase
             $this->assertSame('GET', $method);
             $this->assertSame('https://geocode.googleapis.com/v4/geocode/address', strtok($url, '?'));
             $this->assertSame(
-                'key=google-api-key&address.addressLines=Křižíkova 148/34'
-                    . '&address.locality=Praha 8&address.regionCode=CZ&address.postalCode=18600',
+                'address.addressLines=Křižíkova 148/34&address.locality=Praha 8'
+                    . '&address.regionCode=CZ&address.postalCode=18600',
                 rawurldecode((string)parse_url($url, PHP_URL_QUERY)),
             );
             $this->assertContains('X-Goog-FieldMask: results.location', $options['headers']);
+            $this->assertContains('X-Goog-Api-Key: google-api-key', $options['headers']);
+            $this->assertRequestTimeout($options);
 
             return $this->createCoordinatesResponse(50.0921, 14.4456);
         });
@@ -118,5 +122,13 @@ final class GoogleAddressCoordinatesFacadeTest extends TestCase
                 ],
             ],
         ], JSON_THROW_ON_ERROR));
+    }
+
+    /**
+     * @param array<string, mixed> $options
+     */
+    private function assertRequestTimeout(array $options): void
+    {
+        $this->assertSame(30.0, $options['timeout']);
     }
 }

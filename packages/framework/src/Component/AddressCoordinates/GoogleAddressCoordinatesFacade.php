@@ -13,6 +13,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class GoogleAddressCoordinatesFacade
 {
     protected const string GEOCODE_ADDRESS_URL = 'https://geocode.googleapis.com/v4/geocode/address';
+    protected const int GEOCODE_REQUEST_TIMEOUT_SECONDS = 30;
 
     public function __construct(
         protected readonly HttpClientInterface $httpClient,
@@ -53,21 +54,27 @@ class GoogleAddressCoordinatesFacade
         }
 
         return $this->getCoordinatesByQuery([
-            'key' => $this->googleMapApiKey,
             'addressQuery' => $address,
         ]);
     }
 
     /**
-     * @param array<string, string> $query
+     * @param array{'addressQuery': string}|array{
+     *     'address.addressLines'?: string,
+     *     'address.locality'?: string,
+     *     'address.regionCode'?: string,
+     *     'address.postalCode'?: string,
+     * } $query
      */
     protected function getCoordinatesByQuery(array $query): ?AddressCoordinatesData
     {
         try {
             $response = $this->httpClient->request('GET', static::GEOCODE_ADDRESS_URL, [
                 'query' => $query,
+                'timeout' => static::GEOCODE_REQUEST_TIMEOUT_SECONDS,
                 'headers' => [
                     'X-Goog-FieldMask' => 'results.location',
+                    'X-Goog-Api-Key' => $this->googleMapApiKey,
                 ],
             ]);
 
@@ -107,7 +114,12 @@ class GoogleAddressCoordinatesFacade
     }
 
     /**
-     * @return array<string, string>|null
+     * @return array{
+     *     'address.addressLines'?: string,
+     *     'address.locality'?: string,
+     *     'address.regionCode'?: string,
+     *     'address.postalCode'?: string,
+     * }|null
      */
     protected function createAddressQuery(
         string $street,
@@ -115,9 +127,7 @@ class GoogleAddressCoordinatesFacade
         string $countryCode,
         string $postcode,
     ): ?array {
-        $query = [
-            'key' => $this->googleMapApiKey,
-        ];
+        $query = [];
 
         if ($street !== '') {
             $query['address.addressLines'] = $street;
