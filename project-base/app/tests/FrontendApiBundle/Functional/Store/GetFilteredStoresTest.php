@@ -14,19 +14,95 @@ class GetFilteredStoresTest extends GraphQlTestCase
         $searchTextName = t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain());
 
         $edges = $this->getResponseEdges(searchText: $searchTextName);
-        $this->assertCount(1, $edges);
-        $this->assertSame($edges[0]['node']['name'], $searchTextName);
-        $this->assertNull($edges[0]['node']['distance']);
+        $this->assertCount(8, $edges);
+
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
+
+        $expectedResultsData = [
+            [
+                'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 0,
+            ],
+            [
+                'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 83346,
+            ],
+            [
+                'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 164571,
+            ],
+            [
+                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 174361,
+            ],
+            [
+                'name' => t('Hradec Králové', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 182889,
+            ],
+            [
+                'name' => t('Brno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 241376,
+            ],
+            [
+                'name' => t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 279140,
+            ],
+            [
+                'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 351535,
+            ],
+        ];
+
+        foreach ($edges as $storeNode) {
+            self::assertSame(array_shift($expectedResultsData), $storeNode['node']);
+        }
     }
 
     public function testGetFilteredStoresByPostcode(): void
     {
-        $expectedResultName = t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain());
-
         $edges = $this->getResponseEdges(searchText: '77900');
-        $this->assertCount(1, $edges);
-        $this->assertSame($edges[0]['node']['name'], $expectedResultName);
-        $this->assertNull($edges[0]['node']['distance']);
+        $this->assertCount(8, $edges);
+
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
+
+        $expectedResultsData = [
+            [
+                'name' => t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 0,
+            ],
+            [
+                'name' => t('Brno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 64299,
+            ],
+            [
+                'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 79167,
+            ],
+            [
+                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 116847,
+            ],
+            [
+                'name' => t('Hradec Králové', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 122311,
+            ],
+            [
+                'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 203403,
+            ],
+            [
+                'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 209925,
+            ],
+            [
+                'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 279140,
+            ],
+        ];
+
+        foreach ($edges as $storeNode) {
+            self::assertSame(array_shift($expectedResultsData), $storeNode['node']);
+        }
     }
 
     public function testGetZeroFilteredStores(): void
@@ -91,36 +167,36 @@ class GetFilteredStoresTest extends GraphQlTestCase
 
         $expectedResultsData = [
             [
-                'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 47573,
-            ],
-            [
-                'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 51140,
+                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 0,
             ],
             [
                 'name' => t('Hradec Králové', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 102295,
+                'distance' => 19884,
             ],
             [
-                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 107087,
+                'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 95889,
             ],
             [
-                'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 118174,
+                'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 96494,
             ],
             [
                 'name' => t('Brno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 213179,
+                'distance' => 111171,
             ],
             [
                 'name' => t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 223409,
+                'distance' => 116847,
+            ],
+            [
+                'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 174361,
             ],
             [
                 'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 280015,
+                'distance' => 180185,
             ],
         ];
 

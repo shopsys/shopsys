@@ -35,7 +35,11 @@ class StoresQuery extends AbstractQuery
         /** @var array{latitude: string, longitude: string}|null $coordinates */
         $coordinates = $argument->offsetGet('coordinates');
 
-        $searchCoordinates = $this->storeSearchTextCoordinatesProvider->getCoordinatesFromSearchText($searchText);
+        $searchCoordinates = $searchText !== null
+            ? $this->storeFacade->findStoreCoordinatesBySearchText($domainId, $searchText)
+            : null;
+
+        $searchCoordinates ??= $this->storeSearchTextCoordinatesProvider->getCoordinatesFromSearchText($searchText);
 
         if ($searchCoordinates) {
             $coordinates = $searchCoordinates;

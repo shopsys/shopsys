@@ -1,0 +1,10 @@
+query StoresWithDistance ($first: Int, $searchText: String) {
+    stores (first: $first, searchText: $searchText) {
+        edges {
+            node {
+                city
+                distance
+            }
+        }
+    }
+}

@@ -51,6 +51,27 @@ class GetStoresTest extends GraphQlTestCase
         }
     }
 
+    public function testGetStoresUsesStoreCoordinatesWhenSearchTextMatchesStore(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoresWithDistanceQuery.graphql', [
+            'first' => 1,
+            'searchText' => 'Praha',
+        ]);
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'stores');
+        $this->assertSame(
+            [
+                [
+                    'node' => [
+                        'city' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                        'distance' => 0,
+                    ],
+                ],
+            ],
+            $responseData['edges'],
+        );
+    }
+
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
         foreach ($keys as $key) {
