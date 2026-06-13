@@ -36,6 +36,7 @@ class SectionEditorFormComponent
     use DefaultActionTrait;
 
     public const string ORDER_DETAIL_SECTION_UPDATED_EVENT = 'orderDetailSectionUpdatedEvent';
+    public const string ORDER_DETAIL_UPDATED_BROWSER_EVENT = 'order-detail:updated';
 
     #[LiveProp]
     public int $orderId;
@@ -69,6 +70,7 @@ class SectionEditorFormComponent
         $this->orderFacade->edit($this->orderId, $this->orderData);
         $this->flashMessageService->addSuccessFlash($this->getSection()->getSuccessMessage());
         $this->emit(self::ORDER_DETAIL_SECTION_UPDATED_EVENT);
+        $this->dispatchBrowserEvent(self::ORDER_DETAIL_UPDATED_BROWSER_EVENT);
         $this->emit(SectionEditorComponent::SECTION_EDITOR_CLOSE_EVENT);
     }
 

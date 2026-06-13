@@ -185,6 +185,7 @@ class ItemsTabComponent
 
         $this->flashMessageService->addSuccessFlash(t('Order items have been saved.'));
         $this->emit(SectionEditorFormComponent::ORDER_DETAIL_SECTION_UPDATED_EVENT);
+        $this->dispatchBrowserEvent(SectionEditorFormComponent::ORDER_DETAIL_UPDATED_BROWSER_EVENT);
         $this->dispatchBrowserEvent(self::ORDER_DETAIL_ITEMS_SAVED_BROWSER_EVENT);
     }
 

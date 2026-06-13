@@ -119,6 +119,7 @@ class PaymentTransactionsTabComponent
             $this->paymentTransactionRefundFacade->changeManualRefundedAmount($paymentTransaction, $this->paymentTransactionRefundData->refundedAmount);
             $this->flashMessageService->addSuccessFlash(t('Refunded amount has been changed.'));
             $this->emit(SectionEditorFormComponent::ORDER_DETAIL_SECTION_UPDATED_EVENT);
+            $this->dispatchBrowserEvent(SectionEditorFormComponent::ORDER_DETAIL_UPDATED_BROWSER_EVENT);
             $this->closeRefundModal();
         } catch (RefundedAmountGreaterThanPaidAmountException) {
             $this->addFormError(
@@ -158,6 +159,7 @@ class PaymentTransactionsTabComponent
                 $this->resetForm();
                 $this->flashMessageService->addSuccessFlash(t('Refund has been sent.'));
                 $this->emit(SectionEditorFormComponent::ORDER_DETAIL_SECTION_UPDATED_EVENT);
+                $this->dispatchBrowserEvent(SectionEditorFormComponent::ORDER_DETAIL_UPDATED_BROWSER_EVENT);
                 $this->closeRefundModal();
 
                 return;

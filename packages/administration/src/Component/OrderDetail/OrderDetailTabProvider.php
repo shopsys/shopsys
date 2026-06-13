@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 
 class OrderDetailTabProvider implements OrderDetailTabProviderInterface
 {
+    public const string HISTORY_TAB_ID = 'history';
+
     public function __construct(
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
@@ -49,7 +51,7 @@ class OrderDetailTabProvider implements OrderDetailTabProviderInterface
         );
 
         yield new OrderDetailTab(
-            'history',
+            self::HISTORY_TAB_ID,
             t('History'),
             HistoryTabComponent::COMPONENT_NAME,
             40,

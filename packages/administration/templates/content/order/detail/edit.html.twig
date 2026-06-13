@@ -26,7 +26,11 @@
     {% endembed %}
 
     {% if orderDetailTabs %}
-        <div class="card" data-controller="order-detail-tabs">
+        <div class="card"
+             data-controller="order-detail-tabs"
+             data-order-detail-tabs-order-updated-event-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\OrderDetail\\LiveComponent\\SectionEditorFormComponent::ORDER_DETAIL_UPDATED_BROWSER_EVENT') }}"
+             data-order-detail-tabs-history-tab-id-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\OrderDetail\\OrderDetailTabProvider::HISTORY_TAB_ID') }}"
+        >
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs" role="tablist">
                     {% for tab in orderDetailTabs %}

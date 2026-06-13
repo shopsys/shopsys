@@ -4,23 +4,35 @@ import Register from 'framework/common/utils/Register';
 
 export default class extends Controller {
     static targets = ['pane'];
+    static values = {
+        historyTabId: String,
+        orderUpdatedEvent: String,
+    };
 
     connect() {
         this.onShown = event => {
             this.loadTab(event.target);
             this.updateActiveTabInUrl(event.target);
         };
+        this.onOrderUpdated = () => this.markHistoryTabStale();
+
         this.element.addEventListener('shown.bs.tab', this.onShown);
+        document.addEventListener(this.orderUpdatedEventValue, this.onOrderUpdated);
     }
 
     disconnect() {
         this.element.removeEventListener('shown.bs.tab', this.onShown);
+        document.removeEventListener(this.orderUpdatedEventValue, this.onOrderUpdated);
     }
 
-    loadTab(tabLink) {
+    loadTab(tabLink, force = false) {
         const pane = this.findPane(tabLink);
 
-        if (!pane || pane.dataset.orderDetailTabsLoadedValue === '1') {
+        this.loadPane(pane, force);
+    }
+
+    loadPane(pane, force = false) {
+        if (!pane || (!force && pane.dataset.orderDetailTabsLoadedValue === '1')) {
             return;
         }
 
@@ -50,6 +62,22 @@ export default class extends Controller {
             });
     }
 
+    markHistoryTabStale() {
+        const historyPane = this.findPaneByTabId(this.historyTabIdValue);
+
+        if (!historyPane) {
+            return;
+        }
+
+        if (historyPane.classList.contains('active')) {
+            this.loadPane(historyPane, true);
+
+            return;
+        }
+
+        historyPane.dataset.orderDetailTabsLoadedValue = '0';
+    }
+
     findPane(tabLink) {
         const selector = tabLink.dataset.bsTarget ?? tabLink.getAttribute('href');
 
@@ -58,6 +86,14 @@ export default class extends Controller {
         }
 
         return this.paneTargets.find(pane => `#${pane.id}` === selector) ?? null;
+    }
+
+    findPaneByTabId(tabId) {
+        const tabLink = [...this.element.querySelectorAll('[data-tab-id]')].find(
+            element => element.dataset.tabId === tabId,
+        );
+
+        return tabLink ? this.findPane(tabLink) : null;
     }
 
     updateActiveTabInUrl(tabLink) {
