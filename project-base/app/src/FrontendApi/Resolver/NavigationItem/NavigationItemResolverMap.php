@@ -16,6 +16,10 @@ class NavigationItemResolverMap extends ResolverMap
     {
         return [
             'NavigationItem' => [
+                /**
+                 * routeName is on purpose defined and resolved in project-base
+                 * because it works with FriendlyUrlRouteEnum that serves as a config and must be defined in project-base as well.
+                 */
                 'routeName' => static function (NavigationItemDetail $navigationItemDetail) {
                     $routeName = $navigationItemDetail->getNavigationItem()->getRouteName();
 

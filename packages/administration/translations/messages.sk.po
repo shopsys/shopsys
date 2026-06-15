@@ -2053,6 +2053,9 @@ msgstr "Vybrať novú hodnotu"
 msgid "Select row"
 msgstr "Vybrať riadok"
 
+msgid "Select value"
+msgstr "Vybrať hodnotu"
+
 msgid "Selected order doesn't exist."
 msgstr "Vybraná objednávka neexistuje."
 

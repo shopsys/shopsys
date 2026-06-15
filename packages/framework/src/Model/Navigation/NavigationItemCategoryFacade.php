@@ -28,6 +28,10 @@ class NavigationItemCategoryFacade
             $this->em->flush();
         }
 
+        if ($navigationItemData->type === NavigationItemTypeEnum::LINK) {
+            return;
+        }
+
         foreach ($navigationItemData->categoriesByColumnNumber as $columnNumber => $categories) {
             $this->saveCategoriesInColumn($navigationItem, $columnNumber, $categories);
         }

@@ -2116,6 +2116,9 @@ msgstr ""
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr ""
 
+msgid "Navigation item type"
+msgstr ""
+
 msgid "New SEO page"
 msgstr ""
 
@@ -3265,6 +3268,9 @@ msgstr ""
 msgid "Street"
 msgstr ""
 
+msgid "Subcategories"
+msgstr ""
+
 msgid "Subject"
 msgstr ""
 
@@ -3284,6 +3290,9 @@ msgid "Superadmin"
 msgstr ""
 
 msgid "Superadmin permissions"
+msgstr ""
+
+msgid "Supported formats: /url-address, url-address, https://example.com/url-address"
 msgstr ""
 
 msgid "System data"

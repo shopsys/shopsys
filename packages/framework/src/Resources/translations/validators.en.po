@@ -562,6 +562,15 @@ msgstr ""
 msgid "Please select a country"
 msgstr ""
 
+msgid "Please select at least one category"
+msgstr ""
+
+msgid "Please select navigation item type"
+msgstr ""
+
+msgid "Please select valid navigation item type"
+msgstr ""
+
 msgid "Please upload a CSV file"
 msgstr ""
 

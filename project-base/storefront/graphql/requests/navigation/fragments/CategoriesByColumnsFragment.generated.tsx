@@ -16,12 +16,13 @@ export type TypeFriendlyUrlRouteEnum =
   | 'FRONT_PRODUCT_LIST'
   | 'FRONT_STORES_DETAIL';
 
-export type TypeCategoriesByColumnFragment = { __typename: 'NavigationItem', name: string, link: string, routeName: Types.TypeFriendlyUrlRouteEnum | null, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> };
+export type TypeCategoriesByColumnFragment = { __typename: 'NavigationItem', name: string, type: string, link: string | null, routeName: Types.TypeFriendlyUrlRouteEnum | null, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> };
 
 export const CategoriesByColumnFragment = gql`
     fragment CategoriesByColumnFragment on NavigationItem {
   __typename
   name
+  type
   link
   routeName
   categoriesByColumns {

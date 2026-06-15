@@ -6482,10 +6482,10 @@ Categories separated into columns
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="navigationitem.link">link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
-Target URL
+Target URL for link navigation items
 
 </td>
 </tr>
@@ -6504,6 +6504,15 @@ Navigation item name
 <td>
 
 Friendly route name if exists, NULL for unknown (e.g., external) links
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="navigationitem.type">type</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Navigation item type
 
 </td>
 </tr>

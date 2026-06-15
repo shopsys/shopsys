@@ -1,6 +1,7 @@
 query NavigationQuery {
     navigation {
         name
+        type
         link
         routeName
         categoriesByColumns {

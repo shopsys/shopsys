@@ -2053,6 +2053,9 @@ msgstr ""
 msgid "Select row"
 msgstr ""
 
+msgid "Select value"
+msgstr ""
+
 msgid "Selected order doesn't exist."
 msgstr ""
 

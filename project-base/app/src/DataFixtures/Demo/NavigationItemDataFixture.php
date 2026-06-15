@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemTypeEnum;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class NavigationItemDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -154,6 +155,8 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
         NavigationItemData $navigationItemData,
         array $categoryReferenceNamesByColumn,
     ): void {
+        $navigationItemData->type = NavigationItemTypeEnum::CATEGORIES;
+
         foreach ($categoryReferenceNamesByColumn as $columnNumber => $categoryReferenceNames) {
             $navigationItemData->categoriesByColumnNumber[$columnNumber] = array_map(
                 function (string $category) {

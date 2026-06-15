@@ -17,8 +17,16 @@ class UrlNormalizer
             return null;
         }
 
-        $domainUrl = $domainConfig->getUrl();
-        $url = str_replace($domainUrl, '', $url);
+        $url = trim($url);
+        $domainUrl = rtrim($domainConfig->getUrl(), '/');
+
+        if ($url === $domainUrl) {
+            return '/';
+        }
+
+        if (str_starts_with($url, $domainUrl . '/')) {
+            $url = substr($url, strlen($domainUrl));
+        }
 
         if (str_starts_with($url, 'http://')) {
             return $url;
@@ -29,7 +37,7 @@ class UrlNormalizer
         }
 
         if (str_starts_with($url, 'www.')) {
-            return $url;
+            return 'https://' . $url;
         }
 
         if (!str_starts_with($url, '/')) {

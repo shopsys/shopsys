@@ -1,6 +1,7 @@
 fragment CategoriesByColumnFragment on NavigationItem {
     __typename
     name
+    type
     link
     routeName
     categoriesByColumns {

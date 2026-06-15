@@ -1872,12 +1872,14 @@ export type TypeNavigationItem = {
   __typename?: 'NavigationItem';
   /** Categories separated into columns */
   categoriesByColumns: Array<TypeNavigationItemCategoriesByColumns>;
-  /** Target URL */
-  link: Scalars['String']['output'];
+  /** Target URL for link navigation items */
+  link: Maybe<Scalars['String']['output']>;
   /** Navigation item name */
   name: Scalars['String']['output'];
   /** Friendly route name if exists, NULL for unknown (e.g., external) links */
   routeName: Maybe<TypeFriendlyUrlRouteEnum>;
+  /** Navigation item type */
+  type: Scalars['String']['output'];
 };
 
 /** Represents a single column inside the navigation item */
