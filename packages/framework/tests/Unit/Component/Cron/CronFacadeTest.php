@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleProcessRunner;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
+use Shopsys\FrameworkBundle\Component\Cron\SentryCronMonitorFacade;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -103,6 +105,35 @@ class CronFacadeTest extends TestCase
             ->runScheduledModulesForInstance(CronModuleConfig::DEFAULT_INSTANCE_NAME, static function (): void {}, false);
     }
 
+    public function testRunScheduledModulesReportsDisabledModulesAsHealthy(): void
+    {
+        $moduleStub = $this->createStub(SimpleCronModuleInterface::class);
+
+        $cronModuleFacadeStub = $this->createStub(CronModuleFacade::class);
+        $cronModuleFacadeStub->method('getOnlyScheduledCronModuleConfigs')
+            ->willReturnArgument(0);
+        $cronModuleFacadeStub->method('isModuleDisabled')->willReturn(true);
+
+        $cronModuleProcessRunnerMock = $this->createMock(CronModuleProcessRunner::class);
+        $cronModuleProcessRunnerMock->expects($this->never())->method('runModule');
+
+        $sentryCronMonitorFacadeMock = $this->createMock(SentryCronMonitorFacade::class);
+        $sentryCronMonitorFacadeMock->expects($this->exactly(2))->method('reportDisabledRunAsHealthy');
+
+        $parameterBagStub = $this->createStub(ParameterBagInterface::class);
+        $parameterBagStub->method('get')->willReturn([]);
+
+        $cronConfig = $this->createCronConfigWithRegisteredServices(['first' => $moduleStub, 'second' => $moduleStub]);
+
+        $this->createCronFacade(
+            $cronConfig,
+            $cronModuleFacadeStub,
+            $parameterBagStub,
+            $cronModuleProcessRunnerMock,
+            $sentryCronMonitorFacadeMock,
+        )->runScheduledModulesForInstance(CronModuleConfig::DEFAULT_INSTANCE_NAME, static function (): void {}, false);
+    }
+
     public function testRunSingleModuleDelegatesToProcessRunner(): void
     {
         $cronModuleFacadeStub = $this->createStub(CronModuleFacade::class);
@@ -141,6 +172,7 @@ class CronFacadeTest extends TestCase
         CronModuleFacade $cronModuleFacade,
         ?ParameterBagInterface $parameterBag = null,
         ?CronModuleProcessRunner $cronModuleProcessRunner = null,
+        ?SentryCronMonitorFacade $sentryCronMonitorFacade = null,
     ): CronFacade {
         $loggerMock = $this->createStub(Logger::class);
 
@@ -150,6 +182,7 @@ class CronFacadeTest extends TestCase
             $cronModuleFacade,
             $parameterBag ?? $this->createStub(ParameterBagInterface::class),
             $cronModuleProcessRunner ?? $this->createStub(CronModuleProcessRunner::class),
+            $sentryCronMonitorFacade ?? $this->createStub(SentryCronMonitorFacade::class),
         );
     }
 
@@ -158,7 +191,7 @@ class CronFacadeTest extends TestCase
         ?CronTimeResolver $cronTimeResolverMock = null,
     ): CronConfig {
         $cronTimeResolver = $cronTimeResolverMock ?? new CronTimeResolver();
-        $cronConfig = new CronConfig($cronTimeResolver);
+        $cronConfig = new CronConfig($cronTimeResolver, new TransformStringHelper());
 
         foreach ($servicesIndexedById as $serviceId => $service) {
             $cronConfig->registerCronModuleInstance(

@@ -80,3 +80,44 @@ Set it to `false` for instances whose modules are independent of each other so t
 !!! note
 
     Crons implementing `Shopsys\Plugin\Cron\IteratedCronModuleInterface` with the correct implementation of iterate, wakeUp, and sleep methods will be checked during every iteration if their memory limit is not approaching and if so, they will be stopped and started again in the next iteration.
+
+## Sentry Cron Monitoring
+
+Cron modules can opt into [Sentry Cron Monitoring](https://docs.sentry.io/product/crons/) so that missed runs, failures, and overrunning jobs are reported to Sentry (and from there to alert channels like Slack):
+
+```yaml
+Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule:
+    tags:
+        - {
+              name: shopsys.cron,
+              cron: '0 4 * * *',
+              instanceName: export,
+              readableName: 'Generate Sitemap',
+              sentryMonitoring: true,
+              sentryCheckinMargin: 5,
+              sentryFailureThreshold: 3,
+          }
+```
+
+When `sentryMonitoring` is enabled, an `in_progress` check-in is sent when the module starts and an `ok`/`error` check-in when it finishes.
+The Sentry monitor is created and updated automatically with a schedule matching the module's cron expression, so no manual setup in Sentry is needed.
+
+The `shopsys.cron` tag supports these monitoring attributes:
+
+| Attribute                 | Meaning                                                                                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `sentryMonitoring`        | enables monitoring for the module (default `false`)                                                                                                                                                    |
+| `sentryMaxRuntime`        | minutes a single run may take before Sentry marks the check-in as timed out; defaults to `timeout_iterated_cron_sec` (rounded up to whole minutes) for iterated modules and to `30` for simple modules |
+| `sentryCheckinMargin`     | minutes Sentry waits for the start check-in after the scheduled time before reporting a missed run; defaults to the instance's `run_every_min`                                                         |
+| `sentryFailureThreshold`  | number of consecutive failed or missed check-ins before Sentry creates an issue                                                                                                                        |
+| `sentryRecoveryThreshold` | number of consecutive successful check-ins before Sentry resolves the issue                                                                                                                            |
+
+Things to be aware of:
+
+- check-ins are only sent when Sentry is configured via the `SENTRY_DSN` environment variable; without a DSN, they are no-ops
+- the monitor schedule is evaluated in the `shopsys.cron_timezone` timezone (the server timezone when the parameter is not set), the same timezone used for evaluating cron expressions
+- modules within one instance run sequentially, so a module can start several minutes after its scheduled time when earlier modules run long — set `sentryCheckinMargin` generously for modules with a fixed schedule time
+- the minute field of a monitored module's cron expression must align with the instance's `run_every_min` grid — for example, `7 * * * *` never runs with `run_every_min: 5`, yet Sentry would expect a check-in every hour and report it as missed
+- a disabled monitored module reports a healthy run whenever its schedule fires, so intentionally disabling a module does not trigger false "missed run" alerts
+- an iterated module that is suspended and resumed reports each chunk as a separate successful check-in
+- when you remove `sentryMonitoring` from a module, the existing monitor stays in Sentry and keeps alerting about missed check-ins — delete or mute it in the Sentry UI

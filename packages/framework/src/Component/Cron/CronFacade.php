@@ -18,6 +18,7 @@ class CronFacade
         protected readonly CronModuleFacade $cronModuleFacade,
         protected readonly ParameterBagInterface $parameterBag,
         protected readonly CronModuleProcessRunner $cronModuleProcessRunner,
+        protected readonly SentryCronMonitorFacade $sentryCronMonitorFacade,
     ) {
     }
 
@@ -70,6 +71,7 @@ class CronFacade
             foreach ($cronModuleConfigs as $cronModuleConfig) {
                 if ($this->cronModuleFacade->isModuleDisabled($cronModuleConfig)) {
                     $this->cronModuleFacade->unscheduleModule($cronModuleConfig);
+                    $this->sentryCronMonitorFacade->reportDisabledRunAsHealthy($cronModuleConfig);
 
                     continue;
                 }

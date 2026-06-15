@@ -27,6 +27,7 @@ class CronModuleConfig implements CronTimeInterface
         protected readonly ?string $readableFrequency = null,
         protected readonly int $runEveryMin = self::RUN_EVERY_MIN_DEFAULT,
         protected readonly int $timeoutIteratedCronSec = self::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+        protected readonly ?SentryMonitorConfig $sentryMonitorConfig = null,
     ) {
         $this->assignToInstance(self::DEFAULT_INSTANCE_NAME);
     }
@@ -81,7 +82,7 @@ class CronModuleConfig implements CronTimeInterface
      * Replaces wildcard minute field with the actual run interval so that
      * the translated frequency reflects reality (e.g. "every 5 minutes" instead of "every minute").
      */
-    protected function getEffectiveCronExpression(): string
+    public function getEffectiveCronExpression(): string
     {
         $parts = explode(' ', $this->cronExpression);
 
@@ -100,5 +101,10 @@ class CronModuleConfig implements CronTimeInterface
     public function getTimeoutIteratedCronSec(): int
     {
         return $this->timeoutIteratedCronSec;
+    }
+
+    public function getSentryMonitorConfig(): ?SentryMonitorConfig
+    {
+        return $this->sentryMonitorConfig;
     }
 }

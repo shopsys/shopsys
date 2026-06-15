@@ -146,6 +146,14 @@ services:
         arguments:
             - '@monolog.logger.cron'
 
+    Shopsys\FrameworkBundle\Component\Cron\MonitorConfigFactory:
+        arguments:
+            $cronTimeZone: '%shopsys.cron_timezone%'
+
+    Shopsys\FrameworkBundle\Component\Cron\SentryCronMonitorFacade:
+        arguments:
+            $logger: '@monolog.logger.cron'
+
     Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig:
         arguments:
             - '%shopsys.customer_uploaded_file_config_filepath%'

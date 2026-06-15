@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Symfony\Component\Clock\Clock;
 
@@ -84,7 +85,7 @@ class CronModuleExecutorTest extends TestCase
     private function getCronModuleExecutor(array $servicesIndexedById): CronModuleExecutor
     {
         $cronTimeResolver = new CronTimeResolver();
-        $cronConfig = new CronConfig($cronTimeResolver);
+        $cronConfig = new CronConfig($cronTimeResolver, new TransformStringHelper());
 
         $loggerStub = $this->createStub(Logger::class);
         $bytesHelper = new BytesHelper();

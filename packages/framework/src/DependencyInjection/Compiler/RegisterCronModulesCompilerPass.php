@@ -38,6 +38,11 @@ final class RegisterCronModulesCompilerPass implements CompilerPassInterface
                         $tag['readableFrequency'] ?? null,
                         $instanceConfig['run_every_min'],
                         $instanceConfig['timeout_iterated_cron_sec'],
+                        $tag['sentryMonitoring'] ?? false,
+                        $tag['sentryMaxRuntime'] ?? null,
+                        $tag['sentryCheckinMargin'] ?? null,
+                        $tag['sentryFailureThreshold'] ?? null,
+                        $tag['sentryRecoveryThreshold'] ?? null,
                     ],
                 );
             }
