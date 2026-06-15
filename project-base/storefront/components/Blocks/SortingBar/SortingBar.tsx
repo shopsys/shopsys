@@ -1,4 +1,5 @@
 import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/Portal';
+import { scrollToSelectedFilters } from 'components/Blocks/Product/Filter/filterElementIds';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { DEFAULT_SORT } from 'config/constants';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
@@ -68,6 +69,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     const handleChangeSort = (sortOption: TypeProductOrderingModeEnum) => {
         updateSort(sortOption);
         setIsSortMenuOpen(false);
+        scrollToSelectedFilters();
     };
 
     return (

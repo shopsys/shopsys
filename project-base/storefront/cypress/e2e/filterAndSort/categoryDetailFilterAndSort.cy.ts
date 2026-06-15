@@ -88,7 +88,7 @@ describe('Product Filtering E2E Tests', () => {
             .blur();
         cy.waitForStableAndInteractiveDOM();
 
-        cy.getByTID([[TIDs.blocks_sortingbar_option_, 'PRICE_ASC']]).click({ force: true });
+        cy.getByTID([[TIDs.blocks_sortingbar_option_, 'PRICE_ASC']]).filter(':visible').click();
         cy.waitForStableAndInteractiveDOM();
 
         cy.url().should('satisfy', (url) => {

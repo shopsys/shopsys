@@ -13,6 +13,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
+import { FILTER_SELECTED_PARAMETERS_ELEMENT_ID } from './filterElementIds';
 
 export type FilterSelectedParametersProps = {
     filterOptions: TypeProductFilterOptionsFragment;
@@ -45,7 +46,11 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
         <AnimatePresence initial={false}>
             {!currentFilter && !getHasDefaultFilters(defaultProductFiltersMap) ? null : (
                 <AnimateCollapseDiv className="block!" keyName="selected-parameters">
-                    <div className="mt-5 vl:mt-0 vl:mb-5" data-tid={TIDs.selected_filters}>
+                    <div
+                        className="vl:mb-5 scroll-mt-5"
+                        data-tid={TIDs.selected_filters}
+                        id={FILTER_SELECTED_PARAMETERS_ELEMENT_ID}
+                    >
                         <p className="h6 mb-5 vl:mb-2">{t('Selected filters')}</p>
 
                         <div className="flex flex-wrap items-center gap-y-2">

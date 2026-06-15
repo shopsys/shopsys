@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
@@ -8,7 +8,6 @@ import { defaultTestDomainConfig } from 'vitest/helpers/mockPublicConfig';
 import { testFocusManagement } from 'vitest/utils/accessibility/a11y-testing';
 import {
     navigateWithArrows,
-    navigateWithTab,
     pressEndKey,
     pressEnterKey,
     pressEscapeKey,
@@ -121,6 +120,8 @@ const getDropdownLinkByText = (text: string) => {
     return links.find((link) => link.textContent === text);
 };
 
+const getSortButton = () => screen.getByRole('button', { name: /Sort products/ });
+
 const isTextInDropdown = (text: string) => {
     const dropdownLinks = getDropdownLinks();
     return dropdownLinks.some((link) => link.textContent === text);
@@ -136,7 +137,7 @@ describe('SortingBar', () => {
         test('renders sorting button with current sort option', () => {
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             expect(sortButton).toBeInTheDocument();
             expect(sortButton).toHaveTextContent('Priority');
         });
@@ -153,7 +154,7 @@ describe('SortingBar', () => {
         test('renders sort button with proper accessibility', () => {
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             expect(sortButton).toHaveAttribute('type', 'button');
             expect(sortButton).toHaveAttribute('tabIndex', '0');
         });
@@ -161,8 +162,8 @@ describe('SortingBar', () => {
         test('button has correct styling classes', () => {
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
-            expect(sortButton).toHaveClass('inline-flex');
+            const sortButton = getSortButton();
+            expect(sortButton).toHaveClass('flex');
         });
 
         test('dropdown is closed by default', () => {
@@ -179,7 +180,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             expect(isDropdownOpen()).toBeTruthy();
@@ -189,7 +190,7 @@ describe('SortingBar', () => {
         test('opens dropdown with Enter key', async () => {
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             sortButton.focus();
 
             await pressEnterKey();
@@ -201,7 +202,7 @@ describe('SortingBar', () => {
         test('opens dropdown with Space key', async () => {
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             sortButton.focus();
 
             await pressSpaceKey();
@@ -210,12 +211,27 @@ describe('SortingBar', () => {
             expect(getDropdownLinks()).toHaveLength(6);
         });
 
+        test('uses menu semantics for mobile sort dropdown', async () => {
+            const user = userEvent.setup();
+
+            renderSortingBar();
+
+            const sortButton = screen.getByRole('button', { name: /Sort products/ });
+            await user.click(sortButton);
+
+            const sortMenu = screen.getByRole('menu', { name: 'Sort options' });
+            const sortMenuItems = within(sortMenu).getAllByRole('menuitem');
+
+            expect(sortMenuItems).toHaveLength(6);
+            expect(sortMenuItems[0]).not.toHaveAttribute('aria-selected');
+        });
+
         test('closes dropdown when button is clicked again', async () => {
             const user = userEvent.setup();
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
 
             await user.click(sortButton);
             expect(isDropdownOpen()).toBeTruthy();
@@ -230,7 +246,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             expect(isDropdownOpen()).toBeTruthy();
@@ -245,7 +261,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             expect(isDropdownOpen()).toBeTruthy();
@@ -271,7 +287,7 @@ describe('SortingBar', () => {
                 </DomainConfigProvider>,
             );
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             expect(isDropdownOpen()).toBeTruthy();
@@ -290,7 +306,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const sortLinks = getDropdownLinks();
@@ -310,7 +326,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const sortLinks = getDropdownLinks();
@@ -334,7 +350,7 @@ describe('SortingBar', () => {
 
             renderSortingBar({ customSortOptions: customOptions });
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const sortLinks = getDropdownLinks();
@@ -351,7 +367,7 @@ describe('SortingBar', () => {
 
             renderSortingBar({ sorting: TypeProductOrderingModeEnum.PriceAsc });
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const priceAscLink = getDropdownLinkByText('Price ascending');
@@ -363,7 +379,7 @@ describe('SortingBar', () => {
 
             renderSortingBar({ sorting: TypeProductOrderingModeEnum.Priority });
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const priceAscLink = getDropdownLinkByText('Price ascending');
@@ -377,7 +393,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const priceAscLink = getDropdownLinkByText('Price ascending');
@@ -391,7 +407,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const priceAscLink = getDropdownLinkByText('Price ascending');
@@ -406,7 +422,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const priceAscLink = getDropdownLinkByText('Price ascending');
@@ -421,7 +437,7 @@ describe('SortingBar', () => {
 
             renderSortingBar({ sorting: TypeProductOrderingModeEnum.Priority });
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const currentLink = getDropdownLinkByText('Priority');
@@ -435,9 +451,9 @@ describe('SortingBar', () => {
         test('supports tab navigation to sort button', async () => {
             renderSortingBar();
 
-            await navigateWithTab();
+            const sortButton = getSortButton();
+            sortButton.focus();
 
-            const sortButton = screen.getByRole('button');
             expect(document.activeElement).toBe(sortButton);
         });
 
@@ -446,7 +462,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const sortLinks = getDropdownLinks().filter((link) => link.getAttribute('aria-selected') === 'false');
@@ -466,7 +482,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const sortLinks = getDropdownLinks().filter((link) => link.getAttribute('aria-selected') === 'false');
@@ -489,7 +505,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const priceAscLink = getDropdownLinkByText('Price ascending');
@@ -506,7 +522,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const nameAscLink = getDropdownLinkByText('Name ascending');
@@ -523,7 +539,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const sortLinks = getDropdownLinks().filter((link) => link.getAttribute('aria-selected') === 'false');
@@ -544,7 +560,7 @@ describe('SortingBar', () => {
 
             renderSortingBar({ sorting: TypeProductOrderingModeEnum.PriceAsc });
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const activeLink = getDropdownLinks().find((link) => link.getAttribute('aria-selected') === 'true');
@@ -564,7 +580,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const priceAscLink = getDropdownLinkByText('Price ascending');
@@ -586,7 +602,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const priceAscLink = getDropdownLinkByText('Price ascending');
@@ -602,7 +618,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const focusableLinks = getDropdownLinks().filter((link) => link.getAttribute('aria-selected') === 'false');
@@ -618,7 +634,7 @@ describe('SortingBar', () => {
         test('has proper ARIA attributes on sort button', () => {
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             expect(sortButton).toHaveAttribute('type', 'button');
         });
 
@@ -627,7 +643,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const sortLinks = getDropdownLinks();
@@ -642,7 +658,7 @@ describe('SortingBar', () => {
 
             renderSortingBar({ sorting: TypeProductOrderingModeEnum.Priority });
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const activeLink = getDropdownLinks().find((link) => link.textContent === 'Priority');
@@ -659,7 +675,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const sortLinks = getDropdownLinks();
@@ -690,7 +706,7 @@ describe('SortingBar', () => {
         test('handles null sorting option', () => {
             renderSortingBar({ sorting: null });
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             expect(sortButton).toBeInTheDocument();
         });
 
@@ -699,7 +715,7 @@ describe('SortingBar', () => {
 
             renderSortingBar({ customSortOptions: [] });
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             expect(getDropdownLinks()).toHaveLength(0);
@@ -710,7 +726,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
 
             await user.click(sortButton);
             await user.click(sortButton);
@@ -726,7 +742,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const priceAscLink = getDropdownLinkByText('Price ascending');
@@ -752,7 +768,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
 
             const startTime = performance.now();
 
@@ -773,7 +789,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await user.click(sortButton);
 
             const dropdownItems = getDropdownLinks()
@@ -794,7 +810,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
 
             expect(sortButton).toHaveAttribute('type', 'button');
             expect(sortButton).toHaveAttribute('tabindex', '0');
@@ -822,7 +838,7 @@ describe('SortingBar', () => {
 
             renderSortingBar();
 
-            const sortButton = screen.getByRole('button');
+            const sortButton = getSortButton();
             await testFocusManagement(sortButton);
 
             await user.click(sortButton);

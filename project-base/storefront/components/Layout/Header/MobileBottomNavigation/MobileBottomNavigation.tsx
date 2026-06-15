@@ -22,7 +22,6 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useKeypress } from 'utils/useKeyPress';
-import { useVisualViewportBottomOffset } from './useVisualViewportBottomOffset';
 
 type OpenPanel = 'catalog' | 'cart' | 'search' | 'account' | null;
 
@@ -33,7 +32,6 @@ export const MobileBottomNavigation: FC = () => {
     const isUserLoggedIn = useIsUserLoggedIn();
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
-    const visualViewportBottomOffset = useVisualViewportBottomOffset();
     const [homeUrl] = getInternationalizedStaticUrls(['/'], url);
 
     const closeOpenPanel = () => setOpenPanel(null);
@@ -67,7 +65,6 @@ export const MobileBottomNavigation: FC = () => {
             <nav
                 aria-label={t('Mobile bottom navigation', { ns: 'accessibility' })}
                 className="fixed right-0 -bottom-px left-0 z-overlay vl:hidden bg-brand-700 p-1 pb-[calc(0.25rem+env(safe-area-inset-bottom)+1px)]"
-                style={visualViewportBottomOffset ? { bottom: visualViewportBottomOffset - 1 } : undefined}
             >
                 <ul className="grid grid-cols-5">
                     <MobileBottomNavigationLink href={homeUrl} icon={HomeIcon} label={t('Home')} />

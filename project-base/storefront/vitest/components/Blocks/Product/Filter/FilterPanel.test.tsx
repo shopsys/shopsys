@@ -416,28 +416,28 @@ describe('FilterPanel Component', () => {
             const user = userEvent.setup();
             render(<FilterPanel {...defaultProps} />);
 
-            const showButton = screen.getByRole('button', { name: 'Show 42 products' });
-            const clearButton = screen.getByRole('button', { name: /^Clear all/ });
-
-            showButton.focus();
-            expect(document.activeElement).toBe(showButton);
-
-            await user.tab();
-            expect(document.activeElement).toBe(clearButton);
-        });
-
-        test('shift+tab navigation backwards', async () => {
-            const user = userEvent.setup();
-            render(<FilterPanel {...defaultProps} />);
-
             const clearButton = screen.getByRole('button', { name: /^Clear all/ });
             const showButton = screen.getByRole('button', { name: 'Show 42 products' });
 
             clearButton.focus();
             expect(document.activeElement).toBe(clearButton);
 
-            await user.tab({ shift: true });
+            await user.tab();
             expect(document.activeElement).toBe(showButton);
+        });
+
+        test('shift+tab navigation backwards', async () => {
+            const user = userEvent.setup();
+            render(<FilterPanel {...defaultProps} />);
+
+            const showButton = screen.getByRole('button', { name: 'Show 42 products' });
+            const clearButton = screen.getByRole('button', { name: /^Clear all/ });
+
+            showButton.focus();
+            expect(document.activeElement).toBe(showButton);
+
+            await user.tab({ shift: true });
+            expect(document.activeElement).toBe(clearButton);
         });
 
         test('keyboard navigation within price filter', async () => {

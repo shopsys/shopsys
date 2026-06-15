@@ -34,6 +34,7 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
     onSortMenuToggle,
 }) => {
     const { t } = useTranslation();
+    const selectedSortOptionLabel = sortOptionsLabels[selectedSortOption] || t('Sort');
 
     return (
         <>
@@ -47,15 +48,15 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                     currentSort: sortOptionsLabels[selectedSortOption] || t('default order'),
                 })}
                 className={twJoin(
-                    'fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-4 z-floatingAction vl:hidden size-14 rounded-full p-0 shadow-[0_8px_24px_rgba(0,0,0,0.24)]',
+                    'fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-4 z-floatingAction flex vl:hidden h-14 max-w-[calc(50vw-1.5rem)] items-center gap-2 rounded-full px-3 shadow-[0_8px_24px_rgba(0,0,0,0.24)]',
                     isSortMenuOpen && 'z-aboveOverlay',
                 )}
                 title={t('Sort')}
                 onClick={onSortMenuToggle}
             >
-                <SortIcon aria-hidden="true" className="size-6" />
+                <SortIcon aria-hidden="true" className="size-5 shrink-0" />
 
-                <span className="sr-only">{sortOptionsLabels[selectedSortOption] || t('Sort')}</span>
+                <span className="truncate font-secondary font-semibold text-sm">{selectedSortOptionLabel}</span>
             </Button>
 
             <div
@@ -63,7 +64,7 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                 id="sort-dropdown"
                 role="menu"
                 className={twJoin(
-                    'fixed bottom-[calc(9rem+env(safe-area-inset-bottom))] left-4 z-aboveOverlay vl:hidden w-[min(20rem,calc(100vw-2rem))] flex-col divide-y divide-border-less rounded-xl bg-background-default px-5 py-2.5 shadow-[0_12px_32px_rgba(0,0,0,0.24)]',
+                    'fixed bottom-[calc(9rem+env(safe-area-inset-bottom))] left-4 z-aboveOverlay vl:hidden w-[min(20rem,calc(100vw-2rem))] flex-col divide-y divide-border-less rounded-xl bg-background-default px-5 py-0 shadow-[0_12px_32px_rgba(0,0,0,0.24)]',
                     isSortMenuOpen ? 'flex' : 'hidden',
                 )}
             >
@@ -80,23 +81,23 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                 aria-controls="filter-panel"
                 aria-expanded={isFilterPanelOpen}
                 aria-label={t('Open product filters', { ns: 'accessibility' })}
-                className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-floatingAction vl:hidden size-14 rounded-full p-0 shadow-[0_8px_24px_rgba(0,0,0,0.24)]"
+                className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-floatingAction flex vl:hidden h-14 items-center gap-2 rounded-full px-3 shadow-[0_8px_24px_rgba(0,0,0,0.24)]"
                 title={t('Filter')}
-                variant="secondary"
+                variant="inverted"
                 onClick={onFilterPanelOpen}
             >
-                <FilterIcon aria-hidden="true" className="size-6" />
+                <FilterIcon aria-hidden="true" className="size-5 shrink-0" />
+
+                <span className="font-secondary font-semibold text-sm">{t('Filter')}</span>
 
                 {activeFilterCount > 0 && (
                     <span
                         aria-hidden="true"
-                        className="absolute top-2 right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-background-accent px-1 font-bold font-secondary text-text-inverted text-xs leading-normal"
+                        className="absolute -top-0.5 -right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-background-warning px-1 font-bold font-secondary text-text-default text-xs leading-normal shadow-sm"
                     >
                         {activeFilterCount}
                     </span>
                 )}
-
-                <span className="sr-only">{t('Filter')}</span>
             </Button>
 
             {isSortMenuOpen && <Overlay isActive={isSortMenuOpen} onClick={onSortMenuClose} />}
