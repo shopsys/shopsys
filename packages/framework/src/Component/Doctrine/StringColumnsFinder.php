@@ -23,6 +23,11 @@ class StringColumnsFinder
 
                 throw new UnexpectedTypeException($message);
             }
+
+            if ($classMetadata->isMappedSuperclass) {
+                continue;
+            }
+
             $stringColumnNames = $this->getStringColumnNames($classMetadata);
 
             if (count($stringColumnNames) > 0) {
