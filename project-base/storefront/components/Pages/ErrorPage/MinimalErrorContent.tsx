@@ -1,3 +1,4 @@
+import { ErrorPageBody } from 'components/Pages/ErrorPage/ErrorPageBody';
 import Head from 'next/head';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -27,40 +28,54 @@ const formatErrorForDisplay = (err: string): string => {
 export const MinimalErrorContent: FC<MinimalErrorContentProps> = ({ statusCode, err, showDebugInfo }) => {
     const is404 = statusCode === 404;
     const formattedError = err ? formatErrorForDisplay(err) : undefined;
+    const shouldShowDebugInfo = showDebugInfo && process.env.NODE_ENV !== 'production';
 
     return (
         <>
             <Head>
-                <title>{is404 ? 'Page Not Found' : 'Error'}</title>
+                <title>{is404 ? 'Page Not Found' : 'Server Error'}</title>
             </Head>
-            <div className="flex min-h-screen items-center justify-center bg-background-body font-sans">
-                <div className="max-w-lg p-8 text-center">
-                    <div className="mb-4 font-bold text-8xl text-red-500">{statusCode}</div>
-                    <h1 className="mb-2 font-semibold text-2xl">{is404 ? 'Page Not Found' : 'Something went wrong'}</h1>
-                    <p className="mb-8 text-text-secondary">
-                        {is404
-                            ? "We couldn't find the page you're looking for."
-                            : 'Please try again later or contact support.'}
-                    </p>
-                    <a
-                        href="/"
-                        className={twMergeCustom(
-                            'bg-background-accent text-text-inverted hover:bg-background-accent-less',
-                            'inline-block rounded-md px-6 py-3 font-semibold',
-                        )}
+
+            <div className="flex min-h-screen items-center justify-center bg-background-default">
+                <div className="mx-auto w-full max-w-5xl px-5 py-10 text-center lg:py-20">
+                    <ErrorPageBody
+                        heading={is404 ? 'This page got lost.' : 'Something went wrong.'}
+                        statusCode={statusCode}
+                        text={
+                            is404
+                                ? 'The address may be wrong, but there is still plenty to discover.'
+                                : 'Please try again later or contact us.'
+                        }
                     >
-                        Back to Home
-                    </a>
-                    {showDebugInfo && formattedError && (
-                        <div
-                            className={twMergeCustom(
-                                'mt-8 rounded-md border border-border-primary bg-background-main p-4 text-left',
-                                'whitespace-pre-wrap break-all font-mono text-xs',
+                        <div className="flex flex-col items-center gap-4 lg:gap-8">
+                            <a
+                                href="/"
+                                className={twMergeCustom(
+                                    'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button px-3 py-2.5 text-center font-bold font-secondary text-xs outline-2 -outline-offset-2 transition-all sm:px-4 sm:py-2 sm:text-sm',
+                                    'bg-button-primary-bg-default text-button-primary-text-default outline-button-primary-border-default',
+                                    'hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered hover:no-underline hover:outline-button-primary-border-hovered',
+                                    'active:bg-button-primary-bg-active active:text-button-primary-text-active active:outline-button-primary-border-active',
+                                    'no-underline',
+                                )}
+                            >
+                                Back to Shop
+                            </a>
+
+                            {shouldShowDebugInfo && formattedError && (
+                                <div
+                                    className={twMergeCustom(
+                                        'mx-auto w-full max-w-2xl rounded-md border border-border-default bg-background-more p-4 text-left',
+                                        'whitespace-pre-wrap break-all font-mono text-text-less text-xs',
+                                    )}
+                                >
+                                    <p className="mb-2 font-semibold text-text-less text-xxs uppercase tracking-widest">
+                                        Debug information
+                                    </p>
+                                    {formattedError}
+                                </div>
                             )}
-                        >
-                            {formattedError}
                         </div>
-                    )}
+                    </ErrorPageBody>
                 </div>
             </div>
         </>

@@ -36,6 +36,7 @@ import { GoogleIcon } from 'components/Basic/Icon/GoogleIcon';
 import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
 import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
+import { HomeIcon } from 'components/Basic/Icon/HomeIcon';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { InfoInTriangleIcon } from 'components/Basic/Icon/InfoInTriangleIcon';
 import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
@@ -207,6 +208,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <HeartIcon className="size-10" />
                 <span className="text-center text-xs break-all">HeartIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <HomeIcon className="size-10" />
+                <span className="text-center text-xs break-all">HomeIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <InfoIcon className="size-10" />

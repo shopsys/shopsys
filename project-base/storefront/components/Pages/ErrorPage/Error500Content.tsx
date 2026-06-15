@@ -1,8 +1,8 @@
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
+import { ErrorPage } from './ErrorPage';
 
 type Error500ContentProps = {
     err?: string;
@@ -13,22 +13,27 @@ export const Error500Content: FC<Error500ContentProps> = ({ err }) => {
 
     return (
         <ErrorLayout>
-            <Webline>
-                <ErrorPage isWithoutImage>
-                    <ErrorPageTextHeading>{t('Something went wrong.')}</ErrorPageTextHeading>
-                    <ErrorPageTextMain>{t('Please try again later or contact us.')}</ErrorPageTextMain>
-                    <ErrorPageButtonLink href="/">{t('Back to shop')}</ErrorPageButtonLink>
-                </ErrorPage>
-                {isWithToastAndConsoleErrorDebugging && err && (
-                    <div className="my-3 flex justify-center">
-                        <div className="rounded-sm bg-background-more">
-                            <div className="p-3">
-                                <p>{err}</p>
-                            </div>
+            <ErrorPage
+                heading={t('Something went wrong.')}
+                statusCode="500"
+                text={t('Please try again later or contact us.')}
+            >
+                <div className="flex justify-center">
+                    <LinkButton href="/" skeletonType="homepage">
+                        {t('Back to shop')}
+                    </LinkButton>
+                </div>
+            </ErrorPage>
+
+            {isWithToastAndConsoleErrorDebugging && err && (
+                <div className="my-3 flex justify-center">
+                    <div className="rounded-sm bg-background-more">
+                        <div className="p-3">
+                            <p>{err}</p>
                         </div>
                     </div>
-                )}
-            </Webline>
+                </div>
+            )}
         </ErrorLayout>
     );
 };
