@@ -116,7 +116,7 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
                             ? 'min-w-14'
-                            : 'min-w-[151px]',
+                            : 'min-w-37',
                     )}
                 >
                     <span className="relative flex">
@@ -165,7 +165,7 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                 </CartInHeaderPopover>
             </div>
 
-            <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />
+            {isDesktop && <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />}
         </>
     );
 };

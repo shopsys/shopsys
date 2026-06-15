@@ -32,7 +32,7 @@ export const FixedHeader: FC<FixedHeaderProps> = ({ fixedHeaderRef, isVisible, n
         >
             <Webline>
                 <div className="flex flex-wrap items-center justify-between gap-x-7 gap-y-3 pt-3">
-                    <Logo imageClassName="lg:w-32" />
+                    <Logo imageClassName="vl:w-32" />
 
                     <div className="order-6 vl:order-2 h-10 w-full vl:max-w-md vl:flex-1 lg:relative lg:order-4 lg:w-full xl:ml-12">
                         <AutocompleteSearch inputClassName="h-10" inputId="fixed-header-search-input" />

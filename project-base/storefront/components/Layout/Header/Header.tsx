@@ -5,7 +5,7 @@ import { DeferredAutocompleteSearch } from './AutocompleteSearch/DeferredAutocom
 import { DeferredCartInHeader } from './Cart/DeferredCartInHeader';
 import { Logo } from './Logo/Logo';
 import { DeferredMenuIconic } from './MenuIconic/DeferredMenuIconic';
-import { DeferredMobileMenu } from './MobileMenu/DeferredMobileMenu';
+import { MobileBottomNavigation } from './MobileBottomNavigation/MobileBottomNavigation';
 
 const HeaderContact = dynamic(() => import('./Contact/HeaderContact').then((component) => component.HeaderContact));
 
@@ -16,30 +16,32 @@ type HeaderProps = {
 export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     return (
         <Webline>
-            <div
-                className="flex flex-wrap items-center gap-y-3 pt-3 pb-4 lg:gap-x-7 lg:pt-6 lg:pb-1"
-                data-tid={TIDs.header}
-            >
-                <Logo />
+            {simpleHeader ? (
+                <div className="flex items-center py-3 lg:py-7.5" data-tid={TIDs.header}>
+                    <Logo />
 
-                {simpleHeader ? (
                     <HeaderContact />
-                ) : (
-                    <>
-                        <div className="order-6 vl:order-2 h-12 w-full vl:max-w-100 vl:flex-1 transition lg:relative lg:order-4 lg:w-full xl:ml-12">
-                            <DeferredAutocompleteSearch />
-                        </div>
+                </div>
+            ) : (
+                <div
+                    className="flex flex-wrap items-center vl:gap-x-7 gap-y-3 pt-3 vl:pt-6 pb-3 vl:pb-1"
+                    data-tid={TIDs.header}
+                >
+                    <Logo />
 
-                        <div className="order-2 ml-auto flex">
-                            <DeferredMenuIconic />
-                        </div>
+                    <div className="vl:relative order-6 vl:order-2 vl:block hidden h-12 w-full vl:max-w-100 vl:flex-1 transition xl:ml-12">
+                        <DeferredAutocompleteSearch />
+                    </div>
 
-                        <DeferredMobileMenu />
+                    <div className="order-2 ml-auto vl:flex hidden">
+                        <DeferredMenuIconic />
+                    </div>
 
-                        <DeferredCartInHeader />
-                    </>
-                )}
-            </div>
+                    <DeferredCartInHeader />
+
+                    <MobileBottomNavigation />
+                </div>
+            )}
         </Webline>
     );
 };

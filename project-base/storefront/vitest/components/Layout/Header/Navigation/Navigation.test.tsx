@@ -34,6 +34,7 @@ vi.mock('components/Basic/Animations/AnimateNavigationMenu', () => ({
 const visibleNavigationItem: TypeCategoriesByColumnFragment = {
     __typename: 'NavigationItem',
     name: 'Catalog',
+    type: 'link',
     link: '/catalog',
     routeName: null,
     categoriesByColumns: [],
@@ -42,7 +43,8 @@ const visibleNavigationItem: TypeCategoriesByColumnFragment = {
 const navigationItemWithChildren: TypeCategoriesByColumnFragment = {
     __typename: 'NavigationItem',
     name: 'Electronics',
-    link: '/electronics',
+    type: 'categories',
+    link: null,
     routeName: null,
     categoriesByColumns: [
         {
@@ -65,6 +67,7 @@ const navigationItemWithChildren: TypeCategoriesByColumnFragment = {
 const overflowNavigationItem: TypeCategoriesByColumnFragment = {
     __typename: 'NavigationItem',
     name: 'Gift Ideas',
+    type: 'link',
     link: '/gift-ideas',
     routeName: null,
     categoriesByColumns: [],
@@ -91,6 +94,22 @@ const renderNavigation = () =>
     );
 
 describe('Navigation', () => {
+    test('renders a category submenu at full width inside the centered menu container', async () => {
+        const user = userEvent.setup();
+        renderNavigation();
+
+        await user.tab();
+
+        const categoryLink = await screen.findByRole('link', { name: 'Televisions' });
+        const categoryGrid = categoryLink.closest('ul');
+        const overlay = document.querySelector('.fixed.bg-overlay-default');
+
+        expect(categoryGrid).toHaveClass('grid-cols-4');
+        expect(categoryGrid?.parentElement).toHaveClass('w-full', 'vl:max-w-default-max-width');
+        expect(categoryGrid?.parentElement?.parentElement).not.toHaveClass('grid-cols-4');
+        expect(overlay).toHaveClass('z-overlay');
+    });
+
     test('closes an opened submenu when keyboard focus moves to an item without children', async () => {
         const user = userEvent.setup();
         renderNavigation();

@@ -15,7 +15,7 @@ export const CartInHeaderPopover: FC<CartInHeaderPopoverProps> = ({ children, is
                     className={twMergeCustom(
                         'pointer-events-auto absolute top-14 -right-3.75 z-cart vl:block hidden p-5',
                         'right-0 h-auto min-w-78 origin-top-right rounded-lg bg-background-default',
-                        isCartEmpty ? 'vl:flex hidden w-96 flex-nowrap items-center justify-center' : 'w-md',
+                        isCartEmpty ? 'vl:flex hidden w-96 flex-nowrap items-center justify-center' : 'w-137',
                     )}
                 >
                     {children}

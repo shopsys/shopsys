@@ -17,6 +17,7 @@ type SearchInputProps = NativeProps & {
     inputId?: string;
     inputRef?: RefObject<HTMLInputElement | null>;
     onClear: () => void;
+    onClearEmpty?: () => void;
     onSearch?: () => void;
     onOpenPopup?: () => void;
     ariaLabelForSearchButton: string;
@@ -31,12 +32,13 @@ export const SearchInput: FC<SearchInputProps> = ({
     inputRef,
     onChange,
     onClear,
+    onClearEmpty,
     onSearch,
     onOpenPopup,
     ariaLabelForSearchButton,
 }) => {
     const { t } = useTranslation();
-    const shouldShowClearButton = !!value && !shouldShowSpinnerInInput;
+    const shouldShowClearButton = (!!value || !!onClearEmpty) && !shouldShowSpinnerInInput;
 
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter' && onSearch) {
@@ -47,8 +49,14 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     const handleClear = () => {
-        onClear();
-        inputRef?.current?.focus();
+        if (value) {
+            onClear();
+            inputRef?.current?.focus();
+
+            return;
+        }
+
+        onClearEmpty?.();
     };
 
     return (
@@ -91,10 +99,10 @@ export const SearchInput: FC<SearchInputProps> = ({
 
             {shouldShowClearButton && (
                 <button
-                    aria-label={t('Clear search input', { ns: 'accessibility' })}
+                    aria-label={value ? t('Clear search input', { ns: 'accessibility' }) : t('Close')}
                     className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-md p-1.5"
                     tabIndex={0}
-                    title={t('Clear search')}
+                    title={value ? t('Clear search') : t('Close')}
                     type="button"
                     onClick={handleClear}
                 >

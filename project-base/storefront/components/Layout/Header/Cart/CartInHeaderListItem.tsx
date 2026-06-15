@@ -39,7 +39,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
         <li
             key={uuid}
             data-tid={TIDs.header_cart_list_item_ + product.catalogNumber}
-            className="relative flex h-auto w-full flex-col items-center gap-x-6 gap-y-2 border-border-less border-b py-4 first:pt-0 last:border-b-3"
+            className="relative flex h-auto w-full flex-col items-center gap-x-6 gap-y-2 border-border-less border-b py-4 first:pt-0 last:border-b-0"
         >
             <div className="relative flex min-h-20 w-full flex-row items-center gap-x-6">
                 {isProductGift && <GiftBadge />}

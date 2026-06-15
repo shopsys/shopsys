@@ -1,6 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
@@ -268,7 +267,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                 )}
 
                 <IconButton
-                    Icon={RemoveIcon}
+                    Icon={TrashCanIcon}
                     className="vl:static absolute top-2.5 right-2.5 flex items-center"
                     disabled={isRemovingFromCart}
                     tid={TIDs.pages_cart_removecartitembutton}

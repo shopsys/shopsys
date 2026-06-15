@@ -1,57 +1,52 @@
-import { Overlay } from 'components/Basic/Overlay/Overlay';
+import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';
-import { AnimatePresence, m } from 'framer-motion';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
-import { useEffect, useState } from 'react';
-import { twJoin } from 'tailwind-merge';
+import { useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { MobileMenuContent } from './MobileMenuContent';
 
-export const MobileMenu: FC = () => {
+type MobileMenuProps = {
+    shouldRenderTrigger?: boolean;
+    isMenuOpened?: boolean;
+    onMenuToggle?: () => void;
+};
+
+export const MobileMenu: FC<MobileMenuProps> = ({
+    shouldRenderTrigger = true,
+    isMenuOpened: controlledIsMenuOpened,
+    onMenuToggle,
+}) => {
     const { t } = useTranslation();
     const [{ data: navigationData }] = useNavigationQuery();
-    const [isMenuOpened, setIsMenuOpened] = useState(false);
-
-    useEffect(() => {
-        if (isMenuOpened) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-    }, [isMenuOpened]);
+    const [uncontrolledIsMenuOpened, setUncontrolledIsMenuOpened] = useState(false);
+    const isMenuOpened = controlledIsMenuOpened ?? uncontrolledIsMenuOpened;
+    const setIsMenuOpened =
+        onMenuToggle ?? (() => setUncontrolledIsMenuOpened((currentIsMenuOpened) => !currentIsMenuOpened));
 
     if (!navigationData?.navigation.length) {
         return null;
     }
 
-    const handleMenuToggle = () => setIsMenuOpened((currentIsMenuOpened) => !currentIsMenuOpened);
+    const handleMenuToggle = () => setIsMenuOpened();
+    const handleMenuActiveChange = (nextIsMenuOpened: boolean) => {
+        if (nextIsMenuOpened !== isMenuOpened) {
+            setIsMenuOpened();
+        }
+    };
 
     return (
         <>
-            <HamburgerMenu onClick={handleMenuToggle} />
+            {shouldRenderTrigger && <HamburgerMenu isOpen={isMenuOpened} onClick={handleMenuToggle} />}
 
-            <AnimatePresence initial={false}>
-                {isMenuOpened && (
-                    <m.div
-                        animate={{ translateX: '0%' }}
-                        aria-label={t('Mobile navigation menu', { ns: 'accessibility' })}
-                        exit={{ translateX: '-100%' }}
-                        initial={{ translateX: '-100%' }}
-                        role="navigation"
-                        transition={{ duration: 0.2, type: 'tween' }}
-                        className={twJoin(
-                            'pointer-events-auto fixed top-0 left-0 z-maximum h-dvh w-[315px] overflow-y-auto overflow-x-hidden bg-background-default',
-                        )}
-                    >
-                        <MobileMenuContent
-                            navigationItems={navigationData.navigation}
-                            onMenuToggleHandler={handleMenuToggle}
-                        />
-                    </m.div>
-                )}
-            </AnimatePresence>
-
-            {isMenuOpened && <Overlay isActive={isMenuOpened} onClick={handleMenuToggle} />}
+            <Drawer
+                ariaLabel={t('Mobile navigation menu', { ns: 'accessibility' })}
+                className="z-maximum w-78 overflow-x-hidden p-0"
+                isActive={isMenuOpened}
+                setIsActive={handleMenuActiveChange}
+                shouldRenderHeader={false}
+            >
+                <MobileMenuContent navigationItems={navigationData.navigation} onMenuToggleHandler={handleMenuToggle} />
+            </Drawer>
         </>
     );
 };

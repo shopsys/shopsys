@@ -77,7 +77,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 ogType={ogType}
             />
 
-            <div className="flex h-full min-h-screen flex-col">
+            <div className="flex h-full min-h-screen flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] vl:pb-0">
                 <AccessibilityNavigation />
 
                 <NotificationBars />

@@ -4,10 +4,10 @@ import { MenuItem } from './MobileMenuContent';
 type NavigationColumnCategories = TypeNavigationQuery['navigation'][number]['categoriesByColumns'];
 
 export const mapNavigationMenuItems = (navigationItems: TypeNavigationQuery['navigation']) =>
-    navigationItems.map(({ name: baseItemName, link, categoriesByColumns }) => ({
+    navigationItems.map(({ name: baseItemName, type, link, categoriesByColumns }) => ({
         link,
         name: baseItemName,
-        children: mapCategoriesChildren(categoriesByColumns, baseItemName),
+        children: type === 'categories' ? mapCategoriesChildren(categoriesByColumns, baseItemName) : [],
     }));
 
 const mapCategoriesChildren = (categoriesByColumns: NavigationColumnCategories, parentItem: string) =>

@@ -19,7 +19,7 @@ export const Logo: FC<LogoProps> = ({ imageClassName }) => {
 
             <ExtendedNextLink
                 aria-label={t('Go to homepage', { ns: 'accessibility' })}
-                className="group order-2 flex-1 vl:flex-none rounded-md px-2 sm:px-3 lg:order-1 lg:px-0"
+                className="group order-2 vl:order-1 flex-1 vl:flex-none rounded-md vl:px-0"
                 href="/"
                 tid={TIDs.header_homepage_link}
                 title={t('Homepage')}
@@ -28,7 +28,7 @@ export const Logo: FC<LogoProps> = ({ imageClassName }) => {
                 <Image
                     alt="Shopsys.com"
                     className={twMergeCustom(
-                        'h-auto w-32 max-w-full group-focus-visible:brightness-0 lg:w-40',
+                        'h-auto vl:w-40 w-32 max-w-full group-focus-visible:brightness-0',
                         imageClassName,
                     )}
                     sizes="(max-width: 1023px) 128px, 160px"
