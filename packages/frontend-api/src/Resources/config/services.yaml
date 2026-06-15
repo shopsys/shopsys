@@ -24,6 +24,10 @@ services:
 
     Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~
 
+    Shopsys\FrontendApiBundle\Component\HttpFoundation\GraphqlBatchRequestValidator:
+        arguments:
+            $maxOperations: '%shopsys.frontend_api.max_batch_operations%'
+
     Shopsys\FrontendApiBundle\Component\HttpFoundation\GraphqlMutationErrorRollbackSubscriber: ~
 
     Shopsys\FrontendApiBundle\Component\HttpFoundation\GraphqlOperationTypeResolver: ~

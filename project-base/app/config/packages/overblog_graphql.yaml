@@ -27,3 +27,5 @@ overblog_graphql:
         query_max_complexity: 1110
     services:
         promise_adapter: "webonyx_graphql.sync_promise_adapter"
+
+# Frontend API-specific parameters are configured in frontend_api.yaml

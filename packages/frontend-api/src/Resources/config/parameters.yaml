@@ -1,2 +1,3 @@
 parameters:
+    shopsys.frontend_api.max_batch_operations: 20
     shopsys.frontend_api.validation_logged_as_error: false

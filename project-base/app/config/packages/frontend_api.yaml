@@ -1,2 +1,8 @@
 parameters:
     shopsys.frontend_api.keys_filepath: '%kernel.project_dir%/config/frontend-api'
+
+    # Maximum number of operations allowed in a single GraphQL batch request
+    shopsys.frontend_api.max_batch_operations: 20
+
+    # Set to true to log validation errors with log level ERROR instead of INFO
+    shopsys.frontend_api.validation_logged_as_error: false
