@@ -57,6 +57,7 @@ export const cache = cacheExchange({
         NewsletterSubscriber: keyNull,
         NotificationBar: keyNull,
         Order: keyUuid,
+        OrderConfirmationPageContent: keyNull,
         OrderItem: keyNull,
         OpeningHours: keyUuid,
         OpeningHoursOfDay: keyUuid,

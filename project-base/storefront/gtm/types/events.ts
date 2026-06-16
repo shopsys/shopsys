@@ -261,6 +261,7 @@ export type GtmPaymentEventType = GtmEventInterface<
             id: string;
             isPaymentSuccessful: boolean;
             paymentRetryCount: number;
+            paymentStatus?: string | null;
             PaymentFalseReason?: string | null;
             paymentType: string;
         };
@@ -280,16 +281,6 @@ export type GtmPaymentChangeEventType = GtmEventInterface<
             paymentPriceWithVat: number | null;
             products: GtmCartItemType[] | undefined;
             arePricesHidden: boolean;
-        };
-    }
->;
-
-/** @public Used by ignored file gtm/factories/getGtmPaymentFailEvent.ts */
-export type GtmPaymentFailEventType = GtmEventInterface<
-    GtmEventType.payment_fail,
-    {
-        paymentFail: {
-            id: string;
         };
     }
 >;

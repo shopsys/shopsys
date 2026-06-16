@@ -18,7 +18,6 @@ export enum GtmEventType {
     contact_information_view = 'ec.contact_information_view',
     payment = 'ec.payment',
     payment_change = 'ec.payment_change',
-    payment_fail = 'ec.payment_fail',
     create_order = 'ec.create_order',
     show_message = 'ec.show_message',
     send_form = 'send_form',

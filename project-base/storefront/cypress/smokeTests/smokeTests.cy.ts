@@ -108,7 +108,6 @@ context('Smoke tests', () => {
         },
         ['/new-password']: { skip: true },
         ['/order-confirmation']: { skip: true },
-        ['/order-payment-confirmation']: { skip: true },
         ['/personal-data-export']: {
             skip: false,
             test: () => {

@@ -1,0 +1,4 @@
+OrderConfirmationPageContentStatusEnum:
+    type: enum
+    inherits:
+        - 'OrderConfirmationPageContentStatusEnumDecorator'

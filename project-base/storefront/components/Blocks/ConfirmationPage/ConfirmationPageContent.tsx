@@ -1,24 +1,44 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
+import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
+import { PageHero, PageHeroVariant } from 'components/Layout/PageHero/PageHero';
 import { TIDs } from 'cypress/tids';
 import Trans from 'next-translate/Trans';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { CombinedError } from 'urql';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { twMergeCustom } from 'utils/twMerge';
 
 type ConfirmationPageContentProps = {
-    heading: string;
-    headingClassName?: string;
     content?: string;
     error?: CombinedError;
+    heading: string;
+    headingDescription?: string;
+    headingIcon: React.ElementType;
+    headingVariant?: PageHeroVariant;
     orderDetailUrl?: string;
-};
+} & (
+    | {
+          actionHref: string;
+          actionSkeletonType: PageType;
+          actionTitle: string;
+      }
+    | {
+          actionHref?: never;
+          actionSkeletonType?: never;
+          actionTitle?: never;
+      }
+);
 
 export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
+    actionHref,
+    actionSkeletonType,
+    actionTitle,
     heading,
-    headingClassName,
+    headingDescription,
+    headingIcon,
+    headingVariant,
     content,
     children,
     error,
@@ -31,13 +51,33 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
 
     return (
         <>
-            <h1 className={twMergeCustom('mt-1 mb-4 lg:mt-6', headingClassName)}>{heading}</h1>
+            <div className="mb-4 lg:mt-6">
+                {actionHref ? (
+                    <PageHero
+                        actionHref={actionHref}
+                        actionSkeletonType={actionSkeletonType}
+                        actionTitle={actionTitle}
+                        description={headingDescription}
+                        icon={headingIcon}
+                        title={heading}
+                        variant={headingVariant}
+                    />
+                ) : (
+                    <PageHero
+                        description={headingDescription}
+                        icon={headingIcon}
+                        title={heading}
+                        variant={headingVariant}
+                    />
+                )}
+            </div>
 
             {!!content && (
                 <>
                     <div
                         dangerouslySetInnerHTML={{ __html: content }}
                         data-tid={TIDs.order_confirmation_page_text_wrapper}
+                        className="text-center"
                     />
                     {children}
                 </>
@@ -46,6 +86,7 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
             {isContentExpiredError && (
                 <div className="mt-4 flex items-center gap-2 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
                     <InfoIcon className="size-5 text-icon-warning" />
+
                     <p className="text-sm">
                         {isLoggedIn && orderDetailUrl ? (
                             <Trans
@@ -68,8 +109,10 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
             )}
 
             {applicationError && !isContentExpiredError && (
-                <div className="mt-4">
-                    <p className="text-text-error">{applicationError.message}</p>
+                <div className="mt-4 flex items-center gap-2 rounded-xl border-1 border-toast-border-error bg-toast-bg-error p-5">
+                    <WarningIcon className="size-5 text-icon-error" />
+
+                    <p className="text-sm">{applicationError.message}</p>
                 </div>
             )}
         </>

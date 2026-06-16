@@ -2,6 +2,7 @@ fragment UpdatePaymentStatusFragment on Order {
     __typename
     isPaid
     number
+    paymentTransactionsCount
     items {
         type
         payment {
@@ -10,5 +11,12 @@ fragment UpdatePaymentStatusFragment on Order {
         }
     }
     hasPaymentInProcess
+    lastExternalPaymentUrl
+    paymentStatus
+    confirmationPageContent {
+        __typename
+        content
+        status
+    }
     urlHash
 }

@@ -1,4 +1,0 @@
-PaymentContentPageStatusEnum:
-    type: enum
-    inherits:
-        - 'PaymentContentPageStatusEnumDecorator'

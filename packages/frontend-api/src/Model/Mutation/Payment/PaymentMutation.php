@@ -44,8 +44,6 @@ class PaymentMutation extends AbstractMutation
         }
 
         try {
-            $order->resetOrderPaymentStatusPageValidityHash();
-
             return $this->paymentServiceFacade->payOrder($order);
         } catch (Throwable $exception) {
             throw new Error($exception->getMessage(), null, null, [], null, $exception);
@@ -56,15 +54,10 @@ class PaymentMutation extends AbstractMutation
     {
         try {
             $uuid = $argument['orderUuid'];
-            $orderPaymentStatusPageValidityHash = $argument['orderPaymentStatusPageValidityHash'] ?? null;
             $order = $this->orderApiFacade->getByUuid($uuid);
 
             if ($this->paymentServiceFacade->updatePaymentTransactionsByOrder($order)) {
                 $this->orderFacade->updatePaymentByLastPaymentTransaction($order);
-            }
-
-            if ($orderPaymentStatusPageValidityHash !== null && $order->getOrderPaymentStatusPageValidityHash() === $orderPaymentStatusPageValidityHash) {
-                $this->orderFacade->setOrderPaymentStatusPageValidFromNow($order);
             }
 
             return $order;

@@ -1,41 +1,34 @@
-import { TypeOrderDetailByHashQuery } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
-import { TypeOrderPaymentPageContentQuery } from 'graphql/requests/orders/queries/OrderPaymentPageContentQuery.generated';
-import { TypePaymentContentPageStatusEnum } from 'graphql/types';
+import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
+import { TypeOrderConfirmationPageContentStatusEnum } from 'graphql/types';
 import { PaymentFail } from './PaymentFail';
 import { PaymentInProcess } from './PaymentInProcess';
 import { PaymentSuccess } from './PaymentSuccess';
 
 export const PaymentStatus: FC<{
-    orderData: TypeOrderDetailByHashQuery | undefined;
-    orderPaymentPageContentData: TypeOrderPaymentPageContentQuery | undefined;
-}> = ({ orderData, orderPaymentPageContentData }) => {
-    const order = orderData?.order;
+    order: TypeOrderDetailFragment;
+}> = ({ order }) => {
+    const status = order.confirmationPageContent.status;
+    const content = order.confirmationPageContent.content;
 
-    const isPaymentSuccessful =
-        orderPaymentPageContentData?.orderPaymentPageContent.status === TypePaymentContentPageStatusEnum.Successful;
-    const isPaymentInProcess =
-        orderPaymentPageContentData?.orderPaymentPageContent.status === TypePaymentContentPageStatusEnum.InProcess;
-    const isPaymentFailed =
-        orderPaymentPageContentData?.orderPaymentPageContent.status === TypePaymentContentPageStatusEnum.Failed;
+    const isPaymentSuccessful = status === TypeOrderConfirmationPageContentStatusEnum.Successful;
+    const isPaymentInProcess = status === TypeOrderConfirmationPageContentStatusEnum.InProcess;
+    const isPaymentFailed = status === TypeOrderConfirmationPageContentStatusEnum.Failed;
 
-    if (order?.isPaid && isPaymentSuccessful) {
-        return (
-            <PaymentSuccess
-                orderPaymentSuccessfulContent={orderPaymentPageContentData.orderPaymentPageContent.content}
-            />
-        );
+    if (order.isPaid && isPaymentSuccessful) {
+        return <PaymentSuccess orderPaymentSuccessfulContent={content} />;
     }
 
-    if (order?.hasPaymentInProcess && isPaymentInProcess) {
+    if (order.hasPaymentInProcess && isPaymentInProcess) {
         return (
             <PaymentInProcess
-                orderPaymentInProcessContent={orderPaymentPageContentData.orderPaymentPageContent.content}
+                orderPaymentInProcessContent={content}
+                paymentInstructionUrl={order.lastExternalPaymentUrl}
             />
         );
     }
 
-    if (order && isPaymentFailed) {
-        return <PaymentFail orderPaymentFailedContent={orderPaymentPageContentData.orderPaymentPageContent.content} />;
+    if (isPaymentFailed) {
+        return <PaymentFail orderPaymentFailedContent={content} />;
     }
 
     return null;

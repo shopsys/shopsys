@@ -17,11 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CheckDatabaseSchemaCommand extends Command
 {
-    protected const RETURN_CODE_OK = 0;
-    protected const RETURN_CODE_ERROR = 1;
-
-    public function __construct(protected readonly DatabaseSchemaFacade $databaseSchemaFacade)
-    {
+    public function __construct(
+        protected readonly DatabaseSchemaFacade $databaseSchemaFacade,
+    ) {
         parent::__construct();
     }
 
@@ -38,7 +36,7 @@ class CheckDatabaseSchemaCommand extends Command
         if (count($filteredSchemaDiffSqlCommands) === 0) {
             $output->writeln('<info>Database schema is satisfying ORM.</info>');
 
-            return static::RETURN_CODE_OK;
+            return Command::SUCCESS;
         }
 
         $output->writeln('<error>Database schema is not satisfying ORM!</error>');
@@ -51,6 +49,6 @@ class CheckDatabaseSchemaCommand extends Command
         $output->writeln('<info>TIP: you can use shopsys:migrations:generate</info>');
         $output->writeln('');
 
-        return static::RETURN_CODE_ERROR;
+        return Command::FAILURE;
     }
 }

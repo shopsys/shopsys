@@ -1,0 +1,11 @@
+OrderConfirmationPageContentDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            content:
+                type: "String!"
+                description: "HTML content for status page after payment. The content is determined by the payment status."
+            status:
+                type: "OrderConfirmationPageContentStatusEnum!"
+                description: "Status indicating the current state of the payment page content."

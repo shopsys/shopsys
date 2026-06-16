@@ -8,7 +8,6 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TIDs } from 'cypress/tids';
 import { useCouldBeCustomerRegisteredQuery } from 'graphql/requests/customer/queries/CouldBeCustomerRegisteredQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
@@ -20,7 +19,14 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
 
-export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
+type RegistrationAfterOrderProps = {
+    orderUuid: string;
+    companyNumber?: string | null;
+    orderEmail: string;
+    orderUrlHash: string;
+};
+
+export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({
     orderUuid,
     companyNumber,
     orderEmail,
@@ -36,8 +42,8 @@ export const RegistrationAfterOrder: FC<OrderConfirmationUrlQuery> = ({
     const [{ data: couldBeCustomerRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
         useCouldBeCustomerRegisteredQuery({
             variables: {
-                email: orderEmail!,
-                companyNumber: companyNumber!,
+                email: orderEmail,
+                companyNumber: companyNumber,
             },
             pause: !orderEmail,
         });

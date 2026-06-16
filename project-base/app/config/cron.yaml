@@ -35,6 +35,10 @@ services:
         tags:
             - { name: shopsys.cron, cron: '0 3 * * *', instanceName: service, readableName: 'Remove expired login as user exchange tokens' }
 
+    Shopsys\FrameworkBundle\Model\Payment\ReturnHash\DeleteExpiredPaymentReturnHashesCronModule:
+        tags:
+            - { name: shopsys.cron, cron: '5 3 * * *', instanceName: service, readableName: 'Remove expired payment return hashes' }
+
     Shopsys\FrameworkBundle\Model\Customer\User\RemoveOldCustomerUserRefreshTokenChainsCronModule:
         tags:
             - { name: shopsys.cron, cron: '0 4 * * *', instanceName: service, readableName: 'Remove old customer user refresh token chains' }

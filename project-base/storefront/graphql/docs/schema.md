@@ -68,12 +68,12 @@
     * [OpeningHoursOfDay](#openinghoursofday)
     * [OpeningHoursRange](#openinghoursrange)
     * [Order](#order)
+    * [OrderConfirmationPageContent](#orderconfirmationpagecontent)
     * [OrderConnection](#orderconnection)
     * [OrderEdge](#orderedge)
     * [OrderItem](#orderitem)
     * [OrderItemConnection](#orderitemconnection)
     * [OrderItemEdge](#orderitemedge)
-    * [OrderPaymentPageContent](#orderpaymentpagecontent)
     * [OrderPaymentsConfig](#orderpaymentsconfig)
     * [OrderWithdrawalRequest](#orderwithdrawalrequest)
     * [PageInfo](#pageinfo)
@@ -162,10 +162,10 @@
     * [CustomerUserRoleEnum](#customeruserroleenum)
     * [FriendlyUrlRouteEnum](#friendlyurlrouteenum)
     * [LoginTypeEnum](#logintypeenum)
+    * [OrderConfirmationPageContentStatusEnum](#orderconfirmationpagecontentstatusenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
     * [ParameterTypeEnum](#parametertypeenum)
-    * [PaymentContentPageStatusEnum](#paymentcontentpagestatusenum)
     * [PaymentTypeEnum](#paymenttypeenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
@@ -884,20 +884,6 @@ Returns list of searched order items that can be paginated using `first`, `last`
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="query.orderpaymentpagecontent">orderPaymentPageContent</strong></td>
-<td valign="top"><a href="#orderpaymentpagecontent">OrderPaymentPageContent</a>!</td>
-<td>
-
-Returns HTML content for order payment page depending on the state of the payment.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="query.orderpayments">orderPayments</strong></td>
 <td valign="top"><a href="#orderpaymentsconfig">OrderPaymentsConfig</a>!</td>
 <td>
@@ -946,17 +932,17 @@ Returns list of orders that can be paginated using `first`, `last`, `before` and
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="query.ordersentpagecontent">orderSentPageContent</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong id="query.orderurlhashbyreturnhash">orderUrlHashByReturnHash</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
-Returns HTML content for order sent page.
+Returns order URL hash resolved from a short-lived payment return hash
 
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td colspan="2" align="right" valign="top">returnHash</td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -1913,25 +1899,6 @@ Set default delivery address by Uuid
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="mutation.setorderpaymentstatuspagevalidityhashmutation">SetOrderPaymentStatusPageValidityHashMutation</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-set order payment status page validity hash, so it's possible to safely return to the payment status page
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderPaymentStatusPageValidityHash</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="mutation.updatepaymentstatus">UpdatePaymentStatus</strong></td>
 <td valign="top"><a href="#order">Order</a>!</td>
 <td>
@@ -1939,11 +1906,6 @@ set order payment status page validity hash, so it's possible to safely return t
 check payment status of order after callback from payment service
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderPaymentStatusPageValidityHash</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">orderUuid</td>
@@ -6676,6 +6638,15 @@ The customer’s company tax number (only when ordered on the company behalf)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.confirmationpagecontent">confirmationPageContent</strong></td>
+<td valign="top"><a href="#orderconfirmationpagecontent">OrderConfirmationPageContent</a>!</td>
+<td>
+
+Returns content to be displayed on the order confirmation page after placing the order
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a>!</td>
 <td>
@@ -6901,6 +6872,24 @@ Unique order number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.paymentstatus">paymentStatus</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Current status of the last external payment transaction
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.paymenttransactionscount">paymentTransactionsCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of payment transactions created for the order
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.pickupplaceidentifier">pickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -7050,6 +7039,39 @@ Returns withdrawal instructions for the order
 <td>
 
 Returns withdrawal request information for the order, null if no withdrawal was requested
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderConfirmationPageContent
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="orderconfirmationpagecontent.content">content</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+HTML content for status page after payment. The content is determined by the payment status.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderconfirmationpagecontent.status">status</strong></td>
+<td valign="top"><a href="#orderconfirmationpagecontentstatusenum">OrderConfirmationPageContentStatusEnum</a>!</td>
+<td>
+
+Status indicating the current state of the payment page content.
 
 </td>
 </tr>
@@ -7342,39 +7364,6 @@ A cursor for use in pagination.
 <td>
 
 The item at the end of the edge.
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### OrderPaymentPageContent
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong id="orderpaymentpagecontent.content">content</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-HTML content for status page after payment. The content is determined by the payment status.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="orderpaymentpagecontent.status">status</strong></td>
-<td valign="top"><a href="#paymentcontentpagestatusenum">PaymentContentPageStatusEnum</a>!</td>
-<td>
-
-Status indicating the current state of the payment page content.
 
 </td>
 </tr>
@@ -13374,6 +13363,33 @@ One of the possible methods of the customer user login
 </tbody>
 </table>
 
+### OrderConfirmationPageContentStatusEnum
+
+Represents the status of the order confirmation page content.
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>FAILED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>IN_PROCESS</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>SUCCESSFUL</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### OrderItemTypeEnum
 
 One of possible types of the order item
@@ -13494,33 +13510,6 @@ Represents the type of the parameter
 </tr>
 <tr>
 <td valign="top"><strong>SLIDER</strong></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-
-### PaymentContentPageStatusEnum
-
-Represents the status of a payment content page after the payment process
-
-<table>
-<thead>
-<tr>
-<th align="left">Value</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td valign="top"><strong>FAILED</strong></td>
-<td></td>
-</tr>
-<tr>
-<td valign="top"><strong>IN_PROCESS</strong></td>
-<td></td>
-</tr>
-<tr>
-<td valign="top"><strong>SUCCESSFUL</strong></td>
 <td></td>
 </tr>
 </tbody>

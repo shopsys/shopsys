@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class GetCountOfMigrationsToExecuteCommand extends Command
 {
-    protected const OPTION_SIMPLE = 'simple';
+    protected const string OPTION_SIMPLE = 'simple';
 
     protected AliasResolver $aliasResolver;
 

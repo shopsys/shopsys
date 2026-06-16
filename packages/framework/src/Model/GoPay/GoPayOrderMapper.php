@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Payment\ReturnHash\PaymentReturnHashFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class GoPayOrderMapper
@@ -16,6 +17,7 @@ class GoPayOrderMapper
     public function __construct(
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
+        protected readonly PaymentReturnHashFacade $paymentReturnHashFacade,
     ) {
     }
 
@@ -27,6 +29,7 @@ class GoPayOrderMapper
 
         $goPayPaymentItemsData = $this->createGoPayPaymentItemsData($order);
         $router = $this->domainRouterFactory->getRouter($order->getDomainId());
+        $returnHash = $this->paymentReturnHashFacade->createForOrderAndGetHash($order);
         $payment = [
             'payer' => [
                 'default_payment_instrument' => $defaultPaymentInstrument,
@@ -40,13 +43,8 @@ class GoPayOrderMapper
             'items' => $goPayPaymentItemsData,
             'callback' => [
                 'return_url' => $router->generate(
-                    'front_order_paid',
-                    [
-                        'orderIdentifier' => $order->getUuid(),
-                        'orderPaymentStatusPageValidityHash' => $order->getOrderPaymentStatusPageValidityHash(),
-                        'orderEmail' => $order->getEmail(),
-                        'orderUrlHash' => $order->getUrlHash(),
-                    ],
+                    'front_order_confirmation_page',
+                    ['returnHash' => $returnHash],
                     UrlGeneratorInterface::ABSOLUTE_URL,
                 ),
                 'notification_url' => $router->generate(

@@ -11,8 +11,8 @@ front_logout:
     # controller's action is unnecessary, because firewall processes whole request
     path: /logout/{_csrf_token}
 
-front_order_paid:
-    path: /order-payment-confirmation
+front_order_confirmation_page:
+    path: /order-confirmation
 
 front_order_payment_status_notify:
     defaults:
