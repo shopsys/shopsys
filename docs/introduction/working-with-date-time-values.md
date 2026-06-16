@@ -143,16 +143,6 @@ In services with injected `ClockInterface`, use `$this->clock->now()` instead.
 
 ### Parsing External Dates
 
-When storing dates from external sources (e.g., from 3rd party application), parse them with `DateTimeImmutable` and convert to UTC timezone:
-
-```php
-$dateFromOtherSource = '2020-08-24 18:30:02';
-$dateTime = new \DateTimeImmutable($dateFromOtherSource, new \DateTimeZone('Europe/Prague'));
-$dateTimeUtc = $dateTime->setTimezone(new \DateTimeZone('UTC'));
-```
-
-### Parsing External Dates
-
 When storing dates from external sources (e.g., from 3rd party application), parse them with `DatePoint` and convert to UTC timezone:
 
 ```php
