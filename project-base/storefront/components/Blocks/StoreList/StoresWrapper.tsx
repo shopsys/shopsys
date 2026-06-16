@@ -5,7 +5,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { TypeCoordinates } from 'graphql/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSessionStore } from 'store/useSessionStore';
 import { MapMarker } from 'types/map';
@@ -21,6 +21,7 @@ type StoresWrapperProps = {
     isLoadingMoreStores?: boolean;
     appliedSearchTextValue: string;
     searchTextValue: string;
+    priorityStore?: StoreOrPacketeryPoint | null;
     selectedStoreUuid?: string | null;
     userCoordinates?: TypeCoordinates | null;
     scrollableTargetId?: string;
@@ -39,6 +40,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     isLoadingMoreStores = false,
     appliedSearchTextValue,
     searchTextValue,
+    priorityStore = null,
     selectedStoreUuid,
     userCoordinates,
     scrollableTargetId,
@@ -65,10 +67,20 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
         !isLoadingMoreStores &&
         onLoadMoreStoresCallback !== undefined;
 
-    const edges = stores.edges || [];
-    const mappedStores = mapConnectionEdges<StoreOrPacketeryPoint>(edges);
+    const mappedStores = useMemo(() => mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges || []), [stores.edges]);
+    const displayedStores = useMemo(() => {
+        if (mappedStores === undefined || priorityStore === null) {
+            return mappedStores;
+        }
+
+        return [
+            priorityStore,
+            ...mappedStores.filter((mappedStore) => mappedStore.identifier !== priorityStore.identifier),
+        ];
+    }, [mappedStores, priorityStore]);
+    const loadedStoresCount = mappedStores?.length ?? 0;
     const resolvedUserCoordinates = userCoordinates ?? internalUserCoordinates;
-    const firstStore = mappedStores?.[0] ?? null;
+    const firstStore = displayedStores?.[0] ?? null;
     const searchCoordinatesForMapFocus =
         isDistanceFromSearchText && stores.searchCoordinates !== null
             ? {
@@ -124,7 +136,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
 
         if (
             selectedStoreUuid === null ||
-            (mappedStores?.some((store) => store.identifier === selectedStoreUuid) ?? false) ||
+            (displayedStores?.some((store) => store.identifier === selectedStoreUuid) ?? false) ||
             onUserCoordinatesCallback === undefined
         ) {
             return;
@@ -143,7 +155,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
         }
     };
 
-    if (!mappedStores) {
+    if (!displayedStores) {
         return null;
     }
 
@@ -162,7 +174,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                         onClear={() => onSearchTextCallback('')}
                     />
                     <InfiniteScroll
-                        dataLength={mappedStores.length}
+                        dataLength={loadedStoresCount}
                         hasMore={shouldLoadMoreStores}
                         loader={<StoreListLoader />}
                         next={onLoadMoreStoresCallback ?? (() => undefined)}
@@ -172,7 +184,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                         <StoreList
                             isDistanceFromSearchText={isDistanceFromSearchText}
                             selectedStoreUuid={selectedStore}
-                            stores={mappedStores}
+                            stores={displayedStores}
                             onSelectStoreCallback={shouldAllowStoreSelection ? selectStoreHandler : undefined}
                         />
                     </InfiniteScroll>

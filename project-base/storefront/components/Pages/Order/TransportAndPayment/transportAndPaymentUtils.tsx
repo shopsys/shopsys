@@ -249,7 +249,11 @@ export const useTransportChangeInSelect = (
 
         clearPacketeryPickupPoint();
         updatePortalContent(
-            <PickupPlacePopup transportUuid={newTransport.uuid} onChangePickupPlaceCallback={changePickupPlace} />,
+            <PickupPlacePopup
+                lastOrderPickupPlace={lastOrderPickupPlace}
+                transportUuid={newTransport.uuid}
+                onChangePickupPlaceCallback={changePickupPlace}
+            />,
         );
     };
 

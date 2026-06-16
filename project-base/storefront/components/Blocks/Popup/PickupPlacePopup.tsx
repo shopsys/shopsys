@@ -16,6 +16,7 @@ import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type PickupPlacePopupProps = {
     transportUuid: string;
+    lastOrderPickupPlace: StoreOrPacketeryPoint | null;
     onChangePickupPlaceCallback: (transportUuid: string, selectedPickupPlace: StoreOrPacketeryPoint | null) => void;
 };
 
@@ -32,7 +33,11 @@ const findStoreByUuid = (
     return stores?.edges?.find((storeEdge) => storeEdge?.node?.identifier === storeUuid)?.node ?? null;
 };
 
-export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onChangePickupPlaceCallback }) => {
+export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
+    transportUuid,
+    lastOrderPickupPlace,
+    onChangePickupPlaceCallback,
+}) => {
     const { t } = useTranslation();
     const { pickupPlace } = useCurrentCart();
     const [selectedStoreUuid, setSelectedStoreUuid] = useState(pickupPlace?.identifier ?? '');
@@ -59,6 +64,12 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
         additionalQueryVariables: transportStoresAdditionalQueryVariables,
         getStoreConnectionFromData,
     });
+    const findSelectableStoreByUuid = useCallback(
+        (storeUuid: string | null) =>
+            findStoreByUuid(transportStores, storeUuid) ??
+            (lastOrderPickupPlace?.identifier === storeUuid ? lastOrderPickupPlace : null),
+        [lastOrderPickupPlace, transportStores],
+    );
 
     const onConfirmPickupPlaceHandler = () => {
         onChangePickupPlaceCallback(transportUuid, selectedPickupPlace);
@@ -71,19 +82,19 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
             return;
         }
 
-        const selectedStore = findStoreByUuid(transportStores, selectedStoreUuid);
+        const selectedStore = findSelectableStoreByUuid(selectedStoreUuid);
 
         if (selectedStore) {
             setSelectedPickupPlace(selectedStore);
         }
-    }, [selectedStoreUuid, transportStores]);
+    }, [findSelectableStoreByUuid, selectedStoreUuid]);
 
     const onSelectStoreHandler = useCallback(
         (newStoreUuid: string | null) => {
             setSelectedStoreUuid(newStoreUuid ?? '');
-            setSelectedPickupPlace(findStoreByUuid(transportStores, newStoreUuid));
+            setSelectedPickupPlace(findSelectableStoreByUuid(newStoreUuid));
         },
-        [transportStores],
+        [findSelectableStoreByUuid],
     );
 
     return (
@@ -101,6 +112,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
                         isDistanceFromSearchText={isDistanceFromSearchText}
                         isFetchingStores={isFetchingStores}
                         isLoadingMoreStores={isLoadingMoreStores}
+                        priorityStore={searchTextValue === '' ? lastOrderPickupPlace : null}
                         scrollableTargetId={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID}
                         searchTextValue={searchTextValue}
                         selectedStoreUuid={selectedStoreUuid}
