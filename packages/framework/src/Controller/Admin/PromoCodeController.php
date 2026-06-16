@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use League\Csv\Writer;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\CsvResponse;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
 
 #[ForRole(AdminRoleConstant::ROLE_PROMO_CODE)]
 class PromoCodeController extends AdminBaseController
@@ -227,25 +228,26 @@ class PromoCodeController extends AdminBaseController
     #[CanView]
     public function downloadMassGenerateBatchAction(int $batchId): Response
     {
-        $tempFileName = tempnam(sys_get_temp_dir(), 'promoCodesCsv');
-        file_put_contents($tempFileName, $this->generateCsvFromPromoCodeFromBatchId($batchId));
-
-        $fileName = 'promoCodesBatch-' . $batchId;
-
-        return $this->file($tempFileName, $fileName);
+        return new CsvResponse(
+            $this->getCsvDataFromPromoCodeFromBatchId($batchId),
+            'promoCodesBatch-' . $batchId,
+            null,
+            [
+                CsvEncoder::DELIMITER_KEY => ';',
+                CsvEncoder::NO_HEADERS_KEY => true,
+            ],
+        );
     }
 
-    protected function generateCsvFromPromoCodeFromBatchId(int $batchId): string
+    /**
+     * @return iterable<int, array{0: string}>
+     */
+    protected function getCsvDataFromPromoCodeFromBatchId(int $batchId): iterable
     {
         $promoCodes = $this->promoCodeFacade->findByMassBatchId($batchId);
 
-        $csv = Writer::fromString();
-        $csv->setDelimiter(';');
-
         foreach ($promoCodes as $promoCode) {
-            $csv->insertOne([$promoCode->getCode()]);
+            yield [$promoCode->getCode()];
         }
-
-        return $csv->toString();
     }
 }
