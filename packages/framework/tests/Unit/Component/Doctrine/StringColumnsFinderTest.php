@@ -59,6 +59,52 @@ class StringColumnsFinderTest extends TestCase
         $this->assertSame($expectedResult, $actualResult);
     }
 
+    public function testGetAllStringColumnNamesIndexedByTableNameSkipsMappedSuperclasses(): void
+    {
+        $mappedSuperclassMetadataStub = $this->createStub(ClassMetadata::class);
+        $mappedSuperclassMetadataStub->isMappedSuperclass = true;
+        $mappedSuperclassMetadataStub
+            ->method('getTableName')
+            ->willReturn('MappedSuperclass');
+        $mappedSuperclassMetadataStub
+            ->method('getFieldNames')
+            ->willReturn(['mappedSuperclassStringField']);
+        $mappedSuperclassMetadataStub
+            ->method('getTypeOfField')
+            ->willReturn('string');
+        $mappedSuperclassMetadataStub
+            ->method('getColumnName')
+            ->willReturn('mapped_superclass_string_field');
+
+        $classMetadataInfoStub = $this->createStub(ClassMetadata::class);
+        $classMetadataInfoStub
+            ->method('getTableName')
+            ->willReturn('EntityName');
+        $classMetadataInfoStub
+            ->method('getFieldNames')
+            ->willReturn(['entityStringField']);
+        $classMetadataInfoStub
+            ->method('getTypeOfField')
+            ->willReturn('string');
+        $classMetadataInfoStub
+            ->method('getColumnName')
+            ->willReturn('entity_string_field');
+
+        $expectedResult = [
+            'EntityName' => [
+                'entity_string_field',
+            ],
+        ];
+
+        $stringColumnsFinder = new StringColumnsFinder();
+        $actualResult = $stringColumnsFinder->getAllStringColumnNamesIndexedByTableName([
+            $mappedSuperclassMetadataStub,
+            $classMetadataInfoStub,
+        ]);
+
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
     public function testGetAllStringColumnNamesIndexedByTableNameException(): void
     {
         $classMetadataStub = $this->createStub(PersistenceClassMetadata::class);
