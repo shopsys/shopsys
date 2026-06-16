@@ -4,7 +4,7 @@ import GoogleMapReact from 'google-map-react';
 import { TypeMapStoreFragment } from 'graphql/requests/stores/fragments/MapStoreFragment.generated';
 import { useMapStoresQuery } from 'graphql/requests/stores/queries/MapStoresQuery.generated';
 import { TypeCoordinates } from 'graphql/types';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { PointFeature } from 'supercluster';
 import { MapMarker, MapMarkerNullable } from 'types/map';
 import useSupercluster from 'use-supercluster';
@@ -76,11 +76,20 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     const { t } = useTranslation();
 
     const [{ data: mapStoresData }] = useMapStoresQuery({ pause: markers !== undefined });
-    const effectiveMarkers = markers ?? mapConnectionEdges<TypeMapStoreFragment>(mapStoresData?.stores.edges);
-
-    const validMarkers = (effectiveMarkers?.filter((marker) => marker.latitude !== null && marker.longitude !== null) ??
-        []) as MapMarker[];
-    const markersClusterConfig: PointFeature<MarkerProperties>[] = validMarkers.map(markerMapper);
+    const effectiveMarkers = useMemo(
+        () => markers ?? mapConnectionEdges<TypeMapStoreFragment>(mapStoresData?.stores.edges),
+        [mapStoresData?.stores.edges, markers],
+    );
+    const validMarkers = useMemo(
+        () =>
+            (effectiveMarkers?.filter((marker) => marker.latitude !== null && marker.longitude !== null) ??
+                []) as MapMarker[],
+        [effectiveMarkers],
+    );
+    const markersClusterConfig: PointFeature<MarkerProperties>[] = useMemo(
+        () => validMarkers.map(markerMapper),
+        [validMarkers],
+    );
 
     const { clusters, supercluster } = useSupercluster({
         points: markersClusterConfig,
