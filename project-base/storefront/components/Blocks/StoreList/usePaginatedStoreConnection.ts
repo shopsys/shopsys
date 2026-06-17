@@ -5,7 +5,7 @@ import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragm
 import { TypeCoordinates } from 'graphql/types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import { useClient, useQuery } from 'urql';
+import { CombinedError, useClient, useQuery } from 'urql';
 import { useDebounce } from 'utils/useDebounce';
 
 type StoreConnectionQueryVariables = {
@@ -37,38 +37,47 @@ export const usePaginatedStoreConnection = <
     const [userCoordinates, setUserCoordinates] = useState<TypeCoordinates | null>(defaultUserCoordinates);
     const [stores, setStores] = useState<TypeListedStoreConnectionFragment | null>(null);
     const [isLoadingMoreStores, setIsLoadingMoreStores] = useState(false);
+    const [loadMoreStoresError, setLoadMoreStoresError] = useState<CombinedError | undefined>();
     const debouncedSearchTextValue = useDebounce(searchTextValue, 700);
     const isSearchTextDebouncing = searchTextValue !== debouncedSearchTextValue;
-    const isDistanceFromSearchText = debouncedSearchTextValue.trim() !== '';
+    const normalizedSearchTextValue = debouncedSearchTextValue.trim();
+    const isDistanceFromSearchText = normalizedSearchTextValue !== '';
 
     const queryVariables = useMemo(
         () =>
             ({
                 ...additionalQueryVariables,
-                searchText: debouncedSearchTextValue || null,
+                searchText: normalizedSearchTextValue || null,
                 coordinates: userCoordinates,
                 first: STORE_LIST_PAGE_SIZE,
                 after: null,
             }) as QueryVariables,
-        [additionalQueryVariables, debouncedSearchTextValue, userCoordinates],
+        [additionalQueryVariables, normalizedSearchTextValue, userCoordinates],
     );
     const queryKey = JSON.stringify(queryVariables);
     const queryKeyRef = useRef(queryKey);
-    const [{ data, fetching: isStoreConnectionFetching }] = useQuery<TData, QueryVariables>({
+    const [{ data, fetching: isStoreConnectionFetching, error: storeConnectionQueryError }] = useQuery<
+        TData,
+        QueryVariables
+    >({
         query: queryDocument,
         variables: queryVariables,
     });
 
     useEffect(() => {
         queryKeyRef.current = queryKey;
+        setStores(null);
         setIsLoadingMoreStores(false);
+        setLoadMoreStoresError(undefined);
     }, [queryKey]);
 
     useEffect(() => {
         const storeConnection = getStoreConnectionFromData(data);
 
+        setStores(storeConnection ?? null);
+
         if (storeConnection) {
-            setStores(storeConnection);
+            setLoadMoreStoresError(undefined);
         }
     }, [data, getStoreConnectionFromData]);
 
@@ -84,6 +93,7 @@ export const usePaginatedStoreConnection = <
         const requestedQueryKey = queryKey;
 
         setIsLoadingMoreStores(true);
+        setLoadMoreStoresError(undefined);
 
         try {
             const storesResponse = await client
@@ -92,9 +102,20 @@ export const usePaginatedStoreConnection = <
                     after: stores.pageInfo.endCursor,
                 })
                 .toPromise();
+
+            if (queryKeyRef.current !== requestedQueryKey) {
+                return;
+            }
+
+            if (storesResponse.error) {
+                setLoadMoreStoresError(storesResponse.error);
+
+                return;
+            }
+
             const nextStoreConnection = getStoreConnectionFromData(storesResponse.data);
 
-            if (queryKeyRef.current !== requestedQueryKey || !nextStoreConnection) {
+            if (!nextStoreConnection) {
                 return;
             }
 
@@ -104,6 +125,10 @@ export const usePaginatedStoreConnection = <
                     : mergeStoreConnections(currentStores, nextStoreConnection),
             );
         } finally {
+            if (queryKeyRef.current !== requestedQueryKey) {
+                return;
+            }
+
             setIsLoadingMoreStores(false);
         }
     }, [
@@ -119,7 +144,7 @@ export const usePaginatedStoreConnection = <
     ]);
 
     return {
-        appliedSearchTextValue: debouncedSearchTextValue,
+        appliedSearchTextValue: normalizedSearchTextValue,
         isDistanceFromSearchText,
         isFetchingStores: isStoreConnectionFetching || isSearchTextDebouncing,
         isInitialStoresFetching: isStoreConnectionFetching && stores === null,
@@ -128,6 +153,7 @@ export const usePaginatedStoreConnection = <
         searchTextValue,
         setSearchTextValue,
         setUserCoordinates,
+        storeConnectionError: storeConnectionQueryError ?? loadMoreStoresError,
         stores,
         userCoordinates,
     };

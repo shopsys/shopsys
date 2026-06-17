@@ -1,4 +1,5 @@
 import { SkeletonModuleTransportStores } from 'components/Blocks/Skeleton/SkeletonModuleTransportStores';
+import { StoreListError } from 'components/Blocks/StoreList/StoreListError';
 import { StoresWrapper } from 'components/Blocks/StoreList/StoresWrapper';
 import { usePaginatedStoreConnection } from 'components/Blocks/StoreList/usePaginatedStoreConnection';
 import { Button } from 'components/Forms/Button/Button';
@@ -57,6 +58,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
         searchTextValue,
         setSearchTextValue,
         setUserCoordinates,
+        storeConnectionError,
         stores: transportStores,
         userCoordinates,
     } = usePaginatedStoreConnection<TypeTransportStoresQuery, { uuid: string }>({
@@ -64,6 +66,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
         additionalQueryVariables: transportStoresAdditionalQueryVariables,
         getStoreConnectionFromData,
     });
+    const storeConnectionErrorMessage = t('Stores could not be loaded. Please try again later.');
     const findSelectableStoreByUuid = useCallback(
         (storeUuid: string | null) =>
             findStoreByUuid(transportStores, storeUuid) ??
@@ -104,7 +107,13 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
             title={t('Choose the store where you are going to pick up your order')}
         >
             <div id={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID} className="min-h-0 flex-1 overflow-y-auto pr-1">
-                {isFetchingStores && transportStores === null && <SkeletonModuleTransportStores />}
+                {isFetchingStores && transportStores === null && !storeConnectionError && (
+                    <SkeletonModuleTransportStores />
+                )}
+
+                {storeConnectionError && transportStores === null && (
+                    <StoreListError message={storeConnectionErrorMessage} />
+                )}
 
                 {transportStores && (
                     <StoresWrapper
@@ -116,6 +125,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
                         scrollableTargetId={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID}
                         searchTextValue={searchTextValue}
                         selectedStoreUuid={selectedStoreUuid}
+                        storeConnectionErrorMessage={storeConnectionError ? storeConnectionErrorMessage : undefined}
                         stores={transportStores}
                         shouldShowTitle={false}
                         shouldWrapInWebline={false}

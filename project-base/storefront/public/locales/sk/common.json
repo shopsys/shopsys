@@ -607,6 +607,7 @@
     "Store not found.": "Predajňa nenájdená.",
     "Stores": "Predajny",
     "Stores and collection points throughout the Czech Republic": "Predajne a odberné miesta po celej SR",
+    "Stores could not be loaded. Please try again later.": "Predajne sa nepodarilo načítať. Skúste to prosím neskôr.",
     "Stores page": "Stránka s predajňami",
     "Street and house no.": "Ulica a číslo popisné",
     "Street must be at most {{ max }} characters": "Ulica nesmie byť dlhšia ako {{ max }} znakov",

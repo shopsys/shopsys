@@ -13,6 +13,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getStoreListMapFocus } from './getStoreListMapFocus';
+import { StoreListError } from './StoreListError';
 
 type StoresWrapperProps = {
     stores: TypeListedStoreConnectionFragment;
@@ -25,6 +26,7 @@ type StoresWrapperProps = {
     selectedStoreUuid?: string | null;
     userCoordinates?: TypeCoordinates | null;
     scrollableTargetId?: string;
+    storeConnectionErrorMessage?: string;
     onLoadMoreStoresCallback?: () => void;
     onSearchTextCallback: (searchText: string) => void;
     onUserCoordinatesCallback?: (coordinates: TypeCoordinates | null) => void;
@@ -44,6 +46,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     selectedStoreUuid,
     userCoordinates,
     scrollableTargetId,
+    storeConnectionErrorMessage,
     onLoadMoreStoresCallback,
     onSearchTextCallback,
     onUserCoordinatesCallback,
@@ -155,6 +158,36 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
         }
     };
 
+    const searchInput = (
+        <SearchInput
+            ariaLabelForSearchButton={t('Search for a store', { ns: 'accessibility' })}
+            label={t('City or postcode')}
+            shouldShowSpinnerInInput={isFetchingStores}
+            value={searchTextValue}
+            onChange={(e) => onSearchTextCallback(e.currentTarget.value)}
+            onClear={() => onSearchTextCallback('')}
+        />
+    );
+
+    if (storeConnectionErrorMessage !== undefined) {
+        const errorContent = (
+            <>
+                {shouldShowTitle && <h1 className="mb-4">{t('Stores')}</h1>}
+
+                <div className="max-w-xl">
+                    {searchInput}
+                    <StoreListError message={storeConnectionErrorMessage} />
+                </div>
+            </>
+        );
+
+        if (!shouldWrapInWebline) {
+            return errorContent;
+        }
+
+        return <Webline>{errorContent}</Webline>;
+    }
+
     if (!displayedStores) {
         return null;
     }
@@ -165,14 +198,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
 
             <div className="flex flex-col-reverse gap-5 lg:flex-row">
                 <div className="basis-1/2">
-                    <SearchInput
-                        ariaLabelForSearchButton={t('Search for a store', { ns: 'accessibility' })}
-                        label={t('City or postcode')}
-                        shouldShowSpinnerInInput={isFetchingStores}
-                        value={searchTextValue}
-                        onChange={(e) => onSearchTextCallback(e.currentTarget.value)}
-                        onClear={() => onSearchTextCallback('')}
-                    />
+                    {searchInput}
                     <InfiniteScroll
                         dataLength={loadedStoresCount}
                         hasMore={shouldLoadMoreStores}
