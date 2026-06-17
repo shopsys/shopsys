@@ -28,6 +28,10 @@
             @apply mt-10 mb-5 lg:mt-12 lg:mb-6;
         }
 
+        h2[id] {
+            @apply scroll-mt-3;
+        }
+
         h3 {
             @apply text-2xl;
             @apply mt-8 mb-4 lg:mt-10 lg:mb-5;
