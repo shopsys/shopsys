@@ -13,9 +13,6 @@ parameters:
     shopsys.allowed_admin_locales: ['en', 'cs', 'sk']
     shopsys.cron_timezone: Europe/Prague
 
-    # Set to true to log validation errors with log level ERROR instead of INFO
-    shopsys.frontend_api.validation_logged_as_error: false
-
     shopsys.mail_template.display_price: 'selling_price'
 
     # Performance test parameters
