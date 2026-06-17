@@ -45,7 +45,7 @@ const autocompleteSearchResult = {
             flags: null,
             parameters: null,
         },
-        pageInfo: { __typename: 'PageInfo', hasNextPage: true },
+        pageInfo: { hasNextPage: true },
         edges: [{ __typename: 'ProductEdge', node: null }],
     },
 } satisfies TypeAutocompleteSearchQuery;

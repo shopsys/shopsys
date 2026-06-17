@@ -1,5 +1,6 @@
 import { ParsedUrlQuery } from 'node:querystring';
 import { AuthConfig, AuthUtilities } from '@urql/exchange-auth';
+import { DocumentNode } from 'graphql';
 import {
     RefreshTokensDocument,
     TypeRefreshTokens,
@@ -14,9 +15,11 @@ import { DomainConfigType } from 'utils/domain/domainConfig';
 import { isAuthError } from 'utils/errors/isAuthError';
 
 const isRefreshTokenMutation = (operation: Operation) => {
+    const query = operation.query as DocumentNode;
+
     return (
         operation.kind === 'mutation' &&
-        operation.query.definitions.some((def) => {
+        query.definitions.some((def) => {
             if ('name' in def) {
                 return def.name?.value === 'RefreshTokens';
             }

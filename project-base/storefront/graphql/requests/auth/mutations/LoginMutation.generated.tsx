@@ -1,20 +1,24 @@
 // @ts-nocheck
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { TokenFragments } from '../fragments/TokensFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeLoginMutationVariables = Types.Exact<{
-  email: Types.Scalars['String']['input'];
-  password: Types.Scalars['Password']['input'];
-  previousCartUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
-  productListsUuids: Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input'];
-  shouldOverwriteCustomerUserCart?: Types.InputMaybe<Types.Scalars['Boolean']['input']>;
+export type TypeLoginMutationVariables = Exact<{
+  email: string;
+  password: string;
+  previousCartUuid?: string | null | undefined;
+  productListsUuids: Array<string> | string;
+  shouldOverwriteCustomerUserCart?: boolean | null | undefined;
 }>;
 
 
-export type TypeLoginMutation = { __typename?: 'Mutation', Login: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
+export type TypeLoginMutation = { Login: { showCartMergeInfo: boolean, tokens: { accessToken: string, refreshToken: string } } };
 
 
 export const LoginMutationDocument = gql`

@@ -7,12 +7,22 @@ const codegenTypescriptConfig = {
     withHOC: false,
     withComponent: false,
     scalars: {
+        DateTime: 'string',
+        FileUpload: 'File',
         Money: 'string',
+        Password: 'string',
         Uuid: 'string',
     },
-    avoidOptionals: true,
+    avoidOptionals: {
+        field: true,
+        object: true,
+        inputValue: false,
+        defaultValue: true,
+    },
     omitOperationSuffix: true,
     importTypes: true,
+    preResolveTypes: false,
+    skipTypename: false,
 };
 
 const config: CodegenConfig = {

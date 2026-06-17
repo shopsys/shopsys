@@ -1,10 +1,5 @@
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -13,12 +8,12 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   /** Represents and encapsulates an ISO-8601 encoded UTC date-time value */
-  DateTime: { input: any; output: any; }
+  DateTime: { input: string; output: string; }
   /** Represents and encapsulates a file upload */
-  FileUpload: { input: any; output: any; }
+  FileUpload: { input: File; output: File; }
   Money: { input: string; output: string; }
   /** Represents and encapsulates a string for password */
-  Password: { input: any; output: any; }
+  Password: { input: string; output: string; }
   /** Represents and encapsulates an ISO-8601 encoded UTC date-time value */
   Uuid: { input: string; output: string; }
 };
@@ -40,11 +35,11 @@ export type TypeAddNewCustomerUserDataInput = {
 
 export type TypeAddOrderItemsToCartInput = {
   /** Cart identifier or null if customer is logged in */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** UUID of the order based on which the cart should be prefilled */
   orderUuid: Scalars['Uuid']['input'];
   /** Information if the prefilled cart should be merged with the current cart */
-  shouldMerge: InputMaybe<Scalars['Boolean']['input']>;
+  shouldMerge?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type TypeAddProductResult = {
@@ -57,9 +52,9 @@ export type TypeAddProductResult = {
 
 export type TypeAddToCartInput = {
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** True if quantity should be set no matter the current state of the cart. False if quantity should be added to the already existing same item in the cart */
-  isAbsoluteQuantity: InputMaybe<Scalars['Boolean']['input']>;
+  isAbsoluteQuantity?: InputMaybe<Scalars['Boolean']['input']>;
   /** Product UUID */
   productUuid: Scalars['Uuid']['input'];
   /** Item quantity */
@@ -141,7 +136,7 @@ export type TypeAdvertPosition = {
 
 export type TypeApplyPromoCodeToCartInput = {
   /** Cart identifier or null if customer is logged in */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Promo code to be used after checkout */
   promoCode: Scalars['String']['input'];
 };
@@ -538,7 +533,7 @@ export type TypeCart = {
 
 export type TypeCartInput = {
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 /** Represent one item in the cart */
@@ -715,17 +710,17 @@ export type TypeCategoryHierarchyItem = {
 
 export type TypeChangeCompanyDataInput = {
   /** UUID */
-  billingAddressUuid: InputMaybe<Scalars['Uuid']['input']>;
+  billingAddressUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String']['input'];
   /** Determines whether the customer is a company or not. */
-  companyCustomer: InputMaybe<Scalars['Boolean']['input']>;
+  companyCustomer?: InputMaybe<Scalars['Boolean']['input']>;
   /** The customer’s company name (required when companyCustomer is true) */
-  companyName: InputMaybe<Scalars['String']['input']>;
+  companyName?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s company identification number (required when companyCustomer is true) */
-  companyNumber: InputMaybe<Scalars['String']['input']>;
+  companyNumber?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s company tax number (required when companyCustomer is true) */
-  companyTaxNumber: InputMaybe<Scalars['String']['input']>;
+  companyTaxNumber?: InputMaybe<Scalars['String']['input']>;
   /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
   country: Scalars['String']['input'];
   /** Billing address zip code (will be on the tax invoice) */
@@ -745,18 +740,18 @@ export type TypeChangePasswordInput = {
 
 export type TypeChangePaymentInCartInput = {
   /** Cart identifier or null if customer is logged in */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Selected bank swift code of goPay payment bank transfer */
-  paymentGoPayBankSwift: InputMaybe<Scalars['String']['input']>;
+  paymentGoPayBankSwift?: InputMaybe<Scalars['String']['input']>;
   /** UUID of a payment that should be added to the cart. If this is set to null, the payment is removed from the cart */
-  paymentUuid: InputMaybe<Scalars['Uuid']['input']>;
+  paymentUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 export type TypeChangePaymentInOrderInput = {
   /** Order identifier */
   orderUuid: Scalars['Uuid']['input'];
   /** Selected bank swift code of goPay payment bank transfer */
-  paymentGoPayBankSwift: InputMaybe<Scalars['String']['input']>;
+  paymentGoPayBankSwift?: InputMaybe<Scalars['String']['input']>;
   /** UUID of a payment that should be assigned to the order. */
   paymentUuid: Scalars['Uuid']['input'];
 };
@@ -774,11 +769,11 @@ export type TypeChangePersonalDataInput = {
 
 export type TypeChangeTransportInCartInput = {
   /** Cart identifier or null if customer is logged in */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** The identifier of selected personal pickup place */
-  pickupPlaceIdentifier: InputMaybe<Scalars['String']['input']>;
+  pickupPlaceIdentifier?: InputMaybe<Scalars['String']['input']>;
   /** UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart */
-  transportUuid: InputMaybe<Scalars['Uuid']['input']>;
+  transportUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 /** Represents a company customer user */
@@ -894,18 +889,18 @@ export type TypeComplaintEdge = {
 /** Filter complaints */
 export type TypeComplaintFilterInput = {
   /** Filter complaints created after this date */
-  createdAfter: InputMaybe<Scalars['DateTime']['input']>;
+  createdAfter?: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter complaints created before this date */
-  createdBefore: InputMaybe<Scalars['DateTime']['input']>;
+  createdBefore?: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter complaints by complaint number or product */
-  search: InputMaybe<Scalars['String']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Filter complaints by status codes */
-  statusCodes: InputMaybe<Array<Scalars['String']['input']>>;
+  statusCodes?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type TypeComplaintInput = {
   /** Bank account number for money return */
-  bankAccountNumber: InputMaybe<Scalars['String']['input']>;
+  bankAccountNumber?: InputMaybe<Scalars['String']['input']>;
   /** Delivery address */
   deliveryAddress: TypeDeliveryAddressInput;
   /** The customer's email address */
@@ -913,9 +908,9 @@ export type TypeComplaintInput = {
   /** All items in the complaint */
   items: Array<TypeComplaintItemInput>;
   /** Order or document number (doesn't have to be from any existing order) */
-  manualDocumentNumber: InputMaybe<Scalars['String']['input']>;
+  manualDocumentNumber?: InputMaybe<Scalars['String']['input']>;
   /** UUID of the order */
-  orderUuid: InputMaybe<Scalars['Uuid']['input']>;
+  orderUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Chosen resolution from complaintResolutionQuery */
   resolution: Scalars['String']['input'];
 };
@@ -949,13 +944,13 @@ export type TypeComplaintItemInput = {
   /** Description of the complaint item */
   description: Scalars['String']['input'];
   /** Files attached to the complaint item */
-  files: InputMaybe<Array<Scalars['FileUpload']['input']>>;
+  files?: InputMaybe<Array<Scalars['FileUpload']['input']>>;
   /** Catalog number of the complaint item entered by customer (if the complaint is created without an order, otherwise, the catalog number is taken from the order item) */
-  manualComplaintItemCatnum: InputMaybe<Scalars['String']['input']>;
+  manualComplaintItemCatnum?: InputMaybe<Scalars['String']['input']>;
   /** Name of the complaint item entered by customer (if the complaint is created without an order, otherwise, the name is taken from the order item) */
-  manualComplaintItemName: InputMaybe<Scalars['String']['input']>;
+  manualComplaintItemName?: InputMaybe<Scalars['String']['input']>;
   /** UUID of the order item */
-  orderItemUuid: InputMaybe<Scalars['Uuid']['input']>;
+  orderItemUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Quantity of the complaint item */
   quantity: Scalars['Int']['input'];
 };
@@ -1021,11 +1016,11 @@ export type TypeCountry = {
 
 export type TypeCreateInquiryInput = {
   /** The customer’s company name */
-  companyName: InputMaybe<Scalars['String']['input']>;
+  companyName?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s company identification number */
-  companyNumber: InputMaybe<Scalars['String']['input']>;
+  companyNumber?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s company tax number */
-  companyTaxNumber: InputMaybe<Scalars['String']['input']>;
+  companyTaxNumber?: InputMaybe<Scalars['String']['input']>;
   /** The customer's email address */
   email: Scalars['String']['input'];
   /** Customer user first name */
@@ -1033,7 +1028,7 @@ export type TypeCreateInquiryInput = {
   /** Customer user last name */
   lastName: Scalars['String']['input'];
   /** Customer's question or note to the inquiry product */
-  note: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   /** Product UUID */
   productUuid: Scalars['Uuid']['input'];
   /** The customer's telephone */
@@ -1240,7 +1235,7 @@ export type TypeDeliveryAddressInput = {
   /** Delivery address city name */
   city: Scalars['String']['input'];
   /** Delivery address company name */
-  companyName: InputMaybe<Scalars['String']['input']>;
+  companyName?: InputMaybe<Scalars['String']['input']>;
   /** Delivery address country */
   country: Scalars['String']['input'];
   /** Delivery address first name */
@@ -1252,14 +1247,14 @@ export type TypeDeliveryAddressInput = {
   /** Delivery address street name */
   street: Scalars['String']['input'];
   /** Delivery address telephone */
-  telephone: InputMaybe<TypePhoneDataInput>;
+  telephone?: InputMaybe<TypePhoneDataInput>;
   /** UUID */
-  uuid: InputMaybe<Scalars['Uuid']['input']>;
+  uuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 export type TypeEditCustomerUserPersonalDataInput = {
   /** UUID */
-  customerUserUuid: InputMaybe<Scalars['Uuid']['input']>;
+  customerUserUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Customer user first name */
   firstName: Scalars['String']['input'];
   /** Customer user last name */
@@ -1432,7 +1427,7 @@ export type TypeLoginInfo = {
 
 export type TypeLoginInput = {
   /** Uuid of the cart that should be merged to the cart of the user */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** The user email. */
   email: Scalars['String']['input'];
   /** The user password. */
@@ -2102,53 +2097,53 @@ export type TypeOrderEdge = {
 /** Filter orders */
 export type TypeOrderFilterInput = {
   /** Filter orders created after this date */
-  createdAfter: InputMaybe<Scalars['DateTime']['input']>;
+  createdAfter?: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter orders created before this date */
-  createdBefore: InputMaybe<Scalars['DateTime']['input']>;
+  createdBefore?: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid) */
-  orderItemsCatnum: InputMaybe<Scalars['String']['input']>;
+  orderItemsCatnum?: InputMaybe<Scalars['String']['input']>;
   /** Filter orders by order items with product UUID (OR condition with orderItemsCatnum) */
-  orderItemsProductUuid: InputMaybe<Scalars['Uuid']['input']>;
+  orderItemsProductUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Filter orders by order number or product */
-  search: InputMaybe<Scalars['String']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Filter orders by status codes */
-  statusCodes: InputMaybe<Array<Scalars['String']['input']>>;
+  statusCodes?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /** Represents the main input object to create orders */
 export type TypeOrderInput = {
   /** Cart identifier used for getting carts of not logged customers */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String']['input'];
   /** The customer’s company name (required when onCompanyBehalf is true) */
-  companyName: InputMaybe<Scalars['String']['input']>;
+  companyName?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s company identification number (required when onCompanyBehalf is true) */
-  companyNumber: InputMaybe<Scalars['String']['input']>;
+  companyNumber?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s company tax number (required when onCompanyBehalf is true) */
-  companyTaxNumber: InputMaybe<Scalars['String']['input']>;
+  companyTaxNumber?: InputMaybe<Scalars['String']['input']>;
   /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
   country: Scalars['String']['input'];
   /** Delivery address identifier. Can be used by logged users only. If set, it takes precedence over the individual delivery address fields (deliveryFirstName, deliveryLastName, etc.) */
-  deliveryAddressUuid: InputMaybe<Scalars['Uuid']['input']>;
+  deliveryAddressUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** City name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
-  deliveryCity: InputMaybe<Scalars['String']['input']>;
+  deliveryCity?: InputMaybe<Scalars['String']['input']>;
   /** Company name for delivery */
-  deliveryCompanyName: InputMaybe<Scalars['String']['input']>;
+  deliveryCompanyName?: InputMaybe<Scalars['String']['input']>;
   /** Country code in ISO 3166-1 alpha-2 for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
-  deliveryCountry: InputMaybe<Scalars['String']['input']>;
+  deliveryCountry?: InputMaybe<Scalars['String']['input']>;
   /** First name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
-  deliveryFirstName: InputMaybe<Scalars['String']['input']>;
+  deliveryFirstName?: InputMaybe<Scalars['String']['input']>;
   /** Last name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
-  deliveryLastName: InputMaybe<Scalars['String']['input']>;
+  deliveryLastName?: InputMaybe<Scalars['String']['input']>;
   /** Zip code for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
-  deliveryPostcode: InputMaybe<Scalars['String']['input']>;
+  deliveryPostcode?: InputMaybe<Scalars['String']['input']>;
   /** Street name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
-  deliveryStreet: InputMaybe<Scalars['String']['input']>;
+  deliveryStreet?: InputMaybe<Scalars['String']['input']>;
   /** Contact telephone for delivery */
-  deliveryTelephone: InputMaybe<TypePhoneDataInput>;
+  deliveryTelephone?: InputMaybe<TypePhoneDataInput>;
   /** The customer's email address */
-  email: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** The customer's first name */
   firstName: Scalars['String']['input'];
   /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */
@@ -2158,9 +2153,9 @@ export type TypeOrderInput = {
   /** The customer's last name */
   lastName: Scalars['String']['input'];
   /** Allows user to subscribe/unsubscribe newsletter. */
-  newsletterSubscription: InputMaybe<Scalars['Boolean']['input']>;
+  newsletterSubscription?: InputMaybe<Scalars['Boolean']['input']>;
   /** Other information related to the order */
-  note: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   /** Determines whether the order is made on the company behalf. */
   onCompanyBehalf: Scalars['Boolean']['input'];
   /** Billing address zip code (will be on the tax invoice) */
@@ -2236,17 +2231,17 @@ export enum TypeOrderItemTypeEnum {
 /** Filter order items */
 export type TypeOrderItemsFilterInput = {
   /** Filter order items by product catalog number (OR condition with productUuid) */
-  catnum: InputMaybe<Scalars['String']['input']>;
+  catnum?: InputMaybe<Scalars['String']['input']>;
   /** Filter order items in orders created after this date */
-  orderCreatedAfter: InputMaybe<Scalars['DateTime']['input']>;
+  orderCreatedAfter?: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter orders created after this date */
-  orderStatus: InputMaybe<TypeOrderStatusEnum>;
+  orderStatus?: InputMaybe<TypeOrderStatusEnum>;
   /** Filter order items by order with this UUID */
-  orderUuid: InputMaybe<Scalars['Uuid']['input']>;
+  orderUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Filter order items by product with this UUID (OR condition with catnum) */
-  productUuid: InputMaybe<Scalars['Uuid']['input']>;
+  productUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Filter order items by type */
-  type: InputMaybe<TypeOrderItemTypeEnum>;
+  type?: InputMaybe<TypeOrderItemTypeEnum>;
 };
 
 export type TypeOrderPaymentsConfig = {
@@ -2316,11 +2311,11 @@ export type TypeOrderWithdrawalRequestInput = {
   /** Last name of the person requesting withdrawal */
   lastName: Scalars['String']['input'];
   /** Additional note or reason for withdrawal (optional) */
-  note: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   /** Order URL hash to identify the order */
   orderUrlHash: Scalars['String']['input'];
   /** Telephone number data (optional) */
-  telephone: InputMaybe<TypePhoneDataInput>;
+  telephone?: InputMaybe<TypePhoneDataInput>;
 };
 
 /** Information about pagination in a connection. */
@@ -2385,9 +2380,9 @@ export type TypeParameterColorFilterOption = TypeParameterFilterOptionInterface 
 /** Represents a parameter filter */
 export type TypeParameterFilter = {
   /** The parameter maximal value (for parameters with "slider" type) */
-  maximalValue: InputMaybe<Scalars['Float']['input']>;
+  maximalValue?: InputMaybe<Scalars['Float']['input']>;
   /** The parameter minimal value (for parameters with "slider" type) */
-  minimalValue: InputMaybe<Scalars['Float']['input']>;
+  minimalValue?: InputMaybe<Scalars['Float']['input']>;
   /** Uuid of filtered parameter */
   parameter: Scalars['Uuid']['input'];
   /** Array of uuids representing parameter values to be filtered by */
@@ -2558,7 +2553,7 @@ export type TypePersonalDataAccessRequestInput = {
   /** The customer's email address */
   email: Scalars['String']['input'];
   /** One of two possible types for personal data access request - display or export */
-  type: InputMaybe<TypePersonalDataAccessRequestTypeEnum>;
+  type?: InputMaybe<TypePersonalDataAccessRequestTypeEnum>;
 };
 
 /** One of two possible types for personal data access request */
@@ -2765,17 +2760,17 @@ export type TypeProductEdge = {
 /** Represents a product filter */
 export type TypeProductFilter = {
   /** Array of uuids of brands filter */
-  brands: InputMaybe<Array<Scalars['Uuid']['input']>>;
+  brands?: InputMaybe<Array<Scalars['Uuid']['input']>>;
   /** Array of uuids of flags filter */
-  flags: InputMaybe<Array<Scalars['Uuid']['input']>>;
+  flags?: InputMaybe<Array<Scalars['Uuid']['input']>>;
   /** Maximal price filter */
-  maximalPrice: InputMaybe<Scalars['Money']['input']>;
+  maximalPrice?: InputMaybe<Scalars['Money']['input']>;
   /** Minimal price filter */
-  minimalPrice: InputMaybe<Scalars['Money']['input']>;
+  minimalPrice?: InputMaybe<Scalars['Money']['input']>;
   /** Only in stock filter */
-  onlyInStock: InputMaybe<Scalars['Boolean']['input']>;
+  onlyInStock?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parameter filter */
-  parameters: InputMaybe<Array<TypeParameterFilter>>;
+  parameters?: InputMaybe<Array<TypeParameterFilter>>;
 };
 
 /** Represents a product filter options */
@@ -2811,7 +2806,7 @@ export type TypeProductListInput = {
   /** Product list type */
   type: TypeProductListTypeEnum;
   /** Product list identifier */
-  uuid: InputMaybe<Scalars['Uuid']['input']>;
+  uuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 /** One of possible types of the product list */
@@ -3334,7 +3329,7 @@ export enum TypeRecommendationType {
 
 export type TypeRecoverPasswordInput = {
   /** Uuid of the cart that should be merged to the cart of the user */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Customer user email. */
   email: Scalars['String']['input'];
   /** Hash */
@@ -3364,19 +3359,19 @@ export type TypeRegistrationByOrderInput = {
 /** Represents the main input object to register customer user */
 export type TypeRegistrationDataInput = {
   /** UUID */
-  billingAddressUuid: InputMaybe<Scalars['Uuid']['input']>;
+  billingAddressUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Uuid of the cart that should be merged to the cart of the newly registered user */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String']['input'];
   /** Determines whether the customer is a company or not. */
-  companyCustomer: InputMaybe<Scalars['Boolean']['input']>;
+  companyCustomer?: InputMaybe<Scalars['Boolean']['input']>;
   /** The customer’s company name (required when companyCustomer is true) */
-  companyName: InputMaybe<Scalars['String']['input']>;
+  companyName?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s company identification number (required when companyCustomer is true) */
-  companyNumber: InputMaybe<Scalars['String']['input']>;
+  companyNumber?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s company tax number (required when companyCustomer is true) */
-  companyTaxNumber: InputMaybe<Scalars['String']['input']>;
+  companyTaxNumber?: InputMaybe<Scalars['String']['input']>;
   /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
   country: Scalars['String']['input'];
   /** The customer's email address */
@@ -3551,12 +3546,12 @@ export type TypeRemoveFromCartInput = {
   /** Cart item UUID */
   cartItemUuid: Scalars['Uuid']['input'];
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 export type TypeRemovePromoCodeFromCartInput = {
   /** Cart identifier or null if customer is logged in */
-  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Promo code to be removed */
   promoCode: Scalars['String']['input'];
 };
@@ -3590,7 +3585,7 @@ export type TypeSalesRepresentativeImageArgs = {
 export type TypeSearchInput = {
   isAutocomplete: Scalars['Boolean']['input'];
   /** Ordered list of parameters used in Luigi's Box to ensure same order of parameters in search results */
-  parameters: InputMaybe<Array<Scalars['Uuid']['input']>>;
+  parameters?: InputMaybe<Array<Scalars['Uuid']['input']>>;
   search: Scalars['String']['input'];
   /** Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/) */
   userIdentifier: Scalars['Uuid']['input'];

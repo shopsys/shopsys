@@ -1,4 +1,4 @@
-import { Kind, OperationDefinitionNode } from 'graphql';
+import { DocumentNode, Kind, OperationDefinitionNode } from 'graphql';
 import { CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
@@ -132,9 +132,10 @@ const handleErrorMessagesForDevelopment = (error: CombinedError, t: Translate) =
 };
 
 const getMutationName = (operation: Operation): string => {
-    const operationDefinition = operation.query.definitions.find(
-        (definition) => definition.kind === 'OperationDefinition',
-    ) as OperationDefinitionNode | undefined;
+    const query = operation.query as DocumentNode;
+    const operationDefinition = query.definitions.find((definition) => definition.kind === 'OperationDefinition') as
+        | OperationDefinitionNode
+        | undefined;
 
     return operationDefinition?.name?.value ?? 'UnknownMutation';
 };
@@ -280,7 +281,7 @@ const handleCartErrorMessages = ({ userError, applicationError }: ParsedErrors) 
 
 const hasFriendlyUrlQueryFailedWith500 = (operation: Operation, error: CombinedError) =>
     error.graphQLErrors.some(({ extensions }) => extensions.code === 500) &&
-    operation.query.definitions.some(
+    (operation.query as DocumentNode).definitions.some(
         (definition) =>
             definition.kind === Kind.OPERATION_DEFINITION &&
             definition.directives?.some((directiveDefinition) => directiveDefinition.name.value === 'friendlyUrl'),

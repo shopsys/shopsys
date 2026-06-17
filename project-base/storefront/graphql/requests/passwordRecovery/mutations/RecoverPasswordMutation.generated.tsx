@@ -1,20 +1,24 @@
 // @ts-nocheck
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { TokenFragments } from '../../auth/fragments/TokensFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeRecoverPasswordMutationVariables = Types.Exact<{
-  email: Types.Scalars['String']['input'];
-  hash: Types.Scalars['String']['input'];
-  newPassword: Types.Scalars['Password']['input'];
-  cartUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
-  productListsUuids: Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input'];
+export type TypeRecoverPasswordMutationVariables = Exact<{
+  email: string;
+  hash: string;
+  newPassword: string;
+  cartUuid?: string | null | undefined;
+  productListsUuids: Array<string> | string;
 }>;
 
 
-export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
+export type TypeRecoverPasswordMutation = { RecoverPassword: { showCartMergeInfo: boolean, tokens: { accessToken: string, refreshToken: string } } };
 
 
 export const RecoverPasswordMutationDocument = gql`

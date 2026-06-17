@@ -78,8 +78,10 @@ import {
     TypeProductListQuery,
     TypeProductListQueryVariables,
 } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
-import { MakeMaybe, TypeProductListInput } from 'graphql/types';
+import { Maybe, TypeProductListInput } from 'graphql/types';
 import { invalidateFields } from './cacheUtils';
+
+type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 
 export const cacheUpdates: UpdatesConfig = {
     Mutation: {
