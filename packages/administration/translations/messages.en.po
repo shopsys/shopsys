@@ -958,7 +958,7 @@ msgstr ""
 msgid "Friday"
 msgstr ""
 
-msgid "From"
+msgid "From (with VAT)"
 msgstr ""
 
 msgid "Future"
