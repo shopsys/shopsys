@@ -1,0 +1,17 @@
+fragment ComplaintListItemFragment on Complaint {
+    uuid
+    number
+    createdAt
+    status
+    items {
+        productName
+        product {
+            slug
+            isVisible
+            mainImage {
+                name
+                url
+            }
+        }
+    }
+}

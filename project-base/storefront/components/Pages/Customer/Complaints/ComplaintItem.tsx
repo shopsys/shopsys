@@ -3,14 +3,14 @@ import { Image } from 'components/Basic/Image/Image';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
+import { TypeComplaintListItemFragment } from 'graphql/requests/complaints/fragments/ComplaintListItemFragment.generated';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { ComplaintItemColumnInfo } from './ComplaintItemColumnInfo';
 
 type ComplaintItemProps = {
-    complaintItem: TypeComplaintDetailFragment;
+    complaintItem: TypeComplaintListItemFragment;
 };
 
 export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
@@ -25,7 +25,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                 <div className="flex size-20 shrink-0" data-tid={TIDs.complaint_item_image}>
                     <Image
                         priority
-                        alt={complaintItem.items[0].orderItem?.product?.mainImage?.name || ''}
+                        alt={complaintItem.items[0].product?.mainImage?.name || ''}
                         className="size-20 object-contain mix-blend-multiply"
                         height={48}
                         src={complaintItem.items[0].product?.mainImage?.url}

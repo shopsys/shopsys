@@ -7,7 +7,7 @@ query ComplaintsQuery($first: Int, $after: String, $searchInput: SearchInput) {
         edges {
             cursor
             node {
-                ...ComplaintDetailFragment
+                ...ComplaintListItemFragment
             }
         }
     }
