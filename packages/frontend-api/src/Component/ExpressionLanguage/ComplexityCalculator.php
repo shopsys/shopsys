@@ -11,16 +11,22 @@ use Overblog\GraphQLBundle\Definition\Argument;
  */
 class ComplexityCalculator
 {
-    public static function calculate(Argument $argument, int $oneItemComplexity, int $defaultCount): int
-    {
+    public static function calculate(
+        Argument $argument,
+        int $oneItemComplexity,
+        int $defaultCount,
+        int $childrenComplexity = 0,
+    ): int {
+        $itemComplexity = $childrenComplexity + $oneItemComplexity;
+
         if ($argument->offsetExists('first')) {
-            return $argument['first'] * $oneItemComplexity;
+            return $argument['first'] * $itemComplexity;
         }
 
         if ($argument->offsetExists('last')) {
-            return $argument['last'] * $oneItemComplexity;
+            return $argument['last'] * $itemComplexity;
         }
 
-        return $defaultCount * $oneItemComplexity;
+        return $defaultCount * $itemComplexity;
     }
 }
