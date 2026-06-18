@@ -25,6 +25,6 @@ framework:
         handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
         storage_factory_id: session.storage.factory.native
     trusted_hosts: ~
-    trusted_proxies: '%env(TRUSTED_PROXIES)%)'
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
     validation:
         enable_attributes: true
