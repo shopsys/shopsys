@@ -823,6 +823,9 @@ msgstr "Meno zákazníka"
 msgid "Customer phone number"
 msgstr "Telefónne číslo zákazníka"
 
+msgid "Customer question"
+msgstr "Otázka zákazníka"
+
 msgid "Customer sees prices"
 msgstr "Zákazník vidí ceny"
 
@@ -2728,6 +2731,12 @@ msgstr "Produkt je varianta"
 msgid "Product name"
 msgstr "Názov produktu"
 
+msgid "Product question sent to administrator"
+msgstr "Otázka k produktu odoslaná administrátorovi"
+
+msgid "Product question sent to customer"
+msgstr "Otázka k produktu odoslaná zákazníkovi"
+
 msgid "Product saved in order"
 msgstr "Produkt uložený v objednávke"
 
@@ -2931,6 +2940,12 @@ msgstr "Obchodný zástupca <strong>{{ label }}</strong> odstránený."
 
 msgid "Sales representatives"
 msgstr "Obchodní zástupcovia"
+
+msgid "Sample customer name"
+msgstr "Ukážkové meno zákazníka"
+
+msgid "Sample product question."
+msgstr "Ukážková otázka k produktu."
 
 msgid "Save"
 msgstr "Uložiť"

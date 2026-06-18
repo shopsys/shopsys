@@ -11,6 +11,7 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 type ProductCompareButtonProps = {
     productName: string;
     isWithText?: boolean;
+    isWithShortText?: boolean;
     isProductInWishlist: boolean;
     toggleProductInWishlist: () => void;
     tabIndex?: number;
@@ -20,11 +21,19 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
     className,
     productName,
     isWithText,
+    isWithShortText,
     isProductInWishlist,
     toggleProductInWishlist,
     tabIndex = 0,
 }) => {
     const { t } = useTranslation();
+    const buttonText = isWithShortText
+        ? isProductInWishlist
+            ? t('In wishlist')
+            : t('To wishlist')
+        : isProductInWishlist
+          ? t('Remove from wishlist')
+          : t('Add to wishlist');
 
     return (
         <button
@@ -50,15 +59,11 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             onClick={toggleProductInWishlist}
         >
             {isProductInWishlist ? (
-                <HeartFilledIcon className="size-6 text-icon-accent-red" />
+                <HeartFilledIcon className="size-6 shrink-0 text-icon-accent-red" />
             ) : (
-                <HeartIcon className="size-6" />
+                <HeartIcon className="size-6 shrink-0" />
             )}
-            {isWithText && (
-                <span className="text-sm">
-                    {isProductInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}
-                </span>
-            )}
+            {isWithText && <span className="truncate text-sm">{buttonText}</span>}
         </button>
     );
 };

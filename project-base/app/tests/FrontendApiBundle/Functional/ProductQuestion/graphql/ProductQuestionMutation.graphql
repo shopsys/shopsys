@@ -1,0 +1,8 @@
+mutation ProductQuestionMutation($customerName: String!, $email: String!, $question: String!, $productUuid: Uuid!) {
+    ProductQuestion(input: {
+        customerName: $customerName,
+        email: $email,
+        question: $question,
+        productUuid: $productUuid
+    })
+}

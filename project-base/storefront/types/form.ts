@@ -159,6 +159,13 @@ export type InquiryFormType = {
     productUuid: string;
 };
 
+export type ProductQuestionFormType = {
+    customerName: string;
+    email: string;
+    question: string;
+    productUuid: string;
+};
+
 export type WatchdogFormType = {
     email: string;
     productUuid: string;

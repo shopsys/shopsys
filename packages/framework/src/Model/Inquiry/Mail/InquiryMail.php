@@ -86,7 +86,7 @@ class InquiryMail
             self::VARIABLE_COMPANY_NAME => fn () => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyName()),
             self::VARIABLE_COMPANY_NUMBER => fn () => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyNumber()),
             self::VARIABLE_COMPANY_TAX_NUMBER => fn () => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyTaxNumber()),
-            self::VARIABLE_PRODUCT_NAME => fn () => $this->mailerHelper->escapeOptionalString($inquiry->getProduct()?->getName()),
+            self::VARIABLE_PRODUCT_NAME => fn () => $inquiry->getProduct()?->getName(),
             self::VARIABLE_PRODUCT_CATALOG_NUMBER => fn () => htmlspecialchars($inquiry->getProductCatnum(), ENT_QUOTES),
         ];
     }

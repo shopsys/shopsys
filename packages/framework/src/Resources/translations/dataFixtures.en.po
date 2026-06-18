@@ -28,6 +28,12 @@ msgstr ""
 msgid "<h1>Your order is being processed</h1> Dear customer,<br/> <br/> we have started processing your order.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
 msgstr ""
 
+msgid "<p>A customer has asked a question about a product.</p> <p><strong>Name:</strong> {customerName}<br> <strong>Email:</strong> {email}<br> <strong>Product:</strong> <a href=\"{productUrl}\" tabindex=\"0\">{productName}</a></p> <p><strong>Question:</strong><br>{question}</p>"
+msgstr ""
+
+msgid "<p>Dear {customerName},</p> <p>Thank you for your question about <a href=\"{productUrl}\" tabindex=\"0\">{productName}</a>. We have received it and will get back to you by email as soon as possible.</p> <p><strong>Your question:</strong><br>{question}</p>"
+msgstr ""
+
 msgid "<p>Order number {number} has been sent, thank you for your purchase. We will contact you about next order status. <br /><br /> <a href=\"{order_detail_url}\" tabindex=\"0\">Track</a> the status of your order. <br /> {transport_instructions} <br /> {payment_instructions} <br /></p>"
 msgstr ""
 
@@ -73,6 +79,9 @@ msgstr ""
 msgid "New product inquiry received"
 msgstr ""
 
+msgid "New product question from {customerName}"
+msgstr ""
+
 msgid "Personal information export - {domain}"
 msgstr ""
 
@@ -101,6 +110,9 @@ msgid "Your order no. {number} has been placed"
 msgstr ""
 
 msgid "Your order no. {number} is being processed"
+msgstr ""
+
+msgid "Your question about {productName}"
 msgstr ""
 
 msgid "Your watched product is back in stock!"

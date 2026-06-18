@@ -19,6 +19,8 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail;
+use Shopsys\FrameworkBundle\Model\ProductQuestion\Mail\ProductQuestionMail;
+use Shopsys\FrameworkBundle\Model\ProductQuestion\Mail\ProductQuestionMailTemplateVariablesProvider;
 use Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMail;
 use Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMailTemplateVariablesProvider;
 
@@ -42,6 +44,7 @@ class MailTemplateConfiguration
         protected readonly InquiryMailTemplateVariablesProvider $inquiryMailTemplateVariablesProvider,
         protected readonly WatchdogMailTemplateVariablesProvider $watchdogMailTemplateVariablesProvider,
         protected readonly ComplaintMail $complaintMail,
+        protected readonly ProductQuestionMailTemplateVariablesProvider $productQuestionMailTemplateVariablesProvider,
     ) {
         $this->registerStaticMailTemplates();
         $this->registerOrderStatusMailTemplates();
@@ -50,6 +53,7 @@ class MailTemplateConfiguration
         $this->registerCustomerActivationMailTemplate();
         $this->registerInquiryMailTemplates();
         $this->registerWatchdogMailTemplate();
+        $this->registerProductQuestionMailTemplates();
     }
 
     public function getMailTemplateVariablesBySlug(string $slug): MailTemplateVariables
@@ -347,5 +351,14 @@ class MailTemplateConfiguration
     {
         $watchdogMailTemplateVariables = $this->watchdogMailTemplateVariablesProvider->create();
         $this->addMailTemplateVariables(WatchdogMail::WATCHDOG_MAIL_TEMPLATE_NAME, $watchdogMailTemplateVariables);
+    }
+
+    protected function registerProductQuestionMailTemplates(): void
+    {
+        $productQuestionMailTemplateVariables = $this->productQuestionMailTemplateVariablesProvider->create(ProductQuestionMail::CUSTOMER_MAIL_TEMPLATE_NAME);
+        $this->addMailTemplateVariables(ProductQuestionMail::CUSTOMER_MAIL_TEMPLATE_NAME, $productQuestionMailTemplateVariables);
+
+        $productQuestionMailTemplateVariables = $this->productQuestionMailTemplateVariablesProvider->create(ProductQuestionMail::ADMIN_MAIL_TEMPLATE_NAME);
+        $this->addMailTemplateVariables(ProductQuestionMail::ADMIN_MAIL_TEMPLATE_NAME, $productQuestionMailTemplateVariables);
     }
 }

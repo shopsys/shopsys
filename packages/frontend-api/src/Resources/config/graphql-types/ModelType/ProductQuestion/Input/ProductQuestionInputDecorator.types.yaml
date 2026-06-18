@@ -1,0 +1,34 @@
+ProductQuestionInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            productUuid:
+                type: "Uuid!"
+                description: "UUID of the product the question is about"
+            customerName:
+                type: "String!"
+                description: "Name of the customer asking the question"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter your name"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Name cannot be longer than {{ limit }} characters"
+            email:
+                type: "String!"
+                description: "The customer's email address"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter email"
+                    -   Email:
+                            message: "Please enter valid email"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"
+            question:
+                type: "String!"
+                description: "The customer's question about the product"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter your question"

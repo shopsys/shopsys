@@ -1389,6 +1389,8 @@ type Mutation {
   OrderWithdrawalRequest(input: OrderWithdrawalRequestInput!): Boolean!
   "Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer"
   PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
+  "Send a product question to the customer and the shop operator"
+  ProductQuestion(input: ProductQuestionInput!): Boolean!
   "Recover password using hash required from RequestPasswordRecovery"
   RecoverPassword(input: RecoverPasswordInput!): LoginResult!
   "Refreshes access and refresh tokens"
@@ -2335,6 +2337,17 @@ type ProductPrice {
   priceWithVat: Money!
   "Total value of VAT"
   vatAmount: Money!
+}
+
+input ProductQuestionInput {
+  "Name of the customer asking the question"
+  customerName: String!
+  "The customer's email address"
+  email: String!
+  "UUID of the product the question is about"
+  productUuid: Uuid!
+  "The customer's question about the product"
+  question: String!
 }
 
 "One of possible product types"

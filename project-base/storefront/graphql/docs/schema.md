@@ -146,6 +146,7 @@
     * [ProductFilter](#productfilter)
     * [ProductListInput](#productlistinput)
     * [ProductListUpdateInput](#productlistupdateinput)
+    * [ProductQuestionInput](#productquestioninput)
     * [RecoverPasswordInput](#recoverpasswordinput)
     * [RefreshTokenInput](#refreshtokeninput)
     * [RegistrationByOrderInput](#registrationbyorderinput)
@@ -1728,6 +1729,20 @@ Pay order(create payment transaction in payment gateway) and get payment setup d
 <tr>
 <td colspan="2" align="right" valign="top">orderUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mutation.productquestion">ProductQuestion</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Send a product question to the customer and the shop operator
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productquestioninput">ProductQuestionInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -12652,6 +12667,56 @@ Product list identifier
 <td>
 
 Product identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductQuestionInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productquestioninput.customername">customerName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of the customer asking the question
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productquestioninput.email">email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productquestioninput.productuuid">productUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the product the question is about
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productquestioninput.question">question</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's question about the product
 
 </td>
 </tr>
