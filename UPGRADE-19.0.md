@@ -97,6 +97,8 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 
 - [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
     - migration for creating `messenger_messages` table (see `Shopsys\FrameworkBundle\Migrations\Version20241223020557`)
+    - delete the original migration file `app/src/Migrations/Version20231227143511` from your project
+    - replace the `App\Migrations\Version20231227143511` entry with `Shopsys\FrameworkBundle\Migrations\Version20241223020557` in `migrations-lock.yml`
 - see [project-base diff](https://www.github.com/shopsys/project-base/commit/86f3f32eb5abf72a8b276edd0ba6bcd446a2f3d2) to update your project
 
 #### few simple tweaks and fixes ([#4364](https://github.com/shopsys/shopsys/pull/4364))
