@@ -213,7 +213,7 @@ Additional rules:
 
 After the markdown is generated, check whether Playwright MCP/browser tools are available and whether the application is reachable.
 
-**Required:** when Playwright MCP is available, generate screenshots for UX-relevant tickets as part of the workflow (do not wait for a separate prompt). Default target URL is the review environment `https://<release-branch>.odin.shopsys.cloud/` (e.g. `19-0.odin.shopsys.cloud` for branch `19.0`); confirm or override with the user before starting.
+**Required:** when Playwright MCP is available, generate screenshots for UX-relevant tickets as part of the workflow (do not wait for a separate prompt). The default target URL is the production environment - https://cz.ssfwcc.prod.shopsys.cloud/. 
 
 If yes, explicitly ask the user whether they want visual attachments for relevant tasks:
 - The user may name concrete Jira tickets
