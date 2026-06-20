@@ -25,7 +25,7 @@ help: ## Displays list of available commands
 	run-specific-test-regression run-specific-test-base \
 	open-acceptance-tests-base open-acceptance-tests-regression run-smoke-tests \
 	generate-snapshots-info-table prepare-data-for-acceptance-tests cypress-prepare cypress-cleanup \
-	check-licenses
+	check-licenses environment-prod environment-dev
 
 # ------------------------------------------------------------------------------
 # 🐳 Docker Compose (macOS with Mutagen)
@@ -67,6 +67,33 @@ generate-schema-native: ## Generates GraphQL schema and frontend types (natively
 	find project-base/storefront/graphql/requests -type f -name "*.generated.tsx" -exec rm {} \;
 	cd project-base/storefront; pnpm run gql
 	rm -rf project-base/storefront/schema.graphql
+
+# ------------------------------------------------------------------------------
+# 🔁 Switching application environment (backend + storefront)
+# ------------------------------------------------------------------------------
+
+# Switches the whole application to the given environment.
+# $(1) = backend environment passed to phing (dev|prod)
+# $(2) = storefront run command (dev|build)
+# The storefront run command lives in the STOREFRONT_RUN_COMMAND env variable in docker-compose.yml
+# (read by the storefront entrypoint). The target rewrites that value and recreates the container to apply it.
+define switch_environment
+	@echo "🔁 Switching whole application to '$(1)' environment..."
+	@echo "🐘 Switching backend..."
+	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=$(1) environment-change
+	@echo "🛍️  Setting STOREFRONT_RUN_COMMAND=$(2) in docker-compose.yml and recreating the storefront container..."
+	sed -i.bak -E 's@^([[:space:]]*- STOREFRONT_RUN_COMMAND=)(dev|build)[[:space:]]*$$@\1$(2)@' docker-compose.yml && rm -f docker-compose.yml.bak
+	@grep -qE '^[[:space:]]*- STOREFRONT_RUN_COMMAND=$(2)$$' docker-compose.yml || { echo "❌ Failed to set STOREFRONT_RUN_COMMAND=$(2) in docker-compose.yml"; exit 1; }
+	docker compose up -d --force-recreate storefront
+	@echo "✅ Application switched to '$(1)' environment (storefront running '$(2)')."
+	@if [ "$(2)" = "build" ]; then echo "ℹ️  Storefront is building the production bundle in the background; follow it with 'docker compose logs -f storefront'."; fi
+endef
+
+environment-prod: ## Switches the whole application (backend + storefront) to the production environment
+	$(call switch_environment,prod,build)
+
+environment-dev: ## Switches the whole application (backend + storefront) to the development environment
+	$(call switch_environment,dev,dev)
 
 # ------------------------------------------------------------------------------
 # ✅ Code Checks and Fixes (PHP and JS/TS)

@@ -19,7 +19,12 @@ install_with_retry() {
   done
 }
 
-case "$1" in
+# The run command is taken from the STOREFRONT_RUN_COMMAND env variable (set in docker-compose.yml
+# and toggled by `make environment-dev` / `make environment-prod`), falling back to the container
+# command argument and then to `dev`.
+RUN_COMMAND="${STOREFRONT_RUN_COMMAND:-${1:-dev}}"
+
+case "$RUN_COMMAND" in
   "dev")
     install_with_retry
     exec pnpm run dev ;;
