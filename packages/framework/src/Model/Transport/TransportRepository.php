@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportRepository
@@ -51,6 +52,34 @@ class TransportRepository
             ->andWhere('t.id IN (:transportIds)')->setParameter('transportIds', $transportIds)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param int[] $productIds
+     * @return array<int, int[]>
+     */
+    public function getProductIdsIndexedByExcludedTransportId(array $productIds): array
+    {
+        if ($productIds === []) {
+            return [];
+        }
+
+        $rows = $this->em->createQueryBuilder()
+            ->select('t.id AS transportId', 'p.id AS productId')
+            ->from(Product::class, 'p')
+            ->join('p.excludedTransports', 't')
+            ->where('p.id IN (:productIds)')
+            ->setParameter('productIds', $productIds)
+            ->getQuery()
+            ->getScalarResult();
+
+        $productIdsByExcludedTransportId = [];
+
+        foreach ($rows as $row) {
+            $productIdsByExcludedTransportId[(int)$row['transportId']][] = (int)$row['productId'];
+        }
+
+        return $productIdsByExcludedTransportId;
     }
 
     /**

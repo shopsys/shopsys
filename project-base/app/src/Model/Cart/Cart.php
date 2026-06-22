@@ -27,6 +27,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct createQuantifiedProduct(\App\Model\Cart\Item\CartItem $cartItem)
  * @method \App\Model\Cart\Item\CartItem[] getProductGiftCartItems()
  * @method \App\Model\Cart\Item\CartItem[] getProductCartItems()
+ * @method \App\Model\Product\Product[] getPersonalPickupOnlyProducts()
  */
 #[AsMcpTable]
 #[ORM\Table(name: 'carts')]

@@ -1837,6 +1837,9 @@ msgstr "ID %productId%"
 msgid "Icon"
 msgstr "Ikona"
 
+msgid "If enabled, a cart containing this product can only use personal pickup at store transports."
+msgstr "Ak je zapnuté, košík obsahujúci tento produkt je možné doručiť iba dopravami typu osobný odber na predajni."
+
 msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
 msgstr "Ak krajina nie je uvedená, musíte ju najskôr <a href=\"%countryCreateUrl%\" target=\"_blank\">vytvoriť</a>. Alebo vo zriedkavých scenároch váš kód krajiny nemusí byť <a href=\"%supportedCountriesUrl%\" target=\"_blank\">podporovaný</a>."
 
@@ -2586,6 +2589,9 @@ msgstr "Prehľad Personal information"
 
 msgid "Personal pickup"
 msgstr "Osobný odber"
+
+msgid "Personal pickup only"
+msgstr "Iba osobný odber"
 
 msgid "Phone"
 msgstr "Telefón"

@@ -59,6 +59,11 @@ class ProductData
     public $hidden;
 
     /**
+     * @var bool
+     */
+    public $personalPickupOnly;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
      */
     public $unit;
@@ -240,6 +245,7 @@ class ProductData
         $this->nameSuffix = [];
         $this->sellingDenied = false;
         $this->hidden = false;
+        $this->personalPickupOnly = false;
         $this->flagsByDomainId = [];
         $this->isAllowedNegativeStock = true;
         $this->productStockData = [];

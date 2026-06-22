@@ -21,12 +21,21 @@ export type TypeTransportTypeEnum =
   | 'packetery'
   | 'personal_pickup';
 
+/** Reason why a transport cannot be selected for the given cart */
+export type TypeTransportUnavailabilityReasonInCartEnum =
+  | 'excluded_for_product'
+  | 'personal_pickup_required';
+
 export type TypeTransportsQueryVariables = Exact<{
   cartUuid?: string | null | undefined;
 }>;
 
 
-export type TypeTransportsQuery = { transports: Array<{ __typename: 'Transport', uuid: string, name: string, description: string | null, daysUntilDelivery: number, transportTypeCode: Types.TypeTransportTypeEnum, isPersonalPickup: boolean, vatPercent: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, payments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }> }> };
+export type TypeTransportsQuery = { transports: Array<{ __typename: 'Transport', uuid: string, name: string, description: string | null, daysUntilDelivery: number, transportTypeCode: Types.TypeTransportTypeEnum, isPersonalPickup: boolean, vatPercent: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, payments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }>, productsBlockingSelectionInCart: Array<{ reason: Types.TypeTransportUnavailabilityReasonInCartEnum, products: Array<
+        | { uuid: string, fullName: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+        | { uuid: string, fullName: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+        | { uuid: string, fullName: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+      > }> }> };
 
 
 export const TransportsQueryDocument = gql`

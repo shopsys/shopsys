@@ -101,6 +101,7 @@
     * [ProductFilterOptions](#productfilteroptions)
     * [ProductList](#productlist)
     * [ProductPrice](#productprice)
+    * [ProductsByTransportUnavailabilityReason](#productsbytransportunavailabilityreason)
     * [PromoCode](#promocode)
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
@@ -183,6 +184,7 @@
     * [SellingPriceTypeEnum](#sellingpricetypeenum)
     * [StoreOpeningStatusEnum](#storeopeningstatusenum)
     * [TransportTypeEnum](#transporttypeenum)
+    * [TransportUnavailabilityReasonInCartEnum](#transportunavailabilityreasonincartenum)
   * [Scalars](#scalars)
     * [Boolean](#boolean)
     * [DateTime](#datetime)
@@ -6129,6 +6131,15 @@ Whether the product is currently out of stock (but may be back in stock later), 
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainvariant.ispersonalpickuponly">isPersonalPickupOnly</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether a cart containing this product is limited to personal pickup transports
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.issellingdenied">isSellingDenied</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -8968,6 +8979,41 @@ Total value of VAT
 </tbody>
 </table>
 
+### ProductsByTransportUnavailabilityReason
+
+Cart products grouped by the reason why they cannot be delivered using the transport
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productsbytransportunavailabilityreason.products">products</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+Cart products that cannot be delivered using the transport for this reason
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productsbytransportunavailabilityreason.reason">reason</strong></td>
+<td valign="top"><a href="#transportunavailabilityreasonincartenum">TransportUnavailabilityReasonInCartEnum</a>!</td>
+<td>
+
+Reason why the products cannot be delivered using the transport
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### PromoCode
 
 <table>
@@ -9377,6 +9423,15 @@ Whether the product is currently out of stock (but may be back in stock later), 
 <td colspan="2" valign="top"><strong id="regularproduct.ismainvariant">isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="regularproduct.ispersonalpickuponly">isPersonalPickupOnly</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether a cart containing this product is limited to personal pickup transports
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="regularproduct.issellingdenied">isSellingDenied</strong></td>
@@ -10551,6 +10606,20 @@ Transport price
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="transport.productsblockingselectionincart">productsBlockingSelectionInCart</strong></td>
+<td valign="top">[<a href="#productsbytransportunavailabilityreason">ProductsByTransportUnavailabilityReason</a>!]!</td>
+<td>
+
+Cart products that cannot be delivered using this transport, grouped by the reason (empty when the transport can be selected)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">cartUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="transport.stores">stores</strong></td>
 <td valign="top"><a href="#storeconnection">StoreConnection</a></td>
 <td>
@@ -10794,6 +10863,15 @@ Whether the product is currently out of stock (but may be back in stock later), 
 <td colspan="2" valign="top"><strong id="variant.ismainvariant">isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.ispersonalpickuponly">isPersonalPickupOnly</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether a cart containing this product is limited to personal pickup transports
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="variant.issellingdenied">isSellingDenied</strong></td>
@@ -14225,6 +14303,29 @@ One of the possible methods of the transport type
 </tbody>
 </table>
 
+### TransportUnavailabilityReasonInCartEnum
+
+Reason why a transport cannot be selected for the given cart
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>excluded_for_product</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>personal_pickup_required</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ## Scalars
 
 ### Boolean
@@ -15125,6 +15226,15 @@ Whether the product is currently out of stock (but may be back in stock later), 
 <td colspan="2" valign="top"><strong id="product.ismainvariant">isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.ispersonalpickuponly">isPersonalPickupOnly</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether a cart containing this product is limited to personal pickup transports
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="product.issellingdenied">isSellingDenied</strong></td>

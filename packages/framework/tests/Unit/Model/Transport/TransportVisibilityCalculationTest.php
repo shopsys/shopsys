@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Transport;
 
-use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
 
 class TransportVisibilityCalculationTest extends TestCase
@@ -35,12 +35,12 @@ class TransportVisibilityCalculationTest extends TestCase
         $independentPaymentVisibilityCalculationStub = $this
             ->createStub(IndependentPaymentVisibilityCalculation::class);
 
-        $entityManagerStub = $this->createStub(EntityManagerInterface::class);
+        $transportRepositoryStub = $this->createStub(TransportRepository::class);
 
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationStub,
-            $entityManagerStub,
+            $transportRepositoryStub,
         );
 
         $this->assertFalse($transportVisibilityCalculation->isVisible($transportStub, [], $domainId));
@@ -76,12 +76,12 @@ class TransportVisibilityCalculationTest extends TestCase
             ->with($this->equalTo($paymentStub), $this->equalTo($domainId))
             ->willReturn(false);
 
-        $entityManagerStub = $this->createStub(EntityManagerInterface::class);
+        $transportRepositoryStub = $this->createStub(TransportRepository::class);
 
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationMock,
-            $entityManagerStub,
+            $transportRepositoryStub,
         );
 
         $this->assertFalse($transportVisibilityCalculation->isVisible($transportStub, [$paymentStub], $domainId));
@@ -121,12 +121,12 @@ class TransportVisibilityCalculationTest extends TestCase
             ->with($this->equalTo($paymentMock), $this->equalTo($domainId))
             ->willReturn(true);
 
-        $entityManagerStub = $this->createStub(EntityManagerInterface::class);
+        $transportRepositoryStub = $this->createStub(TransportRepository::class);
 
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationMock,
-            $entityManagerStub,
+            $transportRepositoryStub,
         );
 
         $this->assertFalse($transportVisibilityCalculation->isVisible($transportStub, [$paymentMock], $domainId));
@@ -166,12 +166,12 @@ class TransportVisibilityCalculationTest extends TestCase
             ->with($this->equalTo($paymentMock), $this->equalTo($domainId))
             ->willReturn(true);
 
-        $entityManagerStub = $this->createStub(EntityManagerInterface::class);
+        $transportRepositoryStub = $this->createStub(TransportRepository::class);
 
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationMock,
-            $entityManagerStub,
+            $transportRepositoryStub,
         );
 
         $this->assertTrue($transportVisibilityCalculation->isVisible($transportStub, [$paymentMock], $domainId));
@@ -212,12 +212,12 @@ class TransportVisibilityCalculationTest extends TestCase
             ->with($this->equalTo($paymentMock), $this->equalTo($domainId))
             ->willReturn(true);
 
-        $entityManagerStub = $this->createStub(EntityManagerInterface::class);
+        $transportRepositoryStub = $this->createStub(TransportRepository::class);
 
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationMock,
-            $entityManagerStub,
+            $transportRepositoryStub,
         );
 
         $transports = [$transportHiddenStub, $transportVisibleStub];

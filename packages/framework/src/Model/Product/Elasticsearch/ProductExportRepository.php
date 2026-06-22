@@ -153,6 +153,7 @@ class ProductExportRepository
             ProductExportFieldProvider::PARAMETERS => $this->extractParametersIncludedVariants($product, $locale, $domainId),
             ProductExportFieldProvider::ORDERING_PRIORITY => $product->getOrderingPriority($domainId),
             ProductExportFieldProvider::SELLING_DENIED => $product->isCalculatedSellingDenied($domainId),
+            ProductExportFieldProvider::PERSONAL_PICKUP_ONLY => $product->isPersonalPickupOnly(),
             ProductExportFieldProvider::AVAILABILITY => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
             ProductExportFieldProvider::IS_MAIN_VARIANT => $product->isMainVariant(),
             ProductExportFieldProvider::IS_VARIANT => $product->isVariant(),

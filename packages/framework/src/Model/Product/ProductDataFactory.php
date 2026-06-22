@@ -167,6 +167,7 @@ class ProductDataFactory
         $productData->productType = $product->getProductType();
 
         $productData->isAllowedNegativeStock = $product->isAllowedNegativeStock();
+        $productData->personalPickupOnly = $product->isPersonalPickupOnly();
         $this->fillProductStockByProduct($productData, $product);
     }
 

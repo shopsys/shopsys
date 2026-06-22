@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -241,6 +242,22 @@ class Cart
             static fn (QuantifiedProduct $quantifiedProduct) => $quantifiedProduct->getProduct(),
             $this->getQuantifiedProducts(),
         );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getPersonalPickupOnlyProducts(): array
+    {
+        return array_filter(
+            $this->getProducts(),
+            static fn (Product $product) => $product->isPersonalPickupOnly(),
+        );
+    }
+
+    public function isPersonalPickupRequired(): bool
+    {
+        return $this->getPersonalPickupOnlyProducts() !== [];
     }
 
     public function findSimilarItemByItem(CartItem $item): ?CartItem

@@ -1500,6 +1500,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   isCurrentlyOutOfStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
+  /** Whether a cart containing this product is limited to personal pickup transports */
+  isPersonalPickupOnly: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
@@ -2670,6 +2672,8 @@ export type TypeProduct = {
   isCurrentlyOutOfStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
+  /** Whether a cart containing this product is limited to personal pickup transports */
+  isPersonalPickupOnly: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
@@ -2894,6 +2898,15 @@ export enum TypeProductTypeEnum {
   /** Product with inquiry form instead of add to cart button */
   Inquiry = 'INQUIRY'
 }
+
+/** Cart products grouped by the reason why they cannot be delivered using the transport */
+export type TypeProductsByTransportUnavailabilityReason = {
+  __typename?: 'ProductsByTransportUnavailabilityReason';
+  /** Cart products that cannot be delivered using the transport for this reason */
+  products: Array<TypeProduct>;
+  /** Reason why the products cannot be delivered using the transport */
+  reason: TypeTransportUnavailabilityReasonInCartEnum;
+};
 
 export type TypePromoCode = {
   __typename?: 'PromoCode';
@@ -3475,6 +3488,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   isCurrentlyOutOfStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
+  /** Whether a cart containing this product is limited to personal pickup transports */
+  isPersonalPickupOnly: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
@@ -3831,6 +3846,8 @@ export type TypeTransport = {
   position: Scalars['Int']['output'];
   /** Transport price */
   price: TypePrice;
+  /** Cart products that cannot be delivered using this transport, grouped by the reason (empty when the transport can be selected) */
+  productsBlockingSelectionInCart: Array<TypeProductsByTransportUnavailabilityReason>;
   /** Stores available for personal pickup */
   stores: Maybe<TypeStoreConnection>;
   /** Code of transport type */
@@ -3858,11 +3875,23 @@ export type TypeTransportPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
+
+/** Represents a transport */
+export type TypeTransportProductsBlockingSelectionInCartArgs = {
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+};
+
 /** One of the possible methods of the transport type */
 export enum TypeTransportTypeEnum {
   Common = 'common',
   Packetery = 'packetery',
   PersonalPickup = 'personal_pickup'
+}
+
+/** Reason why a transport cannot be selected for the given cart */
+export enum TypeTransportUnavailabilityReasonInCartEnum {
+  ExcludedForProduct = 'excluded_for_product',
+  PersonalPickupRequired = 'personal_pickup_required'
 }
 
 /** Represents a unit */
@@ -3911,6 +3940,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   isCurrentlyOutOfStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
+  /** Whether a cart containing this product is limited to personal pickup transports */
+  isPersonalPickupOnly: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
   /** Product link */

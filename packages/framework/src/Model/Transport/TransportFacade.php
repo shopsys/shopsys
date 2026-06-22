@@ -231,10 +231,6 @@ class TransportFacade
         $domainId = $this->domain->getId();
         $transports = $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig(), $cart?->getTotalWeight());
 
-        if ($cart !== null) {
-            $transports = $this->transportVisibilityCalculation->filterTransportsByProductsInCart($transports, $cart);
-        }
-
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         return $this->transportVisibilityCalculation->filterVisible($transports, $visiblePayments, $domainId);
