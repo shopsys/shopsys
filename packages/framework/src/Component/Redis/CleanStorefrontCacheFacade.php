@@ -22,6 +22,7 @@ class CleanStorefrontCacheFacade
     public const string BRANDS_QUERY_KEY_PART = 'BrandsQuery';
     public const string SEO_PAGE_QUERY_KEY_PART = 'SeoPageQuery';
     public const string STORES_QUERY_KEY_PART = 'StoresQuery';
+    public const string MAP_STORES_QUERY_KEY_PART = 'MapStoresQuery';
 
     public function __construct(
         protected readonly Redis $storefrontGraphqlQueryClient,

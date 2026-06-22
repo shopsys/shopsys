@@ -66,7 +66,6 @@ export const usePaginatedStoreConnection = <
 
     useEffect(() => {
         queryKeyRef.current = queryKey;
-        setStores(null);
         setIsLoadingMoreStores(false);
         setLoadMoreStoresError(undefined);
     }, [queryKey]);
@@ -125,11 +124,9 @@ export const usePaginatedStoreConnection = <
                     : mergeStoreConnections(currentStores, nextStoreConnection),
             );
         } finally {
-            if (queryKeyRef.current !== requestedQueryKey) {
-                return;
+            if (queryKeyRef.current === requestedQueryKey) {
+                setIsLoadingMoreStores(false);
             }
-
-            setIsLoadingMoreStores(false);
         }
     }, [
         client,

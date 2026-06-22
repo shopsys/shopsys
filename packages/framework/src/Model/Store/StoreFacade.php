@@ -44,7 +44,7 @@ class StoreFacade
         $this->imageFacade->manageImages($store, $storeData->image);
         $this->productRecalculationDispatcher->dispatchAllProducts();
 
-        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::STORES_QUERY_KEY_PART);
+        $this->cleanStorefrontStoresQueriesCache();
 
         return $store;
     }
@@ -62,7 +62,7 @@ class StoreFacade
         $this->createFriendlyUrl($store);
         $this->productRecalculationDispatcher->dispatchAllProducts();
 
-        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::STORES_QUERY_KEY_PART);
+        $this->cleanStorefrontStoresQueriesCache();
 
         return $store;
     }
@@ -88,12 +88,18 @@ class StoreFacade
         $this->em->remove($store);
         $this->em->flush();
 
-        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::STORES_QUERY_KEY_PART);
+        $this->cleanStorefrontStoresQueriesCache();
     }
 
     public function changeDefaultStore(Store $store): void
     {
         $this->storeRepository->changeDefaultStore($store);
+    }
+
+    protected function cleanStorefrontStoresQueriesCache(): void
+    {
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::STORES_QUERY_KEY_PART);
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::MAP_STORES_QUERY_KEY_PART);
     }
 
     public function findStoreByExternalId(string $externalId): ?Store

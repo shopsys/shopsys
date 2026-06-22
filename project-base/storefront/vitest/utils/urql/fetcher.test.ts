@@ -48,6 +48,52 @@ const REQUEST_WITHOUT_DIRECTIVE = {
     signal: {},
 } as unknown as RequestInit;
 
+const STORES_QUERY_REQUEST_WITH_DIRECTIVE = {
+    ...REQUEST_WITH_DIRECTIVE,
+    body: JSON.stringify({
+        operationName: 'StoresQuery',
+        variables: {
+            searchText: null,
+            coordinates: null,
+            first: 10,
+            after: null,
+        },
+        query: `query StoresQuery($searchText: String = null, $coordinates: Coordinates = null, $first: Int, $after: String)
+@redisCache(ttl: 3600) {
+    stores(searchText: $searchText, coordinates: $coordinates, first: $first, after: $after) {
+        edges {
+            node {
+                uuid
+            }
+        }
+    }
+}`,
+    }),
+} as unknown as RequestInit;
+
+const STORES_QUERY_REQUEST_WITH_PARAMETER = {
+    ...STORES_QUERY_REQUEST_WITH_DIRECTIVE,
+    body: JSON.stringify({
+        operationName: 'StoresQuery',
+        variables: {
+            searchText: 'Praha',
+            coordinates: null,
+            first: null,
+            after: null,
+        },
+        query: `query StoresQuery($searchText: String = null, $coordinates: Coordinates = null, $first: Int, $after: String)
+@redisCache(ttl: 3600) {
+    stores(searchText: $searchText, coordinates: $coordinates, first: $first, after: $after) {
+        edges {
+            node {
+                uuid
+            }
+        }
+    }
+}`,
+    }),
+} as unknown as RequestInit;
+
 const TEST_URL = 'https://test.ts/graphql/';
 const TEST_URL_WITH_DIRECTIVE =
     'https://test.ts/graphql/?query=query%20TestQuery%20@redisCache(ttl:%203600)%20{%0A%20foobar%0A}';
@@ -60,9 +106,12 @@ const TEST_RESPONSE_BODY = { testBody: 'test data' };
 describe('fetcher test', () => {
     beforeEach(() => {
         vi.unstubAllEnvs();
+        isClientGetter.mockReset();
         isClientGetter.mockImplementation(() => false);
+        mockRedisClientGet.mockReset();
+        mockRedisClientSet.mockClear();
         mockRedisClientGet.mockImplementation(() => null);
-        mockRedisClientSet.mockImplementation(() => null);
+        mockRedisClientGet.mockImplementation((): string | null => null);
         mockFetch.mockImplementation(() =>
             Promise.resolve({
                 headers: new Headers({
@@ -147,7 +196,41 @@ describe('fetcher test', () => {
             JSON.stringify(TEST_RESPONSE_BODY),
             { EX: 3600 },
         );
-        vi.unstubAllEnvs();
+    });
+
+    test('using fetcher on StoresQuery should use operation name in Redis cache key', async () => {
+        isClientGetter.mockImplementation(() => false);
+        vi.stubEnv('REDIS_PREFIX', 'TEST_PREFIX');
+        mockFetch.mockImplementation(() =>
+            Promise.resolve({
+                headers: new Headers({
+                    'content-type': 'application/json',
+                }),
+                json: () => Promise.resolve({ data: TEST_RESPONSE_BODY }),
+            }),
+        );
+
+        const testFetcher = fetcher(mockRedisClient);
+        await testFetcher(TEST_URL, STORES_QUERY_REQUEST_WITH_DIRECTIVE);
+
+        expect(mockRedisClient.get).toBeCalledWith(expect.stringContaining('TEST_PREFIX:fe:queryCache:StoresQuery:'));
+        expect(mockRedisClient.get).not.toBeCalledWith(expect.stringContaining('TEST_PREFIX:fe:queryCache:undefined:'));
+    });
+
+    test('using fetcher on StoresQuery with a set parameter should not use Redis cache', async () => {
+        isClientGetter.mockImplementation(() => false);
+
+        const testFetcher = fetcher(mockRedisClient);
+        await testFetcher(TEST_URL, STORES_QUERY_REQUEST_WITH_PARAMETER);
+
+        expect(mockRedisClient.get).not.toBeCalled();
+        expect(mockRedisClient.set).not.toBeCalled();
+        expect(mockFetch).toBeCalledWith(
+            TEST_URL,
+            expect.objectContaining({
+                body: expect.not.stringContaining('@redisCache'),
+            }),
+        );
     });
 
     test('should handle non-JSON content-type responses', async () => {
@@ -239,7 +322,6 @@ describe('fetcher test', () => {
 
             const expectedCleanedUrl = 'https://test.ts/graphql/?query=query%20TestQuery%20%20{%0A%20foobar%0A}';
             expect(mockFetch).toBeCalledWith(expectedCleanedUrl, REQUEST_WITHOUT_DIRECTIVE);
-            vi.unstubAllEnvs();
         });
 
         test('should handle URLs without directives', () => {

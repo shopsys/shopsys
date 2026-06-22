@@ -4,6 +4,7 @@ import {
     AdvertsQueryDocument,
     TypeAdvertsQueryVariables,
 } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
+import { MapStoresQueryDocument } from 'graphql/requests/stores/queries/MapStoresQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
@@ -39,6 +40,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
                 },
                 prefetchedQueries: [
+                    {
+                        query: MapStoresQueryDocument,
+                    },
                     {
                         query: AdvertsQueryDocument,
                         variables: {

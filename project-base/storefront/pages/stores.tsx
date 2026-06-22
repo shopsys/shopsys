@@ -4,6 +4,7 @@ import { usePaginatedStoreConnection } from 'components/Blocks/StoreList/usePagi
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { MapStoresQueryDocument } from 'graphql/requests/stores/queries/MapStoresQuery.generated';
 import { StoresQueryDocument, TypeStoresQuery } from 'graphql/requests/stores/queries/StoresQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
@@ -86,6 +87,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
                             first: STORE_LIST_PAGE_SIZE,
                             after: null,
                         },
+                    },
+                    {
+                        query: MapStoresQueryDocument,
                     },
                 ],
                 redisClient,
