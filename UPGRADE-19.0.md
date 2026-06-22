@@ -1139,6 +1139,16 @@ The notes below cover Shopsys-specific changes:
 
 - add `LUIGIS_BOX_ENABLED_DOMAIN_IDS=''` and `LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS='{}'` to `project-base/app/.env.test` so that search tests use the local provider instead of routing to the remote Luigi's Box service — see #project-base-diff to update your project
 
+#### Add MCP server for AI-based read-only database exploration ([#4564](https://github.com/shopsys/shopsys/pull/4564))
+
+- you need to decide which of your custom database tables and fields should be exposed to the MCP server and add the proper attributes (`#[AsMcpTable]` and `#[AsMcpColumn]`) accordingly
+    - the coverage is also required by PHPStan rule, so you can rest assured any missing attributes will be reported
+- be sure to set proper `MCP_DATABASE_USER` and `MCP_DATABASE_PASSWORD` environment variables in your deployment (Gitlab variables) to allow the MCP server to connect to your database
+    - the credentials should point to a user with read-only access to the database (you might need the devops team to create such a user for you)
+- you can see more info about the MCP server [in the docs](https://docs.shopsys.com/en/19.0/ai/mcp/)
+- see [project-base diff](https://github.com/shopsys/project-base/commit/70e150bd08ac88c523a9be4bdf384e65af669386) to update your project
+- see also [project-base diff](https://github.com/shopsys/project-base/commit/7a44d94068137de3ef90b70131007c58940ab052) of [#4640](https://github.com/shopsys/shopsys/pull/4640) with an additional fix
+
 <!-- backendNotes -->
 
 ### Storefront
