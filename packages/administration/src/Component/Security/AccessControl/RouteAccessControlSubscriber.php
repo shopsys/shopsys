@@ -81,6 +81,11 @@ final class RouteAccessControlSubscriber implements EventSubscriberInterface
 
         $reflectionClass = new ReflectionClass($controllerObject);
         $routeData = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
+
+        if ($routeData === []) {
+            return;
+        }
+
         $routeAccessControlData = new RouteAccessControlData(
             null,
             $routeData,
