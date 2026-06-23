@@ -11,6 +11,7 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
     - upgrade to the next version
     - fix all the issues you encounter
     - repeat
+- when upgrading to a new major or minor version, always upgrade to the latest patch version of that major/minor first (e.g. upgrade to the latest `19.0.x` before moving on to `20.0`); patch releases contain fixes — including database migration fixes — that make the subsequent upgrade safe
 - check the instructions in all sections; any of them could be relevant to you
 - the typical upgrade sequence should be:
     - run `docker compose down --volumes` to turn off your containers
