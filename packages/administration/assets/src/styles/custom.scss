@@ -11,6 +11,7 @@
         overflow: hidden;
 
         @include media-breakpoint-up(xl) {
+            /* biome-ignore lint/suspicious/noDuplicateProperties: breakpoint override intentionally redefines the base declaration */
             flex-basis: auto;
         }
     }
@@ -19,6 +20,7 @@
         width: 100%;
 
         @include media-breakpoint-up(sm) {
+            /* biome-ignore lint/suspicious/noDuplicateProperties: breakpoint override intentionally redefines the base declaration */
             width: auto;
         }
     }
@@ -28,6 +30,7 @@
         justify-content: space-between;
 
         @include media-breakpoint-up(sm) {
+            /* biome-ignore lint/suspicious/noDuplicateProperties: breakpoint override intentionally redefines the base declaration */
             width: auto;
         }
     }
@@ -49,6 +52,7 @@
     margin-bottom: 10vh !important;
 
     @include media-breakpoint-up(xl) {
+        /* biome-ignore lint/suspicious/noDuplicateProperties: breakpoint override intentionally redefines the base declaration */
         margin-bottom: 20vh !important;
     }
 
@@ -82,7 +86,7 @@
 }
 
 .link-disabled {
-    opacity: .4;
+    opacity: 0.4;
     cursor: not-allowed;
     pointer-events: auto;
 }
