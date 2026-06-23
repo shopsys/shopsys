@@ -33,7 +33,10 @@ class TransportGridFactory implements GridFactoryInterface
     {
         $queryBuilder = $this->transportRepository->getQueryBuilderForAll()
             ->addSelect('tt.name')
+            ->addSelect('tgt.name AS transportGroupName')
             ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
+            ->leftJoin('t.group', 'tg')
+            ->leftJoin('tg.translations', 'tgt', Join::WITH, 'tgt.locale = :locale')
             ->setParameter('locale', $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale());
         $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
@@ -51,6 +54,7 @@ class TransportGridFactory implements GridFactoryInterface
         $grid->enableDragAndDrop(Transport::class);
 
         $grid->addColumn('name', 'tt.name', t('Name'));
+        $grid->addColumn('group', 'transportGroupName', t('Group'));
         $grid->addColumn('prices', 'prices', t('Prices'))->setClassAttribute('w-25 text-end');
 
         $grid->addEditActionColumn('admin_transport_edit', ['id' => 't.id']);

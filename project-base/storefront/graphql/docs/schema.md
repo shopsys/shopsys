@@ -116,6 +116,7 @@
     * [StoreEdge](#storeedge)
     * [Token](#token)
     * [Transport](#transport)
+    * [TransportGroup](#transportgroup)
     * [Unit](#unit)
     * [Variant](#variant)
     * [VideoToken](#videotoken)
@@ -10519,6 +10520,15 @@ Localized transport description (domain dependent)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="transport.group">group</strong></td>
+<td valign="top"><a href="#transportgroup">TransportGroup</a></td>
+<td>
+
+Transport group
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="transport.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -10650,6 +10660,64 @@ UUID
 <td colspan="2" valign="top"><strong id="transport.vatpercent">vatPercent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### TransportGroup
+
+Represents a transport group
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="transportgroup.mainimage">mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Transport group image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="transportgroup.name">name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Transport group name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="transportgroup.position">position</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Transport group position
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="transportgroup.uuid">uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Transport group UUID
+
+</td>
 </tr>
 </tbody>
 </table>

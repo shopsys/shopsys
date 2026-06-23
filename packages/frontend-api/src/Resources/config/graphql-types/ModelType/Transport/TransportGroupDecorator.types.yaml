@@ -1,0 +1,23 @@
+TransportGroupDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a transport group"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "Transport group UUID"
+            name:
+                type: "String!"
+                description: "Transport group name"
+            position:
+                type: "Int!"
+                description: "Transport group position"
+            mainImage:
+                type: "Image"
+                description: "Transport group image by params"
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null

@@ -21,6 +21,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
@@ -133,12 +134,7 @@ abstract class AbstractCrudController extends AdminBaseController
                 $this->executeExtensions(fn (CrudEditHookExtensionInterface $extension) => $extension->afterEdit($entity, $data), CrudEditHookExtensionInterface::class);
 
                 if ($this->isFlashMessageBagEmpty()) {
-                    $this->addSuccessFlashTwig(
-                        t('<strong>{{ objectName }}</strong> was saved successfully.'),
-                        [
-                            'objectName' => $entity->toHumanReadable(),
-                        ],
-                    );
+                    $this->addEditSuccessFlash($entity, $id);
                 }
 
                 return $this->redirect(
@@ -323,5 +319,24 @@ abstract class AbstractCrudController extends AdminBaseController
         foreach ($extensions as $extension) {
             $callback($extension);
         }
+    }
+
+    private function addEditSuccessFlash(Presentable $entity, int $id): void
+    {
+        $this->addSuccessFlashTwig(
+            t('<strong><a href="{{ url }}">{{ objectName }}</a></strong> was saved successfully.'),
+            [
+                'objectName' => $entity->toHumanReadable(),
+                'url' => $this->generateUrl(
+                    CrudTransformationHelper::generateRouteName(
+                        $this->definition->controllerName,
+                        ActionType::EDIT,
+                    ),
+                    [
+                        'id' => $id,
+                    ],
+                ),
+            ],
+        );
     }
 }

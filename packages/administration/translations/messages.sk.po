@@ -37,6 +37,9 @@ msgstr "Položka \"<strong>{{ objectName }}</strong>\" bola úspešne vymazaná.
 msgid "<strong>{{ objectName }}</strong> was saved successfully."
 msgstr "Položka „<strong>{{ objectName }}</strong>\" bola úspešne uložená."
 
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
+msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" bola úspešne uložená."
+
 msgid "Action"
 msgstr "Akcia"
 
@@ -721,6 +724,9 @@ msgstr "Naozaj chcete odstrániť objednávku?"
 msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr "Naozaj chcete odstrániť túto kategóriu aj s ich SEO mixami?"
 
+msgid "Do you really want to remove this transport group? This step is irreversible!"
+msgstr "Naozaj chcete odstrániť túto skupinu dopravy? Tento krok je nezvratný!"
+
 msgid "Domain"
 msgstr "Doména"
 
@@ -900,6 +906,9 @@ msgstr "Úprava doručovania"
 
 msgid "Editing store"
 msgstr "Úprava predajne"
+
+msgid "Editing transport group"
+msgstr "Úprava skupiny dopravy"
 
 msgid "Editing warehouse"
 msgstr "Úprava skladu"
@@ -1389,6 +1398,9 @@ msgstr "Nová doručovacia metóda"
 
 msgid "New store"
 msgstr "Nový obchod"
+
+msgid "New transport group"
+msgstr "Nová skupina dopravy"
 
 msgid "New value"
 msgstr "Nová hodnota"
@@ -2314,6 +2326,12 @@ msgstr "Transfery"
 msgid "Transport"
 msgstr "Doprava"
 
+msgid "Transport group"
+msgstr "Skupina dopravy"
+
+msgid "Transport groups"
+msgstr "Skupiny dopravy"
+
 msgid "Transports and payments"
 msgstr "Prepravy a platby"
 
@@ -2649,4 +2667,3 @@ msgstr "bez DPH"
 
 msgid "yesterday"
 msgstr "včera"
-

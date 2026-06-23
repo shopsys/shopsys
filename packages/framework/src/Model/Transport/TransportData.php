@@ -71,6 +71,11 @@ class TransportData
      */
     public $type;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportGroup|null
+     */
+    public $group;
+
     public function __construct()
     {
         $this->name = [];

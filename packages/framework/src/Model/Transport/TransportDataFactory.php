@@ -88,6 +88,7 @@ class TransportDataFactory
         $transportData->payments = $transport->getPayments();
         $transportData->image = $this->imageUploadDataFactory->createFromEntityAndType($transport);
         $transportData->type = $transport->getType();
+        $transportData->group = $transport->getGroup();
         $transportData->trackingUrl = $transport->getTrackingUrl();
     }
 }

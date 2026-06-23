@@ -51,3 +51,6 @@ TransportDecorator:
                         defaultValue: null
             vatPercent:
                 type: "String!"
+            group:
+                type: "TransportGroup"
+                description: "Transport group"

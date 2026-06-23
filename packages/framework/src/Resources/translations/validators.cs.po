@@ -508,6 +508,9 @@ msgstr "Vyplňte prosím celkovou cenu s DPH"
 msgid "Please enter total price without VAT"
 msgstr "Vyplňte prosím celkovou cenu bez DPH"
 
+msgid "Please enter transport group name"
+msgstr "Vyplňte prosím název skupiny doprav"
+
 msgid "Please enter unit name in all languages"
 msgstr "Vyplňte prosím název jednotky ve všech jazycích"
 
@@ -675,6 +678,9 @@ msgstr "Toto pole musí zůstat prázdné"
 
 msgid "This value is not a valid email address."
 msgstr "Tato hodnota není platnou e-mailovou adresou."
+
+msgid "Transport group name cannot be longer than {{ limit }} characters"
+msgstr "Název skupiny doprav nesmí být delší než {{ limit }} znaků"
 
 msgid "Unit name cannot be longer than {{ limit }} characters"
 msgstr "Název jednotky nesmí být delší než {{ limit }} znaků"

@@ -3064,6 +3064,8 @@ type Transport {
   daysUntilDelivery: Int!
   "Localized transport description (domain dependent)"
   description: String
+  "Transport group"
+  group: TransportGroup
   "Transport images"
   images(type: String = null): [Image!]!
   "Localized transport instruction (domain dependent)"
@@ -3089,6 +3091,18 @@ type Transport {
   "UUID"
   uuid: Uuid!
   vatPercent: String!
+}
+
+"Represents a transport group"
+type TransportGroup {
+  "Transport group image by params"
+  mainImage(type: String = null): Image
+  "Transport group name"
+  name: String!
+  "Transport group position"
+  position: Int!
+  "Transport group UUID"
+  uuid: Uuid!
 }
 
 "One of the possible methods of the transport type"

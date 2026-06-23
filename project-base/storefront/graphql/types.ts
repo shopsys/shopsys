@@ -3830,6 +3830,8 @@ export type TypeTransport = {
   daysUntilDelivery: Scalars['Int']['output'];
   /** Localized transport description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
+  /** Transport group */
+  group: Maybe<TypeTransportGroup>;
   /** Transport images */
   images: Array<TypeImage>;
   /** Localized transport instruction (domain dependent) */
@@ -3879,6 +3881,25 @@ export type TypeTransportPriceArgs = {
 /** Represents a transport */
 export type TypeTransportProductsBlockingSelectionInCartArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+/** Represents a transport group */
+export type TypeTransportGroup = {
+  __typename?: 'TransportGroup';
+  /** Transport group image by params */
+  mainImage: Maybe<TypeImage>;
+  /** Transport group name */
+  name: Scalars['String']['output'];
+  /** Transport group position */
+  position: Scalars['Int']['output'];
+  /** Transport group UUID */
+  uuid: Scalars['Uuid']['output'];
+};
+
+
+/** Represents a transport group */
+export type TypeTransportGroupMainImageArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** One of the possible methods of the transport type */
