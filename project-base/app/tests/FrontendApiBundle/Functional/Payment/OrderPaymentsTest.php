@@ -75,9 +75,9 @@ class OrderPaymentsTest extends GraphQlTestCase
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 1,
             'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_GOPAY_CARD,
             'expectedAvailablePaymentReferenceNames' => [
+                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
                 PaymentDataFixture::PAYMENT_CARD,
                 PaymentDataFixture::PAYMENT_CASH,
-                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
             ],
         ];
 

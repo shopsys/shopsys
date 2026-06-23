@@ -51,6 +51,9 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     #[Override]
     public function load(ObjectManager $manager): void
     {
+        $this->createGoPayCardPayment();
+        $this->createGoPayBankAccountTransferPaymentOnDomain();
+
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = PaymentTypeEnum::TYPE_BASIC;
 
@@ -118,22 +121,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::zero());
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
 
-        $this->createGoPayCardPayment();
-        $this->createGoPayBankAccountTransferPaymentOnDomain();
-
-        $paymentData = $this->paymentDataFactory->create();
-        $paymentData->type = PaymentTypeEnum::TYPE_BASIC;
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
-            $locale = $domainConfig->getLocale();
-
-            $paymentData->enabled[$domainConfig->getId()] = true;
-            $paymentData->name[$locale] = t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        }
-
-        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
-        $this->createPayment(self::PAYMENT_LATER, $paymentData, [TransportDataFixture::TRANSPORT_DRONE]);
-
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = PaymentTypeEnum::TYPE_BANK_TRANSFER;
 
@@ -157,6 +144,19 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
                 TransportDataFixture::TRANSPORT_PACKETERY,
             ],
         );
+
+        $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = PaymentTypeEnum::TYPE_BASIC;
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+
+            $paymentData->enabled[$domainConfig->getId()] = true;
+            $paymentData->name[$locale] = t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
+        $this->createPayment(self::PAYMENT_LATER, $paymentData, [TransportDataFixture::TRANSPORT_DRONE]);
     }
 
     /**

@@ -17,6 +17,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
+use Shopsys\FrameworkBundle\Model\Transport\TransportGroupFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesDataFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 
@@ -38,12 +40,46 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         private readonly TransportDataFactory $transportDataFactory,
         private readonly PriceConverter $priceConverter,
         private readonly TransportInputPricesDataFactory $transportInputPricesDataFactory,
+        private readonly TransportGroupFacade $transportGroupFacade,
     ) {
     }
 
     #[Override]
     public function load(ObjectManager $manager): void
     {
+        $transportData = $this->transportDataFactory->create();
+        $transportData->daysUntilDelivery = 2;
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+
+            $transportData->enabled[$domainConfig->getId()] = true;
+            $transportData->name[$locale] = t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('Packeta delivery company', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        $this->setPriceForAllDomains($transportData, Money::create('49.95'));
+        $transportData->type = TransportTypeEnum::TYPE_PACKETERY;
+        $transportData->group = $this->getPickupPointTransportGroup();
+        $this->createTransport(self::TRANSPORT_PACKETERY, $transportData);
+
+        $transportData = $this->transportDataFactory->create();
+        $transportData->daysUntilDelivery = 4;
+        $transportData->trackingUrl = 'https://www.ppl.cz/vyhledat-zasilku?shipmentId={tracking_number}';
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+
+            $transportData->enabled[$domainConfig->getId()] = true;
+            $transportData->name[$locale] = t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}" tabindex="0">{tracking_url}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        $this->setPriceForAllDomains($transportData, Money::create('199.95'));
+        $transportData->group = $this->getDeliveryToAddressTransportGroup();
+        $this->createTransport(self::TRANSPORT_PPL, $transportData);
+
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 5;
         $transportData->trackingUrl = 'https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers={tracking_number}';
@@ -59,22 +95,8 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('99.95'), 5000);
+        $transportData->group = $this->getDeliveryToAddressTransportGroup();
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
-
-        $transportData = $this->transportDataFactory->create();
-        $transportData->daysUntilDelivery = 4;
-        $transportData->trackingUrl = 'https://www.ppl.cz/vyhledat-zasilku?shipmentId={tracking_number}';
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
-            $locale = $domainConfig->getLocale();
-
-            $transportData->enabled[$domainConfig->getId()] = true;
-            $transportData->name[$locale] = t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}" tabindex="0">{tracking_url}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        }
-
-        $this->setPriceForAllDomains($transportData, Money::create('199.95'));
-        $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 0;
@@ -101,6 +123,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->type = TransportTypeEnum::TYPE_PERSONAL_PICKUP;
 
         $this->setPriceForAllDomains($transportData, Money::zero());
+        $transportData->group = $this->getPickupPointTransportGroup();
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -116,23 +139,23 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         }
 
         $this->setPriceForAllDomains($transportData, Money::zero());
+        $transportData->group = $this->getDeliveryToAddressTransportGroup();
         $this->createTransport(self::TRANSPORT_DRONE, $transportData);
+    }
 
-        $transportData = $this->transportDataFactory->create();
-        $transportData->daysUntilDelivery = 2;
+    private function getDeliveryToAddressTransportGroup(): TransportGroup
+    {
+        return $this->getTransportGroupByPosition(0);
+    }
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
-            $locale = $domainConfig->getLocale();
+    private function getPickupPointTransportGroup(): TransportGroup
+    {
+        return $this->getTransportGroupByPosition(1);
+    }
 
-            $transportData->enabled[$domainConfig->getId()] = true;
-            $transportData->name[$locale] = t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->description[$locale] = t('Packeta delivery company', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->instructions[$locale] = t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        }
-
-        $this->setPriceForAllDomains($transportData, Money::create('49.95'));
-        $transportData->type = TransportTypeEnum::TYPE_PACKETERY;
-        $this->createTransport(self::TRANSPORT_PACKETERY, $transportData);
+    private function getTransportGroupByPosition(int $position): TransportGroup
+    {
+        return $this->transportGroupFacade->getAll()[$position];
     }
 
     /**
