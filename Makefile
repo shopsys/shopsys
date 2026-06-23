@@ -99,7 +99,7 @@ environment-dev: ## Switches the whole application (backend + storefront) to the
 # ✅ Code Checks and Fixes (PHP and JS/TS)
 # ------------------------------------------------------------------------------
 
-check-fix: generate-schema php-checks php-translations storefront-checks storefront-translations storefront-styles-for-admin check-licenses generate-icons-for-styleguide ## Runs all code checks (backend & storefront) and attempts to fix issues
+check-fix: generate-schema php-checks php-translations storefront-checks storefront-knip storefront-translations storefront-styles-for-admin check-licenses generate-icons-for-styleguide ## Runs all code checks (backend & storefront) and attempts to fix issues
 
 php-checks: ## Runs PHP checks (coding standards, PHPStan) and attempts to fix issues
 	docker compose exec php-fpm php phing standards-fix phpstan
@@ -112,6 +112,9 @@ php-translations: ## Updates translation files of the backend
 
 storefront-checks: ## Runs Storefront (JS/TS) checks and attempts to fix issues
 	docker compose exec storefront pnpm run check--fix
+
+storefront-knip: ## Runs Storefront knip to check for unused files
+	docker compose exec storefront pnpm run knip
 
 storefront-translations: ## Updates translation files of the storefront
 	docker compose exec storefront pnpm run translate
