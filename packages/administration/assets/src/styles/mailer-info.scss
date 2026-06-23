@@ -3,6 +3,6 @@
     --tblr-alert-bg: color-mix(in srgb, var(--tblr-alert-color) 25%, transparent);
     --tblr-alert-border-color: color-mix(in srgb, var(--tblr-alert-color) 20%, transparent);
 
-    background-color: color-mix(in srgb,var(--tblr-alert-bg),var(--tblr-bg-surface));
+    background-color: color-mix(in srgb, var(--tblr-alert-bg), var(--tblr-bg-surface));
     border: var(--tblr-border-width) var(--tblr-border-style) var(--tblr-alert-border-color);
 }

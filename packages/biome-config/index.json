@@ -14,12 +14,14 @@
         "rules": {
             "recommended": true,
             "style": {
+                "noDescendingSpecificity": "off",
                 "noParameterAssign": "off",
                 "useConst": "error",
                 "useTemplate": "error"
             },
             "complexity": {
                 "noForEach": "off",
+                "noImportantStyles": "off",
                 "noStaticOnlyClass": "off",
                 "noThisInStatic": "off"
             },
@@ -40,6 +42,11 @@
             "bracketSpacing": true,
             "bracketSameLine": false,
             "quoteProperties": "asNeeded"
+        }
+    },
+    "css": {
+        "formatter": {
+            "quoteStyle": "single"
         }
     }
 }
