@@ -3,7 +3,7 @@ import { twMergeCustom } from 'utils/twMerge';
 export const TransportAndPaymentListItem: FC = ({ children, className }) => (
     <li
         className={twMergeCustom(
-            'relative order-1 flex min-w-full flex-wrap gap-2 border-border-less border-b py-4 transition last:border-b-0',
+            'relative order-1 flex min-w-full flex-wrap border-border-less border-b py-4 transition last:border-b-0',
             className,
         )}
     >

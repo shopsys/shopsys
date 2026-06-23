@@ -28,6 +28,10 @@ export const translationKeys = {
         ppl: 'PPL',
         droneDelivery: 'Drone delivery',
     },
+    transportGroup: {
+        deliveryToAddress: 'Delivery to address',
+        pickupPoint: 'Pickup point',
+    },
     order: {
         created:
             'Order number {{ orderNumber }} has been sent, thank you for your purchase. We will contact you about next order status.',

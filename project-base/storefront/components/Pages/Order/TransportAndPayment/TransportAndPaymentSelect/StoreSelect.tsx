@@ -27,7 +27,9 @@ export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, stores, o
                             <TransportAndPaymentSelectItemLabel
                                 isActive={selectedStoreUuid === pickupPlace.identifier}
                                 name={pickupPlace.name}
+                                openingHoursDisplay="expanded"
                                 pickupPlaceDetail={pickupPlace}
+                                pickupPlaceDetailLayout="compact"
                             />
                         }
                         onChange={(event) => onSelectStoreCallback(event.target.value)}

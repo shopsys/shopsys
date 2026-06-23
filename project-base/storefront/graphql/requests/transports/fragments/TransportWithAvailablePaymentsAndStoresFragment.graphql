@@ -9,6 +9,14 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
     mainImage {
         ...ImageFragment
     }
+    group {
+        id
+        name
+        position
+        mainImage {
+            ...ImageFragment
+        }
+    }
     payments {
         ...SimplePaymentFragment
     }

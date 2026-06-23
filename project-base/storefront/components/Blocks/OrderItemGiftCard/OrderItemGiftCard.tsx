@@ -31,15 +31,17 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
         <li className="relative flex flex-col gap-1 rounded-xl bg-background-more p-4 font-secondary">
             <GiftBadge />
 
-            <div className="isolate flex items-center gap-2.5">
-                <Image
-                    alt={generateProductImageAlt(fullName, categoryName)}
-                    className="size-auto max-h-20 max-w-20 mix-blend-multiply"
-                    height={80}
-                    src={mainImage?.url}
-                    tid={TIDs.order_summary_cart_item_image}
-                    width={80}
-                />
+            <div className="flex items-center gap-2.5">
+                <div className="flex size-20 items-center justify-center">
+                    <Image
+                        alt={generateProductImageAlt(fullName, categoryName)}
+                        className="size-auto max-h-20 max-w-20 mix-blend-multiply"
+                        height={80}
+                        src={mainImage?.url}
+                        tid={TIDs.order_summary_cart_item_image}
+                        width={80}
+                    />
+                </div>
                 <div className="flex flex-1 items-center justify-between gap-2.5">
                     <div className="flex flex-col gap-0.5">
                         <span className="max-w-44 font-semibold text-sm">{fullName}</span>

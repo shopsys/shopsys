@@ -19,22 +19,26 @@ export const TransportUnavailabilityInfo: FC<TransportUnavailabilityInfoProps> =
     const hiddenProductsCount = products.length - INITIAL_VISIBLE_PRODUCTS_COUNT;
 
     return (
-        <div className="flex w-full flex-col gap-2 pl-7 text-sm text-text-less">
-            <div className="flex items-start gap-2">
-                <InfoIcon className="mt-0.5 size-4 shrink-0" />
+        <div className="flex w-full flex-col gap-2 p-5 pt-0 text-sm text-text-less">
+            <div className="flex items-center gap-2">
+                <InfoIcon className="size-4 shrink-0" />
+
                 <span>{heading}</span>
             </div>
 
-            <ul className="flex flex-col gap-1.5 pl-6">
+            <ul className="flex flex-col gap-1 pl-6">
                 {visibleProducts.map((product) => (
                     <li key={product.uuid} className="flex items-center gap-2.5">
-                        <Image
-                            alt={product.fullName}
-                            className="size-auto max-h-6 max-w-12 mix-blend-multiply"
-                            height={24}
-                            src={product.mainImage?.url}
-                            width={48}
-                        />
+                        <div className="flex size-7 items-center justify-center rounded-full">
+                            <Image
+                                alt={product.fullName}
+                                className="size-auto max-h-7 max-w-7 mix-blend-multiply"
+                                height={24}
+                                src={product.mainImage?.url}
+                                width={48}
+                            />
+                        </div>
+
                         <span>{product.fullName}</span>
                     </li>
                 ))}
@@ -42,7 +46,7 @@ export const TransportUnavailabilityInfo: FC<TransportUnavailabilityInfoProps> =
 
             {hiddenProductsCount > 0 && (
                 <button
-                    className="w-fit cursor-pointer pl-6 text-left text-link-default underline hover:text-link-hovered hover:no-underline"
+                    className="ml-6 w-fit cursor-pointer rounded-sm text-text-less hover:underline"
                     type="button"
                     onClick={() => setAreAllProductsShown((previousValue) => !previousValue)}
                 >

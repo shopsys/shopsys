@@ -2,6 +2,7 @@ import {
     changeSelectionOfPaymentByName,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
+    openTransportGroupByName,
     waitForTransportAndPaymentToBeInteractive,
 } from './transportAndPaymentSupport';
 import { staticData, url } from 'fixtures/demodata';
@@ -46,9 +47,9 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
     it('[Change T&P And Preserve On Refresh] should change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(translations.transport.czechPost);
+        changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
-        changeSelectionOfTransportByName(translations.transport.ppl);
+        changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
         waitForTransportAndPaymentToBeInteractive();
@@ -61,11 +62,12 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
             ],
         });
 
-        changeSelectionOfTransportByName(translations.transport.ppl);
+        changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         chooseTransportPersonalCollectionAndStore(
             staticData.transport.personalCollection.storePardubice.name,
             translations.transport.personalCollection,
+            translations.transportGroup.pickupPoint,
         );
         waitForTransportAndPaymentToBeInteractive();
         changeSelectionOfPaymentByName(translations.payment.cash);
@@ -100,9 +102,9 @@ describe('Last Order Transport Overweight Tests', { retries: { runMode: 0 } }, (
 
         cy.getByTID([TIDs.toast_info]).should('not.exist');
         cy.getByTID([TIDs.toast_error]).should('not.exist');
-        cy.getByTID([TIDs.pages_order_transport, TIDs.pages_order_selectitem_label_name]).should(
-            'not.contain',
-            translations.transport.czechPost,
-        );
+        openTransportGroupByName(translations.transportGroup.deliveryToAddress);
+        cy.getByTID([TIDs.transport_group_panel, TIDs.pages_order_selectitem_label_name])
+            .should('contain', translations.transport.ppl)
+            .and('not.contain', translations.transport.czechPost);
     });
 });

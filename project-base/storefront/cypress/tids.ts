@@ -90,6 +90,8 @@ export enum TIDs {
     pages_order_pickupplace_popup_confirm = 'pages_order_pickupplace_popup_confirm',
     pages_order_transport = 'pages_order_transport',
     pages_order_payment = 'pages_order_payment',
+    transport_group_button = 'transport_group_button',
+    transport_group_panel = 'transport_group_panel',
     reset_transport_button = 'reset_transport_button',
     reset_payment_button = 'reset_payment_button',
     contact_information_form = 'contact_information_form',

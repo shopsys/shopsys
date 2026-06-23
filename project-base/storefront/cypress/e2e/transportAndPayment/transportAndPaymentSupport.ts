@@ -2,17 +2,61 @@ import { TypeTransportWithAvailablePaymentsAndStoresFragment } from '../../../gr
 import { TypeOpeningHoursOfDay, TypeStoreOpeningStatusEnum } from '../../../graphql/types';
 import { TIDs } from 'tids';
 
-export const chooseTransportPersonalCollectionAndStore = (storeName: string, transportName: string) => {
-    cy.getByTID([TIDs.pages_order_selectitem_label_name]).contains(transportName).click();
+const getTransportGroupButtonByName = (transportGroupName: string) =>
+    cy.getByTID([TIDs.transport_group_button]).contains(transportGroupName).closest('button');
+
+export const openTransportGroupByName = (transportGroupName: string) => {
+    getTransportGroupButtonByName(transportGroupName).then(($button) => {
+        if ($button.attr('aria-expanded') === 'false') {
+            cy.wrap($button).click();
+        }
+    });
+
+    getTransportGroupButtonByName(transportGroupName)
+        .should('have.attr', 'aria-expanded', 'true');
+
+    getTransportGroupButtonByName(transportGroupName)
+        .invoke('attr', 'aria-controls')
+        .then((transportGroupPanelId) => {
+            expect(transportGroupPanelId).to.be.a('string').and.not.be.empty;
+            cy.get(`#${transportGroupPanelId}`).should('be.visible');
+        });
+};
+
+export const chooseTransportPersonalCollectionAndStore = (
+    storeName: string,
+    transportName: string,
+    transportGroupName?: string,
+) => {
+    changeSelectionOfTransportByName(transportName, transportGroupName);
     cy.getByTID([TIDs.layout_popup]);
     cy.getByTID([TIDs.pages_order_selectitem_label_name]).contains(storeName).click();
     cy.getByTID([TIDs.pages_order_pickupplace_popup_confirm]).scrollIntoView().click();
 };
 
-export const changeSelectionOfTransportByName = (transportName: string) => {
-    cy.getByTID([TIDs.pages_order_transport, TIDs.pages_order_selectitem_label_name])
-        .contains(transportName)
-        .click('left');
+export const changeSelectionOfTransportByName = (transportName: string, transportGroupName?: string) => {
+    cy.get('body').then(($body) => {
+        const transportLabelSelector = `[data-tid="${TIDs.pages_order_transport}"] [data-tid="${TIDs.pages_order_selectitem_label_name}"]`;
+        const visibleTransportLabel = [...$body.find(transportLabelSelector)].find(
+            (transportLabel) =>
+                transportLabel.textContent?.includes(transportName) && Cypress.$(transportLabel).is(':visible'),
+        );
+
+        if (visibleTransportLabel) {
+            cy.wrap(visibleTransportLabel).click('left');
+
+            return;
+        }
+
+        if (transportGroupName === undefined) {
+            throw new Error(`Transport "${transportName}" is not visible and no transport group was provided.`);
+        }
+
+        openTransportGroupByName(transportGroupName);
+        cy.getByTID([TIDs.transport_group_panel, TIDs.pages_order_selectitem_label_name])
+            .contains(transportName)
+            .click('left');
+    });
 };
 
 export const changeSelectionOfPaymentByName = (paymentName: string) => {
@@ -24,9 +68,20 @@ const checkSectionHasEnabledRadios = (sectionTid: TIDs) => {
     cy.getByTID([sectionTid], { timeout: 10000 }).find('input[type="radio"]:enabled').its('length').should('be.gte', 1);
 };
 
+const checkTransportSectionIsInteractive = () => {
+    cy.getByTID([TIDs.pages_order_transport], { timeout: 10000 }).should(($transportSection) => {
+        const enabledTransportRadiosCount = $transportSection.find('input[type="radio"]:enabled').length;
+        const enabledTransportGroupButtonsCount = $transportSection.find(
+            `[data-tid="${TIDs.transport_group_button}"]:enabled`,
+        ).length;
+
+        expect(enabledTransportRadiosCount + enabledTransportGroupButtonsCount).to.be.gte(1);
+    });
+};
+
 export const waitForTransportAndPaymentToBeInteractive = () => {
     cy.getByTID([TIDs.loader_overlay], { timeout: 10000 }).should('not.exist');
-    checkSectionHasEnabledRadios(TIDs.pages_order_transport);
+    checkTransportSectionIsInteractive();
 
     cy.get('body').then(($body) => {
         const paymentSectionSelector = `[data-tid=${TIDs.pages_order_payment}]`;

@@ -21,7 +21,7 @@ export const PaymentsInOrderSelectItem: FC<PaymentsInOrderSelectItemProps> = ({
     const isPaymentSelected = selectedPaymentForChange?.uuid === payment.uuid;
 
     return (
-        <TransportAndPaymentListItem key={payment.uuid} className="order-none flex w-auto flex-col">
+        <TransportAndPaymentListItem key={payment.uuid} className="order-0 flex w-auto flex-col">
             <Radiobutton
                 checked={isPaymentSelected}
                 id={payment.uuid}

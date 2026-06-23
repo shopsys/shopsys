@@ -1,20 +1,24 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
-import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import {
+    getShouldDisplayTransportGroups,
+    getTransportGroupChoices,
+    getTransportsWithoutGroup,
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
 } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
+import { KeyboardEvent, MouseEvent, useEffect, useMemo, useState } from 'react';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { PaymentListItem } from './PaymentSelectListItem';
+import { TransportGroupListItem } from './TransportGroupListItem';
 import { TransportListItem } from './TransportSelectListItem';
 
 type TransportAndPaymentSelectProps = {
@@ -34,6 +38,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 }) => {
     const { t } = useTranslation();
     const { transport, pickupPlace, payment } = useCurrentCart();
+    const [selectedTransportGroupUuid, setSelectedTransportGroupUuid] = useState<string | null>(null);
+    const [shouldFocusPaymentAfterTransportChange, setShouldFocusPaymentAfterTransportChange] = useState(false);
     const { changePayment, resetPaymentAndGoPayBankSwift } = usePaymentChangeInSelect(changePaymentInCart);
     const { changeTransport, resetTransportAndPayment, openPickupPlacePopup } = useTransportChangeInSelect(
         transports,
@@ -41,20 +47,88 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         changeTransportInCart,
         changePaymentInCart,
     );
+    const transportGroupChoices = useMemo(() => getTransportGroupChoices(transports), [transports]);
+    const shouldDisplayTransportGroups = getShouldDisplayTransportGroups(transportGroupChoices);
+    const transportsWithoutGroup = useMemo(() => getTransportsWithoutGroup(transports), [transports]);
+    const transportsToDisplay = shouldDisplayTransportGroups ? transportsWithoutGroup : transports;
+    const shouldShowSelectedTransport = !!transport;
+    const shouldShowTransportList = !transport;
+    const shouldShowSelectedPayment = !!payment;
+    const shouldShowPaymentList = !payment;
+
+    const isKeyboardSelection = (event: KeyboardEvent<HTMLInputElement> | MouseEvent<HTMLInputElement>) =>
+        event.detail === 0;
+
+    const changeTransportByInputMethod = (
+        updatedTransportUuid: string | null,
+        event: KeyboardEvent<HTMLInputElement> | MouseEvent<HTMLInputElement>,
+    ) => {
+        setShouldFocusPaymentAfterTransportChange(isKeyboardSelection(event) && updatedTransportUuid !== null);
+        changeTransport(updatedTransportUuid);
+    };
+
+    const changePaymentByInputMethod = (
+        updatedPaymentUuid: string | null,
+        _event: KeyboardEvent<HTMLInputElement> | MouseEvent<HTMLInputElement>,
+    ) => {
+        changePayment(updatedPaymentUuid);
+    };
+
+    useEffect(() => {
+        if (!shouldFocusPaymentAfterTransportChange || !transport || isTransportSelectionLoading) {
+            return;
+        }
+
+        const focusPaymentTimeout = window.setTimeout(() => {
+            const firstPaymentInput = document.querySelector<HTMLInputElement>(
+                `[data-tid="${TIDs.pages_order_payment}"] input[name="payment"]:not(:disabled)`,
+            );
+
+            firstPaymentInput?.focus();
+            setShouldFocusPaymentAfterTransportChange(false);
+        });
+
+        return () => window.clearTimeout(focusPaymentTimeout);
+    }, [isTransportSelectionLoading, shouldFocusPaymentAfterTransportChange, transport]);
+
+    const toggleSelectedTransportGroup = (transportGroupUuid: string) =>
+        setSelectedTransportGroupUuid((currentTransportGroupUuid) =>
+            currentTransportGroupUuid === transportGroupUuid ? null : transportGroupUuid,
+        );
+    const resetSelectedTransportGroupAndPayment = async () => {
+        setSelectedTransportGroupUuid(null);
+        setShouldFocusPaymentAfterTransportChange(false);
+        await resetTransportAndPayment();
+    };
 
     return (
         <>
             <PacketeryContainer />
 
             <div data-tid={TIDs.pages_order_transport}>
-                <h2 className="h4 mb-3">{t('Choose transport')}</h2>
+                <div className="mb-3 flex items-center justify-between">
+                    <h2 className="h4">{t('Choose transport')}</h2>
+
+                    <AnimatePresence initial={false}>
+                        {!!transport && transports.length > 1 && (
+                            <AnimateCollapseDiv className="flex! relative flex-col" keyName="transport-reset">
+                                <ResetButton
+                                    disabled={isTransportSelectionLoading}
+                                    text={t('Change transport type')}
+                                    tid={TIDs.reset_transport_button}
+                                    onClick={resetSelectedTransportGroupAndPayment}
+                                />
+                            </AnimateCollapseDiv>
+                        )}
+                    </AnimatePresence>
+                </div>
 
                 <fieldset>
                     <legend className="sr-only">{t('Choose transport type')}</legend>
 
                     <ul>
                         <AnimatePresence initial={false}>
-                            {!!transport && (
+                            {shouldShowSelectedTransport && (
                                 <AnimateCollapseDiv
                                     className="block! relative"
                                     disableAnimation={transports.length === 1}
@@ -62,7 +136,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 >
                                     <TransportListItem
                                         isActive
-                                        changeTransport={changeTransport}
+                                        changeTransport={changeTransportByInputMethod}
                                         disabled={isTransportSelectionLoading}
                                         openPickupPlacePopup={() => openPickupPlacePopup(transport.uuid)}
                                         pickupPlace={pickupPlace}
@@ -73,16 +147,34 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         </AnimatePresence>
 
                         <AnimatePresence initial={false}>
-                            {!transport && (
+                            {shouldShowTransportList && (
                                 <AnimateCollapseDiv
                                     className="block! relative"
                                     disableAnimation={transports.length === 1}
                                     keyName="transport-list"
                                 >
-                                    {transports.map((transportItem) => (
+                                    {shouldDisplayTransportGroups &&
+                                        transportGroupChoices.map(({ group, transports: groupTransports }) => {
+                                            const isTransportGroupSelected = selectedTransportGroupUuid === group.uuid;
+
+                                            return (
+                                                <TransportGroupListItem
+                                                    key={group.uuid}
+                                                    changeTransport={changeTransportByInputMethod}
+                                                    group={group}
+                                                    isSelected={isTransportGroupSelected}
+                                                    isTransportSelectionLoading={isTransportSelectionLoading}
+                                                    pickupPlace={pickupPlace}
+                                                    toggleSelectedTransportGroup={toggleSelectedTransportGroup}
+                                                    transports={groupTransports}
+                                                />
+                                            );
+                                        })}
+
+                                    {transportsToDisplay.map((transportItem) => (
                                         <TransportListItem
                                             key={transportItem.uuid}
-                                            changeTransport={changeTransport}
+                                            changeTransport={changeTransportByInputMethod}
                                             disabled={
                                                 isTransportSelectionLoading ||
                                                 transportItem.productsBlockingSelectionInCart.length > 0
@@ -96,19 +188,6 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         </AnimatePresence>
                     </ul>
                 </fieldset>
-
-                <AnimatePresence initial={false}>
-                    {!!transport && transports.length > 1 && (
-                        <AnimateCollapseDiv className="flex! relative flex-col" keyName="transport-reset">
-                            <ResetButton
-                                disabled={isTransportSelectionLoading}
-                                text={t('Change transport type')}
-                                tid={TIDs.reset_transport_button}
-                                onClick={resetTransportAndPayment}
-                            />
-                        </AnimateCollapseDiv>
-                    )}
-                </AnimatePresence>
             </div>
 
             <AnimatePresence initial={false}>
@@ -122,14 +201,29 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             <LoaderWithOverlay className="w-8" overlayClassName="rounded-xl" />
                         )}
 
-                        <h2 className="h4 mb-3">{t('Choose payment')}</h2>
+                        <div className="mb-3 flex items-center justify-between">
+                            <h2 className="h4">{t('Choose payment')}</h2>
+
+                            <AnimatePresence initial={false}>
+                                {payment !== null && transport.payments.length > 1 && (
+                                    <AnimateCollapseDiv className="flex! relative flex-col" keyName="payment-reset">
+                                        <ResetButton
+                                            disabled={isTransportSelectionLoading}
+                                            text={t('Change payment type')}
+                                            tid={TIDs.reset_payment_button}
+                                            onClick={resetPaymentAndGoPayBankSwift}
+                                        />
+                                    </AnimateCollapseDiv>
+                                )}
+                            </AnimatePresence>
+                        </div>
 
                         <fieldset>
                             <legend className="sr-only">{t('Choose payment type')}</legend>
 
                             <ul>
                                 <AnimatePresence initial={false}>
-                                    {!!payment && (
+                                    {shouldShowSelectedPayment && (
                                         <AnimateCollapseDiv
                                             className="block! relative"
                                             disableAnimation={transport.payments.length === 1}
@@ -137,7 +231,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                         >
                                             <PaymentListItem
                                                 isActive
-                                                changePayment={changePayment}
+                                                changePayment={changePaymentByInputMethod}
                                                 disabled={isTransportSelectionLoading}
                                                 payment={payment}
                                             />
@@ -146,7 +240,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 </AnimatePresence>
 
                                 <AnimatePresence initial={false}>
-                                    {!payment && (
+                                    {shouldShowPaymentList && (
                                         <AnimateCollapseDiv
                                             className="block! relative"
                                             disableAnimation={transport.payments.length === 1}
@@ -155,7 +249,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                             {transport.payments.map((paymentItem) => (
                                                 <PaymentListItem
                                                     key={paymentItem.uuid}
-                                                    changePayment={changePayment}
+                                                    changePayment={changePaymentByInputMethod}
                                                     disabled={isTransportSelectionLoading}
                                                     payment={paymentItem}
                                                 />
@@ -165,19 +259,6 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 </AnimatePresence>
                             </ul>
                         </fieldset>
-
-                        <AnimatePresence initial={false}>
-                            {payment !== null && transport.payments.length > 1 && (
-                                <AnimateCollapseDiv className="flex! relative flex-col" keyName="payment-reset">
-                                    <ResetButton
-                                        disabled={isTransportSelectionLoading}
-                                        text={t('Change payment type')}
-                                        tid={TIDs.reset_payment_button}
-                                        onClick={resetPaymentAndGoPayBankSwift}
-                                    />
-                                </AnimateCollapseDiv>
-                            )}
-                        </AnimatePresence>
                     </AnimateCollapseDiv>
                 )}
             </AnimatePresence>
@@ -189,13 +270,12 @@ type ResetButtonProps = { text: string; onClick: () => void; tid: string; disabl
 
 const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid, disabled }) => (
     <button
-        className="flex w-full cursor-pointer items-center rounded-xl bg-background-more px-5 py-3 text-sm hover:bg-background-most disabled:pointer-events-none disabled:opacity-50"
+        className="cursor-pointer font-secondary font-semibold text-sm underline hover:no-underline"
         data-tid={tid}
         disabled={disabled}
         tabIndex={0}
         onClick={onClick}
     >
-        <ArrowIcon className="mr-2 size-4" />
         {text}
     </button>
 );

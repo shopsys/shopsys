@@ -267,7 +267,7 @@ describe('Cart Page Tests', () => {
         );
 
         goToNextOrderStep();
-        changeSelectionOfTransportByName(translations.transport.ppl);
+        changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(),
             'transport and payment page with non-free options after applying promocode',
