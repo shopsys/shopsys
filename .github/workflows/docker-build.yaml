@@ -1280,7 +1280,7 @@ jobs:
                     chmod +x set-urls-for-review.sh
                     chmod +x 12-set-env-variables.envsh
                     ./set-urls-for-review.sh setDomainsToDockerCompose
-                    docker compose down -v --remove-orphans || true
+                    docker compose down -v --remove-orphans
                     HASH_DEC=$((16#$(printf '%s' "${BRANCH_NAME_ESCAPED}" | sha1sum | head -c 8)))
                     export CRON_OFFSET_MIN=$((HASH_DEC % 5))
                     export CRON_OFFSET_MIN_10=$((HASH_DEC % 10))
