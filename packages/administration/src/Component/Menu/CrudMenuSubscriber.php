@@ -10,6 +10,7 @@ use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItemPositioner;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class CrudMenuSubscriber implements EventSubscriberInterface
@@ -17,6 +18,7 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
     public function __construct(
         public readonly CrudControllerRegistry $crudControllerRegistry,
         public readonly CrudRouteProvider $crudRouteProvider,
+        private readonly MenuItemPositioner $menuItemPositioner,
     ) {
     }
 
@@ -57,11 +59,16 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
             }
 
             $route = $this->crudRouteProvider->getRouteItem($item->controllerClass, ActionType::LIST);
-            $parent = $menu->addChild($route->getRouteName(), [
-                'route' => $route->getRouteName(),
-                'display' => $config->isVisibleInMenu(),
-                'label' => $config->getMenuTitle(),
-            ]);
+            $parent = $this->menuItemPositioner->addChild(
+                $menu,
+                $route->getRouteName(),
+                [
+                    'route' => $route->getRouteName(),
+                    'display' => $config->isVisibleInMenu(),
+                    'label' => $config->getMenuTitle(),
+                ],
+                $config->getMenuSectionPosition(),
+            );
 
             if ($config->getMenuIcon() !== null && $menu === $rootMenu) {
                 $parent->setExtra('icon', $config->getMenuIcon());
