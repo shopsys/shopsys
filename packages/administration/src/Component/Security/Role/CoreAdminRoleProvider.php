@@ -123,6 +123,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
             new Role(AdminRoleConstant::ROLE_ARTICLE, t('Articles'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_BLOG_CATEGORY, t('Blog category'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_BLOG_ARTICLE, t('Blog article'), [Permission::FULL]),
+            new Role(AdminRoleConstant::ROLE_BLOG_ARTICLE_AUTHOR, t('Blog article author'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_NAVIGATION, t('Navigation'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_NOTIFICATION_BAR, t('Notification bar'), [Permission::FULL]),
         ];

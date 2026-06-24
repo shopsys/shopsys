@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Form\BlogArticleAuthorPickerType;
 use Shopsys\FrameworkBundle\Form\BlogCategoriesType;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -174,6 +175,10 @@ final class BlogArticleFormType extends AbstractType
                     ],
                 ],
                 'label' => 'Name',
+            ])
+            ->add('blogArticleAuthor', BlogArticleAuthorPickerType::class, [
+                'required' => false,
+                'label' => 'Author',
             ])
             ->add('blogCategoriesByDomainId', MultidomainType::class, [
                 'required' => false,

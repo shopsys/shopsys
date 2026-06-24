@@ -89,6 +89,11 @@ class BlogArticleData
      */
     public $uuid;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor|null
+     */
+    public $blogArticleAuthor;
+
     public function __construct()
     {
         $this->names = [];

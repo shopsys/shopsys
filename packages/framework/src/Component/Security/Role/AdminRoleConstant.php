@@ -35,6 +35,7 @@ class AdminRoleConstant
     public const string ROLE_ARTICLE = 'ROLE_ARTICLE';
     public const string ROLE_BLOG_CATEGORY = 'ROLE_BLOG_CATEGORY';
     public const string ROLE_BLOG_ARTICLE = 'ROLE_BLOG_ARTICLE';
+    public const string ROLE_BLOG_ARTICLE_AUTHOR = 'ROLE_BLOG_ARTICLE_AUTHOR';
     public const string ROLE_NAVIGATION = 'ROLE_NAVIGATION';
     public const string ROLE_NOTIFICATION_BAR = 'ROLE_NOTIFICATION_BAR';
     public const string ROLE_PRICING_GROUP = 'ROLE_PRICING_GROUP';

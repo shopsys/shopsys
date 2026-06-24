@@ -39,7 +39,6 @@ final class SinglePickerType extends AbstractType
         $view->vars['picker_title'] = $options['picker_title'];
         $view->vars['placeholder'] = $options['placeholder'];
         $view->vars['enable_remove'] = $options['enable_remove'];
-        $view->vars['inline_label'] = $options['inline_label'];
 
         $value = $form->getData();
 
@@ -60,7 +59,6 @@ final class SinglePickerType extends AbstractType
             'placeholder' => t('Choose'),
             'picker_title' => t('Select'),
             'enable_remove' => true,
-            'inline_label' => false,
             'item_name' => 'name',
             'required' => false,
         ]);
@@ -70,7 +68,6 @@ final class SinglePickerType extends AbstractType
         $resolver->setAllowedTypes('picker_title', 'string');
         $resolver->setAllowedTypes('item_name', ['string', 'callable']);
         $resolver->setAllowedTypes('enable_remove', 'bool');
-        $resolver->setAllowedTypes('inline_label', 'bool');
     }
 
     #[Override]

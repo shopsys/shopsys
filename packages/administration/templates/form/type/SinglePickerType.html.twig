@@ -1,13 +1,7 @@
 {% block single_picker_row %}
     <div class="mb-3 row">
-        {% if inline_label %}
-            <div class="col">
-                {{ form_widget(form) }}
-            </div>
-        {% else %}
-            {{- form_label(form) -}}
-            {{- form_widget(form, {attr: {class: 'col-sm-10'}}) -}}
-        {% endif %}
+        {{- form_label(form) -}}
+        {{- form_widget(form, {attr: {class: 'col-sm-10'}}) -}}
     </div>
 {% endblock %}
 
@@ -21,23 +15,18 @@
          data-picker-title="{{ picker_title }}"
          data-placeholder="{{ placeholder }}"
     >
-        {% if inline_label %}
-            <span class="input-group-text"><strong>{{ label|trans({}, translation_domain) }}</strong></span>
-        {% endif %}
-
         <input type="text"
-               class="form-control js-single-picker-label{% if inline_label %} bg-white{% endif %}"
-               {% if inline_label %}style="color: var(--tblr-body-color);"{% endif %}
+               class="form-control js-single-picker-label"
                value="{{ selected_name|default(placeholder) }}"
                disabled="disabled"
                readonly="readonly"
         />
 
         <button type="button"
-                class="js-single-picker-button-add btn{% if inline_label %} btn-icon{% endif %}"
+                class="js-single-picker-button-add btn"
                 title="{{ picker_title }}"
         >
-            {% if inline_label %}{{ ux_icon('search') }}{% else %}...{% endif %}
+            ...
         </button>
 
         {% if enable_remove %}
