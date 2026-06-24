@@ -23,7 +23,11 @@ class TransportGroupController extends AbstractCrudController
     {
         $config
             ->setRoutePrefix('/transport-and-payment')
-            ->setMenuSection(SideMenuBuilder::ROOT_SETTING, SideMenuBuilder::SECTION_LISTS)
+            ->setMenuSection(
+                SideMenuBuilder::ROOT_SETTING,
+                SideMenuBuilder::SECTION_LISTS,
+                ['after' => SideMenuBuilder::LIST_TRANSPORT_AND_PAYMENT],
+            )
             ->setCustomRoleConstant(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)
             ->registerHandler(TransportGroupCrudHandler::class);
     }
