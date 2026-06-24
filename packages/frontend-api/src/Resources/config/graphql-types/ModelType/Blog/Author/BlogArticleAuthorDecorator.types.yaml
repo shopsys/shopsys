@@ -3,9 +3,6 @@ BlogArticleAuthorDecorator:
     decorator: true
     config:
         fields:
-            id:
-                type: "Int!"
-                description: "ID of the blog article author"
             uuid:
                 type: "Uuid!"
                 description: "The blog article author UUID"

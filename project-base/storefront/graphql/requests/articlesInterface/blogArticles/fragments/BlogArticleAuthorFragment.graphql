@@ -1,0 +1,10 @@
+fragment BlogArticleAuthorFragment on BlogArticleAuthor {
+    __typename
+    uuid
+    name
+    jobTitle
+    description
+    mainImage {
+        ...ImageFragment
+    }
+}

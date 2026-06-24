@@ -18,6 +18,7 @@
     * [AutocompleteFavorites](#autocompletefavorites)
     * [Availability](#availability)
     * [BlogArticle](#blogarticle)
+    * [BlogArticleAuthor](#blogarticleauthor)
     * [BlogArticleConnection](#blogarticleconnection)
     * [BlogArticleEdge](#blogarticleedge)
     * [BlogCategory](#blogcategory)
@@ -2582,6 +2583,15 @@ Availability status in a format suitable for usage in the code
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="blogarticle.author">author</strong></td>
+<td valign="top"><a href="#blogarticleauthor">BlogArticleAuthor</a></td>
+<td>
+
+The author of the blog article
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="blogarticle.blogcategories">blogCategories</strong></td>
 <td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
 <td>
@@ -2768,6 +2778,71 @@ The blog article UUID
 <td>
 
 Indicates whether the blog article is displayed on homepage
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### BlogArticleAuthor
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="blogarticleauthor.description">description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog article author description
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="blogarticleauthor.jobtitle">jobTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog article author job title
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="blogarticleauthor.mainimage">mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+The blog article author image
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="blogarticleauthor.name">name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The blog article author name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="blogarticleauthor.uuid">uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The blog article author UUID
 
 </td>
 </tr>

@@ -8,9 +8,16 @@ type ArticleMetadataProps = {
     datePublished?: string | null;
     description?: string | null;
     imageUrl?: string | null;
+    authorName?: string | null;
 };
 
-export const ArticleMetadata: FC<ArticleMetadataProps> = ({ headline, datePublished, description, imageUrl }) => {
+export const ArticleMetadata: FC<ArticleMetadataProps> = ({
+    headline,
+    datePublished,
+    description,
+    imageUrl,
+    authorName,
+}) => {
     const { url } = useDomainConfig();
     const router = useRouter();
     const currentUrl = getStringWithoutTrailingSlash(url) + router.asPath;
@@ -29,6 +36,7 @@ export const ArticleMetadata: FC<ArticleMetadataProps> = ({ headline, datePublis
                         ...(datePublished && { datePublished }),
                         ...(description && { description }),
                         ...(imageUrl && { image: imageUrl }),
+                        ...(authorName && { author: { '@type': 'Person', name: authorName } }),
                         url: currentUrl,
                     }),
                 }}

@@ -305,8 +305,6 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
 type BlogArticleAuthor {
   "The blog article author description"
   description: String
-  "ID of the blog article author"
-  id: Int!
   "The blog article author job title"
   jobTitle: String
   "The blog article author image"

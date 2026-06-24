@@ -20,6 +20,7 @@ export const cache = cacheExchange({
         AutocompleteFavorites: keyNull,
         Availability: keyName,
         BlogArticle: keyUuid,
+        BlogArticleAuthor: keyUuid,
         BlogCategory: keyUuid,
         Brand: keyUuid,
         BrandFilterOption: keyNull,

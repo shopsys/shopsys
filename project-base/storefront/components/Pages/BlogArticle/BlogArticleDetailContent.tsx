@@ -1,5 +1,6 @@
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { Flag } from 'components/Basic/Flag/Flag';
+import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { ARTICLE_INTRODUCTION_ANCHOR_ID } from 'components/Blocks/ArticleAnchorNavigation/ArticleAnchorNavigation';
@@ -7,6 +8,7 @@ import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisit
 import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/ProductsSlider';
 import { BlogLayout } from 'components/Layout/BlogLayout';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { BlogArticleAuthorBox } from 'components/Pages/BlogArticle/BlogArticleAuthorBox';
 import { TIDs } from 'cypress/tids';
 import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
 import { useMemo } from 'react';
@@ -48,6 +50,25 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                         tid={TIDs.blog_article_publication_date}
                     />
 
+                    {blogArticle.author && (
+                        <div className="mr-3.5 flex items-center gap-2" data-tid={TIDs.blog_article_author}>
+                            {blogArticle.author.mainImage ? (
+                                <Image
+                                    alt={blogArticle.author.mainImage.name || blogArticle.author.name}
+                                    className="size-6 rounded-full object-cover"
+                                    height={24}
+                                    src={blogArticle.author.mainImage.url}
+                                    width={24}
+                                />
+                            ) : (
+                                <UserIcon className="size-6 text-text-less" />
+                            )}
+                            <span className="font-secondary font-semibold text-sm text-text-less">
+                                {blogArticle.author.name}
+                            </span>
+                        </div>
+                    )}
+
                     <div className="flex flex-wrap items-center gap-2 whitespace-nowrap">
                         {blogArticle.blogCategories.map((blogPreviewCategory) => {
                             if (!blogPreviewCategory.parent) {
@@ -66,6 +87,8 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                 {!!blogArticle.text && (
                     <GrapesJsParser text={htmlWithHeadingAnchors} visibleSliderItems={VISIBLE_SLIDER_ITEMS_ARTICLE} />
                 )}
+
+                {blogArticle.author && <BlogArticleAuthorBox author={blogArticle.author} />}
             </BlogLayout>
 
             <DeferredLastVisitedProducts />
