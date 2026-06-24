@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -13,11 +14,10 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserEr
 
 class OrderRepository
 {
-    protected EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+    ) {
     }
 
     protected function createOrderQueryBuilder(): QueryBuilder
@@ -88,7 +88,7 @@ class OrderRepository
     public function getCustomerUserOrderCount(CustomerUser $customerUser, OrderFilter $filter): int
     {
         $queryBuilder = $this->em->createQueryBuilder()
-            ->select('count(o.id)')
+            ->select('COUNT(DISTINCT o.id)')
             ->from(Order::class, 'o')
             ->where('o.deleted = FALSE')
             ->andWhere('o.customerUser = :customerUser')
@@ -99,6 +99,21 @@ class OrderRepository
         return $queryBuilder
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    public function getCustomerUserOrderStatusCounts(CustomerUser $customerUser, OrderFilter $filter): array
+    {
+        $queryBuilder = $this->createCustomerUserOrderLimitedList($customerUser)
+            ->join('o.status', 'os')
+            ->select('os.id AS statusId, COUNT(DISTINCT o.id) AS ordersCount')
+            ->groupBy('os.id');
+
+        $this->applyOrderFilterToQueryBuilder($filter, $queryBuilder);
+
+        return $this->extractOrderStatusCountsByStatusId($queryBuilder->getQuery()->getArrayResult());
     }
 
     public function getByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): Order
@@ -148,13 +163,30 @@ class OrderRepository
     public function getCustomerOrderCount(Customer $customer, OrderFilter $orderFilter): int
     {
         $queryBuilder = $this->createOrderQueryBuilder()
-            ->select('count(o.id)')
+            ->select('COUNT(DISTINCT o.id)')
             ->andWhere('o.customer = :customerUser')
             ->setParameter('customerUser', $customer);
 
         $this->applyOrderFilterToQueryBuilder($orderFilter, $queryBuilder);
 
         return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    public function getCustomerOrderStatusCounts(Customer $customer, OrderFilter $filter): array
+    {
+        $queryBuilder = $this->createOrderQueryBuilder()
+            ->join('o.status', 'os')
+            ->select('os.id AS statusId, COUNT(DISTINCT o.id) AS ordersCount')
+            ->andWhere('o.customer = :customer')
+            ->setParameter('customer', $customer)
+            ->groupBy('os.id');
+
+        $this->applyOrderFilterToQueryBuilder($filter, $queryBuilder);
+
+        return $this->extractOrderStatusCountsByStatusId($queryBuilder->getQuery()->getArrayResult());
     }
 
     /**
@@ -209,21 +241,41 @@ class OrderRepository
 
     protected function applyOrderFilterToQueryBuilder(OrderFilter $filter, QueryBuilder $queryBuilder): void
     {
+        $isOrderItemsFilterUsed = $filter->getSearch() !== null
+            || $filter->getOrderItemsCatnum() !== null
+            || $filter->getOrderItemsProductUuid() !== null;
+
+        if ($isOrderItemsFilterUsed) {
+            $queryBuilder
+                ->distinct()
+                ->leftJoin('o.items', 'oi');
+        }
+
         if ($filter->getCreatedAfter() !== null) {
             $queryBuilder->andWhere('o.createdAt >= :createdAfter')
                 ->setParameter('createdAfter', $filter->getCreatedAfter());
+        }
+
+        if ($filter->getCreatedBefore() !== null) {
+            $queryBuilder->andWhere('o.createdAt <= :createdBefore')
+                ->setParameter('createdBefore', $filter->getCreatedBefore());
+        }
+
+        if ($filter->getSearch() !== null) {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->orX(
+                    'NORMALIZED(o.number) LIKE NORMALIZED(:search)',
+                    'NORMALIZED(oi.name) LIKE NORMALIZED(:search)',
+                    'NORMALIZED(oi.catnum) LIKE NORMALIZED(:search)',
+                ),
+            )
+                ->setParameter('search', $this->databaseSearchingHelper->getFullTextLikeSearchString($filter->getSearch()));
         }
 
         if ($filter->getStatuses() !== null && count($filter->getStatuses()) > 0) {
             $queryBuilder->andWhere('o.status IN (:statuses)')
                 ->setParameter('statuses', $filter->getStatuses());
         }
-
-        if ($filter->getOrderItemsCatnum() === null && $filter->getOrderItemsProductUuid() === null) {
-            return;
-        }
-
-        $queryBuilder->leftJoin('o.items', 'oi');
 
         if ($filter->getOrderItemsCatnum() !== null) {
             $queryBuilder->andWhere('oi.catnum = :catnum')
@@ -235,5 +287,20 @@ class OrderRepository
                 ->andWhere('p.uuid = :productUuid')
                 ->setParameter('productUuid', $filter->getOrderItemsProductUuid());
         }
+    }
+
+    /**
+     * @param array<int, array{statusId: int|string, ordersCount: int|string}> $orderStatusCounts
+     * @return array<int, int>
+     */
+    protected function extractOrderStatusCountsByStatusId(array $orderStatusCounts): array
+    {
+        $orderStatusCountsByStatusId = [];
+
+        foreach ($orderStatusCounts as $orderStatusCount) {
+            $orderStatusCountsByStatusId[(int)$orderStatusCount['statusId']] = (int)$orderStatusCount['ordersCount'];
+        }
+
+        return $orderStatusCountsByStatusId;
     }
 }

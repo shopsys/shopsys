@@ -26,7 +26,7 @@ class ComplaintRepository
         CustomerUser $customerUser,
         int $limit,
         int $offset,
-        ?string $search = null,
+        ComplaintFilter $filter,
     ): array {
         $queryBuilder = $this->createCustomerUserComplaintsQueryBuilder($customerUser)
             ->orderBy('c.createdAt', 'DESC')
@@ -34,10 +34,9 @@ class ComplaintRepository
             ->setMaxResults($limit)
             ->setFirstResult($offset);
 
+        $this->applyFilterToQueryBuilder($queryBuilder, $filter);
 
-        return $this->applySearchToQueryBuilder($queryBuilder, $search)
-            ->getQuery()
-            ->getResult();
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -47,7 +46,7 @@ class ComplaintRepository
         Customer $customer,
         int $limit,
         int $offset,
-        ?string $search = null,
+        ComplaintFilter $filter,
     ): array {
         $queryBuilder = $this->createCustomerComplaintsQueryBuilder($customer)
             ->orderBy('c.createdAt', 'DESC')
@@ -55,33 +54,67 @@ class ComplaintRepository
             ->setMaxResults($limit)
             ->setFirstResult($offset);
 
-        return $this->applySearchToQueryBuilder($queryBuilder, $search)
-            ->getQuery()
-            ->getResult();
+        $this->applyFilterToQueryBuilder($queryBuilder, $filter);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function getCustomerUserComplaintsListCount(
         CustomerUser $customerUser,
-        ?string $search = null,
+        ComplaintFilter $filter,
     ): int {
         $queryBuilder = $this->createCustomerUserComplaintsQueryBuilder($customerUser)
-            ->select('COUNT(c)');
+            ->select('COUNT(DISTINCT c.id)');
 
-        return $this->applySearchToQueryBuilder($queryBuilder, $search)
-            ->getQuery()
-            ->getSingleScalarResult();
+        $this->applyFilterToQueryBuilder($queryBuilder, $filter);
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     public function getCustomerComplaintsListCount(
         Customer $customer,
-        ?string $search = null,
+        ComplaintFilter $filter,
     ): int {
         $queryBuilder = $this->createCustomerComplaintsQueryBuilder($customer)
-            ->select('COUNT(c)');
+            ->select('COUNT(DISTINCT c.id)');
 
-        return $this->applySearchToQueryBuilder($queryBuilder, $search)
-            ->getQuery()
-            ->getSingleScalarResult();
+        $this->applyFilterToQueryBuilder($queryBuilder, $filter);
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    public function getCustomerUserComplaintStatusCounts(
+        CustomerUser $customerUser,
+        ComplaintFilter $filter,
+    ): array {
+        $queryBuilder = $this->createCustomerUserComplaintsQueryBuilder($customerUser)
+            ->join('c.status', 'cs')
+            ->select('cs.id AS statusId, COUNT(DISTINCT c.id) AS complaintsCount')
+            ->groupBy('cs.id');
+
+        $this->applyFilterToQueryBuilder($queryBuilder, $filter);
+
+        return $this->extractComplaintStatusCountsByStatusId($queryBuilder->getQuery()->getArrayResult());
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    public function getCustomerComplaintStatusCounts(
+        Customer $customer,
+        ComplaintFilter $filter,
+    ): array {
+        $queryBuilder = $this->createCustomerComplaintsQueryBuilder($customer)
+            ->join('c.status', 'cs')
+            ->select('cs.id AS statusId, COUNT(DISTINCT c.id) AS complaintsCount')
+            ->groupBy('cs.id');
+
+        $this->applyFilterToQueryBuilder($queryBuilder, $filter);
+
+        return $this->extractComplaintStatusCountsByStatusId($queryBuilder->getQuery()->getArrayResult());
     }
 
     protected function createCustomerUserComplaintsQueryBuilder(
@@ -129,22 +162,56 @@ class ComplaintRepository
             ->select('c');
     }
 
-    protected function applySearchToQueryBuilder(QueryBuilder $queryBuilder, ?string $search = null): QueryBuilder
+    protected function applyFilterToQueryBuilder(QueryBuilder $queryBuilder, ComplaintFilter $filter): void
     {
-        if ($search === null) {
-            return $queryBuilder;
+        if ($filter->getCreatedAfter() !== null) {
+            $queryBuilder->andWhere('c.createdAt >= :createdAfter')
+                ->setParameter('createdAfter', $filter->getCreatedAfter());
         }
 
-        return $queryBuilder
-            ->leftJoin('c.items', 'ci')
-            ->leftJoin('ci.orderItem', 'oi')
-            ->andWhere(
-                $queryBuilder->expr()->orX(
-                    'NORMALIZED(c.number) LIKE NORMALIZED(:search)',
-                    'NORMALIZED(oi.name) LIKE NORMALIZED(:search)',
-                    'NORMALIZED(oi.catnum) LIKE NORMALIZED(:search)',
-                ),
-            )
-            ->setParameter('search', $this->databaseSearchingHelper->getFullTextLikeSearchString($search));
+        if ($filter->getCreatedBefore() !== null) {
+            $queryBuilder->andWhere('c.createdAt <= :createdBefore')
+                ->setParameter('createdBefore', $filter->getCreatedBefore());
+        }
+
+        if ($filter->getSearch() !== null) {
+            $search = $this->databaseSearchingHelper->getFullTextLikeSearchString($filter->getSearch());
+
+            $queryBuilder
+                ->distinct()
+                ->leftJoin('c.items', 'ci')
+                ->leftJoin('ci.orderItem', 'oi')
+                ->andWhere(
+                    $queryBuilder->expr()->orX(
+                        'NORMALIZED(c.number) LIKE NORMALIZED(:search)',
+                        'NORMALIZED(oi.name) LIKE NORMALIZED(:search)',
+                        'NORMALIZED(oi.catnum) LIKE NORMALIZED(:search)',
+                    ),
+                )
+                ->setParameter('search', $search);
+        }
+
+        if ($filter->getStatuses() === null || count($filter->getStatuses()) <= 0) {
+            return;
+        }
+
+        $queryBuilder->andWhere('c.status IN (:statuses)')
+            ->setParameter('statuses', $filter->getStatuses());
+    }
+
+    /**
+     * @param array<int, array{statusId: int|string, complaintsCount: int|string}> $complaintStatusCounts
+     * @return array<int, int>
+     */
+    protected function extractComplaintStatusCountsByStatusId(array $complaintStatusCounts): array
+    {
+        $complaintStatusCountsByStatusId = [];
+
+        foreach ($complaintStatusCounts as $complaintStatusCount) {
+            $complaintStatusCountsByStatusId[(int)$complaintStatusCount['statusId']] =
+                (int)$complaintStatusCount['complaintsCount'];
+        }
+
+        return $complaintStatusCountsByStatusId;
     }
 }

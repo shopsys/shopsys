@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo\Helper;
 
-use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Product\ProductFacade;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

@@ -2,21 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Order;
+namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
 use DateTimeImmutable;
 
-class OrderFilter
+class ComplaintFilter
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]|null $statuses
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus[]|null $statuses
      */
     public function __construct(
         protected ?DateTimeImmutable $createdAfter = null,
         protected ?DateTimeImmutable $createdBefore = null,
         protected ?array $statuses = null,
-        protected ?string $orderItemsCatnum = null,
-        protected ?string $orderItemsProductUuid = null,
         protected ?string $search = null,
     ) {
     }
@@ -32,21 +30,11 @@ class OrderFilter
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]|null
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus[]|null
      */
     public function getStatuses(): ?array
     {
         return $this->statuses;
-    }
-
-    public function getOrderItemsCatnum(): ?string
-    {
-        return $this->orderItemsCatnum;
-    }
-
-    public function getOrderItemsProductUuid(): ?string
-    {
-        return $this->orderItemsProductUuid;
     }
 
     public function getSearch(): ?string

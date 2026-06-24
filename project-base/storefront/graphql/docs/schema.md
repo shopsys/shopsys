@@ -41,6 +41,8 @@
     * [ComplaintEdge](#complaintedge)
     * [ComplaintItem](#complaintitem)
     * [ComplaintResolution](#complaintresolution)
+    * [ComplaintStatus](#complaintstatus)
+    * [ComplaintStatusCount](#complaintstatuscount)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
     * [CurrentCompanyCustomerUser](#currentcompanycustomeruser)
@@ -75,6 +77,8 @@
     * [OrderItemConnection](#orderitemconnection)
     * [OrderItemEdge](#orderitemedge)
     * [OrderPaymentsConfig](#orderpaymentsconfig)
+    * [OrderStatus](#orderstatus)
+    * [OrderStatusCount](#orderstatuscount)
     * [OrderWithdrawalRequest](#orderwithdrawalrequest)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
@@ -126,6 +130,7 @@
     * [ChangePaymentInOrderInput](#changepaymentinorderinput)
     * [ChangePersonalDataInput](#changepersonaldatainput)
     * [ChangeTransportInCartInput](#changetransportincartinput)
+    * [ComplaintFilterInput](#complaintfilterinput)
     * [ComplaintInput](#complaintinput)
     * [ComplaintItemInput](#complaintiteminput)
     * [ContactFormInput](#contactforminput)
@@ -160,6 +165,7 @@
     * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [CartItemTypeEnum](#cartitemtypeenum)
     * [CategoryAutomatedFilterEnum](#categoryautomatedfilterenum)
+    * [ComplaintStatusEnum](#complaintstatusenum)
     * [CustomerUserRoleEnum](#customeruserroleenum)
     * [FriendlyUrlRouteEnum](#friendlyurlrouteenum)
     * [LoginTypeEnum](#logintypeenum)
@@ -620,6 +626,11 @@ Returns list of complaints that can be paginated using `first`, `last`, `before`
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#complaintfilterinput">ComplaintFilterInput</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">first</td>
 <td valign="top"><a href="#int">Int</a></td>
 <td></td>
@@ -630,8 +641,17 @@ Returns list of complaints that can be paginated using `first`, `last`, `before`
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">searchInput</td>
-<td valign="top"><a href="#searchinput">SearchInput</a></td>
+<td colspan="2" valign="top"><strong id="query.complaintstatuscounts">complaintStatusCounts</strong></td>
+<td valign="top">[<a href="#complaintstatuscount">ComplaintStatusCount</a>!]!</td>
+<td>
+
+Returns complaint counts grouped by status
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#complaintfilterinput">ComplaintFilterInput</a></td>
 <td></td>
 </tr>
 <tr>
@@ -930,6 +950,20 @@ Returns list of orders that can be paginated using `first`, `last`, `before` and
 <tr>
 <td colspan="2" align="right" valign="top">last</td>
 <td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query.orderstatuscounts">orderStatusCounts</strong></td>
+<td valign="top">[<a href="#orderstatuscount">OrderStatusCount</a>!]!</td>
+<td>
+
+Returns order counts grouped by status
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#orderfilterinput">OrderFilterInput</a></td>
 <td></td>
 </tr>
 <tr>
@@ -4613,6 +4647,81 @@ Constant string value of the resolution
 </tbody>
 </table>
 
+### ComplaintStatus
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintstatus.code">code</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Complaint status code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintstatus.name">name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized complaint status name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintstatus.type">type</strong></td>
+<td valign="top"><a href="#complaintstatusenum">ComplaintStatusEnum</a>!</td>
+<td>
+
+Complaint status type
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintStatusCount
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintstatuscount.count">count</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of complaints with the status
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintstatuscount.status">status</strong></td>
+<td valign="top"><a href="#complaintstatus">ComplaintStatus</a>!</td>
+<td>
+
+Complaint status
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Country
 
 Represents country
@@ -7412,6 +7521,81 @@ All currently available payment methods for the order (excluding the current one
 <td>
 
 Current payment method used in the order. Null if the original payment is not available anymore due to the reached limit of max payment transactions count.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderStatus
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="orderstatus.code">code</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Order status code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderstatus.name">name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized order status name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderstatus.type">type</strong></td>
+<td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a>!</td>
+<td>
+
+Order status type
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderStatusCount
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="orderstatuscount.count">count</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of orders with the status
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderstatuscount.status">status</strong></td>
+<td valign="top"><a href="#orderstatus">OrderStatus</a>!</td>
+<td>
+
+Order status
 
 </td>
 </tr>
@@ -11394,6 +11578,58 @@ UUID of a transport that should be added to the cart. If this is set to null, th
 </tbody>
 </table>
 
+### ComplaintFilterInput
+
+Filter complaints
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintfilterinput.createdafter">createdAfter</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Filter complaints created after this date
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintfilterinput.createdbefore">createdBefore</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Filter complaints created before this date
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintfilterinput.search">search</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Filter complaints by complaint number or product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="complaintfilterinput.statuscodes">statusCodes</strong></td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td>
+
+Filter complaints by status codes
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### ComplaintInput
 
 <table>
@@ -11997,6 +12233,15 @@ Filter orders created after this date
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="orderfilterinput.createdbefore">createdBefore</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Filter orders created before this date
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="orderfilterinput.orderitemscatnum">orderItemsCatnum</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -12015,11 +12260,20 @@ Filter orders by order items with product UUID (OR condition with orderItemsCatn
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="orderfilterinput.status">status</strong></td>
-<td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a></td>
+<td colspan="2" valign="top"><strong id="orderfilterinput.search">search</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
-Filter orders created after this date
+Filter orders by order number or product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderfilterinput.statuscodes">statusCodes</strong></td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td>
+
+Filter orders by status codes
 
 </td>
 </tr>
@@ -13289,6 +13543,45 @@ Category automated filter types
 <tr>
 <td valign="top"><strong>specialPrices</strong></td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintStatusEnum
+
+Status of complaint
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>in_progress</strong></td>
+<td>
+
+In progress
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>new</strong></td>
+<td>
+
+New
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>resolved</strong></td>
+<td>
+
+Resolved
+
+</td>
 </tr>
 </tbody>
 </table>

@@ -7,9 +7,15 @@ OrderFilterInputDecorator:
             createdAfter:
                 type: "DateTime"
                 description: "Filter orders created after this date"
-            status:
-                type: "OrderStatusEnum"
-                description: "Filter orders created after this date"
+            createdBefore:
+                type: "DateTime"
+                description: "Filter orders created before this date"
+            search:
+                type: "String"
+                description: "Filter orders by order number or product"
+            statusCodes:
+                type: "[String!]"
+                description: "Filter orders by status codes"
             orderItemsCatnum:
                 type: "String"
                 description: "Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid)"

@@ -1,0 +1,10 @@
+ComplaintStatusCount:
+    type: object
+    config:
+        fields:
+            status:
+                type: "ComplaintStatus!"
+                description: "Complaint status"
+            count:
+                type: "Int!"
+                description: "Number of complaints with the status"

@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -43,6 +45,7 @@ class ComplaintApiFacade
         protected readonly ComplaintMailFacade $complaintMailFacade,
         protected readonly ComplaintRepository $complaintRepository,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
+        protected readonly ComplaintStatusFacade $complaintStatusFacade,
     ) {
     }
 
@@ -143,9 +146,14 @@ class ComplaintApiFacade
         CustomerUser $customerUser,
         int $limit,
         int $offset,
-        ?string $search = null,
+        ComplaintFilter $filter,
     ): array {
-        return $this->complaintRepository->getCustomerUserComplaintsLimitedList($customerUser, $limit, $offset, $search);
+        return $this->complaintRepository->getCustomerUserComplaintsLimitedList(
+            $customerUser,
+            $limit,
+            $offset,
+            $filter,
+        );
     }
 
     /**
@@ -155,23 +163,78 @@ class ComplaintApiFacade
         Customer $customer,
         int $limit,
         int $offset,
-        ?string $search = null,
+        ComplaintFilter $filter,
     ): array {
-        return $this->complaintRepository->getCustomerComplaintsLimitedList($customer, $limit, $offset, $search);
+        return $this->complaintRepository->getCustomerComplaintsLimitedList($customer, $limit, $offset, $filter);
     }
 
     public function getCustomerUserComplaintsLimitedListCount(
         CustomerUser $customerUser,
-        ?string $search = null,
+        ComplaintFilter $filter,
     ): int {
-        return $this->complaintRepository->getCustomerUserComplaintsListCount($customerUser, $search);
+        return $this->complaintRepository->getCustomerUserComplaintsListCount($customerUser, $filter);
     }
 
     public function getCustomerComplaintsLimitedListCount(
         Customer $customer,
-        ?string $search = null,
+        ComplaintFilter $filter,
     ): int {
-        return $this->complaintRepository->getCustomerComplaintsListCount($customer, $search);
+        return $this->complaintRepository->getCustomerComplaintsListCount($customer, $filter);
+    }
+
+    /**
+     * @return array<int, array{status: array{code: string, type: string, name: string}, count: int}>
+     */
+    public function getCustomerUserComplaintStatusCounts(
+        CustomerUser $customerUser,
+        ComplaintFilter $filter,
+        string $locale,
+    ): array {
+        return $this->getComplaintStatusesWithCounts(
+            $this->complaintRepository->getCustomerUserComplaintStatusCounts($customerUser, $filter),
+            $locale,
+        );
+    }
+
+    /**
+     * @return array<int, array{status: array{code: string, type: string, name: string}, count: int}>
+     */
+    public function getCustomerComplaintStatusCounts(
+        Customer $customer,
+        ComplaintFilter $filter,
+        string $locale,
+    ): array {
+        return $this->getComplaintStatusesWithCounts(
+            $this->complaintRepository->getCustomerComplaintStatusCounts($customer, $filter),
+            $locale,
+        );
+    }
+
+    /**
+     * @param array<int, int> $countsByStatusId
+     * @return array<int, array{status: array{code: string, type: string, name: string}, count: int}>
+     */
+    protected function getComplaintStatusesWithCounts(array $countsByStatusId, string $locale): array
+    {
+        return array_map(
+            fn (ComplaintStatus $complaintStatus): array => [
+                'status' => $this->createComplaintStatusData($complaintStatus, $locale),
+                'count' => $countsByStatusId[$complaintStatus->getId()] ?? 0,
+            ],
+            $this->complaintStatusFacade->getAll(),
+        );
+    }
+
+    /**
+     * @return array{code: string, type: string, name: string}
+     */
+    protected function createComplaintStatusData(ComplaintStatus $complaintStatus, string $locale): array
+    {
+        return [
+            'code' => $complaintStatus->getCode(),
+            'type' => $complaintStatus->getStatusType(),
+            'name' => $complaintStatus->getName($locale),
+        ];
     }
 
     public function findByComplaintNumberAndCustomerUser(

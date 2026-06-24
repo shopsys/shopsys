@@ -1,0 +1,4 @@
+ComplaintFilterInput:
+    type: input-object
+    inherits:
+        - 'ComplaintFilterInputDecorator'

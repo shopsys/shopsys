@@ -5,8 +5,11 @@ ComplaintStatusEnumDecorator:
         description: "Status of complaint"
         values:
             new:
-                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Complaint\\ComplaintStatusEnum::STATUS_NEW")'
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Complaint\\Status\\ComplaintStatusTypeEnum::STATUS_TYPE_NEW")'
                 description: "New"
+            in_progress:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Complaint\\Status\\ComplaintStatusTypeEnum::STATUS_TYPE_IN_PROGRESS")'
+                description: "In progress"
             resolved:
-                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Complaint\\ComplaintStatusEnum::STATUS_RESOLVED")'
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Complaint\\Status\\ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED")'
                 description: "Resolved"

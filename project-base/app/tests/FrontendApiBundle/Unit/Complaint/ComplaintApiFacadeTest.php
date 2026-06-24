@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -60,6 +61,8 @@ class ComplaintApiFacadeTest extends TestCase
 
     private Stub $withdrawalRequestFacade;
 
+    private Stub $complaintStatusFacade;
+
     #[Override]
     protected function setUp(): void
     {
@@ -76,6 +79,7 @@ class ComplaintApiFacadeTest extends TestCase
         $this->complaintMailFacade = $this->createStub(ComplaintMailFacade::class);
         $this->complaintRepository = $this->createStub(ComplaintRepository::class);
         $this->withdrawalRequestFacade = $this->createStub(WithdrawalRequestFacade::class);
+        $this->complaintStatusFacade = $this->createStub(ComplaintStatusFacade::class);
 
         $this->complaintApiFacade = new ComplaintApiFacade(
             $this->em,
@@ -91,6 +95,7 @@ class ComplaintApiFacadeTest extends TestCase
             $this->complaintMailFacade,
             $this->complaintRepository,
             $this->withdrawalRequestFacade,
+            $this->complaintStatusFacade,
         );
     }
 

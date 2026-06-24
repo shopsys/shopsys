@@ -1,0 +1,18 @@
+ComplaintFilterInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Filter complaints"
+        fields:
+            createdAfter:
+                type: "DateTime"
+                description: "Filter complaints created after this date"
+            createdBefore:
+                type: "DateTime"
+                description: "Filter complaints created before this date"
+            search:
+                type: "String"
+                description: "Filter complaints by complaint number or product"
+            statusCodes:
+                type: "[String!]"
+                description: "Filter complaints by status codes"

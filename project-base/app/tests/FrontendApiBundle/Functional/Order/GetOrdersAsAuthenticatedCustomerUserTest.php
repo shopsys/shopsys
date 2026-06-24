@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\DataFixtures\Demo\OrderStatusDataFixture;
 use App\Model\Order\Order;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Symfony\Component\Clock\DatePoint;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
@@ -106,8 +108,125 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         // filter by order created after date
         yield [['filter' => ['createdAfter' => (new DatePoint())->modify('-1 year')->format(DateTimeInterface::ATOM)]], null, null];
 
+        // filter by order created before date
+        yield [['filter' => ['createdBefore' => (new DatePoint())->modify('-10 days')->format(DateTimeInterface::ATOM)]], 4, 2];
+
+        // filter by order number search
+        yield [
+            [
+                'filter' => [
+                    'search' => new ReferenceDataAccessor(
+                        OrderDataFixture::ORDER_PREFIX . 2,
+                        fn (Order $order) => $order->getNumber(),
+                    ),
+                ],
+            ],
+            4,
+            1,
+        ];
+
+        // filter by order item product name search
+        yield [
+            [
+                'filter' => [
+                    'search' => 'Hello Kitty',
+                ],
+            ],
+            0,
+            2,
+        ];
+
         // filter by order status
-        yield [['filter' => ['status' => 'inProgress']], 0, 1];
+        yield [
+            [
+                'filter' => [
+                    'statusCodes' => [
+                        self::createOrderStatusCodeAccessor(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS),
+                    ],
+                ],
+            ],
+            0,
+            1,
+        ];
+
+        // filter by multiple order statuses
+        yield [
+            [
+                'filter' => [
+                    'statusCodes' => [
+                        self::createOrderStatusCodeAccessor(OrderStatusDataFixture::ORDER_STATUS_NEW),
+                        self::createOrderStatusCodeAccessor(OrderStatusDataFixture::ORDER_STATUS_DONE),
+                    ],
+                ],
+            ],
+            1,
+            5,
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $queryVariables
+     * @param array<string, int> $expectedCountsByStatusReferenceName
+     */
+    #[DataProvider('getOrderStatusCountsDataProvider')]
+    public function testGetOrderStatusCounts(array $queryVariables, array $expectedCountsByStatusReferenceName): void
+    {
+        $resolvedQueryVariables = $this->resolveReferenceDataAccessors($queryVariables);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/getOrders.graphql', $resolvedQueryVariables);
+        $actualCountsByStatusCode = $this->getOrderStatusCountsByStatusCode($response);
+
+        foreach ($expectedCountsByStatusReferenceName as $orderStatusReferenceName => $expectedCount) {
+            $orderStatus = $this->getReference($orderStatusReferenceName, OrderStatus::class);
+
+            $this->assertSame($expectedCount, $actualCountsByStatusCode[$orderStatus->getCode()]);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{
+     *     0: array<string, mixed>,
+     *     1: array<string, int>,
+     * }>
+     */
+    public static function getOrderStatusCountsDataProvider(): iterable
+    {
+        yield 'all order status counts' => [
+            [
+                'first' => 1,
+            ],
+            [
+                OrderStatusDataFixture::ORDER_STATUS_NEW => 3,
+                OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS => 1,
+                OrderStatusDataFixture::ORDER_STATUS_DONE => 2,
+                OrderStatusDataFixture::ORDER_STATUS_CANCELED => 0,
+                OrderStatusDataFixture::ORDER_STATUS_WITHDRAWN => 0,
+            ],
+        ];
+
+        yield 'status counts respect search and status filters' => [
+            [
+                'first' => 1,
+                'statuslessFilter' => [
+                    'search' => 'Hello Kitty',
+                    'statusCodes' => [
+                        self::createOrderStatusCodeAccessor(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS),
+                    ],
+                ],
+            ],
+            [
+                OrderStatusDataFixture::ORDER_STATUS_NEW => 0,
+                OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS => 1,
+                OrderStatusDataFixture::ORDER_STATUS_DONE => 0,
+            ],
+        ];
+    }
+
+    private static function createOrderStatusCodeAccessor(string $referenceName): ReferenceDataAccessor
+    {
+        return new ReferenceDataAccessor(
+            $referenceName,
+            fn (OrderStatus $orderStatus) => $orderStatus->getCode(),
+        );
     }
 
     private function getExpectedUserOrders(?int $offset, ?int $length): array
@@ -128,5 +247,21 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         }
 
         return $ordersArray;
+    }
+
+    /**
+     * @param array<string, mixed> $response
+     * @return array<string, int>
+     */
+    private function getOrderStatusCountsByStatusCode(array $response): array
+    {
+        $statusCounts = $this->getResponseDataForGraphQlType($response, 'orderStatusCounts');
+        $statusCountsByStatusCode = [];
+
+        foreach ($statusCounts as $statusCount) {
+            $statusCountsByStatusCode[$statusCount['status']['code']] = $statusCount['count'];
+        }
+
+        return $statusCountsByStatusCode;
     }
 }
