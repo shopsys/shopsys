@@ -8,12 +8,12 @@ use Closure;
 use Doctrine\Persistence\ManagerRegistry;
 use Override;
 use RuntimeException;
-use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\HintsHelper;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
-final class OrmAdapter implements AdapterInterface
+final class OrmAdapter implements EntityClassAwareAdapterInterface
 {
     private ProxyQuery $proxyQuery;
 
@@ -22,7 +22,7 @@ final class OrmAdapter implements AdapterInterface
      * @param null|\Closure(\Doctrine\ORM\QueryBuilder $configureQuery): void $configureQuery
      */
     public function __construct(
-        string $entityClass,
+        private readonly string $entityClass,
         private readonly ManagerRegistry $managerRegistry,
         private readonly Localization $localization,
         private readonly HintsHelper $hintsHelper,
@@ -33,6 +33,15 @@ final class OrmAdapter implements AdapterInterface
         if ($configureQuery !== null) {
             $configureQuery($this->proxyQuery->getQueryBuilder());
         }
+    }
+
+    /**
+     * @return class-string
+     */
+    #[Override]
+    public function getEntityClass(): string
+    {
+        return $this->entityClass;
     }
 
     /**

@@ -67,6 +67,8 @@ class Grid
 
     protected ?string $orderingEntityClass = null;
 
+    protected ?string $dragAndDropOrderSourceColumnName = null;
+
     protected PaginationResult $paginationResults;
 
     /**
@@ -461,7 +463,7 @@ class Grid
             }
         }
 
-        if ($this->getOrderSourceColumnName() !== null) {
+        if (!$this->isDragAndDrop() && $this->getOrderSourceColumnName() !== null) {
             $gridParameters['order'] = $this->getOrderSourceColumnNameWithDirection();
         }
 
@@ -512,8 +514,8 @@ class Grid
         $orderDirection = $this->orderDirection;
 
         if ($this->isDragAndDrop()) {
-            $orderSourceColumnName = null;
-            $orderDirection = DataSourceInterface::ORDER_DESC;
+            $orderSourceColumnName = $this->dragAndDropOrderSourceColumnName;
+            $orderDirection = DataSourceInterface::ORDER_ASC;
         }
 
         $this->paginationResults = $this->dataSource->getPaginatedRows(
@@ -567,9 +569,15 @@ class Grid
         return $row[$sourceColumnName];
     }
 
-    public function enableDragAndDrop(string $entityClass): void
+    /**
+     * When drag-and-drop is enabled the listing is always ordered by $orderSourceColumnName ascending,
+     * regardless of any ordering coming from the request, so the persisted positions are never mixed up.
+     * Pass null when the ordering is already baked into the data source query builder (legacy grids).
+     */
+    public function enableDragAndDrop(string $entityClass, ?string $orderSourceColumnName = null): void
     {
         $this->orderingEntityClass = $entityClass;
+        $this->dragAndDropOrderSourceColumnName = $orderSourceColumnName;
     }
 
     public function enableMultipleDragAndDrop(): void
