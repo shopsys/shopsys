@@ -153,7 +153,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                     className={twJoin(
                                         'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                         isOpen || comboBoxConfig.searchValue || activeOption
-                                            ? 'top-[9px] left-3 text-sm'
+                                            ? 'top-2.25 left-3 text-sm'
                                             : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                     )}
                                 >
@@ -185,7 +185,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 className={twJoin(
                                     'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || activeOption
-                                        ? 'top-[9px] text-sm'
+                                        ? 'top-2.25 text-sm'
                                         : 'top-1/2 -translate-y-1/2 font-semibold text-md',
                                 )}
                             >

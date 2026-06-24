@@ -2,7 +2,12 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
 import { Button } from 'components/Forms/Button/Button';
-import { ElementWithImage, OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItemElements';
+import {
+    CustomerRecordCard,
+    CustomerRecordColumnInfo,
+    CustomerRecordElementWithImage,
+    CustomerRecordRowInfo,
+} from 'components/Pages/Customer/CustomerRecordElements';
 import { OrderPaymentStatusBar } from 'components/Pages/Customer/Orders/OrderPaymentStatusBar';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -54,17 +59,17 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
     return (
         <>
-            <div className="flex vl:flex-row flex-col flex-wrap justify-between gap-5 rounded-xl bg-background-more p-5">
-                <OrderItemColumnInfo title={t('Order number')}>
+            <CustomerRecordCard className="gap-5">
+                <CustomerRecordColumnInfo title={t('Order number')}>
                     <span data-tid={TIDs.order_detail_number}>{order.number}</span>
-                </OrderItemColumnInfo>
+                </CustomerRecordColumnInfo>
 
-                <OrderItemColumnInfo title={t('Date of order')}>
+                <CustomerRecordColumnInfo title={t('Date of order')}>
                     <span data-tid={TIDs.order_detail_creation_date}>{formatDate(order.creationDate)}</span>
-                </OrderItemColumnInfo>
+                </CustomerRecordColumnInfo>
 
                 {isPriceVisible(order.totalPrice.priceWithVat) && (
-                    <OrderItemColumnInfo title={t('Price')}>
+                    <CustomerRecordColumnInfo title={t('Price')}>
                         {formatPrice(order.totalPrice.priceWithVat)}
 
                         <OrderPaymentStatusBar
@@ -72,10 +77,10 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                             orderHasPaymentInProcess={order.hasPaymentInProcess}
                             orderIsPaid={order.isPaid}
                         />
-                    </OrderItemColumnInfo>
+                    </CustomerRecordColumnInfo>
                 )}
 
-                <OrderItemColumnInfo title={t('Status')}>{order.status}</OrderItemColumnInfo>
+                <CustomerRecordColumnInfo title={t('Status')}>{order.status}</CustomerRecordColumnInfo>
 
                 {showRepeatOrderButton && !notPaid && (
                     <div className="flex shrink-0 gap-4">
@@ -109,7 +114,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         </span>
                     </div>
                 )}
-            </div>
+            </CustomerRecordCard>
 
             {canCreateOrder && notPaid && <PaymentsInOrderSelect orderUuid={order.uuid} />}
 
@@ -117,9 +122,10 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 <OrderDetailRowInfo tid={TIDs.order_detail_transport} title={t('Transport')}>
                     <div className="flex w-full items-center justify-between">
                         <div className="flex flex-col gap-2">
-                            <ElementWithImage
+                            <CustomerRecordElementWithImage
                                 image={orderTransport.transport?.mainImage?.url}
                                 name={orderTransport.name}
+                                tid={TIDs.order_list_transport_and_payment_image}
                             />
 
                             {order.trackingUrl && (
@@ -150,7 +156,11 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
             {orderPayment && (
                 <OrderDetailRowInfo tid={TIDs.order_detail_payment} title={t('Payment')}>
                     <div className="flex w-full justify-between">
-                        <ElementWithImage image={orderPayment.payment?.mainImage?.url} name={orderPayment.name} />
+                        <CustomerRecordElementWithImage
+                            image={orderPayment.payment?.mainImage?.url}
+                            name={orderPayment.name}
+                            tid={TIDs.order_list_transport_and_payment_image}
+                        />
 
                         {isPriceVisible(orderPayment.totalPrice.priceWithVat) && (
                             <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
@@ -236,12 +246,8 @@ type OrderDetailRowInfoProps = {
 
 const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, children }) => {
     return (
-        <div
-            className="flex vl:flex-row flex-col vl:items-center gap-1 vl:gap-3 rounded-xl bg-background-more p-5 text-sm"
-            data-tid={tid}
-        >
-            <span className="min-w-[100px] font-secondary font-semibold text-text-less">{title}</span>
+        <CustomerRecordRowInfo className="rounded-xl bg-background-more p-5" tid={tid} title={title}>
             {children}
-        </div>
+        </CustomerRecordRowInfo>
     );
 };

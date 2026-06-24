@@ -1,6 +1,12 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
+import {
+    CustomerRecordCard,
+    CustomerRecordColumnInfo,
+    CustomerRecordElementWithImage,
+    CustomerRecordRowInfo,
+} from 'components/Pages/Customer/CustomerRecordElements';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -12,7 +18,6 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getOrderPaymentItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { ElementWithImage, OrderItemColumnInfo, OrderItemRowInfo } from './OrderItemElements';
 import { OrderItemProducts } from './OrderItemProducts';
 import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';
 
@@ -60,14 +65,14 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
 
     return (
-        <div className="flex vl:flex-row flex-col flex-wrap justify-between gap-4 rounded-xl bg-background-more p-5">
+        <CustomerRecordCard>
             <span className="sr-only" id={orderSummaryId}>
                 {orderSummary}
             </span>
 
             <div className="flex flex-1 flex-col gap-2.5">
                 <div className="flex vl:flex-row flex-col gap-x-8 gap-y-2">
-                    <OrderItemColumnInfo tid={TIDs.order_list_item_number} title={t('Order number')}>
+                    <CustomerRecordColumnInfo tid={TIDs.order_list_item_number} title={t('Order number')}>
                         <ExtendedNextLink
                             aria-describedby={orderSummaryId}
                             className="font-bold"
@@ -83,14 +88,14 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         >
                             {order.number}
                         </ExtendedNextLink>
-                    </OrderItemColumnInfo>
+                    </CustomerRecordColumnInfo>
 
-                    <OrderItemColumnInfo tid={TIDs.order_list_item_date} title={t('Date of order')}>
+                    <CustomerRecordColumnInfo tid={TIDs.order_list_item_date} title={t('Date of order')}>
                         {formatDate(order.creationDate)}
-                    </OrderItemColumnInfo>
+                    </CustomerRecordColumnInfo>
 
                     {isPriceVisible(order.totalPrice.priceWithVat) && (
-                        <OrderItemColumnInfo title={t('Price')}>
+                        <CustomerRecordColumnInfo title={t('Price')}>
                             {formatPrice(order.totalPrice.priceWithVat)}
 
                             <OrderPaymentStatusBar
@@ -98,28 +103,30 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                                 orderHasPaymentInProcess={order.hasPaymentInProcess}
                                 orderIsPaid={order.isPaid}
                             />
-                        </OrderItemColumnInfo>
+                        </CustomerRecordColumnInfo>
                     )}
 
-                    <OrderItemColumnInfo title={t('State')}>{order.status}</OrderItemColumnInfo>
+                    <CustomerRecordColumnInfo title={t('State')}>{order.status}</CustomerRecordColumnInfo>
                 </div>
 
                 {orderPayment && (
-                    <OrderItemRowInfo title={t('Payment')}>
-                        <ElementWithImage
+                    <CustomerRecordRowInfo title={t('Payment')}>
+                        <CustomerRecordElementWithImage
                             image={orderPayment.payment?.mainImage?.url}
                             name={orderPayment.payment?.name || ''}
+                            tid={TIDs.order_list_transport_and_payment_image}
                         />
-                    </OrderItemRowInfo>
+                    </CustomerRecordRowInfo>
                 )}
 
                 {orderTransport && (
-                    <OrderItemRowInfo title={t('Transport')}>
-                        <ElementWithImage
+                    <CustomerRecordRowInfo title={t('Transport')}>
+                        <CustomerRecordElementWithImage
                             image={orderTransport.transport?.mainImage?.url}
                             name={orderTransport.transport?.name || ''}
+                            tid={TIDs.order_list_transport_and_payment_image}
                         />
-                    </OrderItemRowInfo>
+                    </CustomerRecordRowInfo>
                 )}
 
                 <OrderItemProducts items={order.productItems} orderLink={orderLink} />
@@ -168,6 +175,6 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     {t('Detail')}
                 </LinkButton>
             </div>
-        </div>
+        </CustomerRecordCard>
     );
 };

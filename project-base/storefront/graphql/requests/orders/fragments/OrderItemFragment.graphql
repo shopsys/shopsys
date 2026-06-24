@@ -3,6 +3,7 @@ fragment OrderItemFragment on OrderItem {
     quantity
     product {
         __typename
+        name
         isVisible
         isSellingDenied
         isInquiryType

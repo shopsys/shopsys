@@ -3,7 +3,12 @@ fragment ComplaintListItemFragment on Complaint {
     number
     createdAt
     status
+    resolution {
+        name
+    }
     items {
+        uuid
+        quantity
         productName
         product {
             slug

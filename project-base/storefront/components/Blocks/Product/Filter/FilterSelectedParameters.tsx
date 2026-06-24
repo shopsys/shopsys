@@ -277,7 +277,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 };
 
 const SelectedParametersIcon: FC = () => (
-    <RemoveBoldIcon className="ml-2 w-3 cursor-pointer text-icon-less group-hover:text-icon-inverted" />
+    <RemoveBoldIcon className="size-3 cursor-pointer text-icon-less group-hover:text-icon-error" />
 );
 
 const getCheckedFlags = (

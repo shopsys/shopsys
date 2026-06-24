@@ -4,6 +4,7 @@ import { UserProfileCardsIcon } from 'components/Basic/Icon/UserProfileCardsIcon
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { twJoin } from 'tailwind-merge';
+import { normalizeTelephone } from 'utils/formaters/normalizeTelephone';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ComplaintDetailCustomerInfoProps = {
@@ -23,15 +24,14 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
                 <ExtendedNextLink
                     href={`mailto:${complaint.email}`}
                     className={twJoin(
-                        'text-sm underline hover:text-greyDark hover:no-underline',
-                        'overflow-x-auto whitespace-nowrap text-text-default',
+                        'overflow-x-auto whitespace-nowrap text-sm text-text-default underline hover:no-underline',
                         '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                     )}
                 >
                     {complaint.email}
                 </ExtendedNextLink>
 
-                <span>{complaint.deliveryTelephone}</span>
+                <span>{normalizeTelephone(complaint.deliveryTelephone)}</span>
             </InformationCard>
 
             <InformationCard heading={t('Delivery address')} icon={<BoxPackageHandIcon className="size-8" />}>

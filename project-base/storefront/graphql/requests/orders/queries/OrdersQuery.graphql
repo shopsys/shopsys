@@ -1,8 +1,18 @@
 query OrdersQuery (
     $after: String
+    $filter: OrderFilterInput
     $first: Int
+    $statuslessFilter: OrderFilterInput
 ){
-    orders (after: $after, first: $first) {
+    orders (after: $after, filter: $filter, first: $first) {
         ...OrderListFragment
+    }
+    orderStatusCounts(filter: $statuslessFilter) {
+        status {
+            code
+            type
+            name
+        }
+        count
     }
 }

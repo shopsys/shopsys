@@ -91,8 +91,14 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     </span>
                 )}
 
-                <span className="flex w-full justify-between">
-                    <span className="w-full">
+                <span className="flex w-full min-w-0 justify-between">
+                    <span
+                        className={twMergeCustom(
+                            'w-full min-w-0',
+                            (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
+                                'truncate',
+                        )}
+                    >
                         {label}
                         {required && (
                             <span aria-hidden="true" className="ml-1 text-text-error">

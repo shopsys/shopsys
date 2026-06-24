@@ -1,13 +1,17 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Image } from 'components/Basic/Image/Image';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
+import {
+    CustomerRecordCard,
+    CustomerRecordColumnInfo,
+    CustomerRecordProductImage,
+    CustomerRecordRowInfo,
+} from 'components/Pages/Customer/CustomerRecordElements';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeComplaintListItemFragment } from 'graphql/requests/complaints/fragments/ComplaintListItemFragment.generated';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { ComplaintItemColumnInfo } from './ComplaintItemColumnInfo';
 
 type ComplaintItemProps = {
     complaintItem: TypeComplaintListItemFragment;
@@ -18,90 +22,82 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
     const { formatDate } = useFormatDate();
     const { url } = useDomainConfig();
     const [customerComplaintDetailUrl] = getInternationalizedStaticUrls(['/customer/complaint-detail'], url);
+    const complaintDetailLink = {
+        pathname: customerComplaintDetailUrl,
+        query: { complaintNumber: complaintItem.number },
+    };
 
     return (
-        <div className="flex flex-col gap-5 rounded-md bg-background-more p-4 vl:p-6">
-            <div className="flex vl:flex-row flex-col vl:items-start vl:justify-between gap-4">
-                <div className="flex size-20 shrink-0" data-tid={TIDs.complaint_item_image}>
-                    <Image
-                        priority
-                        alt={complaintItem.items[0].product?.mainImage?.name || ''}
-                        className="size-20 object-contain mix-blend-multiply"
-                        height={48}
-                        src={complaintItem.items[0].product?.mainImage?.url}
-                        width={72}
-                    />
+        <CustomerRecordCard>
+            <div className="flex flex-1 flex-col gap-2.5">
+                <div className="flex vl:flex-row flex-col gap-x-8 gap-y-2">
+                    <CustomerRecordColumnInfo tid={TIDs.complaint_list_item_number} title={t('Complaint number')}>
+                        <ExtendedNextLink
+                            className="font-semibold text-sm"
+                            type="complaintDetail"
+                            aria-label={t('Go to complaint number {{complaintNumber}}', {
+                                ns: 'accessibility',
+                                complaintNumber: complaintItem.number,
+                            })}
+                            href={complaintDetailLink}
+                        >
+                            {complaintItem.number}
+                        </ExtendedNextLink>
+                    </CustomerRecordColumnInfo>
+
+                    <CustomerRecordColumnInfo tid={TIDs.complaint_list_item_date} title={t('Creation date')}>
+                        {formatDate(complaintItem.createdAt)}
+                    </CustomerRecordColumnInfo>
+
+                    <CustomerRecordColumnInfo title={t('Status')}>{complaintItem.status}</CustomerRecordColumnInfo>
+
+                    <CustomerRecordColumnInfo title={t('Resolution')}>
+                        {complaintItem.resolution.name}
+                    </CustomerRecordColumnInfo>
                 </div>
 
-                <div className="flex flex-col gap-1">
-                    <span className="h5">
-                        {complaintItem.items[0].product?.isVisible ? (
-                            <ExtendedNextLink
-                                href={complaintItem.items[0].product.slug}
-                                type="product"
-                                aria-label={t('Go to product {{productName}}', {
-                                    ns: 'accessibility',
-                                    productName: complaintItem.items[0].productName,
-                                })}
-                            >
-                                {complaintItem.items[0].productName}
-                            </ExtendedNextLink>
-                        ) : (
-                            complaintItem.items[0].productName
-                        )}
-                    </span>
-
-                    <div className="flex flex-wrap gap-x-8 gap-y-2">
-                        <ComplaintItemColumnInfo
-                            tid={TIDs.complaint_list_item_number}
-                            title={t('Complaint number')}
-                            value={
-                                <ExtendedNextLink
-                                    type="complaintDetail"
-                                    aria-label={t('Go to complaint number {{complaintNumber}}', {
-                                        ns: 'accessibility',
-                                        complaintNumber: complaintItem.number,
-                                    })}
-                                    href={{
-                                        pathname: customerComplaintDetailUrl,
-                                        query: { complaintNumber: complaintItem.number },
-                                    }}
-                                >
-                                    {complaintItem.number}
-                                </ExtendedNextLink>
-                            }
-                        />
-
-                        <ComplaintItemColumnInfo
-                            tid={TIDs.complaint_list_item_date}
-                            title={t('Creation date')}
-                            value={formatDate(complaintItem.createdAt)}
-                        />
-
-                        <ComplaintItemColumnInfo
-                            title={t('Status')}
-                            value={complaintItem.status}
-                            wrapperClassName="min-w-[80px]"
-                        />
+                <CustomerRecordRowInfo title={t('Products')}>
+                    <div className="flex flex-wrap gap-3">
+                        {complaintItem.items.map((item) => (
+                            <ComplaintProduct key={item.uuid} complaintProduct={item} />
+                        ))}
                     </div>
-                </div>
+                </CustomerRecordRowInfo>
+            </div>
 
+            <div className="flex shrink-0 gap-4">
                 <LinkButton
-                    className="w-full whitespace-nowrap md:ml-auto md:w-auto"
-                    size="small"
                     type="complaintDetail"
                     aria-label={t('Go to complaint number {{complaintNumber}}', {
                         ns: 'accessibility',
                         complaintNumber: complaintItem.number,
                     })}
-                    href={{
-                        pathname: customerComplaintDetailUrl,
-                        query: { complaintNumber: complaintItem.number },
-                    }}
+                    variant="secondary"
+                    href={complaintDetailLink}
                 >
-                    {t('Complaint detail')}
+                    {t('Detail')}
                 </LinkButton>
             </div>
-        </div>
+        </CustomerRecordCard>
+    );
+};
+
+type ComplaintProductProps = {
+    complaintProduct: TypeComplaintListItemFragment['items'][number];
+};
+
+const ComplaintProduct: FC<ComplaintProductProps> = ({ complaintProduct }) => {
+    const productName = complaintProduct.productName;
+
+    return (
+        <CustomerRecordProductImage
+            image={complaintProduct.product?.mainImage?.url}
+            imageAlt={complaintProduct.product?.mainImage?.name ?? productName}
+            isVisible={complaintProduct.product?.isVisible}
+            link={complaintProduct.product?.slug}
+            quantity={complaintProduct.quantity}
+            tid={TIDs.complaint_item_image}
+            tooltipLabel={productName}
+        />
     );
 };

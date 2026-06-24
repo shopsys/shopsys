@@ -12,9 +12,9 @@ export const SkeletonModulePageHero: FC<SkeletonModulePageHeroProps> = ({ simple
         <Skeleton className="mx-auto h-7 w-72 lg:h-8" />
 
         {!simple && (
-            <div className="flex flex-col items-center justify-center gap-1">
-                <Skeleton className="h-6 w-2/4" />
-                <Skeleton className="h-6 w-3/5" />
+            <div className="flex flex-col items-center justify-center gap-2">
+                <Skeleton className="h-5 w-2/4" />
+                <Skeleton className="h-5 w-3/5" />
             </div>
         )}
     </VerticalStack>

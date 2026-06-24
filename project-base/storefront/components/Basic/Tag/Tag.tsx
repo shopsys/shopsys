@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ReactElement } from 'react';
+import { type AriaRole, type ReactElement, type Ref } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -7,6 +7,10 @@ type TagProps = {
     isDisabled?: boolean;
     isActive?: boolean;
     ariaLabel?: string;
+    ariaPressed?: boolean;
+    ariaSelected?: boolean;
+    buttonRef?: Ref<HTMLButtonElement>;
+    htmlRole?: AriaRole;
     onClick?: () => void;
 } & (
     | {
@@ -37,13 +41,18 @@ export const Tag: FC<TagProps> = ({
     render,
     onClick,
     ariaLabel,
+    ariaPressed,
+    ariaSelected,
+    buttonRef,
+    htmlRole,
 }) => {
     const TagTwClassName = twMergeCustom(
-        'flex cursor-pointer items-center justify-center rounded-tag px-4 py-1 font-secondary font-semibold no-underline transition-all',
-        'border-tag-border-default bg-tag-bg-default text-sm text-tag-text-default',
-        'hover:cursor-pointer hover:border-tag-border-hovered hover:bg-tag-bg-hovered hover:text-tag-text-hovered hover:no-underline',
-        isDisabled && 'border-tag-border-disabled bg-tag-bg-disabled text-tag-text-disabled',
-        isActive && 'border-tag-border-active bg-tag-bg-active text-tag-text-active',
+        'flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 rounded-2xl px-3.5 py-1.5 font-secondary font-semibold text-sm no-underline transition-all',
+        'focus-visible:bg-orange-500 focus-visible:text-text-default focus-visible:outline-hidden',
+        isActive
+            ? 'bg-background-brand-less text-text-inverted'
+            : 'bg-background-more text-text-default hover:bg-background-most hover:no-underline',
+        isDisabled && 'pointer-events-none opacity-50',
         className,
     );
 
@@ -56,7 +65,17 @@ export const Tag: FC<TagProps> = ({
     }
 
     const content = (
-        <button aria-label={ariaLabel} className={TagTwClassName} tabIndex={0} type="button" onClick={onClick}>
+        <button
+            ref={buttonRef}
+            aria-label={ariaLabel}
+            aria-pressed={ariaPressed}
+            aria-selected={ariaSelected}
+            className={TagTwClassName}
+            role={htmlRole}
+            tabIndex={0}
+            type="button"
+            onClick={onClick}
+        >
             {children}
         </button>
     );
