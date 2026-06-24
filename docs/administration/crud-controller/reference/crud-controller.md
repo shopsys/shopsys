@@ -46,7 +46,8 @@ Configure general behavior of the controller. Customizable options are available
 protected function configure(CrudConfig $config): void
 {
     $config
-        ->setTitle(ActionType::LIST, t('All products'))
+        ->setEntityNameSingular(t('Product'))
+        ->setEntityNamePlural(t('Products'))
         ->setMenuTitle(t('Products management'))
         ->setMenuSection('products');
 }
@@ -143,21 +144,35 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 
 The `CrudConfig` class is used to configure the behavior of the Crud Controller. It is used in the `configure` method of the Crud Controller.
 
-### Default titles
+### Titles, breadcrumbs and pretitle
 
-Page titles and the menu label are generated automatically from the entity class name using English singular/plural inflection. For example, entity `OrderItem` produces menu title "Order items", etc.
+All page labels are derived from a single source — the **singular** and **plural** entity name — which are generated automatically from the entity class name using English singular/plural inflection. For example, entity `OrderItem` produces singular "Order item" and plural "Order items". These generated names are registered as translation keys automatically — no manual `t()` wrapping is needed for defaults.
 
-These generated names are registered as translation keys automatically — no manual `t()` wrapping is needed for defaults.
+The action and the entity name are never concatenated into a single declined phrase (such as "Editing Order item"), because that is grammatically broken in inflected languages (e.g. Czech "Editace Sklad"). Instead each label keeps the entity name in the nominative case and conveys the action separately:
+
+| Page   | Pretitle (above the heading) | Heading & browser tab title    | Breadcrumb                            |
+|--------|------------------------------|--------------------------------|---------------------------------------|
+| list   | `Overview`                   | plural (e.g. "Orders")         | plural (menu label)                   |
+| create | `New record`                 | singular (e.g. "Order")        | `New record`                          |
+| edit   | `Editing`                    | singular `·` record name       | `Editing a record - {record name}`    |
+| detail | `Detail`                     | singular `·` record name       | `Record detail - {record name}`       |
+
+- The **pretitle** is a static, action-specific label rendered in the page templates.
+- The **heading** (and browser tab title) is the entity name; for edit/detail the concrete record's human-readable name is appended after a `·` separator.
+- The **breadcrumb** uses a generic, entity-independent phrase (using the word "record") so it stays grammatically correct; for edit/detail it is overridden at runtime with the record name.
+
+For the record name to be shown, the entity returned by the handler's `getById()` must implement [`Presentable`]({{github.link}}/packages/framework/src/Component/Utils/Presentable.php) (`toHumanReadable()`); this is required by the `ReadHandlerInterface` contract.
 
 ### Methods
 
-#### `setTitle(ActionType $actionType, string $title)`
+#### `setEntityNameSingular(string $entityNameSingular)` and `setEntityNamePlural(string $entityNamePlural)`
 
-Sets a custom title for a specific page type. The title is displayed in the page header. Overrides the auto-generated default for the given action.
+Override the automatically derived singular/plural entity name. Wrap the value in `t()` so it gets picked up for translation. Set these only when the automatic English inflection is wrong (e.g. irregular plurals) or you want a different label than the entity class name.
 
 ```php
-$config->setTitle(ActionType::LIST, t('All orders'));
-$config->setTitle(ActionType::CREATE, t('New order'));
+$config
+    ->setEntityNameSingular(t('Order'))
+    ->setEntityNamePlural(t('Orders'));
 ```
 
 #### `setMenuTitle(string $menuTitle)`

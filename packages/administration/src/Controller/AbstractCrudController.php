@@ -22,6 +22,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -50,6 +51,9 @@ abstract class AbstractCrudController extends AdminBaseController
 
     #[Required]
     public FormFactoryInterface $formFactory;
+
+    #[Required]
+    public BreadcrumbOverrider $breadcrumbOverrider;
 
     public function setDefinition(Definition $definition): void
     {
@@ -171,8 +175,12 @@ abstract class AbstractCrudController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
+        $config = $this->definition->getConfig();
+        $recordName = $entity->toHumanReadable();
+        $this->breadcrumbOverrider->overrideLastItem($config->getBreadcrumbTitle(ActionType::EDIT) . ' - ' . $recordName);
+
         return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
-            'title' => $this->definition->getConfig()->getTitle(ActionType::EDIT),
+            'title' => $config->getTitle(ActionType::EDIT, $recordName),
             'topActions' => $this->getConfiguredActions(ActionType::EDIT),
             'form' => $form->createView(),
         ]);
