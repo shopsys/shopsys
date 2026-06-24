@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Author;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
+use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler;
 
 class BlogArticleAuthorFacade
 {
@@ -14,6 +16,8 @@ class BlogArticleAuthorFacade
         protected readonly BlogArticleAuthorRepository $blogArticleAuthorRepository,
         protected readonly BlogArticleAuthorFactory $blogArticleAuthorFactory,
         protected readonly ImageFacade $imageFacade,
+        protected readonly BlogArticleRepository $blogArticleRepository,
+        protected readonly BlogArticleExportScheduler $blogArticleExportScheduler,
     ) {
     }
 
@@ -48,14 +52,21 @@ class BlogArticleAuthorFacade
         $this->imageFacade->manageImages($blogArticleAuthor, $blogArticleAuthorData->image);
         $this->em->flush();
 
+        $this->blogArticleExportScheduler->scheduleRowIdsForImmediateExport(
+            $this->blogArticleRepository->getBlogArticleIdsByBlogArticleAuthor($blogArticleAuthor),
+        );
+
         return $blogArticleAuthor;
     }
 
     public function deleteById(int $blogArticleAuthorId): void
     {
         $blogArticleAuthor = $this->blogArticleAuthorRepository->getById($blogArticleAuthorId);
+        $affectedBlogArticleIds = $this->blogArticleRepository->getBlogArticleIdsByBlogArticleAuthor($blogArticleAuthor);
 
         $this->em->remove($blogArticleAuthor);
         $this->em->flush();
+
+        $this->blogArticleExportScheduler->scheduleRowIdsForImmediateExport($affectedBlogArticleIds);
     }
 }

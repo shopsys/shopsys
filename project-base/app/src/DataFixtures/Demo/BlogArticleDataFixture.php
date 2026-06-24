@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum;
+use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData;
@@ -35,8 +36,12 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     public const string BLOG_ARTICLE_DRAFT = 'blog_article_draft';
     public const string BLOG_ARTICLE_PREVIEW = 'blog_article_preview';
     public const string BLOG_ARTICLE_PUBLISHED_FUTURE = 'blog_article_published_future';
+    public const string BLOG_ARTICLE_WITH_AUTHOR = 'blog_article_with_author';
+    public const string BLOG_ARTICLE_WITHOUT_AUTHOR = 'blog_article_without_author';
 
     private int $articleCounter = 1;
+
+    private int $blogArticleAuthorRotation = 0;
 
     public function __construct(
         private readonly BlogArticleFacade $blogArticleFacade,
@@ -71,10 +76,15 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory]);
             $this->applyStatusDiversity($blogArticleData, $i);
+            $this->forceBlogArticleAuthorForTestReferences($blogArticleData, $i);
+
             $blogArticle = $this->blogArticleFacade->create($blogArticleData);
 
             if ($i === 0) {
                 $this->addReference(self::FIRST_DEMO_BLOG_ARTICLE, $blogArticle);
+                $this->addReference(self::BLOG_ARTICLE_WITHOUT_AUTHOR, $blogArticle);
+            } elseif ($i === 1) {
+                $this->addReference(self::BLOG_ARTICLE_WITH_AUTHOR, $blogArticle);
             }
 
             if ($i === self::PAGES_IN_CATEGORY - 1) {
@@ -201,9 +211,42 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $blogArticleData->seoMetaDescriptions[$domainId] = t('Blog article example %counter% %locale% - Meta description', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
+        $this->assignBlogArticleAuthor($blogArticleData);
+
         $this->articleCounter++;
 
         return $blogArticleData;
+    }
+
+    private function assignBlogArticleAuthor(BlogArticleData $blogArticleData): void
+    {
+        if (crc32($blogArticleData->uuid) % 5 === 0) {
+            return;
+        }
+
+        $authorReferenceNames = [
+            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_1,
+            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_2,
+            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_3,
+        ];
+
+        $blogArticleData->blogArticleAuthor = $this->getReference(
+            $authorReferenceNames[$this->blogArticleAuthorRotation % count($authorReferenceNames)],
+            BlogArticleAuthor::class,
+        );
+        $this->blogArticleAuthorRotation++;
+    }
+
+    private function forceBlogArticleAuthorForTestReferences(BlogArticleData $blogArticleData, int $index): void
+    {
+        if ($index === 0) {
+            $blogArticleData->blogArticleAuthor = null;
+        } elseif ($index === 1) {
+            $blogArticleData->blogArticleAuthor = $this->getReference(
+                BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_1,
+                BlogArticleAuthor::class,
+            );
+        }
     }
 
     private function applyStatusDiversity(BlogArticleData $blogArticleData, int $index): void
@@ -418,6 +461,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     {
         return [
             ProductDataFixture::class,
+            BlogArticleAuthorDataFixture::class,
         ];
     }
 }

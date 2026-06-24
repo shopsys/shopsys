@@ -258,6 +258,8 @@ interface BaseCustomerUser {
 }
 
 type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
+  "The author of the blog article"
+  author: BlogArticleAuthor
   "The list of the blog article visible categories"
   blogCategories: [BlogCategory!]!
   "Hierarchy of the current element in relation to the structure"
@@ -298,6 +300,21 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
   uuid: Uuid!
   "Indicates whether the blog article is displayed on homepage"
   visibleOnHomepage: Boolean!
+}
+
+type BlogArticleAuthor {
+  "The blog article author description"
+  description: String
+  "ID of the blog article author"
+  id: Int!
+  "The blog article author job title"
+  jobTitle: String
+  "The blog article author image"
+  mainImage(type: String = null): Image
+  "The blog article author name"
+  name: String!
+  "The blog article author UUID"
+  uuid: Uuid!
 }
 
 "A connection to a list of items."

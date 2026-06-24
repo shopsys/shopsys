@@ -131,6 +131,11 @@ services:
             $imagesBatchLoader: '@images_batch_loader'
             $firstImageBatchLoader: '@first_image_batch_loader'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\BlogArticleAuthorImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Image\BlogArticleImagesQuery:
         arguments:
             $imagesBatchLoader: '@images_batch_loader'
