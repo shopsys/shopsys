@@ -14,11 +14,11 @@ class ComplaintStatusFactory
     ) {
     }
 
-    public function create(ComplaintStatusData $data, string $statusType): ComplaintStatus
+    public function create(ComplaintStatusData $data, string $statusType, string $code): ComplaintStatus
     {
         $this->complaintStatusTypeEnum->validateCase($statusType);
         $entityClassName = $this->entityNameResolver->resolve(ComplaintStatus::class);
 
-        return new $entityClassName($data, $statusType);
+        return new $entityClassName($data, $statusType, $code);
     }
 }

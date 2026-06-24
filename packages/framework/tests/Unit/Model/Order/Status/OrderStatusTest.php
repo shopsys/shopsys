@@ -28,11 +28,13 @@ class OrderStatusTest extends TestCase
     {
         $orderStatusData = new OrderStatusData();
         $orderStatusData->name = ['en' => 'orderStatusName'];
-        $orderStatus = new OrderStatus($orderStatusData, $statusType);
+        $orderStatus = new OrderStatus($orderStatusData, $statusType, 'order-status');
 
         if ($expectedException !== null) {
             $this->expectException($expectedException);
         }
         $orderStatus->checkForDelete();
+
+        $this->assertNull($expectedException);
     }
 }

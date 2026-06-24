@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Complaint\Status;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
@@ -16,6 +17,7 @@ class ComplaintStatusFacade
         protected readonly ComplaintStatusRepository $complaintStatusRepository,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly ComplaintMail $complaintMail,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -24,6 +26,7 @@ class ComplaintStatusFacade
         $complaintStatus = $this->complaintStatusFactory->create(
             $complaintStatusData,
             ComplaintStatusTypeEnum::STATUS_TYPE_IN_PROGRESS,
+            $this->createUniqueCode($complaintStatusData),
         );
         $this->em->persist($complaintStatus);
         $this->em->flush();
@@ -86,8 +89,46 @@ class ComplaintStatusFacade
         return $this->complaintStatusRepository->getAll();
     }
 
+    /**
+     * @param string[] $codes
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus[]
+     */
+    public function getAllByCodes(array $codes): array
+    {
+        return $this->complaintStatusRepository->getAllByCodes($codes);
+    }
+
     public function getDefault(): ComplaintStatus
     {
         return $this->complaintStatusRepository->getDefault();
+    }
+
+    protected function createUniqueCode(ComplaintStatusData $complaintStatusData): string
+    {
+        $baseCode = $this->createCodeFromComplaintStatusData($complaintStatusData);
+        $code = $baseCode;
+        $suffix = 2;
+
+        while ($this->complaintStatusRepository->findByCode($code) !== null) {
+            $code = $baseCode . '-' . $suffix;
+            $suffix++;
+        }
+
+        return $code;
+    }
+
+    protected function createCodeFromComplaintStatusData(ComplaintStatusData $complaintStatusData): string
+    {
+        foreach ($complaintStatusData->name as $name) {
+            if ($name !== null && trim($name) !== '') {
+                $code = $this->transformStringHelper->stringToFriendlyUrlSlug($name);
+
+                if ($code !== '') {
+                    return $code;
+                }
+            }
+        }
+
+        return 'complaint-status';
     }
 }

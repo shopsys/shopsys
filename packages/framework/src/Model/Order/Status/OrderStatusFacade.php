@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Status;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
@@ -17,12 +18,17 @@ class OrderStatusFacade
         protected readonly OrderRepository $orderRepository,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly OrderStatusFactory $orderStatusFactory,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
     public function create(OrderStatusData $orderStatusFormData): OrderStatus
     {
-        $orderStatus = $this->orderStatusFactory->create($orderStatusFormData, OrderStatusTypeEnum::TYPE_IN_PROGRESS);
+        $orderStatus = $this->orderStatusFactory->create(
+            $orderStatusFormData,
+            OrderStatusTypeEnum::TYPE_IN_PROGRESS,
+            $this->createUniqueCode($orderStatusFormData),
+        );
         $this->em->persist($orderStatus);
         $this->em->flush();
 
@@ -84,6 +90,15 @@ class OrderStatusFacade
     }
 
     /**
+     * @param string[] $codes
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
+     */
+    public function getAllByCodes(array $codes): array
+    {
+        return $this->orderStatusRepository->getAllByCodes($codes);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
     public function getAllByType(string $statusType): array
@@ -94,5 +109,34 @@ class OrderStatusFacade
     public function getByType(string $statusType): OrderStatus
     {
         return $this->orderStatusRepository->getByType($statusType);
+    }
+
+    protected function createUniqueCode(OrderStatusData $orderStatusData): string
+    {
+        $baseCode = $this->createCodeFromOrderStatusData($orderStatusData);
+        $code = $baseCode;
+        $suffix = 2;
+
+        while ($this->orderStatusRepository->findByCode($code) !== null) {
+            $code = $baseCode . '-' . $suffix;
+            $suffix++;
+        }
+
+        return $code;
+    }
+
+    protected function createCodeFromOrderStatusData(OrderStatusData $orderStatusData): string
+    {
+        foreach ($orderStatusData->name as $name) {
+            if ($name !== null && trim($name) !== '') {
+                $code = $this->transformStringHelper->stringToFriendlyUrlSlug($name);
+
+                if ($code !== '') {
+                    return $code;
+                }
+            }
+        }
+
+        return 'order-status';
     }
 }

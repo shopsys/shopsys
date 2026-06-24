@@ -40,6 +40,20 @@ class ComplaintStatusRepository
         return $complaintStatus;
     }
 
+    public function findByCode(string $code): ?ComplaintStatus
+    {
+        return $this->getComplaintStatusRepository()->findOneBy(['code' => $code]);
+    }
+
+    /**
+     * @param string[] $codes
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus[]
+     */
+    public function getAllByCodes(array $codes): array
+    {
+        return $this->getComplaintStatusRepository()->findBy(['code' => $codes]);
+    }
+
     public function getDefault(): ComplaintStatus
     {
         $complaintStatus = $this->getComplaintStatusRepository()->findOneBy(['statusType' => ComplaintStatusTypeEnum::STATUS_TYPE_NEW]);

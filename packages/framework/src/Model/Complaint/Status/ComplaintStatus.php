@@ -33,6 +33,13 @@ class ComplaintStatus extends AbstractTranslatableEntity
     protected $id;
 
     /**
+     * @var string
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    protected $code;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation>
      */
     #[Prezent\Translations(targetEntity: ComplaintStatusTranslation::class)]
@@ -46,10 +53,11 @@ class ComplaintStatus extends AbstractTranslatableEntity
     #[ORM\Column(type: 'string', length: 25)]
     protected $statusType;
 
-    public function __construct(ComplaintStatusData $complaintStatusData, string $statusType)
+    public function __construct(ComplaintStatusData $complaintStatusData, string $statusType, string $code)
     {
         $this->translations = new ArrayCollection();
         $this->statusType = $statusType;
+        $this->code = $code;
         $this->setData($complaintStatusData);
     }
 
@@ -69,6 +77,14 @@ class ComplaintStatus extends AbstractTranslatableEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**

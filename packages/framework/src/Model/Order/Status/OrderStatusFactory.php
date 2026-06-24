@@ -14,11 +14,11 @@ class OrderStatusFactory
     ) {
     }
 
-    public function create(OrderStatusData $data, string $type): OrderStatus
+    public function create(OrderStatusData $data, string $type, string $code): OrderStatus
     {
         $this->orderStatusTypeEnum->validateCase($type);
         $entityClassName = $this->entityNameResolver->resolve(OrderStatus::class);
 
-        return new $entityClassName($data, $type);
+        return new $entityClassName($data, $type, $code);
     }
 }
