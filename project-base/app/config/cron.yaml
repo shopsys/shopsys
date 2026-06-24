@@ -21,108 +21,108 @@ services:
 
     Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule:
         tags:
-            - { name: shopsys.cron, cron: '* * * * *', instanceName: service, readableName: 'Delete vats' }
+            - { name: shopsys.cron, cron: '* * * * *', instanceName: service, readableName: 'Delete vats', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Component\Cron\DeleteOldCronModuleRunsCronModule:
         tags:
-            - { name: shopsys.cron, cron: '* * * * *', instanceName: service, readableName: 'Delete old cron module runs' }
+            - { name: shopsys.cron, cron: '* * * * *', instanceName: service, readableName: 'Delete old cron module runs', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule:
         tags:
-            - { name: shopsys.cron, cron: '0 0 * * *', instanceName: service, readableName: 'Delete old customer carts' }
+            - { name: shopsys.cron, cron: '0 0 * * *', instanceName: service, readableName: 'Delete old customer carts', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrontendApiBundle\Model\Security\DeleteExpiredExchangeTokensCronModule:
         tags:
-            - { name: shopsys.cron, cron: '0 3 * * *', instanceName: service, readableName: 'Remove expired login as user exchange tokens' }
+            - { name: shopsys.cron, cron: '0 3 * * *', instanceName: service, readableName: 'Remove expired login as user exchange tokens', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Payment\ReturnHash\DeleteExpiredPaymentReturnHashesCronModule:
         tags:
-            - { name: shopsys.cron, cron: '5 3 * * *', instanceName: service, readableName: 'Remove expired payment return hashes' }
+            - { name: shopsys.cron, cron: '5 3 * * *', instanceName: service, readableName: 'Remove expired payment return hashes', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Customer\User\RemoveOldCustomerUserRefreshTokenChainsCronModule:
         tags:
-            - { name: shopsys.cron, cron: '0 4 * * *', instanceName: service, readableName: 'Remove old customer user refresh token chains' }
+            - { name: shopsys.cron, cron: '0 4 * * *', instanceName: service, readableName: 'Remove old customer user refresh token chains', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Component\FileUpload\DeleteOldUploadedFilesCronModule:
         tags:
-            - { name: shopsys.cron, cron: '0 5 * * *', instanceName: service, readableName: 'Delete old temporary uploaded files' }
+            - { name: shopsys.cron, cron: '0 5 * * *', instanceName: service, readableName: 'Delete old temporary uploaded files', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
         tags:
-            - { name: shopsys.cron, cron: '10 23 * * *', instanceName: service, readableName: 'Delete old transfer issues' }
+            - { name: shopsys.cron, cron: '10 23 * * *', instanceName: service, readableName: 'Delete old transfer issues', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
         tags:
-            - { name: shopsys.cron, cron: '0 3 * * *', instanceName: service, readableName: 'Download Heureka categories' }
+            - { name: shopsys.cron, cron: '0 3 * * *', instanceName: service, readableName: 'Download Heureka categories', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryCronModule:
         tags:
-            - { name: shopsys.cron, cron: '15 3 * * *', instanceName: service, readableName: 'Download Zbozi.cz categories' }
+            - { name: shopsys.cron, cron: '15 3 * * *', instanceName: service, readableName: 'Download Zbozi.cz categories', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Product\List\RemoveOldProductListsCronModule:
         tags:
-            - { name: shopsys.cron, cron: '0 3 * * *', instanceName: service, readableName: 'Delete old product lists' }
+            - { name: shopsys.cron, cron: '0 3 * * *', instanceName: service, readableName: 'Delete old product lists', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Product\GiftPlan\RecalculateGiftFlagsCronModule:
         tags:
-            - { name: shopsys.cron, cron: '15 0 * * *', instanceName: service, readableName: 'Recalculate gift flags by active plans' }
+            - { name: shopsys.cron, cron: '15 0 * * *', instanceName: service, readableName: 'Recalculate gift flags by active plans', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     # Export
 
     Shopsys\FrameworkBundle\Model\Feed\FeedCronModule:
         tags:
-            - { name: shopsys.cron, cron: '* * * * *', instanceName: export, readableName: 'Generate feeds' }
+            - { name: shopsys.cron, cron: '* * * * *', instanceName: export, readableName: 'Generate feeds', sentryMonitoring: true, sentryMaxRuntime: 5, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule:
         tags:
-            - { name: shopsys.cron, cron: '0 4 * * *', instanceName: export, readableName: 'Generate Sitemap' }
+            - { name: shopsys.cron, cron: '0 4 * * *', instanceName: export, readableName: 'Generate Sitemap', sentryMonitoring: true, sentryCheckinMargin: 5, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapCronModule:
         tags:
-            - { name: shopsys.cron, cron: '10 4 * * *', instanceName: export, readableName: 'Generate image sitemap' }
+            - { name: shopsys.cron, cron: '10 4 * * *', instanceName: export, readableName: 'Generate image sitemap', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportCronModule:
         tags:
-            - { name: shopsys.cron, cron: '10 3 * * *', instanceName: export, readableName: "Export articles to Elasticsearch" }
+            - { name: shopsys.cron, cron: '10 3 * * *', instanceName: export, readableName: "Export articles to Elasticsearch", sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportCronModule:
         tags:
-            - { name: shopsys.cron, cron: '10 3 * * *', instanceName: export, readableName: "Export blog articles to Elasticsearch" }
+            - { name: shopsys.cron, cron: '10 3 * * *', instanceName: export, readableName: "Export blog articles to Elasticsearch", sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportChangedCronModule:
         tags:
-            - { name: shopsys.cron, cron: '5 * * * *', instanceName: export, readableName: "Export changed blog articles to Elasticsearch" }
+            - { name: shopsys.cron, cron: '5 * * * *', instanceName: export, readableName: "Export changed blog articles to Elasticsearch", sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     # Products
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductRecalculationCronModule:
         tags:
-            - { name: shopsys.cron, cron: '0 0 * * *', instanceName: products, readableName: "Dispatches all products to be recalculated and exported" }
+            - { name: shopsys.cron, cron: '0 0 * * *', instanceName: products, readableName: "Dispatches all products to be recalculated and exported", sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     # GoPay
 
     Shopsys\FrameworkBundle\Model\GoPay\GoPayAvailablePaymentsCronModule:
         tags:
-            - { name: shopsys.cron, cron: '50 3 * * *', instanceName: gopay, readableName: 'Import available payment methods from GoPay' }
+            - { name: shopsys.cron, cron: '50 3 * * *', instanceName: gopay, readableName: 'Import available payment methods from GoPay', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\GoPay\OrderGoPayStatusUpdateCronModule:
         tags:
-            - { name: shopsys.cron, cron: '15 * * * *', instanceName: gopay, readableName: 'Import order payment status from GoPay' }
+            - { name: shopsys.cron, cron: '15 * * * *', instanceName: gopay, readableName: 'Import order payment status from GoPay', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     # Data bridge import
 
     App\Component\DataBridge\DummyCronModule:
         tags:
-            - { name: shopsys.cron, cron: '* * * * *', instanceName: dataBridgeImport, readableName: 'Dummy data bridge import' }
+            - { name: shopsys.cron, cron: '* * * * *', instanceName: dataBridgeImport, readableName: 'Dummy data bridge import', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     # Packetery
 
     Shopsys\FrameworkBundle\Component\Packetery\PacketeryCronModule:
         tags:
-            - { name: shopsys.cron, cron: '* * * * *', instanceName: packetery, readableName: 'Sending parcels to the packetery' }
+            - { name: shopsys.cron, cron: '* * * * *', instanceName: packetery, readableName: 'Sending parcels to the packetery', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     # Watchdog
 
     Shopsys\FrameworkBundle\Model\Watchdog\WatchdogCronModule:
         tags:
-            - { name: shopsys.cron, cron: '*/10 * * * *', instanceName: watchdog, readableName: 'Sending watchdog emails' }
+            - { name: shopsys.cron, cron: '*/10 * * * *', instanceName: watchdog, readableName: 'Sending watchdog emails', sentryMonitoring: true, sentryFailureThreshold: 3 }

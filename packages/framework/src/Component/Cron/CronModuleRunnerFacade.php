@@ -17,6 +17,7 @@ class CronModuleRunnerFacade
         protected readonly CronConfig $cronConfig,
         protected readonly CronModuleFacade $cronModuleFacade,
         protected readonly CronModuleExecutor $cronModuleExecutor,
+        protected readonly SentryCronMonitorFacade $sentryCronMonitorFacade,
     ) {
     }
 
@@ -50,6 +51,7 @@ class CronModuleRunnerFacade
     {
         if ($this->cronModuleFacade->isModuleDisabled($cronModuleConfig) === true) {
             $this->cronModuleFacade->unscheduleModule($cronModuleConfig);
+            $this->sentryCronMonitorFacade->reportDisabledRunAsHealthy($cronModuleConfig);
 
             return CronModuleExecutor::RUN_STATUS_OK;
         }

@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleRunnerFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
+use Shopsys\FrameworkBundle\Component\Cron\SentryCronMonitorFacade;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class CronModuleRunnerFacadeTest extends TestCase
@@ -30,7 +32,7 @@ class CronModuleRunnerFacadeTest extends TestCase
         $cronModuleService = $this->createStub(SimpleCronModuleInterface::class);
         $this->serviceId = get_class($cronModuleService);
 
-        $this->cronConfig = new CronConfig(new CronTimeResolver());
+        $this->cronConfig = new CronConfig(new CronTimeResolver(), new TransformStringHelper());
         $this->cronConfig->registerCronModuleInstance(
             $cronModuleService,
             $this->serviceId,
@@ -39,14 +41,17 @@ class CronModuleRunnerFacadeTest extends TestCase
         );
     }
 
-    public function testRunDisabledModuleReturnsOkAndUnschedulesIt(): void
+    public function testRunDisabledModuleReturnsOkUnschedulesItAndReportsHealthyRun(): void
     {
         $cronModuleFacadeMock = $this->createMock(CronModuleFacade::class);
         $cronModuleFacadeMock->method('isModuleDisabled')->willReturn(true);
         $cronModuleFacadeMock->expects($this->once())->method('unscheduleModule');
         $cronModuleFacadeMock->expects($this->never())->method('markCronAsStarted');
 
-        $result = $this->createCronModuleRunnerFacade($cronModuleFacadeMock)
+        $sentryCronMonitorFacadeMock = $this->createMock(SentryCronMonitorFacade::class);
+        $sentryCronMonitorFacadeMock->expects($this->once())->method('reportDisabledRunAsHealthy');
+
+        $result = $this->createCronModuleRunnerFacade($cronModuleFacadeMock, sentryCronMonitorFacade: $sentryCronMonitorFacadeMock)
             ->runModuleByServiceIdInContext($this->serviceId);
 
         $this->assertSame(CronModuleExecutor::RUN_STATUS_OK, $result);
@@ -109,12 +114,14 @@ class CronModuleRunnerFacadeTest extends TestCase
     private function createCronModuleRunnerFacade(
         CronModuleFacade $cronModuleFacade,
         ?CronModuleExecutor $cronModuleExecutor = null,
+        ?SentryCronMonitorFacade $sentryCronMonitorFacade = null,
     ): CronModuleRunnerFacade {
         return new CronModuleRunnerFacade(
             $this->createStub(Logger::class),
             $this->cronConfig,
             $cronModuleFacade,
             $cronModuleExecutor ?? $this->createStub(CronModuleExecutor::class),
+            $sentryCronMonitorFacade ?? $this->createStub(SentryCronMonitorFacade::class),
         );
     }
 }

@@ -23,6 +23,7 @@ class CronModuleFacade
         protected readonly CronModuleRunFactory $cronModuleRunFactory,
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly ClockInterface $clock,
+        protected readonly SentryCronMonitorFacade $sentryCronMonitorFacade,
     ) {
     }
 
@@ -88,6 +89,8 @@ class CronModuleFacade
         $cronModule->updateLastStartedAt();
 
         $this->em->flush();
+
+        $this->sentryCronMonitorFacade->reportStart($cronModuleConfig);
     }
 
     public function markCronAsEnded(CronModuleConfig $cronModuleConfig): void
@@ -105,10 +108,14 @@ class CronModuleFacade
         $this->em->persist($cronModuleRun);
 
         $this->em->flush();
+
+        $this->sentryCronMonitorFacade->reportSuccess($cronModuleConfig);
     }
 
     public function markCronAsFailed(CronModuleConfig $cronModuleConfig): void
     {
+        $this->sentryCronMonitorFacade->reportFailure($cronModuleConfig);
+
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
         $startedAt = $cronModule->getLastStartedAt() ?? $this->clock->now();
         $finishedAt = $this->clock->now();

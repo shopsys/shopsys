@@ -6,12 +6,16 @@ namespace Shopsys\FrameworkBundle\Component\Cron\Config;
 
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\CronModuleConfigNotFoundException;
+use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\SentryMonitoringNotEnabledException;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class CronConfig
 {
+    protected const int MAX_SENTRY_SLUG_LENGTH = 50;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
@@ -19,6 +23,7 @@ class CronConfig
 
     public function __construct(
         protected readonly CronTimeResolver $cronTimeResolver,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
         $this->cronModuleConfigs = [];
     }
@@ -32,6 +37,11 @@ class CronConfig
         ?string $readableFrequency = null,
         int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
         int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+        bool $sentryMonitoring = false,
+        ?int $sentryMaxRuntime = null,
+        ?int $sentryCheckinMargin = null,
+        ?int $sentryFailureThreshold = null,
+        ?int $sentryRecoveryThreshold = null,
     ): void {
         $this->cronTimeResolver->validateCronExpression($cronExpression);
 
@@ -43,10 +53,59 @@ class CronConfig
             $readableFrequency,
             $runEveryMin,
             $timeoutIteratedCronSec,
+            $this->createSentryMonitorConfig(
+                $serviceId,
+                $sentryMonitoring,
+                $sentryMaxRuntime,
+                $sentryCheckinMargin,
+                $sentryFailureThreshold,
+                $sentryRecoveryThreshold,
+            ),
         );
         $cronModuleConfig->assignToInstance($instanceName);
 
         $this->cronModuleConfigs[] = $cronModuleConfig;
+    }
+
+    protected function createSentryMonitorConfig(
+        string $serviceId,
+        bool $sentryMonitoring,
+        ?int $sentryMaxRuntime,
+        ?int $sentryCheckinMargin,
+        ?int $sentryFailureThreshold,
+        ?int $sentryRecoveryThreshold,
+    ): ?SentryMonitorConfig {
+        if (!$sentryMonitoring) {
+            $hasSentryOptions = $sentryMaxRuntime !== null
+                || $sentryCheckinMargin !== null
+                || $sentryFailureThreshold !== null
+                || $sentryRecoveryThreshold !== null;
+
+            if ($hasSentryOptions) {
+                throw new SentryMonitoringNotEnabledException($serviceId);
+            }
+
+            return null;
+        }
+
+        return new SentryMonitorConfig(
+            $this->buildSentryMonitorSlug($serviceId),
+            $sentryMaxRuntime,
+            $sentryCheckinMargin,
+            $sentryFailureThreshold,
+            $sentryRecoveryThreshold,
+        );
+    }
+
+    protected function buildSentryMonitorSlug(string $serviceId): string
+    {
+        $className = basename(str_replace('\\', '/', $serviceId));
+        $className = $this->transformStringHelper->removeStringFromEnd($className, 'CronModule');
+        $classSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($className);
+
+        $suffix = '-' . substr(md5($serviceId), 0, 6);
+
+        return rtrim(substr($classSlug, 0, self::MAX_SENTRY_SLUG_LENGTH - strlen($suffix)), '-') . $suffix;
     }
 
     /**
