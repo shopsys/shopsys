@@ -10,7 +10,7 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
         ...ImageFragment
     }
     group {
-        id
+        uuid
         name
         position
         mainImage {
