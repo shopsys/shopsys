@@ -25,7 +25,7 @@ function initSelect($container) {
         const ts = new TomSelect(el, settings);
 
         if (modalContent) {
-            positionModalSelectDropdown(ts);
+            positionModalSelectDropdown(ts, modalContent);
         }
 
         ts.control_input.addEventListener('keydown', evt => {
@@ -37,7 +37,41 @@ function initSelect($container) {
     });
 }
 
-function positionModalSelectDropdown(ts) {
+function positionModalSelectDropdown(ts, modalContent) {
+    const listenerOptions = { capture: true, passive: true };
+    const scrollTargets = new Set(
+        [
+            modalContent.querySelector('.modal-body'),
+            modalContent.closest('.modal'),
+            window,
+            window.visualViewport,
+        ].filter(Boolean),
+    );
+    const closeDropdownOnPageScroll = event => {
+        if (event.target instanceof Node && ts.dropdown.contains(event.target)) {
+            return;
+        }
+
+        if (ts.isOpen) {
+            ts.close();
+        }
+    };
+    const addDropdownCloseListeners = () => {
+        scrollTargets.forEach(scrollTarget => {
+            scrollTarget.addEventListener('scroll', closeDropdownOnPageScroll, listenerOptions);
+        });
+        window.addEventListener('touchmove', closeDropdownOnPageScroll, listenerOptions);
+        window.addEventListener('wheel', closeDropdownOnPageScroll, listenerOptions);
+    };
+    const removeDropdownCloseListeners = () => {
+        scrollTargets.forEach(scrollTarget => {
+            scrollTarget.removeEventListener('scroll', closeDropdownOnPageScroll, listenerOptions);
+        });
+        window.removeEventListener('touchmove', closeDropdownOnPageScroll, listenerOptions);
+        window.removeEventListener('wheel', closeDropdownOnPageScroll, listenerOptions);
+    };
+    const destroy = ts.destroy.bind(ts);
+
     ts.positionDropdown = () => {
         const controlRect = ts.control.getBoundingClientRect();
         const viewportPadding = 8;
@@ -55,6 +89,13 @@ function positionModalSelectDropdown(ts) {
             left: `${controlRect.left}px`,
             top: `${top}px`,
         });
+    };
+
+    ts.on('dropdown_open', addDropdownCloseListeners);
+    ts.on('dropdown_close', removeDropdownCloseListeners);
+    ts.destroy = () => {
+        removeDropdownCloseListeners();
+        destroy();
     };
 }
 

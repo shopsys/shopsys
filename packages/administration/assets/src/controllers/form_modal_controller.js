@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import { getComponent } from '@symfony/ux-live-component';
-import { Modal } from '@tabler/core';
+import { Modal, Popover, Tooltip } from '@tabler/core';
 import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
 import ConfirmWindow from '../js/utils/confirmWindow';
@@ -82,6 +82,7 @@ export default class extends Controller {
     showModal() {
         window.requestAnimationFrame(() => {
             this.dirty = false;
+            this.hideOverlappingFloatingElements();
             this.registerModalContent();
             this.getModal().show();
         });
@@ -139,6 +140,17 @@ export default class extends Controller {
         return Modal.getOrCreateInstance(this.element, {
             backdrop: 'static',
             keyboard: false,
+        });
+    }
+
+    hideOverlappingFloatingElements() {
+        document.querySelectorAll('[data-bs-toggle="tooltip"], [data-bs-toggle="popover"]').forEach(element => {
+            if (this.element.contains(element)) {
+                return;
+            }
+
+            Tooltip.getInstance(element)?.hide();
+            Popover.getInstance(element)?.hide();
         });
     }
 
