@@ -169,6 +169,9 @@ msgstr "Adresa"
 msgid "Admin inquiry detail URL"
 msgstr "URL detailu poptávky v administraci"
 
+msgid "Administration"
+msgstr "Administrace"
+
 msgid "Administration localization was changed to \"%locale%\""
 msgstr "Administrace byla přepnuta do jazyka \"%locale%\""
 
@@ -199,11 +202,14 @@ msgstr "Skupina práv <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla
 msgid "Administrator role group <strong>{{ name }}</strong> deleted."
 msgstr "Skupina práv <strong>{{ name }}</strong> byla smazána."
 
+msgid "Administrator role groups"
+msgstr "Skupiny práv pro administrátora"
+
 msgid "Administrators"
 msgstr "Administrátoři"
 
-msgid "Administrators overview"
-msgstr "Přehled administrátorů"
+msgid "Advertising"
+msgstr "Reklama"
 
 msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
 msgstr "Reklama <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> byla vytvořena"
@@ -213,9 +219,6 @@ msgstr "Reklama <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> byla uprav
 
 msgid "Advertising <strong>{{ name }}</strong> deleted"
 msgstr "Reklama <strong>{{ name }}</strong> byla smazána"
-
-msgid "Advertising system"
-msgstr "Reklamní systém"
 
 msgid "All roles"
 msgstr "Všechny role"
@@ -304,11 +307,11 @@ msgstr "Článek je viditelný pouze v administraci."
 msgid "Article is ready to be displayed on the storefront."
 msgstr "Článek je připraven k zobrazení na storefrontu."
 
+msgid "Articles"
+msgstr "Články"
+
 msgid "Articles in footer"
 msgstr "Články v patičce"
-
-msgid "Articles overview"
-msgstr "Přehled článků"
 
 msgid "Articles without positioning"
 msgstr "Články bez umístění"
@@ -499,9 +502,6 @@ msgstr "Kupované množství"
 msgid "By flag"
 msgstr "Dle příznaku"
 
-msgid "CMS"
-msgstr "CMS"
-
 msgid "CSV file"
 msgstr "CSV soubor"
 
@@ -525,6 +525,9 @@ msgstr "Držitel platební karty zrušil platbu"
 
 msgid "Cart manipulation and order creation"
 msgstr "Manipulace s košíkem a vytváření objednávky"
+
+msgid "Catalog"
+msgstr "Katalog"
 
 msgid "Catalog number"
 msgstr "Katalogové číslo"
@@ -598,6 +601,9 @@ msgstr "Kód"
 msgid "Code of service Heureka - Verified by Customer"
 msgstr "Kód služby Ověřeno zákazníky"
 
+msgid "Codes"
+msgstr "Kódy"
+
 msgid "Collapse"
 msgstr "Sbalit"
 
@@ -607,14 +613,17 @@ msgstr "Kolekce %collectionAttribute% byla změněna:<br> %changes%"
 msgid "Color"
 msgstr "Barva"
 
+msgid "Color parameter values"
+msgstr "Hodnoty barevných parametrů"
+
 msgid "Color pattern icon"
 msgstr "Ikona barevného vzoru"
 
 msgid "Combination of parameters and their values"
 msgstr "Kombinace parametrů a jejich hodnot parametrů"
 
-msgid "Communication with customer"
-msgstr "Komunikace se zákazníkem"
+msgid "Communication"
+msgstr "Komunikace"
 
 msgid "Company"
 msgstr "Firma"
@@ -823,6 +832,9 @@ msgstr "Jméno zákazníka"
 msgid "Customer phone number"
 msgstr "Telefonní číslo zákazníka"
 
+msgid "Customer role groups"
+msgstr "Skupiny práv zákazníků"
+
 msgid "Customer sees prices"
 msgstr "Zákazník vidí ceny"
 
@@ -841,17 +853,11 @@ msgstr "Skupina práv <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla
 msgid "Customer user role group <strong>{{ name }}</strong> deleted."
 msgstr "Skupina práv <strong>{{ name }</strong> byla smazána"
 
-msgid "Customer user role groups"
-msgstr "Skupina práv"
-
 msgid "Customer with ID %customerId% not found."
 msgstr "Zákazník s ID %customerId% nebyl nalezen."
 
 msgid "Customers"
 msgstr "Zákazníci"
-
-msgid "Customers overview"
-msgstr "Přehled zákazníků"
 
 msgid "Dashboard"
 msgstr "Nástěnka"
@@ -1198,11 +1204,11 @@ msgstr "E-mail"
 msgid "E-mail addresses whitelist"
 msgstr "Whitelist e-mailových adres"
 
+msgid "E-mail whitelist"
+msgstr "Whitelist e-mailových adres"
+
 msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
 msgstr "Whitelist e-mailových adres je vynucen environment proměnnou MAILER_FORCE_WHITELIST. Whitelist je vždy aktivní."
-
-msgid "E-mail whitelist settings"
-msgstr "Nastavení whitelistu e-mailových adres"
 
 msgid "E-mail whitelist settings modified"
 msgstr "Nastavení whitelistu e-mailových adres bylo upraveno"
@@ -1213,8 +1219,8 @@ msgstr "E-maily jsou odesílány na adresy, které vyhovují alespoň jednomu re
 msgid "E-shop URL address"
 msgstr "URL adresa e-shopu"
 
-msgid "E-shop identification"
-msgstr "Identifikace e-shopu"
+msgid "E-shop identification / domains"
+msgstr "Identifikace e-shopu / domény"
 
 msgid "E-shop name"
 msgstr "Název e-shopu"
@@ -1411,9 +1417,6 @@ msgstr "Povolení příjemci e-mailů (whitelist)"
 msgid "Email name"
 msgstr "Jméno k e-mailu"
 
-msgid "Email newsletter"
-msgstr "E-maily zpravodaje"
-
 msgid "Email settings"
 msgstr "Nastavení e-mailů"
 
@@ -1596,9 +1599,6 @@ msgstr "Název souboru"
 
 msgid "Files"
 msgstr "Soubory"
-
-msgid "Files overview"
-msgstr "Přehled souborů"
 
 msgid "Files uploaded:"
 msgstr "Soubory nahrány:"
@@ -1813,7 +1813,7 @@ msgstr "Svátky a interní dny"
 msgid "Holidays import"
 msgstr "Import svátků"
 
-msgid "Home page"
+msgid "Homepage"
 msgstr "Domovská stránka"
 
 msgid "Hreflang tags help search engines understand the language and regional targeting of your content. By selecting multiple domains, you ensure that hreflang tags will be properly rendered in sitemap and on the page. Search engines then properly index and display the correct versions of your content to users across different regions."
@@ -1963,8 +1963,8 @@ msgstr "Poslední spuštění"
 msgid "Last update"
 msgstr "Poslední aktualizace"
 
-msgid "Legal conditions"
-msgstr "Právní podmínky"
+msgid "Legal"
+msgstr "Právní"
 
 msgid "Legal conditions settings modified."
 msgstr "Nastavení právních podmínek upraveno."
@@ -1987,14 +1987,8 @@ msgstr "Odkaz na stránku s přihlášením"
 msgid "LinkedIn URL"
 msgstr "LinkedIn URL"
 
-msgid "List of language constants"
-msgstr "Přehled jazykových konstant"
-
 msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr "Seznam produktů v objednávce (obrázek, název, množství, cena za jednotku s DPH, celková cena za položku s DPH)"
-
-msgid "Lists and nomenclatures"
-msgstr "Seznamy a číselníky"
 
 msgid "Locale \"%locale%\" is not supported. You can choose only from the following locales: \"%supportedLocales%\"."
 msgstr "Lokalizace \"%locale%\" není podporovaná. Můžete si vybrat pouze z následujících lokalizací: \"%supportedLocales%\"."
@@ -2218,6 +2212,9 @@ msgstr "Nový sklad"
 msgid "New withdrawal request for order {orderNumber}"
 msgstr "Nová žádost o odstoupení od smlouvy pro objednávku {orderNumber}"
 
+msgid "Newsletter subscribers"
+msgstr "Odběratelé newsletteru"
+
 msgid "No"
 msgstr "Ne"
 
@@ -2436,9 +2433,6 @@ msgstr "Hodnota parameteru"
 
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
 msgstr "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> je úspěšně upravena."
-
-msgid "Parameter value of type color"
-msgstr "Hodnota parametru typu barva"
 
 msgid "Parameter values"
 msgstr "Hodnoty parametru"
@@ -2746,9 +2740,6 @@ msgstr "Zboží"
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
 msgstr "Zboží vyřazené z prodeje se nezobrazuje ve výpisech ani nelze vyhledat. Detail tohoto zboží je dostupný přímým přístupem z URL, zboží ale nelze vložit do košíku."
 
-msgid "Products overview"
-msgstr "Přehled zboží"
-
 msgid "Products parameters of selected category"
 msgstr "Parametry produktů vybrané kategorie"
 
@@ -2854,9 +2845,6 @@ msgstr "Role"
 msgid "Role Group"
 msgstr "Skupina práv"
 
-msgid "Role Groups"
-msgstr "Skupiny práv"
-
 msgid "Role group <strong>{{ roleGroupName }}</strong> cannot be deleted, because some customer users are using it"
 msgstr "Skupina práv <strong>{{ roleGroupName }}</strong> nelze smazat, protože je používana zákazníky"
 
@@ -2911,11 +2899,17 @@ msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána
 msgid "SEO pages"
 msgstr "SEO stránky"
 
+msgid "SEO settings"
+msgstr "Nastavení SEO"
+
 msgid "SMS was sent but not delivered yet"
 msgstr "SMS byla odeslána - Zatím se ji nepodařilo doručit"
 
-msgid "Sales including/excluding VAT settings"
-msgstr "Nastavení prodeje s/bez DPH"
+msgid "Sales"
+msgstr "Prodej"
+
+msgid "Sales including/excluding VAT"
+msgstr "Prodej s/bez DPH"
 
 msgid "Sales representative"
 msgstr "Obchodní zástupce"
@@ -3139,6 +3133,9 @@ msgstr "Nastavení"
 msgid "Settings modified."
 msgstr "Nastavení bylo upraveno."
 
+msgid "Shipping & Payment"
+msgstr "Doprava a platby"
+
 msgid "Shipping <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Byla vytvořena doprava <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 
@@ -3148,11 +3145,11 @@ msgstr "Byla upravena doprava <strong><a href=\"{{ url }}\">{{ name }}</a></stro
 msgid "Shipping <strong>{{ name }}</strong> deleted"
 msgstr "Doprava <strong>{{ name }}</strong> byla smazána"
 
+msgid "Shipping and payment methods"
+msgstr "Způsoby dopravy a platby"
+
 msgid "Shipping instructions"
 msgstr "Pokyny k dopravě"
-
-msgid "Shippings and payments"
-msgstr "Dopravy a platby"
 
 msgid "Short description"
 msgstr "Krátký popis"
@@ -3211,9 +3208,6 @@ msgstr "Stav"
 msgid "Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed"
 msgstr "Stav reklamace s číslem {complaint_number} z objednávky číslo {order_number} vytvořené {date} se změnil"
 
-msgid "Status of complaints"
-msgstr "Stavy reklamací"
-
 msgid "Status of complaints <strong>{{ name }}</strong> deleted"
 msgstr "Stav reklamací <strong>{{ name }}</strong> byl smazán"
 
@@ -3226,9 +3220,6 @@ msgstr "Stav reklamací <strong>{{ oldName }}</strong> byl nahrazen stavem <stro
 msgid "Status of order"
 msgstr "Stav objednávky"
 
-msgid "Status of orders"
-msgstr "Stavy objednávek"
-
 msgid "Status of orders <strong>{{ name }}</strong> deleted"
 msgstr "Stav objednávek <strong>{{ name }}</strong> byl smazán"
 
@@ -3237,9 +3228,6 @@ msgstr "Stav objednávek <strong>{{ name }}</strong> je rezervovaný a nelze jej
 
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
 msgstr "Stav objednávek <strong>{{ oldName }}</strong> byl nahrazen stavem <strong>{{ newName }}</strong> a byl smazán."
-
-msgid "Stocking"
-msgstr "Skladovost"
 
 msgid "Store"
 msgstr "Prodejna"
@@ -3288,6 +3276,9 @@ msgstr "Superadmin"
 
 msgid "Superadmin permissions"
 msgstr "Oprávnění super administrátora"
+
+msgid "System / Superadmin"
+msgstr "Systém / Superadmin"
 
 msgid "System data"
 msgstr "Systémové údaje"
@@ -3496,8 +3487,8 @@ msgstr "Platební karta je vydaná v regionu, ve kterém nejsou podporovány pla
 msgid "Unsupported two factor authentication method"
 msgstr "Nepodporovaná metoda dvoufaktorového ověření"
 
-msgid "Unused friendly URL list"
-msgstr "Seznam nepoužívaných hezkých URL"
+msgid "Unused friendly URLs"
+msgstr "Nepoužívané hezké URL"
 
 msgid "Updated at"
 msgstr "Aktualizováno dne"
@@ -3658,8 +3649,8 @@ msgstr "Podrobnosti žádosti o odstoupení"
 msgid "Withdrawn"
 msgstr "Odstoupeno od smlouvy"
 
-msgid "XML Feeds"
-msgstr "XML Feedy"
+msgid "XML feeds"
+msgstr "XML feedy"
 
 msgid "XML feeds settings"
 msgstr "Nastavení XML feedů"
@@ -3825,4 +3816,3 @@ msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vy
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr "{1}Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkovi a bude odstraněn, pokud budete pokračovat.<br><br>Zákazník:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[2,10]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[11,14]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% další<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[15,Inf]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% dalších<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?"
-
