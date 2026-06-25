@@ -11,5 +11,12 @@
 {% endblock %}
 
 {% block main_content %}
+    {% if hasDomainFilter %}
+        {% if isDomainSwitchMode %}
+            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+        {% else %}
+            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
+        {% endif %}
+    {% endif %}
     {{ grid.render }}
 {% endblock %}

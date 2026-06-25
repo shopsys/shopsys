@@ -10,7 +10,10 @@ use Psr\Log\LoggerInterface;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
+use Shopsys\AdministrationBundle\Component\Config\DomainFilterMode;
+use Shopsys\AdministrationBundle\Component\Config\DomainFilterType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
+use Shopsys\AdministrationBundle\Component\Crud\Domain\CrudDomainFilterResolver;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudDeleteHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
@@ -51,6 +54,15 @@ abstract class AbstractCrudController extends AdminBaseController
     #[Required]
     public FormFactoryInterface $formFactory;
 
+    #[Required]
+    public CrudDomainFilterResolver $crudDomainFilterResolver;
+
+    /**
+     * Domain id the list grid is currently filtered by, or null when no domain filter applies.
+     * Available to configureQuery() for entities that need a custom domain-filtering query.
+     */
+    protected ?int $selectedDomainFilterId = null;
+
     public function setDefinition(Definition $definition): void
     {
         $this->definition = $definition;
@@ -81,10 +93,22 @@ abstract class AbstractCrudController extends AdminBaseController
 
     public function listAction(): Response
     {
-        $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder): void {
-            $this->configureQuery($queryBuilder);
-            $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureQuery($queryBuilder));
-        });
+        $config = $this->definition->getConfig();
+        $domainFilterType = $this->crudDomainFilterResolver->resolveType($this->definition->entityClass, $config);
+        $domainFilterMode = $config->getDomainFilterMode();
+
+        $this->selectedDomainFilterId = $domainFilterType === DomainFilterType::NONE
+            ? null
+            : $this->crudDomainFilterResolver->getSelectedDomainId($this->definition->controllerName, $domainFilterMode);
+
+        $adapter = $this->ormAdapterFactory->create(
+            $this->definition->entityClass,
+            function (QueryBuilder $queryBuilder) use ($domainFilterType, $config): void {
+                $this->crudDomainFilterResolver->applyFilter($queryBuilder, $domainFilterType, $this->selectedDomainFilterId, $config);
+                $this->configureQuery($queryBuilder);
+                $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureQuery($queryBuilder));
+            },
+        );
         $datagrid = $this->datagridFactory->create($adapter, [
             'crudDefinition' => $this->definition,
             'name' => $this->definition->entityName,
@@ -94,9 +118,12 @@ abstract class AbstractCrudController extends AdminBaseController
         $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureDatagrid($datagrid));
 
         return $this->render('@ShopsysAdministration/crud/list.html.twig', [
-            'title' => $this->definition->getConfig()->getTitle(ActionType::LIST),
+            'title' => $config->getTitle(ActionType::LIST),
             'grid' => $datagrid->createView(),
             'topActions' => $this->getConfiguredActions(ActionType::LIST),
+            'hasDomainFilter' => $domainFilterType !== DomainFilterType::NONE,
+            'isDomainSwitchMode' => $domainFilterMode === DomainFilterMode::SWITCH,
+            'domainFilterNamespace' => $this->definition->controllerName,
         ]);
     }
 

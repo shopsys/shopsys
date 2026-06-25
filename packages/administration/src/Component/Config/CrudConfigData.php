@@ -29,6 +29,11 @@ final readonly class CrudConfigData
         private ?string $customRoleSection,
         private array $handlerClasses,
         private ?string $menuIcon,
+        private bool $domainFilterDisabled,
+        private ?DomainFilterType $domainFilterType,
+        private string $domainFilterField,
+        private string $domainFilterAssociation,
+        private DomainFilterMode $domainFilterMode,
     ) {
         foreach ($this->enabledActions as $action) {
             if (array_key_exists($action->value, $this->handlerClasses) && $this->handlerClasses[$action->value] === null) {
@@ -130,5 +135,30 @@ final readonly class CrudConfigData
     public function getMenuIcon(): ?string
     {
         return $this->menuIcon;
+    }
+
+    public function isDomainFilterDisabled(): bool
+    {
+        return $this->domainFilterDisabled;
+    }
+
+    public function getDomainFilterType(): ?DomainFilterType
+    {
+        return $this->domainFilterType;
+    }
+
+    public function getDomainFilterField(): string
+    {
+        return $this->domainFilterField;
+    }
+
+    public function getDomainFilterAssociation(): string
+    {
+        return $this->domainFilterAssociation;
+    }
+
+    public function getDomainFilterMode(): DomainFilterMode
+    {
+        return $this->domainFilterMode;
     }
 }

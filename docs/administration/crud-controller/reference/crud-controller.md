@@ -241,3 +241,19 @@ $config
     ->setMenuIcon('cart')
 ;
 ```
+
+#### Domain filter methods
+
+The list page automatically detects whether the entity is domain-aware and, if so, renders a domain switcher above the grid and scopes the grid to the selected domain. The following methods let you override this automatic behavior. See [Domain filter](domain-filter.md) for the full description.
+
+##### `disableDomainFilter()`
+
+Turn the domain filter off even if the entity is domain-aware.
+
+##### `configureDomainFilter(?DomainFilterType $type = null, string $field = 'domainId', string $association = 'domains')`
+
+Override automatic detection. Pass a `DomainFilterType` to force a strategy, or keep `null` to keep auto-detection while using custom field/association names.
+
+##### `setDomainFilterMode(DomainFilterMode $mode)`
+
+Choose which facade backs the filter: `DomainFilterMode::SWITCH` (default, globally selected single domain) or `DomainFilterMode::FILTER` (per-page filter with an extra "all domains" option).

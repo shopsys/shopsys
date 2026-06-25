@@ -107,4 +107,8 @@ protected function configureActions(ActionsConfig $actions): void
 
     You can look under the hood of the Actions in the [Actions reference](../reference/actions.md) section. 
 
+## 4. Domain filter (automatic)
+
+If the entity is domain-aware, the list page automatically renders a domain switcher above the grid and scopes the grid to the selected domain — no configuration needed. The behavior is detected from the entity's Doctrine mapping (scalar `domainId` field, or a `domains` `OneToMany` association). You can override or disable it in `configure()`. See [Domain filter](../reference/domain-filter.md) for details.
+
 And that's it. Now you have a list page configured and ready to be used. You can continue with [Extending existing Crud Controller](extending-existing-crud-controller.md) guide to see how to extend the Crud Controller with custom functionality.

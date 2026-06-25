@@ -40,6 +40,16 @@ final class CrudConfig
 
     private ?string $menuIcon = null;
 
+    private bool $domainFilterDisabled = false;
+
+    private ?DomainFilterType $domainFilterType = null;
+
+    private string $domainFilterField = 'domainId';
+
+    private string $domainFilterAssociation = 'domains';
+
+    private DomainFilterMode $domainFilterMode = DomainFilterMode::SWITCH;
+
     /**
      * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>|null>
      */
@@ -220,6 +230,53 @@ final class CrudConfig
     }
 
     /**
+     * Disable the automatic domain filter even if the entity is domain-aware.
+     *
+     * @return $this
+     */
+    public function disableDomainFilter(): self
+    {
+        $this->domainFilterDisabled = true;
+
+        return $this;
+    }
+
+    /**
+     * Override automatic domain filter detection.
+     *
+     * Pass $type to force a specific filtering strategy, or null to keep auto-detection
+     * while using custom field/association names (e.g. for non-standard entity mappings).
+     *
+     * @return $this
+     */
+    public function configureDomainFilter(
+        ?DomainFilterType $type = null,
+        string $field = 'domainId',
+        string $association = 'domains',
+    ): self {
+        $this->domainFilterType = $type;
+        $this->domainFilterField = $field;
+        $this->domainFilterAssociation = $association;
+
+        return $this;
+    }
+
+    /**
+     * Set which facade backs the domain filter.
+     *
+     * SWITCH uses the globally selected domain (always one domain), FILTER uses a per-page filter
+     * with an additional "all domains" option.
+     *
+     * @return $this
+     */
+    public function setDomainFilterMode(DomainFilterMode $mode): self
+    {
+        $this->domainFilterMode = $mode;
+
+        return $this;
+    }
+
+    /**
      * @template T of \Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface
      *
      * Register handler class or classes for CRUD actions.
@@ -307,6 +364,11 @@ final class CrudConfig
             $this->customRoleSection,
             $this->handlerClasses,
             $this->menuIcon,
+            $this->domainFilterDisabled,
+            $this->domainFilterType,
+            $this->domainFilterField,
+            $this->domainFilterAssociation,
+            $this->domainFilterMode,
         );
     }
 }
