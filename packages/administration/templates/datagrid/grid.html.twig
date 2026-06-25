@@ -1,5 +1,6 @@
 {% block grid %}
     <div class="js-grid card"
+         {% if grid.enabledScrollToGridOnNavigation %}id="{{ grid.anchorId }}"{% endif %}
          data-total-count="{{ grid.totalCount }}"
          data-grid-id="{{ grid.id|escape('html_attr') }}"
             {% if grid.inlineEdit %}

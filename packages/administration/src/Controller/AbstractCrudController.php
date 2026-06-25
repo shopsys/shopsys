@@ -88,6 +88,19 @@ abstract class AbstractCrudController extends AdminBaseController
     {
     }
 
+    protected function getEditTemplate(): string
+    {
+        return '@ShopsysAdministration/crud/edit.html.twig';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getEditViewData(object $entity): array
+    {
+        return [];
+    }
+
     public function listAction(): Response
     {
         $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder): void {
@@ -179,10 +192,11 @@ abstract class AbstractCrudController extends AdminBaseController
         $recordName = $entity->toHumanReadable();
         $this->breadcrumbOverrider->overrideLastItem($config->getBreadcrumbTitle(ActionType::EDIT) . ' - ' . $recordName);
 
-        return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
+        return $this->render($this->getEditTemplate(), [
             'title' => $config->getTitle(ActionType::EDIT, $recordName),
             'topActions' => $this->getConfiguredActions(ActionType::EDIT),
             'form' => $form->createView(),
+            ...$this->getEditViewData($entity),
         ]);
     }
 

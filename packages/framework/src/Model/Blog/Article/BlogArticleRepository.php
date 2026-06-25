@@ -37,6 +37,19 @@ class BlogArticleRepository
         return $this->em->getRepository(BlogArticle::class);
     }
 
+    public function getBlogArticlesByBlogArticleAuthorQueryBuilder(
+        BlogArticleAuthor $blogArticleAuthor,
+        string $locale,
+    ): QueryBuilder {
+        return $this->em->createQueryBuilder()
+            ->select('ba, bat')
+            ->from(BlogArticle::class, 'ba')
+            ->join('ba.translations', 'bat', Join::WITH, 'bat.locale = :locale')
+            ->where('ba.blogArticleAuthor = :blogArticleAuthor')
+            ->setParameter('blogArticleAuthor', $blogArticleAuthor)
+            ->setParameter('locale', $locale);
+    }
+
     /**
      * @return int[]
      */

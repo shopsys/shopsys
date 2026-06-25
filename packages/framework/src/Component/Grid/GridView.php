@@ -176,6 +176,10 @@ class GridView
         $masterRequest = $this->requestStack->getMainRequest();
         $routeParameters = $this->grid->getUrlParameters($parameters, $removeParameters);
 
+        if ($this->grid->isEnabledScrollToGridOnNavigation()) {
+            $routeParameters['_fragment'] = $this->grid->getAnchorId();
+        }
+
         return $this->router->generate(
             $masterRequest->attributes->get('_route'),
             $routeParameters,
