@@ -20,6 +20,5 @@ ENV APP_ENV=development
 ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY docker/entrypoint.sh /
+# entrypoint.sh selects the run command (dev|build) from the STOREFRONT_RUN_COMMAND env variable (set in docker-compose.yml), defaulting to `dev`.
 ENTRYPOINT ["/entrypoint.sh"]
-
-CMD ["dev"]

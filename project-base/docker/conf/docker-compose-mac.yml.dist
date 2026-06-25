@@ -51,8 +51,9 @@ services:
             dockerfile: ./docker/dev.Dockerfile
             target: development
         container_name: shopsys-framework-storefront
-        command: # Optional
-            - dev # change to `- build` if you want to test application build
+        environment:
+            # toggled by `make environment-dev` / `make environment-prod`; recreate the container to apply (dev = dev server, build = production build)
+            - STOREFRONT_RUN_COMMAND=dev
         volumes:
             - storefront:/home/node/app
         ports:
