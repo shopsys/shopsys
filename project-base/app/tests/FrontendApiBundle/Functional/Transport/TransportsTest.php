@@ -6,12 +6,14 @@ namespace Tests\FrontendApiBundle\Functional\Transport;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\TransportGroupDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\TransportUnavailabilityReasonInCartEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -59,6 +61,9 @@ class TransportsTest extends GraphQlTestCase
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
 
+        $deliveryToAddressGroup = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS, TransportGroup::class);
+        $pickupPointGroup = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_PICKUP_POINT, TransportGroup::class);
+
         $arrayExpected = [
             [
                 'name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -85,6 +90,7 @@ class TransportsTest extends GraphQlTestCase
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($pickupPointGroup, 722),
             ],
             [
                 'name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -109,6 +115,7 @@ class TransportsTest extends GraphQlTestCase
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($deliveryToAddressGroup, 721),
             ],
             [
                 'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -131,6 +138,7 @@ class TransportsTest extends GraphQlTestCase
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($deliveryToAddressGroup, 721),
             ],
             [
                 'name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -202,6 +210,7 @@ class TransportsTest extends GraphQlTestCase
                     ],
                 ],
                 'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($pickupPointGroup, 722),
             ],
             [
                 'name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -229,10 +238,27 @@ class TransportsTest extends GraphQlTestCase
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($deliveryToAddressGroup, 721),
             ],
         ];
 
         $this->assertSame($arrayExpected, $responseData);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getExpectedTransportGroupData(TransportGroup $transportGroup, int $imageId): array
+    {
+        $name = $transportGroup->getName($this->getLocaleForFirstDomain());
+
+        return [
+            'mainImage' => [
+                'url' => $this->getBaseUrlPath('/content-test/images/transportGroup/' . $imageId . '.png'),
+                'name' => $name,
+            ],
+            'name' => $name,
+        ];
     }
 
     public function testTransportsAreOrderedAndFlaggedWhenCartRequiresPersonalPickup(): void

@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
-use Shopsys\FrameworkBundle\Model\Transport\TransportGroupFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesDataFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 
@@ -40,7 +39,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         private readonly TransportDataFactory $transportDataFactory,
         private readonly PriceConverter $priceConverter,
         private readonly TransportInputPricesDataFactory $transportInputPricesDataFactory,
-        private readonly TransportGroupFacade $transportGroupFacade,
     ) {
     }
 
@@ -61,7 +59,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $this->setPriceForAllDomains($transportData, Money::create('49.95'));
         $transportData->type = TransportTypeEnum::TYPE_PACKETERY;
-        $transportData->group = $this->getPickupPointTransportGroup();
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_PICKUP_POINT, TransportGroup::class);
         $this->createTransport(self::TRANSPORT_PACKETERY, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -77,7 +75,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('199.95'));
-        $transportData->group = $this->getDeliveryToAddressTransportGroup();
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS, TransportGroup::class);
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -95,7 +93,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('99.95'), 5000);
-        $transportData->group = $this->getDeliveryToAddressTransportGroup();
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS, TransportGroup::class);
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -123,7 +121,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->type = TransportTypeEnum::TYPE_PERSONAL_PICKUP;
 
         $this->setPriceForAllDomains($transportData, Money::zero());
-        $transportData->group = $this->getPickupPointTransportGroup();
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_PICKUP_POINT, TransportGroup::class);
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -139,23 +137,8 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         }
 
         $this->setPriceForAllDomains($transportData, Money::zero());
-        $transportData->group = $this->getDeliveryToAddressTransportGroup();
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS, TransportGroup::class);
         $this->createTransport(self::TRANSPORT_DRONE, $transportData);
-    }
-
-    private function getDeliveryToAddressTransportGroup(): TransportGroup
-    {
-        return $this->getTransportGroupByPosition(0);
-    }
-
-    private function getPickupPointTransportGroup(): TransportGroup
-    {
-        return $this->getTransportGroupByPosition(1);
-    }
-
-    private function getTransportGroupByPosition(int $position): TransportGroup
-    {
-        return $this->transportGroupFacade->getAll()[$position];
     }
 
     /**
@@ -213,6 +196,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             VatDataFixture::class,
             CurrencyDataFixture::class,
             SettingValueDataFixture::class,
+            TransportGroupDataFixture::class,
         ];
     }
 }

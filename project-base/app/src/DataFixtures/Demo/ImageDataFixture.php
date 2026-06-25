@@ -21,7 +21,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
-use Shopsys\FrameworkBundle\Model\Transport\TransportGroupFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -42,7 +42,6 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         private readonly string $targetImagesDirectory,
         private readonly string $targetDomainImagesDirectory,
         private readonly string $targetFileManagerUploadDirectory,
-        private readonly TransportGroupFacade $transportGroupFacade,
     ) {
         parent::__construct($filesystem, $localFilesystem, $mountManager, $em, $transformStringHelper);
     }
@@ -225,14 +224,12 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     private function processTransportGroupsImages(): void
     {
         $transportGroupsImagesData = [
-            721 => 0,
-            722 => 1,
+            721 => TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS,
+            722 => TransportGroupDataFixture::TRANSPORT_GROUP_PICKUP_POINT,
         ];
 
-        $transportGroups = $this->transportGroupFacade->getAll();
-
-        foreach ($transportGroupsImagesData as $imageId => $transportGroupPosition) {
-            $transportGroup = $transportGroups[$transportGroupPosition];
+        foreach ($transportGroupsImagesData as $imageId => $transportGroupReferenceName) {
+            $transportGroup = $this->getReference($transportGroupReferenceName, TransportGroup::class);
 
             $names = [];
 
@@ -479,6 +476,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             CategoryDataFixture::class,
             PaymentDataFixture::class,
             TransportDataFixture::class,
+            TransportGroupDataFixture::class,
             ProductDataFixture::class,
             SliderItemDataFixture::class,
         ];
