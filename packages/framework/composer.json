@@ -141,6 +141,8 @@
         "symfony/var-dumper": "^7.4",
         "symfony/yaml": "^7.4"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "symfony": {
             "require": "^7.4",

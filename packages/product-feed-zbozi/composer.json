@@ -51,6 +51,8 @@
         "phpunit/phpunit": "^12.5",
         "shopsys/frontend-api": "20.0.x-dev"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "suggest": {
         "shopsys/frontend-api": "Required only when you want to extend the Frontend API Category type with additional Zbozi.cz related fields."
     },
