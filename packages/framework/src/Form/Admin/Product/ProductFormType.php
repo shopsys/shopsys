@@ -735,7 +735,7 @@ final class ProductFormType extends AbstractType
                     new Constraints\Image(
                         maxSize: '2M',
                         mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                        maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                         mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
                     ),
