@@ -1,0 +1,9 @@
+{
+    "name": "fixture/root-with-all-dependencies",
+    "require": {
+        "php": "^8.5",
+        "fixture/intermediate": "1.0.x-dev",
+        "fixture/leaf-a": "1.0.x-dev",
+        "fixture/leaf-b": "1.0.x-dev"
+    }
+}

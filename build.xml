@@ -85,6 +85,21 @@
         </exec>
     </target>
 
+    <target name="mutual-dependencies-check" description="Checks that every package directly requires all of its transitive dev-version shopsys dependencies." hidden="true">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="monorepo:validate-mutual-dependencies"/>
+        </exec>
+    </target>
+
+    <target name="mutual-dependencies-fix" description="Adds the missing direct requires for transitive dev-version shopsys dependencies." hidden="true">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="monorepo:validate-mutual-dependencies"/>
+            <arg value="--fix"/>
+        </exec>
+    </target>
+
     <target name="npm-translations-dump" description="Dumped translations from javascript's files." hidden="true">
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
@@ -177,11 +192,11 @@
         </if>
     </target>
 
-    <target name="standards" depends="shopsys_administration.standards,phing-config-check" description="Checks coding standards."/>
+    <target name="standards" depends="shopsys_administration.standards,phing-config-check,mutual-dependencies-check" description="Checks coding standards."/>
 
     <target name="standards-diff" depends="shopsys_administration.standards-diff,phing-config-check" description="Checks coding standards in changed files."/>
 
-    <target name="standards-fix" depends="shopsys_administration.standards-fix,phing-config-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
+    <target name="standards-fix" depends="shopsys_administration.standards-fix,phing-config-fix,mutual-dependencies-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
 
     <target name="standards-fix-diff" depends="shopsys_administration.standards-fix-diff,phing-config-fix" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
 
@@ -300,6 +315,12 @@
             <arg value="--configuration"/>
             <arg value="${path.utils}/releaser/phpunit.xml"/>
             <arg value="${path.utils}/releaser/tests/"/>
+        </exec>
+        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="--colors=always"/>
+            <arg value="--configuration"/>
+            <arg value="${path.utils}/monorepo-tools/phpunit.xml"/>
+            <arg value="${path.utils}/monorepo-tools/tests/"/>
         </exec>
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
@@ -470,6 +491,15 @@
                     <arg value="--configuration"/>
                     <arg value="${path.utils}/releaser/phpunit.xml"/>
                     <arg value="${path.utils}/releaser/tests/"/>
+                    <arg value="--do-not-fail-on-empty-test-suite"/>
+                    <arg value="--filter"/>
+                    <arg value="${test.name}"/>
+                </exec>
+                <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="--colors=always"/>
+                    <arg value="--configuration"/>
+                    <arg value="${path.utils}/monorepo-tools/phpunit.xml"/>
+                    <arg value="${path.utils}/monorepo-tools/tests/"/>
                     <arg value="--do-not-fail-on-empty-test-suite"/>
                     <arg value="--filter"/>
                     <arg value="${test.name}"/>

@@ -65,7 +65,9 @@
             "Tests\\ProductFeed\\LuigisBoxBundle\\": "packages/product-feed-luigis-box/tests/",
             "Tests\\LuigisBoxBundle\\": "packages/luigis-box/tests/",
             "Shopsys\\Releaser\\": "utils/releaser/src/",
-            "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests"
+            "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests",
+            "Shopsys\\MonorepoTools\\": "utils/monorepo-tools/src/",
+            "Shopsys\\MonorepoTools\\Tests\\": "utils/monorepo-tools/tests"
         }
     },
     "require": {

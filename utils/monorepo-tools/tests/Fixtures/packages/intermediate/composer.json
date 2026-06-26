@@ -1,0 +1,8 @@
+{
+    "name": "fixture/intermediate",
+    "require": {
+        "php": "^8.5",
+        "fixture/leaf-a": "1.0.x-dev",
+        "fixture/leaf-b": "1.0.x-dev"
+    }
+}

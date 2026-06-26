@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    backupGlobals="false"
+    colors="true"
+    processIsolation="false"
+    stopOnFailure="false"
+    failOnWarning="true"
+    failOnNotice="true"
+    displayDetailsOnTestsThatTriggerNotices="true"
+    failOnPhpunitNotice="true"
+    displayDetailsOnPhpunitNotices="true"
+    beStrictAboutTestsThatDoNotTestAnything="false"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd"
+    cacheDirectory=".phpunit.cache"
+    backupStaticProperties="false"
+>
+  <source/>
+</phpunit>

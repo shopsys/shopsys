@@ -1,0 +1,7 @@
+{
+    "name": "fixture/root-with-stable-dependency",
+    "require": {
+        "php": "^8.5",
+        "fixture/intermediate": "^1.0"
+    }
+}

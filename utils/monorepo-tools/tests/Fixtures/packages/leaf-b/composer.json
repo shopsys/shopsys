@@ -1,0 +1,6 @@
+{
+    "name": "fixture/leaf-b",
+    "require": {
+        "php": "^8.5"
+    }
+}

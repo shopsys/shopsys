@@ -21,6 +21,7 @@
 /.env.local.php
 /.env.*.local
 /utils/releaser/.phpunit.cache
+/utils/monorepo-tools/.phpunit.cache
 /packages/frontend-api/.phpunit.cache
 
 /phing.phar
