@@ -32,8 +32,9 @@ export const mapGtmProductInterface = (
         vatAmount: parseFloat(productInterface.price.vatAmount),
         sku: productInterface.catalogNumber,
         url: productUrl,
-        brand: productInterface.brand?.name ?? '',
-        categories: productInterface.categories.map((category) => category.name),
+        brand: 'brand' in productInterface ? (productInterface.brand?.name ?? '') : '',
+        categories:
+            'categories' in productInterface ? productInterface.categories.map((category) => category.name) : [],
         ...(zboziCategory !== undefined && { zboziCategory }),
     };
 };

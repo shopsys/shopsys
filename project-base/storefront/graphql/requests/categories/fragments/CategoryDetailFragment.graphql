@@ -35,7 +35,7 @@ fragment CategoryDetailFragment on Category {
         ...ListedProductConnectionPreviewFragment
     }
     bestsellers {
-        ...ListedProductFragment
+        ...CategoryBestsellerFragment
     }
     automatedFilters
 }

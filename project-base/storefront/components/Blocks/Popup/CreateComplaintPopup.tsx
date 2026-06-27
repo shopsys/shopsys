@@ -16,6 +16,7 @@ import { useComplaintForm, useComplaintFormMeta } from 'components/Pages/Custome
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
+import { TypeComplaintOrderedItemFragment } from 'graphql/requests/complaints/fragments/ComplaintOrderedItemFragment.generated';
 import { useCreateComplaint } from 'graphql/requests/complaints/mutations/CreateComplaintMutation.generated';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -31,9 +32,11 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
+export type CreateComplaintPopupOrderItem = TypeOrderDetailItemFragment | TypeComplaintOrderedItemFragment;
+
 type CreateComplaintPopupProps = {
     orderUuid?: string;
-    orderItem?: TypeOrderDetailItemFragment;
+    orderItem?: CreateComplaintPopupOrderItem;
 };
 
 export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid = null, orderItem = null }) => {

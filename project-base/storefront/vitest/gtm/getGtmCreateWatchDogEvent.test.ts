@@ -18,7 +18,6 @@ const listedProduct = {
     uuid: 'd6316f87-b06a-45f1-92b4-4a6a347817db',
     slug: '/watched-product',
     fullName: 'Watched Product',
-    name: 'Watched Product',
     stockQuantity: 0,
     isAllowedNegativeStock: false,
     isSellingDenied: false,
@@ -28,6 +27,7 @@ const listedProduct = {
     isMainVariant: false,
     isInquiryType: false,
     unit: {
+        __typename: 'Unit',
         name: 'pcs',
     },
     flags: [
@@ -40,7 +40,6 @@ const listedProduct = {
     ],
     mainImage: {
         __typename: 'Image',
-        name: 'Watched product image',
         url: 'https://cdn.example.com/watched-product.jpg',
     },
     price: {
@@ -49,12 +48,10 @@ const listedProduct = {
         priceWithoutVat: '100.00',
         vatAmount: '21.00',
         isPriceFrom: false,
-        nextPriceChange: null,
         percentageDiscount: null,
         basicPrice: {
+            __typename: 'Price',
             priceWithVat: '121.00',
-            priceWithoutVat: '100.00',
-            vatAmount: '21.00',
         },
     },
     availability: {
@@ -65,7 +62,6 @@ const listedProduct = {
     brand: {
         __typename: 'Brand',
         name: 'Watch Brand',
-        slug: '/watch-brand',
     },
     categories: [
         {

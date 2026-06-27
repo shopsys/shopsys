@@ -4,10 +4,10 @@ fragment ListedProductFragment on Product {
     uuid
     slug
     fullName
-    name
     stockQuantity
     isAllowedNegativeStock
     unit {
+        __typename
         name
     }
     isSellingDenied
@@ -16,10 +16,11 @@ fragment ListedProductFragment on Product {
         ...SimpleFlagFragment
     }
     mainImage {
-        ...ImageFragment
+        __typename
+        url
     }
     price {
-        ...ProductPriceFragment
+        ...ListedProductPriceFragment
     }
     availability {
         ...AvailabilityFragment
@@ -27,7 +28,8 @@ fragment ListedProductFragment on Product {
     availableStoresCount
     catalogNumber
     brand {
-        ...SimpleBrandFragment
+        __typename
+        name
     }
     categories {
         __typename
@@ -35,11 +37,6 @@ fragment ListedProductFragment on Product {
     }
     isMainVariant
     isInquiryType
-    ... on Variant {
-        mainVariant {
-            slug
-        }
-    }
 
     ... on MainVariant {
         variantsCount

@@ -4,9 +4,8 @@ query OrderedItemsQuery($first: Int, $after: String, $filter: OrderItemsFilterIn
         totalCount
         edges {
             __typename
-            cursor
             node {
-                ...OrderDetailItemFragment
+                ...ComplaintOrderedItemFragment
             }
         }
     }
