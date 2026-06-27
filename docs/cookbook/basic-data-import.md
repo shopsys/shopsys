@@ -496,7 +496,7 @@ php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModul
 - Clear entity manager identity map once in a while because `EntityManager::flush()` searches
   for changes in all mapped entities, and after time, it consumes a huge amount of resources to persist a single entity.
     - Call `EntityManager::flush()` with parameter (i.e. entity or array of entities you want to flush) anytime it is possible.  
-       **Warning: Flushing is not a cascade operation, i.e. when you flush an entity that contains any other entities (e.g., translations),
+      **Warning: Flushing is not a cascade operation, i.e. when you flush an entity that contains any other entities (e.g., translations),
       these are not flushed automatically. You should not forget to flush them as well.**
     - You should load any entity again after clearing the identity map because any attempt to flush the old one will result in an exception.
 - Use streamed input for XML and JSON.
