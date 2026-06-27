@@ -18,7 +18,6 @@ QueryDecorator:
                 type: "CategoryConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('categoriesSearchQuery', args)"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     searchInput:
                         type: "SearchInput!"
@@ -30,7 +29,6 @@ QueryDecorator:
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: "@=query('productsWithOverlyingEntityQuery', args, info)"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             product:
                 type: 'Product'
@@ -48,7 +46,6 @@ QueryDecorator:
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: "@=query('productsSearchQuery', args)"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     searchInput:
                         type: "SearchInput!"
@@ -127,7 +124,6 @@ QueryDecorator:
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('orderItemsQuery', args)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || isGranted('ROLE_API_COMPANY_ORDERS_VIEW'))"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     filter:
                         type: "OrderItemsFilterInput"
@@ -137,7 +133,6 @@ QueryDecorator:
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('orderItemsSearchQuery', args)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || isGranted('ROLE_API_COMPANY_ORDERS_VIEW'))"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     searchInput:
                         type: "SearchInput!"
@@ -166,7 +161,6 @@ QueryDecorator:
                 type: "ArticleConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('articlesQuery', args, args['placement'])"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     placement:
                         type: "[ArticlePlacementTypeEnum!]"
@@ -259,7 +253,6 @@ QueryDecorator:
                 type: "BlogArticleConnection!"
                 argsBuilder: "BlogArticlePaginatorArgumentsBuilder"
                 resolve: "@=query('blogArticlesQuery', args)"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords"
             blogCategory:
                 type: 'BlogCategory'
@@ -342,7 +335,6 @@ QueryDecorator:
                         type: "SearchInput"
                 resolve: "@=query('complaintsQuery', args)"
                 access: "@=(isGranted('ROLE_API_COMPLAINT_CREATION') || isGranted('ROLE_API_COMPANY_COMPLAINTS_VIEW'))"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
             flags:
                 type: '[Flag!]'
@@ -401,7 +393,6 @@ QueryDecorator:
                 type: "StoreConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('storesQuery', args)"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"
                 args:
                     searchText:

@@ -6,7 +6,6 @@ OrderQuery:
                 type: "OrderConnection"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('ordersQuery', args)"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
             order:
                 type: 'Order'

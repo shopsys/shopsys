@@ -19,9 +19,6 @@ services:
     Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider:
         alias: Shopsys\FrontendApiBundle\Model\Security\LoginAdministratorAsUserUrlProvider
 
-    Shopsys\FrontendApiBundle\Component\ExpressionLanguage\DynamicPaginationComplexityExpressionFunction:
-        tags: [ 'overblog_graphql.expression_function' ]
-
     Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~
 
     Shopsys\FrontendApiBundle\Component\HttpFoundation\GraphqlBatchRequestValidator:
@@ -65,7 +62,9 @@ services:
         arguments:
             $mainFriendlyUrlSlugCache: '@main_friendly_url_slug_cache'
 
-    Shopsys\FrontendApiBundle\Model\GraphqlConfigurator: ~
+    Shopsys\FrontendApiBundle\Model\GraphqlConfigurator:
+        arguments:
+            $maxQueryComplexity: '%overblog_graphql.query_max_complexity%'
 
     Shopsys\FrontendApiBundle\Model\Logger\FrontendApiLogger:
         arguments:
