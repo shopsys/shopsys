@@ -103,6 +103,8 @@ services:
         image: php-fpm-image
         volumes:
             - web-volume:/var/www/html/project-base/app/web
+        depends_on:
+            - php-fpm
         environment:
             IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
             DATABASE_NAME: "${BRANCH_NAME_ESCAPED}"
