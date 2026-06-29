@@ -169,6 +169,9 @@ msgstr ""
 msgid "Admin inquiry detail URL"
 msgstr ""
 
+msgid "Administration"
+msgstr ""
+
 msgid "Administration localization was changed to \"%locale%\""
 msgstr ""
 
@@ -199,10 +202,13 @@ msgstr ""
 msgid "Administrator role group <strong>{{ name }}</strong> deleted."
 msgstr ""
 
+msgid "Administrator role groups"
+msgstr ""
+
 msgid "Administrators"
 msgstr ""
 
-msgid "Administrators overview"
+msgid "Advertising"
 msgstr ""
 
 msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
@@ -212,9 +218,6 @@ msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modifie
 msgstr ""
 
 msgid "Advertising <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Advertising system"
 msgstr ""
 
 msgid "All roles"
@@ -304,10 +307,10 @@ msgstr ""
 msgid "Article is ready to be displayed on the storefront."
 msgstr ""
 
-msgid "Articles in footer"
+msgid "Articles"
 msgstr ""
 
-msgid "Articles overview"
+msgid "Articles in footer"
 msgstr ""
 
 msgid "Articles without positioning"
@@ -499,9 +502,6 @@ msgstr ""
 msgid "By flag"
 msgstr ""
 
-msgid "CMS"
-msgstr ""
-
 msgid "CSV file"
 msgstr ""
 
@@ -524,6 +524,9 @@ msgid "Cardholder canceled the payment"
 msgstr ""
 
 msgid "Cart manipulation and order creation"
+msgstr ""
+
+msgid "Catalog"
 msgstr ""
 
 msgid "Catalog number"
@@ -598,6 +601,9 @@ msgstr ""
 msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
+msgid "Codes"
+msgstr ""
+
 msgid "Collapse"
 msgstr ""
 
@@ -607,13 +613,16 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
+msgid "Color parameter values"
+msgstr ""
+
 msgid "Color pattern icon"
 msgstr ""
 
 msgid "Combination of parameters and their values"
 msgstr ""
 
-msgid "Communication with customer"
+msgid "Communication"
 msgstr ""
 
 msgid "Company"
@@ -823,6 +832,9 @@ msgstr ""
 msgid "Customer phone number"
 msgstr ""
 
+msgid "Customer role groups"
+msgstr ""
+
 msgid "Customer sees prices"
 msgstr ""
 
@@ -841,16 +853,10 @@ msgstr ""
 msgid "Customer user role group <strong>{{ name }}</strong> deleted."
 msgstr ""
 
-msgid "Customer user role groups"
-msgstr ""
-
 msgid "Customer with ID %customerId% not found."
 msgstr ""
 
 msgid "Customers"
-msgstr ""
-
-msgid "Customers overview"
 msgstr ""
 
 msgid "Dashboard"
@@ -1198,10 +1204,10 @@ msgstr ""
 msgid "E-mail addresses whitelist"
 msgstr ""
 
-msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
+msgid "E-mail whitelist"
 msgstr ""
 
-msgid "E-mail whitelist settings"
+msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
 msgstr ""
 
 msgid "E-mail whitelist settings modified"
@@ -1213,7 +1219,7 @@ msgstr ""
 msgid "E-shop URL address"
 msgstr ""
 
-msgid "E-shop identification"
+msgid "E-shop identification / domains"
 msgstr ""
 
 msgid "E-shop name"
@@ -1411,9 +1417,6 @@ msgstr ""
 msgid "Email name"
 msgstr ""
 
-msgid "Email newsletter"
-msgstr ""
-
 msgid "Email settings"
 msgstr ""
 
@@ -1595,9 +1598,6 @@ msgid "Filename"
 msgstr ""
 
 msgid "Files"
-msgstr ""
-
-msgid "Files overview"
 msgstr ""
 
 msgid "Files uploaded:"
@@ -1813,7 +1813,7 @@ msgstr ""
 msgid "Holidays import"
 msgstr ""
 
-msgid "Home page"
+msgid "Homepage"
 msgstr ""
 
 msgid "Hreflang tags help search engines understand the language and regional targeting of your content. By selecting multiple domains, you ensure that hreflang tags will be properly rendered in sitemap and on the page. Search engines then properly index and display the correct versions of your content to users across different regions."
@@ -1963,7 +1963,7 @@ msgstr ""
 msgid "Last update"
 msgstr ""
 
-msgid "Legal conditions"
+msgid "Legal"
 msgstr ""
 
 msgid "Legal conditions settings modified."
@@ -1987,13 +1987,7 @@ msgstr ""
 msgid "LinkedIn URL"
 msgstr ""
 
-msgid "List of language constants"
-msgstr ""
-
 msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
-msgstr ""
-
-msgid "Lists and nomenclatures"
 msgstr ""
 
 msgid "Locale \"%locale%\" is not supported. You can choose only from the following locales: \"%supportedLocales%\"."
@@ -2218,6 +2212,9 @@ msgstr ""
 msgid "New withdrawal request for order {orderNumber}"
 msgstr ""
 
+msgid "Newsletter subscribers"
+msgstr ""
+
 msgid "No"
 msgstr ""
 
@@ -2435,9 +2432,6 @@ msgid "Parameter value"
 msgstr ""
 
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
-msgstr ""
-
-msgid "Parameter value of type color"
 msgstr ""
 
 msgid "Parameter values"
@@ -2746,9 +2740,6 @@ msgstr ""
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
 msgstr ""
 
-msgid "Products overview"
-msgstr ""
-
 msgid "Products parameters of selected category"
 msgstr ""
 
@@ -2854,9 +2845,6 @@ msgstr ""
 msgid "Role Group"
 msgstr ""
 
-msgid "Role Groups"
-msgstr ""
-
 msgid "Role group <strong>{{ roleGroupName }}</strong> cannot be deleted, because some customer users are using it"
 msgstr ""
 
@@ -2911,10 +2899,16 @@ msgstr ""
 msgid "SEO pages"
 msgstr ""
 
+msgid "SEO settings"
+msgstr ""
+
 msgid "SMS was sent but not delivered yet"
 msgstr ""
 
-msgid "Sales including/excluding VAT settings"
+msgid "Sales"
+msgstr ""
+
+msgid "Sales including/excluding VAT"
 msgstr ""
 
 msgid "Sales representative"
@@ -3139,6 +3133,9 @@ msgstr ""
 msgid "Settings modified."
 msgstr ""
 
+msgid "Shipping & Payment"
+msgstr ""
+
 msgid "Shipping <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
@@ -3148,10 +3145,10 @@ msgstr ""
 msgid "Shipping <strong>{{ name }}</strong> deleted"
 msgstr ""
 
-msgid "Shipping instructions"
+msgid "Shipping and payment methods"
 msgstr ""
 
-msgid "Shippings and payments"
+msgid "Shipping instructions"
 msgstr ""
 
 msgid "Short description"
@@ -3211,9 +3208,6 @@ msgstr ""
 msgid "Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed"
 msgstr ""
 
-msgid "Status of complaints"
-msgstr ""
-
 msgid "Status of complaints <strong>{{ name }}</strong> deleted"
 msgstr ""
 
@@ -3226,9 +3220,6 @@ msgstr ""
 msgid "Status of order"
 msgstr ""
 
-msgid "Status of orders"
-msgstr ""
-
 msgid "Status of orders <strong>{{ name }}</strong> deleted"
 msgstr ""
 
@@ -3236,9 +3227,6 @@ msgid "Status of orders <strong>{{ name }}</strong> reserved and can't be delete
 msgstr ""
 
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
-msgstr ""
-
-msgid "Stocking"
 msgstr ""
 
 msgid "Store"
@@ -3287,6 +3275,9 @@ msgid "Superadmin"
 msgstr ""
 
 msgid "Superadmin permissions"
+msgstr ""
+
+msgid "System / Superadmin"
 msgstr ""
 
 msgid "System data"
@@ -3496,7 +3487,7 @@ msgstr ""
 msgid "Unsupported two factor authentication method"
 msgstr ""
 
-msgid "Unused friendly URL list"
+msgid "Unused friendly URLs"
 msgstr ""
 
 msgid "Updated at"
@@ -3658,7 +3649,7 @@ msgstr ""
 msgid "Withdrawn"
 msgstr ""
 
-msgid "XML Feeds"
+msgid "XML feeds"
 msgstr ""
 
 msgid "XML feeds settings"
