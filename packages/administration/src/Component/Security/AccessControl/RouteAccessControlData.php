@@ -44,7 +44,7 @@ class RouteAccessControlData
     public function hasAccess(HttpMethod $httpMethod, callable $hasRoleCallback): bool
     {
         if ($this->hasAnyRules() === false) {
-            return true;
+            return false;
         }
 
         $hasApplicableRules = false;
