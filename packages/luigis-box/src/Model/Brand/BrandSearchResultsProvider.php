@@ -10,6 +10,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Override;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderInterface;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
+use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadResult;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
@@ -36,6 +37,8 @@ class BrandSearchResultsProvider extends SearchResultsProvider implements BrandS
                 0,
                 $argument,
             ),
-        );
+        )->then(static function (LuigisBoxBatchLoadResult $result): array {
+            return $result->getData();
+        });
     }
 }

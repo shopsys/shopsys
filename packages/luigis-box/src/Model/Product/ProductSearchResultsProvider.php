@@ -15,6 +15,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResult
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
+use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadResult;
 use Shopsys\LuigisBoxBundle\Model\Facet\FacetFactory;
 use Shopsys\LuigisBoxBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
@@ -46,6 +47,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->map(TypeInLuigisBoxEnum::PRODUCT, $productFilterData, $this->domain);
         $parameterUuids = $argument['parameters'] ?? [];
         $facetNames = [];
+        $batchLoadResult = null;
 
         foreach ($this->parameterFacade->getParametersByUuids($parameterUuids) as $parameter) {
             $facetNames[] = $parameter->getName();
@@ -54,21 +56,29 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         $facetNames = array_unique([...$facetNames, ...$this->facetFactory->mapFacetsFromProductFilterData($productFilterData)], SORT_REGULAR);
 
         return $this->productConnectionFactory->createConnectionPromiseForSearch(
-            function ($offset, $limit) use ($argument, $luigisBoxFilter, $facetNames) {
-                return $this->luigisBoxBatchLoader->load(
-                    $this->luigisBoxBatchLoadDataFactory->createForSearch(
-                        TypeInLuigisBoxEnum::PRODUCT,
-                        $limit,
-                        $offset,
-                        $argument,
-                        $luigisBoxFilter,
-                        $facetNames,
-                    ),
+            function ($offset, $limit) use ($argument, $luigisBoxFilter, $facetNames, &$batchLoadResult) {
+                $batchLoadData = $this->luigisBoxBatchLoadDataFactory->createForSearch(
+                    TypeInLuigisBoxEnum::PRODUCT,
+                    $limit,
+                    $offset,
+                    $argument,
+                    $luigisBoxFilter,
+                    $facetNames,
                 );
+
+                return $this->luigisBoxBatchLoader->load($batchLoadData)
+                    ->then(static function (LuigisBoxBatchLoadResult $result) use (&$batchLoadResult): array {
+                        $batchLoadResult = $result;
+
+                        return $result->getData();
+                    });
             },
             $argument,
             $productFilterData,
             $orderingMode,
+            static function () use (&$batchLoadResult): ?LuigisBoxBatchLoadResult {
+                return $batchLoadResult;
+            },
         );
     }
 }

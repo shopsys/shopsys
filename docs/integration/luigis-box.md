@@ -7,13 +7,14 @@ More information about Luigi's Box can be found on their [website](https://luigi
 
 ## Differences from the standard search
 
-- autocomplete does not include the number of found entities as Luigi's Box does not provide this information
+- autocomplete returns result lists, not paginated connections with total counts
 - search filter (e.g., price range) is limited by already selected filters
 
 ## Installation
 
 You can find installation steps on the GitHub page of our [package](https://github.com/shopsys/luigis-box?tab=readme-ov-file#installation).
-If you use the default Shopsys Platform installation, the package is already enabled by default.
+If you use the default Shopsys Platform installation, the package is already installed.
+To enable Luigi's Box for a domain, configure `LUIGIS_BOX_ENABLED_DOMAIN_IDS` and `LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS`.
 
 ## Search providers implementation
 
@@ -40,6 +41,15 @@ Shopsys\LuigisBoxBundle\Model\Product\ProductSearchResultsProvider:
 ```
 
 The first provider of each type with the highest priority that is enabled on the domain will be used.
+
+## Search request behavior
+
+Search results are loaded independently for each result type.
+This means products, categories, articles, and brands can each use their own limit and total count, and secondary results are not limited by product search results.
+Because Luigi's Box evaluates autocomplete and full search differently, autocomplete suggestions and search page results may differ for the same search phrase.
+Each independently loaded result type on the search page is counted as a separate Luigi's Box request for billing purposes.
+
+Autocomplete still returns a mixed list of result types for quick suggestions.
 
 ## Filters (facets) setting
 
