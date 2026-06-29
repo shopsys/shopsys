@@ -19,6 +19,10 @@
     }
 }
 
+[data-js-single-picker-label] {
+    cursor: pointer;
+}
+
 .product-picker-image-avatar img {
     max-width: 40px;
     max-height: 40px;

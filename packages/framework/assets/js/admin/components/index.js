@@ -38,7 +38,6 @@ import './Parameters';
 import './Payment';
 import './Product';
 import './PriceListProductPicker';
-import './ProductPicker';
 import './PriceListProductPickerWindow';
 import './productsPicker';
 import './ProductsPickerWindow';

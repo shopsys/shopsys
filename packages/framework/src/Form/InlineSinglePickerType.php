@@ -6,11 +6,11 @@ namespace Shopsys\FrameworkBundle\Form;
 
 use Override;
 
-final class SinglePickerType extends AbstractSinglePickerType
+final class InlineSinglePickerType extends AbstractSinglePickerType
 {
     #[Override]
     public function getBlockPrefix(): string
     {
-        return 'single_picker';
+        return 'inline_single_picker';
     }
 }

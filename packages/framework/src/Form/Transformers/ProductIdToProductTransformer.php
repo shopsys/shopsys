@@ -8,46 +8,30 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-class ProductIdToProductTransformer implements DataTransformerInterface
+class ProductIdToProductTransformer extends AbstractEntityIdToEntityTransformer
 {
     public function __construct(protected readonly ProductRepository $productRepository)
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     */
     #[Override]
-    public function transform($product): ?int
+    protected function getEntityId(object $entity): int
     {
-        if ($product instanceof Product) {
-            return $product->getId();
-        }
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        $product = $entity;
 
-        return null;
+        return $product->getId();
     }
 
-    /**
-     * @param int $productId
-     */
     #[Override]
-    public function reverseTransform($productId): ?Product
+    protected function getEntityById(int $entityId): Product
     {
-        $productId = (int)$productId;
-
-        if ($productId === 0) {
-            return null;
-        }
-
         try {
-            $product = $this->productRepository->getById($productId);
-        } catch (ProductNotFoundException $e) {
-            throw new TransformationFailedException('Product not found', 0, $e);
+            return $this->productRepository->getById($entityId);
+        } catch (ProductNotFoundException $exception) {
+            throw new TransformationFailedException('Product not found', 0, $exception);
         }
-
-        return $product;
     }
 }

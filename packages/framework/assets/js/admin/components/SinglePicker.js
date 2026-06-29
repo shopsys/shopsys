@@ -13,10 +13,10 @@ export default class SinglePicker {
         this.onSelectCallback = onSelectCallback;
 
         if (onSelectCallback === undefined) {
-            this.$input = $picker.find('.js-single-picker-input');
-            this.$label = $picker.find('.js-single-picker-label');
-            this.$addButton = $picker.find('.js-single-picker-button-add');
-            this.$removeButton = $picker.find('.js-single-picker-button-remove');
+            this.$input = $picker.find('[data-js-single-picker-input]');
+            this.$label = $picker.find('[data-js-single-picker-label]');
+            this.$addButton = $picker.find('[data-js-single-picker-button-add]');
+            this.$removeButton = $picker.find('[data-js-single-picker-button-remove]');
 
             this.$removeButton.prop('disabled', this.$input.val() === '');
             this.$removeButton.click(() => {
@@ -24,6 +24,8 @@ export default class SinglePicker {
 
                 return false;
             });
+
+            this.$label.click(event => this.openPickerWindow(event));
         } else {
             this.$addButton = $picker;
         }
@@ -74,12 +76,12 @@ export default class SinglePicker {
     }
 
     static init($container) {
-        $container.filterAllNodes('.js-single-picker').each(function () {
+        $container.filterAllNodes('[data-js-single-picker]').each(function () {
             // eslint-disable-next-line no-new
             new SinglePicker($(this));
         });
 
-        $('.js-single-picker-window-select').click(event => {
+        $('[data-js-single-picker-window-select]').click(event => {
             const $btnElement = $(event.currentTarget);
             SinglePicker.onClickSelect(
                 $btnElement.data('picker-instance-id'),

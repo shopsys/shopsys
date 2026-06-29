@@ -60,9 +60,9 @@ class ProductPickerController extends AdminBaseController
         );
     }
 
-    #[Route(path: '/product-picker/pick-single/{parentInstanceId}/', defaults: ['parentInstanceId' => '__instance_id__'])]
+    #[Route(path: '/product-picker/pick-single/{jsInstanceId}/', defaults: ['jsInstanceId' => '__js_instance_id__'])]
     #[RequireRole(SystemRole::ADMIN)]
-    public function pickSingleAction(Request $request, string $parentInstanceId): Response
+    public function pickSingleAction(Request $request, string $jsInstanceId): Response
     {
         return $this->getPickerResponse(
             $request,
@@ -71,7 +71,7 @@ class ProductPickerController extends AdminBaseController
             ],
             [
                 'isMultiple' => false,
-                'parentInstanceId' => $parentInstanceId,
+                'jsInstanceId' => $jsInstanceId,
                 'allowMainVariants' => $request->query->getBoolean('allowMainVariants', true),
                 'allowVariants' => $request->query->getBoolean('allowVariants', true),
             ],

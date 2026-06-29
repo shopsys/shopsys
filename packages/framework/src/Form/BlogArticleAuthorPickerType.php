@@ -42,6 +42,6 @@ final class BlogArticleAuthorPickerType extends AbstractType
     #[Override]
     public function getParent(): string
     {
-        return SinglePickerType::class;
+        return InlineSinglePickerType::class;
     }
 }
