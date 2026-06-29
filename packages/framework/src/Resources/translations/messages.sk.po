@@ -331,6 +331,9 @@ msgstr "Atribút %attribute% bol zmenený %changes%"
 msgid "Authentication code"
 msgstr "Overovací kód"
 
+msgid "Author"
+msgstr "Autor"
+
 msgid "Autocomplete favorites"
 msgstr "Obľúbené položky v našepkávači"
 
@@ -565,11 +568,17 @@ msgstr "Zmeny"
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr "Zmena domény spôsobí stratu neuložených zmien. Chcete pokračovať?"
 
+msgid "Choose"
+msgstr "Vybrať"
+
 msgid "Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
 msgstr "Vyberte článok, ktorý bude slúžiť ako zásady ochrany osobných údajov, s ktorými musí zákazník súhlasiť pri vytváraní objednávky alebo registrácii používateľa."
 
 msgid "Choose article, which will serve as terms and conditions with which the customer has to agree when creating order."
 msgstr "Vyberte článok, ktorý bude slúžiť ako obchodné podmienky, s ktorými musí zákazník súhlasiť pri vytváraní objednávky."
+
+msgid "Choose author"
+msgstr "Vybrať autora"
 
 msgid "Choose product"
 msgstr "Vybrať produkt"
@@ -594,6 +603,9 @@ msgstr "Mesto"
 
 msgid "Clean Storefront Cache"
 msgstr "Vymazať cache obchodu"
+
+msgid "Close"
+msgstr "Zavrieť"
 
 msgid "Code"
 msgstr "Kód"
@@ -1903,6 +1915,9 @@ msgstr "Interná poznámka"
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr "Dôrazne sa odporúča otestovať toto nastavenie na vývojovom alebo CI serveri pred tým, ako sa použije v produkčnom prostredí!"
 
+msgid "Job title"
+msgstr "Pracovná pozícia"
+
 msgid "Key"
 msgstr "Kľúč"
 
@@ -2946,6 +2961,9 @@ msgstr "Vyhľadať a vybrať produkty..."
 
 msgid "Second column categories"
 msgstr "Kategórie druhého stĺpca"
+
+msgid "Select"
+msgstr "Vybrať"
 
 msgid "Select country"
 msgstr "Vybrať krajinu"

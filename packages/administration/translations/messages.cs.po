@@ -208,6 +208,9 @@ msgstr "Článek bude viditelný od %date%."
 msgid "Articles"
 msgstr "Články"
 
+msgid "Articles by this author"
+msgstr "Články tohoto autora"
+
 msgid "Articles overview"
 msgstr "Přehled článků"
 
@@ -261,6 +264,12 @@ msgstr "Fakturační údaje uloženy."
 
 msgid "Blog article"
 msgstr "Článek blogu"
+
+msgid "Blog article author"
+msgstr "Autor blogového článku"
+
+msgid "Blog article authors"
+msgstr "Autoři blogových článků"
 
 msgid "Blog articles"
 msgstr "Články blogu"
@@ -351,9 +360,6 @@ msgstr "Vymazat cache s graphql dotazy na FE"
 
 msgid "Clear"
 msgstr "Vymazat"
-
-msgid "Click to go to product section"
-msgstr "Kliknutím přejdete k výběru produktu"
 
 msgid "Close"
 msgstr "Zavřít"
@@ -630,6 +636,9 @@ msgstr "Přehled zákazníků"
 
 msgid "Dashboard"
 msgstr "Nástěnka"
+
+msgid "Date of creation"
+msgstr "Datum vytvoření"
 
 msgid "Default administration currency"
 msgstr "Výchozí měna administrace"
@@ -1942,8 +1951,14 @@ msgstr "Naplánovat"
 msgid "Scheduled"
 msgstr "Naplánován"
 
+msgid "Search"
+msgstr "Hledat"
+
 msgid "Search [verb]"
 msgstr "Vyhledat"
+
+msgid "Search by author name..."
+msgstr "Hledat podle jména autora..."
 
 msgid "Search by code..."
 msgstr "Vyhledat podle kódu..."

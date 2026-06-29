@@ -208,6 +208,9 @@ msgstr "Článok bude viditeľný od %date%."
 msgid "Articles"
 msgstr "Články"
 
+msgid "Articles by this author"
+msgstr "Články tohto autora"
+
 msgid "Articles overview"
 msgstr "Prehľad článkov"
 
@@ -261,6 +264,12 @@ msgstr "Fakturačné údaje uložené."
 
 msgid "Blog article"
 msgstr "Blogový článok"
+
+msgid "Blog article author"
+msgstr "Autor blogového článku"
+
+msgid "Blog article authors"
+msgstr "Autori blogových článkov"
 
 msgid "Blog articles"
 msgstr "Blogové články"
@@ -351,9 +360,6 @@ msgstr "Vymazať cache dotazov obchodu"
 
 msgid "Clear"
 msgstr "Vymazať"
-
-msgid "Click to go to product section"
-msgstr "Kliknite pre prechod do sekcie produktov"
 
 msgid "Close"
 msgstr "Zavrieť"
@@ -630,6 +636,9 @@ msgstr "Prehľad zákazníkov"
 
 msgid "Dashboard"
 msgstr "Dashboard"
+
+msgid "Date of creation"
+msgstr "Dátum vytvorenia"
 
 msgid "Default administration currency"
 msgstr "Predvolená mena administrácie"
@@ -1942,8 +1951,14 @@ msgstr "Rozvrh"
 msgid "Scheduled"
 msgstr "Naplánované"
 
+msgid "Search"
+msgstr "Hľadať"
+
 msgid "Search [verb]"
 msgstr "Hľadať"
+
+msgid "Search by author name..."
+msgstr "Hľadať podľa mena autora..."
 
 msgid "Search by code..."
 msgstr "Hľadať podľa kódu..."

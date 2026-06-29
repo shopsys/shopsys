@@ -208,6 +208,9 @@ msgstr ""
 msgid "Articles"
 msgstr ""
 
+msgid "Articles by this author"
+msgstr ""
+
 msgid "Articles overview"
 msgstr ""
 
@@ -260,6 +263,12 @@ msgid "Billing details saved."
 msgstr ""
 
 msgid "Blog article"
+msgstr ""
+
+msgid "Blog article author"
+msgstr ""
+
+msgid "Blog article authors"
 msgstr ""
 
 msgid "Blog articles"
@@ -350,9 +359,6 @@ msgid "Clean Storefront Query Cache"
 msgstr ""
 
 msgid "Clear"
-msgstr ""
-
-msgid "Click to go to product section"
 msgstr ""
 
 msgid "Close"
@@ -629,6 +635,9 @@ msgid "Customers overview"
 msgstr ""
 
 msgid "Dashboard"
+msgstr ""
+
+msgid "Date of creation"
 msgstr ""
 
 msgid "Default administration currency"
@@ -1942,8 +1951,14 @@ msgstr ""
 msgid "Scheduled"
 msgstr ""
 
+msgid "Search"
+msgstr ""
+
 msgid "Search [verb]"
 msgstr "Search"
+
+msgid "Search by author name..."
+msgstr ""
 
 msgid "Search by code..."
 msgstr ""

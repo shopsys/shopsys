@@ -148,6 +148,9 @@ msgstr "Neplatná hlavička v CSV souboru. Použijte následující sloupce: {{ 
 msgid "Invalid whitelist pattern."
 msgstr "Neplatný předpis whitelistu."
 
+msgid "Job title cannot be longer than {{ limit }} characters"
+msgstr "Pracovní pozice nesmí být delší než {{ limit }} znaků"
+
 msgid "Last name cannot be longer than {{ limit }} characters"
 msgstr "Příjmení nesmí být delší než {{ limit }} znaků"
 
