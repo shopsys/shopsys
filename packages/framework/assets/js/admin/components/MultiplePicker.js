@@ -37,15 +37,22 @@ export default class MultiplePicker {
 
         const iframeContent = `<iframe src="${url}" style="width: 100%; height: 800px; border: none;"></iframe>`;
 
-        // eslint-disable-next-line no-new
-        new ModalWindow({
+        this.modal = new ModalWindow({
             content: iframeContent,
-            title: Translator.trans('Select items'),
+            title: this.getPickerWindowTitle(),
             size: 'xl',
-            buttons: [{ text: Translator.trans('Finish assigning') }],
+            buttons: this.getPickerWindowButtons(),
         });
 
         return false;
+    }
+
+    getPickerWindowTitle() {
+        return Translator.trans('Select items');
+    }
+
+    getPickerWindowButtons() {
+        return [{ text: Translator.trans('Finish assigning') }];
     }
 
     initItem($item) {
