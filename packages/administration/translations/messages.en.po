@@ -2188,7 +2188,7 @@ msgstr ""
 msgid "Terms and conditions settings"
 msgstr ""
 
-msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
+msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr ""
 
 msgid "The days are used to display proper stores opening hours and to calculate order withdrawal deadline."
