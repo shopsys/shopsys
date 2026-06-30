@@ -10,6 +10,9 @@ msgstr "%categoryName% - Kombinácie"
 msgid "%categoryName% - Filters"
 msgstr "%categoryName% - Filtry"
 
+msgid "%count% item|%count% items"
+msgstr "{1} %count% položka|[2,4] %count% položky|[5,Inf] %count% položiek"
+
 msgid "%defaultCurrency% per 1 %currentCurrency%"
 msgstr "%defaultCurrency% za 1 %currentCurrency%"
 
@@ -418,8 +421,17 @@ msgstr "Konvertovať hodnoty priradené k parametru - %name%"
 msgid "Copied!"
 msgstr "Skopírované"
 
+msgid "Copy JSON"
+msgstr "Skopírovať JSON"
+
+msgid "Copy the entire JSON document"
+msgstr "Skopírovať celý JSON dokument"
+
 msgid "Copy to clipboard"
 msgstr "Kopírovať do schránky"
+
+msgid "Could not load Elasticsearch data."
+msgstr "Nepodarilo sa načítať dáta z Elasticsearch."
 
 msgid "Countries"
 msgstr "Krajiny"
@@ -880,6 +892,9 @@ msgstr "Zadajte 6-miestny autentifikačný kód z vašej mobilnej aplikácie pre
 msgid "Enter one-time passcode."
 msgstr "Vložte jednorazový prístupový kód."
 
+msgid "Entity ID"
+msgstr "ID entity"
+
 msgid "Error"
 msgstr "Chyba"
 
@@ -1041,6 +1056,12 @@ msgstr "V konkrétnej záložke domény nie je možné upraviť poradie a zarade
 
 msgid "Incl. VAT"
 msgstr "Vrát. DPH"
+
+msgid "Index alias"
+msgstr "Alias indexu"
+
+msgid "Indexed data"
+msgstr "Indexované dáta"
 
 msgid "Inquired product"
 msgstr "Dopytovaný produkt"
@@ -1659,6 +1680,9 @@ msgstr "Rýchle hľadanie"
 
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr "Výšku sadzby nemôže byť upravená. Je potrebné vytvoriť novú sadzbu a starú odstrániť s nahradením za novú."
+
+msgid "Record is not present in the Elasticsearch for the selected entity and domain."
+msgstr "Záznam nie je uložený v Elasticsearch pre zvolenú entitu a doménu."
 
 msgid "Refund amount"
 msgstr "Refundovať čiastku"
@@ -2325,6 +2349,9 @@ msgstr "predvolené (%domainName%)"
 
 msgid "discount"
 msgstr "zľava"
+
+msgid "empty"
+msgstr "prázdne"
 
 msgid "files"
 msgstr "súbory"

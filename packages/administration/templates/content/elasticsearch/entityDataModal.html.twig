@@ -1,0 +1,116 @@
+{% extends app.request.xmlHttpRequest ? '@ShopsysAdministration/layout/layout_modal.html.twig' : '@ShopsysAdministration/layout/layout_simple.html.twig' %}
+
+{% block title %}- {{ 'Indexed data'|trans }}{% endblock %}
+
+{% block content %}
+    {% macro json_tree(value, key = null, root = false) %}
+        {% if value is iterable %}
+            <details {% if root %}open{% endif %}>
+                <summary class="rounded cursor-pointer">
+                    {% if key is not null %}
+                        <code class="bg-transparent text-primary fw-semibold text-nowrap">{{ key }}</code>
+                        <span class="text-secondary">:</span>
+                    {% endif %}
+                    <span class="small text-secondary{% if value is empty %} fst-italic{% endif %}">
+                        {{ value is empty ? 'empty'|trans : '%count% item|%count% items'|trans({ '%count%': value|length }) }}
+                    </span>
+                </summary>
+                <div class="ms-3 ps-3 border-start">
+                    {% for childKey, childValue in value %}
+                        {{ _self.json_tree(childValue, childKey, childKey is same as('_source') ? true : false) }}
+                    {% endfor %}
+                </div>
+            </details>
+        {% else %}
+            {% set encodedValue = value|json_encode(constant('JSON_UNESCAPED_UNICODE')) %}
+            <div class="d-flex align-items-baseline text-break">
+                {% if key is not null %}
+                    <code class="bg-transparent text-primary fw-semibold text-nowrap">{{ key }}</code>
+                    <span class="text-secondary">:</span>
+                {% endif %}
+
+                {% set valueClass = value is same as(null) ? 'text-secondary fst-italic' :
+                    value is same as(true) or value is same as(false) ? 'text-purple' :
+                    encodedValue matches '/^-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?$/' ? 'text-orange' : 'text-success' %}
+
+                <code class="bg-transparent text-break {{ valueClass }}">{{ encodedValue }}</code>
+            </div>
+        {% endif %}
+    {% endmacro %}
+
+    <div class="text-start">
+        <h3>{{ 'Indexed data'|trans }}</h3>
+
+        {% if domains|length > 1 and not hideDomainSwitch %}
+            <div class="btn-list mb-3" role="tablist">
+                {% for domain in domains %}
+                    {% if domain.id == selectedDomainId %}
+                        <span class="btn active">
+                            {{ domain_icon(domain.id) }}
+                            {{ domain.name }}
+                        </span>
+                    {% else %}
+                        <a href="{{ url('admin_elasticsearch_entity_data', { indexName: indexName, id: entityId, domainId: domain.id }) }}"
+                           class="btn"
+                           data-js-elasticsearch-entity-data-domain-switch
+                        >
+                            {{ domain_icon(domain.id) }}
+                            {{ domain.name }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="row align-items-end mb-3">
+            <div class="col">
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Entity ID'|trans }}</div>
+                        <div class="datagrid-content">{{ elasticsearchEntityData.entityId }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Index alias'|trans }}</div>
+                        <div class="datagrid-content">{{ elasticsearchEntityData.indexAlias }}</div>
+                    </div>
+                </div>
+            </div>
+            {% if elasticsearchEntityData.isFound() %}
+                <div class="col-auto">
+                    {% if app.request.xmlHttpRequest %}
+                        <a href="{{ app.request.uri }}"
+                           target="_blank"
+                           class="btn btn-sm"
+                           data-bs-toggle="tooltip"
+                           title="{{ 'Open in a new tab'|trans }}"
+                        >
+                            {{ ux_icon('forward-page', {class: 'icon-sm'}) }}
+                        </a>
+                    {% endif %}
+                    <button class="btn btn-sm btn-secondary"
+                            data-js-clipboard-copy="{{ elasticsearchEntityData.prettyJson }}"
+                            data-js-clipboard-copy-title="{{ 'Copy the entire JSON document'|trans }}"
+                    >
+                        {{ ux_icon('duplicate') }}
+                        {{ 'Copy JSON'|trans }}
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if elasticsearchEntityData.isFound() %}
+            <div class="overflow-auto border rounded p-3 font-monospace" style="max-height: 60vh;">
+                {{ _self.json_tree(elasticsearchEntityData.rawDocument, null, true) }}
+            </div>
+        {% elseif elasticsearchEntityData.isNotFound() %}
+            <div class="alert alert-info mb-0">
+                {{ 'Record is not present in the Elasticsearch for the selected entity and domain.'|trans }}
+            </div>
+        {% else %}
+            <div class="alert alert-danger mb-0">
+                <strong>{{ 'Could not load Elasticsearch data.'|trans }}</strong>
+                <div class="mt-2"><code>{{ elasticsearchEntityData.errorMessage }}</code></div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

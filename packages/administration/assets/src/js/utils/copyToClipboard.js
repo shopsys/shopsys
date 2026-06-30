@@ -4,8 +4,8 @@ import Register from 'framework/common/utils/Register';
 
 export default class CopyToClipboard {
     constructor($container) {
-        const content = $container.data('js-clipboard-copy');
-        const customTitle = $container.data('js-clipboard-copy-title');
+        const content = $container.attr('data-js-clipboard-copy') || '';
+        const customTitle = $container.attr('data-js-clipboard-copy-title');
 
         const originalTitle = customTitle || Translator.trans('Copy to clipboard');
 

@@ -2,8 +2,17 @@
 
 {% block title %}- {{ 'Editing product'|trans }} - {{ product.name }}{% endblock %}
 
-{% block pre_title %}{{ 'Editing product'|trans}}{% endblock %}
+{% block pre_title %}{{ 'Editing product'|trans }}{% endblock %}
 {% block h1 %}{{ product.name|default(product.catnum) }}{% endblock %}
+
+{% block links_after_title %}
+    {{ parent() }}
+
+    {% include '@ShopsysAdministration/content/elasticsearch/_entityDataButton.html.twig' with {
+        indexName: 'product',
+        entityId: product.id,
+    } only %}
+{% endblock %}
 
 {% block btn_wrapper %}
     {{ block('product_visibilities') }}

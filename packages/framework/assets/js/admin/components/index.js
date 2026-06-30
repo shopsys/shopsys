@@ -14,6 +14,7 @@ import './CustomerRoleGroupForm';
 import './DynamicPlaceholder';
 import './EntityUrlsNew';
 import './EntityUrlsRow';
+import './ElasticsearchEntityData';
 import './ExecuteRefund';
 import './initBootstrapFileInput';
 import './FilePicker';

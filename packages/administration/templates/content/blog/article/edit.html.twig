@@ -5,6 +5,15 @@
 {% block pre_title %}{{ 'Editing blog article'|trans }}{% endblock %}
 {% block h1 %}{{ blogArticle.name }}{% endblock %}
 
+{% block links_after_title %}
+    {{ parent() }}
+
+    {% include '@ShopsysAdministration/content/elasticsearch/_entityDataButton.html.twig' with {
+        indexName: 'blog_article',
+        entityId: blogArticle.id,
+    } only %}
+{% endblock %}
+
 {% block btn_wrapper %}
     {% set statusItemsHtml %}
         {% include '@ShopsysAdministration/content/blog/article/statusItems.html.twig' %}
