@@ -6,16 +6,19 @@ namespace Tests\FrontendApiBundle\Functional\Zbozi;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 final class CategoryZboziCategoryTest extends GraphQlTestCase
 {
-    public function testCategoryZboziCategoryIsNullOnFirstDomain(): void
+    public function testCategoryZboziCategoryIsNullOnNonCsDomain(): void
     {
-        if ($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale() === 'cs') {
-            $this->markTestSkipped('First domain has cs locale where zbozi mappings exist; this test expects no mapping.');
+        $domainId = ZboziDomainTestHelper::findFirstNonCsDomainId($this->domain);
+
+        if ($domainId === null) {
+            $this->markTestSkipped('There is no non-cs domain where zbozi mappings are expected to be missing.');
         }
+
+        $this->domain->switchDomainById($domainId);
 
         $electronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
@@ -30,11 +33,13 @@ final class CategoryZboziCategoryTest extends GraphQlTestCase
 
     public function testCategoryZboziCategoryReturnsFullNameOnCsDomain(): void
     {
-        if ($this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID)->getLocale() !== 'cs') {
-            $this->markTestSkipped('Second domain is not in cs locale; zbozi mappings are seeded only for cs.');
+        $domainId = ZboziDomainTestHelper::findFirstCsDomainId($this->domain);
+
+        if ($domainId === null) {
+            $this->markTestSkipped('There is no cs domain where zbozi mappings are seeded.');
         }
 
-        $this->domain->switchDomainById(Domain::SECOND_DOMAIN_ID);
+        $this->domain->switchDomainById($domainId);
 
         $electronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 

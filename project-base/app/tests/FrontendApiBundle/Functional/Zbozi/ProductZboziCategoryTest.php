@@ -12,7 +12,7 @@ final class ProductZboziCategoryTest extends GraphQlTestCase
 {
     public function testProductZboziCategoryIsNullOnNonCsDomain(): void
     {
-        $domainId = $this->findFirstNonCsDomainId();
+        $domainId = ZboziDomainTestHelper::findFirstNonCsDomainId($this->domain);
 
         if ($domainId === null) {
             $this->markTestSkipped('There is no non-cs domain where zbozi mappings are expected to be missing.');
@@ -33,7 +33,7 @@ final class ProductZboziCategoryTest extends GraphQlTestCase
 
     public function testProductZboziCategoryReturnsFullNameOnCsDomain(): void
     {
-        $domainId = $this->findFirstCsDomainId();
+        $domainId = ZboziDomainTestHelper::findFirstCsDomainId($this->domain);
 
         if ($domainId === null) {
             $this->markTestSkipped('There is no cs domain where zbozi mappings are seeded.');
@@ -50,27 +50,5 @@ final class ProductZboziCategoryTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'product');
 
         $this->assertSame('Foto | Foto doplňky a příslušenství | Objektivy', $data['zboziCategory']);
-    }
-
-    private function findFirstNonCsDomainId(): ?int
-    {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            if ($domainConfig->getLocale() !== 'cs') {
-                return $domainConfig->getId();
-            }
-        }
-
-        return null;
-    }
-
-    private function findFirstCsDomainId(): ?int
-    {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            if ($domainConfig->getLocale() === 'cs') {
-                return $domainConfig->getId();
-            }
-        }
-
-        return null;
     }
 }
