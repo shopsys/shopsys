@@ -1,9 +1,9 @@
 import { staticData, url } from 'fixtures/demodata';
-import { changeElementText, checkUrl } from 'support';
+import { changeElementText, checkUrl, getHeaderElementByTID } from 'support';
 import { TIDs } from 'tids';
 
 export const navigateToStoresFromHeader = () => {
-    cy.getByTID([TIDs.header_stores_link]).should('be.visible').click();
+    getHeaderElementByTID(TIDs.header_stores_link).should('be.visible').click();
     checkUrl(url.stores);
     cy.waitForStableAndInteractiveDOM();
 };

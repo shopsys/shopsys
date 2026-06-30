@@ -165,7 +165,6 @@ export type TranslationsType = {
         promoCode: string;
     };
     link: Record<string, string>;
-    button: Record<string, string>;
     filter: Record<string, string>;
     toast: {
         success: Record<string, string>;

@@ -38,7 +38,11 @@ export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFi
     };
 
     return (
-        <div className="scroll-mt-20" id={PRODUCT_DETAIL_SECTIONS_IDS.files} ref={sectionRef}>
+        <div
+            className="scroll-mt-[calc(var(--sticky-navigation-offset,0)+5rem)]"
+            id={PRODUCT_DETAIL_SECTIONS_IDS.files}
+            ref={sectionRef}
+        >
             <Webline>
                 <ProductDetailSectionHeading>{t('Files')}</ProductDetailSectionHeading>
 

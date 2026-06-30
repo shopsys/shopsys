@@ -5,7 +5,16 @@ export const twMergeCustom = extendTailwindMerge({
         classGroups: {
             z: [
                 {
-                    z: ['z-flag', 'z-above', 'z-menu', 'z-overlay', 'z-cart', 'z-aboveOverlay', 'z-maximum'],
+                    z: [
+                        'z-flag',
+                        'z-above',
+                        'z-menu',
+                        'z-overlay',
+                        'z-modalOverlay',
+                        'z-cart',
+                        'z-aboveOverlay',
+                        'z-maximum',
+                    ],
                 },
             ],
         },

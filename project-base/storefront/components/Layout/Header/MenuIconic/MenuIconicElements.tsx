@@ -2,6 +2,7 @@ import { AnimateAppearDiv } from 'components/Basic/Animations/AnimateAppearDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { AnimatePresence } from 'framer-motion';
 import { forwardRef, TouchEvent as ReactTouchEvent } from 'react';
+import { RemoveScroll } from 'react-remove-scroll';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
@@ -150,11 +151,13 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
 type MenuIconicItemUserPopoverProps = {
     isHovered: boolean;
     isAuthenticated: boolean;
+    topClassName?: string;
 };
 
 export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
     isHovered,
     isAuthenticated,
+    topClassName = 'top-[54px]',
     children,
 }) => {
     const isDesktop = useMediaMin('vl');
@@ -170,16 +173,19 @@ export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
     return (
         <AnimatePresence initial={false}>
             {isHovered && (
-                <AnimateAppearDiv
-                    className={twMergeCustom(
-                        `pointer-events-auto absolute top-[54px] z-cart hidden origin-top`,
-                        'vl:block rounded-xl bg-background-default p-5',
-                        'before:absolute before:-top-2.5 before:left-0 before:h-2.5 before:w-full',
-                        positionClasses,
-                    )}
-                >
-                    {children}
-                </AnimateAppearDiv>
+                <RemoveScroll>
+                    <AnimateAppearDiv
+                        className={twMergeCustom(
+                            'pointer-events-auto absolute z-cart hidden origin-top',
+                            topClassName,
+                            'vl:block rounded-xl bg-background-default p-5',
+                            'before:absolute before:-top-2.5 before:left-0 before:h-2.5 before:w-full',
+                            positionClasses,
+                        )}
+                    >
+                        {children}
+                    </AnimateAppearDiv>
+                </RemoveScroll>
             )}
         </AnimatePresence>
     );

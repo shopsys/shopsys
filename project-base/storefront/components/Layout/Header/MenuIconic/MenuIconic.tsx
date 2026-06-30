@@ -12,7 +12,17 @@ import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
 import { MenuIconicItemUserAuthenticated } from './MenuIconicItemUserAuthenticated';
 import { MenuIconicItemUserUnauthenticated } from './MenuIconicItemUserUnauthenticated';
 
-export const MenuIconic: FC = () => {
+export type MenuIconicProps = {
+    isCompact?: boolean;
+    loginFormName?: string;
+    shouldUseLocalUserMenuState?: boolean;
+};
+
+export const MenuIconic: FC<MenuIconicProps> = ({
+    isCompact,
+    loginFormName = 'header-login-form',
+    shouldUseLocalUserMenuState,
+}) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
@@ -25,6 +35,7 @@ export const MenuIconic: FC = () => {
 
     const menuCountTwClass =
         'absolute -right-3 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent-red px-0.5 font-secondary text-xs font-bold leading-normal text-text-inverted lg:-top-[6.5px]';
+    const userPopoverTopClassName = isCompact ? 'top-[40px]' : undefined;
 
     return (
         <nav aria-label={t('User tools navigation', { ns: 'accessibility' })}>
@@ -38,7 +49,7 @@ export const MenuIconic: FC = () => {
                         type="stores"
                     >
                         <MarkerIcon className="size-6" />
-                        {t('Stores')}
+                        {!isCompact && t('Stores')}
                     </MenuIconicItemLink>
                 </MenuIconicItem>
 
@@ -54,7 +65,7 @@ export const MenuIconic: FC = () => {
                             <CompareIcon className="size-6" />
                             {!!comparisonCount && <span className={menuCountTwClass}>{comparisonCount}</span>}
                         </div>
-                        <span className="max-lg:hidden">{t('Comparison')}</span>
+                        {!isCompact && <span className="max-lg:hidden">{t('Comparison')}</span>}
                     </MenuIconicItemLink>
                 </MenuIconicItem>
 
@@ -69,12 +80,24 @@ export const MenuIconic: FC = () => {
                             <HeartIcon className="size-6" />
                             {!!wishlistCount && <span className={menuCountTwClass}>{wishlistCount}</span>}
                         </div>
-                        <span className="max-lg:hidden">{t('Wishlist')}</span>
+                        {!isCompact && <span className="max-lg:hidden">{t('Wishlist')}</span>}
                     </MenuIconicItemLink>
                 </MenuIconicItem>
 
                 <MenuIconicItem>
-                    {isUserLoggedIn ? <MenuIconicItemUserAuthenticated /> : <MenuIconicItemUserUnauthenticated />}
+                    {isUserLoggedIn ? (
+                        <MenuIconicItemUserAuthenticated
+                            shouldShowLabel={!isCompact}
+                            shouldUseLocalUserMenuState={shouldUseLocalUserMenuState}
+                            userPopoverTopClassName={userPopoverTopClassName}
+                        />
+                    ) : (
+                        <MenuIconicItemUserUnauthenticated
+                            loginFormName={loginFormName}
+                            shouldShowLabel={!isCompact}
+                            userPopoverTopClassName={userPopoverTopClassName}
+                        />
+                    )}
                 </MenuIconicItem>
             </ul>
         </nav>

@@ -30,11 +30,11 @@ export const useLoginForm = (defaultEmail?: string): [UseFormReturn<LoginFormTyp
     return [formProviderMethods, defaultValues];
 };
 
-export const useLoginFormMeta = (): FormMeta<LoginFormType> => {
+export const useLoginFormMeta = (formName: string = 'login-form'): FormMeta<LoginFormType> => {
     const { t } = useTranslation();
 
     return {
-        formName: 'login-form',
+        formName,
         messages: {},
         fields: createFields<LoginFormType>({
             email: t('Your email'),

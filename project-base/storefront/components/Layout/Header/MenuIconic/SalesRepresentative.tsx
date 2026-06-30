@@ -7,7 +7,11 @@ import { twJoin } from 'tailwind-merge';
 import { formatPhoneNumber } from 'utils/formaters/formatPhoneNumber';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
-export const SalesRepresentative: FC = () => {
+type SalesRepresentativeProps = {
+    onContactClick?: () => void;
+};
+
+export const SalesRepresentative: FC<SalesRepresentativeProps> = ({ onContactClick }) => {
     const { t } = useTranslation();
     const currentCustomerData = useCurrentCustomerData();
     const salesRepresentative = currentCustomerData?.salesRepresentative;
@@ -48,6 +52,7 @@ export const SalesRepresentative: FC = () => {
                         className="rounded-md font-semibold text-sm text-text-default no-underline"
                         href={`tel:${telephone}`}
                         tabIndex={0}
+                        onClick={onContactClick}
                     >
                         {formatPhoneNumber(telephone)}
                     </a>
@@ -61,6 +66,7 @@ export const SalesRepresentative: FC = () => {
                         aria-label={t('Send email to sales representative', { ns: 'accessibility' })}
                         href={`mailto:${email}`}
                         tabIndex={0}
+                        onClick={onContactClick}
                         className={twJoin(
                             'max-w-64 overflow-x-auto whitespace-nowrap rounded-md font-semibold text-sm text-text-default no-underline',
                             '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',

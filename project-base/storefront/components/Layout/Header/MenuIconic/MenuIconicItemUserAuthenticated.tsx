@@ -3,6 +3,8 @@ import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { UserMenu } from 'components/Blocks/UserMenu/UserMenu';
 import { TIDs } from 'cypress/tids';
+import { useState } from 'react';
+import { RemoveScroll } from 'react-remove-scroll';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
@@ -10,10 +12,23 @@ import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useDebounce } from 'utils/useDebounce';
 import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
 
-export const MenuIconicItemUserAuthenticated: FC = () => {
+type MenuIconicItemUserAuthenticatedProps = {
+    shouldShowLabel?: boolean;
+    shouldUseLocalUserMenuState?: boolean;
+    userPopoverTopClassName?: string;
+};
+
+export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticatedProps> = ({
+    shouldShowLabel = true,
+    shouldUseLocalUserMenuState,
+    userPopoverTopClassName,
+}) => {
     const { t } = useTranslation();
-    const isUserMenuOpen = useSessionStore((s) => s.isUserMenuOpen);
-    const setIsUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
+    const [isLocalUserMenuOpen, setIsLocalUserMenuOpen] = useState(false);
+    const isGlobalUserMenuOpen = useSessionStore((s) => s.isUserMenuOpen);
+    const setIsGlobalUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
+    const isUserMenuOpen = shouldUseLocalUserMenuState ? isLocalUserMenuOpen : isGlobalUserMenuOpen;
+    const setIsUserMenuOpen = shouldUseLocalUserMenuState ? setIsLocalUserMenuOpen : setIsGlobalUserMenuOpen;
     const isActiveDelayed = useDebounce(isUserMenuOpen, 200);
     const isDesktop = useMediaMin('vl');
 
@@ -34,9 +49,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 onMouseEnter={() => isDesktop && setIsUserMenuOpen(true)}
                 onMouseLeave={() => isDesktop && setIsUserMenuOpen(false)}
                 onClick={(e) => {
-                    if (isDesktop) {
-                        setIsUserMenuOpen(true);
-                    } else if (e.target === e.currentTarget) {
+                    if (!isDesktop && e.target === e.currentTarget) {
                         setIsUserMenuOpen(!isUserMenuOpen);
                     }
                 }}
@@ -75,15 +88,21 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                         <UserIcon className="size-6" />
                         <div className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-button-primary-bg-default" />
                     </div>
-                    <span className="hidden lg:inline-block">{t('My account')}</span>
+                    {shouldShowLabel && <span className="hidden lg:inline-block">{t('Account')}</span>}
                 </MenuIconicItemLink>
 
-                <Drawer isActive={isUserMenuOpen} setIsActive={setIsUserMenuOpen} title={t('My account')}>
-                    <UserMenu />
+                <Drawer isActive={isUserMenuOpen} setIsActive={setIsUserMenuOpen} title={t('Account')}>
+                    <RemoveScroll>
+                        <UserMenu onMenuClose={() => setIsUserMenuOpen(false)} />
+                    </RemoveScroll>
                 </Drawer>
 
-                <MenuIconicItemUserPopover isAuthenticated isHovered={isActiveDelayed}>
-                    <UserMenu />
+                <MenuIconicItemUserPopover
+                    isAuthenticated
+                    isHovered={isActiveDelayed}
+                    topClassName={userPopoverTopClassName}
+                >
+                    <UserMenu onMenuClose={() => setIsUserMenuOpen(false)} />
                 </MenuIconicItemUserPopover>
             </div>
 

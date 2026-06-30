@@ -3,14 +3,12 @@ import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
-import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { twMergeCustom } from 'utils/twMerge';
 
 const placeholderItemTwClass =
-    'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 rounded-tr-none text-xs font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
+    'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 text-xs rounded-sm font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
 
 export const MenuIconicPlaceholder: FC = () => {
     const { t } = useTranslation();
@@ -36,9 +34,9 @@ export const MenuIconicPlaceholder: FC = () => {
                 <span className="max-lg:hidden">{t('Wishlist')}</span>
             </li>
 
-            <li className={twMergeCustom(placeholderItemTwClass, 'lg:w-[72px]')}>
+            <li className={placeholderItemTwClass}>
                 <UserIcon className="size-6" />
-                <Skeleton className="h-4 w-16 rounded-sm max-lg:hidden" />
+                <span className="max-lg:hidden">{t('Account')}</span>
             </li>
         </ul>
     );

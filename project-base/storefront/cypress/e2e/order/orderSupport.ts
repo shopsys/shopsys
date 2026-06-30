@@ -1,6 +1,13 @@
 import { DEFAULT_PERSIST_STORE_STATE, PERSIST_STORE_NAME, url, staticData } from 'fixtures/demodata';
 import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
-import { changeElementText, checkAndHideSuccessToast, checkUrl, translations, t } from 'support';
+import {
+    changeElementText,
+    checkAndHideSuccessToast,
+    checkUrl,
+    getHeaderElementByTID,
+    translations,
+    t,
+} from 'support';
 import { TIDs } from 'tids';
 
 const getPhoneValueWithPrefix = (phone: string, dialCode: string = '+420') => {
@@ -134,9 +141,9 @@ export const clickOnSendOrderButton = () => {
 };
 
 export const mouseOverUserMenuButton = () => {
-    cy.getByTID([TIDs.my_account_link]).should('be.visible').realMouseMove(0, 10);
+    getHeaderElementByTID(TIDs.my_account_link).should('be.visible').realMouseMove(0, 10);
     cy.wait(1000);
-    cy.getByTID([TIDs.my_account_link]).should('be.visible').realMouseMove(-1, -15);
+    getHeaderElementByTID(TIDs.my_account_link).should('be.visible').realMouseMove(-1, -15);
     cy.wait(1000);
 };
 

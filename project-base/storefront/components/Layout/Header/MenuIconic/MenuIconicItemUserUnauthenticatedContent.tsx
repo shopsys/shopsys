@@ -9,7 +9,15 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useFocusTrap } from 'utils/useFocusTrap';
 
-export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
+type MenuIconicItemUserUnauthenticatedContentProps = {
+    loginFormName: string;
+    onMenuClose: () => void;
+};
+
+export const MenuIconicItemUserUnauthenticatedContent: FC<MenuIconicItemUserUnauthenticatedContentProps> = ({
+    loginFormName,
+    onMenuClose,
+}) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
@@ -46,6 +54,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                     skeletonType="registration"
                     tid={TIDs.login_popup_register_button}
                     variant="transparent"
+                    onClick={onMenuClose}
                 >
                     {t('Register')}
                     <ArrowSecondaryIcon className="size-5 -rotate-90 p-1 md:size-6" />
@@ -54,7 +63,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
             <div className="order-1 vl:order-2 vl:w-91 w-full">
                 <h3 className="h4 mb-5">{t('Log in to your account')}</h3>
 
-                <LoginForm />
+                <LoginForm formName={loginFormName} />
             </div>
         </div>
     );

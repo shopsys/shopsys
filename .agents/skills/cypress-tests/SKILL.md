@@ -404,9 +404,11 @@ cy.waitForStableAndInteractiveDOM();
 | `checkAndHideErrorToast(text?)`                                           | Assert error toast exists, click to dismiss                          |
 | `checkAndHideInfoToast(text?)`                                            | Assert info toast exists, click to dismiss                           |
 | `checkUrl(url)`                                                           | Assert `cy.url().should('contain', url)`                             |
+| `getHeaderElementByTID(tid)`                                              | Scroll to the top and find a descendant in the main header           |
+| `openHeaderUserMenu()`                                                    | Scroll to the top and open the main header account menu              |
 | `checkIsUserLoggedIn()`                                                   | Assert my_account_link contains "My account" translation             |
 | `checkIsUserLoggedOut()`                                                  | Assert my_account_link contains "Login" translation                  |
-| `goToEditProfileFromHeader()`                                             | Hover account menu, click edit profile link                          |
+| `goToEditProfileFromHeader()`                                             | Open account menu, click edit profile link                           |
 | `checkLoaderOverlayIsNotVisibleAfterTimePeriod(ms?)`                      | Wait then assert loader_overlay not exist                            |
 | `changeElementText(tid, text, isRightAfterSSR?)`                          | Replace element text (for dynamic content in snapshots)              |
 | `loseFocus()`                                                             | Blur currently focused element                                       |
@@ -730,14 +732,25 @@ cy.getByTID([TIDs.product_list_item_image]).then(($items) => {
 });
 ```
 
-### User menu hover navigation
+### Main and fixed header navigation
 
 ```typescript
-cy.getByTID([TIDs.my_account_link])
+// Regular flows always use the main header in a stable scroll position.
+openHeaderUserMenu();
+cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.user_menu_edit_profile_link])
+    .filter(':visible')
+    .first()
     .should('be.visible')
-    .realHover()
-    .then(() => cy.getByTID([TIDs.user_menu_edit_profile_link]).should('be.visible').click());
+    .click({ scrollBehavior: false });
+
+// A dedicated fixed-header test scopes every action explicitly to the fixed header.
+cy.scrollTo('bottom');
+cy.getByTID([TIDs.fixed_header]).should('be.visible');
+cy.getByTID([TIDs.fixed_header, TIDs.my_account_link]).click({ scrollBehavior: false });
 ```
+
+Do not dynamically choose between the main and fixed headers. Regular feature tests should use the main header after
+scrolling to the top. Test fixed-header behavior separately and scope all selectors under `TIDs.fixed_header`.
 
 ### Disable retries for flaky-prone tests
 

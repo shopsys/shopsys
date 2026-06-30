@@ -14,7 +14,11 @@ export const ProductDetailOverviewSection = ({ description, sectionRef }: Produc
     const { t } = useTranslation();
 
     return (
-        <div className="scroll-mt-20" id={PRODUCT_DETAIL_SECTIONS_IDS.overview} ref={sectionRef}>
+        <div
+            className="scroll-mt-[calc(var(--sticky-navigation-offset,0)+5rem)]"
+            id={PRODUCT_DETAIL_SECTIONS_IDS.overview}
+            ref={sectionRef}
+        >
             <Webline>
                 <ProductDetailSectionHeading>{t('Overview')}</ProductDetailSectionHeading>
 

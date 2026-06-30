@@ -1,6 +1,6 @@
-import { fillInEmailAndPasswordInLoginPopup } from 'e2e/authentication/authenticationSupport';
+import { fillInEmailAndPasswordInLoginPopup, submitLoginPopupForm } from 'e2e/authentication/authenticationSupport';
 import { url } from 'fixtures/demodata';
-import { checkUrl, translations } from 'support';
+import { checkUrl, getHeaderElementByTID } from 'support';
 import { TIDs } from 'tids';
 
 export const increaseCartItemQuantityWithSpinbox = (catnum: string) => {
@@ -36,19 +36,19 @@ export const addProductToCartFromPromotedProductsOnHomepage = (productCatnum: nu
 };
 
 export const searchProductByNameWithAutocomplete = (productName: string) => {
-    cy.getByTID([TIDs.layout_header_search_autocomplete_input]).type(productName);
+    getHeaderElementByTID(TIDs.layout_header_search_autocomplete_input).type(productName);
     cy.getByTID([TIDs.layout_header_search_autocomplete_popup_products]).contains(productName);
-    cy.getByTID([TIDs.layout_header_search_autocomplete_input]).type('{enter}');
+    getHeaderElementByTID(TIDs.layout_header_search_autocomplete_input).type('{enter}');
 };
 
 export const goToCartPageFromHeader = () => {
-    cy.getByTID([TIDs.header_cart_link]).click();
+    getHeaderElementByTID(TIDs.header_cart_link).click();
     checkUrl(url.cart);
     cy.waitForStableAndInteractiveDOM();
 };
 
 export const goToHomepageFromHeader = () => {
-    cy.getByTID([TIDs.header_homepage_link]).click();
+    getHeaderElementByTID(TIDs.header_homepage_link).click();
     checkUrl('/');
     cy.waitForStableAndInteractiveDOM();
 };
@@ -56,11 +56,11 @@ export const goToHomepageFromHeader = () => {
 export const loginInThirdOrderStep = (password: string) => {
     cy.getByTID([TIDs.login_in_order_button]).click();
     fillInEmailAndPasswordInLoginPopup(undefined, password);
-    cy.getByTID([TIDs.layout_popup]).get('button').contains(translations.button.login).click();
+    submitLoginPopupForm();
 };
 
 export const openHeaderCartByMouseover = () => {
-    cy.getByTID([TIDs.header_cart_link]).trigger('mouseover');
+    getHeaderElementByTID(TIDs.header_cart_link).trigger('mouseover');
     cy.wait(1000);
     cy.scrollTo('topLeft');
 };

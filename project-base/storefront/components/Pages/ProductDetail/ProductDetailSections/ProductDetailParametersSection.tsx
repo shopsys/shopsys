@@ -48,7 +48,11 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
     }));
 
     return (
-        <div className="scroll-mt-20" id={PRODUCT_DETAIL_SECTIONS_IDS.parameters} ref={sectionRef}>
+        <div
+            className="scroll-mt-[calc(var(--sticky-navigation-offset,0)+5rem)]"
+            id={PRODUCT_DETAIL_SECTIONS_IDS.parameters}
+            ref={sectionRef}
+        >
             <Webline>
                 <ProductDetailSectionHeading>{t('Parameters')}</ProductDetailSectionHeading>
 
