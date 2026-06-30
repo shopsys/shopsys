@@ -1,7 +1,7 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { MINIMAL_SEARCH_QUERY_LENGTH } from 'components/Layout/Header/AutocompleteSearch/constants';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
-import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
+import { TypeComplaintListItemFragment } from 'graphql/requests/complaints/fragments/ComplaintListItemFragment.generated';
 import { useComplaintsQuery } from 'graphql/requests/complaints/queries/ComplaintsQuery.generated';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -28,7 +28,7 @@ export const useComplaintsData = (searchQueryValue: string) => {
         },
     });
 
-    const mappedComplaints = mapConnectionEdges<TypeComplaintDetailFragment>(complaintsData?.complaints.edges);
+    const mappedComplaints = mapConnectionEdges<TypeComplaintListItemFragment>(complaintsData?.complaints.edges);
     const complaintsTotalCount = complaintsData?.complaints.totalCount;
 
     return { mappedComplaints, complaintsTotalCount, complaintsDataFetching, complaintsData };

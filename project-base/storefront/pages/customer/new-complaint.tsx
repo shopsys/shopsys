@@ -10,6 +10,7 @@ import { OrderedItemsContent } from 'components/Pages/Customer/OrderedItems/Orde
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERED_ITEMS_FILTER, DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeComplaintOrderedItemFragment } from 'graphql/requests/complaints/fragments/ComplaintOrderedItemFragment.generated';
 import { ComplaintResolutionQueryDocument } from 'graphql/requests/complaints/queries/ComplaintResolutionQuery.generated';
 import {
     OrderedItemsQueryDocument,
@@ -17,7 +18,6 @@ import {
     useOrderedItemsQuery,
 } from 'graphql/requests/complaints/queries/OrderedItemsQuery.generated';
 import { useSearchOrderedItemsQuery } from 'graphql/requests/complaints/queries/SearchOrderedItemsQuery.generated';
-import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
@@ -77,7 +77,7 @@ const NewComplaintPage: FC = () => {
         requestPolicy: 'network-only',
     });
 
-    const mappedOrderedItems = mapConnectionEdges<TypeOrderDetailItemFragment>(
+    const mappedOrderedItems = mapConnectionEdges<TypeComplaintOrderedItemFragment>(
         isSearchQueryValid ? searchOrderedItemsData?.orderItemsSearch.edges : orderedItemsData?.orderItems.edges,
     );
 

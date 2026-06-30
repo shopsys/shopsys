@@ -1,6 +1,6 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimatePresence } from 'framer-motion';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeCategoryBestsellerFragment } from 'graphql/requests/categories/fragments/CategoryBestsellerFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmSliderProductListViewEvent';
 import { useEffect, useRef, useState } from 'react';
@@ -11,7 +11,7 @@ import { CategoryBestsellersListItem } from './CategoryBestsellersListItem';
 const NUMBER_OF_VISIBLE_ITEMS = 3;
 
 type CategoryBestsellersProps = {
-    products: TypeListedProductFragment[];
+    products: TypeCategoryBestsellerFragment[];
 };
 
 export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) => {

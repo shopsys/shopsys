@@ -2,9 +2,8 @@ query SearchOrderedItemsQuery($first: Int, $after: String, $searchInput: SearchI
     orderItemsSearch(first: $first, after: $after, searchInput: $searchInput, filter: $filter) {
         totalCount
         edges {
-            cursor
             node {
-                ...OrderDetailItemFragment
+                ...ComplaintOrderedItemFragment
             }
         }
     }

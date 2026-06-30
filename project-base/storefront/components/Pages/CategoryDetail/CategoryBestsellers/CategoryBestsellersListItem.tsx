@@ -6,13 +6,13 @@ import { ProductListItemImage } from 'components/Blocks/Product/ProductsList/Pro
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeCategoryBestsellerFragment } from 'graphql/requests/categories/fragments/CategoryBestsellerFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type CategoryBestsellersListItemProps = {
-    product: TypeListedProductFragment;
+    product: TypeCategoryBestsellerFragment;
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
 };

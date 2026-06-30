@@ -2,14 +2,14 @@ import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerComplaints } from 'components/Blocks/Skeleton/SkeletonModuleCustomerComplaints';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
-import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
+import { TypeComplaintOrderedItemFragment } from 'graphql/requests/complaints/fragments/ComplaintOrderedItemFragment.generated';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { OrderedItem } from './OrderedItem';
 
 type OrderedItemsContentProps = {
     areOrderedItemsFetching: boolean;
-    items: TypeOrderDetailItemFragment[] | undefined;
+    items: TypeComplaintOrderedItemFragment[] | undefined;
     totalCount: number | undefined;
 };
 

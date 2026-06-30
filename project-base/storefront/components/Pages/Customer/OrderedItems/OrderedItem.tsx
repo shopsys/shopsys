@@ -3,7 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
+import { TypeComplaintOrderedItemFragment } from 'graphql/requests/complaints/fragments/ComplaintOrderedItemFragment.generated';
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
@@ -22,7 +22,7 @@ const CreateComplaintPopup = dynamic(
 );
 
 type OrderedItemProps = {
-    orderedItem: TypeOrderDetailItemFragment;
+    orderedItem: TypeComplaintOrderedItemFragment;
 };
 
 export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
@@ -36,7 +36,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
     const openCreateComplaintPopup = (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
         orderUuid: string,
-        orderItem: TypeOrderDetailItemFragment,
+        orderItem: TypeComplaintOrderedItemFragment,
     ) => {
         e.stopPropagation();
         updatePortalContent(<CreateComplaintPopup orderItem={orderItem} orderUuid={orderUuid} />);

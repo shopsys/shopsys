@@ -1,0 +1,21 @@
+fragment ComplaintOrderedItemFragment on OrderItem {
+    uuid
+    name
+    quantity
+    unit
+    totalPrice {
+        priceWithVat
+    }
+    order {
+        uuid
+        number
+        creationDate
+    }
+    product {
+        isVisible
+        slug
+        mainImage {
+            ...ImageFragment
+        }
+    }
+}

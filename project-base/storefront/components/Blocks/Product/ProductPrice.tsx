@@ -1,5 +1,6 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TIDs } from 'cypress/tids';
+import { TypeListedProductPriceFragment } from 'graphql/requests/products/fragments/ListedProductPriceFragment.generated';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -7,7 +8,7 @@ import { isPriceVisible } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductPriceProps = {
-    productPrice: TypeProductPriceFragment;
+    productPrice: TypeProductPriceFragment | TypeListedProductPriceFragment;
     isPriceFromVisible?: boolean;
     placeholder?: string;
     textPriceSize?: 'base' | 'lg';

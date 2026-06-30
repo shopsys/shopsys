@@ -26,7 +26,7 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
 
     const mappedProductSearchResults = mapConnectionEdges<TypeListedProductFragment>(productsSearch.edges);
 
-    const onProductDetailRedirectHandler = (product: TypeSimpleProductFragment | TypeListedProductFragment) => {
+    const onProductDetailRedirectHandler = (product: TypeListedProductFragment | TypeSimpleProductFragment) => {
         onGtmAutocompleteResultClickEventHandler(
             autocompleteSearchQueryValue,
             GtmSectionType.product,

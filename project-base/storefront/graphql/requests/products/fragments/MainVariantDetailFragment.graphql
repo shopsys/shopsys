@@ -2,6 +2,9 @@ fragment MainVariantDetailFragment on MainVariant {
     ...ProductDetailInterfaceFragment
     variants {
         ...ListedProductFragment
+        mainImage {
+            ...ImageFragment
+        }
         storeAvailabilities {
             ...SimpleStoreAvailabilityFragment
         }

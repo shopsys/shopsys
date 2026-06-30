@@ -3,13 +3,13 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerComplaints } from 'components/Blocks/Skeleton/SkeletonModuleCustomerComplaints';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
-import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
+import { TypeComplaintListItemFragment } from 'graphql/requests/complaints/fragments/ComplaintListItemFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ComplaintItem } from './ComplaintItem';
 
 type ComplaintsContentProps = {
     areComplaintsFetching: boolean;
-    items: TypeComplaintDetailFragment[] | undefined;
+    items: TypeComplaintListItemFragment[] | undefined;
     totalCount: number | undefined;
     hasNextPage: boolean | undefined;
 };

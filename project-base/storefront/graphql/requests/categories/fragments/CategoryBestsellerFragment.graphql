@@ -1,0 +1,8 @@
+fragment CategoryBestsellerFragment on Product {
+    ...ListedProductFragment
+    ... on Variant {
+        mainVariant {
+            slug
+        }
+    }
+}

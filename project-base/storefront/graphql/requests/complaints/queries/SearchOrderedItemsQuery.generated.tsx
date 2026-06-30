@@ -2,7 +2,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { OrderDetailItemFragment } from '../../orders/fragments/OrderDetailItemFragment.generated';
+import { ComplaintOrderedItemFragment } from '../fragments/ComplaintOrderedItemFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeSearchOrderedItemsQueryVariables = Types.Exact<{
@@ -13,7 +13,7 @@ export type TypeSearchOrderedItemsQueryVariables = Types.Exact<{
 }>;
 
 
-export type TypeSearchOrderedItemsQuery = { __typename?: 'Query', orderItemsSearch: { __typename?: 'OrderItemConnection', totalCount: number, edges: Array<{ __typename?: 'OrderItemEdge', cursor: string, node: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { __typename?: 'Order', uuid: string, number: string, creationDate: any, customerUser: { __typename?: 'CompanyCustomerUser', uuid: string } | { __typename?: 'CurrentCompanyCustomerUser', uuid: string } | { __typename?: 'CurrentRegularCustomerUser', uuid: string } | { __typename?: 'RegularCustomerUser', uuid: string } | null, withdrawalRequest: { __typename: 'OrderWithdrawalRequest' } | null }, product: { __typename?: 'MainVariant', catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ __typename?: 'Category', name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: any | null, percentageDiscount: number | null, basicPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: any | null, percentageDiscount: number | null, basicPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { __typename?: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } } | { __typename?: 'RegularProduct', catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ __typename?: 'Category', name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: any | null, percentageDiscount: number | null, basicPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: any | null, percentageDiscount: number | null, basicPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { __typename?: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } } | { __typename?: 'Variant', catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ __typename?: 'Category', name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: any | null, percentageDiscount: number | null, basicPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: any | null, percentageDiscount: number | null, basicPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { __typename?: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } } | null, transport: { __typename?: 'Transport', isPersonalPickup: boolean, transportTypeCode: Types.TypeTransportTypeEnum, mainImage: { __typename?: 'Image', url: string } | null } | null, payment: { __typename?: 'Payment', mainImage: { __typename?: 'Image', url: string } | null } | null } | null } | null> | null } };
+export type TypeSearchOrderedItemsQuery = { __typename?: 'Query', orderItemsSearch: { __typename?: 'OrderItemConnection', totalCount: number, edges: Array<{ __typename?: 'OrderItemEdge', node: { __typename?: 'OrderItem', uuid: string, name: string, quantity: number, unit: string | null, totalPrice: { __typename?: 'Price', priceWithVat: string }, order: { __typename?: 'Order', uuid: string, number: string, creationDate: any }, product: { __typename?: 'MainVariant', isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | { __typename?: 'RegularProduct', isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | { __typename?: 'Variant', isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null } | null } | null> | null } };
 
 
 export const SearchOrderedItemsQueryDocument = gql`
@@ -26,14 +26,13 @@ export const SearchOrderedItemsQueryDocument = gql`
   ) {
     totalCount
     edges {
-      cursor
       node {
-        ...OrderDetailItemFragment
+        ...ComplaintOrderedItemFragment
       }
     }
   }
 }
-    ${OrderDetailItemFragment}`;
+    ${ComplaintOrderedItemFragment}`;
 
 export function useSearchOrderedItemsQuery(options: Omit<Urql.UseQueryArgs<TypeSearchOrderedItemsQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeSearchOrderedItemsQuery, TypeSearchOrderedItemsQueryVariables>({ query: SearchOrderedItemsQueryDocument, ...options });

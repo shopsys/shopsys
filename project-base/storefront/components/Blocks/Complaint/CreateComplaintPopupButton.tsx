@@ -1,10 +1,10 @@
+import type { CreateComplaintPopupOrderItem } from 'components/Blocks/Popup/CreateComplaintPopup';
 import { Button, ButtonProps } from 'components/Forms/Button/Button';
-import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { useSessionStore } from 'store/useSessionStore';
 
 type CreateComplaintButtonProps = ButtonProps & {
     label: string;
-    orderItem?: TypeOrderDetailItemFragment;
+    orderItem?: CreateComplaintPopupOrderItem;
     orderUuid?: string;
 };
 
@@ -18,7 +18,7 @@ export const CreateComplaintPopupButton: FC<CreateComplaintButtonProps> = ({
     const openCreateComplaintPopup = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
         orderUuid?: string,
-        orderItem?: TypeOrderDetailItemFragment,
+        orderItem?: CreateComplaintPopupOrderItem,
     ) => {
         e.stopPropagation();
         const { CreateComplaintPopup } = await import('components/Blocks/Popup/CreateComplaintPopup');
