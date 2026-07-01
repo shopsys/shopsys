@@ -27,9 +27,10 @@ export const DeleteAddressAction: FC<DeleteAddressActionProps> = ({ address }) =
     const { t } = useTranslation();
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
     const deleteItemHandler = async (deliveryAddressUuid: string) => {
-        updatePortalContent(null);
+        closePortalContent();
         const deleteDeliveryAddressResult = await deleteDeliveryAddress({ deliveryAddressUuid });
 
         if (deleteDeliveryAddressResult.error !== undefined) {

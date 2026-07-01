@@ -104,7 +104,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                             <WalletIcon className="size-4 sm:size-6" />
                         </div>
 
-                        <span className={twJoin('h5 text-center text-xs sm:text-sm lg:text-base', 'text-text-error')}>
+                        <span className={twJoin('h5 text-center text-xs sm:text-sm lg:text-md', 'text-text-error')}>
                             {t('Payment failed')}
                         </span>
                     </div>

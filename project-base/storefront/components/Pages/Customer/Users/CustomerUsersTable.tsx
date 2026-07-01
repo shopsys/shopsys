@@ -39,6 +39,7 @@ const ManageCustomerUserPopup = dynamic(
 export const CustomerUsersTable: FC = () => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const [, removeCustomerUser] = useRemoveCustomerUserMutation();
     const { customerUsers, customerUsersIsFetching } = useCurrentCustomerUsers();
     const { currentCustomerUserUuid } = useAuthorization();
@@ -52,7 +53,7 @@ export const CustomerUsersTable: FC = () => {
             return;
         }
 
-        updatePortalContent(null);
+        closePortalContent();
         const deleteCustomerUserResult = await removeCustomerUser({ customerUserUuid });
 
         if (deleteCustomerUserResult.error !== undefined) {

@@ -24,6 +24,7 @@ export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
 }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
 
     if (isSellingDenied) {
         return null;
@@ -38,14 +39,16 @@ export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
                 'mr-1 flex items-center font-secondary',
                 availability.status === TypeAvailabilityStatusEnum.InStock && 'cursor-pointer hover:underline',
             )}
-            onClick={() =>
-                availability.status === TypeAvailabilityStatusEnum.InStock &&
-                updatePortalContent(
-                    <Popup contentClassName="overflow-auto" title={t('Availability in stores')}>
-                        <ProductDetailAvailabilityList storeAvailabilities={storeAvailabilities} />
-                    </Popup>,
-                )
-            }
+            onClick={() => {
+                if (availability.status === TypeAvailabilityStatusEnum.InStock) {
+                    storeCurrentFocus();
+                    updatePortalContent(
+                        <Popup contentClassName="overflow-auto" title={t('Availability in stores')}>
+                            <ProductDetailAvailabilityList storeAvailabilities={storeAvailabilities} />
+                        </Popup>,
+                    );
+                }
+            }}
         />
     );
 };

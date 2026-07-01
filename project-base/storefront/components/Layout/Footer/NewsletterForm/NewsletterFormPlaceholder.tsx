@@ -2,7 +2,7 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 
 export const NewsletterFormPlaceholder: FC = () => (
-    <FooterContainer className="bg-background-accent-less">
+    <FooterContainer className="bg-footer-bg-light">
         <div className="grid grid-cols-1 items-center gap-5 vl:gap-44 lg:grid-cols-2">
             <Skeleton className="h-12 w-full lg:h-6 lg:w-80" />
 

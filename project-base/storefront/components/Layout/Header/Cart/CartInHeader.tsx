@@ -43,6 +43,15 @@ export const CartInHeader: FC = ({ className }) => {
     const isDesktop = useMediaMin('vl');
 
     const isPriceVisibleOrEmtpyCart = isPriceVisible(cart?.totalItemsPrice.priceWithVat) || !cart?.items.length;
+    const cartAccessibleLabel = cart?.items.length
+        ? t('Cart, {{ count }} items, {{ price }}. Show cart popup', {
+              ns: 'accessibility',
+              count: cart.items.length,
+              price: isPriceVisible(cart.totalItemsPrice.priceWithVat)
+                  ? formatPrice(cart.totalItemsPrice.priceWithVat, { explicitZero: true })
+                  : t('price hidden'),
+          })
+        : t('0 items. Empty cart. Show cart popup', { ns: 'accessibility' });
 
     const handleOnKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Enter') {
@@ -60,7 +69,7 @@ export const CartInHeader: FC = ({ className }) => {
             <div
                 aria-expanded={isActive}
                 aria-haspopup="menu"
-                aria-label={t('Show cart popup', { ns: 'accessibility' })}
+                aria-label={cartAccessibleLabel}
                 data-tid={TIDs.header_cart}
                 role="button"
                 tabIndex={!cart?.items.length ? -1 : 0}
@@ -121,10 +130,9 @@ export const CartInHeader: FC = ({ className }) => {
                 </ExtendedNextLink>
 
                 <button
-                    aria-controls="cart-popup"
                     aria-expanded={isActive}
                     aria-haspopup="menu"
-                    aria-label={t('Show cart popup', { ns: 'accessibility' })}
+                    aria-label={cartAccessibleLabel}
                     tabIndex={-1}
                     title={t('Cart')}
                     className={twJoin(

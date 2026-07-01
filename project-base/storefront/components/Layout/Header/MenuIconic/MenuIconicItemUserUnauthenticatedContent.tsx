@@ -40,8 +40,8 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                 </div>
 
                 <LinkButton
-                    aria-label={t('Go to registration page', { ns: 'accessibility' })}
-                    aria-labelledby="registration-form-description"
+                    aria-describedby="registration-form-description"
+                    aria-label={t('Register. Go to registration page', { ns: 'accessibility' })}
                     href={registrationUrl}
                     skeletonType="registration"
                     tid={TIDs.login_popup_register_button}
@@ -51,8 +51,10 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                     <ArrowSecondaryIcon className="size-5 -rotate-90 p-1 md:size-6" />
                 </LinkButton>
             </div>
-            <div className="order-1 vl:order-2 vl:w-[364px] w-full">
-                <LoginForm formHeading={t('Log in')} formWrapperClassName="p-8! w-full" />
+            <div className="order-1 vl:order-2 vl:w-91 w-full">
+                <h3 className="h4 mb-5">{t('Log in to your account')}</h3>
+
+                <LoginForm />
             </div>
         </div>
     );

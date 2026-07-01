@@ -13,7 +13,7 @@ import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { isPriceVisible } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { useDebounce } from 'utils/useDebounce';
 
@@ -42,6 +42,43 @@ export const CartListItem: FC<CartListItemProps> = ({
     const hasProductDetailLink = productSlug !== undefined;
     const isProduct = type === TypeCartItemTypeEnum.Product;
     const isProductGift = type === TypeCartItemTypeEnum.ProductGift;
+    const productPrice = isProductGift ? product.giftPrice : product.price;
+    const payableQuantity = Math.max(quantity - freeQuantity, 0);
+    const itemTotalPriceWithVat = formatPrice(mapPriceForCalculations(productPrice.priceWithVat) * payableQuantity);
+    const itemTotalPriceWithoutVat = formatPrice(
+        mapPriceForCalculations(productPrice.priceWithoutVat) * payableQuantity,
+    );
+    const cartItemDescriptionId = `product-${uuid}-cart-summary`;
+    const cartItemSummary = [
+        t('Code: {{ catalogNumber }}.', { ns: 'accessibility', catalogNumber: product.catalogNumber }),
+        `${t('Availability')}: ${product.availability.name}.`,
+        t('Quantity: {{ quantity }} {{ unit }}.', {
+            ns: 'accessibility',
+            quantity,
+            unit: product.unit.name,
+        }),
+        isPriceVisible(productPrice.priceWithVat)
+            ? t('Unit price with VAT: {{ price }}.', {
+                  ns: 'accessibility',
+                  price: formatPrice(productPrice.priceWithVat),
+              })
+            : undefined,
+        isPriceVisible(productPrice.priceWithVat)
+            ? t('Item total with VAT: {{ price }}.', { ns: 'accessibility', price: itemTotalPriceWithVat })
+            : undefined,
+        isPriceVisible(productPrice.priceWithoutVat)
+            ? t('Item total without VAT: {{ price }}.', { ns: 'accessibility', price: itemTotalPriceWithoutVat })
+            : undefined,
+        freeQuantity > 0
+            ? t('{{ quantity }} {{ unit }} is free.', {
+                  ns: 'accessibility',
+                  quantity: freeQuantity,
+                  unit: product.unit.name,
+              })
+            : undefined,
+    ]
+        .filter(Boolean)
+        .join(' ');
 
     const onSubmitCartChange = useEffectEvent((productUuid: string, qty: number, idx: number) => {
         if (qty === quantity) {
@@ -72,10 +109,15 @@ export const CartListItem: FC<CartListItemProps> = ({
     return (
         <li>
             <section
+                aria-describedby={cartItemDescriptionId}
                 aria-labelledby={`product-${uuid}-name`}
                 className="relative flex flex-row flex-wrap vl:flex-nowrap items-center justify-between gap-4 rounded-xl bg-background-more p-4 vl:p-5"
                 data-tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
             >
+                <p className="sr-only" id={cartItemDescriptionId}>
+                    {cartItemSummary}
+                </p>
+
                 {isProductGift && <GiftBadge />}
 
                 <div className="flex basis-full vl:basis-auto vl:items-center gap-2.5 pt-6 vl:pt-0 pr-8 vl:pr-0">
@@ -164,6 +206,39 @@ export const CartListItem: FC<CartListItemProps> = ({
                             ref={spinboxRef}
                             size="large"
                             step={1}
+                            ariaDescription={t(
+                                'Type in a quantity for {{ productName }} or use the buttons to change it.',
+                                {
+                                    ns: 'accessibility',
+                                    productName: product.fullName,
+                                },
+                            )}
+                            ariaLabel={t('Quantity for {{ productName }}', {
+                                ns: 'accessibility',
+                                productName: product.fullName,
+                            })}
+                            decreaseAriaLabel={t('Decrease quantity of {{ productName }}', {
+                                ns: 'accessibility',
+                                productName: product.fullName,
+                            })}
+                            getValueAnnouncement={(currentValue) =>
+                                t(
+                                    'Quantity for {{ productName }} changed to {{ quantity }} {{ unit }}. Item total with VAT: {{ price }}.',
+                                    {
+                                        ns: 'accessibility',
+                                        productName: product.fullName,
+                                        quantity: currentValue,
+                                        unit: product.unit.name,
+                                        price: formatPrice(
+                                            mapPriceForCalculations(product.price.priceWithVat) * currentValue,
+                                        ),
+                                    },
+                                )
+                            }
+                            increaseAriaLabel={t('Increase quantity of {{ productName }}', {
+                                ns: 'accessibility',
+                                productName: product.fullName,
+                            })}
                             onChangeValueCallback={setSpinboxValue}
                         />
                     ) : (

@@ -20,6 +20,8 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
+    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
 
     const galleryLastShownItemIndex = GALLERY_SHOWN_ITEMS_COUNT - 1;
@@ -31,12 +33,14 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
 
     const openGallery = (initialIndex: number) => {
         if (complaintItem.files && complaintItem.files.length > 0) {
+            storeCurrentFocus();
+
             updatePortalContent(
                 <ModalGallery
                     galleryName={complaintItem.productName}
                     initialIndex={initialIndex}
                     items={complaintItem.files}
-                    onCloseModal={() => updatePortalContent(null)}
+                    onCloseModal={closePortalContent}
                 />,
             );
         }

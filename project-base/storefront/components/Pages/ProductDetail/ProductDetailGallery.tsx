@@ -33,6 +33,8 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
 }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
+    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
     const [firstImage, ...additionalImages] = images;
     const mainImage = images.length ? firstImage : undefined;
 
@@ -41,12 +43,14 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
     const galleryAdditionalItemsCount = galleryItems.length - GALLERY_SHOWN_ITEMS_COUNT;
 
     const openGallery = (initialIndex: number) => {
+        storeCurrentFocus();
+
         updatePortalContent(
             <ModalGallery
                 galleryName={productName}
                 initialIndex={initialIndex}
                 items={[firstImage, ...galleryItems]}
-                onCloseModal={() => updatePortalContent(null)}
+                onCloseModal={closePortalContent}
             />,
         );
     };

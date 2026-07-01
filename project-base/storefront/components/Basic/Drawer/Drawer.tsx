@@ -31,7 +31,7 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                     )}
                 >
                     <div className="mb-5 flex flex-row justify-between">
-                        <span className="w-full text-center text-base">{title}</span>
+                        <span className="w-full text-center text-md">{title}</span>
 
                         <button
                             className="flex cursor-pointer items-center justify-center p-1 text-icon-less"

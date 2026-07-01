@@ -38,7 +38,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     setIsOpen,
 }: SelectListProps<T> & FunctionComponentProps) => {
     const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-    const listRef = useRef<HTMLUListElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
     const optionsLength = options.length;
 
     useFocusTrap(listRef);
@@ -97,11 +97,12 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     };
 
     const SelectListItems = options.map((option, index) => (
-        /* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Listbox options intentionally handle click and keyboard interaction on the option container. */
-        <li
+        <div
             key={option.label}
             aria-selected={option.value === activeOption?.value}
             data-tid={`${tid}${index}`}
+            id={`${tid}-option-${index}`}
+            role="option"
             tabIndex={option.isDisabled ? -1 : 0}
             className={twMergeCustom(
                 'list-none font-semibold outline-hidden hover:bg-input-bg-hovered',
@@ -131,12 +132,17 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             </div>
 
             {itemAfterText && itemAfterText}
-        </li>
+        </div>
     ));
 
     if (infinityScrollConfig && infinityScrollConfig.dataLength >= infinityScrollConfig.pageSize) {
         return (
-            <SelectListInfiniteScroll infinityScrollConfig={infinityScrollConfig} listRef={listRef} tid={tid}>
+            <SelectListInfiniteScroll
+                infinityScrollConfig={infinityScrollConfig}
+                listId={listId}
+                listRef={listRef}
+                tid={tid}
+            >
                 {SelectListItems}
             </SelectListInfiniteScroll>
         );
@@ -153,9 +159,9 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 listClassName,
             )}
         >
-            <ul id={listId} ref={listRef}>
+            <div id={listId} ref={listRef} role="listbox">
                 {SelectListItems}
-            </ul>
+            </div>
         </AnimateCollapseDiv>
     );
 };

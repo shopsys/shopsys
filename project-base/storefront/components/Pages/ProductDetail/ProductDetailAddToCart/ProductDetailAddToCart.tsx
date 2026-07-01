@@ -20,6 +20,7 @@ export type ProductDetailAddToCartProps = {
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
+    const { t: tAccessibility } = useTranslation('accessibility');
     const { canCreateOrder } = useAuthorization();
 
     const { onAddToCartHandler, isAddingToCart } = useAddToCartHandler({
@@ -77,6 +78,12 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                 ref={spinboxRef}
                 size="xlarge"
                 step={1}
+                ariaLabel={tAccessibility('Quantity')}
+                decreaseAriaLabel={tAccessibility('Decrease quantity')}
+                getValueAnnouncement={(currentValue) =>
+                    `${tAccessibility('Quantity')}: ${currentValue} ${product.unit.name}`
+                }
+                increaseAriaLabel={tAccessibility('Increase quantity')}
             />
 
             <div className="relative">

@@ -26,6 +26,7 @@ export const useAddOrderItemsToCart = () => {
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const updatePortalContent = useSessionStore((store) => store.updatePortalContent);
     const updatePageLoadingState = useSessionStore((store) => store.updatePageLoadingState);
+    const storeCurrentFocus = useSessionStore((store) => store.storeCurrentFocus);
 
     const handleAddingItemsToCart = async (input: TypeAddOrderItemsToCartInput) => {
         const addOrderItemsToCartResponse = await addOrderItemsToCart({ input });
@@ -56,6 +57,8 @@ export const useAddOrderItemsToCart = () => {
     };
 
     const addOrderItemsToEmptyCart = async (orderUuid: string) => {
+        storeCurrentFocus();
+
         if (cart?.items.length) {
             updatePortalContent(
                 <MergeCartsPopup

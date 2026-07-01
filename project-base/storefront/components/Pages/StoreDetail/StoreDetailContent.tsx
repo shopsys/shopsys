@@ -19,14 +19,18 @@ type StoreDetailContentProps = {
 export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
+    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
 
     const openGallery = (initialIndex: number) => {
+        storeCurrentFocus();
+
         updatePortalContent(
             <ModalGallery
                 galleryName={store.storeName}
                 initialIndex={initialIndex}
                 items={store.storeImages}
-                onCloseModal={() => updatePortalContent(null)}
+                onCloseModal={closePortalContent}
             />,
         );
     };
@@ -110,6 +114,11 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         {store.storeImages.map((image, index) => (
                             <button
                                 key={image.url}
+                                aria-label={t('Open image gallery of store {{ storeName }}, image {{ imageNumber }}', {
+                                    ns: 'accessibility',
+                                    storeName: store.storeName,
+                                    imageNumber: index + 1,
+                                })}
                                 className="m-0.5 flex h-[190px] w-[280px] cursor-pointer snap-start justify-center overflow-hidden rounded-xl border-0 bg-transparent p-0"
                                 data-src={image.url}
                                 tabIndex={0}

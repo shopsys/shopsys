@@ -129,7 +129,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({
                                 passwordInputProps={{
                                     label: formMeta.fields.password.label,
                                     autoComplete: 'new-password',
-                                    'aria-labelledby': 'registration-after-order-password-label',
+                                    'aria-describedby': 'registration-after-order-password-label',
                                 }}
                             />
 
@@ -162,7 +162,6 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({
                     </fieldset>
 
                     <SubmitButton
-                        aria-label={t('Submit form to create your new account', { ns: 'accessibility' })}
                         className="self-start"
                         hasDisabledCursor={!formProviderMethods.formState.isValid}
                         hasDisabledLook={isInvalidRegistration}

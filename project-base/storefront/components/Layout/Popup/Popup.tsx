@@ -3,7 +3,7 @@ import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useId, useLayoutEffect, useRef, useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -18,6 +18,7 @@ type PopupProps = {
     title: string;
     ariaDescription?: string;
     hideCloseButton?: boolean;
+    isTitleHidden?: boolean;
     contentClassName?: string;
     key?: string;
     children?: React.ReactNode;
@@ -30,32 +31,36 @@ export const Popup: React.FC<PopupProps> = ({
     ariaDescription,
     children,
     hideCloseButton,
+    isTitleHidden,
     className,
     contentClassName,
     key,
     role = 'dialog',
 }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const windowDimensions = useWindowDimensions();
     const [popupPositions, setPopupPositions] = useState({ left: 0, top: 0 });
     const popupRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
-    const ariaLabel = ariaDescription ? `${title}. ${ariaDescription}` : title;
+    const popupId = useId();
+    const titleId = `${popupId}-title`;
+    const descriptionId = ariaDescription ? `${popupId}-description` : undefined;
     const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
-    const restoreStoredFocus = useSessionStore((s) => s.restoreStoredFocus);
 
     const handleClosePopup = () => {
-        updatePortalContent(null);
-        restoreStoredFocus();
+        closePortalContent();
     };
 
     const onStoreAndFocus = useEffectEvent(() => {
         storeCurrentFocus();
 
-        if (popupRef.current) {
-            popupRef.current.focus();
-        }
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                (titleRef.current ?? popupRef.current)?.focus({ preventScroll: true });
+            });
+        });
     });
 
     // Focus on popup when it appears
@@ -100,7 +105,8 @@ export const Popup: React.FC<PopupProps> = ({
                     <m.div
                         key="popup"
                         animate={{ opacity: 1, scale: 1 }}
-                        aria-label={ariaLabel}
+                        aria-describedby={descriptionId}
+                        aria-labelledby={titleId}
                         aria-modal="true"
                         data-tid={TIDs.layout_popup}
                         exit={{ opacity: 0, scale: 0.8 }}
@@ -128,9 +134,15 @@ export const Popup: React.FC<PopupProps> = ({
                         }}
                     >
                         <div className="mb-3 flex justify-between">
-                            <span className="h3 outline-hidden" tabIndex={-1}>
+                            <h2
+                                aria-describedby={descriptionId}
+                                className={twMergeCustom('h3 outline-hidden', isTitleHidden && 'sr-only')}
+                                id={titleId}
+                                ref={titleRef}
+                                tabIndex={-1}
+                            >
                                 {title}
-                            </span>
+                            </h2>
 
                             {!hideCloseButton && (
                                 <IconButton
@@ -139,10 +151,16 @@ export const Popup: React.FC<PopupProps> = ({
                                     buttonRef={closeButtonRef}
                                     className="ml-auto"
                                     title={t('Close popup')}
-                                    onClick={() => updatePortalContent(null)}
+                                    onClick={handleClosePopup}
                                 />
                             )}
                         </div>
+
+                        {ariaDescription && (
+                            <p className="sr-only" id={descriptionId}>
+                                {ariaDescription}
+                            </p>
+                        )}
 
                         <div className={twMergeCustom(contentClassName)}>{children}</div>
                     </m.div>

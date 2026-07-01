@@ -6,6 +6,7 @@ import { ReactElement, ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
 import { SelectOptionType } from 'types/selectOptions';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import useClickClosePopup from 'utils/ui/useClickClosePopup';
 import { SelectList, SelectListProps } from './SelectList';
@@ -65,6 +66,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
     externalSetIsSelectOpen,
     listClassName,
 }: SelectProps<T> & FunctionComponentProps) => {
+    const { t } = useTranslation();
     const wrapperRef = useRef(null);
     const additionalItemRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -137,7 +139,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 role="combobox"
                                 value={comboBoxConfig.searchValue}
                                 className={twMergeCustom(
-                                    'h-full w-full bg-transparent px-3 font-secondary font-semibold text-base! outline-hidden',
+                                    'h-full w-full bg-transparent px-3 font-secondary font-semibold text-md! outline-hidden',
                                     label && 'pt-5',
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
@@ -152,7 +154,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                         'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                         isOpen || comboBoxConfig.searchValue || activeOption
                                             ? 'top-[9px] left-3 text-sm'
-                                            : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-base',
+                                            : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                     )}
                                 >
                                     {label}
@@ -184,7 +186,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                     'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || activeOption
                                         ? 'top-[9px] text-sm'
-                                        : 'top-1/2 -translate-y-1/2 font-semibold text-base',
+                                        : 'top-1/2 -translate-y-1/2 font-semibold text-md',
                                 )}
                             >
                                 {label}
@@ -207,12 +209,21 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
 
                     {isLoading && (
                         <div className="mx-1 flex items-center">
-                            <SpinnerIcon className="size-5" />
+                            <SpinnerIcon
+                                aria-label={t('Loading options', { ns: 'accessibility' })}
+                                className="size-5"
+                            />
                         </div>
                     )}
 
                     {onResetSelect && activeOption && !isLoading && (
-                        <button className="cursor-pointer" tabIndex={0} type="reset" onClick={onResetSelect}>
+                        <button
+                            aria-label={t('Clear selected option', { ns: 'accessibility' })}
+                            className="cursor-pointer"
+                            tabIndex={0}
+                            type="reset"
+                            onClick={onResetSelect}
+                        >
                             <RemoveIcon className="mx-1 size-4 transition hover:text-red active:scale-95" />
                         </button>
                     )}

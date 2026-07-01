@@ -212,8 +212,10 @@ export const RangeSlider: FC<RangeSliderProps> = ({
             <div className="flex gap-x-2">
                 <div className="w-1/2" data-tid={TIDs.filter_price_input_min}>
                     <TextInput
-                        aria-hidden
-                        aria-label={t('Filter by minimum value', { ns: 'accessibility' })}
+                        aria-label={t('Filter {{ filterName }} by minimum value', {
+                            ns: 'accessibility',
+                            filterName: title,
+                        })}
                         disabled={isDisabled}
                         id={`${title} - from`}
                         label={t('from')}
@@ -226,8 +228,10 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 </div>
                 <div className="w-1/2" data-tid={TIDs.filter_price_input_max}>
                     <TextInput
-                        aria-hidden
-                        aria-label={t('Filter by maximum value', { ns: 'accessibility' })}
+                        aria-label={t('Filter {{ filterName }} by maximum value', {
+                            ns: 'accessibility',
+                            filterName: title,
+                        })}
                         disabled={isDisabled}
                         id={`${title} - to`}
                         label={t('to')}

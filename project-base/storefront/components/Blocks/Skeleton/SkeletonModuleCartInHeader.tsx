@@ -7,7 +7,7 @@ export const SkeletonModuleCartInHeader: FC = () => {
     const { t } = useTranslation();
     return (
         <div className="order-3 vl:order-4 flex">
-            <div className="vl:flex hidden h-11 min-w-[151px] cursor-pointer items-center justify-center gap-x-2 rounded-lg border border-button-primary-text-default px-3 text-button-primary-text-default no-underline transition-all hover:no-underline group-hover:shadow-lg">
+            <div className="vl:flex hidden h-11 min-w-37.75 cursor-pointer items-center justify-center gap-x-2 rounded-lg border border-button-primary-text-default px-3 text-button-primary-text-default no-underline transition-all hover:no-underline group-hover:shadow-lg">
                 <span className="relative flex text-lg">
                     <CartIcon className="size-6" />
                     <CartCount>0</CartCount>

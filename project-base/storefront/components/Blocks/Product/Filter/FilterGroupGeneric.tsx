@@ -44,6 +44,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     const defaultSelectedFlags = useSessionStore((s) => s.defaultProductFiltersMap.flags);
 
     const selectedItems = currentFilter?.[filterField];
+    const contentId = createAriaParameter('filter-group', title);
 
     const { defaultOptions, isShowLessMoreShown, isWithAllItemsShown, setAreAllItemsShown } = useFilterShowLess(
         options,
@@ -66,6 +67,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
         <FilterGroupWrapper>
             <FilterGroupTitle
                 ariaLabel={ariaLabel}
+                contentId={contentId}
                 isActive={isActive}
                 isOpen={isGroupOpen}
                 title={title}
@@ -73,7 +75,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
             />
             <AnimatePresence initial={false}>
                 {isGroupOpen && (
-                    <FilterGroupContent id={createAriaParameter('filter-group', title)}>
+                    <FilterGroupContent id={contentId}>
                         {defaultOptions && (
                             <AnimatePresence initial={false}>
                                 {defaultOptions.map((option, index) => {

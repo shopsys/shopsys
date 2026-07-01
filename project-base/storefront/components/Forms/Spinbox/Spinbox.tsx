@@ -20,21 +20,44 @@ type SpinboxProps = {
     max?: number | null;
     onChangeValueCallback?: (currentValue: number) => void;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
+    ariaDescription?: string;
+    ariaLabel?: string;
+    decreaseAriaLabel?: string;
+    increaseAriaLabel?: string;
+    getValueAnnouncement?: (currentValue: number) => string;
 };
 
 const isValidNumber = (value: number): boolean => !Number.isNaN(value);
 const isWithinMaxLimit = (value: number): boolean => value <= MAX_CART_ITEM_QUANTITY;
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
-    ({ min, max, onChangeValueCallback, step, defaultValue, size = 'large' }, spinboxForwardedRef) => {
+    (
+        {
+            min,
+            max,
+            onChangeValueCallback,
+            step,
+            defaultValue,
+            id,
+            size = 'large',
+            ariaDescription,
+            ariaLabel,
+            decreaseAriaLabel,
+            increaseAriaLabel,
+            getValueAnnouncement,
+        },
+        spinboxForwardedRef,
+    ) => {
         const { t } = useTranslation();
 
         const resolvedMax = Math.min(max ?? MAX_CART_ITEM_QUANTITY, MAX_CART_ITEM_QUANTITY);
+        const descriptionId = `${id}-quantity-input-description`;
 
         const [value, setValue] = useState<number | undefined>(defaultValue);
         const [lastValidValue, setLastValidValue] = useState<number>(defaultValue);
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
+        const [valueAnnouncement, setValueAnnouncement] = useState('');
         const lastKeyPressedRef = useRef<string | null>(null);
         const backspaceSequenceRef = useRef<boolean>(false);
 
@@ -74,10 +97,12 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 spinboxRef.current.valueAsNumber = min;
                 setValue(min);
                 setLastValidValue(min);
+                setValueAnnouncement(getValueAnnouncement?.(min) ?? String(min));
             } else if (integerValue > resolvedMax) {
                 spinboxRef.current.valueAsNumber = resolvedMax;
                 setValue(resolvedMax);
                 setLastValidValue(resolvedMax);
+                setValueAnnouncement(getValueAnnouncement?.(resolvedMax) ?? String(resolvedMax));
 
                 showInfoMessage(
                     t('Maximum available quantity is {{ quantity }}. The quantity was adjusted.', {
@@ -87,6 +112,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             } else {
                 spinboxRef.current.valueAsNumber = integerValue;
                 setValue(integerValue);
+                setValueAnnouncement(getValueAnnouncement?.(integerValue) ?? String(integerValue));
 
                 if (!skipLastValidUpdate) {
                     setLastValidValue(integerValue);
@@ -220,7 +246,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 )}
             >
                 <SpinboxButton
-                    ariaLabel={t('Decrease quantity', { ns: 'accessibility' })}
+                    ariaLabel={decreaseAriaLabel ?? t('Decrease quantity', { ns: 'accessibility' })}
                     disabled={value === min}
                     size={size}
                     tid={TIDs.forms_spinbox_decrease}
@@ -234,11 +260,11 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 </SpinboxButton>
 
                 <input
-                    aria-hidden
-                    aria-describedby="quantity-input-description"
-                    aria-label={t('Quantity', { ns: 'accessibility' })}
+                    aria-describedby={descriptionId}
+                    aria-label={ariaLabel ?? t('Quantity', { ns: 'accessibility' })}
                     data-tid={TIDs.spinbox_input}
                     defaultValue={defaultValue}
+                    id={id}
                     max={resolvedMax}
                     min={min}
                     ref={spinboxRef}
@@ -254,16 +280,16 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     onKeyDown={handleKeyDown}
                 />
 
-                <span className="sr-only" id="quantity-input-description">
-                    {t('Type in a number or use arrow up or arrow down to change the quantity')}
+                <span className="sr-only" id={descriptionId}>
+                    {ariaDescription ?? t('Type in a number or use arrow up or arrow down to change the quantity')}
                 </span>
 
-                <span aria-live="polite" className="sr-only">
-                    {value}
+                <span aria-atomic="true" aria-live="polite" className="sr-only">
+                    {valueAnnouncement}
                 </span>
 
                 <SpinboxButton
-                    ariaLabel={t('Increase quantity', { ns: 'accessibility' })}
+                    ariaLabel={increaseAriaLabel ?? t('Increase quantity', { ns: 'accessibility' })}
                     disabled={value === resolvedMax}
                     size={size}
                     tid={TIDs.forms_spinbox_increase}

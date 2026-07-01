@@ -65,9 +65,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             </ColorPreview>
             <div className="flex w-full justify-between">
                 <div className="w-full">{label}</div>
-                {!!count && !checked && (
-                    <div className="ml-auto font-normal text-input-placeholder-default">({count})</div>
-                )}
+                {!!count && !checked && <div className="ml-auto font-normal text-text-less">({count})</div>}
             </div>
         </label>
     </div>

@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { SocialNetworkLogin } from 'components/Blocks/SocialNetworkLogin/SocialNetworkLogin';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
+import { Form, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -23,14 +23,13 @@ export type LoginFormProps = {
     shouldOverwriteCustomerUserCart?: boolean;
     formWrapperClassName?: string;
     formContentWrapperClassName?: string;
-    formHeading?: string;
 };
 
 export const LoginForm: FC<LoginFormProps> = ({
     defaultEmail,
     shouldOverwriteCustomerUserCart,
+    formWrapperClassName,
     formContentWrapperClassName,
-    formHeading,
 }) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
@@ -61,7 +60,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     };
 
     return (
-        <div>
+        <div className={formWrapperClassName}>
             <p className="sr-only" id="login-form-description">
                 {t('Login form for logging in to your account. Please fill in your email address and password.')}
             </p>
@@ -73,8 +72,6 @@ export const LoginForm: FC<LoginFormProps> = ({
                     onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}
                 >
                     <FormContentWrapper className={formContentWrapperClassName}>
-                        {formHeading && <FormHeading>{formHeading}</FormHeading>}
-
                         <TextInputControlled
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
@@ -84,7 +81,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                                 required: true,
                                 type: 'email',
                                 autoComplete: 'email',
-                                'aria-labelledby': 'login-form-description',
+                                'aria-describedby': 'login-form-description',
                             }}
                         />
 
@@ -98,19 +95,8 @@ export const LoginForm: FC<LoginFormProps> = ({
                             }}
                         />
 
-                        <FormButtonWrapper className="mt-2.5 flex flex-col gap-4">
-                            <FormButtonWrapper className="mt-0 justify-start">
-                                <SubmitButton
-                                    aria-label={t('Submit form to login to your account', { ns: 'accessibility' })}
-                                    size="large"
-                                    tid={TIDs.login_form_submit_button}
-                                    variant="inverted"
-                                >
-                                    {t('Login')}
-                                </SubmitButton>
-                            </FormButtonWrapper>
-
-                            <div className="mb-4 whitespace-nowrap">
+                        <FormButtonWrapper className="mt-0 flex items-center justify-between">
+                            <div className="whitespace-nowrap">
                                 <ExtendedNextLink
                                     aria-label={t('Go to reset password page', { ns: 'accessibility' })}
                                     href={resetPasswordUrl}
@@ -119,15 +105,26 @@ export const LoginForm: FC<LoginFormProps> = ({
                                     {t('Lost your password?')}
                                 </ExtendedNextLink>
                             </div>
+                            <SubmitButton size="large" tid={TIDs.login_form_submit_button}>
+                                {t('Login')}
+                            </SubmitButton>
+                        </FormButtonWrapper>
 
-                            {settingsData?.settings?.socialNetworkLoginConfig !== undefined &&
-                                settingsData.settings.socialNetworkLoginConfig.length > 0 && (
+                        {settingsData?.settings?.socialNetworkLoginConfig !== undefined &&
+                            settingsData.settings.socialNetworkLoginConfig.length > 0 && (
+                                <>
+                                    <div className="flex items-center gap-3 text-sm text-text-less">
+                                        <div className="h-px flex-1 bg-background-accent-less" />
+                                        <span>{t('or')}</span>
+                                        <div className="h-px flex-1 bg-background-accent-less" />
+                                    </div>
+
                                     <SocialNetworkLogin
                                         shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
                                         socialNetworks={settingsData.settings.socialNetworkLoginConfig}
                                     />
-                                )}
-                        </FormButtonWrapper>
+                                </>
+                            )}
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

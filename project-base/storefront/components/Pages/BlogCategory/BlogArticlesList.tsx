@@ -60,12 +60,12 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                 </div>
                             </div>
 
-                            <h2 className="h5 mb-0 font-bold! text-text-default group-hover:text-link-default group-hover:underline max-md:text-base">
+                            <h2 className="h5 mb-0 font-bold! text-text-default group-hover:text-link-default group-hover:underline max-md:text-md">
                                 {blogArticle.name}
                             </h2>
 
                             {!!blogArticle.perex && (
-                                <p className="mb-0 font-secondary text-base max-md:text-sm">{blogArticle.perex}</p>
+                                <p className="mb-0 font-secondary text-md max-md:text-sm">{blogArticle.perex}</p>
                             )}
                         </div>
                     </ExtendedNextLink>

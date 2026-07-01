@@ -37,7 +37,7 @@ export const NewsletterForm: FC = () => {
     };
 
     return (
-        <FooterContainer className="bg-background-accent-less">
+        <FooterContainer className="bg-footer-bg-light">
             <div className="grid grid-cols-1 items-center gap-5 vl:gap-44 lg:grid-cols-2">
                 <div className="text-balance font-secondary font-semibold text-lg lg:text-center">
                     {t('Sign up for our newsletter and get 35% discount on running apparel')}
@@ -79,11 +79,10 @@ export const NewsletterForm: FC = () => {
 
                         <div className="col-start-3 row-start-1">
                             <SubmitButton
-                                aria-label={t('Submit form to sign up for newsletter', { ns: 'accessibility' })}
+                                aria-label={t('Send. Sign up for newsletter', { ns: 'accessibility' })}
                                 className="h-12 w-full py-0 sm:w-auto"
                                 hasDisabledCursor={!formProviderMethods.formState.isValid}
                                 title={t('Sign up')}
-                                variant="inverted"
                             >
                                 {t('Send')}
                             </SubmitButton>

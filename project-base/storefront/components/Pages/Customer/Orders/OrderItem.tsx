@@ -5,6 +5,7 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
+import { useId } from 'react';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -30,6 +31,16 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
     const orderTransport = getOrderTransportItem(order.items);
     const orderPayment = getOrderPaymentItem(order.items);
+    const orderSummaryId = useId();
+    const orderSummary = [
+        `${t('Date of order')}: ${formatDate(order.creationDate)}.`,
+        `${t('State')}: ${order.status}.`,
+        isPriceVisible(order.totalPrice.priceWithVat)
+            ? `${t('Price')}: ${formatPrice(order.totalPrice.priceWithVat)}.`
+            : undefined,
+    ]
+        .filter(Boolean)
+        .join(' ');
 
     const orderLink = {
         pathname: customerOrderDetailUrl,
@@ -50,10 +61,15 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
 
     return (
         <div className="flex vl:flex-row flex-col flex-wrap justify-between gap-4 rounded-xl bg-background-more p-5">
+            <span className="sr-only" id={orderSummaryId}>
+                {orderSummary}
+            </span>
+
             <div className="flex flex-1 flex-col gap-2.5">
                 <div className="flex vl:flex-row flex-col gap-x-8 gap-y-2">
                     <OrderItemColumnInfo tid={TIDs.order_list_item_number} title={t('Order number')}>
                         <ExtendedNextLink
+                            aria-describedby={orderSummaryId}
                             className="font-bold"
                             type="orderDetail"
                             aria-label={t('Go to order detail number {{ orderNumber }}', {
@@ -139,6 +155,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                 )}
 
                 <LinkButton
+                    aria-describedby={orderSummaryId}
                     href={orderLink}
                     tid={TIDs.my_orders_link_ + listIndex}
                     type="orderDetail"

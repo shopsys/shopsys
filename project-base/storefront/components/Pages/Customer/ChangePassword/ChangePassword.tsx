@@ -95,7 +95,7 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                                 passwordInputProps={{
                                     label: formMeta.fields.oldPassword.label,
                                     autoComplete: 'current-password',
-                                    'aria-labelledby': 'change-password-form-description',
+                                    'aria-describedby': 'change-password-form-description',
                                 }}
                             />
 
@@ -125,12 +125,7 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                         </FormBlockWrapper>
 
                         <FormButtonWrapper className="mt-0 pb-6">
-                            <SubmitButton
-                                aria-label={t('Submit form to change your password', { ns: 'accessibility' })}
-                                hasDisabledLook={isSubmitting}
-                            >
-                                {t('Change password')}
-                            </SubmitButton>
+                            <SubmitButton hasDisabledLook={isSubmitting}>{t('Change password')}</SubmitButton>
                         </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>

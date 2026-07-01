@@ -31,6 +31,7 @@ export const IconButton: FC<IconButtonProps> = ({
             ref={buttonRef}
             tabIndex={tabIndex}
             title={title}
+            type="button"
             className={twMergeCustom(
                 'rounded-md p-0.5 text-icon-less outline-hidden hover:cursor-pointer hover:text-icon-default',
                 disabled && 'pointer-events-none text-input-border-disabled',

@@ -34,13 +34,28 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
                 )}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
                 onMouseLeave={(e) => isDesktop && !isBrowserPasswordManagerHovered(e) && setIsActive(false)}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
+                onClick={(e) => {
+                    if (isDesktop) {
                         setIsActive(true);
+                    } else if (e.target === e.currentTarget) {
+                        setIsActive((current) => !current);
+                    }
+                }}
+                onKeyDown={(e) => {
+                    if (e.key === 'Escape') {
+                        e.preventDefault();
+                        setIsActive(false);
+
+                        return;
                     }
 
-                    if (e.key === 'Escape') {
-                        setIsActive(false);
+                    if (e.target !== e.currentTarget) {
+                        return;
+                    }
+
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setIsActive((current) => !current);
                     }
                 }}
             >

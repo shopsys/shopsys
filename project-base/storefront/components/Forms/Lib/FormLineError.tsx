@@ -7,9 +7,10 @@ type FormLineErrorProps = {
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select' | 'dropzone';
     textInputSize?: 'small' | 'default';
     error?: FieldError;
+    id?: string;
 };
 
-export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textInputSize }) => {
+export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textInputSize, id }) => {
     if (error === undefined) {
         return null;
     }
@@ -37,6 +38,8 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
             />
             {error.message !== undefined && (
                 <span
+                    id={id}
+                    role="alert"
                     className={twJoin('font-secondary text-sm text-text-error', isCheckbox && 'block pr-6')}
                     data-tid={TIDs.form_line_error}
                 >

@@ -26,7 +26,7 @@ export const ProductDetailPrice: FC<ProductDetailPriceProps> = ({ productPrice }
                 <div
                     className={twMergeCustom(
                         'whitespace-nowrap font-bold font-secondary text-2xl text-price-default',
-                        isSpecialPrice && 'font-semibold text-base text-price-before line-through',
+                        isSpecialPrice && 'font-semibold text-md text-price-before line-through',
                     )}
                 >
                     {formatPrice(productPrice.basicPrice.priceWithVat)}

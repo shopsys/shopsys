@@ -50,7 +50,12 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
     };
 
     return (
-        <nav aria-label={t('Main navigation', { ns: 'accessibility' })} className="relative" id="main-navigation">
+        <nav
+            aria-label={t('Main navigation', { ns: 'accessibility' })}
+            className="relative"
+            id="main-navigation"
+            tabIndex={-1}
+        >
             {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: The navigation list needs scroll and pointer tracking without changing its list semantics. */}
             <ul
                 ref={navigationRef}

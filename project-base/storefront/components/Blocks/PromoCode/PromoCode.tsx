@@ -3,11 +3,9 @@ import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { Form } from 'components/Forms/Form/Form';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
-import { AnimatePresence, m } from 'framer-motion';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';
-import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { blurInput } from 'utils/forms/blurInput';
@@ -41,55 +39,45 @@ export const PromoCode: FC = () => {
                     aria-expanded={isContentVisible}
                     aria-label={t('Toggle promo code', { ns: 'accessibility' })}
                     id="promo-code"
+                    data-tid={TIDs.blocks_promocode_add_button}
                     label={t('I have a discount coupon')}
                     value={isContentVisible}
                     onChange={() => setIsContentVisible(!isContentVisible)}
                 />
             </div>
-            <AnimatePresence initial={false}>
-                {isContentVisible && (
-                    <m.div
-                        key="promo-code"
-                        animate="open"
-                        className="flex!"
-                        exit="closed"
-                        initial="closed"
-                        variants={collapseExpandAnimation}
+            {isContentVisible && (
+                <FormProvider {...formProviderMethods}>
+                    <Form
+                        className="flex flex-col gap-2.5 sm:flex-row"
+                        formName={formMeta.formName}
+                        onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
                     >
-                        <FormProvider {...formProviderMethods}>
-                            <Form
-                                className="flex flex-col gap-2.5 sm:flex-row"
+                        <div className="max-w-60">
+                            <TextInputControlled
+                                isWithoutFormLineError
+                                control={formProviderMethods.control}
                                 formName={formMeta.formName}
-                                onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
-                            >
-                                <div className="max-w-60">
-                                    <TextInputControlled
-                                        isWithoutFormLineError
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.promoCode.name}
-                                        textInputProps={{
-                                            label: formMeta.fields.promoCode.label,
-                                            required: true,
-                                        }}
-                                    />
-                                </div>
+                                name={formMeta.fields.promoCode.name}
+                                textInputProps={{
+                                    label: formMeta.fields.promoCode.label,
+                                    required: true,
+                                }}
+                            />
+                        </div>
 
-                                <SubmitButton
-                                    aria-label={t('Submit form to apply promo code', { ns: 'accessibility' })}
-                                    className="self-start"
-                                    hasDisabledCursor={!formProviderMethods.formState.isValid}
-                                    size="xlarge"
-                                    tid={TIDs.blocks_promocode_apply_button}
-                                    variant="inverted"
-                                >
-                                    {t('Apply code')}
-                                </SubmitButton>
-                            </Form>
-                        </FormProvider>
-                    </m.div>
-                )}
-            </AnimatePresence>
+                        <SubmitButton
+                            aria-label={t('Apply code. Apply promo code', { ns: 'accessibility' })}
+                            className="self-start"
+                            hasDisabledCursor={!formProviderMethods.formState.isValid}
+                            size="xlarge"
+                            tid={TIDs.blocks_promocode_apply_button}
+                            variant="inverted"
+                        >
+                            {t('Apply code')}
+                        </SubmitButton>
+                    </Form>
+                </FormProvider>
+            )}
         </div>
     );
 };

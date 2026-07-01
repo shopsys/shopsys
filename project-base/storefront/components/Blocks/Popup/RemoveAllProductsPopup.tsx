@@ -11,12 +11,10 @@ type RemoveAllProductsPopupProps = {
 
 export const RemoveAllProductsPopup: FC<RemoveAllProductsPopupProps> = ({ title, removeAllHandler }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const restoreStoredFocus = useSessionStore((s) => s.restoreStoredFocus);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
     const handleClose = () => {
-        updatePortalContent(null);
-        restoreStoredFocus();
+        closePortalContent();
     };
 
     const handleConfirm = () => {

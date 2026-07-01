@@ -48,7 +48,7 @@ export const FooterCopyright: FC = () => {
 
                 {!getCouldNotFindUserConsentPolicyArticleUrl(settingsResponse) && (
                     <ExtendedNextLink
-                        aria-label={t('Go to user consent update page', { ns: 'accessibility' })}
+                        aria-label={t('Update your consent. Go to user consent update page', { ns: 'accessibility' })}
                         className="text-sm leading-6"
                         href={userConsentUrl}
                         skeletonType="user-consent"
@@ -58,12 +58,7 @@ export const FooterCopyright: FC = () => {
                     </ExtendedNextLink>
                 )}
 
-                <Button
-                    aria-label={t('Go to top of the page', { ns: 'accessibility' })}
-                    className="w-full md:w-auto lg:hidden"
-                    variant="secondary"
-                    onClick={handleBackToTop}
-                >
+                <Button className="w-full md:w-auto lg:hidden" variant="secondary" onClick={handleBackToTop}>
                     {t('Back to top')}
                 </Button>
             </div>

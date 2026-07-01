@@ -13,14 +13,17 @@ export const HeaderContact: FC = () => {
         <div className="order-2 ml-auto flex">
             <div className="relative flex flex-1 flex-col items-start py-4 pr-4 lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-wrap items-center gap-3 lg:flex-1 xl:justify-center">
-                    <PhoneIcon className="w-5 text-text-inverted" />
-
                     <a
-                        aria-label={t('Call us', { ns: 'accessibility' })}
+                        aria-label={t('Call us at {{ phone }}. {{ openingHours }}', {
+                            ns: 'accessibility',
+                            phone,
+                            openingHours,
+                        })}
                         className="rounded-md font-bold text-text-inverted no-underline hover:text-text-inverted focus-visible:ring-1"
                         href={`tel:${cleanPhone}`}
                         tid={TIDs.simple_header_contact}
                     >
+                        <PhoneIcon className="size-6" />
                         {phone}
                     </a>
 

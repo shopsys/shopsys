@@ -30,8 +30,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     const formatPrice = useFormatPrice();
     const { url, isLuigisBoxActive } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const { restoreStoredFocus } = useSessionStore.getState();
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
@@ -41,8 +40,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     );
 
     const handleClosePopup = () => {
-        restoreStoredFocus();
-        updatePortalContent(null);
+        closePortalContent();
     };
 
     return (

@@ -12,7 +12,7 @@ export const FooterMenu: FC<FooterMenuProps> = ({ footerArticles }) => {
     const { t } = useTranslation();
 
     return (
-        <FooterContainer className="bg-background-accent-less">
+        <FooterContainer>
             <nav
                 aria-label={t('Footer navigation', { ns: 'accessibility' })}
                 className="flex vl:flex-row flex-col gap-7 lg:gap-6"

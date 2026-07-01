@@ -101,7 +101,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
                     </button>
                 )}
 
-                <span className="h-6 flex-1 text-center text-base">
+                <span className="h-6 flex-1 text-center text-md">
                     {currentGroupTitle ? currentGroupTitle : t('Menu')}
                 </span>
 

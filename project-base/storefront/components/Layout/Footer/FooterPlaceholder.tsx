@@ -20,7 +20,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
     return (
         <>
             {!simpleFooter && !!footerArticles?.length && (
-                <FooterContainer className="bg-background-accent-less">
+                <FooterContainer>
                     <nav className="flex vl:flex-row flex-col gap-7 lg:gap-6">
                         <div className="flex flex-1 flex-col gap-1.5 lg:flex-row lg:gap-6">
                             {footerArticles.map((item) => (
@@ -55,7 +55,11 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                         <div className="flex flex-col gap-4">
                             <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
                                 <a
-                                    aria-label={t('Call us', { ns: 'accessibility' })}
+                                    aria-label={t('Call us at {{ phone }}. {{ openingHours }}', {
+                                        ns: 'accessibility',
+                                        phone,
+                                        openingHours,
+                                    })}
                                     className="sr-only"
                                     href={`tel:${cleanPhone}`}
                                 >
@@ -70,7 +74,11 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
 
                             <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
                                 <a
-                                    aria-label={t('Write to us', { ns: 'accessibility' })}
+                                    aria-label={t('Write to us at {{ email }}. {{ emailSubtitle }}', {
+                                        ns: 'accessibility',
+                                        email,
+                                        emailSubtitle,
+                                    })}
                                     className="sr-only"
                                     href={`mailto:${email}`}
                                 >

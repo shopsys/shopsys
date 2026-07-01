@@ -33,13 +33,28 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 )}
                 onMouseEnter={() => isDesktop && setIsUserMenuOpen(true)}
                 onMouseLeave={() => isDesktop && setIsUserMenuOpen(false)}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
+                onClick={(e) => {
+                    if (isDesktop) {
+                        setIsUserMenuOpen(true);
+                    } else if (e.target === e.currentTarget) {
                         setIsUserMenuOpen(!isUserMenuOpen);
                     }
-
+                }}
+                onKeyDown={(e) => {
                     if (e.key === 'Escape') {
+                        e.preventDefault();
                         setIsUserMenuOpen(false);
+
+                        return;
+                    }
+
+                    if (e.target !== e.currentTarget) {
+                        return;
+                    }
+
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setIsUserMenuOpen(!isUserMenuOpen);
                     }
                 }}
             >
