@@ -212,6 +212,14 @@ MutationDecorator:
                         type: CreateInquiryInput!
                         validation: cascade
                 resolve: "@=mutation('createInquiryMutation', args)"
+            ProductQuestion:
+                type: Boolean!
+                description: "Send a product question to the customer and the shop operator"
+                args:
+                    input:
+                        type: ProductQuestionInput!
+                        validation: cascade
+                resolve: "@=mutation('productQuestionMutation', args, validator)"
             AddNewCustomerUser:
                 type: "BaseCustomerUser!"
                 description: "Add new customer user to customer"

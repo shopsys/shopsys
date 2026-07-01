@@ -64,6 +64,9 @@ msgstr "Priezvisko nemôže byť dlhšie ako {{ limit }} znakov"
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Priezvisko kontaktnej osoby nemôže byť dlhšie ako {{ limit }} znakov"
 
+msgid "Name cannot be longer than {{ limit }} characters"
+msgstr "Meno nemôže byť dlhšie ako {{ limit }} znakov"
+
 msgid "New password must be at least {{ limit }} characters long"
 msgstr "Nové heslo musí mať najmenej {{ limit }} znakov"
 
@@ -180,6 +183,9 @@ msgstr "Prosím, zadajte vaše meno"
 
 msgid "Please enter your postal code"
 msgstr "Prosím, zadajte vaše PSČ"
+
+msgid "Please enter your question"
+msgstr "Prosím, zadajte svoju otázku"
 
 msgid "Please enter your street"
 msgstr "Prosím, zadajte vašu ulicu"

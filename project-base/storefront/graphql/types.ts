@@ -1584,6 +1584,8 @@ export type TypeMutation = {
   OrderWithdrawalRequest: Scalars['Boolean']['output'];
   /** Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer */
   PayOrder: TypePaymentSetupCreationData;
+  /** Send a product question to the customer and the shop operator */
+  ProductQuestion: Scalars['Boolean']['output'];
   /** Recover password using hash required from RequestPasswordRecovery */
   RecoverPassword: TypeLoginResult;
   /** Refreshes access and refresh tokens */
@@ -1735,6 +1737,11 @@ export type TypeMutationOrderWithdrawalRequestArgs = {
 
 export type TypeMutationPayOrderArgs = {
   orderUuid: Scalars['Uuid']['input'];
+};
+
+
+export type TypeMutationProductQuestionArgs = {
+  input: TypeProductQuestionInput;
 };
 
 
@@ -2810,6 +2817,17 @@ export type TypeProductPrice = {
   priceWithoutVat: Scalars['Money']['output'];
   /** Total value of VAT */
   vatAmount: Scalars['Money']['output'];
+};
+
+export type TypeProductQuestionInput = {
+  /** Name of the customer asking the question */
+  customerName: Scalars['String']['input'];
+  /** The customer's email address */
+  email: Scalars['String']['input'];
+  /** UUID of the product the question is about */
+  productUuid: Scalars['Uuid']['input'];
+  /** The customer's question about the product */
+  question: Scalars['String']['input'];
 };
 
 /** One of possible product types */

@@ -1,0 +1,3 @@
+mutation ProductQuestionMutation($input: ProductQuestionInput!) {
+    ProductQuestion(input: $input)
+}

@@ -1,0 +1,4 @@
+ProductQuestionInput:
+    type: input-object
+    inherits:
+        - 'ProductQuestionInputDecorator'

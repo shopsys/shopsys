@@ -64,6 +64,9 @@ msgstr "Příjmení nesmí být delší než {{ limit }} znaků"
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Příjmení kontaktní osoby nesmí být delší než {{ limit }} znaků"
 
+msgid "Name cannot be longer than {{ limit }} characters"
+msgstr "Jméno nesmí být delší než {{ limit }} znaků"
+
 msgid "New password must be at least {{ limit }} characters long"
 msgstr "Nové heslo musí mít minimálně {{ limit }} znaků"
 
@@ -180,6 +183,9 @@ msgstr "Vyplňte prosím své jméno"
 
 msgid "Please enter your postal code"
 msgstr "Vyplňte prosím PSČ"
+
+msgid "Please enter your question"
+msgstr "Vyplňte prosím svůj dotaz"
 
 msgid "Please enter your street"
 msgstr "Vyplňte prosím ulici"

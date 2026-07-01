@@ -7,6 +7,7 @@ import { twMergeCustom } from 'utils/twMerge';
 type ProductCompareButtonProps = {
     productName: string;
     isWithText?: boolean;
+    isWithShortText?: boolean;
     isProductInComparison: boolean;
     toggleProductInComparison: () => void;
     tabIndex?: number;
@@ -16,11 +17,19 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     className,
     productName,
     isWithText,
+    isWithShortText,
     isProductInComparison,
     toggleProductInComparison,
     tabIndex = 0,
 }) => {
     const { t } = useTranslation();
+    const buttonText = isWithShortText
+        ? isProductInComparison
+            ? t('In comparison')
+            : t('Compare')
+        : isProductInComparison
+          ? t('Remove from comparison')
+          : t('Compare');
 
     return (
         <button
@@ -47,13 +56,11 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
             onClick={toggleProductInComparison}
         >
             {isProductInComparison ? (
-                <CompareFilledIcon className="size-6 text-icon-accent-red" />
+                <CompareFilledIcon className="size-6 shrink-0 text-icon-accent-red" />
             ) : (
-                <CompareIcon className="size-6" />
+                <CompareIcon className="size-6 shrink-0" />
             )}
-            {isWithText && (
-                <span className="text-sm">{isProductInComparison ? t('Remove from comparison') : t('Compare')}</span>
-            )}
+            {isWithText && <span className="truncate text-sm">{buttonText}</span>}
         </button>
     );
 };

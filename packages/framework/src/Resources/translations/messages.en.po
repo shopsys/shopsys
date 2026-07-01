@@ -823,6 +823,9 @@ msgstr ""
 msgid "Customer phone number"
 msgstr ""
 
+msgid "Customer question"
+msgstr ""
+
 msgid "Customer sees prices"
 msgstr ""
 
@@ -2728,6 +2731,12 @@ msgstr ""
 msgid "Product name"
 msgstr ""
 
+msgid "Product question sent to administrator"
+msgstr ""
+
+msgid "Product question sent to customer"
+msgstr ""
+
 msgid "Product saved in order"
 msgstr ""
 
@@ -2930,6 +2939,12 @@ msgid "Sales representative <strong>{{ label }}</strong> deleted."
 msgstr ""
 
 msgid "Sales representatives"
+msgstr ""
+
+msgid "Sample customer name"
+msgstr ""
+
+msgid "Sample product question."
 msgstr ""
 
 msgid "Save"

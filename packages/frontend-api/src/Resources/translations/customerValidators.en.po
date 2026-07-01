@@ -64,6 +64,9 @@ msgstr ""
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Name cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "New password must be at least {{ limit }} characters long"
 msgstr ""
 
@@ -179,6 +182,9 @@ msgid "Please enter your name"
 msgstr ""
 
 msgid "Please enter your postal code"
+msgstr ""
+
+msgid "Please enter your question"
 msgstr ""
 
 msgid "Please enter your street"
