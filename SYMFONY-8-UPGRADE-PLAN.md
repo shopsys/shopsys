@@ -23,8 +23,10 @@ Work is done on branch `pk-symfony-8` as a series of small commits.
 ## Phases
 
 - [x] **Phase 0 — Analysis & plan** (this file)
-- [ ] **Phase 1 — Preparatory bumps compatible with Symfony 7.4**
-  - [ ] bump `scheb/2fa-bundle`, `scheb/2fa-email`, `scheb/2fa-google-authenticator` `^7.6` → `^8.6`
+- [x] **Phase 1 — Preparatory bumps compatible with Symfony 7.4**
+  - [x] bump `scheb/2fa-bundle`, `scheb/2fa-email`, `scheb/2fa-google-authenticator` `^7.6` → `^8.6`
+  - [x] fix: scheb v8 tags its service template (with abstract args) with `kernel.reset` — excluded it
+    from the `tagged_iterator` in Shopsys `ServicesResetter` to keep the container dumpable
 - [ ] **Phase 2 — Composer metadata overrides for the 6 blocking packages**
   - [ ] add inline `package` repositories (same code/dist, relaxed Symfony constraints) to root `composer.json`
   - [ ] mirror the change in `project-base/app/composer.json`

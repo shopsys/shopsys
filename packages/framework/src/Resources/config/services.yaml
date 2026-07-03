@@ -537,7 +537,12 @@ services:
 
     Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
         arguments:
-            $resettableServices: !tagged_iterator kernel.reset
+            # scheb/2fa-bundle v8 tags its per-firewall service template (with abstract arguments) with kernel.reset,
+            # hard references created by tagged_iterator would fail to compile, unlike Symfony's own services_resetter
+            $resettableServices: !tagged_iterator
+                tag: kernel.reset
+                exclude:
+                    - 'scheb_two_factor.security.provider_preparation_listener'
 
     Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator:
         tags:
