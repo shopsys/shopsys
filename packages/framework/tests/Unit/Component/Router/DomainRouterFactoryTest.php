@@ -38,7 +38,9 @@ class DomainRouterFactoryTest extends TestCase
             $currentAdministratorStub,
         );
 
-        $localizedRouterStub = $this->createStub(Router::class);
+        $containerStub = $this->createStub(ContainerInterface::class);
+        // Router is final since Symfony 8 and cannot be doubled, a real instance is cheap as long as routes are not loaded
+        $localizedRouter = new Router($containerStub, 'routerConfiguration');
         $friendlyUrlRouterStub = $this->createStub(FriendlyUrlRouter::class);
 
         $localizedRouterFactoryMock = $this->getMockBuilder(LocalizedRouterFactory::class)
@@ -48,11 +50,11 @@ class DomainRouterFactoryTest extends TestCase
         $localizedRouterFactoryMock
             ->expects($this->once())
             ->method('getRouter')
-            ->willReturnCallback(function ($locale, RequestContext $context) use ($localizedRouterStub) {
+            ->willReturnCallback(function ($locale, RequestContext $context) use ($localizedRouter) {
                 $this->assertSame('en', $locale);
                 $this->assertSame('example.com', $context->getHost());
 
-                return $localizedRouterStub;
+                return $localizedRouter;
             });
 
         $friendlyUrlRouterFactoryMock = $this->getMockBuilder(FriendlyUrlRouterFactory::class)
@@ -72,7 +74,6 @@ class DomainRouterFactoryTest extends TestCase
             );
 
         $requestStackStub = $this->createStub(RequestStack::class);
-        $containerStub = $this->createStub(ContainerInterface::class);
         $transformStringHelper = $this->createStub(TransformStringHelper::class);
 
         $domainRouterFactory = new DomainRouterFactory(

@@ -115,24 +115,17 @@ class SubRequestListenerTest extends TestCase
 
     public function testOnKernelController(): void
     {
-        /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $masterRequestMock */
-        $masterRequestMock = $this->getMockBuilder(Request::class)
-            ->onlyMethods(['getMethod'])
-            ->getMock();
-
-        $masterRequestMock->expects($this->once())->method('getMethod')->willReturn('POST');
-        $masterRequestMock->query->replace([
+        // Request cannot be doubled since Symfony 8, its property hooks would require doubling the final InputBag class
+        $masterRequest = new Request();
+        $masterRequest->setMethod('POST');
+        $masterRequest->query->replace([
             'key1' => 'value1',
             'key2' => 'value2',
         ]);
-        $masterRequestMock->request->replace(['post' => 'value']);
+        $masterRequest->request->replace(['post' => 'value']);
 
-        /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $subRequestMock */
-        $subRequestMock = $this->getMockBuilder(Request::class)
-            ->onlyMethods(['setMethod'])
-            ->getMock();
-        $subRequestMock->expects($this->once())->method('setMethod')->with($this->equalTo('POST'));
-        $subRequestMock->query->replace([
+        $subRequest = new Request();
+        $subRequest->query->replace([
             'key2' => 'value2_2',
             'key3' => 'value3',
         ]);
@@ -140,14 +133,14 @@ class SubRequestListenerTest extends TestCase
         $event1 = new ControllerEvent(
             $this->createStub(HttpKernelInterface::class),
             fn () => null,
-            $masterRequestMock,
+            $masterRequest,
             HttpKernelInterface::MAIN_REQUEST,
         );
 
         $event2 = new ControllerEvent(
             $this->createStub(HttpKernelInterface::class),
             fn () => null,
-            $subRequestMock,
+            $subRequest,
             HttpKernelInterface::SUB_REQUEST,
         );
 
@@ -155,12 +148,13 @@ class SubRequestListenerTest extends TestCase
         $subRequestListener->onKernelController($event1);
         $subRequestListener->onKernelController($event2);
 
+        $this->assertSame('POST', $subRequest->getMethod());
         $expected = [
             'key1' => 'value1',
             'key2' => 'value2_2',
             'key3' => 'value3',
         ];
-        $this->assertSame($expected, $subRequestMock->query->all());
-        $this->assertSame($masterRequestMock->request, $subRequestMock->request);
+        $this->assertSame($expected, $subRequest->query->all());
+        $this->assertSame($masterRequest->request, $subRequest->request);
     }
 }
