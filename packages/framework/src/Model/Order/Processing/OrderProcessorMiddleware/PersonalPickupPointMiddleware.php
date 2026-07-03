@@ -64,10 +64,10 @@ class PersonalPickupPointMiddleware implements OrderProcessorMiddlewareInterface
         $orderData->personalPickupStore = $store;
         $orderData->deliveryAddressSameAsBillingAddress = false;
 
-        $orderData->deliveryFirstName = $orderData->deliveryFirstName ?? $orderData->firstName;
-        $orderData->deliveryLastName = $orderData->deliveryLastName ?? $orderData->lastName;
-        $orderData->deliveryCompanyName = $orderData->deliveryCompanyName ?? $orderData->companyName;
-        $orderData->deliveryTelephone = $orderData->deliveryTelephone ?? $orderData->telephone;
+        $orderData->deliveryFirstName ??= $orderData->firstName;
+        $orderData->deliveryLastName ??= $orderData->lastName;
+        $orderData->deliveryCompanyName ??= $orderData->companyName;
+        $orderData->deliveryTelephone ??= $orderData->telephone;
 
         $orderData->deliveryStreet = $store->getStreet();
         $orderData->deliveryCity = $store->getCity();

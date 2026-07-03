@@ -70,7 +70,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         // last 1 order
         yield [['last' => 1], 5, 1];
 
-        //last 2 orders
+        // last 2 orders
         yield [['last' => 2], 4, 2];
 
         // filter by order item catnum

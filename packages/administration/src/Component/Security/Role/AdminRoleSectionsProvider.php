@@ -36,7 +36,7 @@ class AdminRoleSectionsProvider extends AbstractRoleSectionProvider
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     #[Override]
     public static function getTargetContext(): string

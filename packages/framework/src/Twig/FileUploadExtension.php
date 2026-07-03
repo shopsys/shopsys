@@ -32,7 +32,7 @@ class FileUploadExtension extends AbstractExtension
         $filepath = $this->fileUpload->getTemporaryDirectory() . '/' . $temporaryFilename;
 
         if (file_exists($filepath) && is_file($filepath) && is_writable($filepath)) {
-            $fileSize = round((int)filesize($filepath) / 1000 / 1000, 2); //https://en.wikipedia.org/wiki/Binary_prefix
+            $fileSize = round((int)filesize($filepath) / 1000 / 1000, 2); // https://en.wikipedia.org/wiki/Binary_prefix
 
             return $filename . ' (' . $fileSize . ' MB)';
         }

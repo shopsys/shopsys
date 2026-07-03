@@ -59,7 +59,7 @@ class ProductOnCurrentDomainElasticFacade
         ?string $searchText,
         ProductFilterData $productFilterData,
     ): ProductFilterCountData {
-        $searchText = $searchText ?? '';
+        $searchText ??= '';
 
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInSearch(
             $productFilterData,

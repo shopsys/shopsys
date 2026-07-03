@@ -67,7 +67,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         $this->addReference(self::FIRST_DEMO_BLOG_CATEGORY, $mainPageBlogCategory);
 
-        //only in main category
+        // only in main category
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory]);
             $this->applyStatusDiversity($blogArticleData, $i);
@@ -90,7 +90,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $firstSubcategory = $this->blogCategoryFacade->create($firstSubcategoryData);
         $this->addReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, $firstSubcategory);
 
-        //in first subcategory
+        // in first subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory, $firstSubcategory]);
             $this->applyStatusDiversity($blogArticleData, $i);
@@ -105,7 +105,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $secondSubcategory = $this->blogCategoryFacade->create($secondSubcategoryData);
         $this->addReference(self::SECOND_DEMO_BLOG_SUBCATEGORY, $secondSubcategory);
 
-        //in second subcategory
+        // in second subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory, $secondSubcategory]);
             $this->applyStatusDiversity($blogArticleData, $i);

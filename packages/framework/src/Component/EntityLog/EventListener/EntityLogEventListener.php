@@ -126,7 +126,7 @@ class EntityLogEventListener implements ResetInterface
 
         foreach ($changeSet as $key => $value) {
             if ($value instanceof PersistentCollection) {
-                unset($changeSet[$key]); //collection is logged in resolveChangesOnCollectionForEntity method
+                unset($changeSet[$key]); // collection is logged in resolveChangesOnCollectionForEntity method
             }
         }
 

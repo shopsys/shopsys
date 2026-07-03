@@ -54,7 +54,7 @@ class AutocompleteFavoritesTest extends GraphQlTestCase
         /**
          * despite these products are set in @see \App\DataFixtures\Demo\AutocompleteFavoriteDataFixture,
          * they should not be returned by the query
-         **/
+         */
         $unexpectedProductNames = [
             $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148', Product::class)->getName($firstDomainLocale),
             $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '76', Product::class)->getName($firstDomainLocale),

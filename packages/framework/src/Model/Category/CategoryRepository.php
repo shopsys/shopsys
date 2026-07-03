@@ -466,7 +466,7 @@ class CategoryRepository extends NestedTreeRepository
     ): array {
         $queryBuilder = $this->getAllQueryBuilder();
         $domainId = $domainConfig->getId();
-        $locale = $locale ?? $domainConfig->getLocale();
+        $locale ??= $domainConfig->getLocale();
         $mainCategory = $this->getProductMainCategoryOnDomain($product, $domainId);
 
         $this->addTranslation($queryBuilder, $locale);

@@ -7,7 +7,6 @@ namespace Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\StaleAnnota
 /**
  * This is a description of the class.
  *
- * @author John Doe
  * @method void staleMethod()
  * @property string $validProperty
  */

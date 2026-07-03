@@ -30,8 +30,8 @@ class ComplaintItemDataApiFactory
         $catnum = $orderItem?->getCatnum() ?? $manualComplaintItemCatnum;
 
         if ($product) {
-            $productName = $productName ?? $product->getName();
-            $catnum = $catnum ?? $product->getCatnum();
+            $productName ??= $product->getName();
+            $catnum ??= $product->getCatnum();
         }
 
         $complaintItemData = $this->complaintItemDataFactory->create();

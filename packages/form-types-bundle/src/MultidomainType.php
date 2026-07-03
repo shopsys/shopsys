@@ -30,7 +30,7 @@ final class MultidomainType extends AbstractType
     {
         $entryOptions = $options['entry_options'];
         $entryOptions['required'] = ($options['required'] ?? false) || ($entryOptions['required'] ?? false);
-        $entryOptions['constraints'] = $entryOptions['constraints'] ?? [];
+        $entryOptions['constraints'] ??= [];
 
         $domainIds = $this->domainIdsProvider->getAdminEnabledDomainIds();
 
