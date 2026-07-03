@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Image;
 
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use League\Flysystem\Visibility;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository;
@@ -73,7 +74,7 @@ class ImageFactoryTest extends TestCase
 
         return new FileUpload(
             'temporaryDir',
-            [Image::class => 'imageDir'],
+            [Image::class => ['directory' => 'imageDir', 'visibility' => Visibility::PUBLIC]],
             $fileNamingConvention,
             $mountManager,
             $abstractFilesystem,

@@ -297,10 +297,16 @@ services:
     Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
         arguments:
             $temporaryDir: '%shopsys.var_dir%'
-            $directoriesByFileClass:
-                Shopsys\FrameworkBundle\Component\Image\Image: '%shopsys.image_dir%'
-                Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile: '%shopsys.uploaded_file_dir%'
-                Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile: '%shopsys.customer_uploaded_file_dir%'
+            $filesConfigByFileClass:
+                Shopsys\FrameworkBundle\Component\Image\Image:
+                    directory: '%shopsys.image_dir%'
+                    visibility: !php/const League\Flysystem\Visibility::PUBLIC
+                Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile:
+                    directory: '%shopsys.uploaded_file_dir%'
+                    visibility: !php/const League\Flysystem\Visibility::PUBLIC
+                Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile:
+                    directory: '%shopsys.customer_uploaded_file_dir%'
+                    visibility: !php/const League\Flysystem\Visibility::PRIVATE
 
     Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory:
         arguments:

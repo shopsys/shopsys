@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\FileUpload\Exception;
 
 use Exception;
 
-class MissingFileClassDirectoryMappingException extends Exception
+class MissingFileConfigByFileClassException extends Exception
 {
     public function __construct(string $message = '', ?Exception $previous = null)
     {
