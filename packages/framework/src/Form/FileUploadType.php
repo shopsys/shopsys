@@ -228,10 +228,10 @@ final class FileUploadType extends AbstractType
                 'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Length([
-                            'max' => 255,
-                            'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
-                        ]),
+                        new Constraints\Length(
+                            max: 255,
+                            maxMessage: 'Name cannot be longer than {{ limit }} characters',
+                        ),
                     ],
                 ],
             ],

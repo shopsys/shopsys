@@ -69,10 +69,10 @@ final class BasicFileUploadType extends AbstractType
                     'label' => '',
                     'entry_options' => [
                         'constraints' => [
-                            new Constraints\Length([
-                                'max' => 255,
-                                'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
-                            ]),
+                            new Constraints\Length(
+                                max: 255,
+                                maxMessage: 'Name cannot be longer than {{ limit }} characters',
+                            ),
                         ],
                     ],
                 ],
