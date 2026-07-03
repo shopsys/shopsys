@@ -57,7 +57,8 @@ class RequireOverrideAttributeSniff extends AbstractRequireOverrideAttributeSnif
     protected function methodExistsInParentClass(ReflectionClass $parentClass, string $methodName): bool
     {
         if ($parentClass->hasMethod($methodName)) {
-            return true;
+            // private methods cannot be overridden, PHP rejects #[Override] for them
+            return !$parentClass->getMethod($methodName)->isPrivate();
         }
 
         if ($parentClass->isInterface()) {
