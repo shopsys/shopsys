@@ -31,16 +31,16 @@
         "shopsys/framework": "20.0.x-dev",
         "shopsys/mcp-attributes": "20.0.x-dev",
         "shopsys/migrations": "20.0.x-dev",
-        "symfony/clock": "^7.4",
-        "symfony/config": "^7.4",
-        "symfony/dependency-injection": "^7.4",
-        "symfony/http-foundation": "^7.4",
-        "symfony/http-kernel": "^7.4",
+        "symfony/clock": "^8.1",
+        "symfony/config": "^8.1",
+        "symfony/dependency-injection": "^8.1",
+        "symfony/http-foundation": "^8.1",
+        "symfony/http-kernel": "^8.1",
         "symfony/mcp-bundle": "^0.8",
-        "symfony/password-hasher": "^7.4",
-        "symfony/routing": "^7.4",
-        "symfony/security-core": "^7.4",
-        "symfony/security-http": "^7.4"
+        "symfony/password-hasher": "^8.1",
+        "symfony/routing": "^8.1",
+        "symfony/security-core": "^8.1",
+        "symfony/security-http": "^8.1"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1.16",
@@ -54,7 +54,7 @@
     "prefer-stable": true,
     "extra": {
         "symfony": {
-            "require": "^7.4",
+            "require": "^8.1",
             "docker": false
         }
     },

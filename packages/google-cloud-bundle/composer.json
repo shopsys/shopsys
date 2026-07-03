@@ -24,11 +24,11 @@
         "google/cloud-storage": "^1.10",
         "league/flysystem-google-cloud-storage": "^3.0",
         "shopsys/framework": "20.0.x-dev",
-        "symfony/config": "^7.4",
-        "symfony/dependency-injection": "^7.4",
-        "symfony/framework-bundle": "^7.4",
-        "symfony/http-kernel": "^7.4",
-        "symfony/options-resolver": "^7.4"
+        "symfony/config": "^8.1",
+        "symfony/dependency-injection": "^8.1",
+        "symfony/framework-bundle": "^8.1",
+        "symfony/http-kernel": "^8.1",
+        "symfony/options-resolver": "^8.1"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

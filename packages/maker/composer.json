@@ -36,15 +36,15 @@
         "ramsey/uuid": "^4.3.1",
         "shopsys/framework": "20.0.x-dev",
         "shopsys/migrations": "20.0.x-dev",
-        "symfony/console": "^7.4",
-        "symfony/dependency-injection": "^7.4",
-        "symfony/filesystem": "^7.4",
-        "symfony/framework-bundle": "^7.4",
-        "symfony/http-kernel": "^7.4",
+        "symfony/console": "^8.1",
+        "symfony/dependency-injection": "^8.1",
+        "symfony/filesystem": "^8.1",
+        "symfony/framework-bundle": "^8.1",
+        "symfony/http-kernel": "^8.1",
         "symfony/maker-bundle": "^1.62",
-        "symfony/process": "^7.4",
+        "symfony/process": "^8.1",
         "symfony/service-contracts": "^3.5",
-        "symfony/yaml": "^7.4"
+        "symfony/yaml": "^8.1"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1.16",
@@ -58,7 +58,7 @@
     "prefer-stable": true,
     "extra": {
         "symfony": {
-            "require": "^7.4",
+            "require": "^8.1",
             "docker": false
         }
     },

@@ -29,9 +29,9 @@
     "require": {
         "php": "^8.5",
         "phpunit/phpunit": "^12.5",
-        "symfony/framework-bundle": "^7.4",
-        "symfony/http-foundation": "^7.4",
-        "symfony/dependency-injection": "^7.4",
-        "symfony/routing": "^7.4"
+        "symfony/framework-bundle": "^8.1",
+        "symfony/http-foundation": "^8.1",
+        "symfony/dependency-injection": "^8.1",
+        "symfony/routing": "^8.1"
     }
 }

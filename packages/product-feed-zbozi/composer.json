@@ -40,11 +40,11 @@
         "shopsys/mcp-attributes": "20.0.x-dev",
         "shopsys/migrations": "20.0.x-dev",
         "shopsys/plugin-interface": "20.0.x-dev",
-        "symfony/config": "^7.4",
-        "symfony/dependency-injection": "^7.4",
-        "symfony/form": "^7.4",
-        "symfony/http-kernel": "^7.4",
-        "symfony/translation": "^7.4",
+        "symfony/config": "^8.1",
+        "symfony/dependency-injection": "^8.1",
+        "symfony/form": "^8.1",
+        "symfony/http-kernel": "^8.1",
+        "symfony/translation": "^8.1",
         "twig/twig": "^3.14.0"
     },
     "require-dev": {
