@@ -128,6 +128,7 @@ use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
+use Symplify\CodingStandard\Fixer\Annotation\RemovePropertyVariableNameDescriptionFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -355,6 +356,8 @@ return ECSConfig::configure()
         // rule is applied via `docblock` set, but we do not want to use it for now
         // remove variable name from @var and @type annotations
         PhpdocVarWithoutNameFixer::class => null,
+        // removes variable names from inline @var annotations, conflicts with InlineDocCommentDeclarationSniff
+        RemovePropertyVariableNameDescriptionFixer::class => null,
         // rule breaks jms/translation-bundle as it fails on this usage: `[, $b] = $var`
         // won't do any changes after upgrade
         ListSyntaxFixer::class => null,
