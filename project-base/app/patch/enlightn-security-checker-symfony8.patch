@@ -1,0 +1,23 @@
+diff -ruN a/security-checker b/security-checker
+--- a/security-checker	2026-07-03 14:18:49.246073471 +0200
++++ b/security-checker	2026-07-03 14:18:49.252307654 +0200
+@@ -18,5 +18,5 @@
+ use Symfony\Component\Console\Application;
+ 
+ $console = new Application('Enlightn Security Checker');
+-$console->add(new SecurityCheckerCommand);
++$console->addCommand(new SecurityCheckerCommand);
+ $console->run();
+\ No newline at end of file
+diff -ruN a/src/SecurityCheckerCommand.php b/src/SecurityCheckerCommand.php
+--- a/src/SecurityCheckerCommand.php	2026-07-03 14:20:02.542841898 +0200
++++ b/src/SecurityCheckerCommand.php	2026-07-03 14:20:02.549749662 +0200
+@@ -16,7 +16,7 @@
+     /**
+      * @see Command
+      */
+-    protected function configure()
++    protected function configure(): void
+     {
+         $this
+             ->setName('security:check')

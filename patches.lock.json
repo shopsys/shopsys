@@ -1,6 +1,18 @@
 {
-    "_hash": "ba7a06a15c5cb856258cf4773d784129739c56d43d33c3325c6fe42e798a9336",
+    "_hash": "b660057c03c8bea74acbe2a35d759f3e70b6779209b125a5d7e741be79fca115",
     "patches": {
+        "enlightn/security-checker": [
+            {
+                "package": "enlightn/security-checker",
+                "description": "Use Application::addCommand() because Application::add() was removed in Symfony 8",
+                "url": "project-base/app/patch/enlightn-security-checker-symfony8.patch",
+                "sha256": "801264c03de198d86d69e3d7421d2201f2794dcf7bbaa503ae99e9ed964bcddf",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ],
         "jms/translation-bundle": [
             {
                 "package": "jms/translation-bundle",
