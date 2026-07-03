@@ -167,12 +167,13 @@
         </exec>
     </target>
 
-    <target name="project-base-vendor-check" description="Check there exists no vendor directory in project-base/app as that would break the autoloader" hidden="true">
+    <target name="project-base-vendor-check" description="Check there is no composer installation in project-base/app as that would break the autoloader" hidden="true">
+        <!-- utils/link-packages.js intentionally creates asset symlinks in ${path.root}/vendor/shopsys, only a real composer installation is a problem -->
         <if>
-            <available file="${path.root}/vendor" type="dir" property="dir.Exists"/>
+            <available file="${path.root}/vendor/autoload.php" type="file" property="autoload.Exists"/>
             <then>
                 <echo level="error" message="Composer dependencies are installed in ${path.root} directory which would break the monorepo autoloader. Remove ${path.root}/vendor before re-running the command."/>
-                <fail message="Directory ${path.root}/vendor found."/>
+                <fail message="File ${path.root}/vendor/autoload.php found."/>
             </then>
         </if>
     </target>

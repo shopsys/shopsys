@@ -48,7 +48,7 @@ Work is done on branch `pk-symfony-8` as a series of small commits.
     - [x] runtime verification: admin, storefront, GraphQL endpoint and GraphiQL UI respond correctly
 - [x] **Phase 5 — Tests**
     - [x] unit + functional + smoke + frontend-api test suites green
-      (2 unit tests fixed — they doubled Symfony classes that are `final` since Symfony 8)
+          (2 unit tests fixed — they doubled Symfony classes that are `final` since Symfony 8)
 - [x] **Phase 6 — Monorepo packages**
     - [x] bump `symfony/*` constraints in `packages/*/composer.json` to `^8.1`
 - [x] **Phase 7 — Coding standards & final validation**
@@ -69,4 +69,3 @@ Work is done on branch `pk-symfony-8` as a series of small commits.
 ## Result
 
 Upgrade finished on 2026-07-03: Symfony 8.1.1, all test suites green, standards + PHPStan clean.
-
