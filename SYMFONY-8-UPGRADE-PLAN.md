@@ -57,7 +57,7 @@ Work is done on branch `pk-symfony-8` as a series of small commits.
           Symfony 8.1 kernels declare `configureContainer()` as private in a trait)
     - [x] new Symplify `RemovePropertyVariableNameDescriptionFixer` skipped — it conflicts with Slevomat `InlineDocCommentDeclarationSniff`
 - [x] **Phase 8 — Upgrade notes**
-    - [x] `upgrade-notes/backend_20260703_144531.md` (PR number placeholder `#XXXX` to be filled when the PR exists)
+    - [x] `upgrade-notes/backend_20260703_144531.md` (PR [#4685](https://github.com/shopsys/shopsys/pull/4685))
 
 ## Decision log
 
