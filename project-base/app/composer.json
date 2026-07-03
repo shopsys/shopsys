@@ -193,6 +193,9 @@
         "var-dir": "var",
         "public-dir": "web",
         "patches": {
+            "enlightn/security-checker": {
+                "Use Application::addCommand() because Application::add() was removed in Symfony 8": "patch/enlightn-security-checker-symfony8.patch"
+            },
             "jms/translation-bundle": {
                 "Load DI config via PHP files because Symfony 8 removed the XML configuration format": "patch/jms-translation-symfony8-php-config.patch"
             },
