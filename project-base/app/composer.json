@@ -203,5 +203,245 @@
             "require": "^7.4",
             "docker": false
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "becklyn/ordered-form-bundle",
+                "version": "1.4.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/Becklyn/OrderedFormBundle.git",
+                    "reference": "5a068240bf4fb56a82fc48d1eb146e985138eb70"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/Becklyn/OrderedFormBundle/zipball/5a068240bf4fb56a82fc48d1eb146e985138eb70",
+                    "reference": "5a068240bf4fb56a82fc48d1eb146e985138eb70",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=7.4",
+                    "symfony/config": "^5.4.3 || ^6.0.3 || ^7.0 || ^8.0",
+                    "symfony/dependency-injection": "^5.4.3 || ^6.0.3 || ^7.0 || ^8.0",
+                    "symfony/form": "^5.4.3 || ^6.0.3 || ^7.0 || ^8.0",
+                    "symfony/http-kernel": "^5.4.4 || ^6.0.4 || ^7.0 || ^8.0"
+                },
+                "type": "symfony-bundle",
+                "autoload": {
+                    "psr-4": {
+                        "Becklyn\\OrderedFormBundle\\": "src/"
+                    }
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "description": "This bundle adds functionality for ordering form elements"
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "enlightn/security-checker",
+                "version": "v2.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/enlightn/security-checker.git",
+                    "reference": "d495ab07639388c7c770c5223aa0d42fee1d2604"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/enlightn/security-checker/zipball/d495ab07639388c7c770c5223aa0d42fee1d2604",
+                    "reference": "d495ab07639388c7c770c5223aa0d42fee1d2604",
+                    "shasum": ""
+                },
+                "require": {
+                    "ext-json": "*",
+                    "guzzlehttp/guzzle": "^6.3|^7.0",
+                    "php": ">=8.2",
+                    "symfony/console": "^7 || ^8.0",
+                    "symfony/finder": "^3|^4|^5|^6|^7|^8.0",
+                    "symfony/process": "^3.4|^4|^5|^6|^7|^8.0",
+                    "symfony/yaml": "^3.4|^4|^5|^6|^7|^8.0"
+                },
+                "bin": [
+                    "security-checker"
+                ],
+                "type": "library",
+                "autoload": {
+                    "psr-4": {
+                        "Enlightn\\SecurityChecker\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "description": "A PHP dependency vulnerabilities scanner based on the Security Advisories Database."
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jms/translation-bundle",
+                "version": "2.7.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/schmittjoh/JMSTranslationBundle.git",
+                    "reference": "826b29282b1d784cba362a7b98236dfb6fe8a9da"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/schmittjoh/JMSTranslationBundle/zipball/826b29282b1d784cba362a7b98236dfb6fe8a9da",
+                    "reference": "826b29282b1d784cba362a7b98236dfb6fe8a9da",
+                    "shasum": ""
+                },
+                "require": {
+                    "nikic/php-parser": "^5",
+                    "php": "^8.1",
+                    "psr/log": "^1.0 || ^2.0 || ^3.0",
+                    "symfony/config": "^5.4 || ^6.4 || ^7.1 || ^8.0",
+                    "symfony/console": "^5.4 || ^6.4 || ^7.1 || ^8.0",
+                    "symfony/framework-bundle": "^5.4 || ^6.4 || ^7.1 || ^8.0",
+                    "symfony/translation": "^5.4 || ^6.4 || ^7.1 || ^8.0",
+                    "symfony/translation-contracts": "^2.0 || ^3.0",
+                    "symfony/validator": "^5.4 || ^6.4 || ^7.1 || ^8.0",
+                    "twig/twig": "^3.15"
+                },
+                "type": "symfony-bundle",
+                "extra": {
+                    "symfony": {
+                        "allow-contrib": true
+                    },
+                    "branch-alias": {
+                        "dev-master": "2.x-dev"
+                    }
+                },
+                "autoload": {
+                    "psr-4": {
+                        "JMS\\TranslationBundle\\": ""
+                    }
+                },
+                "license": [
+                    "Apache-2.0"
+                ],
+                "description": "Puts the Symfony Translation Component on steroids"
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "overblog/dataloader-bundle",
+                "version": "v1.1.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/overblog/dataloader-bundle.git",
+                    "reference": "6ac3ab346fc8ae88cd964d462defc451d335a4de"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/overblog/dataloader-bundle/zipball/6ac3ab346fc8ae88cd964d462defc451d335a4de",
+                    "reference": "6ac3ab346fc8ae88cd964d462defc451d335a4de",
+                    "shasum": ""
+                },
+                "require": {
+                    "overblog/dataloader-php": "^1",
+                    "php": "^8.1",
+                    "symfony/dependency-injection": "^5.4 || ^6.3 || ^7.0 || ^8.0"
+                },
+                "type": "symfony-bundle",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "0.5-dev"
+                    }
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Overblog\\DataLoaderBundle\\": "src/"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "description": "DataLoader Symfony bundle implementation."
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "overblog/graphiql-bundle",
+                "version": "v1.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/overblog/GraphiQLBundle.git",
+                    "reference": "68520e0732380d9acd03977e049d9490ee78a6a3"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/overblog/GraphiQLBundle/zipball/68520e0732380d9acd03977e049d9490ee78a6a3",
+                    "reference": "68520e0732380d9acd03977e049d9490ee78a6a3",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": "^8.0",
+                    "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+                    "symfony/routing": "^5.4 || ^6.0 || ^7.00 || ^8.0",
+                    "symfony/twig-bundle": "^5.4 || ^6.0 || ^7.0 || ^8.0"
+                },
+                "type": "symfony-bundle",
+                "autoload": {
+                    "psr-4": {
+                        "Overblog\\GraphiQLBundle\\": "src/"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "description": "Symfony GraphiQLBundle makes possible to render the UI into your symfony project"
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "prezent/doctrine-translatable-bundle",
+                "version": "3.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/Prezent/doctrine-translatable-bundle.git",
+                    "reference": "cd5dc939b377e10b725d7b2fbe3b9028c8f0e0ef"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/Prezent/doctrine-translatable-bundle/zipball/cd5dc939b377e10b725d7b2fbe3b9028c8f0e0ef",
+                    "reference": "cd5dc939b377e10b725d7b2fbe3b9028c8f0e0ef",
+                    "shasum": ""
+                },
+                "require": {
+                    "doctrine/doctrine-bundle": "^2.0|^3.0",
+                    "php": ">=8.2",
+                    "prezent/doctrine-translatable": "^5.0",
+                    "symfony/config": "^6.0|^7.0|^8.0",
+                    "symfony/dependency-injection": "^6.0|^7.0|^8.0",
+                    "symfony/event-dispatcher": "^6.0|^7.0|^8.0",
+                    "symfony/http-foundation": "^6.0|^7.0|^8.0",
+                    "symfony/http-kernel": "^6.0|^7.0|^8.0"
+                },
+                "type": "symfony-bundle",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "3.x-dev"
+                    }
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Prezent\\Doctrine\\TranslatableBundle\\": ""
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "description": "Integrate the doctrine-translatable extension in Symfony"
+            }
+        }
+    ]
 }
