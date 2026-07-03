@@ -10,7 +10,7 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use SplPriorityQueue;
-use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Webmozart\Assert\Assert;
 
@@ -40,9 +40,9 @@ final class CrudControllerRegistry
      */
     public function __construct(
         private readonly EntityNameResolver $entityNameResolver,
-        #[TaggedLocator('shopsys.admin.crud_controllers')]
+        #[AutowireLocator('shopsys.admin.crud_controllers')]
         private readonly ServiceLocator $controllers,
-        #[TaggedLocator('shopsys.admin.crud_handler')]
+        #[AutowireLocator('shopsys.admin.crud_handler')]
         private readonly ServiceLocator $handlers,
         private readonly array $crudControllers = [],
         private readonly array $crudControllerExtensions = [],

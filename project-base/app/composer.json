@@ -87,27 +87,27 @@
         "stof/doctrine-extensions-bundle": "^1.15",
         "symfony-cmf/routing": "^3.0.3",
         "symfony-cmf/routing-bundle": "^3.0.3",
-        "symfony/doctrine-messenger": "^7.4",
-        "symfony/dotenv": "^7.4",
-        "symfony/error-handler": "^7.4",
+        "symfony/doctrine-messenger": "^8.1",
+        "symfony/dotenv": "^8.1",
+        "symfony/error-handler": "^8.1",
         "symfony/flex": "^2.4",
-        "symfony/form": "^7.4",
-        "symfony/http-client": "^7.4",
-        "symfony/mailer": "^7.4",
-        "symfony/messenger": "^7.4",
-        "symfony/monolog-bridge": "^7.4",
+        "symfony/form": "^8.1",
+        "symfony/http-client": "^8.1",
+        "symfony/mailer": "^8.1",
+        "symfony/messenger": "^8.1",
+        "symfony/monolog-bridge": "^8.1",
         "symfony/monolog-bundle": "^4.0",
-        "symfony/property-info": "^7.4",
-        "symfony/runtime": "^7.4",
-        "symfony/security-bundle": "^7.4",
+        "symfony/property-info": "^8.1",
+        "symfony/runtime": "^8.1",
+        "symfony/security-bundle": "^8.1",
         "symfony/service-contracts": "^3.5",
-        "symfony/stopwatch": "^7.4",
-        "symfony/translation": "^7.4",
-        "symfony/twig-bundle": "^7.4",
-        "symfony/validator": "^7.4",
-        "symfony/web-link": "^7.4",
+        "symfony/stopwatch": "^8.1",
+        "symfony/translation": "^8.1",
+        "symfony/twig-bundle": "^8.1",
+        "symfony/validator": "^8.1",
+        "symfony/web-link": "^8.1",
         "symfony/webpack-encore-bundle": "^2.2",
-        "symfony/workflow": "^7.4",
+        "symfony/workflow": "^8.1",
         "tracy/tracy": "^2.4.13",
         "tuscanicz/enum": "^2.1",
         "twig/twig": "^3.14.0",
@@ -131,10 +131,10 @@
         "shopsys/http-smoke-testing": "20.0.x-dev",
         "shopsys/maker": "20.0.x-dev",
         "sspooky13/yaml-standards": "^9.0",
-        "symfony/browser-kit": "^7.4",
-        "symfony/debug-bundle": "^7.4",
-        "symfony/var-dumper": "^7.4",
-        "symfony/web-profiler-bundle": "^7.4",
+        "symfony/browser-kit": "^8.1",
+        "symfony/debug-bundle": "^8.1",
+        "symfony/var-dumper": "^8.1",
+        "symfony/web-profiler-bundle": "^8.1",
         "shopsys/phpunit-injector": "^2.7"
     },
     "conflict": {
@@ -193,14 +193,23 @@
         "var-dir": "var",
         "public-dir": "web",
         "patches": {
+            "jms/translation-bundle": {
+                "Load DI config via PHP files because Symfony 8 removed the XML configuration format": "patch/jms-translation-symfony8-php-config.patch"
+            },
+            "overblog/graphiql-bundle": {
+                "Load DI config via PHP files because Symfony 8 removed the XML configuration format": "patch/overblog-graphiql-symfony8-php-config.patch"
+            },
             "overblog/graphql-bundle": {
                 "Remove kernel.reset tag from Executor to prevent schema clearing": "patch/overblog-executor-reset.patch",
                 "Use customerValidators translation domain in InputValidator": "patch/overblog-validator.patch"
+            },
+            "prezent/doctrine-translatable-bundle": {
+                "Load DI config via PHP files because Symfony 8 removed the XML configuration format": "patch/prezent-translatable-symfony8-php-config.patch"
             }
         },
         "symfony": {
             "allow-contrib": true,
-            "require": "^7.4",
+            "require": "^8.1",
             "docker": false
         }
     },
@@ -398,6 +407,46 @@
                     "MIT"
                 ],
                 "description": "Symfony GraphiQLBundle makes possible to render the UI into your symfony project"
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "prezent/doctrine-translatable",
+                "version": "5.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/Prezent/doctrine-translatable.git",
+                    "reference": "cb52112f4c889c2036b173173f9918ed3d82bc33"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/Prezent/doctrine-translatable/zipball/cb52112f4c889c2036b173173f9918ed3d82bc33",
+                    "reference": "cb52112f4c889c2036b173173f9918ed3d82bc33",
+                    "shasum": ""
+                },
+                "require": {
+                    "doctrine/common": "^2.3|^3.0",
+                    "doctrine/orm": "^3.5",
+                    "jms/metadata": "^1.1|^2.0",
+                    "php": ">=8.2",
+                    "symfony/cache": "^6.4|^7.1|^8.0"
+                },
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "5.x-dev"
+                    }
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Prezent\\Doctrine\\Translatable\\": "src/"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "description": "Translatable behaviour extension for Doctrine"
             }
         },
         {

@@ -406,14 +406,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * {@inheritdoc}
      */
     #[Override]
-    public function eraseCredentials(): void
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function getRoles(): array
     {
         if ($this->roles->exists(fn ($key, AdministratorRole $role) => $role->getRole() === SystemRole::SUPER_ADMIN)) {

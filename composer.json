@@ -162,45 +162,45 @@
         "stof/doctrine-extensions-bundle": "^1.15",
         "symfony-cmf/routing": "^3.0.3",
         "symfony-cmf/routing-bundle": "^3.0.3",
-        "symfony/amqp-messenger": "^7.4",
-        "symfony/browser-kit": "^7.4",
-        "symfony/clock": "^7.4",
-        "symfony/console": "^7.4",
-        "symfony/css-selector": "^7.4",
-        "symfony/doctrine-messenger": "^7.4",
-        "symfony/dom-crawler": "^7.4",
-        "symfony/dotenv": "^7.4",
-        "symfony/error-handler": "^7.4",
-        "symfony/event-dispatcher": "^7.4",
+        "symfony/amqp-messenger": "^8.1",
+        "symfony/browser-kit": "^8.1",
+        "symfony/clock": "^8.1",
+        "symfony/console": "^8.1",
+        "symfony/css-selector": "^8.1",
+        "symfony/doctrine-messenger": "^8.1",
+        "symfony/dom-crawler": "^8.1",
+        "symfony/dotenv": "^8.1",
+        "symfony/error-handler": "^8.1",
+        "symfony/event-dispatcher": "^8.1",
         "symfony/flex": "^2.4",
-        "symfony/form": "^7.4",
-        "symfony/framework-bundle": "^7.4",
-        "symfony/html-sanitizer": "^7.4",
-        "symfony/http-client": "^7.4",
-        "symfony/http-kernel": "^7.4",
-        "symfony/intl": "^7.4",
-        "symfony/mailer": "^7.4",
+        "symfony/form": "^8.1",
+        "symfony/framework-bundle": "^8.1",
+        "symfony/html-sanitizer": "^8.1",
+        "symfony/http-client": "^8.1",
+        "symfony/http-kernel": "^8.1",
+        "symfony/intl": "^8.1",
+        "symfony/mailer": "^8.1",
         "symfony/mcp-bundle": "^0.8",
-        "symfony/messenger": "^7.4",
-        "symfony/monolog-bridge": "^7.4",
+        "symfony/messenger": "^8.1",
+        "symfony/monolog-bridge": "^8.1",
         "symfony/monolog-bundle": "^4.0",
-        "symfony/property-info": "^7.4",
-        "symfony/rate-limiter": "^7.4",
-        "symfony/runtime": "^7.4",
-        "symfony/security-bundle": "^7.4",
-        "symfony/security-core": "^7.4",
-        "symfony/security-http": "^7.4",
-        "symfony/serializer": "^7.4",
+        "symfony/property-info": "^8.1",
+        "symfony/rate-limiter": "^8.1",
+        "symfony/runtime": "^8.1",
+        "symfony/security-bundle": "^8.1",
+        "symfony/security-core": "^8.1",
+        "symfony/security-http": "^8.1",
+        "symfony/serializer": "^8.1",
         "symfony/service-contracts": "^3.5",
-        "symfony/stopwatch": "^7.4",
-        "symfony/string": "^7.4",
-        "symfony/translation": "^7.4",
-        "symfony/twig-bundle": "^7.4",
+        "symfony/stopwatch": "^8.1",
+        "symfony/string": "^8.1",
+        "symfony/translation": "^8.1",
+        "symfony/twig-bundle": "^8.1",
         "symfony/ux-icons": "^2.22",
-        "symfony/validator": "^7.4",
-        "symfony/web-link": "^7.4",
+        "symfony/validator": "^8.1",
+        "symfony/web-link": "^8.1",
         "symfony/webpack-encore-bundle": "^2.2",
-        "symfony/workflow": "^7.4",
+        "symfony/workflow": "^8.1",
         "tracy/tracy": "^2.4.13",
         "tuscanicz/enum": "^2.1",
         "twig/twig": "^3.14.0",
@@ -226,12 +226,12 @@
         "slevomat/coding-standard": "^8.27.1",
         "squizlabs/php_codesniffer": "^4.0",
         "sspooky13/yaml-standards": "^9.0",
-        "symfony/debug-bundle": "^7.4",
+        "symfony/debug-bundle": "^8.1",
         "symfony/maker-bundle": "^1.62",
-        "symfony/process": "^7.4",
-        "symfony/var-dumper": "^7.4",
-        "symfony/web-profiler-bundle": "^7.4",
-        "symfony/yaml": "^7.4",
+        "symfony/process": "^8.1",
+        "symfony/var-dumper": "^8.1",
+        "symfony/web-profiler-bundle": "^8.1",
+        "symfony/yaml": "^8.1",
         "symplify/easy-coding-standard": "^13.0",
         "shopsys/phpunit-injector": "^2.7"
     },
@@ -281,16 +281,25 @@
         "public-dir": "project-base/app/web",
         "symfony": {
             "allow-contrib": true,
-            "require": "^7.4",
+            "require": "^8.1",
             "docker": false
         },
         "runtime": {
             "dotenv_path": "project-base/app/.env"
         },
         "patches": {
+            "jms/translation-bundle": {
+                "Load DI config via PHP files because Symfony 8 removed the XML configuration format": "project-base/app/patch/jms-translation-symfony8-php-config.patch"
+            },
+            "overblog/graphiql-bundle": {
+                "Load DI config via PHP files because Symfony 8 removed the XML configuration format": "project-base/app/patch/overblog-graphiql-symfony8-php-config.patch"
+            },
             "overblog/graphql-bundle": {
                 "Remove kernel.reset tag from Executor to prevent schema clearing": "project-base/app/patch/overblog-executor-reset.patch",
                 "Use customerValidators translation domain in InputValidator": "project-base/app/patch/overblog-validator.patch"
+            },
+            "prezent/doctrine-translatable-bundle": {
+                "Load DI config via PHP files because Symfony 8 removed the XML configuration format": "project-base/app/patch/prezent-translatable-symfony8-php-config.patch"
             }
         }
     },
@@ -514,6 +523,46 @@
                     "MIT"
                 ],
                 "description": "Symfony GraphiQLBundle makes possible to render the UI into your symfony project"
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "prezent/doctrine-translatable",
+                "version": "5.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/Prezent/doctrine-translatable.git",
+                    "reference": "cb52112f4c889c2036b173173f9918ed3d82bc33"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/Prezent/doctrine-translatable/zipball/cb52112f4c889c2036b173173f9918ed3d82bc33",
+                    "reference": "cb52112f4c889c2036b173173f9918ed3d82bc33",
+                    "shasum": ""
+                },
+                "require": {
+                    "doctrine/common": "^2.3|^3.0",
+                    "doctrine/orm": "^3.5",
+                    "jms/metadata": "^1.1|^2.0",
+                    "php": ">=8.2",
+                    "symfony/cache": "^6.4|^7.1|^8.0"
+                },
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "5.x-dev"
+                    }
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Prezent\\Doctrine\\Translatable\\": "src/"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "description": "Translatable behaviour extension for Doctrine"
             }
         },
         {

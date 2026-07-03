@@ -45,10 +45,6 @@ class McpAdministratorUserProviderTest extends TestCase
                 return [];
             }
 
-            public function eraseCredentials(): void
-            {
-            }
-
             public function getUserIdentifier(): string
             {
                 return 'unsupported';

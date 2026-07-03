@@ -1,6 +1,30 @@
 {
-    "_hash": "520d0650cc42a2f84fb941926c300e37aae7c21ee73be7852151b6f92b1302d3",
+    "_hash": "ba7a06a15c5cb856258cf4773d784129739c56d43d33c3325c6fe42e798a9336",
     "patches": {
+        "jms/translation-bundle": [
+            {
+                "package": "jms/translation-bundle",
+                "description": "Load DI config via PHP files because Symfony 8 removed the XML configuration format",
+                "url": "project-base/app/patch/jms-translation-symfony8-php-config.patch",
+                "sha256": "db51a2b3708bdef0479e9983741df9ca488f49858328bf8d3c13c4459baa4beb",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ],
+        "overblog/graphiql-bundle": [
+            {
+                "package": "overblog/graphiql-bundle",
+                "description": "Load DI config via PHP files because Symfony 8 removed the XML configuration format",
+                "url": "project-base/app/patch/overblog-graphiql-symfony8-php-config.patch",
+                "sha256": "2bd77349a716fa671b586a06ad3180aeebfe71cb150f0ff433207354b5c9a8ea",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ],
         "overblog/graphql-bundle": [
             {
                 "package": "overblog/graphql-bundle",
@@ -17,6 +41,18 @@
                 "description": "Use customerValidators translation domain in InputValidator",
                 "url": "project-base/app/patch/overblog-validator.patch",
                 "sha256": "864bc2cfdc4a3085641107b6d69c67612eac2c55af6012ed584bc2699f895c1e",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ],
+        "prezent/doctrine-translatable-bundle": [
+            {
+                "package": "prezent/doctrine-translatable-bundle",
+                "description": "Load DI config via PHP files because Symfony 8 removed the XML configuration format",
+                "url": "project-base/app/patch/prezent-translatable-symfony8-php-config.patch",
+                "sha256": "7b57d79d7a5a3334faa012dfbd46765c352a2fd344d71775e5f336b4b5de91cd",
                 "depth": 1,
                 "extra": {
                     "provenance": "root"

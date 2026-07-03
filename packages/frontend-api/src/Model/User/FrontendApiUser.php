@@ -58,11 +58,6 @@ class FrontendApiUser implements UserInterface
         return $this->email;
     }
 
-    #[Override]
-    public function eraseCredentials(): void
-    {
-    }
-
     public function getUuid(): string
     {
         return $this->uuid;
