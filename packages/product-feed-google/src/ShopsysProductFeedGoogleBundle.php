@@ -15,7 +15,7 @@ class ShopsysProductFeedGoogleBundle extends Bundle
      * {@inheritdoc}
      */
     #[Override]
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

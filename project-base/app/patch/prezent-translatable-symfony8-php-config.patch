@@ -1,0 +1,101 @@
+diff -ruN a/DependencyInjection/PrezentDoctrineTranslatableExtension.php b/DependencyInjection/PrezentDoctrineTranslatableExtension.php
+--- a/DependencyInjection/PrezentDoctrineTranslatableExtension.php	2026-07-03 14:09:27.923949026 +0200
++++ b/DependencyInjection/PrezentDoctrineTranslatableExtension.php	2026-07-03 14:09:43.440332437 +0200
+@@ -28,8 +28,8 @@
+     {
+         $config = $this->processConfiguration(new Configuration(), $configs);
+ 
+-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+-        $loader->load('services.xml');
++        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
++        $loader->load('services.php');
+ 
+         $container->getDefinition('prezent_doctrine_translatable.listener')
+                   ->addMethodCall('setCurrentLocale', array($config['fallback_locale']))
+@@ -42,9 +42,9 @@
+      * Load the Sonata configuration, if the versions is supported
+      *
+      * @param ContainerBuilder $container
+-     * @param Loader\XmlFileLoader $loader
++     * @param Loader\PhpFileLoader $loader
+      */
+-    private function loadSonata(ContainerBuilder $container, Loader\XmlFileLoader $loader)
++    private function loadSonata(ContainerBuilder $container, Loader\PhpFileLoader $loader)
+     {
+         $bundles = $container->getParameter('kernel.bundles');
+ 
+@@ -60,6 +60,6 @@
+             }
+         }
+ 
+-        $loader->load('sonata.xml');
++        $loader->load('sonata.php');
+     }
+ }
+diff -ruN a/Resources/config/services.php b/Resources/config/services.php
+--- a/Resources/config/services.php	1970-01-01 01:00:00.000000000 +0100
++++ b/Resources/config/services.php	2026-07-03 14:10:08.773252744 +0200
+@@ -0,0 +1,38 @@
++<?php
++
++/*
++ * (c) Prezent Internet B.V. <info@prezent.nl>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++namespace Symfony\Component\DependencyInjection\Loader\Configurator;
++
++return static function (ContainerConfigurator $container): void {
++    $container->parameters()
++        ->set('prezent_doctrine_translatable.listener.class', 'Prezent\Doctrine\Translatable\EventListener\TranslatableListener')
++        ->set('prezent_doctrine_translatable.listener.locale.class', 'Prezent\Doctrine\TranslatableBundle\EventListener\LocaleListener')
++        ->set('prezent_doctrine_translatable.metadata_factory.class', 'Metadata\MetadataFactory')
++        ->set('prezent_doctrine_translatable.driver_chain.class', 'Metadata\Driver\DriverChain');
++
++    $services = $container->services();
++
++    $services->defaults()
++        ->autowire()
++        ->autoconfigure();
++
++    $services->set('prezent_doctrine_translatable.driver_chain', '%prezent_doctrine_translatable.driver_chain.class%');
++
++    $services->set('prezent_doctrine_translatable.metadata_factory', '%prezent_doctrine_translatable.metadata_factory.class%')
++        ->args([service('prezent_doctrine_translatable.driver_chain')]);
++
++    $services->set('prezent_doctrine_translatable.listener', '%prezent_doctrine_translatable.listener.class%')
++        ->args([service('prezent_doctrine_translatable.metadata_factory')])
++        ->tag('doctrine.event_listener', ['event' => 'loadClassMetadata', 'connection' => 'default'])
++        ->tag('doctrine.event_listener', ['event' => 'postLoad', 'connection' => 'default']);
++
++    $services->set('prezent_doctrine_translatable.listener.locale', '%prezent_doctrine_translatable.listener.locale.class%')
++        ->args([service('prezent_doctrine_translatable.listener')])
++        ->tag('kernel.event_subscriber');
++};
+diff -ruN a/Resources/config/sonata.php b/Resources/config/sonata.php
+--- a/Resources/config/sonata.php	1970-01-01 01:00:00.000000000 +0100
++++ b/Resources/config/sonata.php	2026-07-03 14:10:11.716453732 +0200
+@@ -0,0 +1,21 @@
++<?php
++
++/*
++ * (c) Prezent Internet B.V. <info@prezent.nl>
++ *
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ */
++
++namespace Symfony\Component\DependencyInjection\Loader\Configurator;
++
++return static function (ContainerConfigurator $container): void {
++    $container->parameters()
++        ->set('prezent_doctrine_translatable.sonata.filter.class', 'Prezent\Doctrine\TranslatableBundle\Filter\TranslatableFilter');
++
++    $services = $container->services();
++
++    $services->set('prezent_doctrine_translatable.sonata.filter', '%prezent_doctrine_translatable.sonata.filter.class%')
++        ->args([service('prezent_doctrine_translatable.listener')])
++        ->tag('sonata.admin.filter.type', ['alias' => 'translatable']);
++};

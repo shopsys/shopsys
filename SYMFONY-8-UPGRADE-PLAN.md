@@ -30,12 +30,20 @@ Work is done on branch `pk-symfony-8` as a series of small commits.
 - [x] **Phase 2 — Composer metadata overrides for the 6 blocking packages**
   - [x] add inline `package` repositories (same code/dist, relaxed Symfony constraints) to root `composer.json`
   - [x] mirror the change in `project-base/app/composer.json`
-- [ ] **Phase 3 — Switch to Symfony 8.1**
-  - [ ] bump all `symfony/*` `^7.4` → `^8.1` and `extra.symfony.require` in root + `project-base/app` composer.json
-  - [ ] `composer update`, commit new `composer.lock` + `symfony.lock`
+- [x] **Phase 3 — Switch to Symfony 8.1**
+  - [x] bump all `symfony/*` `^7.4` → `^8.1` and `extra.symfony.require` in root + `project-base/app` composer.json
+  - [x] `composer update` (composer.lock is gitignored in the monorepo; `symfony.lock` unchanged)
+  - [x] composer patches for `jms/translation-bundle`, `overblog/graphiql-bundle` and
+    `prezent/doctrine-translatable-bundle` — Symfony 8 removed the XML DI config format,
+    the patches convert their service definitions to PHP config files
 - [ ] **Phase 4 — Fix breaks**
-  - [ ] application build (`phing build-dev-quick`), container compilation, cache warmup
-  - [ ] PHPStan pass (fix removed/changed APIs; prefer changes also compatible with 7.4)
+  - [x] `Bundle::build()` now requires `: void` return type (product feed bundles)
+  - [x] `framework.annotations` config option removed
+  - [x] `UserInterface::eraseCredentials()` removed — dropped empty implementations
+  - [x] `#[TaggedLocator]` removed — replaced by `#[AutowireLocator]`
+  - [x] container compiles, cache warms up, admin + storefront respond (dev)
+  - [ ] application build (`phing build-dev-quick`)
+  - [ ] PHPStan pass (fix removed/changed APIs)
 - [ ] **Phase 5 — Tests**
   - [ ] unit + functional + smoke + frontend-api test suites green
 - [ ] **Phase 6 — Monorepo packages**

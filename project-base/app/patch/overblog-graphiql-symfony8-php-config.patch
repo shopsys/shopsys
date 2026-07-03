@@ -1,0 +1,58 @@
+diff -ruN a/src/DependencyInjection/OverblogGraphiQLExtension.php b/src/DependencyInjection/OverblogGraphiQLExtension.php
+--- a/src/DependencyInjection/OverblogGraphiQLExtension.php	2026-07-03 14:09:27.912336364 +0200
++++ b/src/DependencyInjection/OverblogGraphiQLExtension.php	2026-07-03 14:09:43.435039708 +0200
+@@ -7,7 +7,7 @@
+ use Symfony\Component\Config\FileLocator;
+ use Symfony\Component\DependencyInjection\ContainerBuilder;
+ use Symfony\Component\DependencyInjection\Extension\Extension;
+-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
++use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+ use Symfony\Component\DependencyInjection\Reference;
+ 
+ class OverblogGraphiQLExtension extends Extension
+@@ -20,8 +20,8 @@
+         $configuration = new Configuration();
+         $config = $this->processConfiguration($configuration, $configs);
+ 
+-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+-        $loader->load('services.xml');
++        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
++        $loader->load('services.php');
+ 
+         $container->setParameter('overblog_graphiql.endpoint_resolver', $config['endpoint_resolver']);
+ 
+diff -ruN a/src/Resources/config/services.php b/src/Resources/config/services.php
+--- a/src/Resources/config/services.php	1970-01-01 01:00:00.000000000 +0100
++++ b/src/Resources/config/services.php	2026-07-03 14:09:55.052544741 +0200
+@@ -0,0 +1,31 @@
++<?php
++
++declare(strict_types=1);
++
++namespace Symfony\Component\DependencyInjection\Loader\Configurator;
++
++use Overblog\GraphiQLBundle\Config\GraphiQLControllerEndpoint;
++use Overblog\GraphiQLBundle\Config\GraphiQLViewConfig;
++use Overblog\GraphiQLBundle\Config\GraphiQLViewJavaScriptLibraries;
++use Overblog\GraphiQLBundle\Controller\GraphiQLController;
++
++return static function (ContainerConfigurator $container): void {
++    $services = $container->services();
++
++    $services->set('overblog_graphiql.controller.graphql.endpoint', GraphiQLControllerEndpoint::class);
++
++    $services->set('overblog_graphiql.view.config', GraphiQLViewConfig::class);
++
++    $services->set('overblog_graphiql.view.config.javascript_libraries', GraphiQLViewJavaScriptLibraries::class);
++
++    $services->set('overblog_graphiql.controller', GraphiQLController::class)
++        ->public()
++        ->args([
++            service('twig'),
++            service('overblog_graphiql.view.config'),
++            service('overblog_graphiql.controller.graphql.endpoint'),
++        ]);
++
++    $services->alias(GraphiQLController::class, 'overblog_graphiql.controller')
++        ->public();
++};

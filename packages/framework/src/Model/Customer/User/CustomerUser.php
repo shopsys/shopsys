@@ -425,14 +425,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      * {@inheritdoc}
      */
     #[Override]
-    public function eraseCredentials(): void
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function getRoles(): array
     {
         return $this->roleGroup->getRoles();

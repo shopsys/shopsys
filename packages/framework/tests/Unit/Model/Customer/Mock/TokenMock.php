@@ -42,11 +42,6 @@ class TokenMock implements TokenInterface
     }
 
     #[Override]
-    public function eraseCredentials(): void
-    {
-    }
-
-    #[Override]
     public function getAttributes(): array
     {
         return [];
