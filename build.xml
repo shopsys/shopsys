@@ -11,7 +11,7 @@
     <property name="path.utils" value="${project.basedir}/utils"/>
     <property name="path.upgrade-notes" value="${project.basedir}/upgrade-notes"/>
     <property name="translations.dump.flags" value=""/>
-    <property name="npm-export-translations.extra-args" value="source-dir=${path.administration}/assets/src/js/**/*.js translations-dir=${path.administration}/translations/*.po" override="true"/>
+    <property name="npm-export-translations.extra-args" value="source-dir=${path.administration}/assets/src/**/*.js translations-dir=${path.administration}/translations/*.po" override="true"/>
 
     <import file="${path.framework}/build.xml"/>
     <import file="${path.frontend-api}/build.xml"/>
