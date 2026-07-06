@@ -263,7 +263,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_WEB);
         }
 
-        //mobile version
+        // mobile version
         $imagesIdsIndexedBySliderItemsIds = [
             1 => 103,
             2 => 104,

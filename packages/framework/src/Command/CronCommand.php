@@ -282,7 +282,7 @@ class CronCommand extends Command
     {
         /** @var string|null $cronTimezone */
         $cronTimezone = $this->parameterBag->get('shopsys.cron_timezone');
-        $cronTimezone = $cronTimezone ?? date_default_timezone_get();
+        $cronTimezone ??= date_default_timezone_get();
 
         return new DateTimeZone($cronTimezone);
     }

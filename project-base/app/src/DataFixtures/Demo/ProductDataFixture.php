@@ -4073,12 +4073,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         return [
             '9176544M' => [
-                '9176544', //36 / led
-                '9176588', //54 / crt
-                '9176522', //24 / led
-                '917652236', //36 / crt
-                '917652254', //54 / led
-                '91765223', //24 / crt
+                '9176544', // 36 / led
+                '9176588', // 54 / crt
+                '9176522', // 24 / led
+                '917652236', // 36 / crt
+                '917652254', // 54 / led
+                '91765223', // 24 / crt
             ],
             '32PFL4400' => [
                 '9176554', // 36 / led

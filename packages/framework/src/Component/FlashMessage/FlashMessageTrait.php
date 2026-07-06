@@ -8,7 +8,7 @@ use LogicException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
-use Symfony\Component\HttpFoundation\Session\Session as Session;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @property \Psr\Container\ContainerInterface $container

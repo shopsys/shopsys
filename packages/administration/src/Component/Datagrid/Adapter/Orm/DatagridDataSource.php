@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\AdministrationBundle\Component\Doctrine\DatagridHydrator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
-use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult as PaginationResult;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
 final class DatagridDataSource extends QueryBuilderWithRowManipulatorDataSource

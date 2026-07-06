@@ -39,7 +39,7 @@ class ProductConnectionFactory
 
             return $this->luigisBoxFacetsToProductFilterConfigMapper->map($batchLoadResult?->getFacets() ?? [], $productFilterData);
         };
-        $orderingMode = $orderingMode ?? $this->productOrderingModeProvider->getDefaultOrderingModeForSearch();
+        $orderingMode ??= $this->productOrderingModeProvider->getDefaultOrderingModeForSearch();
 
         return $this->getConnectionPromise(
             $retrieveProductClosure,
