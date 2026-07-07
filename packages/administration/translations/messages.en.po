@@ -67,9 +67,6 @@ msgstr ""
 msgid "Add another price with weight limit"
 msgstr ""
 
-msgid "Add another video"
-msgstr ""
-
 msgid "Add country"
 msgstr ""
 
@@ -107,6 +104,9 @@ msgid "Add some mail whitelist patterns"
 msgstr ""
 
 msgid "Add some parameters"
+msgstr ""
+
+msgid "Add video"
 msgstr ""
 
 msgid "Administration"

@@ -67,9 +67,6 @@ msgstr "Přidat další parametr"
 msgid "Add another price with weight limit"
 msgstr "Přidat další cenu s váhovým limitem"
 
-msgid "Add another video"
-msgstr "Přidat další video"
-
 msgid "Add country"
 msgstr "Přidat stát"
 
@@ -108,6 +105,9 @@ msgstr "Přidejte nějaké předpisy pro e-mailový whitelist"
 
 msgid "Add some parameters"
 msgstr "Přidat parametr"
+
+msgid "Add video"
+msgstr "Přidat video"
 
 msgid "Administration"
 msgstr "Administrace"
