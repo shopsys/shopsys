@@ -1,7 +1,7 @@
 import { captureException } from '@sentry/nextjs';
 import { RedisClientType } from 'redis';
 import { fetcher } from 'urql/fetcher';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const isClientGetter = vi.fn();
 vi.mock('utils/isClient', () => ({
@@ -18,9 +18,10 @@ const mockFetch = vi.fn();
 global.fetch = mockFetch;
 
 const mockRedisClientGet = vi.fn((): string | null => null);
+const mockRedisClientSet = vi.fn(() => null);
 const mockRedisClient = {
     get: mockRedisClientGet,
-    set: vi.fn(() => null),
+    set: mockRedisClientSet,
 } as unknown as RedisClientType;
 
 const REQUEST_WITH_DIRECTIVE = {
@@ -57,6 +58,21 @@ const TEST_URL_WITH_FRIENDLY_URL =
 const TEST_RESPONSE_BODY = { testBody: 'test data' };
 
 describe('fetcher test', () => {
+    beforeEach(() => {
+        vi.unstubAllEnvs();
+        isClientGetter.mockImplementation(() => false);
+        mockRedisClientGet.mockImplementation(() => null);
+        mockRedisClientSet.mockImplementation(() => null);
+        mockFetch.mockImplementation(() =>
+            Promise.resolve({
+                headers: new Headers({
+                    'content-type': 'application/json',
+                }),
+                json: () => Promise.resolve({ data: TEST_RESPONSE_BODY }),
+            }),
+        );
+    });
+
     test('using fetcher on the server without Redis should capture an exception in Sentry but still make a request', () => {
         isClientGetter.mockImplementation(() => false);
 

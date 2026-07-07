@@ -8,7 +8,8 @@ import {
     SORT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
-import { describe, expect, Mock, test, vi } from 'vitest';
+import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
+import { resetUseUpdateFilterTestMocks } from 'vitest/utils/queryParams/useUpdateFilterTestUtils';
 
 const CATEGORY_URL = '/category-url';
 const CATEGORY_PATHNAME = '/categories/[categorySlug]';
@@ -67,6 +68,17 @@ vi.mock('config/constants', async (importOriginal) => {
 });
 
 describe('useUpdateFilter().updateFilterFlags tests', () => {
+    beforeEach(() => {
+        resetUseUpdateFilterTestMocks({
+            mockSeoSensitiveFiltersGetter,
+            useRouterMock: useRouter as Mock,
+            useSessionStoreMock: useSessionStore as unknown as Mock,
+            mockPush,
+            categoryPathname: CATEGORY_PATHNAME,
+            categoryUrl: CATEGORY_URL,
+        });
+    });
+
     test('flag should be added to query if not present', () => {
         useUpdateFilterQuery().updateFilterFlagsQuery('test-flag');
 

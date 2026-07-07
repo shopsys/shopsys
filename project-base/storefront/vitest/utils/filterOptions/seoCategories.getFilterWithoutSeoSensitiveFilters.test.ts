@@ -1,7 +1,7 @@
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
 import { getFilterWithoutSeoSensitiveFilters } from 'utils/seoCategories/getFilterWithoutSeoSensitiveFilters';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const DEFAULT_SEO_SENSITIVE_CONFIG = {
     SORT: false,
@@ -57,6 +57,10 @@ const removeKeysFromFilterTestValue = (
 };
 
 describe('seoCategories.getFilterWithoutSeoSensitiveFilters tests', () => {
+    beforeEach(() => {
+        mockSeoSensitiveFiltersGetter.mockImplementation(() => DEFAULT_SEO_SENSITIVE_CONFIG);
+    });
+
     test('should return empty filter if the current filter is undefined or null', () => {
         const { filteredFilter: undefinedFilter } = getFilterWithoutSeoSensitiveFilters(undefined, null);
         const { filteredFilter: nullFilter } = getFilterWithoutSeoSensitiveFilters(null, null);

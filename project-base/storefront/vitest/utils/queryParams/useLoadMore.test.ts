@@ -5,7 +5,7 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 import { useUpdateLoadMoreQuery } from 'utils/queryParams/useUpdateLoadMoreQuery';
-import { describe, expect, Mock, test, vi } from 'vitest';
+import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
 
 const CATEGORY_URL = '/category-url';
 const CATEGORY_PATHNAME = '/categories/[categorySlug]';
@@ -58,6 +58,11 @@ vi.mock('store/useSessionStore', () => ({
 }));
 
 describe('useQueryParams().loadMore tests', () => {
+    beforeEach(() => {
+        mockPageQueryGetter.mockImplementation(() => undefined);
+        mockLoadMoreQueryGetter.mockImplementation(() => undefined);
+    });
+
     test('loading 1 "load more" page while on the 1st page should only update the load more URL query', () => {
         useUpdateLoadMoreQuery()();
 
