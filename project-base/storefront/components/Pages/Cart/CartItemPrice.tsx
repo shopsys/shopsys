@@ -23,7 +23,7 @@ export const CartItemPrice: FC<CartItemPriceProps> = ({ productPrice, quantity, 
     }
 
     return (
-        <div className={twMergeCustom('flex vl:w-36 items-center justify-end', className)}>
+        <div className={twMergeCustom('flex vl:w-32 items-center justify-end', className)}>
             <div className="flex flex-col gap-0.5 whitespace-nowrap text-right font-bold font-secondary">
                 <div
                     className={twMergeCustom(

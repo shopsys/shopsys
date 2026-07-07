@@ -65,17 +65,20 @@ export const openHeaderCartByMouseover = () => {
     cy.scrollTo('topLeft');
 };
 
-export const removeFirstProductFromHeaderCart = () => {
-    cy.getByTID([TIDs.pages_cart_removecartitembutton]).first().click();
+export const removeProductFromHeaderCartWithSpinbox = (catnum: string, quantity: number) => {
+    for (let i = 0; i < quantity; i++) {
+        cy.getByTID([[TIDs.header_cart_list_item_, catnum], TIDs.forms_spinbox_decrease]).should('be.visible').click();
+        cy.waitForStableAndInteractiveDOM();
+    }
 };
 
 export const removeProductFromCartPage = (catnum: string) => {
     cy.getByTID([[TIDs.pages_cart_list_item_, catnum], TIDs.pages_cart_removecartitembutton]).click();
 };
 
-export const checkCartItemSpinboxDecreaseButtonIsDisabled = (catnum: string) => {
+export const checkCartItemSpinboxDecreaseButtonIsEnabled = (catnum: string) => {
     cy.getByTID([[TIDs.pages_cart_list_item_, catnum], TIDs.forms_spinbox_decrease]).should(
-        'have.css',
+        'not.have.css',
         'pointer-events',
         'none',
     );
@@ -83,14 +86,6 @@ export const checkCartItemSpinboxDecreaseButtonIsDisabled = (catnum: string) => 
 
 export const checkCartItemSpinboxIncreaseButtonIsEnabled = (catnum: string) => {
     cy.getByTID([[TIDs.pages_cart_list_item_, catnum], TIDs.forms_spinbox_increase]).should(
-        'not.have.css',
-        'pointer-events',
-        'none',
-    );
-};
-
-export const checkCartItemSpinboxDecreaseButtonIsEnabled = (catnum: string) => {
-    cy.getByTID([[TIDs.pages_cart_list_item_, catnum], TIDs.forms_spinbox_decrease]).should(
         'not.have.css',
         'pointer-events',
         'none',

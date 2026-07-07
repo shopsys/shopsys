@@ -32,6 +32,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'payment-error': t('There was an error while changing the payment method.'),
         'promo-code-apply-error': t('There was an error while adding a promo code to the order.'),
         'promo-code-remove-error': t('There was an error while removing the promo code from the order.'),
+        'remove-from-cart-error': t('Unable to remove product from cart.'),
         'transport-error': t('There was an error while changing the transport method.'),
     };
 

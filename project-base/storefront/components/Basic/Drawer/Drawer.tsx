@@ -26,9 +26,11 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                     initial={{ translateX: '100%' }}
                     transition={{ duration: 0.2 }}
                     className={twMergeCustom(
-                        'pointer-events-auto fixed top-0 right-0 z-aboveOverlay h-dvh min-w-[315px] overflow-y-auto rounded-none bg-background-default p-5',
+                        'pointer-events-auto fixed top-0 right-0 z-aboveOverlay h-dvh min-w-79 max-w-md overflow-y-auto rounded-none bg-background-default p-5',
                         className,
                     )}
+                    onClick={(event) => event.stopPropagation()}
+                    onTouchEnd={(event) => event.stopPropagation()}
                 >
                     <div className="mb-5 flex flex-row justify-between">
                         <span className="w-full text-center text-md">{title}</span>

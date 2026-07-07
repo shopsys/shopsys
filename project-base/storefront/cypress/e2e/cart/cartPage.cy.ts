@@ -1,6 +1,5 @@
 import {
     applyPromoCodeOnCartPage,
-    checkCartItemSpinboxDecreaseButtonIsDisabled,
     checkCartItemSpinboxDecreaseButtonIsEnabled,
     checkCartItemSpinboxIncreaseButtonIsEnabled,
     clickOnPromoCodeButton,
@@ -146,8 +145,8 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Quantity Spinbox Decrease] min spinbox button should not be clickable if it cannot be used due to min quantity', function () {
-        checkCartItemSpinboxDecreaseButtonIsDisabled(staticData.products.philips32PFL4308.catnum);
+    it('[Quantity Spinbox Decrease] min spinbox button should stay clickable for removing the cart item', function () {
+        checkCartItemSpinboxDecreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
         cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.philips32PFL4308.catnum], TIDs.spinbox_input])
             .clear()
             .type('50')

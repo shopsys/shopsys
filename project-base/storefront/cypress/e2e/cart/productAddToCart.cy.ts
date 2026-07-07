@@ -181,4 +181,58 @@ describe('Product Add To Cart Tests', () => {
         });
         checkPopupIsVisible(true);
     });
+
+    it('[Product Card Quantity Adjust] should switch between add to cart button and quantity spinbox', function () {
+        visitEntityByUuid('category', staticData.categories.electronics.uuid);
+
+        cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]]).within(() => {
+            cy.getByTID([TIDs.blocks_product_addtocart]).should('be.visible').click();
+        });
+
+        checkPopupIsVisible(true);
+        cy.waitForStableAndInteractiveDOM();
+
+        cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]]).within(() => {
+            cy.getByTID([TIDs.blocks_product_addtocart]).should('not.exist');
+            cy.getByTID([TIDs.spinbox_input]).should('have.value', '1');
+        });
+
+        takeSnapshotAndCompare(
+            getSnapshotFullIndexAsString(),
+            'product card quantity spinbox',
+            {
+                blackout: [
+                    { tid: TIDs.product_list_item_image, zIndex: 5 },
+                    { tid: TIDs.simple_navigation_image, zIndex: 9999 },
+                    { tid: TIDs.footer_social_links },
+                    { tid: TIDs.footer_payment_images },
+                    { tid: TIDs.footer_copyright },
+                ],
+            },
+        );
+
+        cy.getByTID([
+            [TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum],
+            TIDs.forms_spinbox_increase,
+        ]).click();
+        cy.waitForStableAndInteractiveDOM();
+
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
+        cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]]).within(() => {
+            cy.getByTID([TIDs.spinbox_input]).should('have.value', '2');
+            cy.getByTID([TIDs.forms_spinbox_decrease]).click();
+        });
+        cy.waitForStableAndInteractiveDOM();
+
+        cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]]).within(() => {
+            cy.getByTID([TIDs.spinbox_input]).should('have.value', '1');
+            cy.getByTID([TIDs.forms_spinbox_decrease]).click();
+        });
+        cy.waitForStableAndInteractiveDOM();
+
+        cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]]).within(() => {
+            cy.getByTID([TIDs.spinbox_input]).should('not.exist');
+            cy.getByTID([TIDs.blocks_product_addtocart]).should('be.visible');
+        });
+    });
 });

@@ -19,7 +19,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const removingCartItemUuidsRef = useRef(new Set<string>());
 
-    const removeFromCart = async (cartItem: TypeCartItemFragment, listIndex: number) => {
+    const removeFromCart = async (cartItem: TypeCartItemFragment, listIndex?: number) => {
         if (removingCartItemUuidsRef.current.has(cartItem.uuid)) {
             return null;
         }

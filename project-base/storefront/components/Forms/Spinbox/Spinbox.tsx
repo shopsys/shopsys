@@ -2,7 +2,16 @@ import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { TIDs } from 'cypress/tids';
-import { FormEventHandler, forwardRef, KeyboardEventHandler, useEffect, useEffectEvent, useRef, useState } from 'react';
+import {
+    FormEventHandler,
+    forwardRef,
+    KeyboardEventHandler,
+    ReactNode,
+    useEffect,
+    useEffectEvent,
+    useRef,
+    useState,
+} from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
@@ -24,7 +33,15 @@ type SpinboxProps = {
     ariaLabel?: string;
     decreaseAriaLabel?: string;
     increaseAriaLabel?: string;
-    getValueAnnouncement?: (currentValue: number) => string;
+    minValueDecreaseIcon?: ReactNode;
+    minValueDecreaseTitle?: string;
+    minValueDecreaseAriaLabel?: string;
+    maxValueReachedTitle?: string;
+    onMinValueDecrease?: () => void;
+    inputAriaLabel?: string;
+    liveAnnouncement?: string;
+    className?: string;
+    hasPendingLook?: boolean;
 };
 
 const isValidNumber = (value: number): boolean => !Number.isNaN(value);
@@ -38,33 +55,53 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             onChangeValueCallback,
             step,
             defaultValue,
-            id,
             size = 'large',
             ariaDescription,
             ariaLabel,
+            minValueDecreaseIcon,
+            minValueDecreaseTitle,
+            minValueDecreaseAriaLabel,
+            maxValueReachedTitle,
+            onMinValueDecrease,
+            inputAriaLabel,
             decreaseAriaLabel,
             increaseAriaLabel,
-            getValueAnnouncement,
+            liveAnnouncement,
+            className,
+            hasPendingLook = false,
+            id,
         },
         spinboxForwardedRef,
     ) => {
         const { t } = useTranslation();
 
         const resolvedMax = Math.min(max ?? MAX_CART_ITEM_QUANTITY, MAX_CART_ITEM_QUANTITY);
-        const descriptionId = `${id}-quantity-input-description`;
 
         const [value, setValue] = useState<number | undefined>(defaultValue);
         const [lastValidValue, setLastValidValue] = useState<number>(defaultValue);
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
-        const [valueAnnouncement, setValueAnnouncement] = useState('');
+        const [userValueChangeSequence, setUserValueChangeSequence] = useState(0);
         const lastKeyPressedRef = useRef<string | null>(null);
         const backspaceSequenceRef = useRef<boolean>(false);
 
         const spinboxRef = useForwardedRef<HTMLInputElement>(spinboxForwardedRef);
         const intervalRef = useRef<NodeJS.Timeout | null>(null);
         const debouncedValue = useDebounce(value, 500);
-        const lastReportedValueRef = useRef<number | undefined>(undefined);
+        const debouncedUserValueChangeSequence = useDebounce(userValueChangeSequence, 500);
+        const lastReportedValueRef = useRef<number | undefined>(defaultValue);
+        const hasPendingUserValueChangeRef = useRef(false);
+
+        useEffect(() => {
+            setValue(defaultValue);
+            setLastValidValue(defaultValue);
+            lastReportedValueRef.current = defaultValue;
+            hasPendingUserValueChangeRef.current = false;
+
+            if (spinboxRef.current) {
+                spinboxRef.current.valueAsNumber = defaultValue;
+            }
+        }, [defaultValue]);
 
         const restoreValueOnEmpty = (inputValue: number) => {
             if (!spinboxRef.current) {
@@ -94,15 +131,17 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             const integerValue = Math.round(newValue);
 
             if (integerValue < min) {
+                hasPendingUserValueChangeRef.current = true;
+                setUserValueChangeSequence((currentSequence) => currentSequence + 1);
                 spinboxRef.current.valueAsNumber = min;
                 setValue(min);
                 setLastValidValue(min);
-                setValueAnnouncement(getValueAnnouncement?.(min) ?? String(min));
             } else if (integerValue > resolvedMax) {
+                hasPendingUserValueChangeRef.current = true;
+                setUserValueChangeSequence((currentSequence) => currentSequence + 1);
                 spinboxRef.current.valueAsNumber = resolvedMax;
                 setValue(resolvedMax);
                 setLastValidValue(resolvedMax);
-                setValueAnnouncement(getValueAnnouncement?.(resolvedMax) ?? String(resolvedMax));
 
                 showInfoMessage(
                     t('Maximum available quantity is {{ quantity }}. The quantity was adjusted.', {
@@ -110,9 +149,10 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     }),
                 );
             } else {
+                hasPendingUserValueChangeRef.current = true;
+                setUserValueChangeSequence((currentSequence) => currentSequence + 1);
                 spinboxRef.current.valueAsNumber = integerValue;
                 setValue(integerValue);
-                setValueAnnouncement(getValueAnnouncement?.(integerValue) ?? String(integerValue));
 
                 if (!skipLastValidUpdate) {
                     setLastValidValue(integerValue);
@@ -207,16 +247,35 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             if (
                 debouncedValue !== undefined &&
                 !Number.isNaN(debouncedValue) &&
-                debouncedValue !== lastReportedValueRef.current
+                (hasPendingUserValueChangeRef.current || debouncedValue !== lastReportedValueRef.current)
             ) {
                 lastReportedValueRef.current = debouncedValue;
+                hasPendingUserValueChangeRef.current = false;
                 onReportValue(debouncedValue);
             }
-        }, [debouncedValue]);
+        }, [debouncedValue, debouncedUserValueChangeSequence]);
 
         const onValueChange = useEffectEvent((amountChange: number) => {
             handleValueChange(amountChange);
         });
+
+        const isDecreaseOnMinValue = value === min;
+        const isIncreaseOnMaxValue = value === resolvedMax;
+        const isDecreaseDisabled = isDecreaseOnMinValue && onMinValueDecrease === undefined;
+        const isIncreaseDisabled = isIncreaseOnMaxValue;
+        const descriptionId = `${id}-quantity-input-description`;
+
+        const onDecreaseClick = () => {
+            if (isDecreaseOnMinValue) {
+                lastReportedValueRef.current = value;
+                hasPendingUserValueChangeRef.current = false;
+                onMinValueDecrease?.();
+
+                return;
+            }
+
+            handleValueChange(-step);
+        };
 
         useEffect(() => {
             if (isHoldingIncrease) {
@@ -238,30 +297,42 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
         return (
             <div
-                className={twJoin(
-                    'inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden rounded-counter bg-input-bg-default outline-2 outline-input-border-default -outline-offset-2',
-                    (size === 'small' || size === 'medium') && 'py-1',
-                    size === 'large' && 'py-1 sm:py-1.5',
-                    size === 'xlarge' && 'py-1.5 sm:py-3.5',
+                aria-busy={hasPendingLook}
+                className={twMergeCustom(
+                    'inline-flex h-fit w-full shrink-0 items-center justify-between overflow-hidden rounded-counter bg-background-default outline outline-gray-400 -outline-offset-1',
+                    className,
                 )}
             >
                 <SpinboxButton
-                    ariaLabel={decreaseAriaLabel ?? t('Decrease quantity', { ns: 'accessibility' })}
-                    disabled={value === min}
+                    ariaLabel={
+                        isDecreaseOnMinValue && minValueDecreaseAriaLabel
+                            ? minValueDecreaseAriaLabel
+                            : (decreaseAriaLabel ?? t('Decrease quantity', { ns: 'accessibility' }))
+                    }
+                    className="bg-gray-300 hover:bg-gray-500"
+                    disabled={isDecreaseDisabled}
                     size={size}
                     tid={TIDs.forms_spinbox_decrease}
-                    title={t('Decrease')}
-                    onClick={() => handleValueChange(-step)}
-                    onMouseDown={() => setIsHoldingDecrease(true)}
+                    title={isDecreaseOnMinValue && minValueDecreaseTitle ? minValueDecreaseTitle : t('Decrease')}
+                    onClick={onDecreaseClick}
+                    onMouseDown={() => {
+                        if (!isDecreaseOnMinValue) {
+                            setIsHoldingDecrease(true);
+                        }
+                    }}
                     onMouseLeave={() => setIsHoldingDecrease(false)}
                     onMouseUp={() => setIsHoldingDecrease(false)}
                 >
-                    <MinusIcon className="size-4" />
+                    {isDecreaseOnMinValue && minValueDecreaseIcon ? (
+                        minValueDecreaseIcon
+                    ) : (
+                        <MinusIcon className="size-4" />
+                    )}
                 </SpinboxButton>
 
                 <input
                     aria-describedby={descriptionId}
-                    aria-label={ariaLabel ?? t('Quantity', { ns: 'accessibility' })}
+                    aria-label={inputAriaLabel ?? ariaLabel ?? t('Quantity', { ns: 'accessibility' })}
                     data-tid={TIDs.spinbox_input}
                     defaultValue={defaultValue}
                     id={id}
@@ -272,8 +343,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     tid={TIDs.spinbox_input}
                     type="number"
                     className={twJoin(
-                        'text-center font-bold font-secondary text-input-text-default text-lg outline-hidden',
-                        size === 'xlarge' ? 'w-10' : 'w-8',
+                        'w-13 text-center font-secondary font-semibold text-input-text-default text-lg outline-hidden',
                     )}
                     onBlur={handleBlur}
                     onInput={handleInput}
@@ -284,18 +354,33 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     {ariaDescription ?? t('Type in a number or use arrow up or arrow down to change the quantity')}
                 </span>
 
-                <span aria-atomic="true" aria-live="polite" className="sr-only">
-                    {valueAnnouncement}
-                </span>
+                {liveAnnouncement && (
+                    <span aria-atomic="true" aria-live="polite" className="sr-only" role="status">
+                        {liveAnnouncement}
+                    </span>
+                )}
 
                 <SpinboxButton
                     ariaLabel={increaseAriaLabel ?? t('Increase quantity', { ns: 'accessibility' })}
-                    disabled={value === resolvedMax}
+                    className={twJoin(
+                        'bg-button-primary-bg-default text-button-primary-text-default hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
+                        isIncreaseDisabled && 'bg-button-primary-bg-disabled text-button-primary-text-disabled',
+                    )}
+                    disabled={isIncreaseDisabled}
                     size={size}
                     tid={TIDs.forms_spinbox_increase}
-                    title={t('Increase')}
-                    onClick={() => handleValueChange(step)}
-                    onMouseDown={() => setIsHoldingIncrease(true)}
+                    title={isIncreaseOnMaxValue && maxValueReachedTitle ? maxValueReachedTitle : t('Increase')}
+                    hasPendingLook={hasPendingLook}
+                    onClick={() => {
+                        if (!isIncreaseDisabled) {
+                            handleValueChange(step);
+                        }
+                    }}
+                    onMouseDown={() => {
+                        if (!isIncreaseDisabled) {
+                            setIsHoldingIncrease(true);
+                        }
+                    }}
                     onMouseLeave={() => setIsHoldingIncrease(false)}
                     onMouseUp={() => setIsHoldingIncrease(false)}
                 >
@@ -317,22 +402,38 @@ type SpinboxButtonProps = {
     disabled: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
     ariaLabel: string;
+    className: string;
+    hasPendingLook?: boolean;
 };
 
-const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, tid, title, ariaLabel, ...props }) => (
-    <button
-        aria-label={ariaLabel}
-        data-tid={tid}
-        tabIndex={disabled ? -1 : 0}
-        title={title}
-        className={twMergeCustom([
-            'flex cursor-pointer justify-center rounded-sm border-none text-icon-less outline-hidden hover:text-icon-default',
-            size === 'xlarge' ? 'w-10' : 'w-7',
-
-            disabled && 'pointer-events-none text-input-border-disabled',
-        ])}
-        {...props}
-    >
-        {children}
-    </button>
+const SpinboxButton: FC<SpinboxButtonProps> = ({
+    children,
+    disabled,
+    size,
+    tid,
+    title,
+    ariaLabel,
+    className,
+    hasPendingLook,
+    ...props
+}) => (
+    <span className="inline-flex" title={title}>
+        <button
+            aria-disabled={disabled}
+            aria-label={ariaLabel}
+            data-tid={tid}
+            tabIndex={disabled ? -1 : 0}
+            title={title}
+            className={twMergeCustom([
+                'relative flex cursor-pointer items-center justify-center rounded-input border-none',
+                size === 'xlarge' ? 'h-14 w-14' : 'size-9',
+                className,
+                hasPendingLook && 'opacity-70',
+                disabled && 'pointer-events-none',
+            ])}
+            {...props}
+        >
+            {children}
+        </button>
+    </span>
 );

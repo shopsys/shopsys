@@ -46,6 +46,10 @@ const MUTATION_ERROR_CONFIG: Partial<Record<string, MutationErrorConfig>> = {
         gtmOrigin: GtmMessageOriginType.cart,
         validationFields: ['promoCode'],
     },
+    RemoveFromCartMutation: {
+        errorType: 'remove-from-cart-error',
+        gtmOrigin: GtmMessageOriginType.cart,
+    },
     ChangePaymentInCartMutation: {
         errorType: 'payment-error',
         gtmOrigin: GtmMessageOriginType.transport_and_payment_page,

@@ -48,10 +48,10 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
             data-tid={TIDs.comparison_product_ + product.catalogNumber}
             id="js-table-compare-product"
         >
-            <div className="flex w-[182px] flex-col gap-2 sm:w-[205px]">
+            <div className="flex w-45.5 flex-col gap-2 sm:w-51.25">
                 <div className="flex flex-col gap-2">
                     <div
-                        className="flex h-[185px] w-full items-center justify-center pt-4 pb-3"
+                        className="flex h-46.25 w-full items-center justify-center pt-4 pb-3"
                         data-tid={TIDs.comparison_product_image}
                     >
                         <Image
@@ -62,6 +62,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                             width={200}
                         />
                     </div>
+
                     <ExtendedNextLink
                         href={product.slug}
                         type="product"
@@ -77,26 +78,32 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                             )
                         }
                     >
-                        <span className="line-clamp-4 min-h-[5rem] font-secondary text-sm">{product.fullName}</span>
+                        <span className="line-clamp-4 min-h-20 font-secondary text-sm">{product.fullName}</span>
                     </ExtendedNextLink>
+
                     <span className="text-xs">
                         {t('Code')}: {product.catalogNumber}
                     </span>
                 </div>
-                <div className="flex w-full items-center justify-between gap-1 md:justify-normal md:gap-2.5">
-                    <ProductAction
-                        gtmMessageOrigin={GtmMessageOriginType.other}
-                        gtmProductListName={GtmProductListNameType.product_comparison_page}
-                        listIndex={listIndex}
-                        product={product}
-                    />
+
+                <ProductAction
+                    gtmMessageOrigin={GtmMessageOriginType.other}
+                    gtmProductListName={GtmProductListNameType.product_comparison_page}
+                    listIndex={listIndex}
+                    product={product}
+                />
+
+                <div className="flex flex-col items-baseline gap-2 font-normal">
                     <ProductCompareButton
                         isProductInComparison={isProductInComparison(product.uuid)}
                         productName={product.fullName}
                         tabIndex={0}
+                        isWithText
                         toggleProductInComparison={toggleProductInComparison}
                     />
+
                     <ProductWishlistButton
+                        isWithText
                         isProductInWishlist={isProductInWishlist(product.uuid)}
                         productName={product.fullName}
                         tabIndex={0}

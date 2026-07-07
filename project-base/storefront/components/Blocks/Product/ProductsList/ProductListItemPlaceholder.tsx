@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
+import { ProductActionSkeleton } from 'components/Blocks/Skeleton/ProductActionSkeleton';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { FunctionComponentProps } from 'types/globals';
 import { twMergeCustom } from 'utils/twMerge';
@@ -37,7 +37,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
             >
                 <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                <div className="line-clamp-3 min-h-[3.75rem] font-secondary font-semibold text-sm group-hover:text-link-default group-hover:underline">
+                <div className="line-clamp-3 min-h-15 font-secondary font-semibold text-sm group-hover:text-link-default group-hover:underline">
                     {product.fullName}
                 </div>
 
@@ -53,24 +53,13 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
                     <ProductAvailability
                         availability={product.availability}
                         availableStoresCount={product.availableStoresCount}
-                        className="min-h-10 xs:min-h-[60px] sm:min-h-10"
+                        className="min-h-10 xs:min-h-15 sm:min-h-10"
                         isInquiryType={product.isInquiryType}
                     />
                 )}
             </ExtendedNextLink>
 
-            {(visibleItemsConfig.addToCart || visibleItemsConfig.productListButtons) && (
-                <div className="flex w-full items-center justify-between gap-1 sm:justify-normal sm:gap-2.5">
-                    {visibleItemsConfig.addToCart && <Skeleton className="h-9 w-1/2" />}
-
-                    {visibleItemsConfig.productListButtons && (
-                        <>
-                            <Skeleton className="size-6" />
-                            <Skeleton className="size-6" />
-                        </>
-                    )}
-                </div>
-            )}
+            {visibleItemsConfig.addToCart && <ProductActionSkeleton isWithAddToCart isWithProductListButtons={false} />}
         </li>
     );
 };

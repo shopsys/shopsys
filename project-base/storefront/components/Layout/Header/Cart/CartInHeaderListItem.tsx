@@ -1,9 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { Image } from 'components/Basic/Image/Image';
+import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeCartItemTypeEnum } from 'graphql/types';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { MouseEventHandler } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -12,12 +16,15 @@ import { generateProductImageAlt } from 'utils/productAltText';
 
 type CartInHeaderListItemProps = {
     cartItem: TypeCartItemFragment;
+    listIndex: number;
     onRemoveFromCart: MouseEventHandler<HTMLButtonElement>;
     isRemovingFromCart: boolean;
 };
 
 export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
+    cartItem,
     cartItem: { product, uuid, quantity, type },
+    listIndex,
     onRemoveFromCart,
     isRemovingFromCart,
 }) => {
@@ -31,9 +38,12 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     return (
         <li
             key={uuid}
-            className="relative flex h-auto w-full flex-row flex-wrap items-center gap-x-6 border-border-less border-b py-3 last:border-b-[3px] lg:flex-nowrap"
+            data-tid={TIDs.header_cart_list_item_ + product.catalogNumber}
+            className="relative flex h-auto w-full flex-col items-center gap-x-6 gap-y-2 border-border-less border-b py-4 first:pt-0 last:border-b-3"
         >
-            <div className="flex min-h-20 w-full flex-row items-center gap-x-6">
+            <div className="relative flex min-h-20 w-full flex-row items-center gap-x-6">
+                {isProductGift && <GiftBadge />}
+
                 {hasProductDetailLink ? (
                     <>
                         <ExtendedNextLink
@@ -86,31 +96,45 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                         </span>
                     </>
                 )}
+
+                {!isProductGift && (
+                    <RemoveCartItemButton
+                        ariaLabel={t(`Remove from cart ${product.fullName}`, { ns: 'accessibility' })}
+                        className="cursor-pointer text-icon-less hover:text-icon-default"
+                        disabled={isRemovingFromCart}
+                        title={t('Remove from cart')}
+                        onRemoveFromCart={onRemoveFromCart}
+                    />
+                )}
             </div>
-            <div className="mt-2 flex flex-row gap-x-6 lg:mt-0 lg:w-auto">
-                <div className="w-20 text-center font-secondary font-semibold text-sm">
-                    {`${quantity} ${product.unit.name}`}
-                </div>
+
+            <div className="flex w-full flex-row items-center justify-between gap-x-2">
+                {isProduct ? (
+                    <div className="w-40">
+                        <CartItemQuantityControls
+                            cartItem={cartItem}
+                            gtmMessageOrigin={GtmMessageOriginType.cart}
+                            gtmProductListName={GtmProductListNameType.cart}
+                            listIndex={listIndex}
+                            size="small"
+                        />
+                    </div>
+                ) : (
+                    <div className="font-secondary font-semibold text-sm">{`${quantity} ${product.unit.name}`}</div>
+                )}
 
                 {isProduct && isPriceVisible(product.price.priceWithVat) && (
-                    <div className="wrap-break-word w-28 font-bold font-secondary text-price-default lg:text-right">
+                    <div className="wrap-break-word w-28 text-right font-bold font-secondary text-price-default">
                         {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
                     </div>
                 )}
 
                 {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
-                    <div className="wrap-break-word w-28 font-bold font-secondary text-price-default lg:text-right">
+                    <div className="wrap-break-word w-28 text-right font-bold font-secondary text-price-default">
                         {formatPrice(mapPriceForCalculations(product.giftPrice.priceWithVat) * quantity)}
                     </div>
                 )}
             </div>
-            <RemoveCartItemButton
-                ariaLabel={t(`Remove from cart ${product.fullName}`, { ns: 'accessibility' })}
-                className="absolute top-2 right-0 cursor-pointer text-icon-less hover:text-icon-default lg:relative lg:top-0 lg:right-0"
-                disabled={isRemovingFromCart}
-                title={t('Remove from cart')}
-                onRemoveFromCart={onRemoveFromCart}
-            />
         </li>
     );
 };
