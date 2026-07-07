@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { TypeAdvertsFragment_AdvertImage_ } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
+import { TypeAdvertsFragment_AdvertImage } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
 import { TypeImage } from 'graphql/types';
 
 type ImageComponentProps = {
@@ -10,7 +10,7 @@ type ImageComponentProps = {
 };
 
 type AdvertImageProps = {
-    advert: TypeAdvertsFragment_AdvertImage_;
+    advert: TypeAdvertsFragment_AdvertImage;
 };
 
 const ImageComponent = ({ mainImage, mainImageMobile, altBackup }: ImageComponentProps) => {

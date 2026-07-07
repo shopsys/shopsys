@@ -23,6 +23,17 @@ type ShowMessageOptions = {
     toastId?: string;
 };
 
+type ToastMessageContentProps = {
+    message: string;
+    tid: string;
+};
+
+const ToastMessageContent: FC<ToastMessageContentProps> = ({ message, tid }) => (
+    <div className="custom-toast-content">
+        <span dangerouslySetInnerHTML={{ __html: message }} data-tid={tid} />
+    </div>
+);
+
 export const showMessage = (
     message: string,
     type: 'info' | 'error' | 'success',
@@ -41,12 +52,14 @@ export const showMessage = (
 
             toast.error(
                 () => (
-                    <CopyTextBlock
-                        textToCopy={message}
-                        onIgnore={() => {
-                            toast.dismiss(toastId);
-                        }}
-                    />
+                    <div className="custom-toast-content">
+                        <CopyTextBlock
+                            textToCopy={message}
+                            onIgnore={() => {
+                                toast.dismiss(toastId);
+                            }}
+                        />
+                    </div>
                 ),
                 {
                     toastId,
@@ -57,7 +70,7 @@ export const showMessage = (
                 },
             );
         } else {
-            toast.error(() => <span dangerouslySetInnerHTML={{ __html: message }} data-tid={TIDs.toast_error} />, {
+            toast.error(() => <ToastMessageContent message={message} tid={TIDs.toast_error} />, {
                 toastId,
                 closeOnClick: true,
                 icon: <CloseIcon className="p-1" />,
@@ -65,14 +78,14 @@ export const showMessage = (
             });
         }
     } else if (type === 'info') {
-        toast.info(() => <span dangerouslySetInnerHTML={{ __html: message }} data-tid={TIDs.toast_info} />, {
+        toast.info(() => <ToastMessageContent message={message} tid={TIDs.toast_info} />, {
             toastId,
             closeOnClick: true,
             icon: <InfoInTriangleIcon />,
             onClose: () => restoreStoredFocus(),
         });
     } else {
-        toast.success(() => <span dangerouslySetInnerHTML={{ __html: message }} data-tid={TIDs.toast_success} />, {
+        toast.success(() => <ToastMessageContent message={message} tid={TIDs.toast_success} />, {
             toastId,
             closeOnClick: true,
             icon: <CheckmarkIcon />,

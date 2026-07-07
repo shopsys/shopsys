@@ -152,7 +152,7 @@
         @apply focus-visible:outline-hidden;
     }
 
-    .Toastify__toast-body {
+    .custom-toast-content {
         @apply text-text-default! max-w-[90%];
 
         > div {

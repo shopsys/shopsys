@@ -1,8 +1,14 @@
 // @ts-nocheck
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeComplaintListItemFragment = { __typename?: 'Complaint', uuid: string, number: string, createdAt: any, status: string, resolution: { __typename?: 'ComplaintResolution', name: string }, items: Array<{ __typename?: 'ComplaintItem', uuid: string, quantity: number, productName: string, product: { __typename?: 'MainVariant', slug: string, isVisible: boolean, mainImage: { __typename?: 'Image', name: string | null, url: string } | null } | { __typename?: 'RegularProduct', slug: string, isVisible: boolean, mainImage: { __typename?: 'Image', name: string | null, url: string } | null } | { __typename?: 'Variant', slug: string, isVisible: boolean, mainImage: { __typename?: 'Image', name: string | null, url: string } | null } | null }> };
+export type TypeComplaintListItemFragment = { uuid: string, number: string, createdAt: string, status: string, resolution: { name: string }, items: Array<{ uuid: string, quantity: number, productName: string, product:
+      | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
+      | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
+      | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
+     | null }> };
 
 export const ComplaintListItemFragment = gql`
     fragment ComplaintListItemFragment on Complaint {

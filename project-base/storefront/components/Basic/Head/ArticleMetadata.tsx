@@ -5,7 +5,7 @@ import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash'
 
 type ArticleMetadataProps = {
     headline: string;
-    datePublished: string;
+    datePublished?: string | null;
     description?: string | null;
     imageUrl?: string | null;
 };
@@ -26,7 +26,7 @@ export const ArticleMetadata: FC<ArticleMetadataProps> = ({ headline, datePublis
                         '@context': 'https://schema.org/',
                         '@type': 'Article',
                         headline,
-                        datePublished,
+                        ...(datePublished && { datePublished }),
                         ...(description && { description }),
                         ...(imageUrl && { image: imageUrl }),
                         url: currentUrl,

@@ -3,8 +3,10 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
 import {
     ArticleDetailQueryDocument,
+    TypeArticleDetailQuery,
     useArticleDetailQuery,
 } from 'graphql/requests/articles/queries/ArticleDetailQuery.generated';
+import { TypeArticleDetailFragment } from 'graphql/requests/articlesInterface/articles/fragments/ArticleDetailFragment.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
@@ -25,13 +27,17 @@ const Error404Content = dynamic(
     { ssr: false },
 );
 
+const isArticleSite = (article: TypeArticleDetailQuery['article']): article is TypeArticleDetailFragment =>
+    article?.__typename === 'ArticleSite';
+
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
     const [{ data: articleDetailData, fetching: isArticleDetailFetching }] = useArticleDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
-    const article = articleDetailData?.article?.__typename === 'ArticleSite' ? articleDetailData.article : null;
+    const articleResult = articleDetailData?.article ?? null;
+    const article = isArticleSite(articleResult) ? articleResult : null;
 
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(article);
     useGtmPageReadyEvent(pageReadyEvent, isArticleDetailFetching);

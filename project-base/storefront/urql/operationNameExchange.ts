@@ -1,4 +1,4 @@
-import { OperationDefinitionNode } from 'graphql';
+import { DocumentNode, OperationDefinitionNode } from 'graphql';
 import { Exchange } from 'urql';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { pipe, tap } from 'wonka';
@@ -9,9 +9,10 @@ export const operationNameExchange: Exchange =
         return pipe(
             ops$,
             tap((operation) => {
+                const query = operation.query as DocumentNode;
                 const operationName =
                     (
-                        operation.query.definitions.find((definition) => definition.kind === 'OperationDefinition') as
+                        query.definitions.find((definition) => definition.kind === 'OperationDefinition') as
                             | OperationDefinitionNode
                             | undefined
                     )?.name?.value ?? 'UnknownOperation';

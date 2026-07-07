@@ -43,7 +43,9 @@ export const ProductDetailPrice: FC<ProductDetailPriceProps> = ({ productPrice }
                 )}
             </div>
 
-            {isSpecialPrice && <DeferredCountdown endTime={productPrice.nextPriceChange} />}
+            {isSpecialPrice && productPrice.nextPriceChange && (
+                <DeferredCountdown endTime={productPrice.nextPriceChange} />
+            )}
         </div>
     );
 };

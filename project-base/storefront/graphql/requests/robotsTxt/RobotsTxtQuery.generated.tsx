@@ -1,13 +1,17 @@
 // @ts-nocheck
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../types';
 
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeRobotsTxtQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeRobotsTxtQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TypeRobotsTxtQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', seo: { __typename?: 'SeoSetting', robotsTxtContent: string | null } } | null };
+export type TypeRobotsTxtQuery = { settings: { seo: { robotsTxtContent: string | null } } | null };
 
 
 export const RobotsTxtQueryDocument = gql`

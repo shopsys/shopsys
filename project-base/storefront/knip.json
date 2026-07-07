@@ -3,6 +3,9 @@
     "ignoreIssues": {
         "**/*.generated.tsx": ["exports", "types"]
     },
+    "ignoreExportsUsedInFile": {
+        "type": true
+    },
     "project": ["**/*.{ts,tsx}"],
     "ignore": ["cypress/**", "graphql/types.ts", "vitest/biome/fixtures/**"],
     "ignoreDependencies": ["license-checker", "tailwindcss"],

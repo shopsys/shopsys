@@ -90,7 +90,7 @@ const getOptimisticChangePaymentInCartResult = (
     cartQueryResult: TypeCartQuery,
     input: TypeChangePaymentInCartInput,
 ) => {
-    const optimisticPayment = getPaymentFromTransport(cartQueryResult.cart?.transport, input.paymentUuid);
+    const optimisticPayment = getPaymentFromTransport(cartQueryResult.cart?.transport, input.paymentUuid ?? null);
 
     return {
         __typename: 'Cart',

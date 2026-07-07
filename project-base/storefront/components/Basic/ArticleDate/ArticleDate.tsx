@@ -2,7 +2,7 @@ import { twJoin } from 'tailwind-merge';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type ArticleDate = {
-    date: string;
+    date?: string | null;
     tid?: string;
     className?: string;
 };
@@ -17,6 +17,10 @@ const toIsoDateUTC = (dateString: string): string => {
 
 export const ArticleDate: FC<ArticleDate> = ({ date, tid, className }) => {
     const { formatDate } = useFormatDate();
+
+    if (!date) {
+        return null;
+    }
 
     const isoDateTime = toIsoDateUTC(date); // Required by HTML spec
     const displayDate = formatDate(date);
