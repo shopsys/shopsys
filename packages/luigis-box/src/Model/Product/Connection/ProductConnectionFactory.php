@@ -35,7 +35,7 @@ class ProductConnectionFactory
         $productFilterOptionsClosure = function () use ($productFilterData) {
             return $this->luigisBoxFacetsToProductFilterConfigMapper->map(LuigisBoxBatchLoader::getFacets(), $productFilterData);
         };
-        $orderingMode = $orderingMode ?? $this->productOrderingModeProvider->getDefaultOrderingModeForSearch();
+        $orderingMode ??= $this->productOrderingModeProvider->getDefaultOrderingModeForSearch();
 
         return $this->getConnectionPromise(
             $retrieveProductClosure,

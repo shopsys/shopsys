@@ -128,6 +128,7 @@ use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
+use Symplify\CodingStandard\Fixer\Annotation\RemovePropertyVariableNameDescriptionFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -363,4 +364,5 @@ return ECSConfig::configure()
         ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_TRAVERSABLE_TYPE_HINT_SPECIFICATION,
         ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_SUPPRESS,
         ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_LESS_SPECIFIC_NATIVE_TYPE_HINT,
+        RemovePropertyVariableNameDescriptionFixer::class => null,
     ]);
