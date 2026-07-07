@@ -23,8 +23,6 @@ Create new project on Shopsys Platform easily from this package following the [I
 
 For documentation of Shopsys Platform itself see [Shopsys Platform Knowledge Base](https://docs.shopsys.com/en/latest/).
 
-Documentation of the specific project built on Shopsys Platform should be in [Project Documentation](https://github.com/shopsys/project-base/blob/{{ shopsys.version }}/docs/index.md).
-
 ## Contributing
 
 Thank you for your contributions to Shopsys Project-base.
