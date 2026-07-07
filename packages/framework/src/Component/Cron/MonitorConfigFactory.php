@@ -28,7 +28,7 @@ class MonitorConfigFactory
             $maxRuntime = (int)ceil($cronModuleConfig->getTimeoutIteratedCronSec() / 60);
         }
 
-        $maxRuntime = $maxRuntime ?? self::DEFAULT_MAX_RUNTIME_MIN;
+        $maxRuntime ??= self::DEFAULT_MAX_RUNTIME_MIN;
 
         $checkinMargin = $sentryMonitorConfig?->getCheckinMargin() ?? $cronModuleConfig->getRunEveryMin();
 
