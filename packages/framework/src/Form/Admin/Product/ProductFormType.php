@@ -313,6 +313,7 @@ final class ProductFormType extends AbstractType
                     'entry_type' => TextareaType::class,
                     'required' => false,
                     'disabled' => $this->isProductVariant($product),
+                    'label' => false,
                 ]);
         }
 
@@ -336,6 +337,7 @@ final class ProductFormType extends AbstractType
                     'entry_type' => CKEditorType::class,
                     'required' => false,
                     'disabled' => $this->isProductVariant($product),
+                    'label' => false,
                 ]);
         }
 
