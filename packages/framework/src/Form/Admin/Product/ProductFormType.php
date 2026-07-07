@@ -277,6 +277,18 @@ final class ProductFormType extends AbstractType
                 'label' => 'Weight (g)',
                 'required' => false,
             ])
+            ->add('unit', ChoiceType::class, [
+                'required' => true,
+                'choices' => $this->unitFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'constraints' => [
+                    new Constraints\NotBlank(
+                        message: 'Please choose unit',
+                    ),
+                ],
+                'label' => 'Unit',
+            ])
             ->add('excludedTransports', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->transportFacade->getAll(),
@@ -422,20 +434,6 @@ final class ProductFormType extends AbstractType
                     ],
                 ]);
         }
-        $builderDisplayAvailabilityGroup
-            ->add('unit', ChoiceType::class, [
-                'required' => true,
-                'choices' => $this->unitFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new Constraints\NotBlank(
-                        message: 'Please choose unit',
-                    ),
-                ],
-                'label' => 'Unit',
-            ]);
-
         $builderDisplayAvailabilityGroup
             ->add('orderingPriorityByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,

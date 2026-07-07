@@ -65,9 +65,9 @@ class NewProductTest extends ApplicationTestCase
         $form['product_form[basicInformationGroup][partno]'] = '123456';
         $form['product_form[basicInformationGroup][ean]'] = '123456';
         $form['product_form[descriptionsGroup][descriptions][1]'] = 'test description';
+        $form['product_form[basicInformationGroup][unit]']->setValue((string)$unit->getId());
         $form['product_form[displayAvailabilityGroup][sellingFrom]'] = '1.1.1990';
         $form['product_form[displayAvailabilityGroup][sellingTo]'] = '1.1.2000';
-        $form['product_form[displayAvailabilityGroup][unit]']->setValue((string)$unit->getId());
         $form['product_form[stocksGroup][productStockData][1][productQuantity]'] = '1';
         $form['product_form[stocksGroup][productStockData][2][productQuantity]'] = '2';
         $form['product_form[stocksGroup][productStockData][3][productQuantity]'] = '3';
