@@ -8,13 +8,17 @@ const { mockApply, mockOff, mockOn } = vi.hoisted(() => ({
     mockOn: vi.fn(),
 }));
 
-vi.mock('@mswjs/interceptors', () => ({
-    BatchInterceptor: vi.fn().mockImplementation(() => ({
-        apply: mockApply,
-        off: mockOff,
-        on: mockOn,
-    })),
-}));
+vi.mock('@mswjs/interceptors', () => {
+    class MockBatchInterceptor {
+        apply = mockApply;
+        off = mockOff;
+        on = mockOn;
+    }
+
+    return {
+        BatchInterceptor: MockBatchInterceptor,
+    };
+});
 
 vi.mock('@mswjs/interceptors/fetch', () => ({
     FetchInterceptor: vi.fn(),

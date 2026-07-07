@@ -8,7 +8,8 @@ import {
     SORT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
-import { describe, expect, Mock, test, vi } from 'vitest';
+import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
+import { resetUseUpdateFilterTestMocks } from 'vitest/utils/queryParams/useUpdateFilterTestUtils';
 
 const CATEGORY_URL = '/category-url';
 const CATEGORY_PATHNAME = '/categories/[categorySlug]';
@@ -67,6 +68,17 @@ vi.mock('store/useSessionStore', () => ({
 }));
 
 describe('useQueryParams().updateFilterPriceMaximum tests', () => {
+    beforeEach(() => {
+        resetUseUpdateFilterTestMocks({
+            mockSeoSensitiveFiltersGetter,
+            useRouterMock: useRouter as Mock,
+            useSessionStoreMock: useSessionStore as unknown as Mock,
+            mockPush,
+            categoryPathname: CATEGORY_PATHNAME,
+            categoryUrl: CATEGORY_URL,
+        });
+    });
+
     test('maximalPrice should not be updated if it is the same as current maximal price', () => {
         (useRouter as Mock).mockImplementation(() => ({
             pathname: CATEGORY_PATHNAME,

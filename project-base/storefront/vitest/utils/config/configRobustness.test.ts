@@ -11,7 +11,8 @@ describe('config robustness', () => {
             const parsed = JSON.parse(malicious) as Record<string, unknown>;
 
             expect(({} as Record<string, unknown>).polluted).toBeUndefined();
-            expect(parsed.__proto__).toEqual({ polluted: 'yes' });
+            expect(Object.hasOwn(parsed, '__proto__')).toBe(true);
+            expect(Reflect.get(parsed, '__proto__')).toEqual({ polluted: 'yes' });
         });
 
         it('constructor.prototype in serialized config does not pollute', () => {
