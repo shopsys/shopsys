@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Component\Security;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\ResetPasswordHashNotValidException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -22,7 +21,7 @@ class NewPasswordUrlProvider
 
     public function getNewPasswordUrl(ResetPasswordInterface $user, int $domainId, string $routeName): string
     {
-        if ($user instanceof Administrator) {
+        if ($this->administrationRouter->getRouteCollection()->get($routeName) !== null) {
             $router = $this->administrationRouter;
         } else {
             $router = $this->domainRouterFactory->getRouter($domainId);
