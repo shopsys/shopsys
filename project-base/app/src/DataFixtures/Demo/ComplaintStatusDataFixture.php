@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 class ComplaintStatusDataFixture extends AbstractReferenceFixture
 {
     public const string COMPLAINT_STATUS_NEW = 'complaint_status_new';
+    public const string COMPLAINT_STATUS_IN_PROGRESS = 'complaint_status_in_progress';
     public const string COMPLAINT_STATUS_RESOLVED = 'complaint_status_resolved';
 
     public function __construct(
@@ -24,6 +25,7 @@ class ComplaintStatusDataFixture extends AbstractReferenceFixture
     {
         $this->createComplaintStatusReference(1, self::COMPLAINT_STATUS_NEW);
         $this->createComplaintStatusReference(2, self::COMPLAINT_STATUS_RESOLVED);
+        $this->createComplaintStatusReference(3, self::COMPLAINT_STATUS_IN_PROGRESS);
     }
 
     /**

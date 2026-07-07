@@ -1,6 +1,7 @@
-import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/SkeletonModuleCustomerOrders';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { CustomerEmptyContent } from 'components/Pages/Customer/CustomerEmptyContent';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
@@ -10,41 +11,56 @@ import { OrderItem } from './OrderItem';
 type OrdersContentProps = {
     areOrdersFetching: boolean;
     orders: TypeListedOrderFragment[] | undefined;
-    totalCount: number | undefined;
+    filteredTotalCount: number | undefined;
     hasNextPage: boolean | undefined;
+    hasActiveFilters: boolean;
+    hasActiveStatus: boolean;
 };
 
-export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, orders, totalCount, hasNextPage }) => {
+export const OrdersContent: FC<OrdersContentProps> = ({
+    areOrdersFetching,
+    orders,
+    filteredTotalCount,
+    hasNextPage,
+    hasActiveFilters,
+    hasActiveStatus,
+}) => {
     const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
     const { t } = useTranslation();
 
-    if (!orders?.length && !areOrdersFetching) {
+    if (areOrdersFetching || orders === undefined) {
+        return <SkeletonModuleCustomerOrders />;
+    }
+
+    if (orders.length === 0) {
         return (
-            <div className="flex gap-2 text-lg vl:text-xl">
-                <InfoIcon className="w-5" />
-                {t('You have no orders')}
-            </div>
+            <CustomerEmptyContent
+                title={
+                    hasActiveFilters || hasActiveStatus ? t('No orders match your filters') : t('You have no orders')
+                }
+                description={
+                    hasActiveFilters || hasActiveStatus
+                        ? t('Try adjusting or clearing your filters to see more orders.')
+                        : t('Your order history will appear here after your first purchase.')
+                }
+            />
         );
     }
 
     return (
         <>
-            {areOrdersFetching ? (
-                <SkeletonModuleCustomerOrders />
-            ) : (
-                <div className="flex flex-col gap-5">
-                    {orders?.map((order, index) => (
-                        <OrderItem
-                            key={order.uuid}
-                            addOrderItemsToEmptyCart={addOrderItemsToEmptyCart}
-                            listIndex={index}
-                            order={order}
-                        />
-                    ))}
-                </div>
-            )}
+            <VerticalStack gap="sm">
+                {orders.map((order, index) => (
+                    <OrderItem
+                        key={order.uuid}
+                        addOrderItemsToEmptyCart={addOrderItemsToEmptyCart}
+                        listIndex={index}
+                        order={order}
+                    />
+                ))}
+            </VerticalStack>
 
-            <Pagination hasNextPage={hasNextPage} pageSize={DEFAULT_ORDERS_SIZE} totalCount={totalCount || 0} />
+            <Pagination hasNextPage={hasNextPage} pageSize={DEFAULT_ORDERS_SIZE} totalCount={filteredTotalCount || 0} />
         </>
     );
 };

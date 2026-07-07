@@ -69,7 +69,7 @@ class OrderDeliveryDateFacadeTest extends TestCase
     {
         $statusData = new OrderStatusData();
 
-        return new OrderStatus($statusData, $type);
+        return new OrderStatus($statusData, $type, 'order-status');
     }
 
     private function createOrderMock(

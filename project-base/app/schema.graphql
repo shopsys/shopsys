@@ -747,6 +747,18 @@ type ComplaintEdge {
   node: Complaint
 }
 
+"Filter complaints"
+input ComplaintFilterInput {
+  "Filter complaints created after this date"
+  createdAfter: DateTime
+  "Filter complaints created before this date"
+  createdBefore: DateTime
+  "Filter complaints by complaint number or product"
+  search: String
+  "Filter complaints by status codes"
+  statusCodes: [String!]
+}
+
 input ComplaintInput {
   "Bank account number for money return"
   bankAccountNumber: String = null
@@ -803,6 +815,32 @@ type ComplaintResolution {
   name: String!
   "Constant string value of the resolution"
   value: String!
+}
+
+type ComplaintStatus {
+  "Complaint status code"
+  code: String!
+  "Localized complaint status name"
+  name: String!
+  "Complaint status type"
+  type: ComplaintStatusEnum!
+}
+
+type ComplaintStatusCount {
+  "Number of complaints with the status"
+  count: Int!
+  "Complaint status"
+  status: ComplaintStatus!
+}
+
+"Status of complaint"
+enum ComplaintStatusEnum {
+  "In progress"
+  in_progress
+  "New"
+  new
+  "Resolved"
+  resolved
 }
 
 input ContactFormInput {
@@ -1650,12 +1688,16 @@ type OrderEdge {
 input OrderFilterInput {
   "Filter orders created after this date"
   createdAfter: DateTime
+  "Filter orders created before this date"
+  createdBefore: DateTime
   "Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid)"
   orderItemsCatnum: String
   "Filter orders by order items with product UUID (OR condition with orderItemsCatnum)"
   orderItemsProductUuid: Uuid
-  "Filter orders created after this date"
-  status: OrderStatusEnum
+  "Filter orders by order number or product"
+  search: String
+  "Filter orders by status codes"
+  statusCodes: [String!]
 }
 
 "Represents the main input object to create orders"
@@ -1794,6 +1836,22 @@ type OrderPaymentsConfig {
   availablePayments: [Payment!]!
   "Current payment method used in the order. Null if the original payment is not available anymore due to the reached limit of max payment transactions count."
   currentPayment: Payment
+}
+
+type OrderStatus {
+  "Order status code"
+  code: String!
+  "Localized order status name"
+  name: String!
+  "Order status type"
+  type: OrderStatusEnum!
+}
+
+type OrderStatusCount {
+  "Number of orders with the status"
+  count: Int!
+  "Order status"
+  status: OrderStatus!
 }
 
 "Status of order"
@@ -2437,7 +2495,9 @@ type Query {
   "Returns complaint resolutions variants"
   complaintResolution: [ComplaintResolution!]!
   "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
-  complaints(after: String, before: String, first: Int, last: Int, searchInput: SearchInput): ComplaintConnection!
+  complaints(after: String, before: String, filter: ComplaintFilterInput, first: Int, last: Int): ComplaintConnection!
+  "Returns complaint counts grouped by status"
+  complaintStatusCounts(filter: ComplaintFilterInput): [ComplaintStatusCount!]!
   "Check if customer can be registered with provided data"
   couldBeCustomerRegisteredQuery(companyNumber: String = null, email: String!): Boolean!
   "Returns available countries"
@@ -2475,6 +2535,8 @@ type Query {
   orderPayments(orderUuid: Uuid!): OrderPaymentsConfig!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
   orders(after: String, before: String, filter: OrderFilterInput, first: Int, last: Int): OrderConnection
+  "Returns order counts grouped by status"
+  orderStatusCounts(filter: OrderFilterInput): [OrderStatusCount!]!
   "Returns order URL hash resolved from a short-lived payment return hash"
   orderUrlHashByReturnHash(returnHash: String!): String
   ParameterCheckboxFilterOption: ParameterCheckboxFilterOption

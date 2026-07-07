@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -26,6 +27,7 @@ class OrdersQuery extends AbstractQuery
         protected readonly CustomerFacade $customerFacade,
         protected readonly Security $security,
         protected readonly OrderFilterFactory $orderFilterFactory,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -42,6 +44,26 @@ class OrdersQuery extends AbstractQuery
         }
 
         return $this->getPaginatedCustomerUserOrders($customerUser, $argument);
+    }
+
+    public function orderStatusCountsQuery(Argument $argument): array
+    {
+        $customerUser = $this->currentCustomerUser->getCurrentCustomerUser();
+        $filter = $this->orderFilterFactory->createFromArgument($argument);
+
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)) {
+            return $this->orderApiFacade->getCustomerOrderStatusCounts(
+                $customerUser->getCustomer(),
+                $filter,
+                $this->domain->getLocale(),
+            );
+        }
+
+        return $this->orderApiFacade->getCustomerUserOrderStatusCounts(
+            $customerUser,
+            $filter,
+            $this->domain->getLocale(),
+        );
     }
 
     protected function getPaginatedCustomerUserOrders(

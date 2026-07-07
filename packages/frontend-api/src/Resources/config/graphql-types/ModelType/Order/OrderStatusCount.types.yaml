@@ -1,0 +1,10 @@
+OrderStatusCount:
+    type: object
+    config:
+        fields:
+            status:
+                type: "OrderStatus!"
+                description: "Order status"
+            count:
+                type: "Int!"
+                description: "Number of orders with the status"

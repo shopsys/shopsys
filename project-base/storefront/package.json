@@ -29,6 +29,7 @@
     "dependencies": {
         "@hookform/resolvers": "~2.6.1",
         "@next/bundle-analyzer": "~15.5.18",
+        "@radix-ui/react-popover": "^1.1.15",
         "@sentry/nextjs": "~10.53.1",
         "@urql/devtools": "~2.0.3",
         "@urql/exchange-auth": "~2.2.1",
@@ -47,6 +48,7 @@
         "next-urql": "~5.0.2",
         "nprogress": "~0.2.0",
         "react": "~19.2.6",
+        "react-day-picker": "^10.0.1",
         "react-dom": "~19.2.6",
         "react-dropzone": "^14.4.1",
         "react-hook-form": "~7.71.2",

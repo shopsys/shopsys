@@ -1,5 +1,10 @@
-query ComplaintsQuery($first: Int, $after: String, $searchInput: SearchInput) {
-    complaints(first: $first, after: $after, searchInput: $searchInput) {
+query ComplaintsQuery(
+    $first: Int
+    $after: String
+    $filter: ComplaintFilterInput
+    $statuslessFilter: ComplaintFilterInput
+) {
+    complaints(first: $first, after: $after, filter: $filter) {
         totalCount
         pageInfo {
             ...PageInfoFragment
@@ -10,5 +15,13 @@ query ComplaintsQuery($first: Int, $after: String, $searchInput: SearchInput) {
                 ...ComplaintListItemFragment
             }
         }
+    }
+    complaintStatusCounts(filter: $statuslessFilter) {
+        status {
+            code
+            type
+            name
+        }
+        count
     }
 }

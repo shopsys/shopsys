@@ -1,12 +1,13 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonModuleCustomerOrders: FC = () => {
     return (
-        <div className="flex flex-col gap-5">
+        <VerticalStack gap="sm">
             {createEmptyArray(3).map((_, index) => (
-                <Skeleton key={index} className="h-[460px] vl:h-32 rounded-xl" />
+                <Skeleton key={index} className="h-115 vl:h-72 rounded-xl" />
             ))}
-        </div>
+        </VerticalStack>
     );
 };

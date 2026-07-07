@@ -1,8 +1,6 @@
-let currentLocale = 'en';
+import { createIntlDateTimeFormatter, initIntlDateTimeFormatterLocale } from './createIntlDateTimeFormatter';
 
-export const initIntlDateTimeFormatterLocale = (defaultLocale: string): void => {
-    currentLocale = defaultLocale;
-};
+export { initIntlDateTimeFormatterLocale };
 
 const parseDate = (date?: Date | string): Date | null => {
     const dateObj = date ? new Date(date) : new Date();
@@ -10,17 +8,6 @@ const parseDate = (date?: Date | string): Date | null => {
         return null;
     }
     return dateObj;
-};
-
-const createFormatter = (
-    options: Intl.DateTimeFormatOptions,
-    timezone?: string,
-    locale?: string,
-): Intl.DateTimeFormat => {
-    return new Intl.DateTimeFormat(locale ?? currentLocale, {
-        ...options,
-        timeZone: timezone,
-    });
 };
 
 /**
@@ -33,7 +20,7 @@ export const formatDate = (date?: Date | string, timezone?: string, locale?: str
         return '';
     }
 
-    const formatter = createFormatter(
+    const formatter = createIntlDateTimeFormatter(
         {
             year: 'numeric',
             month: 'numeric',
@@ -56,7 +43,7 @@ export const formatDateAndTime = (date?: Date | string, timezone?: string, local
         return '';
     }
 
-    const formatter = createFormatter(
+    const formatter = createIntlDateTimeFormatter(
         {
             year: 'numeric',
             month: 'numeric',

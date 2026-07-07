@@ -891,6 +891,18 @@ export type TypeComplaintEdge = {
   node: Maybe<TypeComplaint>;
 };
 
+/** Filter complaints */
+export type TypeComplaintFilterInput = {
+  /** Filter complaints created after this date */
+  createdAfter: InputMaybe<Scalars['DateTime']['input']>;
+  /** Filter complaints created before this date */
+  createdBefore: InputMaybe<Scalars['DateTime']['input']>;
+  /** Filter complaints by complaint number or product */
+  search: InputMaybe<Scalars['String']['input']>;
+  /** Filter complaints by status codes */
+  statusCodes: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
 export type TypeComplaintInput = {
   /** Bank account number for money return */
   bankAccountNumber: InputMaybe<Scalars['String']['input']>;
@@ -955,6 +967,34 @@ export type TypeComplaintResolution = {
   /** Constant string value of the resolution */
   value: Scalars['String']['output'];
 };
+
+export type TypeComplaintStatus = {
+  __typename?: 'ComplaintStatus';
+  /** Complaint status code */
+  code: Scalars['String']['output'];
+  /** Localized complaint status name */
+  name: Scalars['String']['output'];
+  /** Complaint status type */
+  type: TypeComplaintStatusEnum;
+};
+
+export type TypeComplaintStatusCount = {
+  __typename?: 'ComplaintStatusCount';
+  /** Number of complaints with the status */
+  count: Scalars['Int']['output'];
+  /** Complaint status */
+  status: TypeComplaintStatus;
+};
+
+/** Status of complaint */
+export enum TypeComplaintStatusEnum {
+  /** In progress */
+  InProgress = 'in_progress',
+  /** New */
+  New = 'new',
+  /** Resolved */
+  Resolved = 'resolved'
+}
 
 export type TypeContactFormInput = {
   /** Email address of the sender */
@@ -2063,12 +2103,16 @@ export type TypeOrderEdge = {
 export type TypeOrderFilterInput = {
   /** Filter orders created after this date */
   createdAfter: InputMaybe<Scalars['DateTime']['input']>;
+  /** Filter orders created before this date */
+  createdBefore: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid) */
   orderItemsCatnum: InputMaybe<Scalars['String']['input']>;
   /** Filter orders by order items with product UUID (OR condition with orderItemsCatnum) */
   orderItemsProductUuid: InputMaybe<Scalars['Uuid']['input']>;
-  /** Filter orders created after this date */
-  status: InputMaybe<TypeOrderStatusEnum>;
+  /** Filter orders by order number or product */
+  search: InputMaybe<Scalars['String']['input']>;
+  /** Filter orders by status codes */
+  statusCodes: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /** Represents the main input object to create orders */
@@ -2211,6 +2255,24 @@ export type TypeOrderPaymentsConfig = {
   availablePayments: Array<TypePayment>;
   /** Current payment method used in the order. Null if the original payment is not available anymore due to the reached limit of max payment transactions count. */
   currentPayment: Maybe<TypePayment>;
+};
+
+export type TypeOrderStatus = {
+  __typename?: 'OrderStatus';
+  /** Order status code */
+  code: Scalars['String']['output'];
+  /** Localized order status name */
+  name: Scalars['String']['output'];
+  /** Order status type */
+  type: TypeOrderStatusEnum;
+};
+
+export type TypeOrderStatusCount = {
+  __typename?: 'OrderStatusCount';
+  /** Number of orders with the status */
+  count: Scalars['Int']['output'];
+  /** Order status */
+  status: TypeOrderStatus;
 };
 
 /** Status of order */
@@ -2916,6 +2978,8 @@ export type TypeQuery = {
   complaint: TypeComplaint;
   /** Returns complaint resolutions variants */
   complaintResolution: Array<TypeComplaintResolution>;
+  /** Returns complaint counts grouped by status */
+  complaintStatusCounts: Array<TypeComplaintStatusCount>;
   /** Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords */
   complaints: TypeComplaintConnection;
   /** Check if customer can be registered with provided data */
@@ -2948,6 +3012,8 @@ export type TypeQuery = {
   orderItemsSearch: TypeOrderItemConnection;
   /** Returns payments available for the given order */
   orderPayments: TypeOrderPaymentsConfig;
+  /** Returns order counts grouped by status */
+  orderStatusCounts: Array<TypeOrderStatusCount>;
   /** Returns order URL hash resolved from a short-lived payment return hash */
   orderUrlHashByReturnHash: Maybe<Scalars['String']['output']>;
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
@@ -3087,12 +3153,17 @@ export type TypeQueryComplaintArgs = {
 };
 
 
+export type TypeQueryComplaintStatusCountsArgs = {
+  filter: InputMaybe<TypeComplaintFilterInput>;
+};
+
+
 export type TypeQueryComplaintsArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TypeComplaintFilterInput>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  searchInput: InputMaybe<TypeSearchInput>;
 };
 
 
@@ -3141,6 +3212,11 @@ export type TypeQueryOrderItemsSearchArgs = {
 
 export type TypeQueryOrderPaymentsArgs = {
   orderUuid: Scalars['Uuid']['input'];
+};
+
+
+export type TypeQueryOrderStatusCountsArgs = {
+  filter: InputMaybe<TypeOrderFilterInput>;
 };
 
 

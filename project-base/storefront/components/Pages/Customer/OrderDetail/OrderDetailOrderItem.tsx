@@ -82,7 +82,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                     'flex vl:grid w-full vl:grid-cols-[3fr_2fr_1fr_2fr] flex-wrap items-center justify-between gap-3 vl:gap-5 border-b last:border-none',
                 )}
             >
-                <div className="flex vl:w-auto w-full items-center gap-2.5">
+                <div className="flex vl:w-auto w-full items-center gap-5">
                     <div className="flex size-20 shrink-0" data-tid={TIDs.order_detail_item_image}>
                         <Image
                             alt={orderItem.name}

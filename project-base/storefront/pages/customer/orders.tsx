@@ -3,42 +3,36 @@ import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
-import { OrdersContent } from 'components/Pages/Customer/Orders/OrdersContent';
+import { OrdersPageContent } from 'components/Pages/Customer/Orders/OrdersPageContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
-import {
-    OrdersQueryDocument,
-    TypeOrdersQueryVariables,
-    useOrdersQuery,
-} from 'graphql/requests/orders/queries/OrdersQuery.generated';
+import { OrdersQueryDocument, TypeOrdersQueryVariables } from 'graphql/requests/orders/queries/OrdersQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
+import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { mapConnectionEdges } from 'utils/mappers/connection';
+import {
+    getOrdersFilterFromUrlQuery,
+    getOrdersStatuslessFilterFromUrlQuery,
+} from 'utils/orders/getOrdersFilterFromUrlQuery';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
-import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const OrdersPage: FC = () => {
     const { t } = useTranslation();
-    const currentPage = useCurrentPageQuery();
+    const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { url } = useDomainConfig();
-    const [{ data: ordersData, fetching: areOrdersFetching }] = useOrdersQuery({
-        variables: { after: getEndCursor(currentPage, 0, DEFAULT_ORDERS_SIZE), first: DEFAULT_ORDERS_SIZE },
-        requestPolicy: 'cache-and-network',
-    });
-    const mappedOrders = mapConnectionEdges<TypeListedOrderFragment>(ordersData?.orders?.edges);
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
     ];
+
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
@@ -46,7 +40,11 @@ const OrdersPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CustomerLayout breadcrumbs={breadcrumbs} title={t('My orders')}>
+            <CustomerLayout
+                breadcrumbs={breadcrumbs}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+                title={t('My orders')}
+            >
                 <PageHero
                     icon={SearchListIcon}
                     title={t('My orders')}
@@ -55,12 +53,7 @@ const OrdersPage: FC = () => {
                     )}
                 />
 
-                <OrdersContent
-                    areOrdersFetching={areOrdersFetching}
-                    hasNextPage={ordersData?.orders?.pageInfo.hasNextPage}
-                    orders={mappedOrders}
-                    totalCount={ordersData?.orders?.totalCount}
-                />
+                <OrdersPageContent paginationScrollTargetRef={paginationScrollTargetRef} />
             </CustomerLayout>
         </>
     );
@@ -84,7 +77,12 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
                 query: OrdersQueryDocument,
                 variables: {
                     after: getEndCursor(page, 0, DEFAULT_ORDERS_SIZE),
+                    filter: getOrdersFilterFromUrlQuery(context.query, domainConfig.fallbackTimezone),
                     first: DEFAULT_ORDERS_SIZE,
+                    statuslessFilter: getOrdersStatuslessFilterFromUrlQuery(
+                        context.query,
+                        domainConfig.fallbackTimezone,
+                    ),
                 },
             },
         ],

@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
-import { OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItemElements';
+import { CustomerRecordColumnInfo } from 'components/Pages/Customer/CustomerRecordElements';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
@@ -45,18 +45,20 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
                 <p className="h4">{t('Withdrawal request was submitted')}</p>
 
                 <div className="flex vl:flex-row flex-col flex-wrap gap-x-10 gap-y-5">
-                    <OrderItemColumnInfo title={t('Requested on')}>
+                    <CustomerRecordColumnInfo title={t('Requested on')}>
                         {formatDate(withdrawalRequest.requestedAt)}
-                    </OrderItemColumnInfo>
-                    <OrderItemColumnInfo title={t('Contact person')}>
+                    </CustomerRecordColumnInfo>
+                    <CustomerRecordColumnInfo title={t('Contact person')}>
                         {withdrawalRequest.firstName} {withdrawalRequest.lastName}
-                    </OrderItemColumnInfo>
-                    <OrderItemColumnInfo title={t('Email')}>{withdrawalRequest.email}</OrderItemColumnInfo>
+                    </CustomerRecordColumnInfo>
+                    <CustomerRecordColumnInfo title={t('Email')}>{withdrawalRequest.email}</CustomerRecordColumnInfo>
                     {withdrawalRequest.telephone && (
-                        <OrderItemColumnInfo title={t('Phone')}>{withdrawalRequest.telephone}</OrderItemColumnInfo>
+                        <CustomerRecordColumnInfo title={t('Phone')}>
+                            {withdrawalRequest.telephone}
+                        </CustomerRecordColumnInfo>
                     )}
                     {withdrawalRequest.note && (
-                        <OrderItemColumnInfo title={t('Note')}>{withdrawalRequest.note}</OrderItemColumnInfo>
+                        <CustomerRecordColumnInfo title={t('Note')}>{withdrawalRequest.note}</CustomerRecordColumnInfo>
                     )}
                 </div>
             </div>

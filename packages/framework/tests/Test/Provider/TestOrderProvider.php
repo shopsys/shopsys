@@ -94,7 +94,7 @@ class TestOrderProvider
 
     public static function createOrderStatusInstance(OrderStatusData $orderStatusData): OrderStatus
     {
-        return new OrderStatus($orderStatusData, OrderStatusTypeEnum::TYPE_NEW);
+        return new OrderStatus($orderStatusData, OrderStatusTypeEnum::TYPE_NEW, 'new');
     }
 
     public static function createTransportDataInstance(): TransportData

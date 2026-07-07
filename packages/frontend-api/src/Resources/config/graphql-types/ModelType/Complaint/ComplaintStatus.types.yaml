@@ -1,0 +1,13 @@
+ComplaintStatus:
+    type: object
+    config:
+        fields:
+            code:
+                type: "String!"
+                description: "Complaint status code"
+            type:
+                type: "ComplaintStatusEnum!"
+                description: "Complaint status type"
+            name:
+                type: "String!"
+                description: "Localized complaint status name"

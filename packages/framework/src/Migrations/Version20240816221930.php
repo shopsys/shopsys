@@ -37,13 +37,15 @@ final class Version20240816221930 extends AbstractMigration implements DomainAwa
 
         $this->createComplaintStatus(1, ComplaintStatusTypeEnum::STATUS_TYPE_NEW);
         $this->createComplaintStatus(2, ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED);
+        $this->createComplaintStatus(3, ComplaintStatusTypeEnum::STATUS_TYPE_IN_PROGRESS);
 
         foreach ($this->getAllLocales() as $locale) {
             $this->createComplaintStatusTranslations(1, t('New [adjective]', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
             $this->createComplaintStatusTranslations(2, t('Resolved', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
+            $this->createComplaintStatusTranslations(3, t('In Progress', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
         }
 
-        $this->sql('ALTER SEQUENCE complaint_statuses_id_seq RESTART WITH 3');
+        $this->sql('ALTER SEQUENCE complaint_statuses_id_seq RESTART WITH 4');
 
         $this->sql('ALTER TABLE complaints ADD status_id INT NULL');
         $this->sql('

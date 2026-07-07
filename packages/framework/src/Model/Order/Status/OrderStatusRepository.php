@@ -41,6 +41,20 @@ class OrderStatusRepository
         return $orderStatus;
     }
 
+    public function findByCode(string $code): ?OrderStatus
+    {
+        return $this->getOrderStatusRepository()->findOneBy(['code' => $code]);
+    }
+
+    /**
+     * @param string[] $codes
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
+     */
+    public function getAllByCodes(array $codes): array
+    {
+        return $this->getOrderStatusRepository()->findBy(['code' => $codes]);
+    }
+
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */

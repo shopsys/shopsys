@@ -1,0 +1,13 @@
+OrderStatus:
+    type: object
+    config:
+        fields:
+            code:
+                type: "String!"
+                description: "Order status code"
+            type:
+                type: "OrderStatusEnum!"
+                description: "Order status type"
+            name:
+                type: "String!"
+                description: "Localized order status name"

@@ -22,13 +22,19 @@ class OrderFilterFactory
 
         $filter = $argument['filter'];
 
-        $status = isset($filter['status']) ? $this->orderStatusFacade->getAllByType($filter['status']) : null;
+        $statusCodes = $filter['statusCodes'] ?? [];
+
+        $orderStatuses = $this->orderStatusFacade->getAllByCodes($statusCodes);
+
+        $search = isset($filter['search']) ? trim($filter['search']) : null;
 
         return new OrderFilter(
             $filter['createdAfter'] ?? null,
-            $status,
+            $filter['createdBefore'] ?? null,
+            $orderStatuses !== [] ? $orderStatuses : null,
             $filter['orderItemsCatnum'] ?? null,
             $filter['orderItemsProductUuid'] ?? null,
+            $search !== '' ? $search : null,
         );
     }
 }

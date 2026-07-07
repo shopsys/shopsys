@@ -331,11 +331,27 @@ QueryDecorator:
                 type: "ComplaintConnection!"
                 argsBuilder: "Relay::Connection"
                 args:
-                    searchInput:
-                        type: "SearchInput"
+                    filter:
+                        type: "ComplaintFilterInput"
                 resolve: "@=query('complaintsQuery', args)"
                 access: "@=(isGranted('ROLE_API_COMPLAINT_CREATION') || isGranted('ROLE_API_COMPANY_COMPLAINTS_VIEW'))"
                 description: "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
+            complaintStatusCounts:
+                type: "[ComplaintStatusCount!]!"
+                args:
+                    filter:
+                        type: "ComplaintFilterInput"
+                resolve: "@=query('complaintStatusCountsQuery', args)"
+                access: "@=(isGranted('ROLE_API_COMPLAINT_CREATION') || isGranted('ROLE_API_COMPANY_COMPLAINTS_VIEW'))"
+                description: "Returns complaint counts grouped by status"
+            orderStatusCounts:
+                type: "[OrderStatusCount!]!"
+                args:
+                    filter:
+                        type: "OrderFilterInput"
+                resolve: "@=query('orderStatusCountsQuery', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || isGranted('ROLE_API_COMPANY_ORDERS_VIEW'))"
+                description: "Returns order counts grouped by status"
             flags:
                 type: '[Flag!]'
                 resolve: "@=query('flagsQuery')"

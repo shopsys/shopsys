@@ -34,6 +34,13 @@ class OrderStatus extends AbstractTranslatableEntity
     protected $id;
 
     /**
+     * @var string
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    protected $code;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation>
      */
     #[Prezent\Translations(targetEntity: OrderStatusTranslation::class)]
@@ -49,11 +56,13 @@ class OrderStatus extends AbstractTranslatableEntity
 
     /**
      * @param string $type
+     * @param string $code
      */
-    public function __construct(OrderStatusData $orderStatusData, $type)
+    public function __construct(OrderStatusData $orderStatusData, $type, $code)
     {
         $this->translations = new ArrayCollection();
         $this->type = $type;
+        $this->code = $code;
         $this->setData($orderStatusData);
     }
 
@@ -73,6 +82,14 @@ class OrderStatus extends AbstractTranslatableEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 
     #[EntityLogIdentify(EntityLogIdentify::IS_LOCALIZED)]

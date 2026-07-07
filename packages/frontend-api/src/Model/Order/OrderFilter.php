@@ -13,15 +13,22 @@ class OrderFilter
      */
     public function __construct(
         protected ?DateTimeImmutable $createdAfter = null,
+        protected ?DateTimeImmutable $createdBefore = null,
         protected ?array $statuses = null,
         protected ?string $orderItemsCatnum = null,
         protected ?string $orderItemsProductUuid = null,
+        protected ?string $search = null,
     ) {
     }
 
     public function getCreatedAfter(): ?DateTimeImmutable
     {
         return $this->createdAfter;
+    }
+
+    public function getCreatedBefore(): ?DateTimeImmutable
+    {
+        return $this->createdBefore;
     }
 
     /**
@@ -40,5 +47,10 @@ class OrderFilter
     public function getOrderItemsProductUuid(): ?string
     {
         return $this->orderItemsProductUuid;
+    }
+
+    public function getSearch(): ?string
+    {
+        return $this->search;
     }
 }
