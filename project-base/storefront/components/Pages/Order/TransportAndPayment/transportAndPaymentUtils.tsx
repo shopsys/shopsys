@@ -12,7 +12,7 @@ import {
     TypeStoreQueryVariables,
 } from 'graphql/requests/stores/queries/StoreQuery.generated';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
-import { Maybe } from 'graphql/types';
+import { Maybe, TypeTransportUnavailabilityReasonInCartEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -50,6 +50,18 @@ const ErrorPopup = dynamic(
 );
 
 const packeteryApiKey = getPublicConfigProperty('packeteryApiKey');
+
+export const getTransportUnavailabilityHeading = (
+    unavailabilityReason: TypeTransportUnavailabilityReasonInCartEnum,
+    t: Translate,
+): string => {
+    switch (unavailabilityReason) {
+        case TypeTransportUnavailabilityReasonInCartEnum.PersonalPickupRequired:
+            return t('These products can only be picked up personally:');
+        default:
+            return t('These products cannot be delivered using this transport:');
+    }
+};
 
 export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentInCart) => {
     const { payment: currentPayment, paymentGoPayBankSwift: currentPaymentGoPayBankSwift } = useCurrentCart();

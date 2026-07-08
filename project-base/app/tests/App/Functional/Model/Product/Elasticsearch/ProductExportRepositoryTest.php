@@ -81,6 +81,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'parameters',
             'ordering_priority',
             'selling_denied',
+            'personal_pickup_only',
             'availability',
             'availability_status',
             'is_main_variant',

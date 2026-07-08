@@ -1,0 +1,10 @@
+TransportUnavailabilityReasonInCartEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Reason why a transport cannot be selected for the given cart"
+        values:
+            personal_pickup_required:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportUnavailabilityReasonInCartEnum::PERSONAL_PICKUP_REQUIRED")'
+            excluded_for_product:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportUnavailabilityReasonInCartEnum::EXCLUDED_FOR_PRODUCT")'

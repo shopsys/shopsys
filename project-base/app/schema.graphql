@@ -1319,6 +1319,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   isCurrentlyOutOfStock: Boolean!
   isInquiryType: Boolean!
   isMainVariant: Boolean!
+  "Whether a cart containing this product is limited to personal pickup transports"
+  isPersonalPickupOnly: Boolean!
   isSellingDenied: Boolean!
   isVisible: Boolean!
   "Product link"
@@ -2222,6 +2224,8 @@ interface Product {
   isCurrentlyOutOfStock: Boolean!
   isInquiryType: Boolean!
   isMainVariant: Boolean!
+  "Whether a cart containing this product is limited to personal pickup transports"
+  isPersonalPickupOnly: Boolean!
   isSellingDenied: Boolean!
   isVisible: Boolean!
   "Product link"
@@ -2406,6 +2410,14 @@ input ProductQuestionInput {
   productUuid: Uuid!
   "The customer's question about the product"
   question: String!
+}
+
+"Cart products grouped by the reason why they cannot be delivered using the transport"
+type ProductsByTransportUnavailabilityReason {
+  "Cart products that cannot be delivered using the transport for this reason"
+  products: [Product!]!
+  "Reason why the products cannot be delivered using the transport"
+  reason: TransportUnavailabilityReasonInCartEnum!
 }
 
 "One of possible product types"
@@ -2758,6 +2770,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   isCurrentlyOutOfStock: Boolean!
   isInquiryType: Boolean!
   isMainVariant: Boolean!
+  "Whether a cart containing this product is limited to personal pickup transports"
+  isPersonalPickupOnly: Boolean!
   isSellingDenied: Boolean!
   isVisible: Boolean!
   "Product link"
@@ -3066,6 +3080,8 @@ type Transport {
   position: Int!
   "Transport price"
   price(cartUuid: Uuid = null): Price!
+  "Cart products that cannot be delivered using this transport, grouped by the reason (empty when the transport can be selected)"
+  productsBlockingSelectionInCart(cartUuid: Uuid = null): [ProductsByTransportUnavailabilityReason!]!
   "Stores available for personal pickup"
   stores: StoreConnection
   "Code of transport type"
@@ -3080,6 +3096,12 @@ enum TransportTypeEnum {
   common
   packetery
   personal_pickup
+}
+
+"Reason why a transport cannot be selected for the given cart"
+enum TransportUnavailabilityReasonInCartEnum {
+  excluded_for_product
+  personal_pickup_required
 }
 
 "Represents a unit"
@@ -3129,6 +3151,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   isCurrentlyOutOfStock: Boolean!
   isInquiryType: Boolean!
   isMainVariant: Boolean!
+  "Whether a cart containing this product is limited to personal pickup transports"
+  isPersonalPickupOnly: Boolean!
   isSellingDenied: Boolean!
   isVisible: Boolean!
   "Product link"

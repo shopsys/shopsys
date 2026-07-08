@@ -299,6 +299,9 @@
             "selling_denied": {
                 "type": "boolean"
             },
+            "personal_pickup_only": {
+                "type": "boolean"
+            },
             "availability": {
                 "type": "text"
             },

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Cart;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
@@ -67,6 +68,54 @@ class CartTest extends TestCase
         $cart->addItem($cartItem);
 
         $this->assertFalse($cart->isEmpty());
+    }
+
+    public function testGetPersonalPickupOnlyProducts(): void
+    {
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
+
+        $personalPickupOnlyProductData = TestProductProvider::getTestProductData();
+        $personalPickupOnlyProductData->name = ['cs' => 'Personal pickup only product'];
+        $personalPickupOnlyProductData->personalPickupOnly = true;
+        $personalPickupOnlyProduct = Product::create($personalPickupOnlyProductData);
+
+        $commonProductData = TestProductProvider::getTestProductData();
+        $commonProductData->name = ['cs' => 'Common product'];
+        $commonProduct = Product::create($commonProductData);
+
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
+        $cart->addItem($this->createCartItemWithId($cart, $personalPickupOnlyProduct, 1));
+        $cart->addItem($this->createCartItemWithId($cart, $commonProduct, 2));
+
+        $personalPickupOnlyProducts = $cart->getPersonalPickupOnlyProducts();
+
+        $this->assertCount(1, $personalPickupOnlyProducts);
+        $this->assertContains($personalPickupOnlyProduct, $personalPickupOnlyProducts);
+        $this->assertNotContains($commonProduct, $personalPickupOnlyProducts);
+    }
+
+    private function createCartItemWithId(Cart $cart, Product $product, int $id): CartItem
+    {
+        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+
+        $idReflectionProperty = new ReflectionProperty(CartItem::class, 'id');
+        $idReflectionProperty->setValue($cartItem, $id);
+
+        return $cartItem;
+    }
+
+    public function testGetPersonalPickupOnlyProductsReturnsEmptyArrayWhenNoneFlagged(): void
+    {
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
+
+        $productData = TestProductProvider::getTestProductData();
+        $productData->name = ['cs' => 'Common product'];
+        $product = Product::create($productData);
+
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
+        $cart->addItem($this->createCartItemWithId($cart, $product, 1));
+
+        $this->assertSame([], $cart->getPersonalPickupOnlyProducts());
     }
 
     public function testClean(): void

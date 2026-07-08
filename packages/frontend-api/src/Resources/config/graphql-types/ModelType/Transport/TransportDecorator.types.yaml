@@ -41,5 +41,13 @@ TransportDecorator:
             transportTypeCode:
                 type: "TransportTypeEnum!"
                 description: "Code of transport type"
+            productsBlockingSelectionInCart:
+                type: "[ProductsByTransportUnavailabilityReason!]!"
+                description: "Cart products that cannot be delivered using this transport, grouped by the reason (empty when the transport can be selected)"
+                resolve: '@=query("transportProductsBlockingSelectionInCartQuery", value, args["cartUuid"], context)'
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                        defaultValue: null
             vatPercent:
                 type: "String!"

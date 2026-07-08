@@ -110,6 +110,11 @@ class ProductArrayFieldMapper
         return $data['selling_denied'] === true;
     }
 
+    public function isPersonalPickupOnly(array $data): bool
+    {
+        return $data['personal_pickup_only'] === true;
+    }
+
     public function isCurrentlyOutOfStock(array $data): bool
     {
         if ($this->isAllowedNegativeStock($data)) {

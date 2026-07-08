@@ -143,6 +143,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         }
 
         $this->productDemoDataSetter->setProductParameterValues($productData, $parameterValues);
+        $productData->personalPickupOnly = true;
 
         $this->createProduct($productData);
 

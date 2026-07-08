@@ -1,5 +1,8 @@
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
-import { useTransportChangeInSelect } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
+import {
+    getTransportUnavailabilityHeading,
+    useTransportChangeInSelect,
+} from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TypeTransportStoresFragment } from 'graphql/requests/transports/fragments/TransportStoresFragment.generated';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -8,6 +11,7 @@ import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
+import { TransportUnavailabilityInfo } from './TransportUnavailabilityInfo';
 
 type ChangeTransport = ReturnType<typeof useTransportChangeInSelect>['changeTransport'];
 
@@ -68,6 +72,15 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                 }
                 onClick={changeTransport}
             />
+
+            {disabled &&
+                transport.productsBlockingSelectionInCart.map((productsGroup) => (
+                    <TransportUnavailabilityInfo
+                        key={productsGroup.reason}
+                        heading={getTransportUnavailabilityHeading(productsGroup.reason, t)}
+                        products={productsGroup.products}
+                    />
+                ))}
         </TransportAndPaymentListItem>
     );
 };

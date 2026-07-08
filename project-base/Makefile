@@ -20,7 +20,7 @@ help: ## Displays list of available commands
 # ------------------------------------------------------------------------------
 
 .PHONY: help mutagen-up mutagen-up-build mutagen-up-build-no-cache mutagen-stop mutagen-down generate-schema generate-schema-native check-fix php-checks php-lock-icons php-translations \
-	storefront-checks storefront-translations check-schema run-acceptance-tests-base \
+	storefront-checks storefront-translations translations-dump check-schema run-acceptance-tests-base \
 	run-acceptance-tests-regression selected-acceptance-tests-base selected-acceptance-tests-regression \
 	run-specific-test-regression run-specific-test-base \
 	open-acceptance-tests-base open-acceptance-tests-regression run-smoke-tests \
@@ -118,6 +118,8 @@ storefront-knip: ## Runs Storefront knip to check for unused files
 
 storefront-translations: ## Updates translation files of the storefront
 	docker compose exec storefront pnpm run translate
+
+translations-dump: php-translations storefront-translations ## Updates translation files of both the backend and the storefront
 
 storefront-styles-for-admin: ## Rebuilds the storefront styles for admin
 	docker compose exec storefront pnpm run compile-tailwind-for-admin

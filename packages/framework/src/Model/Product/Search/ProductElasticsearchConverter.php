@@ -51,6 +51,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::VARIANTS] = $product[ProductExportFieldProvider::VARIANTS] ?? [];
 
         $result[ProductExportFieldProvider::SELLING_DENIED] = $product[ProductExportFieldProvider::SELLING_DENIED] ?? true;
+        $result[ProductExportFieldProvider::PERSONAL_PICKUP_ONLY] = $product[ProductExportFieldProvider::PERSONAL_PICKUP_ONLY] ?? false;
 
         // unknown default value, used for filtering only
         $result[ProductExportFieldProvider::BRAND] = $product[ProductExportFieldProvider::BRAND] ?? null;

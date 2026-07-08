@@ -111,6 +111,13 @@ class Product extends AbstractTranslatableEntity
     protected $hidden;
 
     /**
+     * @var bool
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'boolean')]
+    protected $personalPickupOnly;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
     #[AsMcpColumn]
@@ -271,6 +278,7 @@ class Product extends AbstractTranslatableEntity
         $this->weight = $productData->weight;
         $this->productType = $productData->productType;
         $this->isAllowedNegativeStock = $productData->isAllowedNegativeStock;
+        $this->personalPickupOnly = $productData->personalPickupOnly;
         $this->setTranslations($productData);
         $this->setExcludedTransports($productData->excludedTransports);
         $this->editRelatedProducts($productData->relatedProducts);
@@ -448,6 +456,14 @@ class Product extends AbstractTranslatableEntity
     public function isSellingDenied()
     {
         return $this->sellingDenied;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPersonalPickupOnly()
+    {
+        return $this->personalPickupOnly;
     }
 
     /**

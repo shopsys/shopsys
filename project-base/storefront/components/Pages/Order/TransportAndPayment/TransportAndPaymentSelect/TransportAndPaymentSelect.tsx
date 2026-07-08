@@ -83,7 +83,10 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                         <TransportListItem
                                             key={transportItem.uuid}
                                             changeTransport={changeTransport}
-                                            disabled={isTransportSelectionLoading}
+                                            disabled={
+                                                isTransportSelectionLoading ||
+                                                transportItem.productsBlockingSelectionInCart.length > 0
+                                            }
                                             pickupPlace={pickupPlace}
                                             transport={transportItem}
                                         />

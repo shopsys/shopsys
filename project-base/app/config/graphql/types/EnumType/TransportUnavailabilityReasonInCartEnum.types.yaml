@@ -1,0 +1,4 @@
+TransportUnavailabilityReasonInCartEnum:
+    type: enum
+    inherits:
+        - 'TransportUnavailabilityReasonInCartEnumDecorator'

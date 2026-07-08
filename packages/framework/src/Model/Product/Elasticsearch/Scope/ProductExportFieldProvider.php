@@ -28,6 +28,7 @@ class ProductExportFieldProvider
     public const string PARAMETERS = 'parameters';
     public const string ORDERING_PRIORITY = 'ordering_priority';
     public const string SELLING_DENIED = 'selling_denied';
+    public const string PERSONAL_PICKUP_ONLY = 'personal_pickup_only';
     public const string AVAILABILITY = 'availability';
     public const string IS_MAIN_VARIANT = 'is_main_variant';
     public const string IS_VARIANT = 'is_variant';

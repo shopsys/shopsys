@@ -42,6 +42,7 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
             name
         }
         isSellingDenied
+        isPersonalPickupOnly
         isCurrentlyOutOfStock
         description
         orderingPriority

@@ -284,6 +284,11 @@ final class ProductFormType extends AbstractType
                 'multiple' => true,
                 'expanded' => false,
                 'label' => 'Excluded transports',
+            ])
+            ->add('personalPickupOnly', YesNoType::class, [
+                'required' => false,
+                'label' => 'Personal pickup only',
+                'help' => t('If enabled, a cart containing this product can only use personal pickup at store transports.'),
             ]);
 
         return $builderBasicInformationGroup;

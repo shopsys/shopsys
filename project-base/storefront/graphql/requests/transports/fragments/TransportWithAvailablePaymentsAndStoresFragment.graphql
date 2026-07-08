@@ -18,5 +18,15 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
     }
     transportTypeCode
     isPersonalPickup
+    productsBlockingSelectionInCart {
+        reason
+        products {
+            uuid
+            fullName
+            mainImage {
+                ...ImageFragment
+            }
+        }
+    }
     vatPercent
 }

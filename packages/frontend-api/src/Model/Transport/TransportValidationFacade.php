@@ -63,6 +63,10 @@ class TransportValidationFacade
         if ($this->transportVisibilityCalculation->filterTransportsByProductsInCart([$transport], $cart) === []) {
             throw new TransportUnavailableForProductsInCartException();
         }
+
+        if ($cart->isPersonalPickupRequired() && !$transport->isPersonalPickup()) {
+            throw new TransportUnavailableForProductsInCartException();
+        }
     }
 
     public function checkTransportPriceAndWeightLimit(Transport $transport, Cart $cart): void

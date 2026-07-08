@@ -1,0 +1,4 @@
+ProductsByTransportUnavailabilityReason:
+    type: object
+    inherits:
+        - 'ProductsByTransportUnavailabilityReasonDecorator'

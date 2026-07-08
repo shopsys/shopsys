@@ -1,0 +1,12 @@
+query TransportsAvailabilityForCartQuery($cartUuid: Uuid) {
+    transports(cartUuid: $cartUuid) {
+        name
+        isPersonalPickup
+        productsBlockingSelectionInCart {
+            reason
+            products {
+                fullName
+            }
+        }
+    }
+}

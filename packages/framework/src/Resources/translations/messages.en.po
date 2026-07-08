@@ -1837,6 +1837,9 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
+msgid "If enabled, a cart containing this product can only use personal pickup at store transports."
+msgstr ""
+
 msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
 msgstr ""
 
@@ -2585,6 +2588,9 @@ msgid "Personal information overview"
 msgstr ""
 
 msgid "Personal pickup"
+msgstr ""
+
+msgid "Personal pickup only"
 msgstr ""
 
 msgid "Phone"

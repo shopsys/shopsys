@@ -5,16 +5,31 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Transport;
 
 use App\DataFixtures\Demo\CartDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Product\Product;
+use App\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
+use Shopsys\FrameworkBundle\Model\Transport\TransportUnavailabilityReasonInCartEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportsTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private ProductFacade $productFacade;
+
+    /**
+     * @inject
+     */
+    private ProductDataFactory $productDataFactory;
+
     public function testByCartUuid(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/TransportsQuery.graphql', [
@@ -23,11 +38,13 @@ class TransportsTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'transports');
 
         $locale = $this->getFirstDomainLocale();
+        // "Drone delivery" is excluded for a product in the demo cart, so it is now shown disabled and sorted last
         $expectedTransportsData = [
             ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
         ];
         $this->assertCount(count($expectedTransportsData), $responseData);
 
@@ -209,5 +226,138 @@ class TransportsTest extends GraphQlTestCase
         ];
 
         $this->assertSame($arrayExpected, $responseData);
+    }
+
+    public function testTransportsAreOrderedAndFlaggedWhenCartRequiresPersonalPickup(): void
+    {
+        $this->setProductAsPersonalPickupOnly(ProductDataFixture::PRODUCT_PREFIX . 1);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/TransportsAvailabilityForCartQuery.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'transports');
+
+        $personalPickupOnlyProductFullName = $this->getProductFullNameForFirstDomain(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $hasSeenUnavailableTransport = false;
+
+        foreach ($responseData as $transport) {
+            if ($transport['isPersonalPickup']) {
+                $this->assertSame([], $transport['productsBlockingSelectionInCart']);
+                $this->assertFalse(
+                    $hasSeenUnavailableTransport,
+                    'Personal pickup transports must be listed before the unavailable ones',
+                );
+            } else {
+                $this->assertSame(
+                    [['fullName' => $personalPickupOnlyProductFullName]],
+                    $this->getBlockingProductsByReason($transport)[TransportUnavailabilityReasonInCartEnum::PERSONAL_PICKUP_REQUIRED],
+                );
+                $hasSeenUnavailableTransport = true;
+            }
+        }
+
+        $this->assertTrue(
+            $hasSeenUnavailableTransport,
+            'At least one non-personal-pickup transport is expected to be flagged as unavailable',
+        );
+    }
+
+    public function testTransportExcludedForProductIsFlaggedButStillReturned(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/TransportsAvailabilityForCartQuery.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'transports');
+
+        $droneName = t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $excludingProductFullName = $this->getProductFullNameForFirstDomain(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $transportsWithExcludedProducts = [];
+
+        foreach ($responseData as $transport) {
+            $blockingProductsByReason = $this->getBlockingProductsByReason($transport);
+
+            if (array_key_exists(TransportUnavailabilityReasonInCartEnum::EXCLUDED_FOR_PRODUCT, $blockingProductsByReason)) {
+                $transportsWithExcludedProducts[$transport['name']] = $blockingProductsByReason[TransportUnavailabilityReasonInCartEnum::EXCLUDED_FOR_PRODUCT];
+            }
+        }
+
+        $this->assertArrayHasKey($droneName, $transportsWithExcludedProducts);
+        $this->assertSame([['fullName' => $excludingProductFullName]], $transportsWithExcludedProducts[$droneName]);
+    }
+
+    public function testTransportBlockedByBothReasonsListsAllProductsThatCannotBeDelivered(): void
+    {
+        $this->setProductAsPersonalPickupOnly(ProductDataFixture::PRODUCT_PREFIX . 72);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/TransportsAvailabilityForCartQuery.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'transports');
+
+        $transportsByName = [];
+
+        foreach ($responseData as $transport) {
+            $transportsByName[$transport['name']] = $transport;
+        }
+
+        $droneName = t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $commonTransportName = t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $excludingProductFullName = $this->getProductFullNameForFirstDomain(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $personalPickupOnlyProductFullName = $this->getProductFullNameForFirstDomain(ProductDataFixture::PRODUCT_PREFIX . 72);
+
+        $this->assertSame(
+            [
+                [
+                    'reason' => TransportUnavailabilityReasonInCartEnum::EXCLUDED_FOR_PRODUCT,
+                    'products' => [['fullName' => $excludingProductFullName]],
+                ],
+                [
+                    'reason' => TransportUnavailabilityReasonInCartEnum::PERSONAL_PICKUP_REQUIRED,
+                    'products' => [['fullName' => $personalPickupOnlyProductFullName]],
+                ],
+            ],
+            $transportsByName[$droneName]['productsBlockingSelectionInCart'],
+        );
+
+        $this->assertSame(
+            [
+                [
+                    'reason' => TransportUnavailabilityReasonInCartEnum::PERSONAL_PICKUP_REQUIRED,
+                    'products' => [['fullName' => $personalPickupOnlyProductFullName]],
+                ],
+            ],
+            $transportsByName[$commonTransportName]['productsBlockingSelectionInCart'],
+        );
+    }
+
+    /**
+     * @param array{productsBlockingSelectionInCart: array<int, array{reason: string, products: array<int, array{fullName: string}>}>} $transport
+     * @return array<string, array<int, array{fullName: string}>>
+     */
+    private function getBlockingProductsByReason(array $transport): array
+    {
+        $blockingProductsByReason = [];
+
+        foreach ($transport['productsBlockingSelectionInCart'] as $productsGroup) {
+            $blockingProductsByReason[$productsGroup['reason']] = $productsGroup['products'];
+        }
+
+        return $blockingProductsByReason;
+    }
+
+    private function getProductFullNameForFirstDomain(string $productReferenceName): string
+    {
+        $product = $this->getReference($productReferenceName, Product::class);
+
+        return $product->getFullName($this->getFirstDomainLocale());
+    }
+
+    private function setProductAsPersonalPickupOnly(string $productReferenceName): void
+    {
+        $product = $this->getReference($productReferenceName, Product::class);
+
+        $productData = $this->productDataFactory->createFromProduct($product);
+        $productData->personalPickupOnly = true;
+        $this->productFacade->edit($product->getId(), $productData);
     }
 }

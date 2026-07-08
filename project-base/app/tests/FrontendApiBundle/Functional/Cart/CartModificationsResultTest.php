@@ -230,6 +230,29 @@ class CartModificationsResultTest extends GraphQlTestCase
         self::assertTrue($transportModifications['transportUnavailable']);
     }
 
+    public function testNonPersonalPickupTransportIsReportedAsUnavailableForPersonalPickupOnlyProductInCart(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
+        $this->addTransportToCart($newlyCreatedCart['uuid'], $transport);
+        $this->setTestingProductAsPersonalPickupOnly();
+
+        $transportModifications = $this->getTransportModificationsForCartQuery($newlyCreatedCart['uuid']);
+        self::assertTrue($transportModifications['transportUnavailable']);
+    }
+
+    public function testPersonalPickupTransportIsAvailableForPersonalPickupOnlyProductInCart(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $this->addTransportToCart($newlyCreatedCart['uuid'], $transport, $store->getUuid());
+        $this->setTestingProductAsPersonalPickupOnly();
+
+        $transportModifications = $this->getTransportModificationsForCartQuery($newlyCreatedCart['uuid']);
+        self::assertFalse($transportModifications['transportUnavailable']);
+    }
+
     public function testHiddenTransportIsReportedAsUnavailable(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
@@ -424,6 +447,16 @@ class CartModificationsResultTest extends GraphQlTestCase
 
         $productData = $this->productDataFactory->createFromProduct($this->testingProduct);
         $productData->excludedTransports = [$transport];
+        $this->productFacade->edit($this->testingProduct->getId(), $productData);
+    }
+
+    private function setTestingProductAsPersonalPickupOnly(): void
+    {
+        // refresh testing product
+        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+
+        $productData = $this->productDataFactory->createFromProduct($this->testingProduct);
+        $productData->personalPickupOnly = true;
         $this->productFacade->edit($this->testingProduct->getId(), $productData);
     }
 

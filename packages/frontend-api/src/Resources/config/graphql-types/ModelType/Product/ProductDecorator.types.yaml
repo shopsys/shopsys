@@ -65,6 +65,9 @@ ProductDecorator:
                 description: "Brand of product"
             isSellingDenied:
                 type: "Boolean!"
+            isPersonalPickupOnly:
+                type: "Boolean!"
+                description: "Whether a cart containing this product is limited to personal pickup transports"
             isCurrentlyOutOfStock:
                 type: "Boolean!"
                 description: "Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied"

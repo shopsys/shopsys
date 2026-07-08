@@ -15,5 +15,15 @@ fragment TransportWithAvailablePaymentsFragment on Transport {
     daysUntilDelivery
     transportTypeCode
     isPersonalPickup
+    productsBlockingSelectionInCart {
+        reason
+        products {
+            uuid
+            fullName
+            mainImage {
+                ...ImageFragment
+            }
+        }
+    }
     vatPercent
 }

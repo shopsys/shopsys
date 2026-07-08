@@ -1,0 +1,12 @@
+ProductsByTransportUnavailabilityReasonDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Cart products grouped by the reason why they cannot be delivered using the transport"
+        fields:
+            reason:
+                type: "TransportUnavailabilityReasonInCartEnum!"
+                description: "Reason why the products cannot be delivered using the transport"
+            products:
+                type: "[Product!]!"
+                description: "Cart products that cannot be delivered using the transport for this reason"

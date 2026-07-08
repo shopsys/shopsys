@@ -4,17 +4,31 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Transport;
 
+use ArrayObject;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportUnavailabilityReasonInCartEnum;
+use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
+use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class TransportsQuery extends AbstractQuery
 {
+    protected const string CART_CACHE_NAMESPACE = 'transportsQueryCart';
+    protected const string EXCLUDING_PRODUCTS_CACHE_NAMESPACE = 'transportsQueryExcludingProductsByTransportId';
+    protected const string CURRENT_CUSTOMER_CART_CACHE_KEY = 'currentCustomerCart';
+
     public function __construct(
         protected readonly TransportFacade $transportFacade,
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly GqlContextHelper $gqlContextHelper,
+        protected readonly InMemoryCache $inMemoryCache,
+        protected readonly TransportVisibilityCalculation $transportVisibilityCalculation,
     ) {
     }
 
@@ -23,18 +37,112 @@ class TransportsQuery extends AbstractQuery
      */
     public function transportsQuery(?string $cartUuid = null): array
     {
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        if ($customerUser === null && $cartUuid === null) {
-            return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations();
-        }
-
-        $cart = $this->cartApiFacade->findCart($customerUser, $cartUuid);
+        $cart = $this->findCart($cartUuid);
 
         if ($cart === null) {
             return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations();
         }
 
-        return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations($cart);
+        $transports = $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations($cart);
+
+        return $this->sortAvailableTransportsFirst($transports, $cart, $cartUuid);
+    }
+
+    /**
+     * @return array<int, array{reason: string, products: \Shopsys\FrameworkBundle\Model\Product\Product[]}>
+     */
+    public function transportProductsBlockingSelectionInCartQuery(
+        Transport $transport,
+        ?string $cartUuid = null,
+        ?ArrayObject $context = null,
+    ): array {
+        $resolvedCartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
+        $cart = $this->findCart($resolvedCartUuid);
+
+        if ($cart === null) {
+            return [];
+        }
+
+        return $this->getProductsBlockingSelectionGroupedByReason($transport, $cart, $resolvedCartUuid);
+    }
+
+    /**
+     * @return array<int, array{reason: string, products: \Shopsys\FrameworkBundle\Model\Product\Product[]}>
+     */
+    protected function getProductsBlockingSelectionGroupedByReason(
+        Transport $transport,
+        Cart $cart,
+        ?string $cartUuid,
+    ): array {
+        $productsGroupedByReason = [];
+
+        $excludingProducts = $this->getExcludingProductsByTransportId($cart, $cartUuid)[$transport->getId()] ?? [];
+
+        if ($excludingProducts !== []) {
+            $productsGroupedByReason[] = [
+                'reason' => TransportUnavailabilityReasonInCartEnum::EXCLUDED_FOR_PRODUCT,
+                'products' => $excludingProducts,
+            ];
+        }
+
+        $personalPickupOnlyProducts = array_values($cart->getPersonalPickupOnlyProducts());
+
+        if (!$transport->isPersonalPickup() && $personalPickupOnlyProducts !== []) {
+            $productsGroupedByReason[] = [
+                'reason' => TransportUnavailabilityReasonInCartEnum::PERSONAL_PICKUP_REQUIRED,
+                'products' => $personalPickupOnlyProducts,
+            ];
+        }
+
+        return $productsGroupedByReason;
+    }
+
+    protected function findCart(?string $cartUuid): ?Cart
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            self::CART_CACHE_NAMESPACE,
+            function () use ($cartUuid): ?Cart {
+                $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+                if ($customerUser === null && $cartUuid === null) {
+                    return null;
+                }
+
+                return $this->cartApiFacade->findCart($customerUser, $cartUuid);
+            },
+            $cartUuid ?? self::CURRENT_CUSTOMER_CART_CACHE_KEY,
+        );
+    }
+
+    /**
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product[]>
+     */
+    protected function getExcludingProductsByTransportId(Cart $cart, ?string $cartUuid): array
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            self::EXCLUDING_PRODUCTS_CACHE_NAMESPACE,
+            fn (): array => $this->transportVisibilityCalculation->getExcludingProductsByTransportIdForCart($cart),
+            $cartUuid ?? self::CURRENT_CUSTOMER_CART_CACHE_KEY,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    protected function sortAvailableTransportsFirst(array $transports, Cart $cart, ?string $cartUuid): array
+    {
+        $availableTransports = [];
+        $unavailableTransports = [];
+
+        foreach ($transports as $transport) {
+            if ($this->getProductsBlockingSelectionGroupedByReason($transport, $cart, $cartUuid) === []) {
+                $availableTransports[] = $transport;
+            } else {
+                $unavailableTransports[] = $transport;
+            }
+        }
+
+        return [...$availableTransports, ...$unavailableTransports];
     }
 }
