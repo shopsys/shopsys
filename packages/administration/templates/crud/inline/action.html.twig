@@ -1,7 +1,5 @@
-{% set url = action_url(actionRoute, data) %}
-
-{% if url is not null %}
-    <a href="{{ url }}"
+{% if action_has_access(actionRoute) %}
+    <a href="{{ action_url(actionRoute, data) }}"
         {{ attributes|raw }}
     >
         {% if icon is not null %}

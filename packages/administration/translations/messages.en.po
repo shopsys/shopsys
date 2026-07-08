@@ -589,9 +589,6 @@ msgstr ""
 msgid "Created on"
 msgstr ""
 
-msgid "Creating new %entity_name%"
-msgstr ""
-
 msgid "Cron detail"
 msgstr ""
 
@@ -674,6 +671,9 @@ msgid "Deselect all permissions for this role"
 msgstr ""
 
 msgid "Deselect all permissions in section"
+msgstr ""
+
+msgid "Detail"
 msgstr ""
 
 msgid "Disable"
@@ -802,10 +802,13 @@ msgstr ""
 msgid "Edit withdrawal request"
 msgstr ""
 
-msgid "Editing %entity_name%"
+msgid "Editing"
 msgstr ""
 
 msgid "Editing SEO page"
+msgstr ""
+
+msgid "Editing a record"
 msgstr ""
 
 msgid "Editing administrator"
@@ -1372,6 +1375,9 @@ msgstr ""
 msgid "New promo code"
 msgstr ""
 
+msgid "New record"
+msgstr ""
+
 msgid "New registered customers"
 msgstr ""
 
@@ -1799,6 +1805,9 @@ msgid "Quick search"
 msgstr ""
 
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
+msgstr ""
+
+msgid "Record detail"
 msgstr ""
 
 msgid "Record is not present in the Elasticsearch for the selected entity and domain."

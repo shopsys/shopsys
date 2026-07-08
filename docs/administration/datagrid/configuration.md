@@ -17,7 +17,7 @@ All methods are chainable, so you can call them one after another.
 
 ```php
 // ...
-use Shopsys\AdministrationBundle\Component\Action\RowAction
+use Shopsys\AdministrationBundle\Component\Action\RowAction;
 
 //...
 
@@ -51,6 +51,32 @@ $datagrid->remove('name');
 $actions = $datagrid->rowActions();
 
 ```
+
+## Drag-and-drop ordering
+
+If the listed entity has a position that the user should be able to change by dragging rows, enable drag-and-drop ordering with `enableDragAndDrop()`. Pass the name of the field the listing is ordered by (typically the position field):
+
+```php
+// The ordering field has to be defined; it can be hidden if you do not want to display it
+$datagrid->add('position', [
+    'visible' => false,
+]);
+
+// Orders ascending by default
+$datagrid->enableDragAndDrop('position');
+
+// Drag-and-drop can be turned off again (e.g. in an extension)
+$datagrid->disableDragAndDrop();
+```
+
+Requirements and behavior:
+
+- the ordering field must be defined via `add()` beforehand, otherwise an exception is thrown,
+- the managed entity must implement `Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface` (its `setPosition()` is used to persist the new order),
+- the adapter must be entity-class-aware (e.g. the default ORM adapter); array-backed datagrids are not supported,
+- the listing is always ordered by the given field, so a manual `setDefaultOrder()` cannot be combined with drag-and-drop (and removing the ordering field is blocked until `disableDragAndDrop()` is called),
+- ordering by any other column is disabled and pagination is turned off, so the whole list can be reordered at once,
+- saving the new order is handled automatically; it is available only to administrators with the edit permission.
 
 More information about configuration-specific sections can be found in the following sections:
 

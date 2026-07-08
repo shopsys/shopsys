@@ -12,10 +12,9 @@ use Webmozart\Assert\Assert;
 
 final class CrudConfig
 {
-    /**
-     * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, string>
-     */
-    private array $customPageTitles;
+    private ?string $entityNameSingular = null;
+
+    private ?string $entityNamePlural = null;
 
     private ?string $menuTitle = null;
 
@@ -51,21 +50,31 @@ final class CrudConfig
 
     public function __construct(private readonly string $entityName)
     {
-        $this->customPageTitles = [];
-
         $this->enabledActions = new ArrayCollection([
             ActionType::LIST,
         ]);
     }
 
     /**
-     * Sets a custom title for a given action type.
+     * Overrides the automatically derived singular entity name. Wrap the value in `t()`.
      *
      * @return $this
      */
-    public function setTitle(ActionType $actionType, string $title): self
+    public function setEntityNameSingular(string $entityNameSingular): self
     {
-        $this->customPageTitles[$actionType->value] = $title;
+        $this->entityNameSingular = $entityNameSingular;
+
+        return $this;
+    }
+
+    /**
+     * Overrides the automatically derived plural entity name. Wrap the value in `t()`.
+     *
+     * @return $this
+     */
+    public function setEntityNamePlural(string $entityNamePlural): self
+    {
+        $this->entityNamePlural = $entityNamePlural;
 
         return $this;
     }
@@ -294,7 +303,8 @@ final class CrudConfig
     public function getConfig(): CrudConfigData
     {
         return new CrudConfigData(
-            $this->customPageTitles,
+            $this->entityNameSingular,
+            $this->entityNamePlural,
             $this->menuTitle,
             $this->entityName,
             $this->fullDisabled,

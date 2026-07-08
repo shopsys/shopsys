@@ -77,7 +77,7 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
                 $parent->addChild($route->getRouteName(), [
                     'route' => $route->getRouteName(),
                     'display' => false,
-                    'label' => $config->getTitle($action),
+                    'label' => $config->getBreadcrumbTitle($action),
                 ]);
             }
         }

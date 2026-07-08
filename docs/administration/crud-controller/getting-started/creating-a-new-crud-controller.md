@@ -39,7 +39,7 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 public function configure(CrudConfig $config): void
 {
     $config
-        ->setTitle(ActionType::LIST, t('Orders management')) // Set the custom title of the list page
+        ->setEntityNamePlural(t('Orders')) // Override the auto-derived plural entity name (used in the list title and menu)
         ->setMenuSection('customers') // Set the menu section where the controller will be placed
     ;
 }

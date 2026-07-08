@@ -337,6 +337,47 @@ class GridTest extends TestCase
         $this->assertTrue($grid->isDragAndDrop());
     }
 
+    public function testDragAndDropIgnoresRequestOrderToPreventOrderByInjection(): void
+    {
+        $getParameters = [
+            Grid::GET_PARAMETER => [
+                'gridId' => [
+                    'order' => 'maliciousColumn',
+                ],
+            ],
+        ];
+
+        $request = new Request($getParameters);
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        $twigStub = $this->createStub(Environment::class);
+        $routerStub = $this->createStub(Router::class);
+        $routeCsrfProtectorStub = $this->createStub(RouteCsrfProtector::class);
+        $dataSourceMock = $this->getMockBuilder(DataSourceInterface::class)->getMock();
+        $dataSourceMock->expects($this->once())->method('getPaginatedRows')
+            ->with(null, 1, 'position', DataSourceInterface::ORDER_ASC)
+            ->willReturn(new PaginationResult(1, 1, 0, []));
+        $accessCheckerStub = $this->createStub(AccessCheckerInterface::class);
+        $accessCheckerStub
+            ->method('canEdit')
+            ->willReturn(true);
+
+        $grid = new Grid(
+            'gridId',
+            SystemRole::ALL,
+            $dataSourceMock,
+            $requestStack,
+            $routerStub,
+            $routeCsrfProtectorStub,
+            $twigStub,
+            $accessCheckerStub,
+        );
+
+        $grid->enableDragAndDrop('Path\To\Entity\Class', 'position');
+        $grid->createView();
+    }
+
     public function testReorderColumns(): void
     {
         $request = new Request();

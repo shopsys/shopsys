@@ -589,9 +589,6 @@ msgstr "Vytvorené"
 msgid "Created on"
 msgstr "Vytvorené v"
 
-msgid "Creating new %entity_name%"
-msgstr "Vytváranie nového %entity_name%"
-
 msgid "Cron detail"
 msgstr "Detail cronu"
 
@@ -675,6 +672,9 @@ msgstr "Zrušiť výber všetkých oprávnení pre túto rolu"
 
 msgid "Deselect all permissions in section"
 msgstr "Zrušiť výber všetkých povolení v sekcii"
+
+msgid "Detail"
+msgstr "Detail"
 
 msgid "Disable"
 msgstr "Zakázať"
@@ -802,11 +802,14 @@ msgstr "Upraviť sledovanie zásielky"
 msgid "Edit withdrawal request"
 msgstr "Upraviť žiadosť o odstúpenie"
 
-msgid "Editing %entity_name%"
-msgstr "Úprava %entity_name%"
+msgid "Editing"
+msgstr "Úprava"
 
 msgid "Editing SEO page"
 msgstr "Upravovanie SEO stránky"
+
+msgid "Editing a record"
+msgstr "Upravovanie položky"
 
 msgid "Editing administrator"
 msgstr "Upravovanie administrátora"
@@ -1372,6 +1375,9 @@ msgstr "Nový produkt"
 msgid "New promo code"
 msgstr "Nový promo kód"
 
+msgid "New record"
+msgstr "Nový záznam"
+
 msgid "New registered customers"
 msgstr "Novoregistrovaní zákazníci"
 
@@ -1800,6 +1806,9 @@ msgstr "Rýchle hľadanie"
 
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr "Výšku sadzby nemôže byť upravená. Je potrebné vytvoriť novú sadzbu a starú odstrániť s nahradením za novú."
+
+msgid "Record detail"
+msgstr "Detail položky"
 
 msgid "Record is not present in the Elasticsearch for the selected entity and domain."
 msgstr "Záznam nie je uložený v Elasticsearch pre zvolenú entitu a doménu."
