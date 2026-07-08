@@ -7,12 +7,6 @@
 
         {{ form_row(form.defaultCurrency, { label: 'Default administration currency'|trans, icon: { title: 'When changing the default currency there is no recalculation of prices'|trans } }) }}
 
-        <hr>
-
-        {% for item in form.domainDefaultCurrencies %}
-            {{ form_row(item, { label: 'Basic frontend currency %domainName%'|trans({'%domainName%': domainNames[item.vars.name]})}) }}
-        {% endfor %}
-
         <div class="text-end">
             {{ form_widget(form.save) }}
         </div>

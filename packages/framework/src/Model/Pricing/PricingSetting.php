@@ -14,7 +14,6 @@ class PricingSetting
     public const string SELLING_PRICE_TYPE = 'sellingPriceType';
 
     public const string DEFAULT_CURRENCY = 'defaultCurrencyId';
-    public const string DEFAULT_DOMAIN_CURRENCY = 'defaultDomainCurrencyId';
     public const string FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT = 'freeTransportAndPaymentPriceLimit';
 
     public const int PRICE_TYPE_WITH_VAT = 1;
@@ -40,19 +39,9 @@ class PricingSetting
         return $this->setting->get(self::DEFAULT_CURRENCY);
     }
 
-    public function getDomainDefaultCurrencyIdByDomainId(int $domainId): int
-    {
-        return $this->setting->getForDomain(self::DEFAULT_DOMAIN_CURRENCY, $domainId);
-    }
-
     public function setDefaultCurrency(Currency $currency): void
     {
         $this->setting->set(self::DEFAULT_CURRENCY, $currency->getId());
-    }
-
-    public function setDomainDefaultCurrency(Currency $currency, int $domainId): void
-    {
-        $this->setting->setForDomain(self::DEFAULT_DOMAIN_CURRENCY, $currency->getId(), $domainId);
     }
 
     public function getFreeTransportAndPaymentPriceLimit(int $domainId): ?Money

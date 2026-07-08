@@ -36,9 +36,6 @@ class ProductPriceCalculationTest extends TestCase
         $pricingSettingStub
             ->method('getInputPriceType')
                 ->willReturn($inputPriceType);
-        $pricingSettingStub
-            ->method('getDomainDefaultCurrencyIdByDomainId')
-                ->willReturn(1);
 
         $productManualInputPriceRepositoryStub = $this->createStub(ProductManualInputPriceRepository::class);
 

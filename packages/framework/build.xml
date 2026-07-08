@@ -578,7 +578,15 @@
         </exec>
     </target>
 
-    <target name="domains-data-create" depends="domains-db-functions-create" description="Creates domains data for newly configured domains. You should run it when you modify domains.yaml">
+    <target name="currencies-data-create" description="Creates currencies configured in domains.yaml that are missing in the database. You should run it when you modify domain currencies in domains.yaml">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:currencies-data:create"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
+    <target name="domains-data-create" depends="domains-db-functions-create,currencies-data-create" description="Creates domains data for newly configured domains. You should run it when you modify domains.yaml">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-data:create"/>
@@ -1192,7 +1200,16 @@
         </exec>
     </target>
 
-    <target name="test-domains-data-create" depends="production-protection,test-domains-db-functions-create" description="Creates domains data in tests DB for newly configured domains." hidden="true">
+    <target name="test-currencies-data-create" depends="production-protection" description="Creates currencies configured in domains.yaml in tests DB." hidden="true">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:currencies-data:create"/>
+            <arg value="--env=test"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
+    <target name="test-domains-data-create" depends="production-protection,test-domains-db-functions-create,test-currencies-data-create" description="Creates domains data in tests DB for newly configured domains." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-data:create"/>

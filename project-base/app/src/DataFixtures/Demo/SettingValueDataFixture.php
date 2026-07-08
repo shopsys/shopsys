@@ -43,8 +43,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
 
-            $this->setDomainDefaultCurrency($domainId);
-
             if ($domainId === 1) {
                 $freeTransportLimit = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
                     Money::create(self::FREE_TRANSPORT_AND_PAYMENT_LIMIT),
@@ -143,16 +141,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             }
         }
         $this->setting->set(BaseSetting::FILE_STRUCTURE_MIGRATED_FOR_RELATIONS, true);
-    }
-
-    private function setDomainDefaultCurrency(int $domainId): void
-    {
-        if ($domainId === Domain::SECOND_DOMAIN_ID) {
-            $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
-        } else {
-            $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR, Currency::class);
-        }
-        $this->setting->setForDomain(PricingSetting::DEFAULT_DOMAIN_CURRENCY, $defaultCurrency->getId(), $domainId);
     }
 
     /**

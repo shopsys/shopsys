@@ -36,6 +36,11 @@ class CurrencyFacade
         return $this->currencyRepository->getByCode($currencyCode);
     }
 
+    public function findByCode(string $currencyCode): ?Currency
+    {
+        return $this->currencyRepository->findByCode($currencyCode);
+    }
+
     public function create(CurrencyData $currencyData): Currency
     {
         $currency = $this->currencyFactory->create($currencyData);
@@ -96,7 +101,18 @@ class CurrencyFacade
     public function getDomainDefaultCurrencyByDomainId(
         int $domainId,
     ): Currency {
-        return $this->getById($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId));
+        return $this->getByCode($this->domain->getDomainConfigById($domainId)->getDefaultCurrencyCode());
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[]
+     */
+    public function getEnabledCurrenciesByDomainId(int $domainId): array
+    {
+        return array_map(
+            fn (string $currencyCode): Currency => $this->getByCode($currencyCode),
+            $this->domain->getDomainConfigById($domainId)->getCurrencyCodes(),
+        );
     }
 
     public function setDefaultCurrency(Currency $currency): void
@@ -105,12 +121,6 @@ class CurrencyFacade
         $this->pricingSetting->setDefaultCurrency($currency);
         $this->recalculateExchangeRatesByNewDefaultCurrency($originalDefaultCurrency, $currency);
         $this->em->flush();
-    }
-
-    public function setDomainDefaultCurrency(Currency $currency, int $domainId): void
-    {
-        $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);
-        $this->dispatchCurrencyEvent($currency, CurrencyEvent::UPDATE);
     }
 
     protected function recalculateExchangeRatesByNewDefaultCurrency(
@@ -136,10 +146,14 @@ class CurrencyFacade
     {
         $notAllowedToDeleteCurrencyIds = [$this->getDefaultCurrency()->getId()];
 
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $notAllowedToDeleteCurrencyIds[] = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId(
-                $domainConfig->getId(),
-            );
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
+            foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+                $currency = $this->findByCode($currencyCode);
+
+                if ($currency !== null) {
+                    $notAllowedToDeleteCurrencyIds[] = $currency->getId();
+                }
+            }
         }
 
         foreach ($this->getCurrenciesUsedInOrders() as $currency) {

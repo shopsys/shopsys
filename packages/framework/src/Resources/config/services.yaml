@@ -741,6 +741,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail: ~
 
+    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataCreator: ~
+
     Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider:
         tags:
             - { name: kernel.reset, method: reset }

@@ -82,18 +82,8 @@ class CurrencyController extends AdminBaseController
 
     public function settingsAction(Request $request): Response
     {
-        $domainNames = [];
-
         $currencySettingsFormData = [];
         $currencySettingsFormData['defaultCurrency'] = $this->currencyFacade->getDefaultCurrency();
-        $currencySettingsFormData['domainDefaultCurrencies'] = [];
-
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-            $currencySettingsFormData['domainDefaultCurrencies'][$domainId] =
-                $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-            $domainNames[$domainId] = $domainConfig->getName();
-        }
 
         $form = $this->createForm(CurrencySettingsFormType::class, $currencySettingsFormData);
         $form->handleRequest($request);
@@ -103,14 +93,6 @@ class CurrencyController extends AdminBaseController
 
             $this->currencyFacade->setDefaultCurrency($currencySettingsFormData['defaultCurrency']);
 
-            foreach ($this->domain->getAll() as $domainConfig) {
-                $domainId = $domainConfig->getId();
-                $this->currencyFacade->setDomainDefaultCurrency(
-                    $currencySettingsFormData['domainDefaultCurrencies'][$domainId],
-                    $domainId,
-                );
-            }
-
             $this->addSuccessFlashTwig(t('Currency settings modified'));
 
             return $this->redirectToRoute('admin_currency_list');
@@ -118,7 +100,6 @@ class CurrencyController extends AdminBaseController
 
         return $this->render('@ShopsysAdministration/content/currency/currencySettings.html.twig', [
             'form' => $form->createView(),
-            'domainNames' => $domainNames,
         ]);
     }
 }

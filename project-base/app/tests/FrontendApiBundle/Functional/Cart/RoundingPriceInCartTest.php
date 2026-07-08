@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Product;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
@@ -75,9 +76,9 @@ class RoundingPriceInCartTest extends GraphQlTestCase
         );
     }
 
-    public function testProperRoundingIsReturnedForCashPaymentInCzk(): void
+    public function testProperRoundingIsReturnedForCashPaymentWithWholeRounding(): void
     {
-        $this->setCurrencyOnFirstDomainToCzkWithoutRounding();
+        $this->setFirstDomainCurrencyRoundingToHundredthsAndCashPaymentToWholeRounding();
         $cartUuid = $this->createCartWithProductTransportAndPayment();
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql', [
@@ -85,24 +86,21 @@ class RoundingPriceInCartTest extends GraphQlTestCase
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
 
-        $this->assertNotNull($data['roundingPrice'], 'Rounding price has to be set for cash payment in CZK');
+        $this->assertNotNull($data['roundingPrice'], 'Rounding price has to be set for cash payment with whole rounding');
 
-        // domain is switched to CZK currency, so all following prices are different from DataFixtures
-
-        $expectedRoundingAmount = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('0.04');
+        // cart total is 3498.96 CZK converted to the domain default currency (139.96 EUR), whole rounding adds 0.04
+        $expectedRoundingAmount = $this->moneyFormatterHelper->formatWithMaxFractionDigits(Money::create('0.04'));
         $this->assertEquals($data['roundingPrice']['priceWithoutVat'], $expectedRoundingAmount);
         $this->assertEquals($data['roundingPrice']['priceWithVat'], $expectedRoundingAmount);
     }
 
-    public function setCurrencyOnFirstDomainToCzkWithoutRounding(): void
+    public function setFirstDomainCurrencyRoundingToHundredthsAndCashPaymentToWholeRounding(): void
     {
-        $currencyCzk = $this->currencyFacade->getByCode('CZK');
+        $firstDomainCurrency = $this->getFirstDomainCurrency();
 
-        $currencyData = $this->currencyDataFactory->createFromCurrency($currencyCzk);
+        $currencyData = $this->currencyDataFactory->createFromCurrency($firstDomainCurrency);
         $currencyData->roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS;
-        $currencyCzk = $this->currencyFacade->edit($currencyCzk->getId(), $currencyData);
-
-        $this->currencyFacade->setDomainDefaultCurrency($currencyCzk, Domain::FIRST_DOMAIN_ID);
+        $this->currencyFacade->edit($firstDomainCurrency->getId(), $currencyData);
 
         $cashPayment = $this->getReference(PaymentDataFixture::PAYMENT_CASH, Payment::class);
         $cashPaymentData = $this->paymentDataFactory->createFromPayment($cashPayment);
