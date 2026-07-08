@@ -6,12 +6,16 @@ namespace Tests\FrameworkBundle\Test;
 
 use DateTimeZone;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class DomainConfigHelper
 {
     public const string DEFAULT_EXAMPLE_COM_BASE_URL = 'https://example.com:8080';
     public const string DEFAULT_TIMEZONE_STRING = 'Europe/Prague';
 
+    /**
+     * @param string[] $currencyCodes
+     */
     public static function getDomainConfig(
         int $id = 1,
         string $url = self::DEFAULT_EXAMPLE_COM_BASE_URL,
@@ -22,7 +26,8 @@ class DomainConfigHelper
         string $type = DomainConfig::TYPE_B2C,
         bool $loadDemoData = true,
         ?string $postfix = null,
+        array $currencyCodes = [Currency::CODE_CZK],
     ): DomainConfig {
-        return new DomainConfig($id, $url, $name, $locale, new DateTimeZone($dateTimeZoneString), $baseUrl, $type, $loadDemoData, $postfix);
+        return new DomainConfig($id, $url, $name, $locale, new DateTimeZone($dateTimeZoneString), $baseUrl, $type, $loadDemoData, $postfix, $currencyCodes);
     }
 }

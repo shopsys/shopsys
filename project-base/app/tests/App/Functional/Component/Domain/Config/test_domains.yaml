@@ -3,13 +3,16 @@ domains:
         locale: cs
         name: shopsys
         timezone: Europe/Prague
+        currencies: [CZK]
 
     -   id: 2
         locale: en
         name: 2.shopsys
         timezone: Europe/Prague
+        currencies: [EUR]
 
     -   id: 3
         locale: en
         name: 2.shopsys
         timezone: Europe/Prague
+        currencies: [EUR]

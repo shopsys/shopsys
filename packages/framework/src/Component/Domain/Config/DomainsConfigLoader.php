@@ -92,6 +92,7 @@ class DomainsConfigLoader
             $domainConfig[DomainsConfigDefinition::CONFIG_TYPE],
             $domainConfig[DomainsConfigDefinition::CONFIG_LOAD_DEMO_DATA],
             $postfix,
+            $domainConfig[DomainsConfigDefinition::CONFIG_CURRENCIES],
         );
     }
 

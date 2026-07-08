@@ -5,6 +5,7 @@ domains:
         name: B2C - EN
         timezone: Europe/Prague
         type: b2c
+        currencies: [EUR, CZK]
 
     -   id: 2
         load_demo_data: true
@@ -12,6 +13,7 @@ domains:
         name: B2B - CZ
         timezone: Europe/Prague
         type: b2b
+        currencies: [CZK]
 
     -   id: 3
         load_demo_data: true
@@ -19,3 +21,4 @@ domains:
         name: B2B - SK
         timezone: Europe/Prague
         type: b2b
+        currencies: [EUR]

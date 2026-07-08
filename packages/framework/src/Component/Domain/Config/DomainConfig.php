@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Domain\Config;
 
 use DateTimeZone;
+use Shopsys\FrameworkBundle\Component\Domain\Config\Exception\NoCurrenciesConfiguredForDomainException;
 
 class DomainConfig
 {
     public const string TYPE_B2C = 'b2c';
     public const string TYPE_B2B = 'b2b';
 
+    /**
+     * @param string[] $currencyCodes
+     */
     public function __construct(
         protected int $id,
         protected string $url,
@@ -21,6 +25,7 @@ class DomainConfig
         protected string $type = self::TYPE_B2C,
         protected readonly bool $loadDemoData = true,
         protected readonly ?string $postfix = null,
+        protected readonly array $currencyCodes = [],
     ) {
     }
 
@@ -77,5 +82,27 @@ class DomainConfig
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCurrencyCodes(): array
+    {
+        return $this->currencyCodes;
+    }
+
+    public function getDefaultCurrencyCode(): string
+    {
+        if ($this->currencyCodes === []) {
+            throw new NoCurrenciesConfiguredForDomainException($this->id);
+        }
+
+        return $this->currencyCodes[0];
+    }
+
+    public function hasCurrencyCode(string $currencyCode): bool
+    {
+        return in_array($currencyCode, $this->currencyCodes, true);
     }
 }
