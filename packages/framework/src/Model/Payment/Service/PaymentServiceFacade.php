@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Payment\Service;
 
 use Psr\Log\LoggerInterface;
-use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotConfiguredException;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotEnabledOnDomainException;
@@ -20,12 +19,10 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\Exception\PaymentTransacti
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\Exception\PaymentTransactionRefundFailedException;
 
 class PaymentServiceFacade
 {
-    use FlashMessageTrait;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceInterface[]
      */
@@ -36,7 +33,6 @@ class PaymentServiceFacade
         protected readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
         GoPayFacade $goPayFacade,
         protected readonly LoggerInterface $logger,
-        protected readonly ContainerInterface $container,
         protected readonly PaymentSetupCreationDataFactory $paymentSetupCreationDataFactory,
     ) {
         $this->paymentServices = [];
@@ -101,38 +97,58 @@ class PaymentServiceFacade
         return $updated;
     }
 
-    public function refundTransaction(PaymentTransaction $paymentTransaction, Money $refundAmount): void
+    public function refundTransaction(PaymentTransaction $paymentTransaction, Money $refundAmount): bool
     {
         $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
 
         try {
             $paymentServiceFacade = $this->getPaymentServiceFacadeByPaymentType($paymentTransaction->getPaymentThrowExceptionIfNull()->getType());
+            $refundFailed = false;
 
             try {
                 $update = $paymentServiceFacade->refundTransaction($paymentTransactionData, $refundAmount);
             } catch (GoPayPaymentDownloadException $exception) {
-                $this->addErrorFlash(t('GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right.', ['%paymentId%' => $paymentTransaction->getExternalPaymentIdentifier()]));
                 $this->logger->error(
                     'GoPay API return error.',
-                    ['exception' => $exception],
+                    [
+                        'exception' => $exception,
+                        'paymentTransactionId' => $paymentTransaction->getId(),
+                        'externalPaymentIdentifier' => $paymentTransaction->getExternalPaymentIdentifier(),
+                    ],
                 );
+                $refundFailed = true;
                 $update = false;
             }
 
             try {
                 $update = $update || $paymentServiceFacade->updateTransaction($paymentTransactionData);
             } catch (GoPayPaymentDownloadException $exception) {
-                $update = $update || false; // @phpstan-ignore-line
+                $this->logger->error(
+                    'GoPay API return error while updating refunded transaction.',
+                    [
+                        'exception' => $exception,
+                        'paymentTransactionId' => $paymentTransaction->getId(),
+                        'externalPaymentIdentifier' => $paymentTransaction->getExternalPaymentIdentifier(),
+                    ],
+                );
             }
 
             if ($update) {
                 $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
             }
-        } catch (PaymentServiceFacadeNotRegisteredException|PaymentTransactionHasNoAssignedPayment $exception) {
+
+            if ($refundFailed) {
+                throw new PaymentTransactionRefundFailedException();
+            }
+
+            return $update;
+        } catch (PaymentServiceFacadeNotRegisteredException|GoPayNotConfiguredException|GoPayNotEnabledOnDomainException|PaymentTransactionHasNoAssignedPayment $exception) {
             $this->logger->error(
                 $exception->getMessage(),
                 ['exception' => $exception],
             );
         }
+
+        return false;
     }
 }

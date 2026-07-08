@@ -1,0 +1,30 @@
+<div class="modal modal-blur {{ modalClass|default('show d-block') }}"
+     tabindex="-1"
+     role="dialog"
+     aria-modal="true"
+>
+    <div class="modal-dialog {{ dialogClass|default('modal-lg') }} modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ title }}</h5>
+                {% block close %}{% endblock %}
+            </div>
+
+            {% block content %}
+                <div class="modal-body">
+                    {% block body %}{% endblock %}
+                </div>
+
+                {% if showFooter|default(true) %}
+                    <div class="modal-footer">
+                        {% block footer %}{% endblock %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% if backdrop|default(true) %}
+    <div class="modal-backdrop fade show"></div>
+{% endif %}

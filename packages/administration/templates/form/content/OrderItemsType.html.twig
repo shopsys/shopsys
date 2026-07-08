@@ -1,41 +1,226 @@
 {% block order_items_row %}
     {% import '@ShopsysAdministration/content/order/orderItem.html.twig' as orderItemMacro %}
+    {% set isEditable = canEdit|default(false) %}
+    {% set isEditMode = editMode|default(form.vars.submitted and not form.vars.valid) %}
+    {% set canRemoveItem = form.itemsWithoutTransportAndPayment|length > 1 %}
 
-    <div class="card mb-3">
-        <div class="card-header">
-            <h3 class="card-title">{{ 'Order items'|trans }}</h3>
+    <div class="card mb-3 js-order-items-card" data-initial-mode="{{ isEditMode ? 'edit' : 'preview' }}">
+        <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <h3 class="card-title mb-0">{{ 'Order items'|trans }}</h3>
+            {% if isEditable %}
+                <div class="btn-list js-order-items-preview-only{% if isEditMode %} d-none{% endif %}">
+                    <button type="button"
+                            class="btn btn-sm btn-outline-primary js-order-items-add-product"
+                            data-product-picker-url="{{ url('admin_productpicker_picksingle', { allowMainVariants: false }) }}"
+                            data-loading="addAttribute(disabled)"
+                    >
+                        {{ 'Add product'|trans }}
+                    </button>
+                    <button type="button"
+                            class="btn btn-sm btn-outline-primary js-order-items-add-item"
+                            data-loading="addAttribute(disabled)"
+                    >
+                        {{ 'Add item'|trans }}
+                    </button>
+                    {{ component('Admin:LiveActionButton', {
+                        action: 'switchToEdit',
+                        label: 'Edit items'|trans,
+                        buttonClass: 'btn btn-sm btn-outline-primary',
+                        preventDefault: false,
+                    }) }}
+                </div>
+                <div class="btn-list js-order-items-edit{% if not isEditMode %} d-none{% endif %}">
+                    <button type="button"
+                            id="js-order-item-add-product"
+                            class="btn btn-sm btn-outline-primary js-order-items-add-product"
+                            data-product-picker-url="{{ url('admin_productpicker_picksingle', { allowMainVariants: false }) }}"
+                            data-loading="addAttribute(disabled)"
+                    >
+                        {{ ux_icon('plus') }}
+                        {{ 'Add product'|trans }}
+                    </button>
+                    <button type="button"
+                            id="js-order-item-add"
+                            class="btn btn-sm btn-outline-primary js-order-items-add-item"
+                            data-loading="addAttribute(disabled)"
+                    >
+                        {{ ux_icon('plus') }}
+                        {{ 'Add item'|trans }}
+                    </button>
+                </div>
+            {% endif %}
         </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                {{ form_errors(form.itemsWithoutTransportAndPayment) }}
 
-                <table class="table table-transparent table-vcenter">
+        <div class="card-body p-0 js-order-items-preview{% if isEditMode %} d-none{% endif %}">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-vcenter mb-0 order-items-preview-table">
                     <thead>
                         <tr>
-                            <th class="w-25">{{ 'Name'|trans }}</th>
-                            <th>{{ 'Catalog number'|trans }}</th>
+                            <th>{{ 'Name'|trans }}</th>
                             <th class="text-end">{{ 'Amount'|trans }}</th>
-                            <th class="text-end">{{ 'Unit'|trans }}</th>
-                            <th class="text-wrap text-end">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
-                            <th class="text-wrap text-end">{{ 'VAT rate (%)'|trans }}</th>
-                            <th class="text-wrap text-end">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
-                            <th class="text-wrap text-end">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
-                            <th class="text-wrap text-end">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
-                            <th class="text-wrap text-center">
-                                {{ 'Set prices manually'|trans }}
-                                {{ info_icon('All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically.'|trans) }}
-                            </th>
-                            <th></th>
+                            <th class="text-end">{{ 'Unit price'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
+                            <th class="text-end">{{ 'Total'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
                         </tr>
                     </thead>
-                    <tbody id="js-order-items"
-                           data-prototype="{{ orderItemMacro.orderItem(form.itemsWithoutTransportAndPayment.vars.prototype, null, null, inputPriceType)|escape }}"
-                           data-order-product-add-url="{{ url('admin_order_addproduct', { orderId: order.id }) }}"
-                    >
+                    <tbody>
                         {% for orderItemId, orderItemForm in form.itemsWithoutTransportAndPayment %}
                             {% set itemData = orderItemForm.vars.data %}
                             {% set productItemData = (itemData is not null and itemData.type in ['product', 'productGift']) ? itemData : null %}
-                            {{ orderItemMacro.orderItem(orderItemForm, orderItemId, productItemData, inputPriceType) }}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        {% if productItemData and productItemData.product %}
+                                            {{ image(productItemData.product, { width: 36, height: 36 }) }}
+                                        {% endif %}
+                                        <div class="min-w-0">
+                                            <div class="d-flex align-items-center gap-1 min-w-0">
+                                                {% if productItemData and productItemData.product %}
+                                                    <a href="{{ path('admin_product_edit', { id: productItemData.product.id }) }}"
+                                                       class="fw-medium"
+                                                       target="_blank"
+                                                       title="{{ 'Open product detail'|trans }}"
+                                                    >
+                                                        {{ itemData.name }}
+                                                        {{ ux_icon('forward-page', { class: 'icon icon-sm' }) }}
+                                                    </a>
+                                                {% else %}
+                                                    <span class="text-truncate">{{ itemData.name }}</span>
+                                                {% endif %}
+                                            </div>
+                                            {% if itemData.catnum %}
+                                                <div class="small text-secondary">{{ itemData.catnum }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end text-nowrap">{{ itemData.quantity }} {{ itemData.unitName ?: '' }}</td>
+                                <td class="text-end text-nowrap">
+                                    {{ _self.pricesDependentOnPricingSetting(
+                                        inputPriceType,
+                                        order,
+                                        itemData.vatPercent,
+                                        itemData.unitPriceWithoutVat,
+                                        itemData.unitPriceWithVat
+                                    ) }}
+                                </td>
+                                <td class="text-end text-nowrap">
+                                    {{ _self.pricesDependentOnPricingSetting(
+                                        inputPriceType,
+                                        order,
+                                        itemData.vatPercent,
+                                        itemData.totalPriceWithoutVat,
+                                        itemData.totalPriceWithVat
+                                    ) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        {% set transportData = form.orderTransport.vars.data %}
+                        <tr>
+                            <td>{{ transportData.name }}</td>
+                            <td class="text-end text-nowrap">1</td>
+                            <td class="text-end text-nowrap">
+                                {{ _self.pricesDependentOnPricingSetting(
+                                    inputPriceType,
+                                    order,
+                                    transportData.vatPercent,
+                                    transportData.unitPriceWithoutVat,
+                                    transportData.unitPriceWithVat
+                                ) }}
+                            </td>
+                            <td class="text-end text-nowrap">
+                                {{ _self.pricesDependentOnPricingSetting(
+                                    inputPriceType,
+                                    order,
+                                    transportData.vatPercent,
+                                    transportData.totalPriceWithoutVat,
+                                    transportData.totalPriceWithVat
+                                ) }}
+                            </td>
+                        </tr>
+
+                        {% set paymentData = form.orderPayment.vars.data %}
+                        <tr>
+                            <td>{{ paymentData.name }}</td>
+                            <td class="text-end text-nowrap">1</td>
+                            <td class="text-end text-nowrap">
+                                {{ _self.pricesDependentOnPricingSetting(
+                                    inputPriceType,
+                                    order,
+                                    paymentData.vatPercent,
+                                    paymentData.unitPriceWithoutVat,
+                                    paymentData.unitPriceWithVat
+                                ) }}
+                            </td>
+                            <td class="text-end text-nowrap">
+                                {{ _self.pricesDependentOnPricingSetting(
+                                    inputPriceType,
+                                    order,
+                                    paymentData.vatPercent,
+                                    paymentData.totalPriceWithoutVat,
+                                    paymentData.totalPriceWithVat
+                                ) }}
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end text-nowrap">
+                                {{ 'Total excluding VAT'|trans }}
+                            </td>
+                            <td class="text-end text-nowrap">
+                                {{ order.totalPriceWithoutVat is not null ? (order.totalPriceWithoutVat|priceWithCurrencyByOrder(order)) : '-' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-end text-nowrap">
+                                {{ 'VAT'|trans }}
+                            </td>
+                            <td class="text-end text-nowrap">
+                                {{ order.totalVatAmount is not null ? (order.totalVatAmount|priceWithCurrencyByOrder(order)) : '-' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-end text-nowrap">
+                                <strong>{{ 'Total including VAT'|trans }}</strong>
+                            </td>
+                            <td class="text-end text-nowrap">
+                                <strong>{{ order.totalPriceWithVat is not null ? (order.totalPriceWithVat|priceWithCurrencyByOrder(order)) : '-' }}</strong>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-body p-0 js-order-items-edit{% if not isEditMode %} d-none{% endif %}">
+            <div class="table-responsive">
+                {{ form_errors(form.itemsWithoutTransportAndPayment) }}
+
+                <table class="table table-hover table-vcenter">
+                    <thead>
+                        <tr>
+                            <th style="min-width: 280px;">{{ 'Name'|trans }}</th>
+                            <th style="width: 120px;">{{ 'Catalog number'|trans }}</th>
+                            <th class="text-end w-1">{{ 'Amount'|trans }}</th>
+                            <th class="text-end w-1">{{ 'Unit'|trans }}</th>
+                            <th class="text-wrap text-end">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
+                            <th class="text-end w-1">{{ 'VAT rate (%)'|trans }}</th>
+                            <th class="text-wrap text-end">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
+                            <th class="text-wrap text-end">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
+                            <th class="text-wrap text-end">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCode(order.currencyCode) }})</th>
+                            <th class="text-wrap text-center" style="width: 90px;">
+                                {{ 'Set prices manually'|trans }}
+                                {{ info_icon('All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically.'|trans) }}
+                            </th>
+                            <th class="w-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="js-order-items">
+                        {% for orderItemId, orderItemForm in form.itemsWithoutTransportAndPayment %}
+                            {% set itemData = orderItemForm.vars.data %}
+                            {% set productItemData = (itemData is not null and itemData.type in ['product', 'productGift']) ? itemData : null %}
+                            {{ orderItemMacro.orderItem(orderItemForm, orderItemId, productItemData, inputPriceType, canRemoveItem) }}
                         {% endfor %}
 
                         {{ orderItemMacro.orderTransport(form.orderTransport, transportPricesWithVatByTransportId, transportVatPercentsByTransportId, inputPriceType) }}
@@ -47,10 +232,10 @@
                                 <strong>{{ 'Total'|trans }}</strong>
                             </td>
                             <td class="text-end">
-                                <strong>{{ order.totalPriceWithoutVat|priceWithCurrencyByOrder(order) }}</strong>
+                                <strong>{{ order.totalPriceWithoutVat is not null ? (order.totalPriceWithoutVat|priceWithCurrencyByOrder(order)) : '-' }}</strong>
                             </td>
                             <td class="text-end">
-                                <strong>{{ order.totalPriceWithVat|priceWithCurrencyByOrder(order) }}</strong>
+                                <strong>{{ order.totalPriceWithVat is not null ? (order.totalPriceWithVat|priceWithCurrencyByOrder(order)) : '-' }}</strong>
                             </td>
                             <td></td>
                             <td></td>
@@ -59,24 +244,38 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer">
-            <div class="btn-list">
-                <button type="button"
-                        id="js-order-item-add"
-                        class="btn"
-                >
-                    {{ ux_icon('plus') }}
-                    {{ 'Add item'|trans }}
-                </button>
-                <button type="button"
-                        id="js-order-item-add-product"
-                        class="btn"
-                        data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: false}) }}"
-                >
-                    {{ ux_icon('plus') }}
-                    {{ 'Add product'|trans }}
-                </button>
-            </div>
-        </div>
     </div>
+
+    {% macro pricesDependentOnPricingSetting(inputPriceType, order, vat, priceWithoutVat, priceWithVat) %}
+        {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITHOUT_VAT')) %}
+            <div class="fw-medium">
+                {{ priceWithoutVat ? (priceWithoutVat|priceWithCurrencyByOrder(order)) : '-' }}
+            </div>
+
+            <div class="small text-secondary">
+                <span class="badge bg-secondary-lt me-2">
+                    {{ 'with VAT'|trans }}
+                    {% if vat %}
+                        &middot; {{ vat|formatPercent }}
+                    {% endif %}
+                </span>
+                {{ priceWithVat ? (priceWithVat|priceWithCurrencyByOrder(order)) : '-' }}
+            </div>
+        {% else %}
+            <div class="fw-medium">
+                {{ priceWithVat ? (priceWithVat|priceWithCurrencyByOrder(order)) : '-' }}
+            </div>
+
+            <div class="small text-secondary">
+                <span class="badge bg-secondary-lt me-2">
+                    {{ 'without VAT'|trans }}
+                    {% if vat %}
+                        &middot; {{ vat|formatPercent }}
+                    {% endif %}
+                </span>
+                {{ priceWithoutVat ? (priceWithoutVat|priceWithCurrencyByOrder(order)) : '-' }}
+            </div>
+        {% endif %}
+    {% endmacro %}
+
 {% endblock %}

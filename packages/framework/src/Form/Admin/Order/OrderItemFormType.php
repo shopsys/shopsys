@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 
 use Override;
+use Shopsys\FrameworkBundle\Form\ProductType;
 use Shopsys\FrameworkBundle\Form\Transformers\InverseTransformer;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
@@ -103,6 +104,9 @@ final class OrderItemFormType extends AbstractType
                 'constraints' => [
                     new Constraints\Length(max: 10),
                 ],
+            ])
+            ->add('product', ProductType::class, [
+                'required' => false,
             ]);
     }
 

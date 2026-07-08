@@ -1,0 +1,43 @@
+{% set defaultAttributes = {
+    type: this.type,
+    class: this.buttonClass,
+} %}
+
+{% if this.loading is not null %}
+    {% set defaultAttributes = defaultAttributes|merge({
+        'data-loading': this.loading,
+    }) %}
+{% endif %}
+
+{% if this.action is not null and this.type != 'submit' %}
+    {% set defaultAttributes = defaultAttributes|merge({
+        'data-action': this.preventDefault ? 'live#action:prevent' : 'live#action',
+        'data-live-action-param': this.action,
+    }) %}
+
+    {% for name, value in this.liveParams %}
+        {% set defaultAttributes = defaultAttributes|merge({
+            ('data-live-' ~ name ~ '-param'): value,
+        }) %}
+    {% endfor %}
+{% endif %}
+
+<button {{ attributes.defaults(defaultAttributes) }}>
+    {% if this.loadingLabel is not null and this.action is not null %}
+        <span data-loading="action({{ this.action }})|hide">
+            {% if this.icon is not null %}
+                {{ ux_icon(this.icon) }}
+            {% endif %}
+            {{ this.label }}
+        </span>
+        <span style="display: none" data-loading="action({{ this.action }})|show">
+            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            {{ this.loadingLabel }}
+        </span>
+    {% else %}
+        {% if this.icon is not null %}
+            {{ ux_icon(this.icon) }}
+        {% endif %}
+        {{ this.label }}
+    {% endif %}
+</button>

@@ -34,9 +34,6 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
@@ -71,9 +68,6 @@ class OrderFacade
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly OrderItemFactory $orderItemFactory,
-        protected readonly PaymentTransactionFacade $paymentTransactionFacade,
-        protected readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
-        protected readonly PaymentServiceFacade $paymentServiceFacade,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly OrderDataFactory $orderDataFactory,
         protected readonly PricingSetting $pricingSetting,
@@ -124,15 +118,6 @@ class OrderFacade
             $this->orderDeliveryDateFacade->setDeliveredNowIfNecessary($order);
         }
 
-        foreach ($orderData->paymentTransactionRefunds as $paymentTransactionId => $paymentTransactionRefundData) {
-            $paymentTransaction = $this->paymentTransactionFacade->getById($paymentTransactionId);
-            $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
-            $paymentTransactionData->refundedAmount = $paymentTransactionRefundData->refundedAmount;
-            $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
-        }
-
-        $this->handleRefundTransactions($orderData->paymentTransactionRefunds);
-
         $this->processWithdrawalRequest($order, $orderData);
 
         return $order;
@@ -153,19 +138,6 @@ class OrderFacade
             );
         } elseif ($orderData->status === $this->orderStatusFacade->getByType(OrderStatusTypeEnum::TYPE_WITHDRAWN)) {
             $this->withdrawalRequestFacade->createOnly($order, $orderData->withdrawalRequestData);
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData[] $transactionsIndexedByPaymentTransactionId
-     */
-    protected function handleRefundTransactions(array $transactionsIndexedByPaymentTransactionId): void
-    {
-        foreach ($transactionsIndexedByPaymentTransactionId as $paymentTransactionId => $paymentTransactionRefundData) {
-            if ($paymentTransactionRefundData->executeRefund) {
-                $paymentTransaction = $this->paymentTransactionFacade->getById($paymentTransactionId);
-                $this->paymentServiceFacade->refundTransaction($paymentTransaction, $paymentTransactionRefundData->refundAmount);
-            }
         }
     }
 

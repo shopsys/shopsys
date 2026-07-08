@@ -10,14 +10,12 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderDataFactory
 {
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
-        protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
         protected readonly OrderItemTypeEnum $orderItemTypeEnum,
         protected readonly WithdrawalRequestDataFactory $withdrawalRequestDataFactory,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
@@ -82,10 +80,6 @@ class OrderDataFactory
         $orderData->orderPayment = $this->orderItemDataFactory->createFromOrderItem($order->getPaymentItem());
 
         $orderData->goPayBankSwift = $order->getGoPayBankSwift();
-
-        foreach ($order->getPaymentTransactions() as $paymentTransaction) {
-            $orderData->paymentTransactionRefunds[$paymentTransaction->getId()] = $this->paymentTransactionRefundDataFactory->createFromPaymentTransaction($paymentTransaction);
-        }
 
         $orderData->heurekaAgreement = $order->isHeurekaAgreement();
         $orderData->trackingNumber = $order->getTrackingNumber();

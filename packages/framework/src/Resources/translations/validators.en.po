@@ -463,6 +463,12 @@ msgstr ""
 msgid "Please enter quantity"
 msgstr ""
 
+msgid "Please enter refund amount."
+msgstr ""
+
+msgid "Please enter refunded amount."
+msgstr ""
+
 msgid "Please enter role name"
 msgstr ""
 

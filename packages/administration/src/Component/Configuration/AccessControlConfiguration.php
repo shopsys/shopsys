@@ -21,6 +21,7 @@ final readonly class AccessControlConfiguration
         'ef_connect',
         'ef_main_js',
         'elfinder',
+        'ux_live_component',
     ];
 
     /**

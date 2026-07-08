@@ -1,0 +1,15 @@
+{% set canEdit = this.canEdit ?? can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_ORDER')) %}
+
+{% if canEdit %}
+    <a href="#"
+       class="text-secondary d-inline-flex align-items-center"
+       data-action="live#emit:prevent"
+       data-live-event-param="{{ this.openEditorEmitParam() }}"
+       data-live-section-param="{{ this.section.getId() }}"
+       aria-label="{{ this.section.getModalTitle() }}"
+    >
+        <span class="d-inline-flex" data-bs-toggle="tooltip" title="{{ this.section.getModalTitle() }}">
+            {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
+        </span>
+    </a>
+{% endif %}

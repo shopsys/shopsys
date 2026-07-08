@@ -1,0 +1,58 @@
+<div {{ attributes }}>
+    <div class="modal modal-blur fade"
+         tabindex="-1"
+         data-controller="form-modal"
+         data-form-modal-open-value="{{ this.open ? '1' : '0' }}"
+         data-form-modal-open-event-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\OrderDetail\\LiveComponent\\SectionEditorComponent::SECTION_EDITOR_OPEN_BROWSER_EVENT') }}"
+         data-form-modal-close-event-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\OrderDetail\\LiveComponent\\SectionEditorComponent::SECTION_EDITOR_CLOSE_BROWSER_EVENT') }}"
+         data-form-modal-pending-actions-value="{{ ['save']|json_encode }}">
+        <div class="modal-dialog {{ this.section ? this.section.getModalDialogClass() : 'modal-xl' }} modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                {% if this.section %}
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ this.section.getModalTitle() }}</h5>
+                        <button type="button"
+                                class="btn-close"
+                                data-action="form-modal#requestClose"
+                                aria-label="{{ 'Close'|trans }}"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ component('OrderDetail:SectionEditorForm', {
+                            orderId: this.orderId,
+                            sectionId: this.section.getId(),
+                            key: 'order-detail-section-editor-form-' ~ this.section.getId(),
+                        }) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-ghost-secondary"
+                                data-action="form-modal#requestClose"
+                        >
+                            {{ 'Cancel'|trans }}
+                        </button>
+                        <button type="button"
+                                class="d-none"
+                                data-form-modal-target="closeTrigger"
+                                data-action="live#action"
+                                data-live-action-param="close"
+                        ></button>
+                        <button type="submit"
+                                class="btn btn-primary"
+                                form="js-order-detail-section-editor-form"
+                                data-form-modal-disable-on-pending
+                        >
+                            <span data-form-modal-hide-on-pending>
+                                {{ 'Save'|trans }}
+                            </span>
+                            <span class="d-none" data-form-modal-show-on-pending>
+                                <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                {{ 'Saving...'|trans }}
+                            </span>
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

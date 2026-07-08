@@ -5,6 +5,7 @@ arrange:
     - adding-new-attribute-to-an-entity.md
     - adding-a-new-elasticsearch-index.md
     - adding-a-new-administration-page.md
+    - extending-order-detail-page.md
     - adding-a-new-advert-position.md
     - modifying-a-template-in-administration.md
     - basic-data-import.md

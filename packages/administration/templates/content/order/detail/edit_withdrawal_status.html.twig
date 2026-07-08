@@ -1,0 +1,10 @@
+{% extends '@ShopsysAdministration/content/order/detail/edit.html.twig' %}
+
+{% block order_detail_modals %}
+    {{ parent() }}
+
+    {{ component('OrderDetail:WithdrawalStatusModal', {
+        orderId: order.id,
+        statusId: withdrawalStatusId,
+    }) }}
+{% endblock %}

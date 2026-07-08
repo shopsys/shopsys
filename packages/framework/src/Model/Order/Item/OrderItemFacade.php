@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
@@ -16,20 +14,15 @@ class OrderItemFacade
     protected const int DEFAULT_PRODUCT_QUANTITY = 1;
 
     public function __construct(
-        protected readonly EntityManagerInterface $em,
-        protected readonly OrderRepository $orderRepository,
         protected readonly ProductRepository $productRepository,
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly Domain $domain,
-        protected readonly OrderPriceCalculation $orderPriceCalculation,
-        protected readonly OrderItemFactory $orderItemFactory,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
     }
 
-    public function addProductToOrder(int $orderId, int $productId): OrderItem
+    public function createProductOrderItemData(Order $order, int $productId): OrderItemData
     {
-        $order = $this->orderRepository->getById($orderId);
         $product = $this->productRepository->getById($productId);
         $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
 
@@ -41,24 +34,14 @@ class OrderItemFacade
 
         $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
         $orderItemData->name = $product->getName($orderDomainConfig->getLocale());
-        $orderItemData->unitPriceWithVat = $productPrice->getPriceWithVat();
-        $orderItemData->unitPriceWithoutVat = $productPrice->getPriceWithoutVat();
+        $orderItemData->setUnitPrice($productPrice);
+        $orderItemData->setTotalPrice($productPrice);
         $orderItemData->vatPercent = $product->getVatForDomain($order->getDomainId())->getPercent();
         $orderItemData->quantity = static::DEFAULT_PRODUCT_QUANTITY;
         $orderItemData->unitName = $product->getUnit()->getName($orderDomainConfig->getLocale());
         $orderItemData->catnum = $product->getCatnum();
+        $orderItemData->product = $product;
 
-        $orderProduct = $this->orderItemFactory->createProduct(
-            $orderItemData,
-            $order,
-            $product,
-        );
-
-        $orderTotalPrice = $this->orderPriceCalculation->getOrderTotalPrice($order);
-        $order->setTotalPrices($orderTotalPrice->getPrice(), $orderTotalPrice->getProductPrice());
-
-        $this->em->flush();
-
-        return $orderProduct;
+        return $orderItemData;
     }
 }

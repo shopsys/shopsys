@@ -1,0 +1,90 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Order Nr.'|trans }} {{ order.number }}{% endblock %}
+
+{% block pre_title %}{{ 'Order detail'|trans }}{% endblock %}
+{% block h1 %}{{ 'Order Nr.'|trans }} {{ order.number }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ findUrlByDomainId('front_customer_order_detail_unregistered', { urlHash: order.urlHash }, order.domainId) }}" target="_blank" class="btn btn-outline-primary">
+        {{ ux_icon('forward-page') }}
+        {{ 'View order on Frontend'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {% set canEdit = can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_ORDER')) %}
+
+    {% block order_summary_bar %}
+        {{ component('OrderDetail:SummaryBar', { order: order }) }}
+    {% endblock %}
+
+    {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_order_list') }}" class="btn btn-ghost-secondary">{{ 'Back to overview'|trans }}</a>
+        {% endblock %}
+    {% endembed %}
+
+    {% if orderDetailTabs %}
+        <div class="card"
+             data-controller="order-detail-tabs"
+             data-order-detail-tabs-order-updated-event-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\OrderDetail\\LiveComponent\\SectionEditorFormComponent::ORDER_DETAIL_UPDATED_BROWSER_EVENT') }}"
+             data-order-detail-tabs-history-tab-id-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\OrderDetail\\OrderDetailTabProvider::HISTORY_TAB_ID') }}"
+        >
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                    {% for tab in orderDetailTabs %}
+                        {% set isActive = activeTab == tab.id %}
+                        {% set isDisabled = tab.isDisabled(order) %}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link {% if isActive %} active{% endif %}"
+                                    id="nav-{{ tab.id }}"
+                                    type="button"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#tab-{{ tab.id }}"
+                                    data-tab-id="{{ tab.id }}"
+                                    role="tab"
+                                    aria-controls="tab-{{ tab.id }}"
+                                    aria-selected="{{ isActive ? 'true' : 'false' }}"
+                                    {% if isDisabled %}disabled aria-disabled="true"{% endif %}
+                            >
+                                {{ tab.label }}
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-body p-0">
+                <div class="tab-content">
+                    {% for tab in orderDetailTabs %}
+                        {% set isActive = activeTab == tab.id %}
+                        {% set isDisabled = tab.isDisabled(order) %}
+                        <div class="tab-pane js-order-detail-tab-pane{% if isActive %} show active{% endif %} p-3"
+                             id="tab-{{ tab.id }}"
+                             role="tabpanel"
+                             aria-labelledby="nav-{{ tab.id }}"
+                                {% if not isDisabled %}
+                                    data-order-detail-tabs-target="pane"
+                                    data-order-detail-tabs-loaded-value="{{ isActive ? '1' : '0' }}"
+                                    data-order-detail-tabs-content-url-value="{{ url('admin_order_detail_tab_content', { id: order.id, tabId: tab.id }) }}"
+                                {% endif %}
+                        >
+                            {% if not isDisabled and isActive %}
+                                {% include '@ShopsysAdministration/content/order/detail/components/_tab_component.html.twig' with {
+                                    order: order,
+                                    tab: tab,
+                                } only %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% block order_detail_modals %}
+        {% if canEdit %}
+            {{ component('OrderDetail:SectionEditor', { orderId: order.id }) }}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

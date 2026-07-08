@@ -1,4 +1,4 @@
-import { Dropdown, Modal, Popover, Tab, Toast, Tooltip } from '@tabler/core';
+import { Dropdown, Modal, Popover, Tab, Tooltip } from '@tabler/core';
 import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
 import TomSelect from 'tom-select';
@@ -6,10 +6,11 @@ import registerTooltip from './utils/registerTooltip';
 
 function initSelect($container) {
     $container.filterAllNodes('select').each((_key, el) => {
+        const modalContent = el.closest('.modal-content');
         const settings = {
             allowEmptyOption: true,
             maxOptions: null,
-            dropdownParent: el.closest('.modal') ? null : 'body',
+            dropdownParent: modalContent ?? 'body',
             plugins: {
                 dropdown_input: {},
                 no_backspace_delete: {},
@@ -23,6 +24,10 @@ function initSelect($container) {
 
         const ts = new TomSelect(el, settings);
 
+        if (modalContent) {
+            positionModalSelectDropdown(ts, modalContent);
+        }
+
         ts.control_input.addEventListener('keydown', evt => {
             if (evt.key === 'Tab') {
                 evt.preventDefault();
@@ -30,6 +35,68 @@ function initSelect($container) {
             }
         });
     });
+}
+
+function positionModalSelectDropdown(ts, modalContent) {
+    const listenerOptions = { capture: true, passive: true };
+    const scrollTargets = new Set(
+        [
+            modalContent.querySelector('.modal-body'),
+            modalContent.closest('.modal'),
+            window,
+            window.visualViewport,
+        ].filter(Boolean),
+    );
+    const closeDropdownOnPageScroll = event => {
+        if (event.target instanceof Node && ts.dropdown.contains(event.target)) {
+            return;
+        }
+
+        if (ts.isOpen) {
+            ts.close();
+        }
+    };
+    const addDropdownCloseListeners = () => {
+        scrollTargets.forEach(scrollTarget => {
+            scrollTarget.addEventListener('scroll', closeDropdownOnPageScroll, listenerOptions);
+        });
+        window.addEventListener('touchmove', closeDropdownOnPageScroll, listenerOptions);
+        window.addEventListener('wheel', closeDropdownOnPageScroll, listenerOptions);
+    };
+    const removeDropdownCloseListeners = () => {
+        scrollTargets.forEach(scrollTarget => {
+            scrollTarget.removeEventListener('scroll', closeDropdownOnPageScroll, listenerOptions);
+        });
+        window.removeEventListener('touchmove', closeDropdownOnPageScroll, listenerOptions);
+        window.removeEventListener('wheel', closeDropdownOnPageScroll, listenerOptions);
+    };
+    const destroy = ts.destroy.bind(ts);
+
+    ts.positionDropdown = () => {
+        const controlRect = ts.control.getBoundingClientRect();
+        const viewportPadding = 8;
+        const dropdownHeight = ts.dropdown.offsetHeight;
+        const spaceBelow = window.innerHeight - controlRect.bottom - viewportPadding;
+        const spaceAbove = controlRect.top - viewportPadding;
+        const shouldOpenUp = dropdownHeight > spaceBelow && spaceAbove > spaceBelow;
+        const top = shouldOpenUp
+            ? Math.max(viewportPadding, controlRect.top - Math.min(dropdownHeight, spaceAbove))
+            : controlRect.bottom;
+
+        Object.assign(ts.dropdown.style, {
+            position: 'fixed',
+            width: `${controlRect.width}px`,
+            left: `${controlRect.left}px`,
+            top: `${top}px`,
+        });
+    };
+
+    ts.on('dropdown_open', addDropdownCloseListeners);
+    ts.on('dropdown_close', removeDropdownCloseListeners);
+    ts.destroy = () => {
+        removeDropdownCloseListeners();
+        destroy();
+    };
 }
 
 function focusNextTabableElement(referenceElement, reverse) {
@@ -132,12 +199,6 @@ function initTab($container) {
         });
 }
 
-function initToast($container) {
-    $container.filterAllNodes('[data-bs-toggle="toast"]').each(function () {
-        new Toast(this);
-    });
-}
-
 export function initComponents($container) {
     initSelect($container);
     initTooltip($container);
@@ -146,7 +207,6 @@ export function initComponents($container) {
     initAutosize($container);
     initModal($container);
     initTab($container);
-    initToast($container);
     registerTooltip();
 }
 

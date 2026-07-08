@@ -1,0 +1,80 @@
+{% set canEdit = canEdit|default(can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_ORDER'))) %}
+{% set orderStatusColor = order.status.type|order_status_color %}
+
+{% block section_content %}
+    <div class="subheader d-flex justify-content-between align-items-center mb-1">
+        <span>{{ 'Basic information'|trans }}</span>
+        <a href="#"
+           class="switch-text text-secondary small d-inline-block"
+           data-bs-toggle="collapse"
+           data-bs-target="#basicInfoMore"
+           aria-expanded="false"
+           aria-controls="basicInfoMore"
+        >
+            <span class="switch-text-a">{{ 'Show more'|trans }}</span>
+            <span class="switch-text-b">{{ 'Show less'|trans }}</span>
+        </a>
+    </div>
+
+    <div>
+        {% if canEdit and orderStatuses is defined %}
+            <div class="dropdown d-inline-block">
+                <a href="#" class="status status-{{ orderStatusColor }}" data-bs-toggle="dropdown" role="button">
+                    <span class="status-dot"></span>
+                    {{ order.status.name }}
+                    {{ ux_icon('chevron-down', { class: 'icon icon-sm' }) }}
+                </a>
+                <div class="dropdown-menu">
+                    {% for status in orderStatuses %}
+                        <a href="{{ protectedUrl('admin_order_edit_changestatus', {id: order.id, statusId: status.id,}) }}"
+                           class="dropdown-item{% if order.status.id == status.id %} active{% endif %}"
+                           data-confirm-window
+                           data-confirm-message="{{ 'Do you really want to change order status to <strong>%s</strong>?'|trans({'%s': status.name}) }}"
+                           data-confirm-style="warning"
+                        >
+                            <span class="status status-{{ status.type|order_status_color }}">
+                                <span class="status-dot"></span>
+                            </span>
+                            {{ status.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <span class="status status-{{ orderStatusColor }}">
+                <span class="status-dot"></span>
+                {{ order.status.name }}
+            </span>
+        {% endif %}
+    </div>
+
+    <div class="text-secondary">
+        {{ 'Created'|trans }}: {{ order.createdAt|formatDateTime }}
+    </div>
+
+    {% if order.promoCode %}
+        <div class="text-secondary">{{ 'Promo code'|trans }}: {{ order.promoCode }}</div>
+    {% endif %}
+
+    {% block basic_info_primary_extra %}
+        {# This block can be used to add more primary details that should be visible without expanding the "Show more" section #}
+    {% endblock %}
+
+    {# Secondary details collapsed to keep compact card height #}
+    <div class="collapse" id="basicInfoMore">
+        <div class="d-flex flex-column gap-1">
+            {% if isMultidomain() %}
+                <div class="text-secondary">{{ 'Domain'|trans }}: {{ domain_icon(order.domainId) }} {{ getDomainName(order.domainId) }}</div>
+            {% endif %}
+            {% if order.origin %}
+                <div class="text-secondary">{{ 'Origin'|trans }}: {{ order.origin }}</div>
+            {% endif %}
+            <div class="text-secondary">{{ 'Heureka agreement'|trans }}: {{ order.heurekaAgreement ? 'Yes'|trans : 'No'|trans }}</div>
+            <div class="text-secondary">{{ 'Internal ID'|trans }}: {{ order.id }}</div>
+
+            {% block basic_info_secondary_extra %}
+                {# This block can be used to add more secondary details that are hidden by default and shown after clicking "Show more" #}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter;
 
-class CollectionChangesFormatter
+class CollectionChangesFormatter extends AbstractChangeSetFormatter
 {
     /**
      * @param array{insertedItems: array<\Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges>, deletedItems: array<\Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges>} $changes
@@ -24,7 +24,10 @@ class CollectionChangesFormatter
     protected function formatInsertedItems(array $insertedChanges, array &$formattedCollectionChanges): void
     {
         foreach ($insertedChanges as $insertedChange) {
-            $formattedCollectionChanges[] = t('Created %dataType%: "%readableValue%"', ['%dataType%' => $insertedChange['dataType'], '%readableValue%' => $insertedChange['newReadableValue']]);
+            $formattedCollectionChanges[] = t('Created %dataType%: %readableValue%', [
+                '%dataType%' => $this->formatCode($insertedChange['dataType']),
+                '%readableValue%' => $this->formatCode($insertedChange['newReadableValue'] ?: t('empty value')),
+            ]);
         }
     }
 
@@ -34,7 +37,10 @@ class CollectionChangesFormatter
     protected function formatDeletedItems(array $deletedChanges, array &$formattedCollectionChanges): void
     {
         foreach ($deletedChanges as $deletedChange) {
-            $formattedCollectionChanges[] = t('Removed %dataType%: "%readableValue%"', ['%dataType%' => $deletedChange['dataType'], '%readableValue%' => $deletedChange['oldReadableValue']]);
+            $formattedCollectionChanges[] = t('Removed %dataType%: %readableValue%', [
+                '%dataType%' => $this->formatCode($deletedChange['dataType']),
+                '%readableValue%' => $this->formatCode($deletedChange['oldReadableValue'] ?: t('empty value')),
+            ]);
         }
     }
 }

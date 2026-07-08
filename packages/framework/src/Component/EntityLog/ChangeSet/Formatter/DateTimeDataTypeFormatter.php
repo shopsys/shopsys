@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Clock\DatePoint;
 
-class DateTimeDataTypeFormatter
+class DateTimeDataTypeFormatter extends AbstractChangeSetFormatter
 {
     public function __construct(
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
@@ -19,9 +19,9 @@ class DateTimeDataTypeFormatter
      */
     public function formatChanges(array $changes): string
     {
-        $changes['oldReadableValue'] = $changes['oldValue'] ? $this->dateTimeFormatterExtension->formatDateTime(new DatePoint($changes['oldValue'])) : t('empty value');
-        $changes['newReadableValue'] = $changes['newValue'] ? $this->dateTimeFormatterExtension->formatDateTime(new DatePoint($changes['newValue'])) : t('empty value');
+        $changes['oldReadableValue'] = $this->formatCode($changes['oldValue'] ? $this->dateTimeFormatterExtension->formatDateTime(new DatePoint($changes['oldValue'])) : t('empty value'));
+        $changes['newReadableValue'] = $this->formatCode($changes['newValue'] ? $this->dateTimeFormatterExtension->formatDateTime(new DatePoint($changes['newValue'])) : t('empty value'));
 
-        return t('from "oldReadableValue" to "newReadableValue"', $changes);
+        return t('from oldReadableValue to newReadableValue', $changes);
     }
 }

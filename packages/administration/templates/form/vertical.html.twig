@@ -1,0 +1,68 @@
+{% extends 'bootstrap_5_layout.html.twig' %}
+
+{%- block textarea_widget -%}
+    {% set attr = attr|merge({'data-bs-toggle': 'autosize'}) %}
+    {{- parent() -}}
+{%- endblock -%}
+
+{%- block form_widget_simple -%}
+    {% if symbolAfterInput is defined or symbolBeforeInput is defined or rawSymbolAfterInput is defined or rawSymbolBeforeInput is defined %}
+        <div class="input-group">
+            {% if symbolBeforeInput is defined %}
+                <span class="input-group-text">
+                    {{ symbolBeforeInput }}
+                </span>
+            {% endif %}
+
+            {% if rawSymbolBeforeInput is defined %}
+                <span class="input-group-text">
+                    {{ rawSymbolBeforeInput|raw }}
+                </span>
+            {% endif %}
+
+            {{ parent('form_widget_simple') }}
+
+            {% if symbolAfterInput is defined %}
+                <span class="input-group-text"> {{ symbolAfterInput }} </span>
+            {% endif %}
+
+            {% if rawSymbolAfterInput is defined %}
+                <span class="input-group-text"> {{ rawSymbolAfterInput|raw }} </span>
+            {% endif %}
+        </div>
+    {% else %}
+        {{ parent('form_widget_simple') }}
+    {% endif %}
+{%- endblock -%}
+
+{%- block checkbox_row -%}
+    <div{% with {attr: row_attr|merge({class: row_attr.class|default('mb-3')|trim})} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_widget(form) -}}
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock -%}
+
+{%- block form_label -%}
+    {% if label is not same as(false) %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        {% set label_attr = label_attr|merge({
+            'class': (label_attr.class|default('') ~ ' fw-semibold text-body-secondary')|trim
+        }) %}
+        {{- parent() -}}
+    {% endif %}
+{%- endblock -%}
+
+{%- block money_widget -%}
+    {% set value = value|cropZeros %}
+
+    {{ parent('money_widget') }}
+{%- endblock -%}
+
+{% block number_widget %}
+    {% set value = value|cropZeros %}
+
+    {{ parent('number_widget') }}
+{% endblock number_widget %}

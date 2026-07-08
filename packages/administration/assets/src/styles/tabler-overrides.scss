@@ -7,6 +7,12 @@
     --tblr-primary: #2478e0;
 }
 
+// reduce blur of modal backdrop
+.modal-blur {
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+}
+
 // fix disabled button in input group border color
 .input-group {
     --tblr-btn-disabled-border-color: #{$border-color};

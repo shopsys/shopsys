@@ -1,0 +1,7 @@
+{% set canEdit = can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_ORDER')) %}
+
+{% include this.section.getViewTemplate() with {
+    order: this.order,
+    section: this.section,
+    canEdit: canEdit,
+}|merge(this.context) only %}

@@ -39,7 +39,7 @@
         <div class="page-header d-print-none">
             <div class="container-xl">
 
-                {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\FlashMessageController::indexAction')) }}
+                {{ component('Admin:FlashMessages') }}
 
                 {{ render_required_settings() }}
 

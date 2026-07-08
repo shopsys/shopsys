@@ -1,0 +1,27 @@
+{% form_theme form '@ShopsysAdministration/form/vertical.html.twig' %}
+
+{% block section_content %}
+    {{ form_row(form.companyDataGroup.companyName) }}
+
+    <div class="row g-3">
+        <div class="col-12 col-md-6">
+            {{ form_row(form.companyDataGroup.companyNumber) }}
+        </div>
+        <div class="col-12 col-md-6">
+            {{ form_row(form.companyDataGroup.companyTaxNumber) }}
+        </div>
+    </div>
+
+    {{ form_row(form.billingDataGroup.street) }}
+
+    <div class="row g-3">
+        <div class="col-12 col-md-6">
+            {{ form_row(form.billingDataGroup.city) }}
+        </div>
+        <div class="col-12 col-md-6">
+            {{ form_row(form.billingDataGroup.postcode) }}
+        </div>
+    </div>
+
+    {{ form_row(form.billingDataGroup.country) }}
+{% endblock %}

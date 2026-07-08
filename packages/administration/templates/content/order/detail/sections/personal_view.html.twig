@@ -1,0 +1,64 @@
+{% block section_content %}
+    <div class="subheader d-flex justify-content-between align-items-center mb-1">
+        {{ 'Customer'|trans }}
+        {{ component('OrderDetail:SectionEditButton', {
+            section: section,
+            canEdit: canEdit,
+        }) }}
+    </div>
+
+    {% if order.customerUser %}
+        {% set registeredCompanyName = order.customerUser.customer.billingAddress.companyName|default(null) %}
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            {% if registeredCompanyName %}
+                <span class="d-inline-flex align-items-center gap-2">
+                    <span class="text-secondary d-inline-flex align-items-center">
+                        {{ ux_icon('company', { class: 'icon icon-inline' }) }}
+                    </span>
+                    <a href="{{ url('admin_customer_edit', { id: order.customerUser.customer.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                        {{ registeredCompanyName }} {{ ux_icon('forward-page', { class: 'icon icon-inline' }) }}
+                    </a>
+                </span>
+            {% endif %}
+            <span class="d-inline-flex align-items-center gap-2">
+                <span class="text-secondary d-inline-flex align-items-center">
+                    {{ ux_icon('user', { class: 'icon icon-inline' }) }}
+                </span>
+                <a href="{{ url('admin_customer_user_edit', { id: order.customerUser.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                    {{ order.customerUser.firstName }} {{ order.customerUser.lastName }} {{ ux_icon('forward-page', { class: 'icon icon-inline' }) }}
+                </a>
+            </span>
+        </div>
+
+        {% block customer_registered_extra %}
+            {# This block can be used to add more details related to the registered customer #}
+        {% endblock %}
+    {% endif %}
+
+    <div class="d-flex align-items-center gap-2">
+        <span class="text-secondary d-inline-flex align-items-center">
+            {{ ux_icon('person-man', { class: 'icon icon-inline' }) }}
+        </span>
+        <span>{{ order.firstName }} {{ order.lastName }}</span>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+        <span class="text-secondary d-inline-flex align-items-center">
+            {{ ux_icon('letter-outline', { class: 'icon icon-inline' }) }}
+        </span>
+        <a href="mailto:{{ order.email }}">{{ order.email }}</a>
+    </div>
+
+    {% if order.telephone %}
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-secondary d-inline-flex align-items-center">
+                {{ ux_icon('phone', { class: 'icon icon-inline' }) }}
+            </span>
+            <a href="tel:{{ order.telephone }}">{{ order.telephone }}</a>
+        </div>
+    {% endif %}
+
+    {% block customer_contact_extra %}
+        {# This block can be used to add more contact details #}
+    {% endblock %}
+{% endblock %}

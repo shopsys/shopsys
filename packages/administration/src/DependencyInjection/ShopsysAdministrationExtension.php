@@ -6,6 +6,8 @@ namespace Shopsys\AdministrationBundle\DependencyInjection;
 
 use Override;
 use Shopsys\AdministrationBundle\Component\Configuration\AccessControlConfiguration;
+use Shopsys\AdministrationBundle\Component\OrderDetail\OrderDetailSectionProviderInterface;
+use Shopsys\AdministrationBundle\Component\OrderDetail\OrderDetailTabProviderInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -36,6 +38,11 @@ class ShopsysAdministrationExtension extends Extension implements PrependExtensi
 
         // Override Framework bundle parameter for RolesType simple permissions
         $container->setParameter('shopsys.administration.roles.simple_permissions', $config['roles']['simple_permissions']);
+
+        $container->registerForAutoconfiguration(OrderDetailSectionProviderInterface::class)
+            ->addTag('shopsys.order_detail_section_provider');
+        $container->registerForAutoconfiguration(OrderDetailTabProviderInterface::class)
+            ->addTag('shopsys.order_detail_tab_provider');
 
         // Load services
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
@@ -90,7 +97,13 @@ class ShopsysAdministrationExtension extends Extension implements PrependExtensi
         $themes = [];
 
         if (is_dir($themeDir)) {
-            foreach ($finder->files()->in($themeDir)->name('*.html.twig') as $file) {
+            $files = $finder
+                ->files()
+                ->in($themeDir)
+                ->name('*.html.twig')
+                ->notName('vertical.html.twig');
+
+            foreach ($files as $file) {
                 $themes[] = sprintf('@ShopsysAdministration/form/%s', $file->getRelativePathname());
             }
         }

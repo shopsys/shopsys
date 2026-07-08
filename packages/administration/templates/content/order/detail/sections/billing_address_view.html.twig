@@ -1,0 +1,56 @@
+{% block section_content %}
+    <div class="subheader d-flex justify-content-between align-items-center mb-1">
+        {{ 'Billing address'|trans }}
+        {{ component('OrderDetail:SectionEditButton', {
+            section: section,
+            canEdit: canEdit,
+        }) }}
+    </div>
+
+    {% if order.companyName %}
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-secondary d-inline-flex align-items-center">
+                {{ ux_icon('company', { class: 'icon icon-inline' }) }}
+            </span>
+            <span>{{ order.companyName }}</span>
+        </div>
+    {% endif %}
+
+    {% if order.companyNumber %}
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-secondary d-inline-flex align-items-center">
+                {{ ux_icon('id', { class: 'icon icon-inline' }) }}
+            </span>
+            <span>{{ 'Company number'|trans }}: {{ order.companyNumber }}</span>
+        </div>
+    {% endif %}
+
+    {% if order.companyTaxNumber %}
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-secondary d-inline-flex align-items-center">
+                {{ ux_icon('receipt-tax', { class: 'icon icon-inline' }) }}
+            </span>
+            <span>{{ 'Tax number'|trans }}: {{ order.companyTaxNumber }}</span>
+        </div>
+    {% endif %}
+
+    {% block addresses_company_extra %}
+        {# This block can be used to add more company-related fields #}
+    {% endblock %}
+
+    <div class="d-flex align-items-start gap-2">
+        <span class="text-secondary d-inline-flex align-items-center flex-shrink-0 mt-1">
+            {{ ux_icon('house-outline', { class: 'icon icon-inline' }) }}
+        </span>
+
+        <span class="d-flex flex-column gap-1">
+            <span>{{ order.street }}</span>
+            <span>{{ order.postcode }} {{ order.city }}</span>
+            <span>{{ order.country.name }}</span>
+        </span>
+    </div>
+
+    {% block addresses_billing_address_extra %}
+        {# This block can be used to add more billing address related fields #}
+    {% endblock %}
+{% endblock %}

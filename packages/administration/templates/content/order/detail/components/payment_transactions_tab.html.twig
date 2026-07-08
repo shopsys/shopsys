@@ -1,0 +1,209 @@
+{% set order = this.order %}
+{% set canEdit = can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_ORDER')) %}
+
+{% form_theme form '@ShopsysAdministration/form/vertical.html.twig' %}
+
+<div {{ attributes }}>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Payment transactions'|trans }}</h3>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-vcenter table-nowrap table-hover card-table">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Payment method'|trans }}</th>
+                            <th class="text-wrap">{{ 'External transaction ID'|trans }}</th>
+                            <th>{{ 'Status'|trans }}</th>
+                            <th class="text-wrap text-end w-1">{{ 'Paid amount'|trans }}</th>
+                            <th class="text-wrap text-end w-1">{{ 'Refunded amount'|trans }}</th>
+                            <th class="text-wrap text-end w-1">{{ 'Refundable amount'|trans }}</th>
+
+                            {% if canEdit %}
+                                <th class="text-end w-1">{{ 'Actions'|trans }}</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for paymentTransaction in order.paymentTransactions %}
+                            <tr>
+                                <td>
+                                    <div class="fw-medium">{{ paymentTransaction.payment ? paymentTransaction.payment.name : '-' }}</div>
+                                </td>
+                                <td>
+                                    {{ paymentTransaction.externalPaymentIdentifier ?: '-' }}
+                                </td>
+                                <td>
+                                    {% if paymentTransaction.externalPaymentStatus %}
+                                        <span class="badge {{ paymentTransaction.externalPaymentStatus|gopay_payment_status_badge_class }}">
+                                            {{ paymentTransaction.externalPaymentStatus|translate_payment_transaction_status }}
+                                        </span>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                    {% if paymentTransaction.externalPaymentSubStatus %}
+                                        <div class="text-secondary small mt-1">
+                                            {{ paymentTransaction.externalPaymentSubStatus|translate_payment_transaction_sub_status }}
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    {{ paymentTransaction.paidAmount|priceWithCurrencyByOrder(order) }}
+                                </td>
+                                <td class="text-end">
+                                    {{ paymentTransaction.refundedAmount|priceWithCurrencyByOrder(order) }}
+                                </td>
+                                <td class="text-end">
+                                    {{ paymentTransaction.refundableAmount|priceWithCurrencyByOrder(order) }}
+                                </td>
+
+                                {% if canEdit %}
+                                    <td class="text-end">
+                                        {% if paymentTransaction.isRefundable %}
+                                            {{ component('Admin:LiveActionButton', {
+                                                action: 'openRefundModal',
+                                                label: 'Manage refund'|trans,
+                                                icon: 'refund',
+                                                buttonClass: 'btn btn-outline-primary btn-sm',
+                                                preventDefault: false,
+                                                liveParams: {
+                                                    'payment-transaction-id': paymentTransaction.id,
+                                                },
+                                            }) }}
+                                        {% endif %}
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% if canEdit %}
+        <div class="modal modal-blur fade"
+             tabindex="-1"
+             data-controller="form-modal"
+             data-form-modal-open-value="{{ this.refundModalPaymentTransactionId ? '1' : '0' }}"
+             data-form-modal-pending-actions-value="{{ ['executeOnlineRefund', 'saveManualRefundedAmount']|json_encode }}">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    {% if this.refundModalPaymentTransactionId %}
+                        {% set paymentTransaction = this.refundModalPaymentTransaction %}
+
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ 'Manage refund'|trans }}</h5>
+                            <button type="button"
+                                    class="btn-close"
+                                    data-action="form-modal#requestClose"
+                                    aria-label="{{ 'Close'|trans }}"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="datagrid mb-4">
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">{{ 'Payment method'|trans }}</div>
+                                    <div class="datagrid-content">{{ paymentTransaction.payment ? paymentTransaction.payment.name : '-' }}</div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">{{ 'External transaction ID'|trans }}</div>
+                                    <div class="datagrid-content">
+                                        {{ paymentTransaction.externalPaymentIdentifier ?: '-' }}
+                                    </div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">{{ 'Status'|trans }}</div>
+                                    <div class="datagrid-content">
+                                        {% if paymentTransaction.externalPaymentStatus %}
+                                            <span class="badge {{ paymentTransaction.externalPaymentStatus|gopay_payment_status_badge_class }}">
+                                                {{ paymentTransaction.externalPaymentStatus|translate_payment_transaction_status }}
+                                            </span>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">{{ 'Paid amount'|trans }}</div>
+                                    <div class="datagrid-content">{{ paymentTransaction.paidAmount|priceWithCurrencyByOrder(order) }}</div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">{{ 'Refunded amount'|trans }}</div>
+                                    <div class="datagrid-content">{{ paymentTransaction.refundedAmount|priceWithCurrencyByOrder(order) }}</div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">{{ 'Refundable amount'|trans }}</div>
+                                    <div class="datagrid-content">{{ paymentTransaction.refundableAmount|priceWithCurrencyByOrder(order) }}</div>
+                                </div>
+                            </div>
+
+                            {{ form_start(form, {
+                                attr: {
+                                    'data-model': 'norender|*',
+                                    'data-action': 'live#action:prevent',
+                                    'data-live-action-param': 'executeOnlineRefund',
+                                    'data-no-form-change-info': '',
+                                },
+                            }) }}
+                            {% if this.refundModalErrorMessage %}
+                                <div class="alert alert-danger mb-4" role="alert">
+                                    {{ this.refundModalErrorMessage }}
+                                </div>
+                            {% endif %}
+
+                            <div class="border-top pt-4">
+                                <h4>{{ 'Refund via GoPay'|trans }}</h4>
+                                {{ form_label(form.refundAmount, null, { label_attr: { class: 'form-label' } }) }}
+
+                                <div class="input-group input-group-flat">
+                                    {{ form_widget(form.refundAmount) }}
+                                    {{ component('Admin:LiveActionButton', {
+                                        type: 'submit',
+                                        action: 'executeOnlineRefund',
+                                        label: 'Send refund'|trans,
+                                        loadingLabel: 'Sending refund...'|trans,
+                                        icon: 'revert',
+                                    }) }}
+                                </div>
+                                {{ form_errors(form.refundAmount) }}
+                            </div>
+
+                            <details class="border-top mt-4 pt-4">
+                                <summary class="h4 mb-3 cursor-pointer">{{ 'Manual correction'|trans }}</summary>
+                                {{ form_label(form.refundedAmount, null, { label_attr: { class: 'form-label' } }) }}
+                                <div class="input-group input-group-flat">
+                                    {{ form_widget(form.refundedAmount) }}
+                                    {{ component('Admin:LiveActionButton', {
+                                        action: 'saveManualRefundedAmount',
+                                        label: 'Save correction'|trans,
+                                        loadingLabel: 'Saving correction...'|trans,
+                                        buttonClass: 'btn btn-outline-primary',
+                                    }) }}
+                                </div>
+                                {{ form_errors(form.refundedAmount) }}
+                            </details>
+                            {{ form_end(form, { render_rest: false }) }}
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="visually-hidden"
+                                    data-form-modal-target="closeTrigger"
+                                    data-action="live#action"
+                                    data-live-action-param="closeRefundModal"></button>
+                            {{ component('Admin:LiveActionButton', {
+                                action: 'closeRefundModal',
+                                label: 'Close'|trans,
+                                buttonClass: 'btn btn-ghost-secondary',
+                                loading: null,
+                                preventDefault: false,
+                            }) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

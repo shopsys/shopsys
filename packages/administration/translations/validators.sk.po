@@ -1,0 +1,21 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Payment transaction is not refundable."
+msgstr "Platobnú transakciu nie je možné refundovat."
+
+msgid "Refund amount must be greater than zero."
+msgstr "Čiastka refundácie musí byt väčšia než nula."
+
+msgid "Refunded amount cannot be negative."
+msgstr "Refundovaná čiastka nemôže byt záporná."
+
+msgid "You can refund only %refundableAmount%."
+msgstr "Môžete refundovať iba %refundableAmount%."
+
+msgid "You can set refunded amount only up to %paidAmount%."
+msgstr "Refundovanú čiastku môžete nastaviť maximálne na %paidAmount%."
+

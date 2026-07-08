@@ -463,6 +463,12 @@ msgstr "Vyplňte prosím promo kód"
 msgid "Please enter quantity"
 msgstr "Vyplňte prosím množství"
 
+msgid "Please enter refund amount."
+msgstr "Vyplňte prosím částku k refundaci."
+
+msgid "Please enter refunded amount."
+msgstr "Vyplňte prosím refundovanou částku."
+
 msgid "Please enter role name"
 msgstr "Vyplňte prosím název"
 

@@ -10,7 +10,7 @@
     <property name="path.framework.assets" value="${path.root}/node_modules/@shopsys/framework"/>
     <property name="path.frontend-api" value="${path.vendor}/shopsys/frontend-api"/>
     <property name="path.administration" value="${path.vendor}/shopsys/administration"/>
-    <property name="npm-export-translations.extra-args" value="source-dir=${path.administration}/assets/src/js/**/*.js translations-dir=${path.administration}/translations/*.po" override="true"/>
+    <property name="npm-export-translations.extra-args" value="source-dir=${path.administration}/assets/src/**/*.js translations-dir=${path.administration}/translations/*.po" override="true"/>
 
     <property name="phpstan.level" value="5"/>
 

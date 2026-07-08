@@ -1,0 +1,38 @@
+{% form_theme form '@ShopsysAdministration/form/vertical.html.twig' %}
+
+{% block section_content %}
+    <div data-controller="delivery-address-form">
+        {{ form_row(form.shippingAddressGroup.deliveryAddressSameAsBillingAddress, {
+            attr: {
+                'data-delivery-address-form-target': 'sameAsBillingAddress',
+                'data-action': 'delivery-address-form#updateDeliveryFieldsState',
+            },
+        }) }}
+
+        <div data-delivery-address-form-target="deliveryFields">
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    {{ form_row(form.shippingAddressGroup.deliveryAddressFields.deliveryFirstName) }}
+                </div>
+                <div class="col-12 col-md-6">
+                    {{ form_row(form.shippingAddressGroup.deliveryAddressFields.deliveryLastName) }}
+                </div>
+            </div>
+
+            {{ form_row(form.shippingAddressGroup.deliveryAddressFields.deliveryCompanyName) }}
+            {{ form_row(form.shippingAddressGroup.deliveryAddressFields.deliveryTelephone) }}
+            {{ form_row(form.shippingAddressGroup.deliveryAddressFields.deliveryStreet) }}
+
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    {{ form_row(form.shippingAddressGroup.deliveryAddressFields.deliveryCity) }}
+                </div>
+                <div class="col-12 col-md-6">
+                    {{ form_row(form.shippingAddressGroup.deliveryAddressFields.deliveryPostcode) }}
+                </div>
+            </div>
+
+            {{ form_row(form.shippingAddressGroup.deliveryAddressFields.deliveryCountry) }}
+        </div>
+    </div>
+{% endblock %}

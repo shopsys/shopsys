@@ -1,0 +1,55 @@
+{% block section_content %}
+    <div class="subheader d-flex justify-content-between align-items-center mb-1">
+        {{ 'Delivery address'|trans }}
+        {{ component('OrderDetail:SectionEditButton', {
+            section: section,
+            canEdit: canEdit,
+        }) }}
+    </div>
+
+    {% if order.deliveryAddressSameAsBillingAddress %}
+        <span class="badge bg-blue-lt align-self-start">{{ 'Same as billing address'|trans }}</span>
+    {% else %}
+        {% if order.deliveryCompanyName %}
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-secondary d-inline-flex align-items-center">
+                    {{ ux_icon('company', { class: 'icon icon-inline' }) }}
+                </span>
+                <span>{{ order.deliveryCompanyName }}</span>
+            </div>
+        {% endif %}
+
+        {% if order.deliveryFirstName or order.deliveryLastName %}
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-secondary d-inline-flex align-items-center">
+                    {{ ux_icon('person-man', { class: 'icon icon-inline' }) }}
+                </span>
+                <span>{{ order.deliveryFirstName }} {{ order.deliveryLastName }}</span>
+            </div>
+        {% endif %}
+
+        {% if order.deliveryTelephone %}
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-secondary d-inline-flex align-items-center">
+                    {{ ux_icon('phone', { class: 'icon icon-inline' }) }}
+                </span>
+                <a href="tel:{{ order.deliveryTelephone }}">{{ order.deliveryTelephone }}</a>
+            </div>
+        {% endif %}
+
+        <div class="d-flex align-items-start gap-2">
+            <span class="text-secondary d-inline-flex align-items-center flex-shrink-0 mt-1">
+                {{ ux_icon('house-outline', { class: 'icon icon-inline' }) }}
+            </span>
+            <span class="d-flex flex-column gap-1">
+                <span>{{ order.deliveryStreet }}</span>
+                <span>{{ order.deliveryPostcode }} {{ order.deliveryCity }}</span>
+                <span>{{ order.deliveryCountry.name }}</span>
+            </span>
+        </div>
+
+        {% block addresses_delivery_address_extra %}
+            {# This block can be used to add more delivery address related fields #}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

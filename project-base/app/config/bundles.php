@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['all' => true],
@@ -41,6 +43,8 @@ return [
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['all' => true],
     Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],
+    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
+    Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
     Shopsys\AdministrationBundle\ShopsysAdministrationBundle::class => ['all' => true],
     Becklyn\OrderedFormBundle\BecklynOrderedFormBundle::class => ['all' => true],
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
@@ -48,4 +52,5 @@ return [
     Symfony\AI\McpBundle\McpBundle::class => ['all' => true],
     Shopsys\MakerBundle\ShopsysMakerBundle::class => ['dev' => true],
     Shopsys\McpBundle\ShopsysMcpBundle::class => ['all' => true],
+    Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
 ];

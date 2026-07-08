@@ -1,0 +1,14 @@
+{% if withdrawalRequestDataForm is not defined %}
+    {% set withdrawalRequestDataForm = form.basicInformationGroup.withdrawalRequestGroup.withdrawalRequestData %}
+{% endif %}
+
+{% form_theme withdrawalRequestDataForm '@ShopsysAdministration/form/vertical.html.twig' %}
+
+{% block section_content %}
+    {{ form_row(withdrawalRequestDataForm.firstName) }}
+    {{ form_row(withdrawalRequestDataForm.lastName) }}
+    {{ form_row(withdrawalRequestDataForm.email) }}
+    {{ form_row(withdrawalRequestDataForm.telephone) }}
+    {{ form_row(withdrawalRequestDataForm.note) }}
+    {{ form_row(withdrawalRequestDataForm.requestedAt) }}
+{% endblock %}

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\App\Smoke\Http;
 
+use App\DataFixtures\Demo\OrderDataFixture;
+use App\DataFixtures\Demo\OrderStatusDataFixture;
 use App\DataFixtures\Demo\ReadyCategorySeoDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Administrator\Administrator;
+use App\Model\Order\Order;
+use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
@@ -231,6 +235,24 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Category with ID 1 is the root, use ID 2 instead.')
                     ->setParameter('domainId', 1)
                     ->setParameter('categoryId', 2);
+            })
+            ->customizeByRouteName('admin_order_edit_withdrawal_status', function (RouteConfig $config): void {
+                $order = $this->getPersistentReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, entityClassName: Order::class);
+                $withdrawnStatus = $this->getPersistentReference(OrderStatusDataFixture::ORDER_STATUS_WITHDRAWN, entityClassName: OrderStatus::class);
+
+                $config->changeDefaultRequestDataSet('Use valid order and withdrawn status from fixtures.')
+                    ->setParameter('id', $order->getId())
+                    ->setParameter('statusId', $withdrawnStatus->getId());
+            })
+            ->customizeByRouteName('admin_order_edit_changestatus', function (RouteConfig $config): void {
+                $order = $this->getPersistentReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, entityClassName: Order::class);
+                $newStatus = $this->getPersistentReference(OrderStatusDataFixture::ORDER_STATUS_NEW, entityClassName: OrderStatus::class);
+
+                $config->changeDefaultRequestDataSet('Use valid order and status from fixtures and add CSRF token.')
+                    ->setParameter('id', $order->getId())
+                    ->setParameter('statusId', $newStatus->getId())
+                    ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
+                    ->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('admin_pricinggroup_delete', function (RouteConfig $config): void {
                 $config->skipRoute('Deleting pricing group is not necessary.');

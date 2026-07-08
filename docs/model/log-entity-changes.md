@@ -144,6 +144,17 @@ return $this->render('@ShopsysAdministration/content/order/edit.html.twig', [
 
 and render it
 
-```
+```twig
 {{ entityLogGridView.render() }}
 ```
+
+Alternatively, administration pages can render the same entity logs as a timeline:
+
+```twig
+{{ component('Admin:EntityLogTimeline', {
+    entityName: entityName,
+    entityId: entityId,
+}) }}
+```
+
+The timeline groups records from the same save operation by `logCollectionNumber` and displays the details needed for reviewing changes: action, entity, readable identifier, user, date, and formatted changes.

@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Command;
 
 use Override;
 use Shopsys\AdministrationBundle\Component\Configuration\AccessControlConfiguration;
+use Shopsys\AdministrationBundle\Component\Security\AccessControl\LiveComponentAccessControlDataProvider;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -26,6 +27,7 @@ final class AccessControlCommand extends Command
     public function __construct(
         private readonly AccessControlConfiguration $accessControlConfiguration,
         private readonly RouteAccessControlDataProvider $routeAccessControlDataProvider,
+        private readonly LiveComponentAccessControlDataProvider $liveComponentAccessControlDataProvider,
     ) {
         parent::__construct();
     }
@@ -59,14 +61,27 @@ final class AccessControlCommand extends Command
         $checkOnly = $input->getOption('check');
 
         $allRoutes = $this->routeAccessControlDataProvider->getAll();
+        $allLiveComponentActions = $this->liveComponentAccessControlDataProvider->getAll();
 
         if ($checkOnly) {
             [, , $uncovered] = $this->categorizeRoutes($allRoutes);
+            [, , $uncoveredLiveComponentActions] = $this->categorizeLiveComponentActions($allLiveComponentActions);
 
-            if (count($uncovered) > 0) {
-                $this->renderRoutesTable($io, $output, 'Uncovered Routes', $uncovered);
-                $io->error(sprintf('Found %d uncovered routes', count($uncovered)));
-                $io->note('Fix by adding access control attributes to controller actions or exclude routes in configuration.');
+            if (count($uncovered) > 0 || count($uncoveredLiveComponentActions) > 0) {
+                if (count($uncovered) > 0) {
+                    $this->renderAccessControlDataTable($io, $output, 'Uncovered Routes', 'Route Name', $uncovered);
+                }
+
+                if (count($uncoveredLiveComponentActions) > 0) {
+                    $this->renderAccessControlDataTable($io, $output, 'Uncovered Live Component Actions', 'Component Action', $uncoveredLiveComponentActions);
+                }
+
+                $io->error(sprintf(
+                    'Found %d uncovered routes and %d uncovered Live Component actions',
+                    count($uncovered),
+                    count($uncoveredLiveComponentActions),
+                ));
+                $io->note('Fix by adding access control attributes to controller actions or Live Component actions, or exclude routes in configuration.');
 
                 return Command::FAILURE;
             }
@@ -82,7 +97,7 @@ final class AccessControlCommand extends Command
             return Command::SUCCESS;
         }
 
-        return $this->displayRouteSections($io, $output, $allRoutes) ? Command::FAILURE : Command::SUCCESS;
+        return $this->displayAccessControlSections($io, $output, $allRoutes, $allLiveComponentActions) ? Command::FAILURE : Command::SUCCESS;
     }
 
     /**
@@ -110,6 +125,26 @@ final class AccessControlCommand extends Command
     }
 
     /**
+     * @param array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData> $allLiveComponentActions
+     * @return array{array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData>, array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData>, array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData>}
+     */
+    private function categorizeLiveComponentActions(array $allLiveComponentActions): array
+    {
+        $covered = [];
+        $uncovered = [];
+
+        foreach ($allLiveComponentActions as $actionName => $actionData) {
+            if ($actionData->hasAnyRules()) {
+                $covered[$actionName] = $actionData;
+            } else {
+                $uncovered[$actionName] = $actionData;
+            }
+        }
+
+        return [$covered, [], $uncovered];
+    }
+
+    /**
      * @param array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData> $allRoutes
      */
     private function displayFilteredRoutes(
@@ -124,7 +159,7 @@ final class AccessControlCommand extends Command
         $io->newLine();
 
         if (count($filteredRoutes) > 0) {
-            $this->renderRoutesTable($io, $output, 'Matching Routes', $filteredRoutes);
+            $this->renderAccessControlDataTable($io, $output, 'Matching Routes', 'Route Name', $filteredRoutes);
         }
     }
 
@@ -161,45 +196,61 @@ final class AccessControlCommand extends Command
      * @param array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData> $allRoutes
      * @return bool True if there are uncovered routes
      */
-    private function displayRouteSections(
+    private function displayAccessControlSections(
         SymfonyStyle $io,
         OutputInterface $output,
         array $allRoutes,
+        array $allLiveComponentActions,
     ): bool {
         $io->info(sprintf('Found %d total admin routes', count($allRoutes)));
         $io->newLine();
 
         [$covered, $excluded, $uncovered] = $this->categorizeRoutes($allRoutes);
+        [$coveredLiveComponentActions, , $uncoveredLiveComponentActions] = $this->categorizeLiveComponentActions($allLiveComponentActions);
 
         if (count($covered) > 0) {
-            $this->renderRoutesTable($io, $output, 'Covered Routes', $covered);
+            $this->renderAccessControlDataTable($io, $output, 'Covered Routes', 'Route Name', $covered);
         }
 
         if (count($excluded) > 0) {
-            $this->renderRoutesTable($io, $output, 'Excluded Routes', $excluded);
+            $this->renderAccessControlDataTable($io, $output, 'Excluded Routes', 'Route Name', $excluded);
             $io->note('Excluded routes are intentionally ignored from access control checks (e.g., login pages, public endpoints)');
         }
 
         if (count($uncovered) > 0) {
-            $this->renderRoutesTable($io, $output, 'Uncovered Routes', $uncovered);
+            $this->renderAccessControlDataTable($io, $output, 'Uncovered Routes', 'Route Name', $uncovered);
             $io->note('Add access control attributes to controller actions or exclude routes in configuration.');
         }
 
-        return count($uncovered) > 0;
+        if (count($coveredLiveComponentActions) > 0) {
+            $this->renderAccessControlDataTable($io, $output, 'Covered Live Component Actions', 'Component Action', $coveredLiveComponentActions);
+        }
+
+        if (count($uncoveredLiveComponentActions) > 0) {
+            $this->renderAccessControlDataTable($io, $output, 'Uncovered Live Component Actions', 'Component Action', $uncoveredLiveComponentActions);
+            $io->note('Add access control attributes to Live Component actions.');
+        }
+
+        return count($uncovered) > 0 || count($uncoveredLiveComponentActions) > 0;
     }
 
     /**
-     * @param array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData> $routes
+     * @param array<string, \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData> $accessControlData
      */
-    private function renderRoutesTable(SymfonyStyle $io, OutputInterface $output, string $title, array $routes): void
-    {
-        $titleWithCount = sprintf('%s (%d)', $title, count($routes));
+    private function renderAccessControlDataTable(
+        SymfonyStyle $io,
+        OutputInterface $output,
+        string $title,
+        string $nameHeader,
+        array $accessControlData,
+    ): void {
+        $titleWithCount = sprintf('%s (%d)', $title, count($accessControlData));
         $io->section($titleWithCount);
 
-        $rows = $this->prepareTableRows($routes);
+        $rows = $this->prepareTableRows($accessControlData);
 
         $table = new Table($output);
-        $table->setHeaders(['Route Name', 'Controller', 'Required Roles']);
+        $table->setHeaders([$nameHeader, 'Controller', 'Required Roles']);
         $table->setRows($rows);
         $table->render();
         $io->newLine();

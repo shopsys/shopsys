@@ -1,0 +1,81 @@
+<div {{ attributes }}>
+    {% set groups = this.groups %}
+
+    {% if groups|length == 0 %}
+        <div class="text-secondary">{{ 'No logs created so far.'|trans }}</div>
+    {% else %}
+        <ul class="timeline">
+            {% for group in groups %}
+                {% set isSingleEntry = group|length == 1 %}
+                {% set firstLog = group|first %}
+                {% set groupAction = this.getGroupAction(group) %}
+
+                <li class="timeline-event">
+                    <div class="timeline-event-icon {{ this.getActionIconClass(groupAction) }}">
+                        {{ ux_icon(this.getActionIconName(groupAction)) }}
+                    </div>
+                    <div class="card timeline-event-card">
+                        <div class="card-body">
+                            <div class="text-secondary float-end">
+                                {{ this.getGroupCreatedAt(group)|formatDateTime }}
+                            </div>
+
+                            {% if isSingleEntry %}
+                                <h4 class="mb-2 d-flex flex-wrap gap-2 align-items-center">
+                                    <span class="badge {{ this.getActionBadgeClass(firstLog.action) }}">{{ firstLog.action|capitalize|trans }}</span>
+                                    {% if firstLog.entityIdentifier is empty %}
+                                        <span>{{ firstLog.entityName }}</span>
+                                    {% else %}
+                                        <span>{{ '%entityName% (%entityIdentifier%)'|trans({
+                                            '%entityName%': firstLog.entityName,
+                                            '%entityIdentifier%': firstLog.entityIdentifier,
+                                        }) }}</span>
+                                    {% endif %}
+                                </h4>
+                            {% else %}
+                                <h4 class="mb-2">{{ 'Several changes'|trans }}</h4>
+                            {% endif %}
+
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge bg-secondary-lt">
+                                    {{ 'By: %userIdentifier%'|trans({'%userIdentifier%': firstLog.userIdentifier}) }}
+                                </span>
+                                {% if not isSingleEntry %}
+                                    <span class="badge bg-secondary-lt">
+                                        {{ '%count% entries'|trans({'%count%': group|length}) }}
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                            {% if isSingleEntry %}
+                                {% set formattedChanges = this.getFormattedChanges(firstLog) %}
+                                {% if formattedChanges is not empty %}
+                                    <div class="text-secondary">{{ formattedChanges|raw }}</div>
+                                {% endif %}
+                            {% else %}
+                                <div class="vstack gap-3">
+                                    {% for entityLog in group %}
+                                        <div class="border-start ps-3">
+                                            <div class="d-flex flex-wrap gap-2 align-items-center mb-1">
+                                                <span class="badge {{ this.getActionBadgeClass(entityLog.action) }}">{{ entityLog.action|capitalize|trans }}</span>
+                                                <strong>{{ entityLog.entityName }}</strong>
+                                                {% if entityLog.entityIdentifier is not empty %}
+                                                    <span class="text-secondary">({{ entityLog.entityIdentifier }})</span>
+                                                {% endif %}
+                                            </div>
+
+                                            {% set formattedChanges = this.getFormattedChanges(entityLog) %}
+                                            {% if formattedChanges is not empty %}
+                                                <div class="text-secondary">{{ formattedChanges|raw }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

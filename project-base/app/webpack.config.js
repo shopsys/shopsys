@@ -17,6 +17,7 @@ Encore
     .autoProvidejQuery()
     .addEntry('admin', './assets/js/admin/admin.js')
     .addEntry('administration', sources.getPackageNodeModulesDir('administration') + '/src/js/index.js')
+    .enableStimulusBridge('./assets/controllers.json')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())

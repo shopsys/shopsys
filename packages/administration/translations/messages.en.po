@@ -10,6 +10,9 @@ msgstr ""
 msgid "%categoryName% - Filters"
 msgstr ""
 
+msgid "%count% entries"
+msgstr ""
+
 msgid "%count% item|%count% items"
 msgstr ""
 
@@ -17,6 +20,9 @@ msgid "%defaultCurrency% per 1 %currentCurrency%"
 msgstr ""
 
 msgid "%defaultCurrency% per unit"
+msgstr ""
+
+msgid "%entityName% (%entityIdentifier%)"
 msgstr ""
 
 msgid "<a href=\"%url%\">Go back</a> to login page."
@@ -32,6 +38,9 @@ msgid "<strong>{{ objectName }}</strong> was saved successfully."
 msgstr ""
 
 msgid "Action"
+msgstr ""
+
+msgid "Actions"
 msgstr ""
 
 msgid "Active"
@@ -229,6 +238,9 @@ msgstr ""
 msgid "Basic frontend currency %domainName%"
 msgstr ""
 
+msgid "Basic information"
+msgstr ""
+
 msgid "Basic price"
 msgstr ""
 
@@ -242,6 +254,9 @@ msgid "Bestselling products"
 msgstr ""
 
 msgid "Billing address"
+msgstr ""
+
+msgid "Billing details saved."
 msgstr ""
 
 msgid "Blog article"
@@ -281,6 +296,9 @@ msgid "Bulk edit"
 msgstr ""
 
 msgid "But at other addresses we have a lot for you..."
+msgstr ""
+
+msgid "By: %userIdentifier%"
 msgstr ""
 
 msgid "Calculated prices"
@@ -389,6 +407,9 @@ msgid "Complaints overview"
 msgstr ""
 
 msgid "Confirm one-time passcode"
+msgstr ""
+
+msgid "Contact"
 msgstr ""
 
 msgid "Contact Form"
@@ -577,6 +598,9 @@ msgstr ""
 msgid "Currencies and rounding"
 msgstr ""
 
+msgid "Customer"
+msgstr ""
+
 msgid "Customer delivery addresses"
 msgstr ""
 
@@ -628,10 +652,16 @@ msgstr ""
 msgid "Delete file"
 msgstr ""
 
+msgid "Delivered"
+msgstr ""
+
 msgid "Delivery address"
 msgstr ""
 
 msgid "Delivery address detail"
+msgstr ""
+
+msgid "Delivery address saved."
 msgstr ""
 
 msgid "Description"
@@ -673,6 +703,9 @@ msgstr ""
 msgid "Displaying"
 msgstr ""
 
+msgid "Do you really want to change order status to <strong>%s</strong>?"
+msgstr ""
+
 msgid "Do you really want to delete this category?"
 msgstr ""
 
@@ -680,6 +713,9 @@ msgid "Do you really want to delete this file? It will be permanently deleted an
 msgstr ""
 
 msgid "Do you really want to delete this item?"
+msgstr ""
+
+msgid "Do you really want to remove the order?"
 msgstr ""
 
 msgid "Do you really want to remove this category even with their SEO mixes?"
@@ -730,7 +766,19 @@ msgstr ""
 msgid "Edit administrator"
 msgstr ""
 
+msgid "Edit billing details"
+msgstr ""
+
+msgid "Edit delivery address"
+msgstr ""
+
 msgid "Edit domain icon"
+msgstr ""
+
+msgid "Edit items"
+msgstr ""
+
+msgid "Edit note"
 msgstr ""
 
 msgid "Edit parameter"
@@ -739,10 +787,19 @@ msgstr ""
 msgid "Edit parameter group"
 msgstr ""
 
+msgid "Edit personal data"
+msgstr ""
+
 msgid "Edit store"
 msgstr ""
 
 msgid "Edit the combination with SEO values"
+msgstr ""
+
+msgid "Edit tracking"
+msgstr ""
+
+msgid "Edit withdrawal request"
 msgstr ""
 
 msgid "Editing %entity_name%"
@@ -812,6 +869,9 @@ msgid "Editing navigation item"
 msgstr ""
 
 msgid "Editing notification bar"
+msgstr ""
+
+msgid "Editing order - Nr. %number%"
 msgstr ""
 
 msgid "Editing parameter of type color"
@@ -931,9 +991,6 @@ msgstr ""
 msgid "External transaction ID"
 msgstr ""
 
-msgid "External transaction status"
-msgstr ""
-
 msgid "Feeds"
 msgstr ""
 
@@ -945,6 +1002,9 @@ msgstr ""
 
 msgid "Files"
 msgstr ""
+
+msgid "Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status."
+msgstr "Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status."
 
 msgid "First name"
 msgstr ""
@@ -1009,13 +1069,22 @@ msgstr ""
 msgid "Go to product advanced search"
 msgstr ""
 
+msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
+msgstr ""
+
 msgid "Granted"
 msgstr ""
 
 msgid "Heureka - Verified by Customer"
 msgstr ""
 
+msgid "Heureka agreement"
+msgstr ""
+
 msgid "Heureka setting"
+msgstr ""
+
+msgid "History"
 msgstr ""
 
 msgid "Holiday / internal day"
@@ -1075,6 +1144,9 @@ msgstr ""
 msgid "Inquiry by"
 msgstr ""
 
+msgid "Internal ID"
+msgstr ""
+
 msgid "Invalid reset password hash for administrator"
 msgstr ""
 
@@ -1088,6 +1160,9 @@ msgid "It is possible to use this when creating a link: mark the text you want t
 msgstr ""
 
 msgid "Item name"
+msgstr ""
+
+msgid "Items"
 msgstr ""
 
 msgid "Keep empty if you do not want to limit the price by products' weight"
@@ -1132,6 +1207,9 @@ msgstr ""
 msgid "Loading"
 msgstr ""
 
+msgid "Loading..."
+msgstr ""
+
 msgid "Location"
 msgstr ""
 
@@ -1169,6 +1247,12 @@ msgid "Main variant [abbreviation]"
 msgstr "M"
 
 msgid "Make modification"
+msgstr ""
+
+msgid "Manage refund"
+msgstr ""
+
+msgid "Manual correction"
 msgstr ""
 
 msgid "Marketing & Promotions"
@@ -1432,10 +1516,10 @@ msgstr ""
 msgid "No watchdog found."
 msgstr ""
 
-msgid "Not granted"
+msgid "No withdrawal request data."
 msgstr ""
 
-msgid "Not refundable"
+msgid "Not granted"
 msgstr ""
 
 msgid "Not sellable"
@@ -1445,6 +1529,9 @@ msgid "Not visible"
 msgstr ""
 
 msgid "Note"
+msgstr ""
+
+msgid "Note saved."
 msgstr ""
 
 msgid "Notification bar"
@@ -1468,6 +1555,9 @@ msgstr ""
 msgid "Open in a new tab"
 msgstr ""
 
+msgid "Open product detail"
+msgstr ""
+
 msgid "Open user menu"
 msgstr ""
 
@@ -1477,17 +1567,35 @@ msgstr ""
 msgid "Order Nr. %orderNumber%"
 msgstr ""
 
+msgid "Order Nr. <strong>{{ number }}</strong> deleted"
+msgstr ""
+
 msgid "Order URL address"
 msgstr ""
 
 msgid "Order confirmation page"
 msgstr ""
 
+msgid "Order detail"
+msgstr ""
+
+msgid "Order has not been sent to GoPay"
+msgstr ""
+
 msgid "Order items"
+msgstr ""
+
+msgid "Order items have been saved."
 msgstr ""
 
 msgid "Order number"
 msgstr ""
+
+msgid "Order status has been changed."
+msgstr ""
+
+msgid "Order status is not changed yet!"
+msgstr "Order status is not changed yet!"
 
 msgid "Order statuses"
 msgstr ""
@@ -1511,6 +1619,9 @@ msgid "Orders overview"
 msgstr ""
 
 msgid "Orders sold"
+msgstr ""
+
+msgid "Origin"
 msgstr ""
 
 msgid "Overview"
@@ -1546,16 +1657,25 @@ msgstr ""
 msgid "Payment"
 msgstr ""
 
+msgid "Payment & Transport"
+msgstr ""
+
 msgid "Payment instructions"
 msgstr ""
 
-msgid "Payment method name"
+msgid "Payment method"
+msgstr ""
+
+msgid "Payment transactions"
 msgstr ""
 
 msgid "Payments"
 msgstr ""
 
 msgid "Personal data access pages setting"
+msgstr ""
+
+msgid "Personal data saved."
 msgstr ""
 
 msgid "Personal information export"
@@ -1684,13 +1804,22 @@ msgstr ""
 msgid "Record is not present in the Elasticsearch for the selected entity and domain."
 msgstr ""
 
-msgid "Refund amount"
+msgid "Refund has been sent."
+msgstr ""
+
+msgid "Refund via GoPay"
+msgstr ""
+
+msgid "Refund was not sent. Please check the payment transaction state."
 msgstr ""
 
 msgid "Refundable amount"
 msgstr ""
 
 msgid "Refunded amount"
+msgstr ""
+
+msgid "Refunded amount has been changed."
 msgstr ""
 
 msgid "Remove"
@@ -1703,6 +1832,9 @@ msgid "Replace file"
 msgstr ""
 
 msgid "Request a one-time passcode by email"
+msgstr ""
+
+msgid "Requested at"
 msgstr ""
 
 msgid "Reset administrator password"
@@ -1759,13 +1891,34 @@ msgstr ""
 msgid "Sales representatives"
 msgstr ""
 
+msgid "Same as billing address"
+msgstr ""
+
 msgid "Saturday"
+msgstr ""
+
+msgid "Save"
 msgstr ""
 
 msgid "Save changes"
 msgstr ""
 
 msgid "Save changes in order"
+msgstr ""
+
+msgid "Save correction"
+msgstr ""
+
+msgid "Save items"
+msgstr ""
+
+msgid "Saving correction..."
+msgstr ""
+
+msgid "Saving items..."
+msgstr ""
+
+msgid "Saving..."
 msgstr ""
 
 msgid "Scaled promo code"
@@ -1876,13 +2029,16 @@ msgstr ""
 msgid "Select row"
 msgstr ""
 
+msgid "Selected order doesn't exist."
+msgstr ""
+
 msgid "Sellable"
 msgstr ""
 
 msgid "Selling prices"
 msgstr ""
 
-msgid "Send refund and save order"
+msgid "Send refund"
 msgstr ""
 
 msgid "Send reset password"
@@ -1892,6 +2048,9 @@ msgid "Send test mail"
 msgstr ""
 
 msgid "Sending emails is turned off, no email will be sent from the app."
+msgstr ""
+
+msgid "Sending refund..."
 msgstr ""
 
 msgid "Set as default"
@@ -1904,6 +2063,9 @@ msgid "Settings"
 msgstr ""
 
 msgid "Settings & Configuration"
+msgstr ""
+
+msgid "Several changes"
 msgstr ""
 
 msgid "Shipping"
@@ -1919,6 +2081,12 @@ msgid "Shippings and payments"
 msgstr ""
 
 msgid "Show all customer orders"
+msgstr ""
+
+msgid "Show less"
+msgstr ""
+
+msgid "Show more"
 msgstr ""
 
 msgid "Site"
@@ -1993,7 +2161,13 @@ msgstr ""
 msgid "System Tools"
 msgstr ""
 
+msgid "Tab content could not be loaded."
+msgstr ""
+
 msgid "Table of Contents"
+msgstr ""
+
+msgid "Tax number"
 msgstr ""
 
 msgid "Telephone"
@@ -2107,7 +2281,16 @@ msgstr ""
 msgid "Total including VAT"
 msgstr ""
 
+msgid "Total price"
+msgstr ""
+
 msgid "Total price including VAT"
+msgstr ""
+
+msgid "Tracking"
+msgstr ""
+
+msgid "Tracking saved."
 msgstr ""
 
 msgid "Transfer issues"
@@ -2117,6 +2300,9 @@ msgid "Transfer issues overview"
 msgstr ""
 
 msgid "Transfers"
+msgstr ""
+
+msgid "Transport"
 msgstr ""
 
 msgid "Transports and payments"
@@ -2147,6 +2333,9 @@ msgid "Undo delete"
 msgstr ""
 
 msgid "Unit"
+msgstr ""
+
+msgid "Unit price"
 msgstr ""
 
 msgid "Unit price excluding VAT"
@@ -2242,6 +2431,9 @@ msgstr ""
 msgid "View allowed recipients."
 msgstr ""
 
+msgid "View order on Frontend"
+msgstr ""
+
 msgid "Visibility and sellability for unlogged customers"
 msgstr ""
 
@@ -2284,6 +2476,15 @@ msgstr ""
 msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
 msgstr ""
 
+msgid "Withdrawal"
+msgstr ""
+
+msgid "Withdrawal request"
+msgstr ""
+
+msgid "Withdrawal request saved."
+msgstr ""
+
 msgid "XML Feeds"
 msgstr ""
 
@@ -2306,6 +2507,9 @@ msgid "You cannot choose product that is main variant"
 msgstr ""
 
 msgid "You cannot choose product that is variant"
+msgstr ""
+
+msgid "You have unsaved changes. Do you really want to close the editor without saving?"
 msgstr ""
 
 msgid "administrators"
@@ -2426,6 +2630,12 @@ msgid "use %keyTab% or %keyShiftTab%"
 msgstr ""
 
 msgid "watchdogs"
+msgstr ""
+
+msgid "with VAT"
+msgstr ""
+
+msgid "without VAT"
 msgstr ""
 
 msgid "yesterday"

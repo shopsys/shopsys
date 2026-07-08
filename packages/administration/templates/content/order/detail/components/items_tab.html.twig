@@ -1,0 +1,33 @@
+{% set order = this.order %}
+{% set canEdit = can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_ORDER')) %}
+
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            novalidate: 'novalidate',
+        },
+    }) }}
+        {{ form_row(form.orderItems, {
+            canEdit: canEdit,
+            editMode: this.editMode,
+        }) }}
+
+        {% if canEdit %}
+            <div class="text-end mt-3">
+                {{ component('Admin:LiveActionButton', {
+                    action: 'cancel',
+                    label: 'Cancel'|trans,
+                    buttonClass: 'btn btn-outline-secondary' ~ (not this.editMode ? ' d-none' : ''),
+                    preventDefault: false,
+                }) }}
+                {{ component('Admin:LiveActionButton', {
+                    action: 'save',
+                    label: 'Save items'|trans,
+                    loadingLabel: 'Saving items...'|trans,
+                    icon: 'checked',
+                    buttonClass: 'btn btn-primary' ~ (not this.editMode ? ' d-none' : ''),
+                }) }}
+            </div>
+        {% endif %}
+    {{ form_end(form, { render_rest: false }) }}
+</div>

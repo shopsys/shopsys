@@ -1,25 +1,37 @@
-{% macro orderItem(orderItemForm, orderItemId, productItem, inputPriceType) %}
+{% macro orderItem(orderItemForm, orderItemId, productItem, inputPriceType, canRemoveItem) %}
     {% import _self as self %}
+    {% set setPricesManually = orderItemForm.vars.data is not null ? orderItemForm.setPricesManually.vars.data : false %}
+    {% set isCalculatedPriceReadonly = not setPricesManually %}
+
     <tr class="js-order-item js-order-item-any" id="{{ orderItemForm.vars.id }}" data-index="{{ orderItemId }}">
         <td>
-            <div class="input-group input-group-flat">
-                {{ form_widget(orderItemForm.name, {attr: { class: 'js-order-item-name'}}) }}
-                {% set errors = form_errors(orderItemForm.name) %}
+            <div class="d-flex align-items-center gap-2">
                 {% if productItem and productItem.product %}
-                    <span class="input-group-text">
-                        <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="input-group-link" target="_blank">
-                            {{ ux_icon('forward-page') }}
-                        </a>
-                    </span>
-                {% elseif productItem and not productItem.product and not errors %}
-                    <span class="input-group-text">
-                        {{ info_icon('Product not in e-shop.'|trans) }}
-                    </span>
+                    {{ image(productItem.product, { width: 36, height: 36 }) }}
                 {% endif %}
+                <div class="flex-grow-1">
+                    <div class="input-group input-group-flat">
+                        {{ form_widget(orderItemForm.name, { attr: { class: 'js-order-item-name' } }) }}
+                        {% set errors = form_errors(orderItemForm.name) %}
+                        {% set isNewItem = orderItemId starts with constant('Shopsys\\FrameworkBundle\\Model\\Order\\OrderData::NEW_ITEM_PREFIX') %}
+                        {% if productItem and productItem.product %}
+                            <span class="input-group-text">
+                                <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="input-group-link" target="_blank">
+                                    {{ ux_icon('forward-page') }}
+                                </a>
+                            </span>
+                        {% elseif productItem and not productItem.product and not errors and not isNewItem %}
+                            <span class="input-group-text">
+                                {{ info_icon('Product not in e-shop.'|trans) }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    {% if errors %}
+                        {{ errors|raw }}
+                    {% endif %}
+                    <input type="hidden" name="{{ orderItemForm.product.vars.full_name }}" value="{{ orderItemForm.product.vars.value }}">
+                </div>
             </div>
-            {% if errors %}
-                {{ errors|raw }}
-            {% endif %}
         </td>
         <td class="text-end">
             {{ form_widget(orderItemForm.catnum) }}
@@ -32,60 +44,69 @@
             {{ self.smallInputWidget(orderItemForm.unitName) }}
         </td>
         {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITH_VAT')) %}
-            <td class="text-end">{{ self.calculablePriceWidget(orderItemForm.unitPriceWithoutVat) }}</td>
+            <td class="text-end">{{ self.calculablePriceWidget(orderItemForm.unitPriceWithoutVat, isCalculatedPriceReadonly) }}</td>
             <td class="text-end">{{ self.smallInputWidget(orderItemForm.vatPercent) }}</td>
             <td class="text-end">{{ self.inputPriceWidget(orderItemForm.unitPriceWithVat) }}</td>
         {% elseif inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITHOUT_VAT')) %}
             <td class="text-end">{{ self.inputPriceWidget(orderItemForm.unitPriceWithoutVat) }}</td>
             <td class="text-end">{{ self.smallInputWidget(orderItemForm.vatPercent) }}</td>
-            <td class="text-end">{{ self.calculablePriceWidget(orderItemForm.unitPriceWithVat) }}</td>
+            <td class="text-end">{{ self.calculablePriceWidget(orderItemForm.unitPriceWithVat, isCalculatedPriceReadonly) }}</td>
         {% endif %}
-        <td class="text-end">{{ self.calculablePriceWidget(orderItemForm.totalPriceWithoutVat) }}</td>
-        <td class="text-end">{{ self.calculablePriceWidget(orderItemForm.totalPriceWithVat) }}</td>
-        {% set uncheckedByDefault = orderItemForm.vars.data is not null ? orderItemForm.setPricesManually.vars.data : false %}
+        <td class="text-end">{{ self.calculablePriceWidget(orderItemForm.totalPriceWithoutVat, isCalculatedPriceReadonly) }}</td>
+        <td class="text-end">{{ self.calculablePriceWidget(orderItemForm.totalPriceWithVat, isCalculatedPriceReadonly) }}</td>
         <td class="align-middle">
-            <div class="d-flex align-items-center justify-content-center gap-1"> 
-                {{ form_widget(orderItemForm.setPricesManually, {attr: { class: 'js-set-prices-manually'}, checked: uncheckedByDefault}) }}
-                {{ ux_icon('warning', {
-                    class: 'js-setting-prices-manually-warning cursor-help',
-                    'title': 'Using price calculation has been disabled, don\'t forget to edit all prices.'|trans,
-                    'data-bs-toggle': 'tooltip'
-                }) }}
+            <div class="d-flex align-items-center justify-content-center gap-1">
+                {{ form_widget(orderItemForm.setPricesManually, { attr: { class: 'js-set-prices-manually' }, checked: setPricesManually }) }}
+                <span class="js-setting-prices-manually-warning cursor-help{% if not setPricesManually %} d-none{% endif %}"
+                      title="{{ 'Using price calculation has been disabled, don\'t forget to edit all prices.'|trans }}"
+                      data-bs-toggle="tooltip"
+                >
+                    {{ ux_icon('warning', { class: 'pe-none' }) }}
+                </span>
             </div>
         </td>
         <td class="align-middle">
-            <a href="#" class="js-order-item-remove">{{ ux_icon('trash') }}</a>
+            <a href="#"
+               class="js-order-item-remove text-secondary{% if not canRemoveItem %} link-disabled{% endif %}"
+               data-order-item-index="{{ orderItemId }}"
+               data-loading="addClass(disabled)"
+            >
+                {{ ux_icon('trash', { class: 'icon icon-sm' }) }}
+            </a>
         </td>
     </tr>
 {% endmacro %}
 
 {% macro orderTransport(orderTransportForm, transportPricesWithVatByTransportId, transportVatPercentsByTransportId, inputPriceType) %}
     {% import _self as self %}
+    {% set setPricesManually = orderTransportForm.setPricesManually.vars.data %}
+    {% set isCalculatedPriceReadonly = not setPricesManually %}
+
     <tr class="js-order-transport-row js-order-item-any"
         data-transport-prices-with-vat-by-transport-id="{{ transportPricesWithVatByTransportId|json_encode() }}"
         data-transport-vat-percents-by-transport-id="{{ transportVatPercentsByTransportId|json_encode() }}"
     >
         <td>
-            {{ form_widget(orderTransportForm.transport) }}
+            {{ form_widget(orderTransportForm.transport, { attr: { 'data-loading': 'addAttribute(disabled)' } }) }}
             {{ form_errors(orderTransportForm.transport) }}
         </td>
         <td class="text-end">-</td>
         <td class="text-end">1</td>
         <td></td>
         {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITH_VAT')) %}
-            <td class="text-end">{{ self.calculablePriceWidget(orderTransportForm.unitPriceWithoutVat) }}</td>
+            <td class="text-end">{{ self.calculablePriceWidget(orderTransportForm.unitPriceWithoutVat, isCalculatedPriceReadonly) }}</td>
             <td class="text-end">{{ self.smallInputWidget(orderTransportForm.vatPercent) }}</td>
             <td class="text-end">{{ self.inputPriceWidget(orderTransportForm.unitPriceWithVat) }}</td>
         {% elseif inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITHOUT_VAT')) %}
             <td class="text-end">{{ self.inputPriceWidget(orderTransportForm.unitPriceWithoutVat) }}</td>
             <td class="text-end">{{ self.smallInputWidget(orderTransportForm.vatPercent) }}</td>
-            <td class="text-end">{{ self.calculablePriceWidget(orderTransportForm.unitPriceWithVat) }}</td>
+            <td class="text-end">{{ self.calculablePriceWidget(orderTransportForm.unitPriceWithVat, isCalculatedPriceReadonly) }}</td>
         {% endif %}
         <td></td>
         <td></td>
         <td>
             <div class="d-flex align-items-center justify-content-center">
-                {{ form_widget(orderTransportForm.setPricesManually, {attr: { class: 'js-set-prices-manually'}}) }}
+                {{ form_widget(orderTransportForm.setPricesManually, { attr: { class: 'js-set-prices-manually' } }) }}
             </div>
         </td>
         <td></td>
@@ -94,35 +115,34 @@
 
 {% macro orderPayment(orderPaymentForm, paymentPricesWithVatByPaymentId, paymentVatPercentsByPaymentId, inputPriceType) %}
     {% import _self as self %}
-    <tr
-            class="js-order-payment-row js-order-item-any"
-            data-payment-prices-with-vat-by-payment-id="{{ paymentPricesWithVatByPaymentId|json_encode() }}"
-            data-payment-vat-percents-by-payment-id="{{ paymentVatPercentsByPaymentId|json_encode() }}"
+    {% set setPricesManually = orderPaymentForm.setPricesManually.vars.data %}
+    {% set isCalculatedPriceReadonly = not setPricesManually %}
+
+    <tr class="js-order-payment-row js-order-item-any"
+        data-payment-prices-with-vat-by-payment-id="{{ paymentPricesWithVatByPaymentId|json_encode() }}"
+        data-payment-vat-percents-by-payment-id="{{ paymentVatPercentsByPaymentId|json_encode() }}"
     >
         <td>
-            <div class="relative padding-left-10">
-                {{ form_widget(orderPaymentForm.payment) }}
-                {{ form_errors(orderPaymentForm.payment) }}
-            </div>
+            {{ form_widget(orderPaymentForm.payment, { attr: { 'data-loading': 'addAttribute(disabled)' } }) }}
+            {{ form_errors(orderPaymentForm.payment) }}
         </td>
         <td class="text-end">-</td>
         <td class="text-end">1</td>
         <td></td>
         {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITH_VAT')) %}
-            <td class="text-end">{{ self.calculablePriceWidget(orderPaymentForm.unitPriceWithoutVat) }}</td>
-            <td class="text-end">{{ self.smallInputWidget(orderPaymentForm.vatPercent) }}
-            </td>
+            <td class="text-end">{{ self.calculablePriceWidget(orderPaymentForm.unitPriceWithoutVat, isCalculatedPriceReadonly) }}</td>
+            <td class="text-end">{{ self.smallInputWidget(orderPaymentForm.vatPercent) }}</td>
             <td class="text-end">{{ self.inputPriceWidget(orderPaymentForm.unitPriceWithVat) }}</td>
         {% elseif inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITHOUT_VAT')) %}
             <td class="text-end">{{ self.inputPriceWidget(orderPaymentForm.unitPriceWithoutVat) }}</td>
             <td class="text-end">{{ self.smallInputWidget(orderPaymentForm.vatPercent) }}</td>
-            <td class="text-end">{{ self.calculablePriceWidget(orderPaymentForm.unitPriceWithVat) }}</td>
+            <td class="text-end">{{ self.calculablePriceWidget(orderPaymentForm.unitPriceWithVat, isCalculatedPriceReadonly) }}</td>
         {% endif %}
         <td></td>
         <td></td>
         <td>
             <div class="d-flex align-items-center justify-content-center">
-                {{ form_widget(orderPaymentForm.setPricesManually, {attr: { class: 'js-set-prices-manually'}}) }}
+                {{ form_widget(orderPaymentForm.setPricesManually, { attr: { class: 'js-set-prices-manually' } }) }}
             </div>
         </td>
         <td></td>
@@ -130,23 +150,22 @@
 {% endmacro %}
 
 {% macro inputPriceWidget(priceForm) %}
-    <div class="input-group input-group-flat" style="min-width: 10em">
-      
-        {{ form_widget(priceForm, {attr: { class: 'text-end' }}) }}
+    <div class="input-group input-group-flat" style="min-width: 6em">
+        {{ form_widget(priceForm, { attr: { class: 'text-end' } }) }}
     </div>
     {{ form_errors(priceForm) }}
 {% endmacro %}
 
-{% macro calculablePriceWidget(calculablePriceForm) %}
-    <div class="input-group input-group-flat" style="min-width: 10em">
-        {{ form_widget(calculablePriceForm, {attr: { class: 'text-end js-calculable-price'}}) }}
+{% macro calculablePriceWidget(calculablePriceForm, readonly) %}
+    <div class="input-group input-group-flat" style="min-width: 6em">
+        {{ form_widget(calculablePriceForm, { attr: { class: 'text-end js-calculable-price' }|merge(readonly ? { readonly: 'readonly' } : {}) }) }}
     </div>
     {{ form_errors(calculablePriceForm) }}
 {% endmacro %}
 
 {% macro smallInputWidget(form) %}
     <div class="input-group input-group-flat" style="min-width: 4em">
-        {{ form_widget(form, {attr: { class: 'text-end' }}) }}
+        {{ form_widget(form, { attr: { class: 'text-end' } }) }}
     </div>
     {{ form_errors(form) }}
 {% endmacro %}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
+use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageService;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
@@ -22,6 +23,9 @@ class AdminBaseController extends AbstractController
 
     #[Required]
     public ErrorExtractor $errorExtractor;
+
+    #[Required]
+    public FlashMessageService $flashMessageService;
 
     protected function getCurrentAdministrator(): Administrator
     {
