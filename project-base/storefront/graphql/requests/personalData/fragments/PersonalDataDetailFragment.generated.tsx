@@ -1,71 +1,457 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { OrderDetailItemFragment } from '../../orders/fragments/OrderDetailItemFragment.generated';
 import { CountryFragment } from '../../countries/fragments/CountryFragment.generated';
 import { BaseCustomerUserFragment } from '../../customer/fragments/BaseCustomerUserFragment.generated';
-/** Product Availability statuses */
-export type TypeAvailabilityStatusEnum =
-  /** Product availability status in stock */
-  | 'InStock'
-  /** Product availability status out of stock */
-  | 'OutOfStock';
-
-/** Available customer user roles */
-export type TypeCustomerUserRoleEnum =
-  | 'ROLE_API_ALL'
-  | 'ROLE_API_CART_AND_ORDER_CREATION'
-  | 'ROLE_API_COMPANY_COMPLAINTS_VIEW'
-  | 'ROLE_API_COMPANY_ORDERS_VIEW'
-  | 'ROLE_API_COMPLAINT_CREATION'
-  | 'ROLE_API_CUSTOMER_SEES_PRICES'
-  | 'ROLE_API_CUSTOMER_SELF_MANAGE'
-  | 'ROLE_API_MANAGE_COMPANY_DATA'
-  | 'ROLE_API_MANAGE_CUSTOMERS';
-
-/** One of possible types of the order item */
-export type TypeOrderItemTypeEnum =
-  | 'discount'
-  | 'payment'
-  | 'product'
-  | 'productGift'
-  | 'promotion'
-  | 'rounding'
-  | 'transport';
-
-/** One of the possible methods of the transport type */
-export type TypeTransportTypeEnum =
-  | 'common'
-  | 'packetery'
-  | 'personal_pickup';
-
-export type TypePersonalDataDetailFragment = { __typename: 'PersonalData', exportLink: string, orders: Array<{ __typename: 'Order', uuid: string, city: string, companyName: string | null, number: string, creationDate: string, firstName: string | null, lastName: string | null, telephone: string, companyNumber: string | null, companyTaxNumber: string | null, street: string, postcode: string, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, items: Array<{ __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { uuid: string, number: string, creationDate: string, customerUser:
-          | { uuid: string }
-          | { uuid: string }
-          | { uuid: string }
-          | { uuid: string }
-         | null, withdrawalRequest: { __typename: 'OrderWithdrawalRequest' } | null }, product:
-        | { catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-        | { catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-        | { catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-       | null, transport: { isPersonalPickup: boolean, transportTypeCode: Types.TypeTransportTypeEnum, mainImage: { url: string } | null } | null, payment: { mainImage: { url: string } | null } | null }>, country: { __typename: 'Country', name: string, code: string }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null, productItems: Array<{ __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { uuid: string, number: string, creationDate: string, customerUser:
-          | { uuid: string }
-          | { uuid: string }
-          | { uuid: string }
-          | { uuid: string }
-         | null, withdrawalRequest: { __typename: 'OrderWithdrawalRequest' } | null }, product:
-        | { catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-        | { catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-        | { catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-       | null, transport: { isPersonalPickup: boolean, transportTypeCode: Types.TypeTransportTypeEnum, mainImage: { url: string } | null } | null, payment: { mainImage: { url: string } | null } | null }>, totalPrice: { priceWithVat: string } }>, customerUser:
-    | { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, billingAddressUuid: string, street: string | null, city: string | null, postcode: string | null, newsletterSubscription: boolean, pricingGroup: string, hasPasswordSet: boolean, roles: Array<Types.TypeCustomerUserRoleEnum>, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null } | null, deliveryAddresses: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null }>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string }, salesRepresentative: { __typename: 'SalesRepresentative', email: string | null, firstName: string | null, lastName: string | null, telephone: string | null, uuid: string, image: { url: string, name: string | null } | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null } | null }
-    | { __typename: 'CurrentCompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, billingAddressUuid: string, street: string | null, city: string | null, postcode: string | null, newsletterSubscription: boolean, pricingGroup: string, hasPasswordSet: boolean, roles: Array<Types.TypeCustomerUserRoleEnum>, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null } | null, deliveryAddresses: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null }>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string }, salesRepresentative: { __typename: 'SalesRepresentative', email: string | null, firstName: string | null, lastName: string | null, telephone: string | null, uuid: string, image: { url: string, name: string | null } | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null } | null }
-    | { __typename: 'CurrentRegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, billingAddressUuid: string, street: string | null, city: string | null, postcode: string | null, newsletterSubscription: boolean, pricingGroup: string, hasPasswordSet: boolean, roles: Array<Types.TypeCustomerUserRoleEnum>, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null } | null, deliveryAddresses: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null }>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string }, salesRepresentative: { __typename: 'SalesRepresentative', email: string | null, firstName: string | null, lastName: string | null, telephone: string | null, uuid: string, image: { url: string, name: string | null } | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null } | null }
-    | { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, billingAddressUuid: string, street: string | null, city: string | null, postcode: string | null, newsletterSubscription: boolean, pricingGroup: string, hasPasswordSet: boolean, roles: Array<Types.TypeCustomerUserRoleEnum>, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null } | null, deliveryAddresses: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null }>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string }, salesRepresentative: { __typename: 'SalesRepresentative', email: string | null, firstName: string | null, lastName: string | null, telephone: string | null, uuid: string, image: { url: string, name: string | null } | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null } | null }
-   | null, newsletterSubscriber: { __typename: 'NewsletterSubscriber', email: string, createdAt: string } | null, complaints: Array<{ __typename: 'Complaint', uuid: string, number: string, createdAt: string, status: string, deliveryFirstName: string, deliveryLastName: string, deliveryCompanyName: string | null, deliveryCity: string, deliveryPostcode: string, deliveryStreet: string, deliveryTelephone: string, deliveryCountry: { name: string }, items: Array<{ __typename: 'ComplaintItem', productName: string, quantity: number, description: string, orderItem: { uuid: string } | null }> }> };
+export type TypePersonalDataDetailFragment = (
+  { __typename: 'PersonalData' }
+  & Pick<Types.TypePersonalData, 'exportLink'>
+  & { orders: Array<(
+    { __typename: 'Order' }
+    & Pick<Types.TypeOrder, 'uuid' | 'city' | 'companyName' | 'number' | 'creationDate' | 'firstName' | 'lastName' | 'telephone' | 'companyNumber' | 'companyTaxNumber' | 'street' | 'postcode' | 'deliveryFirstName' | 'deliveryLastName' | 'deliveryCompanyName' | 'deliveryTelephone' | 'deliveryStreet' | 'deliveryCity' | 'deliveryPostcode'>
+    & { items: Array<(
+      { __typename: 'OrderItem' }
+      & Pick<Types.TypeOrderItem, 'uuid' | 'name' | 'vatRate' | 'quantity' | 'unit' | 'type'>
+      & { unitPrice: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ), totalPrice: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ), order: (
+        { __typename?: 'Order' }
+        & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate'>
+        & { customerUser: Types.Maybe<(
+          { __typename?: 'CompanyCustomerUser' }
+          & Pick<Types.TypeCompanyCustomerUser, 'uuid'>
+        ) | (
+          { __typename?: 'CurrentCompanyCustomerUser' }
+          & Pick<Types.TypeCurrentCompanyCustomerUser, 'uuid'>
+        ) | (
+          { __typename?: 'CurrentRegularCustomerUser' }
+          & Pick<Types.TypeCurrentRegularCustomerUser, 'uuid'>
+        ) | (
+          { __typename?: 'RegularCustomerUser' }
+          & Pick<Types.TypeRegularCustomerUser, 'uuid'>
+        )>, withdrawalRequest: Types.Maybe<{ __typename: 'OrderWithdrawalRequest' }> }
+      ), product: Types.Maybe<(
+        { __typename?: 'MainVariant' }
+        & Pick<Types.TypeMainVariant, 'catalogNumber' | 'slug' | 'isVisible' | 'isSellingDenied' | 'isInquiryType' | 'isCurrentlyOutOfStock' | 'promotionBuyQuantity' | 'promotionFreeQuantity'>
+        & { categories: Array<(
+          { __typename?: 'Category' }
+          & Pick<Types.TypeCategory, 'name'>
+        )>, mainImage: Types.Maybe<(
+          { __typename: 'Image' }
+          & Pick<Types.TypeImage, 'name' | 'url'>
+        )>, price: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), giftPrice: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), availability: (
+          { __typename?: 'Availability' }
+          & Pick<Types.TypeAvailability, 'name' | 'status'>
+        ) }
+      ) | (
+        { __typename?: 'RegularProduct' }
+        & Pick<Types.TypeRegularProduct, 'catalogNumber' | 'slug' | 'isVisible' | 'isSellingDenied' | 'isInquiryType' | 'isCurrentlyOutOfStock' | 'promotionBuyQuantity' | 'promotionFreeQuantity'>
+        & { categories: Array<(
+          { __typename?: 'Category' }
+          & Pick<Types.TypeCategory, 'name'>
+        )>, mainImage: Types.Maybe<(
+          { __typename: 'Image' }
+          & Pick<Types.TypeImage, 'name' | 'url'>
+        )>, price: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), giftPrice: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), availability: (
+          { __typename?: 'Availability' }
+          & Pick<Types.TypeAvailability, 'name' | 'status'>
+        ) }
+      ) | (
+        { __typename?: 'Variant' }
+        & Pick<Types.TypeVariant, 'catalogNumber' | 'slug' | 'isVisible' | 'isSellingDenied' | 'isInquiryType' | 'isCurrentlyOutOfStock' | 'promotionBuyQuantity' | 'promotionFreeQuantity'>
+        & { categories: Array<(
+          { __typename?: 'Category' }
+          & Pick<Types.TypeCategory, 'name'>
+        )>, mainImage: Types.Maybe<(
+          { __typename: 'Image' }
+          & Pick<Types.TypeImage, 'name' | 'url'>
+        )>, price: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), giftPrice: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), availability: (
+          { __typename?: 'Availability' }
+          & Pick<Types.TypeAvailability, 'name' | 'status'>
+        ) }
+      )>, transport: Types.Maybe<(
+        { __typename?: 'Transport' }
+        & Pick<Types.TypeTransport, 'isPersonalPickup' | 'transportTypeCode'>
+        & { mainImage: Types.Maybe<(
+          { __typename?: 'Image' }
+          & Pick<Types.TypeImage, 'url'>
+        )> }
+      )>, payment: Types.Maybe<(
+        { __typename?: 'Payment' }
+        & { mainImage: Types.Maybe<(
+          { __typename?: 'Image' }
+          & Pick<Types.TypeImage, 'url'>
+        )> }
+      )> }
+    )>, country: (
+      { __typename: 'Country' }
+      & Pick<Types.TypeCountry, 'name' | 'code'>
+    ), deliveryCountry: Types.Maybe<(
+      { __typename: 'Country' }
+      & Pick<Types.TypeCountry, 'name' | 'code'>
+    )>, productItems: Array<(
+      { __typename: 'OrderItem' }
+      & Pick<Types.TypeOrderItem, 'uuid' | 'name' | 'vatRate' | 'quantity' | 'unit' | 'type'>
+      & { unitPrice: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ), totalPrice: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ), order: (
+        { __typename?: 'Order' }
+        & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate'>
+        & { customerUser: Types.Maybe<(
+          { __typename?: 'CompanyCustomerUser' }
+          & Pick<Types.TypeCompanyCustomerUser, 'uuid'>
+        ) | (
+          { __typename?: 'CurrentCompanyCustomerUser' }
+          & Pick<Types.TypeCurrentCompanyCustomerUser, 'uuid'>
+        ) | (
+          { __typename?: 'CurrentRegularCustomerUser' }
+          & Pick<Types.TypeCurrentRegularCustomerUser, 'uuid'>
+        ) | (
+          { __typename?: 'RegularCustomerUser' }
+          & Pick<Types.TypeRegularCustomerUser, 'uuid'>
+        )>, withdrawalRequest: Types.Maybe<{ __typename: 'OrderWithdrawalRequest' }> }
+      ), product: Types.Maybe<(
+        { __typename?: 'MainVariant' }
+        & Pick<Types.TypeMainVariant, 'catalogNumber' | 'slug' | 'isVisible' | 'isSellingDenied' | 'isInquiryType' | 'isCurrentlyOutOfStock' | 'promotionBuyQuantity' | 'promotionFreeQuantity'>
+        & { categories: Array<(
+          { __typename?: 'Category' }
+          & Pick<Types.TypeCategory, 'name'>
+        )>, mainImage: Types.Maybe<(
+          { __typename: 'Image' }
+          & Pick<Types.TypeImage, 'name' | 'url'>
+        )>, price: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), giftPrice: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), availability: (
+          { __typename?: 'Availability' }
+          & Pick<Types.TypeAvailability, 'name' | 'status'>
+        ) }
+      ) | (
+        { __typename?: 'RegularProduct' }
+        & Pick<Types.TypeRegularProduct, 'catalogNumber' | 'slug' | 'isVisible' | 'isSellingDenied' | 'isInquiryType' | 'isCurrentlyOutOfStock' | 'promotionBuyQuantity' | 'promotionFreeQuantity'>
+        & { categories: Array<(
+          { __typename?: 'Category' }
+          & Pick<Types.TypeCategory, 'name'>
+        )>, mainImage: Types.Maybe<(
+          { __typename: 'Image' }
+          & Pick<Types.TypeImage, 'name' | 'url'>
+        )>, price: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), giftPrice: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), availability: (
+          { __typename?: 'Availability' }
+          & Pick<Types.TypeAvailability, 'name' | 'status'>
+        ) }
+      ) | (
+        { __typename?: 'Variant' }
+        & Pick<Types.TypeVariant, 'catalogNumber' | 'slug' | 'isVisible' | 'isSellingDenied' | 'isInquiryType' | 'isCurrentlyOutOfStock' | 'promotionBuyQuantity' | 'promotionFreeQuantity'>
+        & { categories: Array<(
+          { __typename?: 'Category' }
+          & Pick<Types.TypeCategory, 'name'>
+        )>, mainImage: Types.Maybe<(
+          { __typename: 'Image' }
+          & Pick<Types.TypeImage, 'name' | 'url'>
+        )>, price: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), giftPrice: (
+          { __typename: 'ProductPrice' }
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+          & { basicPrice: (
+            { __typename?: 'Price' }
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          ) }
+        ), availability: (
+          { __typename?: 'Availability' }
+          & Pick<Types.TypeAvailability, 'name' | 'status'>
+        ) }
+      )>, transport: Types.Maybe<(
+        { __typename?: 'Transport' }
+        & Pick<Types.TypeTransport, 'isPersonalPickup' | 'transportTypeCode'>
+        & { mainImage: Types.Maybe<(
+          { __typename?: 'Image' }
+          & Pick<Types.TypeImage, 'url'>
+        )> }
+      )>, payment: Types.Maybe<(
+        { __typename?: 'Payment' }
+        & { mainImage: Types.Maybe<(
+          { __typename?: 'Image' }
+          & Pick<Types.TypeImage, 'url'>
+        )> }
+      )> }
+    )>, totalPrice: (
+      { __typename?: 'Price' }
+      & Pick<Types.TypePrice, 'priceWithVat'>
+    ) }
+  )>, customerUser: Types.Maybe<(
+    { __typename: 'CompanyCustomerUser' }
+    & Pick<Types.TypeCompanyCustomerUser, 'companyName' | 'companyNumber' | 'companyTaxNumber' | 'uuid' | 'firstName' | 'lastName' | 'email' | 'telephone' | 'billingAddressUuid' | 'street' | 'city' | 'postcode' | 'newsletterSubscription' | 'pricingGroup' | 'hasPasswordSet' | 'roles'>
+    & { telephoneData: Types.Maybe<(
+      { __typename?: 'PhoneData' }
+      & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+    )>, country: Types.Maybe<(
+      { __typename: 'Country' }
+      & Pick<Types.TypeCountry, 'name' | 'code'>
+    )>, defaultDeliveryAddress: Types.Maybe<(
+      { __typename: 'DeliveryAddress' }
+      & Pick<Types.TypeDeliveryAddress, 'uuid' | 'companyName' | 'street' | 'city' | 'postcode' | 'telephone' | 'firstName' | 'lastName'>
+      & { telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )>, country: Types.Maybe<(
+        { __typename: 'Country' }
+        & Pick<Types.TypeCountry, 'name' | 'code'>
+      )> }
+    )>, deliveryAddresses: Array<(
+      { __typename: 'DeliveryAddress' }
+      & Pick<Types.TypeDeliveryAddress, 'uuid' | 'companyName' | 'street' | 'city' | 'postcode' | 'telephone' | 'firstName' | 'lastName'>
+      & { telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )>, country: Types.Maybe<(
+        { __typename: 'Country' }
+        & Pick<Types.TypeCountry, 'name' | 'code'>
+      )> }
+    )>, roleGroup: (
+      { __typename: 'CustomerUserRoleGroup' }
+      & Pick<Types.TypeCustomerUserRoleGroup, 'uuid' | 'name'>
+    ), salesRepresentative: Types.Maybe<(
+      { __typename: 'SalesRepresentative' }
+      & Pick<Types.TypeSalesRepresentative, 'email' | 'firstName' | 'lastName' | 'telephone' | 'uuid'>
+      & { image: Types.Maybe<(
+        { __typename?: 'Image' }
+        & Pick<Types.TypeImage, 'url' | 'name'>
+      )>, telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )> }
+    )> }
+  ) | (
+    { __typename: 'CurrentCompanyCustomerUser' }
+    & Pick<Types.TypeCurrentCompanyCustomerUser, 'uuid' | 'firstName' | 'lastName' | 'email' | 'telephone' | 'billingAddressUuid' | 'street' | 'city' | 'postcode' | 'newsletterSubscription' | 'pricingGroup' | 'hasPasswordSet' | 'roles'>
+    & { telephoneData: Types.Maybe<(
+      { __typename?: 'PhoneData' }
+      & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+    )>, country: Types.Maybe<(
+      { __typename: 'Country' }
+      & Pick<Types.TypeCountry, 'name' | 'code'>
+    )>, defaultDeliveryAddress: Types.Maybe<(
+      { __typename: 'DeliveryAddress' }
+      & Pick<Types.TypeDeliveryAddress, 'uuid' | 'companyName' | 'street' | 'city' | 'postcode' | 'telephone' | 'firstName' | 'lastName'>
+      & { telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )>, country: Types.Maybe<(
+        { __typename: 'Country' }
+        & Pick<Types.TypeCountry, 'name' | 'code'>
+      )> }
+    )>, deliveryAddresses: Array<(
+      { __typename: 'DeliveryAddress' }
+      & Pick<Types.TypeDeliveryAddress, 'uuid' | 'companyName' | 'street' | 'city' | 'postcode' | 'telephone' | 'firstName' | 'lastName'>
+      & { telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )>, country: Types.Maybe<(
+        { __typename: 'Country' }
+        & Pick<Types.TypeCountry, 'name' | 'code'>
+      )> }
+    )>, roleGroup: (
+      { __typename: 'CustomerUserRoleGroup' }
+      & Pick<Types.TypeCustomerUserRoleGroup, 'uuid' | 'name'>
+    ), salesRepresentative: Types.Maybe<(
+      { __typename: 'SalesRepresentative' }
+      & Pick<Types.TypeSalesRepresentative, 'email' | 'firstName' | 'lastName' | 'telephone' | 'uuid'>
+      & { image: Types.Maybe<(
+        { __typename?: 'Image' }
+        & Pick<Types.TypeImage, 'url' | 'name'>
+      )>, telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )> }
+    )> }
+  ) | (
+    { __typename: 'CurrentRegularCustomerUser' }
+    & Pick<Types.TypeCurrentRegularCustomerUser, 'uuid' | 'firstName' | 'lastName' | 'email' | 'telephone' | 'billingAddressUuid' | 'street' | 'city' | 'postcode' | 'newsletterSubscription' | 'pricingGroup' | 'hasPasswordSet' | 'roles'>
+    & { telephoneData: Types.Maybe<(
+      { __typename?: 'PhoneData' }
+      & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+    )>, country: Types.Maybe<(
+      { __typename: 'Country' }
+      & Pick<Types.TypeCountry, 'name' | 'code'>
+    )>, defaultDeliveryAddress: Types.Maybe<(
+      { __typename: 'DeliveryAddress' }
+      & Pick<Types.TypeDeliveryAddress, 'uuid' | 'companyName' | 'street' | 'city' | 'postcode' | 'telephone' | 'firstName' | 'lastName'>
+      & { telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )>, country: Types.Maybe<(
+        { __typename: 'Country' }
+        & Pick<Types.TypeCountry, 'name' | 'code'>
+      )> }
+    )>, deliveryAddresses: Array<(
+      { __typename: 'DeliveryAddress' }
+      & Pick<Types.TypeDeliveryAddress, 'uuid' | 'companyName' | 'street' | 'city' | 'postcode' | 'telephone' | 'firstName' | 'lastName'>
+      & { telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )>, country: Types.Maybe<(
+        { __typename: 'Country' }
+        & Pick<Types.TypeCountry, 'name' | 'code'>
+      )> }
+    )>, roleGroup: (
+      { __typename: 'CustomerUserRoleGroup' }
+      & Pick<Types.TypeCustomerUserRoleGroup, 'uuid' | 'name'>
+    ), salesRepresentative: Types.Maybe<(
+      { __typename: 'SalesRepresentative' }
+      & Pick<Types.TypeSalesRepresentative, 'email' | 'firstName' | 'lastName' | 'telephone' | 'uuid'>
+      & { image: Types.Maybe<(
+        { __typename?: 'Image' }
+        & Pick<Types.TypeImage, 'url' | 'name'>
+      )>, telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )> }
+    )> }
+  ) | (
+    { __typename: 'RegularCustomerUser' }
+    & Pick<Types.TypeRegularCustomerUser, 'uuid' | 'firstName' | 'lastName' | 'email' | 'telephone' | 'billingAddressUuid' | 'street' | 'city' | 'postcode' | 'newsletterSubscription' | 'pricingGroup' | 'hasPasswordSet' | 'roles'>
+    & { telephoneData: Types.Maybe<(
+      { __typename?: 'PhoneData' }
+      & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+    )>, country: Types.Maybe<(
+      { __typename: 'Country' }
+      & Pick<Types.TypeCountry, 'name' | 'code'>
+    )>, defaultDeliveryAddress: Types.Maybe<(
+      { __typename: 'DeliveryAddress' }
+      & Pick<Types.TypeDeliveryAddress, 'uuid' | 'companyName' | 'street' | 'city' | 'postcode' | 'telephone' | 'firstName' | 'lastName'>
+      & { telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )>, country: Types.Maybe<(
+        { __typename: 'Country' }
+        & Pick<Types.TypeCountry, 'name' | 'code'>
+      )> }
+    )>, deliveryAddresses: Array<(
+      { __typename: 'DeliveryAddress' }
+      & Pick<Types.TypeDeliveryAddress, 'uuid' | 'companyName' | 'street' | 'city' | 'postcode' | 'telephone' | 'firstName' | 'lastName'>
+      & { telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )>, country: Types.Maybe<(
+        { __typename: 'Country' }
+        & Pick<Types.TypeCountry, 'name' | 'code'>
+      )> }
+    )>, roleGroup: (
+      { __typename: 'CustomerUserRoleGroup' }
+      & Pick<Types.TypeCustomerUserRoleGroup, 'uuid' | 'name'>
+    ), salesRepresentative: Types.Maybe<(
+      { __typename: 'SalesRepresentative' }
+      & Pick<Types.TypeSalesRepresentative, 'email' | 'firstName' | 'lastName' | 'telephone' | 'uuid'>
+      & { image: Types.Maybe<(
+        { __typename?: 'Image' }
+        & Pick<Types.TypeImage, 'url' | 'name'>
+      )>, telephoneData: Types.Maybe<(
+        { __typename?: 'PhoneData' }
+        & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+      )> }
+    )> }
+  )>, newsletterSubscriber: Types.Maybe<(
+    { __typename: 'NewsletterSubscriber' }
+    & Pick<Types.TypeNewsletterSubscriber, 'email' | 'createdAt'>
+  )>, complaints: Array<(
+    { __typename: 'Complaint' }
+    & Pick<Types.TypeComplaint, 'uuid' | 'number' | 'createdAt' | 'status' | 'deliveryFirstName' | 'deliveryLastName' | 'deliveryCompanyName' | 'deliveryCity' | 'deliveryPostcode' | 'deliveryStreet' | 'deliveryTelephone'>
+    & { deliveryCountry: (
+      { __typename?: 'Country' }
+      & Pick<Types.TypeCountry, 'name'>
+    ), items: Array<(
+      { __typename: 'ComplaintItem' }
+      & Pick<Types.TypeComplaintItem, 'productName' | 'quantity' | 'description'>
+      & { orderItem: Types.Maybe<(
+        { __typename?: 'OrderItem' }
+        & Pick<Types.TypeOrderItem, 'uuid'>
+      )> }
+    )> }
+  )> }
+);
 
 export const PersonalDataDetailFragment = gql`
     fragment PersonalDataDetailFragment on PersonalData {

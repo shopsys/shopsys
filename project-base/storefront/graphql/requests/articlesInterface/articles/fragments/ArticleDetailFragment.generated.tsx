@@ -1,11 +1,17 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../../types';
 
 import gql from 'graphql-tag';
 import { BreadcrumbFragment } from '../../../breadcrumbs/fragments/BreadcrumbFragment.generated';
-export type TypeArticleDetailFragment = { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, createdAt: string, seoH1: string | null, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> };
+export type TypeArticleDetailFragment = (
+  { __typename: 'ArticleSite' }
+  & Pick<Types.TypeArticleSite, 'uuid' | 'slug' | 'placement' | 'text' | 'seoTitle' | 'seoMetaDescription' | 'createdAt' | 'seoH1'>
+  & { articleName: Types.TypeArticleSite['name'] }
+  & { breadcrumb: Array<(
+    { __typename: 'Link' }
+    & Pick<Types.TypeLink, 'name' | 'slug'>
+  )> }
+);
 
 export const ArticleDetailFragment = gql`
     fragment ArticleDetailFragment on ArticleSite {

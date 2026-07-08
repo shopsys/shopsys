@@ -1,8 +1,4 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
@@ -10,18 +6,30 @@ import { PricingSettingFragment } from '../fragments/PricingSettingFragment.gene
 import { SeoSettingFragment } from '../fragments/SeoSettingFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-/** One of the possible methods of the customer user login */
-export type TypeLoginTypeEnum =
-  | 'admin'
-  | 'facebook'
-  | 'google'
-  | 'seznam'
-  | 'web';
-
-export type TypeSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+export type TypeSettingsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeSettingsQuery = { settings: { contactFormMainText: string | null, displayTimezone: string, heurekaEnabled: boolean, privacyPolicyArticleUrl: string | null, termsAndConditionsArticleUrl: string | null, userConsentPolicyArticleUrl: string | null, socialNetworkLoginConfig: Array<Types.TypeLoginTypeEnum>, cspHeader: string, defaultPricingGroupId: number, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string | null, titleAddOn: string | null, metaDescription: string | null }, mainBlogCategoryData: { mainBlogCategoryUrl: string | null, mainBlogCategoryMainImage: { url: string } | null } } | null };
+export type TypeSettingsQuery = (
+  { __typename?: 'Query' }
+  & { settings: Types.Maybe<(
+    { __typename?: 'Settings' }
+    & Pick<Types.TypeSettings, 'contactFormMainText' | 'displayTimezone' | 'heurekaEnabled' | 'privacyPolicyArticleUrl' | 'termsAndConditionsArticleUrl' | 'userConsentPolicyArticleUrl' | 'socialNetworkLoginConfig' | 'cspHeader' | 'defaultPricingGroupId'>
+    & { pricing: (
+      { __typename: 'PricingSetting' }
+      & Pick<Types.TypePricingSetting, 'defaultCurrencyCode' | 'minimumFractionDigits'>
+    ), seo: (
+      { __typename: 'SeoSetting' }
+      & Pick<Types.TypeSeoSetting, 'title' | 'titleAddOn' | 'metaDescription'>
+    ), mainBlogCategoryData: (
+      { __typename?: 'MainBlogCategoryData' }
+      & Pick<Types.TypeMainBlogCategoryData, 'mainBlogCategoryUrl'>
+      & { mainBlogCategoryMainImage: Types.Maybe<(
+        { __typename?: 'Image' }
+        & Pick<Types.TypeImage, 'url'>
+      )> }
+    ) }
+  )> }
+);
 
 
 export const SettingsQueryDocument = gql`

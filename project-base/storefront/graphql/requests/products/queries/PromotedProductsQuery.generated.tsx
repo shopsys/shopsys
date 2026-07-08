@@ -1,29 +1,104 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ListedProductFragment } from '../fragments/ListedProductFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-/** Product Availability statuses */
-export type TypeAvailabilityStatusEnum =
-  /** Product availability status in stock */
-  | 'InStock'
-  /** Product availability status out of stock */
-  | 'OutOfStock';
-
-export type TypePromotedProductsQueryVariables = Exact<{ [key: string]: never; }>;
+export type TypePromotedProductsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypePromotedProductsQuery = { promotedProducts: Array<
-    | { __typename: 'MainVariant', variantsCount: number, id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }> }
-    | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }> }
-    | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }> }
-  > };
+export type TypePromotedProductsQuery = (
+  { __typename?: 'Query' }
+  & { promotedProducts: Array<(
+    { __typename: 'MainVariant' }
+    & Pick<Types.TypeMainVariant, 'variantsCount' | 'id' | 'uuid' | 'slug' | 'fullName' | 'stockQuantity' | 'isAllowedNegativeStock' | 'isSellingDenied' | 'isCurrentlyOutOfStock' | 'availableStoresCount' | 'catalogNumber' | 'isMainVariant' | 'isInquiryType'>
+    & { unit: (
+      { __typename: 'Unit' }
+      & Pick<Types.TypeUnit, 'name'>
+    ), flags: Array<(
+      { __typename: 'Flag' }
+      & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+    )>, mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'url'>
+    )>, price: (
+      { __typename: 'ProductPrice' }
+      & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+      & { basicPrice: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat'>
+      ) }
+    ), availability: (
+      { __typename: 'Availability' }
+      & Pick<Types.TypeAvailability, 'name' | 'status'>
+    ), brand: Types.Maybe<(
+      { __typename: 'Brand' }
+      & Pick<Types.TypeBrand, 'name'>
+    )>, categories: Array<(
+      { __typename: 'Category' }
+      & Pick<Types.TypeCategory, 'name'>
+    )> }
+  ) | (
+    { __typename: 'RegularProduct' }
+    & Pick<Types.TypeRegularProduct, 'id' | 'uuid' | 'slug' | 'fullName' | 'stockQuantity' | 'isAllowedNegativeStock' | 'isSellingDenied' | 'isCurrentlyOutOfStock' | 'availableStoresCount' | 'catalogNumber' | 'isMainVariant' | 'isInquiryType'>
+    & { unit: (
+      { __typename: 'Unit' }
+      & Pick<Types.TypeUnit, 'name'>
+    ), flags: Array<(
+      { __typename: 'Flag' }
+      & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+    )>, mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'url'>
+    )>, price: (
+      { __typename: 'ProductPrice' }
+      & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+      & { basicPrice: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat'>
+      ) }
+    ), availability: (
+      { __typename: 'Availability' }
+      & Pick<Types.TypeAvailability, 'name' | 'status'>
+    ), brand: Types.Maybe<(
+      { __typename: 'Brand' }
+      & Pick<Types.TypeBrand, 'name'>
+    )>, categories: Array<(
+      { __typename: 'Category' }
+      & Pick<Types.TypeCategory, 'name'>
+    )> }
+  ) | (
+    { __typename: 'Variant' }
+    & Pick<Types.TypeVariant, 'id' | 'uuid' | 'slug' | 'fullName' | 'stockQuantity' | 'isAllowedNegativeStock' | 'isSellingDenied' | 'isCurrentlyOutOfStock' | 'availableStoresCount' | 'catalogNumber' | 'isMainVariant' | 'isInquiryType'>
+    & { unit: (
+      { __typename: 'Unit' }
+      & Pick<Types.TypeUnit, 'name'>
+    ), flags: Array<(
+      { __typename: 'Flag' }
+      & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+    )>, mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'url'>
+    )>, price: (
+      { __typename: 'ProductPrice' }
+      & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+      & { basicPrice: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat'>
+      ) }
+    ), availability: (
+      { __typename: 'Availability' }
+      & Pick<Types.TypeAvailability, 'name' | 'status'>
+    ), brand: Types.Maybe<(
+      { __typename: 'Brand' }
+      & Pick<Types.TypeBrand, 'name'>
+    )>, categories: Array<(
+      { __typename: 'Category' }
+      & Pick<Types.TypeCategory, 'name'>
+    )> }
+  )> }
+);
 
 
 export const PromotedProductsQueryDocument = gql`

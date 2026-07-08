@@ -45,6 +45,7 @@
     * [ComplaintStatusCount](#complaintstatuscount)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
+    * [CurrencySetting](#currencysetting)
     * [CurrentCompanyCustomerUser](#currentcompanycustomeruser)
     * [CurrentRegularCustomerUser](#currentregularcustomeruser)
     * [CustomerUserRoleGroup](#customeruserrolegroup)
@@ -4787,6 +4788,50 @@ Localized country name
 </tbody>
 </table>
 
+### CurrencySetting
+
+Represents a currency enabled on the domain
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="currencysetting.code">code</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Currency code in ISO 4217
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="currencysetting.minfractiondigits">minFractionDigits</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Minimum number of decimal places used when displaying prices in this currency
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="currencysetting.name">name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Currency name
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### CurrentCompanyCustomerUser
 
 Represents a currently logged company customer user
@@ -6789,6 +6834,15 @@ Date and time when the order was created
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.currencycode">currencyCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Currency code (ISO 4217) the order was placed in
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.customeruser">customerUser</strong></td>
 <td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a></td>
 <td>
@@ -6893,6 +6947,15 @@ Contact phone number data for delivery
 <td>
 
 The customer's email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.exchangerate">exchangeRate</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Exchange rate between the order currency and the domain default currency at the time the order was placed
 
 </td>
 </tr>
@@ -8591,6 +8654,15 @@ Represents the price
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="price.currencycode">currencyCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Currency code (ISO 4217) of the price, the currently selected currency unless the price is a stored snapshot (e.g. order prices)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="price.pricewithoutvat">priceWithoutVat</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
@@ -8635,6 +8707,24 @@ Represents setting of pricing
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="pricingsetting.availablecurrencies">availableCurrencies</strong></td>
+<td valign="top">[<a href="#currencysetting">CurrencySetting</a>!]!</td>
+<td>
+
+Currencies enabled on the current domain, the first one is the domain default currency
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="pricingsetting.currentcurrencycode">currentCurrencyCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Code of the currently selected currency (resolved from the X-Currency-Code header with a fallback to the domain default currency)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="pricingsetting.defaultcurrencycode">defaultCurrencyCode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -8648,7 +8738,7 @@ Code of the default currency used on the current domain
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Minimum number of decimal places for the price on the current domain
+Minimum number of decimal places for the price in the currently selected currency
 
 </td>
 </tr>
@@ -8908,6 +8998,15 @@ Represents the price of the product
 <td>
 
 Basic price of the product. If product has no discounts, it's the same as the selling price
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productprice.currencycode">currencyCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Currency code (ISO 4217) of the price, the currently selected currency unless the price is a stored snapshot (e.g. order prices)
 
 </td>
 </tr>

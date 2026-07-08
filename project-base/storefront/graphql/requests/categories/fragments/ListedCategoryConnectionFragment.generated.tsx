@@ -1,11 +1,26 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ListedCategoryFragment } from './ListedCategoryFragment.generated';
-export type TypeListedCategoryConnectionFragment = { __typename: 'CategoryConnection', totalCount: number, edges: Array<{ __typename: 'CategoryEdge', node: { __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, products: { __typename: 'ProductConnection', totalCount: number } } | null } | null> | null };
+export type TypeListedCategoryConnectionFragment = (
+  { __typename: 'CategoryConnection' }
+  & Pick<Types.TypeCategoryConnection, 'totalCount'>
+  & { edges: Types.Maybe<Array<Types.Maybe<(
+    { __typename: 'CategoryEdge' }
+    & { node: Types.Maybe<(
+      { __typename: 'Category' }
+      & Pick<Types.TypeCategory, 'uuid' | 'name' | 'slug'>
+      & { mainImage: Types.Maybe<(
+        { __typename: 'Image' }
+        & Pick<Types.TypeImage, 'name' | 'url'>
+      )>, products: (
+        { __typename: 'ProductConnection' }
+        & Pick<Types.TypeProductConnection, 'totalCount'>
+      ) }
+    )> }
+  )>>> }
+);
 
 export const ListedCategoryConnectionFragment = gql`
     fragment ListedCategoryConnectionFragment on CategoryConnection {

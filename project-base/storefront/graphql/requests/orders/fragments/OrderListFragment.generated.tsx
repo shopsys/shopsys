@@ -1,26 +1,71 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { PageInfoFragment } from '../../pageInfo/fragments/PageInfoFragment.generated';
 import { ListedOrderFragment } from './ListedOrderFragment.generated';
-/** One of possible types of the order item */
-export type TypeOrderItemTypeEnum =
-  | 'discount'
-  | 'payment'
-  | 'product'
-  | 'productGift'
-  | 'promotion'
-  | 'rounding'
-  | 'transport';
-
-export type TypeOrderListFragment = { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: string, isPaid: boolean, hasExternalPayment: boolean, hasPaymentInProcess: boolean, status: string, note: string | null, productItems: Array<{ __typename: 'OrderItem', quantity: number, product:
-          | { __typename: 'MainVariant', name: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, link: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-          | { __typename: 'RegularProduct', name: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, link: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-          | { __typename: 'Variant', name: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, link: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-         | null }>, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, items: Array<{ type: Types.TypeOrderItemTypeEnum, payment: { name: string, mainImage: { url: string } | null } | null, transport: { name: string, mainImage: { url: string } | null } | null }> } | null } | null> | null };
+export type TypeOrderListFragment = (
+  { __typename: 'OrderConnection' }
+  & Pick<Types.TypeOrderConnection, 'totalCount'>
+  & { pageInfo: (
+    { __typename: 'PageInfo' }
+    & Pick<Types.TypePageInfo, 'hasNextPage' | 'hasPreviousPage' | 'endCursor'>
+  ), edges: Types.Maybe<Array<Types.Maybe<(
+    { __typename: 'OrderEdge' }
+    & Pick<Types.TypeOrderEdge, 'cursor'>
+    & { node: Types.Maybe<(
+      { __typename: 'Order' }
+      & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate' | 'isPaid' | 'hasExternalPayment' | 'hasPaymentInProcess' | 'status' | 'note'>
+      & { productItems: Array<(
+        { __typename: 'OrderItem' }
+        & Pick<Types.TypeOrderItem, 'quantity'>
+        & { product: Types.Maybe<(
+          { __typename: 'MainVariant' }
+          & Pick<Types.TypeMainVariant, 'name' | 'isVisible' | 'isSellingDenied' | 'isInquiryType' | 'isCurrentlyOutOfStock' | 'link'>
+          & { mainImage: Types.Maybe<(
+            { __typename: 'Image' }
+            & Pick<Types.TypeImage, 'name' | 'url'>
+          )> }
+        ) | (
+          { __typename: 'RegularProduct' }
+          & Pick<Types.TypeRegularProduct, 'name' | 'isVisible' | 'isSellingDenied' | 'isInquiryType' | 'isCurrentlyOutOfStock' | 'link'>
+          & { mainImage: Types.Maybe<(
+            { __typename: 'Image' }
+            & Pick<Types.TypeImage, 'name' | 'url'>
+          )> }
+        ) | (
+          { __typename: 'Variant' }
+          & Pick<Types.TypeVariant, 'name' | 'isVisible' | 'isSellingDenied' | 'isInquiryType' | 'isCurrentlyOutOfStock' | 'link'>
+          & { mainImage: Types.Maybe<(
+            { __typename: 'Image' }
+            & Pick<Types.TypeImage, 'name' | 'url'>
+          )> }
+        )> }
+      )>, totalPrice: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ), items: Array<(
+        { __typename?: 'OrderItem' }
+        & Pick<Types.TypeOrderItem, 'type'>
+        & { payment: Types.Maybe<(
+          { __typename?: 'Payment' }
+          & Pick<Types.TypePayment, 'name'>
+          & { mainImage: Types.Maybe<(
+            { __typename?: 'Image' }
+            & Pick<Types.TypeImage, 'url'>
+          )> }
+        )>, transport: Types.Maybe<(
+          { __typename?: 'Transport' }
+          & Pick<Types.TypeTransport, 'name'>
+          & { mainImage: Types.Maybe<(
+            { __typename?: 'Image' }
+            & Pick<Types.TypeImage, 'url'>
+          )> }
+        )> }
+      )> }
+    )> }
+  )>>> }
+);
 
 export const OrderListFragment = gql`
     fragment OrderListFragment on OrderConnection {

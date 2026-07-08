@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as FrameworkOrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -25,7 +25,7 @@ class OrderDataFactory
         protected readonly Domain $domain,
         protected readonly PaymentFacade $paymentFacade,
         protected readonly TransportFacade $transportFacade,
-        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly CountryFacade $countryFacade,
         protected readonly ProductFacade $productFacade,
         protected readonly StoreFacade $storeFacade,
@@ -52,7 +52,7 @@ class OrderDataFactory
     {
         $cloneOrderData = clone $orderData;
 
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+        $currency = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($this->domain->getId());
         $cloneOrderData->fillCurrencyFieldsFromCurrency($currency);
 
         $cloneOrderData->country = $this->countryFacade->findByCode($input['country']);

@@ -1,19 +1,24 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypePayOrderMutationVariables = Exact<{
-  orderUuid: string;
+export type TypePayOrderMutationVariables = Types.Exact<{
+  orderUuid: Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type TypePayOrderMutation = { PayOrder: { goPayCreatePaymentSetup: { gatewayUrl: string, goPayId: string, embedJs: string } | null } };
+export type TypePayOrderMutation = (
+  { __typename?: 'Mutation' }
+  & { PayOrder: (
+    { __typename?: 'PaymentSetupCreationData' }
+    & { goPayCreatePaymentSetup: Types.Maybe<(
+      { __typename?: 'GoPayCreatePaymentSetup' }
+      & Pick<Types.TypeGoPayCreatePaymentSetup, 'gatewayUrl' | 'goPayId' | 'embedJs'>
+    )> }
+  ) }
+);
 
 
 export const PayOrderMutationDocument = gql`

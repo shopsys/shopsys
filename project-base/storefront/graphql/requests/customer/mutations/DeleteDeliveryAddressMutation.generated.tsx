@@ -1,20 +1,29 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { DeliveryAddressFragment } from '../fragments/DeliveryAddressFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeDeleteDeliveryAddressMutationVariables = Exact<{
-  deliveryAddressUuid: string;
+export type TypeDeleteDeliveryAddressMutationVariables = Types.Exact<{
+  deliveryAddressUuid: Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type TypeDeleteDeliveryAddressMutation = { DeleteDeliveryAddress: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, country: { __typename: 'Country', name: string, code: string } | null }> };
+export type TypeDeleteDeliveryAddressMutation = (
+  { __typename?: 'Mutation' }
+  & { DeleteDeliveryAddress: Array<(
+    { __typename: 'DeliveryAddress' }
+    & Pick<Types.TypeDeliveryAddress, 'uuid' | 'companyName' | 'street' | 'city' | 'postcode' | 'telephone' | 'firstName' | 'lastName'>
+    & { telephoneData: Types.Maybe<(
+      { __typename?: 'PhoneData' }
+      & Pick<Types.TypePhoneData, 'prefix' | 'countryCode' | 'number'>
+    )>, country: Types.Maybe<(
+      { __typename: 'Country' }
+      & Pick<Types.TypeCountry, 'name' | 'code'>
+    )> }
+  )> }
+);
 
 
 export const DeleteDeliveryAddressMutationDocument = gql`

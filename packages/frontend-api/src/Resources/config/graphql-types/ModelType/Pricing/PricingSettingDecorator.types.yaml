@@ -7,9 +7,15 @@ PricingSettingDecorator:
             defaultCurrencyCode:
                 type: "String!"
                 description: "Code of the default currency used on the current domain"
+            currentCurrencyCode:
+                type: "String!"
+                description: "Code of the currently selected currency (resolved from the X-Currency-Code header with a fallback to the domain default currency)"
             minimumFractionDigits:
                 type: "Int!"
-                description: "Minimum number of decimal places for the price on the current domain"
+                description: "Minimum number of decimal places for the price in the currently selected currency"
+            availableCurrencies:
+                type: "[CurrencySetting!]!"
+                description: "Currencies enabled on the current domain, the first one is the domain default currency"
             sellingPriceType:
                 type: "SellingPriceTypeEnum!"
                 description: "Type of selling price (with VAT or without VAT)"

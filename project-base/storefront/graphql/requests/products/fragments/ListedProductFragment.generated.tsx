@@ -1,30 +1,104 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { SimpleFlagFragment } from '../../flags/fragments/SimpleFlagFragment.generated';
 import { ListedProductPriceFragment } from './ListedProductPriceFragment.generated';
 import { AvailabilityFragment } from '../../availabilities/fragments/AvailabilityFragment.generated';
-/** Product Availability statuses */
-export type TypeAvailabilityStatusEnum =
-  /** Product availability status in stock */
-  | 'InStock'
-  /** Product availability status out of stock */
-  | 'OutOfStock';
+export type TypeListedProductFragment_MainVariant_ = (
+  { __typename: 'MainVariant' }
+  & Pick<Types.TypeMainVariant, 'variantsCount' | 'id' | 'uuid' | 'slug' | 'fullName' | 'stockQuantity' | 'isAllowedNegativeStock' | 'isSellingDenied' | 'isCurrentlyOutOfStock' | 'availableStoresCount' | 'catalogNumber' | 'isMainVariant' | 'isInquiryType'>
+  & { unit: (
+    { __typename: 'Unit' }
+    & Pick<Types.TypeUnit, 'name'>
+  ), flags: Array<(
+    { __typename: 'Flag' }
+    & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+  )>, mainImage: Types.Maybe<(
+    { __typename: 'Image' }
+    & Pick<Types.TypeImage, 'url'>
+  )>, price: (
+    { __typename: 'ProductPrice' }
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+    & { basicPrice: (
+      { __typename: 'Price' }
+      & Pick<Types.TypePrice, 'priceWithVat'>
+    ) }
+  ), availability: (
+    { __typename: 'Availability' }
+    & Pick<Types.TypeAvailability, 'name' | 'status'>
+  ), brand: Types.Maybe<(
+    { __typename: 'Brand' }
+    & Pick<Types.TypeBrand, 'name'>
+  )>, categories: Array<(
+    { __typename: 'Category' }
+    & Pick<Types.TypeCategory, 'name'>
+  )> }
+);
 
-export type TypeListedProductFragment_MainVariant = { __typename: 'MainVariant', variantsCount: number, id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }> };
+export type TypeListedProductFragment_RegularProduct_ = (
+  { __typename: 'RegularProduct' }
+  & Pick<Types.TypeRegularProduct, 'id' | 'uuid' | 'slug' | 'fullName' | 'stockQuantity' | 'isAllowedNegativeStock' | 'isSellingDenied' | 'isCurrentlyOutOfStock' | 'availableStoresCount' | 'catalogNumber' | 'isMainVariant' | 'isInquiryType'>
+  & { unit: (
+    { __typename: 'Unit' }
+    & Pick<Types.TypeUnit, 'name'>
+  ), flags: Array<(
+    { __typename: 'Flag' }
+    & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+  )>, mainImage: Types.Maybe<(
+    { __typename: 'Image' }
+    & Pick<Types.TypeImage, 'url'>
+  )>, price: (
+    { __typename: 'ProductPrice' }
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+    & { basicPrice: (
+      { __typename: 'Price' }
+      & Pick<Types.TypePrice, 'priceWithVat'>
+    ) }
+  ), availability: (
+    { __typename: 'Availability' }
+    & Pick<Types.TypeAvailability, 'name' | 'status'>
+  ), brand: Types.Maybe<(
+    { __typename: 'Brand' }
+    & Pick<Types.TypeBrand, 'name'>
+  )>, categories: Array<(
+    { __typename: 'Category' }
+    & Pick<Types.TypeCategory, 'name'>
+  )> }
+);
 
-export type TypeListedProductFragment_RegularProduct = { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }> };
+export type TypeListedProductFragment_Variant_ = (
+  { __typename: 'Variant' }
+  & Pick<Types.TypeVariant, 'id' | 'uuid' | 'slug' | 'fullName' | 'stockQuantity' | 'isAllowedNegativeStock' | 'isSellingDenied' | 'isCurrentlyOutOfStock' | 'availableStoresCount' | 'catalogNumber' | 'isMainVariant' | 'isInquiryType'>
+  & { unit: (
+    { __typename: 'Unit' }
+    & Pick<Types.TypeUnit, 'name'>
+  ), flags: Array<(
+    { __typename: 'Flag' }
+    & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+  )>, mainImage: Types.Maybe<(
+    { __typename: 'Image' }
+    & Pick<Types.TypeImage, 'url'>
+  )>, price: (
+    { __typename: 'ProductPrice' }
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+    & { basicPrice: (
+      { __typename: 'Price' }
+      & Pick<Types.TypePrice, 'priceWithVat'>
+    ) }
+  ), availability: (
+    { __typename: 'Availability' }
+    & Pick<Types.TypeAvailability, 'name' | 'status'>
+  ), brand: Types.Maybe<(
+    { __typename: 'Brand' }
+    & Pick<Types.TypeBrand, 'name'>
+  )>, categories: Array<(
+    { __typename: 'Category' }
+    & Pick<Types.TypeCategory, 'name'>
+  )> }
+);
 
-export type TypeListedProductFragment_Variant = { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }> };
-
-export type TypeListedProductFragment =
-  | TypeListedProductFragment_MainVariant
-  | TypeListedProductFragment_RegularProduct
-  | TypeListedProductFragment_Variant
-;
+export type TypeListedProductFragment = TypeListedProductFragment_MainVariant_ | TypeListedProductFragment_RegularProduct_ | TypeListedProductFragment_Variant_;
 
 export const ListedProductFragment = gql`
     fragment ListedProductFragment on Product {

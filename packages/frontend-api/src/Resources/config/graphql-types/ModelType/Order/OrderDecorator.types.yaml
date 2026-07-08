@@ -28,6 +28,15 @@ OrderDecorator:
                 type: "Price!"
                 description: "Total price of the order including transport and payment prices"
 
+            currencyCode:
+                type: "String!"
+                description: "Currency code (ISO 4217) the order was placed in"
+
+            exchangeRate:
+                type: "String!"
+                description: "Exchange rate between the order currency and the domain default currency at the time the order was placed"
+                resolve: "@=value.getCurrencyExchangeRate()"
+
             firstName:
                 type: "String"
                 description: "The customer's first name"

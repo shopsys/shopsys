@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSettingFacade;
+use Shopsys\FrontendApiBundle\Model\Price\PriceWithCurrencyFactory;
 
 class OrderResolverMap extends ResolverMap
 {
@@ -17,6 +18,7 @@ class OrderResolverMap extends ResolverMap
         protected readonly Domain $domain,
         protected readonly WithdrawalSettingFacade $withdrawalSettingFacade,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
+        protected readonly PriceWithCurrencyFactory $priceWithCurrencyFactory,
     ) {
     }
 
@@ -27,6 +29,12 @@ class OrderResolverMap extends ResolverMap
             'Order' => [
                 'creationDate' => function (Order $order) {
                     return $order->getCreatedAt();
+                },
+                'totalPrice' => function (Order $order) {
+                    return $this->priceWithCurrencyFactory->createWithCurrencyCode(
+                        $order->getTotalPrice(),
+                        $order->getCurrencyCode(),
+                    );
                 },
                 'isDeliveryAddressDifferentFromBilling' => function (Order $order) {
                     return !$order->isDeliveryAddressSameAsBillingAddress();

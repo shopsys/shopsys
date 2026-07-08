@@ -13,3 +13,7 @@ PriceDecorator:
             vatAmount:
                 type: "Money!"
                 description: "Total value of VAT"
+            currencyCode:
+                type: "String!"
+                description: "Currency code (ISO 4217) of the price, the currently selected currency unless the price is a stored snapshot (e.g. order prices)"
+                resolve: "@=query('currencyCodeByPriceQuery', value)"

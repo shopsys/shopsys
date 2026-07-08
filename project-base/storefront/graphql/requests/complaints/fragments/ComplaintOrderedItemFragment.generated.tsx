@@ -1,15 +1,40 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-export type TypeComplaintOrderedItemFragment = { uuid: string, name: string, quantity: number, unit: string | null, totalPrice: { priceWithVat: string }, order: { uuid: string, number: string, creationDate: string }, product:
-    | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-    | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-    | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-   | null };
+export type TypeComplaintOrderedItemFragment = (
+  { __typename?: 'OrderItem' }
+  & Pick<Types.TypeOrderItem, 'uuid' | 'name' | 'quantity' | 'unit'>
+  & { totalPrice: (
+    { __typename?: 'Price' }
+    & Pick<Types.TypePrice, 'priceWithVat'>
+  ), order: (
+    { __typename?: 'Order' }
+    & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate'>
+  ), product: Types.Maybe<(
+    { __typename?: 'MainVariant' }
+    & Pick<Types.TypeMainVariant, 'isVisible' | 'slug'>
+    & { mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'name' | 'url'>
+    )> }
+  ) | (
+    { __typename?: 'RegularProduct' }
+    & Pick<Types.TypeRegularProduct, 'isVisible' | 'slug'>
+    & { mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'name' | 'url'>
+    )> }
+  ) | (
+    { __typename?: 'Variant' }
+    & Pick<Types.TypeVariant, 'isVisible' | 'slug'>
+    & { mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'name' | 'url'>
+    )> }
+  )> }
+);
 
 export const ComplaintOrderedItemFragment = gql`
     fragment ComplaintOrderedItemFragment on OrderItem {

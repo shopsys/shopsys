@@ -1,6 +1,4 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
@@ -10,29 +8,164 @@ import { AvailabilityFragment } from '../../availabilities/fragments/Availabilit
 import { ProductPriceFragment } from '../../products/fragments/ProductPriceFragment.generated';
 import { SimpleBrandFragment } from '../../brands/fragments/SimpleBrandFragment.generated';
 import { ParameterFragment } from '../../parameters/fragments/ParameterFragment.generated';
-/** Product Availability statuses */
-export type TypeAvailabilityStatusEnum =
-  /** Product availability status in stock */
-  | 'InStock'
-  /** Product availability status out of stock */
-  | 'OutOfStock';
-
-/** One of possible types of the cart item */
-export type TypeCartItemTypeEnum =
-  | 'product'
-  | 'productGift';
-
-/** Represents the type of the parameter */
-export type TypeParameterTypeEnum =
-  | 'CHECKBOX'
-  | 'COLOR'
-  | 'SLIDER';
-
-export type TypeCartItemFragment = { __typename: 'CartItem', uuid: string, quantity: number, type: Types.TypeCartItemTypeEnum, freeQuantity: number, product:
-    | { __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, catalogNumber: string, isInquiryType: boolean, stockQuantity: number | null, isAllowedNegativeStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, availableStoresCount: number | null, vatPercent: string, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }> }
-    | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, catalogNumber: string, isInquiryType: boolean, stockQuantity: number | null, isAllowedNegativeStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, availableStoresCount: number | null, vatPercent: string, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }> }
-    | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, catalogNumber: string, isInquiryType: boolean, stockQuantity: number | null, isAllowedNegativeStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, availableStoresCount: number | null, vatPercent: string, mainVariant: { slug: string } | null, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }> }
-   };
+export type TypeCartItemFragment = (
+  { __typename: 'CartItem' }
+  & Pick<Types.TypeCartItem, 'uuid' | 'quantity' | 'type' | 'freeQuantity'>
+  & { product: (
+    { __typename: 'MainVariant' }
+    & Pick<Types.TypeMainVariant, 'id' | 'uuid' | 'slug' | 'fullName' | 'catalogNumber' | 'isInquiryType' | 'stockQuantity' | 'isAllowedNegativeStock' | 'promotionBuyQuantity' | 'promotionFreeQuantity' | 'availableStoresCount' | 'vatPercent'>
+    & { flags: Array<(
+      { __typename: 'Flag' }
+      & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+    )>, mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'name' | 'url'>
+    )>, availability: (
+      { __typename: 'Availability' }
+      & Pick<Types.TypeAvailability, 'name' | 'status'>
+    ), price: (
+      { __typename: 'ProductPrice' }
+      & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+      & { basicPrice: (
+        { __typename?: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ) }
+    ), giftPrice: (
+      { __typename: 'ProductPrice' }
+      & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+      & { basicPrice: (
+        { __typename?: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ) }
+    ), unit: (
+      { __typename?: 'Unit' }
+      & Pick<Types.TypeUnit, 'name'>
+    ), brand: Types.Maybe<(
+      { __typename: 'Brand' }
+      & Pick<Types.TypeBrand, 'name' | 'slug'>
+    )>, categories: Array<(
+      { __typename?: 'Category' }
+      & Pick<Types.TypeCategory, 'name'>
+    )>, parameters: Array<(
+      { __typename: 'Parameter' }
+      & Pick<Types.TypeParameter, 'uuid' | 'name' | 'type' | 'group'>
+      & { unit: Types.Maybe<(
+        { __typename: 'Unit' }
+        & Pick<Types.TypeUnit, 'name'>
+      )>, values: Array<(
+        { __typename: 'ParameterValue' }
+        & Pick<Types.TypeParameterValue, 'uuid' | 'text' | 'rgbHex'>
+        & { colorIcon: Types.Maybe<(
+          { __typename?: 'File' }
+          & Pick<Types.TypeFile, 'url' | 'anchorText'>
+        )> }
+      )> }
+    )> }
+  ) | (
+    { __typename: 'RegularProduct' }
+    & Pick<Types.TypeRegularProduct, 'id' | 'uuid' | 'slug' | 'fullName' | 'catalogNumber' | 'isInquiryType' | 'stockQuantity' | 'isAllowedNegativeStock' | 'promotionBuyQuantity' | 'promotionFreeQuantity' | 'availableStoresCount' | 'vatPercent'>
+    & { flags: Array<(
+      { __typename: 'Flag' }
+      & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+    )>, mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'name' | 'url'>
+    )>, availability: (
+      { __typename: 'Availability' }
+      & Pick<Types.TypeAvailability, 'name' | 'status'>
+    ), price: (
+      { __typename: 'ProductPrice' }
+      & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+      & { basicPrice: (
+        { __typename?: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ) }
+    ), giftPrice: (
+      { __typename: 'ProductPrice' }
+      & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+      & { basicPrice: (
+        { __typename?: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ) }
+    ), unit: (
+      { __typename?: 'Unit' }
+      & Pick<Types.TypeUnit, 'name'>
+    ), brand: Types.Maybe<(
+      { __typename: 'Brand' }
+      & Pick<Types.TypeBrand, 'name' | 'slug'>
+    )>, categories: Array<(
+      { __typename?: 'Category' }
+      & Pick<Types.TypeCategory, 'name'>
+    )>, parameters: Array<(
+      { __typename: 'Parameter' }
+      & Pick<Types.TypeParameter, 'uuid' | 'name' | 'type' | 'group'>
+      & { unit: Types.Maybe<(
+        { __typename: 'Unit' }
+        & Pick<Types.TypeUnit, 'name'>
+      )>, values: Array<(
+        { __typename: 'ParameterValue' }
+        & Pick<Types.TypeParameterValue, 'uuid' | 'text' | 'rgbHex'>
+        & { colorIcon: Types.Maybe<(
+          { __typename?: 'File' }
+          & Pick<Types.TypeFile, 'url' | 'anchorText'>
+        )> }
+      )> }
+    )> }
+  ) | (
+    { __typename: 'Variant' }
+    & Pick<Types.TypeVariant, 'id' | 'uuid' | 'slug' | 'fullName' | 'catalogNumber' | 'isInquiryType' | 'stockQuantity' | 'isAllowedNegativeStock' | 'promotionBuyQuantity' | 'promotionFreeQuantity' | 'availableStoresCount' | 'vatPercent'>
+    & { mainVariant: Types.Maybe<(
+      { __typename?: 'MainVariant' }
+      & Pick<Types.TypeMainVariant, 'slug'>
+    )>, flags: Array<(
+      { __typename: 'Flag' }
+      & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+    )>, mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'name' | 'url'>
+    )>, availability: (
+      { __typename: 'Availability' }
+      & Pick<Types.TypeAvailability, 'name' | 'status'>
+    ), price: (
+      { __typename: 'ProductPrice' }
+      & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+      & { basicPrice: (
+        { __typename?: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ) }
+    ), giftPrice: (
+      { __typename: 'ProductPrice' }
+      & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+      & { basicPrice: (
+        { __typename?: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ) }
+    ), unit: (
+      { __typename?: 'Unit' }
+      & Pick<Types.TypeUnit, 'name'>
+    ), brand: Types.Maybe<(
+      { __typename: 'Brand' }
+      & Pick<Types.TypeBrand, 'name' | 'slug'>
+    )>, categories: Array<(
+      { __typename?: 'Category' }
+      & Pick<Types.TypeCategory, 'name'>
+    )>, parameters: Array<(
+      { __typename: 'Parameter' }
+      & Pick<Types.TypeParameter, 'uuid' | 'name' | 'type' | 'group'>
+      & { unit: Types.Maybe<(
+        { __typename: 'Unit' }
+        & Pick<Types.TypeUnit, 'name'>
+      )>, values: Array<(
+        { __typename: 'ParameterValue' }
+        & Pick<Types.TypeParameterValue, 'uuid' | 'text' | 'rgbHex'>
+        & { colorIcon: Types.Maybe<(
+          { __typename?: 'File' }
+          & Pick<Types.TypeFile, 'url' | 'anchorText'>
+        )> }
+      )> }
+    )> }
+  ) }
+);
 
 export const CartItemFragment = gql`
     fragment CartItemFragment on CartItem {

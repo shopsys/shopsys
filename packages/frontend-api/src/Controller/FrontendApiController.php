@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Controller;
 
 use Overblog\GraphQLBundle\Controller\GraphController;
 use Shopsys\FrameworkBundle\Component\EntityLog\Detection\DetectionFacade;
+use Shopsys\FrontendApiBundle\Component\Currency\CurrencyHeaderInitializer;
 use Shopsys\FrontendApiBundle\Component\HttpFoundation\GraphqlBatchRequestValidator;
 use Shopsys\FrontendApiBundle\Model\GraphqlConfigurator;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +19,13 @@ class FrontendApiController
         protected readonly GraphqlConfigurator $graphqlConfigurator,
         protected readonly DetectionFacade $detectionFacade,
         protected readonly GraphqlBatchRequestValidator $graphqlBatchRequestValidator,
+        protected readonly CurrencyHeaderInitializer $currencyHeaderInitializer,
     ) {
     }
 
     public function endpointAction(Request $request, ?string $schemaName = null): Response
     {
+        $this->currencyHeaderInitializer->initializeFromRequest($request);
         $this->detectionFacade->setFrontendApiSourceAndUserIdentifier();
 
         $this->graphqlConfigurator->applyExtraConfiguration();
@@ -38,6 +41,7 @@ class FrontendApiController
             return $limitViolationResponse;
         }
 
+        $this->currencyHeaderInitializer->initializeFromRequest($request);
         $this->detectionFacade->setFrontendApiSourceAndUserIdentifier();
 
         $this->graphqlConfigurator->applyExtraConfiguration();

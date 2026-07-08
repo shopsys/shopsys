@@ -1,10 +1,11 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeCartTransportModificationsFragment = { __typename: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean, personalPickupStoreUnavailable: boolean };
+export type TypeCartTransportModificationsFragment = (
+  { __typename: 'CartTransportModificationsResult' }
+  & Pick<Types.TypeCartTransportModificationsResult, 'transportPriceChanged' | 'transportUnavailable' | 'transportWeightLimitExceeded' | 'personalPickupStoreUnavailable'>
+);
 
 export const CartTransportModificationsFragment = gql`
     fragment CartTransportModificationsFragment on CartTransportModificationsResult {

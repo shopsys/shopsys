@@ -899,6 +899,16 @@ input CreateWatchdogInput {
   productUuid: Uuid!
 }
 
+"Represents a currency enabled on the domain"
+type CurrencySetting {
+  "Currency code in ISO 4217"
+  code: String!
+  "Minimum number of decimal places used when displaying prices in this currency"
+  minFractionDigits: Int!
+  "Currency name"
+  name: String!
+}
+
 "Represents a currently logged company customer user"
 type CurrentCompanyCustomerUser implements BaseCustomerUser & CurrentCustomerUser {
   "UUID"
@@ -1566,6 +1576,8 @@ type Order {
   country: Country!
   "Date and time when the order was created"
   creationDate: DateTime!
+  "Currency code (ISO 4217) the order was placed in"
+  currencyCode: String!
   "The registered customer user who made the order (or null if the order was made by an unregistered user)"
   customerUser: BaseCustomerUser
   "Date and time when the order was delivered to the customer"
@@ -1590,6 +1602,8 @@ type Order {
   deliveryTelephoneData: PhoneData
   "The customer's email address"
   email: String!
+  "Exchange rate between the order currency and the domain default currency at the time the order was placed"
+  exchangeRate: String!
   "The customer's first name"
   firstName: String
   "Indicates whether the order has an external payment"
@@ -2166,6 +2180,8 @@ type PhonePrefix {
 
 "Represents the price"
 type Price {
+  "Currency code (ISO 4217) of the price, the currently selected currency unless the price is a stored snapshot (e.g. order prices)"
+  currencyCode: String!
   "Price without VAT"
   priceWithoutVat: Money!
   "Price with VAT"
@@ -2176,9 +2192,13 @@ type Price {
 
 "Represents setting of pricing"
 type PricingSetting {
+  "Currencies enabled on the current domain, the first one is the domain default currency"
+  availableCurrencies: [CurrencySetting!]!
+  "Code of the currently selected currency (resolved from the X-Currency-Code header with a fallback to the domain default currency)"
+  currentCurrencyCode: String!
   "Code of the default currency used on the current domain"
   defaultCurrencyCode: String!
-  "Minimum number of decimal places for the price on the current domain"
+  "Minimum number of decimal places for the price in the currently selected currency"
   minimumFractionDigits: Int!
   "Type of selling price (with VAT or without VAT)"
   sellingPriceType: SellingPriceTypeEnum!
@@ -2383,6 +2403,8 @@ enum ProductOrderingModeEnum {
 type ProductPrice {
   "Basic price of the product. If product has no discounts, it's the same as the selling price"
   basicPrice: Price!
+  "Currency code (ISO 4217) of the price, the currently selected currency unless the price is a stored snapshot (e.g. order prices)"
+  currencyCode: String!
   "Determines whether it's a final price or starting price"
   isPriceFrom: Boolean!
   "Date of the next price change, null if no price change is planned"

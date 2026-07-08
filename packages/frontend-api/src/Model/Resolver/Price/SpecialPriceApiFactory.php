@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
 use Psr\Clock\ClockInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFactory;
@@ -17,6 +19,8 @@ class SpecialPriceApiFactory
         protected readonly SpecialPriceFactory $specialPriceFactory,
         protected readonly PriceFactory $priceFactory,
         protected readonly ClockInterface $clock,
+        protected readonly Domain $domain,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
     ) {
     }
 
@@ -43,8 +47,14 @@ class SpecialPriceApiFactory
         $usedProductIds = [];
         $finalSpecialPrice = null;
 
+        $currentCurrencyCode = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($this->domain->getId())->getCode();
+
         foreach ($specialPricesArray as $specialPriceArray) {
             foreach ($specialPriceArray['prices'] as $priceArray) {
+                if (array_key_exists('currency_code', $priceArray) && $priceArray['currency_code'] !== $currentCurrencyCode) {
+                    continue;
+                }
+
                 $specialPriceCandidate = $this->createSpecialPrice($specialPriceArray, $priceArray);
 
                 if ($currentDateTime >= $specialPriceCandidate->validFrom && $currentDateTime <= $specialPriceCandidate->validTo) {

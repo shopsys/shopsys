@@ -1,26 +1,48 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-/** One of the possible methods of the payment type */
-export type TypePaymentTypeEnum =
-  | 'bankTransfer'
-  | 'basic'
-  | 'goPay';
-
-export type TypeOrderAvailablePaymentsQueryVariables = Exact<{
-  orderUuid: string;
+export type TypeOrderAvailablePaymentsQueryVariables = Types.Exact<{
+  orderUuid: Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type TypeOrderAvailablePaymentsQuery = { orderPayments: { availablePayments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }>, currentPayment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } | null } };
+export type TypeOrderAvailablePaymentsQuery = (
+  { __typename?: 'Query' }
+  & { orderPayments: (
+    { __typename?: 'OrderPaymentsConfig' }
+    & { availablePayments: Array<(
+      { __typename: 'Payment' }
+      & Pick<Types.TypePayment, 'uuid' | 'name' | 'description' | 'instructions' | 'type'>
+      & { price: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ), mainImage: Types.Maybe<(
+        { __typename: 'Image' }
+        & Pick<Types.TypeImage, 'name' | 'url'>
+      )>, goPayPaymentMethod: Types.Maybe<(
+        { __typename: 'GoPayPaymentMethod' }
+        & Pick<Types.TypeGoPayPaymentMethod, 'identifier' | 'name' | 'paymentGroup'>
+      )> }
+    )>, currentPayment: Types.Maybe<(
+      { __typename: 'Payment' }
+      & Pick<Types.TypePayment, 'uuid' | 'name' | 'description' | 'instructions' | 'type'>
+      & { price: (
+        { __typename: 'Price' }
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      ), mainImage: Types.Maybe<(
+        { __typename: 'Image' }
+        & Pick<Types.TypeImage, 'name' | 'url'>
+      )>, goPayPaymentMethod: Types.Maybe<(
+        { __typename: 'GoPayPaymentMethod' }
+        & Pick<Types.TypeGoPayPaymentMethod, 'identifier' | 'name' | 'paymentGroup'>
+      )> }
+    )> }
+  ) }
+);
 
 
 export const OrderAvailablePaymentsQueryDocument = gql`

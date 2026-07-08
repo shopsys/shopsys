@@ -1,8 +1,4 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
@@ -10,40 +6,68 @@ import { PageInfoFragment } from '../../pageInfo/fragments/PageInfoFragment.gene
 import { ComplaintListItemFragment } from '../fragments/ComplaintListItemFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-/** Filter complaints */
-export type TypeComplaintFilterInput = {
-  /** Filter complaints created after this date */
-  createdAfter?: string | null | undefined;
-  /** Filter complaints created before this date */
-  createdBefore?: string | null | undefined;
-  /** Filter complaints by complaint number or product */
-  search?: string | null | undefined;
-  /** Filter complaints by status codes */
-  statusCodes?: Array<string> | null | undefined;
-};
-
-/** Status of complaint */
-export type TypeComplaintStatusEnum =
-  /** In progress */
-  | 'in_progress'
-  /** New */
-  | 'new'
-  /** Resolved */
-  | 'resolved';
-
-export type TypeComplaintsQueryVariables = Exact<{
-  first?: number | null | undefined;
-  after?: string | null | undefined;
-  filter?: Types.TypeComplaintFilterInput | null | undefined;
-  statuslessFilter?: Types.TypeComplaintFilterInput | null | undefined;
+export type TypeComplaintsQueryVariables = Types.Exact<{
+  first?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  after?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  filter?: Types.InputMaybe<Types.TypeComplaintFilterInput>;
+  statuslessFilter?: Types.InputMaybe<Types.TypeComplaintFilterInput>;
 }>;
 
 
-export type TypeComplaintsQuery = { complaints: { totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ cursor: string, node: { uuid: string, number: string, createdAt: string, status: string, resolution: { name: string }, items: Array<{ uuid: string, quantity: number, productName: string, product:
-            | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
-            | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
-            | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
-           | null }> } | null } | null> | null }, complaintStatusCounts: Array<{ count: number, status: { code: string, type: Types.TypeComplaintStatusEnum, name: string } }> };
+export type TypeComplaintsQuery = (
+  { __typename?: 'Query' }
+  & { complaints: (
+    { __typename?: 'ComplaintConnection' }
+    & Pick<Types.TypeComplaintConnection, 'totalCount'>
+    & { pageInfo: (
+      { __typename: 'PageInfo' }
+      & Pick<Types.TypePageInfo, 'hasNextPage' | 'hasPreviousPage' | 'endCursor'>
+    ), edges: Types.Maybe<Array<Types.Maybe<(
+      { __typename?: 'ComplaintEdge' }
+      & Pick<Types.TypeComplaintEdge, 'cursor'>
+      & { node: Types.Maybe<(
+        { __typename?: 'Complaint' }
+        & Pick<Types.TypeComplaint, 'uuid' | 'number' | 'createdAt' | 'status'>
+        & { resolution: (
+          { __typename?: 'ComplaintResolution' }
+          & Pick<Types.TypeComplaintResolution, 'name'>
+        ), items: Array<(
+          { __typename?: 'ComplaintItem' }
+          & Pick<Types.TypeComplaintItem, 'uuid' | 'quantity' | 'productName'>
+          & { product: Types.Maybe<(
+            { __typename?: 'MainVariant' }
+            & Pick<Types.TypeMainVariant, 'slug' | 'isVisible'>
+            & { mainImage: Types.Maybe<(
+              { __typename?: 'Image' }
+              & Pick<Types.TypeImage, 'name' | 'url'>
+            )> }
+          ) | (
+            { __typename?: 'RegularProduct' }
+            & Pick<Types.TypeRegularProduct, 'slug' | 'isVisible'>
+            & { mainImage: Types.Maybe<(
+              { __typename?: 'Image' }
+              & Pick<Types.TypeImage, 'name' | 'url'>
+            )> }
+          ) | (
+            { __typename?: 'Variant' }
+            & Pick<Types.TypeVariant, 'slug' | 'isVisible'>
+            & { mainImage: Types.Maybe<(
+              { __typename?: 'Image' }
+              & Pick<Types.TypeImage, 'name' | 'url'>
+            )> }
+          )> }
+        )> }
+      )> }
+    )>>> }
+  ), complaintStatusCounts: Array<(
+    { __typename?: 'ComplaintStatusCount' }
+    & Pick<Types.TypeComplaintStatusCount, 'count'>
+    & { status: (
+      { __typename?: 'ComplaintStatus' }
+      & Pick<Types.TypeComplaintStatus, 'code' | 'type' | 'name'>
+    ) }
+  )> }
+);
 
 
 export const ComplaintsQueryDocument = gql`

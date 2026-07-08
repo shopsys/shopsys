@@ -1,0 +1,15 @@
+CurrencySettingDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a currency enabled on the domain"
+        fields:
+            code:
+                type: "String!"
+                description: "Currency code in ISO 4217"
+            name:
+                type: "String!"
+                description: "Currency name"
+            minFractionDigits:
+                type: "Int!"
+                description: "Minimum number of decimal places used when displaying prices in this currency"

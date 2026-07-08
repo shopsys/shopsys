@@ -1,18 +1,20 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { CustomerUserRoleGroupFragment } from '../fragments/CustomerUserRoleGroupGragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeCustomerUserRoleGroupsQueryVariables = Exact<{ [key: string]: never; }>;
+export type TypeCustomerUserRoleGroupsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeCustomerUserRoleGroupsQuery = { customerUserRoleGroups: Array<{ __typename: 'CustomerUserRoleGroup', uuid: string, name: string }> };
+export type TypeCustomerUserRoleGroupsQuery = (
+  { __typename?: 'Query' }
+  & { customerUserRoleGroups: Array<(
+    { __typename: 'CustomerUserRoleGroup' }
+    & Pick<Types.TypeCustomerUserRoleGroup, 'uuid' | 'name'>
+  )> }
+);
 
 
 export const CustomerUserRoleGroupsQueryDocument = gql`

@@ -19,6 +19,8 @@ services:
     Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider:
         alias: Shopsys\FrontendApiBundle\Model\Security\LoginAdministratorAsUserUrlProvider
 
+    Shopsys\FrontendApiBundle\Component\Currency\CurrencyHeaderInitializer: ~
+
     Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~
 
     Shopsys\FrontendApiBundle\Component\HttpFoundation\GraphqlBatchRequestValidator:

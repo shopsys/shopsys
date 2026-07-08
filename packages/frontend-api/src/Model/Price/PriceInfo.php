@@ -24,10 +24,13 @@ class PriceInfo
 
     public bool $isPriceFrom;
 
+    public ?string $currencyCode = null;
+
     public function setSellingPrice(PriceInterface $price): void
     {
         $this->priceWithoutVat = $price->getPriceWithoutVat();
         $this->priceWithVat = $price->getPriceWithVat();
         $this->vatAmount = $price->getVatAmount();
+        $this->currencyCode = $price->getCurrency()?->getCode();
     }
 }

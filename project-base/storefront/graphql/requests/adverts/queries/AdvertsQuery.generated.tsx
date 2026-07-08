@@ -1,24 +1,40 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { AdvertsFragment } from '../fragments/AdvertsFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeAdvertsQueryVariables = Exact<{
-  categoryUuid?: string | null | undefined;
-  positionNames?: Array<string> | string | null | undefined;
+export type TypeAdvertsQueryVariables = Types.Exact<{
+  categoryUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  positionNames?: Types.InputMaybe<Array<Types.Scalars['String']['input']> | Types.Scalars['String']['input']>;
 }>;
 
 
-export type TypeAdvertsQuery = { adverts: Array<
-    | { __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> }
-    | { __typename: 'AdvertImage', link: string | null, uuid: string, name: string, positionName: string, type: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, mainImageMobile: { __typename: 'Image', name: string | null, url: string } | null, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> }
-  > };
+export type TypeAdvertsQuery = (
+  { __typename?: 'Query' }
+  & { adverts: Array<(
+    { __typename: 'AdvertCode' }
+    & Pick<Types.TypeAdvertCode, 'code' | 'uuid' | 'name' | 'positionName' | 'type'>
+    & { categories: Array<(
+      { __typename: 'Category' }
+      & Pick<Types.TypeCategory, 'uuid' | 'name' | 'slug'>
+    )> }
+  ) | (
+    { __typename: 'AdvertImage' }
+    & Pick<Types.TypeAdvertImage, 'link' | 'uuid' | 'name' | 'positionName' | 'type'>
+    & { mainImage: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'name' | 'url'>
+    )>, mainImageMobile: Types.Maybe<(
+      { __typename: 'Image' }
+      & Pick<Types.TypeImage, 'name' | 'url'>
+    )>, categories: Array<(
+      { __typename: 'Category' }
+      & Pick<Types.TypeCategory, 'uuid' | 'name' | 'slug'>
+    )> }
+  )> }
+);
 
 
 export const AdvertsQueryDocument = gql`

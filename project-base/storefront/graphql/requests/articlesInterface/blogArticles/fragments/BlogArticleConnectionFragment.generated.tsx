@@ -1,12 +1,34 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../../types';
 
 import gql from 'graphql-tag';
 import { PageInfoFragment } from '../../../pageInfo/fragments/PageInfoFragment.generated';
 import { ListedBlogArticleFragment } from './ListedBlogArticleFragment.generated';
-export type TypeBlogArticleConnectionFragment = { __typename: 'BlogArticleConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'BlogArticleEdge', node: { __typename: 'BlogArticle', uuid: string, name: string, link: string, publishDate: string | null, perex: string | null, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, blogCategories: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, parent: { name: string } | null }> } | null } | null> | null };
+export type TypeBlogArticleConnectionFragment = (
+  { __typename: 'BlogArticleConnection' }
+  & Pick<Types.TypeBlogArticleConnection, 'totalCount'>
+  & { pageInfo: (
+    { __typename: 'PageInfo' }
+    & Pick<Types.TypePageInfo, 'hasNextPage' | 'hasPreviousPage' | 'endCursor'>
+  ), edges: Types.Maybe<Array<Types.Maybe<(
+    { __typename: 'BlogArticleEdge' }
+    & { node: Types.Maybe<(
+      { __typename: 'BlogArticle' }
+      & Pick<Types.TypeBlogArticle, 'uuid' | 'name' | 'link' | 'publishDate' | 'perex' | 'slug'>
+      & { mainImage: Types.Maybe<(
+        { __typename: 'Image' }
+        & Pick<Types.TypeImage, 'name' | 'url'>
+      )>, blogCategories: Array<(
+        { __typename: 'BlogCategory' }
+        & Pick<Types.TypeBlogCategory, 'uuid' | 'name' | 'link'>
+        & { parent: Types.Maybe<(
+          { __typename?: 'BlogCategory' }
+          & Pick<Types.TypeBlogCategory, 'name'>
+        )> }
+      )> }
+    )> }
+  )>>> }
+);
 
 export const BlogArticleConnectionFragment = gql`
     fragment BlogArticleConnectionFragment on BlogArticleConnection {

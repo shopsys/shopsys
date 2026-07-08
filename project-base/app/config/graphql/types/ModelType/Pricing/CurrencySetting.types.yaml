@@ -1,0 +1,4 @@
+CurrencySetting:
+    type: object
+    inherits:
+        - 'CurrencySettingDecorator'

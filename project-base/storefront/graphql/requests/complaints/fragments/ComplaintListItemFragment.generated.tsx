@@ -1,14 +1,40 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeComplaintListItemFragment = { uuid: string, number: string, createdAt: string, status: string, resolution: { name: string }, items: Array<{ uuid: string, quantity: number, productName: string, product:
-      | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
-      | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
-      | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
-     | null }> };
+export type TypeComplaintListItemFragment = (
+  { __typename?: 'Complaint' }
+  & Pick<Types.TypeComplaint, 'uuid' | 'number' | 'createdAt' | 'status'>
+  & { resolution: (
+    { __typename?: 'ComplaintResolution' }
+    & Pick<Types.TypeComplaintResolution, 'name'>
+  ), items: Array<(
+    { __typename?: 'ComplaintItem' }
+    & Pick<Types.TypeComplaintItem, 'uuid' | 'quantity' | 'productName'>
+    & { product: Types.Maybe<(
+      { __typename?: 'MainVariant' }
+      & Pick<Types.TypeMainVariant, 'slug' | 'isVisible'>
+      & { mainImage: Types.Maybe<(
+        { __typename?: 'Image' }
+        & Pick<Types.TypeImage, 'name' | 'url'>
+      )> }
+    ) | (
+      { __typename?: 'RegularProduct' }
+      & Pick<Types.TypeRegularProduct, 'slug' | 'isVisible'>
+      & { mainImage: Types.Maybe<(
+        { __typename?: 'Image' }
+        & Pick<Types.TypeImage, 'name' | 'url'>
+      )> }
+    ) | (
+      { __typename?: 'Variant' }
+      & Pick<Types.TypeVariant, 'slug' | 'isVisible'>
+      & { mainImage: Types.Maybe<(
+        { __typename?: 'Image' }
+        & Pick<Types.TypeImage, 'name' | 'url'>
+      )> }
+    )> }
+  )> }
+);
 
 export const ComplaintListItemFragment = gql`
     fragment ComplaintListItemFragment on Complaint {

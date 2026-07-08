@@ -9,12 +9,14 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
+use Shopsys\FrontendApiBundle\Model\Price\PriceWithCurrencyFactory;
 
 class OrderItemResolverMap extends ResolverMap
 {
     public function __construct(
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly DataLoaderInterface $firstImageBatchLoader,
+        protected readonly PriceWithCurrencyFactory $priceWithCurrencyFactory,
     ) {
     }
 
@@ -24,10 +26,16 @@ class OrderItemResolverMap extends ResolverMap
         return [
             'OrderItem' => [
                 'totalPrice' => function (OrderItem $orderItem) {
-                    return $this->orderItemPriceCalculation->calculateTotalPrice($orderItem);
+                    return $this->priceWithCurrencyFactory->createWithCurrencyCode(
+                        $this->orderItemPriceCalculation->calculateTotalPrice($orderItem),
+                        $orderItem->getOrder()->getCurrencyCode(),
+                    );
                 },
                 'unitPrice' => function (OrderItem $orderItem) {
-                    return $orderItem->getPrice();
+                    return $this->priceWithCurrencyFactory->createWithCurrencyCode(
+                        $orderItem->getPrice(),
+                        $orderItem->getOrder()->getCurrencyCode(),
+                    );
                 },
                 'unit' => function (OrderItem $orderItem) {
                     return $orderItem->getUnitName();

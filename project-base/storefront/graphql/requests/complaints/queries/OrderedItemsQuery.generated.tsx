@@ -1,65 +1,59 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ComplaintOrderedItemFragment } from '../fragments/ComplaintOrderedItemFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-/** One of possible types of the order item */
-export type TypeOrderItemTypeEnum =
-  | 'discount'
-  | 'payment'
-  | 'product'
-  | 'productGift'
-  | 'promotion'
-  | 'rounding'
-  | 'transport';
-
-/** Filter order items */
-export type TypeOrderItemsFilterInput = {
-  /** Filter order items by product catalog number (OR condition with productUuid) */
-  catnum?: string | null | undefined;
-  /** Filter order items in orders created after this date */
-  orderCreatedAfter?: string | null | undefined;
-  /** Filter orders created after this date */
-  orderStatus?: TypeOrderStatusEnum | null | undefined;
-  /** Filter order items by order with this UUID */
-  orderUuid?: string | null | undefined;
-  /** Filter order items by product with this UUID (OR condition with catnum) */
-  productUuid?: string | null | undefined;
-  /** Filter order items by type */
-  type?: TypeOrderItemTypeEnum | null | undefined;
-};
-
-/** Status of order */
-export type TypeOrderStatusEnum =
-  /** Canceled */
-  | 'canceled'
-  /** Done */
-  | 'done'
-  /** In progress */
-  | 'inProgress'
-  /** New */
-  | 'new'
-  /** Withdrawn */
-  | 'withdrawn';
-
-export type TypeOrderedItemsQueryVariables = Exact<{
-  first?: number | null | undefined;
-  after?: string | null | undefined;
-  filter?: Types.TypeOrderItemsFilterInput | null | undefined;
+export type TypeOrderedItemsQueryVariables = Types.Exact<{
+  first?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  after?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  filter?: Types.InputMaybe<Types.TypeOrderItemsFilterInput>;
 }>;
 
 
-export type TypeOrderedItemsQuery = { orderItems: { __typename: 'OrderItemConnection', totalCount: number, edges: Array<{ __typename: 'OrderItemEdge', node: { uuid: string, name: string, quantity: number, unit: string | null, totalPrice: { priceWithVat: string }, order: { uuid: string, number: string, creationDate: string }, product:
-          | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-          | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-          | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-         | null } | null } | null> | null } };
+export type TypeOrderedItemsQuery = (
+  { __typename?: 'Query' }
+  & { orderItems: (
+    { __typename: 'OrderItemConnection' }
+    & Pick<Types.TypeOrderItemConnection, 'totalCount'>
+    & { edges: Types.Maybe<Array<Types.Maybe<(
+      { __typename: 'OrderItemEdge' }
+      & { node: Types.Maybe<(
+        { __typename?: 'OrderItem' }
+        & Pick<Types.TypeOrderItem, 'uuid' | 'name' | 'quantity' | 'unit'>
+        & { totalPrice: (
+          { __typename?: 'Price' }
+          & Pick<Types.TypePrice, 'priceWithVat'>
+        ), order: (
+          { __typename?: 'Order' }
+          & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate'>
+        ), product: Types.Maybe<(
+          { __typename?: 'MainVariant' }
+          & Pick<Types.TypeMainVariant, 'isVisible' | 'slug'>
+          & { mainImage: Types.Maybe<(
+            { __typename: 'Image' }
+            & Pick<Types.TypeImage, 'name' | 'url'>
+          )> }
+        ) | (
+          { __typename?: 'RegularProduct' }
+          & Pick<Types.TypeRegularProduct, 'isVisible' | 'slug'>
+          & { mainImage: Types.Maybe<(
+            { __typename: 'Image' }
+            & Pick<Types.TypeImage, 'name' | 'url'>
+          )> }
+        ) | (
+          { __typename?: 'Variant' }
+          & Pick<Types.TypeVariant, 'isVisible' | 'slug'>
+          & { mainImage: Types.Maybe<(
+            { __typename: 'Image' }
+            & Pick<Types.TypeImage, 'name' | 'url'>
+          )> }
+        )> }
+      )> }
+    )>>> }
+  ) }
+);
 
 
 export const OrderedItemsQueryDocument = gql`

@@ -1,12 +1,20 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 import { HreflangLinksFragment } from '../../hreflangLinks/fragments/HreflangLinksFragment.generated';
-export type TypeSeoPageFragment = { __typename: 'SeoPage', title: string | null, metaDescription: string | null, canonicalUrl: string | null, ogTitle: string | null, ogDescription: string | null, ogImage: { __typename: 'Image', name: string | null, url: string } | null, hreflangLinks: Array<{ hreflang: string, href: string }> };
+export type TypeSeoPageFragment = (
+  { __typename: 'SeoPage' }
+  & Pick<Types.TypeSeoPage, 'title' | 'metaDescription' | 'canonicalUrl' | 'ogTitle' | 'ogDescription'>
+  & { ogImage: Types.Maybe<(
+    { __typename: 'Image' }
+    & Pick<Types.TypeImage, 'name' | 'url'>
+  )>, hreflangLinks: Array<(
+    { __typename?: 'HreflangLink' }
+    & Pick<Types.TypeHreflangLink, 'hreflang' | 'href'>
+  )> }
+);
 
 export const SeoPageFragment = gql`
     fragment SeoPageFragment on SeoPage {

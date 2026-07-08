@@ -1,19 +1,24 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { SimpleArticleSiteFragment } from '../articles/fragments/SimpleArticleSiteFragment.generated';
 import { SimpleBlogArticleFragment } from '../blogArticles/fragments/SimpleBlogArticleFragment.generated';
-export type TypeSimpleArticleInterfaceFragment_ArticleSite = { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean };
+export type TypeSimpleArticleInterfaceFragment_ArticleSite_ = (
+  { __typename: 'ArticleSite' }
+  & Pick<Types.TypeArticleSite, 'uuid' | 'name' | 'slug' | 'placement' | 'external'>
+);
 
-export type TypeSimpleArticleInterfaceFragment_BlogArticle = { __typename: 'BlogArticle', name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null };
+export type TypeSimpleArticleInterfaceFragment_BlogArticle_ = (
+  { __typename: 'BlogArticle' }
+  & Pick<Types.TypeBlogArticle, 'name' | 'slug'>
+  & { mainImage: Types.Maybe<(
+    { __typename: 'Image' }
+    & Pick<Types.TypeImage, 'name' | 'url'>
+  )> }
+);
 
-export type TypeSimpleArticleInterfaceFragment =
-  | TypeSimpleArticleInterfaceFragment_ArticleSite
-  | TypeSimpleArticleInterfaceFragment_BlogArticle
-;
+export type TypeSimpleArticleInterfaceFragment = TypeSimpleArticleInterfaceFragment_ArticleSite_ | TypeSimpleArticleInterfaceFragment_BlogArticle_;
 
 export const SimpleArticleInterfaceFragment = gql`
     fragment SimpleArticleInterfaceFragment on ArticleInterface {

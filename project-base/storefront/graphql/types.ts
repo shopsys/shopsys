@@ -1,5 +1,10 @@
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -1049,6 +1054,17 @@ export type TypeCreateWatchdogInput = {
   productUuid: Scalars['Uuid']['input'];
 };
 
+/** Represents a currency enabled on the domain */
+export type TypeCurrencySetting = {
+  __typename?: 'CurrencySetting';
+  /** Currency code in ISO 4217 */
+  code: Scalars['String']['output'];
+  /** Minimum number of decimal places used when displaying prices in this currency */
+  minFractionDigits: Scalars['Int']['output'];
+  /** Currency name */
+  name: Scalars['String']['output'];
+};
+
 /** Represents a currently logged company customer user */
 export type TypeCurrentCompanyCustomerUser = TypeBaseCustomerUser & TypeCurrentCustomerUser & {
   __typename?: 'CurrentCompanyCustomerUser';
@@ -1973,6 +1989,8 @@ export type TypeOrder = {
   country: TypeCountry;
   /** Date and time when the order was created */
   creationDate: Scalars['DateTime']['output'];
+  /** Currency code (ISO 4217) the order was placed in */
+  currencyCode: Scalars['String']['output'];
   /** The registered customer user who made the order (or null if the order was made by an unregistered user) */
   customerUser: Maybe<TypeBaseCustomerUser>;
   /** Date and time when the order was delivered to the customer */
@@ -1997,6 +2015,8 @@ export type TypeOrder = {
   deliveryTelephoneData: Maybe<TypePhoneData>;
   /** The customer's email address */
   email: Scalars['String']['output'];
+  /** Exchange rate between the order currency and the domain default currency at the time the order was placed */
+  exchangeRate: Scalars['String']['output'];
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
   /** Indicates whether the order has an external payment */
@@ -2613,6 +2633,8 @@ export type TypePhonePrefix = {
 /** Represents the price */
 export type TypePrice = {
   __typename?: 'Price';
+  /** Currency code (ISO 4217) of the price, the currently selected currency unless the price is a stored snapshot (e.g. order prices) */
+  currencyCode: Scalars['String']['output'];
   /** Price with VAT */
   priceWithVat: Scalars['Money']['output'];
   /** Price without VAT */
@@ -2624,9 +2646,13 @@ export type TypePrice = {
 /** Represents setting of pricing */
 export type TypePricingSetting = {
   __typename?: 'PricingSetting';
+  /** Currencies enabled on the current domain, the first one is the domain default currency */
+  availableCurrencies: Array<TypeCurrencySetting>;
+  /** Code of the currently selected currency (resolved from the X-Currency-Code header with a fallback to the domain default currency) */
+  currentCurrencyCode: Scalars['String']['output'];
   /** Code of the default currency used on the current domain */
   defaultCurrencyCode: Scalars['String']['output'];
-  /** Minimum number of decimal places for the price on the current domain */
+  /** Minimum number of decimal places for the price in the currently selected currency */
   minimumFractionDigits: Scalars['Int']['output'];
   /** Type of selling price (with VAT or without VAT) */
   sellingPriceType: TypeSellingPriceTypeEnum;
@@ -2862,6 +2888,8 @@ export type TypeProductPrice = {
   __typename?: 'ProductPrice';
   /** Basic price of the product. If product has no discounts, it's the same as the selling price */
   basicPrice: TypePrice;
+  /** Currency code (ISO 4217) of the price, the currently selected currency unless the price is a stored snapshot (e.g. order prices) */
+  currencyCode: Scalars['String']['output'];
   /** Determines whether it's a final price or starting price */
   isPriceFrom: Scalars['Boolean']['output'];
   /** Date of the next price change, null if no price change is planned */

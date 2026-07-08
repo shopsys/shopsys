@@ -1,49 +1,152 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ProductListFragment } from '../fragments/ProductListFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-/** Product Availability statuses */
-export type TypeAvailabilityStatusEnum =
-  /** Product availability status in stock */
-  | 'InStock'
-  /** Product availability status out of stock */
-  | 'OutOfStock';
-
-/** Represents the type of the parameter */
-export type TypeParameterTypeEnum =
-  | 'CHECKBOX'
-  | 'COLOR'
-  | 'SLIDER';
-
-export type TypeProductListInput = {
-  /** Product list type */
-  type: TypeProductListTypeEnum;
-  /** Product list identifier */
-  uuid?: string | null | undefined;
-};
-
-/** One of possible types of the product list */
-export type TypeProductListTypeEnum =
-  | 'COMPARISON'
-  | 'WISHLIST';
-
-export type TypeProductListQueryVariables = Exact<{
+export type TypeProductListQueryVariables = Types.Exact<{
   input: Types.TypeProductListInput;
 }>;
 
 
-export type TypeProductListQuery = { productList: { __typename: 'ProductList', uuid: string, products: Array<
-      | { __typename: 'MainVariant', variantsCount: number, id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }>, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }> }
-      | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }>, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }> }
-      | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }>, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }> }
-    > } | null };
+export type TypeProductListQuery = (
+  { __typename?: 'Query' }
+  & { productList: Types.Maybe<(
+    { __typename: 'ProductList' }
+    & Pick<Types.TypeProductList, 'uuid'>
+    & { products: Array<(
+      { __typename: 'MainVariant' }
+      & Pick<Types.TypeMainVariant, 'variantsCount' | 'id' | 'uuid' | 'slug' | 'fullName' | 'stockQuantity' | 'isAllowedNegativeStock' | 'isSellingDenied' | 'isCurrentlyOutOfStock' | 'availableStoresCount' | 'catalogNumber' | 'isMainVariant' | 'isInquiryType'>
+      & { parameters: Array<(
+        { __typename: 'Parameter' }
+        & Pick<Types.TypeParameter, 'uuid' | 'name' | 'type' | 'group'>
+        & { unit: Types.Maybe<(
+          { __typename: 'Unit' }
+          & Pick<Types.TypeUnit, 'name'>
+        )>, values: Array<(
+          { __typename: 'ParameterValue' }
+          & Pick<Types.TypeParameterValue, 'uuid' | 'text' | 'rgbHex'>
+          & { colorIcon: Types.Maybe<(
+            { __typename?: 'File' }
+            & Pick<Types.TypeFile, 'url' | 'anchorText'>
+          )> }
+        )> }
+      )>, unit: (
+        { __typename: 'Unit' }
+        & Pick<Types.TypeUnit, 'name'>
+      ), flags: Array<(
+        { __typename: 'Flag' }
+        & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+      )>, mainImage: Types.Maybe<(
+        { __typename: 'Image' }
+        & Pick<Types.TypeImage, 'url'>
+      )>, price: (
+        { __typename: 'ProductPrice' }
+        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+        & { basicPrice: (
+          { __typename: 'Price' }
+          & Pick<Types.TypePrice, 'priceWithVat'>
+        ) }
+      ), availability: (
+        { __typename: 'Availability' }
+        & Pick<Types.TypeAvailability, 'name' | 'status'>
+      ), brand: Types.Maybe<(
+        { __typename: 'Brand' }
+        & Pick<Types.TypeBrand, 'name'>
+      )>, categories: Array<(
+        { __typename: 'Category' }
+        & Pick<Types.TypeCategory, 'name'>
+      )> }
+    ) | (
+      { __typename: 'RegularProduct' }
+      & Pick<Types.TypeRegularProduct, 'id' | 'uuid' | 'slug' | 'fullName' | 'stockQuantity' | 'isAllowedNegativeStock' | 'isSellingDenied' | 'isCurrentlyOutOfStock' | 'availableStoresCount' | 'catalogNumber' | 'isMainVariant' | 'isInquiryType'>
+      & { parameters: Array<(
+        { __typename: 'Parameter' }
+        & Pick<Types.TypeParameter, 'uuid' | 'name' | 'type' | 'group'>
+        & { unit: Types.Maybe<(
+          { __typename: 'Unit' }
+          & Pick<Types.TypeUnit, 'name'>
+        )>, values: Array<(
+          { __typename: 'ParameterValue' }
+          & Pick<Types.TypeParameterValue, 'uuid' | 'text' | 'rgbHex'>
+          & { colorIcon: Types.Maybe<(
+            { __typename?: 'File' }
+            & Pick<Types.TypeFile, 'url' | 'anchorText'>
+          )> }
+        )> }
+      )>, unit: (
+        { __typename: 'Unit' }
+        & Pick<Types.TypeUnit, 'name'>
+      ), flags: Array<(
+        { __typename: 'Flag' }
+        & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+      )>, mainImage: Types.Maybe<(
+        { __typename: 'Image' }
+        & Pick<Types.TypeImage, 'url'>
+      )>, price: (
+        { __typename: 'ProductPrice' }
+        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+        & { basicPrice: (
+          { __typename: 'Price' }
+          & Pick<Types.TypePrice, 'priceWithVat'>
+        ) }
+      ), availability: (
+        { __typename: 'Availability' }
+        & Pick<Types.TypeAvailability, 'name' | 'status'>
+      ), brand: Types.Maybe<(
+        { __typename: 'Brand' }
+        & Pick<Types.TypeBrand, 'name'>
+      )>, categories: Array<(
+        { __typename: 'Category' }
+        & Pick<Types.TypeCategory, 'name'>
+      )> }
+    ) | (
+      { __typename: 'Variant' }
+      & Pick<Types.TypeVariant, 'id' | 'uuid' | 'slug' | 'fullName' | 'stockQuantity' | 'isAllowedNegativeStock' | 'isSellingDenied' | 'isCurrentlyOutOfStock' | 'availableStoresCount' | 'catalogNumber' | 'isMainVariant' | 'isInquiryType'>
+      & { parameters: Array<(
+        { __typename: 'Parameter' }
+        & Pick<Types.TypeParameter, 'uuid' | 'name' | 'type' | 'group'>
+        & { unit: Types.Maybe<(
+          { __typename: 'Unit' }
+          & Pick<Types.TypeUnit, 'name'>
+        )>, values: Array<(
+          { __typename: 'ParameterValue' }
+          & Pick<Types.TypeParameterValue, 'uuid' | 'text' | 'rgbHex'>
+          & { colorIcon: Types.Maybe<(
+            { __typename?: 'File' }
+            & Pick<Types.TypeFile, 'url' | 'anchorText'>
+          )> }
+        )> }
+      )>, unit: (
+        { __typename: 'Unit' }
+        & Pick<Types.TypeUnit, 'name'>
+      ), flags: Array<(
+        { __typename: 'Flag' }
+        & Pick<Types.TypeFlag, 'uuid' | 'name' | 'rgbColor'>
+      )>, mainImage: Types.Maybe<(
+        { __typename: 'Image' }
+        & Pick<Types.TypeImage, 'url'>
+      )>, price: (
+        { __typename: 'ProductPrice' }
+        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+        & { basicPrice: (
+          { __typename: 'Price' }
+          & Pick<Types.TypePrice, 'priceWithVat'>
+        ) }
+      ), availability: (
+        { __typename: 'Availability' }
+        & Pick<Types.TypeAvailability, 'name' | 'status'>
+      ), brand: Types.Maybe<(
+        { __typename: 'Brand' }
+        & Pick<Types.TypeBrand, 'name'>
+      )>, categories: Array<(
+        { __typename: 'Category' }
+        & Pick<Types.TypeCategory, 'name'>
+      )> }
+    )> }
+  )> }
+);
 
 
 export const ProductListQueryDocument = gql`

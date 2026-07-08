@@ -1,27 +1,22 @@
 // @ts-nocheck
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-/** One of two possible types for personal data access request */
-export type TypePersonalDataAccessRequestTypeEnum =
-  /** Display data */
-  | 'display'
-  /** Export data */
-  | 'export';
-
-export type TypePersonalDataRequestMutationVariables = Exact<{
-  email: string;
-  type?: Types.TypePersonalDataAccessRequestTypeEnum | null | undefined;
+export type TypePersonalDataRequestMutationVariables = Types.Exact<{
+  email: Types.Scalars['String']['input'];
+  type?: Types.InputMaybe<Types.TypePersonalDataAccessRequestTypeEnum>;
 }>;
 
 
-export type TypePersonalDataRequestMutation = { RequestPersonalDataAccess: { displaySiteSlug: string, exportSiteSlug: string } };
+export type TypePersonalDataRequestMutation = (
+  { __typename?: 'Mutation' }
+  & { RequestPersonalDataAccess: (
+    { __typename?: 'PersonalDataPage' }
+    & Pick<Types.TypePersonalDataPage, 'displaySiteSlug' | 'exportSiteSlug'>
+  ) }
+);
 
 
 export const PersonalDataRequestMutationDocument = gql`
