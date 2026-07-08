@@ -7,12 +7,15 @@ namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddlewar
 use Override;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 
 class FreeTransportAndPaymentInformationMiddleware implements OrderProcessorMiddlewareInterface
 {
-    public function __construct(protected readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade)
-    {
+    public function __construct(
+        protected readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
+    ) {
     }
 
     #[Override]
@@ -20,10 +23,12 @@ class FreeTransportAndPaymentInformationMiddleware implements OrderProcessorMidd
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,
     ): OrderProcessingData {
+        $domainId = $orderProcessingData->getDomainConfig()->getId();
         $orderProcessingData->orderData->freeTransportAndPaymentApplied = $this->freeTransportAndPaymentFacade->isFreeTransportAndPaymentApplied(
-            $orderProcessingData->getDomainConfig()->getId(),
+            $domainId,
             $orderProcessingData->orderData->getProductsTotalPriceAfterAppliedDiscounts(),
             $orderProcessingData->orderInput->isFreeTransportAndPaymentPromoCodeApplied(),
+            $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($domainId),
         );
 
         return $orderProcessingStack->processNext($orderProcessingData);

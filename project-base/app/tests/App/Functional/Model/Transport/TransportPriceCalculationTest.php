@@ -36,7 +36,7 @@ class TransportPriceCalculationTest extends TransactionFunctionalTestCase
     {
         $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
         $this->expectException(TransportPriceNotFoundException::class);
-        $this->transportPriceCalculation->calculatePrice($transportCzechPost, Price::zero(), Domain::FIRST_DOMAIN_ID, self::CART_TOTAL_WEIGHT_ABOVE_ALL_LIMITS, false);
+        $this->transportPriceCalculation->calculatePrice($transportCzechPost, Price::zero(), Domain::FIRST_DOMAIN_ID, self::CART_TOTAL_WEIGHT_ABOVE_ALL_LIMITS, false, $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID));
     }
 
     #[DataProvider('calculatePriceDataProvider')]
@@ -44,7 +44,7 @@ class TransportPriceCalculationTest extends TransactionFunctionalTestCase
     {
         $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
 
-        $calculatedPrice = $this->transportPriceCalculation->calculatePrice($transportCzechPost, Price::zero(), Domain::FIRST_DOMAIN_ID, $cartTotalWeight, false);
+        $calculatedPrice = $this->transportPriceCalculation->calculatePrice($transportCzechPost, Price::zero(), Domain::FIRST_DOMAIN_ID, $cartTotalWeight, false, $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID));
 
         $expectedTransportPriceWithoutVat = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
             Money::create($expectedMoneyAmountWithoutVat),
@@ -74,7 +74,7 @@ class TransportPriceCalculationTest extends TransactionFunctionalTestCase
     {
         $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
 
-        $calculatedPrice = $this->transportPriceCalculation->calculatePrice($transportCzechPost, $productsPrice, Domain::FIRST_DOMAIN_ID, 0, $forceFreeTransport);
+        $calculatedPrice = $this->transportPriceCalculation->calculatePrice($transportCzechPost, $productsPrice, Domain::FIRST_DOMAIN_ID, 0, $forceFreeTransport, $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID));
 
         $this->assertTrue($calculatedPrice->getPriceWithoutVat()->isZero());
     }

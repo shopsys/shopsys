@@ -22,11 +22,17 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade;
+
     /**
      * @inject
      */
@@ -60,11 +66,14 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
     public function testChangePaymentInOrderRespectsFreeTransportSetting(): void
     {
         // make sure the payment and transport is free
-        $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($this->domain->getId(), Money::create(1));
+        $this->freeTransportAndPaymentFacade->setPriceLimits(
+            $this->domain->getId(),
+            [$this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId())->getCode() => Money::create(1)],
+        );
 
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
         $paymentCreditCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
-        $this->assertGreaterThan(Money::zero(), $paymentCreditCard->getPrice($this->domain->getId())->getPrice());
+        $this->assertGreaterThan(Money::zero(), $paymentCreditCard->getPrice($this->domain->getId(), $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()))->getPrice());
 
         $expectedTotalPrice = $order->getTotalPriceWithoutVat()->getAmount();
 

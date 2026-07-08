@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -23,29 +24,28 @@ class PaymentPriceCalculation
         Payment $payment,
         PriceInterface $productsPrice,
         int $domainId,
+        Currency $currency,
         bool $forceFreePayment,
-        string $roundingType,
-        int $roundingPlaces,
     ): PriceInterface {
-        if ($this->freeTransportAndPaymentFacade->isFree($productsPrice, $domainId, $forceFreePayment)) {
+        if ($this->freeTransportAndPaymentFacade->isFree($productsPrice, $domainId, $forceFreePayment, $currency)) {
             return Price::zero();
         }
 
-        return $this->calculateIndependentPrice($payment, $domainId, $roundingType, $roundingPlaces);
+        return $this->calculateIndependentPrice($payment, $domainId, $currency);
     }
 
     public function calculateIndependentPrice(
         Payment $payment,
         int $domainId,
-        string $roundingType,
-        int $roundingPlaces,
+        Currency $currency,
     ): PriceInterface {
         return $this->basePriceCalculation->calculateRoundedBasePrice(
-            $payment->getPrice($domainId)->getPrice(),
+            $payment->getPrice($domainId, $currency)->getPrice(),
             $this->pricingSetting->getInputPriceType(),
             $payment->getPaymentDomain($domainId)->getVat(),
-            $roundingType,
-            $roundingPlaces,
+            $currency->getRoundingType(),
+            $currency->getRoundingPlacesPriceWithoutVat(),
+            $currency,
         );
     }
 }

@@ -35,7 +35,10 @@ class PaymentDataFactory
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $paymentData->enabled[$domainId] = false;
-            $paymentData->pricesIndexedByDomainId[$domainId] = Money::zero();
+
+            foreach ($this->domain->getDomainConfigById($domainId)->getCurrencyCodes() as $currencyCode) {
+                $paymentData->pricesIndexedByDomainIdAndCurrencyCode[$domainId][$currencyCode] = Money::zero();
+            }
             $paymentData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
             $paymentData->goPayPaymentMethodByDomainId[$domainId] = null;
             $paymentData->hiddenByGoPay[$domainId] = false;
@@ -85,7 +88,12 @@ class PaymentDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $paymentData->enabled[$domainId] = $payment->isEnabled($domainId);
-            $paymentData->pricesIndexedByDomainId[$domainId] = $payment->getPrice($domainId)->getPrice();
+
+            foreach ($payment->getPrices() as $paymentPrice) {
+                if ($paymentPrice->getDomainId() === $domainId) {
+                    $paymentData->pricesIndexedByDomainIdAndCurrencyCode[$domainId][$paymentPrice->getCurrency()->getCode()] = $paymentPrice->getPrice();
+                }
+            }
             $paymentData->vatsIndexedByDomainId[$domainId] = $payment->getPaymentDomain($domainId)->getVat();
             $paymentData->goPayPaymentMethodByDomainId[$domainId] = $payment->getGoPayPaymentMethodByDomainId($domainId);
             $paymentData->hiddenByGoPay[$domainId] = $payment->isHiddenByGoPayByDomainId($domainId);

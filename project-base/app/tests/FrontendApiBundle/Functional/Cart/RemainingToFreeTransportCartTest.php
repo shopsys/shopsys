@@ -12,6 +12,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -20,6 +21,11 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
     use OrderTestTrait;
 
     private Product $testingProduct;
+
+    /**
+     * @inject
+     */
+    private FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade;
 
     #[Override]
     protected function setUp(): void
@@ -74,7 +80,7 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
 
     private function disableFreeTransportAndPayment(): void
     {
-        $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($this->domain->getId(), null);
+        $this->freeTransportAndPaymentFacade->setPriceLimits($this->domain->getId(), null);
     }
 
     public function testCorrectRemainingPriceIsReturned(): void

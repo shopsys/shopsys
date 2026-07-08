@@ -47,9 +47,9 @@ class PaymentData
     public $enabled;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]
+     * @var array<int, array<string, \Shopsys\FrameworkBundle\Component\Money\Money>>
      */
-    public $pricesIndexedByDomainId;
+    public $pricesIndexedByDomainIdAndCurrencyCode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
@@ -100,7 +100,7 @@ class PaymentData
         $this->enabled = [];
         $this->transports = [];
         $this->orderRoundingTypeByDomainId = [];
-        $this->pricesIndexedByDomainId = [];
+        $this->pricesIndexedByDomainIdAndCurrencyCode = [];
         $this->vatsIndexedByDomainId = [];
         $this->goPayPaymentMethodByDomainId = [];
         $this->hiddenByGoPay = [];

@@ -21,7 +21,7 @@ final class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
 {
     public const string DOMAINS_SUBFORM_NAME = 'priceLimits';
     public const string FIELD_ENABLED = 'enabled';
-    public const string FIELD_PRICE_LIMIT = 'priceLimit';
+    public const string FIELD_PRICE_LIMITS_BY_CURRENCY_CODE = 'priceLimitsByCurrencyCode';
     public const string VALIDATION_GROUP_PRICE_LIMIT_ENABLED = 'priceLimitEnabled';
 
     public function __construct(private readonly Domain $domain)
@@ -58,9 +58,17 @@ final class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
             ])
                 ->add(self::FIELD_ENABLED, CheckboxType::class, [
                     'required' => false,
-                ])
-                ->add(self::FIELD_PRICE_LIMIT, MoneyType::class, [
+                ]);
+
+            $priceLimitsByCurrencyCodeBuilder = $builder->create(self::FIELD_PRICE_LIMITS_BY_CURRENCY_CODE, null, [
+                'compound' => true,
+                'label' => false,
+            ]);
+
+            foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+                $priceLimitsByCurrencyCodeBuilder->add($currencyCode, MoneyType::class, [
                     'required' => true,
+                    'label' => count($domainConfig->getCurrencyCodes()) > 1 ? $currencyCode : false,
                     'constraints' => [
                         new NotNegativeMoneyAmount(
                             message: 'Price must be greater or equal to zero',
@@ -73,7 +81,9 @@ final class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
                     ],
                     'scale' => 6,
                 ]);
+            }
 
+            $formBuilderForDomain->add($priceLimitsByCurrencyCodeBuilder);
             $formBuilderForDomains->add($formBuilderForDomain);
         }
 

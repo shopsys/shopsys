@@ -65,7 +65,7 @@ final class PromoCodeFacadeTest extends TransactionFunctionalTestCase
             ['fromPrice' => '100.000000', 'discount' => '20.000000'],
         ];
 
-        $promoCodeData->limits[] = $this->promoCodeLimitFactory->create('100', '20');
+        $promoCodeData->limits[] = $this->promoCodeLimitFactory->create('100', '20', $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID));
 
         $this->promoCodeFacade->edit($promoCode->getId(), $promoCodeData);
         $this->em->clear();

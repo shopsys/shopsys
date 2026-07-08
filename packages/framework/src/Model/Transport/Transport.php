@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
@@ -348,18 +349,22 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         throw new TransportDomainNotFoundException($domainId, $this->id);
     }
 
-    public function getLowestPriceOnDomain(int $domainId): TransportPrice
+    public function getLowestPriceOnDomain(int $domainId, Currency $currency): TransportPrice
     {
         $lowestPrice = null;
 
         foreach ($this->getPricesByDomainId($domainId) as $transportPrice) {
+            if ($transportPrice->getCurrency() !== $currency) {
+                continue;
+            }
+
             if ($lowestPrice === null || $transportPrice->getPrice()->isLessThanOrEqualTo($lowestPrice->getPrice())) {
                 $lowestPrice = $transportPrice;
             }
         }
 
         if ($lowestPrice === null) {
-            $message = 'Transport price with domain ID ' . $domainId . ' and transport ID ' . $this->getId() . ' not found.';
+            $message = 'Transport price with domain ID ' . $domainId . ', currency code ' . $currency->getCode() . ' and transport ID ' . $this->getId() . ' not found.';
 
             throw new TransportPriceNotFoundException($message);
         }

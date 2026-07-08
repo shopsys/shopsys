@@ -35,8 +35,13 @@
                                     {{ form_widget(priceLimitForm.enabled, { attr: { class: 'js-free-transport-and-payment-price-limit-enabled' } } ) }}
                                 </td>
                                 <td>
-                                    {{ form_widget(priceLimitForm.priceLimit, { symbolAfterInput: currencySymbolByDomainId(domainId), attr: { class: 'js-free-transport-and-payment-price-limit-input' } }) }}
-                                    {{ form_errors(priceLimitForm.priceLimit) }}
+                                    {% for currencyCode, priceLimitInput in priceLimitForm.priceLimitsByCurrencyCode %}
+                                        <div class="mb-1">
+                                            {{ form_label(priceLimitInput) }}
+                                            {{ form_widget(priceLimitInput, { symbolAfterInput: currencySymbolByCode(currencyCode), attr: { class: 'js-free-transport-and-payment-price-limit-input' } }) }}
+                                            {{ form_errors(priceLimitInput) }}
+                                        </div>
+                                    {% endfor %}
                                 </td>
                             </tr>
                         {% endfor %}

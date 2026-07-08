@@ -1,15 +1,23 @@
 {% macro priceWithLimitRow(priceWithLimit, index) %}
-    {% set domainId = priceWithLimit.vars.domain_id %}
-    {% set transportPrice = priceWithLimit.vars.transport_calculated_price %}
+    {% set currencyCodes = priceWithLimit.vars.currency_codes %}
+    {% set calculatedPricesByCurrencyCode = priceWithLimit.vars.transport_calculated_prices_by_currency_code %}
     <div class="js-transport-prices-item js-form-group row align-items-center mb-3 pb-3 border-bottom" data-index="{{ index }}">
-        {{ form_widget(priceWithLimit.transportPriceId) }}
+        {% for currencyCode in currencyCodes %}
+            {{ form_widget(priceWithLimit.transportPriceIdsByCurrencyCode[currencyCode]) }}
+        {% endfor %}
         <div class="col-12 col-md-3 mb-2 mb-md-0">
             <label class="d-md-none col-form-label">{{ inputPriceLabel() }}</label>
-            <div class="d-none">
-                {{ form_label(priceWithLimit.price) }}
-            </div>
-            {{ form_widget(priceWithLimit.price, { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
-            {{ form_errors(priceWithLimit.price) }}
+            {% for currencyCode in currencyCodes %}
+                {% if currencyCodes|length > 1 %}
+                    {{ form_label(priceWithLimit.pricesByCurrencyCode[currencyCode]) }}
+                {% else %}
+                    <div class="d-none">
+                        {{ form_label(priceWithLimit.pricesByCurrencyCode[currencyCode]) }}
+                    </div>
+                {% endif %}
+                {{ form_widget(priceWithLimit.pricesByCurrencyCode[currencyCode], { symbolAfterInput: currencySymbolByCode(currencyCode) }) }}
+                {{ form_errors(priceWithLimit.pricesByCurrencyCode[currencyCode]) }}
+            {% endfor %}
         </div>
         <div class="col-12 col-md-3 mb-2 mb-md-0">
             <label class="d-md-none col-form-label">
@@ -21,22 +29,25 @@
         </div>
         <div class="col-11 col-md-5 text-md-end">
             <label class="d-md-none col-form-label">{{ 'Calculated prices'|trans }}</label>
-            {% if transportPrice is not null %}
-                <div class="row">
-                    <div class="col">
-                        {{ transportPrice.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
-                        <br>
-                        <span class="small">{{ 'Excl. VAT'|trans }}</span>
+            {% for currencyCode in currencyCodes %}
+                {% set transportPrice = calculatedPricesByCurrencyCode[currencyCode] ?? null %}
+                {% if transportPrice is not null %}
+                    <div class="row">
+                        <div class="col">
+                            {{ transportPrice.priceWithoutVat|priceWithCurrencyByCode(currencyCode) }}
+                            <br>
+                            <span class="small">{{ 'Excl. VAT'|trans }}</span>
+                        </div>
+                        <div class="col">
+                            <strong>
+                                {{ transportPrice.priceWithVat|priceWithCurrencyByCode(currencyCode) }}
+                            </strong>
+                            <br>
+                            <span class="small">{{ 'Incl. VAT'|trans }}</span>
+                        </div>
                     </div>
-                    <div class="col">
-                        <strong>
-                            {{ transportPrice.priceWithVat|priceWithCurrencyByDomainId(domainId) }}
-                        </strong>
-                        <br>
-                        <span class="small">{{ 'Incl. VAT'|trans }}</span>
-                    </div>
-                </div>
-            {% endif %}
+                {% endif %}
+            {% endfor %}
         </div>
         <div class="col-1 text-center">
             <a href="#" class="js-transport-prices-item-remove">{{ ux_icon('delete') }}</a>

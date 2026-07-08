@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
@@ -26,6 +27,7 @@ class PriceQuery extends AbstractQuery
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly Domain $domain,
         protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
@@ -51,9 +53,8 @@ class PriceQuery extends AbstractQuery
                 $payment,
                 $order->getTotalProductsPrice(),
                 $order->getDomainId(),
+                $this->currencyFacade->getByCode($order->getCurrencyCode()),
                 $order->isFreeTransportAndPaymentApplied(),
-                $order->getCurrencyRoundingType(),
-                $order->getCurrencyRoundingPlacesPriceWithoutVat(),
             );
         }
 
@@ -74,13 +75,12 @@ class PriceQuery extends AbstractQuery
 
     protected function calculateIndependentPaymentPrice(Payment $payment): PriceInterface
     {
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+        $currency = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($this->domain->getId());
 
         return $this->paymentPriceCalculation->calculateIndependentPrice(
             $payment,
             $this->domain->getId(),
-            $currency->getRoundingType(),
-            $currency->getRoundingPlacesPriceWithoutVat(),
+            $currency,
         );
     }
 
@@ -109,7 +109,10 @@ class PriceQuery extends AbstractQuery
     protected function calculateIndependentTransportPrice(Transport $transport): PriceInterface
     {
         return $this->transportPriceCalculation->calculateIndependentPrice(
-            $transport->getLowestPriceOnDomain($this->domain->getId()),
+            $transport->getLowestPriceOnDomain(
+                $this->domain->getId(),
+                $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($this->domain->getId()),
+            ),
         );
     }
 }

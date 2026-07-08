@@ -337,7 +337,8 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         // refresh transport, so we're able to work with it as with an entity
         $transport = $this->getReference($transportReferenceName, Transport::class);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
-        $transportData->inputPricesByDomain[1]->pricesWithLimits[0]->price = $transport->getLowestPriceOnDomain(1)->getPrice()->add(Money::create(10));
+        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(1);
+        $transportData->inputPricesByDomain[1]->pricesWithLimits[0]->pricesByCurrencyCode[$firstDomainDefaultCurrency->getCode()] = $transport->getLowestPriceOnDomain(1, $firstDomainDefaultCurrency)->getPrice()->add(Money::create(10));
         $this->transportFacade->edit($transport, $transportData);
     }
 
@@ -361,7 +362,8 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
     {
         $payment = $this->getReference($paymentReferenceName, Payment::class);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
-        $paymentData->pricesIndexedByDomainId[1] = $payment->getPrice(1)->getPrice()->add(Money::create(10));
+        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(1);
+        $paymentData->pricesIndexedByDomainIdAndCurrencyCode[1][$firstDomainDefaultCurrency->getCode()] = $payment->getPrice(1, $firstDomainDefaultCurrency)->getPrice()->add(Money::create(10));
         $this->paymentFacade->edit($payment, $paymentData);
     }
 

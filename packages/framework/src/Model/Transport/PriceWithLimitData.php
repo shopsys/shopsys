@@ -7,9 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 class PriceWithLimitData
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     * @var array<string, \Shopsys\FrameworkBundle\Component\Money\Money|null>
      */
-    public $price;
+    public $pricesByCurrencyCode = [];
 
     /**
      * @var int|null
@@ -17,7 +17,7 @@ class PriceWithLimitData
     public $maxWeight;
 
     /**
-     * @var int|null
+     * @var array<string, int|null>
      */
-    public $transportPriceId;
+    public $transportPriceIdsByCurrencyCode = [];
 }

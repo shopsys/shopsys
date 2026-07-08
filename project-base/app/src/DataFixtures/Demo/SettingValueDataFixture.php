@@ -18,10 +18,10 @@ use Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
+use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 
 class SettingValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -29,10 +29,10 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
 
     public function __construct(
         private readonly Setting $setting,
-        private readonly PricingSetting $pricingSetting,
         private readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper,
-        private readonly PriceConverter $priceConverter,
         private readonly Domain $domain,
+        private readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
+        private readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -44,16 +44,18 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $locale = $domainConfig->getLocale();
 
             if ($domainId === 1) {
-                $freeTransportLimit = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
-                    Money::create(self::FREE_TRANSPORT_AND_PAYMENT_LIMIT),
-                    $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class),
-                    $domainId,
-                );
+                $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
+                $freeTransportLimitsByCurrencyCode = [];
 
-                $this->pricingSetting->setFreeTransportAndPaymentPriceLimit(
-                    $domainId,
-                    $freeTransportLimit,
-                );
+                foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+                    $targetCurrency = $this->currencyFacade->getByCode($currencyCode);
+                    $convertedLimit = Money::create(self::FREE_TRANSPORT_AND_PAYMENT_LIMIT)->multiply(
+                        (string)$this->currencyFacade->getExchangeRateForCurrencies($currencyCzk, $targetCurrency),
+                    );
+                    $freeTransportLimitsByCurrencyCode[$currencyCode] = $convertedLimit;
+                }
+
+                $this->freeTransportAndPaymentFacade->setPriceLimits($domainId, $freeTransportLimitsByCurrencyCode);
             }
 
             $termsAndConditions = $this->getReferenceForDomain(

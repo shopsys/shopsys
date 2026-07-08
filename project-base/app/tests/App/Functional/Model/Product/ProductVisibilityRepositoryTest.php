@@ -103,7 +103,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
                     continue;
                 }
 
-                $priceByPricingGroupId[$pricingGroup->getId()] = $price;
+                $priceByPricingGroupId[$pricingGroup->getId()][$this->domain->getDomainConfigById($domainId)->getDefaultCurrencyCode()] = $price;
             }
 
             $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create(

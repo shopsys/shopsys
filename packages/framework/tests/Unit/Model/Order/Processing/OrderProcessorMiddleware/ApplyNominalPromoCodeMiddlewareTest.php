@@ -116,7 +116,7 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         $currentPromoCodeFacade = $this->createStub(CurrentPromoCodeFacade::class);
 
         $promoCodeFacade = $this->createStub(PromoCodeFacade::class);
-        $promoCodeFacade->method('getHighestLimitByPromoCodeAndTotalPrice')->willReturn(new PromoCodeLimit('1', '10'));
+        $promoCodeFacade->method('getHighestLimitByPromoCodeAndTotalPrice')->willReturn(new PromoCodeLimit('1', '10', $this->createCurrency()));
 
         $discountCalculation = $this->createStub(DiscountCalculation::class);
         $discountCalculation->method('calculateNominalDiscount')->willReturn($discountPrice);

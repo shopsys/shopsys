@@ -39,6 +39,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
@@ -116,6 +117,7 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createStub(OrderItemPriceCalculation::class),
             $this->createStub(NumberFormatterExtension::class),
             $this->createStub(PaymentPriceCalculation::class),
+            $this->createStub(CurrencyFacade::class),
             $this->createStub(TransportPriceCalculation::class),
             $this->createStub(OrderItemFactory::class),
             $this->createStub(PaymentTransactionFacade::class),

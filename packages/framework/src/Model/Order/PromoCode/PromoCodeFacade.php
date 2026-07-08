@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCod
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class PromoCodeFacade
@@ -37,6 +38,7 @@ class PromoCodeFacade
         protected readonly PromoCodePricingGroupFactory $promoCodePricingGroupFactory,
         protected readonly PromoCodeFlagRepository $promoCodeFlagRepository,
         protected readonly HashGenerator $hashGenerator,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
     ) {
     }
 
@@ -340,9 +342,12 @@ class PromoCodeFacade
         PromoCode $promoCode,
         PriceInterface $price,
     ): PromoCodeLimit {
+        $currency = $price->getCurrency() ?? $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($promoCode->getDomainId());
+
         $promoCodeLimit = $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice(
             $promoCode,
             $price->getPriceWithVat(),
+            $currency,
         );
 
         if ($promoCodeLimit === null) {

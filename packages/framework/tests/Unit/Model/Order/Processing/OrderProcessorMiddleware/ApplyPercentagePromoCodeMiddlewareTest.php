@@ -163,7 +163,7 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
         $currentPromoCodeFacade->method('validatePromoCode')->willReturn([1, 2]);
 
         $promoCodeFacade = $this->createStub(PromoCodeFacade::class);
-        $promoCodeFacade->method('getHighestLimitByPromoCodeAndTotalPrice')->willReturn(new PromoCodeLimit('1', '10'));
+        $promoCodeFacade->method('getHighestLimitByPromoCodeAndTotalPrice')->willReturn(new PromoCodeLimit('1', '10', $this->createCurrency()));
 
         $discountCalculation = $this->createStub(DiscountCalculation::class);
         $discountCalculation->method('calculatePercentageDiscountRoundedByCurrency')->willReturnOnConsecutiveCalls(...array_values($discountPrices));

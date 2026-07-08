@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
@@ -65,16 +64,13 @@ class TransportPriceCalculationTest extends TestCase
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
-        $currencyFacadeStub = $this->createStub(CurrencyFacade::class);
         $currencyData = new CurrencyData();
         $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
-        $currencyFacadeStub
-            ->method('getDomainDefaultCurrencyByDomainId')
-            ->willReturn(new Currency($currencyData));
+        $currency = new Currency($currencyData);
         $transportPriceFacadeStub = $this->createStub(TransportPriceFacade::class);
         $freeTransportAndPaymentFacadeStub = $this->createStub(FreeTransportAndPaymentFacade::class);
 
-        $transportPriceCalculation = new TransportPriceCalculation($basePriceCalculation, $pricingSettingStub, $currencyFacadeStub, $transportPriceFacadeStub, $freeTransportAndPaymentFacadeStub);
+        $transportPriceCalculation = new TransportPriceCalculation($basePriceCalculation, $pricingSettingStub, $transportPriceFacadeStub, $freeTransportAndPaymentFacadeStub);
 
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -87,11 +83,11 @@ class TransportPriceCalculationTest extends TestCase
         $transportInputPricesData = new TransportInputPricesData();
         $transportInputPricesData->vat = $vat;
         $priceWithLimitData = new PriceWithLimitData();
-        $priceWithLimitData->price = $inputPrice;
+        $priceWithLimitData->pricesByCurrencyCode[Currency::CODE_CZK] = $inputPrice;
         $transportInputPricesData->pricesWithLimits = [$priceWithLimitData];
         $transportData->inputPricesByDomain = [Domain::FIRST_DOMAIN_ID => $transportInputPricesData];
         $transport = new Transport($transportData);
-        $transportPrice = new TransportPrice($transport, $inputPrice, Domain::FIRST_DOMAIN_ID, null);
+        $transportPrice = new TransportPrice($transport, $inputPrice, Domain::FIRST_DOMAIN_ID, null, $currency);
 
         $price = $transportPriceCalculation->calculateIndependentPrice($transportPrice);
 

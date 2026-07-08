@@ -130,8 +130,12 @@ class ProductDomainTest extends TransactionFunctionalTestCase
             $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create(
                 $this->vatFacade->getDefaultVatForDomain($domainId),
                 [
-                    1 => Money::zero(),
-                    2 => Money::zero(),
+                    1 => [
+                        $this->domain->getDomainConfigById($domainId)->getDefaultCurrencyCode() => Money::zero(),
+                    ],
+                    2 => [
+                        $this->domain->getDomainConfigById($domainId)->getDefaultCurrencyCode() => Money::zero(),
+                    ],
                 ],
             );
         }

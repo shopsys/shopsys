@@ -10,16 +10,16 @@
                     </span>
                 </div>
                 <div class="card-body">
-                    {{ _self.render_price_and_vat_row(domainId, form, pricesIndexedByDomainId) }}
+                    {{ _self.render_price_and_vat_row(domainId, form, pricesIndexedByDomainIdAndCurrencyCode, currencyCodesByDomainId[domainId]) }}
                 </div>
             </div>
         {% else %}
-            {{ _self.render_price_and_vat_row(domainId, form, pricesIndexedByDomainId) }}
+            {{ _self.render_price_and_vat_row(domainId, form, pricesIndexedByDomainIdAndCurrencyCode, currencyCodesByDomainId[domainId]) }}
         {% endif %}
     {% endfor %}
 {% endblock %}
 
-{% macro render_price_and_vat_row(domainId, form, pricesIndexedByDomainId) %}
+{% macro render_price_and_vat_row(domainId, form, pricesIndexedByDomainIdAndCurrencyCode, currencyCodes) %}
     <div class="row">
         {{ form_label(form.vatsIndexedByDomainId[domainId]) }}
         <div class="col-auto">
@@ -37,33 +37,35 @@
         </div>
     </div>
 
-    <div class="row align-items-center">
-        {{ form_label(form.pricesIndexedByDomainId[domainId]) }}
+    {% for currencyCode in currencyCodes %}
+        <div class="row align-items-center">
+            {{ form_label(form.pricesIndexedByDomainIdAndCurrencyCode[domainId][currencyCode]) }}
 
-        <div class="col-12 col-md-6">
-            {{ form_widget(form.pricesIndexedByDomainId[domainId], { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
-            {{ form_errors(form.pricesIndexedByDomainId[domainId] ) }}
-        </div>
-
-        <div class="mt-2 d-md-none">
-            <h4>{{ 'Selling prices'|trans }}</h4>
-        </div>
-
-        {% set price = pricesIndexedByDomainId[domainId] %}
-
-        {% if price %}
-            <div class="col-6 col-md-2 text-md-end ms-auto">
-                {{ price.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
-                <br>
-                <span class="small">{{ 'Excl. VAT'|trans }}</span>
+            <div class="col-12 col-md-6">
+                {{ form_widget(form.pricesIndexedByDomainIdAndCurrencyCode[domainId][currencyCode], { symbolAfterInput: currencySymbolByCode(currencyCode) }) }}
+                {{ form_errors(form.pricesIndexedByDomainIdAndCurrencyCode[domainId][currencyCode] ) }}
             </div>
-            <div class="col-6 col-md-2 text-md-end">
-                <strong>
-                    {{ price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}
-                </strong>
-                <br>
-                <span class="small">{{ 'Incl. VAT'|trans }}</span>
+
+            <div class="mt-2 d-md-none">
+                <h4>{{ 'Selling prices'|trans }}</h4>
             </div>
-        {% endif %}
-    </div>
+
+            {% set price = pricesIndexedByDomainIdAndCurrencyCode[domainId][currencyCode] ?? null %}
+
+            {% if price %}
+                <div class="col-6 col-md-2 text-md-end ms-auto">
+                    {{ price.priceWithoutVat|priceWithCurrencyByCode(currencyCode) }}
+                    <br>
+                    <span class="small">{{ 'Excl. VAT'|trans }}</span>
+                </div>
+                <div class="col-6 col-md-2 text-md-end">
+                    <strong>
+                        {{ price.priceWithVat|priceWithCurrencyByCode(currencyCode) }}
+                    </strong>
+                    <br>
+                    <span class="small">{{ 'Incl. VAT'|trans }}</span>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
 {% endmacro %}

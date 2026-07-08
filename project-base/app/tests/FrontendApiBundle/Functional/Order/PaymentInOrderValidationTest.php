@@ -97,7 +97,8 @@ class PaymentInOrderValidationTest extends GraphQlTestCase
     {
         $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
-        $paymentData->pricesIndexedByDomainId[1] = $payment->getPrice(1)->getPrice()->add(Money::create(10));
+        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(1);
+        $paymentData->pricesIndexedByDomainIdAndCurrencyCode[1][$firstDomainDefaultCurrency->getCode()] = $payment->getPrice(1, $firstDomainDefaultCurrency)->getPrice()->add(Money::create(10));
         $this->paymentFacade->edit($payment, $paymentData);
     }
 }

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -37,10 +38,28 @@ class PromoCodeLimit
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
     protected $discount;
 
-    public function __construct(string $from, string $discount)
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    #[AsMcpColumn]
+    #[ORM\JoinColumn(nullable: false, name: 'currency_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Currency::class)]
+    protected $currency;
+
+    public function __construct(string $from, string $discount, Currency $currency)
     {
         $this->fromPrice = $from;
         $this->discount = $discount;
+        $this->currency = $currency;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 
     /**

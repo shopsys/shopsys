@@ -161,7 +161,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 
     private function createPromoCodeWithFlags(array $promoCodeFlags): PromoCode
     {
-        $promoCodeLimit = $this->promoCodeLimitFactory->create('1', '10');
+        $promoCodeLimit = $this->promoCodeLimitFactory->create('1', '10', $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()));
 
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->flags = $promoCodeFlags;

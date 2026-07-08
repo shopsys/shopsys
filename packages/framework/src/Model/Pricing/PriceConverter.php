@@ -56,6 +56,20 @@ class PriceConverter
         string $vatPercent,
         int $domainId,
     ): Money {
+        return $this->convertPriceToInputPriceInCurrency(
+            $price,
+            $currency,
+            $vatPercent,
+            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId),
+        );
+    }
+
+    public function convertPriceToInputPriceInCurrency(
+        Money $price,
+        Currency $currency,
+        string $vatPercent,
+        Currency $targetCurrency,
+    ): Money {
         if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $multiplier = (string)(100 + (float)$vatPercent);
 
@@ -64,6 +78,9 @@ class PriceConverter
                 ->divide(100, 6);
         }
 
-        return $this->convertPriceWithoutVatToDomainDefaultCurrencyPrice($price, $currency, $domainId);
+        $coefficient = $this->currencyFacade->getExchangeRateForCurrencies($currency, $targetCurrency);
+        $convertedPrice = $price->multiply((string)$coefficient);
+
+        return $this->rounding->roundPriceWithoutVat($convertedPrice, $targetCurrency->getRoundingPlacesPriceWithoutVat());
     }
 }

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Order\OrderPaymentFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderTransportFormType;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
@@ -25,6 +26,7 @@ final class OrderItemsType extends AbstractType
         private readonly TransportFacade $transportFacade,
         private readonly PaymentFacade $paymentFacade,
         private readonly PricingSetting $pricingSetting,
+        private readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -77,16 +79,17 @@ final class OrderItemsType extends AbstractType
 
         $view->vars['order'] = $order;
         $view->vars['inputPriceType'] = $this->pricingSetting->getInputPriceType();
+        $orderCurrency = $this->currencyFacade->getByCode($order->getCurrencyCode());
         $view->vars['transportPricesWithVatByTransportId'] = $this->transportFacade->getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(
             $order->getDomainId(),
+            $orderCurrency,
         );
         $view->vars['transportVatPercentsByTransportId'] = $this->transportFacade->getTransportVatPercentsByDomainIdIndexedByTransportId(
             $order->getDomainId(),
         );
         $view->vars['paymentPricesWithVatByPaymentId'] = $this->paymentFacade->getPaymentPricesWithVatByDomainIdIndexedByPaymentId(
             $order->getDomainId(),
-            $order->getCurrencyRoundingType(),
-            $order->getCurrencyRoundingPlacesPriceWithoutVat(),
+            $orderCurrency,
         );
         $view->vars['paymentVatPercentsByPaymentId'] = $this->paymentFacade->getPaymentVatPercentsByDomainIdIndexedByPaymentId(
             $order->getDomainId(),

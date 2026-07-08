@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
@@ -100,7 +101,19 @@ class TransportFacade
 
         foreach ($inputPricesDataIndexedByDomainId as $domainId => $pricesData) {
             foreach ($pricesData->pricesWithLimits as $pricesWithLimitData) {
-                $prices[] = $this->transportPriceFactory->create($transport, $pricesWithLimitData->price, $domainId, $pricesWithLimitData->maxWeight);
+                foreach ($pricesWithLimitData->pricesByCurrencyCode as $currencyCode => $price) {
+                    if ($price === null) {
+                        continue;
+                    }
+
+                    $prices[] = $this->transportPriceFactory->create(
+                        $transport,
+                        $price,
+                        $domainId,
+                        $pricesWithLimitData->maxWeight,
+                        $this->currencyFacade->getByCode($currencyCode),
+                    );
+                }
             }
         }
 
@@ -137,12 +150,13 @@ class TransportFacade
      */
     public function getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(
         int $domainId,
+        Currency $currency,
     ): array {
         $transportPricesWithVatByTransportId = [];
         $transports = $this->getAllIncludingDeleted();
 
         foreach ($transports as $transport) {
-            $transportInputPrice = $transport->getLowestPriceOnDomain($domainId);
+            $transportInputPrice = $transport->getLowestPriceOnDomain($domainId, $currency);
             $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
                 $transportInputPrice,
             );
@@ -172,12 +186,20 @@ class TransportFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[][]
      */
+    /**
+     * Only the domain default currency prices are returned (used by the admin grid)
+     */
     public function getIndependentBasePricesIndexedByDomainId(Transport $transport): array
     {
         $prices = [];
 
         foreach ($transport->getPrices() as $transportInputPrice) {
             $domainId = $transportInputPrice->getDomainId();
+
+            if ($transportInputPrice->getCurrency() !== $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId)) {
+                continue;
+            }
+
             $prices[$domainId][] = $this->transportPriceCalculation->calculateIndependentPrice(
                 $transportInputPrice,
             );

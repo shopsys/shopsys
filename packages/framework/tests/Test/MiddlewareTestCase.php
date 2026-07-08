@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
@@ -87,8 +88,43 @@ class MiddlewareTestCase extends TestCase
 
         $currencyFacade->method('getDomainDefaultCurrencyByDomainId')
             ->willReturn($currency);
+        $currencyFacade->method('getByCode')
+            ->willReturn($currency);
 
         return $currencyFacade;
+    }
+
+    protected function createCurrentCurrencyProvider(
+        string $currencyCode = Currency::CODE_EUR,
+        string $roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS,
+        int $roundingPlaces = Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT,
+        int $minFractionDigits = Currency::DEFAULT_MIN_FRACTION_DIGITS,
+    ): CurrentCurrencyProvider {
+        $currentCurrencyProvider = $this->createStub(CurrentCurrencyProvider::class);
+
+        $currency = $this->createCurrency($currencyCode, $roundingType, $roundingPlaces, $minFractionDigits);
+
+        $currentCurrencyProvider->method('getCurrentCurrencyOfDomain')
+            ->willReturn($currency);
+        $currentCurrencyProvider->method('getCurrentCurrencyOfCurrentDomain')
+            ->willReturn($currency);
+
+        return $currentCurrencyProvider;
+    }
+
+    protected function createCurrency(
+        string $currencyCode = Currency::CODE_EUR,
+        string $roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS,
+        int $roundingPlaces = Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT,
+        int $minFractionDigits = Currency::DEFAULT_MIN_FRACTION_DIGITS,
+    ): Currency {
+        $currency = $this->createStub(Currency::class);
+        $currency->method('getCode')->willReturn($currencyCode);
+        $currency->method('getRoundingType')->willReturn($roundingType);
+        $currency->method('getRoundingPlacesPriceWithoutVat')->willReturn($roundingPlaces);
+        $currency->method('getMinFractionDigits')->willReturn($minFractionDigits);
+
+        return $currency;
     }
 
     protected function createVat(): Vat

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory;
@@ -18,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFac
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Symfony\Component\Clock\DatePoint;
 
@@ -43,6 +45,8 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         private readonly PromoCodeLimitFactory $promoCodeLimitFactory,
         private readonly PromoCodeFlagFactory $promoCodeFlagFactory,
         private readonly EntityManagerInterface $em,
+        private readonly Domain $domain,
+        private readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -196,17 +200,27 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
 
     private function setDefaultLimit(PromoCode $promoCode): void
     {
-        $promoCodeLimit = $this->promoCodeLimitFactory->create('1.0', '10');
-        $promoCodeLimit->setPromoCode($promoCode);
-        $this->em->persist($promoCodeLimit);
-        $this->em->flush();
+        $this->createLimitForEveryDomainCurrency($promoCode, '1.0', '10');
     }
 
     private function setDefaultNominalLimit(PromoCode $promoCode): void
     {
-        $promoCodeLimit = $this->promoCodeLimitFactory->create('101', '100');
-        $promoCodeLimit->setPromoCode($promoCode);
-        $this->em->persist($promoCodeLimit);
+        $this->createLimitForEveryDomainCurrency($promoCode, '101', '100');
+    }
+
+    private function createLimitForEveryDomainCurrency(PromoCode $promoCode, string $fromPrice, string $discount): void
+    {
+        $domainConfig = $this->domain->getDomainConfigById($promoCode->getDomainId());
+
+        foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+            $promoCodeLimit = $this->promoCodeLimitFactory->create(
+                $fromPrice,
+                $discount,
+                $this->currencyFacade->getByCode($currencyCode),
+            );
+            $promoCodeLimit->setPromoCode($promoCode);
+            $this->em->persist($promoCodeLimit);
+        }
         $this->em->flush();
     }
 

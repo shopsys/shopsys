@@ -98,7 +98,7 @@ class AddPaymentMiddlewareTest extends MiddlewareTestCase
     {
         return new AddPaymentMiddleware(
             $this->createPaymentPriceCalculationStub($paymentPrice),
-            $this->createCurrencyFacade(),
+            $this->createCurrentCurrencyProvider(),
             $this->createOrderItemDataFactory(),
         );
     }

@@ -179,7 +179,7 @@ final class PaymentFormType extends AbstractType
                 'help' => t('Rounding item with 0 % VAT will be added to the order. It is used for payment in cash.'),
             ])
             ->add('pricesByDomains', PriceAndVatTableByDomainsType::class, [
-                'pricesIndexedByDomainId' => $this->paymentFacade->getPricesIndexedByDomainId($payment),
+                'pricesIndexedByDomainIdAndCurrencyCode' => $this->paymentFacade->getPricesIndexedByDomainIdAndCurrencyCode($payment),
                 'inherit_data' => true,
                 'label' => false,
             ]);

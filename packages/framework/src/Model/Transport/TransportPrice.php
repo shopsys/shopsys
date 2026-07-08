@@ -6,12 +6,13 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'transport_prices')]
-#[ORM\UniqueConstraint(name: 'unique_weight_limit_on_domain', columns: ['max_weight', 'domain_id', 'transport_id'])]
+#[ORM\UniqueConstraint(name: 'unique_weight_limit_on_domain', columns: ['max_weight', 'domain_id', 'transport_id', 'currency_id'])]
 #[ORM\Entity]
 class TransportPrice
 {
@@ -53,12 +54,29 @@ class TransportPrice
     #[ORM\Column(type: 'integer', nullable: true)]
     protected $maxWeight;
 
-    public function __construct(Transport $transport, Money $price, int $domainId, ?int $maxWeight)
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    #[AsMcpColumn]
+    #[ORM\JoinColumn(nullable: false, name: 'currency_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Currency::class)]
+    protected $currency;
+
+    public function __construct(Transport $transport, Money $price, int $domainId, ?int $maxWeight, Currency $currency)
     {
         $this->transport = $transport;
         $this->price = $price;
         $this->domainId = $domainId;
         $this->maxWeight = $maxWeight;
+        $this->currency = $currency;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 
     /**

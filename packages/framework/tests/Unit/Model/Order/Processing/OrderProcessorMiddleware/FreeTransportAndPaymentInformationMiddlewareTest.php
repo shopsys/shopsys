@@ -26,7 +26,10 @@ class FreeTransportAndPaymentInformationMiddlewareTest extends MiddlewareTestCas
             ->method('isFreeTransportAndPaymentApplied')
             ->willReturn($expectedValue);
 
-        $freeTransportAndPaymentInformationMiddleware = new FreeTransportAndPaymentInformationMiddleware($freeTransportAndPaymentFacadeStub);
+        $freeTransportAndPaymentInformationMiddleware = new FreeTransportAndPaymentInformationMiddleware(
+            $freeTransportAndPaymentFacadeStub,
+            $this->createCurrentCurrencyProvider(),
+        );
 
         $orderProcessingData = $this->createOrderProcessingData();
 

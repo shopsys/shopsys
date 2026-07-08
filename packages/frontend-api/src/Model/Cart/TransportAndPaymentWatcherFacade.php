@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -33,6 +34,7 @@ class TransportAndPaymentWatcherFacade
         protected readonly PaymentFacade $paymentFacade,
         protected readonly Domain $domain,
         protected readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly CartTransportFacade $cartTransportFacade,
         protected readonly TransportValidationFacade $transportValidationFacade,
         protected readonly CartPaymentFacade $cartPaymentFacade,
@@ -56,11 +58,14 @@ class TransportAndPaymentWatcherFacade
 
         $isFreeTransportAndPaymentPromoCodeApplied = $orderData->freeTransportAndPaymentApplied;
 
-        if ($this->freeTransportAndPaymentFacade->isActive($domainId, $isFreeTransportAndPaymentPromoCodeApplied)) {
+        $currentCurrency = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($domainId);
+
+        if ($this->freeTransportAndPaymentFacade->isActive($domainId, $isFreeTransportAndPaymentPromoCodeApplied, $currentCurrency)) {
             $amountForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingAmount(
                 $productsPrice,
                 $domainId,
                 $isFreeTransportAndPaymentPromoCodeApplied,
+                $currentCurrency,
             );
 
             $this->cartWithModificationsResult->setRemainingAmountForFreeTransport($amountForFreeTransport);

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -40,7 +41,7 @@ class PaymentFacade
         $this->em->flush();
         $this->updatePaymentPrices(
             $payment,
-            $paymentData->pricesIndexedByDomainId,
+            $paymentData->pricesIndexedByDomainIdAndCurrencyCode,
             $paymentData->vatsIndexedByDomainId,
         );
         $this->setAdditionalDataAndFlush($payment, $paymentData);
@@ -54,7 +55,7 @@ class PaymentFacade
         $payment->edit($paymentData);
         $this->updatePaymentPrices(
             $payment,
-            $paymentData->pricesIndexedByDomainId,
+            $paymentData->pricesIndexedByDomainIdAndCurrencyCode,
             $paymentData->vatsIndexedByDomainId,
         );
         $this->setAdditionalDataAndFlush($payment, $paymentData);
@@ -101,25 +102,31 @@ class PaymentFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesIndexedByDomainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $vatsIndexedByDomainId
+     */
+    /**
+     * @param array<int, array<string, \Shopsys\FrameworkBundle\Component\Money\Money>> $pricesIndexedByDomainIdAndCurrencyCode
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $vatsIndexedByDomainId
      */
     protected function updatePaymentPrices(
         Payment $payment,
-        array $pricesIndexedByDomainId,
+        array $pricesIndexedByDomainIdAndCurrencyCode,
         array $vatsIndexedByDomainId,
     ): void {
         foreach ($this->domain->getAllIds() as $domainId) {
-            $existPriceForDomain = $payment->hasPriceForDomain($domainId);
-            $payment->setPrice($pricesIndexedByDomainId[$domainId], $domainId);
+            foreach ($pricesIndexedByDomainIdAndCurrencyCode[$domainId] ?? [] as $currencyCode => $price) {
+                $currency = $this->currencyFacade->getByCode($currencyCode);
 
-            if ($existPriceForDomain !== false) {
-                continue;
+                if ($payment->hasPriceForDomainAndCurrency($domainId, $currency)) {
+                    $payment->setPrice($price, $domainId, $currency);
+
+                    continue;
+                }
+
+                $payment->addPrice(
+                    $this->paymentPriceFactory->create($payment, $price, $domainId, $currency),
+                );
             }
-
-            $payment->addPrice(
-                $this->paymentPriceFactory->create($payment, $pricesIndexedByDomainId[$domainId], $domainId),
-            );
         }
     }
 
@@ -136,14 +143,13 @@ class PaymentFacade
      */
     public function getPaymentPricesWithVatByDomainIdIndexedByPaymentId(
         int $domainId,
-        string $roundingType,
-        int $roundingPlaces,
+        Currency $currency,
     ): array {
         $paymentPricesWithVatByPaymentId = [];
         $payments = $this->getAllIncludingDeleted();
 
         foreach ($payments as $payment) {
-            $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $domainId, $roundingType, $roundingPlaces);
+            $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $domainId, $currency);
             $paymentPricesWithVatByPaymentId[$payment->getId()] = $paymentPrice->getPriceWithVat();
         }
 
@@ -186,18 +192,25 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[]
      */
+    /**
+     * Only the domain default currency prices are returned (used by the admin grid)
+     */
     public function getIndependentBasePricesIndexedByDomainId(Payment $payment): array
     {
         $prices = [];
 
         foreach ($payment->getPrices() as $paymentInputPrice) {
             $domainId = $paymentInputPrice->getDomainId();
-            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+            $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+            if ($paymentInputPrice->getCurrency() !== $defaultCurrency) {
+                continue;
+            }
+
             $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice(
                 $payment,
                 $domainId,
-                $currency->getRoundingType(),
-                $currency->getRoundingPlacesPriceWithoutVat(),
+                $defaultCurrency,
             );
         }
 
@@ -205,27 +218,26 @@ class PaymentFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[]
+     * @return array<int, array<string, \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface>>
      */
-    public function getPricesIndexedByDomainId(?Payment $payment): array
+    public function getPricesIndexedByDomainIdAndCurrencyCode(?Payment $payment): array
     {
         $prices = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+            foreach ($this->currencyFacade->getEnabledCurrenciesByDomainId($domainId) as $currency) {
+                if ($payment === null) {
+                    $prices[$domainId][$currency->getCode()] = Price::zero();
 
-            if ($payment === null) {
-                $prices[$domainId] = Price::zero();
+                    continue;
+                }
 
-                continue;
+                $prices[$domainId][$currency->getCode()] = $this->paymentPriceCalculation->calculateIndependentPrice(
+                    $payment,
+                    $domainId,
+                    $currency,
+                );
             }
-
-            $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice(
-                $payment,
-                $domainId,
-                $currency->getRoundingType(),
-                $currency->getRoundingPlacesPriceWithoutVat(),
-            );
         }
 
         return $prices;

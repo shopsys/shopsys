@@ -68,7 +68,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             );
         }
 
-        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('99.95'));
+        $this->setPriceForAllDomainCurrencies($paymentData, Money::create('99.95'));
 
         $this->createPayment(self::PAYMENT_CARD, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
@@ -86,7 +86,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             $paymentData->name[$locale] = t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('49.90'));
+        $this->setPriceForAllDomainCurrencies($paymentData, Money::create('49.90'));
         $this->createPayment(
             self::PAYMENT_CASH_ON_DELIVERY,
             $paymentData,
@@ -115,7 +115,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         }
         $paymentData->orderRoundingTypeByDomainId[Domain::THIRD_DOMAIN_ID] = OrderRoundingTypeEnum::FIVE_CENTS;
 
-        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::zero());
+        $this->setPriceForAllDomainCurrencies($paymentData, Money::zero());
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
 
         $this->createGoPayCardPayment();
@@ -131,7 +131,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             $paymentData->name[$locale] = t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
+        $this->setPriceForAllDomainCurrencies($paymentData, Money::create('199.90'));
         $this->createPayment(self::PAYMENT_LATER, $paymentData, [TransportDataFixture::TRANSPORT_DRONE]);
 
         $paymentData = $this->paymentDataFactory->create();
@@ -146,7 +146,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->setBankAccountDetailsToPaymentData($paymentData, $domainConfig);
         }
 
-        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
+        $this->setPriceForAllDomainCurrencies($paymentData, Money::create('199.90'));
         $this->createPayment(
             self::PAYMENT_BANK_TRANSFER,
             $paymentData,
@@ -213,21 +213,25 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param \App\Model\Payment\PaymentData $paymentData
      */
-    private function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
+    private function setPriceForAllDomainCurrencies(PaymentData $paymentData, Money $price): void
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $domainId = $domainConfig->getId();
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
 
-            $convertedPrice = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(
-                $price,
-                $currencyCzk,
-                $vat->getPercent(),
-                $domainId,
-            );
+            foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+                $convertedPrice = $this->priceConverter->convertPriceToInputPriceInCurrency(
+                    $price,
+                    $currencyCzk,
+                    $vat->getPercent(),
+                    $this->currencyFacade->getByCode($currencyCode),
+                );
 
-            $paymentData->pricesIndexedByDomainId[$domainId] = $convertedPrice;
+                $paymentData->pricesIndexedByDomainIdAndCurrencyCode[$domainId][$currencyCode] = $convertedPrice;
+            }
+
             $paymentData->vatsIndexedByDomainId[$domainId] = $vat;
         }
     }

@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\TransportAndPayment\FreeTransportAndPaymentPriceLimitsFormType;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,7 +19,7 @@ class TransportAndPaymentController extends AdminBaseController
 {
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly PricingSetting $pricingSetting,
+        protected readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
     ) {
     }
 
@@ -39,13 +39,13 @@ class TransportAndPaymentController extends AdminBaseController
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
-            $freeTransportAndPaymentPriceLimit = $this->pricingSetting->getFreeTransportAndPaymentPriceLimit(
+            $priceLimitsByCurrencyCode = $this->freeTransportAndPaymentFacade->getPriceLimitsIndexedByCurrencyCode(
                 $domainId,
             );
 
             $formData[FreeTransportAndPaymentPriceLimitsFormType::DOMAINS_SUBFORM_NAME][$domainId] = [
-                FreeTransportAndPaymentPriceLimitsFormType::FIELD_ENABLED => $freeTransportAndPaymentPriceLimit !== null,
-                FreeTransportAndPaymentPriceLimitsFormType::FIELD_PRICE_LIMIT => $freeTransportAndPaymentPriceLimit,
+                FreeTransportAndPaymentPriceLimitsFormType::FIELD_ENABLED => $priceLimitsByCurrencyCode !== [],
+                FreeTransportAndPaymentPriceLimitsFormType::FIELD_PRICE_LIMITS_BY_CURRENCY_CODE => $priceLimitsByCurrencyCode,
             ];
         }
 
@@ -60,12 +60,12 @@ class TransportAndPaymentController extends AdminBaseController
                 $domainId = $domainConfig->getId();
 
                 if ($subformData[$domainId][FreeTransportAndPaymentPriceLimitsFormType::FIELD_ENABLED]) {
-                    $priceLimit = $subformData[$domainId][FreeTransportAndPaymentPriceLimitsFormType::FIELD_PRICE_LIMIT];
+                    $priceLimitsByCurrencyCode = $subformData[$domainId][FreeTransportAndPaymentPriceLimitsFormType::FIELD_PRICE_LIMITS_BY_CURRENCY_CODE];
                 } else {
-                    $priceLimit = null;
+                    $priceLimitsByCurrencyCode = null;
                 }
 
-                $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($domainId, $priceLimit);
+                $this->freeTransportAndPaymentFacade->setPriceLimits($domainId, $priceLimitsByCurrencyCode);
             }
 
             $this->addSuccessFlash(t('Free shipping and payment settings saved'));

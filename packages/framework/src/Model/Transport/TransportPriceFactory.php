@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class TransportPriceFactory
 {
@@ -18,9 +19,10 @@ class TransportPriceFactory
         Money $price,
         int $domainId,
         ?int $maxWeight,
+        Currency $currency,
     ): TransportPrice {
         $entityClassName = $this->entityNameResolver->resolve(TransportPrice::class);
 
-        return new $entityClassName($transport, $price, $domainId, $maxWeight);
+        return new $entityClassName($transport, $price, $domainId, $maxWeight, $currency);
     }
 }

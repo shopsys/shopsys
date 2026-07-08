@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -199,9 +200,10 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     public function setPrice(
         Money $price,
         int $domainId,
+        Currency $currency,
     ): void {
         foreach ($this->prices as $paymentInputPrice) {
-            if ($paymentInputPrice->getDomainId() === $domainId) {
+            if ($paymentInputPrice->getDomainId() === $domainId && $paymentInputPrice->getCurrency() === $currency) {
                 $paymentInputPrice->setPrice($price);
 
                 return;
@@ -209,10 +211,10 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
     }
 
-    public function hasPriceForDomain(int $domainId): bool
+    public function hasPriceForDomainAndCurrency(int $domainId, Currency $currency): bool
     {
-        foreach ($this->prices as $transportInputPrice) {
-            if ($transportInputPrice->getDomainId() === $domainId) {
+        foreach ($this->prices as $paymentInputPrice) {
+            if ($paymentInputPrice->getDomainId() === $domainId && $paymentInputPrice->getCurrency() === $currency) {
                 return true;
             }
         }
@@ -436,15 +438,15 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         throw new PaymentDomainNotFoundException($domainId, $this->id);
     }
 
-    public function getPrice(int $domainId): PaymentPrice
+    public function getPrice(int $domainId, Currency $currency): PaymentPrice
     {
         foreach ($this->prices as $price) {
-            if ($price->getDomainId() === $domainId) {
+            if ($price->getDomainId() === $domainId && $price->getCurrency() === $currency) {
                 return $price;
             }
         }
 
-        $message = 'Payment price for domain ID ' . $domainId . ' and payment ID ' . $this->getId() . 'not found.';
+        $message = 'Payment price for domain ID ' . $domainId . ', currency code ' . $currency->getCode() . ' and payment ID ' . $this->getId() . ' not found.';
 
         throw new PaymentPriceNotFoundException($message);
     }

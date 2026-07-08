@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -38,11 +39,29 @@ class PaymentPrice
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
-    public function __construct(Payment $payment, Money $price, int $domainId)
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    #[AsMcpColumn]
+    #[ORM\JoinColumn(nullable: false, name: 'currency_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Currency::class)]
+    protected $currency;
+
+    public function __construct(Payment $payment, Money $price, int $domainId, Currency $currency)
     {
         $this->payment = $payment;
         $this->price = $price;
         $this->domainId = $domainId;
+        $this->currency = $currency;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 
     /**

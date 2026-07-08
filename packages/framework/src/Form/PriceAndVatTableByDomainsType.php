@@ -20,8 +20,10 @@ use Symfony\Component\Validator\Constraints;
 
 final class PriceAndVatTableByDomainsType extends AbstractType
 {
-    public function __construct(private readonly Domain $domain, private readonly VatFacade $vatFacade)
-    {
+    public function __construct(
+        private readonly Domain $domain,
+        private readonly VatFacade $vatFacade,
+    ) {
     }
 
     #[Override]
@@ -29,16 +31,22 @@ final class PriceAndVatTableByDomainsType extends AbstractType
     {
         parent::buildView($view, $form, $options);
 
-        $view->vars['pricesIndexedByDomainId'] = $options['pricesIndexedByDomainId'];
+        $view->vars['pricesIndexedByDomainIdAndCurrencyCode'] = $options['pricesIndexedByDomainIdAndCurrencyCode'];
         $view->vars['enabledDomainIds'] = $this->domain->getAdminEnabledDomainIds();
+        $currencyCodesByDomainId = [];
+
+        foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
+            $currencyCodesByDomainId[$domainConfig->getId()] = $domainConfig->getCurrencyCodes();
+        }
+        $view->vars['currencyCodesByDomainId'] = $currencyCodesByDomainId;
     }
 
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired('pricesIndexedByDomainId')
-            ->setAllowedTypes('pricesIndexedByDomainId', ['array']);
+            ->setRequired('pricesIndexedByDomainIdAndCurrencyCode')
+            ->setAllowedTypes('pricesIndexedByDomainIdAndCurrencyCode', ['array']);
     }
 
     #[Override]
@@ -51,7 +59,7 @@ final class PriceAndVatTableByDomainsType extends AbstractType
             'label' => false,
         ]);
 
-        $entityPricesByDomainId = $builder->create('pricesIndexedByDomainId', FormType::class, [
+        $entityPricesByDomainId = $builder->create('pricesIndexedByDomainIdAndCurrencyCode', FormType::class, [
             'compound' => true,
             'label' => false,
         ]);
@@ -68,16 +76,25 @@ final class PriceAndVatTableByDomainsType extends AbstractType
                 'label' => 'VAT',
             ]);
 
-            $entityPricesByDomainId->add((string)$domainConfig->getId(), MoneyType::class, [
-                'scale' => 6,
-                'required' => true,
-                'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
-                'constraints' => [
-                    new Constraints\NotBlank(message: 'Please enter price'),
-                    new NotNegativeMoneyAmount(message: 'Price must be greater or equal to zero'),
-                ],
-                'label' => 'Price',
+            $pricesByCurrencyCode = $builder->create((string)$domainConfig->getId(), FormType::class, [
+                'compound' => true,
+                'label' => false,
             ]);
+
+            foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+                $pricesByCurrencyCode->add($currencyCode, MoneyType::class, [
+                    'scale' => 6,
+                    'required' => true,
+                    'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
+                    'constraints' => [
+                        new Constraints\NotBlank(message: 'Please enter price'),
+                        new NotNegativeMoneyAmount(message: 'Price must be greater or equal to zero'),
+                    ],
+                    'label' => count($domainConfig->getCurrencyCodes()) > 1 ? $currencyCode : 'Price',
+                ]);
+            }
+
+            $entityPricesByDomainId->add($pricesByCurrencyCode);
         }
 
         $builder->add($vatsIndexedByDomainId);

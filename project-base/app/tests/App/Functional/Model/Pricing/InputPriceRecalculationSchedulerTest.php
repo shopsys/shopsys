@@ -142,9 +142,10 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $paymentData = $this->paymentDataFactory->create();
         $transportData = $this->transportDataFactory->create();
 
-        $paymentData->pricesIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $inputPrice;
+        $firstDomainDefaultCurrencyCode = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getDefaultCurrencyCode();
+        $paymentData->pricesIndexedByDomainIdAndCurrencyCode[Domain::FIRST_DOMAIN_ID][$firstDomainDefaultCurrencyCode] = $inputPrice;
         $priceWithLimitData = new PriceWithLimitData();
-        $priceWithLimitData->price = $inputPrice;
+        $priceWithLimitData->pricesByCurrencyCode[$firstDomainDefaultCurrencyCode] = $inputPrice;
         $transportData->inputPricesByDomain[Domain::FIRST_DOMAIN_ID]->pricesWithLimits = [$priceWithLimitData];
 
         $vatData = new VatData();
@@ -183,7 +184,8 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $this->em->refresh($payment);
         $this->em->refresh($transport);
 
-        $this->assertThat($payment->getPrice(Domain::FIRST_DOMAIN_ID)->getPrice(), new IsMoneyEqual($expectedPrice));
-        $this->assertThat($transport->getLowestPriceOnDomain(Domain::FIRST_DOMAIN_ID)->getPrice(), new IsMoneyEqual($expectedPrice));
+        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
+        $this->assertThat($payment->getPrice(Domain::FIRST_DOMAIN_ID, $firstDomainDefaultCurrency)->getPrice(), new IsMoneyEqual($expectedPrice));
+        $this->assertThat($transport->getLowestPriceOnDomain(Domain::FIRST_DOMAIN_ID, $firstDomainDefaultCurrency)->getPrice(), new IsMoneyEqual($expectedPrice));
     }
 }

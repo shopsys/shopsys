@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
@@ -37,6 +38,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         private readonly TransportFacade $transportFacade,
         private readonly TransportDataFactory $transportDataFactory,
         private readonly PriceConverter $priceConverter,
+        private readonly CurrencyFacade $currencyFacade,
         private readonly TransportInputPricesDataFactory $transportInputPricesDataFactory,
     ) {
     }
@@ -152,27 +154,39 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $domainId = $domainConfig->getId();
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
-
-            $convertedPrice = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(
-                $price,
-                $currencyCzk,
-                $vat->getPercent(),
-                $domainId,
-            );
 
             $transportInputPricesData = $this->transportInputPricesDataFactory->create($domainId);
             $transportInputPricesData->vat = $vat;
             $priceWithLimitData = $this->transportInputPricesDataFactory->createPriceWithLimitDataInstance();
-            $priceWithLimitData->price = $convertedPrice;
             $priceWithLimitData->maxWeight = $maxWeight;
-            $transportInputPricesData->pricesWithLimits = [$priceWithLimitData];
+            $priceWithLimitData2 = null;
 
             if ($maxWeight !== null) {
                 $priceWithLimitData2 = $this->transportInputPricesDataFactory->createPriceWithLimitDataInstance();
-                $priceWithLimitData2->price = $convertedPrice->multiply(2);
                 $priceWithLimitData2->maxWeight = $maxWeight * 2;
+            }
+
+            foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+                $convertedPrice = $this->priceConverter->convertPriceToInputPriceInCurrency(
+                    $price,
+                    $currencyCzk,
+                    $vat->getPercent(),
+                    $this->currencyFacade->getByCode($currencyCode),
+                );
+
+                $priceWithLimitData->pricesByCurrencyCode[$currencyCode] = $convertedPrice;
+
+                if ($priceWithLimitData2 !== null) {
+                    $priceWithLimitData2->pricesByCurrencyCode[$currencyCode] = $convertedPrice->multiply(2);
+                }
+            }
+
+            $transportInputPricesData->pricesWithLimits = [$priceWithLimitData];
+
+            if ($priceWithLimitData2 !== null) {
                 $transportInputPricesData->pricesWithLimits[] = $priceWithLimitData2;
             }
 

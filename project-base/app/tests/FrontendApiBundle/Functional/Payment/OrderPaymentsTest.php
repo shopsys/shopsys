@@ -11,14 +11,23 @@ use App\Model\Payment\Payment;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class OrderPaymentsTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade;
+
     public function testOrderPaymentsPricesWhenFreePriceLimitIsMet(): void
     {
         // make sure the payment and transport is free
-        $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($this->domain->getId(), Money::create(1));
+        $this->freeTransportAndPaymentFacade->setPriceLimits(
+            $this->domain->getId(),
+            [$this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId())->getCode() => Money::create(1)],
+        );
 
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
         $response = $this->getResponseContentForGql(

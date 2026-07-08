@@ -70,6 +70,11 @@ class PriceExtension extends AbstractExtension
                 ['is_safe' => ['html']],
             ),
             new TwigFilter(
+                'priceWithCurrencyByCode',
+                $this->priceWithCurrencyByCodeFilter(...),
+                ['is_safe' => ['html']],
+            ),
+            new TwigFilter(
                 'priceFromDecimalStringWithCurrencyAdmin',
                 $this->priceFromDecimalStringWithCurrencyAdmin(...),
             ),
@@ -168,6 +173,13 @@ class PriceExtension extends AbstractExtension
     public function priceWithCurrencyByCurrencyIdFilter(Money $price, int $currencyId): string
     {
         $currency = $this->currencyFacade->getById($currencyId);
+
+        return $this->formatCurrency($price, $currency);
+    }
+
+    public function priceWithCurrencyByCodeFilter(Money $price, string $currencyCode): string
+    {
+        $currency = $this->currencyFacade->getByCode($currencyCode);
 
         return $this->formatCurrency($price, $currency);
     }

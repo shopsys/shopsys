@@ -53,9 +53,14 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData->hidden = $hidden;
         $productData->sellingDenied = $sellingDenied;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
+        $firstDomainDefaultCurrencyCode = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getDefaultCurrencyCode();
         $productData->productInputPricesByDomain[Domain::FIRST_DOMAIN_ID] = $this->productInputPriceDataFactory->create(
             $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID, Vat::class),
-            [Domain::FIRST_DOMAIN_ID => Money::create(1)],
+            [
+                Domain::FIRST_DOMAIN_ID => [
+                    $firstDomainDefaultCurrencyCode => Money::create(1),
+                ],
+            ],
         );
 
         $productData->name[$this->getFirstDomainLocale()] = 'Test product';

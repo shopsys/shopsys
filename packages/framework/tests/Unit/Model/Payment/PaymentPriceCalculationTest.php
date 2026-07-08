@@ -122,16 +122,17 @@ class PaymentPriceCalculationTest extends TestCase
             Domain::FIRST_DOMAIN_ID => $vat,
         ];
         $payment = new Payment($paymentData);
-        $payment->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID);
+        $payment->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID, $currency);
         $payment->addPrice(
             (new PaymentPriceFactory(new EntityNameResolver([])))->create(
                 $payment,
                 $inputPrice,
                 Domain::FIRST_DOMAIN_ID,
+                $currency,
             ),
         );
 
-        $price = $paymentPriceCalculation->calculateIndependentPrice($payment, Domain::FIRST_DOMAIN_ID, $currency->getRoundingType(), $currency->getRoundingPlacesPriceWithoutVat());
+        $price = $paymentPriceCalculation->calculateIndependentPrice($payment, Domain::FIRST_DOMAIN_ID, $currency);
 
         $this->assertThat($price->getPriceWithoutVat(), new IsMoneyEqual($priceWithoutVat));
         $this->assertThat($price->getPriceWithVat(), new IsMoneyEqual($priceWithVat));
@@ -186,12 +187,13 @@ class PaymentPriceCalculationTest extends TestCase
             Domain::FIRST_DOMAIN_ID => $vat,
         ];
         $payment = new Payment($paymentData);
-        $payment->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID);
+        $payment->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID, $currency);
         $payment->addPrice(
             (new PaymentPriceFactory(new EntityNameResolver([])))->create(
                 $payment,
                 $inputPrice,
                 Domain::FIRST_DOMAIN_ID,
+                $currency,
             ),
         );
 
@@ -199,9 +201,8 @@ class PaymentPriceCalculationTest extends TestCase
             $payment,
             $productsPrice,
             Domain::FIRST_DOMAIN_ID,
+            $currency,
             $forceFreePrice,
-            $currency->getRoundingType(),
-            $currency->getRoundingPlacesPriceWithoutVat(),
         );
 
         if ($priceShouldBeFree) {

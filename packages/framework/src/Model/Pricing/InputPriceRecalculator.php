@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
@@ -22,7 +21,6 @@ class InputPriceRecalculator
         protected readonly InputPriceCalculation $inputPriceCalculation,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -51,12 +49,10 @@ class InputPriceRecalculator
 
         $this->batchProcessQuery($query, function (Payment $payment) use ($toInputPriceType): void {
             foreach ($payment->getPrices() as $paymentInputPrice) {
-                $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($paymentInputPrice->getDomainId());
                 $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice(
                     $payment,
                     $paymentInputPrice->getDomainId(),
-                    $currency->getRoundingType(),
-                    $currency->getRoundingPlacesPriceWithoutVat(),
+                    $paymentInputPrice->getCurrency(),
                 );
 
                 $newInputPrice = $this->inputPriceCalculation->getInputPrice(

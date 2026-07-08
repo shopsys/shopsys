@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class PromoCodeLimitRepository
 {
@@ -47,6 +48,7 @@ class PromoCodeLimitRepository
     public function getHighestLimitByPromoCodeAndTotalPrice(
         PromoCode $promoCode,
         Money $totalPriceAmount,
+        Currency $currency,
     ): ?PromoCodeLimit {
         return $this->getQueryBuilder()
             ->select('l')
@@ -55,6 +57,8 @@ class PromoCodeLimitRepository
             ->setParameter('totalPrice', $totalPriceAmount->getAmount())
             ->andWhere('l.promoCode = :promoCode')
             ->setParameter('promoCode', $promoCode)
+            ->andWhere('l.currency = :currency')
+            ->setParameter('currency', $currency)
             ->orderBy('l.fromPrice', 'desc')
             ->setMaxResults(1)
             ->getQuery()

@@ -37,6 +37,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
@@ -69,6 +70,7 @@ class OrderFacade
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly NumberFormatterExtension $numberFormatterExtension,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly CurrencyFacade $currencyFacade,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly OrderItemFactory $orderItemFactory,
         protected readonly PaymentTransactionFacade $paymentTransactionFacade,
@@ -335,9 +337,8 @@ class OrderFacade
                 $payment,
                 $order->getTotalProductsPrice(),
                 $order->getDomainId(),
+                $this->currencyFacade->getByCode($order->getCurrencyCode()),
                 $order->isFreeTransportAndPaymentApplied(),
-                $order->getCurrencyRoundingType(),
-                $order->getCurrencyRoundingPlacesPriceWithoutVat(),
             );
         } else {
             $paymentPrice = array_first($previousPaymentItems)->getPrice();

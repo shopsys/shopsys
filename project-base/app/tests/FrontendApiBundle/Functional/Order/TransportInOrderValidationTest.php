@@ -162,7 +162,8 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     {
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
-        $transportData->inputPricesByDomain[1]->pricesWithLimits[0]->price = $transport->getLowestPriceOnDomain(1)->getPrice()->add(Money::create(10));
+        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(1);
+        $transportData->inputPricesByDomain[1]->pricesWithLimits[0]->pricesByCurrencyCode[$firstDomainDefaultCurrency->getCode()] = $transport->getLowestPriceOnDomain(1, $firstDomainDefaultCurrency)->getPrice()->add(Money::create(10));
         $this->transportFacade->edit($transport, $transportData);
     }
 

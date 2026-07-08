@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -25,6 +26,7 @@ class TransportValidationFacade
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly Domain $domain,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly TransportPriceProvider $transportPriceProvider,
@@ -52,6 +54,7 @@ class TransportValidationFacade
                 $this->domain->getId(),
                 $transport,
                 $cart->getTotalWeight(),
+                $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($this->domain->getId()),
             );
         } catch (TransportPriceNotFoundException) {
             throw new TransportWeightLimitExceededException();
