@@ -12,16 +12,23 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 class PriceFactory
 {
     /**
-     * @param array<int, array{price_without_vat: mixed, price_with_vat: mixed, price_from: bool, pricing_group_id: int}> $pricesArray
+     * @param array<int, array{price_without_vat: mixed, price_with_vat: mixed, price_from: bool, pricing_group_id: int, currency_code?: string}> $pricesArray
      */
     public function createProductPriceFromArrayByPricingGroup(
         array $pricesArray,
         PricingGroup $pricingGroup,
+        ?string $currencyCode = null,
     ): ProductPriceInterface {
         foreach ($pricesArray as $priceArray) {
-            if ($priceArray['pricing_group_id'] === $pricingGroup->getId()) {
-                return $this->createProductPriceFromArray($priceArray, $pricingGroup);
+            if ($priceArray['pricing_group_id'] !== $pricingGroup->getId()) {
+                continue;
             }
+
+            if ($currencyCode !== null && ($priceArray['currency_code'] ?? null) !== $currencyCode) {
+                continue;
+            }
+
+            return $this->createProductPriceFromArray($priceArray, $pricingGroup);
         }
 
         throw new NoProductPriceForPricingGroupException(0, $pricingGroup->getId());

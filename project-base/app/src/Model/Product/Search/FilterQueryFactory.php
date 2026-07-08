@@ -44,6 +44,10 @@ class FilterQueryFactory extends BaseFilterQueryFactory
     #[Override]
     public function create(string $indexName): BaseFilterQuery
     {
-        return new FilterQuery($indexName, $this->pricingSetting->getSellingPriceType());
+        return new FilterQuery(
+            $indexName,
+            $this->pricingSetting->getSellingPriceType(),
+            $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($this->domain->getId())->getCode(),
+        );
     }
 }

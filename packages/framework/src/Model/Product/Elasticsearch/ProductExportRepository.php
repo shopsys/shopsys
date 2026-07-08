@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
@@ -67,6 +69,8 @@ class ProductExportRepository
         protected readonly ParameterValueFileResolver $parameterValueFileResolver,
         protected readonly Domain $domain,
         protected readonly TopProductRepository $topProductRepository,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         #[AutowireIterator('shopsys.product_export_data_provider')]
         protected readonly iterable $productExportDataProviders = [],
     ) {
@@ -349,20 +353,29 @@ class ProductExportRepository
     protected function extractPrices(int $domainId, Product $product): array
     {
         $prices = [];
-        $productPrices = $this->productFacade->getAllProductPricesByDomainId($product, $domainId);
 
-        foreach ($productPrices as $productPrice) {
-            $pricingGroup = $productPrice->getPricingGroup();
-            $price = $productPrice->getPrice();
+        foreach ($this->currencyFacade->getEnabledCurrenciesByDomainId($domainId) as $currency) {
+            try {
+                $this->currentCurrencyProvider->setCurrentCurrencyCode($currency->getCode());
+                $productPrices = $this->productFacade->getAllProductPricesByDomainId($product, $domainId);
 
-            $prices[] = [
-                'pricing_group_id' => $pricingGroup->getId(),
-                'price_with_vat' => (float)$price->getPriceWithVat()->getAmount(),
-                'price_without_vat' => (float)$price->getPriceWithoutVat()->getAmount(),
-                'vat' => (float)$price->getVatAmount()->getAmount(),
-                'price_from' => $productPrice->isPriceFrom(),
-                'variant_prices' => $this->getVariantPrices($product, $pricingGroup, $domainId),
-            ];
+                foreach ($productPrices as $productPrice) {
+                    $pricingGroup = $productPrice->getPricingGroup();
+                    $price = $productPrice->getPrice();
+
+                    $prices[] = [
+                        'pricing_group_id' => $pricingGroup->getId(),
+                        'currency_code' => $currency->getCode(),
+                        'price_with_vat' => (float)$price->getPriceWithVat()->getAmount(),
+                        'price_without_vat' => (float)$price->getPriceWithoutVat()->getAmount(),
+                        'vat' => (float)$price->getVatAmount()->getAmount(),
+                        'price_from' => $productPrice->isPriceFrom(),
+                        'variant_prices' => $this->getVariantPrices($product, $pricingGroup, $domainId),
+                    ];
+                }
+            } finally {
+                $this->currentCurrencyProvider->setCurrentCurrencyCode(null);
+            }
         }
 
         return $prices;
@@ -375,34 +388,42 @@ class ProductExportRepository
             $this->getVariantsForDefaultPricingGroup($product, $domainId),
         );
 
-        $specialPrices = $this->specialPriceFacade->getCurrentAndFutureSpecialPrices(
-            $product,
-            $domainId,
-            $variantIds,
-        );
-
         $return = [];
 
-        foreach ($specialPrices as $specialPrice) {
-            $priceListId = $specialPrice->priceListId;
-            $priceListName = $specialPrice->priceListName;
+        foreach ($this->currencyFacade->getEnabledCurrenciesByDomainId($domainId) as $currency) {
+            try {
+                $this->currentCurrencyProvider->setCurrentCurrencyCode($currency->getCode());
+                $specialPrices = $this->specialPriceFacade->getCurrentAndFutureSpecialPrices(
+                    $product,
+                    $domainId,
+                    $variantIds,
+                );
 
-            if (!isset($return[$priceListId])) {
-                $return[$priceListId] = [
-                    'price_list_id' => $priceListId,
-                    'price_list_name' => $priceListName,
-                    'valid_from' => $specialPrice->validFrom->format('Y-m-d H:i:s'),
-                    'valid_to' => $specialPrice->validTo->format('Y-m-d H:i:s'),
-                    'prices' => [],
-                ];
+                foreach ($specialPrices as $specialPrice) {
+                    $priceListId = $specialPrice->priceListId;
+                    $priceListName = $specialPrice->priceListName;
+
+                    if (!isset($return[$priceListId])) {
+                        $return[$priceListId] = [
+                            'price_list_id' => $priceListId,
+                            'price_list_name' => $priceListName,
+                            'valid_from' => $specialPrice->validFrom->format('Y-m-d H:i:s'),
+                            'valid_to' => $specialPrice->validTo->format('Y-m-d H:i:s'),
+                            'prices' => [],
+                        ];
+                    }
+
+                    $return[$priceListId]['prices'][] = [
+                        'currency_code' => $currency->getCode(),
+                        'price_with_vat' => (float)$specialPrice->price->getPriceWithVat()->getAmount(),
+                        'price_without_vat' => (float)$specialPrice->price->getPriceWithoutVat()->getAmount(),
+                        'vat' => (float)$specialPrice->price->getVatAmount()->getAmount(),
+                        'product_id' => $specialPrice->productId,
+                    ];
+                }
+            } finally {
+                $this->currentCurrencyProvider->setCurrentCurrencyCode(null);
             }
-
-            $return[$priceListId]['prices'][] = [
-                'price_with_vat' => (float)$specialPrice->price->getPriceWithVat()->getAmount(),
-                'price_without_vat' => (float)$specialPrice->price->getPriceWithoutVat()->getAmount(),
-                'vat' => (float)$specialPrice->price->getVatAmount()->getAmount(),
-                'product_id' => $specialPrice->productId,
-            ];
         }
 
         return array_values($return);

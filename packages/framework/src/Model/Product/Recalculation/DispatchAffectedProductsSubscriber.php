@@ -134,6 +134,10 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
             BrandEvent::UPDATE => 'dispatchAffectedByBrand',
             CategoryEvent::UPDATE => 'dispatchAffectedByCategory',
             CategoryEvent::DELETE => 'dispatchAffectedByCategory',
+            CurrencyEvent::CREATE => [
+                ['dispatchAllProducts'],
+                ['cleanStorefrontSettingsQueryCache'],
+            ],
             CurrencyEvent::UPDATE => [
                 ['dispatchAllProducts'],
                 ['cleanStorefrontSettingsQueryCache'],

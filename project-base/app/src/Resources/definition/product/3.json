@@ -190,6 +190,9 @@
             "prices": {
                 "type": "nested",
                 "properties": {
+                    "currency_code": {
+                        "type": "keyword"
+                    },
                     "pricing_group_id": {
                         "type": "integer"
                     },
@@ -241,6 +244,9 @@
                     "prices": {
                         "type": "nested",
                         "properties": {
+                            "currency_code": {
+                                "type": "keyword"
+                            },
                             "price_with_vat": {
                                 "type": "float"
                             },

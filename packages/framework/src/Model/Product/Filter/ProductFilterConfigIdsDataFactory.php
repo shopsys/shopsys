@@ -6,12 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 
 class ProductFilterConfigIdsDataFactory
 {
     public function __construct(
-        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly Domain $domain,
     ) {
     }
@@ -66,8 +66,9 @@ class ProductFilterConfigIdsDataFactory
         $minPrice = Money::create((string)($pricesData['min_price']['value'] ?? 0));
         $maxPrice = Money::create((string)($pricesData['max_price']['value'] ?? 0));
 
-        $minPrice = $minPrice->round($this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId())->getMinFractionDigits());
-        $maxPrice = $maxPrice->round($this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId())->getMinFractionDigits());
+        $currentCurrency = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($this->domain->getId());
+        $minPrice = $minPrice->round($currentCurrency->getMinFractionDigits());
+        $maxPrice = $maxPrice->round($currentCurrency->getMinFractionDigits());
 
         return new PriceRange($minPrice, $maxPrice);
     }

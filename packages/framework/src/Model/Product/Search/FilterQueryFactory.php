@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
@@ -23,12 +24,17 @@ class FilterQueryFactory
         protected readonly Domain $domain,
         protected readonly CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade,
         protected readonly PricingSetting $pricingSetting,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
     ) {
     }
 
     public function create(string $indexName): FilterQuery
     {
-        return new FilterQuery($indexName, $this->pricingSetting->getSellingPriceType());
+        return new FilterQuery(
+            $indexName,
+            $this->pricingSetting->getSellingPriceType(),
+            $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($this->domain->getId())->getCode(),
+        );
     }
 
     public function createListableProductsByCategory(

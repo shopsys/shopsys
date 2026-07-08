@@ -53,6 +53,7 @@ class FilterQuery
     public function __construct(
         protected readonly string $indexName,
         protected readonly int $sellingPriceType,
+        protected readonly string $currencyCode,
     ) {
         $this->match = $this->matchAll();
     }
@@ -132,7 +133,7 @@ class FilterQuery
 
             if (!params['_source']['prices'].isEmpty()) {
                 for (def price : params['_source']['prices']) {
-                    if (price['pricing_group_id'] === params['pricing_group_id']) {
+                    if (price['pricing_group_id'] === params['pricing_group_id'] && price['currency_code'] == params['currency_code']) {
                         finalPrice = Math.min(finalPrice, price['" . $priceFieldName . "']);
                         for (def variantPrice : price['variant_prices']) {
                             if (variantPrice['" . $priceFieldName . "'] < finalPrice) {
@@ -156,6 +157,7 @@ class FilterQuery
                     if ((validFrom.isBefore(currentDate) || validFrom.equals(currentDate)) && (validTo.isAfter(currentDate) || validTo.equals(currentDate))) {
 
                         for (def price : specialPrice['prices']) {
+                        if (price['currency_code'] != params['currency_code']) { continue; }
                             if (usedProductIds.contains(price['product_id'])) {
                                 continue;
                             }
@@ -176,6 +178,7 @@ class FilterQuery
                     'source' => $scriptMinValue,
                     'params' => [
                         'pricing_group_id' => $pricingGroupId,
+                        'currency_code' => $this->currencyCode,
                         'current_date' => date('Y-m-d H:i:s'),
                     ],
                 ],
@@ -197,7 +200,7 @@ class FilterQuery
 
             if (!params['_source']['prices'].isEmpty()) {
                 for (def price : params['_source']['prices']) {
-                    if (price['pricing_group_id'] === params['pricing_group_id']) {
+                    if (price['pricing_group_id'] === params['pricing_group_id'] && price['currency_code'] == params['currency_code']) {
                         finalPrice = Math.max(finalPrice, price['" . $priceFieldName . "']);
                         for (def variantPrice : price['variant_prices']) {
                             if (variantPrice['" . $priceFieldName . "'] > finalPrice) {
@@ -222,6 +225,7 @@ class FilterQuery
                     if ((validFrom.isBefore(currentDate) || validFrom.equals(currentDate)) && (validTo.isAfter(currentDate) || validTo.equals(currentDate))) {
 
                         for (def price : specialPrice['prices']) {
+                        if (price['currency_code'] != params['currency_code']) { continue; }
                             if (usedProductIds.contains(price['product_id'])) {
                                 continue;
                             }
@@ -247,6 +251,7 @@ class FilterQuery
                     'source' => $scriptMaxValue,
                     'params' => [
                         'pricing_group_id' => $pricingGroupId,
+                        'currency_code' => $this->currencyCode,
                         'current_date' => date('Y-m-d H:i:s'),
                     ],
                 ],
@@ -267,7 +272,7 @@ class FilterQuery
             def currentDate = java.time.ZonedDateTime.parse(params['current_date'], formatter).toInstant();
 
             for (def price : params['_source']['prices']) {
-                if (price['pricing_group_id'] === params['pricing_group_id']) {
+                if (price['pricing_group_id'] === params['pricing_group_id'] && price['currency_code'] == params['currency_code']) {
                     if (params['_source']['is_main_variant'] === false) {
                         double basicPrice = price['" . $priceFieldName . "'];
 
@@ -323,6 +328,7 @@ class FilterQuery
                     'source' => $script,
                     'params' => [
                         'pricing_group_id' => $pricingGroupId,
+                        'currency_code' => $this->currencyCode,
                         'current_date' => date('Y-m-d H:i:s'),
                     ],
                 ],
