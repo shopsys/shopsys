@@ -741,6 +741,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail: ~
 
+    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider:
+        tags:
+            - { name: kernel.reset, method: reset }
+
     Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler:
@@ -750,6 +754,10 @@ services:
     Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\PricingSetting: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\ProductPricesMulticurrencyModeProvider:
+        arguments:
+            $productPricesMulticurrencyMode: '%shopsys.pricing.product_prices_multicurrency_mode%'
 
     Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
 

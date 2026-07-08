@@ -7,13 +7,18 @@ namespace Shopsys\FrameworkBundle\Model\Pricing;
 use Override;
 use Shopsys\FrameworkBundle\Component\Money\HiddenMoney;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\CurrencyMismatchException;
 
 final class Price implements PriceInterface
 {
     private Money $vatAmount;
 
-    public function __construct(private readonly Money $priceWithoutVat, private readonly Money $priceWithVat)
-    {
+    public function __construct(
+        private readonly Money $priceWithoutVat,
+        private readonly Money $priceWithVat,
+        private readonly ?Currency $currency = null,
+    ) {
         $this->vatAmount = $priceWithVat->subtract($priceWithoutVat);
     }
 
@@ -57,11 +62,21 @@ final class Price implements PriceInterface
      * {@inheritdoc}
      */
     #[Override]
+    public function getCurrency(): ?Currency
+    {
+        return $this->currency;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function add(PriceInterface $priceToAdd): static
     {
         return new self(
             $this->priceWithoutVat->add($priceToAdd->getPriceWithoutVat()),
             $this->priceWithVat->add($priceToAdd->getPriceWithVat()),
+            $this->resolveResultCurrency($priceToAdd),
         );
     }
 
@@ -74,6 +89,7 @@ final class Price implements PriceInterface
         return new self(
             $this->priceWithoutVat->subtract($priceToSubtract->getPriceWithoutVat()),
             $this->priceWithVat->subtract($priceToSubtract->getPriceWithVat()),
+            $this->resolveResultCurrency($priceToSubtract),
         );
     }
 
@@ -86,6 +102,7 @@ final class Price implements PriceInterface
         return new self(
             $this->priceWithoutVat->multiply($multiplier),
             $this->priceWithVat->multiply($multiplier),
+            $this->currency,
         );
     }
 
@@ -127,5 +144,22 @@ final class Price implements PriceInterface
             new HiddenMoney(),
             new HiddenMoney(),
         );
+    }
+
+    /**
+     * A currency-less price adopts the currency of the other operand, mixing two different currencies is forbidden
+     */
+    private function resolveResultCurrency(PriceInterface $otherPrice): ?Currency
+    {
+        $otherCurrency = $otherPrice->getCurrency();
+
+        if ($this->currency !== null
+            && $otherCurrency !== null
+            && $this->currency->getCode() !== $otherCurrency->getCode()
+        ) {
+            throw new CurrencyMismatchException($this->currency->getCode(), $otherCurrency->getCode());
+        }
+
+        return $this->currency ?? $otherCurrency;
     }
 }

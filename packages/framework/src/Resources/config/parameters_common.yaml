@@ -25,3 +25,6 @@ parameters:
     shopsys.entity_extension.map: {}
 
     shopsys.mail_template.display_price: 'selling_price'
+
+    # Product prices in secondary domain currencies: 'calculated' (converted from the domain default currency by exchange rate) or 'manual' (entered separately for every enabled currency)
+    shopsys.pricing.product_prices_multicurrency_mode: 'calculated'

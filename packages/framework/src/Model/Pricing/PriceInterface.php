@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 interface PriceInterface
 {
@@ -15,6 +16,8 @@ interface PriceInterface
     public function getPriceWithVat(): Money;
 
     public function getVatAmount(): Money;
+
+    public function getCurrency(): ?Currency;
 
     public function add(self $priceToAdd): static;
 
