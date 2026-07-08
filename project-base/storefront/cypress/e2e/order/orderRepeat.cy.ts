@@ -22,7 +22,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         const email = 'order-repeat-logged-in-with-empty-cart@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3);
-        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+        cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
         cy.preselectTransportForTest(staticData.transport.ppl.uuid);
         cy.preselectPaymentForTest(staticData.payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email));
@@ -45,11 +45,11 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         const email = 'order-repeat-logged-in-with-filled-cart-and-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3);
-        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+        cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
         cy.preselectTransportForTest(staticData.transport.ppl.uuid);
         cy.preselectPaymentForTest(staticData.payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email));
-        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+        cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
         cy.addProductToCartForTest(staticData.products.a4techMouse.uuid, 2);
         cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
 
@@ -70,11 +70,11 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         const email = 'order-repeat-logged-in-with-filled-cart-without-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3);
-        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+        cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
         cy.preselectTransportForTest(staticData.transport.ppl.uuid);
         cy.preselectPaymentForTest(staticData.payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email));
-        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+        cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
         cy.addProductToCartForTest(staticData.products.a4techMouse.uuid, 2);
         cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
 
@@ -102,7 +102,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );
-        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+        cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
         cy.preselectTransportForTest(staticData.transport.ppl.uuid);
         cy.preselectPaymentForTest(staticData.payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email)).then((order) => {
@@ -127,11 +127,11 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );
-        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+        cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
         cy.preselectTransportForTest(staticData.transport.ppl.uuid);
         cy.preselectPaymentForTest(staticData.payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email)).then((order) => {
-            cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+            cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
             cy.addProductToCartForTest(staticData.products.a4techMouse.uuid, 2);
 
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.orderDetail + `/${order.urlHash}`);
@@ -155,11 +155,11 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );
-        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+        cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
         cy.preselectTransportForTest(staticData.transport.ppl.uuid);
         cy.preselectPaymentForTest(staticData.payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email)).then((order) => {
-            cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid, 4);
+            cy.addProductToCartForTest(staticData.products.philips54CRT.uuid, 4);
             cy.addProductToCartForTest(staticData.products.a4techMouse.uuid, 2);
 
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.orderDetail + `/${order.urlHash}`);
