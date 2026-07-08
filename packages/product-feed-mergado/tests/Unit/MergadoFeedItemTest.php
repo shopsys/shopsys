@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -35,7 +35,7 @@ class MergadoFeedItemTest extends TestCase
 
     private ProductPriceCalculationForCustomerUser|MockObject $productPriceCalculationForCustomerUserMock;
 
-    private CurrencyFacade|MockObject $currencyFacadeMock;
+    private CurrentCurrencyProvider|MockObject $currentCurrencyProviderMock;
 
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
 
@@ -108,7 +108,7 @@ class MergadoFeedItemTest extends TestCase
         $productParametersBatchLoaderStub = $this->createStub(ProductParametersBatchLoader::class);
         $categoryFacadeStub = $this->createStub(CategoryFacade::class);
         $categoryFacadeStub->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')->willReturn(['category1', 'category2']);
-        $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
+        $this->currentCurrencyProviderMock = $this->createMock(CurrentCurrencyProvider::class);
         $imageFacadeStub = $this->createStub(ImageFacade::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
         $loggerStub = $this->createStub(LoggerInterface::class);
@@ -124,7 +124,7 @@ class MergadoFeedItemTest extends TestCase
             $productAvailabilityFacadeStub,
             $this->productPriceCalculationForCustomerUserMock,
             $imageFacadeStub,
-            $this->currencyFacadeMock,
+            $this->currentCurrencyProviderMock,
             $loggerStub,
         );
 
@@ -166,7 +166,7 @@ class MergadoFeedItemTest extends TestCase
         $domainConfigStub->method('getUrl')->willReturn($url);
         $domainConfigStub->method('getLocale')->willReturn($locale);
 
-        $this->currencyFacadeMock->expects($this->any())->method('getDomainDefaultCurrencyByDomainId')
+        $this->currentCurrencyProviderMock->expects($this->any())->method('getCurrentCurrencyOfDomain')
             ->with($id)->willReturn($currency);
 
         return $domainConfigStub;

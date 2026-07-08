@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FeedExportFactory
@@ -25,14 +26,20 @@ class FeedExportFactory
         protected readonly ServicesResetter $servicesResetter,
         protected readonly TransformStringHelper $transformStringHelper,
         protected readonly LoggerInterface $logger,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
     ) {
     }
 
-    public function create(FeedInterface $feed, DomainConfig $domainConfig, ?int $lastSeekId = null): FeedExport
-    {
+    public function create(
+        FeedInterface $feed,
+        DomainConfig $domainConfig,
+        ?int $lastSeekId = null,
+        ?string $currencyCode = null,
+    ): FeedExport {
+        $currencyCode ??= $domainConfig->getDefaultCurrencyCode();
         $feedRenderer = $this->feedRendererFactory->create($feed);
-        $feedFilepath = $this->feedPathProvider->getFeedFilepath($feed->getInfo(), $domainConfig);
-        $feedLocalFilepath = $this->feedPathProvider->getFeedLocalFilepath($feed->getInfo(), $domainConfig);
+        $feedFilepath = $this->feedPathProvider->getFeedFilepath($feed->getInfo(), $domainConfig, $currencyCode);
+        $feedLocalFilepath = $this->feedPathProvider->getFeedLocalFilepath($feed->getInfo(), $domainConfig, $currencyCode);
 
         return new FeedExport(
             $feed,
@@ -47,6 +54,8 @@ class FeedExportFactory
             $feedLocalFilepath,
             $this->servicesResetter,
             $this->logger,
+            $this->currentCurrencyProvider,
+            $currencyCode,
             $lastSeekId,
         );
     }

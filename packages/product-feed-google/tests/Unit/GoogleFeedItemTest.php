@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -27,7 +27,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class GoogleFeedItemTest extends TestCase
 {
-    private CurrencyFacade|MockObject $currencyFacadeMock;
+    private CurrentCurrencyProvider|MockObject $currentCurrencyProviderMock;
 
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
 
@@ -47,7 +47,7 @@ class GoogleFeedItemTest extends TestCase
     {
         $productPriceCalculation = $this->createProductPriceCalculationStub(Price::zero());
 
-        $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
+        $this->currentCurrencyProviderMock = $this->createMock(CurrentCurrencyProvider::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
         $productAvailabilityFacadeStub->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
@@ -57,7 +57,7 @@ class GoogleFeedItemTest extends TestCase
 
         $this->googleFeedItemFactory = new GoogleFeedItemFactory(
             $productPriceCalculation,
-            $this->currencyFacadeMock,
+            $this->currentCurrencyProviderMock,
             $this->productUrlsBatchLoaderMock,
             $productAvailabilityFacadeStub,
             $specialPriceFacade,
@@ -97,7 +97,7 @@ class GoogleFeedItemTest extends TestCase
         $domainConfigStub->method('getUrl')->willReturn($url);
         $domainConfigStub->method('getLocale')->willReturn($locale);
 
-        $this->currencyFacadeMock->expects($this->any())->method('getDomainDefaultCurrencyByDomainId')
+        $this->currentCurrencyProviderMock->expects($this->any())->method('getCurrentCurrencyOfDomain')
             ->with($id)->willReturn($currency);
 
         return $domainConfigStub;

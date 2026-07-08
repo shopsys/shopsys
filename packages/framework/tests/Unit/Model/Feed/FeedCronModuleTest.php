@@ -9,13 +9,16 @@ use Monolog\Logger;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
+use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\FrameworkBundle\Model\Feed\FeedCronModule;
+use Shopsys\FrameworkBundle\Model\Feed\FeedCurrencyResolver;
 use Shopsys\FrameworkBundle\Model\Feed\FeedExport;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModule;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
+use Shopsys\FrameworkBundle\Model\Feed\FeedRegistry;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 use Tests\FrameworkBundle\Unit\TestCase;
 
@@ -46,12 +49,13 @@ class FeedCronModuleTest extends TestCase
 
         $feedExportMock = $this->getMockBuilder(FeedExport::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['isFinished', 'generateBatch', 'getFeedInfo', 'getDomainConfig', 'sleep'])
+            ->onlyMethods(['isFinished', 'generateBatch', 'getFeedInfo', 'getDomainConfig', 'getCurrencyCode', 'sleep'])
             ->getMock();
         $feedExportMock->expects($this->atLeastOnce())->method('isFinished')->willReturn(true);
         $feedExportMock->expects($this->any())->method('generateBatch');
         $feedExportMock->expects($this->any())->method('getFeedInfo')->willReturn($feedInfoStub);
         $feedExportMock->expects($this->any())->method('getDomainConfig')->willReturn($domainConfig);
+        $feedExportMock->expects($this->any())->method('getCurrencyCode')->willReturn('CZK');
 
         $this->setValueOfProtectedProperty($feedExportMock, 'lastSeekId', null);
 
@@ -67,7 +71,9 @@ class FeedCronModuleTest extends TestCase
 
         $feedModuleFacadeStub = $this->createStub(FeedModuleFacade::class);
 
-        $feedCronModule = new FeedCronModule($feedFacadeStub, $domain, $settingStub, $feedModuleRepositoryStub, $feedModuleFacadeStub);
+        $feedRegistryStub = $this->createStub(FeedRegistry::class);
+        $feedRegistryStub->method('getFeedConfigByName')->willThrowException(new FeedNotFoundException('feed'));
+        $feedCronModule = new FeedCronModule($feedFacadeStub, $domain, $settingStub, $feedModuleRepositoryStub, $feedModuleFacadeStub, $feedRegistryStub, new FeedCurrencyResolver());
         $feedCronModule->setLogger($logger);
 
         $feedCronModule->iterate();

@@ -6,7 +6,7 @@ namespace Shopsys\ProductFeed\GoogleBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
@@ -20,7 +20,7 @@ class GoogleFeedItemFactory
 {
     public function __construct(
         protected readonly ProductPriceCalculation $productPriceCalculation,
-        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly SpecialPriceFacade $specialPriceFacade,
@@ -80,6 +80,6 @@ class GoogleFeedItemFactory
 
     protected function getCurrency(DomainConfig $domainConfig): Currency
     {
-        return $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainConfig->getId());
+        return $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($domainConfig->getId());
     }
 }

@@ -12,6 +12,7 @@ use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FeedExport
@@ -34,8 +35,15 @@ class FeedExport
         protected readonly string $feedLocalFilepath,
         protected readonly ServicesResetter $servicesResetter,
         protected readonly LoggerInterface $logger,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
+        protected readonly string $currencyCode,
         protected ?int $lastSeekId = null,
     ) {
+    }
+
+    public function getCurrencyCode(): string
+    {
+        return $this->currencyCode;
     }
 
     public function wakeUp(): void
@@ -109,29 +117,35 @@ class FeedExport
             return;
         }
 
-        $itemsInBatch = $this->feed->getItems($this->domainConfig, $this->lastSeekId, static::BATCH_SIZE);
+        // the currency scope must be set in every batch as the services (including the provider) are reset between batches
+        $this->currentCurrencyProvider->setCurrentCurrencyCode($this->currencyCode);
 
-        if ($this->lastSeekId === null) {
-            $this->clearTemporaryFile();
-            $this->writeToFeed($this->feedRenderer->renderBegin($this->domainConfig));
+        try {
+            $itemsInBatch = $this->feed->getItems($this->domainConfig, $this->lastSeekId, static::BATCH_SIZE);
+
+            if ($this->lastSeekId === null) {
+                $this->clearTemporaryFile();
+                $this->writeToFeed($this->feedRenderer->renderBegin($this->domainConfig));
+            }
+
+            $countInBatch = 0;
+
+            foreach ($itemsInBatch as $item) {
+                $this->writeToFeed($this->feedRenderer->renderItem($this->domainConfig, $item));
+                $this->lastSeekId = $item->getSeekId();
+                $countInBatch++;
+            }
+
+            if ($countInBatch < static::BATCH_SIZE) {
+                $this->writeToFeed($this->feedRenderer->renderEnd($this->domainConfig));
+                $this->finishFile();
+            }
+        } finally {
+            $this->currentCurrencyProvider->setCurrentCurrencyCode(null);
+            $this->servicesResetter->reset();
+            $this->em->clear();
+            gc_collect_cycles();
         }
-
-        $countInBatch = 0;
-
-        foreach ($itemsInBatch as $item) {
-            $this->writeToFeed($this->feedRenderer->renderItem($this->domainConfig, $item));
-            $this->lastSeekId = $item->getSeekId();
-            $countInBatch++;
-        }
-
-        if ($countInBatch < static::BATCH_SIZE) {
-            $this->writeToFeed($this->feedRenderer->renderEnd($this->domainConfig));
-            $this->finishFile();
-        }
-
-        $this->servicesResetter->reset();
-        $this->em->clear();
-        gc_collect_cycles();
     }
 
     public function getFeedInfo(): FeedInfoInterface

@@ -11,11 +11,13 @@ class FeedConfig implements CronTimeInterface
 {
     /**
      * @param int[] $domainIds
+     * @param string|array<int, string[]>|null $currenciesConfig
      */
     public function __construct(
         protected readonly FeedInterface $feed,
         protected readonly string $cronExpression,
         protected readonly array $domainIds,
+        protected readonly string|array|null $currenciesConfig = null,
     ) {
     }
 
@@ -36,5 +38,13 @@ class FeedConfig implements CronTimeInterface
     public function getDomainIds(): array
     {
         return $this->domainIds;
+    }
+
+    /**
+     * @return string|array<int, string[]>|null
+     */
+    public function getCurrenciesConfig(): string|array|null
+    {
+        return $this->currenciesConfig;
     }
 }

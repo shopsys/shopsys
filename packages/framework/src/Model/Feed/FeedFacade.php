@@ -18,23 +18,46 @@ class FeedFacade
         protected readonly FilesystemOperator $filesystem,
         protected readonly FeedModuleRepository $feedModuleRepository,
         protected readonly EntityManagerInterface $em,
+        protected readonly FeedCurrencyResolver $feedCurrencyResolver,
     ) {
     }
 
-    public function generateFeed(string $feedName, DomainConfig $domainConfig): void
+    /**
+     * Null currency code generates the feed in every currency it is configured for
+     */
+    public function generateFeed(string $feedName, DomainConfig $domainConfig, ?string $currencyCode = null): void
     {
-        $feedExport = $this->createFeedExport($feedName, $domainConfig);
+        $currencyCodes = $currencyCode !== null ? [$currencyCode] : $this->getCurrencyCodesForFeed($feedName, $domainConfig);
 
-        while (!$feedExport->isFinished()) {
-            $feedExport->generateBatch();
+        foreach ($currencyCodes as $feedCurrencyCode) {
+            $feedExport = $this->createFeedExport($feedName, $domainConfig, null, $feedCurrencyCode);
+
+            while (!$feedExport->isFinished()) {
+                $feedExport->generateBatch();
+            }
         }
     }
 
-    public function createFeedExport(string $feedName, DomainConfig $domainConfig, ?int $lastSeekId = null): FeedExport
-    {
+    public function createFeedExport(
+        string $feedName,
+        DomainConfig $domainConfig,
+        ?int $lastSeekId = null,
+        ?string $currencyCode = null,
+    ): FeedExport {
         $feedConfig = $this->feedRegistry->getFeedConfigByName($feedName);
 
-        return $this->feedExportFactory->create($feedConfig->getFeed(), $domainConfig, $lastSeekId);
+        return $this->feedExportFactory->create($feedConfig->getFeed(), $domainConfig, $lastSeekId, $currencyCode);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCurrencyCodesForFeed(string $feedName, DomainConfig $domainConfig): array
+    {
+        return $this->feedCurrencyResolver->resolveCurrencyCodes(
+            $this->feedRegistry->getFeedConfigByName($feedName),
+            $domainConfig,
+        );
     }
 
     /**
@@ -67,19 +90,28 @@ class FeedFacade
         return $feedNames;
     }
 
-    public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
-    {
-        return $this->feedPathProvider->getFeedUrl($feedInfo, $domainConfig);
+    public function getFeedUrl(
+        FeedInfoInterface $feedInfo,
+        DomainConfig $domainConfig,
+        ?string $currencyCode = null,
+    ): string {
+        return $this->feedPathProvider->getFeedUrl($feedInfo, $domainConfig, $currencyCode);
     }
 
-    public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
-    {
-        return $this->feedPathProvider->getFeedFilepath($feedInfo, $domainConfig);
+    public function getFeedFilepath(
+        FeedInfoInterface $feedInfo,
+        DomainConfig $domainConfig,
+        ?string $currencyCode = null,
+    ): string {
+        return $this->feedPathProvider->getFeedFilepath($feedInfo, $domainConfig, $currencyCode);
     }
 
-    public function getFeedTimestamp(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): ?int
-    {
-        $filePath = $this->feedPathProvider->getFeedFilepath($feedInfo, $domainConfig);
+    public function getFeedTimestamp(
+        FeedInfoInterface $feedInfo,
+        DomainConfig $domainConfig,
+        ?string $currencyCode = null,
+    ): ?int {
+        $filePath = $this->feedPathProvider->getFeedFilepath($feedInfo, $domainConfig, $currencyCode);
 
         try {
             return $this->filesystem->lastModified($filePath);

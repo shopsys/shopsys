@@ -27,6 +27,8 @@ class FeedCronModule implements IteratedCronModuleInterface
         protected readonly Setting $setting,
         protected readonly FeedModuleRepository $feedModuleRepository,
         protected readonly FeedModuleFacade $feedModuleFacade,
+        protected readonly FeedRegistry $feedRegistry,
+        protected readonly FeedCurrencyResolver $feedCurrencyResolver,
     ) {
     }
 
@@ -63,12 +65,7 @@ class FeedCronModule implements IteratedCronModuleInterface
                 return false;
             }
 
-            $this->logger->info(sprintf(
-                'Started generation of feed "%s" generated on domain "%s" into "%s".',
-                $this->currentFeedExport->getFeedInfo()->getName(),
-                $this->currentFeedExport->getDomainConfig()->getName(),
-                $this->feedFacade->getFeedFilepath($this->currentFeedExport->getFeedInfo(), $this->currentFeedExport->getDomainConfig()),
-            ));
+            $this->logStartOfCurrentFeedExport();
         }
 
         $this->currentFeedExport->generateBatch();
@@ -76,20 +73,24 @@ class FeedCronModule implements IteratedCronModuleInterface
         if ($this->currentFeedExport->isFinished()) {
             $feedInfo = $this->currentFeedExport->getFeedInfo();
             $domainConfig = $this->currentFeedExport->getDomainConfig();
+            $currencyCode = $this->currentFeedExport->getCurrencyCode();
 
-            $currentFeedModule = $this->feedModuleRepository->getFeedModuleByNameAndDomainId(
-                $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
-                $this->getFeedExportCreationDataQueue()->getCurrentDomain()->getId(),
-            );
+            if ($this->getFeedExportCreationDataQueue()->isCurrentLastCurrencyOfFeedModule()) {
+                $currentFeedModule = $this->feedModuleRepository->getFeedModuleByNameAndDomainId(
+                    $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
+                    $this->getFeedExportCreationDataQueue()->getCurrentDomain()->getId(),
+                );
 
-            $this->feedFacade->markFeedModuleAsUnscheduled($currentFeedModule);
+                $this->feedFacade->markFeedModuleAsUnscheduled($currentFeedModule);
+            }
             $this->cleanSettingsValues();
 
             $this->logger->info(sprintf(
-                'Feed "%s" generated on domain "%s" into "%s".',
+                'Feed "%s" generated on domain "%s" in currency "%s" into "%s".',
                 $feedInfo->getName(),
                 $domainConfig->getName(),
-                $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig),
+                $currencyCode,
+                $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig, $currencyCode),
             ));
 
             $this->currentFeedExport = null;
@@ -103,18 +104,24 @@ class FeedCronModule implements IteratedCronModuleInterface
                     return false;
                 }
 
-                $this->logger->info(sprintf(
-                    'Started generation of feed "%s" generated on domain "%s" into "%s".',
-                    $this->currentFeedExport->getFeedInfo()->getName(),
-                    $this->currentFeedExport->getDomainConfig()->getName(),
-                    $this->feedFacade->getFeedFilepath($this->currentFeedExport->getFeedInfo(), $this->currentFeedExport->getDomainConfig()),
-                ));
+                $this->logStartOfCurrentFeedExport();
             }
 
             return $existsNext;
         }
 
         return true;
+    }
+
+    protected function logStartOfCurrentFeedExport(): void
+    {
+        $this->logger->info(sprintf(
+            'Started generation of feed "%s" generated on domain "%s" in currency "%s" into "%s".',
+            $this->currentFeedExport->getFeedInfo()->getName(),
+            $this->currentFeedExport->getDomainConfig()->getName(),
+            $this->currentFeedExport->getCurrencyCode(),
+            $this->feedFacade->getFeedFilepath($this->currentFeedExport->getFeedInfo(), $this->currentFeedExport->getDomainConfig(), $this->currentFeedExport->getCurrencyCode()),
+        ));
     }
 
     /**
@@ -131,15 +138,18 @@ class FeedCronModule implements IteratedCronModuleInterface
 
         $currentFeedName = $this->getFeedExportCreationDataQueue()->getCurrentFeedName();
         $currentDomain = $this->getFeedExportCreationDataQueue()->getCurrentDomain();
+        $currentCurrencyCode = $this->getFeedExportCreationDataQueue()->getCurrentCurrencyCode();
 
         $this->setting->set(Setting::FEED_NAME_TO_CONTINUE, $currentFeedName);
         $this->setting->set(Setting::FEED_DOMAIN_ID_TO_CONTINUE, $currentDomain->getId());
+        $this->setting->set(Setting::FEED_CURRENCY_CODE_TO_CONTINUE, $currentCurrencyCode);
         $this->setting->set(Setting::FEED_ITEM_ID_TO_CONTINUE, $lastSeekId);
 
         $this->logger->info(sprintf(
-            'Going to sleep... Will continue with feed "%s" on "%s", processing from ID %d.',
+            'Going to sleep... Will continue with feed "%s" on "%s" in currency "%s", processing from ID %d.',
             $currentFeedName,
             $currentDomain->getName(),
+            $currentCurrencyCode,
             $lastSeekId,
         ));
     }
@@ -152,6 +162,7 @@ class FeedCronModule implements IteratedCronModuleInterface
     {
         $feedNameToContinue = $this->setting->get(Setting::FEED_NAME_TO_CONTINUE);
         $domainIdToContinue = $this->setting->get(Setting::FEED_DOMAIN_ID_TO_CONTINUE);
+        $currencyCodeToContinue = $this->setting->get(Setting::FEED_CURRENCY_CODE_TO_CONTINUE);
 
         if ($feedNameToContinue !== null && $domainIdToContinue !== null) {
             $queue = $this->getFeedExportCreationDataQueue();
@@ -159,7 +170,8 @@ class FeedCronModule implements IteratedCronModuleInterface
             while (
                 $queue->isEmpty() === false && (
                     $feedNameToContinue !== $queue->getCurrentFeedName() ||
-                    $domainIdToContinue !== $queue->getCurrentDomain()->getId()
+                    $domainIdToContinue !== $queue->getCurrentDomain()->getId() ||
+                    ($currencyCodeToContinue !== null && $currencyCodeToContinue !== $queue->getCurrentCurrencyCode())
                 )
             ) {
                 $queue->next();
@@ -197,6 +209,7 @@ class FeedCronModule implements IteratedCronModuleInterface
                 $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
                 $this->getFeedExportCreationDataQueue()->getCurrentDomain(),
                 $lastSeekId,
+                $this->getFeedExportCreationDataQueue()->getCurrentCurrencyCode(),
             );
         } catch (FeedNotFoundException $e) {
             $this->logger->error($e->getMessage());
@@ -221,6 +234,8 @@ class FeedCronModule implements IteratedCronModuleInterface
             $this->feedExportCreationDataQueue = new FeedExportCreationDataQueue(
                 $this->feedModuleRepository->getAllScheduledFeedModules(),
                 $this->domain->getAll(),
+                $this->feedRegistry,
+                $this->feedCurrencyResolver,
             );
         }
 
@@ -231,6 +246,7 @@ class FeedCronModule implements IteratedCronModuleInterface
     {
         $this->setting->set(Setting::FEED_NAME_TO_CONTINUE, null);
         $this->setting->set(Setting::FEED_DOMAIN_ID_TO_CONTINUE, null);
+        $this->setting->set(Setting::FEED_CURRENCY_CODE_TO_CONTINUE, null);
         $this->setting->set(Setting::FEED_ITEM_ID_TO_CONTINUE, null);
     }
 }

@@ -27,6 +27,7 @@ final class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterf
                         new Reference($serviceId),
                         $tag['cron'],
                         isset($tag['domain_ids']) ? $this->splitDomainIdsFromString($tag['domain_ids']) : [],
+                        $tag['currencies'] ?? null,
                     ],
                 );
             }

@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
@@ -29,7 +29,7 @@ class LuigisBoxProductFeedItemFactory
 
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly CategoryRepository $categoryRepository,
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
@@ -105,7 +105,7 @@ class LuigisBoxProductFeedItemFactory
 
     protected function getCurrency(DomainConfig $domainConfig): Currency
     {
-        return $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainConfig->getId());
+        return $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($domainConfig->getId());
     }
 
     protected function getAvailabilityRank(Product $product, DomainConfig $domainConfig): int

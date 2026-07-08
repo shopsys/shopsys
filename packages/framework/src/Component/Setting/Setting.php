@@ -24,6 +24,7 @@ class Setting
     public const string FEED_NAME_TO_CONTINUE = 'feedNameToContinue';
     public const string FEED_DOMAIN_ID_TO_CONTINUE = 'feedDomainIdToContinue';
     public const string FEED_ITEM_ID_TO_CONTINUE = 'feedItemIdToContinue';
+    public const string FEED_CURRENCY_CODE_TO_CONTINUE = 'feedCurrencyCodeToContinue';
     public const string TRANSFER_DAYS_BETWEEN_STOCKS = 'transferDaysBetweenStocks';
     public const string FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS = 'feedDeliveryDaysForOutOfStockProducts';
     public const string CUSTOMER_USER_DEFAULT_GROUP_ROLE_ID = 'customerUserDefaultGroupRoleId';

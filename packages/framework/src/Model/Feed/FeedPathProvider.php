@@ -17,25 +17,45 @@ class FeedPathProvider
     ) {
     }
 
-    public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
-    {
-        return $domainConfig->getBaseUrl() . $this->feedUrlPrefix . $this->getFeedFilename($feedInfo, $domainConfig);
+    public function getFeedUrl(
+        FeedInfoInterface $feedInfo,
+        DomainConfig $domainConfig,
+        ?string $currencyCode = null,
+    ): string {
+        return $domainConfig->getBaseUrl() . $this->feedUrlPrefix . $this->getFeedFilename($feedInfo, $domainConfig, $currencyCode);
     }
 
-    public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
-    {
-        return $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig);
+    public function getFeedFilepath(
+        FeedInfoInterface $feedInfo,
+        DomainConfig $domainConfig,
+        ?string $currencyCode = null,
+    ): string {
+        return $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig, $currencyCode);
     }
 
-    public function getFeedLocalFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
-    {
-        return $this->projectDir . $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig);
+    public function getFeedLocalFilepath(
+        FeedInfoInterface $feedInfo,
+        DomainConfig $domainConfig,
+        ?string $currencyCode = null,
+    ): string {
+        return $this->projectDir . $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig, $currencyCode);
     }
 
-    protected function getFeedFilename(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
-    {
+    /**
+     * The domain default currency keeps the historical filename so the feed URLs registered at aggregators keep working
+     */
+    protected function getFeedFilename(
+        FeedInfoInterface $feedInfo,
+        DomainConfig $domainConfig,
+        ?string $currencyCode = null,
+    ): string {
         $feedHash = $this->setting->get(Setting::FEED_HASH);
+        $filename = $feedHash . '_' . $feedInfo->getName() . '_' . $domainConfig->getId();
 
-        return $feedHash . '_' . $feedInfo->getName() . '_' . $domainConfig->getId() . '.xml';
+        if ($currencyCode !== null && $currencyCode !== $domainConfig->getDefaultCurrencyCode()) {
+            $filename .= '_' . strtolower($currencyCode);
+        }
+
+        return $filename . '.xml';
     }
 }

@@ -35,14 +35,14 @@ class FeedController extends AdminBaseController
     ) {
     }
 
-    #[Route(path: '/feed/generate/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
+    #[Route(path: '/feed/generate/{feedName}/{domainId}/{currencyCode}', requirements: ['domainId' => '\d+'], defaults: ['currencyCode' => null])]
     #[SuperAdminOnly]
-    public function generateAction(string $feedName, int $domainId): Response
+    public function generateAction(string $feedName, int $domainId, ?string $currencyCode = null): Response
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);
 
         try {
-            $this->feedFacade->generateFeed($feedName, $domainConfig);
+            $this->feedFacade->generateFeed($feedName, $domainConfig, $currencyCode);
 
             $this->addSuccessFlashTwig(
                 t('Feed "{{ feedName }}" successfully generated.'),
@@ -107,18 +107,22 @@ class FeedController extends AdminBaseController
                 $domainConfig = $this->domain->getDomainConfigById($domainId);
                 $feedInfo = $feedConfig->getFeed()->getInfo();
                 $feedModulesIndexedByDomainId = $this->feedModuleRepository->getFeedModulesByConfigIndexedByDomainId($feedConfig);
+                $feedCurrencyCodes = $this->feedFacade->getCurrencyCodesForFeed($feedInfo->getName(), $domainConfig);
 
-                $feedTimestamp = $this->feedFacade->getFeedTimestamp($feedInfo, $domainConfig);
-                $feedsData[] = [
-                    'feedLabel' => $feedInfo->getLabel(),
-                    'feedName' => $feedInfo->getName(),
-                    'domainConfig' => $domainConfig,
-                    'url' => $this->feedFacade->getFeedUrl($feedInfo, $domainConfig),
-                    'created' => $feedTimestamp === null ? null : (new DatePoint())->setTimestamp($feedTimestamp),
-                    'generate' => null,
-                    'schedule' => $feedModulesIndexedByDomainId[$domainId]->isScheduled(),
-                    'additionalInformation' => $feedInfo->getAdditionalInformation(),
-                ];
+                foreach ($feedCurrencyCodes as $currencyCode) {
+                    $feedTimestamp = $this->feedFacade->getFeedTimestamp($feedInfo, $domainConfig, $currencyCode);
+                    $feedsData[] = [
+                        'feedLabel' => count($feedCurrencyCodes) > 1 ? sprintf('%s (%s)', $feedInfo->getLabel(), $currencyCode) : $feedInfo->getLabel(),
+                        'feedName' => $feedInfo->getName(),
+                        'currencyCode' => $currencyCode,
+                        'domainConfig' => $domainConfig,
+                        'url' => $this->feedFacade->getFeedUrl($feedInfo, $domainConfig, $currencyCode),
+                        'created' => $feedTimestamp === null ? null : (new DatePoint())->setTimestamp($feedTimestamp),
+                        'generate' => null,
+                        'schedule' => $feedModulesIndexedByDomainId[$domainId]->isScheduled(),
+                        'additionalInformation' => $feedInfo->getAdditionalInformation(),
+                    ];
+                }
             }
         }
 

@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
@@ -25,7 +25,7 @@ class MergadoFeedItemFactory
         protected readonly ProductAvailabilityFacade $availabilityFacade,
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ImageFacade $imageFacade,
-        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly LoggerInterface $logger,
     ) {
     }
@@ -33,7 +33,7 @@ class MergadoFeedItemFactory
     public function createForProduct(Product $product, DomainConfig $domainConfig): MergadoFeedItem
     {
         $domainId = $domainConfig->getId();
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $currency = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($domainId);
 
         $productPricesResult = $this->productPriceCalculationForCustomerUser
             ->calculatePricesForCustomerUserAndDomainId($product, $domainId);

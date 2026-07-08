@@ -30,9 +30,14 @@ class FeedRegistry
 
     /**
      * @param int[] $domainIds
+     * @param string|array<int, string[]>|null $currenciesConfig
      */
-    public function registerFeed(FeedInterface $feed, string $cronExpression, array $domainIds): void
-    {
+    public function registerFeed(
+        FeedInterface $feed,
+        string $cronExpression,
+        array $domainIds,
+        string|array|null $currenciesConfig = null,
+    ): void {
         $this->cronTimeResolver->validateCronExpression($cronExpression);
 
         $name = $feed->getInfo()->getName();
@@ -40,7 +45,7 @@ class FeedRegistry
 
         $domainIds = $domainIds === [] ? $this->domain->getAllIds() : $domainIds;
 
-        $this->feedConfigsByName[$name] = new FeedConfig($feed, $cronExpression, $domainIds);
+        $this->feedConfigsByName[$name] = new FeedConfig($feed, $cronExpression, $domainIds, $currenciesConfig);
     }
 
     /**

@@ -3,3 +3,12 @@ services:
         autoconfigure: true
         autowire: true
         public: false
+
+    # demo of the multi-currency feed generation (see the "currencies" tag attribute)
+    Shopsys\ProductFeed\MergadoBundle\MergadoFeed:
+        tags:
+            - { name: shopsys.feed, cron: '0 5 * * *', currencies: 'all' }
+
+    Shopsys\ProductFeed\HeurekaBundle\HeurekaFeed:
+        tags:
+            - { name: shopsys.feed, cron: '0 2 * * *', currencies: { 1: [EUR, CZK] } }

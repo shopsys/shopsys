@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -60,7 +60,7 @@ class LuigisBoxFeedItemTest extends TestCase
 
     private ProductPriceCalculationForCustomerUser|MockObject $productPriceCalculationForCustomerUserMock;
 
-    private CurrencyFacade|MockObject $currencyFacadeMock;
+    private CurrentCurrencyProvider|MockObject $currentCurrencyProviderMock;
 
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
 
@@ -96,7 +96,7 @@ class LuigisBoxFeedItemTest extends TestCase
         $domainConfigStub->method('getUrl')->willReturn($url);
         $domainConfigStub->method('getLocale')->willReturn($locale);
 
-        $this->currencyFacadeMock->expects($this->any())->method('getDomainDefaultCurrencyByDomainId')
+        $this->currentCurrencyProviderMock->expects($this->any())->method('getCurrentCurrencyOfDomain')
             ->with($id)->willReturn($currency);
 
         return $domainConfigStub;
@@ -182,7 +182,7 @@ class LuigisBoxFeedItemTest extends TestCase
 
     private function doSetUp(bool $isProductAvailableOnStock): void
     {
-        $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
+        $this->currentCurrencyProviderMock = $this->createMock(CurrentCurrencyProvider::class);
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(
             ProductPriceCalculationForCustomerUser::class,
         );
@@ -247,7 +247,7 @@ class LuigisBoxFeedItemTest extends TestCase
 
         $this->luigisBoxProductFeedItemFactory = new LuigisBoxProductFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
-            $this->currencyFacadeMock,
+            $this->currentCurrencyProviderMock,
             $this->productUrlsBatchLoaderMock,
             $categoryRepositoryStub,
             $productCachedAttributesFacade,

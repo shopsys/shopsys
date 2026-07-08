@@ -21,7 +21,8 @@
     <a href="{{ url(
         'admin_feed_generate', {
             feedName: row.feedName,
-            domainId: row.domainConfig.id
+            domainId: row.domainConfig.id,
+            currencyCode: row.currencyCode
         }
     ) }}" class="btn">{{ 'Generate'|trans }}</a>
 
