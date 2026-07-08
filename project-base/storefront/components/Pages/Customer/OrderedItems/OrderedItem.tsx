@@ -95,7 +95,9 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                         {isPriceVisible(orderedItem.totalPrice.priceWithVat) && (
                             <OrderedItemColumnInfo
                                 title={t('Price')}
-                                value={formatPrice(orderedItem.totalPrice.priceWithVat)}
+                                value={formatPrice(orderedItem.totalPrice.priceWithVat, {
+                                    currencyCode: orderedItem.totalPrice.currencyCode,
+                                })}
                                 valueClassName="text-price-default"
                                 wrapperClassName="min-w-[80px]"
                             />

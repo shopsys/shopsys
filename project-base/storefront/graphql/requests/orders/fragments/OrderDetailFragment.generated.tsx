@@ -7,16 +7,16 @@ import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 import { OrderWithdrawalRequestFragment } from './OrderWithdrawalRequestFragment.generated';
 export type TypeOrderDetailFragment = (
   { __typename: 'Order' }
-  & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate' | 'status' | 'statusType' | 'firstName' | 'lastName' | 'email' | 'telephone' | 'companyName' | 'companyNumber' | 'companyTaxNumber' | 'street' | 'city' | 'postcode' | 'isDeliveryAddressDifferentFromBilling' | 'deliveryFirstName' | 'deliveryLastName' | 'deliveryCompanyName' | 'deliveryTelephone' | 'deliveryStreet' | 'deliveryCity' | 'deliveryPostcode' | 'note' | 'urlHash' | 'promoCode' | 'trackingNumber' | 'trackingUrl' | 'isPaid' | 'hasExternalPayment' | 'hasPaymentInProcess' | 'paymentTransactionsCount' | 'lastExternalPaymentUrl' | 'paymentStatus' | 'deliveredAt' | 'canRequestWithdrawal' | 'withdrawalDeadline'>
+  & Pick<Types.TypeOrder, 'currencyCode' | 'uuid' | 'number' | 'creationDate' | 'status' | 'statusType' | 'firstName' | 'lastName' | 'email' | 'telephone' | 'companyName' | 'companyNumber' | 'companyTaxNumber' | 'street' | 'city' | 'postcode' | 'isDeliveryAddressDifferentFromBilling' | 'deliveryFirstName' | 'deliveryLastName' | 'deliveryCompanyName' | 'deliveryTelephone' | 'deliveryStreet' | 'deliveryCity' | 'deliveryPostcode' | 'note' | 'urlHash' | 'promoCode' | 'trackingNumber' | 'trackingUrl' | 'isPaid' | 'hasExternalPayment' | 'hasPaymentInProcess' | 'paymentTransactionsCount' | 'lastExternalPaymentUrl' | 'paymentStatus' | 'deliveredAt' | 'canRequestWithdrawal' | 'withdrawalDeadline'>
   & { items: Array<(
     { __typename: 'OrderItem' }
     & Pick<Types.TypeOrderItem, 'uuid' | 'name' | 'vatRate' | 'quantity' | 'unit' | 'type'>
     & { unitPrice: (
       { __typename: 'Price' }
-      & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
     ), totalPrice: (
       { __typename: 'Price' }
-      & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
     ), order: (
       { __typename?: 'Order' }
       & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate'>
@@ -44,14 +44,14 @@ export type TypeOrderDetailFragment = (
         & Pick<Types.TypeImage, 'name' | 'url'>
       )>, price: (
         { __typename: 'ProductPrice' }
-        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
         & { basicPrice: (
           { __typename?: 'Price' }
           & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
         ) }
       ), giftPrice: (
         { __typename: 'ProductPrice' }
-        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
         & { basicPrice: (
           { __typename?: 'Price' }
           & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -71,14 +71,14 @@ export type TypeOrderDetailFragment = (
         & Pick<Types.TypeImage, 'name' | 'url'>
       )>, price: (
         { __typename: 'ProductPrice' }
-        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
         & { basicPrice: (
           { __typename?: 'Price' }
           & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
         ) }
       ), giftPrice: (
         { __typename: 'ProductPrice' }
-        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
         & { basicPrice: (
           { __typename?: 'Price' }
           & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -98,14 +98,14 @@ export type TypeOrderDetailFragment = (
         & Pick<Types.TypeImage, 'name' | 'url'>
       )>, price: (
         { __typename: 'ProductPrice' }
-        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
         & { basicPrice: (
           { __typename?: 'Price' }
           & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
         ) }
       ), giftPrice: (
         { __typename: 'ProductPrice' }
-        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+        & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
         & { basicPrice: (
           { __typename?: 'Price' }
           & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -136,7 +136,7 @@ export type TypeOrderDetailFragment = (
     & Pick<Types.TypeCountry, 'name' | 'code'>
   )>, totalPrice: (
     { __typename: 'Price' }
-    & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+    & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
   ), confirmationPageContent: (
     { __typename?: 'OrderConfirmationPageContent' }
     & Pick<Types.TypeOrderConfirmationPageContent, 'content' | 'status'>
@@ -160,6 +160,7 @@ export type TypeOrderDetailFragment = (
 
 export const OrderDetailFragment = gql`
     fragment OrderDetailFragment on Order {
+  currencyCode
   __typename
   uuid
   number

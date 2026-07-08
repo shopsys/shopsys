@@ -71,14 +71,14 @@ export type TypeCreateOrderMutation = (
             & Pick<Types.TypeAvailability, 'name' | 'status'>
           ), price: (
             { __typename: 'ProductPrice' }
-            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
             & { basicPrice: (
               { __typename?: 'Price' }
               & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
             ) }
           ), giftPrice: (
             { __typename: 'ProductPrice' }
-            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
             & { basicPrice: (
               { __typename?: 'Price' }
               & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -121,14 +121,14 @@ export type TypeCreateOrderMutation = (
             & Pick<Types.TypeAvailability, 'name' | 'status'>
           ), price: (
             { __typename: 'ProductPrice' }
-            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
             & { basicPrice: (
               { __typename?: 'Price' }
               & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
             ) }
           ), giftPrice: (
             { __typename: 'ProductPrice' }
-            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
             & { basicPrice: (
               { __typename?: 'Price' }
               & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -174,14 +174,14 @@ export type TypeCreateOrderMutation = (
             & Pick<Types.TypeAvailability, 'name' | 'status'>
           ), price: (
             { __typename: 'ProductPrice' }
-            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
             & { basicPrice: (
               { __typename?: 'Price' }
               & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
             ) }
           ), giftPrice: (
             { __typename: 'ProductPrice' }
-            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+            & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
             & { basicPrice: (
               { __typename?: 'Price' }
               & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -213,19 +213,19 @@ export type TypeCreateOrderMutation = (
         ) }
       )>, totalPrice: (
         { __typename: 'Price' }
-        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
       ), totalItemsPrice: (
         { __typename: 'Price' }
-        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
       ), totalItemsPriceBeforeDiscount: (
         { __typename: 'Price' }
-        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
       ), totalProductPriceAdjustmentsDiscount: (
         { __typename: 'Price' }
-        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
       ), totalDiscountPrice: (
         { __typename: 'Price' }
-        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
       ), modifications: (
         { __typename: 'CartModificationsResult' }
         & Pick<Types.TypeCartModificationsResult, 'someProductWasRemovedFromEshop'>
@@ -248,14 +248,14 @@ export type TypeCreateOrderMutation = (
                 & Pick<Types.TypeAvailability, 'name' | 'status'>
               ), price: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
                 ) }
               ), giftPrice: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -298,14 +298,14 @@ export type TypeCreateOrderMutation = (
                 & Pick<Types.TypeAvailability, 'name' | 'status'>
               ), price: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
                 ) }
               ), giftPrice: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -351,14 +351,14 @@ export type TypeCreateOrderMutation = (
                 & Pick<Types.TypeAvailability, 'name' | 'status'>
               ), price: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
                 ) }
               ), giftPrice: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -405,14 +405,14 @@ export type TypeCreateOrderMutation = (
                 & Pick<Types.TypeAvailability, 'name' | 'status'>
               ), price: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
                 ) }
               ), giftPrice: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -455,14 +455,14 @@ export type TypeCreateOrderMutation = (
                 & Pick<Types.TypeAvailability, 'name' | 'status'>
               ), price: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
                 ) }
               ), giftPrice: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -508,14 +508,14 @@ export type TypeCreateOrderMutation = (
                 & Pick<Types.TypeAvailability, 'name' | 'status'>
               ), price: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
                 ) }
               ), giftPrice: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -562,14 +562,14 @@ export type TypeCreateOrderMutation = (
                 & Pick<Types.TypeAvailability, 'name' | 'status'>
               ), price: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
                 ) }
               ), giftPrice: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -612,14 +612,14 @@ export type TypeCreateOrderMutation = (
                 & Pick<Types.TypeAvailability, 'name' | 'status'>
               ), price: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
                 ) }
               ), giftPrice: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -665,14 +665,14 @@ export type TypeCreateOrderMutation = (
                 & Pick<Types.TypeAvailability, 'name' | 'status'>
               ), price: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
                 ) }
               ), giftPrice: (
                 { __typename: 'ProductPrice' }
-                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+                & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
                 & { basicPrice: (
                   { __typename?: 'Price' }
                   & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -730,7 +730,7 @@ export type TypeCreateOrderMutation = (
         & Pick<Types.TypeTransport, 'uuid' | 'name' | 'description' | 'daysUntilDelivery' | 'transportTypeCode' | 'isPersonalPickup' | 'vatPercent'>
         & { price: (
           { __typename: 'Price' }
-          & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
         ), mainImage: Types.Maybe<(
           { __typename: 'Image' }
           & Pick<Types.TypeImage, 'name' | 'url'>
@@ -739,7 +739,7 @@ export type TypeCreateOrderMutation = (
           & Pick<Types.TypePayment, 'uuid' | 'name' | 'description' | 'instructions' | 'type'>
           & { price: (
             { __typename: 'Price' }
-            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+            & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
           ), mainImage: Types.Maybe<(
             { __typename: 'Image' }
             & Pick<Types.TypeImage, 'name' | 'url'>
@@ -781,7 +781,7 @@ export type TypeCreateOrderMutation = (
         & Pick<Types.TypePayment, 'uuid' | 'name' | 'description' | 'instructions' | 'type'>
         & { price: (
           { __typename: 'Price' }
-          & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
         ), mainImage: Types.Maybe<(
           { __typename: 'Image' }
           & Pick<Types.TypeImage, 'name' | 'url'>
@@ -794,11 +794,11 @@ export type TypeCreateOrderMutation = (
         & Pick<Types.TypePromoCode, 'code' | 'type'>
         & { discountPrice: (
           { __typename?: 'Price' }
-          & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
         ) }
       )>, roundingPrice: Types.Maybe<(
         { __typename: 'Price' }
-        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
       )> }
     )> }
   ) }

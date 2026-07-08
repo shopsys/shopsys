@@ -12,7 +12,7 @@ export type TypeProductGiftFragment_MainVariant_ = (
     & Pick<Types.TypeImage, 'name' | 'url'>
   )>, giftPrice: (
     { __typename: 'ProductPrice' }
-    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
     & { basicPrice: (
       { __typename?: 'Price' }
       & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -28,7 +28,7 @@ export type TypeProductGiftFragment_RegularProduct_ = (
     & Pick<Types.TypeImage, 'name' | 'url'>
   )>, giftPrice: (
     { __typename: 'ProductPrice' }
-    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
     & { basicPrice: (
       { __typename?: 'Price' }
       & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -44,7 +44,7 @@ export type TypeProductGiftFragment_Variant_ = (
     & Pick<Types.TypeImage, 'name' | 'url'>
   )>, giftPrice: (
     { __typename: 'ProductPrice' }
-    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
     & { basicPrice: (
       { __typename?: 'Price' }
       & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>

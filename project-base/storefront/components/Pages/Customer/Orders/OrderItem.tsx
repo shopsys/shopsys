@@ -41,7 +41,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
         `${t('Date of order')}: ${formatDate(order.creationDate)}.`,
         `${t('State')}: ${order.status}.`,
         isPriceVisible(order.totalPrice.priceWithVat)
-            ? `${t('Price')}: ${formatPrice(order.totalPrice.priceWithVat)}.`
+            ? `${t('Price')}: ${formatPrice(order.totalPrice.priceWithVat, { currencyCode: order.totalPrice.currencyCode })}.`
             : undefined,
     ]
         .filter(Boolean)
@@ -96,7 +96,9 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
 
                     {isPriceVisible(order.totalPrice.priceWithVat) && (
                         <CustomerRecordColumnInfo title={t('Price')}>
-                            {formatPrice(order.totalPrice.priceWithVat)}
+                            {formatPrice(order.totalPrice.priceWithVat, {
+                                currencyCode: order.totalPrice.currencyCode,
+                            })}
 
                             <OrderPaymentStatusBar
                                 orderHasExternalPayment={order.hasExternalPayment}

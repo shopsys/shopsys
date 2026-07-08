@@ -36,6 +36,7 @@ fragment PersonalDataDetailFragment on PersonalData {
         }
         totalPrice {
             priceWithVat
+            currencyCode
         }
     }
     customerUser {

@@ -36,7 +36,7 @@ export const getGtmCreateOrderEventOrderPart = (
     reviewConsents: GtmReviewConsentsType | undefined,
     domainConfig: DomainConfigType,
 ): GtmCreateOrderEventOrderPartType => ({
-    currencyCode: domainConfig.currencyCode,
+    currencyCode: cart.totalPrice.currencyCode ?? domainConfig.currencyCode,
     id: orderNumber,
     valueWithoutVat: getGtmPriceBasedOnVisibility(cart.totalPrice.priceWithoutVat),
     valueWithVat: getGtmPriceBasedOnVisibility(cart.totalPrice.priceWithVat),

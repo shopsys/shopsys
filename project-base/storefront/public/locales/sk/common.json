@@ -774,5 +774,6 @@
     "Your watchdog has been created": "Váš strážny pes bol vytvorený",
     "Your wishlist is feeling empty! Add products you love so you can easily find them here later.": "Váš obľúbený zoznam je prázdny! Pridajte produkty, ktoré milujete, aby ste ich mohli ľahko nájsť tu neskôr.",
     "Your withdrawal request has been submitted": "Vaša žiadosť o odstúpenie bola odoslaná",
-    "Zip code cannot be longer than {{ postcodeLength }} characters": "PSČ nesmie byť dlhší ako {{ postcodeLength }} znakov"
+    "Zip code cannot be longer than {{ postcodeLength }} characters": "PSČ nesmie byť dlhší ako {{ postcodeLength }} znakov",
+    "Switch currency to {{ currencyCode }}": "Prepnúť menu na {{ currencyCode }}"
 }

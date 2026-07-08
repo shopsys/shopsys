@@ -3,6 +3,7 @@ fragment ProductPriceFragment on ProductPrice {
     priceWithVat
     priceWithoutVat
     vatAmount
+    currencyCode
     isPriceFrom
     nextPriceChange
     percentageDiscount

@@ -32,7 +32,7 @@ export type TypeProductInProductListFragment_MainVariant_ = (
     & Pick<Types.TypeImage, 'url'>
   )>, price: (
     { __typename: 'ProductPrice' }
-    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'percentageDiscount'>
     & { basicPrice: (
       { __typename: 'Price' }
       & Pick<Types.TypePrice, 'priceWithVat'>
@@ -77,7 +77,7 @@ export type TypeProductInProductListFragment_RegularProduct_ = (
     & Pick<Types.TypeImage, 'url'>
   )>, price: (
     { __typename: 'ProductPrice' }
-    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'percentageDiscount'>
     & { basicPrice: (
       { __typename: 'Price' }
       & Pick<Types.TypePrice, 'priceWithVat'>
@@ -122,7 +122,7 @@ export type TypeProductInProductListFragment_Variant_ = (
     & Pick<Types.TypeImage, 'url'>
   )>, price: (
     { __typename: 'ProductPrice' }
-    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'percentageDiscount'>
     & { basicPrice: (
       { __typename: 'Price' }
       & Pick<Types.TypePrice, 'priceWithVat'>

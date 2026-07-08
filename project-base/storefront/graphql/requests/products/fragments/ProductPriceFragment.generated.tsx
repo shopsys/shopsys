@@ -4,7 +4,7 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 export type TypeProductPriceFragment = (
   { __typename: 'ProductPrice' }
-  & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+  & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
   & { basicPrice: (
     { __typename?: 'Price' }
     & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -17,6 +17,7 @@ export const ProductPriceFragment = gql`
   priceWithVat
   priceWithoutVat
   vatAmount
+  currencyCode
   isPriceFrom
   nextPriceChange
   percentageDiscount

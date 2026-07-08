@@ -1,4 +1,5 @@
 fragment OrderDetailFragment on Order {
+    currencyCode
     __typename
     uuid
     number

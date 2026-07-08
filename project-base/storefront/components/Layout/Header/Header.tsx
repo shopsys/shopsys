@@ -3,6 +3,7 @@ import { TIDs } from 'cypress/tids';
 import dynamic from 'next/dynamic';
 import { DeferredAutocompleteSearch } from './AutocompleteSearch/DeferredAutocompleteSearch';
 import { DeferredCartInHeader } from './Cart/DeferredCartInHeader';
+import { CurrencySwitcher } from './CurrencySwitcher/CurrencySwitcher';
 import { Logo } from './Logo/Logo';
 import { DeferredMenuIconic } from './MenuIconic/DeferredMenuIconic';
 import { DeferredMobileMenu } from './MobileMenu/DeferredMobileMenu';
@@ -30,7 +31,8 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                             <DeferredAutocompleteSearch />
                         </div>
 
-                        <div className="order-2 ml-auto flex">
+                        <div className="order-2 ml-auto flex items-center gap-3">
+                            <CurrencySwitcher />
                             <DeferredMenuIconic />
                         </div>
 

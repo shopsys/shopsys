@@ -5,6 +5,7 @@ fragment ComplaintOrderedItemFragment on OrderItem {
     unit
     totalPrice {
         priceWithVat
+        currencyCode
     }
     order {
         uuid

@@ -17,7 +17,7 @@ export type TypeTransportsQuery = (
     & Pick<Types.TypeTransport, 'uuid' | 'name' | 'description' | 'daysUntilDelivery' | 'transportTypeCode' | 'isPersonalPickup' | 'vatPercent'>
     & { price: (
       { __typename: 'Price' }
-      & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+      & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
     ), mainImage: Types.Maybe<(
       { __typename: 'Image' }
       & Pick<Types.TypeImage, 'name' | 'url'>
@@ -26,7 +26,7 @@ export type TypeTransportsQuery = (
       & Pick<Types.TypePayment, 'uuid' | 'name' | 'description' | 'instructions' | 'type'>
       & { price: (
         { __typename: 'Price' }
-        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+        & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
       ), mainImage: Types.Maybe<(
         { __typename: 'Image' }
         & Pick<Types.TypeImage, 'name' | 'url'>

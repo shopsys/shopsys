@@ -26,7 +26,7 @@ export type TypeOrdersQuery = (
       & Pick<Types.TypeOrderEdge, 'cursor'>
       & { node: Types.Maybe<(
         { __typename: 'Order' }
-        & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate' | 'isPaid' | 'hasExternalPayment' | 'hasPaymentInProcess' | 'status' | 'note'>
+        & Pick<Types.TypeOrder, 'currencyCode' | 'uuid' | 'number' | 'creationDate' | 'isPaid' | 'hasExternalPayment' | 'hasPaymentInProcess' | 'status' | 'note'>
         & { productItems: Array<(
           { __typename: 'OrderItem' }
           & Pick<Types.TypeOrderItem, 'quantity'>
@@ -54,7 +54,7 @@ export type TypeOrdersQuery = (
           )> }
         )>, totalPrice: (
           { __typename: 'Price' }
-          & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+          & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
         ), items: Array<(
           { __typename?: 'OrderItem' }
           & Pick<Types.TypeOrderItem, 'type'>

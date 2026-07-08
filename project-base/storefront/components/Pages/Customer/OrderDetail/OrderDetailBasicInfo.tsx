@@ -70,7 +70,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
                 {isPriceVisible(order.totalPrice.priceWithVat) && (
                     <CustomerRecordColumnInfo title={t('Price')}>
-                        {formatPrice(order.totalPrice.priceWithVat)}
+                        {formatPrice(order.totalPrice.priceWithVat, { currencyCode: order.totalPrice.currencyCode })}
 
                         <OrderPaymentStatusBar
                             orderHasExternalPayment={order.hasExternalPayment}
@@ -147,7 +147,11 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         </div>
 
                         {isPriceVisible(order.totalPrice.priceWithVat) && (
-                            <span className="font-bold">{formatPrice(orderTransport.totalPrice.priceWithVat)}</span>
+                            <span className="font-bold">
+                                {formatPrice(orderTransport.totalPrice.priceWithVat, {
+                                    currencyCode: orderTransport.totalPrice.currencyCode,
+                                })}
+                            </span>
                         )}
                     </div>
                 </OrderDetailRowInfo>
@@ -163,7 +167,11 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         />
 
                         {isPriceVisible(orderPayment.totalPrice.priceWithVat) && (
-                            <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
+                            <span className="font-bold">
+                                {formatPrice(orderPayment.totalPrice.priceWithVat, {
+                                    currencyCode: orderPayment.totalPrice.currencyCode,
+                                })}
+                            </span>
                         )}
                     </div>
                 </OrderDetailRowInfo>
@@ -172,7 +180,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
             {orderRounding && isPriceVisible(orderRounding.totalPrice.priceWithVat) && (
                 <OrderDetailRowInfo title={t('Rounding')}>
                     <span className="block w-full text-right font-bold">
-                        {formatPrice(orderRounding.totalPrice.priceWithVat)}
+                        {formatPrice(orderRounding.totalPrice.priceWithVat, {
+                            currencyCode: orderRounding.totalPrice.currencyCode,
+                        })}
                     </span>
                 </OrderDetailRowInfo>
             )}
@@ -217,11 +227,16 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
                                 <div className="flex flex-col items-end gap-2">
                                     <strong className="text-lg text-price">
-                                        {formatPrice(order.totalPrice.priceWithVat)}
+                                        {formatPrice(order.totalPrice.priceWithVat, {
+                                            currencyCode: order.totalPrice.currencyCode,
+                                        })}
                                     </strong>
 
                                     <span className="text-price-before text-sm">
-                                        {formatPrice(order.totalPrice.priceWithoutVat)} {t('without VAT')}
+                                        {formatPrice(order.totalPrice.priceWithoutVat, {
+                                            currencyCode: order.totalPrice.currencyCode,
+                                        })}{' '}
+                                        {t('without VAT')}
                                     </span>
                                 </div>
                             </div>

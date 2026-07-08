@@ -25,7 +25,7 @@ export type TypeSearchOrderedItemsQuery = (
         & Pick<Types.TypeOrderItem, 'uuid' | 'name' | 'quantity' | 'unit'>
         & { totalPrice: (
           { __typename?: 'Price' }
-          & Pick<Types.TypePrice, 'priceWithVat'>
+          & Pick<Types.TypePrice, 'priceWithVat' | 'currencyCode'>
         ), order: (
           { __typename?: 'Order' }
           & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate'>

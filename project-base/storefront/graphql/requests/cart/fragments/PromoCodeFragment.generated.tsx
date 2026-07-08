@@ -7,7 +7,7 @@ export type TypePromoCodeFragment = (
   & Pick<Types.TypePromoCode, 'code' | 'type'>
   & { discountPrice: (
     { __typename?: 'Price' }
-    & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+    & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
   ) }
 );
 
@@ -20,6 +20,7 @@ export const PromoCodeFragment = gql`
     priceWithVat
     priceWithoutVat
     vatAmount
+    currencyCode
   }
 }
     `;

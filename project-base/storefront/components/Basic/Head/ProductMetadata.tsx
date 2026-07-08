@@ -10,7 +10,7 @@ type ProductMetadataProps = {
 };
 
 export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
-    const { currencyCode } = useDomainConfig();
+    const { currencyCode: domainDefaultCurrencyCode } = useDomainConfig();
     const router = useRouter();
 
     return (
@@ -35,7 +35,7 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                         offers: {
                             '@type': 'Offer',
                             url: router.asPath,
-                            priceCurrency: currencyCode,
+                            priceCurrency: product.price.currencyCode ?? domainDefaultCurrencyCode,
                             price: product.price.priceWithVat,
                             itemCondition: 'https://schema.org/NewCondition',
                             availability:

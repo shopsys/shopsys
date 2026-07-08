@@ -738,5 +738,6 @@
     "Your watchdog has been created": "Your watchdog has been created",
     "Your wishlist is feeling empty! Add products you love so you can easily find them here later.": "Your wishlist is feeling empty! Add products you love so you can easily find them here later.",
     "Your withdrawal request has been submitted": "Your withdrawal request has been submitted",
-    "Zip code cannot be longer than {{ postcodeLength }} characters": "Zip code cannot be longer than {{ postcodeLength }} characters"
+    "Zip code cannot be longer than {{ postcodeLength }} characters": "Zip code cannot be longer than {{ postcodeLength }} characters",
+    "Switch currency to {{ currencyCode }}": "Switch currency to {{ currencyCode }}"
 }

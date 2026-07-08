@@ -12,7 +12,7 @@ export type TypeSimpleProductFragment_MainVariant_ = (
   & Pick<Types.TypeMainVariant, 'id' | 'uuid' | 'catalogNumber' | 'fullName' | 'slug'>
   & { price: (
     { __typename: 'ProductPrice' }
-    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
     & { basicPrice: (
       { __typename?: 'Price' }
       & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -43,7 +43,7 @@ export type TypeSimpleProductFragment_RegularProduct_ = (
   & Pick<Types.TypeRegularProduct, 'id' | 'uuid' | 'catalogNumber' | 'fullName' | 'slug'>
   & { price: (
     { __typename: 'ProductPrice' }
-    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
     & { basicPrice: (
       { __typename?: 'Price' }
       & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
@@ -74,7 +74,7 @@ export type TypeSimpleProductFragment_Variant_ = (
   & Pick<Types.TypeVariant, 'id' | 'uuid' | 'catalogNumber' | 'fullName' | 'slug'>
   & { price: (
     { __typename: 'ProductPrice' }
-    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
+    & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'nextPriceChange' | 'percentageDiscount'>
     & { basicPrice: (
       { __typename?: 'Price' }
       & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>

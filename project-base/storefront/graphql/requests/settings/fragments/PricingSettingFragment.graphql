@@ -1,5 +1,12 @@
 fragment PricingSettingFragment on PricingSetting {
     __typename
     defaultCurrencyCode
+    currentCurrencyCode
     minimumFractionDigits
+    availableCurrencies {
+        __typename
+        code
+        name
+        minFractionDigits
+    }
 }

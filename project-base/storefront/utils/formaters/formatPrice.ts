@@ -5,7 +5,7 @@ export function formatPrice(
     currencyCode: string,
     t: Translate,
     locale: string,
-    minimumFractionDigits: number,
+    minimumFractionDigits: number | undefined,
     options?: { explicitZero?: boolean },
 ): string {
     if (price === 0 && !options?.explicitZero) {

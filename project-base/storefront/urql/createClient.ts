@@ -7,10 +7,12 @@ import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'red
 import { Client, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
+import { getCurrencyCodeFromCookies } from 'utils/currency/currencyCookie';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getExplicitPathDomainLocaleOrDefault, getInternalGraphqlEndpoint } from 'utils/domain/domainUtils';
 
 export const DOMAIN_ID_HEADER = 'X-Domain-Id' as const;
+export const CURRENCY_CODE_HEADER = 'X-Currency-Code' as const;
 
 export const createClient = ({
     t,
@@ -32,6 +34,7 @@ export const createClient = ({
     );
     const publicGraphqlEndpoint = domainConfig.publicGraphqlEndpoint;
     const publicGraphqlEndpointObject = new URL(publicGraphqlEndpoint);
+    const currencyCode = getCurrencyCodeFromCookies(domainConfig, context);
 
     return initUrqlClient(
         {
@@ -43,6 +46,7 @@ export const createClient = ({
                     OriginalHost: publicGraphqlEndpointObject.host,
                     [DOMAIN_ID_HEADER]: domainConfig.domainId.toString(),
                     'X-Forwarded-Proto': publicGraphqlEndpointObject.protocol === 'https:' ? 'on' : 'off',
+                    ...(currencyCode !== undefined ? { [CURRENCY_CODE_HEADER]: currencyCode } : {}),
                 },
             },
             fetch: fetcher(redisClient),

@@ -16,7 +16,11 @@ export type TypeSettingsQuery = (
     & Pick<Types.TypeSettings, 'contactFormMainText' | 'displayTimezone' | 'heurekaEnabled' | 'privacyPolicyArticleUrl' | 'termsAndConditionsArticleUrl' | 'userConsentPolicyArticleUrl' | 'socialNetworkLoginConfig' | 'cspHeader' | 'defaultPricingGroupId'>
     & { pricing: (
       { __typename: 'PricingSetting' }
-      & Pick<Types.TypePricingSetting, 'defaultCurrencyCode' | 'minimumFractionDigits'>
+      & Pick<Types.TypePricingSetting, 'defaultCurrencyCode' | 'currentCurrencyCode' | 'minimumFractionDigits'>
+      & { availableCurrencies: Array<(
+        { __typename: 'CurrencySetting' }
+        & Pick<Types.TypeCurrencySetting, 'code' | 'name' | 'minFractionDigits'>
+      )> }
     ), seo: (
       { __typename: 'SeoSetting' }
       & Pick<Types.TypeSeoSetting, 'title' | 'titleAddOn' | 'metaDescription'>

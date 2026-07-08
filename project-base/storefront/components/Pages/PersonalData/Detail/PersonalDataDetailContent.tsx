@@ -220,7 +220,10 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                                         <Row>
                                                             <CellMinor>{t('Total price including VAT')}</CellMinor>
                                                             <Cell>
-                                                                {formatPrice(parseFloat(order.totalPrice.priceWithVat))}
+                                                                {formatPrice(
+                                                                    parseFloat(order.totalPrice.priceWithVat),
+                                                                    { currencyCode: order.totalPrice.currencyCode },
+                                                                )}
                                                             </Cell>
                                                         </Row>
                                                     )}

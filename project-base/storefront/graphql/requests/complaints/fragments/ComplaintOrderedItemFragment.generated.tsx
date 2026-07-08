@@ -8,7 +8,7 @@ export type TypeComplaintOrderedItemFragment = (
   & Pick<Types.TypeOrderItem, 'uuid' | 'name' | 'quantity' | 'unit'>
   & { totalPrice: (
     { __typename?: 'Price' }
-    & Pick<Types.TypePrice, 'priceWithVat'>
+    & Pick<Types.TypePrice, 'priceWithVat' | 'currencyCode'>
   ), order: (
     { __typename?: 'Order' }
     & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate'>
@@ -44,6 +44,7 @@ export const ComplaintOrderedItemFragment = gql`
   unit
   totalPrice {
     priceWithVat
+    currencyCode
   }
   order {
     uuid

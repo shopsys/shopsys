@@ -2,6 +2,8 @@ export enum TIDs {
     // Layout & Header
     header = 'header',
     header_homepage_link = 'header_homepage_link',
+    header_currency_switcher = 'header_currency_switcher',
+    header_currency_switcher_option_ = 'header_currency_switcher_option_',
     header_cart = 'header_cart',
     header_cart_link = 'header_cart_link',
     header_cart_list_item_ = 'header_cart_list_item_',

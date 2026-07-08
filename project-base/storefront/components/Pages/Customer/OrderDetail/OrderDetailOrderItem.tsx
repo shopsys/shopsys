@@ -61,7 +61,9 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
 
                 {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
                     <div className="whitespace-nowrap font-bold font-secondary text-price-discounted">
-                        {formatPrice(mapPriceForCalculations(orderItem.totalPrice.priceWithVat))}
+                        {formatPrice(mapPriceForCalculations(orderItem.totalPrice.priceWithVat), {
+                            currencyCode: orderItem.totalPrice.currencyCode,
+                        })}
                     </div>
                 )}
             </div>
@@ -138,7 +140,11 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                 </span>
 
                 {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                    <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
+                    <span className="text-right font-bold">
+                        {formatPrice(orderItem.totalPrice.priceWithVat, {
+                            currencyCode: orderItem.totalPrice.currencyCode,
+                        })}
+                    </span>
                 )}
             </div>
         </div>

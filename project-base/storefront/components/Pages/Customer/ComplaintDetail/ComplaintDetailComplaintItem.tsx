@@ -85,7 +85,9 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
 
                 {complaintItemTotalPrice && isPriceVisible(complaintItemTotalPrice.priceWithVat) && (
                     <span className="text-right font-bold font-secondary">
-                        {formatPrice(complaintItemTotalPrice.priceWithVat)}
+                        {formatPrice(complaintItemTotalPrice.priceWithVat, {
+                            currencyCode: complaintItemTotalPrice.currencyCode,
+                        })}
                     </span>
                 )}
             </div>

@@ -22,7 +22,7 @@ export const getGtmMappedCart = (
 
     const mappedCart: GtmCartInfoType = {
         abandonedCartUrl,
-        currencyCode: domain.currencyCode,
+        currencyCode: cart.totalItemsPrice.currencyCode ?? domain.currencyCode,
         valueWithoutVat: getGtmPriceBasedOnVisibility(cart.totalItemsPrice.priceWithoutVat),
         valueWithVat: getGtmPriceBasedOnVisibility(cart.totalItemsPrice.priceWithVat),
         products,

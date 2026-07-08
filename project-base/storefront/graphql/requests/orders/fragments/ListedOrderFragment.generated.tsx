@@ -6,7 +6,7 @@ import { OrderItemFragment } from './OrderItemFragment.generated';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 export type TypeListedOrderFragment = (
   { __typename: 'Order' }
-  & Pick<Types.TypeOrder, 'uuid' | 'number' | 'creationDate' | 'isPaid' | 'hasExternalPayment' | 'hasPaymentInProcess' | 'status' | 'note'>
+  & Pick<Types.TypeOrder, 'currencyCode' | 'uuid' | 'number' | 'creationDate' | 'isPaid' | 'hasExternalPayment' | 'hasPaymentInProcess' | 'status' | 'note'>
   & { productItems: Array<(
     { __typename: 'OrderItem' }
     & Pick<Types.TypeOrderItem, 'quantity'>
@@ -34,7 +34,7 @@ export type TypeListedOrderFragment = (
     )> }
   )>, totalPrice: (
     { __typename: 'Price' }
-    & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount'>
+    & Pick<Types.TypePrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode'>
   ), items: Array<(
     { __typename?: 'OrderItem' }
     & Pick<Types.TypeOrderItem, 'type'>
@@ -58,6 +58,7 @@ export type TypeListedOrderFragment = (
 
 export const ListedOrderFragment = gql`
     fragment ListedOrderFragment on Order {
+  currencyCode
   __typename
   uuid
   number

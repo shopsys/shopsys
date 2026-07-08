@@ -6,5 +6,6 @@ fragment PromoCodeFragment on PromoCode {
         priceWithVat
         priceWithoutVat
         vatAmount
+        currencyCode
     }
 }

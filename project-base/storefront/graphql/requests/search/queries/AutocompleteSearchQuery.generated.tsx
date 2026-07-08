@@ -108,7 +108,7 @@ export type TypeAutocompleteSearchQuery = (
           & Pick<Types.TypeImage, 'url'>
         )>, price: (
           { __typename: 'ProductPrice' }
-          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'percentageDiscount'>
           & { basicPrice: (
             { __typename: 'Price' }
             & Pick<Types.TypePrice, 'priceWithVat'>
@@ -137,7 +137,7 @@ export type TypeAutocompleteSearchQuery = (
           & Pick<Types.TypeImage, 'url'>
         )>, price: (
           { __typename: 'ProductPrice' }
-          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'percentageDiscount'>
           & { basicPrice: (
             { __typename: 'Price' }
             & Pick<Types.TypePrice, 'priceWithVat'>
@@ -166,7 +166,7 @@ export type TypeAutocompleteSearchQuery = (
           & Pick<Types.TypeImage, 'url'>
         )>, price: (
           { __typename: 'ProductPrice' }
-          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'isPriceFrom' | 'percentageDiscount'>
+          & Pick<Types.TypeProductPrice, 'priceWithVat' | 'priceWithoutVat' | 'vatAmount' | 'currencyCode' | 'isPriceFrom' | 'percentageDiscount'>
           & { basicPrice: (
             { __typename: 'Price' }
             & Pick<Types.TypePrice, 'priceWithVat'>

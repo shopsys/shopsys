@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/nextjs';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
-import { DOMAIN_ID_HEADER } from 'urql/createClient';
+import { CURRENCY_CODE_HEADER, DOMAIN_ID_HEADER } from 'urql/createClient';
 import { isClient } from 'utils/isClient';
 
 // Server-side only hash function for Redis cache keys
@@ -142,10 +142,12 @@ export const fetcher =
             const headers = init.headers ? new Headers(init.headers) : new Headers();
             const host = headers.get('OriginalHost');
             const domainId = headers.get(DOMAIN_ID_HEADER);
+            const currencyCode = headers.get(CURRENCY_CODE_HEADER);
+            const currencyBucket = currencyCode ? `${currencyCode}:` : '';
             const isPerPricingGroup = init.body.match(PER_PRICING_GROUP_CACHE_REGEXP) !== null;
             const authBucket = isPerPricingGroup ? `${await getAuthBucketFromHeaders(headers, domainId)}:` : '';
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
-            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? `${domainId}:` : ''}${authBucket}`;
+            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? `${domainId}:` : ''}${currencyBucket}${authBucket}`;
             const hash = `${key}${await getHash(body)}`;
             const fromCache = await redisClient.get(hash);
 

@@ -37,6 +37,7 @@ export const cache = cacheExchange({
         ComplaintItem: keyNull,
         ComplaintResolution: keyNull,
         Country: keyCode,
+        CurrencySetting: keyCode,
         ComplaintStatus: keyCode,
         ComplaintStatusCount: keyNull,
         CustomerUserRoleGroup: keyUuid,

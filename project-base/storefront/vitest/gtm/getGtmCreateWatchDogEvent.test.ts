@@ -47,6 +47,7 @@ const listedProduct = {
         priceWithVat: '121.00',
         priceWithoutVat: '100.00',
         vatAmount: '21.00',
+        currencyCode: 'CZK',
         isPriceFrom: false,
         percentageDiscount: null,
         basicPrice: {
