@@ -49,10 +49,18 @@ class GoPayPaymentMethodFacade
 
     public function downloadAndUpdatePaymentMethods(DomainConfig $domainConfig): void
     {
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainConfig->getId());
+        foreach ($this->currencyFacade->getEnabledCurrenciesByDomainId($domainConfig->getId()) as $currency) {
+            $this->downloadAndUpdatePaymentMethodsByCurrency($domainConfig, $currency);
+        }
+    }
+
+    protected function downloadAndUpdatePaymentMethodsByCurrency(
+        DomainConfig $domainConfig,
+        Currency $currency,
+    ): void {
         $goPayClient = $this->goPayClientFactory->createByDomain($domainConfig);
         $goPayPaymentMethodsRawData = $goPayClient->downloadGoPayPaymentMethodsByCurrency($currency);
-        $paymentMethodByIdentifier = $this->goPayPaymentMethodRepository->getAllIndexedByIdentifierByDomainId($domainConfig->getId());
+        $paymentMethodByIdentifier = $this->goPayPaymentMethodRepository->getAllIndexedByIdentifierByDomainIdAndCurrency($domainConfig->getId(), $currency);
 
         foreach ($goPayPaymentMethodsRawData as $goPayPaymentMethodRawData) {
             $paymentIdentifier = $goPayPaymentMethodRawData['paymentInstrument'];

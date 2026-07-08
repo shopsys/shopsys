@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 
 class OrderProcessingTest extends TestCase
 {
@@ -42,7 +44,11 @@ class OrderProcessingTest extends TestCase
             $nullMiddleware,
         ]);
 
-        $orderProcessor = new OrderProcessor($orderProcessingStack);
+        $orderProcessor = new OrderProcessor(
+            $orderProcessingStack,
+            $this->createStub(CurrentCurrencyProvider::class),
+            $this->createStub(CurrencyFacade::class),
+        );
         $orderInput = $this->createStub(OrderInput::class);
         $orderData = $this->createStub(OrderData::class);
 

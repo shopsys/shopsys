@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
@@ -28,7 +27,6 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
     public function __construct(
         CurrentPromoCodeFacade $currentPromoCodeFacade,
         PromoCodeFacade $promoCodeFacade,
-        protected readonly CurrencyFacade $currencyFacade,
         protected readonly DiscountCalculation $discountCalculation,
         protected readonly NumberFormatterExtension $numberFormatterExtension,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
@@ -88,7 +86,7 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $locale = $domainConfig->getLocale();
         $domainId = $domainConfig->getId();
 
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $currency = $promoCodeLimit->getCurrency();
         $discountPrice = $this->discountCalculation->calculatePercentageDiscountRoundedByCurrency(
             $this->getItemTotalPriceWithAppliedPromotions($productItem),
             (float)$productItem->vatPercent,

@@ -127,9 +127,8 @@ class StatisticsRepository
         $resultSetMapping->addScalarResult('total_price', 'total_price');
 
         $query = $this->em->createNativeQuery(
-            'SELECT SUM(o.total_price_with_vat * c.exchange_rate) AS total_price
+            'SELECT SUM(o.total_price_with_vat * o.currency_exchange_rate) AS total_price
             FROM orders o
-            JOIN currencies c ON c.code = o.currency_code
             JOIN order_statuses os ON o.status_id = os.id AND os.type != :canceled
             WHERE o.created_at BETWEEN :start_date AND :end_date AND o.deleted = FALSE',
             $resultSetMapping,

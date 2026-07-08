@@ -33,6 +33,7 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         );
 
         $orderProcessingData = $this->createOrderProcessingData();
+        $orderProcessingData->orderData->currencyRoundingType = Currency::ROUNDING_TYPE_HUNDREDTHS;
         $orderProcessingData->orderData->totalPrice = $expectedPrice;
 
         $paymentData = new PaymentData();
@@ -62,6 +63,7 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         );
 
         $orderProcessingData = $this->createOrderProcessingData();
+        $orderProcessingData->orderData->currencyRoundingType = Currency::ROUNDING_TYPE_HUNDREDTHS;
         $orderProcessingData->orderData->totalPrice = $expectedPrice;
 
         $addRoundingMiddleware = $this->createAddRoundingMiddleware();
@@ -82,6 +84,7 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         $this->setTranslator();
 
         $orderProcessingData = $this->createOrderProcessingData();
+        $orderProcessingData->orderData->currencyRoundingType = Currency::ROUNDING_TYPE_HUNDREDTHS;
         $orderProcessingData->orderData->totalPrice = $inputPrice;
 
         $paymentData = new PaymentData();
@@ -129,6 +132,7 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         $this->setTranslator();
 
         $orderProcessingData = $this->createOrderProcessingData();
+        $orderProcessingData->orderData->currencyRoundingType = Currency::ROUNDING_TYPE_HUNDREDTHS;
         $inputPrice = new Price(Money::create('100'), Money::create('120.12'));
         $orderProcessingData->orderData->totalPrice = $inputPrice;
 
@@ -143,10 +147,7 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         $orderItemData->payment = $payment;
         $orderProcessingData->orderData->orderPayment = $orderItemData;
 
-        $addRoundingMiddleware = $this->createAddRoundingMiddleware(
-            Currency::CODE_EUR,
-            Currency::ROUNDING_TYPE_HUNDREDTHS,
-        );
+        $addRoundingMiddleware = $this->createAddRoundingMiddleware();
 
         $result = $addRoundingMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
         $actualOrderData = $result->orderData;
@@ -160,15 +161,12 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
         );
     }
 
-    private function createAddRoundingMiddleware(
-        string $currencyCode = Currency::CODE_EUR,
-        string $roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS,
-    ): AddRoundingMiddleware {
+    private function createAddRoundingMiddleware(): AddRoundingMiddleware
+    {
         $orderItemPriceCalculationStub = $this->createStub(OrderItemPriceCalculation::class);
         $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationStub, new Rounding(), new OrderRoundingTypeEnum());
 
         return new AddRoundingMiddleware(
-            $this->createCurrencyFacade($currencyCode, $roundingType),
             $this->createOrderItemDataFactory(),
             $priceCalculation,
         );

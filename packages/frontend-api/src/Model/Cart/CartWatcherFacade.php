@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
 
@@ -26,6 +27,7 @@ class CartWatcherFacade
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly Domain $domain,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
         protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
         protected readonly CartPromoCodeFacade $cartPromoCodeFacade,
@@ -37,6 +39,8 @@ class CartWatcherFacade
 
     public function getCheckedCartWithModifications(Cart $cart): CartWithModificationsResult
     {
+        $this->resetWatchedPricesOnCurrencyChange($cart);
+
         $this->cartWithModificationsResult = $this->cartWithModificationsResultFactory->create($cart);
 
         $this->checkRemovedProductsItems($cart);
@@ -165,5 +169,27 @@ class CartWatcherFacade
             $promoCodeDiscountPrice = $orderData->getPromoCodeDiscountPrice();
             $this->cartWithModificationsResult->addPromoCode($promoCode, $promoCodeDiscountPrice);
         }
+    }
+
+    /**
+     * The watched prices are stored in a single currency, comparing them after a currency switch would report
+     * false price changes, so they are reset and watched anew in the current currency
+     */
+    protected function resetWatchedPricesOnCurrencyChange(Cart $cart): void
+    {
+        $currentCurrencyCode = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($this->domain->getId())->getCode();
+
+        if ($cart->getCurrencyCode() === $currentCurrencyCode) {
+            return;
+        }
+
+        foreach ($cart->getItems() as $cartItem) {
+            $cartItem->setWatchedPrice(null);
+        }
+
+        $cart->setTransportWatchedPrice(null);
+        $cart->setPaymentWatchedPrice(null);
+        $cart->setCurrencyCode($currentCurrencyCode);
+        $this->em->flush();
     }
 }

@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwift;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayPaymentMethodRepository
 {
@@ -31,12 +32,14 @@ class GoPayPaymentMethodRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod[]
      */
-    public function getAllIndexedByIdentifierByDomainId(int $domainId): array
+    public function getAllIndexedByIdentifierByDomainIdAndCurrency(int $domainId, Currency $currency): array
     {
         return $this->getPaymentMethodRepository()
             ->createQueryBuilder('pm')
             ->where('pm.domainId = :domainId')
+            ->andWhere('pm.currency = :currency')
             ->setParameter('domainId', $domainId)
+            ->setParameter('currency', $currency)
             ->indexBy('pm', 'pm.identifier')
             ->getQuery()
             ->getResult();

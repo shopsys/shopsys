@@ -10,12 +10,10 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
 {
     public function __construct(
-        protected readonly CurrencyFacade $currencyFacade,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly OrderPriceCalculation $orderPriceCalculation,
     ) {
@@ -34,11 +32,9 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
             return $orderProcessingStack->processNext($orderProcessingData);
         }
 
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($orderProcessingData->getDomainId());
-
         $roundingPrice = $this->orderPriceCalculation->calculateOrderRoundingPrice(
             $payment,
-            $currency->getRoundingType(),
+            $orderData->currencyRoundingType,
             $orderData->totalPrice,
             $orderProcessingData->getDomainId(),
         );

@@ -190,6 +190,14 @@ class CurrencyFacade
         return $currenciesIndexedById;
     }
 
+    public function getExchangeRateToDomainDefaultCurrency(Currency $currency, int $domainId): string
+    {
+        return (string)$this->getExchangeRateForCurrencies(
+            $currency,
+            $this->getDomainDefaultCurrencyByDomainId($domainId),
+        );
+    }
+
     public function getExchangeRateForCurrencies(Currency $inputCurrency, Currency $outputCurrency): BigDecimal
     {
         $inputCurrencyExchangeRate = BigDecimal::of($inputCurrency->getExchangeRate());

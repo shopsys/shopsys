@@ -15,8 +15,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Tests\FrameworkBundle\Test\IsPriceEqual;
@@ -129,28 +127,6 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
             $discountCalculation,
             $this->createOrderItemDataFactory(),
             $vatFacade,
-            $this->createCurrencyFacadeStub(),
         );
-    }
-
-    private function createCurrencyStub(): Currency
-    {
-        $currency = $this->createStub(Currency::class);
-        $currency->method('getCode')->willReturn('CZK');
-        $currency->method('getRoundingType')->willReturn(Currency::DEFAULT_ROUNDING_TYPE);
-        $currency->method('getRoundingPlacesPriceWithoutVat')->willReturn(Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT);
-
-        return $currency;
-    }
-
-    private function createCurrencyFacadeStub(): CurrencyFacade
-    {
-        $currencyFacadeStub = $this->createStub(CurrencyFacade::class);
-
-        $currencyFacadeStub->method('getDomainDefaultCurrencyByDomainId')->willReturn(
-            $this->createCurrencyStub(),
-        );
-
-        return $currencyFacadeStub;
     }
 }

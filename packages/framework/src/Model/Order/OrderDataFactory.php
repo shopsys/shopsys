@@ -76,6 +76,7 @@ class OrderDataFactory
         $orderData->currencyRoundingType = $order->getCurrencyRoundingType();
         $orderData->currencyRoundingPlacesPriceWithoutVat = $order->getCurrencyRoundingPlacesPriceWithoutVat();
         $orderData->currencyMinFractionDigits = $order->getCurrencyMinFractionDigits();
+        $orderData->currencyExchangeRate = $order->getCurrencyExchangeRate();
         $orderData->createdAsAdministrator = $order->getCreatedAsAdministrator();
         $orderData->createdAsAdministratorName = $order->getCreatedAsAdministratorName();
         $orderData->orderTransport = $this->orderItemDataFactory->createFromOrderItem($order->getTransportItem());

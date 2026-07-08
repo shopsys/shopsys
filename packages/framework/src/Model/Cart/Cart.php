@@ -115,6 +115,15 @@ class Cart
     #[ORM\Column(type: 'string', length: 15, nullable: true)]
     protected $paymentGoPayBankSwift;
 
+    /**
+     * The currency the watched prices were stored in (used to reset them when the customer switches the currency)
+     *
+     * @var string|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'string', length: 3, nullable: true)]
+    protected $currencyCode;
+
     public function __construct(string $cartIdentifier, ?CustomerUser $customerUser)
     {
         $this->cartIdentifier = $cartIdentifier;
@@ -428,6 +437,22 @@ class Cart
     public function getPaymentGoPayBankSwift()
     {
         return $this->paymentGoPayBankSwift;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCurrencyCode()
+    {
+        return $this->currencyCode;
+    }
+
+    /**
+     * @param string|null $currencyCode
+     */
+    public function setCurrencyCode($currencyCode): void
+    {
+        $this->currencyCode = $currencyCode;
     }
 
     /**

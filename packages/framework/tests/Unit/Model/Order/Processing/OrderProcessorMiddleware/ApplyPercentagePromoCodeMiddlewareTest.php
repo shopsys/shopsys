@@ -174,7 +174,6 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
         return new ApplyPercentagePromoCodeMiddleware(
             $currentPromoCodeFacade,
             $promoCodeFacade,
-            $this->createCurrencyFacade(),
             $discountCalculation,
             $numberFormatterExtension,
             $this->createOrderItemDataFactory(),

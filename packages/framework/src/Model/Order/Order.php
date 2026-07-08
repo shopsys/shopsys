@@ -442,6 +442,15 @@ class Order
     #[ORM\Column(type: 'integer')]
     protected $currencyMinFractionDigits;
 
+    /**
+     * Exchange rate between the order currency and the domain default currency at the time the order was placed
+     *
+     * @var string
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
+    protected $currencyExchangeRate;
+
     public function __construct(
         OrderData $orderData,
         string $orderNumber,
@@ -473,6 +482,7 @@ class Order
         $this->currencyRoundingType = $orderData->currencyRoundingType;
         $this->currencyRoundingPlacesPriceWithoutVat = $orderData->currencyRoundingPlacesPriceWithoutVat;
         $this->currencyMinFractionDigits = $orderData->currencyMinFractionDigits;
+        $this->currencyExchangeRate = $orderData->currencyExchangeRate ?? '1';
     }
 
     /**
@@ -829,6 +839,14 @@ class Order
     public function getCurrencyMinFractionDigits()
     {
         return $this->currencyMinFractionDigits;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrencyExchangeRate()
+    {
+        return $this->currencyExchangeRate;
     }
 
     public function setTotalPrices(PriceInterface $orderTotalPrice, PriceInterface $productsTotalPrice): void

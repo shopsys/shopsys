@@ -161,6 +161,13 @@ class OrderData
     public $currencyCode;
 
     /**
+     * Exchange rate between the order currency and the domain default currency at the time the order was placed
+     *
+     * @var string|null
+     */
+    public $currencyExchangeRate;
+
+    /**
      * @var string|null
      */
     public $currencyRoundingType;

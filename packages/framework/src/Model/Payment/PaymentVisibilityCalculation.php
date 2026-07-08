@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation;
 
 class PaymentVisibilityCalculation
@@ -11,6 +12,7 @@ class PaymentVisibilityCalculation
     public function __construct(
         protected readonly IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation,
         protected readonly IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
     ) {
     }
 
@@ -37,7 +39,25 @@ class PaymentVisibilityCalculation
             return false;
         }
 
+        if (!$this->isGoPayPaymentMethodMatchingCurrentCurrency($payment, $domainId)) {
+            return false;
+        }
+
         return $this->hasIndependentlyVisibleTransport($payment, $domainId);
+    }
+
+    /**
+     * The GoPay payment methods are bound to a single currency, the payment is hidden when another currency is selected
+     */
+    protected function isGoPayPaymentMethodMatchingCurrentCurrency(Payment $payment, int $domainId): bool
+    {
+        $goPayPaymentMethod = $payment->getGoPayPaymentMethodByDomainId($domainId);
+
+        if ($goPayPaymentMethod === null) {
+            return true;
+        }
+
+        return $goPayPaymentMethod->getCurrency()->getCode() === $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($domainId)->getCode();
     }
 
     protected function hasIndependentlyVisibleTransport(Payment $payment, int $domainId): bool

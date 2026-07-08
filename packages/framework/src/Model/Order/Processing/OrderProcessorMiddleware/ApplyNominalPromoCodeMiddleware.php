@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -32,7 +31,6 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         protected readonly DiscountCalculation $discountCalculation,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly VatFacade $vatFacade,
-        protected readonly CurrencyFacade $currencyFacade,
     ) {
         parent::__construct($currentPromoCodeFacade, $promoCodeFacade);
     }
@@ -93,7 +91,7 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
         $discountValue = Money::create($promoCodeLimit->getDiscount());
 
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $currency = $promoCodeLimit->getCurrency();
         $discountPrice = $this->discountCalculation->calculateNominalDiscount(
             $discountValue,
             $totalApplicableProductsPrice,

@@ -83,10 +83,14 @@ class TransportAndPaymentWatcherFacade
 
     protected function checkTransportPriceAndWeightLimit(Transport $transport, Cart $cart): void
     {
+        $transportPriceWasWatched = $cart->getTransportWatchedPrice() !== null;
+
         try {
             $this->transportValidationFacade->checkTransportPriceAndWeightLimit($transport, $cart);
         } catch (TransportPriceChangedException $exception) {
-            $this->cartWithModificationsResult->setTransportPriceChanged(true);
+            if ($transportPriceWasWatched) {
+                $this->cartWithModificationsResult->setTransportPriceChanged(true);
+            }
             $this->cartTransportFacade->setTransportWatchedPrice($cart, $exception->getCurrentTransportPrice()->getPriceWithVat());
         } catch (TransportPriceNotFoundException) {
             $this->cartWithModificationsResult->setTransportWeightLimitExceeded(true);
@@ -96,10 +100,14 @@ class TransportAndPaymentWatcherFacade
 
     protected function checkPaymentPrice(Cart $cart, Payment $payment): void
     {
+        $paymentPriceWasWatched = $cart->getPaymentWatchedPrice() !== null;
+
         try {
             $this->paymentValidationFacade->checkPaymentPrice($payment, $cart);
         } catch (PaymentPriceChangedException $exception) {
-            $this->cartWithModificationsResult->setPaymentPriceChanged(true);
+            if ($paymentPriceWasWatched) {
+                $this->cartWithModificationsResult->setPaymentPriceChanged(true);
+            }
             $this->cartPaymentFacade->setPaymentWatchedPrice($cart, $exception->getCurrentPaymentPrice()->getPriceWithVat());
         }
     }
