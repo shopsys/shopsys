@@ -23,6 +23,11 @@ class PriceListProductPriceData
      */
     public $basicPrice;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|null
+     */
+    public $currency;
+
     public function getDiscount(): Money
     {
         return $this->basicPrice->subtract($this->priceAmount);

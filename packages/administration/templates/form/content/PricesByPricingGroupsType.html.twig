@@ -10,14 +10,31 @@
     {{ form_widget(form) }}
 {% endblock %}
 
+{% block pricing_group_currency_prices_row %}
+    {% if form.vars.label %}
+        <div class="row">
+            <div class="col">
+                <h5 class="mb-0 mt-2">{{ form.vars.label }}</h5>
+            </div>
+        </div>
+    {% endif %}
+
+    {% for currencyPriceInput in form %}
+        {{ form_row(currencyPriceInput) }}
+    {% endfor %}
+
+    {{ form_errors(form) }}
+{% endblock %}
+
 {% block pricing_group_price_input_row %}
-    {% set domainId = form.parent.vars.domain_id %}
+    {% set domainId = form.parent.parent.vars.domain_id %}
+    {% set currencyCode = form.vars.currency_code %}
 
     <div class="row align-items-center">
         {{ form_label(form) }}
 
         <div class="col-12 col-md-6">
-           {{ form_widget(form, { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
+           {{ form_widget(form, { symbolAfterInput: currencyCode is not null ? currencySymbolByCode(currencyCode) : currencySymbolByDomainId(domainId) }) }}
             {{ form_errors(form) }}
         </div>
 

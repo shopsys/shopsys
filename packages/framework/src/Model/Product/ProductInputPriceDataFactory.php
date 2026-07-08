@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\ProductPricesMulticurrencyModeProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade;
@@ -17,6 +18,7 @@ class ProductInputPriceDataFactory
         protected readonly VatFacade $vatFacade,
         protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly Domain $domain,
+        protected readonly ProductPricesMulticurrencyModeProvider $productPricesMulticurrencyModeProvider,
     ) {
     }
 
@@ -26,13 +28,13 @@ class ProductInputPriceDataFactory
     }
 
     /**
-     * @param array<int, \Shopsys\FrameworkBundle\Component\Money\Money|null> $manualInputPricesByPricingGroupId
+     * @param array<int, array<string, \Shopsys\FrameworkBundle\Component\Money\Money|null>> $manualInputPricesByPricingGroupIdAndCurrencyCode
      */
-    public function create(Vat $vat, array $manualInputPricesByPricingGroupId): ProductInputPriceData
+    public function create(Vat $vat, array $manualInputPricesByPricingGroupIdAndCurrencyCode): ProductInputPriceData
     {
         $productInputPriceData = $this->createInstance();
         $productInputPriceData->vat = $vat;
-        $productInputPriceData->manualInputPricesByPricingGroupId = $manualInputPricesByPricingGroupId;
+        $productInputPriceData->manualInputPricesByPricingGroupIdAndCurrencyCode = $manualInputPricesByPricingGroupIdAndCurrencyCode;
 
         return $productInputPriceData;
     }
@@ -48,7 +50,7 @@ class ProductInputPriceDataFactory
         foreach ($this->domain->getAllIds() as $domainId) {
             $productInputPriceData[$domainId] = $this->create(
                 $this->vatFacade->getDefaultVatForDomain($domainId),
-                $this->getNullForPricingGroupsByDomainId($allPricingGroups, $domainId),
+                $this->getNullForPricingGroupsAndCurrencyCodesByDomainId($allPricingGroups, $domainId),
             );
         }
 
@@ -62,7 +64,7 @@ class ProductInputPriceDataFactory
     {
         $productInputPriceData = [];
 
-        $manualInputPrices = $this->productInputPriceFacade->getManualInputPricesDataIndexedByDomainIdAndPricingGroupId($product);
+        $manualInputPrices = $this->productInputPriceFacade->getManualInputPricesDataIndexedByDomainIdPricingGroupIdAndCurrencyCode($product);
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $productInputPriceData[$domainId] = $this->create(
@@ -75,16 +77,34 @@ class ProductInputPriceDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $allPricingGroups
-     * @return array<int, null>
+     * @return string[]
      */
-    protected function getNullForPricingGroupsByDomainId(array $allPricingGroups, int $domainId): array
+    protected function getEditableCurrencyCodesByDomainId(int $domainId): array
+    {
+        $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+        if ($this->productPricesMulticurrencyModeProvider->isManualMode()) {
+            return $domainConfig->getCurrencyCodes();
+        }
+
+        return [$domainConfig->getDefaultCurrencyCode()];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $allPricingGroups
+     * @return array<int, array<string, null>>
+     */
+    protected function getNullForPricingGroupsAndCurrencyCodesByDomainId(array $allPricingGroups, int $domainId): array
     {
         $inputPrices = [];
 
         foreach ($allPricingGroups as $pricingGroup) {
-            if ($pricingGroup->getDomainId() === $domainId) {
-                $inputPrices[$pricingGroup->getId()] = null;
+            if ($pricingGroup->getDomainId() !== $domainId) {
+                continue;
+            }
+
+            foreach ($this->getEditableCurrencyCodesByDomainId($domainId) as $currencyCode) {
+                $inputPrices[$pricingGroup->getId()][$currencyCode] = null;
             }
         }
 

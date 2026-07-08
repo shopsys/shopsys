@@ -43,7 +43,7 @@ final class ProductPricesWithVatSelectType extends AbstractType
                 'label' => 'VAT',
             ])
             ->add(
-                'manualInputPricesByPricingGroupId',
+                'manualInputPricesByPricingGroupIdAndCurrencyCode',
                 PricesByPricingGroupsType::class,
                 [
                     'label' => false,

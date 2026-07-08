@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -17,18 +19,24 @@ class ProductManualInputPriceFacade
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
         protected readonly ProductManualInputPriceFactory $productManualInputPriceFactory,
         protected readonly PricingGroupRepository $pricingGroupRepository,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
-    protected function refresh(Product $product, PricingGroup $pricingGroup, ?Money $inputPrice): void
-    {
-        $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
+    protected function refresh(
+        Product $product,
+        PricingGroup $pricingGroup,
+        Currency $currency,
+        ?Money $inputPrice,
+    ): void {
+        $manualInputPrice = $this->productManualInputPriceRepository->findByProductPricingGroupAndCurrency(
             $product,
             $pricingGroup,
+            $currency,
         );
 
         if ($manualInputPrice === null) {
-            $manualInputPrice = $this->productManualInputPriceFactory->create($product, $pricingGroup, $inputPrice);
+            $manualInputPrice = $this->productManualInputPriceFactory->create($product, $pricingGroup, $currency, $inputPrice);
             $this->em->persist($manualInputPrice);
         } else {
             $manualInputPrice->setInputPrice($inputPrice);
@@ -41,15 +49,24 @@ class ProductManualInputPriceFacade
     public function refreshProductManualInputPrices(Product $product, array $productInputPriceDataByDomain): void
     {
         foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
-            if (!array_key_exists($pricingGroup->getId(), $productInputPriceDataByDomain[$pricingGroup->getDomainId()]->manualInputPricesByPricingGroupId)) {
+            $manualInputPricesByCurrencyCode = $productInputPriceDataByDomain[$pricingGroup->getDomainId()]->manualInputPricesByPricingGroupIdAndCurrencyCode[$pricingGroup->getId()] ?? null;
+
+            if ($manualInputPricesByCurrencyCode === null) {
                 continue;
             }
 
-            $this->refresh(
-                $product,
-                $pricingGroup,
-                $productInputPriceDataByDomain[$pricingGroup->getDomainId()]->manualInputPricesByPricingGroupId[$pricingGroup->getId()],
-            );
+            foreach ($this->currencyFacade->getEnabledCurrenciesByDomainId($pricingGroup->getDomainId()) as $currency) {
+                if (!array_key_exists($currency->getCode(), $manualInputPricesByCurrencyCode)) {
+                    continue;
+                }
+
+                $this->refresh(
+                    $product,
+                    $pricingGroup,
+                    $currency,
+                    $manualInputPricesByCurrencyCode[$currency->getCode()],
+                );
+            }
         }
 
         $this->em->flush();

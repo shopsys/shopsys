@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -46,11 +47,20 @@ class PriceListProductPrice
     #[ORM\ManyToOne(targetEntity: PriceList::class, inversedBy: 'priceListProductPrices')]
     protected $priceList;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    #[AsMcpColumn]
+    #[ORM\JoinColumn(name: 'currency_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Currency::class)]
+    protected $currency;
+
     public function __construct(
         PriceListProductPriceData $priceListProductPriceData,
     ) {
         $this->product = $priceListProductPriceData->product;
         $this->priceAmount = $priceListProductPriceData->priceAmount;
+        $this->currency = $priceListProductPriceData->currency;
     }
 
     /**
@@ -75,5 +85,13 @@ class PriceListProductPrice
     public function setPriceList($priceList): void
     {
         $this->priceList = $priceList;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 }

@@ -12,7 +12,7 @@ class ProductInputPriceData
     public $vat;
 
     /**
-     * @var array<int, \Shopsys\FrameworkBundle\Component\Money\Money|null>
+     * @var array<int, array<string, \Shopsys\FrameworkBundle\Component\Money\Money|null>>
      */
-    public $manualInputPricesByPricingGroupId = [];
+    public $manualInputPricesByPricingGroupIdAndCurrencyCode = [];
 }

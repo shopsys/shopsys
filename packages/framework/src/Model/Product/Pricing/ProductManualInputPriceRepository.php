@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
@@ -28,13 +29,15 @@ class ProductManualInputPriceRepository
         return $this->getProductManualInputPriceRepository()->findBy(['product' => $product]);
     }
 
-    public function findByProductAndPricingGroup(
+    public function findByProductPricingGroupAndCurrency(
         Product $product,
         PricingGroup $pricingGroup,
+        Currency $currency,
     ): ?ProductManualInputPrice {
         return $this->getProductManualInputPriceRepository()->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroup,
+            'currency' => $currency,
         ]);
     }
 }

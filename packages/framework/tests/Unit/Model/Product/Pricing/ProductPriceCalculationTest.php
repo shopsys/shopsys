@@ -9,12 +9,15 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Pricing\ProductPricesMulticurrencyModeEnum;
+use Shopsys\FrameworkBundle\Model\Pricing\ProductPricesMulticurrencyModeProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository;
@@ -45,6 +48,7 @@ class ProductPriceCalculationTest extends TestCase
             ->willReturn($variants);
 
         $currencyFacadeStub = $this->createStub(CurrencyFacade::class);
+        $currentCurrencyProviderStub = $this->createStub(CurrentCurrencyProvider::class);
 
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
@@ -56,6 +60,11 @@ class ProductPriceCalculationTest extends TestCase
             $productManualInputPriceRepositoryStub,
             $productRepositoryStub,
             $currencyFacadeStub,
+            $currentCurrencyProviderStub,
+            new ProductPricesMulticurrencyModeProvider(
+                ProductPricesMulticurrencyModeEnum::MODE_CALCULATED,
+                new ProductPricesMulticurrencyModeEnum(),
+            ),
         );
     }
 

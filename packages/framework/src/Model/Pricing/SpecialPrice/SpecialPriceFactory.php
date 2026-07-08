@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice;
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -26,23 +27,34 @@ class SpecialPriceFactory
         return new SpecialPrice();
     }
 
+    /**
+     * When the stored price amount is in a different currency than the target one, it is converted by exchange rate first,
+     * the basic price is converted with the same rate so the "special price is lower than basic price" ordering is preserved
+     */
     public function createWithCalculations(
         DateTimeInterface $validFrom,
         DateTimeInterface $validTo,
         Money $specialPriceAmount,
-        int $domainId,
         Vat $vat,
         int $priceListId,
         string $priceListName,
         int $productId,
+        Currency $targetCurrency,
+        ?Currency $sourceCurrency = null,
     ): SpecialPrice {
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        if ($sourceCurrency !== null && $sourceCurrency->getCode() !== $targetCurrency->getCode()) {
+            $specialPriceAmount = $specialPriceAmount->multiply(
+                (string)$this->currencyFacade->getExchangeRateForCurrencies($sourceCurrency, $targetCurrency),
+            );
+        }
+
         $price = $this->basePriceCalculation->calculateRoundedBasePrice(
             $specialPriceAmount,
             $this->pricingSetting->getInputPriceType(),
             $vat,
-            $currency->getRoundingType(),
-            $currency->getRoundingPlacesPriceWithoutVat(),
+            $targetCurrency->getRoundingType(),
+            $targetCurrency->getRoundingPlacesPriceWithoutVat(),
+            $targetCurrency,
         );
 
         return $this->create(

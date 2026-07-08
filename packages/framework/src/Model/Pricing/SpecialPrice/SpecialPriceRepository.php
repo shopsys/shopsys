@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Clock\DatePoint;
 
@@ -22,9 +23,9 @@ class SpecialPriceRepository
     /**
      * @return array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListName: string, productListId: int, productId: int}|null
      */
-    public function findRelevantSpecialPrice(Product $product, int $domainId): ?array
+    public function findRelevantSpecialPrice(Product $product, int $domainId, Currency $currency): ?array
     {
-        $queryBuilder = $this->getCurrentAndFutureSpecialPricesQueryBuilder($product, $domainId)
+        $queryBuilder = $this->getCurrentAndFutureSpecialPricesQueryBuilder($product, $domainId, $currency)
             ->setMaxResults(1);
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
@@ -34,9 +35,13 @@ class SpecialPriceRepository
      * @param int[] $variantIds
      * @return array<int, array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListName: string, productListId: int, productId: int}>
      */
-    public function getCurrentAndFutureSpecialPrices(Product $product, int $domainId, array $variantIds = []): array
-    {
-        $queryBuilder = $this->getCurrentAndFutureSpecialPricesQueryBuilder($product, $domainId, $variantIds);
+    public function getCurrentAndFutureSpecialPrices(
+        Product $product,
+        int $domainId,
+        Currency $currency,
+        array $variantIds = [],
+    ): array {
+        $queryBuilder = $this->getCurrentAndFutureSpecialPricesQueryBuilder($product, $domainId, $currency, $variantIds);
 
         return $queryBuilder->getQuery()->getResult();
     }
@@ -47,6 +52,7 @@ class SpecialPriceRepository
     protected function getCurrentAndFutureSpecialPricesQueryBuilder(
         Product $product,
         int $domainId,
+        Currency $currency,
         array $variantIds = [],
     ): QueryBuilder {
         $currentDate = $this->clock->now();
@@ -57,12 +63,14 @@ class SpecialPriceRepository
             ->join('pwp.priceList', 'pl')
             ->where('pwp.product IN (:productIds)')
             ->andWhere('pl.domainId = :domainId')
+            ->andWhere('pwp.currency = :currency')
             ->andWhere('
             (:currentDate BETWEEN pl.validFrom AND pl.validTo)
             OR (:currentDate < pl.validFrom)
         ')
             ->setParameter('productIds', [...$variantIds, $product->getId()])
             ->setParameter('domainId', $domainId)
+            ->setParameter('currency', $currency)
             ->setParameter('currentDate', $currentDate)
             ->orderBy('CASE
                 WHEN :currentDate BETWEEN pl.validFrom AND pl.validTo THEN 1

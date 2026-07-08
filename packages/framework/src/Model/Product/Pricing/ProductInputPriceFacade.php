@@ -30,20 +30,21 @@ class ProductInputPriceFacade
     }
 
     /**
-     * @return array<int, array<int, \Shopsys\FrameworkBundle\Component\Money\Money|null>>
+     * @return array<int, array<int, array<string, \Shopsys\FrameworkBundle\Component\Money\Money|null>>>
      */
-    public function getManualInputPricesDataIndexedByDomainIdAndPricingGroupId(Product $product): array
+    public function getManualInputPricesDataIndexedByDomainIdPricingGroupIdAndCurrencyCode(Product $product): array
     {
-        $manualInputPricesDataByPricingGroupId = [];
+        $manualInputPricesData = [];
 
         $manualInputPrices = $this->productManualInputPriceRepository->getByProduct($product);
 
         foreach ($manualInputPrices as $manualInputPrice) {
             $pricingGroup = $manualInputPrice->getPricingGroup();
-            $manualInputPricesDataByPricingGroupId[$pricingGroup->getDomainId()][$pricingGroup->getId()] = $manualInputPrice->getInputPrice();
+            $currencyCode = $manualInputPrice->getCurrency()->getCode();
+            $manualInputPricesData[$pricingGroup->getDomainId()][$pricingGroup->getId()][$currencyCode] = $manualInputPrice->getInputPrice();
         }
 
-        return $manualInputPricesDataByPricingGroupId;
+        return $manualInputPricesData;
     }
 
     public function replaceBatchVatAndRecalculateInputPrices(): bool

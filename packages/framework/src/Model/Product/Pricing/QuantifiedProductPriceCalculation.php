@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
@@ -26,7 +26,7 @@ class QuantifiedProductPriceCalculation
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly PriceCalculation $priceCalculation,
         protected readonly PricingSetting $pricingSetting,
-        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
         protected readonly GiftPlanSettingFacade $giftPlanSettingFacade,
     ) {
     }
@@ -49,15 +49,15 @@ class QuantifiedProductPriceCalculation
         QuantifiedProduct $quantifiedProduct,
         int $domainId,
     ): QuantifiedItemPriceInterface {
-        $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $currentCurrency = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($domainId);
         $vat = $quantifiedProduct->getProduct()->getVatForDomain($domainId);
 
         $basePrice = $this->giftPlanSettingFacade->calculateBaseGiftPrice($domainId, $vat);
         $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $basePrice);
-        $totalPriceVatAmount = $this->getTotalPriceVatAmountForInputPriceWithVat($totalPriceWithVat, $vat, $defaultCurrency);
+        $totalPriceVatAmount = $this->getTotalPriceVatAmountForInputPriceWithVat($totalPriceWithVat, $vat, $currentCurrency);
         $totalPriceWithoutVat = $this->getTotalPriceWithoutVatForInputPriceWithVat($totalPriceWithVat, $totalPriceVatAmount);
 
-        $totalPrice = new Price($totalPriceWithoutVat, $totalPriceWithVat);
+        $totalPrice = new Price($totalPriceWithoutVat, $totalPriceWithVat, $currentCurrency);
 
         return new QuantifiedItemPrice($basePrice, $totalPrice, $vat);
     }
@@ -153,10 +153,12 @@ class QuantifiedProductPriceCalculation
         Product $product,
         int $domainId,
     ): Price {
+        $currentCurrency = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($domainId);
+
         switch ($this->pricingSetting->getInputPriceType()) {
             case PricingSetting::PRICE_TYPE_WITH_VAT:
                 $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice->getPrice());
-                $totalPriceVatAmount = $this->getTotalPriceVatAmountForInputPriceWithVat($totalPriceWithVat, $product->getVatForDomain($domainId), $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId));
+                $totalPriceVatAmount = $this->getTotalPriceVatAmountForInputPriceWithVat($totalPriceWithVat, $product->getVatForDomain($domainId), $currentCurrency);
                 $totalPriceWithoutVat = $this->getTotalPriceWithoutVatForInputPriceWithVat($totalPriceWithVat, $totalPriceVatAmount);
 
                 break;
@@ -169,6 +171,6 @@ class QuantifiedProductPriceCalculation
                 throw new InvalidInputPriceTypeException();
         }
 
-        return new Price($totalPriceWithoutVat, $totalPriceWithVat);
+        return new Price($totalPriceWithoutVat, $totalPriceWithVat, $currentCurrency);
     }
 }

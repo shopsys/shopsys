@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -35,16 +36,26 @@ class ProductManualInputPrice
     protected $pricingGroup;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    #[AsMcpColumn]
+    #[ORM\JoinColumn(nullable: false, name: 'currency_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Currency::class)]
+    protected $currency;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
     protected $inputPrice;
 
-    public function __construct(Product $product, PricingGroup $pricingGroup, ?Money $inputPrice)
+    public function __construct(Product $product, PricingGroup $pricingGroup, Currency $currency, ?Money $inputPrice)
     {
         $this->product = $product;
         $this->pricingGroup = $pricingGroup;
+        $this->currency = $currency;
         $this->setInputPrice($inputPrice);
     }
 
@@ -62,6 +73,14 @@ class ProductManualInputPrice
     public function getPricingGroup()
     {
         return $this->pricingGroup;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 
     /**

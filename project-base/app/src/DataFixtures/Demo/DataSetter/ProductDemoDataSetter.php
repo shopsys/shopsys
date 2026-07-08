@@ -12,6 +12,7 @@ use App\Model\Product\Flag\Flag;
 use App\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -37,6 +38,7 @@ class ProductDemoDataSetter
         private readonly StockRepository $stockRepository,
         private readonly ProductStockDataFactory $productStockDataFactory,
         private readonly ProductInputPriceDataFactory $productInputPriceDataFactory,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -103,8 +105,9 @@ class ProductDemoDataSetter
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $highVat = $this->persistentReferenceFacade->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
             $vat = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, $domainId, Vat::class);
+            $defaultCurrencyCode = $this->domain->getDomainConfigById($domainId)->getDefaultCurrencyCode();
 
-            $pricesByPricingGroupId = [];
+            $pricesByPricingGroupIdAndCurrencyCode = [];
 
             foreach ($allPricingGroups as $pricingGroup) {
                 if ($pricingGroup->getDomainId() !== $domainId) {
@@ -118,10 +121,10 @@ class ProductDemoDataSetter
                     $pricingGroup->getDomainId(),
                 );
 
-                $pricesByPricingGroupId[$pricingGroup->getId()] = $money;
+                $pricesByPricingGroupIdAndCurrencyCode[$pricingGroup->getId()][$defaultCurrencyCode] = $money;
             }
 
-            $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create($vat, $pricesByPricingGroupId);
+            $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create($vat, $pricesByPricingGroupIdAndCurrencyCode);
         }
     }
 

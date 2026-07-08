@@ -80,8 +80,10 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
 
         foreach ($productData->productInputPricesByDomain as $productInputPriceData) {
-            foreach ($productInputPriceData->manualInputPricesByPricingGroupId as $pricingGroupId => $price) {
-                $productInputPriceData->manualInputPricesByPricingGroupId[$pricingGroupId] = Money::create(10);
+            foreach ($productInputPriceData->manualInputPricesByPricingGroupIdAndCurrencyCode as $pricingGroupId => $pricesByCurrencyCode) {
+                foreach (array_keys($pricesByCurrencyCode) as $currencyCode) {
+                    $productInputPriceData->manualInputPricesByPricingGroupIdAndCurrencyCode[$pricingGroupId][$currencyCode] = Money::create(10);
+                }
             }
         }
 

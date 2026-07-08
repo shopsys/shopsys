@@ -6,11 +6,14 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrentCurrencyProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Pricing\ProductPricesMulticurrencyModeProvider;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -24,6 +27,8 @@ class ProductPriceCalculation
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
         protected readonly ProductRepository $productRepository,
         protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCurrencyProvider $currentCurrencyProvider,
+        protected readonly ProductPricesMulticurrencyModeProvider $productPricesMulticurrencyModeProvider,
     ) {
     }
 
@@ -74,29 +79,57 @@ class ProductPriceCalculation
         Product $product,
         PricingGroup $pricingGroup,
     ): ProductPriceInterface {
-        $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
-            $product,
-            $pricingGroup,
-        );
-
-        if ($manualInputPrice !== null) {
-            $inputPrice = $manualInputPrice->getInputPrice() ?? Money::zero();
-        } else {
-            $inputPrice = Money::zero();
-        }
-
         $domainId = $pricingGroup->getDomainId();
-        $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $currentCurrency = $this->currentCurrencyProvider->getCurrentCurrencyOfDomain($domainId);
+
+        $inputPrice = $this->getInputPrice($product, $pricingGroup, $currentCurrency);
 
         $basePrice = $this->basePriceCalculation->calculateRoundedBasePrice(
             $inputPrice,
             $this->pricingSetting->getInputPriceType(),
             $product->getVatForDomain($domainId),
-            $defaultCurrency->getRoundingType(),
-            $defaultCurrency->getRoundingPlacesPriceWithoutVat(),
+            $currentCurrency->getRoundingType(),
+            $currentCurrency->getRoundingPlacesPriceWithoutVat(),
+            $currentCurrency,
         );
 
         return new ProductPrice($basePrice, $pricingGroup, false);
+    }
+
+    /**
+     * In the manual multicurrency mode the input price is stored separately for every enabled currency,
+     * in the calculated mode only the domain default currency price is stored and other currencies are converted by exchange rate
+     */
+    protected function getInputPrice(
+        Product $product,
+        PricingGroup $pricingGroup,
+        Currency $currentCurrency,
+    ): Money {
+        if ($this->productPricesMulticurrencyModeProvider->isManualMode()) {
+            $manualInputPrice = $this->productManualInputPriceRepository->findByProductPricingGroupAndCurrency(
+                $product,
+                $pricingGroup,
+                $currentCurrency,
+            );
+
+            return $manualInputPrice?->getInputPrice() ?? Money::zero();
+        }
+
+        $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($pricingGroup->getDomainId());
+        $manualInputPrice = $this->productManualInputPriceRepository->findByProductPricingGroupAndCurrency(
+            $product,
+            $pricingGroup,
+            $defaultCurrency,
+        );
+        $inputPrice = $manualInputPrice?->getInputPrice() ?? Money::zero();
+
+        if ($currentCurrency->getCode() !== $defaultCurrency->getCode()) {
+            $inputPrice = $inputPrice->multiply(
+                (string)$this->currencyFacade->getExchangeRateForCurrencies($defaultCurrency, $currentCurrency),
+            );
+        }
+
+        return $inputPrice;
     }
 
     /**

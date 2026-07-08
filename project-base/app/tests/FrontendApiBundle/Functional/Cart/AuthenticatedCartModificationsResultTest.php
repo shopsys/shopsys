@@ -288,7 +288,8 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $productData = $this->productDataFactory->createFromProduct($this->testingProduct);
 
         foreach ($pricingGroupFacade->getAll() as $pricingGroup) {
-            $productData->productInputPricesByDomain[$pricingGroup->getDomainId()]->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = Money::create(1);
+            $defaultCurrencyCode = $this->domain->getDomainConfigById($pricingGroup->getDomainId())->getDefaultCurrencyCode();
+            $productData->productInputPricesByDomain[$pricingGroup->getDomainId()]->manualInputPricesByPricingGroupIdAndCurrencyCode[$pricingGroup->getId()][$defaultCurrencyCode] = Money::create(1);
         }
 
         $this->productFacade->edit($this->testingProduct->getId(), $productData);

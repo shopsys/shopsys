@@ -22,8 +22,10 @@ final class PricingGroupPriceType extends AbstractType
     {
         $resolver->setDefaults([
             'product_price' => null,
+            'currency_code' => null,
         ]);
         $resolver->setAllowedTypes('product_price', [ProductPriceInterface::class, 'null']);
+        $resolver->setAllowedTypes('currency_code', ['string', 'null']);
     }
 
     /**
@@ -33,6 +35,7 @@ final class PricingGroupPriceType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['product_price'] = $options['product_price'];
+        $view->vars['currency_code'] = $options['currency_code'];
     }
 
     /**

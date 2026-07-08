@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -14,6 +15,7 @@ class PriceListProductPriceDataFactory
     public function __construct(
         protected readonly ProductFacade $productFacade,
         protected readonly PricingSetting $pricingSetting,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -37,6 +39,7 @@ class PriceListProductPriceDataFactory
         $priceListProductPrice = $this->createInstance();
         $priceListProductPrice->product = $product;
         $priceListProductPrice->priceAmount = $priceAmount;
+        $priceListProductPrice->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $priceListProductPrice->basicPrice = $this->getBasicPriceBasedOnPricingSetting(
             $product,
             $domainId,
@@ -52,6 +55,7 @@ class PriceListProductPriceDataFactory
     ): void {
         $priceListProductPriceData->product = $priceListProductPrice->getProduct();
         $priceListProductPriceData->priceAmount = $priceListProductPrice->getPriceAmount();
+        $priceListProductPriceData->currency = $priceListProductPrice->getCurrency();
         $priceListProductPriceData->basicPrice = $this->getBasicPriceBasedOnPricingSetting(
             $priceListProductPrice->getProduct(),
             $domainId,
