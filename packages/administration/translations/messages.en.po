@@ -28,16 +28,13 @@ msgstr ""
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr ""
 
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
+msgstr ""
+
 msgid "<strong>{{ objectName }}</strong> was created successfully."
 msgstr ""
 
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."
-msgstr ""
-
-msgid "<strong>{{ objectName }}</strong> was saved successfully."
-msgstr ""
-
-msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
 msgstr ""
 
 msgid "Action"
@@ -724,9 +721,6 @@ msgstr ""
 msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr ""
 
-msgid "Do you really want to remove this transport group? This step is irreversible!"
-msgstr ""
-
 msgid "Domain"
 msgstr ""
 
@@ -905,9 +899,6 @@ msgid "Editing shipping"
 msgstr ""
 
 msgid "Editing store"
-msgstr ""
-
-msgid "Editing transport group"
 msgstr ""
 
 msgid "Editing warehouse"
@@ -1397,9 +1388,6 @@ msgid "New shipping"
 msgstr ""
 
 msgid "New store"
-msgstr ""
-
-msgid "New transport group"
 msgstr ""
 
 msgid "New value"
@@ -2323,13 +2311,13 @@ msgstr ""
 msgid "Transfers"
 msgstr ""
 
+msgid "Transport"
+msgstr ""
+
 msgid "Transport group"
 msgstr ""
 
 msgid "Transport groups"
-msgstr ""
-
-msgid "Transport"
 msgstr ""
 
 msgid "Transports and payments"
@@ -2667,3 +2655,4 @@ msgstr ""
 
 msgid "yesterday"
 msgstr ""
+

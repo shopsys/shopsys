@@ -28,17 +28,14 @@ msgstr "%entityName% (%entityIdentifier%)"
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Zpět</a> na přihlašovací stránku."
 
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
+msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" byla úspěšně uložena."
+
 msgid "<strong>{{ objectName }}</strong> was created successfully."
 msgstr "Položka „<strong>{{ objectName }}</strong>\" byla úspěšně vytvořena."
 
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."
 msgstr "Položka „<strong>{{ objectName }}</strong>\" byla úspěšně smazána."
-
-msgid "<strong>{{ objectName }}</strong> was saved successfully."
-msgstr "Položka „<strong>{{ objectName }}</strong>\" byla úspěšně uložena."
-
-msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
-msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" byla úspěšně uložena."
 
 msgid "Action"
 msgstr "Akce"
@@ -724,9 +721,6 @@ msgstr "Opravdu chcete odstranit objednávku?"
 msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr "Opravdu chcete smazat tuto kategorii i s náležícími SEO mixy?"
 
-msgid "Do you really want to remove this transport group? This step is irreversible!"
-msgstr "Opravdu chcete odstranit tuto skupinu doprav? Tento krok nelze vzít zpět!"
-
 msgid "Domain"
 msgstr "Doména"
 
@@ -906,9 +900,6 @@ msgstr "Editace dopravy"
 
 msgid "Editing store"
 msgstr "Editace prodejny"
-
-msgid "Editing transport group"
-msgstr "Editace skupiny doprav"
 
 msgid "Editing warehouse"
 msgstr "Editace skladu"
@@ -1398,9 +1389,6 @@ msgstr "Nová doprava"
 
 msgid "New store"
 msgstr "Nová prodejna"
-
-msgid "New transport group"
-msgstr "Nová skupina doprav"
 
 msgid "New value"
 msgstr "Nová hodnota"
@@ -2667,3 +2655,4 @@ msgstr "bez DPH"
 
 msgid "yesterday"
 msgstr "včera"
+
