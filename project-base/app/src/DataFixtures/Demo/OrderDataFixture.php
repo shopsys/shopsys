@@ -69,7 +69,45 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             } else {
                 $this->loadDefault($domainId);
             }
+
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+            foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+                if ($currencyCode !== $domainConfig->getDefaultCurrencyCode()) {
+                    $this->loadOrderInCurrency($domainId, $currencyCode);
+                }
+            }
         }
+    }
+
+    private function loadOrderInCurrency(int $domainId, string $currencyCode): void
+    {
+        $currency = $this->currencyFacade->getByCode($currencyCode);
+
+        $orderData = $this->orderDataFactory->create();
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
+        $orderData->firstName = 'Radim';
+        $orderData->lastName = 'Svoboda';
+        $orderData->email = 'no-reply@shopsys.com';
+        $orderData->telephone = new PhoneData('CZ', '+420', '725711368');
+        $orderData->street = 'Výstavní 8';
+        $orderData->city = 'Ostrava';
+        $orderData->postcode = '70200';
+        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
+        $orderData->deliveryAddressSameAsBillingAddress = true;
+        $orderData->domainId = $domainId;
+        $orderData->fillCurrencyFieldsFromCurrency($currency);
+        $orderData->createdAt = (new DatePoint())->modify('-1 day')->setTime(10, 12, 34);
+
+        $this->createOrder(
+            $orderData,
+            [
+                ProductDataFixture::PRODUCT_PREFIX . '9' => 1,
+                ProductDataFixture::PRODUCT_PREFIX . '12' => 2,
+            ],
+            TransportDataFixture::TRANSPORT_CZECH_POST,
+            PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
+        );
     }
 
     private function loadDefault(int $domainId): void

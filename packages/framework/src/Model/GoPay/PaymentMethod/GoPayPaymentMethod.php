@@ -11,7 +11,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'gopay_payment_methods')]
-#[ORM\UniqueConstraint(name: 'gopay_payment_method_unique', columns: ['domain_id', 'identifier'])]
+#[ORM\UniqueConstraint(name: 'gopay_payment_method_unique', columns: ['domain_id', 'identifier', 'currency_id'])]
 #[ORM\Entity]
 class GoPayPaymentMethod
 {

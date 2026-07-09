@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use Brick\Math\BigDecimal;
+use Brick\Math\RoundingMode;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -200,23 +202,31 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
 
     private function setDefaultLimit(PromoCode $promoCode): void
     {
-        $this->createLimitForEveryDomainCurrency($promoCode, '1.0', '10');
+        $this->createLimitForEveryDomainCurrency($promoCode, '1.0', '10', false);
     }
 
     private function setDefaultNominalLimit(PromoCode $promoCode): void
     {
-        $this->createLimitForEveryDomainCurrency($promoCode, '101', '100');
+        $this->createLimitForEveryDomainCurrency($promoCode, '101', '100', true);
     }
 
-    private function createLimitForEveryDomainCurrency(PromoCode $promoCode, string $fromPrice, string $discount): void
-    {
+    private function createLimitForEveryDomainCurrency(
+        PromoCode $promoCode,
+        string $fromPrice,
+        string $discount,
+        bool $isNominalDiscount,
+    ): void {
         $domainConfig = $this->domain->getDomainConfigById($promoCode->getDomainId());
+        $defaultCurrency = $this->currencyFacade->getByCode($domainConfig->getDefaultCurrencyCode());
 
         foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+            $currency = $this->currencyFacade->getByCode($currencyCode);
+            $exchangeRate = $this->currencyFacade->getExchangeRateForCurrencies($defaultCurrency, $currency);
+
             $promoCodeLimit = $this->promoCodeLimitFactory->create(
-                $fromPrice,
-                $discount,
-                $this->currencyFacade->getByCode($currencyCode),
+                (string)BigDecimal::of($fromPrice)->multipliedBy($exchangeRate)->toScale(6, RoundingMode::HALF_UP),
+                $isNominalDiscount ? (string)BigDecimal::of($discount)->multipliedBy($exchangeRate)->toScale(6, RoundingMode::HALF_UP) : $discount,
+                $currency,
             );
             $promoCodeLimit->setPromoCode($promoCode);
             $this->em->persist($promoCodeLimit);

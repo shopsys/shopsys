@@ -133,15 +133,24 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
                 $locale = $domainConfig->getLocale();
                 $domainId = $domainConfig->getId();
 
-                $goPayPaymentMethodData = $this->getGoPayPaymentMethodData($data, $locale, $domainId);
-                $goPayPaymentMethod = $this->createGoPayPaymentMethod($data['reference_name'], $goPayPaymentMethodData, $domainId);
+                foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
+                    $isDefaultCurrency = $currencyCode === $domainConfig->getDefaultCurrencyCode();
 
-                if ($data['identifier'] !== 'BANK_ACCOUNT') {
-                    continue;
-                }
+                    $goPayPaymentMethodData = $this->getGoPayPaymentMethodData($data, $locale, $currencyCode, $isDefaultCurrency);
+                    $goPayPaymentMethodData->domainId = $domainId;
+                    $goPayPaymentMethod = $this->createGoPayPaymentMethod(
+                        $isDefaultCurrency ? $data['reference_name'] : null,
+                        $goPayPaymentMethodData,
+                        $domainId,
+                    );
 
-                foreach (self::SWIFT_DEMO_DATA as $swiftData) {
-                    $this->createGoPayBankSwift($goPayPaymentMethod, $swiftData, $locale);
+                    if ($data['identifier'] !== 'BANK_ACCOUNT') {
+                        continue;
+                    }
+
+                    foreach (self::SWIFT_DEMO_DATA as $swiftData) {
+                        $this->createGoPayBankSwift($goPayPaymentMethod, $swiftData, $locale);
+                    }
                 }
             }
         }
@@ -150,16 +159,16 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     private function getGoPayPaymentMethodData(
         array $data,
         string $locale,
-        int $domainId,
+        string $currencyCode,
+        bool $isDefaultCurrency,
     ): GoPayPaymentMethodData {
         $goPayPaymentMethodData = $this->goPayPaymentMethodDataFactory->createInstance();
         $goPayPaymentMethodData->identifier = $data['identifier'];
-        $goPayPaymentMethodData->name = sprintf($data['name_pattern'], $locale);
-        $goPayPaymentMethodData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $goPayPaymentMethodData->name = sprintf($data['name_pattern'], $locale) . ($isDefaultCurrency ? '' : ' (' . $currencyCode . ')');
+        $goPayPaymentMethodData->currency = $this->currencyFacade->getByCode($currencyCode);
         $goPayPaymentMethodData->imageNormalUrl = 'https://gate.gopay.cz/images/checkout/' . $data['image_normal_url'] . '.png';
         $goPayPaymentMethodData->imageLargeUrl = 'https://gate.gopay.cz/images/checkout/' . $data['image_large_url'] . '.png';
         $goPayPaymentMethodData->paymentGroup = $data['payment_group'];
-        $goPayPaymentMethodData->domainId = $domainId;
         $goPayPaymentMethodData->available = $data['available'];
 
         return $goPayPaymentMethodData;
