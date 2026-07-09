@@ -111,7 +111,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     ? [
                           {
                               query: OrderAvailablePaymentsQueryDocument,
-                              variables: { orderUuid: orderUuid },
+                              variables: { orderUuid: orderUuid, orderUrlHash: context.params.urlHash },
                           },
                       ]
                     : [],

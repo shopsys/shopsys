@@ -22,13 +22,14 @@ export const useChangePaymentInOrder = () => {
 
     const changePaymentInOrderHandler = async (
         orderUuid: string,
+        orderUrlHash: string | null,
         paymentUuid: string,
         paymentName: string,
         paymentGoPayBankSwift?: string | null,
         withRedirectAfterChanging = true,
     ) => {
         const { data: changePaymentInOrderData } = await changePaymentInOrder({
-            input: { orderUuid, paymentGoPayBankSwift: paymentGoPayBankSwift ?? null, paymentUuid },
+            input: { orderUuid, orderUrlHash, paymentGoPayBankSwift: paymentGoPayBankSwift ?? null, paymentUuid },
         });
         const editedOrder = changePaymentInOrderData?.ChangePaymentInOrder;
 

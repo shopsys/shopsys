@@ -10,6 +10,7 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypePayOrderMutationVariables = Exact<{
   orderUuid: string;
+  orderUrlHash?: string | null | undefined;
 }>;
 
 
@@ -17,8 +18,8 @@ export type TypePayOrderMutation = { PayOrder: { goPayCreatePaymentSetup: { gate
 
 
 export const PayOrderMutationDocument = gql`
-    mutation PayOrderMutation($orderUuid: Uuid!) {
-  PayOrder(orderUuid: $orderUuid) {
+    mutation PayOrderMutation($orderUuid: Uuid!, $orderUrlHash: String) {
+  PayOrder(orderUuid: $orderUuid, orderUrlHash: $orderUrlHash) {
     goPayCreatePaymentSetup {
       gatewayUrl
       goPayId

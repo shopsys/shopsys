@@ -1,5 +1,5 @@
-mutation UpdatePaymentStatusMutation($orderUuid: Uuid!) {
-    UpdatePaymentStatus(orderUuid: $orderUuid) {
+mutation UpdatePaymentStatusMutation($orderUuid: Uuid!, $orderUrlHash: String) {
+    UpdatePaymentStatus(orderUuid: $orderUuid, orderUrlHash: $orderUrlHash) {
         ...UpdatePaymentStatusFragment
     }
 }

@@ -100,6 +100,7 @@ export const cache = cacheExchange({
         SalesRepresentative: keyUuid,
         OrderPaymentsConfig: keyUuid,
         OrderWithdrawalRequest: keyNull,
+        UpdatePaymentStatusResult: keyNull,
     },
     updates: cacheUpdates,
     optimistic: optimisticUpdates,

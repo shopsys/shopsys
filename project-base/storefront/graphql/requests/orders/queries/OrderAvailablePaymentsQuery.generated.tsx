@@ -17,6 +17,7 @@ export type TypePaymentTypeEnum =
 
 export type TypeOrderAvailablePaymentsQueryVariables = Exact<{
   orderUuid: string;
+  orderUrlHash?: string | null | undefined;
 }>;
 
 
@@ -24,8 +25,8 @@ export type TypeOrderAvailablePaymentsQuery = { orderPayments: { availablePaymen
 
 
 export const OrderAvailablePaymentsQueryDocument = gql`
-    query OrderAvailablePaymentsQuery($orderUuid: Uuid!) {
-  orderPayments(orderUuid: $orderUuid) {
+    query OrderAvailablePaymentsQuery($orderUuid: Uuid!, $orderUrlHash: String) {
+  orderPayments(orderUuid: $orderUuid, orderUrlHash: $orderUrlHash) {
     availablePayments {
       ...SimplePaymentFragment
     }

@@ -1,5 +1,5 @@
-mutation PayOrderMutation($orderUuid: Uuid!) {
-    PayOrder(orderUuid: $orderUuid) {
+mutation PayOrderMutation($orderUuid: Uuid!, $orderUrlHash: String) {
+    PayOrder(orderUuid: $orderUuid, orderUrlHash: $orderUrlHash) {
         goPayCreatePaymentSetup {
             gatewayUrl
             goPayId

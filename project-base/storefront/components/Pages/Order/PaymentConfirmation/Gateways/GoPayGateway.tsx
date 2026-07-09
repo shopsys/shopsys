@@ -14,6 +14,7 @@ import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 type GoPayGatewayProps = {
     orderUuid: string;
+    orderUrlHash?: string | null;
     requiresAction?: boolean;
     isDisabled?: boolean;
     initialButtonText?: string;
@@ -22,6 +23,7 @@ type GoPayGatewayProps = {
 
 export const GoPayGateway: FC<GoPayGatewayProps> = ({
     orderUuid,
+    orderUrlHash,
     requiresAction,
     initialButtonText,
     className,
@@ -63,7 +65,7 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
     const handlePayOrder = async () => {
         setInitiatedPaymentGate(true);
 
-        const payOrderResult = await payOrder({ orderUuid });
+        const payOrderResult = await payOrder({ orderUuid, orderUrlHash: orderUrlHash ?? null });
 
         if (payOrderResult.error) {
             const parsedErrors = getUserFriendlyErrors(payOrderResult.error, t);

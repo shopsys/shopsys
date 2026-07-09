@@ -116,7 +116,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 )}
             </CustomerRecordCard>
 
-            {canCreateOrder && notPaid && <PaymentsInOrderSelect orderUuid={order.uuid} />}
+            {canCreateOrder && notPaid && <PaymentsInOrderSelect orderUrlHash={order.urlHash} orderUuid={order.uuid} />}
 
             {orderTransport && (
                 <OrderDetailRowInfo tid={TIDs.order_detail_transport} title={t('Transport')}>

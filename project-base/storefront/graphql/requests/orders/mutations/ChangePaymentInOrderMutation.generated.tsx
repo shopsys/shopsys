@@ -10,6 +10,8 @@ import { ChangePaymentInOrderFragment } from '../fragments/ChangePaymentInOrderF
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeChangePaymentInOrderInput = {
+  /** Order urlHash as a proof of access to the order for anonymous customers */
+  orderUrlHash?: string | null | undefined;
   /** Order identifier */
   orderUuid: string;
   /** Selected bank swift code of goPay payment bank transfer */

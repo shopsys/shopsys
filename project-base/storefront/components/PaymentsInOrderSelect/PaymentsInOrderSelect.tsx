@@ -13,11 +13,13 @@ import { useChangePaymentInOrder } from './paymentInOrderSelectUtils';
 
 type PaymentsInOrderSelectProps = {
     orderUuid: string;
+    orderUrlHash?: string | null;
     withRedirectAfterChanging?: boolean;
 };
 
 export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
     orderUuid,
+    orderUrlHash,
     withRedirectAfterChanging,
     className,
 }) => {
@@ -30,7 +32,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
 
     const [{ data: orderAvailablePaymentsData, fetching: areOrderAvailablePaymentsFetching }] =
         useOrderAvailablePaymentsQuery({
-            variables: { orderUuid },
+            variables: { orderUuid, orderUrlHash: orderUrlHash ?? null },
         });
 
     const currentOrderPayment = orderAvailablePaymentsData?.orderPayments.currentPayment;
@@ -50,6 +52,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
         if (selectedPaymentForChange?.uuid) {
             const changePaymentInOrderData = await changePaymentInOrderHandler(
                 orderUuid,
+                orderUrlHash ?? null,
                 selectedPaymentForChange.uuid,
                 selectedPaymentForChange.name,
                 selectedPaymentSwiftForChange,
@@ -115,6 +118,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                             requiresAction
                             className="ml-auto"
                             initialButtonText={t('Repeat payment')}
+                            orderUrlHash={orderUrlHash}
                             orderUuid={orderUuid}
                         />
                     ) : (
@@ -134,7 +138,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                             </Button>
                         </>
                     )}
-                    {isGoPayVisible && <GoPayGateway orderUuid={orderUuid} />}
+                    {isGoPayVisible && <GoPayGateway orderUrlHash={orderUrlHash} orderUuid={orderUuid} />}
                 </div>
             </div>
         </div>

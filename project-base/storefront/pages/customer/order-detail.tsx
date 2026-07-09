@@ -92,6 +92,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             let orderUuid = null;
+            let orderUrlHash = null;
 
             const customerResult = await client.query(CurrentCustomerUserQueryDocument, {}).toPromise();
 
@@ -102,6 +103,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     })
                     .toPromise();
                 orderUuid = orderResponse.data?.order?.uuid;
+                orderUrlHash = orderResponse.data?.order?.urlHash ?? null;
             }
 
             return initServerSideProps<TypeOrderAvailablePaymentsQueryVariables>({
@@ -117,7 +119,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     ? [
                           {
                               query: OrderAvailablePaymentsQueryDocument,
-                              variables: { orderUuid: orderUuid },
+                              variables: { orderUuid: orderUuid, orderUrlHash: orderUrlHash },
                           },
                       ]
                     : [],

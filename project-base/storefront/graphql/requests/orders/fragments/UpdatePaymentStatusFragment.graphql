@@ -1,22 +1,15 @@
-fragment UpdatePaymentStatusFragment on Order {
+fragment UpdatePaymentStatusFragment on UpdatePaymentStatusResult {
     __typename
     isPaid
-    number
+    orderNumber
+    paymentName
     paymentTransactionsCount
-    items {
-        type
-        payment {
-            name
-            type
-        }
-    }
     hasPaymentInProcess
     lastExternalPaymentUrl
-    paymentStatus
+    lastPaymentStatus
     confirmationPageContent {
         __typename
         content
         status
     }
-    urlHash
 }

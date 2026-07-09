@@ -1,6 +1,6 @@
-import { TypeOrderConfirmationPageContentStatusEnum, TypeOrderItemTypeEnum } from 'graphql/types';
+import { TypeOrderConfirmationPageContentStatusEnum } from 'graphql/types';
 import {
-    getGtmPaymentEventFromOrder,
+    getGtmPaymentEventFromPaymentStatusUpdate,
     getGtmPaymentRetryCount,
     getIsPaymentSuccessfulByConfirmationStatus,
 } from 'gtm/utils/paymentGtmEventUtils';
@@ -32,23 +32,16 @@ describe('paymentGtmEventUtils', () => {
         expect(getGtmPaymentRetryCount(3)).toBe(2);
     });
 
-    test('creates GTM payment event from order payment status', () => {
+    test('creates GTM payment event from payment status update', () => {
         expect(
-            getGtmPaymentEventFromOrder({
-                number: '123',
-                paymentStatus: 'CANCELED',
+            getGtmPaymentEventFromPaymentStatusUpdate({
+                orderNumber: '123',
+                paymentName: 'GoPay',
+                lastPaymentStatus: 'CANCELED',
                 paymentTransactionsCount: 2,
                 confirmationPageContent: {
                     status: TypeOrderConfirmationPageContentStatusEnum.Failed,
                 },
-                items: [
-                    {
-                        type: TypeOrderItemTypeEnum.Payment,
-                        payment: {
-                            name: 'GoPay',
-                        },
-                    },
-                ],
             }),
         ).toEqual({
             event: 'ec.payment',
