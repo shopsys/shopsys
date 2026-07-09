@@ -8,6 +8,7 @@ use App\Component\Doctrine\QueryBuilderExtender;
 use App\Model\Product\ProductRepository;
 use Override;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePriceRangeRepository;
@@ -22,8 +23,9 @@ class PriceRangeRepository extends BasePriceRangeRepository
     public function __construct(
         ProductRepository $productRepository,
         QueryBuilderExtender $queryBuilderExtender,
+        CurrencyFacade $currencyFacade,
     ) {
-        parent::__construct($productRepository, $queryBuilderExtender);
+        parent::__construct($productRepository, $queryBuilderExtender, $currencyFacade);
     }
 
     /**

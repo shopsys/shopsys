@@ -8,9 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
@@ -21,6 +23,7 @@ class ProductListAdminRepository
         protected readonly EntityManagerInterface $em,
         protected readonly Localization $localization,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -51,11 +54,12 @@ class ProductListAdminRepository
                 ProductManualInputPrice::class,
                 'pmip',
                 Join::WITH,
-                'pmip.product = p.id AND pmip.pricingGroup = :pricingGroupId',
+                'pmip.product = p.id AND pmip.pricingGroup = :pricingGroupId AND pmip.currency = :currency',
             )
             ->leftJoin('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities())
-            ->setParameter('pricingGroupId', $pricingGroupId);
+            ->setParameter('pricingGroupId', $pricingGroupId)
+            ->setParameter('currency', $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID));
 
         return $queryBuilder;
     }

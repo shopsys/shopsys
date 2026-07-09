@@ -24,7 +24,10 @@ class PriceFactory
                 continue;
             }
 
-            if ($currencyCode !== null && ($priceArray['currency_code'] ?? null) !== $currencyCode) {
+            if ($currencyCode !== null
+                && array_key_exists('currency_code', $priceArray)
+                && $priceArray['currency_code'] !== $currencyCode
+            ) {
                 continue;
             }
 

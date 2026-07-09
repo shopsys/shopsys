@@ -69,7 +69,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             } else {
                 $this->loadDefault($domainId);
             }
+        }
 
+        // the orders in secondary currencies are created last so the demo order IDs of the orders above stay stable
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $domainConfig = $this->domain->getDomainConfigById($domainId);
 
             foreach ($domainConfig->getCurrencyCodes() as $currencyCode) {
@@ -88,7 +91,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $orderData->firstName = 'Radim';
         $orderData->lastName = 'Svoboda';
-        $orderData->email = 'no-reply@shopsys.com';
+        $orderData->email = 'radim.svoboda@example.com';
         $orderData->telephone = new PhoneData('CZ', '+420', '725711368');
         $orderData->street = 'Výstavní 8';
         $orderData->city = 'Ostrava';

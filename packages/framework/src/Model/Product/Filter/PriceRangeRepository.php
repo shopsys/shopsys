@@ -8,6 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
@@ -18,6 +19,7 @@ class PriceRangeRepository
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly QueryBuilderExtender $queryBuilderExtender,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -75,6 +77,8 @@ class PriceRangeRepository
             ->addOrExtendJoin($queryBuilder, ProductManualInputPrice::class, 'pmip', 'pmip.product = p')
             ->andWhere('pmip.pricingGroup = :pricingGroup')
             ->setParameter('pricingGroup', $pricingGroup)
+            ->andWhere('pmip.currency = :currency')
+            ->setParameter('currency', $this->currencyFacade->getDomainDefaultCurrencyByDomainId($pricingGroup->getDomainId()))
             ->resetDQLPart('groupBy')
             ->resetDQLPart('orderBy')
             ->select('MIN(pmip.inputPrice) AS minimalPrice, MAX(pmip.inputPrice) AS maximalPrice');
