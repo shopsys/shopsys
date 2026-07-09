@@ -28,11 +28,11 @@ msgstr "%entityName% (%entityIdentifier%)"
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Späť</a> na prihlasovaciu stránku."
 
-msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
-msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" bola úspešne uložená."
-
 msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was created successfully."
 msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" bola úspešne vytvorená."
+
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
+msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" bola úspešne uložená."
 
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."
 msgstr "Položka \"<strong>{{ objectName }}</strong>\" bola úspešne vymazaná."

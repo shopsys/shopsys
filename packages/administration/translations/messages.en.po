@@ -28,10 +28,10 @@ msgstr ""
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr ""
 
-msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was created successfully."
 msgstr ""
 
-msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was created successfully."
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
 msgstr ""
 
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."
