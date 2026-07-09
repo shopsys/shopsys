@@ -2321,7 +2321,7 @@ msgid "Order or document number"
 msgstr "Číslo objednávky alebo dokumentu"
 
 msgid "Order saved"
-msgstr "Objednávka uložená"
+msgstr "Poradie bolo uložené"
 
 msgid "Order saving failed"
 msgstr "Ukladanie objednávky zlyhalo"

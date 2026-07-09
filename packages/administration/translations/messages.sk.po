@@ -1913,7 +1913,7 @@ msgid "Save changes"
 msgstr "Uložiť zmeny"
 
 msgid "Save changes in order"
-msgstr "Uložiť zmeny v objednávke"
+msgstr "Uložiť zmeny v poradí"
 
 msgid "Save correction"
 msgstr "Uložiť korekciu"
