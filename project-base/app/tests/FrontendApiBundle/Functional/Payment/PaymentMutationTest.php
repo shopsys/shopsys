@@ -7,7 +7,6 @@ namespace Tests\FrontendApiBundle\Functional\Payment;
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
 use GoPay\Definition\Response\PaymentStatus;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\ReturnHash\PaymentReturnHashFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
@@ -38,7 +37,10 @@ class PaymentMutationTest extends GraphQlTestCase
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',
-            ['orderUuid' => $order->getUuid()],
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+            ],
         );
         $content = $this->getResponseDataForGraphQlType($response, 'PayOrder');
 
@@ -72,28 +74,27 @@ class PaymentMutationTest extends GraphQlTestCase
 
         $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',
-            ['orderUuid' => $order->getUuid()],
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+            ],
         );
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/UpdatePaymentStatusMutation.graphql',
-            ['orderUuid' => $order->getUuid()],
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+            ],
         );
         $content = $this->getResponseDataForGraphQlType($response, 'UpdatePaymentStatus');
 
         $this->assertTrue($content['isPaid']);
-        $paymentItem = null;
-
-        foreach ($content['items'] as $item) {
-            if ($item['type'] === 'payment') {
-                $paymentItem = $item;
-
-                break;
-            }
-        }
-        $this->assertNotNull($paymentItem, 'Payment item not found in order items');
-        $this->assertSame(PaymentTypeEnum::TYPE_GOPAY, $paymentItem['payment']['type']);
-
+        $this->assertSame($order->getNumber(), $content['orderNumber']);
+        $this->assertSame(
+            $order->getPayment()->getName($this->getLocaleForFirstDomain()),
+            $content['paymentName'],
+        );
 
         $this->em->clear();
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
@@ -115,7 +116,10 @@ class PaymentMutationTest extends GraphQlTestCase
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',
-            ['orderUuid' => $order->getUuid()],
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+            ],
         );
 
         $this->assertUserError($response, 'order-already-paid');
@@ -127,7 +131,10 @@ class PaymentMutationTest extends GraphQlTestCase
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',
-            ['orderUuid' => $order->getUuid()],
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+            ],
         );
 
         $this->assertUserError($response, 'max-transaction-count-reached');

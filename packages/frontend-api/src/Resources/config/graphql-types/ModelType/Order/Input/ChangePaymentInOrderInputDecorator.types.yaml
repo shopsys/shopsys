@@ -8,6 +8,10 @@ ChangePaymentInOrderInputDecorator:
             orderUuid:
                 type: "Uuid!"
                 description: "Order identifier"
+            orderUrlHash:
+                type: "String"
+                description: "Order urlHash as a proof of access to the order for anonymous customers"
+                defaultValue: null
             paymentUuid:
                 type: "Uuid!"
                 description: "UUID of a payment that should be assigned to the order."

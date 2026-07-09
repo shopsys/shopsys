@@ -114,14 +114,20 @@ MutationDecorator:
                 args:
                     orderUuid:
                         type: "Uuid!"
+                    orderUrlHash:
+                        type: "String"
+                        description: "Order urlHash as a proof of access to the order for anonymous customers"
                 resolve: "@=mutation('payOrderMutation', args)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             UpdatePaymentStatus:
-                type: "Order!"
+                type: "UpdatePaymentStatusResult!"
                 description: "check payment status of order after callback from payment service"
                 args:
                     orderUuid:
                         type: "Uuid!"
+                    orderUrlHash:
+                        type: "String"
+                        description: "Order urlHash as a proof of access to the order for anonymous customers"
                 resolve: "@=mutation('updatePaymentStatusMutation', args)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             ChangePaymentInOrder:

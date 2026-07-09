@@ -139,6 +139,9 @@ To implement a new payment gateway in Shopsys:
 
 The Shopsys Frontend API provides GraphQL queries and mutations for working with payment methods:
 
+Operations that require proof of access to an order accept it in two forms: the `orderUrlHash` argument, or the logged-in customer owning the order.
+When `orderUrlHash` is provided, it is the only proof evaluated — a hash that does not match the order and the current domain is rejected with `order-not-found` even for a logged-in customer owning the order.
+
 ### Queries
 
 #### payments
@@ -154,33 +157,32 @@ The Shopsys Frontend API provides GraphQL queries and mutations for working with
 #### orderPayments
 
 - Returns payments available for a given order
-- Example: `query { orderPayments(orderUuid: "...") { ... } }`
+- Requires proof of access to the order: the customer must be logged in and own the order, or the `orderUrlHash` argument must be provided
+- Example: `query { orderPayments(orderUuid: "...", orderUrlHash: "...") { ... } }`
 
 #### GoPaySwifts
 
 - Returns a list of available banks for GoPay bank transfer payment
 - Example: `query { GoPaySwifts(currencyCode: "CZK") { ... } }`
 
-#### orderPaymentPageContent
-
-- Returns HTML content for the order payment page depending on the state of the payment
-- Example: `query { orderPaymentPageContent(orderUuid: "...") { ... } }`
-
 ### Mutations
 
 #### PayOrder
 
 - Creates a payment transaction in a payment gateway and returns payment setup data
-- Example: `mutation { PayOrder(orderUuid: "...") { ... } }`
+- Requires proof of access to the order: the customer must be logged in and own the order, or the `orderUrlHash` argument must be provided
+- Example: `mutation { PayOrder(orderUuid: "...", orderUrlHash: "...") { ... } }`
 
 #### UpdatePaymentStatus
 
-- Checks the payment status of an order after a callback from the payment service
-- Example: `mutation { UpdatePaymentStatus(orderUuid: "...") { ... } }`
+- Checks the payment status of an order after a callback from the payment service and returns the limited `UpdatePaymentStatusResult` type without any personal data
+- Requires proof of access to the order: the customer must be logged in and own the order, or the `orderUrlHash` argument must be provided
+- Example: `mutation { UpdatePaymentStatus(orderUuid: "...", orderUrlHash: "...") { isPaid } }`
 
 #### ChangePaymentInOrder
 
 - Changes payment in an order after order creation (available for unpaid GoPay orders only)
+- Requires proof of access to the order: the customer must be logged in and own the order, or the `orderUrlHash` input field must be provided
 - Example: `mutation { ChangePaymentInOrder(input: { ... }) { ... } }`
 
 #### ChangePaymentInCart

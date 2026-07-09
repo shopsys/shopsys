@@ -1,5 +1,5 @@
-query OrderPayments($orderUuid: Uuid!) {
-    orderPayments(orderUuid: $orderUuid) {
+query OrderPayments($orderUuid: Uuid!, $orderUrlHash: String) {
+    orderPayments(orderUuid: $orderUuid, orderUrlHash: $orderUrlHash) {
         currentPayment {
             uuid
             name

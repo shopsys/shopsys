@@ -628,6 +628,8 @@ input ChangePaymentInCartInput {
 }
 
 input ChangePaymentInOrderInput {
+  "Order urlHash as a proof of access to the order for anonymous customers"
+  orderUrlHash: String = null
   "Order identifier"
   orderUuid: Uuid!
   "Selected bank swift code of goPay payment bank transfer"
@@ -1443,7 +1445,11 @@ type Mutation {
   "Request withdrawal from contract for an order"
   OrderWithdrawalRequest(input: OrderWithdrawalRequestInput!): Boolean!
   "Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer"
-  PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
+  PayOrder(
+    "Order urlHash as a proof of access to the order for anonymous customers"
+    orderUrlHash: String
+    orderUuid: Uuid!
+  ): PaymentSetupCreationData!
   "Send a product question to the customer and the shop operator"
   ProductQuestion(input: ProductQuestionInput!): Boolean!
   "Recover password using hash required from RequestPasswordRecovery"
@@ -1471,7 +1477,11 @@ type Mutation {
   "Set default delivery address by Uuid"
   SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CurrentCustomerUser!
   "check payment status of order after callback from payment service"
-  UpdatePaymentStatus(orderUuid: Uuid!): Order!
+  UpdatePaymentStatus(
+    "Order urlHash as a proof of access to the order for anonymous customers"
+    orderUrlHash: String
+    orderUuid: Uuid!
+  ): UpdatePaymentStatusResult!
 }
 
 "Represents a navigation structure item"
@@ -2561,7 +2571,11 @@ type Query {
   "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded"
   orderItemsSearch(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int, searchInput: SearchInput!): OrderItemConnection!
   "Returns payments available for the given order"
-  orderPayments(orderUuid: Uuid!): OrderPaymentsConfig!
+  orderPayments(
+    "Order urlHash as a proof of access to the order for anonymous customers"
+    orderUrlHash: String
+    orderUuid: Uuid!
+  ): OrderPaymentsConfig!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
   orders(after: String, before: String, filter: OrderFilterInput, first: Int, last: Int): OrderConnection
   "Returns order counts grouped by status"
@@ -3157,6 +3171,26 @@ enum TransportUnavailabilityReasonInCartEnum {
 type Unit {
   "Localized unit name (domain dependent)"
   name: String!
+}
+
+"Payment state of the order after checking the payment status"
+type UpdatePaymentStatusResult {
+  "Content to be displayed on the order confirmation page"
+  confirmationPageContent: OrderConfirmationPageContent!
+  "Indicates whether order payment is still being processed with GoPay payment type"
+  hasPaymentInProcess: Boolean!
+  "Indicates whether the order is paid successfully with GoPay payment type"
+  isPaid: Boolean!
+  "URL for accessing the last payment transaction on a gateway without invoking the new payment transaction"
+  lastExternalPaymentUrl: String
+  "Current status of the last external payment transaction"
+  lastPaymentStatus: String
+  "Unique order number"
+  orderNumber: String!
+  "Name of the current order payment method"
+  paymentName: String!
+  "Number of payment transactions created for the order"
+  paymentTransactionsCount: Int!
 }
 
 "Represents and encapsulates an ISO-8601 encoded UTC date-time value"

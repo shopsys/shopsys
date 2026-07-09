@@ -6,14 +6,12 @@ namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use Override;
 use Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
-use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Payment\Exception\PaymentNotFoundUserError;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -22,7 +20,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class PaymentInExistingOrderValidator extends ConstraintValidator
 {
     public function __construct(
-        protected readonly OrderFacade $orderFacade,
+        protected readonly OrderApiFacade $orderApiFacade,
         protected readonly PaymentFacade $paymentFacade,
         protected readonly GoPayBankSwiftFacade $goPayBankSwiftFacade,
         protected readonly CurrencyFacade $currencyFacade,
@@ -36,11 +34,10 @@ class PaymentInExistingOrderValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, PaymentInExistingOrder::class);
         }
 
+        $order = $this->orderApiFacade->getAuthorizedOrder($value->orderUuid, $value->orderUrlHash);
+
         try {
-            $order = $this->orderFacade->getByUuid($value->orderUuid);
             $payment = $this->paymentFacade->getByUuid($value->paymentUuid);
-        } catch (OrderNotFoundException) {
-            throw new OrderNotFoundUserError('Order with UUID \'' . $value->orderUuid . '\' not found.');
         } catch (PaymentNotFoundException) {
             throw new PaymentNotFoundUserError('Payment with UUID \'' . $value->paymentUuid . '\' not found.');
         }

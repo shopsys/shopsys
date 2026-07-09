@@ -277,11 +277,14 @@ QueryDecorator:
                 description: "Returns list of products by catalog numbers"
             orderPayments:
                 type: 'OrderPaymentsConfig!'
-                resolve: "@=query('orderPaymentsQuery', args['orderUuid'])"
+                resolve: "@=query('orderPaymentsQuery', args['orderUuid'], args['orderUrlHash'])"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 args:
                     orderUuid:
                         type: "Uuid!"
+                    orderUrlHash:
+                        type: "String"
+                        description: "Order urlHash as a proof of access to the order for anonymous customers"
                 description: "Returns payments available for the given order"
             GoPaySwifts:
                 type: "[GoPayBankSwift!]!"

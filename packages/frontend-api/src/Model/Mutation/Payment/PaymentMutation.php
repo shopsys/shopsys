@@ -6,7 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Payment;
 
 use GraphQL\Error\Error;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
@@ -15,6 +14,8 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\MaxTransactionCou
 use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\OrderAlreadyPaidUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\OrderWaitingForProcessPaymentUserError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
+use Shopsys\FrontendApiBundle\Model\Order\UpdatePaymentStatusResult;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderConfirmationPageContentQuery;
 use Throwable;
 
 class PaymentMutation extends AbstractMutation
@@ -23,13 +24,13 @@ class PaymentMutation extends AbstractMutation
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly PaymentServiceFacade $paymentServiceFacade,
         protected readonly OrderFacade $orderFacade,
+        protected readonly OrderConfirmationPageContentQuery $orderConfirmationPageContentQuery,
     ) {
     }
 
     public function payOrderMutation(Argument $argument): PaymentSetupCreationData
     {
-        $uuid = $argument['orderUuid'];
-        $order = $this->orderApiFacade->getByUuid($uuid);
+        $order = $this->orderApiFacade->getAuthorizedOrder($argument['orderUuid'], $argument['orderUrlHash']);
 
         if ($order->isPaid()) {
             throw new OrderAlreadyPaidUserError('Order is already paid');
@@ -50,17 +51,19 @@ class PaymentMutation extends AbstractMutation
         }
     }
 
-    public function updatePaymentStatusMutation(Argument $argument): Order
+    public function updatePaymentStatusMutation(Argument $argument): UpdatePaymentStatusResult
     {
-        try {
-            $uuid = $argument['orderUuid'];
-            $order = $this->orderApiFacade->getByUuid($uuid);
+        $order = $this->orderApiFacade->getAuthorizedOrder($argument['orderUuid'], $argument['orderUrlHash']);
 
+        try {
             if ($this->paymentServiceFacade->updatePaymentTransactionsByOrder($order)) {
                 $this->orderFacade->updatePaymentByLastPaymentTransaction($order);
             }
 
-            return $order;
+            return new UpdatePaymentStatusResult(
+                $order,
+                $this->orderConfirmationPageContentQuery->orderConfirmationPageContentQuery($order),
+            );
         } catch (Throwable $exception) {
             throw new Error($exception->getMessage(), null, null, [], null, $exception);
         }

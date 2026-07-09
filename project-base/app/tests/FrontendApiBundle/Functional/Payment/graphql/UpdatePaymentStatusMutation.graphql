@@ -1,11 +1,10 @@
-mutation UpdatePaymentStatus($orderUuid: Uuid!) {
-    UpdatePaymentStatus(orderUuid: $orderUuid) {
+mutation UpdatePaymentStatus($orderUuid: Uuid!, $orderUrlHash: String) {
+    UpdatePaymentStatus(orderUuid: $orderUuid, orderUrlHash: $orderUrlHash) {
         isPaid
-        items {
-            type
-            payment {
-                type
-            }
-        }
+        orderNumber
+        paymentName
+        lastPaymentStatus
+        paymentTransactionsCount
+        hasPaymentInProcess
     }
 }

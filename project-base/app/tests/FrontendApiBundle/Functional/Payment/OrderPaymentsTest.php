@@ -25,6 +25,7 @@ class OrderPaymentsTest extends GraphQlTestCase
             __DIR__ . '/graphql/OrderPaymentsPricesQuery.graphql',
             [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
             ],
         );
 
@@ -58,15 +59,21 @@ class OrderPaymentsTest extends GraphQlTestCase
     public static function getOrderPaymentsMultidomainDataProvider(): iterable
     {
         yield from static::getOrderPaymentsSingledomainDataProvider();
+    }
 
-        yield 'order on second domain with dron delivery transport' => [
-            'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 24,
-            'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_LATER,
-            'expectedAvailablePaymentReferenceNames' => [
-                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
-                PaymentDataFixture::PAYMENT_BANK_TRANSFER,
+    #[Group('multidomain')]
+    public function testGetOrderPaymentsForOrderFromAnotherDomainIsDenied(): void
+    {
+        $orderOnSecondDomain = $this->getReference(OrderDataFixture::ORDER_PREFIX . 24, Order::class);
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/OrderPaymentsQuery.graphql',
+            [
+                'orderUuid' => $orderOnSecondDomain->getUuid(),
+                'orderUrlHash' => $orderOnSecondDomain->getUrlHash(),
             ],
-        ];
+        );
+
+        $this->assertUserError($response, 'order-not-found');
     }
 
     public static function getOrderPaymentsSingledomainDataProvider(): iterable
@@ -97,6 +104,7 @@ class OrderPaymentsTest extends GraphQlTestCase
             __DIR__ . '/graphql/OrderPaymentsQuery.graphql',
             [
                 'orderUuid' => '00000000-0000-0000-0000-000000000000',
+                'orderUrlHash' => 'non-existing-url-hash',
             ],
         );
 
@@ -125,6 +133,7 @@ class OrderPaymentsTest extends GraphQlTestCase
             __DIR__ . '/graphql/OrderPaymentsQuery.graphql',
             [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
             ],
         );
         $this->assertSame(
