@@ -53,7 +53,11 @@ class PromoCodeDataFactory
         $promoCodeData->categoriesWithSale = $this->promoCodeCategoryRepository->getCategoriesByPromoCodeId($promoCode->getId());
         $promoCodeData->brandsWithSale = $this->promoCodeBrandRepository->getBrandsByPromoCodeId($promoCode->getId());
         $promoCodeData->productsWithSale = $this->promoCodeProductRepository->getProductsByPromoCodeId($promoCode->getId());
-        $promoCodeData->limits = $this->promoCodeLimitRepository->getLimitsByPromoCodeId($promoCode->getId());
+        $promoCodeData->limitsByCurrencyCode = [];
+
+        foreach ($this->promoCodeLimitRepository->getLimitsByPromoCodeId($promoCode->getId()) as $limit) {
+            $promoCodeData->limitsByCurrencyCode[$limit->getCurrency()->getCode()][] = $limit;
+        }
         $promoCodeData->remainingUses = $promoCode->getRemainingUses();
         $promoCodeData->discountType = $promoCode->getDiscountType();
         $promoCodeData->registeredCustomerUserOnly = $promoCode->isRegisteredCustomerUserOnly();

@@ -32,6 +32,11 @@ class ImportPriceListResult
         $this->warnings[] = $this->formatMessage($line, $warning);
     }
 
+    public function addGeneralWarning(string $warning): void
+    {
+        $this->warnings[] = $warning;
+    }
+
     /**
      * @return string[]
      */
@@ -56,6 +61,11 @@ class ImportPriceListResult
     public function increaseSuccessfulCount(): void
     {
         $this->importedCount++;
+    }
+
+    public function decreaseSuccessfulCount(): void
+    {
+        $this->importedCount--;
     }
 
     public function hasErrors(): bool

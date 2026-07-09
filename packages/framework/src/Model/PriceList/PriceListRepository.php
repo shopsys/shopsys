@@ -52,9 +52,11 @@ class PriceListRepository
             ->select([
                 'p.catnum as ' . PriceListCsvColumnsEnum::PRODUCT_CATNUM,
                 'plpp.priceAmount as ' . PriceListCsvColumnsEnum::PRICE,
+                'c.code as ' . PriceListCsvColumnsEnum::CURRENCY_CODE,
             ])
             ->from(PriceListProductPrice::class, 'plpp')
             ->leftJoin('plpp.product', 'p')
+            ->join('plpp.currency', 'c')
             ->where('plpp.priceList = :priceListId')
             ->setParameter('priceListId', $priceListId);
 

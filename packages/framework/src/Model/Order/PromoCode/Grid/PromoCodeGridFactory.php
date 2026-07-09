@@ -95,6 +95,6 @@ class PromoCodeGridFactory implements GridFactoryInterface
             return $limit->getDiscount();
         };
 
-        return array_map($flatten, $limits);
+        return array_unique(array_map($flatten, $limits));
     }
 }

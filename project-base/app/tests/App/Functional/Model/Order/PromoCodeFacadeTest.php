@@ -60,19 +60,21 @@ final class PromoCodeFacadeTest extends TransactionFunctionalTestCase
         );
         $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($promoCode);
 
+        $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
+
         $expectedLimits = [
-            ...$this->mapPromoCodeLimits($promoCodeData->limits),
-            ['fromPrice' => '100.000000', 'discount' => '20.000000'],
+            ...$this->mapPromoCodeLimits(array_merge(...array_values($promoCodeData->limitsByCurrencyCode))),
+            ['fromPrice' => '100.000000', 'discount' => '20.000000', 'currencyCode' => $defaultCurrency->getCode()],
         ];
 
-        $promoCodeData->limits[] = $this->promoCodeLimitFactory->create('100', '20', $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID));
+        $promoCodeData->limitsByCurrencyCode[$defaultCurrency->getCode()][] = $this->promoCodeLimitFactory->create('100', '20', $defaultCurrency);
 
         $this->promoCodeFacade->edit($promoCode->getId(), $promoCodeData);
         $this->em->clear();
 
         $limits = $this->promoCodeLimitRepository->getLimitsByPromoCodeId($promoCode->getId());
 
-        $this->assertSame(
+        $this->assertEqualsCanonicalizing(
             $expectedLimits,
             $this->mapPromoCodeLimits($limits),
         );
@@ -110,13 +112,17 @@ final class PromoCodeFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[] $limits
-     * @return array<int, array{fromPrice: string, discount: string}>
+     * @return array<int, array{fromPrice: string, discount: string, currencyCode: string}>
      */
     private function mapPromoCodeLimits(array $limits): array
     {
         return array_map(
             static function (PromoCodeLimit $limit) {
-                return ['fromPrice' => $limit->getFromPrice(), 'discount' => $limit->getDiscount()];
+                return [
+                    'fromPrice' => $limit->getFromPrice(),
+                    'discount' => $limit->getDiscount(),
+                    'currencyCode' => $limit->getCurrency()->getCode(),
+                ];
             },
             $limits,
         );

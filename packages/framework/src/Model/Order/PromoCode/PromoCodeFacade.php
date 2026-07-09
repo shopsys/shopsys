@@ -91,7 +91,7 @@ class PromoCodeFacade
 
     protected function refreshPromoCodeRelations(PromoCode $promoCode, PromoCodeData $promoCodeData): void
     {
-        $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
+        $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limitsByCurrencyCode);
         $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
         $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
         $this->refreshPromoCodePricingGroups($promoCode, $promoCodeData->limitedPricingGroups);
@@ -100,15 +100,17 @@ class PromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[] $limits
+     * @param array<string, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[]> $limitsByCurrencyCode
      */
-    protected function refreshPromoCodeLimits(PromoCode $promoCode, array $limits): void
+    protected function refreshPromoCodeLimits(PromoCode $promoCode, array $limitsByCurrencyCode): void
     {
         $this->removeExistingPromoCodeLimits($promoCode);
 
         if ($promoCode->isFreeTransportAndPaymentType()) {
             return;
         }
+
+        $limits = array_merge(...array_values($limitsByCurrencyCode));
 
         foreach ($limits as $limit) {
             $promoCodeLimit = clone $limit;

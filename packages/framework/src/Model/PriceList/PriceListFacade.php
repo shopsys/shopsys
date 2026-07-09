@@ -7,10 +7,13 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use League\Flysystem\MountManager;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\ProductPricesMulticurrencyModeProvider;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
@@ -35,6 +38,9 @@ class PriceListFacade
         protected readonly ProductFacade $productFacade,
         protected readonly ImportPriceListResultFactory $importPriceListResultFactory,
         protected readonly MountManager $mountManager,
+        protected readonly Domain $domain,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly ProductPricesMulticurrencyModeProvider $productPricesMulticurrencyModeProvider,
     ) {
     }
 
@@ -128,10 +134,11 @@ class PriceListFacade
     public function getPriceListDataToExport(int $priceListId): array
     {
         $data = [];
+        $exportColumns = array_flip($this->priceListExportColumnsEnum->getAllCases());
 
         foreach ($this->priceListRepository->getPriceListDataToExport($priceListId) as $priceListWithProducts) {
             $priceListWithProducts[PriceListCsvColumnsEnum::PRICE] = $this->normalizePriceColumn($priceListWithProducts[PriceListCsvColumnsEnum::PRICE]);
-            $data[] = $priceListWithProducts;
+            $data[] = array_intersect_key($priceListWithProducts, $exportColumns);
         }
 
         return $data;
@@ -188,6 +195,10 @@ class PriceListFacade
             $this->processCsvRow($row, $constraints, $importResult, $priceListData, $line);
         }
 
+        if ($this->productPricesMulticurrencyModeProvider->isManualMode()) {
+            $this->removeProductPricesWithIncompleteCurrencyCoverage($priceListData, $importResult);
+        }
+
         if ($priceListData->id) {
             $priceList = $this->edit($priceListData->id, $priceListData);
         } else {
@@ -211,36 +222,50 @@ class PriceListFacade
 
     protected function createConstraints(): Constraints\Collection
     {
-        return new Constraints\Collection(
-            [
-                PriceListCsvColumnsEnum::PRODUCT_CATNUM => [
-                    new Constraints\NotBlank(
-                        message: t(
-                            'column {{ column_name }} cannot be empty',
-                            ['{{ column_name }}' => PriceListCsvColumnsEnum::PRODUCT_CATNUM],
-                            Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                        ),
+        $fields = [
+            PriceListCsvColumnsEnum::PRODUCT_CATNUM => [
+                new Constraints\NotBlank(
+                    message: t(
+                        'column {{ column_name }} cannot be empty',
+                        ['{{ column_name }}' => PriceListCsvColumnsEnum::PRODUCT_CATNUM],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
                     ),
-                ],
-                PriceListCsvColumnsEnum::PRICE => [
-                    new Constraints\Type(
-                        type: 'numeric',
-                        message: t(
-                            'column {{ column_name }} must be number, {{ value }} provided',
-                            ['{{ column_name }}' => PriceListCsvColumnsEnum::PRICE],
-                            Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                        ),
-                    ),
-                    new Constraints\GreaterThan(
-                        value: 0,
-                        message: t(
-                            'column {{ column_name }} must be greater than 0',
-                            ['{{ column_name }}' => PriceListCsvColumnsEnum::PRICE],
-                            Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                        ),
-                    ),
-                ],
+                ),
             ],
+            PriceListCsvColumnsEnum::PRICE => [
+                new Constraints\Type(
+                    type: 'numeric',
+                    message: t(
+                        'column {{ column_name }} must be number, {{ value }} provided',
+                        ['{{ column_name }}' => PriceListCsvColumnsEnum::PRICE],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                    ),
+                ),
+                new Constraints\GreaterThan(
+                    value: 0,
+                    message: t(
+                        'column {{ column_name }} must be greater than 0',
+                        ['{{ column_name }}' => PriceListCsvColumnsEnum::PRICE],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                    ),
+                ),
+            ],
+        ];
+
+        if ($this->productPricesMulticurrencyModeProvider->isManualMode()) {
+            $fields[PriceListCsvColumnsEnum::CURRENCY_CODE] = [
+                new Constraints\NotBlank(
+                    message: t(
+                        'column {{ column_name }} cannot be empty',
+                        ['{{ column_name }}' => PriceListCsvColumnsEnum::CURRENCY_CODE],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                    ),
+                ),
+            ];
+        }
+
+        return new Constraints\Collection(
+            $fields,
             allowExtraFields: true,
         );
     }
@@ -308,13 +333,91 @@ class PriceListFacade
             return;
         }
 
+        $currency = null;
+
+        if ($this->productPricesMulticurrencyModeProvider->isManualMode()) {
+            $currencyCode = $row[PriceListCsvColumnsEnum::CURRENCY_CODE];
+
+            if (!$this->domain->getDomainConfigById($priceListData->domainId)->hasCurrencyCode($currencyCode)) {
+                $importResult->addWarning(
+                    $line,
+                    t(
+                        'column {{ column_name }} contains currency code {{ currency_code }} that is not enabled on the domain',
+                        [
+                            '{{ column_name }}' => PriceListCsvColumnsEnum::CURRENCY_CODE,
+                            '{{ currency_code }}' => $currencyCode,
+                        ],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                    ),
+                );
+
+                return;
+            }
+
+            $currency = $this->currencyFacade->getByCode($currencyCode);
+        }
+
         $priceListData->priceListProductPricesData[] = $this->priceListProductPriceDataFactory->create(
             $product,
             Money::create($row[PriceListCsvColumnsEnum::PRICE]),
             $priceListData->domainId,
+            $currency,
         );
 
         $importResult->increaseSuccessfulCount();
+    }
+
+    protected function removeProductPricesWithIncompleteCurrencyCoverage(
+        PriceListData $priceListData,
+        ImportPriceListResult $importResult,
+    ): void {
+        $requiredCurrencyCodes = $this->domain->getDomainConfigById($priceListData->domainId)->getCurrencyCodes();
+        $currencyCodesByProductId = [];
+
+        foreach ($priceListData->priceListProductPricesData as $priceListProductPriceData) {
+            $currencyCodesByProductId[$priceListProductPriceData->product->getId()][] = $priceListProductPriceData->currency->getCode();
+        }
+
+        $shouldWarnByIncompleteProductId = [];
+
+        foreach ($currencyCodesByProductId as $productId => $currencyCodes) {
+            if (array_diff($requiredCurrencyCodes, $currencyCodes) !== []) {
+                $shouldWarnByIncompleteProductId[$productId] = true;
+            }
+        }
+
+        if ($shouldWarnByIncompleteProductId === []) {
+            return;
+        }
+
+        foreach ($priceListData->priceListProductPricesData as $key => $priceListProductPriceData) {
+            $product = $priceListProductPriceData->product;
+
+            if (!array_key_exists($product->getId(), $shouldWarnByIncompleteProductId)) {
+                continue;
+            }
+
+            unset($priceListData->priceListProductPricesData[$key]);
+            $importResult->decreaseSuccessfulCount();
+
+            if (!$shouldWarnByIncompleteProductId[$product->getId()]) {
+                continue;
+            }
+
+            $importResult->addGeneralWarning(
+                t(
+                    'Product with catnum {{ catnum }} does not have prices for all currencies of the domain ({{ currency_codes }}), its prices were skipped',
+                    [
+                        '{{ catnum }}' => $product->getCatnum(),
+                        '{{ currency_codes }}' => implode(', ', $requiredCurrencyCodes),
+                    ],
+                    Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                ),
+            );
+            $shouldWarnByIncompleteProductId[$product->getId()] = false;
+        }
+
+        $priceListData->priceListProductPricesData = array_values($priceListData->priceListProductPricesData);
     }
 
     protected function getFileContent(UploadedFileData $uploadedFileData): string

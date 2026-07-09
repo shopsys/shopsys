@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Symfony\Component\Form\AbstractType;
@@ -49,6 +50,7 @@ final class PromoCodeFormType extends AbstractType
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly BrandFacade $brandFacade,
         private readonly PromoCodeTypeEnum $promoCodeTypeEnum,
+        private readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -169,24 +171,29 @@ final class PromoCodeFormType extends AbstractType
             ],
         ]);
 
-        $limitsGroup->add(
-            $limitsGroup->create('limits', PromoCodeLimitCollectionType::class, [
-                'label' => false,
-                'entry_type' => PromoCodeLimitType::class,
-                'entry_options' => ['discount' => $discountOptions],
-                'required' => false,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'error_bubbling' => false,
-                'constraints' => [
-                    new Constraints\Count(
-                        min: 1,
-                        minMessage: 'Please enter at least one discount limit',
-                        groups: [self::VALIDATION_GROUP_TYPE_PERCENT, self::VALIDATION_GROUP_TYPE_NOMINAL],
-                    ),
-                ],
-            ]),
-        );
+        $currencies = $this->currencyFacade->getEnabledCurrenciesByDomainId($this->getDomainId());
+
+        foreach ($currencies as $currency) {
+            $limitsGroup->add(
+                $limitsGroup->create('limits' . $currency->getCode(), PromoCodeLimitCollectionType::class, [
+                    'label' => count($currencies) > 1 ? $currency->getCode() : false,
+                    'property_path' => 'limitsByCurrencyCode[' . $currency->getCode() . ']',
+                    'entry_type' => PromoCodeLimitType::class,
+                    'entry_options' => ['discount' => $discountOptions, 'currency_code' => $currency->getCode()],
+                    'required' => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'error_bubbling' => false,
+                    'constraints' => [
+                        new Constraints\Count(
+                            min: 1,
+                            minMessage: 'Please enter at least one discount limit',
+                            groups: [self::VALIDATION_GROUP_TYPE_PERCENT, self::VALIDATION_GROUP_TYPE_NOMINAL],
+                        ),
+                    ],
+                ]),
+            );
+        }
 
         $builder->add($limitsGroup);
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -34,12 +35,16 @@ class PriceListProductPriceDataFactory
         return $priceListProductPriceData;
     }
 
-    public function create(Product $product, Money $priceAmount, int $domainId): PriceListProductPriceData
-    {
+    public function create(
+        Product $product,
+        Money $priceAmount,
+        int $domainId,
+        ?Currency $currency = null,
+    ): PriceListProductPriceData {
         $priceListProductPrice = $this->createInstance();
         $priceListProductPrice->product = $product;
         $priceListProductPrice->priceAmount = $priceAmount;
-        $priceListProductPrice->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $priceListProductPrice->currency = $currency ?? $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $priceListProductPrice->basicPrice = $this->getBasicPriceBasedOnPricingSetting(
             $product,
             $domainId,

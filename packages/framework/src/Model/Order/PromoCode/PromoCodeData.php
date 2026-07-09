@@ -17,9 +17,9 @@ class PromoCodeData
     public $discountType = PromoCodeTypeEnum::DISCOUNT_TYPE_PERCENT;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[]
+     * @var array<string, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[]>
      */
-    public $limits = [];
+    public $limitsByCurrencyCode = [];
 
     /**
      * @var int|null
@@ -102,8 +102,10 @@ class PromoCodeData
             $this->flags[$key] = clone $flag;
         }
 
-        foreach ($this->limits as $key => $limit) {
-            $this->limits[$key] = clone $limit;
+        foreach ($this->limitsByCurrencyCode as $currencyCode => $limits) {
+            foreach ($limits as $key => $limit) {
+                $this->limitsByCurrencyCode[$currencyCode][$key] = clone $limit;
+            }
         }
     }
 }
