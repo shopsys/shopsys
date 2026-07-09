@@ -1,10 +1,9 @@
-import { SkeletonModuleTransportStores } from 'components/Blocks/Skeleton/SkeletonModuleTransportStores';
-import { StoreListError } from 'components/Blocks/StoreList/StoreListError';
 import { StoresWrapper } from 'components/Blocks/StoreList/StoresWrapper';
 import { usePaginatedStoreConnection } from 'components/Blocks/StoreList/usePaginatedStoreConnection';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { TIDs } from 'cypress/tids';
+import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import {
     TransportStoresQueryDocument,
     TypeTransportStoresQuery,
@@ -102,40 +101,29 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
 
     return (
         <Popup
-            className="min-h-[min(600px,80dvh)] w-11/12 max-w-6xl md:min-h-auto"
+            className="h-[min(760px,80dvh)] max-h-[80dvh] w-11/12 max-w-6xl"
             contentClassName="flex min-h-0 flex-1 flex-col overflow-hidden"
             title={t('Choose the store where you are going to pick up your order')}
         >
-            <div id={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID} className="min-h-0 flex-1 overflow-y-auto pr-1">
-                {isFetchingStores && transportStores === null && !storeConnectionError && (
-                    <SkeletonModuleTransportStores />
-                )}
-
-                {storeConnectionError && transportStores === null && (
-                    <StoreListError message={storeConnectionErrorMessage} />
-                )}
-
-                {transportStores && (
-                    <StoresWrapper
-                        appliedSearchTextValue={appliedSearchTextValue}
-                        isDistanceFromSearchText={isDistanceFromSearchText}
-                        isFetchingStores={isFetchingStores}
-                        isLoadingMoreStores={isLoadingMoreStores}
-                        priorityStore={searchTextValue === '' ? lastOrderPickupPlace : null}
-                        scrollableTargetId={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID}
-                        searchTextValue={searchTextValue}
-                        selectedStoreUuid={selectedStoreUuid}
-                        storeConnectionErrorMessage={storeConnectionError ? storeConnectionErrorMessage : undefined}
-                        stores={transportStores}
-                        shouldShowTitle={false}
-                        shouldWrapInWebline={false}
-                        userCoordinates={userCoordinates}
-                        onLoadMoreStoresCallback={loadMoreStores}
-                        onSearchTextCallback={setSearchTextValue}
-                        onSelectStoreCallback={onSelectStoreHandler}
-                        onUserCoordinatesCallback={setUserCoordinates}
-                    />
-                )}
+            <div className="min-h-0 flex-1 overflow-y-auto pr-1" id={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID}>
+                <StoresWrapper
+                    appliedSearchTextValue={appliedSearchTextValue}
+                    isDistanceFromSearchText={isDistanceFromSearchText}
+                    isFetchingStores={isFetchingStores}
+                    isLoadingMoreStores={isLoadingMoreStores}
+                    priorityStore={searchTextValue === '' ? lastOrderPickupPlace : null}
+                    scrollableTargetId={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID}
+                    searchTextValue={searchTextValue}
+                    selectedStoreUuid={selectedStoreUuid}
+                    storeConnectionErrorMessage={storeConnectionError ? storeConnectionErrorMessage : undefined}
+                    stores={transportStores}
+                    userCoordinates={userCoordinates}
+                    variant="pickupSelection"
+                    onLoadMoreStoresCallback={loadMoreStores}
+                    onSearchTextCallback={setSearchTextValue}
+                    onSelectStoreCallback={onSelectStoreHandler}
+                    onUserCoordinatesCallback={setUserCoordinates}
+                />
             </div>
 
             <div className="mt-3 flex shrink-0 justify-between border-border-less border-t bg-background-default pt-3">
@@ -149,7 +137,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
                     tid={TIDs.pages_order_pickupplace_popup_confirm}
                     onClick={onConfirmPickupPlaceHandler}
                 >
-                    {t('Confirm')}
+                    {t('Select store')}
                 </Button>
             </div>
         </Popup>

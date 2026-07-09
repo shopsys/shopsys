@@ -35,7 +35,6 @@ export const usePaginatedStoreConnection = <
     const defaultUserCoordinates = useSessionStore((s) => s.coordinates);
     const [searchTextValue, setSearchTextValue] = useState<string>('');
     const [userCoordinates, setUserCoordinates] = useState<TypeCoordinates | null>(defaultUserCoordinates);
-    const [stores, setStores] = useState<TypeListedStoreConnectionFragment | null>(null);
     const [isLoadingMoreStores, setIsLoadingMoreStores] = useState(false);
     const [loadMoreStoresError, setLoadMoreStoresError] = useState<CombinedError | undefined>();
     const debouncedSearchTextValue = useDebounce(searchTextValue, 700);
@@ -48,11 +47,11 @@ export const usePaginatedStoreConnection = <
             ({
                 ...additionalQueryVariables,
                 searchText: normalizedSearchTextValue || null,
-                coordinates: userCoordinates,
+                coordinates: isDistanceFromSearchText ? null : userCoordinates,
                 first: STORE_LIST_PAGE_SIZE,
                 after: null,
             }) as QueryVariables,
-        [additionalQueryVariables, normalizedSearchTextValue, userCoordinates],
+        [additionalQueryVariables, isDistanceFromSearchText, normalizedSearchTextValue, userCoordinates],
     );
     const queryKey = JSON.stringify(queryVariables);
     const queryKeyRef = useRef(queryKey);
@@ -63,6 +62,8 @@ export const usePaginatedStoreConnection = <
         query: queryDocument,
         variables: queryVariables,
     });
+    const initialStoreConnection = getStoreConnectionFromData(data);
+    const [stores, setStores] = useState<TypeListedStoreConnectionFragment | null>(initialStoreConnection ?? null);
 
     useEffect(() => {
         queryKeyRef.current = queryKey;
@@ -73,9 +74,8 @@ export const usePaginatedStoreConnection = <
     useEffect(() => {
         const storeConnection = getStoreConnectionFromData(data);
 
-        setStores(storeConnection ?? null);
-
         if (storeConnection) {
+            setStores(storeConnection);
             setLoadMoreStoresError(undefined);
         }
     }, [data, getStoreConnectionFromData]);

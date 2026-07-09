@@ -7,12 +7,12 @@ import { MapMarker } from 'types/map';
 const ClusterMarker: FC<{ onClick: () => void }> = ({ onClick, children }) => {
     return (
         <button
-            className="absolute h-[30px] w-6 -translate-x-1/2 -translate-y-full text-background-brand"
+            className="absolute h-7.5 w-6 -translate-x-1/2 -translate-y-full text-background-brand"
             title={`Cluster of ${children} locations`}
             type="button"
             onClick={onClick}
         >
-            <GoogleMapMarkerIcon className={twJoin('h-[30px] w-6')} />
+            <GoogleMapMarkerIcon className={twJoin('h-7.5 w-6')} />
 
             <span className="absolute inset-0 flex justify-center pt-1 font-bold text-text-inverted text-xs">
                 {children}
@@ -39,7 +39,7 @@ const SingleMarker: FC<{ onClick: () => void; isActive: boolean; isDetail?: bool
             <GoogleMapMarkerIcon
                 isSingle
                 className={twJoin(
-                    'h-[26px] w-5 text-background-brand',
+                    'h-6.5 w-5 text-background-brand',
                     isActive && 'origin-bottom scale-125',
                     isDetail ? 'cursor-default' : 'cursor-pointer',
                 )}

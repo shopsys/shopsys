@@ -29,17 +29,14 @@ export const OpeningStatus: FC<OpeningStatusProps> = ({ status, className }) => 
     const ariaLabel = t('Currently {{status}}', { status: statusText(status) });
 
     const statusClasses = {
-        [TypeStoreOpeningStatusEnum.Open]: 'bg-opening-status-open',
-        [TypeStoreOpeningStatusEnum.Closed]: 'bg-opening-status-closed',
-        [TypeStoreOpeningStatusEnum.OpenSoon]: 'bg-opening-status-open-today',
-        [TypeStoreOpeningStatusEnum.ClosedSoon]: 'bg-opening-status-open-today',
+        [TypeStoreOpeningStatusEnum.Open]: 'bg-opening-status-bg-open text-opening-status-text-open',
+        [TypeStoreOpeningStatusEnum.Closed]: 'bg-opening-status-bg-closed text-opening-status-text-closed',
+        [TypeStoreOpeningStatusEnum.OpenSoon]: 'bg-opening-status-bg-open-today text-opening-status-text-open-today',
+        [TypeStoreOpeningStatusEnum.ClosedSoon]: 'bg-opening-status-bg-open-today text-opening-status-text-open-today',
     };
 
     return (
-        <Flag
-            ariaLabel={ariaLabel}
-            className={twMergeCustom('text-nowrap text-text-inverted', className, statusClasses[status])}
-        >
+        <Flag ariaLabel={ariaLabel} className={twMergeCustom('text-nowrap', className, statusClasses[status])}>
             <div aria-hidden="true">{statusText(status)}</div>
         </Flag>
     );

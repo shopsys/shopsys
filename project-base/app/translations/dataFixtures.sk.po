@@ -274,6 +274,9 @@ msgstr "Kábel HDMI - HDMI AM / M 2 m pozlátený konektor High Speed HDMI kábe
 msgid "A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both."
 msgstr "Fotoaparát je optický nástroj na nahrávanie alebo zachytávanie obrázkov, ktoré môžu byť uložené lokálne, prenášané na iné miesto alebo oboje."
 
+msgid "A compact city store for quick parcel pickup. Please ring the bell if the door is closed during opening hours."
+msgstr "Kompaktná mestská predajňa na rýchle vyzdvihnutie zásielok. Ak sú dvere počas otváracích hodín zatvorené, zazvoňte, prosím."
+
 msgid "A garden tool is any one of many tools made for gardens and gardening and overlaps with the range of tools made for agriculture and horticulture. Garden tools can also be hand tools and power tools."
 msgstr "Záhradné náradie je akýkoľvek z mnohých nástrojov vyrobených pre záhrady a záhradníctvo a prekrýva sa s radou nástrojov vyrobených pre poľnohospodárstvo a záhradníctvo. Záhradné náradie môže byť aj ručné náradie a elektrické náradie."
 
@@ -282,6 +285,9 @@ msgstr "Osobný počítač (PC) je univerzálny počítač, ktorého veľkosť, 
 
 msgid "A printer is a peripheral which makes a persistent human readable representation of graphics or text on paper or similar physical media."
 msgstr "Tlačiareň je periférne zariadenie, ktoré vytvára trvalé človekom čitateľné zobrazenie grafiky alebo textu na papieri alebo podobnom fyzickom médiu."
+
+msgid "A smaller pickup point for prepaid orders and quick returns. Please use the side entrance after 4 PM."
+msgstr "Menšie výdajné miesto pre predplatené objednávky a rýchle vrátenie tovaru. Po 16. hodine použite, prosím, bočný vchod."
 
 msgid "A telephone is a telecommunications device that permits two or more users to conduct a conversation when they are too far apart to be heard directly. A telephone converts sound, typically and most efficiently the human voice, into electronic signals suitable for transmission via cables or other transmission media over long distances, and replays such signals simultaneously in audible form to its user."
 msgstr "Telefón je telekomunikačné zariadenie, ktoré umožňuje dvom alebo viacerým používateľom viesť rozhovor, keď sú príliš ďaleko od seba na to, aby boli počuť priamo. Telefón prevádza zvuk, typicky a najefektívnejšie ľudský hlas, na elektronické signály vhodné na prenos cez káble alebo iné prenosové médiá na veľké vzdialenosti a prehrá takéto signály súčasne v počuteľnej forme svojmu používateľovi."
@@ -1225,6 +1231,12 @@ msgstr "Orava LT-823 C82B"
 msgid "Orava LT-823 C82C"
 msgstr "Orava LT-823 C82C"
 
+msgid "Orders are available at the pickup counter next to the checkout area. Short-term parking is possible in front of the store."
+msgstr "Objednávky sú k dispozícii pri výdajnom pulte vedľa pokladní. Krátkodobé parkovanie je možné pred predajňou."
+
+msgid "Orders are prepared at the ground-floor counter next to the showroom. Staff can help you check the product before you leave."
+msgstr "Objednávky sú pripravené pri pulte na prízemí vedľa showroomu. Personál vám pred odchodom pomôže skontrolovať tovar."
+
 msgid "Ordinary customer"
 msgstr "Bežný zákazník"
 
@@ -1284,6 +1296,12 @@ msgstr "Fotografov sen. Hlavný fotoaparát s 13 megapixelmi a predný fotoapar�
 
 msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles. Incredible design, giant 5,5palcový display with HD resolution, two front stereo speakers, customized channels with real-time information and a quad-core processor - all combine to form one of the best smartphones in the world."
 msgstr "Fotografov sen. Hlavný fotoaparát s 13 megapixelmi a predný fotoaparát s 5 megapixelmi zaručujú fotky vo vysokom rozlíšení z každej strany. Vďaka vstavaným nástrojom na úpravu a zdieľanie môžete zachytiť pohyblivé obrázky v HD a skombinovať výsledky na zobrazenie z viacerých uhlov. Neuveriteľný dizajn, obrovský 5,5palcový displej s HD rozlíšením, dva predné stereo reproduktory, prispôsobené kanály s informáciami v reálnom čase a štvorjadrový procesor - to všetko sa spája a tvorí jeden z najlepších smartfónov na svete."
+
+msgid "Pick up your order at the service desk near the entrance. The team can also accept returns on weekdays."
+msgstr "Objednávku si vyzdvihnete pri servisnom pulte neďaleko vchodu. Tím prijíma počas pracovných dní aj vratky."
+
+msgid "Pick-up counter is right behind the main entrance. Parking is available in the courtyard for short stops."
+msgstr "Výdajný pult je hneď za hlavným vchodom. Na krátke zastavenie je k dispozícii parkovanie vo dvore."
 
 msgid "Pocket-friendly"
 msgstr "Šetrné k peňaženke"
@@ -1555,15 +1573,6 @@ msgstr "Špeciálne nabídky"
 msgid "Standard rate"
 msgstr "Štandardná sadzba"
 
-msgid "Store in Ostrava Přívoz"
-msgstr "Predajňa v Ostrave Prívoze"
-
-msgid "Store in Žilina"
-msgstr "Predajňa v Žiline"
-
-msgid "Store v Pardubice"
-msgstr "Predajňa v Pardubiciách"
-
 msgid "Suitable for all kinds of goods"
 msgstr "Vhodné pre všetky druhy tovaru"
 
@@ -1693,6 +1702,9 @@ msgstr "Obchodné podmienky e-shopu"
 msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
 msgstr "Televízny monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP+, 2x HDMI, MHL, USB, CI, Scart, 2x 5W repro, diaľkový ovládač"
 
+msgid "The branch is close to the business center entrance. Staff will prepare your order at the front desk after you show the order number."
+msgstr "Pobočka je blízko vchodu do business centra. Po predložení čísla objednávky vám personál pripraví objednávku pri prednom pulte."
+
 msgid "The filter carbon OPK-4360/4390"
 msgstr "Filter uhľíkový OPK-4360/4390"
 
@@ -1708,8 +1720,17 @@ msgstr "Filter uhľíkový OPP-2060"
 msgid "The minimum space requirements excels sub-mounting range hood OPP-2060th"
 msgstr "Minimálnou priestorovou náročnosťou vyniká podstavný odsaváč pary OPP-2060."
 
+msgid "The pickup desk is inside the shopping passage on the first floor. For bulky orders, please call the store before arrival."
+msgstr "Výdajný pult nájdete v obchodnej pasáži na prvom poschodí. Pri objemnejších objednávkach pred príchodom zavolajte na predajňu."
+
 msgid "The printer uses ChromaLife100 ink system with four colors of ink hidden two print cartridges"
 msgstr "Štýlové kompatktaie multifunkčné zariadenie s Wi-Fi a jednoduchým mobilným tlačom."
+
+msgid "The store is located in the city center close to the tram stop. Larger orders can be loaded from the side entrance."
+msgstr "Predajňa sa nachádza v centre mesta blízko električkovej zastávky. Väčšie objednávky je možné naložiť pri bočnom vchode."
+
+msgid "The store is located near the main road with convenient access by car. Heavy items can be collected from the loading zone."
+msgstr "Predajňa sa nachádza pri hlavnej ceste s pohodlným prístupom autom. Ťažký tovar si môžete vyzdvihnúť v nakladacej zóne."
 
 msgid "The switch provides a cost-effective way to create a small network or extend existing ones. Connect not only computers, but also a number of network devices such as IP cameras, network printers and more."
 msgstr "Prvni, Druha, Treti"
@@ -1719,6 +1740,9 @@ msgstr "Výsuvý odsaváč pary je veľmi elegantná a praktická varianta klasi
 
 msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
 msgstr "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and by malo byť at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
+
+msgid "This branch is suitable for larger orders. Use the marked customer parking spots next to the warehouse ramp."
+msgstr "Táto pobočka je vhodná pre väčšie objednávky. Použite označené zákaznícke parkovacie miesta vedľa skladovej rampy."
 
 msgid "This is SEO meta description of brand %brandName%."
 msgstr "Toto je SEO meta popisok značky %brandName%."
@@ -1779,6 +1803,9 @@ msgstr "Nezabudnuteľné príbehy"
 
 msgid "Unleash Your Gaming Potential"
 msgstr "Povol otěze hrania"
+
+msgid "Use the pickup window on the left side of the building for prepaid orders. The main entrance stays available for returns and complaints."
+msgstr "Pre predplatené objednávky použite výdajné okienko na ľavej strane budovy. Hlavný vchod zostáva k dispozícii pre vratky a reklamácie."
 
 msgid "User"
 msgstr "Používateľ"
@@ -2163,4 +2190,3 @@ msgstr "roky"
 
 msgid "| Demo eshop"
 msgstr "| Demo e-shop SK"
-

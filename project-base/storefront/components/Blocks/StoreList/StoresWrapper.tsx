@@ -1,5 +1,8 @@
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { StoreList } from 'components/Blocks/StoreList/StoreList';
+import { StoreListEmpty } from 'components/Blocks/StoreList/StoreListEmpty';
+import { StoreListLoader } from 'components/Blocks/StoreList/StoreListLoader';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
@@ -12,14 +15,17 @@ import { MapMarker } from 'types/map';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { twMergeCustom } from 'utils/twMerge';
+import { SkeletonModuleStoreList } from '../Skeleton/SkeletonModuleStoreList';
 import { getStoreListMapFocus } from './getStoreListMapFocus';
 import { StoreListError } from './StoreListError';
 
 type StoresWrapperProps = {
-    stores: TypeListedStoreConnectionFragment;
+    stores: TypeListedStoreConnectionFragment | null;
     isDistanceFromSearchText: boolean;
     isFetchingStores?: boolean;
     isLoadingMoreStores?: boolean;
+    variant?: 'page' | 'pickupSelection';
     appliedSearchTextValue: string;
     searchTextValue: string;
     priorityStore?: StoreOrPacketeryPoint | null;
@@ -31,8 +37,6 @@ type StoresWrapperProps = {
     onSearchTextCallback: (searchText: string) => void;
     onUserCoordinatesCallback?: (coordinates: TypeCoordinates | null) => void;
     onSelectStoreCallback?: (storeUuid: string | null) => void;
-    shouldShowTitle?: boolean;
-    shouldWrapInWebline?: boolean;
 };
 
 export const StoresWrapper: FC<StoresWrapperProps> = ({
@@ -40,6 +44,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     isDistanceFromSearchText,
     isFetchingStores = false,
     isLoadingMoreStores = false,
+    variant = 'page',
     appliedSearchTextValue,
     searchTextValue,
     priorityStore = null,
@@ -51,9 +56,8 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     onSearchTextCallback,
     onUserCoordinatesCallback,
     onSelectStoreCallback,
-    shouldShowTitle = true,
-    shouldWrapInWebline = true,
 }) => {
+    const isPickupSelectionVariant = variant === 'pickupSelection';
     const defaultUserCoordinates = useSessionStore((s) => s.coordinates);
     const updateDefaultUserCoordinates = useSessionStore((s) => s.updateCoordinates);
     const [internalUserCoordinates, setInternalUserCoordinates] = useState<TypeCoordinates | null>(
@@ -65,14 +69,17 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     const selectedStore = isControlledSelection ? (selectedStoreUuid ?? null) : internalSelectedStoreUuid;
     const shouldAllowStoreSelection = onSelectStoreCallback !== undefined;
     const shouldLoadMoreStores =
-        stores.pageInfo.hasNextPage &&
+        stores?.pageInfo.hasNextPage === true &&
         !isFetchingStores &&
         !isLoadingMoreStores &&
         onLoadMoreStoresCallback !== undefined;
 
-    const mappedStores = useMemo(() => mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges || []), [stores.edges]);
+    const mappedStores = useMemo(
+        () => (stores === null ? null : mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges || [])),
+        [stores],
+    );
     const displayedStores = useMemo(() => {
-        if (mappedStores === undefined || priorityStore === null) {
+        if (mappedStores === null || mappedStores === undefined || priorityStore === null) {
             return mappedStores;
         }
 
@@ -81,11 +88,12 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
             ...mappedStores.filter((mappedStore) => mappedStore.identifier !== priorityStore.identifier),
         ];
     }, [mappedStores, priorityStore]);
+    const displayedStoreList = displayedStores ?? [];
     const loadedStoresCount = mappedStores?.length ?? 0;
-    const resolvedUserCoordinates = userCoordinates ?? internalUserCoordinates;
+    const resolvedUserCoordinates = userCoordinates ?? defaultUserCoordinates ?? internalUserCoordinates;
     const firstStore = displayedStores?.[0] ?? null;
     const searchCoordinatesForMapFocus =
-        isDistanceFromSearchText && stores.searchCoordinates !== null
+        stores !== null && isDistanceFromSearchText && stores.searchCoordinates !== null
             ? {
                   latitude: stores.searchCoordinates.latitude,
                   longitude: stores.searchCoordinates.longitude,
@@ -104,20 +112,43 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     const shouldCenterMapToUserCoordinates = mapFocus === null && searchTextValue === '';
 
     useEffect(() => {
-        if (!navigator.geolocation) {
+        if (defaultUserCoordinates == null) {
             return;
         }
 
-        navigator.geolocation.getCurrentPosition((position) => {
-            const coordinates: TypeCoordinates = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-            };
-            setInternalUserCoordinates(coordinates);
-            updateDefaultUserCoordinates(coordinates);
-            onUserCoordinatesCallback?.(coordinates);
-        });
-    }, [onUserCoordinatesCallback, updateDefaultUserCoordinates]);
+        setInternalUserCoordinates(defaultUserCoordinates);
+
+        if (userCoordinates == null) {
+            onUserCoordinatesCallback?.(defaultUserCoordinates);
+        }
+    }, [defaultUserCoordinates, onUserCoordinatesCallback, userCoordinates]);
+
+    useEffect(() => {
+        if (defaultUserCoordinates != null || userCoordinates != null) {
+            return;
+        }
+
+        if (typeof navigator === 'undefined' || !navigator.geolocation) {
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const coordinates: TypeCoordinates = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                };
+                setInternalUserCoordinates(coordinates);
+                updateDefaultUserCoordinates(coordinates);
+                onUserCoordinatesCallback?.(coordinates);
+            },
+            undefined,
+            {
+                maximumAge: 300000,
+                timeout: 10000,
+            },
+        );
+    }, [defaultUserCoordinates, onUserCoordinatesCallback, updateDefaultUserCoordinates, userCoordinates]);
 
     const selectStoreHandler = (uuid: string | null) => {
         if (!isControlledSelection) {
@@ -168,80 +199,103 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
             onClear={() => onSearchTextCallback('')}
         />
     );
-
-    if (storeConnectionErrorMessage !== undefined) {
-        const errorContent = (
-            <>
-                {shouldShowTitle && <h1 className="mb-4">{t('Stores')}</h1>}
-
-                <div className="max-w-xl">
-                    {searchInput}
-                    <StoreListError message={storeConnectionErrorMessage} />
-                </div>
-            </>
-        );
-
-        if (!shouldWrapInWebline) {
-            return errorContent;
-        }
-
-        return <Webline>{errorContent}</Webline>;
-    }
-
-    if (!displayedStores) {
-        return null;
-    }
+    const shouldShowStores = displayedStoreList.length > 0;
+    const shouldShowStoreListSkeleton =
+        isFetchingStores && !shouldShowStores && storeConnectionErrorMessage === undefined;
+    const isStoreListEmpty =
+        stores !== null &&
+        displayedStoreList.length === 0 &&
+        !isFetchingStores &&
+        storeConnectionErrorMessage === undefined;
+    const shouldShowMap = stores !== null;
 
     const content = (
-        <>
-            {shouldShowTitle && <h1 className="mb-4">{t('Stores')}</h1>}
+        <div className={twMergeCustom('flex flex-col', isPickupSelectionVariant ? 'min-h-full' : 'min-h-0')}>
+            {!isPickupSelectionVariant && <h1 className="mb-4">{t('Stores')}</h1>}
 
-            <div className="flex flex-col-reverse gap-5 lg:flex-row">
-                <div className="basis-1/2">
+            <div
+                className={twMergeCustom(
+                    'flex vl:flex-row flex-col gap-5',
+                    !isPickupSelectionVariant && 'min-h-0 flex-1',
+                )}
+            >
+                <div className={twMergeCustom('vl:basis-1/2', !isPickupSelectionVariant && 'vl:min-h-0')}>
                     {searchInput}
-                    <InfiniteScroll
-                        dataLength={loadedStoresCount}
-                        hasMore={shouldLoadMoreStores}
-                        loader={<StoreListLoader />}
-                        next={onLoadMoreStoresCallback ?? (() => undefined)}
-                        scrollableTarget={scrollableTargetId}
-                        style={{ overflow: 'visible' }}
-                    >
-                        <StoreList
-                            isDistanceFromSearchText={isDistanceFromSearchText}
-                            selectedStoreUuid={selectedStore}
-                            stores={displayedStores}
-                            onSelectStoreCallback={shouldAllowStoreSelection ? selectStoreHandler : undefined}
+
+                    {storeConnectionErrorMessage !== undefined && (
+                        <StoreListError message={storeConnectionErrorMessage} />
+                    )}
+
+                    {shouldShowStoreListSkeleton && <SkeletonModuleStoreList />}
+
+                    {isStoreListEmpty && (
+                        <StoreListEmpty
+                            description={t('Try changing the city or postcode.')}
+                            message={t('No stores found')}
                         />
-                    </InfiniteScroll>
+                    )}
+
+                    {shouldShowStores && (
+                        <InfiniteScroll
+                            dataLength={loadedStoresCount}
+                            hasMore={shouldLoadMoreStores}
+                            loader={<StoreListLoader />}
+                            next={onLoadMoreStoresCallback ?? (() => undefined)}
+                            scrollableTarget={scrollableTargetId}
+                            style={{ overflow: 'visible' }}
+                        >
+                            <StoreList
+                                itemMode={isPickupSelectionVariant ? 'selectOnItemClick' : 'default'}
+                                isDistanceFromSearchText={isDistanceFromSearchText}
+                                selectedStoreUuid={selectedStore}
+                                stores={displayedStoreList}
+                                onSelectStoreCallback={shouldAllowStoreSelection ? selectStoreHandler : undefined}
+                            />
+                        </InfiniteScroll>
+                    )}
+
                     {isLoadingMoreStores && <StoreListLoader />}
                 </div>
-                <div className="basis-1/2" data-tid={TIDs.stores_map}>
-                    <div className="flex aspect-square rounded-xl bg-background-more p-5 lg:sticky lg:top-5">
-                        <GoogleMap
-                            activeMarkerHandler={clickOnMarkerHandler}
-                            additionalMarker={additionalMapMarker}
-                            defaultZoom={mapFocus?.defaultZoom}
-                            latitude={mapLatitude}
-                            longitude={mapLongitude}
-                            shouldCenterToUserCoordinates={shouldCenterMapToUserCoordinates}
-                            userCoordinates={resolvedUserCoordinates}
-                        />
+                <div
+                    className={twMergeCustom(
+                        'vl:basis-1/2',
+                        !isPickupSelectionVariant && 'vl:min-h-0',
+                        !isPickupSelectionVariant && 'max-vl:order-first',
+                    )}
+                    data-tid={TIDs.stores_map}
+                >
+                    <div
+                        className={twMergeCustom(
+                            'vl:sticky flex rounded-xl bg-background-more p-5',
+                            isPickupSelectionVariant
+                                ? 'vl:top-0 h-72 vl:h-[min(520px,calc(80dvh-180px))]'
+                                : 'vl:top-5 aspect-square',
+                        )}
+                    >
+                        {shouldShowMap ? (
+                            <GoogleMap
+                                activeMarkerHandler={clickOnMarkerHandler}
+                                additionalMarker={additionalMapMarker}
+                                defaultZoom={mapFocus?.defaultZoom}
+                                gestureHandling={isPickupSelectionVariant ? 'cooperative' : undefined}
+                                latitude={mapLatitude}
+                                longitude={mapLongitude}
+                                markers={isPickupSelectionVariant ? displayedStoreList : undefined}
+                                shouldCenterToUserCoordinates={shouldCenterMapToUserCoordinates}
+                                userCoordinates={resolvedUserCoordinates}
+                            />
+                        ) : (
+                            <Skeleton className="size-full rounded-lg bg-skeleton-less" />
+                        )}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 
-    if (!shouldWrapInWebline) {
+    if (isPickupSelectionVariant) {
         return content;
     }
 
     return <Webline>{content}</Webline>;
-};
-
-const StoreListLoader: FC = () => {
-    const { t } = useTranslation();
-
-    return <div className="mt-2.5 text-center text-sm text-text-less">{t('Loading more stores')}</div>;
 };

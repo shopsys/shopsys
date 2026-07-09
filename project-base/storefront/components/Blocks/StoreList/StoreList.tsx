@@ -6,6 +6,7 @@ type StoreListProps = {
     stores: StoreOrPacketeryPoint[];
     selectedStoreUuid: string | null;
     isDistanceFromSearchText: boolean;
+    itemMode?: 'default' | 'selectOnItemClick';
     onSelectStoreCallback?: (storeUuid: string | null) => void;
 };
 
@@ -13,6 +14,7 @@ export const StoreList: FC<StoreListProps> = ({
     stores,
     selectedStoreUuid,
     isDistanceFromSearchText,
+    itemMode,
     onSelectStoreCallback,
 }) => {
     return (
@@ -22,6 +24,7 @@ export const StoreList: FC<StoreListProps> = ({
                     key={store.identifier}
                     isDistanceFromSearchText={isDistanceFromSearchText}
                     isSelected={store.identifier === selectedStoreUuid}
+                    mode={itemMode}
                     store={store}
                     onSelectStoreCallback={onSelectStoreCallback}
                 />

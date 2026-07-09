@@ -28,6 +28,7 @@ type GoogleMapProps = {
     userCoordinates?: TypeCoordinates | null;
     shouldCenterToUserCoordinates?: boolean;
     additionalMarker?: MapMarkerNullable | null;
+    gestureHandling?: 'auto' | 'cooperative' | 'greedy' | 'none';
 };
 
 type MarkerProperties = {
@@ -39,6 +40,15 @@ type MarkerProperties = {
 declare const google: any;
 
 const getMarkerIdentifier = (marker: MapMarker) => marker.identifier ?? `${marker.latitude}-${marker.longitude}`;
+const parseCoordinate = (coordinate: string | number | null | undefined): number | null => {
+    if (coordinate === null || coordinate === undefined) {
+        return null;
+    }
+
+    const parsedCoordinate = typeof coordinate === 'number' ? coordinate : parseFloat(coordinate);
+
+    return Number.isFinite(parsedCoordinate) ? parsedCoordinate : null;
+};
 
 const markerMapper = (marker: MapMarker): PointFeature<MarkerProperties> => ({
     type: 'Feature' as const,
@@ -49,7 +59,7 @@ const markerMapper = (marker: MapMarker): PointFeature<MarkerProperties> => ({
     },
     geometry: {
         type: 'Point' as const,
-        coordinates: [parseFloat(marker.longitude), parseFloat(marker.latitude)],
+        coordinates: [parseCoordinate(marker.longitude) as number, parseCoordinate(marker.latitude) as number],
     },
 });
 
@@ -63,11 +73,12 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     userCoordinates = null,
     shouldCenterToUserCoordinates = true,
     additionalMarker = null,
+    gestureHandling,
 }) => {
     const googleMapApiKey = getPublicConfigProperty('googleMapApiKey');
     const { mapSetting } = useDomainConfig();
-    const defaultLatitude = latitude ? parseFloat(latitude) : mapSetting.latitude;
-    const defaultLongitude = longitude ? parseFloat(longitude) : mapSetting.longitude;
+    const defaultLatitude = parseCoordinate(latitude) ?? parseCoordinate(mapSetting.latitude) ?? 0;
+    const defaultLongitude = parseCoordinate(longitude) ?? parseCoordinate(mapSetting.longitude) ?? 0;
     const [activeMarkerIdentifier, setActiveMarkerIdentifier] = useState<string>('');
     const [zoom, setZoom] = useState<number>(defaultZoom ?? mapSetting.zoom);
     const [bounds, setBounds] = useState<GeoJSON.BBox>();
@@ -82,8 +93,9 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     );
     const validMarkers = useMemo(
         () =>
-            (effectiveMarkers?.filter((marker) => marker.latitude !== null && marker.longitude !== null) ??
-                []) as MapMarker[],
+            (effectiveMarkers?.filter(
+                (marker) => parseCoordinate(marker.latitude) !== null && parseCoordinate(marker.longitude) !== null,
+            ) ?? []) as MapMarker[],
         [effectiveMarkers],
     );
     const markersClusterConfig: PointFeature<MarkerProperties>[] = useMemo(
@@ -97,18 +109,12 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         bounds,
         options: { radius: CLUSTER_RADIUS, minZoom: CLUSTER_MIN_ZOOM, maxZoom: CLUSTER_MAX_ZOOM },
     });
+    const additionalMarkerLatitude = parseCoordinate(additionalMarker?.latitude);
+    const additionalMarkerLongitude = parseCoordinate(additionalMarker?.longitude);
     const additionalMarkerCoordinates =
-        additionalMarker !== null &&
-        additionalMarker.latitude !== null &&
-        additionalMarker.latitude !== undefined &&
-        additionalMarker.longitude !== null &&
-        additionalMarker.longitude !== undefined
-            ? {
-                  lat: parseFloat(additionalMarker.latitude),
-                  lng: parseFloat(additionalMarker.longitude),
-              }
+        additionalMarkerLatitude !== null && additionalMarkerLongitude !== null
+            ? { lat: additionalMarkerLatitude, lng: additionalMarkerLongitude }
             : null;
-
     const selectMarkerHandler = (marker: MapMarker) => {
         if (!isDetail) {
             const identifier = getMarkerIdentifier(marker);
@@ -128,9 +134,16 @@ export const GoogleMap: FC<GoogleMapProps> = ({
 
             const latLngBounds = new google.maps.LatLngBounds();
             markersInCluster.forEach((marker) => {
+                const markerLatitude = parseCoordinate(marker.geometry.coordinates[1]);
+                const markerLongitude = parseCoordinate(marker.geometry.coordinates[0]);
+
+                if (markerLatitude === null || markerLongitude === null) {
+                    return;
+                }
+
                 latLngBounds.extend({
-                    lat: marker.geometry.coordinates[1],
-                    lng: marker.geometry.coordinates[0],
+                    lat: markerLatitude,
+                    lng: markerLongitude,
                 });
             });
 
@@ -157,11 +170,14 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         if (markersClusterConfig.length > 1 && mapRef.current !== null && google !== undefined) {
             const newBounds = new google.maps.LatLngBounds();
 
-            if (shouldCenterToUserCoordinates && userCoordinates !== null) {
+            const userLatitude = parseCoordinate(userCoordinates?.latitude);
+            const userLongitude = parseCoordinate(userCoordinates?.longitude);
+
+            if (shouldCenterToUserCoordinates && userLatitude !== null && userLongitude !== null) {
                 mapRef.current.setZoom(USER_COORDINATES_ZOOM);
                 mapRef.current.panTo({
-                    lat: Number(userCoordinates.latitude),
-                    lng: Number(userCoordinates.longitude),
+                    lat: userLatitude,
+                    lng: userLongitude,
                 });
 
                 return;
@@ -207,9 +223,14 @@ export const GoogleMap: FC<GoogleMapProps> = ({
                 options={{
                     disableDoubleClickZoom: true,
                     fullscreenControl: false,
+                    gestureHandling,
                     zoomControlOptions: { position: 1 },
                 }}
                 onChange={({ zoom, bounds }) => {
+                    if (bounds?.nw === undefined || bounds.se === undefined) {
+                        return;
+                    }
+
                     setZoom(zoom);
                     setBounds([bounds.nw.lng, bounds.se.lat, bounds.se.lng, bounds.nw.lat]);
                 }}
@@ -220,10 +241,17 @@ export const GoogleMap: FC<GoogleMapProps> = ({
             >
                 {clusters.map((cluster) => {
                     const [longitude, latitude] = cluster.geometry.coordinates;
+                    const clusterLatitude = parseCoordinate(latitude);
+                    const clusterLongitude = parseCoordinate(longitude);
+
+                    if (clusterLatitude === null || clusterLongitude === null) {
+                        return null;
+                    }
+
                     // Coordinates consumed by GoogleMapReact
                     const coordinates = {
-                        lat: latitude,
-                        lng: longitude,
+                        lat: clusterLatitude,
+                        lng: clusterLongitude,
                     };
 
                     return (

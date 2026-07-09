@@ -1,8 +1,6 @@
 import { STORE_LIST_PAGE_SIZE } from 'components/Blocks/StoreList/constants';
-import { StoreListError } from 'components/Blocks/StoreList/StoreListError';
 import { usePaginatedStoreConnection } from 'components/Blocks/StoreList/usePaginatedStoreConnection';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { MapStoresQueryDocument } from 'graphql/requests/stores/queries/MapStoresQuery.generated';
 import { StoresQueryDocument, TypeStoresQuery } from 'graphql/requests/stores/queries/StoresQuery.generated';
@@ -47,28 +45,19 @@ const StoresPage: FC<ServerSidePropsType> = () => {
 
     return (
         <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={isInitialStoresFetching} title={t('Stores')}>
-            {storeConnectionError && stores === null && (
-                <Webline>
-                    <h1 className="mb-4">{t('Stores')}</h1>
-                    <StoreListError message={storeConnectionErrorMessage} />
-                </Webline>
-            )}
-
-            {stores && (
-                <StoresWrapper
-                    appliedSearchTextValue={appliedSearchTextValue}
-                    isDistanceFromSearchText={isDistanceFromSearchText}
-                    isFetchingStores={isFetchingStores}
-                    isLoadingMoreStores={isLoadingMoreStores}
-                    searchTextValue={searchTextValue}
-                    storeConnectionErrorMessage={storeConnectionError ? storeConnectionErrorMessage : undefined}
-                    stores={stores}
-                    userCoordinates={userCoordinates}
-                    onLoadMoreStoresCallback={loadMoreStores}
-                    onSearchTextCallback={setSearchTextValue}
-                    onUserCoordinatesCallback={setUserCoordinates}
-                />
-            )}
+            <StoresWrapper
+                appliedSearchTextValue={appliedSearchTextValue}
+                isDistanceFromSearchText={isDistanceFromSearchText}
+                isFetchingStores={isFetchingStores}
+                isLoadingMoreStores={isLoadingMoreStores}
+                searchTextValue={searchTextValue}
+                storeConnectionErrorMessage={storeConnectionError ? storeConnectionErrorMessage : undefined}
+                stores={stores}
+                userCoordinates={userCoordinates}
+                onLoadMoreStoresCallback={loadMoreStores}
+                onSearchTextCallback={setSearchTextValue}
+                onUserCoordinatesCallback={setUserCoordinates}
+            />
         </CommonLayout>
     );
 };

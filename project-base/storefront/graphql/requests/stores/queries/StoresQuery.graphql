@@ -1,5 +1,4 @@
-query StoresQuery($searchText: String = null, $coordinates: Coordinates = null, $first: Int, $after: String)
-@redisCache(ttl: 3600) {
+query StoresQuery($searchText: String = null, $coordinates: Coordinates = null, $first: Int, $after: String) {
     stores(searchText: $searchText, coordinates: $coordinates, first: $first, after: $after) {
         ...ListedStoreConnectionFragment
     }

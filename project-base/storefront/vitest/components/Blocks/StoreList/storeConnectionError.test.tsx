@@ -55,7 +55,21 @@ vi.mock('components/Layout/Popup/Popup', () => ({
 }));
 
 vi.mock('components/Blocks/StoreList/StoresWrapper', () => ({
-    StoresWrapper: () => <div data-testid="stores-wrapper" />,
+    StoresWrapper: ({ storeConnectionErrorMessage }: { storeConnectionErrorMessage?: string }) => (
+        <div data-testid="stores-wrapper">
+            {storeConnectionErrorMessage !== undefined && <div role="alert">{storeConnectionErrorMessage}</div>}
+        </div>
+    ),
+}));
+
+vi.mock('next/dynamic', () => ({
+    default:
+        () =>
+        ({ storeConnectionErrorMessage }: { storeConnectionErrorMessage?: string }) => (
+            <div data-testid="stores-wrapper">
+                {storeConnectionErrorMessage !== undefined && <div role="alert">{storeConnectionErrorMessage}</div>}
+            </div>
+        ),
 }));
 
 vi.mock('gtm/factories/useGtmStaticPageReadyEvent', () => ({
@@ -102,7 +116,7 @@ describe('store connection error handling', () => {
 
         expect(queryResultMock).toHaveBeenCalledWith(expect.objectContaining({ query: StoresQueryDocument }));
         expect(screen.getByRole('alert')).toHaveTextContent(storeConnectionErrorMessage);
-        expect(screen.queryByTestId('stores-wrapper')).not.toBeInTheDocument();
+        expect(screen.getByTestId('stores-wrapper')).toBeInTheDocument();
     });
 
     test('shows an error state when the transport stores query fails', () => {
@@ -116,6 +130,6 @@ describe('store connection error handling', () => {
 
         expect(queryResultMock).toHaveBeenCalledWith(expect.objectContaining({ query: TransportStoresQueryDocument }));
         expect(screen.getByRole('alert')).toHaveTextContent(storeConnectionErrorMessage);
-        expect(screen.queryByTestId('stores-wrapper')).not.toBeInTheDocument();
+        expect(screen.getByTestId('stores-wrapper')).toBeInTheDocument();
     });
 });

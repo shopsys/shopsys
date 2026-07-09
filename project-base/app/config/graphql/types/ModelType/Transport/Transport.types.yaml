@@ -12,7 +12,6 @@ Transport:
                 argsBuilder: "Relay::Connection"
                 description: "Stores available for personal pickup"
                 resolve: "@=query('storesByTransportQuery', value, args)"
-                complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     searchText:
                         type: "String"
