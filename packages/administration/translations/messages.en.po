@@ -31,7 +31,7 @@ msgstr ""
 msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
 msgstr ""
 
-msgid "<strong>{{ objectName }}</strong> was created successfully."
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was created successfully."
 msgstr ""
 
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."

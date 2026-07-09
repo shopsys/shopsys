@@ -7,7 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm;
 use Closure;
 use Doctrine\Persistence\ManagerRegistry;
 use Override;
-use RuntimeException;
+use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\HintsHelper;
@@ -26,6 +26,7 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
         private readonly ManagerRegistry $managerRegistry,
         private readonly Localization $localization,
         private readonly HintsHelper $hintsHelper,
+        private readonly CrudEntityIdentifierExtractor $crudEntityIdentifierExtractor,
         ?Closure $configureQuery,
     ) {
         $this->proxyQuery = $this->createProxyQuery($entityClass);
@@ -81,13 +82,10 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
      */
     private function createProxyQuery(string $entityClass): ProxyQuery
     {
+        $this->crudEntityIdentifierExtractor->assertSupportedEntity($entityClass);
+
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->managerRegistry->getManagerForClass($entityClass);
-        $classMetadata = $entityManager->getClassMetadata($entityClass);
-
-        if (count($classMetadata->getIdentifierFieldNames()) !== 1) {
-            throw new RuntimeException('Crud controller does not support entities with composite primary keys.');
-        }
 
         return new ProxyQuery($entityClass, $entityManager, $this->localization->getCurrentLocaleForTranslatableEntities());
     }

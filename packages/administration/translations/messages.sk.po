@@ -31,8 +31,8 @@ msgstr "<a href=\"%url%\">Späť</a> na prihlasovaciu stránku."
 msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
 msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" bola úspešne uložená."
 
-msgid "<strong>{{ objectName }}</strong> was created successfully."
-msgstr "Položka „<strong>{{ objectName }}</strong>\" bola úspešne vytvorená."
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was created successfully."
+msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" bola úspešne vytvorená."
 
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."
 msgstr "Položka \"<strong>{{ objectName }}</strong>\" bola úspešne vymazaná."

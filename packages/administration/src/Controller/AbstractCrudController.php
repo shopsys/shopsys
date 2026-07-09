@@ -15,6 +15,7 @@ use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensio
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudDeleteHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
@@ -55,6 +56,9 @@ abstract class AbstractCrudController extends AdminBaseController
 
     #[Required]
     public BreadcrumbOverrider $breadcrumbOverrider;
+
+    #[Required]
+    public CrudEntityIdentifierExtractor $crudEntityIdentifierExtractor;
 
     public function setDefinition(Definition $definition): void
     {
@@ -202,12 +206,7 @@ abstract class AbstractCrudController extends AdminBaseController
                 $this->executeExtensions(fn (CrudCreateHookExtensionInterface $extension) => $extension->afterCreate($entity, $data), CrudCreateHookExtensionInterface::class);
 
                 if ($this->isFlashMessageBagEmpty()) {
-                    $this->addSuccessFlashTwig(
-                        t('<strong>{{ objectName }}</strong> was created successfully.'),
-                        [
-                            'objectName' => $entity->toHumanReadable(),
-                        ],
-                    );
+                    $this->addCreateSuccessFlash($entity);
                 }
 
                 return $this->redirect(
@@ -327,15 +326,31 @@ abstract class AbstractCrudController extends AdminBaseController
             t('<strong><a href="{{ url }}">{{ objectName }}</a></strong> was saved successfully.'),
             [
                 'objectName' => $entity->toHumanReadable(),
-                'url' => $this->generateUrl(
-                    CrudTransformationHelper::generateRouteName(
-                        $this->definition->controllerName,
-                        ActionType::EDIT,
-                    ),
-                    [
-                        'id' => $id,
-                    ],
-                ),
+                'url' => $this->generateEditUrl($id),
+            ],
+        );
+    }
+
+    private function addCreateSuccessFlash(Presentable $entity): void
+    {
+        $this->addSuccessFlashTwig(
+            t('<strong><a href="{{ url }}">{{ objectName }}</a></strong> was created successfully.'),
+            [
+                'objectName' => $entity->toHumanReadable(),
+                'url' => $this->generateEditUrl($this->crudEntityIdentifierExtractor->getId($entity)),
+            ],
+        );
+    }
+
+    private function generateEditUrl(int $id): string
+    {
+        return $this->generateUrl(
+            CrudTransformationHelper::generateRouteName(
+                $this->definition->controllerName,
+                ActionType::EDIT,
+            ),
+            [
+                'id' => $id,
             ],
         );
     }
