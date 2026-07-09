@@ -1,5 +1,5 @@
-import { getTransportAndPaymentValidationMessages } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TypeTransportTypeEnum } from 'graphql/types';
+import { getTransportAndPaymentValidationMessages } from 'utils/cart/getTransportAndPaymentValidationMessages';
 import { describe, expect, test, vi } from 'vitest';
 
 // Mock the translate function to match Translate type

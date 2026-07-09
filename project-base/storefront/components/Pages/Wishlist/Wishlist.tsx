@@ -1,6 +1,6 @@
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleWishlist } from 'components/Blocks/Skeleton/SkeletonModuleWishlist';
 import { Button } from 'components/Forms/Button/Button';
@@ -80,7 +80,7 @@ export const Wishlist: FC = () => {
                 )}
             </Webline>
 
-            <LastVisitedProducts />
+            <DeferredLastVisitedProducts />
         </VerticalStack>
     );
 };

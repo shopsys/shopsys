@@ -22,6 +22,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useClient } from 'urql';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import type { TransportAndPaymentErrorsType } from 'utils/cart/getTransportAndPaymentValidationMessages';
 import { getLastOrderPickupPlace, PICKUP_POINT_NOT_SET_ERROR_MESSAGE } from 'utils/cart/pickupPlaceCalculations';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
@@ -219,60 +220,6 @@ export const useTransportChangeInSelect = (
         resetTransportAndPayment,
         openPickupPlacePopup,
     };
-};
-
-type TransportAndPaymentErrorsType = {
-    transport: {
-        name: 'transport';
-        label: string;
-        errorMessage: string | undefined;
-    };
-    payment: {
-        name: 'payment';
-        label: string;
-        errorMessage: string | undefined;
-    };
-    goPaySwift: {
-        name: 'goPaySwift';
-        label: string;
-        errorMessage: string | undefined;
-    };
-};
-
-export const getTransportAndPaymentValidationMessages = (
-    transport: Maybe<TypeTransportWithAvailablePaymentsFragment>,
-    pickupPlace: Maybe<StoreOrPacketeryPoint>,
-    payment: Maybe<TypeSimplePaymentFragment>,
-    t: Translate,
-) => {
-    const errors: Partial<TransportAndPaymentErrorsType> = {};
-
-    if (!transport) {
-        errors.transport = {
-            name: 'transport',
-            label: t('Choose transport'),
-            errorMessage: t('Please select transport'),
-        };
-
-        return errors;
-    }
-
-    if (transport.isPersonalPickup && !pickupPlace?.identifier) {
-        errors.transport = {
-            name: 'transport',
-            label: t('Choose transport'),
-            errorMessage: t('Please select transport with a personal pickup place'),
-        };
-    }
-    if (!payment) {
-        errors.payment = {
-            name: 'payment',
-            label: t('Choose payment'),
-            errorMessage: t('Please select payment'),
-        };
-    }
-
-    return errors;
 };
 
 export const useLoadTransportAndPaymentFromLastOrder = (

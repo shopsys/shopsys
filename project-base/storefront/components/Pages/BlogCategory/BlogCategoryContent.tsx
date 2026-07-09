@@ -1,4 +1,4 @@
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { BlogLayout } from 'components/Layout/BlogLayout';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
@@ -34,7 +34,7 @@ export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory
                 />
             </BlogLayout>
 
-            <LastVisitedProducts />
+            <DeferredLastVisitedProducts />
         </VerticalStack>
     );
 };

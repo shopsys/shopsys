@@ -3,6 +3,7 @@ import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/Order
 import { OrderLayout } from 'components/Layout/OrderLayout';
 import { useTransportsQuery } from 'graphql/requests/transports/queries/TransportsQuery.generated';
 import { usePersistStore } from 'store/usePersistStore';
+import { getTransportAndPaymentValidationMessages } from 'utils/cart/getTransportAndPaymentValidationMessages';
 import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -10,7 +11,6 @@ import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
 import {
-    getTransportAndPaymentValidationMessages,
     useLoadTransportAndPaymentFromLastOrder,
     useTransportAndPaymentPageNavigation,
 } from './transportAndPaymentUtils';

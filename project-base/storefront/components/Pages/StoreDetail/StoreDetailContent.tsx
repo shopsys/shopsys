@@ -1,7 +1,5 @@
-import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Image } from 'components/Basic/Image/Image';
 import { Infobox } from 'components/Basic/Infobox/Infobox';
-import { ModalGallery } from 'components/Basic/ModalGallery/ModalGallery';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { StoreContact } from 'components/Blocks/StoreList/StoreContact';
@@ -9,12 +7,30 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
+import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type StoreDetailContentProps = {
     store: TypeStoreDetailFragment;
 };
+
+const GoogleMapPlaceholder: FC = () => (
+    <div aria-hidden="true" className="h-full w-full rounded-lg bg-background-default" />
+);
+
+const GoogleMap = dynamic(
+    () => import('components/Basic/GoogleMap/GoogleMap').then((component) => component.GoogleMap),
+    {
+        ssr: false,
+        loading: () => <GoogleMapPlaceholder />,
+    },
+);
+
+const ModalGallery = dynamic(
+    () => import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
+    { ssr: false },
+);
 
 export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const { t } = useTranslation();

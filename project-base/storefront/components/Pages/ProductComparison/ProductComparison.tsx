@@ -1,7 +1,6 @@
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
-import { RemoveAllProductsPopup } from 'components/Blocks/Popup/RemoveAllProductsPopup';
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { SkeletonModuleComparison } from 'components/Blocks/Skeleton/SkeletonModuleComparison';
 import { Button } from 'components/Forms/Button/Button';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
@@ -10,10 +9,19 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmSliderProductListViewEvent';
+import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { ProductComparisonContent } from './ProductComparisonContent';
+
+const RemoveAllProductsPopup = dynamic(
+    () =>
+        import('components/Blocks/Popup/RemoveAllProductsPopup').then((component) => component.RemoveAllProductsPopup),
+    {
+        ssr: false,
+    },
+);
 
 export const ProductComparison: FC = () => {
     const { t } = useTranslation();
@@ -73,7 +81,7 @@ export const ProductComparison: FC = () => {
                 )}
             </Webline>
 
-            <LastVisitedProducts />
+            <DeferredLastVisitedProducts />
         </VerticalStack>
     );
 };

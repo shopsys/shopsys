@@ -2,7 +2,7 @@ import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDe
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
@@ -65,7 +65,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 </div>
             </FilteredProductsWrapper>
 
-            <LastVisitedProducts />
+            <DeferredLastVisitedProducts />
         </VerticalStack>
     );
 };

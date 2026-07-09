@@ -1,5 +1,5 @@
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { SkeletonPageSearch } from 'components/Blocks/Skeleton/SkeletonPageSearch';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -46,7 +46,7 @@ export const SearchPageContent: FC<SearchPageContentProps> = ({ searchData, isSe
 
             {!isSearchFetching && isClient && searchString && <SearchProducts />}
 
-            <LastVisitedProducts />
+            <DeferredLastVisitedProducts />
         </VerticalStack>
     );
 };
