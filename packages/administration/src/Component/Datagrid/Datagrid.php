@@ -138,10 +138,9 @@ final class Datagrid
     public function enableDragAndDrop(string $field): self
     {
         if (!$this->fields->containsKey($field)) {
-            throw new InvalidArgumentException(sprintf(
-                'Cannot enable drag-and-drop ordering by field "%s" because no such field is defined. Define it with "add()" before calling "enableDragAndDrop()" (it can be hidden using \'visible\' => false).',
-                $field,
-            ));
+            $this->add($field, [
+                'visible' => false,
+            ]);
         }
 
         if ($this->adapter instanceof EntityClassAwareAdapterInterface === false) {
