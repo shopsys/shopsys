@@ -31,8 +31,10 @@ class AllFeedsTest extends FunctionalTestCase
 
         foreach ($this->feedFacade->getFeedsInfo() as $feedInfo) {
             foreach ($this->domain->getAll() as $domainConfig) {
-                $key = sprintf('feed "%s" on domain "%s"', $feedInfo->getName(), $domainConfig->getName());
-                $data[$key] = [$feedInfo, $domainConfig];
+                foreach ($this->feedFacade->getCurrencyCodesForFeed($feedInfo->getName(), $domainConfig) as $currencyCode) {
+                    $key = sprintf('feed "%s" on domain "%s" in currency "%s"', $feedInfo->getName(), $domainConfig->getName(), $currencyCode);
+                    $data[$key] = [$feedInfo, $domainConfig, $currencyCode];
+                }
             }
         }
 
@@ -46,21 +48,23 @@ class AllFeedsTest extends FunctionalTestCase
             $feedInfo = $dataProvider[0];
             /** @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig */
             $domainConfig = $dataProvider[1];
+            /** @var string $currencyCode */
+            $currencyCode = $dataProvider[2];
 
-            $this->cleanUp($feedInfo, $domainConfig);
+            $this->cleanUp($feedInfo, $domainConfig, $currencyCode);
 
-            $this->feedFacade->generateFeed($feedInfo->getName(), $domainConfig);
+            $this->feedFacade->generateFeed($feedInfo->getName(), $domainConfig, $currencyCode);
 
-            $feedFilepath = $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig);
+            $feedFilepath = $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig, $currencyCode);
             $this->assertTrue($this->filesystem->has($feedFilepath), 'Exported feed file exists.');
 
-            $this->cleanUp($feedInfo, $domainConfig);
+            $this->cleanUp($feedInfo, $domainConfig, $currencyCode);
         }
     }
 
-    private function cleanUp(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): void
+    private function cleanUp(FeedInfoInterface $feedInfo, DomainConfig $domainConfig, string $currencyCode): void
     {
-        $feedFilepath = $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig);
+        $feedFilepath = $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig, $currencyCode);
 
         if ($this->filesystem->has($feedFilepath)) {
             $this->filesystem->delete($feedFilepath);

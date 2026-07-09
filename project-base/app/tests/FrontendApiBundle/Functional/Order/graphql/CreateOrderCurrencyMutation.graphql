@@ -1,0 +1,40 @@
+mutation CreateOrderCurrencyMutation(
+    $cartUuid: Uuid,
+    $firstName: String!,
+    $lastName: String!,
+    $email: String!,
+    $telephone: PhoneDataInput!,
+    $street: String!,
+    $city: String!,
+    $postcode: String!,
+    $country: String!,
+    $onCompanyBehalf: Boolean!,
+    $isDeliveryAddressDifferentFromBilling: Boolean!
+) {
+    CreateOrder(
+        input: {
+            cartUuid: $cartUuid
+            firstName: $firstName
+            lastName: $lastName
+            email: $email
+            telephone: $telephone
+            street: $street
+            city: $city
+            postcode: $postcode
+            country: $country
+            onCompanyBehalf: $onCompanyBehalf
+            isDeliveryAddressDifferentFromBilling: $isDeliveryAddressDifferentFromBilling
+        }
+    ) {
+        orderCreated
+        order {
+            uuid
+            currencyCode
+            exchangeRate
+            totalPrice {
+                priceWithVat
+                currencyCode
+            }
+        }
+    }
+}

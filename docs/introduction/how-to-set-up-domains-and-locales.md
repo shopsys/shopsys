@@ -19,7 +19,21 @@ For an explanation of the basic terms, please read [domain, multidomain and mult
 #### 1.1 Domain configuration
 
 Modify the configuration of the domain in `config/domains.yaml`.
-This configuration file contains information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
+This configuration file contains information about the domain ID, the domain identifier for the domain tabs in the administration, the domain locale, and the currencies enabled on the domain.
+
+The `currencies` key is required and lists the ISO 4217 codes of the currencies enabled on the domain.
+The first currency in the list is the domain default currency.
+When more than one currency is configured, the storefront displays a currency switcher and the customer can browse and order in any of the enabled currencies.
+
+```yaml
+domains:
+    - id: 1
+      name: shopsys
+      locale: en
+      currencies: [EUR, CZK]
+```
+
+All configured currencies are created automatically during the application build (see the `currencies-data-create` phing target) and cannot be deleted in the administration.
 
 #### 1.2 Set up the url address
 
