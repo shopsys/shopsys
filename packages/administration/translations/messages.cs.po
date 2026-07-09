@@ -67,9 +67,6 @@ msgstr "Přidat další parametr"
 msgid "Add another price with weight limit"
 msgstr "Přidat další cenu s váhovým limitem"
 
-msgid "Add another video"
-msgstr "Přidat další video"
-
 msgid "Add country"
 msgstr "Přidat stát"
 
@@ -108,6 +105,9 @@ msgstr "Přidejte nějaké předpisy pro e-mailový whitelist"
 
 msgid "Add some parameters"
 msgstr "Přidat parametr"
+
+msgid "Add video"
+msgstr "Přidat video"
 
 msgid "Administration"
 msgstr "Administrace"
@@ -2188,8 +2188,8 @@ msgstr "Obchodní podmínky"
 msgid "Terms and conditions settings"
 msgstr "Nastavení obchodních podmínek"
 
-msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
-msgstr "Aktuální seznam URL adres lze nalézt v repozitáři projektu v souboru \"storefront/config/staticRewritePaths.js\"."
+msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
+msgstr "Aktuální seznam URL adres lze nalézt v repozitáři projektu v souboru \"storefront/config/routes.ts\"."
 
 msgid "The days are used to display proper stores opening hours and to calculate order withdrawal deadline."
 msgstr "Dny se používají k zobrazení správné otevírací doby prodejen a k výpočtu lhůty pro odstoupení od smlouvy u objednávky."
