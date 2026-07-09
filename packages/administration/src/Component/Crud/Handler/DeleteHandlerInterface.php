@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Crud\Handler;
 
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+
 /**
  * Handler interface for delete operations
  *
@@ -17,7 +19,7 @@ interface DeleteHandlerInterface extends ReadHandlerInterface
      * The entity is already retrieved via getById() before this method is called.
      * All database operations within this method and its hooks are wrapped in a transaction.
      *
-     * @param object $entity The entity to delete (complete object, not just ID)
+     * @param \Shopsys\FrameworkBundle\Component\Utils\Presentable $entity The entity to delete (complete object, not just ID)
      */
-    public function delete(object $entity): void;
+    public function delete(Presentable $entity): void;
 }
