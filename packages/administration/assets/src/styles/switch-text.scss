@@ -4,7 +4,7 @@
     .switch-text-a,
     .switch-text-b {
         grid-area: 1 / 1;
-        transition: opacity .5s;
+        transition: opacity 0.5s;
     }
 
     @media (prefers-reduced-motion: reduce) {
