@@ -50,6 +50,26 @@ You get back the following JSON containing names of all root categories on the d
 Frontend API respects the domain you call, so in the case of the standard two domain setup with default data fixtures,
 you can get data for the first domain with the request made to `http://127.0.0.1:8000/graphql/` while requesting `http://127.0.0.2:8000/graphql/` returns data for the second domain.
 
+### Working with Currencies
+
+When a domain has more than one currency configured (the `currencies` key in `config/domains.yaml`), the API resolves the currency of the returned prices from the `X-Currency-Code` HTTP header sent with the request:
+
+```sh
+curl -X POST http://127.0.0.1:8000/graphql/ \
+    -H 'Content-Type: application/json' \
+    -H 'X-Currency-Code: CZK' \
+    -d '{"query": "{ settings { pricing { currentCurrencyCode } } }"}'
+```
+
+The header is read on every request, so no query or mutation needs a currency argument.
+When the header is missing, contains an unknown code, or a currency not enabled on the domain, the API silently falls back to the domain default currency.
+Every `Price` in the API contains a `currencyCode` field with the currency the price is expressed in.
+The currencies enabled on the domain (together with the currently selected one) can be queried from `settings { pricing { currentCurrencyCode, availableCurrencies { code } } }`.
+
+The order prices are always returned in the currency the order was placed in (`order { currencyCode }`), regardless of the currently selected currency.
+
+The default storefront persists the customer's selected currency in the `currencyCode-{domainId}` cookie and sends the header automatically with every API request.
+
 ### Requesting API from another domain (handling CORS)
 
 [overblog/GraphQLBundle](https://github.com/overblog/GraphQLBundle) comes out of the box with a generic and simple [CORS (Cross-Origin Resource Sharing)](http://enable-cors.org/) handler.

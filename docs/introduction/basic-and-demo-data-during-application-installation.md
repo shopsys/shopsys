@@ -7,6 +7,9 @@ after all migrations are executed, necessary data must be created for all the ot
 (e.g., multidomain settings like free transport limit, database indexes for new locale, etc.).
 This is the responsibility of `phing` task `domains-data-create` that executes [`CreateDomainsDataCommand`]({{github.link}}/packages/framework/src/Command/CreateDomainsDataCommand.php).
 
+The currencies configured for the domains in `config/domains.yaml` (the `currencies` key) are created by the `phing` task `currencies-data-create` that executes [`CreateCurrenciesDataCommand`]({{github.link}}/packages/framework/src/Command/CreateCurrenciesDataCommand.php).
+The command is idempotent — it creates only the currencies that do not exist yet, so the build guarantees all the configured currencies are always present in the database.
+
 All the other data that are not vital (products, customers, etc.) are created afterward as data fixtures (i.e., demo data)
 using `phing` target `db-fixtures-demo`.
 We have English and Czech demo data translations by default.

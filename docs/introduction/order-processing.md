@@ -161,8 +161,14 @@ $orderData->street = 'street';
 $orderData->city = 'city';
 $orderData->postcode = '12345';
 $orderData->country = $this->countryFacade->findByCode('CZ');
-$orderData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 ```
+
+!!! note "Order currency"
+
+    The currency of the order is snapshotted into `OrderData` during the processing.
+    When `OrderData::$currencyCode` is not set beforehand, the `OrderProcessor` fills the currency fields from the currently selected currency of the domain (see [`CurrentCurrencyProvider`]({{github.link}}/packages/framework/src/Model/Pricing/Currency/CurrentCurrencyProvider.php)) together with the exchange rate to the domain default currency (`OrderData::$currencyExchangeRate`).
+    If you need to create an order in a specific currency programmatically, call `$orderData->fillCurrencyFieldsFromCurrency($currency)` before the processing.
+    All the order prices are then calculated in the order currency, and the exchange rate snapshot is later used, e.g., by the order statistics in the administration.
 
 Now we are ready to process the order using the `OrderProcessor` service (instance of the`\Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor` class).
 

@@ -429,17 +429,23 @@ class MyTest extends FunctionalTestCase
 It represents a price with and without VAT and is used in many parts of Shopsys Platform.
 Price calculation classes usually output instances of `Price`.
 
-It can be constructed by calling `new Price(Money $priceWithoutVat, Money $priceWithVat)`.
+It can be constructed by calling `new Price(Money $priceWithoutVat, Money $priceWithVat)`, optionally with the currency of the price as the third argument.
 For a zero price, you can use a short-hand method `Price::zero()`.
 
-The class has three getters you can use to retrieve the prices or the VAT amount:
+The class has getters you can use to retrieve the prices, the VAT amount, or the currency:
 
 - `Price::getPriceWithoutVat() : Money`
 - `Price::getPriceWithVat() : Money`
 - `Price::getVatAmount() : Money`
+- `Price::getCurrency() : ?Currency`
 
 And you can calculate with prices using its methods:
 
 - `Price::add(Price $addend) : Price`
 - `Price::subtract(Price $subtrahend) : Price`
 - `Price::inverse() : Price`
+
+The currency of the price is optional.
+Price calculations set it whenever the currency is known, and the resulting price of `add` and `subtract` carries it over.
+Adding or subtracting two prices with different currencies throws a [`CurrencyMismatchException`]({{github.link}}/packages/framework/src/Model/Pricing/Exception/CurrencyMismatchException.php) — a price in one currency must first be converted using an exchange rate before it can be combined with a price in another currency.
+A price without a currency (e.g., `Price::zero()`) is neutral and can be combined with any price.

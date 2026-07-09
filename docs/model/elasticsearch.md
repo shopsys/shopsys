@@ -55,7 +55,7 @@ Following product attributes are exported into Elasticsearch (i.e. the search or
 - flags (IDs of assigned flags)
 - brand (ID of assigned brand)
 - categories (IDs of assigned categories)
-- prices (all the prices for all pricing groups)
+- prices (all the prices for all pricing groups and all currencies enabled on the domain — each price entry carries a `currency_code` so the filtering and price display respect the currently selected currency)
 - in_stock (true/false value whether the product is in stock)
 - parameters (pairs of parameter IDs and parameter value IDs)
 - ordering_priority (priority number)

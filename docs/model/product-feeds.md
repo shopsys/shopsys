@@ -57,6 +57,27 @@ Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
         - { name: shopsys.feed, cron: '0 1 * * *', domain_ids: '1,3' }
 ```
 
+## How to generate a product feed in multiple currencies?
+
+When a domain has more than one currency configured (see the `currencies` key in `domains.yaml`), each feed can define the currencies it is generated in using the `currencies` attribute of the `shopsys.feed` tag:
+
+- when the attribute is omitted, the feed is generated only in the domain default currency (which keeps the historical file name, so the feed URLs registered at the aggregators keep working)
+- `currencies: 'all'` generates the feed in every currency enabled on the domain
+- `currencies: 'EUR,CZK'` generates the feed in the intersection of the listed currencies and the currencies enabled on the domain
+- `currencies: { 1: [EUR, CZK] }` configures the currencies per domain (an unknown currency code fails fast during the feed generation, domains not listed use their default currency)
+
+```yaml
+Shopsys\ProductFeed\MergadoBundle\MergadoFeed:
+    tags:
+        - { name: shopsys.feed, cron: '0 5 * * *', currencies: 'all' }
+
+Shopsys\ProductFeed\HeurekaBundle\HeurekaFeed:
+    tags:
+        - { name: shopsys.feed, cron: '0 2 * * *', currencies: { 1: [EUR, CZK] } }
+```
+
+The feed file generated in the domain default currency keeps the original file name (e.g., `mergado_1.xml`), the files in the other currencies get a lowercase currency code suffix (e.g., `mergado_1_czk.xml`).
+
 ## How to implement a custom product feed?
 
 The heart of a product feed plugin is a service implementing the [`FeedInterface`]({{github.link}}/packages/framework/src/Model/Feed/FeedInterface.php) that is tagged in a DI container with `shopsys.feed` tag.

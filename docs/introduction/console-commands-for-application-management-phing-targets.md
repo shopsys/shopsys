@@ -169,6 +169,11 @@ When a locale is not supported by the operating system the command explains the 
 
 The command is designed to be run only during the first creation of the database but as it uses `IF NOT EXISTS` commands, it can be manually run on existing database in order to create new DB extensions or collations, too.
 
+#### currencies-data-create
+
+Creates the currencies configured for the domains in `config/domains.yaml` (the `currencies` key) when they do not exist in the database yet.
+It is executed automatically as a dependency of `domains-data-create`, so all the configured currencies are guaranteed to exist after every build.
+
 #### demo-data
 
 Wipes Postgres DB, recreates structure, fills with demo data and then exports data to Elasticsearch.
