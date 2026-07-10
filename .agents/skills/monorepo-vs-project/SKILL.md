@@ -27,6 +27,6 @@ When a stub says "read the canonical, then apply this delta", translate the cano
 
 - Read the canonical skill for the *method* (what to do, how to structure output, what patterns to look for).
 - Substitute paths per rules 2–3 and priority per rule 1 as you execute.
-- Follow the monorepo's own conventions (root `AGENTS.md`) for coding standards, Docker commands, and the `packages/` vs `project-base/` visibility/typing rules.
+- Follow the monorepo's own conventions: root `AGENTS.md` (Package-First + the always-on rules), `.agents/skills/coding-conventions/SKILL.md` (visibility/typing per folder, docblocks), and `.agents/skills/shopsys-commands/SKILL.md` (Docker/Phing/pnpm, per-package tests).
 
 That's the whole delta — it lives here once so the individual stubs don't repeat it.

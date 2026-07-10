@@ -15,7 +15,7 @@ A project built on Shopsys Platform: Symfony/PHP backend (`app/`), Next.js/React
 ## Always-on rules
 
 - **Never edit `vendor/shopsys/`** — it's read-only reference. Change platform behavior by extending it from `app/` (Entity Extension, service/FormType overrides). → `.agents/skills/shopsys-architecture/SKILL.md`
-- **Your code conventions:** `final` classes, `private` visibility, typehints and return types everywhere, docblocks for non-obvious types.
+- **Your code conventions:** `final` classes, `private` visibility, typehints and return types everywhere, docblocks for non-obvious types. → `.agents/skills/coding-conventions/SKILL.md`
 - **Reuse first (DRY/KISS):** check `vendor/shopsys/` and `app/src/` for existing functionality before writing new code.
 - **Commands run in Docker:** PHP/Composer/Phing and storefront/pnpm run inside containers; git/`make` on the host. Never start/stop containers yourself. → `.agents/skills/shopsys-commands/SKILL.md`
 - **After GraphQL changes, run `make generate-schema`** so backend and storefront stay in sync (CI fails if they drift).
@@ -24,6 +24,7 @@ A project built on Shopsys Platform: Symfony/PHP backend (`app/`), Next.js/React
 
 - **Architecture & how to extend** (where code lives, Entity Extension, vendor overrides, Data/Factory/Facade, docs links) → `.agents/skills/shopsys-architecture/SKILL.md`
 - **Commands** (build, DB, tests, checks, schema) → `.agents/skills/shopsys-commands/SKILL.md`
+- **Coding conventions & docblocks** → `.agents/skills/coding-conventions/SKILL.md`
 - **Find where code lives** → `.agents/skills/codebase-locator/SKILL.md`
 - **Understand how code works** → `.agents/skills/codebase-analyzer/SKILL.md`
 - **Find example patterns to copy** → `.agents/skills/codebase-pattern-finder/SKILL.md`
