@@ -13,3 +13,6 @@ AvailabilityStatusEnumDecorator:
             ExpectedRestock:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Availability\\AvailabilityStatusEnum::EXPECTED_RESTOCK")'
                 description: "Product is out of stock with a known expected restocking date"
+            Digital:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Availability\\AvailabilityStatusEnum::DIGITAL")'
+                description: "Product availability status for electronically delivered products"

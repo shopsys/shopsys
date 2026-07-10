@@ -1705,6 +1705,9 @@ msgstr "Iba pre registrovaných zákazníkov"
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
 msgstr "Pre odstránenie cenovej skupiny \"%name%\" musíte vybrať inú, ktorá sa nastaví všade tam, kde sa používa existujúca. Ktorú cenovú skupinu chcete nastaviť namiesto nej?"
 
+msgid "For the electronic gift voucher type, stock levels are ignored and the product is always available."
+msgstr "Pri type elektronický darčekový poukaz sa skladové zásoby ignorujú a produkt je vždy dostupný."
+
 msgid "Forgotten administrator password sending"
 msgstr "Zaslanie zabudnutého hesla administrátora"
 

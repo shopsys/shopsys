@@ -67,6 +67,14 @@ class TransportValidationFacade
         if ($cart->isPersonalPickupRequired() && !$transport->isPersonalPickup()) {
             throw new TransportUnavailableForProductsInCartException();
         }
+
+        if ($transport->isEmailType() && $cart->getProductsOtherThanElectronicGiftVouchers() !== []) {
+            throw new TransportUnavailableForProductsInCartException();
+        }
+
+        if (!$transport->isEmailType() && $cart->hasOnlyElectronicGiftVoucherProducts()) {
+            throw new TransportUnavailableForProductsInCartException();
+        }
     }
 
     public function checkTransportPriceAndWeightLimit(Transport $transport, Cart $cart): void

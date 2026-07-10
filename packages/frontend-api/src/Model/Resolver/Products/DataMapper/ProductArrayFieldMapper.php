@@ -73,6 +73,10 @@ class ProductArrayFieldMapper
 
     public function getAvailability(array $data): ProductAvailabilityInfo
     {
+        if ($data['is_digital'] === true) {
+            return $this->productAvailabilityFacade->createDigitalProductAvailabilityInfo($this->domain->getId());
+        }
+
         return $this->productAvailabilityFacade->createProductAvailabilityInfo(
             $data['in_stock'],
             $this->getExpectedRestockingDate($data),

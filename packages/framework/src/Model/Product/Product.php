@@ -857,6 +857,23 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @return bool
+     */
+    public function isElectronicGiftVoucher()
+    {
+        return $this->productType === ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGiftVoucher()
+    {
+        return $this->productType === ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER
+            || $this->productType === ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null $promotionXy
      * @param int $domainId
      */

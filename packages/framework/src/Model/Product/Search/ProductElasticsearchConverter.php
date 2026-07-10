@@ -46,6 +46,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::ORDERING_PRIORITY] = $product[ProductExportFieldProvider::ORDERING_PRIORITY] ?? 0;
 
         $result[ProductExportFieldProvider::IN_STOCK] = $product[ProductExportFieldProvider::IN_STOCK] ?? false;
+        $result[ProductExportFieldProvider::IS_DIGITAL] = $product[ProductExportFieldProvider::IS_DIGITAL] ?? false;
         $result[ProductExportFieldProvider::IS_MAIN_VARIANT] = $product[ProductExportFieldProvider::IS_MAIN_VARIANT] ?? false;
         $result[ProductExportFieldProvider::IS_VARIANT] = $product[ProductExportFieldProvider::IS_VARIANT] ?? false;
         $result[ProductExportFieldProvider::MAIN_VARIANT_ID] = $product[ProductExportFieldProvider::MAIN_VARIANT_ID] ?? null;

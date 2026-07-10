@@ -62,6 +62,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     #[ORM\JoinTable(name: 'payments_transports')]
     #[ORM\ManyToMany(targetEntity: Transport::class, inversedBy: 'payments', cascade: ['persist'])]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     protected $transports;
 
     /**

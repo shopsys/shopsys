@@ -11,6 +11,7 @@ class TransportTypeEnum extends AbstractTransportTypeEnum
     public const string TYPE_COMMON = 'common';
     public const string TYPE_PACKETERY = 'packetery';
     public const string TYPE_PERSONAL_PICKUP = 'personal_pickup';
+    public const string TYPE_EMAIL = 'email';
 
     /**
      * @return array<string, string>
@@ -22,6 +23,7 @@ class TransportTypeEnum extends AbstractTransportTypeEnum
             t('Standard') => self::TYPE_COMMON,
             t('Packetery') => self::TYPE_PACKETERY,
             t('Personal pickup') => self::TYPE_PERSONAL_PICKUP,
+            t('Email') => self::TYPE_EMAIL,
         ];
     }
 }

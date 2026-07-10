@@ -187,6 +187,7 @@ final class ProductFormType extends AbstractType
                 'required' => true,
                 'choices' => $this->productTypeEnum->getAllIndexedByTranslations(),
                 'label' => 'Product type',
+                'help' => t('For the electronic gift voucher type, stock levels are ignored and the product is always available.'),
             ]);
         }
 

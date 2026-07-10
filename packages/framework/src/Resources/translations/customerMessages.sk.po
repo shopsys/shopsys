@@ -19,6 +19,9 @@ msgstr "Prehľad značiek"
 msgid "Catalog number"
 msgstr "Katalógové číslo"
 
+msgid "Delivered by email"
+msgstr "Doručené e-mailom"
+
 msgid "Delivery address"
 msgstr "Doručovacia adresa"
 
@@ -66,6 +69,9 @@ msgstr "Export osobných údajov"
 
 msgid "Personal information overview"
 msgstr "Prehľad osobných údajov"
+
+msgid "Sent by email after payment"
+msgstr "Zasielame e-mailom po zaplatení"
 
 msgid "Transport"
 msgstr "Doprava"

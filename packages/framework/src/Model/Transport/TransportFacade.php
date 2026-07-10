@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\EmailTransportCannotBeDeletedException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportFacade
@@ -55,9 +56,22 @@ class TransportFacade
         return $this->transportRepository->getById($id);
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function getAllByType(string $type): array
+    {
+        return $this->transportRepository->getAllByType($type);
+    }
+
     public function deleteById(int $id): void
     {
         $transport = $this->getById($id);
+
+        if ($transport->isEmailType()) {
+            throw new EmailTransportCannotBeDeletedException();
+        }
+
         $transport->markAsDeleted();
         $paymentsByTransport = $this->paymentRepository->getAllByTransport($transport);
 

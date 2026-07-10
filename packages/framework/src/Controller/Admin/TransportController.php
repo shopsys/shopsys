@@ -15,10 +15,12 @@ use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\EmailTransportCannotBeDeletedException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -47,6 +49,12 @@ class TransportController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($transportData->type === TransportTypeEnum::TYPE_EMAIL) {
+                $this->addErrorFlash(t('Shipping of type Email cannot be created, exactly one must always exist.'));
+
+                return $this->redirectToRoute('admin_transport_new');
+            }
+
             $transport = $this->transportFacade->create($transportData);
 
             $this->addSuccessFlashTwig(
@@ -84,6 +92,14 @@ class TransportController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $isEmailTypeSubmitted = $transportData->type === TransportTypeEnum::TYPE_EMAIL;
+
+            if ($transport->isEmailType() !== $isEmailTypeSubmitted) {
+                $this->addErrorFlash(t('Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist.'));
+
+                return $this->redirectToRoute('admin_transport_edit', ['id' => $transport->getId()]);
+            }
+
             $this->transportFacade->edit($transport, $transportData);
 
             $this->addSuccessFlashTwig(
@@ -130,6 +146,8 @@ class TransportController extends AdminBaseController
             );
         } catch (TransportNotFoundException $ex) {
             $this->addErrorFlash(t('Selected shipping doesn\'t exist.'));
+        } catch (EmailTransportCannotBeDeletedException $ex) {
+            $this->addErrorFlash(t('Shipping of type Email cannot be deleted, exactly one must always exist.'));
         }
 
         return $this->redirectToRoute('admin_transportandpayment_list');

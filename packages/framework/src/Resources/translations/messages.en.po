@@ -1705,6 +1705,9 @@ msgstr ""
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
 msgstr ""
 
+msgid "For the electronic gift voucher type, stock levels are ignored and the product is always available."
+msgstr ""
+
 msgid "Forgotten administrator password sending"
 msgstr ""
 

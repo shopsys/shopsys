@@ -233,6 +233,33 @@ class Cart
         return $this->getPersonalPickupOnlyProducts() !== [];
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getElectronicGiftVoucherProducts(): array
+    {
+        return array_filter(
+            $this->getProducts(),
+            static fn (Product $product) => $product->isElectronicGiftVoucher(),
+        );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getProductsOtherThanElectronicGiftVouchers(): array
+    {
+        return array_filter(
+            $this->getProducts(),
+            static fn (Product $product) => !$product->isElectronicGiftVoucher(),
+        );
+    }
+
+    public function hasOnlyElectronicGiftVoucherProducts(): bool
+    {
+        return $this->getProducts() !== [] && $this->getProductsOtherThanElectronicGiftVouchers() === [];
+    }
+
     public function findSimilarItemByItem(CartItem $item): ?CartItem
     {
         foreach ($this->items as $similarItem) {
