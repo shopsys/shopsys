@@ -3,6 +3,8 @@ name: shopsys-commands
 description: The command catalog for this Shopsys project — how to build, run, test, check code, access the database, and sync the GraphQL schema, including the macOS Mutagen workflow. Read it when you need the exact command for a task and which run inside Docker containers versus on the host.
 ---
 
+> **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
+
 # Shopsys commands
 
 **Golden rule:** PHP / Composer / Phing and storefront / pnpm commands run **inside Docker containers**; git, `make`, and system commands run **on the host**. Never start or stop containers yourself — if they aren't running, ask the user to start them.

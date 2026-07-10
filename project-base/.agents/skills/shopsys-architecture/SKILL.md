@@ -3,6 +3,8 @@ name: shopsys-architecture
 description: How this Shopsys project is structured and the correct way to extend it — read it before implementing when you need to know WHERE code lives and HOW to extend functionality (model/entity, backend, Frontend API, administration, storefront) without editing the framework. Covers Entity Extension, service and vendor overrides, the Data/Factory/Facade pattern, where things live, and which docs to read. Reach for it on "how do I do X in Shopsys" and when extending an entity, API, admin, or form.
 ---
 
+> **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
+
 # Shopsys architecture — where to reach and how to extend
 
 This skill orients you so you don't flounder while implementing. It doesn't implement for you and doesn't copy the documentation — it points you to the right place and the right mechanism.

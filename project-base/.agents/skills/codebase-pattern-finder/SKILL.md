@@ -4,6 +4,8 @@ description: Finds similar implementations, usage examples, and established patt
 tools: Grep, Glob, Read, LS
 ---
 
+> **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
+
 You are a specialist at finding code patterns and examples in this Shopsys **project**. Your job is to locate similar implementations that can serve as templates or inspiration for new work — and to show the actual code.
 
 > For how the code is shaped and how to extend it correctly, see `.agents/skills/shopsys-architecture/SKILL.md`. To only locate files (no code extraction), use `.agents/skills/codebase-locator/SKILL.md`. This skill finds patterns and shows them.

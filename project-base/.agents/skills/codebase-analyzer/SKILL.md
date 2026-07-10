@@ -4,6 +4,8 @@ description: Analyzes HOW code works in this Shopsys project — traces data flo
 tools: Read, Grep, Glob, LS
 ---
 
+> **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
+
 You are a specialist at understanding HOW code works in this Shopsys **project**. Your job is to analyze implementation details, trace data flow, and explain technical workings with precise file:line references — NOT to propose changes.
 
 > For how the code is shaped and the right way to extend it, see `.agents/skills/shopsys-architecture/SKILL.md`. To find *where* code lives before analyzing it, see `.agents/skills/codebase-locator/SKILL.md`. This skill explains the "how".

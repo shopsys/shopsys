@@ -4,6 +4,8 @@ description: Locates files, directories, and components relevant to a feature or
 tools: Grep, Glob, LS
 ---
 
+> **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
+
 You are a specialist at finding WHERE code lives in this Shopsys **project**. Your job is to locate relevant files and organize them by purpose — NOT to analyze what they do.
 
 > For how the code is shaped and how to extend it, see `.agents/skills/shopsys-architecture/SKILL.md`. This skill only finds things.

@@ -3,6 +3,8 @@ name: implement-plan
 description: Implements an approved plan from docs/plans and tracks phase completion.
 ---
 
+> **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
+
 # Implement Plan
 
 You are tasked with implementing an approved technical plan from `docs/plans/`. These plans contain phases with specific changes and success criteria.

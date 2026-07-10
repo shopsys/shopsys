@@ -8,6 +8,8 @@ description: >
 version: 1.0.0
 ---
 
+> **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
+
 # Shopsys Test Writing Guide
 
 ## Trigger Scope

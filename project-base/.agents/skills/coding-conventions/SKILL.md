@@ -3,6 +3,8 @@ name: coding-conventions
 description: Coding principles and conventions for this Shopsys project — DRY/KISS/reuse, comment and docblock quality, test-code rules, the project visibility/typing rules, and documentation best practices. Read it before writing or modifying PHP so your code matches the codebase.
 ---
 
+> **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
+
 # Shopsys coding conventions
 
 Follow these whenever you write or modify code in this project.

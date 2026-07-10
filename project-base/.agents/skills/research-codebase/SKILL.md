@@ -3,6 +3,8 @@ name: research-codebase
 description: Conducts comprehensive research across this Shopsys project using parallel specialized subagents, then writes a self-contained research document.
 ---
 
+> **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
+
 # Research Codebase
 
 You are tasked with conducting comprehensive research across this Shopsys **project** to answer user questions by spawning parallel sub-agents and synthesizing their findings.
