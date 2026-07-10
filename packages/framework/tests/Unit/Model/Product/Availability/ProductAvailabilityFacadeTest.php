@@ -202,6 +202,96 @@ final class ProductAvailabilityFacadeTest extends TestCase
         $this->assertSame(AvailabilityStatusEnum::IN_STOCK, $availability->status);
     }
 
+    public function testElectronicGiftVoucherIsDigitalEvenWhenOutOfStock(): void
+    {
+        $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, '2026-07-12 12:00:00');
+        $product = $this->createElectronicGiftVoucherProduct();
+
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, Domain::FIRST_DOMAIN_ID);
+
+        $this->assertSame(AvailabilityStatusEnum::DIGITAL, $availability->status);
+    }
+
+    public function testElectronicGiftVoucherIsAvailableEvenWhenOutOfStock(): void
+    {
+        $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, '2026-07-12 12:00:00');
+        $product = $this->createElectronicGiftVoucherProduct();
+
+        $this->assertTrue($productAvailabilityFacade->isProductAvailableOnDomainCached($product, Domain::FIRST_DOMAIN_ID));
+    }
+
+    public function testElectronicGiftVoucherQuantityIsNeverClampedByStock(): void
+    {
+        $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, '2026-07-12 12:00:00');
+        $product = $this->createElectronicGiftVoucherProduct();
+
+        $this->assertSame(0, $productAvailabilityFacade->getNotOnStockQuantity($product, Domain::FIRST_DOMAIN_ID, 10));
+    }
+
+    public function testMainVariantWithOnlyElectronicVariantsIsDigital(): void
+    {
+        $productAvailabilityFacade = $this->createProductAvailabilityFacadeWithVariants(
+            [$this->createVariantStub(11, true), $this->createVariantStub(12, true)],
+            [11 => 0, 12 => 0],
+            '2026-07-12 12:00:00',
+        );
+
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct(
+            $this->createMainVariantStub(),
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertSame(AvailabilityStatusEnum::DIGITAL, $availability->status);
+    }
+
+    public function testMixedMainVariantIsInStockWhenNonElectronicVariantHasStock(): void
+    {
+        $productAvailabilityFacade = $this->createProductAvailabilityFacadeWithVariants(
+            [$this->createVariantStub(11, true), $this->createVariantStub(12, false)],
+            [12 => 5],
+            '2026-07-12 12:00:00',
+        );
+
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct(
+            $this->createMainVariantStub(),
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertSame(AvailabilityStatusEnum::IN_STOCK, $availability->status);
+    }
+
+    public function testMixedMainVariantStaysInStockWhenNonElectronicVariantHasNoStock(): void
+    {
+        $productAvailabilityFacade = $this->createProductAvailabilityFacadeWithVariants(
+            [$this->createVariantStub(11, true), $this->createVariantStub(12, false)],
+            [12 => 0],
+            '2026-07-12 12:00:00',
+        );
+
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct(
+            $this->createMainVariantStub(),
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertSame(AvailabilityStatusEnum::IN_STOCK, $availability->status);
+    }
+
+    public function testMainVariantWithoutElectronicVariantsIsOutOfStockWhenNoVariantHasStock(): void
+    {
+        $productAvailabilityFacade = $this->createProductAvailabilityFacadeWithVariants(
+            [$this->createVariantStub(11, false), $this->createVariantStub(12, false)],
+            [11 => 0, 12 => 0],
+            '2026-07-12 12:00:00',
+        );
+
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct(
+            $this->createMainVariantStub(),
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertSame(AvailabilityStatusEnum::OUT_OF_STOCK, $availability->status);
+    }
+
     /**
      * @return iterable<string, array{now: string, expectedRestockingDate: string|null, expectedDaysOrDate: int|string}>
      */
@@ -389,9 +479,77 @@ final class ProductAvailabilityFacadeTest extends TestCase
     {
         $productStub = $this->createStub(Product::class);
         $productStub->method('getId')->willReturn(1);
+        $productStub->method('isMainVariant')->willReturn(false);
+        $productStub->method('isElectronicGiftVoucher')->willReturn(false);
         $productStub->method('getExpectedRestockingDate')->willReturn($expectedRestockingDate);
 
         return $productStub;
+    }
+
+    private function createElectronicGiftVoucherProduct(): Product
+    {
+        $productStub = $this->createStub(Product::class);
+        $productStub->method('getId')->willReturn(1);
+        $productStub->method('isMainVariant')->willReturn(false);
+        $productStub->method('isElectronicGiftVoucher')->willReturn(true);
+
+        return $productStub;
+    }
+
+    private function createMainVariantStub(): Product
+    {
+        $productStub = $this->createStub(Product::class);
+        $productStub->method('getId')->willReturn(10);
+        $productStub->method('isMainVariant')->willReturn(true);
+
+        return $productStub;
+    }
+
+    private function createVariantStub(int $id, bool $isElectronicGiftVoucher): Product
+    {
+        $productStub = $this->createStub(Product::class);
+        $productStub->method('getId')->willReturn($id);
+        $productStub->method('isElectronicGiftVoucher')->willReturn($isElectronicGiftVoucher);
+
+        return $productStub;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
+     * @param array<int, int> $stockQuantitiesByProductId
+     */
+    private function createProductAvailabilityFacadeWithVariants(
+        array $variants,
+        array $stockQuantitiesByProductId,
+        string $now,
+    ): ProductAvailabilityFacade {
+        $settingStub = $this->createStub(Setting::class);
+        $settingStub->method('getForDomain')->willReturn(self::FEED_DELIVERY_DAYS_SETTING);
+
+        $productStockFacadeStub = $this->createStub(ProductStockFacade::class);
+        $productStockFacadeStub->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')
+            ->willReturn($stockQuantitiesByProductId);
+
+        $clockStub = $this->createStub(ClockInterface::class);
+        $clockStub->method('now')->willReturn($this->createDate($now));
+
+        $displayTimeZoneProviderStub = $this->createStub(DisplayTimeZoneProviderInterface::class);
+        $displayTimeZoneProviderStub->method('getDisplayTimeZoneByDomainId')->willReturn(new DateTimeZone('UTC'));
+
+        $productSellableVariantsProviderStub = $this->createStub(ProductSellableVariantsProvider::class);
+        $productSellableVariantsProviderStub->method('getVariantsForDefaultPricingGroup')->willReturn($variants);
+
+        return new ProductAvailabilityFacade(
+            $settingStub,
+            $productStockFacadeStub,
+            $this->createStub(StoreFacade::class),
+            $this->createDomain(),
+            new InMemoryCache(),
+            $clockStub,
+            $this->createStub(DateTimeFormatterInterface::class),
+            $displayTimeZoneProviderStub,
+            $productSellableVariantsProviderStub,
+        );
     }
 
     private function createDomain(): Domain

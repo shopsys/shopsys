@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use SortDirection;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation translation(?string $locale = null)
@@ -62,6 +63,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     #[ORM\JoinTable(name: 'payments_transports')]
     #[ORM\ManyToMany(targetEntity: Transport::class, inversedBy: 'payments', cascade: ['persist'])]
+    #[ORM\OrderBy(['position' => SortDirection::Ascending])]
     protected $transports;
 
     /**

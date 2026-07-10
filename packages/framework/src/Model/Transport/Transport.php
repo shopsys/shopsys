@@ -32,7 +32,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[EntityImage]
 class Transport extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
-    protected const GEDMO_SORTABLE_LAST_POSITION = -1;
+    public const GEDMO_SORTABLE_LAST_POSITION = -1;
 
     /**
      * @var int
@@ -469,6 +469,11 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function isPacketery(): bool
     {
         return $this->type === TransportTypeEnum::TYPE_PACKETERY;
+    }
+
+    public function isEmailType(): bool
+    {
+        return $this->type === TransportTypeEnum::TYPE_EMAIL;
     }
 
     /**

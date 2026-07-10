@@ -29,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade as BaseTransportFaca
  * @method \App\Model\Transport\Transport[] getAll()
  * @method \App\Model\Transport\Transport[] getVisibleByTotalWeightOnCurrentDomainWithEagerLoadedDomainsAndTranslations(int|null $totalWeight)
  * @method \App\Model\Transport\Transport[] getUsableForSingleProductOnCurrentDomainWithEagerLoadedDomainsAndTranslations(\App\Model\Product\Product $product)
+ * @method \App\Model\Transport\Transport[] getAllByType(string $type)
  */
 class TransportFacade extends BaseTransportFacade
 {

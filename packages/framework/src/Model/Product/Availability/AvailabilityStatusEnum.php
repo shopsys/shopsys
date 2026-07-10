@@ -11,4 +11,5 @@ class AvailabilityStatusEnum extends AbstractEnum
     public const string IN_STOCK = 'InStock';
     public const string OUT_OF_STOCK = 'OutOfStock';
     public const string EXPECTED_RESTOCK = 'ExpectedRestock';
+    public const string DIGITAL = 'Digital';
 }

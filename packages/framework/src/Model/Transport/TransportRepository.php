@@ -42,6 +42,17 @@ class TransportRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
+    public function getAllByType(string $type): array
+    {
+        return $this->getQueryBuilderForAll()
+            ->andWhere('t.type = :type')->setParameter('type', $type)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
     public function getAllByIds(array $transportIds): array
     {
         if (count($transportIds) === 0) {

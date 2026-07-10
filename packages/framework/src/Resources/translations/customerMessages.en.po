@@ -16,6 +16,9 @@ msgstr ""
 msgid "Catalog number"
 msgstr ""
 
+msgid "Delivered by email"
+msgstr ""
+
 msgid "Delivery address"
 msgstr ""
 
@@ -62,6 +65,9 @@ msgid "Personal information export"
 msgstr ""
 
 msgid "Personal information overview"
+msgstr ""
+
+msgid "Sent by email after payment"
 msgstr ""
 
 msgid "Transport"

@@ -189,6 +189,7 @@ class OrderMail implements MessageFactoryInterface
         return $this->twig->render('@ShopsysFramework/Mail/Order/deliveryAddress.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'isEmailTransport' => $order->getTransport()->isEmailType(),
         ]);
     }
 
@@ -328,6 +329,7 @@ class OrderMail implements MessageFactoryInterface
         return $this->twig->render('@ShopsysFramework/Mail/Order/addresses.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'isEmailTransport' => $order->getTransport()->isEmailType(),
         ]);
     }
 

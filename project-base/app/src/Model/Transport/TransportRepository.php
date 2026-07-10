@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository as BaseTransport
  * @method \App\Model\Transport\Transport getEnabledOnDomainByUuid(string $uuid, int $domainId)
  * @method \App\Model\Transport\Transport[] getAllWithEagerLoadedDomainsAndTranslations(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, int|null $totalWeight = null)
  * @method void deleteAllPricesByTransport(\App\Model\Transport\Transport $transport)
+ * @method \App\Model\Transport\Transport[] getAllByType(string $type)
  */
 class TransportRepository extends BaseTransportRepository
 {

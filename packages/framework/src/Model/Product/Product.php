@@ -406,6 +406,10 @@ class Product extends AbstractTranslatableEntity
 
     public function calculateFreeQuantity(int $quantity, int $domainId): int
     {
+        if ($this->isGiftVoucher()) {
+            return 0;
+        }
+
         if ($this->getPromotionXy($domainId) === null) {
             return 0;
         }
@@ -855,6 +859,23 @@ class Product extends AbstractTranslatableEntity
     public function getProductType()
     {
         return $this->productType;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isElectronicGiftVoucher()
+    {
+        return $this->productType === ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGiftVoucher()
+    {
+        return $this->productType === ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER
+            || $this->productType === ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER;
     }
 
     /**

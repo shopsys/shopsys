@@ -10,3 +10,5 @@ TransportTypeEnumDecorator:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportTypeEnum::TYPE_PACKETERY")'
             personal_pickup:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportTypeEnum::TYPE_PERSONAL_PICKUP")'
+            email:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportTypeEnum::TYPE_EMAIL")'

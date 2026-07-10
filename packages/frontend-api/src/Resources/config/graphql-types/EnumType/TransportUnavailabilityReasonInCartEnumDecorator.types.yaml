@@ -8,3 +8,7 @@ TransportUnavailabilityReasonInCartEnumDecorator:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportUnavailabilityReasonInCartEnum::PERSONAL_PICKUP_REQUIRED")'
             excluded_for_product:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportUnavailabilityReasonInCartEnum::EXCLUDED_FOR_PRODUCT")'
+            email_transport_not_allowed:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportUnavailabilityReasonInCartEnum::EMAIL_TRANSPORT_NOT_ALLOWED")'
+            electronic_gift_voucher_only:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportUnavailabilityReasonInCartEnum::ELECTRONIC_GIFT_VOUCHER_ONLY")'

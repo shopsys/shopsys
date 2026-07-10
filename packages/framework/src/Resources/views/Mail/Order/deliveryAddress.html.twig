@@ -13,31 +13,39 @@
                                 <h2 style="margin: 0 0 5px 0;">{% trans into orderLocale %}Delivery address{% endtrans %}</h2>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                {{ order.deliveryFirstName }} {{ order.deliveryLastName }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ order.deliveryCompanyName }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ order.deliveryTelephone }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ order.deliveryStreet }}, {{ order.deliveryCity }}, {{ order.deliveryPostcode }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ order.country.name(orderLocale) }}
-                            </td>
-                        </tr>
+                        {% if isEmailTransport|default(false) %}
+                            <tr>
+                                <td>
+                                    {% trans into orderLocale %}Delivered by email{% endtrans %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td>
+                                    {{ order.deliveryFirstName }} {{ order.deliveryLastName }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ order.deliveryCompanyName }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ order.deliveryTelephone }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ order.deliveryStreet }}, {{ order.deliveryCity }}, {{ order.deliveryPostcode }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ order.country.name(orderLocale) }}
+                                </td>
+                            </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </td>

@@ -51,12 +51,30 @@ class TransportsQuery extends AbstractQuery
         $cart = $this->findCart($cartUuid);
 
         if ($cart === null) {
-            return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations();
+            return $this->filterOutEmailTransports(
+                $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(),
+            );
         }
 
         $transports = $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations($cart);
 
+        if (!$cart->hasOnlyElectronicGiftVoucherProducts()) {
+            $transports = $this->filterOutEmailTransports($transports);
+        }
+
         return $this->sortAvailableTransportsFirst($transports, $cart, $cartUuid);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    protected function filterOutEmailTransports(array $transports): array
+    {
+        return array_values(array_filter(
+            $transports,
+            static fn (Transport $transport): bool => !$transport->isEmailType(),
+        ));
     }
 
     /**
@@ -102,6 +120,24 @@ class TransportsQuery extends AbstractQuery
             $productsGroupedByReason[] = [
                 'reason' => TransportUnavailabilityReasonInCartEnum::PERSONAL_PICKUP_REQUIRED,
                 'products' => $personalPickupOnlyProducts,
+            ];
+        }
+
+        $productsOtherThanElectronicGiftVouchers = array_values($cart->getProductsOtherThanElectronicGiftVouchers());
+
+        if ($transport->isEmailType() && $productsOtherThanElectronicGiftVouchers !== []) {
+            $productsGroupedByReason[] = [
+                'reason' => TransportUnavailabilityReasonInCartEnum::EMAIL_TRANSPORT_NOT_ALLOWED,
+                'products' => $productsOtherThanElectronicGiftVouchers,
+            ];
+        }
+
+        $electronicGiftVoucherProducts = array_values($cart->getElectronicGiftVoucherProducts());
+
+        if (!$transport->isEmailType() && $productsOtherThanElectronicGiftVouchers === [] && $electronicGiftVoucherProducts !== []) {
+            $productsGroupedByReason[] = [
+                'reason' => TransportUnavailabilityReasonInCartEnum::ELECTRONIC_GIFT_VOUCHER_ONLY,
+                'products' => $electronicGiftVoucherProducts,
             ];
         }
 
