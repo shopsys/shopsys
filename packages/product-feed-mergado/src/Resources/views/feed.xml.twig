@@ -18,6 +18,12 @@
             <DESCRIPTION>{{ item.description }}</DESCRIPTION>
         {% endif %}
         <DELIVERY_DAYS>{{ item.deliveryDays }}</DELIVERY_DAYS>
+        {% if item.deliveryId is not null %}
+            <DELIVERY>
+                <ID>{{ item.deliveryId }}</ID>
+                <PRICE>{{ item.deliveryPrice is not null ? item.deliveryPrice|moneyFormat(2, '.') : 0 }}</PRICE>
+            </DELIVERY>
+        {% endif %}
         <CURRENCY>{{ item.currencyCode }}</CURRENCY>
         {% if item.imageUrl != null %}
             <IMAGE>{{ item.imageUrl }}</IMAGE>

@@ -6,12 +6,14 @@ namespace Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
 use Shopsys\ProductFeed\HeurekaBundle\Model\Setting\HeurekaFeedSettingEnum;
 
@@ -20,6 +22,7 @@ class HeurekaFeedItemFactory
     protected const string HEUREKA_CATEGORY_FULL_NAMES_CACHE_NAMESPACE = 'heurekaCategoryFullNames';
 
     public function __construct(
+        protected readonly TransportFacade $transportFacade,
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly HeurekaProductDataBatchLoader $productDataBatchLoader,
         protected readonly HeurekaCategoryFacade $heurekaCategoryFacade,
@@ -48,7 +51,23 @@ class HeurekaFeedItemFactory
             $this->getProductAvailabilityDays($product, $domainConfig->getId()),
             $this->getHeurekaCategoryFullName($product, $domainConfig),
             $this->productDataBatchLoader->getProductCpc($product, $domainConfig),
+            $this->getDeliveryId($product),
+            $this->getDeliveryPrice($product, $domainConfig),
         );
+    }
+
+    protected function getDeliveryPrice(Product $product, DomainConfig $domainConfig): ?Money
+    {
+        if (!$product->isElectronicGiftVoucher()) {
+            return null;
+        }
+
+        return $this->transportFacade->findEmailTransportLowestPriceWithVatByDomainId($domainConfig->getId());
+    }
+
+    protected function getDeliveryId(Product $product): ?string
+    {
+        return $product->isElectronicGiftVoucher() ? 'ONLINE' : null;
     }
 
     protected function getBrandName(Product $product): ?string

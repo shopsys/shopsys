@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\MergadoBundle\Model\FeedItem;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -36,7 +37,19 @@ class MergadoFeedItem implements FeedItemInterface
         protected readonly ?Brand $brand = null,
         protected readonly ?string $imageUrl = null,
         protected readonly ?int $mainVariantId = null,
+        protected readonly ?string $deliveryId = null,
+        protected readonly ?Money $deliveryPrice = null,
     ) {
+    }
+
+    public function getDeliveryId(): ?string
+    {
+        return $this->deliveryId;
+    }
+
+    public function getDeliveryPrice(): ?Money
+    {
+        return $this->deliveryPrice;
     }
 
     #[Override]
