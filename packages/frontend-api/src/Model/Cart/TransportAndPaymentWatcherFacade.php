@@ -67,6 +67,9 @@ class TransportAndPaymentWatcherFacade
         }
 
         $this->cartWithModificationsResult->setTotalPrice($orderData->totalPrice);
+        $this->cartWithModificationsResult->setGiftVoucherProductItemsPriceWithVat(
+            $orderData->getGiftVoucherProductItemsTotalPrice()->getPriceWithVat(),
+        );
         $this->cartWithModificationsResult->setTotalItemsPrice($productsPrice);
         $this->cartWithModificationsResult->setTotalItemsPriceBeforeDiscount($orderData->basicTotalItemsPrice);
         $this->cartWithModificationsResult->setTotalProductPriceAdjustmentsDiscount($orderData->totalProductPriceAdjustmentsDiscount);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Cart;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -45,6 +46,7 @@ class CartWatcherFacade
         $this->checkModifiedPrices($cart);
         $this->checkStockQuantities($cart);
         $this->checkPromoCodeValidity($cart);
+        $this->checkGiftVoucherValidity($cart);
 
         $this->em->flush();
 
@@ -107,6 +109,20 @@ class CartWatcherFacade
                 $this->cartPromoCodeFacade->removePromoCode($cart, $promoCode);
                 $this->cartWithModificationsResult->addChangedPromoCode($promoCode->getCode());
             }
+        }
+    }
+
+    protected function checkGiftVoucherValidity(Cart $cart): void
+    {
+        $now = new DateTimeImmutable();
+
+        foreach ($cart->getAllAppliedGiftVouchers() as $giftVoucher) {
+            if ($giftVoucher->isUnredeemed() && $giftVoucher->isValidAt($now)) {
+                continue;
+            }
+
+            $cart->removeGiftVoucherById($giftVoucher->getId());
+            $this->cartWithModificationsResult->addChangedGiftVoucher($giftVoucher->getCode());
         }
     }
 

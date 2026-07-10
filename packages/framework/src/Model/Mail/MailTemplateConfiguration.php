@@ -162,6 +162,11 @@ class MailTemplateConfiguration
                 MailTemplateVariables::CONTEXT_BODY,
             )
             ->addVariable(
+                OrderMail::VARIABLE_GIFT_VOUCHERS_INFO,
+                t('Information about redeemed gift vouchers and the remaining amount to pay (empty if there are no gift vouchers)'),
+                MailTemplateVariables::CONTEXT_BODY,
+            )
+            ->addVariable(
                 OrderMail::VARIABLE_ADDRESSES,
                 t('Billing and delivery address'),
                 MailTemplateVariables::CONTEXT_BODY,

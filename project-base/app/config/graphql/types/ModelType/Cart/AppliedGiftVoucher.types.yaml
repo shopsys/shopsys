@@ -1,0 +1,4 @@
+AppliedGiftVoucher:
+    type: object
+    inherits:
+        - 'AppliedGiftVoucherDecorator'

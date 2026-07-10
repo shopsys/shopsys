@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\OrderCancelledException;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\PurchasedGiftVoucherAlreadyRedeemedException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalAlreadyRequestedException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalDeadlinePassedException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
@@ -16,6 +17,7 @@ use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Order\WithdrawalRequestApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderCancelledUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\PurchasedGiftVoucherAlreadyRedeemedUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\WithdrawalAlreadyRequestedUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\WithdrawalDeadlinePassedUserError;
 
@@ -47,6 +49,8 @@ class OrderWithdrawalRequestMutation extends AbstractMutation
             throw new WithdrawalAlreadyRequestedUserError('Withdrawal has already been requested for this order');
         } catch (WithdrawalDeadlinePassedException) {
             throw new WithdrawalDeadlinePassedUserError('Withdrawal deadline has passed for this order');
+        } catch (PurchasedGiftVoucherAlreadyRedeemedException) {
+            throw new PurchasedGiftVoucherAlreadyRedeemedUserError('Withdrawal is not allowed because a gift voucher purchased in this order has already been redeemed or cancelled');
         }
     }
 }

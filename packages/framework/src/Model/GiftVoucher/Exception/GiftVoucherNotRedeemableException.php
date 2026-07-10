@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\FrameworkBundle\Model\GiftVoucher\Exception;
+
+use Exception;
+
+class GiftVoucherNotRedeemableException extends GiftVoucherException
+{
+    public function __construct(string $code, ?Exception $previous = null)
+    {
+        parent::__construct(sprintf('Gift voucher with code "%s" cannot be redeemed.', $code), 0, $previous);
+    }
+}

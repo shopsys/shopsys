@@ -22,3 +22,6 @@ OrderItemsFilterInputDecorator:
             type:
                 type: "OrderItemTypeEnum"
                 description: "Filter order items by type"
+            excludeProductTypes:
+                type: "[ProductTypeEnum!]"
+                description: "Exclude order items of products with these product types"

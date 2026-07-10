@@ -1,4 +1,4 @@
-RemovePromoCodeFromCartInputDecorator:
+ApplyCodeToCartInputDecorator:
     type: input-object
     decorator: true
     config:
@@ -7,6 +7,6 @@ RemovePromoCodeFromCartInputDecorator:
                 type: "Uuid"
                 defaultValue: null
                 description: "Cart identifier or null if customer is logged in"
-            promoCode:
+            code:
                 type: "String!"
-                description: "Promo code to be removed"
+                description: "Discount coupon or gift voucher code to be applied"

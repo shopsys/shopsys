@@ -44,6 +44,10 @@ services:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
+    Shopsys\FrontendApiBundle\Model\Cart\ApplyCodeToCartRateLimiter:
+        arguments:
+            $applyCodeToCartLimiter: '@limiter.apply_code_to_cart'
+
     Shopsys\FrontendApiBundle\Model\Category\ReadyCategorySeoMixBatchLoader:
         arguments:
             $mainFriendlyUrlSlugCache: '@main_friendly_url_slug_cache'
@@ -70,6 +74,10 @@ services:
         arguments:
             $logger: '@monolog.logger'
             $isValidationLoggedAsError: '%shopsys.frontend_api.validation_logged_as_error%'
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Cart\CodeMutation:
+        arguments:
+            $constraintValidatorFactory: '@validator.validator_factory'
 
     Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
         arguments:

@@ -184,23 +184,23 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('changeTransportInCartMutation', args)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
-            ApplyPromoCodeToCart:
+            ApplyCodeToCart:
                 type: Cart!
-                description: "Apply new promo code for the future checkout"
+                description: "Apply a code as either a promo code or a gift voucher, whichever it matches"
                 args:
                     input:
-                        type: ApplyPromoCodeToCartInput!
+                        type: ApplyCodeToCartInput!
                         validation: cascade
-                resolve: "@=mutation('applyPromoCodeToCartMutation', args, validator)"
+                resolve: "@=mutation('applyCodeToCartMutation', args, validator)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
-            RemovePromoCodeFromCart:
+            RemoveCodeFromCart:
                 type: Cart!
-                description: "Remove already used promo code from cart"
+                description: "Remove an applied discount coupon or gift voucher code from the cart"
                 args:
                     input:
-                        type: RemovePromoCodeFromCartInput!
+                        type: RemoveCodeFromCartInput!
                         validation: cascade
-                resolve: "@=mutation('removePromoCodeFromCartMutation', args, validator)"
+                resolve: "@=mutation('removeCodeFromCartMutation', args, validator)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             ContactForm:
                 type: Boolean!
