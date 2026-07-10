@@ -24,7 +24,7 @@ Shopsys Platform is a **monorepo-based e-commerce platform**.
     - Frontend API (`/packages/frontend-api/`) — GraphQL API
     - Other packages — additional framework components
 - **`/project-base/`** (SECONDARY): Application configuration layer
-    - Configuration files (`config/`)
+    - Configuration files (`app/config/`)
     - Rare project-specific extensions of package classes
     - Storefront React app (`storefront/`)
 
@@ -39,7 +39,7 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 > the `project-base/` subfolder as the standalone `shopsys/project-base` repo). Those are the **canonical,
 > project-perspective** copies of the shared skills (codebase-locator/analyzer/pattern-finder,
 > research-codebase, create-plan, implement-plan, test-writing, shopsys-architecture, shopsys-commands).
-> They say package-first does *not* apply and treat packages as read-only `vendor/shopsys/` — the opposite
+> They say package-first does _not_ apply and treat packages as read-only `vendor/shopsys/` — the opposite
 > of the rules here. During monorepo development, follow **this** root file; the same-named skills in
 > `.agents/skills/` are thin stubs that read the project-base canonical and apply one shared delta,
 > `.agents/skills/monorepo-vs-project/SKILL.md`. `project-base/AGENTS.md` carries a scope guard saying the same.
@@ -49,10 +49,10 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 - **Package-first** (above): new business logic → `/packages/`; only config and rare extensions → `/project-base/`.
 - **Commands run in Docker**: PHP/Composer/Phing and storefront/pnpm run **inside containers**; git/`make`/system commands on the **host**. **Never start or stop containers yourself** — if they aren't running, ask the user. → `.agents/skills/shopsys-commands/SKILL.md`
 - **After GraphQL changes, run `make generate-schema`** to sync backend and storefront (CI fails if they drift).
-- **Coding conventions** — reuse-first (DRY/KISS), comments explain *why*, docblocks for non-obvious types, and per-folder visibility/typing:
+- **Coding conventions** — reuse-first (DRY/KISS), comments explain _why_, docblocks for non-obvious types, and per-folder visibility/typing:
     - `project-base/` and `utils/`: `final`, `private`, typehints & return types everywhere.
     - `packages/`: `protected` (not `private`), no typehints/return types in entities & data objects, no `final` (except FormType, which requires it) — because these are extended in project-base.
-  Full detail → `.agents/skills/coding-conventions/SKILL.md`.
+      Full detail → `.agents/skills/coding-conventions/SKILL.md`.
 - **Multi-domain/multi-language** is supported by default — consider it when changing entities, forms, and the API.
 
 ## Key Configuration Files
