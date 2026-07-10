@@ -328,6 +328,9 @@ msgstr "Vypočítané ceny"
 msgid "Cancel"
 msgstr "Zrušit"
 
+msgid "Cancelled"
+msgstr "Stornovaný"
+
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
@@ -355,6 +358,9 @@ msgstr "Katalogové číslo"
 msgid "Change for"
 msgstr "Změna pro"
 
+msgid "Change log"
+msgstr "Log změn"
+
 msgid "Choose"
 msgstr "Vybrat"
 
@@ -381,6 +387,9 @@ msgstr "Svátky a interní dny"
 
 msgid "Closing modules"
 msgstr "Zapínací moduly"
+
+msgid "Code"
+msgstr "Kód"
 
 msgid "Code can't be modified because it is used for pairing with existing orders."
 msgstr "Kód nemůže být upraven, protože je spárovaný s existujícím objednávkami."
@@ -501,6 +510,9 @@ msgstr "Vytvořit měnu"
 
 msgid "Create flag"
 msgstr "Vytvořit příznak"
+
+msgid "Create gift voucher"
+msgstr "Vytvořit dárkový poukaz"
 
 msgid "Create new administrator"
 msgstr "Vytvořit nového administrátora"
@@ -757,6 +769,9 @@ msgstr "Filtr domén"
 msgid "Download"
 msgstr "Stáhnout"
 
+msgid "Download PDF"
+msgstr "Stáhnout PDF"
+
 msgid "Draft"
 msgstr "Rozpracováno"
 
@@ -888,6 +903,9 @@ msgstr "Editace příznaku"
 
 msgid "Editing gift plan"
 msgstr "Editace dárkového plánu"
+
+msgid "Editing gift voucher"
+msgstr "Editace dárkového poukazu"
 
 msgid "Editing holiday / internal day"
 msgstr "Editace svátku / interního dne"
@@ -1083,6 +1101,12 @@ msgstr "Dárkové plány"
 
 msgid "Gift price"
 msgstr "Cena dárku"
+
+msgid "Gift voucher"
+msgstr "Dárkový poukaz"
+
+msgid "Gift vouchers"
+msgstr "Dárkové poukazy"
 
 msgid "Go to Frontend"
 msgstr "Přejít na Frontend"
@@ -1384,6 +1408,9 @@ msgstr "Nový příznak"
 msgid "New gift plan"
 msgstr "Nový dárkový plán"
 
+msgid "New gift voucher"
+msgstr "Nový dárkový poukaz"
+
 msgid "New navigation item"
 msgstr "Nová položka navigace"
 
@@ -1500,6 +1527,9 @@ msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
 
 msgid "No gift plan found. You have to create some first."
 msgstr "Nebyl nalezen žádný dárkový plán. Musíte prvně nějaký vytvořit."
+
+msgid "No gift vouchers found."
+msgstr "Nebyly nalezeny žádné dárkové poukazy."
 
 msgid "No inquiries found."
 msgstr "Nebyly nalezeny žádné poptávky."
@@ -1624,6 +1654,9 @@ msgstr "Stránka s potvrzením objednávky"
 msgid "Order detail"
 msgstr "Detail objednávky"
 
+msgid "Order has been marked as paid."
+msgstr "Objednávka byla označena jako zaplacená."
+
 msgid "Order has not been sent to GoPay"
 msgstr "Objednávka nebyla odeslána do GoPay"
 
@@ -1671,6 +1704,9 @@ msgstr "Původ"
 
 msgid "Overview"
 msgstr "Přehled"
+
+msgid "Paid"
+msgstr "Zaplaceno"
 
 msgid "Paid amount"
 msgstr "Zaplacená částka"
@@ -1879,6 +1915,15 @@ msgstr "Detail položky"
 msgid "Record is not present in the Elasticsearch for the selected entity and domain."
 msgstr "Záznam není uložen v Elasticsearch pro zvolenou entitu a doménu."
 
+msgid "Redeemed"
+msgstr "Uplatněný"
+
+msgid "Redeemed at"
+msgstr "Uplatněno"
+
+msgid "Redeemed gift vouchers"
+msgstr "Uplatněné dárkové poukazy"
+
 msgid "Refund has been sent."
 msgstr "Refundace byla odeslána."
 
@@ -2032,6 +2077,9 @@ msgstr "Vyhledat"
 msgid "Search by author name..."
 msgstr "Hledat podle jména autora..."
 
+msgid "Search by code or customer email..."
+msgstr "Hledat dle kódu nebo e-mailu zákazníka..."
+
 msgid "Search by code..."
 msgstr "Vyhledat podle kódu..."
 
@@ -2172,6 +2220,9 @@ msgstr "Doprava"
 
 msgid "Shipping instructions"
 msgstr "Pokyny k dopravě"
+
+msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
+msgstr "Dopravu typu E-mail nelze smazat, vždy musí existovat právě jedna."
 
 msgid "Shippings"
 msgstr "Dopravy"
@@ -2461,11 +2512,16 @@ msgstr "Je uložena neznámá telefonní předvolba \"%prefix%\". Ověřte ji pr
 msgid "Unlimited"
 msgstr "Neomezeně"
 
+msgid "Unpaid"
+msgstr "Nezaplaceno"
+
 msgid "Unpin"
 msgstr "Odepnout"
 
 msgid "Unregistered"
 msgstr "Neregistrovaný"
+msgid "Unredeemed"
+msgstr "Neuplatněný"
 
 msgid "Unused friendly URL list"
 msgstr "Seznam nepoužívaných hezkých URL"

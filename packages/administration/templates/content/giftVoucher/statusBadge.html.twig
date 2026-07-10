@@ -1,0 +1,14 @@
+{% set badgeClassesByStatus = {
+    'unredeemed': 'bg-yellow-lt',
+    'redeemed': 'bg-green-lt',
+    'cancelled': 'bg-red-lt',
+} %}
+{% set labelsByStatus = {
+    'unredeemed': 'Unredeemed'|trans,
+    'redeemed': 'Redeemed'|trans,
+    'cancelled': 'Cancelled'|trans,
+} %}
+<span class="badge {{ badgeClassesByStatus[status] ?? 'bg-secondary-lt' }}">{{ labelsByStatus[status] ?? status }}</span>
+{% if isExpired|default(false) %}
+    <span class="badge bg-red text-white">{{ 'Expired'|trans }}</span>
+{% endif %}

@@ -109,6 +109,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
         return [
             new Role(AdminRoleConstant::ROLE_NEWSLETTER, t('Newsletter'), [Permission::DELETE]),
             new Role(AdminRoleConstant::ROLE_PROMO_CODE, t('Promo codes'), [Permission::FULL]),
+            new Role(AdminRoleConstant::ROLE_GIFT_VOUCHER, t('Gift vouchers'), [Permission::CREATE, Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_ADVERT, t('Adverts'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_SLIDER_ITEM, t('Slider items'), [Permission::FULL]),
         ];

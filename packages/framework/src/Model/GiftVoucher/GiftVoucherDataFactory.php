@@ -4,8 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\GiftVoucher;
 
+use DateTimeImmutable;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+
 class GiftVoucherDataFactory
 {
+    public function __construct(
+        protected readonly CurrencyFacade $currencyFacade,
+    ) {
+    }
+
     protected function createInstance(): GiftVoucherData
     {
         return new GiftVoucherData();
@@ -14,6 +22,17 @@ class GiftVoucherDataFactory
     public function create(): GiftVoucherData
     {
         return $this->createInstance();
+    }
+
+    public function createForDomainId(int $domainId): GiftVoucherData
+    {
+        $giftVoucherData = $this->createInstance();
+        $giftVoucherData->domainId = $domainId;
+        $giftVoucherData->currencyCode = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId)->getCode();
+        $giftVoucherData->activatedAt = new DateTimeImmutable();
+        $giftVoucherData->validUntil = $giftVoucherData->activatedAt->modify(GiftVoucherGenerationFacade::VALIDITY_MODIFIER);
+
+        return $giftVoucherData;
     }
 
     public function createFromGiftVoucher(GiftVoucher $giftVoucher): GiftVoucherData

@@ -529,6 +529,9 @@ msgstr "Zrušiť"
 msgid "Canceled"
 msgstr "Zrušené"
 
+msgid "Cancelled"
+msgstr "Stornovaný"
+
 msgid "Cannot read file."
 msgstr "Nedá sa čítať súbor."
 
@@ -619,6 +622,9 @@ msgstr "Zavrieť"
 msgid "Code"
 msgstr "Kód"
 
+msgid "Code for redemption"
+msgstr "Kód na uplatnenie"
+
 msgid "Code of service Heureka - Verified by Customer"
 msgstr "Kód služby Heureka - Overené zákazníkmi"
 
@@ -693,6 +699,9 @@ msgstr "Doplnok k titulku"
 
 msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
 msgstr "Doplnok k titulku bude nastavený ako prípona ku všetkým titulkom, napr. ak je doplnok nastavený na “ | Môj obchod“ a názov produktu je “iPhone 7“, výsledný titulok pre stránku tohto produktu bude “iPhone 7 | Môj obchod“."
+
+msgid "Conditions"
+msgstr "Podmienky"
 
 msgid "Confirm code and disable two-factor authentication"
 msgstr "Potvrdiť kód a vypnúť dvojfaktorové overovanie"
@@ -1216,6 +1225,9 @@ msgstr "Domény"
 msgid "Done"
 msgstr "Hotovo"
 
+msgid "Download PDF"
+msgstr "Stiahnuť PDF"
+
 msgid "Download file"
 msgstr "Stiahnuť súbor"
 
@@ -1374,6 +1386,12 @@ msgstr "Úprava darčekového plánu"
 
 msgid "Editing gift plan - %name%"
 msgstr "Úprava darčekového plánu - %name%"
+
+msgid "Editing gift voucher"
+msgstr "Editácia darčekového poukazu"
+
+msgid "Editing gift voucher - %code%"
+msgstr "Editácia darčekového poukazu - %code%"
 
 msgid "Editing holiday / internal day - {{ name }}"
 msgstr "Úprava sviatku / interného dňa - {{ name }}"
@@ -1776,6 +1794,24 @@ msgstr "Cena darčeka uložená"
 
 msgid "Gift product"
 msgstr "Darčekový produkt"
+
+msgid "Gift voucher"
+msgstr "Darčekový poukaz"
+
+msgid "Gift voucher - electronic"
+msgstr "Darčekový poukaz - elektronický"
+
+msgid "Gift voucher - printed"
+msgstr "Darčekový poukaz - tlačený"
+
+msgid "Gift voucher <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
+msgstr "Darčekový poukaz <strong><a href=\"{{ url }}\">{{ code }}</a></strong> vytvorený"
+
+msgid "Gift voucher <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
+msgstr "Darčekový poukaz <strong><a href=\"{{ url }}\">{{ code }}</a></strong> upravený"
+
+msgid "Gift vouchers"
+msgstr "Darčekové poukazy"
 
 msgid "GoPay"
 msgstr "GoPay"
@@ -2226,6 +2262,9 @@ msgstr "Nová značka"
 
 msgid "New gift plan"
 msgstr "Nový darčekový plán"
+
+msgid "New gift voucher"
+msgstr "Nový darčekový poukaz"
 
 msgid "New item"
 msgstr "Nová položka"
@@ -2862,6 +2901,8 @@ msgstr "Zverejnené"
 
 msgid "Published anonymously"
 msgstr "Zverejnené anonymne"
+msgid "Purchased in order"
+msgstr "Zakúpený v objednávke"
 
 msgid "QR code"
 msgstr "QR kód"
@@ -2874,6 +2915,14 @@ msgstr "Dôvod zmeny obsahu"
 
 msgid "Reason for rejection"
 msgstr "Dôvod zamietnutia"
+msgid "Redeemed"
+msgstr "Uplatnený"
+
+msgid "Redeemed in order"
+msgstr "Uplatnený v objednávke"
+
+msgid "Redemption:"
+msgstr "Uplatnenie:"
 
 msgid "Redirect target"
 msgstr "Cieľ presmerovvania"
@@ -3247,6 +3296,15 @@ msgstr "Doprava <strong>{{ name }}</strong> odstránená"
 msgid "Shipping instructions"
 msgstr "Pokyny na dopravu"
 
+msgid "Shipping of type Email cannot be created, exactly one must always exist."
+msgstr "Dopravu typu E-mail nie je možné vytvoriť, vždy musí existovať práve jedna."
+
+msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
+msgstr "Dopravu typu E-mail nie je možné zmazať, vždy musí existovať práve jedna."
+
+msgid "Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist."
+msgstr "Typ dopravy nie je možné zmeniť z typu E-mail ani na typ E-mail, vždy musí existovať práve jedna doprava typu E-mail."
+
 msgid "Shippings and payments"
 msgstr "Doprava a platby"
 
@@ -3420,6 +3478,8 @@ msgstr "Text"
 
 msgid "Text review"
 msgstr "Textová recenzia"
+msgid "The gift voucher applies to all goods and services. The gift voucher cannot be redeemed after the stated validity date; after the validity expires, its value is forfeited without any right to compensation. The voucher cannot be exchanged for cash. The goods or services must be of equal or higher value."
+msgstr "Darčekový poukaz platí na celý sortiment tovaru a služieb. Darčekový poukaz nie je možné uplatniť po uvedenom dátume platnosti, po vypršaní platnosti jeho hodnota prepadá bez nároku na náhradu. Poukaz nie je možné zameniť za peniaze. Tovar či služba musí byť v rovnakej alebo vyššej hodnote."
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyššia priorita, tým vyššie bude krajina zobrazená v zoznamoch. Krajiny s rovnakou prioritou budú zotriadené alfabeticky."
@@ -3607,6 +3667,9 @@ msgstr "Konfigurácia Unknown"
 msgid "Unknown prefix"
 msgstr "Neznáma predvoľba"
 
+msgid "Unredeemed"
+msgstr "Neuplatnený"
+
 msgid "Unsaved changes"
 msgstr "Neuložené zmeny"
 
@@ -3688,6 +3751,9 @@ msgstr "Planosť do"
 msgid "Valid until"
 msgstr "Planosť do"
 
+msgid "Value"
+msgstr "Hodnota"
+
 msgid "Variable symbol"
 msgstr "Variabilný symbol"
 
@@ -3708,6 +3774,9 @@ msgstr "Viditeľnosť"
 
 msgid "Visible on homepage"
 msgstr "Viditelný na domovskej stránke"
+
+msgid "Voucher value"
+msgstr "Hodnota poukazu"
 
 msgid "Waiting for an offline transfer to be finished"
 msgstr "Čakáme na vykonanie offline platby"
@@ -3864,6 +3933,9 @@ msgstr "upraviť"
 
 msgid "empty value"
 msgstr "prázdna hodnota"
+
+msgid "enter the code in the cart into the field for discount coupons and gift vouchers."
+msgstr "kód zadajte v košíku do poľa pre zľavové kupóny a darčekové poukazy."
 
 msgid "exists"
 msgstr "existuje"

@@ -76,15 +76,19 @@ class GiftVoucherRepository
         return $this->getGiftVoucherRepository()->findBy(['id' => $giftVoucherIds]);
     }
 
-    public function getQueryBuilderByDomainIdAndSearchText(int $domainId, ?string $searchText): QueryBuilder
-    {
+    public function getQueryBuilderByDomainIdAndSearchText(
+        int $domainId,
+        ?string $searchText,
+        ?string $normalizedCodeSearchText = null,
+    ): QueryBuilder {
         $queryBuilder = $this->getGiftVoucherRepository()->createQueryBuilder('gv')
             ->where('gv.domainId = :domainId')->setParameter('domainId', $domainId)
             ->orderBy('gv.id', 'DESC');
 
         if ($searchText !== null && $searchText !== '') {
             $queryBuilder
-                ->andWhere('LOWER(gv.code) LIKE LOWER(:searchText) OR LOWER(gv.customerEmail) LIKE LOWER(:searchText)')
+                ->andWhere('LOWER(gv.code) LIKE LOWER(:codeSearchText) OR LOWER(gv.customerEmail) LIKE LOWER(:searchText)')
+                ->setParameter('codeSearchText', '%' . ($normalizedCodeSearchText ?? $searchText) . '%')
                 ->setParameter('searchText', '%' . $searchText . '%');
         }
 
