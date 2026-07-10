@@ -676,7 +676,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     #[Override]
     public function isResetPasswordHashValid(?string $hash): bool
     {
-        if ($hash === null || $this->resetPasswordHash !== $hash) {
+        if ($hash === null || $this->resetPasswordHash === null || !hash_equals($this->resetPasswordHash, $hash)) {
             return false;
         }
 
