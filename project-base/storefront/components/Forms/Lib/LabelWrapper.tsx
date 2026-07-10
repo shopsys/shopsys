@@ -9,6 +9,7 @@ type LabelWrapperProps = NativeProps & {
     label: string | ReactNode | ReactNode[] | undefined;
     count?: number;
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'radio' | 'selectbox';
+    inputSize?: 'small' | 'default';
     required?: boolean;
     checked?: boolean;
     disabled?: boolean;
@@ -18,6 +19,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
     label,
     count,
     inputType,
+    inputSize,
     required,
     checked,
     disabled,
@@ -33,8 +35,12 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 // "peer" here is input passed from parent component
                 // see https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-sibling-state
                 className={twMergeCustom(
-                    inputType === 'text-input' &&
-                        'pointer-events-none top-2 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-md peer-focus:top-2 peer-focus:font-normal peer-focus:text-sm',
+                    inputType === 'text-input' && [
+                        'pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-md peer-focus:font-normal',
+                        inputSize === 'small'
+                            ? 'top-1.5 text-xs peer-focus:top-1.5 peer-focus:text-xs'
+                            : 'top-2 text-sm peer-focus:top-2 peer-focus:text-sm',
+                    ],
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
                         'peer-focus:translate-none absolute left-3 z-2 block transform-none text-input-placeholder-default peer-placeholder-shown:-translate-y-1/2 peer-hover:text-input-placeholder-hovered peer-focus:text-input-placeholder-active peer-disabled:text-input-placeholder-disabled motion-safe:transition-all',
                     (inputType === 'checkbox' || inputType === 'radio') && [

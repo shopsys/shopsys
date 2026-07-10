@@ -3950,6 +3950,8 @@ export type TypeSettings = {
   defaultPricingGroupId: Scalars['Int']['output'];
   /** Timezone that is used for displaying time */
   displayTimezone: Scalars['String']['output'];
+  /** Returns the localized description of email delivery for electronic gift vouchers */
+  emailTransportDescription: Maybe<Scalars['String']['output']>;
   /** Returns true if Heureka is available for the current domain */
   heurekaEnabled: Scalars['Boolean']['output'];
   /** Main blog category URL and background image */

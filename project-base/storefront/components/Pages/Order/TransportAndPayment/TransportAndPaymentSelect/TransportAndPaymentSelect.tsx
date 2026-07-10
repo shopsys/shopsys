@@ -16,25 +16,35 @@ import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { EmailGiftVoucherInfo } from './EmailGiftVoucherInfo';
 import { PaymentListItem } from './PaymentSelectListItem';
 import { TransportGroupListItem } from './TransportGroupListItem';
 import { TransportListItem } from './TransportSelectListItem';
 
 type TransportAndPaymentSelectProps = {
     transports: TypeTransportWithAvailablePaymentsFragment[];
+    emailTransportDescription: string | null;
     lastOrderPickupPlace: StoreOrPacketeryPoint | null;
     changeTransportInCart: ChangeTransportInCart;
     changePaymentInCart: ChangePaymentInCart;
     isTransportSelectionLoading: boolean;
+    hasElectronicGiftVouchers: boolean;
+    isEmailTransportPreselected: boolean;
+    isSingularElectronicGiftVoucher: boolean;
 };
 
 export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     transports,
+    emailTransportDescription,
     lastOrderPickupPlace,
     changeTransportInCart,
     changePaymentInCart,
     isTransportSelectionLoading,
+    hasElectronicGiftVouchers,
+    isEmailTransportPreselected,
+    isSingularElectronicGiftVoucher,
 }) => {
     const { t } = useTranslation();
     const { transport, pickupPlace, payment } = useCurrentCart();
@@ -51,6 +61,28 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const shouldDisplayTransportGroups = getShouldDisplayTransportGroups(transportGroupChoices);
     const transportsWithoutGroup = useMemo(() => getTransportsWithoutGroup(transports), [transports]);
     const transportsToDisplay = shouldDisplayTransportGroups ? transportsWithoutGroup : transports;
+    // the gift voucher payment is never selected by the customer, it is preselected automatically once there is nothing left to pay
+    // customers who cannot see prices cannot authorize an online payment, so gateway payments are not offered to them
+    const selectablePayments = useMemo(
+        () =>
+            transport?.payments.filter(
+                (paymentItem) =>
+                    paymentItem.type !== TypePaymentTypeEnum.GiftVoucher &&
+                    (canSeePrices || !getIsPaymentWithPaymentGate(paymentItem.type)),
+            ) ?? [],
+        [transport, canSeePrices],
+    );
+    const giftVoucherPayment = transport?.payments.find(
+        (paymentItem) => paymentItem.type === TypePaymentTypeEnum.GiftVoucher,
+    );
+    const onlySelectablePayment = selectablePayments.length === 1 ? selectablePayments[0] : undefined;
+    const paymentToAutoSelect = isNothingLeftToPay ? giftVoucherPayment : onlySelectablePayment;
+    const automaticPaymentSelectionAttemptRef = useRef<string | null>(null);
+    const paymentHeadingRef = useRef<HTMLHeadingElement>(null);
+    const isPaidByGiftVoucher = isNothingLeftToPay && payment?.type === TypePaymentTypeEnum.GiftVoucher;
+    const shouldShowGiftVoucherWarning =
+        transport !== null && !isChangingTransportInCart && giftVouchersExceedPayableAmount;
+    const shouldShowPaidByGiftVoucherInfo = transport !== null && !isTransportSelectionLoading && isPaidByGiftVoucher;
     const shouldShowSelectedTransport = !!transport;
     const shouldShowTransportList = !transport;
     const shouldShowSelectedPayment = !!payment;
@@ -106,88 +138,106 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             <PacketeryContainer />
 
             <div data-tid={TIDs.pages_order_transport}>
-                <div className="mb-3 flex items-center justify-between">
-                    <h2 className="h4">{t('Choose transport')}</h2>
-
-                    <AnimatePresence initial={false}>
-                        {!!transport && transports.length > 1 && (
-                            <AnimateCollapseDiv className="flex! relative flex-col" keyName="transport-reset">
-                                <ResetButton
-                                    disabled={isTransportSelectionLoading}
-                                    text={t('Change transport type')}
-                                    tid={TIDs.reset_transport_button}
-                                    onClick={resetSelectedTransportGroupAndPayment}
+                {isEmailTransportPreselected ? (
+                    <EmailGiftVoucherInfo
+                        description={emailTransportDescription}
+                        isSingular={isSingularElectronicGiftVoucher}
+                    />
+                ) : (
+                    <>
+                        {hasElectronicGiftVouchers && (
+                            <div className="mb-3">
+                                <EmailGiftVoucherInfo
+                                    description={emailTransportDescription}
+                                    isSingular={isSingularElectronicGiftVoucher}
                                 />
-                            </AnimateCollapseDiv>
+                            </div>
                         )}
-                    </AnimatePresence>
-                </div>
+                        <div className="mb-3 flex items-center justify-between">
+                            <h2 className="h4">{t('Choose transport')}</h2>
 
-                <fieldset>
-                    <legend className="sr-only">{t('Choose transport type')}</legend>
-
-                    <ul>
-                        <AnimatePresence initial={false}>
-                            {shouldShowSelectedTransport && (
-                                <AnimateCollapseDiv
-                                    className="block! relative"
-                                    disableAnimation={transports.length === 1}
-                                    keyName="transport-selected"
-                                >
-                                    <TransportListItem
-                                        isActive
-                                        changeTransport={changeTransportByInputMethod}
-                                        disabled={isTransportSelectionLoading}
-                                        openPickupPlacePopup={() => openPickupPlacePopup(transport.uuid)}
-                                        pickupPlace={pickupPlace}
-                                        transport={transport}
-                                    />
-                                </AnimateCollapseDiv>
-                            )}
-                        </AnimatePresence>
-
-                        <AnimatePresence initial={false}>
-                            {shouldShowTransportList && (
-                                <AnimateCollapseDiv
-                                    className="block! relative"
-                                    disableAnimation={transports.length === 1}
-                                    keyName="transport-list"
-                                >
-                                    {shouldDisplayTransportGroups &&
-                                        transportGroupChoices.map(({ group, transports: groupTransports }) => {
-                                            const isTransportGroupSelected = selectedTransportGroupUuid === group.uuid;
-
-                                            return (
-                                                <TransportGroupListItem
-                                                    key={group.uuid}
-                                                    changeTransport={changeTransportByInputMethod}
-                                                    group={group}
-                                                    isSelected={isTransportGroupSelected}
-                                                    isTransportSelectionLoading={isTransportSelectionLoading}
-                                                    pickupPlace={pickupPlace}
-                                                    toggleSelectedTransportGroup={toggleSelectedTransportGroup}
-                                                    transports={groupTransports}
-                                                />
-                                            );
-                                        })}
-
-                                    {transportsToDisplay.map((transportItem) => (
-                                        <TransportListItem
-                                            key={transportItem.uuid}
-                                            changeTransport={changeTransportByInputMethod}
-                                            disabled={
-                                                isTransportSelectionLoading ||
-                                                transportItem.productsBlockingSelectionInCart.length > 0
-                                            }
-                                            pickupPlace={pickupPlace}
-                                            transport={transportItem}
+                            <AnimatePresence initial={false}>
+                                {!!transport && transports.length > 1 && (
+                                    <AnimateCollapseDiv className="flex! relative flex-col" keyName="transport-reset">
+                                        <ResetButton
+                                            disabled={isTransportSelectionLoading}
+                                            text={t('Change transport type')}
+                                            tid={TIDs.reset_transport_button}
+                                            onClick={resetSelectedTransportGroupAndPayment}
                                         />
-                                    ))}
-                                </AnimateCollapseDiv>
-                            )}
-                        </AnimatePresence>
-                    </ul>
-                </fieldset>
+                                    </AnimateCollapseDiv>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        <fieldset>
+                            <legend className="sr-only">{t('Choose transport type')}</legend>
+
+                            <ul>
+                                <AnimatePresence initial={false}>
+                                    {shouldShowSelectedTransport && (
+                                        <AnimateCollapseDiv
+                                            className="block! relative"
+                                            disableAnimation={transports.length === 1}
+                                            keyName="transport-selected"
+                                        >
+                                            <TransportListItem
+                                                isActive
+                                                changeTransport={changeTransportByInputMethod}
+                                                disabled={isTransportSelectionLoading}
+                                                openPickupPlacePopup={() => openPickupPlacePopup(transport.uuid)}
+                                                pickupPlace={pickupPlace}
+                                                transport={transport}
+                                            />
+                                        </AnimateCollapseDiv>
+                                    )}
+                                </AnimatePresence>
+
+                                <AnimatePresence initial={false}>
+                                    {shouldShowTransportList && (
+                                        <AnimateCollapseDiv
+                                            className="block! relative"
+                                            disableAnimation={transports.length === 1}
+                                            keyName="transport-list"
+                                        >
+                                            {shouldDisplayTransportGroups &&
+                                                transportGroupChoices.map(({ group, transports: groupTransports }) => {
+                                                    const isTransportGroupSelected =
+                                                        selectedTransportGroupUuid === group.uuid;
+
+                                                    return (
+                                                        <TransportGroupListItem
+                                                            key={group.uuid}
+                                                            changeTransport={changeTransportByInputMethod}
+                                                            group={group}
+                                                            isSelected={isTransportGroupSelected}
+                                                            isTransportSelectionLoading={isTransportSelectionLoading}
+                                                            pickupPlace={pickupPlace}
+                                                            toggleSelectedTransportGroup={toggleSelectedTransportGroup}
+                                                            transports={groupTransports}
+                                                        />
+                                                    );
+                                                })}
+
+                                            {transportsToDisplay.map((transportItem) => (
+                                                <TransportListItem
+                                                    key={transportItem.uuid}
+                                                    changeTransport={changeTransportByInputMethod}
+                                                    disabled={
+                                                        isTransportSelectionLoading ||
+                                                        transportItem.productsBlockingSelectionInCart.length > 0
+                                                    }
+                                                    pickupPlace={pickupPlace}
+                                                    transport={transportItem}
+                                                />
+                                            ))}
+                                        </AnimateCollapseDiv>
+                                    )}
+                                </AnimatePresence>
+                            </ul>
+                        </fieldset>
+                    </>
+                )}
             </div>
 
             <AnimatePresence initial={false}>

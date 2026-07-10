@@ -10842,6 +10842,15 @@ Timezone that is used for displaying time
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="settings.emailtransportdescription">emailTransportDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Returns the localized description of email delivery for electronic gift vouchers
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="settings.heurekaenabled">heurekaEnabled</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>

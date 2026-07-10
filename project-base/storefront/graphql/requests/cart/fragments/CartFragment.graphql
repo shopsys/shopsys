@@ -32,6 +32,13 @@ fragment CartFragment on Cart {
     promoCodes {
         ...PromoCodeFragment
     }
+    giftVouchers {
+        ...AppliedGiftVoucherFragment
+    }
+    remainingAmountToPay
+    remainingItemsAmountToPay
+    isNothingLeftToPay
+    giftVouchersExceedPayableAmount
     selectedPickupPlaceIdentifier
     paymentGoPayBankSwift
     roundingPrice {

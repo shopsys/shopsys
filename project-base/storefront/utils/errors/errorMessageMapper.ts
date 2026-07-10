@@ -30,14 +30,15 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'product-reviews-disabled': t('Product reviews are not available.'),
         'register-by-order-is-not-possible': t('It was not possible to create register new user from the order'),
         'store-not-found': t('Store not found.'),
+        'too-many-code-application-attempts': t('Too many attempts to apply a code. Try again later.'),
         'too-many-login-attempts': t('Too many login attempts. Try again later.'),
         'too-many-store-search-attempts': t('Too many store search attempts. Try again later.'),
         // Cart mutation errors
         'add-order-items-error': t('Could not prefill your cart.'),
         'add-to-cart-error': t('Unable to add product to cart.'),
+        'apply-code-error': t('There was an error while applying the code to the order.'),
+        'remove-code-error': t('There was an error while removing the code from the order.'),
         'payment-error': t('There was an error while changing the payment method.'),
-        'promo-code-apply-error': t('There was an error while adding a promo code to the order.'),
-        'promo-code-remove-error': t('There was an error while removing the promo code from the order.'),
         'remove-from-cart-error': t('Unable to remove product from cart.'),
         'transport-error': t('There was an error while changing the transport method.'),
     };

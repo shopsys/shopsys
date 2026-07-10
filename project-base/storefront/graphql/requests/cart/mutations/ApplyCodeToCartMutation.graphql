@@ -1,0 +1,5 @@
+mutation ApplyCodeToCartMutation($input: ApplyCodeToCartInput!) {
+    ApplyCodeToCart(input: $input) {
+        ...CartFragment
+    }
+}

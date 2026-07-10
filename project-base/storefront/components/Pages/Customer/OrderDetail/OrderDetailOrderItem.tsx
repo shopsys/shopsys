@@ -7,7 +7,7 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import { TypeOrderItemTypeEnum } from 'graphql/types';
+import { TypeOrderItemTypeEnum, TypeProductTypeEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
@@ -52,7 +52,8 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
         isUserLoggedIn &&
         isOrderFromRegisteredCustomer &&
         orderItem.order.withdrawalRequest === null &&
-        orderItem.type === TypeOrderItemTypeEnum.Product;
+        orderItem.type === TypeOrderItemTypeEnum.Product &&
+        orderItem.product?.productType !== TypeProductTypeEnum.ElectronicGiftVoucher;
     const canShowProductReviewAction =
         !isReviewAvailabilityLoading &&
         settingsData?.settings?.productReviewsEnabled === true &&

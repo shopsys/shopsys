@@ -3154,6 +3154,8 @@ type Settings {
   defaultPricingGroupId: Int!
   "Timezone that is used for displaying time"
   displayTimezone: String!
+  "Returns the localized description of email delivery for electronic gift vouchers"
+  emailTransportDescription: String
   "Returns true if Heureka is available for the current domain"
   heurekaEnabled: Boolean!
   "Main blog category URL and background image"

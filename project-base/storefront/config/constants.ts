@@ -1,4 +1,4 @@
-import { TypeOrderItemTypeEnum, TypeProductOrderingModeEnum } from 'graphql/types';
+import { TypeOrderItemTypeEnum, TypeProductOrderingModeEnum, TypeProductTypeEnum } from 'graphql/types';
 
 export const DEFAULT_PAGE_SIZE = 30;
 export const DEFAULT_ORDERS_SIZE = 28;
@@ -42,4 +42,5 @@ export const DEFAULT_ORDERED_ITEMS_FILTER = {
     catnum: null,
     productUuid: null,
     type: TypeOrderItemTypeEnum.Product,
+    excludeProductTypes: [TypeProductTypeEnum.ElectronicGiftVoucher],
 };

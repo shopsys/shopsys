@@ -62,6 +62,10 @@ export const getTransportUnavailabilityHeading = (
     switch (unavailabilityReason) {
         case TypeTransportUnavailabilityReasonInCartEnum.PersonalPickupRequired:
             return t('These products can only be picked up personally:');
+        case TypeTransportUnavailabilityReasonInCartEnum.ElectronicGiftVoucherOnly:
+            return t('These products can only be delivered by email:');
+        case TypeTransportUnavailabilityReasonInCartEnum.EmailTransportNotAllowed:
+            return t('These products cannot be delivered by email:');
         default:
             return t('These products cannot be delivered using this transport:');
     }
@@ -281,6 +285,7 @@ export const useTransportChangeInSelect = (
 export const useLoadTransportAndPaymentFromLastOrder = (
     changeTransportInCart: ChangeTransportInCart,
     changePaymentInCart: ChangePaymentInCart,
+    isEmailTransportPreselected: boolean,
 ): [boolean, StoreOrPacketeryPoint | null] => {
     const client = useClient();
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -369,11 +374,11 @@ export const useLoadTransportAndPaymentFromLastOrder = (
     });
 
     useEffect(() => {
-        if (hasCart && isUserLoggedIn && !hasLoadedFromLastOrderRef.current) {
+        if (hasCart && isUserLoggedIn && !isEmailTransportPreselected && !hasLoadedFromLastOrderRef.current) {
             hasLoadedFromLastOrderRef.current = true;
             onLoadFromLastOrder();
         }
-    }, [hasCart, isUserLoggedIn]);
+    }, [hasCart, isUserLoggedIn, isEmailTransportPreselected]);
 
     return [isLoadingTransportAndPaymentFromLastOrder, lastOrderPickupPlace];
 };
