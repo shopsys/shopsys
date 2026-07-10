@@ -331,6 +331,9 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Cancelled"
+msgstr ""
+
 msgid "Catalog number"
 msgstr ""
 
@@ -358,6 +361,9 @@ msgstr ""
 msgid "Change for"
 msgstr ""
 
+msgid "Change log"
+msgstr ""
+
 msgid "Choose"
 msgstr ""
 
@@ -383,6 +389,9 @@ msgid "Closed days"
 msgstr ""
 
 msgid "Closing modules"
+msgstr ""
+
+msgid "Code"
 msgstr ""
 
 msgid "Code can't be modified because it is used for pairing with existing orders."
@@ -503,6 +512,9 @@ msgid "Create currency"
 msgstr ""
 
 msgid "Create flag"
+msgstr ""
+
+msgid "Create gift voucher"
 msgstr ""
 
 msgid "Create new administrator"
@@ -760,6 +772,9 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
+msgid "Download PDF"
+msgstr ""
+
 msgid "Draft"
 msgstr ""
 
@@ -890,6 +905,9 @@ msgid "Editing flag"
 msgstr ""
 
 msgid "Editing gift plan"
+msgstr ""
+
+msgid "Editing gift voucher"
 msgstr ""
 
 msgid "Editing holiday / internal day"
@@ -1085,6 +1103,12 @@ msgid "Gift plans"
 msgstr ""
 
 msgid "Gift price"
+msgstr ""
+
+msgid "Gift voucher"
+msgstr ""
+
+msgid "Gift vouchers"
 msgstr ""
 
 msgid "Go to Frontend"
@@ -1387,6 +1411,9 @@ msgstr ""
 msgid "New gift plan"
 msgstr ""
 
+msgid "New gift voucher"
+msgstr ""
+
 msgid "New navigation item"
 msgstr ""
 
@@ -1502,6 +1529,9 @@ msgid "No flags found. You have to create some first."
 msgstr ""
 
 msgid "No gift plan found. You have to create some first."
+msgstr ""
+
+msgid "No gift vouchers found."
 msgstr ""
 
 msgid "No inquiries found."
@@ -1627,6 +1657,9 @@ msgstr ""
 msgid "Order detail"
 msgstr ""
 
+msgid "Order has been marked as paid."
+msgstr ""
+
 msgid "Order has not been sent to GoPay"
 msgstr ""
 
@@ -1673,6 +1706,9 @@ msgid "Origin"
 msgstr ""
 
 msgid "Overview"
+msgstr ""
+
+msgid "Paid"
 msgstr ""
 
 msgid "Paid amount"
@@ -1882,6 +1918,15 @@ msgstr ""
 msgid "Record is not present in the Elasticsearch for the selected entity and domain."
 msgstr ""
 
+msgid "Redeemed"
+msgstr ""
+
+msgid "Redeemed at"
+msgstr ""
+
+msgid "Redeemed gift vouchers"
+msgstr ""
+
 msgid "Refund has been sent."
 msgstr ""
 
@@ -2035,6 +2080,9 @@ msgstr "Search"
 msgid "Search by author name..."
 msgstr ""
 
+msgid "Search by code or customer email..."
+msgstr ""
+
 msgid "Search by code..."
 msgstr ""
 
@@ -2174,6 +2222,9 @@ msgid "Shipping"
 msgstr ""
 
 msgid "Shipping instructions"
+msgstr ""
+
+msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
 msgstr ""
 
 msgid "Shippings"
@@ -2464,10 +2515,14 @@ msgstr ""
 msgid "Unlimited"
 msgstr ""
 
+msgid "Unpaid"
+msgstr ""
+
 msgid "Unpin"
 msgstr ""
 
 msgid "Unregistered"
+msgid "Unredeemed"
 msgstr ""
 
 msgid "Unused friendly URL list"

@@ -1,0 +1,27 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Gift vouchers'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Gift vouchers'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_giftvoucher_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create gift voucher'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ form_start(quickSearchForm) }}
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        form_input: quickSearchForm.text,
+        form_submit: quickSearchForm.submit,
+        placeholder: 'Search by code or customer email...'|trans
+    } %}
+    {{ form_end(quickSearchForm) }}
+
+    {{ gridView.render() }}
+{% endblock %}
