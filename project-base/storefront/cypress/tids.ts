@@ -54,6 +54,7 @@ export enum TIDs {
     blocks_simplenavigation_ = 'blocks_simplenavigation_',
     product_detail_main_image = 'product_detail_main_image',
     product_list_item_image = 'product_list_item_image',
+    grapesjs_product_hero = 'grapesjs_product_hero',
     product_gallery_image = 'product_gallery_image',
     product_gallery_video = 'product_gallery_video',
     product_price = 'product_price',

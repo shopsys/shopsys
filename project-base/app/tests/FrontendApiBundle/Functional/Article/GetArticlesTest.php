@@ -211,6 +211,7 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ) . '
+                    |||[gjc-comp-ProductList&#61;9177759,5964035]|||
                     |||[gjc-comp-ProductList&#61;9177759,9176508,5965879P,532564,1532564,5960453]|||
                     <div class="row">
                         <div class="column">

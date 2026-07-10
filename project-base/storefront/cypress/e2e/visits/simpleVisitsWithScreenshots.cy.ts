@@ -17,7 +17,7 @@ describe('Simple page visit tests with screenshots', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Homepage] should visit homepage with screenshot', function () {
+    it('[Homepage] should visit homepage with screenshot', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
         changeBlogArticleDynamicPartsToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'homepage', {
@@ -33,7 +33,7 @@ describe('Simple page visit tests with screenshots', () => {
         });
     });
 
-    it('[Product Detail] should visit product detail with screenshot', function () {
+    it('[Product Detail] should visit product detail with screenshot', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'product detail', {
             blackout: [
@@ -48,7 +48,7 @@ describe('Simple page visit tests with screenshots', () => {
         });
     });
 
-    it('[Category Detail] should visit category detail with screenshot', function () {
+    it('[Category Detail] should visit category detail with screenshot', () => {
         visitEntityByUuid('category', staticData.categories.personalComputers.uuid);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'category detail', {
             blackout: [
@@ -61,10 +61,26 @@ describe('Simple page visit tests with screenshots', () => {
         });
     });
 
-    it('[Blog Detail] should visit blog article detail with screenshot', function () {
+    it('[Blog Detail] should visit blog article detail with screenshot', () => {
         visitEntityByUuid('blogArticle', staticData.blogArticle.grapesJs.uuid);
         changeBlogArticleDynamicPartsToStaticDemodata();
+        cy.getByTID([TIDs.grapesjs_product_hero])
+            .should('be.visible')
+            .and('have.attr', 'data-product-catnum', staticData.products.panasonicDmcFt5ep.catnum);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'blog article detail', {
+            blackout: [
+                { tid: TIDs.product_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
+                { tid: TIDs.footer_copyright },
+            ],
+        });
+    });
+
+    it('[Article Detail] should visit article detail with product hero and screenshot', () => {
+        visitEntityByUuid('article', staticData.article.forPress.uuid);
+        cy.getByTID([TIDs.grapesjs_product_hero]).should('be.visible');
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'article detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
                 { tid: TIDs.footer_social_links },

@@ -85,6 +85,10 @@ export const staticData = {
             uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb',
             catnum: '9176588',
         },
+        panasonicDmcFt5ep: {
+            catnum: '5965907',
+            name: 'PANASONIC DMC FT5EP',
+        },
         delonghi: {
             uuid: '7c476c2b-55a9-5195-9415-6a0874560a32',
             catnum: '9771339',
@@ -109,6 +113,11 @@ export const staticData = {
         publicationDate: '10/26/1999',
         grapesJs: {
             uuid: 'cf500b03-d2e4-5549-b3af-cefed894c1b4',
+        },
+    },
+    article: {
+        forPress: {
+            uuid: 'a7e526ef-34cd-512f-afbf-4984da1fd780',
         },
     },
     b2bOwner: {

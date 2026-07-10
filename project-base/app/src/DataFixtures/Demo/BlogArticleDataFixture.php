@@ -420,16 +420,26 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
                     <p>
                         <strong>TIP:</strong> Mauris vehicula lacinia, quis nostrud exercitation ullamco laboris ...
                     </p>
+                </div>
 
+                <div class="gjs-text-ckeditor">
+                    <h6>Recommended product</h6>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate.
+                    </p>
+                </div>
+
+                <div class="gjs-products" data-products="5965907">
+                    <div data-product="5965907" data-product-name="PANASONIC DMC FT5EP" class="gjs-product"></div>
+                </div>
+
+                <div class="gjs-text-ckeditor">
                     <h5>Nam libero tempore, cum soluta nobis est eligendi</h5>
                     <p>
                         Proin in tellus sit amet nibh dignissim sagittis. Integer in sapien. Curabitur sagittis hendrerit ante. Praesent in mauris eu tortor porttitor accumsan. Aliquam in lorem sit amet leo accumsan lacinia. Nullam rhoncus aliquam metus. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Aliquam erat volutpat. Duis ante orci, molestie vitae vehicula venenatis, tincidunt ac pede. Duis condimentum augue id magna semper rutrum. Etiam bibendum elit eget erat.
                     </p>
 
                     <h6>Products</h6>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate.
-                    </p>
                 </div>
 
                 <div class="gjs-products" data-products="9177759,9176508,5965879P">
