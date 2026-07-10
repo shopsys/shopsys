@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucherFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
@@ -49,6 +50,7 @@ final class PromoCodeFormType extends AbstractType
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly BrandFacade $brandFacade,
         private readonly PromoCodeTypeEnum $promoCodeTypeEnum,
+        private readonly GiftVoucherFacade $giftVoucherFacade,
     ) {
     }
 
@@ -357,6 +359,10 @@ final class PromoCodeFormType extends AbstractType
 
         if ($promoCode !== null) {
             $context->buildViolation('Promo code with this code already exists')->atPath('code')->addViolation();
+        }
+
+        if ($this->giftVoucherFacade->findByCode($promoCodeData->code) !== null) {
+            $context->buildViolation('A gift voucher with this code already exists')->atPath('code')->addViolation();
         }
     }
 

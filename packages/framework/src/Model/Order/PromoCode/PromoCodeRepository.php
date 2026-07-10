@@ -33,6 +33,17 @@ class PromoCodeRepository
         ]);
     }
 
+    public function existsByCode(string $code): bool
+    {
+        $count = $this->getAllQueryBuilder()
+            ->select('COUNT(pc.id)')
+            ->where('LOWER(pc.code) = LOWER(:code)')->setParameter('code', $code)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $count > 0;
+    }
+
     public function getById(int $promoCodeId): PromoCode
     {
         $promoCode = $this->findById($promoCodeId);
