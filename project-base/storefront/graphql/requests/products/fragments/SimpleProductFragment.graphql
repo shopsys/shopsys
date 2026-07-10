@@ -5,6 +5,7 @@ fragment SimpleProductFragment on Product {
     catalogNumber
     fullName
     slug
+    productType
     price {
         ...ProductPriceFragment
     }

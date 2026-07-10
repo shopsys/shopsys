@@ -29,14 +29,15 @@ const ApplicationErrors = {
     'product-reviews-disabled': 'flash-message',
     'register-by-order-is-not-possible': 'flash-message',
     'store-not-found': 'flash-message',
+    'too-many-code-application-attempts': 'flash-message',
     'too-many-login-attempts': 'flash-message',
     'too-many-store-search-attempts': 'flash-message',
     // Cart mutation errors - handled by hooks, messages centralized here
     'add-order-items-error': 'flash-message',
     'add-to-cart-error': 'flash-message',
+    'apply-code-error': 'flash-message',
+    'remove-code-error': 'flash-message',
     'payment-error': 'flash-message',
-    'promo-code-apply-error': 'flash-message',
-    'promo-code-remove-error': 'flash-message',
     'remove-from-cart-error': 'flash-message',
     'transport-error': 'flash-message',
 

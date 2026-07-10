@@ -94,6 +94,9 @@ export enum TIDs {
     blocks_promocode_apply_button = 'blocks_promocode_apply_button',
     blocks_promocode_promocodeinfo_code = 'blocks_promocode_promocodeinfo_code',
     blocks_promocode_remove_button = 'blocks_promocode_remove_button',
+    blocks_promocode_giftvoucherinfo_code = 'blocks_promocode_giftvoucherinfo_code',
+    blocks_promocode_giftvoucher_remove_button = 'blocks_promocode_giftvoucher_remove_button',
+    cart_preview_remaining_amount_to_pay = 'cart_preview_remaining_amount_to_pay',
 
     // Order Process
     blocks_orderaction_next = 'blocks_orderaction_next',
@@ -102,6 +105,8 @@ export enum TIDs {
     pages_order_pickupplace_popup_confirm = 'pages_order_pickupplace_popup_confirm',
     pages_order_transport = 'pages_order_transport',
     pages_order_payment = 'pages_order_payment',
+    pages_order_email_gift_voucher_info = 'pages_order_email_gift_voucher_info',
+    pages_order_gift_vouchers_exceed_payable_amount_warning = 'pages_order_gift_vouchers_exceed_payable_amount_warning',
     transport_group_button = 'transport_group_button',
     transport_group_panel = 'transport_group_panel',
     reset_transport_button = 'reset_transport_button',

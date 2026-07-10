@@ -3542,6 +3542,15 @@ Total price with VAT reduced by applied gift vouchers, never below zero
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="cart.remainingitemsamounttopay">remainingItemsAmountToPay</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cart.roundingprice">roundingPrice</strong></td>
 <td valign="top"><a href="#price">Price</a></td>
 <td>

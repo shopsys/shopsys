@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { ProductListItemImage } from 'components/Blocks/Product/ProductsList/ProductListItemImage';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const productImagesQueryMocks = vi.hoisted(() => ({
@@ -65,6 +65,7 @@ const product = {
     categories: [{ __typename: 'Category', name: 'Test category' }],
     isMainVariant: false,
     isInquiryType: false,
+    productType: TypeProductTypeEnum.Basic,
     unit: { __typename: 'Unit', name: 'pcs' },
 } satisfies TypeListedProductFragment;
 

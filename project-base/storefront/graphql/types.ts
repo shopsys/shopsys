@@ -557,6 +557,8 @@ export type TypeCart = {
   remainingAmountForFreeTransport: Maybe<Scalars['Money']['output']>;
   /** Total price with VAT reduced by applied gift vouchers, never below zero */
   remainingAmountToPay: Scalars['Money']['output'];
+  /** Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step */
+  remainingItemsAmountToPay: Scalars['Money']['output'];
   /** Rounding amount if payment has rounding allowed */
   roundingPrice: Maybe<TypePrice>;
   /** Selected pickup place identifier if provided */

@@ -286,18 +286,23 @@ export type GtmPaymentChangeEventType = GtmEventInterface<
 >;
 
 export type GtmCreateOrderEventOrderPartType = {
-    currencyCode: string;
+    currency: string;
     id: string;
-    valueWithoutVat: number | null;
-    valueWithVat: number | null;
-    vatAmount: number;
+    value: number | null;
+    valueWithTax: number | null;
+    valueTax: number;
     paymentPriceWithoutVat: number | null;
     paymentPriceWithVat: number | null;
     transportPriceWithoutVat: number | null;
     transportPriceWithVat: number | null;
     transportType: string;
     promoCodes?: string[];
+    coupons?: string[];
+    voucherAmount: number | null;
+    voucherAmountWithTax: number | null;
+    voucherName: string[];
     discountAmount: number | null;
+    discountAmountWithTax: number | null;
     paymentType: string;
     reviewConsents?: GtmReviewConsentsType;
     products: GtmCartItemType[] | undefined;

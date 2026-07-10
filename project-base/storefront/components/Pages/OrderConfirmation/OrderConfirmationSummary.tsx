@@ -1,6 +1,7 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 import { twJoin } from 'tailwind-merge';
+import { AppliedGiftVoucherType } from 'types/cart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
@@ -19,6 +20,8 @@ type OrderConfirmationSummaryProps = {
     roundingPrice?: TypePriceFragment | null;
     totalItemsPriceBeforeDiscount?: TypePriceFragment | null;
     totalDiscountPrice?: TypePriceFragment | null;
+    giftVouchers?: AppliedGiftVoucherType[];
+    remainingAmountToPay?: string;
 };
 
 export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
@@ -29,6 +32,8 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
     roundingPrice,
     totalItemsPriceBeforeDiscount,
     totalDiscountPrice,
+    giftVouchers,
+    remainingAmountToPay,
 }) => {
     const formatPrice = useFormatPrice();
     const { t } = useTranslation();
@@ -71,7 +76,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
 
             {promoCode && (
                 <div className={twJoin('flex items-center justify-between gap-4')}>
-                    {t('Promo code')}
+                    {t('Discount coupon')}
                     <Flag type="discount">{promoCode}</Flag>
                 </div>
             )}
@@ -109,6 +114,36 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
                             {formatPrice(totalPrice.priceWithoutVat)} {t('without VAT')}
                         </span>
                     </div>
+                </div>
+            )}
+
+            {!!giftVouchers?.length && (
+                <div className="flex flex-col gap-4">
+                    {giftVouchers.map((giftVoucher) => (
+                        <div key={giftVoucher.code} className="flex items-center justify-between gap-4">
+                            <span className="flex items-center gap-2">
+                                {t('Gift voucher')}
+
+                                <Flag type="discount">{giftVoucher.code}</Flag>
+                            </span>
+
+                            {isPriceVisible(giftVoucher.valueWithVat) && (
+                                <span className="whitespace-nowrap text-price-discounted">
+                                    {`-${formatPrice(giftVoucher.valueWithVat)}`}
+                                </span>
+                            )}
+                        </div>
+                    ))}
+
+                    {remainingAmountToPay !== undefined && isPriceVisible(remainingAmountToPay) && (
+                        <div className="flex items-baseline justify-between gap-4 border-border-less border-t-[3px] pt-4">
+                            <span className="text-lg">{t('Remaining to pay')}</span>
+
+                            <span className="whitespace-nowrap font-bold text-lg text-price-default">
+                                {formatPrice(remainingAmountToPay, { explicitZero: true })}
+                            </span>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

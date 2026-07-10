@@ -6,12 +6,16 @@ import { ContactInformationPersonalInformation } from 'components/Pages/Order/Co
 import { useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { isEmailTransport } from 'utils/packetery';
 import { ContactInformationBillingAddress } from './FormBlocks/ContactInformationBillingAddress';
 
 export const ContactInformationFormContent: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta();
+    const { transport } = useCurrentCart();
+    const isDeliveryByEmail = isEmailTransport(transport?.transportTypeCode);
 
     return (
         <>
@@ -19,7 +23,7 @@ export const ContactInformationFormContent: FC = () => {
 
             <ContactInformationBillingAddress />
 
-            <ContactInformationDeliveryAddress />
+            {!isDeliveryByEmail && <ContactInformationDeliveryAddress />}
 
             <FormBlockWrapper>
                 <TextInputControlled

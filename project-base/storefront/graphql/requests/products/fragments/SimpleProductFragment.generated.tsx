@@ -11,18 +11,29 @@ import { SimpleFlagFragment } from '../../flags/fragments/SimpleFlagFragment.gen
 import { AvailabilityFragment } from '../../availabilities/fragments/AvailabilityFragment.generated';
 /** Product Availability statuses */
 export type TypeAvailabilityStatusEnum =
-  /** Product is out of stock with a known expected restocking date */
-  | 'ExpectedRestock'
+  /** Product availability status for electronically delivered products */
+  | 'Digital'
   /** Product availability status in stock */
   | 'InStock'
   /** Product availability status out of stock */
   | 'OutOfStock';
 
-export type TypeSimpleProductFragment_MainVariant = { __typename: 'MainVariant', id: number, uuid: string, catalogNumber: string, fullName: string, slug: string, expectedRestockingDate: string | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } };
+/** One of possible product types */
+export type TypeProductTypeEnum =
+  /** Basic product */
+  | 'BASIC'
+  /** Gift voucher delivered by email after the order is paid */
+  | 'ELECTRONIC_GIFT_VOUCHER'
+  /** Product with inquiry form instead of add to cart button */
+  | 'INQUIRY'
+  /** Gift voucher delivered printed as a regular product */
+  | 'PRINTED_GIFT_VOUCHER';
 
-export type TypeSimpleProductFragment_RegularProduct = { __typename: 'RegularProduct', id: number, uuid: string, catalogNumber: string, fullName: string, slug: string, expectedRestockingDate: string | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } };
+export type TypeSimpleProductFragment_MainVariant = { __typename: 'MainVariant', id: number, uuid: string, catalogNumber: string, fullName: string, slug: string, productType: Types.TypeProductTypeEnum, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } };
 
-export type TypeSimpleProductFragment_Variant = { __typename: 'Variant', id: number, uuid: string, catalogNumber: string, fullName: string, slug: string, expectedRestockingDate: string | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } };
+export type TypeSimpleProductFragment_RegularProduct = { __typename: 'RegularProduct', id: number, uuid: string, catalogNumber: string, fullName: string, slug: string, productType: Types.TypeProductTypeEnum, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } };
+
+export type TypeSimpleProductFragment_Variant = { __typename: 'Variant', id: number, uuid: string, catalogNumber: string, fullName: string, slug: string, productType: Types.TypeProductTypeEnum, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } };
 
 export type TypeSimpleProductFragment =
   | TypeSimpleProductFragment_MainVariant
@@ -38,6 +49,7 @@ export const SimpleProductFragment = gql`
   catalogNumber
   fullName
   slug
+  productType
   price {
     ...ProductPriceFragment
   }
@@ -56,7 +68,6 @@ export const SimpleProductFragment = gql`
   flags {
     ...SimpleFlagFragment
   }
-  expectedRestockingDate
   availability {
     ...AvailabilityFragment
   }

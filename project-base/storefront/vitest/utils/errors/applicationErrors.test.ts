@@ -25,6 +25,7 @@ describe('isFlashMessageError', () => {
         'product-price-missing',
         'register-by-order-is-not-possible',
         'store-not-found',
+        'too-many-code-application-attempts',
         'too-many-login-attempts',
         'too-many-store-search-attempts',
     ])('should return true for flash-message code: %s', (code) => {
@@ -171,6 +172,7 @@ describe('error code classification coverage', () => {
             'product-price-missing',
             'register-by-order-is-not-possible',
             'store-not-found',
+            'too-many-code-application-attempts',
             'too-many-login-attempts',
             'too-many-store-search-attempts',
             // No-flash-message codes (logged but no toast)

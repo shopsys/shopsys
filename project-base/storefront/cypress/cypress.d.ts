@@ -23,6 +23,7 @@ declare global {
             waitForHydration(): Cypress.Chainable<void>;
             addProductToCartForTest(productUuid?: string, quantity?: number): Cypress.Chainable<any>;
             addPromoCodeToCartForTest(promoCode: string): Cypress.Chainable<any>;
+            addGiftVoucherToCartForTest(giftVoucherCode: string): Cypress.Chainable<any>;
             preselectTransportForTest(transportUuid: string, pickupPlaceIdentifier?: string): Cypress.Chainable<any>;
             preselectPaymentForTest(paymentUuid: string): Cypress.Chainable<any>;
             login(email?: string, password?: string): Cypress.Chainable<any>;

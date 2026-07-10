@@ -4,67 +4,69 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { PromoCodeFormType } from 'types/form';
+import { ApplyCodeFormType } from 'types/form';
 import { collapseExpandAnimation } from 'utils/animations/animationVariants';
-import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
+import { useApplyCodeToCart } from 'utils/cart/useApplyCodeToCart';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
+import { useApplyCodeForm, useApplyCodeFormMeta } from './applyCodeFormMeta';
 
-type PromoCodeFormProps = {
+type ApplyCodeFormProps = {
     isContentVisible: boolean;
 };
 
-export const PromoCodeForm: FC<PromoCodeFormProps> = ({ isContentVisible }) => {
-    const [formProviderMethods] = usePromoCodeForm();
-    const formMeta = usePromoCodeFormMeta();
+export const ApplyCodeForm: FC<ApplyCodeFormProps> = ({ isContentVisible }) => {
+    const [formProviderMethods] = useApplyCodeForm();
+    const formMeta = useApplyCodeFormMeta();
     const { t } = useTranslation();
-    const { applyPromoCodeToCart } = useApplyPromoCodeToCart({
-        success: t('Promo code was added to the order.'),
-    });
+    const { applyCodeToCart } = useApplyCodeToCart();
 
-    const onApplyPromoCodeHandler: SubmitHandler<PromoCodeFormType> = async (promoCodeFormData) => {
+    const onApplyCodeHandler: SubmitHandler<ApplyCodeFormType> = async (applyCodeFormData) => {
         blurInput();
-        await applyPromoCodeToCart(promoCodeFormData.promoCode);
+        const updatedCart = await applyCodeToCart(applyCodeFormData.code);
+
+        if (updatedCart) {
+            formProviderMethods.reset({ code: '' });
+        }
     };
 
     return (
-        <AnimatePresence initial={false}>
+        <AnimatePresence>
             {isContentVisible && (
                 <m.div
-                    key="promo-code"
+                    key="apply-code"
                     animate="open"
                     className="flex!"
                     exit="closed"
+                    id="apply-code-form"
                     initial="closed"
                     variants={collapseExpandAnimation}
                 >
                     <FormProvider {...formProviderMethods}>
                         <Form
-                            className="flex flex-col gap-2.5 sm:flex-row"
+                            className="grid w-full grid-cols-1 gap-2 px-3 pt-1 pb-3 sm:grid-cols-[minmax(0,1fr)_auto] [&>div:last-child]:w-full sm:[&>div:last-child]:w-fit"
                             formName={formMeta.formName}
-                            onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
+                            onSubmit={formProviderMethods.handleSubmit(onApplyCodeHandler)}
                         >
-                            <div className="max-w-60">
+                            <div className="w-full min-w-0">
                                 <TextInputControlled
-                                    isWithoutFormLineError
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    name={formMeta.fields.promoCode.name}
+                                    name={formMeta.fields.code.name}
                                     textInputProps={{
-                                        label: formMeta.fields.promoCode.label,
+                                        inputSize: 'small',
+                                        label: formMeta.fields.code.label,
                                         required: true,
                                     }}
                                 />
                             </div>
 
                             <SubmitButton
-                                aria-label={t('Apply code. Apply promo code', { ns: 'accessibility' })}
-                                className="self-start"
+                                aria-label={t('Apply discount coupon or gift voucher code', { ns: 'accessibility' })}
+                                className="h-12 w-full whitespace-nowrap py-0 sm:w-auto"
                                 hasDisabledCursor={!formProviderMethods.formState.isValid}
-                                size="xlarge"
+                                size="medium"
                                 tid={TIDs.blocks_promocode_apply_button}
-                                variant="secondary"
                             >
                                 {t('Apply code')}
                             </SubmitButton>

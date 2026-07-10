@@ -47,6 +47,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         payment: cart?.payment ?? null,
         paymentGoPayBankSwift: cart?.paymentGoPayBankSwift ?? null,
         promoCodes: cart?.promoCodes ?? [],
+        giftVouchers: cart?.giftVouchers ?? [],
         roundingPrice: cart?.roundingPrice ?? null,
         modifications: cart?.modifications ?? null,
     };

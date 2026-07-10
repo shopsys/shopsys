@@ -14,9 +14,9 @@ import {
     TypeAddToCartMutationVariables,
 } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
 import {
-    TypeApplyPromoCodeToCartMutation,
-    TypeApplyPromoCodeToCartMutationVariables,
-} from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.generated';
+    TypeApplyCodeToCartMutation,
+    TypeApplyCodeToCartMutationVariables,
+} from 'graphql/requests/cart/mutations/ApplyCodeToCartMutation.generated';
 import {
     TypeChangePaymentInCartMutation,
     TypeChangePaymentInCartMutationVariables,
@@ -26,13 +26,13 @@ import {
     TypeChangeTransportInCartMutationVariables,
 } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
 import {
+    TypeRemoveCodeFromCartMutation,
+    TypeRemoveCodeFromCartMutationVariables,
+} from 'graphql/requests/cart/mutations/RemoveCodeFromCartMutation.generated';
+import {
     TypeRemoveFromCartMutation,
     TypeRemoveFromCartMutationVariables,
 } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
-import {
-    TypeRemovePromoCodeFromCartMutation,
-    TypeRemovePromoCodeFromCartMutationVariables,
-} from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
 import {
     CartQueryDocument,
     TypeCartQuery,
@@ -163,19 +163,15 @@ export const cacheUpdates: UpdatesConfig = {
         RemoveFromCart(result: TypeRemoveFromCartMutation, _args: TypeRemoveFromCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.RemoveFromCart, result.RemoveFromCart.uuid);
         },
-        ApplyPromoCodeToCart(
-            result: TypeApplyPromoCodeToCartMutation,
-            _args: TypeApplyPromoCodeToCartMutationVariables,
-            cache,
-        ) {
-            manuallyUpdateCartQuery(cache, result.ApplyPromoCodeToCart, result.ApplyPromoCodeToCart.uuid);
+        ApplyCodeToCart(result: TypeApplyCodeToCartMutation, _args: TypeApplyCodeToCartMutationVariables, cache) {
+            manuallyUpdateCartQuery(cache, result.ApplyCodeToCart, result.ApplyCodeToCart.uuid);
         },
-        RemovePromoCodeFromCart(
-            result: TypeRemovePromoCodeFromCartMutation,
-            _args: TypeRemovePromoCodeFromCartMutationVariables,
+        RemoveCodeFromCart(
+            result: TypeRemoveCodeFromCartMutation,
+            _args: TypeRemoveCodeFromCartMutationVariables,
             cache,
         ) {
-            manuallyUpdateCartQuery(cache, result.RemovePromoCodeFromCart, result.RemovePromoCodeFromCart.uuid);
+            manuallyUpdateCartQuery(cache, result.RemoveCodeFromCart, result.RemoveCodeFromCart.uuid);
         },
         AddProductToList(result: TypeAddProductToListMutation, args: TypeAddProductToListMutationVariables, cache) {
             manuallyUpdateProductListQuery(args.input.productListInput, result.AddProductToList, cache);

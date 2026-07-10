@@ -9,7 +9,7 @@ type CartSummaryProps = {
 
 export const CartSummary: FC<CartSummaryProps> = ({ cartPreviewRef }) => (
     <div className="mt-5 vl:mt-8 flex vl:flex-row flex-col vl:justify-between gap-8">
-        <div className="flex w-full vl:max-w-106 flex-col gap-6 vl:gap-10">
+        <div className="flex w-full vl:max-w-106 flex-col gap-6">
             <FreeTransportRange />
 
             <PromoCode />

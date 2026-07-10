@@ -1,3 +1,4 @@
+import { TypeCartGiftVoucherModificationsFragment } from 'graphql/requests/cart/fragments/CartGiftVoucherModificationsFragment.generated';
 import { TypeCartItemModificationsFragment } from 'graphql/requests/cart/fragments/CartItemModificationsFragment.generated';
 import { TypeCartModificationsFragment } from 'graphql/requests/cart/fragments/CartModificationsFragment.generated';
 import { TypeCartPaymentModificationsFragment } from 'graphql/requests/cart/fragments/CartPaymentModificationsFragment.generated';
@@ -19,6 +20,7 @@ export const handleCartModifications = (
         ...handleCartPaymentModifications(cartModifications.paymentModifications, t),
         ...handleCartItemModifications(cartModifications.itemModifications, t),
         ...handleCartPromoCodeModifications(cartModifications.promoCodeModifications, t),
+        ...handleCartGiftVoucherModifications(cartModifications.giftVoucherModifications, t),
     ];
 
     if (allMessages.length > 0) {
@@ -123,6 +125,23 @@ const handleCartPromoCodeModifications = (
     for (const nonApplicablePromoCode of promoCodeModifications.noLongerApplicablePromoCode) {
         messages.push(
             t('The promo code {{ promoCode }} is no longer applicable.', { promoCode: nonApplicablePromoCode }),
+        );
+    }
+
+    return messages;
+};
+
+const handleCartGiftVoucherModifications = (
+    giftVoucherModifications: TypeCartGiftVoucherModificationsFragment,
+    t: Translate,
+): string[] => {
+    const messages: string[] = [];
+
+    for (const nonApplicableGiftVoucherCode of giftVoucherModifications.noLongerApplicableGiftVouchers) {
+        messages.push(
+            t('The gift voucher {{ giftVoucherCode }} is no longer applicable.', {
+                giftVoucherCode: nonApplicableGiftVoucherCode,
+            }),
         );
     }
 

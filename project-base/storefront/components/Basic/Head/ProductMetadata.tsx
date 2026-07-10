@@ -51,6 +51,7 @@ const schemaOrgAvailabilityByStatus: Record<TypeAvailabilityStatusEnum, string> 
     [TypeAvailabilityStatusEnum.InStock]: 'https://schema.org/InStock',
     [TypeAvailabilityStatusEnum.OutOfStock]: 'https://schema.org/OutOfStock',
     [TypeAvailabilityStatusEnum.ExpectedRestock]: 'https://schema.org/BackOrder',
+    [TypeAvailabilityStatusEnum.Digital]: 'https://schema.org/OnlineOnly',
 };
 
 const getSchemaOrgAvailability = (availabilityStatus: TypeAvailabilityStatusEnum): string =>

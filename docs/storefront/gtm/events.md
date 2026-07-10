@@ -420,17 +420,25 @@ This type represents the order part of the GtmCreateOrderEventType. It is stored
 
 ```ts
 export type GtmCreateOrderEventOrderPartType = {
-  currencyCode: string; // the code of the currency used on the domain
+  currency: string; // the code of the currency used on the domain
   id: string; // the ID of the order
-  valueWithoutVat: number; // the value of the products in the order without VAT
-  valueWithVat: number; // the value of the products in the order with VAT
-  vatAmount: number; // the total amount of VAT paid for the order
-  paymentPriceWithoutVat: number; // the price of the payment without VAT
-  paymentPriceWithVat: number; // the price of the payment with VAT
-  promoCodes: string[] | undefined; // any promo codes used for the order, if available
-  discountAmount: number | undefined; // the total amount of discounts applied to the order, if available
+  value: number | null; // the value of the order without VAT, null when prices are hidden for the user
+  valueWithTax: number | null; // the value of the order with VAT, null when prices are hidden for the user
+  valueTax: number; // the total amount of VAT paid for the order
+  paymentPriceWithoutVat: number | null; // the price of the payment without VAT, null when prices are hidden for the user
+  paymentPriceWithVat: number | null; // the price of the payment with VAT, null when prices are hidden for the user
+  transportPriceWithoutVat: number | null; // the price of the transport without VAT, null when no transport is selected or prices are hidden for the user
+  transportPriceWithVat: number | null; // the price of the transport with VAT, null when no transport is selected or prices are hidden for the user
+  transportType: string; // the name of the transport used for the order
+  promoCodes?: string[]; // any promo codes used for the order, if available
+  coupons?: string[]; // the same promo codes as in `promoCodes`, provided under the name expected by GA4
+  voucherAmount: number; // the total value of the gift vouchers applied to the order without VAT
+  voucherAmountWithTax: number; // the total value of the gift vouchers applied to the order with VAT
+  voucherName: string[]; // names of the purchased gift voucher products the applied vouchers were generated from, the voucher code is used as a fallback
+  discountAmount: number | null; // the total amount of discounts applied to the order without VAT, null when prices are hidden for the user
+  discountAmountWithTax: number | null; // the total amount of discounts applied to the order with VAT, null when prices are hidden for the user
   paymentType: string; // the type of payment used for the order
-  reviewConsents: GtmReviewConsentsType; // user's review consents
+  reviewConsents?: GtmReviewConsentsType; // user's review consents, if available
   products: GtmCartItemType[] | undefined; // information about the products in the order, if available
 };
 ```
@@ -453,10 +461,10 @@ This type is used for tracking when the user creates an order. It consists of th
 export type GtmCreateOrderEventType = GtmEventInterface<
     GtmEventType.create_order, // the type of the event
     {
-        ecommerce: GtmCreateOrderEventOrderPartType & GtmPurchaseEventPaymentPartType;
+        ecommerce: GtmCreateOrderEventOrderPartType & GtmPurchaseEventPaymentPartType & { arePricesHidden: boolean };
         user: GtmUserInfoType
     }
-
+>;
 ```
 
 ## GtmShowMessageEventType

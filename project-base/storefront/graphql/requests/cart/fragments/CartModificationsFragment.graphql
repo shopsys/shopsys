@@ -12,6 +12,9 @@ fragment CartModificationsFragment on CartModificationsResult {
     promoCodeModifications {
         ...CartPromoCodeModificationsFragment
     }
+    giftVoucherModifications {
+        ...CartGiftVoucherModificationsFragment
+    }
     someProductWasRemovedFromEshop
     multipleAddedProductModifications {
         notAddedProducts {

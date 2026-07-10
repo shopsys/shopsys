@@ -174,7 +174,9 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                             <OrderConfirmationProducts items={order.items} />
 
                             <OrderConfirmationSummary
+                                giftVouchers={order.giftVouchers}
                                 promoCode={order.promoCode}
+                                remainingAmountToPay={order.remainingAmountToPay}
                                 roundingPrice={orderRounding?.totalPrice}
                                 totalPrice={order.totalPrice}
                                 payment={{

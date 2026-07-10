@@ -30,6 +30,7 @@ import { FacebookIcon } from 'components/Basic/Icon/FacebookIcon';
 import { FacebookSimpleIcon } from 'components/Basic/Icon/FacebookSimpleIcon';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
+import { GiftIcon } from 'components/Basic/Icon/GiftIcon';
 import { GoogleIcon } from 'components/Basic/Icon/GoogleIcon';
 import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
 import { GoogleMapSearchMarkerIcon } from 'components/Basic/Icon/GoogleMapSearchMarkerIcon';
@@ -58,6 +59,7 @@ import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { StoreIcon } from 'components/Basic/Icon/StoreIcon';
+import { TagIcon } from 'components/Basic/Icon/TagIcon';
 import { ThumbUpIcon } from 'components/Basic/Icon/ThumbUpIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { TruckClockIcon } from 'components/Basic/Icon/TruckClockIcon';
@@ -184,6 +186,10 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">FilterIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <GiftIcon className="size-10" />
+                <span className="text-center text-xs break-all">GiftIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <GoogleIcon className="size-10" />
                 <span className="text-center text-xs break-all">GoogleIcon</span>
             </div>
@@ -294,6 +300,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <StoreIcon className="size-10" />
                 <span className="text-center text-xs break-all">StoreIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <TagIcon className="size-10" />
+                <span className="text-center text-xs break-all">TagIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <ThumbUpIcon className="size-10" />

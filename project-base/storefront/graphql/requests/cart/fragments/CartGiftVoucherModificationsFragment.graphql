@@ -1,0 +1,4 @@
+fragment CartGiftVoucherModificationsFragment on CartGiftVoucherModificationsResult {
+    __typename
+    noLongerApplicableGiftVouchers
+}

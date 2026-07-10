@@ -1,5 +1,5 @@
 import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { TypePhoneDataInput, TypePromoCode, TypeRegistrationDataInput } from '../../graphql/types';
+import { TypeAppliedGiftVoucher, TypePhoneDataInput, TypePromoCode, TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
 import { b2bDomain, PERSIST_STORE_NAME, staticData } from 'fixtures/demodata';
 
@@ -194,11 +194,14 @@ Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
                 method: 'POST',
                 url: 'graphql/',
                 body: JSON.stringify({
-                    operationName: 'ApplyPromoCodeToCartMutation',
-                    query: `mutation ApplyPromoCodeToCartMutation($input: ApplyPromoCodeToCartInput!) {
-                    ApplyPromoCodeToCart(input: $input) {
+                    operationName: 'ApplyCodeToCartMutation',
+                    query: `mutation ApplyCodeToCartMutation($input: ApplyCodeToCartInput!) {
+                    ApplyCodeToCart(input: $input) {
                         uuid
                         promoCodes {
+                            code
+                        }
+                        giftVouchers {
                             code
                         }
                     }
@@ -206,7 +209,7 @@ Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
                     variables: {
                         input: {
                             cartUuid,
-                            promoCode,
+                            code: promoCode,
                         },
                     },
                 }),
@@ -216,14 +219,65 @@ Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
                 },
                 failOnStatusCode: false,
             })
-            .checkGQL('ApplyPromoCodeToCartMutation')
-            .its('ApplyPromoCodeToCart')
+            .checkGQL('ApplyCodeToCartMutation')
+            .its('ApplyCodeToCart')
             .then((cart) => {
                 expect(cart.uuid).equal(cartUuid);
-                const responsePromoCode = cart.promoCodes.find(
-                    (promoCodeLocal: TypePromoCode) => promoCodeLocal.code === promoCode,
-                )?.code;
-                expect(responsePromoCode).equal(promoCode);
+                const appliedCodes = [
+                    ...cart.promoCodes.map((promoCodeLocal: TypePromoCode) => promoCodeLocal.code),
+                    ...cart.giftVouchers.map((giftVoucher: TypeAppliedGiftVoucher) => giftVoucher.code),
+                ];
+                expect(appliedCodes).to.include(promoCode);
+            });
+    });
+});
+
+Cypress.Commands.add('addGiftVoucherToCartForTest', (giftVoucherCode: string) => {
+    const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
+
+    return cy.getCookie('accessToken-1').then((cookie) => {
+        const accessToken = cookie?.value;
+        let cartUuid: string | null = null;
+
+        if (!accessToken && currentAppStoreAsString) {
+            cartUuid = JSON.parse(currentAppStoreAsString).state.cartUuid;
+        }
+
+        return cy
+            .request({
+                method: 'POST',
+                url: 'graphql/',
+                body: JSON.stringify({
+                    operationName: 'ApplyCodeToCartMutation',
+                    query: `mutation ApplyCodeToCartMutation($input: ApplyCodeToCartInput!) {
+                    ApplyCodeToCart(input: $input) {
+                        uuid
+                        giftVouchers {
+                            code
+                        }
+                    }
+                }`,
+                    variables: {
+                        input: {
+                            cartUuid,
+                            code: giftVoucherCode,
+                        },
+                    },
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
+                },
+                failOnStatusCode: false,
+            })
+            .checkGQL('ApplyCodeToCartMutation')
+            .its('ApplyCodeToCart')
+            .then((cart) => {
+                expect(cart.uuid).equal(cartUuid);
+                const appliedGiftVoucherCodes = cart.giftVouchers.map(
+                    (giftVoucher: TypeAppliedGiftVoucher) => giftVoucher.code,
+                );
+                expect(appliedGiftVoucherCodes).to.include(giftVoucherCode);
             });
     });
 });
