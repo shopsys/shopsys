@@ -4,7 +4,7 @@
 
 This bundle is used to allow [Shopsys Platform](https://www.shopsys-framework.com) integration with Google Cloud.
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
+This repository is maintained by [shopsys/shopsys] monorepo. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 ## Installation
 

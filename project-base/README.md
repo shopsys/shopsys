@@ -2,7 +2,7 @@
 
 **Shopsys Project-base is the foundation you build a new project on top of.** It is the starting point of every project on [Shopsys Platform](https://github.com/shopsys/shopsys) — a **scalable e-commerce platform** for fast-growing online stores, built by in-house teams and agencies. Create your own project from this repository by following the [Installation Guide](https://docs.shopsys.com/en/latest/installation/installation-guide/), and you have a working e-shop right away — backend, administration, and Next.js storefront with a complete Docker development environment — ready for you to develop your store on top of.
 
-This repository is **read-only**: it is generated and maintained from the [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo, where all development happens. See the monorepo's README for more information and its `CHANGELOG` for the history of changes.
+This repository is **read-only**: it is generated and maintained from the [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo, where all development happens. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 ## Installation
 

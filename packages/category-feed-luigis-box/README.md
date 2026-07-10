@@ -6,7 +6,7 @@ Plugin for [Shopsys Platform](https://www.shopsys-framework.com) responsible for
 
 For detailed information about the feed see [official documentation](https://docs.luigisbox.com).
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
+This repository is maintained by [shopsys/shopsys] monorepo. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 ## Installation
 

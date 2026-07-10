@@ -4,7 +4,7 @@
 
 Plugin for [Shopsys Platform](https://www.shopsys-framework.com) responsible for generating XML product feed for [Heureka](https://www.heureka.cz).
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
+This repository is maintained by [shopsys/shopsys] monorepo. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 For detailed information about the feed see [official documentation](https://sluzby.heureka.cz/napoveda/xml-feed/).
 

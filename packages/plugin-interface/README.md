@@ -4,7 +4,7 @@
 
 Package of interfaces providing compatibility between [Shopsys Platform](https://www.shopsys-framework.com) and plugins.
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
+This repository is maintained by [shopsys/shopsys] monorepo. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 ## Features
 

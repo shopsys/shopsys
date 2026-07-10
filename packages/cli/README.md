@@ -2,7 +2,7 @@
 
 Command-line tool for configuring new Shopsys Platform projects.
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [CHANGELOG.md](https://github.com/shopsys/shopsys/blob/HEAD/CHANGELOG.md).
+This repository is maintained by [shopsys/shopsys] monorepo. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 ## Installation
 

@@ -7,7 +7,7 @@ Shopsys Coding Standards are based on [PSR-2](http://www.php-fig.org/psr/psr-2/)
 This project bundles tools along with predefined rulesets for automated checks of Shopsys Coding Standards that we use in many Shopsys projects.
 The repository also contains [few custom rules](#custom-rules).
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
+This repository is maintained by [shopsys/shopsys] monorepo. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 Provided tools:
 

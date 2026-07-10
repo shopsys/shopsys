@@ -3,7 +3,7 @@
 Shopsys PHP Image is an optimized docker image for running Shopsys Platform in production and development environments.
 It is based on `php:8.5-fpm-alpine` image and contains all necessary extensions and tools for running Shopsys Platform.
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
+This repository is maintained by [shopsys/shopsys] monorepo. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 ## Contributing
 

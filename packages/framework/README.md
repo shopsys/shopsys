@@ -8,7 +8,7 @@ Shopsys/framework package is part of Shopsys Platform environment and it stands 
 
 For more information about project, please see [shopsys/shopsys] readme.
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
+This repository is maintained by [shopsys/shopsys] monorepo. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 ## How to Start New Project
 
