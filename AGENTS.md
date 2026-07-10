@@ -30,6 +30,17 @@ Shopsys Platform is a **monorepo-based e-commerce platform** with a three-tier a
     - Rare project-specific extensions of package classes
     - Storefront React app (`storefront/`)
 
+> **Note — `project-base/AGENTS.md` and its skills are authored for downstream projects.** `project-base/`
+> ships its own `AGENTS.md`, `CLAUDE.md`, and `.agents/skills` to downstream projects (the split publishes
+> the `project-base/` subfolder as the standalone `shopsys/project-base` repo). Those files are the
+> **canonical, project-perspective** copies of shared skills (codebase-locator/analyzer/pattern-finder,
+> research-codebase, create-plan, implement-plan, test-writing, shopsys-architecture, shopsys-commands).
+> They say package-first does *not* apply and treat packages as read-only `vendor/shopsys/` — the opposite
+> of the rules here. During monorepo development, follow this root file. The matching skills in
+> `.agents/skills/` are thin stubs that point back to the project-base canonical and apply one shared
+> delta — see `.agents/skills/monorepo-vs-project/SKILL.md` (package-first + path remap). `project-base/AGENTS.md`
+> carries a scope guard telling agents the same thing.
+
 ### Decision Guide
 
 **Code goes in `/packages/`**: Business logic, entities, facades, repositories, controllers, forms
