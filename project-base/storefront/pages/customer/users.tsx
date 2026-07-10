@@ -97,7 +97,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 currentCustomerUserPrefetchMode: 'full',
                 authenticationConfig: {
                     authenticationRequired: true,
-                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiAll],
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiManageCustomers],
                     authorizedAreas: [CustomerUserAreaEnum.B2B],
                 },
                 redisClient,
