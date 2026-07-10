@@ -11,7 +11,6 @@
         "globby": "^14.0.2"
     },
     "scripts": {
-        "postinstall": "node ./utils/link-packages.js",
         "build": "npm run build -w project-base",
         "dev": "npm run dev -w project-base",
         "watch": "npm run watch -w project-base",

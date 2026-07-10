@@ -2,10 +2,11 @@
 
 const ncp = require('ncp').ncp;
 const fs = require('node:fs');
+const sources = require('./helpers/sources');
 
 const assets = [
     {
-        source: 'node_modules/@shopsys/framework/public/admin',
+        source: `${sources.getPackageNodeModulesDir('framework')}/public/admin`,
         destination: 'web/public/admin',
     },
     {
