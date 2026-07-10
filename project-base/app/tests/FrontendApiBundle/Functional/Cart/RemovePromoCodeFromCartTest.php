@@ -22,7 +22,7 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
             'cartUuid' => CartDataFixture::CART_UUID,
             'promoCode' => $promoCode->getCode(),
         ]);
-        $data = $this->getResponseDataForGraphQlType($response, 'RemovePromoCodeFromCart');
+        $data = $this->getResponseDataForGraphQlType($response, 'RemoveCodeFromCart');
 
         self::assertCount(0, $data['promoCodes']);
     }
@@ -53,7 +53,7 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
             'cartUuid' => CartDataFixture::CART_UUID,
             'promoCode' => $promoCode->getCode(),
         ]);
-        $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        $data = $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
 
         self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 

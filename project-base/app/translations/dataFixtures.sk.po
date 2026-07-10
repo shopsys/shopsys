@@ -862,6 +862,12 @@ msgstr "Ekologická tlač"
 msgid "Electronic devices"
 msgstr "Elektronické zariadenia"
 
+msgid "Electronic gift voucher"
+msgstr "Elektronický darčekový poukaz"
+
+msgid "Electronic gift voucher %value% %currency%"
+msgstr "Elektronický darčekový poukaz %value% %currency%"
+
 msgid "Electronic stuff"
 msgstr "Elektronické veci"
 
@@ -1032,6 +1038,12 @@ msgstr "Genius reproduktory SP-M120 čierny"
 
 msgid "Get to know Shopsys"
 msgstr "Spoznajte Shopsys"
+
+msgid "Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart."
+msgstr "Darčekový poukaz na nákup v našom e-shope. Poukaz doručujeme e-mailom po zaplatení objednávky a možno ho uplatniť v košíku."
+
+msgid "Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart. It applies to the entire assortment including transport and payment costs and can be used only once, in its full value."
+msgstr "Darčekový poukaz na nákup v našom e-shope. Poukaz doručujeme e-mailom po zaplatení objednávky a možno ho uplatniť v košíku. Vzťahuje sa na celý sortiment vrátane nákladov na dopravu a platbu a možno ho uplatniť iba raz, v plnej výške."
 
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr "Čistič skla a sklokeramických dosky (4019786908123)"
@@ -1671,6 +1683,9 @@ msgstr "Rozlíšenie tlače"
 
 msgid "Print technology"
 msgstr "Technológia tlače"
+
+msgid "Printed gift voucher %value% %currency%"
+msgstr "Tlačený darčekový poukaz %value% %currency%"
 
 msgid "Printer supplies"
 msgstr "Spotrebný materiál pre tlačiarne"

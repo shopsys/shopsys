@@ -862,6 +862,12 @@ msgstr ""
 msgid "Electronic devices"
 msgstr ""
 
+msgid "Electronic gift voucher"
+msgstr ""
+
+msgid "Electronic gift voucher %value% %currency%"
+msgstr ""
+
 msgid "Electronic stuff"
 msgstr ""
 
@@ -1031,6 +1037,12 @@ msgid "Genius repro SP-M120 black"
 msgstr ""
 
 msgid "Get to know Shopsys"
+msgstr ""
+
+msgid "Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart."
+msgstr ""
+
+msgid "Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart. It applies to the entire assortment including transport and payment costs and can be used only once, in its full value."
 msgstr ""
 
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
@@ -1670,6 +1682,9 @@ msgid "Print resolution"
 msgstr ""
 
 msgid "Print technology"
+msgstr ""
+
+msgid "Printed gift voucher %value% %currency%"
 msgstr ""
 
 msgid "Printer supplies"

@@ -12,14 +12,22 @@ use App\Model\Category\Category;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Tests\FrontendApiBundle\Test\GiftVoucherProductNameTestHelper;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CategorySeoTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private GiftVoucherProductNameTestHelper $giftVoucherProductNameTestHelper;
+
     /**
      * @inject
      */
@@ -80,6 +88,7 @@ class CategorySeoTest extends GraphQlTestCase
                 ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
                 ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
                 ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+                ['name' => $this->giftVoucherProductNameTestHelper->getExpectedGiftVoucherProductName(ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER, '1000', $locale, Domain::FIRST_DOMAIN_ID)],
                 ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ],
             'breadcrumb' => [

@@ -36,7 +36,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
             'cartUuid' => $cartUuid,
             'promoCode' => $validPromoCode->getCode(),
         ]);
-        $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
 
         $query = 'query {
             cart (cartInput: {
@@ -76,7 +76,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
 
         $totalPrice = self::getOrderTotalPriceByExpectedOrderItems([
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2602.48', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('90', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh)],
         ]);
 
         $totalPriceExpected = [
@@ -87,7 +87,6 @@ class CartWithPromoCodeTest extends GraphQlTestCase
 
         $totalDiscountPrice = self::getOrderTotalPriceByExpectedOrderItems([
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('289.26', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('9.92', $vatHigh)],
         ]);
 
         $totalDiscountPriceExpected = [

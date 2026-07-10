@@ -33,10 +33,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\TransportUnavailabilityReasonInCartEnum;
 use Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart;
-use Symfony\Component\Mailer\Envelope;
-use Symfony\Component\Mailer\Event\SentMessageEvent;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
-use Symfony\Component\Mailer\SentMessage;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
@@ -243,16 +240,9 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
 
         ($this->orderMarkedAsPaidMessageGiftVoucherHandler)(new OrderMarkedAsPaidMessage($order->getId()));
 
-        $sendEmailMessages = $this->popCollectedSendEmailMessages();
-
-        self::assertCount(1, $sendEmailMessages);
+        self::assertSame(1, $this->popCollectedSendEmailMessagesCount());
 
         $giftVoucher = array_first($this->giftVoucherRepository->getAllCreatedOnOrder($order));
-
-        self::assertNotNull($giftVoucher->getEmailEnqueuedAt());
-        self::assertNull($giftVoucher->getEmailSentAt());
-
-        $this->dispatchSentMessageEventFor(array_first($sendEmailMessages));
 
         self::assertNotNull($giftVoucher->getEmailSentAt());
 
@@ -380,31 +370,15 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
 
     private function popCollectedSendEmailMessagesCount(): int
     {
-        return count($this->popCollectedSendEmailMessages());
-    }
-
-    /**
-     * @return \Symfony\Component\Mailer\Messenger\SendEmailMessage[]
-     */
-    private function popCollectedSendEmailMessages(): array
-    {
-        $sendEmailMessages = [];
+        $sendEmailMessagesCount = 0;
 
         foreach ($this->delayedEnvelopesCollector->popEnvelopes() as $envelope) {
             if ($envelope->getMessage() instanceof SendEmailMessage) {
-                $sendEmailMessages[] = $envelope->getMessage();
+                $sendEmailMessagesCount++;
             }
         }
 
-        return $sendEmailMessages;
-    }
-
-    private function dispatchSentMessageEventFor(SendEmailMessage $sendEmailMessage): void
-    {
-        $message = $sendEmailMessage->getMessage();
-        $envelope = $sendEmailMessage->getEnvelope() ?? Envelope::create($message);
-
-        $this->eventDispatcher->dispatch(new SentMessageEvent(new SentMessage($message, $envelope)));
+        return $sendEmailMessagesCount;
     }
 
     private function getProductByCatnum(string $catnum): Product
@@ -445,7 +419,7 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
             'cartUuid' => null,
             'giftVoucherCode' => $giftVoucherCode,
         ]);
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'ApplyGiftVoucherToCart');
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'ApplyCodeToCart');
     }
 
     /**

@@ -1,0 +1,25 @@
+mutation ApplyGiftVoucherToCart(
+    $cartUuid: Uuid
+    $giftVoucherCode: String!
+) {
+    ApplyCodeToCart(input: {
+        cartUuid: $cartUuid
+        code: $giftVoucherCode
+    }) {
+        uuid
+        promoCodes {
+            code
+            type
+        }
+        giftVouchers {
+            code
+            valueWithVat
+            validUntil
+        }
+        remainingAmountToPay
+        giftVouchersExceedPayableAmount
+        totalPrice {
+            priceWithVat
+        }
+    }
+}

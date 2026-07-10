@@ -29,7 +29,7 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemovePromoCodeFromCart.graphql', [
             'promoCode' => $promoCode->getCode(),
         ]);
-        $data = $this->getResponseDataForGraphQlType($response, 'RemovePromoCodeFromCart');
+        $data = $this->getResponseDataForGraphQlType($response, 'RemoveCodeFromCart');
 
         self::assertNotNull($this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCode->getCode(), Domain::FIRST_DOMAIN_ID));
 
@@ -68,7 +68,7 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
             'promoCode' => $promoCode->getCode(),
         ]);
-        $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        $data = $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
 
         self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 

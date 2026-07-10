@@ -47,5 +47,7 @@ services:
         arguments:
             $clientConfigs: '%env(json:GOPAY_CONFIG)%'
 
+    Tests\FrontendApiBundle\Test\GiftVoucherProductNameTestHelper: ~
+
     test.client:
         alias: Tests\App\Test\Client

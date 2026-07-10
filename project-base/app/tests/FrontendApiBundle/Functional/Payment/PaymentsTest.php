@@ -37,6 +37,7 @@ class PaymentsTest extends GraphQlTestCase
                 'transports' => [
                     ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Email', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => [
                     'identifier' => 'PAYMENT_CARD',

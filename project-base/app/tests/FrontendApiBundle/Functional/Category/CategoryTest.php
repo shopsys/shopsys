@@ -8,9 +8,12 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
 use Override;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Tests\FrontendApiBundle\Test\GiftVoucherProductNameTestHelper;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CategoryTest extends GraphQlTestCase
@@ -19,6 +22,11 @@ class CategoryTest extends GraphQlTestCase
      * @inject
      */
     private ArraySorterHelper $arraySorterHelper;
+
+    /**
+     * @inject
+     */
+    private GiftVoucherProductNameTestHelper $giftVoucherProductNameTestHelper;
 
     private Category $category;
 
@@ -96,6 +104,7 @@ class CategoryTest extends GraphQlTestCase
             ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
             ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
             ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+            ['name' => $this->giftVoucherProductNameTestHelper->getExpectedGiftVoucherProductName(ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER, '1000', $this->getLocaleForFirstDomain(), Domain::FIRST_DOMAIN_ID)],
             ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
         ], $responseData['bestsellers']);
         $this->assertSame([
@@ -139,29 +148,28 @@ class CategoryTest extends GraphQlTestCase
 
         $locale = $this->getLocaleForFirstDomain();
 
-        $expectedProducts = [
-            ['node' => [
-                'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            ]],
-            ['node' => [
-                'name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            ]],
-            ['node' => [
-                'name' => t(
-                    'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
-                    [],
-                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $locale,
-                ),
-            ]],
-            ['node' => [
-                'name' => t('Samsung Smart TV 3+1 Promo Pack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            ]],
-            ['node' => [
-                'name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            ]],
-        ];
+        $responseProductNames = array_map(
+            static fn (array $edge) => $edge['node']['name'],
+            $responseData['products']['edges'],
+        );
 
-        $this->assertSame($expectedProducts, $responseData['products']['edges']);
+        $expectedProductNames = [
+            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            t(
+                'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
+                [],
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                $locale,
+            ),
+            t('Electronic gift voucher', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            $this->giftVoucherProductNameTestHelper->getExpectedGiftVoucherProductName(ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER, '1000', $locale, Domain::FIRST_DOMAIN_ID),
+            t('Samsung Smart TV 3+1 Promo Pack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+        ];
+        sort($expectedProductNames);
+        sort($responseProductNames);
+
+        $this->assertSame($expectedProductNames, $responseProductNames);
     }
 }

@@ -18,7 +18,11 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory;
@@ -27,6 +31,13 @@ use Symfony\Component\Clock\DatePoint;
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const string PRODUCT_PREFIX = 'product_';
+    public const string PRODUCT_ELECTRONIC_GIFT_VOUCHER_1000 = 'product_electronic_gift_voucher_1000';
+    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_CUSTOM = 'VOUCHER-M';
+    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_500 = 'VOUCHER500';
+    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_1000 = 'VOUCHER1000';
+    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_2000 = 'VOUCHER2000';
+    public const string PRODUCT_CATNUM_PRINTED_GIFT_VOUCHER_1000 = 'VOUCHER-P1000';
+    public const string PRODUCT_CATNUM_A4TECH_MOUSE = '5960453';
     private const string UUID_NAMESPACE = '5d92301d-1583-4505-842a-27fe6854f587';
 
     private int $productNo = 1;
@@ -42,6 +53,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         private readonly EntityManagerInterface $em,
         private readonly ProductDemoDataSetter $productDemoDataSetter,
         private readonly ProductVideoDataFactory $productVideoDataFactory,
+        private readonly CurrencyFacade $currencyFacade,
+        private readonly PriceConverter $priceConverter,
     ) {
     }
 
@@ -187,7 +200,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('5960453');
+        $productData = $this->productDemoDataFactory->createDefaultData(self::PRODUCT_CATNUM_A4TECH_MOUSE);
 
         $productData->partno = 'X-710BK';
         $productData->ean = '8845781245923';
@@ -2139,6 +2152,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData = $this->productDemoDataFactory->createDefaultData('9176544MS');
 
+        $productData->productType = ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER;
         $productData->partno = 'TIC100';
         $productData->ean = '8845781243207';
         $this->productDemoDataSetter->setOrderingPriority($productData, 10);
@@ -4063,7 +4077,84 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
+        $this->createGiftVoucherProducts();
+
         $this->createVariants();
+    }
+
+    private function createGiftVoucherProducts(): void
+    {
+        $electronicGiftVoucherPricesByCatnum = [
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_CUSTOM => null,
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_500 => '500',
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_1000 => '1000',
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_2000 => '2000',
+        ];
+
+        foreach ($electronicGiftVoucherPricesByCatnum as $catnum => $price) {
+            $referenceName = $catnum === self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_1000
+                ? self::PRODUCT_ELECTRONIC_GIFT_VOUCHER_1000
+                : null;
+
+            $this->createGiftVoucherProduct($catnum, $price, ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER, $referenceName);
+        }
+
+        $this->createGiftVoucherProduct(self::PRODUCT_CATNUM_PRINTED_GIFT_VOUCHER_1000, '1000', ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER);
+    }
+
+    private function createGiftVoucherProduct(
+        string $catnum,
+        ?string $price,
+        string $productType,
+        ?string $referenceName = null,
+    ): void {
+        $productData = $this->productDemoDataFactory->createDefaultData($catnum);
+
+        $productData->productType = $productType;
+        $this->productDemoDataSetter->setSellingFrom($productData, '1.1.2000');
+        $this->productDemoDataSetter->setStocksQuantity($productData, 500);
+        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS]);
+
+        if ($price !== null) {
+            $this->productDemoDataSetter->setSellingPriceWithVatForAllPricingGroups($productData, $price, VatDataFixture::VAT_ZERO);
+        }
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
+            $locale = $domain->getLocale();
+            $productData->name[$locale] = $this->getGiftVoucherProductName($productType, $price, $locale, $domain->getId());
+            $productData->shortDescriptions[$domain->getId()] = t('Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->descriptions[$domain->getId()] = t('Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart. It applies to the entire assortment including transport and payment costs and can be used only once, in its full value.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        $product = $this->createProduct($productData);
+
+        if ($referenceName !== null) {
+            $this->addReference($referenceName, $product);
+        }
+    }
+
+    private function getGiftVoucherProductName(
+        string $productType,
+        ?string $price,
+        string $locale,
+        int $domainId,
+    ): string {
+        if ($price === null) {
+            return t('Electronic gift voucher', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        $domainCurrencyCode = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId)->getCode();
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
+        $valueInDomainCurrency = $this->priceConverter
+            ->convertPriceToInputPriceInDomainDefaultCurrency(Money::create($price), $currencyCzk, '0', $domainId)
+            ->round(0)
+            ->getAmount();
+
+        if ($productType === ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER) {
+            return t('Printed gift voucher %value% %currency%', ['%value%' => $valueInDomainCurrency, '%currency%' => $domainCurrencyCode], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        return t('Electronic gift voucher %value% %currency%', ['%value%' => $valueInDomainCurrency, '%currency%' => $domainCurrencyCode], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
     }
 
     private function createProduct(ProductData $productData): Product
@@ -4097,6 +4188,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             '7700769XCX' => [
                 '7700777',
                 '7700769Z',
+            ],
+            'VOUCHER-M' => [
+                'VOUCHER500',
+                'VOUCHER1000',
+                'VOUCHER2000',
             ],
         ];
     }
@@ -4186,6 +4282,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             PricingGroupDataFixture::class,
             SettingValueDataFixture::class,
             ParameterDataFixture::class,
+            CurrencyDataFixture::class,
         ];
     }
 }
