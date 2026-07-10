@@ -20,6 +20,8 @@ class DomainDbFunctionsFacade
 
     protected function createDomainIdsByLocaleFunction(): void
     {
+        $connection = $this->em->getConnection();
+        $databasePlatform = $connection->getDatabasePlatform();
         $domainsIdsByLocale = [];
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
@@ -29,7 +31,7 @@ class DomainDbFunctionsFacade
         $domainIdsByLocaleSqlClauses = [];
 
         foreach ($domainsIdsByLocale as $locale => $domainIds) {
-            $sql = 'WHEN locale = \'' . $locale . '\' THEN ';
+            $sql = 'WHEN locale = ' . $databasePlatform->quoteStringLiteral($locale) . ' THEN ';
 
             foreach ($domainIds as $domainId) {
                 $sql .= ' RETURN NEXT ' . $domainId . ';';
@@ -37,7 +39,7 @@ class DomainDbFunctionsFacade
             $domainIdsByLocaleSqlClauses[] = $sql;
         }
 
-        $this->em->getConnection()->executeStatement(
+        $connection->executeStatement(
             'CREATE OR REPLACE FUNCTION get_domain_ids_by_locale(locale text) RETURNS SETOF integer AS $$
             BEGIN
                 CASE
@@ -51,15 +53,17 @@ class DomainDbFunctionsFacade
 
     protected function createLocaleByDomainIdFunction(): void
     {
+        $connection = $this->em->getConnection();
+        $databasePlatform = $connection->getDatabasePlatform();
         $localeByDomainIdSqlClauses = [];
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
             $localeByDomainIdSqlClauses[] =
                 'WHEN domain_id = ' . $domainConfig->getId()
-                . ' THEN RETURN \'' . $domainConfig->getLocale() . '\';';
+                . ' THEN RETURN ' . $databasePlatform->quoteStringLiteral($domainConfig->getLocale()) . ';';
         }
 
-        $this->em->getConnection()->executeStatement(
+        $connection->executeStatement(
             'CREATE OR REPLACE FUNCTION get_domain_locale(domain_id integer) RETURNS text AS $$
             BEGIN
                 CASE
