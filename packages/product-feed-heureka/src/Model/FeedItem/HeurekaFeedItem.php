@@ -25,7 +25,19 @@ class HeurekaFeedItem implements FeedItemInterface
         protected readonly ?int $availabilityDispatchTime = null,
         protected readonly ?string $heurekaCategoryFullName = null,
         protected readonly ?Money $cpc = null,
+        protected readonly ?string $deliveryId = null,
+        protected readonly ?Money $deliveryPrice = null,
     ) {
+    }
+
+    public function getDeliveryId(): ?string
+    {
+        return $this->deliveryId;
+    }
+
+    public function getDeliveryPrice(): ?Money
+    {
+        return $this->deliveryPrice;
     }
 
     #[Override]

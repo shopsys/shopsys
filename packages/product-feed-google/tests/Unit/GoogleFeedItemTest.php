@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -24,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItem;
 use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -68,6 +70,8 @@ class GoogleFeedItemTest extends TestCase
             $productAvailabilityFacadeStub,
             $specialPriceFacade,
             $pricingGroupSettingFacadeStub,
+            $this->createStub(TransportFacade::class),
+            $this->createStub(CountryFacade::class),
         );
 
         $defaultCurrency = $this->createCurrencyStub(1, 'EUR');

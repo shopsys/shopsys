@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPricesResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData;
@@ -52,6 +53,7 @@ class ZboziFeedItemTest extends TestCase
         $productAvailabilityFacadeStub->method('getProductAvailabilityDaysOrDateForFeedsByDomainId')->willReturn(0);
 
         $this->zboziFeedItemFactory = new ZboziFeedItemFactory(
+            $this->createStub(TransportFacade::class),
             $this->productPriceCalculationForCustomerUserMock,
             $this->productUrlsBatchLoaderMock,
             $this->productParametersBatchLoaderStub,
@@ -119,6 +121,7 @@ class ZboziFeedItemTest extends TestCase
             ->willReturn('2026-07-26');
 
         $zboziFeedItemFactory = new ZboziFeedItemFactory(
+            $this->createStub(TransportFacade::class),
             $this->productPriceCalculationForCustomerUserMock,
             $this->productUrlsBatchLoaderMock,
             $this->productParametersBatchLoaderStub,
