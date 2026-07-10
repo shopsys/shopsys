@@ -134,11 +134,26 @@ export type TypeAdvertPosition = {
   positionName: Scalars['String']['output'];
 };
 
-export type TypeApplyPromoCodeToCartInput = {
+/** Gift voucher applied as a form of payment */
+export type TypeAppliedGiftVoucher = {
+  __typename?: 'AppliedGiftVoucher';
+  /** Code of the gift voucher */
+  code: Scalars['String']['output'];
+  /** Name of the purchased gift voucher product the voucher was generated from */
+  productName: Maybe<Scalars['String']['output']>;
+  /** Date and time until the gift voucher is valid */
+  validUntil: Scalars['DateTime']['output'];
+  /** Value of the gift voucher including VAT */
+  valueWithVat: Scalars['Money']['output'];
+  /** Value of the gift voucher excluding VAT, calculated using the VAT rate of the purchased gift voucher product */
+  valueWithoutVat: Scalars['Money']['output'];
+};
+
+export type TypeApplyCodeToCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
-  /** Promo code to be used after checkout */
-  promoCode: Scalars['String']['input'];
+  /** Discount coupon or gift voucher code to be applied */
+  code: Scalars['String']['input'];
 };
 
 /** A connection to a list of items. */
@@ -251,6 +266,8 @@ export type TypeAvailability = {
 
 /** Product Availability statuses */
 export enum TypeAvailabilityStatusEnum {
+  /** Product availability status for electronically delivered products */
+  Digital = 'Digital',
   /** Product is out of stock with a known expected restocking date */
   ExpectedRestock = 'ExpectedRestock',
   /** Product availability status in stock */
@@ -523,6 +540,10 @@ export type TypeBreadcrumb = {
 
 export type TypeCart = {
   __typename?: 'Cart';
+  /** Applied gift vouchers if provided */
+  giftVouchers: Array<TypeAppliedGiftVoucher>;
+  /** Applied gift vouchers exceed the amount payable by them (total price without gift voucher products), so the order cannot be completed */
+  giftVouchersExceedPayableAmount: Scalars['Boolean']['output'];
   /** All items in the cart */
   items: Array<TypeCartItem>;
   modifications: TypeCartModificationsResult;
@@ -534,6 +555,8 @@ export type TypeCart = {
   promoCodes: Array<TypePromoCode>;
   /** Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa. */
   remainingAmountForFreeTransport: Maybe<Scalars['Money']['output']>;
+  /** Total price with VAT reduced by applied gift vouchers, never below zero */
+  remainingAmountToPay: Scalars['Money']['output'];
   /** Rounding amount if payment has rounding allowed */
   roundingPrice: Maybe<TypePrice>;
   /** Selected pickup place identifier if provided */
@@ -552,6 +575,11 @@ export type TypeCart = {
   transport: Maybe<TypeTransport>;
   /** UUID of the cart, null for authenticated user */
   uuid: Maybe<Scalars['Uuid']['output']>;
+};
+
+export type TypeCartGiftVoucherModificationsResult = {
+  __typename?: 'CartGiftVoucherModificationsResult';
+  noLongerApplicableGiftVouchers: Array<Scalars['String']['output']>;
 };
 
 export type TypeCartInput = {
@@ -589,6 +617,7 @@ export enum TypeCartItemTypeEnum {
 
 export type TypeCartModificationsResult = {
   __typename?: 'CartModificationsResult';
+  giftVoucherModifications: TypeCartGiftVoucherModificationsResult;
   itemModifications: TypeCartItemModificationsResult;
   multipleAddedProductModifications: TypeCartMultipleAddedProductModificationsResult;
   paymentModifications: TypeCartPaymentModificationsResult;
@@ -1211,26 +1240,6 @@ export type TypeCurrentRegularCustomerUser = TypeBaseCustomerUser & TypeCurrentC
   uuid: Scalars['Uuid']['output'];
 };
 
-/** A connection to a list of items. */
-export type TypeCustomerUserProductReviewConnection = {
-  __typename?: 'CustomerUserProductReviewConnection';
-  /** Information to aid in pagination. */
-  edges: Maybe<Array<Maybe<TypeCustomerUserProductReviewEdge>>>;
-  /** Information to aid in pagination. */
-  pageInfo: TypePageInfo;
-  /** Total number of the customer user's reviews */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** An edge in a connection. */
-export type TypeCustomerUserProductReviewEdge = {
-  __typename?: 'CustomerUserProductReviewEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: Maybe<TypeProductReview>;
-};
-
 /** Available customer user roles */
 export enum TypeCustomerUserRoleEnum {
   RoleApiAll = 'ROLE_API_ALL',
@@ -1579,8 +1588,6 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
-  /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
-  reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -1636,8 +1643,8 @@ export type TypeMutation = {
   AddProductToList: TypeProductList;
   /** Add product to cart for future checkout */
   AddToCart: TypeAddToCartResult;
-  /** Apply new promo code for the future checkout */
-  ApplyPromoCodeToCart: TypeCart;
+  /** Apply a code as either a promo code or a gift voucher, whichever it matches */
+  ApplyCodeToCart: TypeCart;
   /** Changes customer user company data */
   ChangeCompanyData: TypeCurrentCustomerUser;
   /** Changes customer user password */
@@ -1660,8 +1667,6 @@ export type TypeMutation = {
   CreateInquiry: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
   CreateOrder: TypeCreateOrderResult;
-  /** Create a new product review that will be published after moderation */
-  CreateProductReview: TypeProductReview;
   /** Create a new watchdog or update validity of the current one */
   CreateWatchdog: Scalars['Boolean']['output'];
   /** Delete delivery address by Uuid */
@@ -1692,6 +1697,8 @@ export type TypeMutation = {
   Register: TypeLoginResult;
   /** Register new customer user using an order data */
   RegisterByOrder: TypeLoginResult;
+  /** Remove an applied discount coupon or gift voucher code from the cart */
+  RemoveCodeFromCart: TypeCart;
   /** delete customer user */
   RemoveCustomerUser: Scalars['Boolean']['output'];
   /** Remove product from cart */
@@ -1700,8 +1707,6 @@ export type TypeMutation = {
   RemoveProductFromList: Maybe<TypeProductList>;
   /** Removes the product list */
   RemoveProductList: Maybe<TypeProductList>;
-  /** Remove already used promo code from cart */
-  RemovePromoCodeFromCart: TypeCart;
   /** Request password recovery - email with hash will be sent */
   RequestPasswordRecovery: Scalars['String']['output'];
   /** Request access to personal data */
@@ -1733,8 +1738,8 @@ export type TypeMutationAddToCartArgs = {
 };
 
 
-export type TypeMutationApplyPromoCodeToCartArgs = {
-  input: TypeApplyPromoCodeToCartInput;
+export type TypeMutationApplyCodeToCartArgs = {
+  input: TypeApplyCodeToCartInput;
 };
 
 
@@ -1790,11 +1795,6 @@ export type TypeMutationCreateInquiryArgs = {
 
 export type TypeMutationCreateOrderArgs = {
   input: TypeOrderInput;
-};
-
-
-export type TypeMutationCreateProductReviewArgs = {
-  input: TypeProductReviewInput;
 };
 
 
@@ -1869,6 +1869,11 @@ export type TypeMutationRegisterByOrderArgs = {
 };
 
 
+export type TypeMutationRemoveCodeFromCartArgs = {
+  input: TypeRemoveCodeFromCartInput;
+};
+
+
 export type TypeMutationRemoveCustomerUserArgs = {
   input: TypeRemoveCustomerUserDataInput;
 };
@@ -1886,11 +1891,6 @@ export type TypeMutationRemoveProductFromListArgs = {
 
 export type TypeMutationRemoveProductListArgs = {
   input: TypeProductListInput;
-};
-
-
-export type TypeMutationRemovePromoCodeFromCartArgs = {
-  input: TypeRemovePromoCodeFromCartInput;
 };
 
 
@@ -2071,6 +2071,8 @@ export type TypeOrder = {
   email: Scalars['String']['output'];
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Gift vouchers redeemed on the order */
+  giftVouchers: Array<TypeAppliedGiftVoucher>;
   /** Indicates whether the order has an external payment */
   hasExternalPayment: Scalars['Boolean']['output'];
   /** Indicates whether order payment is still being processed with GoPay payment type */
@@ -2079,7 +2081,7 @@ export type TypeOrder = {
   heurekaAgreement: Scalars['Boolean']['output'];
   /** Indicates whether the billing address is other than a delivery address */
   isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['output'];
-  /** Indicates whether the order is paid successfully with GoPay payment type */
+  /** Indicates whether the order is paid (either marked as paid, fully covered by gift vouchers, or paid successfully with GoPay payment type) */
   isPaid: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
   items: Array<TypeOrderItem>;
@@ -2101,12 +2103,10 @@ export type TypeOrder = {
   postcode: Scalars['String']['output'];
   /** All product items in the order */
   productItems: Array<TypeOrderItem>;
-  /** Products of the order can be reviewed in its current status */
-  productReviewsAllowed: Scalars['Boolean']['output'];
   /** Promo code (coupon) used in the order */
   promoCode: Maybe<Scalars['String']['output']>;
-  /** Uuids of the order's products that already have a review linked to this order */
-  reviewedProductUuids: Array<Scalars['Uuid']['output']>;
+  /** Total price with VAT reduced by redeemed gift vouchers, never below zero */
+  remainingAmountToPay: Scalars['Money']['output'];
   /** Current status of the order */
   status: Scalars['String']['output'];
   /** Type of the order status */
@@ -2308,6 +2308,8 @@ export enum TypeOrderItemTypeEnum {
 export type TypeOrderItemsFilterInput = {
   /** Filter order items by product catalog number (OR condition with productUuid) */
   catnum?: InputMaybe<Scalars['String']['input']>;
+  /** Exclude order items of products with these product types */
+  excludeProductTypes?: InputMaybe<Array<TypeProductTypeEnum>>;
   /** Filter order items in orders created after this date */
   orderCreatedAfter?: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter orders created after this date */
@@ -2778,8 +2780,6 @@ export type TypeProduct = {
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
-  /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
-  reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -2977,126 +2977,16 @@ export type TypeProductQuestionInput = {
   question: Scalars['String']['input'];
 };
 
-/** Customer review of a product */
-export type TypeProductReview = {
-  __typename?: 'ProductReview';
-  /** Date and time when the review was created */
-  createdAt: Scalars['DateTime']['output'];
-  /** The review is linked to an order of the reviewed product */
-  isVerifiedPurchase: Scalars['Boolean']['output'];
-  /** Currently associated reviewed product, null when the product no longer exists */
-  product: Maybe<TypeProduct>;
-  /** Name of the reviewed product at the time of the review */
-  productName: Scalars['String']['output'];
-  /** UUID of the reviewed product (the concrete variant), null when the product no longer exists */
-  productUuid: Maybe<Scalars['Uuid']['output']>;
-  /** Star rating from 1 to 5 */
-  rating: Scalars['Int']['output'];
-  /** Reason why the customer's own review was not published, null for reviews that were not rejected */
-  rejectionReason: Maybe<Scalars['String']['output']>;
-  /** Date and time when the response was published */
-  responseCreatedAt: Maybe<Scalars['DateTime']['output']>;
-  /** Response of the e-shop to the review */
-  responseText: Maybe<Scalars['String']['output']>;
-  /** Public name of the reviewer in the "FirstName L." form, null when the review is published anonymously */
-  reviewerName: Maybe<Scalars['String']['output']>;
-  /** Moderation status, meaningful for the customer's own reviews (public listings contain approved reviews only) */
-  status: TypeProductReviewStatusEnum;
-  /** Text of the review */
-  text: Maybe<Scalars['String']['output']>;
-  /** UUID */
-  uuid: Scalars['Uuid']['output'];
-};
-
-/** A connection to a list of items. */
-export type TypeProductReviewConnection = {
-  __typename?: 'ProductReviewConnection';
-  /** Information to aid in pagination. */
-  edges: Maybe<Array<Maybe<TypeProductReviewEdge>>>;
-  /** The current ordering mode */
-  orderingMode: TypeProductReviewOrderingModeEnum;
-  /** Information to aid in pagination. */
-  pageInfo: TypePageInfo;
-  /** Aggregated rating of the same set of reviews the connection paginates */
-  summary: TypeProductReviewsSummary;
-  /** Total number of reviews */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** An edge in a connection. */
-export type TypeProductReviewEdge = {
-  __typename?: 'ProductReviewEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: Maybe<TypeProductReview>;
-};
-
-/** Represents the input for creating a product review */
-export type TypeProductReviewInput = {
-  /** Email of the reviewer, required for a customer that is not logged in (the account email is used otherwise) */
-  email?: InputMaybe<Scalars['String']['input']>;
-  /** First name of the reviewer */
-  firstName?: InputMaybe<Scalars['String']['input']>;
-  /** The review will be published without the reviewer name */
-  isAnonymous: Scalars['Boolean']['input'];
-  /** Last name of the reviewer */
-  lastName?: InputMaybe<Scalars['String']['input']>;
-  /** URL hash of the order proving the purchase of a customer that is not logged in, the review is created unverified without it */
-  orderUrlHash?: InputMaybe<Scalars['String']['input']>;
-  /** UUID of the reviewed product; a concrete variant has to be chosen for products with variants */
-  productUuid: Scalars['Uuid']['input'];
-  /** Star rating from 1 to 5 */
-  rating: Scalars['Int']['input'];
-  /** Text of the review */
-  text?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** One of possible ordering modes for product reviews */
-export enum TypeProductReviewOrderingModeEnum {
-  /** Order by rating, highest first */
-  HighestRating = 'HIGHEST_RATING',
-  /** Order by rating, lowest first */
-  LowestRating = 'LOWEST_RATING',
-  /** Order by date of creation, newest first */
-  Newest = 'NEWEST'
-}
-
-export type TypeProductReviewRatingCount = {
-  __typename?: 'ProductReviewRatingCount';
-  /** Number of reviews with the rating */
-  count: Scalars['Int']['output'];
-  /** Star rating */
-  rating: Scalars['Int']['output'];
-};
-
-/** One of possible moderation statuses of a product review */
-export enum TypeProductReviewStatusEnum {
-  /** The review is approved and publicly visible */
-  Approved = 'APPROVED',
-  /** The review is waiting for moderation */
-  Pending = 'PENDING',
-  /** The review was rejected */
-  Rejected = 'REJECTED'
-}
-
-/** Aggregated rating of the approved reviews of a product and its visible variants */
-export type TypeProductReviewsSummary = {
-  __typename?: 'ProductReviewsSummary';
-  /** Average rating, null when there are no reviews */
-  averageRating: Maybe<Scalars['Float']['output']>;
-  /** Number of reviews per star rating, from 5 stars to 1 */
-  ratingCounts: Array<TypeProductReviewRatingCount>;
-  /** Total number of reviews */
-  totalCount: Scalars['Int']['output'];
-};
-
 /** One of possible product types */
 export enum TypeProductTypeEnum {
   /** Basic product */
   Basic = 'BASIC',
+  /** Gift voucher delivered by email after the order is paid */
+  ElectronicGiftVoucher = 'ELECTRONIC_GIFT_VOUCHER',
   /** Product with inquiry form instead of add to cart button */
-  Inquiry = 'INQUIRY'
+  Inquiry = 'INQUIRY',
+  /** Gift voucher delivered printed as a regular product */
+  PrintedGiftVoucher = 'PRINTED_GIFT_VOUCHER'
 }
 
 /** Cart products grouped by the reason why they cannot be delivered using the transport */
@@ -3196,8 +3086,6 @@ export type TypeQuery = {
   countries: Array<TypeCountry>;
   /** Returns currently logged in customer user */
   currentCustomerUser: Maybe<TypeCurrentCustomerUser>;
-  /** Returns reviews written by the current customer user, regardless of their moderation status, newest first. When a product UUID is provided, only the reviews of the product and its variants are returned. The list can be paginated using `first`, `last`, `before` and `after` keywords */
-  currentCustomerUserProductReviews: TypeCustomerUserProductReviewConnection;
   /** Returns all customer user role groups */
   customerUserRoleGroups: Array<TypeCustomerUserRoleGroup>;
   /** Returns all customer users assigned to the current customer */
@@ -3239,8 +3127,6 @@ export type TypeQuery = {
   /** Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list. */
   productList: Maybe<TypeProductList>;
   productListsByType: Array<TypeProductList>;
-  /** Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords */
-  productReviews: TypeProductReviewConnection;
   /** Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords */
   products: TypeProductConnection;
   /** Returns list of products by catalog numbers */
@@ -3385,15 +3271,6 @@ export type TypeQueryCouldBeCustomerRegisteredQueryArgs = {
 };
 
 
-export type TypeQueryCurrentCustomerUserProductReviewsArgs = {
-  after: InputMaybe<Scalars['String']['input']>;
-  before: InputMaybe<Scalars['String']['input']>;
-  first: InputMaybe<Scalars['Int']['input']>;
-  last: InputMaybe<Scalars['Int']['input']>;
-  productUuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-
 export type TypeQueryFlagArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
@@ -3474,16 +3351,6 @@ export type TypeQueryProductListArgs = {
 
 export type TypeQueryProductListsByTypeArgs = {
   productListType: TypeProductListTypeEnum;
-};
-
-
-export type TypeQueryProductReviewsArgs = {
-  after: InputMaybe<Scalars['String']['input']>;
-  before: InputMaybe<Scalars['String']['input']>;
-  first: InputMaybe<Scalars['Int']['input']>;
-  last: InputMaybe<Scalars['Int']['input']>;
-  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
-  productUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -3744,8 +3611,6 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
-  /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
-  reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -3788,6 +3653,13 @@ export type TypeRegularProductMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type TypeRemoveCodeFromCartInput = {
+  /** Cart identifier or null if customer is logged in */
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+  /** Discount coupon or gift voucher code to be removed */
+  code: Scalars['String']['input'];
+};
+
 export type TypeRemoveCustomerUserDataInput = {
   /** Customer user UUID */
   customerUserUuid: Scalars['Uuid']['input'];
@@ -3798,13 +3670,6 @@ export type TypeRemoveFromCartInput = {
   cartItemUuid: Scalars['Uuid']['input'];
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-export type TypeRemovePromoCodeFromCartInput = {
-  /** Cart identifier or null if customer is logged in */
-  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
-  /** Promo code to be removed */
-  promoCode: Scalars['String']['input'];
 };
 
 /** Represents sales representative */
@@ -3903,10 +3768,6 @@ export type TypeSettings = {
   pricing: TypePricingSetting;
   /** Returns privacy policy article's url */
   privacyPolicyArticleUrl: Maybe<Scalars['String']['output']>;
-  /** Returns product review policy article's url */
-  productReviewPolicyArticleUrl: Maybe<Scalars['String']['output']>;
-  /** Returns true if product reviews are enabled on the current domain */
-  productReviewsEnabled: Scalars['Boolean']['output'];
   /** Settings related to SEO */
   seo: TypeSeoSetting;
   /** Returns available social network logins */
@@ -4178,12 +4039,15 @@ export type TypeTransportGroupMainImageArgs = {
 /** One of the possible methods of the transport type */
 export enum TypeTransportTypeEnum {
   Common = 'common',
+  Email = 'email',
   Packetery = 'packetery',
   PersonalPickup = 'personal_pickup'
 }
 
 /** Reason why a transport cannot be selected for the given cart */
 export enum TypeTransportUnavailabilityReasonInCartEnum {
+  ElectronicGiftVoucherOnly = 'electronic_gift_voucher_only',
+  EmailTransportNotAllowed = 'email_transport_not_allowed',
   ExcludedForProduct = 'excluded_for_product',
   PersonalPickupRequired = 'personal_pickup_required'
 }
@@ -4288,8 +4152,6 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
-  /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
-  reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */

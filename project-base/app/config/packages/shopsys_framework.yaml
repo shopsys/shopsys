@@ -13,6 +13,7 @@ shopsys_framework:
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\FreeTransportAndPaymentInformationMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddPaymentMiddleware'
+            - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\ApplyGiftVouchersMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddProductGiftsMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddRoundingMiddleware'

@@ -36,7 +36,7 @@ class GoPayOrderMapper
                 'allowed_payment_instruments' => $this->goPayPaymentMethodFacade->getAllTypeIdentifiers(),
                 'contact' => $this->createContactData($order),
             ],
-            'amount' => $this->formatPriceForGoPay($order->getTotalPriceWithVat()),
+            'amount' => $this->formatPriceForGoPay($order->getRemainingAmountToPay()),
             'currency' => $order->getCurrencyCode(),
             'order_number' => $order->getNumber(),
             'order_description' => t('Order number') . ' ' . $order->getNumber(),
@@ -81,6 +81,14 @@ class GoPayOrderMapper
                 'name' => $orderItem->getName(),
                 'amount' => $this->formatPriceForGoPay($orderItem->getTotalPriceWithVat()),
                 'count' => $orderItem->getQuantity(),
+            ];
+        }
+
+        foreach ($order->getRedeemedGiftVouchers() as $giftVoucher) {
+            $orderItems[] = [
+                'name' => t('Gift voucher') . ' ' . $giftVoucher->getCode(),
+                'amount' => -$this->formatPriceForGoPay($giftVoucher->getValueWithVat()),
+                'count' => 1,
             ];
         }
 

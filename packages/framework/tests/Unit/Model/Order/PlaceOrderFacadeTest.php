@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository;
 use Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository;
+use Shopsys\FrameworkBundle\Model\Order\OrderPaidStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
@@ -108,18 +109,24 @@ class PlaceOrderFacadeTest extends TestCase
         $order->method('getId')->willReturn(1);
         $order->method('getCustomerUser')->willReturn(null);
 
+        $entityManagerStub = $this->createStub(EntityManagerInterface::class);
+        $entityManagerStub->method('wrapInTransaction')->willReturnCallback(
+            static fn (callable $callable) => $callable(),
+        );
+
         $placeOrderFacade = $this->getMockBuilder(PlaceOrderFacade::class)
             ->setConstructorArgs([
                 $this->createStub(OrderStatusRepository::class),
                 $this->createStub(OrderNumberSequenceRepository::class),
                 $this->createStub(OrderHashGeneratorRepository::class),
                 $this->createStub(OrderFactory::class),
-                $this->createStub(EntityManagerInterface::class),
+                $entityManagerStub,
                 $this->createStub(OrderItemFactory::class),
                 $this->createStub(PlacedOrderMessageDispatcher::class),
                 $this->createStub(NewsletterFacade::class),
                 $this->createStub(CustomerUserFacade::class),
                 $this->createStub(PromoCodeFacade::class),
+                $this->createStub(OrderPaidStatusFacade::class),
             ])
             ->onlyMethods(['createOrderOnly'])
             ->getMock();

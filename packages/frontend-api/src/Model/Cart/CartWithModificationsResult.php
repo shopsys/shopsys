@@ -63,11 +63,20 @@ class CartWithModificationsResult
     /**
      * @var array<string, array<int, string>>
      */
+    protected array $giftVoucherModifications = [
+        'noLongerApplicableGiftVouchers' => [],
+    ];
+
+    /**
+     * @var array<string, array<int, string>>
+     */
     protected array $multipleAddedProductModifications = [
         'notAddedProducts' => [],
     ];
 
     protected ?PriceInterface $totalPrice = null;
+
+    protected Money $giftVoucherProductItemsPriceWithVat;
 
     protected ?PriceInterface $totalItemsPrice = null;
 
@@ -112,6 +121,7 @@ class CartWithModificationsResult
         $this->cartModifications['transportModifications'] = $this->transportModifications;
         $this->cartModifications['paymentModifications'] = $this->paymentModifications;
         $this->cartModifications['promoCodeModifications'] = $this->promoCodeModifications;
+        $this->cartModifications['giftVoucherModifications'] = $this->giftVoucherModifications;
         $this->cartModifications['multipleAddedProductModifications'] = $this->multipleAddedProductModifications;
 
         return $this->cartModifications;
@@ -270,6 +280,70 @@ class CartWithModificationsResult
         return $this->promoCodes;
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[]
+     */
+    public function getGiftVouchers(): array
+    {
+        return $this->cart->getAllAppliedGiftVouchers();
+    }
+
+    public function getRemainingToPay(): Money
+    {
+        $remainingToPay = $this->getTotalPrice()->getPriceWithVat()
+            ->subtract($this->getAppliedGiftVouchersTotalValueWithVat());
+
+        if ($remainingToPay->isNegative()) {
+            return Money::zero();
+        }
+
+        return $remainingToPay;
+    }
+
+    public function isNothingLeftToPay(): bool
+    {
+        return $this->getRemainingAmountToPay()->isZero();
+    }
+
+    public function getGiftVouchersExceedPayableAmount(): bool
+    {
+        $giftVouchersTotalValue = $this->getAppliedGiftVouchersTotalValueWithVat();
+
+        if ($giftVouchersTotalValue->isZero()) {
+            return false;
+        }
+
+        $payableAmount = $this->getTotalPrice()->getPriceWithVat()
+            ->subtract($this->getGiftVoucherProductItemsPriceWithVat());
+
+        return $giftVouchersTotalValue->isGreaterThan($payableAmount);
+    }
+
+    protected function getAppliedGiftVouchersTotalValueWithVat(): Money
+    {
+        $giftVouchersTotalValue = Money::zero();
+
+        foreach ($this->cart->getAllAppliedGiftVouchers() as $giftVoucher) {
+            $giftVouchersTotalValue = $giftVouchersTotalValue->add($giftVoucher->getValueWithVat());
+        }
+
+        return $giftVouchersTotalValue;
+    }
+
+    public function getGiftVoucherProductItemsPriceWithVat(): Money
+    {
+        if (!isset($this->giftVoucherProductItemsPriceWithVat)) {
+            throw new LogicException('Gift voucher product items price must be set before calling the getter.');
+        }
+
+        return $this->giftVoucherProductItemsPriceWithVat;
+    }
+
+    public function setGiftVoucherProductItemsPriceWithVat(Money $giftVoucherProductItemsPriceWithVat): void
+    {
+        $this->giftVoucherProductItemsPriceWithVat = $giftVoucherProductItemsPriceWithVat;
+    }
+
     public function getSelectedPickupPlaceIdentifier(): ?string
     {
         return $this->cart->getPickupPlaceIdentifier();
@@ -285,11 +359,17 @@ class CartWithModificationsResult
         $this->promoCodeModifications['noLongerApplicablePromoCode'][] = $promoCode;
     }
 
+    public function addChangedGiftVoucher(string $giftVoucherCode): void
+    {
+        $this->giftVoucherModifications['noLongerApplicableGiftVouchers'][] = $giftVoucherCode;
+    }
+
     public function isCartModified(): bool
     {
         return $this->isTransportInCartModified()
             || $this->isPaymentInCartModified()
             || $this->isPromoCodeInCartValid()
+            || $this->isGiftVoucherInCartModified()
             || $this->isSomeCartItemModified()
             || $this->cartModifications['someProductWasRemovedFromEshop'];
     }
@@ -311,6 +391,11 @@ class CartWithModificationsResult
     protected function isPromoCodeInCartValid(): bool
     {
         return count($this->promoCodeModifications['noLongerApplicablePromoCode']) > 0;
+    }
+
+    protected function isGiftVoucherInCartModified(): bool
+    {
+        return count($this->giftVoucherModifications['noLongerApplicableGiftVouchers']) > 0;
     }
 
     protected function isSomeCartItemModified(): bool

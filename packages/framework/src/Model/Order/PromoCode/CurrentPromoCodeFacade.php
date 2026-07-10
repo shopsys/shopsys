@@ -191,8 +191,7 @@ class CurrentPromoCodeFacade
             throw new InvalidPromoCodeException($enteredCode);
         }
 
-        $quantifiedProducts = $cart->getQuantifiedProducts();
-        $totalProductPrice = $this->promoCodeApplicableProductsTotalPriceCalculator->calculateTotalPrice($quantifiedProducts);
+        $totalProductPrice = $this->promoCodeApplicableProductsTotalPriceCalculator->calculateTotalPrice($cart->getQuantifiedProductsWithoutGiftVouchers());
 
         $this->validatePromoCode($promoCode, $totalProductPrice, $cart->getProducts());
 
@@ -205,6 +204,15 @@ class CurrentPromoCodeFacade
      */
     public function validatePromoCode(PromoCode $promoCode, PriceInterface $totalProductPrice, array $products): array
     {
+        $products = array_values(array_filter(
+            $products,
+            static fn (Product $product) => !$product->isGiftVoucher(),
+        ));
+
+        if ($products === []) {
+            throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
+        }
+
         if ($promoCode->isRegisteredCustomerUserOnly() && $this->currentCustomerUser->findCurrentCustomerUser() === null) {
             throw new AvailableForRegisteredCustomerUserOnly($promoCode->getCode());
         }

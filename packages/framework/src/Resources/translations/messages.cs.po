@@ -1912,6 +1912,9 @@ msgstr "Jednotlivé role"
 msgid "Information about order rounding item (empty if there is no rounding)"
 msgstr "Informace o zaokrouhlovací položce v objednávce (prázdné pokud v objednávce není zaokrouhlení)"
 
+msgid "Information about redeemed gift vouchers and the remaining amount to pay (empty if there are no gift vouchers)"
+msgstr "Informace o uplatněných dárkových poukazech a částce zbývající k úhradě (prázdné pokud objednávka neobsahuje dárkové poukazy)"
+
 msgid "Information for customers"
 msgstr "Informace pro zákazníky"
 

@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
@@ -368,6 +369,13 @@ class Order implements DomainSeparatedEntityInterface
     protected $paymentTransactions;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher>
+     */
+    #[ORM\OneToMany(targetEntity: GiftVoucher::class, mappedBy: 'redeemedOnOrder')]
+    #[ORM\OrderBy(['id' => 'ASC'])]
+    protected $redeemedGiftVouchers;
+
+    /**
      * @var string|null
      */
     #[AsMcpColumn]
@@ -484,6 +492,7 @@ class Order implements DomainSeparatedEntityInterface
         $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
         $this->setTotalPrices(Price::zero(), Price::zero());
         $this->paymentTransactions = new ArrayCollection();
+        $this->redeemedGiftVouchers = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
 
@@ -608,6 +617,36 @@ class Order implements DomainSeparatedEntityInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[]
+     */
+    public function getRedeemedGiftVouchers()
+    {
+        return $this->redeemedGiftVouchers->getValues();
+    }
+
+    public function addRedeemedGiftVoucher(GiftVoucher $giftVoucher): void
+    {
+        if (!$this->redeemedGiftVouchers->contains($giftVoucher)) {
+            $this->redeemedGiftVouchers->add($giftVoucher);
+        }
+    }
+
+    public function getRemainingAmountToPay(): Money
+    {
+        $remainingAmountToPay = $this->getTotalPriceWithVat();
+
+        foreach ($this->getRedeemedGiftVouchers() as $giftVoucher) {
+            $remainingAmountToPay = $remainingAmountToPay->subtract($giftVoucher->getValueWithVat());
+        }
+
+        if ($remainingAmountToPay->isNegative()) {
+            return Money::zero();
+        }
+
+        return $remainingAmountToPay;
     }
 
     public function markAsPaid(DateTimeImmutable $paidAt): void

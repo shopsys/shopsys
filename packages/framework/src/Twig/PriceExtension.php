@@ -83,6 +83,11 @@ class PriceExtension extends AbstractExtension
                 $this->priceTextWithCurrencyByOrderAndLocaleFilter(...),
                 ['is_safe' => ['html']],
             ),
+            new TwigFilter(
+                'priceWithCurrencyByOrderAndLocale',
+                $this->priceWithCurrencyByOrderAndLocaleFilter(...),
+                ['is_safe' => ['html']],
+            ),
         ];
     }
 
@@ -183,6 +188,11 @@ class PriceExtension extends AbstractExtension
             return t('Free', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $locale);
         }
 
+        return $this->formatCurrencyByFrozenValues($price, $order->getCurrencyCode(), $order->getCurrencyMinFractionDigits(), $locale);
+    }
+
+    public function priceWithCurrencyByOrderAndLocaleFilter(Money $price, Order $order, string $locale): string
+    {
         return $this->formatCurrencyByFrozenValues($price, $order->getCurrencyCode(), $order->getCurrencyMinFractionDigits(), $locale);
     }
 

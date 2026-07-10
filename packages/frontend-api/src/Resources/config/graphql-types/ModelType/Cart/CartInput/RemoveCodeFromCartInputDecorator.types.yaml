@@ -1,14 +1,12 @@
-ApplyPromoCodeToCartInputDecorator:
+RemoveCodeFromCartInputDecorator:
     type: input-object
     decorator: true
     config:
-        validation:
-            -   Shopsys\FrontendApiBundle\Component\Constraints\PromoCode: ~
         fields:
             cartUuid:
                 type: "Uuid"
                 defaultValue: null
                 description: "Cart identifier or null if customer is logged in"
-            promoCode:
+            code:
                 type: "String!"
-                description: "Promo code to be used after checkout"
+                description: "Discount coupon or gift voucher code to be removed"

@@ -43,6 +43,9 @@ msgstr "Zdarma"
 msgid "Gift"
 msgstr "Darček"
 
+msgid "Gift voucher"
+msgstr "Darčekový poukaz"
+
 msgid "In stock"
 msgstr "Na sklade"
 
@@ -69,6 +72,9 @@ msgstr "Export osobných údajov"
 
 msgid "Personal information overview"
 msgstr "Prehľad osobných údajov"
+
+msgid "Remaining to pay"
+msgstr "Zostáva zaplatiť"
 
 msgid "Sent by email after payment"
 msgstr "Zasielame e-mailom po zaplatení"

@@ -1,0 +1,4 @@
+ApplyCodeToCartInput:
+    type: input-object
+    inherits:
+        - 'ApplyCodeToCartInputDecorator'

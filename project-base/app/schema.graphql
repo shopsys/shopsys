@@ -99,11 +99,25 @@ type AdvertPosition {
   positionName: String!
 }
 
-input ApplyPromoCodeToCartInput {
+"Gift voucher applied as a form of payment"
+type AppliedGiftVoucher {
+  "Code of the gift voucher"
+  code: String!
+  "Name of the purchased gift voucher product the voucher was generated from"
+  productName: String
+  "Date and time until the gift voucher is valid"
+  validUntil: DateTime!
+  "Value of the gift voucher excluding VAT, calculated using the VAT rate of the purchased gift voucher product"
+  valueWithoutVat: Money!
+  "Value of the gift voucher including VAT"
+  valueWithVat: Money!
+}
+
+input ApplyCodeToCartInput {
   "Cart identifier or null if customer is logged in"
   cartUuid: Uuid = null
-  "Promo code to be used after checkout"
-  promoCode: String!
+  "Discount coupon or gift voucher code to be applied"
+  code: String!
 }
 
 "A connection to a list of items."
@@ -210,6 +224,8 @@ type Availability {
 
 "Product Availability statuses"
 enum AvailabilityStatusEnum {
+  "Product availability status for electronically delivered products"
+  Digital
   "Product is out of stock with a known expected restocking date"
   ExpectedRestock
   "Product availability status in stock"
@@ -419,6 +435,12 @@ interface Breadcrumb {
 }
 
 type Cart {
+  "Applied gift vouchers if provided"
+  giftVouchers: [AppliedGiftVoucher!]!
+  "Applied gift vouchers exceed the amount payable by them (total price without gift voucher products), so the order cannot be completed"
+  giftVouchersExceedPayableAmount: Boolean!
+  "Whether the applied gift vouchers cover the whole amount to pay"
+  isNothingLeftToPay: Boolean!
   "All items in the cart"
   items: [CartItem!]!
   modifications: CartModificationsResult!
@@ -430,6 +452,8 @@ type Cart {
   promoCodes: [PromoCode!]!
   "Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa."
   remainingAmountForFreeTransport: Money
+  "Total price with VAT reduced by applied gift vouchers, never below zero"
+  remainingAmountToPay: Money!
   "Rounding amount if payment has rounding allowed"
   roundingPrice: Price
   "Selected pickup place identifier if provided"
@@ -448,6 +472,10 @@ type Cart {
   transport: Transport
   "UUID of the cart, null for authenticated user"
   uuid: Uuid
+}
+
+type CartGiftVoucherModificationsResult {
+  noLongerApplicableGiftVouchers: [String!]!
 }
 
 input CartInput {
@@ -482,6 +510,7 @@ enum CartItemTypeEnum {
 }
 
 type CartModificationsResult {
+  giftVoucherModifications: CartGiftVoucherModificationsResult!
   itemModifications: CartItemModificationsResult!
   multipleAddedProductModifications: CartMultipleAddedProductModificationsResult!
   paymentModifications: CartPaymentModificationsResult!
@@ -1053,24 +1082,6 @@ type CurrentRegularCustomerUser implements BaseCustomerUser & CurrentCustomerUse
   uuid: Uuid!
 }
 
-"A connection to a list of items."
-type CustomerUserProductReviewConnection {
-  "Information to aid in pagination."
-  edges: [CustomerUserProductReviewEdge]
-  "Information to aid in pagination."
-  pageInfo: PageInfo!
-  "Total number of the customer user's reviews"
-  totalCount: Int!
-}
-
-"An edge in a connection."
-type CustomerUserProductReviewEdge {
-  "A cursor for use in pagination."
-  cursor: String!
-  "The item at the end of the edge."
-  node: ProductReview
-}
-
 "Available customer user roles"
 enum CustomerUserRoleEnum {
   ROLE_API_ALL
@@ -1390,8 +1401,6 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
-  "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
-  reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
   seoH1: String
   "Seo meta description of product"
@@ -1430,8 +1439,8 @@ type Mutation {
   AddProductToList(input: ProductListUpdateInput!): ProductList!
   "Add product to cart for future checkout"
   AddToCart(input: AddToCartInput!): AddToCartResult!
-  "Apply new promo code for the future checkout"
-  ApplyPromoCodeToCart(input: ApplyPromoCodeToCartInput!): Cart!
+  "Apply a code as either a promo code or a gift voucher, whichever it matches"
+  ApplyCodeToCart(input: ApplyCodeToCartInput!): Cart!
   "Changes customer user company data"
   ChangeCompanyData(input: ChangeCompanyDataInput!): CurrentCustomerUser!
   "Changes customer user password"
@@ -1454,8 +1463,6 @@ type Mutation {
   CreateInquiry(input: CreateInquiryInput!): Boolean!
   "Creates complete order with products and addresses"
   CreateOrder(input: OrderInput!): CreateOrderResult!
-  "Create a new product review that will be published after moderation"
-  CreateProductReview(input: ProductReviewInput!): ProductReview!
   "Create a new watchdog or update validity of the current one"
   CreateWatchdog(input: CreateWatchdogInput!): Boolean!
   "Delete delivery address by Uuid"
@@ -1490,6 +1497,8 @@ type Mutation {
   Register(input: RegistrationDataInput!): LoginResult!
   "Register new customer user using an order data"
   RegisterByOrder(input: RegistrationByOrderInput!): LoginResult!
+  "Remove an applied discount coupon or gift voucher code from the cart"
+  RemoveCodeFromCart(input: RemoveCodeFromCartInput!): Cart!
   "delete customer user"
   RemoveCustomerUser(input: RemoveCustomerUserDataInput!): Boolean!
   "Remove product from cart"
@@ -1498,8 +1507,6 @@ type Mutation {
   RemoveProductFromList(input: ProductListUpdateInput!): ProductList
   "Removes the product list"
   RemoveProductList(input: ProductListInput!): ProductList
-  "Remove already used promo code from cart"
-  RemovePromoCodeFromCart(input: RemovePromoCodeFromCartInput!): Cart!
   "Request password recovery - email with hash will be sent"
   RequestPasswordRecovery(email: String!): String!
   "Request access to personal data"
@@ -1651,6 +1658,8 @@ type Order {
   email: String!
   "The customer's first name"
   firstName: String
+  "Gift vouchers redeemed on the order"
+  giftVouchers: [AppliedGiftVoucher!]!
   "Indicates whether the order has an external payment"
   hasExternalPayment: Boolean!
   "Indicates whether order payment is still being processed with GoPay payment type"
@@ -1659,8 +1668,10 @@ type Order {
   heurekaAgreement: Boolean!
   "Indicates whether the billing address is other than a delivery address"
   isDeliveryAddressDifferentFromBilling: Boolean!
-  "Indicates whether the order is paid successfully with GoPay payment type"
+  "Indicates whether the order is paid (either marked as paid, fully covered by gift vouchers, or paid successfully with GoPay payment type)"
   isPaid: Boolean!
+  "Returns whether withdrawal cannot be requested because a gift voucher purchased in the order has already been redeemed or cancelled"
+  isWithdrawalBlockedByPurchasedGiftVoucher: Boolean!
   "All items in the order including payment and transport"
   items: [OrderItem!]!
   "URL for accessing the last payment transaction on a gateway without invoking the new payment transaction. Depending on the payment status, user might see the payment details or even retry the transaction if possible."
@@ -1681,12 +1692,10 @@ type Order {
   postcode: String!
   "All product items in the order"
   productItems: [OrderItem!]!
-  "Products of the order can be reviewed in its current status"
-  productReviewsAllowed: Boolean!
   "Promo code (coupon) used in the order"
   promoCode: String
-  "Uuids of the order's products that already have a review linked to this order"
-  reviewedProductUuids: [Uuid!]!
+  "Total price with VAT reduced by redeemed gift vouchers, never below zero"
+  remainingAmountToPay: Money!
   "Current status of the order"
   status: String!
   "Type of the order status"
@@ -1871,6 +1880,8 @@ type OrderItemEdge {
 input OrderItemsFilterInput {
   "Filter order items by product catalog number (OR condition with productUuid)"
   catnum: String
+  "Exclude order items of products with these product types"
+  excludeProductTypes: [ProductTypeEnum!]
   "Filter order items in orders created after this date"
   orderCreatedAfter: DateTime
   "Filter orders created after this date"
@@ -2317,8 +2328,6 @@ interface Product {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
-  "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
-  reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
   seoH1: String
   "Seo meta description of product"
@@ -2479,115 +2488,6 @@ input ProductQuestionInput {
   question: String!
 }
 
-"Customer review of a product"
-type ProductReview {
-  "Date and time when the review was created"
-  createdAt: DateTime!
-  "The review is linked to an order of the reviewed product"
-  isVerifiedPurchase: Boolean!
-  "Currently associated reviewed product, null when the product no longer exists"
-  product: Product
-  "Name of the reviewed product at the time of the review"
-  productName: String!
-  "UUID of the reviewed product (the concrete variant), null when the product no longer exists"
-  productUuid: Uuid
-  "Star rating from 1 to 5"
-  rating: Int!
-  "Reason why the customer's own review was not published, null for reviews that were not rejected"
-  rejectionReason: String
-  "Date and time when the response was published"
-  responseCreatedAt: DateTime
-  "Response of the e-shop to the review"
-  responseText: String
-  "Public name of the reviewer in the \"FirstName L.\" form, null when the review is published anonymously"
-  reviewerName: String
-  "Moderation status, meaningful for the customer's own reviews (public listings contain approved reviews only)"
-  status: ProductReviewStatusEnum!
-  "Text of the review"
-  text: String
-  "UUID"
-  uuid: Uuid!
-}
-
-"A connection to a list of items."
-type ProductReviewConnection {
-  "Information to aid in pagination."
-  edges: [ProductReviewEdge]
-  "The current ordering mode"
-  orderingMode: ProductReviewOrderingModeEnum!
-  "Information to aid in pagination."
-  pageInfo: PageInfo!
-  "Aggregated rating of the same set of reviews the connection paginates"
-  summary: ProductReviewsSummary!
-  "Total number of reviews"
-  totalCount: Int!
-}
-
-"An edge in a connection."
-type ProductReviewEdge {
-  "A cursor for use in pagination."
-  cursor: String!
-  "The item at the end of the edge."
-  node: ProductReview
-}
-
-"Represents the input for creating a product review"
-input ProductReviewInput {
-  "Email of the reviewer, required for a customer that is not logged in (the account email is used otherwise)"
-  email: String = null
-  "First name of the reviewer"
-  firstName: String = null
-  "The review will be published without the reviewer name"
-  isAnonymous: Boolean! = false
-  "Last name of the reviewer"
-  lastName: String = null
-  "URL hash of the order proving the purchase of a customer that is not logged in, the review is created unverified without it"
-  orderUrlHash: String = null
-  "UUID of the reviewed product; a concrete variant has to be chosen for products with variants"
-  productUuid: Uuid!
-  "Star rating from 1 to 5"
-  rating: Int!
-  "Text of the review"
-  text: String = null
-}
-
-"One of possible ordering modes for product reviews"
-enum ProductReviewOrderingModeEnum {
-  "Order by rating, highest first"
-  HIGHEST_RATING
-  "Order by rating, lowest first"
-  LOWEST_RATING
-  "Order by date of creation, newest first"
-  NEWEST
-}
-
-type ProductReviewRatingCount {
-  "Number of reviews with the rating"
-  count: Int!
-  "Star rating"
-  rating: Int!
-}
-
-"Aggregated rating of the approved reviews of a product and its visible variants"
-type ProductReviewsSummary {
-  "Average rating, null when there are no reviews"
-  averageRating: Float
-  "Number of reviews per star rating, from 5 stars to 1"
-  ratingCounts: [ProductReviewRatingCount!]!
-  "Total number of reviews"
-  totalCount: Int!
-}
-
-"One of possible moderation statuses of a product review"
-enum ProductReviewStatusEnum {
-  "The review is approved and publicly visible"
-  APPROVED
-  "The review is waiting for moderation"
-  PENDING
-  "The review was rejected"
-  REJECTED
-}
-
 "Cart products grouped by the reason why they cannot be delivered using the transport"
 type ProductsByTransportUnavailabilityReason {
   "Cart products that cannot be delivered using the transport for this reason"
@@ -2600,8 +2500,12 @@ type ProductsByTransportUnavailabilityReason {
 enum ProductTypeEnum {
   "Basic product"
   BASIC
+  "Gift voucher delivered by email after the order is paid"
+  ELECTRONIC_GIFT_VOUCHER
   "Product with inquiry form instead of add to cart button"
   INQUIRY
+  "Gift voucher delivered printed as a regular product"
+  PRINTED_GIFT_VOUCHER
 }
 
 type PromoCode {
@@ -2693,8 +2597,6 @@ type Query {
   CurrentCompanyCustomerUser: CurrentCompanyCustomerUser
   "Returns currently logged in customer user"
   currentCustomerUser: CurrentCustomerUser
-  "Returns reviews written by the current customer user, regardless of their moderation status, newest first. When a product UUID is provided, only the reviews of the product and its variants are returned. The list can be paginated using `first`, `last`, `before` and `after` keywords"
-  currentCustomerUserProductReviews(after: String, before: String, first: Int, last: Int, productUuid: Uuid): CustomerUserProductReviewConnection!
   CurrentRegularCustomerUser: CurrentRegularCustomerUser
   "Returns all customer user role groups"
   customerUserRoleGroups: [CustomerUserRoleGroup!]!
@@ -2747,8 +2649,6 @@ type Query {
   "Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."
   productList(input: ProductListInput!): ProductList
   productListsByType(productListType: ProductListTypeEnum!): [ProductList!]!
-  "Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords"
-  productReviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null, productUuid: Uuid!): ProductReviewConnection!
   "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
   products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
   "Returns list of products by catalog numbers"
@@ -2986,8 +2886,6 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
-  "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
-  reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
   seoH1: String
   "Seo meta description of product"
@@ -3012,6 +2910,13 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   zboziCategory: String
 }
 
+input RemoveCodeFromCartInput {
+  "Cart identifier or null if customer is logged in"
+  cartUuid: Uuid = null
+  "Discount coupon or gift voucher code to be removed"
+  code: String!
+}
+
 input RemoveCustomerUserDataInput {
   "Customer user UUID"
   customerUserUuid: Uuid!
@@ -3022,13 +2927,6 @@ input RemoveFromCartInput {
   cartItemUuid: Uuid!
   "Cart identifier, new cart will be created if not provided and customer is not logged in"
   cartUuid: Uuid = null
-}
-
-input RemovePromoCodeFromCartInput {
-  "Cart identifier or null if customer is logged in"
-  cartUuid: Uuid = null
-  "Promo code to be removed"
-  promoCode: String!
 }
 
 "Represents sales representative"
@@ -3117,10 +3015,6 @@ type Settings {
   pricing: PricingSetting!
   "Returns privacy policy article's url"
   privacyPolicyArticleUrl: String
-  "Returns product review policy article's url"
-  productReviewPolicyArticleUrl: String
-  "Returns true if product reviews are enabled on the current domain"
-  productReviewsEnabled: Boolean!
   "Settings related to SEO"
   seo: SeoSetting!
   "Returns available social network logins"
@@ -3320,12 +3214,15 @@ type TransportGroup {
 "One of the possible methods of the transport type"
 enum TransportTypeEnum {
   common
+  email
   packetery
   personal_pickup
 }
 
 "Reason why a transport cannot be selected for the given cart"
 enum TransportUnavailabilityReasonInCartEnum {
+  electronic_gift_voucher_only
+  email_transport_not_allowed
   excluded_for_product
   personal_pickup_required
 }
@@ -3430,8 +3327,6 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
-  "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
-  reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
   seoH1: String
   "Seo meta description of product"

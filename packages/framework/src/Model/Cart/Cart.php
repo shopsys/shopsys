@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData;
 use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -73,6 +74,14 @@ class Cart
     protected $promoCodes;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher>
+     */
+    #[ORM\JoinTable(name: 'cart_gift_vouchers')]
+    #[ORM\ManyToMany(targetEntity: GiftVoucher::class)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
+    protected $giftVouchers;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
     #[AsMcpColumn]
@@ -123,6 +132,7 @@ class Cart
         $this->items = new ArrayCollection();
         $this->modifiedAt = new DatePoint();
         $this->promoCodes = new ArrayCollection();
+        $this->giftVouchers = new ArrayCollection();
     }
 
     public function addItem(CartItem $item): void
@@ -196,6 +206,17 @@ class Cart
         }
 
         return $quantifiedProducts;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
+     */
+    public function getQuantifiedProductsWithoutGiftVouchers()
+    {
+        return array_filter(
+            $this->getQuantifiedProducts(),
+            static fn (QuantifiedProduct $quantifiedProduct) => !$quantifiedProduct->getProduct()->isGiftVoucher(),
+        );
     }
 
     protected function createQuantifiedProduct(CartItem $cartItem): QuantifiedProduct
@@ -350,6 +371,46 @@ class Cart
         return $this->promoCodes->exists(
             static function ($key, PromoCode $promoCode) use ($promoCodeCode) {
                 return $promoCode->getCode() === $promoCodeCode;
+            },
+        );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[]
+     */
+    public function getAllAppliedGiftVouchers()
+    {
+        return $this->giftVouchers->getValues();
+    }
+
+    public function applyGiftVoucher(GiftVoucher $giftVoucher): void
+    {
+        if (!$this->giftVouchers->contains($giftVoucher)) {
+            $this->giftVouchers->add($giftVoucher);
+            $this->setModifiedNow();
+        }
+    }
+
+    public function removeGiftVoucherById(int $giftVoucherId): void
+    {
+        foreach ($this->giftVouchers as $giftVoucher) {
+            if ($giftVoucher->getId() === $giftVoucherId) {
+                $this->giftVouchers->removeElement($giftVoucher);
+                $this->setModifiedNow();
+
+                return;
+            }
+        }
+        $message = 'Gift voucher with ID = ' . $giftVoucherId . ' is not applied.';
+
+        throw new InvalidCartItemException($message);
+    }
+
+    public function isGiftVoucherApplied(string $giftVoucherCode): bool
+    {
+        return $this->giftVouchers->exists(
+            static function ($key, GiftVoucher $giftVoucher) use ($giftVoucherCode) {
+                return $giftVoucher->getCode() === $giftVoucherCode;
             },
         );
     }

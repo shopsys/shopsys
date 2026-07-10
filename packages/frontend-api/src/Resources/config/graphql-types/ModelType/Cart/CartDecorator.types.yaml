@@ -21,6 +21,18 @@ CartDecorator:
             promoCodes:
                 type: "[PromoCode!]!"
                 description: "Applied promo codes if provided"
+            giftVouchers:
+                type: "[AppliedGiftVoucher!]!"
+                description: "Applied gift vouchers if provided"
+            remainingAmountToPay:
+                type: "Money!"
+                description: "Total price with VAT reduced by applied gift vouchers, never below zero"
+            isNothingLeftToPay:
+                type: "Boolean!"
+                description: "Whether the applied gift vouchers cover the whole amount to pay"
+            giftVouchersExceedPayableAmount:
+                type: "Boolean!"
+                description: "Applied gift vouchers exceed the amount payable by them (total price without gift voucher products), so the order cannot be completed"
             modifications:
                 type: "CartModificationsResult!"
             totalPrice:

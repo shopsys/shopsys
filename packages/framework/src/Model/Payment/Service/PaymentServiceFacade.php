@@ -55,7 +55,7 @@ class PaymentServiceFacade
         $paymentTransactionData = $this->paymentTransactionDataFactory->create();
         $paymentTransactionData->order = $order;
         $paymentTransactionData->payment = $order->getPayment();
-        $paymentTransactionData->paidAmount = $order->getTotalPriceWithVat();
+        $paymentTransactionData->paidAmount = $order->getRemainingAmountToPay();
 
         $paymentSetupCreationData = $this->paymentSetupCreationDataFactory->createInstance();
 

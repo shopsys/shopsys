@@ -73,6 +73,9 @@ msgstr ""
 msgid "Old password must be at least {{ limit }} characters long"
 msgstr ""
 
+msgid "Only one promo code can be applied in the cart."
+msgstr ""
+
 msgid "Order is required"
 msgstr ""
 
@@ -260,6 +263,18 @@ msgid "Telephone prefix cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "The file {{ fileName }} is too big."
+msgstr ""
+
+msgid "The gift voucher has already been redeemed or cancelled."
+msgstr ""
+
+msgid "The gift voucher is already applied in the current cart."
+msgstr ""
+
+msgid "The gift voucher is no longer valid. Check it, please."
+msgstr ""
+
+msgid "The gift voucher is not valid. Check it, please."
 msgstr ""
 
 msgid "The payment is not allowed in combination with already selected transport"
