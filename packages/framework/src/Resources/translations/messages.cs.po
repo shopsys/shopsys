@@ -46,6 +46,9 @@ msgstr "-- Vyberte skupinu parametrů --"
 msgid "-- Choose prefix --"
 msgstr "-- Vyberte předvolbu --"
 
+msgid "-- Choose transport group --"
+msgstr "-- Vyberte skupinu doprav --"
+
 msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
 
@@ -984,6 +987,9 @@ msgstr "Telefonní číslo pro doručení"
 
 msgid "Delivery street"
 msgstr "Ulice pro doručení"
+
+msgid "Delivery to address"
+msgstr "Doručení na adresu"
 
 msgid "Description"
 msgstr "Popis"
@@ -2554,6 +2560,9 @@ msgstr "Nastavení telefonních předvoleb bylo upraveno."
 msgid "Phone prefixes"
 msgstr "Telefonní předvolby"
 
+msgid "Pickup point"
+msgstr "Odběrné místo"
+
 msgid "Please check following information:"
 msgstr "Prosím překontrolujte následující informace:"
 
@@ -3381,6 +3390,9 @@ msgstr "Přehled problémů v přenosech"
 
 msgid "Transfer problem has been marked as resolved"
 msgstr "Problém v přenosu byl označen jako vyřešený"
+
+msgid "Transport group"
+msgstr "Skupina doprav"
 
 msgid "Transport type"
 msgstr "Typ dopravy"

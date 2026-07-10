@@ -46,6 +46,9 @@ msgstr ""
 msgid "-- Choose prefix --"
 msgstr ""
 
+msgid "-- Choose transport group --"
+msgstr ""
+
 msgid "-- Choose unit --"
 msgstr ""
 
@@ -983,6 +986,9 @@ msgid "Delivery phone number"
 msgstr ""
 
 msgid "Delivery street"
+msgstr ""
+
+msgid "Delivery to address"
 msgstr ""
 
 msgid "Description"
@@ -2554,6 +2560,9 @@ msgstr ""
 msgid "Phone prefixes"
 msgstr ""
 
+msgid "Pickup point"
+msgstr ""
+
 msgid "Please check following information:"
 msgstr ""
 
@@ -3380,6 +3389,9 @@ msgid "Transfer issues overview"
 msgstr ""
 
 msgid "Transfer problem has been marked as resolved"
+msgstr ""
+
+msgid "Transport group"
 msgstr ""
 
 msgid "Transport type"

@@ -535,6 +535,11 @@ Cypress.Commands.add('createB2bOrderForTest', () => {
     const b2bGraphqlUrl = b2bDomain.baseUrl + '/graphql/';
     const b2bHostname = new URL(b2bDomain.baseUrl).hostname;
     const cookieName = `accessToken-${b2bDomain.domainId}`;
+    type TransportForB2bOrder = {
+        uuid: string;
+        transportTypeCode: string;
+        payments: Array<{ uuid: string }>;
+    };
 
     return cy.getCookie(cookieName, { domain: b2bHostname }).then((cookie) => {
         const accessToken = cookie?.value;
@@ -564,17 +569,20 @@ Cypress.Commands.add('createB2bOrderForTest', () => {
             `query TransportsQuery($cartUuid: Uuid) {
                 transports(cartUuid: $cartUuid) {
                     uuid
+                    transportTypeCode
                     payments { uuid }
                 }
             }`,
             { cartUuid: null },
         ).then((data) => {
-            const firstTransport = data.transports[0];
-            if (!firstTransport) {
-                throw new Error('No transports available on B2B domain.');
+            const firstCommonTransport = (data.transports as TransportForB2bOrder[]).find(
+                (transport) => transport.transportTypeCode === 'common',
+            );
+            if (!firstCommonTransport) {
+                throw new Error('No common transports available on B2B domain.');
             }
-            const transportUuid: string = firstTransport.uuid;
-            const paymentUuid: string = firstTransport.payments[0]?.uuid;
+            const transportUuid: string = firstCommonTransport.uuid;
+            const paymentUuid: string = firstCommonTransport.payments[0]?.uuid;
             if (!paymentUuid) {
                 throw new Error('No payments available for the selected B2B transport.');
             }

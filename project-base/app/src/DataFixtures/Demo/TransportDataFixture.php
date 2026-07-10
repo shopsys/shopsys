@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
 use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesDataFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 
@@ -45,21 +46,21 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public function load(ObjectManager $manager): void
     {
         $transportData = $this->transportDataFactory->create();
-        $transportData->daysUntilDelivery = 5;
-        $transportData->trackingUrl = 'https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers={tracking_number}';
+        $transportData->daysUntilDelivery = 2;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
 
             $transportData->enabled[$domainConfig->getId()] = true;
-            $transportData->name[$locale] = t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}" tabindex="0">{tracking_number}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->description[$locale] = t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->instructions[$locale] = t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->name[$locale] = t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('Packeta delivery company', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setPriceForAllDomains($transportData, Money::create('99.95'), 5000);
-        $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
+        $this->setPriceForAllDomains($transportData, Money::create('49.95'));
+        $transportData->type = TransportTypeEnum::TYPE_PACKETERY;
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_PICKUP_POINT, TransportGroup::class);
+        $this->createTransport(self::TRANSPORT_PACKETERY, $transportData);
 
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 4;
@@ -74,7 +75,26 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('199.95'));
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS, TransportGroup::class);
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
+
+        $transportData = $this->transportDataFactory->create();
+        $transportData->daysUntilDelivery = 5;
+        $transportData->trackingUrl = 'https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers={tracking_number}';
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+
+            $transportData->enabled[$domainConfig->getId()] = true;
+            $transportData->name[$locale] = t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}" tabindex="0">{tracking_number}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        $this->setPriceForAllDomains($transportData, Money::create('99.95'), 5000);
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS, TransportGroup::class);
+        $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 0;
@@ -101,6 +121,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->type = TransportTypeEnum::TYPE_PERSONAL_PICKUP;
 
         $this->setPriceForAllDomains($transportData, Money::zero());
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_PICKUP_POINT, TransportGroup::class);
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -116,23 +137,8 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         }
 
         $this->setPriceForAllDomains($transportData, Money::zero());
+        $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS, TransportGroup::class);
         $this->createTransport(self::TRANSPORT_DRONE, $transportData);
-
-        $transportData = $this->transportDataFactory->create();
-        $transportData->daysUntilDelivery = 2;
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
-            $locale = $domainConfig->getLocale();
-
-            $transportData->enabled[$domainConfig->getId()] = true;
-            $transportData->name[$locale] = t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->description[$locale] = t('Packeta delivery company', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->instructions[$locale] = t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        }
-
-        $this->setPriceForAllDomains($transportData, Money::create('49.95'));
-        $transportData->type = TransportTypeEnum::TYPE_PACKETERY;
-        $this->createTransport(self::TRANSPORT_PACKETERY, $transportData);
     }
 
     /**
@@ -190,6 +196,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             VatDataFixture::class,
             CurrencyDataFixture::class,
             SettingValueDataFixture::class,
+            TransportGroupDataFixture::class,
         ];
     }
 }

@@ -24,6 +24,8 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
+use Shopsys\FrameworkBundle\Model\Transport\TransportGroupFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -41,6 +43,7 @@ final class TransportFormType extends AbstractType
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly TransportFacade $transportFacade,
+        private readonly TransportGroupFacade $transportGroupFacade,
         private readonly Domain $domain,
         private readonly TransportTypeProvider $transportTypeProvider,
     ) {
@@ -101,6 +104,16 @@ final class TransportFormType extends AbstractType
                     new NotBlank(),
                 ],
                 'label' => 'Transport type',
+            ])
+            ->add('group', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->transportGroupFacade->getAll(),
+                'choice_label' => function (TransportGroup $transportGroup) {
+                    return $transportGroup->getName() ?? t('Name has not been entered in your current language') . ' (ID: ' . $transportGroup->getId() . ')';
+                },
+                'choice_value' => 'id',
+                'placeholder' => t('-- Choose transport group --'),
+                'label' => 'Transport group',
             ])
             ->add('daysUntilDelivery', TextType::class, [
                 'required' => true,
@@ -167,7 +180,7 @@ final class TransportFormType extends AbstractType
                         mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
                         mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
                         maxSize: '2M',
-                        maxSizeMessage: 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                        maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ),
                 ],

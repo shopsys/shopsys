@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Payment;
 
-use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -23,78 +22,18 @@ class PaymentsTest extends GraphQlTestCase
         $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $arrayExpected = [
             [
-                'name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'description' => t(
-                    'Quick, cheap and reliable!',
-                    [],
-                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $this->getLocaleForFirstDomain(),
-                ),
-                'instructions' => t('<b>You have chosen payment by credit card. Please finish it in two business days.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'position' => 0,
-                'type' => 'basic',
-                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero),
-                'images' => [
-                    [
-                        'url' => $this->getBaseUrlPath('/content-test/images/payment/53.jpg'),
-                        'name' => PaymentDataFixture::PAYMENT_CARD,
-                    ],
-                ],
-                'transports' => [
-                    ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                ],
-                'goPayPaymentMethod' => null,
-                'vatPercent' => '0.000000',
-            ],
-            [
-                'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'description' => null,
-                'instructions' => null,
-                'position' => 1,
-                'type' => 'basic',
-                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
-                'images' => [
-                    [
-                        'url' => $this->getBaseUrlPath('/content-test/images/payment/55.jpg'),
-                        'name' => PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
-                    ],
-                ],
-                'transports' => [
-                    ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                ],
-                'goPayPaymentMethod' => null,
-                'vatPercent' => '0.000000',
-            ],
-            [
-                'name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'description' => null,
-                'instructions' => null,
-                'position' => 2,
-                'type' => 'basic',
-                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
-                'images' => [
-                    [
-                        'url' => $this->getBaseUrlPath('/content-test/images/payment/54.jpg'),
-                        'name' => PaymentDataFixture::PAYMENT_CASH,
-                    ],
-                ],
-                'transports' => [
-                    ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                ],
-                'goPayPaymentMethod' => null,
-                'vatPercent' => '0.000000',
-            ],
-            [
                 'name' => t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
                 'instructions' => t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'position' => 3,
+                'position' => 0,
                 'type' => 'goPay',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh),
-                'images' => [],
+                'images' => [
+                    [
+                        'url' => $this->getBaseUrlPath('/content-test/images/payment/704.png'),
+                        'name' => t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    ],
+                ],
                 'transports' => [
                     ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
@@ -112,13 +51,18 @@ class PaymentsTest extends GraphQlTestCase
                 'name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'instructions' => t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'position' => 4,
+                'position' => 1,
                 'type' => 'goPay',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh),
-                'images' => [],
+                'images' => [
+                    [
+                        'url' => $this->getBaseUrlPath('/content-test/images/payment/705.png'),
+                        'name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    ],
+                ],
                 'transports' => [
-                    ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
@@ -132,15 +76,66 @@ class PaymentsTest extends GraphQlTestCase
                 'vatPercent' => '21.000000',
             ],
             [
-                'name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'description' => t(
+                    'Quick, cheap and reliable!',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $this->getLocaleForFirstDomain(),
+                ),
+                'instructions' => t('<b>You have chosen payment by credit card. Please finish it in two business days.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'position' => 2,
+                'type' => 'basic',
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero),
+                'images' => [
+                    [
+                        'url' => $this->getBaseUrlPath('/content-test/images/payment/701.png'),
+                        'name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    ],
+                ],
+                'transports' => [
+                    ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                ],
+                'goPayPaymentMethod' => null,
+                'vatPercent' => '0.000000',
+            ],
+            [
+                'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
                 'instructions' => null,
-                'position' => 5,
+                'position' => 3,
                 'type' => 'basic',
-                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),
-                'images' => [],
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
+                'images' => [
+                    [
+                        'url' => $this->getBaseUrlPath('/content-test/images/payment/702.png'),
+                        'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    ],
+                ],
                 'transports' => [
-                    ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                ],
+                'goPayPaymentMethod' => null,
+                'vatPercent' => '0.000000',
+            ],
+            [
+                'name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'description' => null,
+                'instructions' => null,
+                'position' => 4,
+                'type' => 'basic',
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
+                'images' => [
+                    [
+                        'url' => $this->getBaseUrlPath('/content-test/images/payment/703.png'),
+                        'name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    ],
+                ],
+                'transports' => [
+                    ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => null,
                 'vatPercent' => '0.000000',
@@ -149,15 +144,39 @@ class PaymentsTest extends GraphQlTestCase
                 'name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
                 'instructions' => t('Pay by bank transfer {qr_code}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'position' => 6,
+                'position' => 5,
                 'type' => 'bankTransfer',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),
-                'images' => [],
+                'images' => [
+                    [
+                        'url' => $this->getBaseUrlPath('/content-test/images/payment/707.png'),
+                        'name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    ],
+                ],
                 'transports' => [
-                    ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                ],
+                'goPayPaymentMethod' => null,
+                'vatPercent' => '0.000000',
+            ],
+            [
+                'name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'description' => null,
+                'instructions' => null,
+                'position' => 6,
+                'type' => 'basic',
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),
+                'images' => [
+                    [
+                        'url' => $this->getBaseUrlPath('/content-test/images/payment/706.png'),
+                        'name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    ],
+                ],
+                'transports' => [
+                    ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => null,
                 'vatPercent' => '0.000000',

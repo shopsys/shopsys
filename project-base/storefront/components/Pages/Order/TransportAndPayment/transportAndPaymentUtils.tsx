@@ -78,6 +78,55 @@ export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentInCa
     return { changePayment, changeGoPaySwift, resetPaymentAndGoPayBankSwift };
 };
 
+type TransportGroupChoice = {
+    group: NonNullable<TypeTransportWithAvailablePaymentsFragment['group']>;
+    transports: TypeTransportWithAvailablePaymentsFragment[];
+};
+
+export const getTransportGroupChoices = (
+    transports: TypeTransportWithAvailablePaymentsFragment[],
+): TransportGroupChoice[] => {
+    const transportGroupChoicesByUuid = new Map<string, TransportGroupChoice>();
+
+    for (const transport of transports) {
+        if (!transport.group) {
+            continue;
+        }
+
+        const transportGroupChoice = transportGroupChoicesByUuid.get(transport.group.uuid);
+
+        if (transportGroupChoice) {
+            transportGroupChoice.transports.push(transport);
+            continue;
+        }
+
+        transportGroupChoicesByUuid.set(transport.group.uuid, {
+            group: transport.group,
+            transports: [transport],
+        });
+    }
+
+    return Array.from(transportGroupChoicesByUuid.values()).sort((firstChoice, secondChoice) => {
+        if (firstChoice.group.position !== secondChoice.group.position) {
+            return firstChoice.group.position - secondChoice.group.position;
+        }
+
+        return firstChoice.group.name.localeCompare(secondChoice.group.name);
+    });
+};
+
+export const getShouldDisplayTransportGroups = (transportGroupChoices: TransportGroupChoice[]): boolean => {
+    if (transportGroupChoices.length === 0) {
+        return false;
+    }
+
+    return transportGroupChoices.some((transportGroupChoice) => transportGroupChoice.transports.length > 1);
+};
+
+export const getTransportsWithoutGroup = (
+    transports: TypeTransportWithAvailablePaymentsFragment[],
+): TypeTransportWithAvailablePaymentsFragment[] => transports.filter((transport) => !transport.group);
+
 export const useTransportChangeInSelect = (
     transports: TypeTransportWithAvailablePaymentsFragment[] | undefined,
     lastOrderPickupPlace: StoreOrPacketeryPoint | null,

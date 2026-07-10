@@ -6,14 +6,14 @@ namespace Tests\FrontendApiBundle\Functional\Transport;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\DataFixtures\Demo\TransportDataFixture;
+use App\DataFixtures\Demo\TransportGroupDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\TransportUnavailabilityReasonInCartEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -40,10 +40,10 @@ class TransportsTest extends GraphQlTestCase
         $locale = $this->getFirstDomainLocale();
         // "Drone delivery" is excluded for a product in the demo cart, so it is now shown disabled and sorted last
         $expectedTransportsData = [
-            ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-            ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-            ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
         ];
         $this->assertCount(count($expectedTransportsData), $responseData);
@@ -60,30 +60,37 @@ class TransportsTest extends GraphQlTestCase
         $domainId = $this->domain->getId();
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
-        $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+
+        $deliveryToAddressGroup = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS, TransportGroup::class);
+        $pickupPointGroup = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_PICKUP_POINT, TransportGroup::class);
 
         $arrayExpected = [
             [
-                'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'description' => t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'instructions' => t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'description' => t(
+                    'Packeta delivery company',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $this->getLocaleForFirstDomain(),
+                ),
+                'instructions' => t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 0,
-                'daysUntilDelivery' => 5,
-                'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
-                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
+                'daysUntilDelivery' => 2,
+                'transportTypeCode' => TransportTypeEnum::TYPE_PACKETERY,
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.95', $vatHigh),
                 'images' => [
                     [
-                        'url' => $this->getBaseUrlPath('/content-test/images/transport/56.jpg'),
-                        'name' => TransportDataFixture::TRANSPORT_CZECH_POST,
+                        'url' => $this->getBaseUrlPath('/content-test/images/transport/715.png'),
+                        'name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                     ],
                 ],
                 'payments' => [
-                    ['name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($pickupPointGroup, 722),
             ],
             [
                 'name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -95,19 +102,43 @@ class TransportsTest extends GraphQlTestCase
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
                 'images' => [
                     [
-                        'url' => $this->getBaseUrlPath('/content-test/images/transport/57.jpg'),
-                        'name' => TransportDataFixture::TRANSPORT_PPL,
+                        'url' => $this->getBaseUrlPath('/content-test/images/transport/712.png'),
+                        'name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                     ],
                 ],
                 'payments' => [
-                    ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($deliveryToAddressGroup, 721),
+            ],
+            [
+                'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'description' => t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'instructions' => t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'position' => 2,
+                'daysUntilDelivery' => 5,
+                'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
+                'images' => [
+                    [
+                        'url' => $this->getBaseUrlPath('/content-test/images/transport/711.png'),
+                        'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    ],
+                ],
+                'payments' => [
+                    ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                ],
+                'stores' => null,
+                'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($deliveryToAddressGroup, 721),
             ],
             [
                 'name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -118,21 +149,21 @@ class TransportsTest extends GraphQlTestCase
                     $this->getLocaleForFirstDomain(),
                 ),
                 'instructions' => t('We are looking forward to your visit.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'position' => 2,
+                'position' => 3,
                 'daysUntilDelivery' => 0,
                 'transportTypeCode' => TransportTypeEnum::TYPE_PERSONAL_PICKUP,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                 'images' => [
                     [
-                        'url' => $this->getBaseUrlPath('/content-test/images/transport/58.jpg'),
-                        'name' => TransportDataFixture::TRANSPORT_PERSONAL,
+                        'url' => $this->getBaseUrlPath('/content-test/images/transport/713.png'),
+                        'name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                     ],
                 ],
                 'payments' => [
-                    ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => [
                     'edges' => [
@@ -179,6 +210,7 @@ class TransportsTest extends GraphQlTestCase
                     ],
                 ],
                 'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($pickupPointGroup, 722),
             ],
             [
                 'name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -189,43 +221,44 @@ class TransportsTest extends GraphQlTestCase
                     $this->getLocaleForFirstDomain(),
                 ),
                 'instructions' => t('Expect delivery by the end of next month', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'position' => 3,
+                'position' => 4,
                 'daysUntilDelivery' => 0,
                 'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
-                'images' => [],
+                'images' => [
+                    [
+                        'url' => $this->getBaseUrlPath('/content-test/images/transport/714.png'),
+                        'name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    ],
+                ],
                 'payments' => [
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
-            ],
-            [
-                'name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'description' => t(
-                    'Packeta delivery company',
-                    [],
-                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $this->getLocaleForFirstDomain(),
-                ),
-                'instructions' => t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'position' => 4,
-                'daysUntilDelivery' => 2,
-                'transportTypeCode' => TransportTypeEnum::TYPE_PACKETERY,
-                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.95', $vatHigh),
-                'images' => [],
-                'payments' => [
-                    ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                ],
-                'stores' => null,
-                'vatPercent' => '21.000000',
+                'group' => $this->getExpectedTransportGroupData($deliveryToAddressGroup, 721),
             ],
         ];
 
         $this->assertSame($arrayExpected, $responseData);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getExpectedTransportGroupData(TransportGroup $transportGroup, int $imageId): array
+    {
+        $name = $transportGroup->getName($this->getLocaleForFirstDomain());
+
+        return [
+            'mainImage' => [
+                'url' => $this->getBaseUrlPath('/content-test/images/transportGroup/' . $imageId . '.png'),
+                'name' => $name,
+            ],
+            'name' => $name,
+        ];
     }
 
     public function testTransportsAreOrderedAndFlaggedWhenCartRequiresPersonalPickup(): void

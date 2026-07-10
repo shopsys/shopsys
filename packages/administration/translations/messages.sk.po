@@ -28,14 +28,14 @@ msgstr "%entityName% (%entityIdentifier%)"
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Späť</a> na prihlasovaciu stránku."
 
-msgid "<strong>{{ objectName }}</strong> was created successfully."
-msgstr "Položka „<strong>{{ objectName }}</strong>\" bola úspešne vytvorená."
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was created successfully."
+msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" bola úspešne vytvorená."
+
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
+msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" bola úspešne uložená."
 
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."
 msgstr "Položka \"<strong>{{ objectName }}</strong>\" bola úspešne vymazaná."
-
-msgid "<strong>{{ objectName }}</strong> was saved successfully."
-msgstr "Položka „<strong>{{ objectName }}</strong>\" bola úspešne uložená."
 
 msgid "Action"
 msgstr "Akcia"
@@ -1913,7 +1913,7 @@ msgid "Save changes"
 msgstr "Uložiť zmeny"
 
 msgid "Save changes in order"
-msgstr "Uložiť zmeny v objednávke"
+msgstr "Uložiť zmeny v poradí"
 
 msgid "Save correction"
 msgstr "Uložiť korekciu"
@@ -2313,6 +2313,12 @@ msgstr "Transfery"
 
 msgid "Transport"
 msgstr "Doprava"
+
+msgid "Transport group"
+msgstr "Skupina dopravy"
+
+msgid "Transport groups"
+msgstr "Skupiny dopravy"
 
 msgid "Transports and payments"
 msgstr "Prepravy a platby"

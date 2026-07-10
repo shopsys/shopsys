@@ -62,14 +62,14 @@ class CartTransportTest extends GraphQlTestCase
                 $this->getLocaleForFirstDomain(),
             ),
             'instructions' => t('We are looking forward to your visit.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-            'position' => 2,
+            'position' => 3,
             'daysUntilDelivery' => 0,
             'transportTypeCode' => TransportTypeEnum::TYPE_PERSONAL_PICKUP,
             'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
             'images' => [
                 [
-                    'url' => $this->getBaseUrlPath('/content-test/images/transport/58.jpg'),
-                    'name' => TransportDataFixture::TRANSPORT_PERSONAL,
+                    'url' => $this->getBaseUrlPath('/content-test/images/transport/713.png'),
+                    'name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 ],
             ],
             'stores' => [

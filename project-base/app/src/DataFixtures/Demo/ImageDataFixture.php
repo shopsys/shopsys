@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -29,6 +30,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     public const string IMAGES_TABLE_NAME = 'images';
     public const string IMAGES_TRANSLATIONS_TABLE_NAME = 'images_translations';
     public const string IMAGE_TYPE = 'jpg';
+    public const string IMAGE_TYPE_PNG = 'png';
 
     public function __construct(
         FilesystemOperator $filesystem,
@@ -74,6 +76,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processCategoriesImages();
         $this->processPaymentsImages();
         $this->processTransportsImages();
+        $this->processTransportGroupsImages();
         $this->processProductsImages();
         $this->processSliderItemsImages();
         $this->processStoresImages();
@@ -157,9 +160,13 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     private function processPaymentsImages(): void
     {
         $paymentsImagesData = [
-            53 => PaymentDataFixture::PAYMENT_CARD,
-            54 => PaymentDataFixture::PAYMENT_CASH,
-            55 => PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
+            701 => PaymentDataFixture::PAYMENT_CARD,
+            702 => PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
+            703 => PaymentDataFixture::PAYMENT_CASH,
+            704 => PaymentDataFixture::PAYMENT_GOPAY_CARD,
+            705 => PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
+            706 => PaymentDataFixture::PAYMENT_LATER,
+            707 => PaymentDataFixture::PAYMENT_BANK_TRANSFER,
         ];
 
         foreach ($paymentsImagesData as $imageId => $paymentName) {
@@ -168,19 +175,29 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             $names = [];
 
             foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-                $names[$locale] = $paymentName;
+                $names[$locale] = $payment->getName($locale) ?? $paymentName;
             }
 
-            $this->saveImageIntoDb($payment->getId(), 'payment', $imageId, $names);
+            $this->saveImageIntoDb(
+                $payment->getId(),
+                'payment',
+                $imageId,
+                $names,
+                null,
+                Image::DEFAULT_IMAGE_POSITION,
+                self::IMAGE_TYPE_PNG,
+            );
         }
     }
 
     private function processTransportsImages(): void
     {
         $transportsImagesData = [
-            56 => TransportDataFixture::TRANSPORT_CZECH_POST,
-            57 => TransportDataFixture::TRANSPORT_PPL,
-            58 => TransportDataFixture::TRANSPORT_PERSONAL,
+            711 => TransportDataFixture::TRANSPORT_CZECH_POST,
+            712 => TransportDataFixture::TRANSPORT_PPL,
+            713 => TransportDataFixture::TRANSPORT_PERSONAL,
+            714 => TransportDataFixture::TRANSPORT_DRONE,
+            715 => TransportDataFixture::TRANSPORT_PACKETERY,
         ];
 
         foreach ($transportsImagesData as $imageId => $transportName) {
@@ -189,10 +206,46 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             $names = [];
 
             foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-                $names[$locale] = $transportName;
+                $names[$locale] = $transport->getName($locale) ?? $transportName;
             }
 
-            $this->saveImageIntoDb($transport->getId(), 'transport', $imageId, $names);
+            $this->saveImageIntoDb(
+                $transport->getId(),
+                'transport',
+                $imageId,
+                $names,
+                null,
+                Image::DEFAULT_IMAGE_POSITION,
+                self::IMAGE_TYPE_PNG,
+            );
+        }
+    }
+
+    private function processTransportGroupsImages(): void
+    {
+        $transportGroupsImagesData = [
+            721 => TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS,
+            722 => TransportGroupDataFixture::TRANSPORT_GROUP_PICKUP_POINT,
+        ];
+
+        foreach ($transportGroupsImagesData as $imageId => $transportGroupReferenceName) {
+            $transportGroup = $this->getReference($transportGroupReferenceName, TransportGroup::class);
+
+            $names = [];
+
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = $transportGroup->getName($locale);
+            }
+
+            $this->saveImageIntoDb(
+                $transportGroup->getId(),
+                'transportGroup',
+                $imageId,
+                $names,
+                null,
+                Image::DEFAULT_IMAGE_POSITION,
+                self::IMAGE_TYPE_PNG,
+            );
         }
     }
 
@@ -347,6 +400,9 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
+    /**
+     * @param array<string, string|null> $names
+     */
     private function saveImageIntoDb(
         int $entityId,
         string $entityName,
@@ -354,8 +410,15 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         array $names = [],
         ?string $type = null,
         int $position = Image::DEFAULT_IMAGE_POSITION,
+        string $extension = self::IMAGE_TYPE,
     ): void {
-        $imageFilepath = $this->targetImagesDirectory . $entityName . ($type !== null ? '/' . $type : '') . '/' . $imageId . '.' . self::IMAGE_TYPE;
+        $imageFilepath = $this->targetImagesDirectory
+            . $entityName
+            . ($type !== null ? '/' . $type : '')
+            . '/'
+            . $imageId
+            . '.'
+            . $extension;
         $filesize = $this->filesystem->has($imageFilepath) ? $this->filesystem->fileSize($imageFilepath) : null;
 
         $this->em->getConnection()->executeStatement(
@@ -366,7 +429,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
                 'entity_name' => $entityName,
                 'entity_id' => $entityId,
                 'type' => $type,
-                'extension' => self::IMAGE_TYPE,
+                'extension' => $extension,
                 'position' => $position,
                 'modified_at' => new DatePoint('2015-04-16 11:36:06'),
                 'filesize' => $filesize,
@@ -413,6 +476,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             CategoryDataFixture::class,
             PaymentDataFixture::class,
             TransportDataFixture::class,
+            TransportGroupDataFixture::class,
             ProductDataFixture::class,
             SliderItemDataFixture::class,
         ];

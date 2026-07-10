@@ -39,12 +39,6 @@ The Crud Controller provides a set of default actions that are displayed based o
 - **Action**             : Redirects to the `ActionType::CREATE` of the current Crud Controller.
 - **Displayed on**       : `ActionType::LIST` page
 
-### Back to list action
-
-- **Action Name**   : `backToList`
-- **Action**             : Redirects to the `ActionType::LIST` of the current Crud Controller.
-- **Displayed on**       : `ActionType::DETAIL`, `ActionType::CREATE` and `ActionType::EDIT` pages
-
 
 ## Custom actions
 
@@ -83,7 +77,7 @@ protected function configureActions(ActionsConfig $actions): void
     );
     
     // Or remove them
-    $actions->remove(ActionType::CREATE, 'backToList');
+    $actions->remove(ActionType::EDIT, 'publish');
 }
 ```
 

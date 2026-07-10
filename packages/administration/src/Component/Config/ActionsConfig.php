@@ -36,15 +36,6 @@ final class ActionsConfig
                     return in_array(ActionType::CREATE, $defaultActions, true);
                 }),
         );
-
-
-        $backToListAction = Action::create('backToList', t('Back to overview'))
-            ->linkToCrud($controllerClass, ActionType::LIST)
-            ->setIcon('arrow-back');
-
-        $this->add(ActionType::EDIT, $backToListAction);
-        $this->add(ActionType::DETAIL, $backToListAction);
-        $this->add(ActionType::CREATE, $backToListAction);
     }
 
     /**

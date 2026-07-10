@@ -8,10 +8,14 @@ use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
+/**
+ * @phpstan-import-type MenuItemPosition from \Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItemPositioner
+ */
 final readonly class CrudConfigData
 {
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType[] $enabledActions
+     * @param MenuItemPosition $menuSectionPosition
      * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, null|class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>> $handlerClasses
      */
     public function __construct(
@@ -23,6 +27,7 @@ final readonly class CrudConfigData
         private array $enabledActions,
         private string $menuSection,
         private ?string $submenuSection,
+        private string|array $menuSectionPosition,
         private bool $visibleInMenu,
         private ?string $routePrefix,
         private ?string $customRoleConstant,
@@ -120,6 +125,14 @@ final readonly class CrudConfigData
     public function getSubmenuSection(): ?string
     {
         return $this->submenuSection;
+    }
+
+    /**
+     * @return MenuItemPosition
+     */
+    public function getMenuSectionPosition(): string|array
+    {
+        return $this->menuSectionPosition;
     }
 
     public function isVisibleInMenu(): bool

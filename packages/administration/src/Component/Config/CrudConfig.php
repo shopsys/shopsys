@@ -10,6 +10,9 @@ use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface;
 use Webmozart\Assert\Assert;
 
+/**
+ * @phpstan-import-type MenuItemPosition from \Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItemPositioner
+ */
 final class CrudConfig
 {
     private ?string $entityNameSingular = null;
@@ -28,6 +31,11 @@ final class CrudConfig
     private string $menuSection = 'root';
 
     private ?string $submenuSection = null;
+
+    /**
+     * @var MenuItemPosition
+     */
+    private string|array $menuSectionPosition = 'last';
 
     private bool $visibleInMenu = true;
 
@@ -142,12 +150,17 @@ final class CrudConfig
      *
      * @param string $menuSection Name of root level menu section
      * @param string|null $submenuSection Name of submenu section
+     * @param MenuItemPosition $position Position of the item among its siblings
      * @return $this
      */
-    public function setMenuSection(string $menuSection, ?string $submenuSection = null): self
-    {
+    public function setMenuSection(
+        string $menuSection,
+        ?string $submenuSection = null,
+        string|array $position = 'last',
+    ): self {
         $this->menuSection = $menuSection;
         $this->submenuSection = $submenuSection;
+        $this->menuSectionPosition = $position;
 
         return $this;
     }
@@ -311,6 +324,7 @@ final class CrudConfig
             $this->enabledActions->toArray(),
             $this->menuSection,
             $this->submenuSection,
+            $this->menuSectionPosition,
             $this->visibleInMenu,
             $this->routePrefix,
             $this->customRoleConstant,

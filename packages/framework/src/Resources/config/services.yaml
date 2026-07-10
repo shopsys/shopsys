@@ -563,6 +563,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
+    Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItemPositioner: ~
+
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
         arguments:
             $menuFactory: '@knp_menu.factory'

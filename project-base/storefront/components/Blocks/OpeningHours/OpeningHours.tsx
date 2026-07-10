@@ -10,7 +10,9 @@ import { twMergeCustom } from 'utils/twMerge';
 
 export const OpeningHours: FC<{
     openingHours: StoreOrPacketeryPoint['openingHours'] | TypeOpeningHours;
-}> = ({ openingHours, className }) => {
+    className?: string;
+    variant?: 'default' | 'compact';
+}> = ({ openingHours, className, variant = 'default' }) => {
     const { t, lang } = useTranslation();
     const { formatDate } = useFormatDate();
 
@@ -61,7 +63,10 @@ export const OpeningHours: FC<{
         <>
             {'exceptionDays' in openingHours &&
                 openingHours.exceptionDays?.map((exceptionDay) => (
-                    <div key={exceptionDay.from} className={twMergeCustom('mb-1 text-text-error text-xs', className)}>
+                    <div
+                        key={exceptionDay.from}
+                        className={twMergeCustom('px-3 pt-0 pb-3 text-text-error text-xs', className)}
+                    >
                         {formatExceptionDayText(exceptionDay)}
                     </div>
                 ))}
@@ -74,6 +79,7 @@ export const OpeningHours: FC<{
                 {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
                     const isClosedWholeDay = openingHoursRanges.length === 0;
+                    const isCompact = variant === 'compact';
 
                     const ariaClosedText = `${getDayName(openingHours.dayOfWeek, dayOfWeek)} ${formatDate(date)}, ${t('Closed')}`;
                     const ariaOpenText = `${getDayName(openingHours.dayOfWeek, dayOfWeek)} ${formatDate(date)}, ${t('Open')} ${openingHoursRanges
@@ -93,15 +99,24 @@ export const OpeningHours: FC<{
                             aria-current={isToday ? 'date' : undefined}
                             aria-label={dayAriaText}
                             className={twMergeCustom(
-                                'flex list-none flex-col flex-wrap gap-x-5 gap-y-2 rounded-lg p-2 sm:flex-row sm:items-center',
-                                isToday ? 'bg-background-accent-less' : 'hover:bg-background-more',
+                                'flex list-none flex-col flex-wrap gap-x-5 gap-y-2 rounded-lg sm:flex-row sm:items-center',
+                                isCompact ? 'px-3 py-2' : 'p-2',
+                                isToday && !isCompact && 'bg-background-accent-less',
+                                isToday && isCompact && 'bg-background-default',
+                                !isToday && 'hover:bg-background-more',
                             )}
                         >
-                            <span aria-hidden="true" className="h6 w-44">
+                            <span
+                                aria-hidden="true"
+                                className={twMergeCustom(
+                                    'font-secondary font-semibold',
+                                    isCompact ? 'w-36 text-xs' : 'h6 w-44',
+                                )}
+                            >
                                 {getDayName(openingHours.dayOfWeek, dayOfWeek)} <span>{formatDate(date)}</span>
                             </span>
 
-                            <span aria-hidden="true">
+                            <span aria-hidden="true" className={twMergeCustom(isCompact && 'text-xs')}>
                                 {isClosedWholeDay
                                     ? t('Closed')
                                     : openingHoursRanges.map(({ openingTime, closingTime }, index) => {
@@ -117,7 +132,10 @@ export const OpeningHours: FC<{
                             </span>
 
                             {isToday && (
-                                <OpeningStatus className="self-baseline sm:self-auto" status={openingHours.status} />
+                                <OpeningStatus
+                                    className={twMergeCustom('self-baseline sm:self-auto', isCompact && 'text-xs')}
+                                    status={openingHours.status}
+                                />
                             )}
                         </li>
                     );

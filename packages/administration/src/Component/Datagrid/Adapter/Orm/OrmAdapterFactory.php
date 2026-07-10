@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm;
 
 use Closure;
 use Doctrine\Persistence\ManagerRegistry;
+use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Grid\HintsHelper;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -17,6 +18,7 @@ final class OrmAdapterFactory
         private readonly ManagerRegistry $managerRegistry,
         private readonly Localization $localization,
         private readonly HintsHelper $hintsHelper,
+        private readonly CrudEntityIdentifierExtractor $crudEntityIdentifierExtractor,
     ) {
     }
 
@@ -31,6 +33,7 @@ final class OrmAdapterFactory
             $this->managerRegistry,
             $this->localization,
             $this->hintsHelper,
+            $this->crudEntityIdentifierExtractor,
             $configureQuery,
         );
     }

@@ -233,16 +233,18 @@ The URL for the `list` action will be `/admin/new/products/` instead of `/admin/
 
 Specify if the CRUD Controller should be visible or not in the administration menu. This can be useful if you want to create a controller that is not directly accessible by the user or should be accessed from another controller.
 
-#### `setMenuSection(string $menuSection, ?string $submenuSection = null)`
+#### `setMenuSection(string $menuSection, ?string $submenuSection = null, string|array $position = 'last')`
 
 You can specify where the Crud Controller will be displayed in the administration menu.
 
 `$menuSection` is the name of the root-level menu item.
 `$submenuSection` can be used to specify a submenu item.
+`$position` controls the order of the item among its siblings in the target (sub)section. It accepts `'first'`, `'last'` (default), `['before' => '<siblingName>']`, or `['after' => '<siblingName>']`, where the sibling name is the menu item name of an existing sibling. When the referenced sibling is not present, the item is appended last. See [Positioning menu items](../../administration-menu.md#positioning-menu-items) for details.
 
 Examples:
 - `$config->setMenuSection('products')` will create Crud controller item under `Products` section
 - `$config->setMenuSection('customers', 'promo_codes')` will create Crud controller under `Customers -> Promo Codes` section
+- `$config->setMenuSection('settings', 'lists', ['after' => 'transports_and_payments'])` will place the item in the `Settings -> Lists` section right after the `transports_and_payments` item
 
 #### `setMenuIcon(string $icon)`
 

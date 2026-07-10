@@ -60,8 +60,8 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 {(inputType === 'checkbox' || inputType === 'radio') && (
                     <span
                         className={twMergeCustom(
-                            'flex size-5 min-w-5 border border-input-border-default bg-input-bg-default p-[3px] transition group-hover:bg-fill-accent-less',
-                            inputType === 'checkbox' ? 'rounded-checkbox' : 'rounded-full p-[5px]',
+                            'flex size-5 min-w-5 border border-input-border-default bg-input-bg-default p-0.75 transition group-hover:bg-fill-accent-less',
+                            inputType === 'checkbox' ? 'rounded-checkbox' : 'rounded-full p-1.25',
                             'active:scale-90',
                             checked
                                 ? 'border-input-border-active bg-input-fill group-hover:bg-input-fill'

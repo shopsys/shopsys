@@ -157,6 +157,7 @@ export type TranslationsType = {
     placeholder: Record<string, string>;
     payment: Record<string, string>;
     transport: Record<string, string>;
+    transportGroup: Record<string, string>;
     order: {
         created: string;
         orderNumber: string;

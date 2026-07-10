@@ -1,0 +1,4 @@
+TransportGroup:
+    type: object
+    inherits:
+        - 'TransportGroupDecorator'

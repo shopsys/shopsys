@@ -131,7 +131,7 @@ describe('Payment Select Tests', () => {
             ],
         });
 
-        changeSelectionOfTransportByName(translations.transport.czechPost);
+        changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(),

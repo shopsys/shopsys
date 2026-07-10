@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Crud\Handler;
 
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+
 /**
  * Handler interface for create operations
  *
@@ -22,7 +24,6 @@ interface CreateHandlerInterface extends ReadHandlerInterface
      * Creates a new entity from the provided data
      *
      * @param object $data The data transfer object with values for the new entity
-     * @return \Shopsys\FrameworkBundle\Component\Utils\Presentable The newly created entity
      */
-    public function create(object $data): object;
+    public function create(object $data): Presentable;
 }

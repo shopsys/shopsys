@@ -46,6 +46,9 @@ msgstr "-- Vyberte skupinu --"
 msgid "-- Choose prefix --"
 msgstr "-- Vyberte predvoľbu --"
 
+msgid "-- Choose transport group --"
+msgstr "-- Vyberte skupinu dopravy --"
+
 msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
 
@@ -984,6 +987,9 @@ msgstr "Dodacie telefónne číslo"
 
 msgid "Delivery street"
 msgstr "Dodacia ulica"
+
+msgid "Delivery to address"
+msgstr "Doručenie na adresu"
 
 msgid "Description"
 msgstr "Popis"
@@ -2315,7 +2321,7 @@ msgid "Order or document number"
 msgstr "Číslo objednávky alebo dokumentu"
 
 msgid "Order saved"
-msgstr "Objednávka uložená"
+msgstr "Poradie bolo uložené"
 
 msgid "Order saving failed"
 msgstr "Ukladanie objednávky zlyhalo"
@@ -2553,6 +2559,9 @@ msgstr "Nastavenia telefónnych predvolieb boli upravené."
 
 msgid "Phone prefixes"
 msgstr "Telefónne predvoľby"
+
+msgid "Pickup point"
+msgstr "Odberné miesto"
 
 msgid "Please check following information:"
 msgstr "Prosím, skontrolujte nasledujúce informácie:"
@@ -3381,6 +3390,9 @@ msgstr "Prehľad Transfer issues"
 
 msgid "Transfer problem has been marked as resolved"
 msgstr "Problém prenosu bol označený ako vyřešený"
+
+msgid "Transport group"
+msgstr "Skupina dopravy"
 
 msgid "Transport type"
 msgstr "Typ dopravy"

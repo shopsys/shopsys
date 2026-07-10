@@ -119,6 +119,14 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     #[ORM\Column(type: 'string', length: 25)]
     protected $type;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportGroup|null
+     */
+    #[AsMcpColumn]
+    #[ORM\ManyToOne(targetEntity: TransportGroup::class)]
+    #[ORM\JoinColumn(name: 'transport_group_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    protected $group;
+
     public function __construct(TransportData $transportData)
     {
         $this->translations = new ArrayCollection();
@@ -143,6 +151,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         $this->hidden = $transportData->hidden;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->type = $transportData->type;
+        $this->group = $transportData->group;
         $this->trackingUrl = $transportData->trackingUrl;
         $this->setTranslations($transportData);
     }
@@ -432,6 +441,14 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportGroup|null
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 
     public function getVatForDomain(int $domainId): Vat

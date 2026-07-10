@@ -3,6 +3,7 @@ import {
     changeDayOfWeekInTransportsApiResponse,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
+    openTransportGroupByName,
     removeTransportSelectionUsingButton,
     waitForTransportAndPaymentToBeInteractive,
 } from './transportAndPaymentSupport';
@@ -32,7 +33,7 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(translations.transport.czechPost);
+        changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -52,6 +53,7 @@ describe('Transport Select Tests', () => {
         chooseTransportPersonalCollectionAndStore(
             staticData.transport.personalCollection.storeOstrava.name,
             translations.transport.personalCollection,
+            translations.transportGroup.pickupPoint,
         );
         waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
@@ -63,15 +65,75 @@ describe('Transport Select Tests', () => {
         });
     });
 
+    it('[Transport Groups] should expand groups and select transport from opened group', function () {
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
+
+        openTransportGroupByName(translations.transportGroup.deliveryToAddress);
+        cy.getByTID([TIDs.transport_group_panel, TIDs.pages_order_selectitem_label_name]).should(
+            'contain',
+            translations.transport.ppl,
+        );
+        openTransportGroupByName(translations.transportGroup.pickupPoint);
+        cy.getByTID([TIDs.transport_group_button])
+            .contains(translations.transportGroup.deliveryToAddress)
+            .closest('button')
+            .should('have.attr', 'aria-expanded', 'false');
+        cy.getByTID([TIDs.transport_group_panel, TIDs.pages_order_selectitem_label_name]).should(
+            'contain',
+            translations.transport.personalCollection,
+        );
+        changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
+        waitForTransportAndPaymentToBeInteractive();
+
+        cy.getByTID([TIDs.pages_order_payment]).should('be.visible');
+        cy.getByTID([TIDs.pages_order_transport, TIDs.pages_order_selectitem_label_name]).should(
+            'contain',
+            translations.transport.ppl,
+        );
+    });
+
+    it('[Transport Groups Keyboard] should allow keyboard navigation without selecting transport by arrow keys', function () {
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
+
+        cy.getByTID([TIDs.transport_group_button])
+            .contains(translations.transportGroup.deliveryToAddress)
+            .closest('button')
+            .as('deliveryToAddressGroupButton')
+            .should('have.attr', 'aria-expanded', 'false')
+            .focus();
+        cy.realPress('{enter}');
+        cy.get('@deliveryToAddressGroupButton').should('have.attr', 'aria-expanded', 'true');
+
+        cy.getByTID([TIDs.transport_group_panel])
+            .find('input[name="transport"]:enabled')
+            .first()
+            .as('firstTransportRadio')
+            .should('not.be.checked')
+            .focus()
+            .invoke('attr', 'id')
+            .then((firstTransportRadioId) => {
+                cy.realPress('{downarrow}');
+                cy.get('@firstTransportRadio').should('not.be.checked');
+                cy.getByTID([TIDs.pages_order_payment]).should('not.exist');
+                cy.focused().should('have.attr', 'name', 'transport').and('not.have.attr', 'id', firstTransportRadioId);
+            });
+
+        cy.realPress('{enter}');
+        waitForTransportAndPaymentToBeInteractive();
+        cy.getByTID([TIDs.pages_order_payment]).should('be.visible');
+    });
+
     it('[Change Transport] should select a transport, deselect it, and then change the transport option', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(translations.transport.czechPost);
+        changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
-        changeSelectionOfTransportByName(translations.transport.czechPost);
+        changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
-        changeSelectionOfTransportByName(translations.transport.ppl);
+        changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting, deselecting, and selecting again', {
             blackout: [
@@ -86,7 +148,7 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(translations.transport.czechPost);
+        changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -96,7 +158,7 @@ describe('Transport Select Tests', () => {
             ],
         });
 
-        changeSelectionOfTransportByName(translations.transport.czechPost);
+        changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
@@ -111,7 +173,7 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(translations.transport.czechPost);
+        changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -179,7 +241,7 @@ describe('Transport Select Tests', () => {
         });
 
         goToNextOrderStep();
-        changeSelectionOfTransportByName(translations.transport.ppl);
+        changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page with enough products', {
             blackout: [

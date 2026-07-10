@@ -47,6 +47,40 @@ You can take a look at the class [`ConfigureMenuEvent`]({{github.link}}/packages
 
 These can be used to [extend the menu](https://symfony.com/doc/master/bundles/KnpMenuBundle/events.html), either from the project repository or modules.
 
+## Positioning menu items
+
+KnpMenu always appends new children to the end of their parent. When you need to place an item at an exact spot among its siblings, use the [`MenuItemPositioner`]({{github.link}}/packages/framework/src/Model/AdminNavigation/MenuItemPositioner.php) service in your `ConfigureMenuEvent` subscriber.
+
+The position accepts `'first'`, `'last'`, `['before' => '<siblingName>']`, or `['after' => '<siblingName>']`, where `<siblingName>` is the name of an existing sibling menu item. When the referenced sibling is not present, the item is left appended last.
+
+Use `addChild()` to add a child and position it in one call:
+
+```php
+use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItemPositioner;
+
+class MyMenuSubscriber implements EventSubscriberInterface
+{
+    public function __construct(
+        private readonly MenuItemPositioner $menuItemPositioner,
+    ) {
+    }
+
+    public function onConfigureMenu(ConfigureMenuEvent $event): void
+    {
+        // Add the item and place it right after the existing "orders" item instead of at the end
+        $this->menuItemPositioner->addChild(
+            $event->getMenu(),
+            'my_item',
+            ['route' => 'admin_my_page', 'label' => t('My page')],
+            ['after' => 'orders'],
+        );
+    }
+}
+```
+
+If the item already exists, call `moveItemToPosition()` directly to move it: `$this->menuItemPositioner->moveItemToPosition($item, ['after' => 'orders'])`.
+
 ## Routing extension
 
 To render the admin breadcrumb navigation, the menu items are used as well.

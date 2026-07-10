@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Crud\Handler;
 
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+
 /**
  * Handler interface for read operations
  *
@@ -16,7 +18,6 @@ interface ReadHandlerInterface extends HandlerInterface
      *
      * @param int $id Entity identifier
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException When entity is not found
-     * @return object&\Shopsys\FrameworkBundle\Component\Utils\Presentable The entity object
      */
-    public function getById(int $id): object;
+    public function getById(int $id): Presentable;
 }

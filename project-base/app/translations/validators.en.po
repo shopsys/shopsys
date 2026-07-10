@@ -10,6 +10,6 @@ msgstr ""
 msgid "Please enter GTM ID"
 msgstr ""
 
-msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
+msgid "Uploaded image is too large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
 msgstr ""
 

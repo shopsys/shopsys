@@ -28,14 +28,14 @@ msgstr "%entityName% (%entityIdentifier%)"
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Zpět</a> na přihlašovací stránku."
 
-msgid "<strong>{{ objectName }}</strong> was created successfully."
-msgstr "Položka „<strong>{{ objectName }}</strong>\" byla úspěšně vytvořena."
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was created successfully."
+msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" byla úspěšně vytvořena."
+
+msgid "<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong> was saved successfully."
+msgstr "Položka „<strong><a href=\"{{ url }}\">{{ objectName }}</a></strong>\" byla úspěšně uložena."
 
 msgid "<strong>{{ objectName }}</strong> was deleted successfully."
 msgstr "Položka „<strong>{{ objectName }}</strong>\" byla úspěšně smazána."
-
-msgid "<strong>{{ objectName }}</strong> was saved successfully."
-msgstr "Položka „<strong>{{ objectName }}</strong>\" byla úspěšně uložena."
 
 msgid "Action"
 msgstr "Akce"
@@ -2313,6 +2313,12 @@ msgstr "Přehled chyb v přenosech"
 
 msgid "Transport"
 msgstr "Doprava"
+
+msgid "Transport group"
+msgstr "Skupina doprav"
+
+msgid "Transport groups"
+msgstr "Skupiny doprav"
 
 msgid "Transports and payments"
 msgstr "Dopravy a platby"
