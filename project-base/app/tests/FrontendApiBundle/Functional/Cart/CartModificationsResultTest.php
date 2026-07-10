@@ -467,6 +467,6 @@ class CartModificationsResultTest extends GraphQlTestCase
             'promoCode' => $promoCode->getCode(),
         ]);
 
-        $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
     }
 }

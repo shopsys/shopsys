@@ -109,12 +109,29 @@ class ProductDemoDataSetter
         string $price,
         string $vatReference = VatDataFixture::VAT_HIGH,
     ): void {
+        $this->setInputPricesForAllPricingGroups($productData, $price, $vatReference, VatDataFixture::VAT_HIGH);
+    }
+
+    public function setSellingPriceWithVatForAllPricingGroups(
+        ProductData $productData,
+        string $priceWithVat,
+        string $vatReference,
+    ): void {
+        $this->setInputPricesForAllPricingGroups($productData, $priceWithVat, $vatReference, $vatReference);
+    }
+
+    private function setInputPricesForAllPricingGroups(
+        ProductData $productData,
+        string $price,
+        string $vatReference,
+        string $conversionVatReference,
+    ): void {
         $currencyCzk = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
         $allPricingGroups = $this->pricingGroupFacade->getAll();
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
-            $highVat = $this->persistentReferenceFacade->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
             $vat = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, $domainId, Vat::class);
+            $conversionVat = $this->persistentReferenceFacade->getReferenceForDomain($conversionVatReference, $domainId, Vat::class);
 
             $pricesByPricingGroupId = [];
 
@@ -126,7 +143,7 @@ class ProductDemoDataSetter
                 $money = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(
                     Money::create($price),
                     $currencyCzk,
-                    $highVat->getPercent(),
+                    $conversionVat->getPercent(),
                     $pricingGroup->getDomainId(),
                 );
 

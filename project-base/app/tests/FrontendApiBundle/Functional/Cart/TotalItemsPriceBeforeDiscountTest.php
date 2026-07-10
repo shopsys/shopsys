@@ -54,7 +54,7 @@ class TotalItemsPriceBeforeDiscountTest extends GraphQlTestCase
                 'promoCode' => $promoCode->getCode(),
             ],
         );
-        $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        $data = $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
         self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 
         $testingTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);

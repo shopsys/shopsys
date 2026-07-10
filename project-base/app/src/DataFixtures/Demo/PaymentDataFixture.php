@@ -283,6 +283,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createPayment(self::PAYMENT_GOPAY_CARD, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_PPL,
+            TransportDataFixture::TRANSPORT_EMAIL,
         ]);
     }
 }
