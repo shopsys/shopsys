@@ -456,7 +456,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     #[Override]
     public function isResetPasswordHashValid(?string $hash): bool
     {
-        if ($hash === null || $this->resetPasswordHash !== $hash) {
+        if ($hash === null || $this->resetPasswordHash === null || !hash_equals($this->resetPasswordHash, $hash)) {
             return false;
         }
 
