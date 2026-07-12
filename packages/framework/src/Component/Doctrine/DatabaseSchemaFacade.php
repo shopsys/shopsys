@@ -17,12 +17,18 @@ class DatabaseSchemaFacade
 
     public function createSchema(string $schemaName): void
     {
-        $this->em->getConnection()->executeStatement('CREATE SCHEMA ' . $schemaName);
+        $connection = $this->em->getConnection();
+        $databasePlatform = $connection->getDatabasePlatform();
+        $connection->executeStatement('CREATE SCHEMA ' . $databasePlatform->quoteSingleIdentifier($schemaName));
     }
 
     public function dropSchemaIfExists(string $schemaName): void
     {
-        $this->em->getConnection()->executeStatement('DROP SCHEMA IF EXISTS ' . $schemaName . ' CASCADE');
+        $connection = $this->em->getConnection();
+        $databasePlatform = $connection->getDatabasePlatform();
+        $connection->executeStatement(
+            'DROP SCHEMA IF EXISTS ' . $databasePlatform->quoteSingleIdentifier($schemaName) . ' CASCADE',
+        );
     }
 
     public function importDefaultSchema(): void
@@ -48,10 +54,13 @@ class DatabaseSchemaFacade
     public function dropTables(): void
     {
         $connection = $this->em->getConnection();
+        $databasePlatform = $connection->getDatabasePlatform();
         $tableNames = $connection->fetchAllAssociative('SELECT tablename FROM pg_tables WHERE schemaname = \'public\'');
 
         foreach ($tableNames as $tableName) {
-            $connection->executeStatement('DROP TABLE IF EXISTS ' . $tableName['tablename'] . ' CASCADE');
+            $connection->executeStatement(
+                'DROP TABLE IF EXISTS ' . $databasePlatform->quoteSingleIdentifier($tableName['tablename']) . ' CASCADE',
+            );
         }
     }
 }
