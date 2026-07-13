@@ -210,6 +210,8 @@ type Availability {
 
 "Product Availability statuses"
 enum AvailabilityStatusEnum {
+  "Product is out of stock with a known expected restocking date"
+  ExpectedRestock
   "Product availability status in stock"
   InStock
   "Product availability status out of stock"
@@ -1315,6 +1317,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
+  "Expected restocking date, filled whenever set and not passed yet (the 'expecting' availability state additionally requires the product to be out of stock)"
+  expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
   flags: [Flag!]!
@@ -2232,6 +2236,8 @@ interface Product {
   description: String
   "EAN"
   ean: String
+  "Expected restocking date, filled whenever set and not passed yet (the 'expecting' availability state additionally requires the product to be out of stock)"
+  expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
   flags: [Flag!]!
@@ -2784,6 +2790,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
+  "Expected restocking date, filled whenever set and not passed yet (the 'expecting' availability state additionally requires the product to be out of stock)"
+  expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
   flags: [Flag!]!
@@ -3219,6 +3227,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
+  "Expected restocking date, filled whenever set and not passed yet (the 'expecting' availability state additionally requires the product to be out of stock)"
+  expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
   flags: [Flag!]!

@@ -38,6 +38,9 @@ ProductDecorator:
             isAllowedNegativeStock:
                 type: "Boolean!"
                 description: "Whether the product allows purchasing more items than are currently in stock"
+            expectedRestockingDate:
+                type: "DateTime"
+                description: "Expected restocking date, filled whenever set and not passed yet"
             categories:
                 type: "[Category!]!"
                 description: "List of categories"

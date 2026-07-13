@@ -67,6 +67,7 @@ class ProductElasticsearchConverterTest extends TestCase
             'uuid' => '00000000-0000-0000-0000-000000000000',
             'unit' => '',
             'selling_from' => null,
+            'expected_restocking_date' => null,
             'product_videos' => [],
             'vat_percent' => '0',
             'promotion' => [
@@ -164,6 +165,7 @@ class ProductElasticsearchConverterTest extends TestCase
             'uuid' => '00000000-0000-0000-0000-000000000000',
             'unit' => '',
             'selling_from' => null,
+            'expected_restocking_date' => null,
             'product_videos' => [],
             'vat_percent' => '0',
             'promotion' => [

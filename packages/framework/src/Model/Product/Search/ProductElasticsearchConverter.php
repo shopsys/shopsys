@@ -79,6 +79,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::UNIT] = $product[ProductExportFieldProvider::UNIT] ?? '';
 
         $result[ProductExportFieldProvider::SELLING_FROM] = $product[ProductExportFieldProvider::SELLING_FROM] ?? null;
+        $result[ProductExportFieldProvider::EXPECTED_RESTOCKING_DATE] = $product[ProductExportFieldProvider::EXPECTED_RESTOCKING_DATE] ?? null;
 
         $result[ProductExportFieldProvider::PRODUCT_VIDEOS] = $product[ProductExportFieldProvider::PRODUCT_VIDEOS] ?? [];
 

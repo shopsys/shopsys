@@ -177,6 +177,7 @@ class ProductExportRepository
             ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION => $this->extractStoreAvailabilitiesInformation($product, $domainId),
             ProductExportFieldProvider::AVAILABILITY_STATUS => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId),
             ProductExportFieldProvider::SELLING_FROM => $product->getSellingFrom()?->format('Y-m-d H:i:s'),
+            ProductExportFieldProvider::EXPECTED_RESTOCKING_DATE => $this->productAvailabilityFacade->findValidExpectedRestockingDate($product, $domainId)?->format('Y-m-d H:i:s'),
             ProductExportFieldProvider::PRODUCT_VIDEOS => array_map(function (ProductVideo $productVideo) use ($locale) {
                 return [
                     'token' => $productVideo->getVideoToken(),

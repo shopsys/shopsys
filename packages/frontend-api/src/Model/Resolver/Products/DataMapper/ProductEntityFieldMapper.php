@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 
+use DateTimeImmutable;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -107,6 +108,11 @@ class ProductEntityFieldMapper
         }
 
         return !$this->productStockFacade->isProductAvailableOnDomain($product, $this->domain->getId());
+    }
+
+    public function getExpectedRestockingDate(Product $product): ?DateTimeImmutable
+    {
+        return $this->productAvailabilityFacade->findValidExpectedRestockingDate($product, $this->domain->getId());
     }
 
     public function getAccessoriesPromise(Product $product): Promise

@@ -570,6 +570,10 @@
                 "type": "date",
                 "format": "yyyy-MM-dd HH:mm:ss"
             },
+            "expected_restocking_date": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss"
+            },
             "vat_percent": {
                 "type": "text"
             },

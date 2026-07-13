@@ -56,6 +56,7 @@ class ProductExportFieldProvider
     public const string VAT_PERCENT = 'vat_percent';
 
     public const string SELLING_FROM = 'selling_from';
+    public const string EXPECTED_RESTOCKING_DATE = 'expected_restocking_date';
     public const string PRODUCT_VIDEOS = 'product_videos';
 
     public const string PROMOTION = 'promotion';

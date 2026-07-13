@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 
+use DateTimeImmutable;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -122,6 +123,17 @@ class ProductArrayFieldMapper
         }
 
         return ($this->getStockQuantity($data) ?? 0) <= 0;
+    }
+
+    public function getExpectedRestockingDate(array $data): ?DateTimeImmutable
+    {
+        $expectedRestockingDate = $data['expected_restocking_date'];
+
+        if ($expectedRestockingDate === null) {
+            return null;
+        }
+
+        return new DateTimeImmutable($expectedRestockingDate);
     }
 
     public function getAccessoriesPromise(array $data): Promise

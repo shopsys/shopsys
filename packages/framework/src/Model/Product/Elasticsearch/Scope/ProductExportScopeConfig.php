@@ -92,6 +92,7 @@ class ProductExportScopeConfig
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT,
             ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION,
             ProductExportFieldProvider::AVAILABILITY_STATUS,
+            ProductExportFieldProvider::EXPECTED_RESTOCKING_DATE,
         ]);
         $this->addNewExportScopeRule(self::SCOPE_URL, [
             ProductExportFieldProvider::SLUG,

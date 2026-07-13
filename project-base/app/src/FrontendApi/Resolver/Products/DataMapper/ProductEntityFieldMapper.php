@@ -64,6 +64,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method array getParameters(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getRelatedProductsPromise(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Flag\Flag[] getFlags(\App\Model\Product\Product $product)
+ * @method \DateTimeImmutable|null getExpectedRestockingDate(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
