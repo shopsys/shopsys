@@ -1531,6 +1531,9 @@ msgstr ""
 msgid "Expected maximum duration"
 msgstr ""
 
+msgid "Expected restocking date"
+msgstr ""
+
 msgid "Ext."
 msgstr ""
 
@@ -1838,6 +1841,9 @@ msgid "If enabled, a cart containing this product can only use personal pickup a
 msgstr ""
 
 msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
+msgstr ""
+
+msgid "If the product is out of stock, its availability is displayed as \"Expecting [date]\". A date in the past is ignored."
 msgstr ""
 
 msgid "If the slug contains non-ASCII characters (e.g. \"café\"), encode it as URL-encoded form (e.g. \"caf%C3%A9\"). You can use https://www.urlencoder.org/."

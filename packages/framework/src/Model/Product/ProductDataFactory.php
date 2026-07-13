@@ -150,6 +150,7 @@ class ProductDataFactory
         $productData->ean = $product->getEan();
         $productData->sellingFrom = $product->getSellingFrom();
         $productData->sellingTo = $product->getSellingTo();
+        $productData->expectedRestockingDate = $product->getExpectedRestockingDate();
         $productData->sellingDenied = $product->isSellingDenied();
         $productData->unit = $product->getUnit();
         $productData->hidden = $product->isHidden();

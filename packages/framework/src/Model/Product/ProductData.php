@@ -49,6 +49,11 @@ class ProductData
     public $sellingTo;
 
     /**
+     * @var \DateTimeImmutable|null
+     */
+    public $expectedRestockingDate;
+
+    /**
      * @var bool
      */
     public $sellingDenied;
