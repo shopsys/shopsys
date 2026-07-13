@@ -84,6 +84,8 @@ class BlogArticleExportRepository
             $imageUrl = null;
         }
 
+        $blogArticleAuthor = $blogArticle->getBlogArticleAuthor();
+
         return [
             'name' => $blogArticle->getName($locale),
             'text' => $this->grapesJsParser->parse($blogArticle->getDescription($locale)),
@@ -106,6 +108,13 @@ class BlogArticleExportRepository
                 $blogArticle,
                 $domainId,
             )->getUuid(),
+            'author' => $blogArticleAuthor === null ? null : [
+                'id' => $blogArticleAuthor->getId(),
+                'uuid' => $blogArticleAuthor->getUuid(),
+                'name' => $blogArticleAuthor->getName(),
+                'jobTitle' => $blogArticleAuthor->getJobTitle($locale),
+                'description' => $blogArticleAuthor->getDescription($locale),
+            ],
         ];
     }
 }

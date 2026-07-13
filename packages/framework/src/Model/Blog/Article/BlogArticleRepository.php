@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleNotFoundException;
+use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
@@ -34,6 +35,35 @@ class BlogArticleRepository
     protected function getBlogArticleRepository(): EntityRepository
     {
         return $this->em->getRepository(BlogArticle::class);
+    }
+
+    public function getBlogArticlesByBlogArticleAuthorQueryBuilder(
+        BlogArticleAuthor $blogArticleAuthor,
+        string $locale,
+    ): QueryBuilder {
+        return $this->em->createQueryBuilder()
+            ->select('ba, bat')
+            ->from(BlogArticle::class, 'ba')
+            ->join('ba.translations', 'bat', Join::WITH, 'bat.locale = :locale')
+            ->where('ba.blogArticleAuthor = :blogArticleAuthor')
+            ->setParameter('blogArticleAuthor', $blogArticleAuthor)
+            ->setParameter('locale', $locale);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getBlogArticleIdsByBlogArticleAuthor(BlogArticleAuthor $blogArticleAuthor): array
+    {
+        $result = $this->em->createQueryBuilder()
+            ->select('ba.id')
+            ->from(BlogArticle::class, 'ba')
+            ->where('ba.blogArticleAuthor = :blogArticleAuthor')
+            ->setParameter('blogArticleAuthor', $blogArticleAuthor)
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_map('intval', array_column($result, 'id'));
     }
 
     public function getBlogArticlesByDomainIdQueryBuilder(int $domainId): QueryBuilder

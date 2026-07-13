@@ -65,6 +65,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
                 {!!blogArticleData?.blogArticle && (
                     <>
                         <ArticleMetadata
+                            authorName={blogArticleData.blogArticle.author?.name}
                             datePublished={blogArticleData.blogArticle.publishDate}
                             description={blogArticleData.blogArticle.seoMetaDescription}
                             headline={blogArticleData.blogArticle.seoTitle || blogArticleData.blogArticle.name}

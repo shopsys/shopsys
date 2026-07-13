@@ -277,6 +277,25 @@
             },
             "mainBlogCategoryUuid": {
                 "type": "keyword"
+            },
+            "author": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "uuid": {
+                        "type": "keyword"
+                    },
+                    "name": {
+                        "type": "text"
+                    },
+                    "jobTitle": {
+                        "type": "text"
+                    },
+                    "description": {
+                        "type": "text"
+                    }
+                }
             }
         }
     }

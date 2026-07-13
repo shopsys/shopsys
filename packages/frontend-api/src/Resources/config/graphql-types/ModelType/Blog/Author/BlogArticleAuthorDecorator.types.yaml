@@ -1,0 +1,25 @@
+BlogArticleAuthorDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "The blog article author UUID"
+            name:
+                type: "String!"
+                description: "The blog article author name"
+            jobTitle:
+                type: "String"
+                description: "The blog article author job title"
+            description:
+                type: "String"
+                description: "The blog article author description"
+            mainImage:
+                type: "Image"
+                description: "The blog article author image"
+                resolve: '@=query("mainImageByBlogArticleAuthorPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null

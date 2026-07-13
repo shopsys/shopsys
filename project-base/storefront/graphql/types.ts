@@ -300,6 +300,8 @@ export type TypeBaseCustomerUser = {
 
 export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHreflang & TypeSlug & {
   __typename?: 'BlogArticle';
+  /** The author of the blog article */
+  author: Maybe<TypeBlogArticleAuthor>;
   /** The list of the blog article visible categories */
   blogCategories: Array<TypeBlogCategory>;
   /** Hierarchy of the current element in relation to the structure */
@@ -349,6 +351,25 @@ export type TypeBlogArticleImagesArgs = {
 
 
 export type TypeBlogArticleMainImageArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TypeBlogArticleAuthor = {
+  __typename?: 'BlogArticleAuthor';
+  /** The blog article author description */
+  description: Maybe<Scalars['String']['output']>;
+  /** The blog article author job title */
+  jobTitle: Maybe<Scalars['String']['output']>;
+  /** The blog article author image */
+  mainImage: Maybe<TypeImage>;
+  /** The blog article author name */
+  name: Scalars['String']['output'];
+  /** The blog article author UUID */
+  uuid: Scalars['Uuid']['output'];
+};
+
+
+export type TypeBlogArticleAuthorMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 

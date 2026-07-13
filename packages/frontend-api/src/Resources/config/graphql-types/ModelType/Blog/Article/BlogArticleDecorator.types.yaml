@@ -78,3 +78,6 @@ BlogArticleDecorator:
             hreflangLinks:
                 type: "[HreflangLink!]!"
                 description: "Alternate links for hreflang meta tags"
+            author:
+                type: "BlogArticleAuthor"
+                description: "The author of the blog article"

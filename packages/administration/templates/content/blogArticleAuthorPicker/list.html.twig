@@ -1,0 +1,24 @@
+{% extends '@ShopsysAdministration/layout/layout_window.html.twig' %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-body">
+            {{ form_start(quickSearchForm) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_widget(quickSearchForm.text, {attr: {
+                        class: 'form-control',
+                        placeholder: 'Search by author name...'|trans,
+                    }}) }}
+                </div>
+                <div class="col-auto">
+                    {{ form_widget(quickSearchForm.submit, {label: 'Search'|trans, attr: {class: 'btn btn-primary'}}) }}
+                </div>
+            </div>
+            {{ form_end(quickSearchForm) }}
+        </div>
+    </div>
+
+    {{ gridView.render() }}
+    {{ gridView.renderHiddenInputs('page') }}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% block single_picker_row %}
+    <div class="mb-3 row">
+        {{- form_label(form) -}}
+        {{- form_widget(form, {attr: {class: 'col-sm-10'}}) -}}
+    </div>
+{% endblock %}
+
+{% block single_picker_widget %}
+    {% if attr %}
+        <div {{ block('attributes') }}>
+    {% endif %}
+
+    <div class="input-group"
+         data-js-single-picker
+         data-picker-url="{{ picker_url }}"
+         data-picker-title="{{ picker_title }}"
+         data-placeholder="{{ placeholder }}"
+    >
+        <input type="text"
+               class="form-control"
+               data-js-single-picker-label
+               value="{{ selected_name|default(placeholder) }}"
+               readonly="readonly"
+               title="{{ picker_title }}"
+        />
+
+        <button type="button"
+                class="btn btn-icon"
+                data-js-single-picker-button-add
+                title="{{ picker_title }}"
+        >
+            {{ ux_icon('search') }}
+        </button>
+
+        {% if enable_remove %}
+            <button type="button"
+                    class="btn btn-icon"
+                    data-js-single-picker-button-remove
+                    disabled
+                    title="{{ 'Remove'|trans }}"
+            >
+                {{ ux_icon('trash') }}
+            </button>
+        {% endif %}
+
+        {{ form_widget(form, {attr: {'data-js-single-picker-input': ''}}) }}
+    </div>
+
+    {% if attr %}
+        </div>
+    {% endif %}
+{% endblock %}

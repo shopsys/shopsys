@@ -7,16 +7,15 @@ namespace Shopsys\FrameworkBundle\Form;
 use Override;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductIdToProductTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
 final class ProductType extends AbstractType
 {
     public function __construct(
+        private readonly RouterInterface $router,
         private readonly ProductIdToProductTransformer $productIdToProductTransformer,
     ) {
     }
@@ -24,38 +23,7 @@ final class ProductType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addViewTransformer(new CallbackTransformer(
-            static fn ($value) => $value,
-            static fn ($value) => $value !== null && $value !== '' ? (int)$value : null,
-        ));
         $builder->addModelTransformer($this->productIdToProductTransformer);
-    }
-
-    #[Override]
-    public function buildView(FormView $view, FormInterface $form, array $options): void
-    {
-        parent::buildView($view, $form, $options);
-
-        $view->vars['placeholder'] = $options['placeholder'];
-        $view->vars['enableRemove'] = $options['enableRemove'];
-        $view->vars['allow_main_variants'] = (int)$options['allow_main_variants'];
-        $view->vars['allow_variants'] = (int)$options['allow_variants'];
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $form->getData();
-
-        if ($product !== null) {
-            $view->vars['productName'] = $product->getName();
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function getParent(): string
-    {
-        return HiddenType::class;
     }
 
     #[Override]
@@ -63,10 +31,29 @@ final class ProductType extends AbstractType
     {
         $resolver->setDefaults([
             'placeholder' => t('Choose product'),
-            'enableRemove' => false,
-            'required' => true,
+            'picker_title' => t('Assign product'),
+            'enable_remove' => false,
+            'item_name' => 'name',
             'allow_main_variants' => true,
             'allow_variants' => true,
+            'required' => true,
         ]);
+
+        $resolver->setDefault('picker_url', function (Options $options): string {
+            return $this->router->generate('admin_productpicker_picksingle', [
+                'jsInstanceId' => '__js_instance_id__',
+                'allowMainVariants' => $options['allow_main_variants'],
+                'allowVariants' => $options['allow_variants'],
+            ]);
+        });
+
+        $resolver->setAllowedTypes('allow_main_variants', 'bool');
+        $resolver->setAllowedTypes('allow_variants', 'bool');
+    }
+
+    #[Override]
+    public function getParent(): string
+    {
+        return SinglePickerType::class;
     }
 }

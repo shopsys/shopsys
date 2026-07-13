@@ -24,4 +24,7 @@ fragment BlogArticleDetailFragment on BlogArticle {
     blogCategories {
         ...SimpleBlogCategoryFragment
     }
+    author {
+        ...BlogArticleAuthorFragment
+    }
 }

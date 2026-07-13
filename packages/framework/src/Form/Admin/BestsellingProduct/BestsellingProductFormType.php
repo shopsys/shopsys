@@ -48,7 +48,7 @@ final class BestsellingProductFormType extends AbstractType
                         'class' => 'input-group',
                     ],
                     'placeholder' => '-- auto filled --',
-                    'enableRemove' => true,
+                    'enable_remove' => true,
                 ]);
         }
     }

@@ -33,13 +33,11 @@
         </a>
     {% else %}
         <button type="button"
-                class="js-product-picker-select btn btn-sm align-items-baseline"
-                data-instance-id="{{ parentInstanceId }}"
-                data-product-id="{{ row.id }}"
-                data-product-picker-product-image-url="{{ url('admin_productpicker_productimage') }}"
-                data-product-name="{{ row.name }}"
-                data-product-picker-product-ean="{{ row.ean }}"
-                data-product-picker-product-catnum="{{ row.catnum }}"
+                class="btn btn-sm align-items-baseline"
+                data-js-single-picker-window-select
+                data-picker-instance-id="{{ jsInstanceId }}"
+                data-picker-id="{{ row.id }}"
+                data-picker-name="{{ row.name }}"
         >
             <span class="js-products-picker-icon icon-wrapper">
                 {{ ux_icon('plus') }}

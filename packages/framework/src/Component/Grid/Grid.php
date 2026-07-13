@@ -35,6 +35,8 @@ class Grid
 
     protected bool $enableSelecting = false;
 
+    protected bool $enableScrollToGridOnNavigation = false;
+
     /**
      * @var int[]
      */
@@ -275,6 +277,11 @@ class Grid
         $this->enableSelecting = true;
     }
 
+    public function enableScrollToGridOnNavigation(): void
+    {
+        $this->enableScrollToGridOnNavigation = true;
+    }
+
     public function setDefaultLimit(int $limit): void
     {
         if (!$this->isLimitFromRequest) {
@@ -331,6 +338,16 @@ class Grid
         return $this->enableSelecting && $this->accessChecker->canEdit($this->roleConstant);
     }
 
+    public function isEnabledScrollToGridOnNavigation(): bool
+    {
+        return $this->enableScrollToGridOnNavigation;
+    }
+
+    public function getAnchorId(): string
+    {
+        return 'grid-' . $this->id;
+    }
+
     public function isRowSelected(array $row): bool
     {
         $rowId = $this->getRowId($row);
@@ -358,6 +375,17 @@ class Grid
     public function getAllowedLimits(): array
     {
         return $this->allowedLimits;
+    }
+
+    /**
+     * @param int[] $allowedLimits
+     */
+    public function setAllowedLimits(array $allowedLimits): void
+    {
+        $this->allowedLimits = $allowedLimits;
+        $this->limit = static::DEFAULT_LIMIT;
+        $this->isLimitFromRequest = false;
+        $this->loadLimitFromRequest();
     }
 
     public function getTotalCount(): ?int
@@ -418,15 +446,12 @@ class Grid
 
     protected function loadFromRequest(): void
     {
+        $this->loadLimitFromRequest();
+
         $queryData = $this->requestStack->getMainRequest()->query->all(self::GET_PARAMETER);
 
         if (array_key_exists($this->id, $queryData)) {
             $gridQueryData = $queryData[$this->id];
-
-            if (array_key_exists('limit', $gridQueryData)) {
-                $this->setLimit((int)trim($gridQueryData['limit']));
-                $this->isLimitFromRequest = true;
-            }
 
             if (array_key_exists('page', $gridQueryData)) {
                 $this->page = max((int)trim($gridQueryData['page']), 1);
@@ -449,6 +474,30 @@ class Grid
         if (array_key_exists('selectedRowIds', $gridRequestData) && is_array($gridRequestData['selectedRowIds'])) {
             $this->selectedRowIds = array_map('json_decode', $gridRequestData['selectedRowIds']);
         }
+    }
+
+    protected function loadLimitFromRequest(): void
+    {
+        $queryData = $this->requestStack->getMainRequest()->query->all(self::GET_PARAMETER);
+
+        if (!array_key_exists($this->id, $queryData)) {
+            return;
+        }
+
+        $gridQueryData = $queryData[$this->id];
+
+        if (!array_key_exists('limit', $gridQueryData)) {
+            return;
+        }
+
+        $limitFromRequest = (int)trim($gridQueryData['limit']);
+
+        if (!in_array($limitFromRequest, $this->allowedLimits, true)) {
+            return;
+        }
+
+        $this->setLimit($limitFromRequest);
+        $this->isLimitFromRequest = true;
     }
 
     public function getGridParameters(array|string|null $removeParameters = []): array

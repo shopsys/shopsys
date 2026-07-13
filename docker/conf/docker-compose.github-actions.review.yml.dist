@@ -117,7 +117,7 @@ services:
         deploy:
             resources:
                 limits:
-                    memory: 700M
+                    memory: 1G
 
     php-consumer:
         restart: always

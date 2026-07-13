@@ -1,51 +1,30 @@
-import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';
+import MultiplePicker from './MultiplePicker';
 
-window.FilePickerInstances = {};
-
-export default class FilePicker {
+export default class FilePicker extends MultiplePicker {
     constructor($picker) {
-        this.instanceId = Object.keys(window.FilePickerInstances).length;
-        window.FilePickerInstances[this.instanceId] = this;
+        super($picker);
 
-        this.$picker = $picker;
         this.$addButton = $(`[data-picker-target="${$picker.attr('id')}"]`);
-        this.$itemsContainer = $picker.find('.js-picker-items');
-
-        this.$addButton.click(event => this.openPicker(event));
-        this.initExistingItem();
+        this.$addButton.click(() => this.openPickerWindow());
     }
 
-    initExistingItem() {
-        const $existingItem = this.$itemsContainer.find('.js-picker-item');
-
-        if ($existingItem.length > 0) {
-            $existingItem.find('.js-picker-item-button-delete').click(() => {
-                this.removeItem($existingItem);
-            });
-        }
+    getPickerWindowTitle() {
+        return Translator.trans('Select file');
     }
 
-    openPicker(event) {
-        event.preventDefault();
-
-        const url = this.$picker.data('picker-url').replace('__js_instance_id__', this.instanceId);
-        const iframeContent = `<iframe src="${url}" style="width: 100%; height: 800px; border: none;"></iframe>`;
-
-        this.modal = new ModalWindow({
-            content: iframeContent,
-            title: Translator.trans('Select file'),
-            size: 'xl',
-            buttons: [{ text: Translator.trans('Cancel') }],
-        });
-
-        return false;
+    getPickerWindowButtons() {
+        return [{ text: Translator.trans('Cancel') }];
     }
 
     addItem($selectedElement) {
-        this.$itemsContainer.find('.js-picker-item').remove();
+        const $existingItem = this.$itemsContainer.find('.js-picker-item');
+
+        if ($existingItem.length > 0) {
+            this.removeItem($existingItem);
+        }
 
         const itemHtml = this.$picker.data('picker-prototype').replace(/__name__/g, 0);
         const $item = $($.parseHTML(itemHtml));
@@ -53,21 +32,12 @@ export default class FilePicker {
         FilePicker.populateItemFromSelection($item, $selectedElement);
 
         this.$itemsContainer.append($item);
-
-        $item.find('.js-picker-item-button-delete').click(() => {
-            this.removeItem($item);
-        });
-
+        this.initItem($item);
         FormChangeInfo.showInfo();
 
         if (this.modal?.element && typeof this.modal.element.modal === 'function') {
             this.modal.element.modal('hide');
         }
-    }
-
-    removeItem($item) {
-        $item.remove();
-        FormChangeInfo.showInfo();
     }
 
     static populateItemFromSelection($item, $selectedElement) {
@@ -85,7 +55,7 @@ export default class FilePicker {
     }
 
     static onClickSelectFile(instanceId, $btnElement) {
-        const pickerInstance = window.parent.FilePickerInstances[instanceId];
+        const pickerInstance = window.parent.PickerInstances[instanceId];
 
         if (!pickerInstance) {
             console.error(`FilePicker instance ${instanceId} not found.`);

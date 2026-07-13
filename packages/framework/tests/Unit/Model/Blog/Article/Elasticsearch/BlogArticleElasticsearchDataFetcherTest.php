@@ -92,6 +92,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
             'products' => [],
             'imageUrl' => null,
             'status' => 'published',
+            'author' => null,
         ];
     }
 

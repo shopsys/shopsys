@@ -11,7 +11,7 @@
                 <div class="btn-list js-order-items-preview-only{% if isEditMode %} d-none{% endif %}">
                     <button type="button"
                             class="btn btn-sm btn-outline-primary js-order-items-add-product"
-                            data-product-picker-url="{{ url('admin_productpicker_picksingle', { allowMainVariants: false }) }}"
+                            data-picker-url="{{ url('admin_productpicker_picksingle', { jsInstanceId: '__js_instance_id__', allowMainVariants: false }) }}"
                             data-loading="addAttribute(disabled)"
                     >
                         {{ 'Add product'|trans }}
@@ -33,7 +33,7 @@
                     <button type="button"
                             id="js-order-item-add-product"
                             class="btn btn-sm btn-outline-primary js-order-items-add-product"
-                            data-product-picker-url="{{ url('admin_productpicker_picksingle', { allowMainVariants: false }) }}"
+                            data-picker-url="{{ url('admin_productpicker_picksingle', { jsInstanceId: '__js_instance_id__', allowMainVariants: false }) }}"
                             data-loading="addAttribute(disabled)"
                     >
                         {{ ux_icon('plus') }}

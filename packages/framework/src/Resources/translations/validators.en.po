@@ -148,6 +148,9 @@ msgstr ""
 msgid "Invalid whitelist pattern."
 msgstr ""
 
+msgid "Job title cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Last name cannot be longer than {{ limit }} characters"
 msgstr ""
 

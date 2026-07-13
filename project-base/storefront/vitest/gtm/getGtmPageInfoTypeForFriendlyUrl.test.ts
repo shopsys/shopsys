@@ -51,6 +51,7 @@ const blogArticleDetail = {
     breadcrumb: [],
     hreflangLinks: [],
     blogCategories: [],
+    author: null,
 } satisfies TypeBlogArticleDetailFragment;
 
 describe('getGtmPageInfoTypeForFriendlyUrl', () => {

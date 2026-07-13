@@ -1,0 +1,18 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_value_cell_id_select %}
+    <button type="button"
+            class="btn btn-sm align-items-baseline"
+            data-js-single-picker-window-select
+            data-picker-instance-id="{{ jsInstanceId }}"
+            data-picker-id="{{ row.ba.id }}"
+            data-picker-name="{{ row.ba.name }}"
+    >
+        <span class="icon-wrapper">
+            {{ ux_icon('plus') }}
+        </span>
+        <span>
+            {{ 'Choose'|trans }}
+        </span>
+    </button>
+{% endblock %}

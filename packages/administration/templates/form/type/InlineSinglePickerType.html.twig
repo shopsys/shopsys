@@ -1,0 +1,56 @@
+{% block inline_single_picker_row %}
+    <div class="mb-3 row">
+        <div class="col">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block inline_single_picker_widget %}
+    {% if attr %}
+        <div {{ block('attributes') }}>
+    {% endif %}
+
+    <div class="input-group"
+         data-js-single-picker
+         data-picker-url="{{ picker_url }}"
+         data-picker-title="{{ picker_title }}"
+         data-placeholder="{{ placeholder }}"
+    >
+        <span class="input-group-text"><strong>{{ label|trans({}, translation_domain) }}</strong></span>
+
+        <input type="text"
+               class="form-control bg-white"
+               data-js-single-picker-label
+               style="color: var(--tblr-body-color);"
+               value="{{ selected_name|default(placeholder) }}"
+               readonly="readonly"
+               title="{{ picker_title }}"
+        />
+
+        <button type="button"
+                class="btn btn-icon"
+                data-js-single-picker-button-add
+                title="{{ picker_title }}"
+        >
+            {{ ux_icon('search') }}
+        </button>
+
+        {% if enable_remove %}
+            <button type="button"
+                    class="btn btn-icon"
+                    data-js-single-picker-button-remove
+                    disabled
+                    title="{{ 'Remove'|trans }}"
+            >
+                {{ ux_icon('trash') }}
+            </button>
+        {% endif %}
+
+        {{ form_widget(form, {attr: {'data-js-single-picker-input': ''}}) }}
+    </div>
+
+    {% if attr %}
+        </div>
+    {% endif %}
+{% endblock %}

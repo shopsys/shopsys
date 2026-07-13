@@ -47,7 +47,6 @@ class ProductIdToProductTransformerTest extends TestCase
         $productIdToProductTransformer = new ProductIdToProductTransformer($productRepository);
 
         $this->assertSame($product, $productIdToProductTransformer->reverseTransform($productId));
-        /** @phpstan-ignore-next-line */
         $this->assertNull($productIdToProductTransformer->reverseTransform(null));
     }
 }

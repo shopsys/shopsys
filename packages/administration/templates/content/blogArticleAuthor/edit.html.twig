@@ -1,0 +1,11 @@
+{% extends '@ShopsysAdministration/crud/edit.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="mt-5">
+        <h2>{{ 'Articles by this author'|trans }}</h2>
+
+        {{ gridView.render() }}
+    </div>
+{% endblock %}

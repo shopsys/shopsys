@@ -19,6 +19,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
+use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
@@ -82,6 +83,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processStoresImages();
         $this->processBlogCategoryImages();
         $this->processBlogArticleImages();
+        $this->processBlogArticleAuthorImages();
 
         $this->syncDatabaseSequences(['images.id']);
     }
@@ -380,6 +382,26 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
+    private function processBlogArticleAuthorImages(): void
+    {
+        $blogArticleAuthorsImagesData = [
+            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_1 => 723,
+            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_2 => 724,
+        ];
+
+        foreach ($blogArticleAuthorsImagesData as $blogArticleAuthorReferenceName => $imageId) {
+            $blogArticleAuthor = $this->getReference($blogArticleAuthorReferenceName, BlogArticleAuthor::class);
+
+            $names = [];
+
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = $blogArticleAuthor->getName();
+            }
+
+            $this->saveImageIntoDb($blogArticleAuthor->getId(), 'blogArticleAuthor', $imageId, $names);
+        }
+    }
+
     private function processBlogCategoryImages(): void
     {
         $blogCategoryImagesData = [
@@ -471,6 +493,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     public function getDependencies(): array
     {
         return [
+            BlogArticleAuthorDataFixture::class,
             BlogArticleDataFixture::class,
             BrandDataFixture::class,
             CategoryDataFixture::class,

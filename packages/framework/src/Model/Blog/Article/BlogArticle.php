@@ -11,6 +11,7 @@ use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleDomainNotFoundException;
+use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -75,6 +76,14 @@ class BlogArticle extends AbstractTranslatableEntity
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor|null
+     */
+    #[AsMcpColumn]
+    #[ORM\ManyToOne(targetEntity: BlogArticleAuthor::class)]
+    #[ORM\JoinColumn(name: 'blog_article_author_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    protected $blogArticleAuthor;
+
     public function __construct(BlogArticleData $blogArticleData)
     {
         $this->translations = new ArrayCollection();
@@ -86,6 +95,7 @@ class BlogArticle extends AbstractTranslatableEntity
         $this->createdAt = $blogArticleData->createdAt;
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
         $this->uuid = $blogArticleData->uuid ?: Uuid::uuid4()->toString();
+        $this->blogArticleAuthor = $blogArticleData->blogArticleAuthor;
     }
 
     public function edit(
@@ -97,6 +107,7 @@ class BlogArticle extends AbstractTranslatableEntity
         $this->setCategories($blogArticleBlogCategoryDomainFactory, $blogArticleData->blogCategoriesByDomainId);
 
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
+        $this->blogArticleAuthor = $blogArticleData->blogArticleAuthor;
     }
 
     /**
@@ -386,5 +397,13 @@ class BlogArticle extends AbstractTranslatableEntity
     public function isAccessibleOnStorefront(int $domainId): bool
     {
         return $this->getDomain($domainId)->isAccessibleOnStorefront();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor|null
+     */
+    public function getBlogArticleAuthor()
+    {
+        return $this->blogArticleAuthor;
     }
 }

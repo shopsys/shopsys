@@ -331,6 +331,9 @@ msgstr ""
 msgid "Authentication code"
 msgstr ""
 
+msgid "Author"
+msgstr ""
+
 msgid "Autocomplete favorites"
 msgstr ""
 
@@ -565,10 +568,16 @@ msgstr ""
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr ""
 
+msgid "Choose"
+msgstr ""
+
 msgid "Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
 msgstr ""
 
 msgid "Choose article, which will serve as terms and conditions with which the customer has to agree when creating order."
+msgstr ""
+
+msgid "Choose author"
 msgstr ""
 
 msgid "Choose product"
@@ -593,6 +602,9 @@ msgid "City"
 msgstr ""
 
 msgid "Clean Storefront Cache"
+msgstr ""
+
+msgid "Close"
 msgstr ""
 
 msgid "Code"
@@ -1903,6 +1915,9 @@ msgstr ""
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr ""
 
+msgid "Job title"
+msgstr ""
+
 msgid "Key"
 msgstr ""
 
@@ -2945,6 +2960,9 @@ msgid "Search and select products..."
 msgstr ""
 
 msgid "Second column categories"
+msgstr ""
+
+msgid "Select"
 msgstr ""
 
 msgid "Select country"

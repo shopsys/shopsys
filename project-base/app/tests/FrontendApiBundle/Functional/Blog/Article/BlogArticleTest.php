@@ -179,6 +179,63 @@ class BlogArticleTest extends GraphQlTestCase
         $this->assertStringEndsWith($expectedImage, $responseData['images'][0]['url']);
     }
 
+    public function testGetBlogArticleAuthor(): void
+    {
+        $blogArticle = $this->getReference(BlogArticleDataFixture::BLOG_ARTICLE_WITH_AUTHOR, BlogArticle::class);
+        $blogArticleAuthor = $blogArticle->getBlogArticleAuthor();
+        $locale = $this->getFirstDomainLocale();
+
+        $query = '
+            query {
+                blogArticle(uuid: "' . $blogArticle->getUuid() . '") {
+                    author {
+                        name
+                        jobTitle
+                        description
+                        mainImage {
+                            url
+                        }
+                    }
+                }
+            }
+        ';
+
+        $response = $this->getResponseContentForQuery($query);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticle');
+
+        $this->assertArrayHasKey('author', $responseData);
+        $this->assertNotNull($responseData['author']);
+        $this->assertSame($blogArticleAuthor->getName(), $responseData['author']['name']);
+        $this->assertSame($blogArticleAuthor->getJobTitle($locale), $responseData['author']['jobTitle']);
+        $this->assertSame($blogArticleAuthor->getDescription($locale), $responseData['author']['description']);
+        $this->assertArrayHasKey('mainImage', $responseData['author']);
+
+        if ($responseData['author']['mainImage'] !== null) {
+            $this->assertNotEmpty($responseData['author']['mainImage']['url']);
+        }
+    }
+
+    public function testGetBlogArticleWithoutAuthorReturnsNull(): void
+    {
+        $blogArticle = $this->getReference(BlogArticleDataFixture::BLOG_ARTICLE_WITHOUT_AUTHOR, BlogArticle::class);
+
+        $query = '
+            query {
+                blogArticle(uuid: "' . $blogArticle->getUuid() . '") {
+                    author {
+                        name
+                    }
+                }
+            }
+        ';
+
+        $response = $this->getResponseContentForQuery($query);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticle');
+
+        $this->assertArrayHasKey('author', $responseData);
+        $this->assertNull($responseData['author']);
+    }
+
     public static function getImagesDataProvider(): iterable
     {
         yield [

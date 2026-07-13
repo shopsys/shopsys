@@ -31,6 +31,7 @@ class BlogArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetch
         $result['mainSlug'] = $data['mainSlug'] ?? '';
         $result['products'] = $data['products'] ?? [];
         $result['imageUrl'] = $data['imageUrl'] ?? null;
+        $result['author'] = $data['author'] ?? null;
 
         return $result;
     }

@@ -5,7 +5,7 @@ import Translator from 'bazinga-translator';
 import { escapeHtml } from '../../common/utils/escapeHtml';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';
-import ProductPicker from './ProductPicker';
+import SinglePicker from './SinglePicker';
 
 export default class OrderItems {
     static savedEventBound = false;
@@ -68,7 +68,7 @@ export default class OrderItems {
 
             element.dataset.orderItemsProductPickerInitialized = '1';
             // eslint-disable-next-line no-new
-            new ProductPicker($(element), async productId => {
+            new SinglePicker($(element), async productId => {
                 if (await this.runLiveAction('addProduct', { productId: Number(productId) })) {
                     FormChangeInfo.showInfo();
                 }

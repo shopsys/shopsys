@@ -68,6 +68,7 @@ class BlogArticleDataFactory
         $blogArticleData->createdAt = $blogArticle->getCreatedAt();
         $blogArticleData->blogCategoriesByDomainId = $blogArticle->getBlogCategoriesIndexedByDomainId();
         $blogArticleData->uuid = $blogArticle->getUuid();
+        $blogArticleData->blogArticleAuthor = $blogArticle->getBlogArticleAuthor();
 
         $blogArticleData->image = $this->imageUploadDataFactory->createFromEntityAndType($blogArticle);
 
