@@ -12,6 +12,8 @@ use App\Model\Product\Flag\Flag;
 use App\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -37,6 +39,8 @@ class ProductDemoDataSetter
         private readonly StockRepository $stockRepository,
         private readonly ProductStockDataFactory $productStockDataFactory,
         private readonly ProductInputPriceDataFactory $productInputPriceDataFactory,
+        private readonly DateTimeHelper $dateTimeHelper,
+        private readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
     ) {
     }
 
@@ -65,6 +69,14 @@ class ProductDemoDataSetter
     public function setSellingTo(ProductData $productData, string $date): void
     {
         $productData->sellingTo = new DatePoint($date);
+    }
+
+    public function setExpectedRestockingDate(ProductData $productData, string $date): void
+    {
+        $productData->expectedRestockingDate = $this->dateTimeHelper->createUtcDateTimeByTimeZoneAndString(
+            $date,
+            $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin(),
+        );
     }
 
     public function setProductParameterValues(ProductData $productData, array $parametersValues): void

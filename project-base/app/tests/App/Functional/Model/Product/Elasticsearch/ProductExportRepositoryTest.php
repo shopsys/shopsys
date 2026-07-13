@@ -111,6 +111,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'product_videos',
             'hreflang_links',
             'selling_from',
+            'expected_restocking_date',
             'vat_percent',
             'promotion',
             'is_promoted',
