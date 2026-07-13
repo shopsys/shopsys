@@ -141,6 +141,9 @@ export default class TreeSelectionFormItem {
 
         $newItem.data('load-url', itemData.loadUrl);
         $newItem.data('expandable', itemData.isExpandable);
+        if (!itemData.isExpandable) {
+            $newItem.find('.js-tree-selection-form-children-container:first').remove();
+        }
         if (itemData.isVisible === false) {
             $newItem.addClass($form.data('hidden-item-class'));
         }
