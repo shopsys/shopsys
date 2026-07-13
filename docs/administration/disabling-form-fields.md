@@ -11,3 +11,10 @@ To enable disabling defined fields there, need to be set ENV variable `DISABLE_F
 ## Define disabled fields
 
 Disabled fields are defined by constant `DISABLED_FIELDS` for example in: `App\Form\Admin\CategoryFormTypeExtension`
+
+## Supported field types
+
+Standard Symfony form fields render the `disabled` attribute automatically.
+Tree selection fields (`TreeSelectionType`, e.g. `CategoriesType` used for product category assignment) are supported as well —
+all checkboxes in the tree are rendered as disabled, including branches lazily loaded via AJAX,
+while the tree itself can still be expanded and browsed.
