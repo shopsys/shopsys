@@ -6,12 +6,13 @@ import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragment
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { useCookiesStore } from 'store/useCookiesStore';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
-import { ProductItemProps } from './ProductListItem';
+import { ProductItemProps, ProductListViewModeType } from './ProductListItem';
 import { ProductsListContent } from './ProductsListContent';
 
 type ProductsListProps = {
@@ -32,6 +33,11 @@ export const productListTwClass = twJoin(
     'xl:grid-cols-4',
 );
 
+export const productListViewModeListTwClass = 'relative grid grid-cols-1 gap-2';
+
+const getProductListTwClass = (productListViewMode: ProductListViewModeType) =>
+    productListViewMode === 'list' ? productListViewModeListTwClass : productListTwClass;
+
 export const ProductsList: FC<ProductsListProps> = ({
     products,
     gtmProductListName,
@@ -43,6 +49,8 @@ export const ProductsList: FC<ProductsListProps> = ({
 }) => {
     const { t } = useTranslation();
     const currentLoadMore = useCurrentLoadMoreQuery();
+    const productListViewMode = useCookiesStore((store) => store.productListViewMode);
+    const currentProductListTwClass = getProductListTwClass(productListViewMode);
 
     if (!products?.length && !areProductsFetching) {
         return <CategoryDetailContentMessage />;
@@ -53,9 +61,10 @@ export const ProductsList: FC<ProductsListProps> = ({
             <>
                 <h2 className="sr-only">{t('Product list')}</h2>
                 <ProductsListContent
-                    className={productListTwClass}
+                    className={currentProductListTwClass}
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
+                    productListViewMode={productListViewMode}
                     productItemProps={productItemProps}
                     products={products}
                 >
@@ -67,9 +76,9 @@ export const ProductsList: FC<ProductsListProps> = ({
                 </ProductsListContent>
 
                 {isLoadingMoreProducts && (
-                    <div className={productListTwClass}>
+                    <div className={currentProductListTwClass}>
                         {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
-                            <SkeletonModuleProductListItem key={index} />
+                            <SkeletonModuleProductListItem key={index} productListViewMode={productListViewMode} />
                         ))}
                     </div>
                 )}
@@ -78,9 +87,9 @@ export const ProductsList: FC<ProductsListProps> = ({
     }
 
     return (
-        <div className={productListTwClass}>
+        <div className={currentProductListTwClass}>
             {createEmptyArray(calculatePageSize(currentLoadMore)).map((_, index) => (
-                <SkeletonModuleProductListItem key={index} />
+                <SkeletonModuleProductListItem key={index} productListViewMode={productListViewMode} />
             ))}
         </div>
     );

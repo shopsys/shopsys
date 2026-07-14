@@ -35,12 +35,14 @@ import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { GoogleIcon } from 'components/Basic/Icon/GoogleIcon';
 import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
 import { GoogleMapSearchMarkerIcon } from 'components/Basic/Icon/GoogleMapSearchMarkerIcon';
+import { GridIcon } from 'components/Basic/Icon/GridIcon';
 import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { HomeIcon } from 'components/Basic/Icon/HomeIcon';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { InfoInTriangleIcon } from 'components/Basic/Icon/InfoInTriangleIcon';
 import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
+import { ListIcon } from 'components/Basic/Icon/ListIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { LockCrossIcon } from 'components/Basic/Icon/LockCrossIcon';
 import { LockIcon } from 'components/Basic/Icon/LockIcon';
@@ -207,6 +209,10 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">GoogleMapSearchMarkerIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <GridIcon className="size-10" />
+                <span className="text-center text-xs break-all">GridIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <HeartFilledIcon className="size-10" />
                 <span className="text-center text-xs break-all">HeartFilledIcon</span>
             </div>
@@ -229,6 +235,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <InstagramIcon className="size-10" />
                 <span className="text-center text-xs break-all">InstagramIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <ListIcon className="size-10" />
+                <span className="text-center text-xs break-all">ListIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <LockCheckIcon className="size-10" />

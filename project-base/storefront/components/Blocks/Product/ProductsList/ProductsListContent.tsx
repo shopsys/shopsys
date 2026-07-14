@@ -7,7 +7,7 @@ import { SwipeableHandlers } from 'react-swipeable';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
-import { ProductItemProps, ProductListItem } from './ProductListItem';
+import { ProductItemProps, ProductListItem, ProductListViewModeType } from './ProductListItem';
 
 type ProductsListProps = {
     products: TypeListedProductFragment[];
@@ -19,6 +19,7 @@ type ProductsListProps = {
     className?: string;
     isWithSimpleCards?: boolean;
     productItemProps?: Partial<ProductItemProps>;
+    productListViewMode?: ProductListViewModeType;
     keyboardFocusableProductIndices?: number[];
     highlightFirstItemBadgeText?: string;
 };
@@ -33,6 +34,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     swipeHandlers,
     productItemProps,
     className,
+    productListViewMode = 'grid',
     keyboardFocusableProductIndices,
     highlightFirstItemBadgeText,
 }) => {
@@ -51,6 +53,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
                     isProductInWishlist={isProductInWishlist(product.uuid)}
                     listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
                     product={product}
+                    productListViewMode={productListViewMode}
                     ref={productRefs?.[index]}
                     toggleProductInComparison={() =>
                         toggleProductInComparison(

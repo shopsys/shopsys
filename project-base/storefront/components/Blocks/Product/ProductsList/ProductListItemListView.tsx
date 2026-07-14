@@ -1,0 +1,169 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { Flag } from 'components/Basic/Flag/Flag';
+import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
+import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
+import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
+import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
+import { TIDs } from 'cypress/tids';
+import type { MouseEvent, Ref } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { twMergeCustom } from 'utils/twMerge';
+import type { ProductListItemLayoutProps } from './ProductListItemActions';
+import { ProductListItemAddToCart, ProductListItemButtons } from './ProductListItemActions';
+import { ProductListItemImage } from './ProductListItemImage';
+
+type ProductListItemListViewProps = ProductListItemLayoutProps & {
+    forwardedRef: Ref<HTMLLIElement>;
+};
+
+const preventProductActionTextSelection = (event: MouseEvent<HTMLDivElement>) => {
+    if (event.target instanceof HTMLInputElement) {
+        return;
+    }
+
+    event.preventDefault();
+    window.getSelection()?.removeAllRanges();
+};
+
+export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
+    allowKeyboardFocus,
+    className,
+    currentCart,
+    forwardedRef,
+    gtmMessageOrigin,
+    gtmProductListName,
+    highlightBadgeText,
+    isProductInComparison,
+    isProductInWishlist,
+    listIndex,
+    onProductClick,
+    product,
+    shouldShowProductActionSkeleton,
+    toggleProductInComparison,
+    toggleProductInWishlist,
+    visibleItemsConfig,
+}) => {
+    const { t } = useTranslation();
+
+    return (
+        <li
+            data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
+            ref={forwardedRef}
+            className={twMergeCustom(
+                'group relative grid select-text gap-2 rounded-xl border border-background-more bg-background-more p-3 text-left transition',
+                'hover:border-border-less hover:bg-background-default',
+                'sm:p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center',
+                highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
+                className,
+            )}
+        >
+            {highlightBadgeText && (
+                <div className="absolute top-3 right-3 z-above items-end">
+                    <Flag type="highlight">{highlightBadgeText}</Flag>
+                </div>
+            )}
+
+            <ExtendedNextLink
+                preventRedirectOnTextSelection
+                className="grid min-w-0 grid-cols-[80px_minmax(0,1fr)] gap-2 rounded-md text-text-default no-underline hover:text-link-default hover:no-underline xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,240px)] xl:items-center"
+                draggable={false}
+                href={product.slug}
+                tabIndex={allowKeyboardFocus ? 0 : -1}
+                title={t('Go to product page')}
+                type={product.isMainVariant ? 'productMainVariant' : 'product'}
+                aria-label={t('Go to product page of {{ productName }}', {
+                    ns: 'accessibility',
+                    productName: product.fullName,
+                })}
+                onMouseUp={onProductClick}
+            >
+                <div className="flex justify-center">
+                    <ProductListItemImage
+                        product={product}
+                        size="extraSmall"
+                        visibleItemsConfig={{ ...visibleItemsConfig, discount: false, flags: false }}
+                    />
+                </div>
+
+                <div className="flex min-w-0 flex-col justify-center gap-1 xl:max-w-70">
+                    <div className="min-w-0">
+                        <ProductFlags
+                            flags={product.flags}
+                            percentageDiscount={product.price.percentageDiscount}
+                            variant="list"
+                            visibleItemsConfig={visibleItemsConfig}
+                        />
+                    </div>
+
+                    <h3 className="wrap-break-word overflow-hidden font-secondary font-semibold text-sm group-hover:text-link-default group-hover:underline xl:max-w-70">
+                        {product.fullName}
+                    </h3>
+
+                    <div className="text-text-less text-xs">
+                        {t('Code')}: {product.catalogNumber}
+                    </div>
+
+                    {product.__typename === 'MainVariant' && (
+                        <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
+                            <VariantIcon className="size-3 text-text-accent" />
+                            {product.variantsCount} {t('variants count', { count: product.variantsCount })}
+                        </div>
+                    )}
+                </div>
+
+                {visibleItemsConfig.storeAvailability && !product.isSellingDenied && (
+                    <ProductAvailability
+                        availability={product.availability}
+                        availableStoresCount={product.availableStoresCount}
+                        className="col-span-2 min-h-0 text-sm leading-5 xl:col-span-1 xl:max-w-70 xl:justify-self-start"
+                        isInquiryType={product.isInquiryType}
+                    />
+                )}
+            </ExtendedNextLink>
+
+            <div className="flex min-w-0 flex-row items-end justify-between gap-2 md:flex-col md:justify-center">
+                {visibleItemsConfig.price && !(product.isMainVariant && product.isSellingDenied) && (
+                    <ProductPrice
+                        className="justify-end text-right"
+                        isPriceFromVisible={visibleItemsConfig.priceFromWord}
+                        productPrice={product.price}
+                        textPriceSize="lg"
+                    />
+                )}
+
+                <div
+                    className="ml-auto flex flex-wrap items-center justify-end gap-2"
+                    onMouseDownCapture={preventProductActionTextSelection}
+                >
+                    {visibleItemsConfig.productListButtons && (
+                        <div className="flex shrink-0 items-center gap-1">
+                            <ProductListItemButtons
+                                allowKeyboardFocus={allowKeyboardFocus}
+                                isProductInComparison={isProductInComparison}
+                                isProductInWishlist={isProductInWishlist}
+                                productName={product.fullName}
+                                toggleProductInComparison={toggleProductInComparison}
+                                toggleProductInWishlist={toggleProductInWishlist}
+                            />
+                        </div>
+                    )}
+
+                    {visibleItemsConfig.addToCart && (
+                        <ProductListItemAddToCart
+                            allowKeyboardFocus={allowKeyboardFocus}
+                            buttonSize="medium"
+                            currentCart={currentCart}
+                            gtmMessageOrigin={gtmMessageOrigin}
+                            gtmProductListName={gtmProductListName}
+                            listIndex={listIndex}
+                            product={product}
+                            productActionClassName="w-40 shrink-0 sm:w-44"
+                            shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
+                            skeletonClassName="h-9 w-40 shrink-0 sm:w-44"
+                        />
+                    )}
+                </div>
+            </div>
+        </li>
+    );
+};

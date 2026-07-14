@@ -1,26 +1,15 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Flag } from 'components/Basic/Flag/Flag';
-import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
-import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
-import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
-import { ProductAction } from 'components/Blocks/Product/ProductAction';
-import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
-import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { ProductActionSkeleton } from 'components/Blocks/Skeleton/ProductActionSkeleton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { TIDs } from 'cypress/tids';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import type { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import type { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import type { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import { forwardRef } from 'react';
-import { twJoin } from 'tailwind-merge';
-import { FunctionComponentProps } from 'types/globals';
+import type { FunctionComponentProps } from 'types/globals';
+import type { ProductListViewModeType } from 'types/product';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { twMergeCustom } from 'utils/twMerge';
-import { ProductListItemImage } from './ProductListItemImage';
+import { ProductListItemGridView } from './ProductListItemGridView';
+import { ProductListItemListView } from './ProductListItemListView';
 
 export type ProductVisibleItemsConfigType = {
     addToCart?: boolean;
@@ -31,6 +20,8 @@ export type ProductVisibleItemsConfigType = {
     discount?: boolean;
     priceFromWord?: boolean;
 };
+
+export type { ProductListViewModeType } from 'types/product';
 
 export type ProductItemProps = {
     product: TypeListedProductFragment;
@@ -48,6 +39,7 @@ export type ProductItemProps = {
     textSizePrice?: 'base' | 'lg';
     allowKeyboardFocus?: boolean;
     highlightBadgeText?: string;
+    productListViewMode?: ProductListViewModeType;
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -69,13 +61,14 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             onClick,
             allowKeyboardFocus = true,
             highlightBadgeText,
+            productListViewMode = 'grid',
         },
         ref,
     ) => {
         const { url } = useDomainConfig();
-        const { t } = useTranslation();
         const { canCreateOrder, canSeePrices } = useAuthorization();
         const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
+        const currentCart = { cart, isCartFetchingOrUnavailable };
         const isProductActionDependentOnCart =
             visibleItemsConfig.addToCart &&
             canCreateOrder &&
@@ -83,122 +76,58 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             !product.isCurrentlyOutOfStock &&
             (product.isMainVariant || !product.isInquiryType) &&
             !product.isMainVariant;
-        const shouldShowProductActionSkeleton = isProductActionDependentOnCart && isCartFetchingOrUnavailable;
+        const shouldShowProductActionSkeleton = !!isProductActionDependentOnCart && isCartFetchingOrUnavailable;
+
+        const handleProductClick = () => {
+            onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
+            onClick?.(product, listIndex);
+        };
+
+        if (productListViewMode === 'list') {
+            return (
+                <ProductListItemListView
+                    allowKeyboardFocus={allowKeyboardFocus}
+                    className={className}
+                    currentCart={currentCart}
+                    forwardedRef={ref}
+                    gtmMessageOrigin={gtmMessageOrigin}
+                    gtmProductListName={gtmProductListName}
+                    highlightBadgeText={highlightBadgeText}
+                    isProductInComparison={isProductInComparison}
+                    isProductInWishlist={isProductInWishlist}
+                    listIndex={listIndex}
+                    product={product}
+                    shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
+                    toggleProductInComparison={toggleProductInComparison}
+                    toggleProductInWishlist={toggleProductInWishlist}
+                    visibleItemsConfig={visibleItemsConfig}
+                    onProductClick={handleProductClick}
+                />
+            );
+        }
 
         return (
-            <li
-                data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
-                ref={ref}
-                className={twMergeCustom(
-                    'group relative flex select-text flex-col rounded-xl border border-background-more bg-background-more pt-10 pb-2.5 text-left transition sm:pb-5',
-                    size === 'small' && 'gap-0 pb-0',
-                    'hover:border-border-less hover:bg-background-default',
-                    highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
-                    className,
-                )}
-            >
-                {highlightBadgeText && (
-                    <div className="absolute top-5 left-2.5 z-above sm:left-5">
-                        <Flag type="highlight">{highlightBadgeText}</Flag>
-                    </div>
-                )}
-
-                <ExtendedNextLink
-                    preventRedirectOnTextSelection
-                    className="flex grow select-text rounded-xl text-text-default no-underline hover:text-link-default hover:no-underline"
-                    draggable={false}
-                    href={product.slug}
-                    tabIndex={allowKeyboardFocus ? 0 : -1}
-                    type={product.isMainVariant ? 'productMainVariant' : 'product'}
-                    aria-label={t('Go to product page of {{ productName }}', {
-                        ns: 'accessibility',
-                        productName: product.fullName,
-                    })}
-                    onMouseUp={() => {
-                        onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
-                        onClick?.(product, listIndex);
-                    }}
-                >
-                    <div
-                        className={twMergeCustom(
-                            'flex w-full flex-col gap-2.5 px-2.5 sm:px-5',
-                            size === 'small' && 'py-4 pb-4',
-                        )}
-                    >
-                        <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
-
-                        <h3
-                            className={twJoin(
-                                'wrap-break-word grow overflow-hidden font-secondary font-semibold group-hover:text-link-default group-hover:underline',
-                                textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
-                            )}
-                        >
-                            {product.fullName}
-                        </h3>
-
-                        {product.__typename === 'MainVariant' && (
-                            <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
-                                <VariantIcon className="size-3 text-text-accent" />
-                                {product.variantsCount} {t('variants count', { count: product.variantsCount })}
-                            </div>
-                        )}
-
-                        {visibleItemsConfig.price && !(product.isMainVariant && product.isSellingDenied) && (
-                            <ProductPrice
-                                className="min-h-6 sm:min-h-7"
-                                isPriceFromVisible={visibleItemsConfig.priceFromWord}
-                                productPrice={product.price}
-                                textPriceSize={textSizePrice}
-                            />
-                        )}
-
-                        {visibleItemsConfig.storeAvailability && !product.isSellingDenied && (
-                            <ProductAvailability
-                                availability={product.availability}
-                                availableStoresCount={product.availableStoresCount}
-                                className="min-h-10 xs:min-h-15 sm:min-h-10"
-                                isInquiryType={product.isInquiryType}
-                            />
-                        )}
-                    </div>
-                </ExtendedNextLink>
-
-                {visibleItemsConfig.productListButtons && (
-                    <div className="absolute top-1 right-0 flex justify-end sm:top-3 sm:right-2.5">
-                        <ProductCompareButton
-                            isProductInComparison={isProductInComparison}
-                            productName={product.fullName}
-                            tabIndex={allowKeyboardFocus ? 0 : -1}
-                            toggleProductInComparison={toggleProductInComparison}
-                        />
-                        <ProductWishlistButton
-                            isProductInWishlist={isProductInWishlist}
-                            productName={product.fullName}
-                            tabIndex={allowKeyboardFocus ? 0 : -1}
-                            toggleProductInWishlist={toggleProductInWishlist}
-                        />
-                    </div>
-                )}
-
-                {visibleItemsConfig.addToCart && shouldShowProductActionSkeleton ? (
-                    <ProductActionSkeleton
-                        className="w-full px-2.5 pt-2.5 md:px-5"
-                        isWithAddToCart
-                        isWithProductListButtons={false}
-                    />
-                ) : visibleItemsConfig.addToCart ? (
-                    <div className="w-full px-2.5 pt-2.5 md:px-5">
-                        <ProductAction
-                            gtmMessageOrigin={gtmMessageOrigin}
-                            gtmProductListName={gtmProductListName}
-                            listIndex={listIndex}
-                            product={product}
-                            currentCart={{ cart, isCartFetchingOrUnavailable }}
-                            skipKeyboardNavigation={!allowKeyboardFocus}
-                        />
-                    </div>
-                ) : null}
-            </li>
+            <ProductListItemGridView
+                allowKeyboardFocus={allowKeyboardFocus}
+                className={className}
+                currentCart={currentCart}
+                forwardedRef={ref}
+                gtmMessageOrigin={gtmMessageOrigin}
+                gtmProductListName={gtmProductListName}
+                highlightBadgeText={highlightBadgeText}
+                isProductInComparison={isProductInComparison}
+                isProductInWishlist={isProductInWishlist}
+                listIndex={listIndex}
+                product={product}
+                shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
+                size={size}
+                textSize={textSize}
+                textSizePrice={textSizePrice}
+                toggleProductInComparison={toggleProductInComparison}
+                toggleProductInWishlist={toggleProductInWishlist}
+                visibleItemsConfig={visibleItemsConfig}
+                onProductClick={handleProductClick}
+            />
         );
     },
 );

@@ -1,7 +1,18 @@
-import { staticData } from 'fixtures/demodata';
-import { checktHeadlineText, initializePersistStoreInLocalStorageToDefaultValues, translations } from 'support';
+import { COOKIES_STORE_NAME, staticData } from 'fixtures/demodata';
+import {
+    checktHeadlineText,
+    getSnapshotIndexingFunction,
+    initializePersistStoreInLocalStorageToDefaultValues,
+    loseFocus,
+    SNAPSHOT_GROUP,
+    takeSnapshotAndCompare,
+    translations,
+} from 'support';
 import { visitEntityByUuid } from 'support/navigation';
 import { TIDs } from 'tids';
+
+const SUBGROUP_INDEX = 0;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.FILTER, SUBGROUP_INDEX);
 
 describe('Product Filtering E2E Tests', () => {
     beforeEach(() => {
@@ -158,5 +169,73 @@ describe('Product Filtering E2E Tests', () => {
                     .click({ force: true });
             }
         });
+    });
+
+    it('[Product List View Mode] should switch product listing to list view and persist it after reload', () => {
+        visitEntityByUuid('category', staticData.categories.electronics.uuid);
+        cy.waitForStableAndInteractiveDOM();
+
+        cy.getByTID([TIDs.blocks_product_list_view_grid]).should('have.attr', 'aria-pressed', 'true');
+        cy.getByTID([TIDs.blocks_product_list_view_list]).should('have.attr', 'aria-pressed', 'false').click();
+        cy.waitForStableAndInteractiveDOM();
+
+        cy.getByTID([TIDs.blocks_product_list_view_grid]).should('have.attr', 'aria-pressed', 'false');
+        cy.getByTID([TIDs.blocks_product_list_view_list]).should('have.attr', 'aria-pressed', 'true');
+
+        cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]]).within(() => {
+            cy.getByTID([TIDs.product_list_item_image]).should('be.visible');
+            cy.contains(staticData.products.helloKitty.catnum).should('be.visible');
+            cy.get('a').should('have.length', 1);
+        });
+        cy.getByTID([
+            [TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum],
+            TIDs.product_compare_button,
+        ])
+            .should('be.visible')
+            .should(($button) => {
+                expect($button.prop('tagName')).not.to.equal('A');
+            });
+        cy.getByTID([
+            [TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum],
+            TIDs.product_wishlist_button,
+        ])
+            .should('be.visible')
+            .should(($button) => {
+                expect($button.prop('tagName')).not.to.equal('A');
+            });
+        cy.getByTID([
+            [TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum],
+            TIDs.blocks_product_addtocart,
+        ])
+            .should('be.visible')
+            .should(($button) => {
+                expect($button.prop('tagName')).not.to.equal('A');
+            });
+
+        cy.getCookie(COOKIES_STORE_NAME).then((cookie) => {
+            expect(cookie).not.to.be.null;
+
+            const cookiesStore = JSON.parse(decodeURIComponent(cookie?.value ?? ''));
+            expect(cookiesStore.productListViewMode).to.equal('list');
+        });
+
+        loseFocus();
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'product listing in list view', {
+            capture: 'fullPage',
+            blackout: [
+                { tid: TIDs.category_bestseller_image },
+                { tid: TIDs.product_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
+                { tid: TIDs.footer_copyright },
+            ],
+        });
+
+        cy.reloadAndWaitForStableAndInteractiveDOM();
+
+        cy.getByTID([TIDs.blocks_product_list_view_list]).should('have.attr', 'aria-pressed', 'true');
+        cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]])
+            .should('be.visible')
+            .and('contain.text', staticData.products.helloKitty.catnum);
     });
 });

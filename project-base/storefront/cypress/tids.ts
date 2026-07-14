@@ -48,6 +48,8 @@ export enum TIDs {
 
     // Product Listing & Detail
     blocks_product_list_listeditem_ = 'blocks_product_list_listeditem_',
+    blocks_product_list_view_grid = 'blocks_product_list_view_grid',
+    blocks_product_list_view_list = 'blocks_product_list_view_list',
     blocks_product_addtocart = 'blocks_product_addtocart',
     blocks_product_slider_promoted_products = 'blocks_product_slider_promoted_products',
     blocks_sortingbar_option_ = 'blocks_sortingbar_option_',

@@ -27,7 +27,7 @@ export const createFocusManagementSlice: StateCreator<FocusManagementSlice> = (s
     restoreStoredFocus: () => {
         const { storedFocusElement } = get();
         if (storedFocusElement?.isConnected) {
-            storedFocusElement.focus();
+            storedFocusElement.focus({ preventScroll: true });
         }
 
         // Clear the stored focus after restoring
