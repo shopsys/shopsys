@@ -1,4 +1,4 @@
-{% macro treeSelectionItem(loadChildrenUrl, isExpandable, isVisible, checkboxId, checkboxName, value, label, isChecked, childrenHtml = null) %}
+{% macro treeSelectionItem(loadChildrenUrl, isExpandable, isVisible, checkboxId, checkboxName, value, label, isChecked, isDisabled = false, childrenHtml = null) %}
     <li class="tree-item {% if not isVisible %}text-secondary{% endif %} js-tree-selection-form-item"
         data-load-url="{{ loadChildrenUrl }}"
         data-expandable="{{ isExpandable }}"
@@ -17,6 +17,7 @@
                             value="{{ value }}"
                             class="js-tree-selection-form-item-checkbox form-check-input"
                             {% if isChecked %}checked="checked"{% endif %}
+                            {% if isDisabled %}disabled="disabled"{% endif %}
                         >
                         <label for="{{ checkboxId }}" class="form-check-label">
                             {{ label }}
@@ -33,7 +34,7 @@
     </li>
 {% endmacro %}
 
-{% macro treeSelectionItems(nodes, checkboxIdPrefix, checkboxName, selectedIds, branchLoadRoute, domainId) %}
+{% macro treeSelectionItems(nodes, checkboxIdPrefix, checkboxName, selectedIds, branchLoadRoute, domainId, isDisabled = false) %}
     {% for node in nodes %}
         {% set item = node.item %}
         {{ _self.treeSelectionItem(
@@ -45,7 +46,8 @@
             value=item.id,
             label=item.name,
             isChecked=item.id in selectedIds,
-            childrenHtml=_self.treeSelectionItems(node.children, checkboxIdPrefix, checkboxName, selectedIds, branchLoadRoute, domainId),
+            isDisabled=isDisabled,
+            childrenHtml=_self.treeSelectionItems(node.children, checkboxIdPrefix, checkboxName, selectedIds, branchLoadRoute, domainId, isDisabled),
         ) }}
     {% endfor %}
 {% endmacro %}
@@ -76,10 +78,11 @@
                 value='__value__',
                 label='__label__',
                 isChecked=false,
+                isDisabled=disabled,
             ) }}
         </template>
         <ul class="js-tree-selection-form-children-container tree">
-            {{ _self.treeSelectionItems(tree_items, checkbox_id_prefix, checkbox_name, selected_ids, branch_load_route, domain_id) }}
+            {{ _self.treeSelectionItems(tree_items, checkbox_id_prefix, checkbox_name, selected_ids, branch_load_route, domain_id, disabled) }}
         </ul>
     </div>
 {% endblock %}
