@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\ProductFeed\GoogleBundle\Unit;
 
+use DateTimeImmutable;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -22,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItem;
 use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
@@ -43,14 +46,17 @@ class GoogleFeedItemTest extends TestCase
         $this->doSetUp(true);
     }
 
-    private function doSetUp(bool $isProductAvailableOnStock): void
-    {
+    private function doSetUp(
+        bool $isProductAvailableOnStock,
+        ?DateTimeImmutable $effectiveExpectedRestockingDate = null,
+    ): void {
         $productPriceCalculation = $this->createProductPriceCalculationStub(Price::zero());
 
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
         $productAvailabilityFacadeStub->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
+        $productAvailabilityFacadeStub->method('findEffectiveExpectedRestockingDate')->willReturn($effectiveExpectedRestockingDate);
         $specialPriceFacade = $this->createStub(SpecialPriceFacade::class);
         $pricingGroupSettingFacadeStub = $this->createStub(PricingGroupSettingFacade::class);
         $pricingGroupSettingFacadeStub->method('getDefaultPricingGroupByDomainId')->willReturn($this->createStub(PricingGroup::class));
@@ -174,13 +180,69 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('https://example.com/img/product/1', $googleFeedItem->getImageLink());
     }
 
-    public function testGoogleFeedItemOutOfStock(): void
+    /**
+     * @return iterable<string, array{isProductAvailableOnStock: bool, effectiveExpectedRestockingDate: \DateTimeImmutable|null, isAllowedNegativeStock: bool, expectedAvailability: string, expectedAvailabilityDate: \DateTimeImmutable|null}>
+     */
+    public static function getAvailabilityData(): iterable
     {
-        $this->doSetUp(false);
+        $expectedRestockingDate = new DateTimeImmutable('midnight +14 days');
+
+        yield 'product in stock' => [
+            'isProductAvailableOnStock' => true,
+            'effectiveExpectedRestockingDate' => null,
+            'isAllowedNegativeStock' => true,
+            'expectedAvailability' => GoogleFeedItem::AVAILABILITY_IN_STOCK,
+            'expectedAvailabilityDate' => null,
+        ];
+
+        yield 'product out of stock' => [
+            'isProductAvailableOnStock' => false,
+            'effectiveExpectedRestockingDate' => null,
+            'isAllowedNegativeStock' => false,
+            'expectedAvailability' => GoogleFeedItem::AVAILABILITY_OUT_OF_STOCK,
+            'expectedAvailabilityDate' => null,
+        ];
+
+        yield 'out of stock with restocking date and allowed negative stock is backorder' => [
+            'isProductAvailableOnStock' => false,
+            'effectiveExpectedRestockingDate' => $expectedRestockingDate,
+            'isAllowedNegativeStock' => true,
+            'expectedAvailability' => GoogleFeedItem::AVAILABILITY_BACKORDER,
+            'expectedAvailabilityDate' => $expectedRestockingDate,
+        ];
+
+        yield 'out of stock with restocking date but denied negative stock stays out of stock' => [
+            'isProductAvailableOnStock' => false,
+            'effectiveExpectedRestockingDate' => $expectedRestockingDate,
+            'isAllowedNegativeStock' => false,
+            'expectedAvailability' => GoogleFeedItem::AVAILABILITY_OUT_OF_STOCK,
+            'expectedAvailabilityDate' => null,
+        ];
+
+        yield 'out of stock with allowed negative stock but no date stays out of stock' => [
+            'isProductAvailableOnStock' => false,
+            'effectiveExpectedRestockingDate' => null,
+            'isAllowedNegativeStock' => true,
+            'expectedAvailability' => GoogleFeedItem::AVAILABILITY_OUT_OF_STOCK,
+            'expectedAvailabilityDate' => null,
+        ];
+    }
+
+    #[DataProvider('getAvailabilityData')]
+    public function testGoogleFeedItemAvailability(
+        bool $isProductAvailableOnStock,
+        ?DateTimeImmutable $effectiveExpectedRestockingDate,
+        bool $isAllowedNegativeStock,
+        string $expectedAvailability,
+        ?DateTimeImmutable $expectedAvailabilityDate,
+    ): void {
+        $this->doSetUp($isProductAvailableOnStock, $effectiveExpectedRestockingDate);
+        $this->defaultProduct->method('isAllowedNegativeStock')->willReturn($isAllowedNegativeStock);
 
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
-        self::assertEquals('out_of_stock', $googleFeedItem->getAvailability());
+        self::assertSame($expectedAvailability, $googleFeedItem->getAvailability());
+        self::assertSame($expectedAvailabilityDate, $googleFeedItem->getAvailabilityDate());
     }
 
     public function testGoogleFeedItemWithEan(): void

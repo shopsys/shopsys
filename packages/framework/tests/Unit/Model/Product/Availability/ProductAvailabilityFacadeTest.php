@@ -33,6 +33,8 @@ final class ProductAvailabilityFacadeTest extends TestCase
 {
     private const string FORMATTED_DATE = 'Jul 20, 2026';
 
+    private const int FEED_DELIVERY_DAYS_SETTING = 14;
+
     #[Override]
     protected function setUp(): void
     {
@@ -185,6 +187,130 @@ final class ProductAvailabilityFacadeTest extends TestCase
         $this->assertSame(AvailabilityStatusEnum::IN_STOCK, $status);
     }
 
+    /**
+     * @return iterable<string, array{now: string, expectedRestockingDate: string|null, expectedDaysOrDate: int|string}>
+     */
+    public static function getDaysOrDateForFeedsData(): iterable
+    {
+        yield 'number of days when the dispatch time is within the limit' => [
+            'now' => '2026-07-12 12:00:00',
+            'expectedRestockingDate' => '2026-07-15 00:00:00',
+            'expectedDaysOrDate' => 3,
+        ];
+
+        yield 'zero days on the restocking day itself' => [
+            'now' => '2026-07-12 22:00:00',
+            'expectedRestockingDate' => '2026-07-12 00:00:00',
+            'expectedDaysOrDate' => 0,
+        ];
+
+        yield 'restocking date when the dispatch time exceeds the limit' => [
+            'now' => '2026-07-12 12:00:00',
+            'expectedRestockingDate' => '2026-07-22 00:00:00',
+            'expectedDaysOrDate' => '2026-07-22',
+        ];
+
+        yield 'number of days from the setting stays numeric when the date is not filled' => [
+            'now' => '2026-07-12 12:00:00',
+            'expectedRestockingDate' => null,
+            'expectedDaysOrDate' => self::FEED_DELIVERY_DAYS_SETTING,
+        ];
+
+        yield 'number of days from the setting stays numeric when the date has passed' => [
+            'now' => '2026-07-12 12:00:00',
+            'expectedRestockingDate' => '2026-07-10 00:00:00',
+            'expectedDaysOrDate' => self::FEED_DELIVERY_DAYS_SETTING,
+        ];
+    }
+
+    #[DataProvider('getDaysOrDateForFeedsData')]
+    public function testProductAvailabilityDaysOrDateForFeedsWhenOutOfStock(
+        string $now,
+        ?string $expectedRestockingDate,
+        int|string $expectedDaysOrDate,
+    ): void {
+        $restockingDate = $expectedRestockingDate === null ? null : $this->createDate($expectedRestockingDate);
+        $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, $now);
+        $product = $this->createProduct($restockingDate);
+
+        $daysOrDate = $productAvailabilityFacade->getProductAvailabilityDaysOrDateForFeedsByDomainId(
+            $product,
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertSame($expectedDaysOrDate, $daysOrDate);
+    }
+
+    public function testProductAvailabilityDaysOrDateForFeedsIsZeroWhenInStock(): void
+    {
+        $productAvailabilityFacade = $this->createProductAvailabilityFacade(true, '2026-07-12 12:00:00');
+        $product = $this->createProduct($this->createDate('2026-07-22 00:00:00'));
+
+        $daysOrDate = $productAvailabilityFacade->getProductAvailabilityDaysOrDateForFeedsByDomainId(
+            $product,
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertSame(0, $daysOrDate);
+    }
+
+    /**
+     * @return iterable<string, array{now: string, expectedRestockingDate: string|null, isProductAvailableOnDomain: bool, expectedDays: int|null}>
+     */
+    public static function getDaysUntilExpectedRestockingData(): iterable
+    {
+        yield 'days until a future date' => [
+            'now' => '2026-07-12 12:00:00',
+            'expectedRestockingDate' => '2026-07-22 00:00:00',
+            'isProductAvailableOnDomain' => false,
+            'expectedDays' => 10,
+        ];
+
+        yield 'zero days on the restocking day itself' => [
+            'now' => '2026-07-12 22:00:00',
+            'expectedRestockingDate' => '2026-07-12 00:00:00',
+            'isProductAvailableOnDomain' => false,
+            'expectedDays' => 0,
+        ];
+
+        yield 'null when the product is in stock even with a future date' => [
+            'now' => '2026-07-12 12:00:00',
+            'expectedRestockingDate' => '2026-07-22 00:00:00',
+            'isProductAvailableOnDomain' => true,
+            'expectedDays' => null,
+        ];
+
+        yield 'null when the date is not filled' => [
+            'now' => '2026-07-12 12:00:00',
+            'expectedRestockingDate' => null,
+            'isProductAvailableOnDomain' => false,
+            'expectedDays' => null,
+        ];
+
+        yield 'null when the date has passed' => [
+            'now' => '2026-07-12 12:00:00',
+            'expectedRestockingDate' => '2026-07-10 00:00:00',
+            'isProductAvailableOnDomain' => false,
+            'expectedDays' => null,
+        ];
+    }
+
+    #[DataProvider('getDaysUntilExpectedRestockingData')]
+    public function testFindDaysUntilExpectedRestocking(
+        string $now,
+        ?string $expectedRestockingDate,
+        bool $isProductAvailableOnDomain,
+        ?int $expectedDays,
+    ): void {
+        $restockingDate = $expectedRestockingDate === null ? null : $this->createDate($expectedRestockingDate);
+        $productAvailabilityFacade = $this->createProductAvailabilityFacade($isProductAvailableOnDomain, $now);
+        $product = $this->createProduct($restockingDate);
+
+        $days = $productAvailabilityFacade->findDaysUntilExpectedRestocking($product, Domain::FIRST_DOMAIN_ID);
+
+        $this->assertSame($expectedDays, $days);
+    }
+
     public function testAvailabilityInformationUsesExpectedRestockTextWhenDateIsEffective(): void
     {
         $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, '2026-07-12 12:00:00');
@@ -222,6 +348,7 @@ final class ProductAvailabilityFacadeTest extends TestCase
         string $displayTimezone = 'UTC',
     ): ProductAvailabilityFacade {
         $settingStub = $this->createStub(Setting::class);
+        $settingStub->method('getForDomain')->willReturn(self::FEED_DELIVERY_DAYS_SETTING);
 
         $productStockFacadeStub = $this->createStub(ProductStockFacade::class);
         $productStockFacadeStub->method('isProductAvailableOnDomain')->willReturn($isProductAvailableOnDomain);

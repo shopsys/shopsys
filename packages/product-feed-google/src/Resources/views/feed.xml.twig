@@ -14,6 +14,9 @@
             <g:image_link>{{ item.imageLink }}</g:image_link>
         {% endif -%}
         <g:availability>{{ item.availability }}</g:availability>
+        {% if item.availabilityDate is not null -%}
+            <g:availability_date>{{ item.availabilityDate|date(constant('DATE_ATOM')) }}</g:availability_date>
+        {% endif -%}
         <g:price>{{ item.price.priceWithVat|moneyFormat(2) }} {{ item.currency.code }}</g:price>
         {% if item.specialPrice %}
             <g:sale_price>{{ item.specialPrice.price.priceWithVat|moneyFormat(2) }} {{ item.currency.code }}</g:sale_price>

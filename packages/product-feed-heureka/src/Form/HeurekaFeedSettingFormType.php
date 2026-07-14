@@ -23,7 +23,7 @@ final class HeurekaFeedSettingFormType extends AbstractType
             ])
             ->add('heurekaFeedDeliveryDaysInfo', MessageType::class, [
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,
-                'data' => t('The value is used for DELIVERY_DATE setting in Heureka XML feed. See <a href="https://sluzby.heureka.cz/napoveda/xml-feed/#DELIVERY_DATE">the docs</a> for more information.'),
+                'data' => t('The value is used for DELIVERY_DATE setting in Heureka XML feed. See <a href="https://sluzby.heureka.cz/napoveda/xml-feed/#DELIVERY_DATE">the docs</a> for more information. <br/>The value applies only to products without the "Expected restocking date" filled. Otherwise, the number of days is derived from that date.'),
             ]);
     }
 }

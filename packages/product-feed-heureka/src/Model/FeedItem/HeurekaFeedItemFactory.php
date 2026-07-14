@@ -104,6 +104,7 @@ class HeurekaFeedItemFactory
             return 0;
         }
 
-        return $this->setting->getForDomain(HeurekaFeedSettingEnum::HEUREKA_FEED_DELIVERY_DAYS, $domainId);
+        return $this->productAvailabilityFacade->findDaysUntilExpectedRestocking($product, $domainId)
+            ?? $this->setting->getForDomain(HeurekaFeedSettingEnum::HEUREKA_FEED_DELIVERY_DAYS, $domainId);
     }
 }

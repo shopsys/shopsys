@@ -24,7 +24,7 @@ class ZboziFeedItem implements FeedItemInterface
         protected readonly ?string $brandName = null,
         protected readonly ?string $ean = null,
         protected readonly ?string $partno = null,
-        protected readonly ?int $availabilityDispatchTime = null,
+        protected readonly int|string|null $deliveryDate = null,
         protected readonly ?Money $cpc = null,
         protected readonly ?Money $cpcSearch = null,
     ) {
@@ -81,9 +81,13 @@ class ZboziFeedItem implements FeedItemInterface
         return $this->partno;
     }
 
-    public function getDeliveryDate(): ?int
+    /**
+     * Returns the number of days until dispatch, or the expected restocking date in the "Y-m-d" format
+     * when the awaited restocking is too far away for a number of days to be informative
+     */
+    public function getDeliveryDate(): int|string|null
     {
-        return $this->availabilityDispatchTime;
+        return $this->deliveryDate;
     }
 
     public function getManufacturer(): ?string

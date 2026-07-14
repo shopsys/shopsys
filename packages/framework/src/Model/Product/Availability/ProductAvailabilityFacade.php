@@ -23,6 +23,15 @@ class ProductAvailabilityFacade
 
     protected const string PRODUCT_AVAILABILITY_CACHE_NAMESPACE = 'productAvailabilityDomain';
 
+    /**
+     * A deliberate product decision: up to this many days the feeds present the dispatch time
+     * as a number of days, a restocking expected further away is expressed as the concrete date,
+     * which tells the customer more (the Zbozi.cz DELIVERY_DATE element accepts both forms)
+     *
+     * @see https://napoveda.sklik.cz/reklamy/xml-feed/specifikace/#DELIVERY_DATE
+     */
+    protected const int MAX_DISPATCH_DAYS_FOR_NUMERIC_VALUE = 8;
+
     public function __construct(
         protected readonly Setting $setting,
         protected readonly ProductStockFacade $productStockFacade,
@@ -52,13 +61,62 @@ class ProductAvailabilityFacade
         return $this->getOutOfStockText($domainLocale);
     }
 
-    public function getProductAvailabilityDaysForFeedsByDomainId(Product $product, int $domainId): int
+    protected function getProductAvailabilityDaysForFeedsByDomainId(Product $product, int $domainId): int
     {
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             return 0;
         }
 
-        return $this->setting->getForDomain(Setting::FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS, $domainId);
+        return $this->findDaysUntilExpectedRestocking($product, $domainId)
+            ?? $this->setting->getForDomain(Setting::FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS, $domainId);
+    }
+
+    /**
+     * Intended for the Zbozi and Mergado feeds only. Returns the number of days until dispatch, or,
+     * when a real expected restocking date exceeds the limit for a numeric value, the concrete
+     * restocking date as a 'Y-m-d' string in the domain display timezone.
+     */
+    public function getProductAvailabilityDaysOrDateForFeedsByDomainId(Product $product, int $domainId): int|string
+    {
+        $dispatchDays = $this->getProductAvailabilityDaysForFeedsByDomainId($product, $domainId);
+
+        if ($dispatchDays <= static::MAX_DISPATCH_DAYS_FOR_NUMERIC_VALUE) {
+            return $dispatchDays;
+        }
+
+        $dispatchDate = $this->findEffectiveExpectedRestockingDate($product, $domainId);
+
+        // the settings fallback for products without a restocking date stays numeric — a synthetic
+        // date would shift with every feed run and would falsely suggest a known restocking
+        if ($dispatchDate === null) {
+            return $dispatchDays;
+        }
+
+        return $dispatchDate
+            ->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId))
+            ->format('Y-m-d');
+    }
+
+    public function findDaysUntilExpectedRestocking(Product $product, int $domainId): ?int
+    {
+        $expectedRestockingDate = $this->findEffectiveExpectedRestockingDate($product, $domainId);
+
+        if ($expectedRestockingDate === null) {
+            return null;
+        }
+
+        return $this->getDaysUntilExpectedRestockingDate($expectedRestockingDate, $domainId);
+    }
+
+    protected function getDaysUntilExpectedRestockingDate(
+        DateTimeImmutable $expectedRestockingDate,
+        int $domainId,
+    ): int {
+        $displayTimeZone = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId);
+        $today = $this->clock->now()->setTimezone($displayTimeZone)->modify('midnight');
+        $expectedRestockingDay = $expectedRestockingDate->setTimezone($displayTimeZone)->modify('midnight');
+
+        return (int)$today->diff($expectedRestockingDay)->days;
     }
 
     public function getProductAvailabilityStatusByDomainId(

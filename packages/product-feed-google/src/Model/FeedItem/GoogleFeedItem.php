@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\GoogleBundle\Model\FeedItem;
 
+use DateTimeImmutable;
 use Override;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -12,15 +13,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 
 class GoogleFeedItem implements FeedItemInterface
 {
-    protected const IDENTIFIER_TYPE_EAN = 'gtin';
-    protected const IDENTIFIER_TYPE_PARTNO = 'mpn';
-    protected const AVAILABILITY_OUT_OF_STOCK = 'out_of_stock';
-    protected const AVAILABILITY_IN_STOCK = 'in_stock';
+    protected const string IDENTIFIER_TYPE_EAN = 'gtin';
+    protected const string IDENTIFIER_TYPE_PARTNO = 'mpn';
+    public const string AVAILABILITY_OUT_OF_STOCK = 'out_of_stock';
+    public const string AVAILABILITY_IN_STOCK = 'in_stock';
+    public const string AVAILABILITY_BACKORDER = 'backorder';
 
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
-        protected readonly bool $sellingDenied,
+        protected readonly string $availability,
         protected readonly PriceInterface $price,
         protected readonly ?SpecialPrice $specialPrice,
         protected readonly Currency $currency,
@@ -30,6 +32,7 @@ class GoogleFeedItem implements FeedItemInterface
         protected readonly ?string $ean = null,
         protected readonly ?string $partno = null,
         protected readonly ?string $imgUrl = null,
+        protected readonly ?DateTimeImmutable $availabilityDate = null,
     ) {
     }
 
@@ -71,7 +74,12 @@ class GoogleFeedItem implements FeedItemInterface
 
     public function getAvailability(): string
     {
-        return $this->sellingDenied ? static::AVAILABILITY_OUT_OF_STOCK : static::AVAILABILITY_IN_STOCK;
+        return $this->availability;
+    }
+
+    public function getAvailabilityDate(): ?DateTimeImmutable
+    {
+        return $this->availabilityDate;
     }
 
     public function getPrice(): PriceInterface
