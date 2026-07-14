@@ -37,7 +37,6 @@ const storesWithoutResults: TypeListedStoreConnectionFragment = {
     __typename: 'StoreConnection',
     searchCoordinates: null,
     pageInfo: {
-        __typename: 'PageInfo',
         hasNextPage: false,
         endCursor: null,
     },
