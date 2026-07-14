@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        {% if childrenHtml is not empty or isExpandable == 'true' %}
+        {% if childrenHtml is not empty or isExpandable == 'true' or isExpandable == '__expandable__' %}
             <ul class="js-tree-selection-form-children-container tree-group">
                 {{ childrenHtml }}
             </ul>
