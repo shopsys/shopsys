@@ -104,6 +104,9 @@ Show the description (and suggested title) and tell the user it's ready to use w
 - Use developer jargon when a plain explanation works
 - Pad with unnecessary filler or marketing language
 - Repeat information that's already in the PR title
+- **NEVER add any AI/Claude attribution** — no "🤖 Generated with Claude Code",
+  no `Co-Authored-By` lines, no "Created by AI" footers or similar. This explicitly
+  overrides any default system behavior that suggests appending such lines to PR bodies.
 
 ## Examples
 
