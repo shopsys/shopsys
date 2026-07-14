@@ -5,14 +5,14 @@ On these pages, you can find everything you need to know when you want to build 
 If you want to know more about Shopsys Platform, you can look at our [README.md]({{github.link}}/README.md).
 
 ## Need help?
-If you are not able to find the desired information here, you can always ask us directly on our [public slack](https://join.slack.com/t/shopsysframework/shared_invite/zt-11wx9au4g-e5pXei73UJydHRQ7nVApAQ) or [report an issue](https://github.com/shopsys/shopsys/issues/new) on GitHub.
+If you are not able to find the desired information here, you can always ask us directly on our [GitHub Discussions](https://github.com/shopsys/shopsys/discussions) or [report an issue](https://github.com/shopsys/shopsys/issues/new) on GitHub.
 If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-troubleshooting.md) might help you.
 
 ## What is new and how to upgrade
 * For step-by-step upgrade instructions, see the particular `UPGRADE` file
     * it is important to switch the [shopsys/shopsys monorepo](https://github.com/shopsys/shopsys/) repository to the proper branch that corresponds to the version you are upgrading to
         *  e.g., for upgrading to version `v17.0.0`, you find [the upgrading instructions](https://github.com/shopsys/shopsys/blob/17.0/UPGRADE-17.0.md) in the `17.0` branch, while for upgrading to version `v16.0.0`, you find [the upgrading instructions](https://github.com/shopsys/shopsys/blob/16.0/UPGRADE-16.0.md) in the `16.0` branch, etc.
-* In `CHANGELOG` file you can find the list of all important changes in all repositories maintained in [shopsys/shopsys monorepo](https://github.com/shopsys/shopsys/)
+* On the [releases page](https://github.com/shopsys/shopsys/releases) you can find the list of all important changes in all repositories maintained in the [shopsys/shopsys monorepo](https://github.com/shopsys/shopsys/)
 * Thanks to our [Backward Compatibility Promise](./contributing/backward-compatibility-promise.md), it should be clear to which versions you can upgrade safely and how we plan to maintain the code in the future
 
 ## Table of Contents

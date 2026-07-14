@@ -72,7 +72,7 @@ All the necessary information is in our [Contribution Guide](./CONTRIBUTING.md).
 ## Support
 
 What to do when you are in troubles or need some help?
-The best way is to join our [Slack](https://join.slack.com/t/shopsysframework/shared_invite/zt-11wx9au4g-e5pXei73UJydHRQ7nVApAQ).
+The best way is to ask in our [GitHub Discussions](https://github.com/shopsys/shopsys/discussions).
 
 If you are experiencing problems during installation or running Shopsys Platform on Docker,
 please see our [Docker troubleshooting](https://docs.shopsys.com/en/latest/docker/docker-troubleshooting/).

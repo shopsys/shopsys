@@ -4,7 +4,7 @@
 
 This bundle for [Shopsys Platform](https://www.shopsys.com) adds a production MCP server with Shopsys-specific authentication, schema exposure rules, and validated read-only SQL execution.
 The bundle is dedicated for projects based on Shopsys Platform (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
+This repository is maintained by [shopsys/shopsys] monorepo. See the [releases](https://github.com/shopsys/shopsys/releases) page for the history of changes.
 
 ## Documentation
 
