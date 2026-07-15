@@ -1,5 +1,3 @@
-import { GetServerSidePropsContext, NextPageContext } from 'next';
-import { getDomainConfig } from './domain/domainConfig';
 import { logException } from './errors/logException';
 
 type Protocol = 'http' | 'https';
@@ -10,32 +8,6 @@ const getProtocolClientSide = (): Protocol => {
     }
 
     return window.location.protocol === 'https:' ? 'https' : 'http';
-};
-
-export const getProtocol = (context: GetServerSidePropsContext | NextPageContext | undefined): Protocol | undefined => {
-    if (!context) {
-        try {
-            return getProtocolClientSide();
-        } catch {
-            logException('context must be provided when running on the server side');
-            return undefined;
-        }
-    }
-
-    const host = context.req?.headers.host;
-
-    if (!host) {
-        throw new Error('host was not found in the request headers');
-    }
-
-    const domainConfig = getDomainConfig(context);
-    const protocol = domainConfig.url.split('://')[0];
-
-    if (protocol !== 'http' && protocol !== 'https') {
-        throw new Error('protocol must be http or https');
-    }
-
-    return protocol;
 };
 
 export const getIsHttps = (protocol?: string | undefined): boolean | undefined => {

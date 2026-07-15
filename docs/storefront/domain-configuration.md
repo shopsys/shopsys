@@ -176,8 +176,9 @@ Beyond cookies, the Shopsys storefront implements complete domain isolation acro
 
 ### 1. Cookie Isolation (Authentication & Settings)
 
-- Uses domain-specific naming: `accessToken-3`, `refreshToken-3`, `cookiesStore-3`
+- Uses domain-specific naming: `accessToken-3`, `refreshToken-3`, `refreshTokenPresent-3`, `cookiesStore-3`
 - All cookies use `path="/"` for reliable visibility
+- Refresh tokens are stored in `Secure`, `HttpOnly`, `SameSite=Lax` cookies and are only read server-side
 - Prevents authentication and preference conflicts
 
 ### 2. LocalStorage Isolation (Persist Store)
@@ -218,38 +219,42 @@ Beyond cookies, the Shopsys storefront implements complete domain isolation acro
 
 ```typescript
 import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 
-// Client-side
-const domainConfig = useDomainConfig();
-setTokensToCookies(accessToken, refreshToken, domainConfig);
-
-// Server-side (with context)
+// Server-side only
 const domainConfig = getDomainConfig(context);
 setTokensToCookies(accessToken, refreshToken, domainConfig, context);
 ```
 
+Browser authentication mutations use the `/api/auth/token` endpoint, which sets authentication cookies server-side.
+
 ### Reading Authentication Cookies
 
 ```typescript
-import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
+import {
+    getAccessTokenFromCookies,
+    getRefreshTokenFromCookies,
+    hasRefreshTokenInCookies,
+} from 'utils/auth/getTokensFromCookies';
 
 // Client-side
 const domainConfig = useDomainConfig();
-const { accessToken, refreshToken } = getTokensFromCookies(domainConfig);
+const accessToken = getAccessTokenFromCookies(domainConfig);
+const hasRefreshSession = hasRefreshTokenInCookies(domainConfig);
 
 // Server-side
 const domainConfig = getDomainConfig(context);
-const { accessToken, refreshToken } = getTokensFromCookies(domainConfig, context);
+const refreshToken = getRefreshTokenFromCookies(domainConfig, context);
 ```
+
+Client-side code must never read or send the refresh token directly.
 
 ### Removing Cookies
 
 ```typescript
-import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
+import { clearAuthCookies } from 'utils/auth/authMutationFetcher';
 
 // Clear auth cookies for current domain
-removeTokensFromCookies(domainConfig);
+await clearAuthCookies(domainConfig);
 ```
 
 ## Working with Persist Store

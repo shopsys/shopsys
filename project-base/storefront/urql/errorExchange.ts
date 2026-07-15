@@ -5,7 +5,8 @@ import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
 import { ParsedErrors } from 'types/error';
 import { CombinedError, Exchange, Operation } from 'urql';
-import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
+import { clearAuthCookies } from 'utils/auth/authMutationFetcher';
+import { removeAccessTokenFromCookies, removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { FlashMessageKeys, isNoLogError } from 'utils/errors/applicationErrors';
 import { ErrorOrchestrator } from 'utils/errors/ErrorOrchestrator';
@@ -79,6 +80,17 @@ export const getErrorExchange =
                         return;
                     }
 
+                    if (isAuthError(error)) {
+                        if (context) {
+                            removeTokensFromCookies(domainConfig, context);
+                        } else {
+                            removeAccessTokenFromCookies(domainConfig);
+                            void clearAuthCookies(domainConfig).catch(logException);
+                        }
+
+                        return;
+                    }
+
                     if (operation.kind === 'mutation') {
                         handleErrorMessagesForMutation(error, t, operation);
 
@@ -91,12 +103,6 @@ export const getErrorExchange =
                         }
 
                         throw new Error('Internal Server Error');
-                    }
-
-                    if (isAuthError(error)) {
-                        removeTokensFromCookies(domainConfig, context);
-
-                        return;
                     }
 
                     if (isWithErrorDebugging) {

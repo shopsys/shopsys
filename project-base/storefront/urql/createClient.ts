@@ -7,10 +7,11 @@ import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'red
 import { Client, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
+import { AUTH_DOMAIN_ID_HEADER } from 'utils/auth/authConstants';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getExplicitPathDomainLocaleOrDefault, getInternalGraphqlEndpoint } from 'utils/domain/domainUtils';
 
-export const DOMAIN_ID_HEADER = 'X-Domain-Id' as const;
+export const DOMAIN_ID_HEADER = AUTH_DOMAIN_ID_HEADER;
 
 export const createClient = ({
     t,

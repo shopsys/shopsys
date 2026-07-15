@@ -1,32 +1,43 @@
+import { IncomingMessage, ServerResponse } from 'node:http';
 import { getCookie } from 'cookies-next';
-import { GetServerSidePropsContext, NextPageContext } from 'next';
-import { OptionalTokenType } from 'urql/types';
+import {
+    ACCESS_TOKEN_COOKIE_NAME,
+    REFRESH_TOKEN_COOKIE_NAME,
+    REFRESH_TOKEN_PRESENT_COOKIE_NAME,
+} from 'utils/auth/authConstants';
 import { getCookieName } from 'utils/cookies/cookieNaming';
 import { DomainConfigType } from 'utils/domain/domainConfig';
-import { getIsHttps, getProtocol } from 'utils/requestProtocol';
 
-export const getTokensFromCookies = (
+export type AuthServerContext = {
+    req?: IncomingMessage;
+    res?: ServerResponse;
+};
+
+const getNonEmptyCookieValue = (cookieName: string, context?: AuthServerContext): string | undefined => {
+    const cookie = getCookie(cookieName, {
+        req: context?.req,
+        res: context?.res,
+    });
+
+    return typeof cookie === 'string' && cookie.length > 0 ? cookie : undefined;
+};
+
+export const getAccessTokenFromCookies = (
     domainConfig: DomainConfigType,
-    context?: GetServerSidePropsContext | NextPageContext,
-): OptionalTokenType => {
-    let accessToken = getCookie(getCookieName('accessToken', domainConfig.domainId), {
-        req: context?.req,
-        res: context?.res,
-        secure: getIsHttps(getProtocol(context)),
-    });
-    let refreshToken = getCookie(getCookieName('refreshToken', domainConfig.domainId), {
-        req: context?.req,
-        res: context?.res,
-        secure: getIsHttps(getProtocol(context)),
-    });
+    context?: AuthServerContext,
+): string | undefined => {
+    return getNonEmptyCookieValue(getCookieName(ACCESS_TOKEN_COOKIE_NAME, domainConfig.domainId), context);
+};
 
-    if (typeof accessToken !== 'string' || accessToken.length === 0) {
-        accessToken = undefined;
-    }
+export const getRefreshTokenFromCookies = (
+    domainConfig: DomainConfigType,
+    context: AuthServerContext,
+): string | undefined => {
+    return getNonEmptyCookieValue(getCookieName(REFRESH_TOKEN_COOKIE_NAME, domainConfig.domainId), context);
+};
 
-    if (typeof refreshToken !== 'string' || refreshToken.length === 0) {
-        refreshToken = undefined;
-    }
-
-    return { accessToken, refreshToken };
+export const hasRefreshTokenInCookies = (domainConfig: DomainConfigType, context?: AuthServerContext): boolean => {
+    return (
+        getNonEmptyCookieValue(getCookieName(REFRESH_TOKEN_PRESENT_COOKIE_NAME, domainConfig.domainId), context) === '1'
+    );
 };

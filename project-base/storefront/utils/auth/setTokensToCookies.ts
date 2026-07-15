@@ -1,26 +1,49 @@
+import { IncomingMessage, ServerResponse } from 'node:http';
 import { setCookie } from 'cookies-next';
-import { GetServerSidePropsContext, NextPageContext } from 'next';
+import {
+    ACCESS_TOKEN_COOKIE_NAME,
+    REFRESH_TOKEN_COOKIE_MAX_AGE,
+    REFRESH_TOKEN_COOKIE_NAME,
+    REFRESH_TOKEN_PRESENT_COOKIE_NAME,
+} from 'utils/auth/authConstants';
 import { getCookieName } from 'utils/cookies/cookieNaming';
 import { DomainConfigType } from 'utils/domain/domainConfig';
-import { getIsHttps, getProtocol } from 'utils/requestProtocol';
+
+type AuthServerContext = {
+    req?: IncomingMessage;
+    res?: ServerResponse;
+};
 
 export const setTokensToCookies = (
     accessToken: string,
     refreshToken: string,
     domainConfig: DomainConfigType,
-    context?: GetServerSidePropsContext | NextPageContext,
+    context: AuthServerContext,
 ): void => {
-    setCookie(getCookieName('accessToken', domainConfig.domainId), accessToken, {
+    setCookie(getCookieName(ACCESS_TOKEN_COOKIE_NAME, domainConfig.domainId), accessToken, {
+        httpOnly: false,
         req: context?.req,
         res: context?.res,
         path: '/',
-        secure: getIsHttps(getProtocol(context)),
+        sameSite: 'lax',
+        secure: true,
     });
-    setCookie(getCookieName('refreshToken', domainConfig.domainId), refreshToken, {
+    setCookie(getCookieName(REFRESH_TOKEN_COOKIE_NAME, domainConfig.domainId), refreshToken, {
+        httpOnly: true,
         req: context?.req,
         res: context?.res,
-        maxAge: 3600 * 24 * 14,
+        maxAge: REFRESH_TOKEN_COOKIE_MAX_AGE,
         path: '/',
-        secure: getIsHttps(getProtocol(context)),
+        sameSite: 'lax',
+        secure: true,
+    });
+    setCookie(getCookieName(REFRESH_TOKEN_PRESENT_COOKIE_NAME, domainConfig.domainId), '1', {
+        httpOnly: false,
+        req: context?.req,
+        res: context?.res,
+        maxAge: REFRESH_TOKEN_COOKIE_MAX_AGE,
+        path: '/',
+        sameSite: 'lax',
+        secure: true,
     });
 };

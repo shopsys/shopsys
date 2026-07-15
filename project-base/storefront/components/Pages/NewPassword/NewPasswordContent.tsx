@@ -11,6 +11,7 @@ import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mu
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
+import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
 import { useLoginAfterPasswordRecovery } from 'utils/auth/useLogin';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -44,22 +45,23 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     } = useController({ name: formMeta.fields.newPasswordConfirm.name, control: formProviderMethods.control });
 
     const onNewPasswordHandler: SubmitHandler<NewPasswordFormType> = async (newPasswordFormData) => {
-        const newPasswordResult = await newPassword({
-            hash,
-            email,
-            newPassword: newPasswordFormData.newPassword,
-            cartUuid: cartUuid ?? undefined,
-            productListsUuids: Object.values(productListUuids),
-        });
+        const newPasswordResult = await newPassword(
+            {
+                hash,
+                email,
+                newPassword: newPasswordFormData.newPassword,
+                cartUuid: cartUuid ?? undefined,
+                productListsUuids: Object.values(productListUuids),
+            },
+            { fetch: getAuthMutationFetcher(domainConfig) },
+        );
 
         const recoverPasswordData = newPasswordResult.data?.RecoverPassword;
 
-        if (recoverPasswordData?.tokens.accessToken) {
-            const { accessToken, refreshToken } = recoverPasswordData.tokens;
-
+        if (recoverPasswordData) {
             showSuccessMessage(formMeta.messages.success);
 
-            handleActionsAfterPasswordRecovery(recoverPasswordData.showCartMergeInfo, accessToken, refreshToken);
+            handleActionsAfterPasswordRecovery(recoverPasswordData.showCartMergeInfo);
         }
 
         handleError(newPasswordResult.error);

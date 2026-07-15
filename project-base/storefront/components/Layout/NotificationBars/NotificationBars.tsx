@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
+import { getAccessTokenFromCookies } from 'utils/auth/getTokensFromCookies';
 import { useLogout } from 'utils/auth/useLogout';
 import { getYIQContrastTextColor } from 'utils/colors/colors';
 import { useNotificationBarsWithRevalidation } from 'utils/useNotificationBarRevalidation';
@@ -20,7 +20,7 @@ export const NotificationBars: FC = () => {
     const domainConfig = useDomainConfig();
 
     useEffect(() => {
-        const { accessToken: encodedAccessToken } = getTokensFromCookies(domainConfig);
+        const encodedAccessToken = getAccessTokenFromCookies(domainConfig);
         if (!encodedAccessToken) {
             return;
         }

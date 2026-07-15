@@ -7,7 +7,7 @@ import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandle
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
-import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
+import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
 import { blurInput } from 'utils/forms/blurInput';
 
 export const useRegistration = () => {
@@ -25,27 +25,30 @@ export const useRegistration = () => {
     const register = async (registrationInput: Omit<TypeRegistrationDataInput, 'productListsUuids'>) => {
         blurInput();
 
-        const registerResult = await registerMutation({
-            input: {
-                cartUuid: registrationInput.cartUuid,
-                city: registrationInput.city,
-                companyCustomer: registrationInput.companyCustomer,
-                companyName: registrationInput.companyName,
-                companyNumber: registrationInput.companyNumber,
-                companyTaxNumber: registrationInput.companyTaxNumber,
-                country: registrationInput.country,
-                email: registrationInput.email,
-                firstName: registrationInput.firstName,
-                lastName: registrationInput.lastName,
-                newsletterSubscription: registrationInput.newsletterSubscription,
-                password: registrationInput.password,
-                postcode: registrationInput.postcode,
-                street: registrationInput.street,
-                telephone: registrationInput.telephone,
-                productListsUuids: Object.values(productListUuids),
-                billingAddressUuid: null,
+        const registerResult = await registerMutation(
+            {
+                input: {
+                    cartUuid: registrationInput.cartUuid,
+                    city: registrationInput.city,
+                    companyCustomer: registrationInput.companyCustomer,
+                    companyName: registrationInput.companyName,
+                    companyNumber: registrationInput.companyNumber,
+                    companyTaxNumber: registrationInput.companyTaxNumber,
+                    country: registrationInput.country,
+                    email: registrationInput.email,
+                    firstName: registrationInput.firstName,
+                    lastName: registrationInput.lastName,
+                    newsletterSubscription: registrationInput.newsletterSubscription,
+                    password: registrationInput.password,
+                    postcode: registrationInput.postcode,
+                    street: registrationInput.street,
+                    telephone: registrationInput.telephone,
+                    productListsUuids: Object.values(productListUuids),
+                    billingAddressUuid: null,
+                },
             },
-        });
+            { fetch: getAuthMutationFetcher(domainConfig) },
+        );
 
         if (registerResult.data?.Register) {
             return processRegisterResult(registerResult.data.Register);
@@ -55,10 +58,6 @@ export const useRegistration = () => {
     };
 
     function processRegisterResult(registerResultData: TypeLoginResult) {
-        const accessToken = registerResultData.tokens.accessToken;
-        const refreshToken = registerResultData.tokens.refreshToken;
-
-        setTokensToCookies(accessToken, refreshToken, domainConfig);
         updateCartUuid(null);
         updateProductListUuids({});
 
@@ -77,13 +76,16 @@ export const useRegistration = () => {
 
     const registerByOrder = async (registrationInput: Omit<TypeRegistrationByOrderInput, 'productListsUuids'>) => {
         blurInput();
-        const registerResult = await registerByOrderMutation({
-            input: {
-                orderUrlHash: registrationInput.orderUrlHash,
-                password: registrationInput.password,
-                productListsUuids: Object.values(productListUuids),
+        const registerResult = await registerByOrderMutation(
+            {
+                input: {
+                    orderUrlHash: registrationInput.orderUrlHash,
+                    password: registrationInput.password,
+                    productListsUuids: Object.values(productListUuids),
+                },
             },
-        });
+            { fetch: getAuthMutationFetcher(domainConfig) },
+        );
 
         if (registerResult.data?.RegisterByOrder) {
             return processRegisterResult(registerResult.data.RegisterByOrder);

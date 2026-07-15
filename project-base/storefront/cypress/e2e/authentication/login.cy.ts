@@ -15,6 +15,19 @@ import {
     translations,
 } from 'support';
 
+const checkRefreshCookieIsProtected = () => {
+    cy.getCookie('refreshToken-1').should((cookie) => {
+        expect(cookie).not.to.be.null;
+        expect(cookie?.httpOnly).to.be.true;
+        expect(cookie?.sameSite).to.equal('lax');
+        expect(cookie?.secure).to.be.true;
+    });
+    cy.window()
+        .its('document.cookie')
+        .should('not.contain', 'refreshToken-1=')
+        .and('contain', 'refreshTokenPresent-1=1');
+};
+
 describe('Login Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
@@ -28,13 +41,25 @@ describe('Login Tests', () => {
         checkAndHideSuccessToast(translations.toast.success.loggedIn);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedIn();
+        checkRefreshCookieIsProtected();
 
         cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
+        cy.intercept('POST', '/api/auth/token', (request) => {
+            if (request.body.operationName === 'RefreshTokens') {
+                expect(request.body.variables.refreshToken).to.equal('');
+                request.alias = 'refreshTokens';
+            }
+        });
+        cy.clearCookie('accessToken-1');
         logoutFromCustomerMenu();
+        cy.wait('@refreshTokens');
         checkAndHideSuccessToast(translations.toast.success.loggedOut);
         checkUrl('/');
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedOut();
+        cy.getCookie('accessToken-1').should('be.null');
+        cy.getCookie('refreshToken-1').should('be.null');
+        cy.getCookie('refreshTokenPresent-1').should('be.null');
     });
 
     it('[Header] should login from header and then log out', function () {
