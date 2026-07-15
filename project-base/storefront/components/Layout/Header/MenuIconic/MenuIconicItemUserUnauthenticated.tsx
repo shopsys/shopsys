@@ -12,7 +12,17 @@ import { MenuIconicItemUserUnauthenticatedContent } from './MenuIconicItemUserUn
 
 const isBrowserPasswordManagerHovered = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => e.relatedTarget === window;
 
-export const MenuIconicItemUserUnauthenticated: FC = () => {
+type MenuIconicItemUserUnauthenticatedProps = {
+    loginFormName: string;
+    shouldShowLabel?: boolean;
+    userPopoverTopClassName?: string;
+};
+
+export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthenticatedProps> = ({
+    loginFormName,
+    shouldShowLabel = true,
+    userPopoverTopClassName,
+}) => {
     const { t } = useTranslation();
     const [isActive, setIsActive] = useState(false);
     const isActiveDelayed = useDebounce(isActive, 200);
@@ -35,9 +45,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
                 onMouseEnter={() => isDesktop && setIsActive(true)}
                 onMouseLeave={(e) => isDesktop && !isBrowserPasswordManagerHovered(e) && setIsActive(false)}
                 onClick={(e) => {
-                    if (isDesktop) {
-                        setIsActive(true);
-                    } else if (e.target === e.currentTarget) {
+                    if (!isDesktop && e.target === e.currentTarget) {
                         setIsActive((current) => !current);
                     }
                 }}
@@ -63,7 +71,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
                     ariaExpanded={isActive}
                     ariaHaspopup="menu"
                     ariaLabel={t('Show registration and login popup', { ns: 'accessibility' })}
-                    className="cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500 group-focus-visible:text-text-default lg:w-[72px]"
+                    className="cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500 group-focus-visible:text-text-default"
                     tabIndex={-1}
                     tid={TIDs.layout_header_menuiconic_login_link_popup}
                     title={t('Login form')}
@@ -74,15 +82,25 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
                     }}
                 >
                     <UserIcon className="size-6" />
-                    <span className="hidden lg:inline-block">{t('Login')}</span>
+                    {shouldShowLabel && <span className="hidden lg:inline-block">{t('Account')}</span>}
                 </MenuIconicItemLink>
 
                 <Drawer isActive={isActive} setIsActive={setIsActive} title={t('My account')}>
-                    <MenuIconicItemUserUnauthenticatedContent />
+                    <MenuIconicItemUserUnauthenticatedContent
+                        loginFormName={loginFormName}
+                        onMenuClose={() => setIsActive(false)}
+                    />
                 </Drawer>
 
-                <MenuIconicItemUserPopover isAuthenticated={false} isHovered={isActiveDelayed}>
-                    <MenuIconicItemUserUnauthenticatedContent />
+                <MenuIconicItemUserPopover
+                    isAuthenticated={false}
+                    isHovered={isActiveDelayed}
+                    topClassName={userPopoverTopClassName}
+                >
+                    <MenuIconicItemUserUnauthenticatedContent
+                        loginFormName={loginFormName}
+                        onMenuClose={() => setIsActive(false)}
+                    />
                 </MenuIconicItemUserPopover>
             </div>
 

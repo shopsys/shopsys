@@ -1,6 +1,7 @@
 export enum TIDs {
     // Layout & Header
     header = 'header',
+    fixed_header = 'fixed_header',
     header_homepage_link = 'header_homepage_link',
     header_cart = 'header_cart',
     header_cart_link = 'header_cart_link',
@@ -26,6 +27,7 @@ export enum TIDs {
     // Login & Registration
     layout_header_menuiconic_login_link_popup = 'layout_header_menuiconic_login_link_popup',
     layout_popup = 'layout_popup',
+    login_form = 'login_form',
     login_form_submit_button = 'login_form_submit_button',
     login_popup_register_button = 'login_popup_register_button',
     login_in_order_button = 'login_in_order_button',

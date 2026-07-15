@@ -186,19 +186,38 @@ export const checkUrl = (url: string) => {
     cy.url().should('contain', url);
 };
 
+export const getHeaderElementByTID = (tid: TIDs): Cypress.Chainable<JQuery<HTMLElement>> => {
+    cy.scrollTo('top', { ensureScrollable: false });
+    cy.getByTID([TIDs.fixed_header]).should('not.exist');
+
+    return cy.getByTID([TIDs.header, tid]);
+};
+
+export const openHeaderUserMenu = (): Cypress.Chainable<JQuery<HTMLElement>> =>
+    getHeaderElementByTID(TIDs.my_account_link)
+        .should('be.visible')
+        .click({ scrollBehavior: false })
+        .should('have.attr', 'aria-expanded', 'true');
+
 export const checkIsUserLoggedIn = () => {
-    cy.getByTID([TIDs.my_account_link]).should('be.visible').contains(translations.link.myAccount);
+    cy.getByTID([TIDs.header, TIDs.my_account_link]).should('exist');
+    cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.layout_header_menuiconic_login_link_popup]).should(
+        'not.exist',
+    );
 };
 
 export const checkIsUserLoggedOut = () => {
-    cy.getByTID([TIDs.my_account_link]).should('be.visible').contains(translations.button.login);
+    cy.getByTID([TIDs.header, TIDs.my_account_link]).should('exist');
+    cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.layout_header_menuiconic_login_link_popup]).should('exist');
 };
 
 export const goToEditProfileFromHeader = () => {
-    cy.getByTID([TIDs.my_account_link])
+    openHeaderUserMenu();
+    cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.user_menu_edit_profile_link])
+        .filter(':visible')
+        .first()
         .should('be.visible')
-        .realHover()
-        .then(() => cy.getByTID([TIDs.user_menu_edit_profile_link]).should('be.visible').click());
+        .click({ scrollBehavior: false });
     checkUrl(url.customer.editProfile);
     cy.waitForStableAndInteractiveDOM();
 };

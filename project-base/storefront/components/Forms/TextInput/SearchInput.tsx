@@ -14,6 +14,7 @@ type SearchInputProps = NativeProps & {
     label: string;
     shouldShowSpinnerInInput: boolean;
     className?: string;
+    inputId?: string;
     inputRef?: RefObject<HTMLInputElement | null>;
     onClear: () => void;
     onSearch?: () => void;
@@ -26,6 +27,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     value,
     shouldShowSpinnerInInput,
     className,
+    inputId = 'search-input',
     inputRef,
     onChange,
     onClear,
@@ -34,6 +36,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     ariaLabelForSearchButton,
 }) => {
     const { t } = useTranslation();
+    const shouldShowClearButton = !!value && !shouldShowSpinnerInInput;
 
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter' && onSearch) {
@@ -54,7 +57,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 aria-label={label}
                 autoComplete="off"
                 data-tid={TIDs.layout_header_search_autocomplete_input}
-                id="search-input"
+                id={inputId}
                 placeholder={label}
                 ref={inputRef}
                 type="search"
@@ -67,7 +70,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                     '[&:-webkit-autofill]:focus:bg-input-fill! [&:-webkit-autofill]:focus:shadow-inner!',
                     '[&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
                     'focus:outline-hidden',
-                    value ? 'pr-7' : 'pr-4',
+                    shouldShowClearButton ? 'pr-10' : 'pr-4',
                     className,
                 )}
                 onChange={onChange}
@@ -86,7 +89,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 <SearchIcon className="size-6 text-icon-less group-hover:text-icon-accent" />
             </button>
 
-            {!!value && !shouldShowSpinnerInInput && (
+            {shouldShowClearButton && (
                 <button
                     aria-label={t('Clear search input', { ns: 'accessibility' })}
                     className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-md p-1.5"

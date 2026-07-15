@@ -1,5 +1,6 @@
 import {
     goToRegistrationPageFromHeader,
+    goToRegistrationPageFromFixedHeader,
     fillInRegstrationForm,
     submitRegistrationForm,
     clearAndFillInRegstrationFormEmail,
@@ -30,6 +31,13 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
         cy.visitAndWaitForStableAndInteractiveDOM('/');
+    });
+
+    it('[Sticky Header] should navigate to registration and close the account menu', () => {
+        cy.scrollTo('bottom');
+        cy.getByTID([TIDs.fixed_header]).should('be.visible');
+
+        goToRegistrationPageFromFixedHeader();
     });
 
     it('[Register B2C] should register as a B2C customer', function () {

@@ -1,18 +1,22 @@
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import type { NavigationProps } from './Navigation';
 import { Navigation } from './Navigation';
 
 const NavigationPlaceholder = dynamic(() =>
     import('./NavigationPlaceholder').then((component) => component.NavigationPlaceholder),
 );
 
-export const DeferredNavigation: FC = () => {
-    const [{ data: navigationData, fetching: isNavigationFetching }] = useNavigationQuery();
+type DeferredNavigationProps = {
+    isNavigationFetching?: boolean;
+    navigation?: NavigationProps['navigation'];
+};
+
+export const DeferredNavigation: FC<DeferredNavigationProps> = ({ isNavigationFetching, navigation }) => {
     const shouldRender = useDeferredRender('navigation');
 
-    if (!navigationData?.navigation.length) {
+    if (!navigation?.length) {
         return isNavigationFetching ? (
             <Webline className="relative">
                 <NavigationPlaceholder />
@@ -22,11 +26,7 @@ export const DeferredNavigation: FC = () => {
 
     return (
         <Webline className="relative">
-            {shouldRender ? (
-                <Navigation navigation={navigationData.navigation} />
-            ) : (
-                <NavigationPlaceholder navigation={navigationData.navigation} />
-            )}
+            {shouldRender ? <Navigation navigation={navigation} /> : <NavigationPlaceholder navigation={navigation} />}
         </Webline>
     );
 };

@@ -7,6 +7,15 @@
     }
 }
 
+@keyframes fixedHeaderSlideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
 @theme {
     --radius-sm: 0.1875rem;
     --text-zero: [0, 0];

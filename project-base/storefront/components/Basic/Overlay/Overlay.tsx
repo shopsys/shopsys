@@ -7,10 +7,11 @@ import { twMergeCustom } from 'utils/twMerge';
 type OverlayProps = {
     isActive: boolean;
     isHiddenOnDesktop?: boolean;
+    className?: string;
     onClick?: MouseEventHandler;
 };
 
-export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop, children }) => {
+export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop, className, children }) => {
     return (
         <AnimatePresence>
             {isActive && (
@@ -23,8 +24,15 @@ export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop
                     className={twMergeCustom(
                         'fixed inset-0 z-overlay flex cursor-pointer items-center justify-center bg-overlay-default',
                         isHiddenOnDesktop && 'vl:hidden',
+                        className,
                     )}
-                    onClick={onClick}
+                    onClick={(event) => {
+                        if (event.target !== event.currentTarget) {
+                            return;
+                        }
+
+                        onClick?.(event);
+                    }}
                     onMouseDown={(event) => {
                         event.stopPropagation();
                     }}

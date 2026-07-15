@@ -1,40 +1,103 @@
+import { AnimateNavigationMenu } from 'components/Basic/Animations/AnimateNavigationMenu';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useSessionStore } from 'store/useSessionStore';
+import type { FocusEventHandler } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import useWindowDimensions from 'utils/useWindowDimensions';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useDebounce } from 'utils/useDebounce';
 import { NavigationItem } from './NavigationItem';
+import { NavigationItemColumn } from './NavigationItemColumn';
+import { NavigationMoreItem } from './NavigationMoreItem';
+import { NavigationMoreMenu } from './NavigationMoreMenu';
+import { getNavigationItemKey, getNavigationItemSkeletonType } from './navigationUtils';
+import { useNavigationOverflow } from './useNavigationOverflow';
+
+const HOVER_MENU_DELAY = 400;
 
 export type NavigationProps = {
     navigation: TypeCategoriesByColumnFragment[];
+    id?: string;
+    itemClassName?: string;
 };
 
-export const Navigation: FC<NavigationProps> = ({ navigation }) => {
+export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigation', itemClassName }) => {
     const { t } = useTranslation();
+    const shouldReduceMotion = useReducedMotion();
+    const { url } = useDomainConfig();
+    const [catalogUrl] = getInternationalizedStaticUrls(['/catalog'], url);
     const [isFirstHover, setIsFirstHover] = useState(false);
     const [isAnimationDisabled, setIsAnimationDisabled] = useState(false);
-    const showNavigationShadow = useSessionStore((s) => s.showNavigationShadow);
-    const setShowNavigationShadow = useSessionStore((s) => s.setShowNavigationShadow);
-    const navigationRef = useRef<HTMLUListElement>(null);
-    const windowDimensions = useWindowDimensions();
+    const [activeNavigationItemKey, setActiveNavigationItemKey] = useState<string | null>(null);
+    const [navigationOverlayTop, setNavigationOverlayTop] = useState<number | null>(null);
+    const [hasNavigationMenuBeenOpened, setHasNavigationMenuBeenOpened] = useState(false);
+    const [isMoreMenuOpened, setIsMoreMenuOpened] = useState(false);
+    const [hasMoreMenuBeenOpened, setHasMoreMenuBeenOpened] = useState(false);
+    const moreMenuId = `${id}-more-menu`;
+    const isMoreMenuOpenedDelayed = useDebounce(
+        isMoreMenuOpened,
+        !isMoreMenuOpened || hasMoreMenuBeenOpened ? 0 : HOVER_MENU_DELAY,
+    );
+    const activeNavigationItemKeyDelayed = useDebounce(
+        activeNavigationItemKey,
+        activeNavigationItemKey === null || hasNavigationMenuBeenOpened ? 0 : HOVER_MENU_DELAY,
+    );
+    const {
+        hasOverflowNavigationItems,
+        isNavigationMeasured,
+        moreNavigationItemRef,
+        navigationItemRefs,
+        navigationRef,
+        overflowNavigationItems,
+        shouldRenderMoreNavigationItem,
+        visibleNavigationItems,
+    } = useNavigationOverflow({ itemClassName, navigation });
+    const activeNavigationItem = navigation.find(
+        (navigationItem) => getNavigationItemKey(navigationItem) === activeNavigationItemKeyDelayed,
+    );
+    const activeNavigationItemSkeletonType = activeNavigationItem
+        ? getNavigationItemSkeletonType(activeNavigationItem, catalogUrl)
+        : undefined;
 
-    const checkOverflow = useCallback(() => {
-        if (navigationRef.current) {
-            const { scrollWidth, clientWidth, scrollLeft } = navigationRef.current;
-            const isScrolledToEnd = Math.abs(scrollWidth - clientWidth - scrollLeft) < 1;
-
-            setShowNavigationShadow(scrollWidth > clientWidth && !isScrolledToEnd);
-        }
-    }, [setShowNavigationShadow]);
+    const updateNavigationOverlayTop = useCallback(() => {
+        setNavigationOverlayTop(navigationRef.current?.getBoundingClientRect().bottom ?? null);
+    }, []);
 
     useEffect(() => {
-        checkOverflow();
-    }, [windowDimensions, navigation, checkOverflow]);
+        if (!hasOverflowNavigationItems) {
+            setIsMoreMenuOpened(false);
+        }
+    }, [hasOverflowNavigationItems]);
 
-    const handleScroll = () => {
-        checkOverflow();
-    };
+    useEffect(() => {
+        if (activeNavigationItemKeyDelayed !== null) {
+            setHasNavigationMenuBeenOpened(true);
+            updateNavigationOverlayTop();
+        }
+
+        if (isMoreMenuOpenedDelayed) {
+            setHasMoreMenuBeenOpened(true);
+            updateNavigationOverlayTop();
+        }
+    }, [activeNavigationItemKeyDelayed, isMoreMenuOpenedDelayed, updateNavigationOverlayTop]);
+
+    useEffect(() => {
+        if (activeNavigationItemKeyDelayed === null && !isMoreMenuOpenedDelayed) {
+            setNavigationOverlayTop(null);
+
+            return undefined;
+        }
+
+        window.addEventListener('resize', updateNavigationOverlayTop);
+        window.addEventListener('scroll', updateNavigationOverlayTop, { passive: true });
+
+        return () => {
+            window.removeEventListener('resize', updateNavigationOverlayTop);
+            window.removeEventListener('scroll', updateNavigationOverlayTop);
+        };
+    }, [activeNavigationItemKeyDelayed, isMoreMenuOpenedDelayed, updateNavigationOverlayTop]);
 
     const handleAnimations = () => {
         if (!isFirstHover) {
@@ -49,33 +112,146 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
         setIsFirstHover(false);
     };
 
+    const closeNavigationMenu = () => {
+        setActiveNavigationItemKey(null);
+        setNavigationOverlayTop(null);
+        setHasNavigationMenuBeenOpened(false);
+    };
+
+    const closeMoreMenu = () => {
+        setIsMoreMenuOpened(false);
+        setHasMoreMenuBeenOpened(false);
+    };
+
+    const openNavigationMenu = (navigationItemKey: string) => {
+        closeMoreMenu();
+        updateNavigationOverlayTop();
+        setActiveNavigationItemKey(navigationItemKey);
+    };
+
+    const openMoreMenu = (shouldDelay = false) => {
+        closeNavigationMenu();
+
+        if (!shouldDelay) {
+            setHasMoreMenuBeenOpened(true);
+        }
+
+        setIsMoreMenuOpened(true);
+    };
+
+    const toggleMoreMenu = () => {
+        if (isMoreMenuOpenedDelayed) {
+            closeMoreMenu();
+
+            return;
+        }
+
+        openMoreMenu(false);
+    };
+
+    const handleNavigationMouseLeave = () => {
+        closeNavigationMenu();
+        closeMoreMenu();
+        handleEnableAnimation();
+    };
+
+    const handleNavigationBlur: FocusEventHandler<HTMLElement> = (event) => {
+        if (!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget)) {
+            closeNavigationMenu();
+            closeMoreMenu();
+        }
+    };
+
     return (
+        /* biome-ignore lint/a11y/noNoninteractiveElementInteractions: The navigation wrapper needs pointer tracking to keep the detached submenu open while preserving its navigation semantics. */
         <nav
             aria-label={t('Main navigation', { ns: 'accessibility' })}
             className="relative"
-            id="main-navigation"
+            id={id}
             tabIndex={-1}
+            onBlur={handleNavigationBlur}
+            onMouseLeave={handleNavigationMouseLeave}
         >
-            {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: The navigation list needs scroll and pointer tracking without changing its list semantics. */}
             <ul
                 ref={navigationRef}
                 className={twJoin(
-                    'hide-scrollbar hidden w-full overflow-x-auto overflow-y-hidden lg:flex',
-                    showNavigationShadow &&
-                        'transition-all after:absolute after:top-1/2 after:-right-1 after:z-above after:h-7 after:w-20 after:-translate-y-1/2 after:bg-linear-to-l after:from-30% after:from-background-brand after:to-80% after:to-transparent after:blur-xs',
+                    'hidden w-full min-w-0 justify-start overflow-visible lg:flex',
+                    !isNavigationMeasured && 'invisible',
                 )}
-                onMouseLeave={handleEnableAnimation}
-                onScroll={handleScroll}
             >
-                {navigation.map((navigationItem) => (
-                    <NavigationItem
-                        key={`${navigationItem.link}-${navigationItem.name}`}
-                        handleAnimations={handleAnimations}
-                        isAnimationDisabled={isAnimationDisabled}
-                        navigationItem={navigationItem}
+                {visibleNavigationItems.map((navigationItem, index) => {
+                    const navigationItemKey = getNavigationItemKey(navigationItem);
+
+                    return (
+                        <NavigationItem
+                            key={navigationItemKey}
+                            handleAnimations={handleAnimations}
+                            isMenuOpened={activeNavigationItemKeyDelayed === navigationItemKey}
+                            itemRef={(element) => {
+                                navigationItemRefs.current[index] = element;
+                            }}
+                            itemClassName={itemClassName}
+                            navigationItem={navigationItem}
+                            shouldReduceMotion={!!shouldReduceMotion}
+                            onMenuClose={closeNavigationMenu}
+                            onMenuOpen={() => openNavigationMenu(navigationItemKey)}
+                        />
+                    );
+                })}
+
+                {shouldRenderMoreNavigationItem && (
+                    <NavigationMoreItem
+                        isOpened={isMoreMenuOpenedDelayed}
+                        itemRef={moreNavigationItemRef}
+                        itemClassName={itemClassName}
+                        menuId={moreMenuId}
+                        onClose={closeMoreMenu}
+                        onOpen={openMoreMenu}
+                        onToggle={toggleMoreMenu}
                     />
-                ))}
+                )}
             </ul>
+
+            <AnimatePresence initial={false}>
+                {(activeNavigationItemKeyDelayed !== null || isMoreMenuOpenedDelayed) &&
+                    navigationOverlayTop !== null && (
+                        <m.div
+                            aria-hidden="true"
+                            animate={{ opacity: 1 }}
+                            className="pointer-events-none fixed right-0 bottom-0 left-0 z-1000 bg-overlay-default"
+                            exit={{ opacity: 0 }}
+                            initial={{ opacity: 0 }}
+                            style={{ top: navigationOverlayTop }}
+                            transition={shouldReduceMotion ? {} : { type: 'tween', duration: 0.15 }}
+                        />
+                    )}
+            </AnimatePresence>
+
+            <AnimatePresence initial={false}>
+                {(!!activeNavigationItem?.categoriesByColumns.length || isMoreMenuOpenedDelayed) && (
+                    <AnimateNavigationMenu
+                        className="grid! absolute right-0 left-0 z-aboveOverlay grid-cols-4 gap-11 bg-background-default px-10 shadow-md"
+                        disableAnimation={isAnimationDisabled || !!shouldReduceMotion}
+                    >
+                        {isMoreMenuOpenedDelayed ? (
+                            <NavigationMoreMenu
+                                id={moreMenuId}
+                                navigationItems={overflowNavigationItems}
+                                onLinkClick={closeMoreMenu}
+                            />
+                        ) : (
+                            !!activeNavigationItem?.categoriesByColumns.length && (
+                                <NavigationItemColumn
+                                    className="py-12"
+                                    columnCategories={activeNavigationItem.categoriesByColumns}
+                                    skeletonType={activeNavigationItemSkeletonType}
+                                    onLinkClick={closeNavigationMenu}
+                                />
+                            )
+                        )}
+                    </AnimateNavigationMenu>
+                )}
+            </AnimatePresence>
         </nav>
     );
 };

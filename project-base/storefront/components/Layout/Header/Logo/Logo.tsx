@@ -6,8 +6,13 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import logo from '/public/images/logo.svg';
 
-export const Logo: FC = () => {
+type LogoProps = {
+    imageClassName?: string;
+};
+
+export const Logo: FC<LogoProps> = ({ imageClassName }) => {
     const { t } = useTranslation();
+
     return (
         <>
             <LogoMetadata />
@@ -22,7 +27,10 @@ export const Logo: FC = () => {
             >
                 <Image
                     alt="Shopsys.com"
-                    className={twMergeCustom('h-auto w-32 max-w-full group-focus-visible:brightness-0 lg:w-40')}
+                    className={twMergeCustom(
+                        'h-auto w-32 max-w-full group-focus-visible:brightness-0 lg:w-40',
+                        imageClassName,
+                    )}
                     sizes="(max-width: 1023px) 128px, 160px"
                     src={logo}
                 />

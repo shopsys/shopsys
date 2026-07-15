@@ -26,7 +26,7 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                     <HeaderContact />
                 ) : (
                     <>
-                        <div className="order-6 vl:order-2 h-12 w-full vl:max-w-[400px] vl:flex-1 transition lg:relative lg:order-4 lg:w-full xl:ml-12">
+                        <div className="order-6 vl:order-2 h-12 w-full vl:max-w-100 vl:flex-1 transition lg:relative lg:order-4 lg:w-full xl:ml-12">
                             <DeferredAutocompleteSearch />
                         </div>
 

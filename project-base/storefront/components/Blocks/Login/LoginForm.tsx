@@ -21,6 +21,7 @@ import { useLoginForm, useLoginFormMeta } from './loginFormMeta';
 export type LoginFormProps = {
     defaultEmail?: string;
     shouldOverwriteCustomerUserCart?: boolean;
+    formName?: string;
     formWrapperClassName?: string;
     formContentWrapperClassName?: string;
 };
@@ -28,6 +29,7 @@ export type LoginFormProps = {
 export const LoginForm: FC<LoginFormProps> = ({
     defaultEmail,
     shouldOverwriteCustomerUserCart,
+    formName,
     formWrapperClassName,
     formContentWrapperClassName,
 }) => {
@@ -38,7 +40,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
 
     const [formProviderMethods] = useLoginForm(defaultEmail);
-    const formMeta = useLoginFormMeta();
+    const formMeta = useLoginFormMeta(formName);
     const login = useLogin();
     const [{ data: settingsData }] = useSettingsQuery();
     const handleError = useErrorHandler({
@@ -69,6 +71,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                 <Form
                     className="flex w-full justify-center"
                     formName={formMeta.formName}
+                    tid={TIDs.login_form}
                     onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}
                 >
                     <FormContentWrapper className={formContentWrapperClassName}>

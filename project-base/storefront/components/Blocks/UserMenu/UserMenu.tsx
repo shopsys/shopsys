@@ -28,15 +28,17 @@ import { useUserProfileSectionLabel } from 'utils/user/useUserProfileSectionLabe
 type UserMenuProps = {
     className?: string;
     hideFocusTrap?: boolean;
+    onMenuClose?: () => void;
 };
 
-export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
+export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuClose }) => {
     const { t } = useTranslation();
     const pathname = usePathname();
     const logout = useLogout();
     const user = useCurrentCustomerData();
     const setIsUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
     const contentRef = useRef<HTMLDivElement>(null);
+    const closeUserMenu = onMenuClose ?? (() => setIsUserMenuOpen(false));
 
     const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
         useAuthorization();
@@ -60,6 +62,10 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
         url,
     );
     const userProfileSectionLabel = useUserProfileSectionLabel();
+    const logoutAndCloseUserMenu = () => {
+        closeUserMenu();
+        void logout();
+    };
 
     useFocusTrap(hideFocusTrap ? undefined : contentRef);
 
@@ -94,7 +100,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                                 isActive={pathname === customerOrdersUrl}
                                 tid={TIDs.user_menu_my_orders_link}
                                 type="orderList"
-                                onClick={() => setIsUserMenuOpen(false)}
+                                onClick={closeUserMenu}
                             >
                                 <SearchListIcon className="size-6" />
                                 {t('My orders')}
@@ -110,7 +116,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                                 isActive={pathname === customerComplaintsUrl}
                                 tid={TIDs.user_menu_my_complaints_link}
                                 type="complaintList"
-                                onClick={() => setIsUserMenuOpen(false)}
+                                onClick={closeUserMenu}
                             >
                                 <ComplaintsIcon className="size-6" />
                                 {t('My complaints')}
@@ -126,7 +132,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                                 isActive={pathname === customerUsersUrl}
                                 tid={TIDs.user_menu_customer_users_link}
                                 type="customer-users"
-                                onClick={() => setIsUserMenuOpen(false)}
+                                onClick={closeUserMenu}
                             >
                                 <UserIcon className="size-6" />
                                 {t('Customer users')}
@@ -141,7 +147,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                             isActive={pathname === customerEditProfileUrl}
                             tid={TIDs.user_menu_edit_profile_link}
                             type="editProfile"
-                            onClick={() => setIsUserMenuOpen(false)}
+                            onClick={closeUserMenu}
                         >
                             <EditIcon className="size-6" />
                             {userProfileSectionLabel}
@@ -154,7 +160,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                             href={wishlistUrl}
                             isActive={pathname === wishlistUrl}
                             type="wishlist"
-                            onClick={() => setIsUserMenuOpen(false)}
+                            onClick={closeUserMenu}
                         >
                             <HeartIcon className="size-6" />
                             {t('Wishlist')}
@@ -168,7 +174,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                             isActive={pathname === customerChangePasswordUrl}
                             tid={TIDs.user_menu_change_password_link}
                             type="changePassword"
-                            onClick={() => setIsUserMenuOpen(false)}
+                            onClick={closeUserMenu}
                         >
                             <LockCheckIcon className="size-6" />
                             {t('Change password')}
@@ -176,7 +182,11 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                     </MenuIconicItemUserAuthenticatedContentListItem>
 
                     <MenuIconicItemUserAuthenticatedContentListItem>
-                        <MenuIconicSubItemLink tid={TIDs.user_menu_logout} title={t('Logout')} onClick={logout}>
+                        <MenuIconicSubItemLink
+                            tid={TIDs.user_menu_logout}
+                            title={t('Logout')}
+                            onClick={logoutAndCloseUserMenu}
+                        >
                             <ExitIcon className="size-6" />
                             {t('Logout')}
                         </MenuIconicSubItemLink>
@@ -184,7 +194,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                 </ul>
             </nav>
 
-            <SalesRepresentative />
+            <SalesRepresentative onContactClick={closeUserMenu} />
         </div>
     );
 };

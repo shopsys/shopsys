@@ -2,7 +2,10 @@ import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { TypeHreflangLink } from 'graphql/types';
+import dynamic from 'next/dynamic';
+import { useEffect, useRef } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
@@ -15,7 +18,12 @@ import { DeferredNewsletterForm } from './Footer/NewsletterForm/DeferredNewslett
 import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
 import { Header } from './Header/Header';
 import { DeferredNavigation } from './Header/Navigation/DeferredNavigation';
+import { useDesktopFixedHeader } from './hooks/useDesktopFixedHeader';
 import { NotificationBars } from './NotificationBars/NotificationBars';
+
+const FixedHeader = dynamic(() => import('./Header/FixedHeader').then((component) => component.FixedHeader), {
+    ssr: false,
+});
 
 export type CommonLayoutProps = {
     title?: string | null;
@@ -45,6 +53,18 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 }) => {
     const { t } = useTranslation();
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
+    const setIsUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
+    const siteHeaderRef = useRef<HTMLElement>(null);
+    const { fixedHeaderRef, isDesktop, isFixedHeaderVisible, showDesktopFixedHeader } =
+        useDesktopFixedHeader(siteHeaderRef);
+    const [{ data: navigationData, fetching: isNavigationFetching }] = useNavigationQuery();
+    const isOriginalHeaderHidden = isDesktop && showDesktopFixedHeader;
+
+    useEffect(() => {
+        if (showDesktopFixedHeader) {
+            setIsUserMenuOpen(false);
+        }
+    }, [setIsUserMenuOpen, showDesktopFixedHeader]);
 
     return (
         <>
@@ -62,9 +82,27 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
                 <NotificationBars />
 
-                <header className="bg-background-brand" id="site-header" tabIndex={-1}>
+                {isDesktop && showDesktopFixedHeader && (
+                    <FixedHeader
+                        fixedHeaderRef={fixedHeaderRef}
+                        isVisible={isFixedHeaderVisible}
+                        navigation={navigationData?.navigation}
+                    />
+                )}
+
+                <header
+                    aria-hidden={isOriginalHeaderHidden || undefined}
+                    className="bg-background-brand"
+                    id="site-header"
+                    inert={isOriginalHeaderHidden || undefined}
+                    ref={siteHeaderRef}
+                    tabIndex={-1}
+                >
                     <Header />
-                    <DeferredNavigation />
+                    <DeferredNavigation
+                        isNavigationFetching={isNavigationFetching}
+                        navigation={navigationData?.navigation}
+                    />
                 </header>
 
                 <main

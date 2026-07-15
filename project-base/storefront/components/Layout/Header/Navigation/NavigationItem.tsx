@@ -1,43 +1,69 @@
-import { AnimateNavigationMenu } from 'components/Basic/Animations/AnimateNavigationMenu';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { NavigationItemColumn } from 'components/Layout/Header/Navigation/NavigationItemColumn';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
-import { useState } from 'react';
+import type { KeyboardEventHandler, Ref } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { SkeletonEnum } from 'types/skeletons';
-import { getPageTypeKey } from 'utils/page/getPageTypeKey';
-import { getSkeletonTypeFromLink } from 'utils/skeleton/getSkeletonTypeFromLink';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { useDebounce } from 'utils/useDebounce';
+import { twMergeCustom } from 'utils/twMerge';
+import { getNavigationItemSkeletonType } from './navigationUtils';
 
 type NavigationItemProps = {
     navigationItem: TypeCategoriesByColumnFragment;
-    isAnimationDisabled: boolean;
+    isMenuOpened: boolean;
+    shouldReduceMotion: boolean;
     handleAnimations: () => void;
+    itemRef?: Ref<HTMLLIElement>;
+    itemClassName?: string;
+    onMenuClose: () => void;
+    onMenuOpen: () => void;
 };
 
-export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnimationDisabled, handleAnimations }) => {
-    const [isMenuOpened, setIsMenuOpened] = useState(false);
+export const NavigationItem: FC<NavigationItemProps> = ({
+    navigationItem,
+    isMenuOpened,
+    shouldReduceMotion,
+    handleAnimations,
+    itemRef,
+    itemClassName,
+    onMenuClose,
+    onMenuOpen,
+}) => {
     const hasChildren = !!navigationItem.categoriesByColumns.length;
-    const isMenuOpenedDelayed = useDebounce(isMenuOpened && true, 200);
-    const shouldReduceMotion = useReducedMotion();
     const { url } = useDomainConfig();
     const [catalogUrl] = getInternationalizedStaticUrls(['/catalog'], url);
-    const skeletonType =
-        navigationItem.link === catalogUrl
-            ? SkeletonEnum.Catalog
-            : (getPageTypeKey(navigationItem.routeName) ?? getSkeletonTypeFromLink(navigationItem.link));
+    const skeletonType = getNavigationItemSkeletonType(navigationItem, catalogUrl);
+
+    const handleKeyDown: KeyboardEventHandler<HTMLLIElement> = (event) => {
+        if (event.key === 'Escape') {
+            onMenuClose();
+        }
+    };
 
     return (
         /* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Hover state belongs on the list item so the menu keeps its navigation list semantics. */
         <li
             className="group"
-            onMouseLeave={() => setIsMenuOpened(false)}
+            ref={itemRef}
+            onFocus={() => {
+                if (!hasChildren) {
+                    onMenuClose();
+
+                    return;
+                }
+
+                onMenuOpen();
+            }}
+            onKeyDown={handleKeyDown}
             onMouseEnter={() => {
-                setIsMenuOpened(true);
+                if (!hasChildren) {
+                    onMenuClose();
+
+                    return;
+                }
+
+                onMenuOpen();
+
                 if (!shouldReduceMotion) {
                     handleAnimations();
                 }
@@ -46,48 +72,32 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
             <ExtendedNextLink
                 href={navigationItem.link}
                 skeletonType={skeletonType}
-                className={twJoin(
-                    'relative m-0 flex items-center whitespace-nowrap p-5 font-bold font-secondary text-sm vl:text-base group-first-of-type:pl-0',
+                className={twMergeCustom(
+                    'relative m-0 flex items-center whitespace-nowrap p-5 font-secondary font-semibold text-sm vl:text-base group-first-of-type:pl-0 group-last-of-type:pr-0',
                     'text-link-inverted-default no-underline',
                     'hover:text-link-inverted-hovered hover:no-underline group-hover:text-link-inverted-hovered group-hover:no-underline',
                     'active:text-link-inverted-hovered',
                     'disabled:text-link-inverted-disabled',
+                    itemClassName,
                 )}
             >
                 {navigationItem.name}
-                <AnimatePresence initial={false}>
-                    {hasChildren && (
-                        <m.div
-                            animate={{ rotate: isMenuOpenedDelayed ? 180 : 0 }}
-                            className="ml-2 flex items-start"
-                            transition={shouldReduceMotion ? {} : { type: 'tween', duration: 0.2 }}
-                        >
-                            <ArrowIcon
-                                className={twJoin(
-                                    'size-5 text-link-inverted-default',
-                                    isMenuOpenedDelayed && 'group-hover:text-link-inverted-hovered',
-                                )}
-                            />
-                        </m.div>
-                    )}
-                </AnimatePresence>
-            </ExtendedNextLink>
-
-            <AnimatePresence initial={false}>
-                {hasChildren && isMenuOpenedDelayed && (
-                    <AnimateNavigationMenu
-                        className="grid! absolute right-0 left-0 z-menu grid-cols-4 gap-11 bg-background-default px-10 shadow-md"
-                        disableAnimation={isAnimationDisabled || !!shouldReduceMotion}
+                {hasChildren && (
+                    <div
+                        className={twJoin(
+                            'ml-1 flex items-start motion-safe:transition-transform motion-safe:duration-200',
+                            isMenuOpened && 'rotate-180',
+                        )}
                     >
-                        <NavigationItemColumn
-                            className="py-12"
-                            columnCategories={navigationItem.categoriesByColumns}
-                            skeletonType={skeletonType}
-                            onLinkClick={() => setIsMenuOpened(false)}
+                        <ArrowIcon
+                            className={twJoin(
+                                'size-5 text-link-inverted-default transition',
+                                isMenuOpened && 'group-hover:text-link-inverted-hovered',
+                            )}
                         />
-                    </AnimateNavigationMenu>
+                    </div>
                 )}
-            </AnimatePresence>
+            </ExtendedNextLink>
         </li>
     );
 };

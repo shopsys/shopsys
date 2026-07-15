@@ -31,7 +31,12 @@ const nonEmptyCartTwClassName = [
     'group-active:bg-button-primary-bg-active group-active:text-button-primary-text-active group-active:border-button-primary-border-active',
 ];
 
-export const CartInHeader: FC = ({ className }) => {
+export type CartInHeaderProps = {
+    className?: string;
+    isCompact?: boolean;
+};
+
+export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
@@ -105,8 +110,9 @@ export const CartInHeader: FC = ({ className }) => {
                     tabIndex={-1}
                     tid={TIDs.header_cart_link}
                     className={twJoin(
-                        'vl:flex hidden h-11 cursor-pointer items-center justify-center gap-x-3 rounded-lg border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg',
+                        'vl:flex hidden cursor-pointer items-center justify-center gap-x-3 rounded-lg border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg',
                         'group-focus-visible:bg-orange-500 group-focus-visible:text-text-default',
+                        isCompact ? 'h-10' : 'h-11',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
                             ? 'min-w-14'

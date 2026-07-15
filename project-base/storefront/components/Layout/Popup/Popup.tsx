@@ -97,9 +97,9 @@ export const Popup: React.FC<PopupProps> = ({
     useFocusTrap(popupRef);
 
     return (
-        <div key={key}>
+        <div className="fixed inset-0 z-aboveOverlay" key={key}>
             <RemoveScroll>
-                <Overlay isActive onClick={handleClosePopup} />
+                <Overlay className="z-modalOverlay" isActive onClick={handleClosePopup} />
 
                 <AnimatePresence>
                     <m.div
@@ -115,7 +115,7 @@ export const Popup: React.FC<PopupProps> = ({
                         tabIndex={-1}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'fixed z-aboveOverlay mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl',
+                            'fixed z-maximum mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl',
                             className,
                         )}
                         initial={{

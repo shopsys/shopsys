@@ -13,6 +13,7 @@ import { twJoin } from 'tailwind-merge';
 import { SkeletonEnum } from 'types/skeletons';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { twMergeCustom } from 'utils/twMerge';
 import { useDebounce } from 'utils/useDebounce';
 import { useFocusTrap } from 'utils/useFocusTrap';
 import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
@@ -23,7 +24,12 @@ const AutocompleteSearchPopup = dynamic(() =>
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
-export const AutocompleteSearch: FC = () => {
+export type AutocompleteSearchProps = {
+    inputClassName?: string;
+    inputId?: string;
+};
+
+export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({ inputClassName, inputId }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const router = useRouter();
@@ -108,7 +114,8 @@ export const AutocompleteSearch: FC = () => {
                 <SearchInput
                     aria-haspopup="listbox"
                     ariaLabelForSearchButton={t('Go to search page', { ns: 'accessibility' })}
-                    className="w-full"
+                    className={twMergeCustom('w-full', inputClassName)}
+                    inputId={inputId}
                     inputRef={searchInputRef}
                     label={t('Write what you are looking for...')}
                     shouldShowSpinnerInInput={areAutocompleteSearchDataFetching}

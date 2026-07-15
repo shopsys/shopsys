@@ -48,10 +48,6 @@ export const translationKeys = {
     },
     link: {
         orderDetail: 'Track',
-        myAccount: 'My account',
-    },
-    button: {
-        login: 'Login',
     },
     filter: {
         price: 'Price',

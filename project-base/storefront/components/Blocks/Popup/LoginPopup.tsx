@@ -4,7 +4,11 @@ import { Popup } from 'components/Layout/Popup/Popup';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
-export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCustomerUserCart }) => {
+export const LoginPopup: FC<LoginFormProps> = ({
+    defaultEmail,
+    formName = 'popup-login-form',
+    shouldOverwriteCustomerUserCart,
+}) => {
     const { t } = useTranslation();
     const title = t('Log in and continue with order');
 
@@ -19,6 +23,7 @@ export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCu
 
                 <LoginForm
                     defaultEmail={defaultEmail}
+                    formName={formName}
                     formContentWrapperClassName="px-5!"
                     shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
                 />

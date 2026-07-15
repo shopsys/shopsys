@@ -143,7 +143,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                                 <iframe
                                     allowFullScreen
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    className="aspect-video max-h-full w-full max-w-xl md:max-w-[1500px]"
+                                    className="aspect-video max-h-full w-full max-w-xl md:max-w-375"
                                     src={`https://www.youtube.com/embed/${selectedGalleryItem.token}?autoplay=1&mute=1`}
                                     title={selectedGalleryItem.description ?? t('Product Video')}
                                     aria-label={

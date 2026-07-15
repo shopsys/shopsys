@@ -1,17 +1,61 @@
 import { url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkFormLineError, checkUrl, translations } from 'support';
+import {
+    checkFormLineError,
+    checkUrl,
+    openHeaderUserMenu,
+    translations,
+} from 'support';
 import { TIDs } from 'tids';
 
-export const goToRegistrationPageFromHeader = () => {
-    cy.getByTID([TIDs.my_account_link])
+const preventScrollOptions = { scrollBehavior: false } as const;
+
+const fillInEmailAndPasswordInScopedLoginForm = (
+    email: string | undefined,
+    password: string,
+    typeOptions: Partial<Cypress.TypeOptions> = {},
+) => {
+    if (email) {
+        cy.get('input[name="email"]:enabled').should('be.visible').type(email, typeOptions);
+    }
+    cy.get('input[name="password"]:enabled').should('be.visible').type(password, typeOptions);
+};
+
+const submitScopedLoginForm = (clickOptions: Partial<Cypress.ClickOptions> = {}) => {
+    cy.getByTID([TIDs.login_form_submit_button]).should('be.visible').and('be.enabled').click(clickOptions);
+};
+
+const getVisibleLoginFormWithEnabledEmail = (parentTIDs: TIDs[]) =>
+    cy
+        .getByTID([...parentTIDs, TIDs.login_form])
+        .filter(':visible')
+        .filter(':has(input[name="email"]:enabled)')
+        .should('have.length.at.least', 1)
+        .first();
+
+const goToRegistrationPageFromHeaderTID = (headerTID: TIDs.header | TIDs.fixed_header) => {
+    cy.getByTID([headerTID, TIDs.my_account_link])
         .should('be.visible')
-        .realHover()
-        .then(() => {
-            cy.getByTID([TIDs.login_popup_register_button]).click();
-            checkUrl(url.registration);
-            cy.waitForStableAndInteractiveDOM();
-        });
+        .click({ scrollBehavior: false })
+        .should('have.attr', 'aria-expanded', 'true');
+    cy.getByTID([headerTID, TIDs.my_account_link, TIDs.login_popup_register_button])
+        .filter(':visible')
+        .first()
+        .should('be.visible')
+        .click({ scrollBehavior: false });
+    checkUrl(url.registration);
+    cy.waitForStableAndInteractiveDOM();
+    cy.getByTID([TIDs.overlay]).should('not.exist');
+};
+
+export const goToRegistrationPageFromHeader = () => {
+    cy.scrollTo('top', { ensureScrollable: false });
+    cy.getByTID([TIDs.fixed_header]).should('not.exist');
+    goToRegistrationPageFromHeaderTID(TIDs.header);
+};
+
+export const goToRegistrationPageFromFixedHeader = () => {
+    goToRegistrationPageFromHeaderTID(TIDs.fixed_header);
 };
 
 export const submitRegistrationForm = () => {
@@ -19,7 +63,14 @@ export const submitRegistrationForm = () => {
 };
 
 export const submitLoginForm = () => {
-    cy.getByTID([TIDs.login_form_submit_button]).click();
+    cy.getByTID([TIDs.login_form])
+        .filter(':visible')
+        .should('have.length', 1)
+        .within(() => submitScopedLoginForm());
+};
+
+export const submitLoginPopupForm = () => {
+    getVisibleLoginFormWithEnabledEmail([TIDs.layout_popup]).within(() => submitScopedLoginForm());
 };
 
 export const logoutFromCustomerMenu = () => {
@@ -27,27 +78,26 @@ export const logoutFromCustomerMenu = () => {
 };
 
 export const loginFromHeader = (email: string | undefined, password: string) => {
-    cy.getByTID([TIDs.my_account_link])
-        .should('be.visible')
-        .realHover()
-        .then(() => {
-            fillInEmailAndPasswordInLoginPopup(email, password);
-            submitLoginForm();
-        });
+    openHeaderUserMenu();
+    getVisibleLoginFormWithEnabledEmail([TIDs.header, TIDs.my_account_link]).within(() => {
+        fillInEmailAndPasswordInScopedLoginForm(email, password, preventScrollOptions);
+        submitScopedLoginForm(preventScrollOptions);
+    });
 };
 
 export const logoutFromHeader = () => {
-    cy.getByTID([TIDs.my_account_link])
+    openHeaderUserMenu();
+    cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.user_menu_logout])
+        .filter(':visible')
+        .first()
         .should('be.visible')
-        .realHover()
-        .then(() => cy.getByTID([TIDs.user_menu_logout]).should('be.visible').click());
+        .click({ scrollBehavior: false });
 };
 
 export const fillInEmailAndPasswordInLoginPopup = (email: string | undefined, password: string) => {
-    if (email) {
-        cy.get('#login-form-email').type(email, { force: true });
-    }
-    cy.get('#login-form-password').type(password, { force: true });
+    getVisibleLoginFormWithEnabledEmail([TIDs.layout_popup]).within(() =>
+        fillInEmailAndPasswordInScopedLoginForm(email, password),
+    );
 };
 
 export const fillInEmailAndPasswordOnLoginPage = (email: string, password: string) => {
@@ -65,15 +115,15 @@ export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCu
 
     cy.get('#registration-form-firstName')
         .should('have.attr', 'placeholder', translations.placeholder.firstName)
-        .type(generatedData.firstName);
+        .type(generatedData.firstName, { scrollBehavior: 'center' });
 
     cy.get('#registration-form-lastName')
         .should('have.attr', 'placeholder', translations.placeholder.lastName)
-        .type(generatedData.lastName);
+        .type(generatedData.lastName, { scrollBehavior: 'center' });
 
     cy.get('#registration-form-telephone')
         .should('have.attr', 'placeholder', translations.placeholder.phone)
-        .type(phoneWithPrefix);
+        .type(phoneWithPrefix, { scrollBehavior: 'center' });
 
     if (
         custmerType === 'companyCustomer' &&
@@ -81,34 +131,35 @@ export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCu
         generatedData.companyNumber &&
         generatedData.companyTaxNumber
     ) {
-        cy.get('[for="registration-formcustomer1"]').click();
+        cy.get('[for="registration-formcustomer1"]').click({ scrollBehavior: 'center' });
+        cy.waitForStableAndInteractiveDOM();
 
         cy.get('#registration-form-companyName')
             .should('have.attr', 'placeholder', translations.placeholder.companyName)
-            .type(generatedData.companyName!);
+            .type(generatedData.companyName!, { scrollBehavior: 'center' });
 
         cy.get('#registration-form-companyNumber')
             .should('have.attr', 'placeholder', translations.placeholder.companyNumber)
-            .type(generatedData.companyNumber!);
+            .type(generatedData.companyNumber!, { scrollBehavior: 'center' });
 
         cy.get('#registration-form-companyTaxNumber')
             .should('have.attr', 'placeholder', translations.placeholder.companyTaxNumber)
-            .type(generatedData.companyTaxNumber!);
+            .type(generatedData.companyTaxNumber!, { scrollBehavior: 'center' });
     } else {
-        cy.get('[for="registration-formcustomer0"]').click();
+        cy.get('[for="registration-formcustomer0"]').click({ scrollBehavior: 'center' });
     }
 
     cy.get('#registration-form-street')
         .should('have.attr', 'placeholder', translations.placeholder.street)
-        .type(generatedData.street);
+        .type(generatedData.street, { scrollBehavior: 'center' });
 
     cy.get('#registration-form-city')
         .should('have.attr', 'placeholder', translations.placeholder.city)
-        .type(generatedData.city);
+        .type(generatedData.city, { scrollBehavior: 'center' });
 
     cy.get('#registration-form-postcode')
         .should('have.attr', 'placeholder', translations.placeholder.postCode)
-        .type(generatedData.postcode, { force: true });
+        .type(generatedData.postcode, { scrollBehavior: 'center' });
 
     cy.get('[for="registration-form-gdprAgreement"]').find('span').first().click();
 };

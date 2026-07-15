@@ -1,9 +1,10 @@
 import { HorizontalScrollHint } from 'components/Basic/HorizontalScrollHint/HorizontalScrollHint';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
-import { useIntersectionObserver } from 'utils/ui/useIntersectionObserver';
+
+const STICKY_NAVIGATION_OFFSET_PROPERTY = '--sticky-navigation-offset';
 
 type SectionButton = {
     id: string;
@@ -22,9 +23,52 @@ export const ProductDetailSectionNavigation: FC<ProductDetailSectionNavigationPr
     activeSection,
 }) => {
     const buttonRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-    const { ref: sentinelRef, isIntersecting: isIntersectingSentinel } = useIntersectionObserver({
-        defaultIsIntersecting: true,
-    });
+    const navigationRef = useRef<HTMLElement>(null);
+    const sentinelRef = useRef<HTMLDivElement>(null);
+    const [isNavigationSticky, setIsNavigationSticky] = useState(false);
+
+    useEffect(() => {
+        let animationFrameId: number | null = null;
+
+        const updateStickyState = () => {
+            if (animationFrameId !== null) {
+                return;
+            }
+
+            animationFrameId = window.requestAnimationFrame(() => {
+                const navigationElement = navigationRef.current;
+                const sentinelElement = sentinelRef.current;
+
+                if (navigationElement && sentinelElement) {
+                    const stickyOffset =
+                        Number.parseFloat(
+                            window
+                                .getComputedStyle(navigationElement)
+                                .getPropertyValue(STICKY_NAVIGATION_OFFSET_PROPERTY),
+                        ) || 0;
+                    setIsNavigationSticky(sentinelElement.getBoundingClientRect().top <= stickyOffset);
+                }
+
+                animationFrameId = null;
+            });
+        };
+
+        updateStickyState();
+        window.addEventListener('resize', updateStickyState);
+        window.addEventListener('scroll', updateStickyState, { passive: true });
+        const stickyOffsetObserver = new MutationObserver(updateStickyState);
+        stickyOffsetObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+
+        return () => {
+            window.removeEventListener('resize', updateStickyState);
+            window.removeEventListener('scroll', updateStickyState);
+            stickyOffsetObserver.disconnect();
+
+            if (animationFrameId !== null) {
+                window.cancelAnimationFrame(animationFrameId);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         const button = activeSection ? buttonRefs.current.get(activeSection) : null;
@@ -41,9 +85,10 @@ export const ProductDetailSectionNavigation: FC<ProductDetailSectionNavigationPr
             <div aria-hidden="true" className="h-0" ref={sentinelRef} />
             <nav
                 className={twMergeCustom(
-                    'sticky top-0 z-menu bg-background-default transition-shadow duration-200',
-                    !isIntersectingSentinel && 'shadow-md',
+                    'sticky top-(--sticky-navigation-offset,0px) z-menu bg-background-default transition-[top,box-shadow] duration-200',
+                    isNavigationSticky && 'shadow-md',
                 )}
+                ref={navigationRef}
             >
                 <Webline className="py-4">
                     <HorizontalScrollHint
