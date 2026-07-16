@@ -57,6 +57,7 @@ export default class ConfirmWindow {
                     style: resolvedOptions.style,
                     href: resolvedOptions.continueUrl,
                     event: resolvedOptions.continueEvent,
+                    classAttribute: 'test-window-button-continue',
                 },
             ],
         });

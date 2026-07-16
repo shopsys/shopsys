@@ -94,7 +94,8 @@ export default class ModalWindow {
             .map((btn, index) => {
                 const style = btn.style || 'secondary';
                 const href = btn.href || '#';
-                return `<a href="${href}" class="btn btn-${style}" data-button-index="${index}">${btn.text}</a>`;
+                const classAttribute = btn.classAttribute ? ` ${btn.classAttribute}` : '';
+                return `<a href="${href}" class="btn btn-${style}${classAttribute}" data-button-index="${index}">${btn.text}</a>`;
             })
             .join('');
 
