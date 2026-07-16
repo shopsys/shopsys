@@ -655,6 +655,10 @@ services:
         arguments:
             $cronTimeZone: '%shopsys.cron_timezone%'
 
+    Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucherDownloadHashProvider:
+        arguments:
+            $secret: '%kernel.secret%'
+
     Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucherPdfGenerator:
         arguments:
             $logoFilepath: '%shopsys.gift_voucher_pdf_logo_filepath%'

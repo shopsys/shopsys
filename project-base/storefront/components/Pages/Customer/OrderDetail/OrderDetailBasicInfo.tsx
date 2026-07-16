@@ -136,6 +136,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                     <ExtendedNextLink
                                         href={order.trackingUrl}
                                         target="_blank"
+                                        className="text-sm"
                                         aria-label={t('Go to tracking package {{ trackingNumber }}', {
                                             ns: 'accessibility',
                                             trackingNumber: order.trackingNumber,
@@ -190,6 +191,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                             productReviewsAllowed={order.productReviewsAllowed}
                             isReviewAvailabilityLoading={isReviewAvailabilityLoading}
                             reviewedProductUuids={reviewedProductUuids}
+                            purchasedGiftVouchers={order.purchasedGiftVouchers}
                             isDiscount={
                                 orderItem.type === TypeOrderItemTypeEnum.Discount ||
                                 orderItem.type === TypeOrderItemTypeEnum.Promotion

@@ -1,0 +1,22 @@
+PurchasedGiftVoucherDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Gift voucher purchased in the order"
+        fields:
+            code:
+                type: "String!"
+                description: "Code of the gift voucher"
+            valueWithVat:
+                type: "Money!"
+                description: "Value of the gift voucher including VAT"
+            validUntil:
+                type: "DateTime!"
+                description: "Date and time until the gift voucher is valid"
+            productCatnum:
+                type: "String"
+                description: "Catalog number of the purchased gift voucher product the voucher was generated from"
+            pdfUrl:
+                type: "String!"
+                description: "URL for downloading the gift voucher PDF"
+                resolve: '@=query("giftVoucherPdfUrlQuery", value)'
