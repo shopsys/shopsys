@@ -261,7 +261,10 @@
         }
     },
     "config": {
-        "preferred-install": "dist",
+        "preferred-install": {
+            "friendsofsymfony/ckeditor-bundle": "source",
+            "*": "dist"
+        },
         "component-dir": "project-base/app/web/components",
         "sort-packages": true,
         "platform": {
