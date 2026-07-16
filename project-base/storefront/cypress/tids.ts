@@ -130,6 +130,7 @@ export enum TIDs {
     order_detail_item_image = 'order_detail_item_image',
     order_detail_create_complaint_button = 'order_detail_create_complaint_button',
     order_detail_write_review_button = 'order_detail_write_review_button',
+    order_detail_download_gift_voucher_button_ = 'order_detail_download_gift_voucher_button_',
     order_detail_repeat_order_button = 'order_detail_repeat_order_button',
     my_orders_link_ = 'my_orders_link_',
     order_list_item_number = 'order_list_item_number',

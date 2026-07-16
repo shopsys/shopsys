@@ -25,6 +25,14 @@ front_export_personal_data:
         _controller: Shopsys\FrameworkBundle\Controller\Front\PersonalDataController::exportXmlAction
     path: /personal-overview-export/xml/{hash}
 
+front_gift_voucher_download:
+    defaults:
+        _controller: Shopsys\FrameworkBundle\Controller\Front\GiftVoucherController::downloadPdfAction
+    methods: [GET]
+    path: /gift-voucher/download/{uuid}/{hash}
+    requirements:
+        uuid: '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
+
 front_homepage:
     path: /
 

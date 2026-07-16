@@ -126,6 +126,10 @@ OrderDecorator:
                 type: "[AppliedGiftVoucher!]!"
                 description: "Gift vouchers redeemed on the order"
                 resolve: '@=value.getRedeemedGiftVouchers()'
+            purchasedGiftVouchers:
+                type: "[PurchasedGiftVoucher!]!"
+                description: "Gift vouchers generated from the order"
+                resolve: '@=query("purchasedGiftVouchersByOrderQuery", value)'
             hasPaymentInProcess:
                 type: "Boolean!"
                 description: "Indicates whether order payment is still being processed with GoPay payment type"

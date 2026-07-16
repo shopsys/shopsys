@@ -45,8 +45,11 @@ fragment OrderDetailFragment on Order {
         ...PriceFragment
     }
     giftVouchers {
-        code
-        value
+        ...AppliedGiftVoucherFragment
+    }
+    purchasedGiftVouchers {
+        productCatnum
+        pdfUrl
     }
     remainingAmountToPay
     isPaid

@@ -1694,6 +1694,8 @@ type Order {
   productItems: [OrderItem!]!
   "Promo code (coupon) used in the order"
   promoCode: String
+  "Gift vouchers generated from the order"
+  purchasedGiftVouchers: [PurchasedGiftVoucher!]!
   "Total price with VAT reduced by redeemed gift vouchers, never below zero"
   remainingAmountToPay: Money!
   "Current status of the order"
@@ -2525,6 +2527,20 @@ enum PromoCodeTypeEnum {
   nominal
   "Discount type percent"
   percent
+}
+
+"Gift voucher purchased in the order"
+type PurchasedGiftVoucher {
+  "Code of the gift voucher"
+  code: String!
+  "URL for downloading the gift voucher PDF"
+  pdfUrl: String!
+  "Catalog number of the purchased gift voucher product the voucher was generated from"
+  productCatnum: String
+  "Date and time until the gift voucher is valid"
+  validUntil: DateTime!
+  "Value of the gift voucher including VAT"
+  valueWithVat: Money!
 }
 
 type Query {

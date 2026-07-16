@@ -6,6 +6,7 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { OrderDetailItemFragment } from './OrderDetailItemFragment.generated';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
+import { AppliedGiftVoucherFragment } from '../../cart/fragments/AppliedGiftVoucherFragment.generated';
 import { OrderWithdrawalRequestFragment } from './OrderWithdrawalRequestFragment.generated';
 /** Product Availability statuses */
 export type TypeAvailabilityStatusEnum =
@@ -72,7 +73,7 @@ export type TypeOrderDetailFragment = { __typename: 'Order', uuid: string, numbe
       | { catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
       | { catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
       | { catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-     | null, transport: { isPersonalPickup: boolean, transportTypeCode: Types.TypeTransportTypeEnum, mainImage: { url: string } | null } | null, payment: { mainImage: { url: string } | null } | null }>, country: { __typename: 'Country', name: string, code: string }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, giftVouchers: Array<{ code: string, value: string }>, confirmationPageContent: { content: string, status: Types.TypeOrderConfirmationPageContentStatusEnum }, withdrawalRequest: { __typename: 'OrderWithdrawalRequest', email: string, firstName: string, lastName: string, telephone: string | null, note: string | null, requestedAt: string } | null, customerUser:
+     | null, transport: { isPersonalPickup: boolean, transportTypeCode: Types.TypeTransportTypeEnum, mainImage: { url: string } | null } | null, payment: { mainImage: { url: string } | null } | null }>, country: { __typename: 'Country', name: string, code: string }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, giftVouchers: Array<{ __typename: 'AppliedGiftVoucher', code: string, valueWithVat: string, valueWithoutVat: string, productName: string | null }>, purchasedGiftVouchers: Array<{ productCatnum: string | null, pdfUrl: string }>, confirmationPageContent: { content: string, status: Types.TypeOrderConfirmationPageContentStatusEnum }, withdrawalRequest: { __typename: 'OrderWithdrawalRequest', email: string, firstName: string, lastName: string, telephone: string | null, note: string | null, requestedAt: string } | null, customerUser:
     | { uuid: string }
     | { uuid: string }
     | { uuid: string }
@@ -127,8 +128,11 @@ export const OrderDetailFragment = gql`
     ...PriceFragment
   }
   giftVouchers {
-    code
-    value
+    ...AppliedGiftVoucherFragment
+  }
+  purchasedGiftVouchers {
+    productCatnum
+    pdfUrl
   }
   remainingAmountToPay
   isPaid
@@ -153,4 +157,5 @@ export const OrderDetailFragment = gql`
 }
     ${OrderDetailItemFragment}
 ${PriceFragment}
+${AppliedGiftVoucherFragment}
 ${OrderWithdrawalRequestFragment}`;
