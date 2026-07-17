@@ -2116,6 +2116,9 @@ msgstr "Navigačná položka <strong><a href=\"{{ url }}\">{{ name }}</a></stron
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr "Navigačná položka <strong>{{ name }}</strong> bola odstránená"
 
+msgid "Navigation item type"
+msgstr "Typ navigačnej položky"
+
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
@@ -3265,6 +3268,9 @@ msgstr "Obchody"
 msgid "Street"
 msgstr "Ulica"
 
+msgid "Subcategories"
+msgstr "Podkategórie"
+
 msgid "Subject"
 msgstr "Predmet"
 
@@ -3285,6 +3291,9 @@ msgstr "Superadmin"
 
 msgid "Superadmin permissions"
 msgstr "Oprávnenia superadmina"
+
+msgid "Supported formats: /url-address, url-address, https://example.com/url-address"
+msgstr "Podporované formáty: /url-adresa, url-adresa, https://example.com/url-adresa"
 
 msgid "System data"
 msgstr "Systémové údaje"

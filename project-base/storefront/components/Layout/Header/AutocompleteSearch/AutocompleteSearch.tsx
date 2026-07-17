@@ -6,7 +6,7 @@ import { useAutocompleteSearchQuery } from 'graphql/requests/search/queries/Auto
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/utils/pageReadyEvents/useGtmAutocompleteResultsViewEvent';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
@@ -25,19 +25,35 @@ const AutocompleteSearchPopup = dynamic(() =>
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 export type AutocompleteSearchProps = {
+    inputRef?: RefObject<HTMLInputElement | null>;
     inputClassName?: string;
     inputId?: string;
+    popupClassName?: string;
+    shouldOpenPopupOnMount?: boolean;
+    shouldFocusOnMount?: boolean;
+    shouldRenderResultsOverlay?: boolean;
+    onClearEmpty?: () => void;
 };
 
-export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({ inputClassName, inputId }) => {
+export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({
+    inputRef,
+    inputClassName,
+    inputId,
+    popupClassName,
+    shouldFocusOnMount,
+    shouldOpenPopupOnMount,
+    shouldRenderResultsOverlay = true,
+    onClearEmpty,
+}) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const router = useRouter();
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const searchSectionRef = useRef<HTMLDivElement>(null);
-    const searchInputRef = useRef<HTMLInputElement>(null);
+    const localSearchInputRef = useRef<HTMLInputElement>(null);
+    const searchInputRef = inputRef ?? localSearchInputRef;
 
-    const [isSearchResultsPopupOpen, setIsSearchResultsPopupOpen] = useState(false);
+    const [isSearchResultsPopupOpen, setIsSearchResultsPopupOpen] = useState(!!shouldOpenPopupOnMount);
     const [searchQueryValue, setSearchQueryValue] = useState('');
 
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
@@ -68,10 +84,10 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({ inputClassName
         favoritesData?.autocompleteFavorites.brands.length
     );
 
-    const shouldShowPopup = isWithFavorites || isWithValidSearchQuery;
+    const shouldShowPopup = shouldOpenPopupOnMount || isWithFavorites || isWithValidSearchQuery;
     const isSearchResultsPopupVisible = isSearchResultsPopupOpen && shouldShowPopup;
 
-    const showFavorites = !isWithValidSearchQuery && isWithFavorites;
+    const showFavorites = !isWithValidSearchQuery && (shouldOpenPopupOnMount || isWithFavorites);
 
     const handleSearch = () => {
         if (isWithValidSearchQuery) {
@@ -101,6 +117,18 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({ inputClassName
 
     useFocusTrap(isSearchResultsPopupVisible ? searchSectionRef : undefined);
 
+    useEffect(() => {
+        if (shouldFocusOnMount) {
+            window.requestAnimationFrame(() => searchInputRef.current?.focus());
+        }
+    }, [shouldFocusOnMount]);
+
+    useEffect(() => {
+        if (shouldOpenPopupOnMount) {
+            setIsSearchResultsPopupOpen(true);
+        }
+    }, [shouldOpenPopupOnMount]);
+
     return (
         <>
             <search
@@ -122,6 +150,7 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({ inputClassName
                     value={searchQueryValue}
                     onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
                     onClear={() => setSearchQueryValue('')}
+                    onClearEmpty={onClearEmpty}
                     onOpenPopup={handleOpenPopup}
                     onSearch={handleSearch}
                 />
@@ -133,6 +162,7 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({ inputClassName
                             autocompleteSearchQueryValue={searchQueryValue}
                             autocompleteSearchResults={searchData}
                             favoritesData={favoritesData}
+                            popupClassName={popupClassName}
                             showFavorites={showFavorites}
                             onClosePopupCallback={handleClosePopup}
                         />
@@ -140,7 +170,9 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({ inputClassName
                 </AnimatePresence>
             </search>
 
-            <Overlay isActive={isSearchResultsPopupVisible} onClick={handleClosePopup} />
+            {shouldRenderResultsOverlay && (
+                <Overlay isActive={isSearchResultsPopupVisible} onClick={handleClosePopup} />
+            )}
         </>
     );
 };

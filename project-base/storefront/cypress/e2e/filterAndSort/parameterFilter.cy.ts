@@ -97,7 +97,7 @@ describe('Parameter Filter Tests (SSP-1739)', () => {
         cy.waitForStableAndInteractiveDOM();
         cy.url().should('include', 'filter');
 
-        cy.getByTID([[TIDs.blocks_sortingbar_option_, 'PRICE_ASC']]).click({ force: true });
+        cy.getByTID([[TIDs.blocks_sortingbar_option_, 'PRICE_ASC']]).filter(':visible').click();
         cy.waitForStableAndInteractiveDOM();
 
         cy.url().should('include', 'filter');

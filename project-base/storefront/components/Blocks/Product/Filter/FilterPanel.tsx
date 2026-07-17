@@ -14,6 +14,7 @@ import { FilterGroupGeneric } from './FilterGroupGeneric';
 import { FilterGroupInStock } from './FilterGroupInStock';
 import { FilterGroupParameters } from './FilterGroupParameters';
 import { FilterGroupPrice } from './FilterGroupPrice';
+import { scrollToProductList, scrollToSelectedFilters } from './filterElementIds';
 
 export type FilterPanelProps = {
     productFilterOptions: TypeProductFilterOptionsFragment;
@@ -44,6 +45,17 @@ export const FilterPanel: FC<FilterPanelProps> = ({
     const shouldDisplayInStockFilter =
         !!filterOptions.inStock && !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
 
+    const handleShowProductsClick = () => {
+        setIsFilterPanelOpen(false);
+        scrollToSelectedFilters();
+    };
+
+    const handleClearAllFiltersClick = () => {
+        resetAllFilterQueries();
+        setIsFilterPanelOpen(false);
+        scrollToProductList();
+    };
+
     return (
         <section
             aria-label={t('Product filters', { ns: 'accessibility' })}
@@ -58,7 +70,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             />
 
             <div className="flex vl:hidden items-center justify-between p-5">
-                <h2 className="h5">{t('Product filter')}</h2>
+                <span className="w-full text-center font-secondary font-semibold">{t('Product filter')}</span>
 
                 <button
                     aria-label={t('Close filter panel', { ns: 'accessibility' })}
@@ -127,22 +139,22 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 </div>
             </div>
 
-            <div className="flex vl:hidden flex-wrap items-center justify-between gap-x-5 gap-y-2 bg-background-more px-5 py-4">
-                <Button className="ml:auto" size="large" onClick={() => setIsFilterPanelOpen(false)}>
-                    {t('Show')} {totalCount} {t('products count', { count: totalCount })}
-                </Button>
-
+            <div className="flex vl:hidden w-full flex-wrap items-center justify-between gap-x-5 gap-y-2 bg-background-more px-5 py-4">
                 {currentFilter !== null && (
                     <Button
                         aria-label={t('Clear all active filters', { ns: 'accessibility' })}
                         size="large"
                         tid={TIDs.clear_all_filters_button}
                         variant="inverted"
-                        onClick={resetAllFilterQueries}
+                        onClick={handleClearAllFiltersClick}
                     >
                         {t('Clear all')}
                     </Button>
                 )}
+
+                <Button className="ml-auto" size="large" onClick={handleShowProductsClick}>
+                    {t('Show')} {totalCount} {t('products count', { count: totalCount })}
+                </Button>
             </div>
         </section>
     );

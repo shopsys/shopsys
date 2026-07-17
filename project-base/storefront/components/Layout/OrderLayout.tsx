@@ -28,7 +28,11 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
                 <NotificationBars />
 
-                <header className="bg-background-brand lg:pb-6" id="site-header" tabIndex={-1}>
+                <header
+                    className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less"
+                    id="site-header"
+                    tabIndex={-1}
+                >
                     <Header simpleHeader />
                 </header>
 

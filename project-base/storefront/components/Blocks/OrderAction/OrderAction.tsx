@@ -30,7 +30,7 @@ export const OrderAction: FC<OrderActionProps> = ({
     const { t } = useTranslation();
 
     return (
-        <div className="my-5 flex flex-col-reverse items-center justify-between gap-4 md:my-10 md:flex-row">
+        <div className="my-5 flex flex-wrap-reverse items-center justify-between gap-4 md:my-10">
             <Button
                 aria-label={t('Go to previous step', { ns: 'accessibility' })}
                 size="large"

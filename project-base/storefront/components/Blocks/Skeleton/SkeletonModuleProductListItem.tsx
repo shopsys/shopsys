@@ -6,7 +6,7 @@ type SkeletonModuleProductListItemProps = {
 
 export const SkeletonModuleProductListItem: FC<SkeletonModuleProductListItemProps> = ({ isSimpleCard }) => (
     <div className="flex w-full flex-col gap-2.5 rounded-xl bg-skeleton-less px-2.5 py-5 sm:p-5">
-        <Skeleton className="h-[180px]" />
+        <Skeleton className="h-45" />
 
         <div className="flex flex-col gap-1">
             <Skeleton className="h-4" />
@@ -22,6 +22,14 @@ export const SkeletonModuleProductListItem: FC<SkeletonModuleProductListItemProp
             </div>
         )}
 
-        <Skeleton className="h-9" />
+        {isSimpleCard ? (
+            <Skeleton className="h-9" />
+        ) : (
+            <div className="flex w-full items-center justify-between gap-1">
+                <Skeleton className="size-6" />
+                <Skeleton className="size-6" />
+                <Skeleton className="h-9 w-1/2" />
+            </div>
+        )}
     </div>
 );

@@ -3,7 +3,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import type { FocusEventHandler } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -12,7 +12,12 @@ import { NavigationItem } from './NavigationItem';
 import { NavigationItemColumn } from './NavigationItemColumn';
 import { NavigationMoreItem } from './NavigationMoreItem';
 import { NavigationMoreMenu } from './NavigationMoreMenu';
-import { getNavigationItemKey, getNavigationItemSkeletonType } from './navigationUtils';
+import {
+    getNavigationItemKey,
+    getNavigationItemMenuId,
+    getNavigationItemSkeletonType,
+    isNavigationItemWithCategories,
+} from './navigationUtils';
 import { useNavigationOverflow } from './useNavigationOverflow';
 
 const HOVER_MENU_DELAY = 400;
@@ -33,8 +38,11 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
     const [activeNavigationItemKey, setActiveNavigationItemKey] = useState<string | null>(null);
     const [navigationOverlayTop, setNavigationOverlayTop] = useState<number | null>(null);
     const [hasNavigationMenuBeenOpened, setHasNavigationMenuBeenOpened] = useState(false);
+    const [shouldOpenMenuImmediately, setShouldOpenMenuImmediately] = useState(false);
     const [isMoreMenuOpened, setIsMoreMenuOpened] = useState(false);
     const [hasMoreMenuBeenOpened, setHasMoreMenuBeenOpened] = useState(false);
+    const shouldFocusNavigationMenuRef = useRef(false);
+    const navigationMenuRef = useRef<HTMLDivElement>(null);
     const moreMenuId = `${id}-more-menu`;
     const isMoreMenuOpenedDelayed = useDebounce(
         isMoreMenuOpened,
@@ -42,7 +50,9 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
     );
     const activeNavigationItemKeyDelayed = useDebounce(
         activeNavigationItemKey,
-        activeNavigationItemKey === null || hasNavigationMenuBeenOpened ? 0 : HOVER_MENU_DELAY,
+        activeNavigationItemKey === null || hasNavigationMenuBeenOpened || shouldOpenMenuImmediately
+            ? 0
+            : HOVER_MENU_DELAY,
     );
     const {
         hasOverflowNavigationItems,
@@ -60,6 +70,9 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
     const activeNavigationItemSkeletonType = activeNavigationItem
         ? getNavigationItemSkeletonType(activeNavigationItem, catalogUrl)
         : undefined;
+    const activeNavigationItemMenuId = activeNavigationItem
+        ? getNavigationItemMenuId(activeNavigationItem, id)
+        : undefined;
 
     const updateNavigationOverlayTop = useCallback(() => {
         setNavigationOverlayTop(navigationRef.current?.getBoundingClientRect().bottom ?? null);
@@ -74,6 +87,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
     useEffect(() => {
         if (activeNavigationItemKeyDelayed !== null) {
             setHasNavigationMenuBeenOpened(true);
+            setShouldOpenMenuImmediately(false);
             updateNavigationOverlayTop();
         }
 
@@ -82,6 +96,15 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
             updateNavigationOverlayTop();
         }
     }, [activeNavigationItemKeyDelayed, isMoreMenuOpenedDelayed, updateNavigationOverlayTop]);
+
+    useEffect(() => {
+        if (!activeNavigationItem || !shouldFocusNavigationMenuRef.current) {
+            return;
+        }
+
+        shouldFocusNavigationMenuRef.current = false;
+        navigationMenuRef.current?.querySelector<HTMLAnchorElement>('a[href]')?.focus();
+    }, [activeNavigationItem]);
 
     useEffect(() => {
         if (activeNavigationItemKeyDelayed === null && !isMoreMenuOpenedDelayed) {
@@ -116,6 +139,8 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
         setActiveNavigationItemKey(null);
         setNavigationOverlayTop(null);
         setHasNavigationMenuBeenOpened(false);
+        setShouldOpenMenuImmediately(false);
+        shouldFocusNavigationMenuRef.current = false;
     };
 
     const closeMoreMenu = () => {
@@ -123,9 +148,11 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
         setHasMoreMenuBeenOpened(false);
     };
 
-    const openNavigationMenu = (navigationItemKey: string) => {
+    const openNavigationMenu = (navigationItemKey: string, openImmediately = false, focusMenu = false) => {
         closeMoreMenu();
         updateNavigationOverlayTop();
+        setShouldOpenMenuImmediately(openImmediately);
+        shouldFocusNavigationMenuRef.current = focusMenu;
         setActiveNavigationItemKey(navigationItemKey);
     };
 
@@ -175,7 +202,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
             <ul
                 ref={navigationRef}
                 className={twJoin(
-                    'hidden w-full min-w-0 justify-start overflow-visible lg:flex',
+                    'vl:flex hidden w-full min-w-0 justify-start overflow-visible',
                     !isNavigationMeasured && 'invisible',
                 )}
             >
@@ -191,10 +218,13 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
                                 navigationItemRefs.current[index] = element;
                             }}
                             itemClassName={itemClassName}
+                            menuId={getNavigationItemMenuId(navigationItem, id)}
                             navigationItem={navigationItem}
                             shouldReduceMotion={!!shouldReduceMotion}
                             onMenuClose={closeNavigationMenu}
                             onMenuOpen={() => openNavigationMenu(navigationItemKey)}
+                            onMenuOpenAndFocus={() => openNavigationMenu(navigationItemKey, true, true)}
+                            onMenuOpenImmediately={() => openNavigationMenu(navigationItemKey, true)}
                         />
                     );
                 })}
@@ -218,7 +248,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
                         <m.div
                             aria-hidden="true"
                             animate={{ opacity: 1 }}
-                            className="pointer-events-none fixed right-0 bottom-0 left-0 z-1000 bg-overlay-default"
+                            className="pointer-events-none fixed right-0 bottom-0 left-0 z-overlay bg-overlay-default"
                             exit={{ opacity: 0 }}
                             initial={{ opacity: 0 }}
                             style={{ top: navigationOverlayTop }}
@@ -228,25 +258,37 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
             </AnimatePresence>
 
             <AnimatePresence initial={false}>
-                {(!!activeNavigationItem?.categoriesByColumns.length || isMoreMenuOpenedDelayed) && (
+                {(isNavigationItemWithCategories(activeNavigationItem) || isMoreMenuOpenedDelayed) && (
                     <AnimateNavigationMenu
-                        className="grid! absolute right-0 left-0 z-aboveOverlay grid-cols-4 gap-11 bg-background-default px-10 shadow-md"
+                        id={isMoreMenuOpenedDelayed ? undefined : activeNavigationItemMenuId}
+                        className={twJoin(
+                            'absolute right-0 left-0 z-aboveOverlay bg-background-default shadow-md',
+                            isMoreMenuOpenedDelayed && 'grid! grid-cols-4 gap-11 px-10',
+                        )}
                         disableAnimation={isAnimationDisabled || !!shouldReduceMotion}
                     >
                         {isMoreMenuOpenedDelayed ? (
                             <NavigationMoreMenu
                                 id={moreMenuId}
+                                navigationId={id}
                                 navigationItems={overflowNavigationItems}
                                 onLinkClick={closeMoreMenu}
+                                onNavigationItemOpen={(navigationItem) =>
+                                    openNavigationMenu(getNavigationItemKey(navigationItem), true, true)
+                                }
                             />
                         ) : (
-                            !!activeNavigationItem?.categoriesByColumns.length && (
-                                <NavigationItemColumn
-                                    className="py-12"
-                                    columnCategories={activeNavigationItem.categoriesByColumns}
-                                    skeletonType={activeNavigationItemSkeletonType}
-                                    onLinkClick={closeNavigationMenu}
-                                />
+                            isNavigationItemWithCategories(activeNavigationItem) && (
+                                <div
+                                    ref={navigationMenuRef}
+                                    className="vl:mx-auto grid w-full vl:max-w-default-max-width gap-8 p-8"
+                                >
+                                    <NavigationItemColumn
+                                        columnCategories={activeNavigationItem.categoriesByColumns}
+                                        skeletonType={activeNavigationItemSkeletonType}
+                                        onLinkClick={closeNavigationMenu}
+                                    />
+                                </div>
                             )
                         )}
                     </AnimateNavigationMenu>

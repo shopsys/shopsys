@@ -2,3 +2,8 @@ NavigationItem:
     type: object
     inherits:
         - 'NavigationItemDecorator'
+    config:
+        fields:
+            routeName:
+                type: "FriendlyUrlRouteEnum"
+                description: "Friendly route name if exists, NULL for unknown (e.g., external) links"

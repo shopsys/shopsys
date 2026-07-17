@@ -19,6 +19,7 @@ class NavigationItemDataFactory
     public function createForEntity(NavigationItem $navigationItem): NavigationItemData
     {
         $navigationItemData = $this->createInstance();
+        $navigationItemData->type = $navigationItem->getType();
         $navigationItemData->name = $navigationItem->getName();
         $navigationItemData->url = $navigationItem->getUrl();
         $navigationItemData->domainId = $navigationItem->getDomainId();

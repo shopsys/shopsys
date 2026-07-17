@@ -389,7 +389,7 @@ msgid "Please enter link"
 msgstr "Prosím vyplňte odkaz"
 
 msgid "Please enter link URL"
-msgstr "Vyplňte prosím URL odkazu"
+msgstr "Prosím vyplňte URL odkazu"
 
 msgid "Please enter login"
 msgstr "Vyplňte prosím login"
@@ -561,6 +561,15 @@ msgstr "Pro povolenou doménu %domainName% vyberte platební metodu GoPay."
 
 msgid "Please select a country"
 msgstr "Prosím vyberte stát"
+
+msgid "Please select at least one category"
+msgstr "Prosím vyberte alespoň jednu kategorii"
+
+msgid "Please select navigation item type"
+msgstr "Prosím vyberte typ položky navigace"
+
+msgid "Please select valid navigation item type"
+msgstr "Prosím vyberte platný typ položky navigace"
 
 msgid "Please upload a CSV file"
 msgstr "Nahrajte prosím CSV soubor"

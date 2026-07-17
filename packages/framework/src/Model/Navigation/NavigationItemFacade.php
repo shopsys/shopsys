@@ -90,6 +90,16 @@ class NavigationItemFacade
 
     protected function fixUrlInNavigationItemData(NavigationItemData $navigationItemData): void
     {
+        if ($navigationItemData->type !== NavigationItemTypeEnum::LINK) {
+            $navigationItemData->url = null;
+
+            return;
+        }
+
+        if ($navigationItemData->url === null) {
+            return;
+        }
+
         $domainConfig = $this->domain->getDomainConfigById($navigationItemData->domainId);
         $navigationItemData->url = UrlNormalizer::normalizeUrl($navigationItemData->url, $domainConfig);
     }
@@ -104,6 +114,12 @@ class NavigationItemFacade
 
     protected function setNavigationItemRouteName(NavigationItem $navigationItem): void
     {
+        if ($navigationItem->getType() !== NavigationItemTypeEnum::LINK || $navigationItem->getUrl() === null) {
+            $navigationItem->setRouteName(null);
+
+            return;
+        }
+
         $friendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug($navigationItem->getDomainId(), trim($navigationItem->getUrl(), '/'));
         $navigationItem->setRouteName($friendlyUrl?->getRouteName());
     }

@@ -4,10 +4,21 @@
     <div class="row g-2 js-sortable-values-container">
         {% set item_input_name = full_name ~ '[]' %}
         {% set full_name = "" %}
-        {% set attr = attr|merge({'class': (attr.class|default('') ~ ' js-sortable-values-input input')|trim}) %}
+        {% set attr = attr|merge({
+            'class': (attr.class|default('') ~ ' js-sortable-values-input input')|trim,
+        }) %}
+        {% set select_label = label ?: placeholder ?: 'Select value'|trans %}
 
         <div class="col">
-            <select {{ block('widget_attributes') }}>
+            <label for="{{ id }}" class="visually-hidden">{{ select_label }}</label>
+            <select
+                id="{{ id }}"
+                name="{{ full_name }}"
+                {% if disabled %}disabled="disabled"{% endif %}
+                {% if required %}required="required"{% endif %}
+                {{ block('attributes') }}
+                data-item-template="{{ self.sortableValuesWidgetItem(item_input_name, '%value%', '%label%')|escape('html_attr') }}"
+            >
                 <option value="" selected="selected">{{ placeholder }}</option>
                 {% for labelValue, label in labels_by_value %}
                     <option value="{{ labelValue }}"{% if labelValue in value %} disabled="disabled"{% endif %}>
@@ -15,16 +26,6 @@
                     </option>
                 {% endfor %}
             </select>
-        </div>
-
-        <div class="col-6">
-            <button type="button"
-                    class="btn js-sortable-values-item-add"
-                    data-item-template="{{ self.sortableValuesWidgetItem(item_input_name, '%value%', '%label%')|escape('html_attr') }}"
-            >
-                {{ ux_icon('plus') }}
-                {{ 'Add'|trans }}
-            </button>
         </div>
 
         <div class="js-sortable-values-items list-group list-group-flush list-group-hoverable">

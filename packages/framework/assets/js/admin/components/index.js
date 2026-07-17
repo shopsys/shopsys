@@ -42,6 +42,7 @@ import './PriceListProductPickerWindow';
 import './productsPicker';
 import './ProductsPickerWindow';
 import './MultiplePicker';
+import './NavigationItemForm';
 import './PickerWindow';
 import './SinglePicker';
 import './PromoCode';

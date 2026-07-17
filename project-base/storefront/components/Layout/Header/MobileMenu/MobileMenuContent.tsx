@@ -11,9 +11,10 @@ import { mapNavigationMenuItems } from './mobileMenuUtils';
 
 export type MenuItem = {
     name: string;
-    link: string;
+    link: string | null;
     parentItem?: string;
     children?: MenuItem[];
+    isViewAllLink?: boolean;
 };
 
 type MobileMenuContentProps = {
@@ -58,7 +59,19 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
         animate(slideIntoViewThenTeleportAwaySequence);
 
         setHistoryMenuGroups([...(historyMenuGroups || []), currentMenuItems]);
-        setCurrentMenuItems(navigationItem.children!);
+        setCurrentMenuItems([
+            ...navigationItem.children!,
+            ...(navigationItem.link !== null
+                ? [
+                      {
+                          name: t('View all in {{ categoryName }}', { categoryName: navigationItem.name }),
+                          link: navigationItem.link,
+                          parentItem: navigationItem.name,
+                          isViewAllLink: true,
+                      },
+                  ]
+                : []),
+        ]);
     };
 
     const handleBackClick = (historyMenuGroups: MenuItem[][]) => {
@@ -92,31 +105,32 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
             <div className="flex items-center p-5">
                 {!!historyMenuGroups?.length && (
                     <button
-                        className="flex cursor-pointer items-center justify-center p-1 text-icon-less hover:text-icon-default"
+                        className="flex cursor-pointer items-center justify-center text-icon-less hover:text-icon-default"
                         tabIndex={0}
                         title={t('Back')}
                         onClick={() => handleBackClick(historyMenuGroups)}
                     >
-                        <ArrowIcon className="size-4 rotate-90" />
+                        <ArrowIcon className="size-6 rotate-90" />
                     </button>
                 )}
 
-                <span className="h-6 flex-1 text-center text-md">
+                <span className="h-6 flex-1 text-center font-secondary font-semibold">
                     {currentGroupTitle ? currentGroupTitle : t('Menu')}
                 </span>
 
                 <button
-                    className="flex cursor-pointer items-center justify-center p-1 text-icon-less hover:text-icon-default"
+                    className="flex cursor-pointer items-center justify-center text-icon-less hover:text-icon-default"
                     tabIndex={0}
                     title={t('Close')}
                     onClick={onMenuToggleHandler}
                 >
-                    <RemoveIcon className="size-4" />
+                    <RemoveIcon className="size-6" />
                 </button>
             </div>
 
             <MenuItems
                 id="animation-visible-element"
+                isHidden={false}
                 menuItems={currentMenuItems}
                 onExpand={handleExpandClick}
                 onNavigate={onMenuToggleHandler}
@@ -125,6 +139,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
             <MenuItems
                 className="absolute top-16"
                 id="animation-hidden-element"
+                isHidden
                 menuItems={currentMenuItems}
                 onExpand={handleExpandClick}
                 onNavigate={onMenuToggleHandler}
@@ -137,15 +152,17 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
 
 const MenuItems: FC<{
     id: string;
+    isHidden: boolean;
     menuItems: MenuItem[];
     onExpand: (item: MenuItem) => void;
     onNavigate: () => void;
-}> = ({ className, id, menuItems, onExpand, onNavigate }) => {
+}> = ({ className, id, isHidden, menuItems, onExpand, onNavigate }) => {
     return (
-        <div className={twJoin('w-[315px] divide-y divide-border-default px-5', className)} id={id}>
+        <div aria-hidden={isHidden} className={twJoin('w-90 divide-y divide-border-less px-5', className)} id={id}>
             {menuItems.map((navigationItem) => (
                 <DropdownMenuListItem
-                    key={navigationItem.link + navigationItem.name + id}
+                    key={(navigationItem.link ?? navigationItem.name) + navigationItem.name + id}
+                    isHidden={isHidden}
                     navigationItem={navigationItem}
                     onExpand={() => onExpand(navigationItem)}
                     onNavigate={onNavigate}

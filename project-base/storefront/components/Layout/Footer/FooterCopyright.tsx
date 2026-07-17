@@ -58,7 +58,12 @@ export const FooterCopyright: FC = () => {
                     </ExtendedNextLink>
                 )}
 
-                <Button className="w-full md:w-auto lg:hidden" variant="secondary" onClick={handleBackToTop}>
+                <Button
+                    aria-label={t('Go to top of the page', { ns: 'accessibility' })}
+                    className="vl:hidden w-auto"
+                    variant="secondary"
+                    onClick={handleBackToTop}
+                >
                     {t('Back to top')}
                 </Button>
             </div>

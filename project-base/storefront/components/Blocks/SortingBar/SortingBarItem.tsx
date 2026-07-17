@@ -1,9 +1,24 @@
-import { MouseEventHandler } from 'react';
+import { AriaRole, MouseEventHandler } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
-type SortingBarItemProps = { isActive: boolean; href?: string; onClick?: () => void; ariaLabel: string; tid?: string };
+type SortingBarItemProps = {
+    isActive: boolean;
+    href?: string;
+    onClick?: () => void;
+    ariaLabel: string;
+    role?: AriaRole;
+    tid?: string;
+};
 
-export const SortingBarItem: FC<SortingBarItemProps> = ({ children, isActive, href, onClick, ariaLabel, tid }) => {
+export const SortingBarItem: FC<SortingBarItemProps> = ({
+    children,
+    isActive,
+    href,
+    onClick,
+    ariaLabel,
+    role = 'option',
+    tid,
+}) => {
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         e.preventDefault();
         onClick?.();
@@ -12,12 +27,12 @@ export const SortingBarItem: FC<SortingBarItemProps> = ({ children, isActive, hr
     return (
         <a
             aria-label={ariaLabel}
-            aria-selected={isActive}
+            aria-selected={role === 'option' ? isActive : undefined}
             data-tid={tid}
             href={href}
-            role="option"
+            role={role}
             className={twMergeCustom(
-                'vl:relative vl:rounded-t-xl vl:rounded-b-none vl:bg-background-more vl:px-5 py-4 vl:py-2.5 vl:text-center text-right font-bold font-secondary text-link-default text-xs uppercase underline hover:text-link-hovered',
+                'vl:relative vl:rounded-t-xl vl:rounded-b-none vl:bg-background-more vl:px-5 py-4 vl:py-2.5 text-left vl:text-center font-bold font-secondary text-link-default text-xs uppercase underline hover:text-link-hovered',
                 isActive &&
                     'vl:border vl:border-border-less vl:bg-background-default font-semibold text-text-default no-underline vl:after:absolute vl:after:bottom-[-2px] vl:after:left-0 vl:after:h-[2px] vl:after:w-full vl:after:bg-background-default',
             )}

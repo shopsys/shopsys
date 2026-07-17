@@ -1,4 +1,3 @@
-import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { FreeTransportRange } from 'components/Blocks/FreeTransport/FreeTransportRange';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
@@ -62,12 +61,7 @@ export const CartInHeaderList: FC = () => {
     }, [cart?.items.length]);
 
     if (!cart?.items.length) {
-        return (
-            <>
-                <span>{t('Your cart is currently empty.')}</span>
-                <EmptyCartIcon className={twJoin('w-20')} />
-            </>
-        );
+        return <p className="text-center">{t('Your cart is currently empty.')}</p>;
     }
 
     return (
@@ -76,7 +70,7 @@ export const CartInHeaderList: FC = () => {
             <div
                 ref={scrollContainerRef}
                 className={twJoin(
-                    'max-h-[50dvh] w-full overflow-y-auto overflow-x-hidden',
+                    'max-h-[50dvh] w-full overflow-y-auto overflow-x-hidden md:w-127',
                     hasScrollableItems && 'pr-2',
                 )}
             >
@@ -93,7 +87,7 @@ export const CartInHeaderList: FC = () => {
                 </ul>
             </div>
             <div className={twJoin('flex items-center justify-between gap-4 pt-5')}>
-                <div className="vl:max-w-65 text-left">
+                <div className="vl:max-w-75 text-center md:text-left">
                     <FreeTransportRange />
                 </div>
 

@@ -9,31 +9,18 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemTypeEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class NavigationTest extends GraphQlTestCase
 {
     public function testNavigation(): void
     {
-        $query = '
-            query {
-                navigation {
-                    name
-                    link
-                    categoriesByColumns {
-                        columnNumber
-                        categories {
-                            name
-                        }
-                    }
-                }
-            }
-        ';
-
         $expectedData = [
             [
                 'name' => t('Catalog', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                'link' => $this->getCatalogLink(),
+                'type' => NavigationItemTypeEnum::CATEGORIES,
+                'link' => null,
                 'routeName' => null,
                 'categoriesByColumns' => [
                     [
@@ -70,8 +57,9 @@ class NavigationTest extends GraphQlTestCase
             ],
             [
                 'name' => t('Gadgets', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                'link' => $this->getLink(CategoryDataFixture::CATEGORY_ELECTRONICS),
-                'routeName' => FriendlyUrlRouteEnum::FRONT_PRODUCT_LIST->name,
+                'type' => NavigationItemTypeEnum::CATEGORIES,
+                'link' => null,
+                'routeName' => null,
                 'categoriesByColumns' => [
                     [
                         'columnNumber' => 1,
@@ -110,8 +98,9 @@ class NavigationTest extends GraphQlTestCase
             ],
             [
                 'name' => t('Bookworm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                'link' => $this->getLink(CategoryDataFixture::CATEGORY_BOOKS),
-                'routeName' => FriendlyUrlRouteEnum::FRONT_PRODUCT_LIST->name,
+                'type' => NavigationItemTypeEnum::CATEGORIES,
+                'link' => null,
+                'routeName' => null,
                 'categoriesByColumns' => [
                     [
                         'columnNumber' => 1,
@@ -133,14 +122,16 @@ class NavigationTest extends GraphQlTestCase
             ],
             [
                 'name' => t('Growing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'type' => NavigationItemTypeEnum::LINK,
                 'link' => $this->getLink(CategoryDataFixture::CATEGORY_GARDEN_TOOLS),
                 'routeName' => FriendlyUrlRouteEnum::FRONT_PRODUCT_LIST->name,
                 'categoriesByColumns' => [],
             ],
             [
                 'name' => t('Snack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                'link' => $this->getLink(CategoryDataFixture::CATEGORY_FOOD),
-                'routeName' => FriendlyUrlRouteEnum::FRONT_PRODUCT_LIST->name,
+                'type' => NavigationItemTypeEnum::CATEGORIES,
+                'link' => null,
+                'routeName' => null,
                 'categoriesByColumns' => [
                     [
                         'columnNumber' => 1,
@@ -177,10 +168,5 @@ class NavigationTest extends GraphQlTestCase
             ],
             DomainRouter::SLUG,
         );
-    }
-
-    private function getCatalogLink(): string
-    {
-        return $this->getLocalizedPathOnFirstDomainByRouteName('front_catalog', [], DomainRouter::ABSOLUTE_PATH);
     }
 }

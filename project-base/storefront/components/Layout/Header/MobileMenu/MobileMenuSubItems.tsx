@@ -64,7 +64,7 @@ type SubMenuItemProps = {
     onClick: () => void;
 };
 
-const subMenuItemTwClass = 'py-3 text-sm text-text-default no-underline font-semibold text-left';
+const subMenuItemTwClass = 'py-3 text-sm text-text-default no-underline font-semibold text-left font-secondary';
 
 const SubMenuItem: FC<SubMenuItemProps> = ({ children, onClick, href, type }) => {
     if (href) {

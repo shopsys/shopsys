@@ -4,7 +4,7 @@ import Register from '../../common/utils/Register';
 
 export default class SortableValues {
     constructor($container) {
-        $container.filterAllNodes('.js-sortable-values-item-add').click(event => this.addItemButtonClick(event));
+        $container.filterAllNodes('.js-sortable-values-input').change(event => this.addItemSelectChange(event));
         $container.filterAllNodes('.js-sortable-values-item-remove').click(event => this.removeItemButtonClick(event));
 
         $container.filterAllNodes('.js-sortable-values-items').each((_index, element) => {
@@ -16,13 +16,13 @@ export default class SortableValues {
         });
     }
 
-    addItemButtonClick(event) {
-        const $button = $(event.currentTarget);
-        const $container = $button.closest('.js-sortable-values-container');
+    addItemSelectChange(event) {
+        const $select = $(event.currentTarget);
+        const $container = $select.closest('.js-sortable-values-container');
         const $option = $container.find('.js-sortable-values-input :selected');
 
         if ($option.val()) {
-            const $item = this.createItem($button.data('item-template'), $option.val(), $option.text());
+            const $item = this.createItem($select.data('item-template'), $option.val(), $option.text());
 
             $container.find('.js-sortable-values-items').prepend($item);
             new Register().registerNewContent($item);

@@ -11,7 +11,7 @@ export const HeaderContact: FC = () => {
 
     return (
         <div className="order-2 ml-auto flex">
-            <div className="relative flex flex-1 flex-col items-start py-4 pr-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="relative flex flex-1 flex-col items-start lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-wrap items-center gap-3 lg:flex-1 xl:justify-center">
                     <a
                         aria-label={t('Call us at {{ phone }}. {{ openingHours }}', {

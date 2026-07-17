@@ -8,11 +8,11 @@ import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/Aut
 import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
-import { twJoin } from 'tailwind-merge';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { fadeAnimation } from 'utils/animations/animationVariants';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { twMergeCustom } from 'utils/twMerge';
 import { useKeypress } from 'utils/useKeyPress';
 import { AutocompleteFavoritesResult } from './AutocompleteFavoritesResult';
 import { AutocompleteSearchArticlesResult } from './AutocompleteSearchArticlesResult';
@@ -27,6 +27,7 @@ type AutocompleteProps = {
     onClosePopupCallback: () => void;
     areAutocompleteSearchDataFetching: boolean;
     favoritesData: TypeAutocompleteFavoritesQuery | undefined;
+    popupClassName?: string;
     showFavorites: boolean;
 };
 
@@ -36,6 +37,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
     autocompleteSearchResults,
     onClosePopupCallback,
     favoritesData,
+    popupClassName,
     showFavorites,
 }) => {
     const router = useRouter();
@@ -62,12 +64,16 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                 exit="hidden"
                 initial="hidden"
                 variants={fadeAnimation}
-                className={twJoin(
-                    'absolute -bottom-3 left-0 z-aboveOverlay flex vl:w-192.5 w-full origin-top translate-y-full flex-col gap-5 vl:gap-6 overflow-auto rounded-xl bg-background-default p-5',
-                    'max-h-[calc(85vh-169px)] vl:max-h-[calc(98vh-120px)] md:max-h-[calc(98vh-169px)] lg:max-h-[calc(98vh-180px)]',
+                className={twMergeCustom(
+                    'absolute -bottom-3 left-0 z-aboveOverlay flex origin-top translate-y-full flex-col gap-5 vl:gap-6 overflow-auto rounded-xl bg-background-default p-5',
+                    'vl:w-3xl w-full',
+                    'max-h-[calc(85vh-100px)] vl:max-h-[calc(98vh-120px)] md:max-h-[calc(98vh-169px)] lg:max-h-[calc(98vh-180px)]',
+                    popupClassName,
                 )}
             >
-                {showFavorites && (
+                {showFavorites && !favoritesData && <AutocompleteSkeleton />}
+
+                {showFavorites && favoritesData && (
                     <AutocompleteFavoritesResult
                         favoritesData={favoritesData}
                         onClosePopupCallback={onClosePopupCallback}

@@ -1,24 +1,26 @@
-import { SortIcon } from 'components/Basic/Icon/SortIcon';
-import { Overlay } from 'components/Basic/Overlay/Overlay';
-import { Button } from 'components/Forms/Button/Button';
+import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/Portal';
+import { scrollToSelectedFilters } from 'components/Blocks/Product/Filter/filterElementIds';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { DEFAULT_SORT } from 'config/constants';
-import { TIDs } from 'cypress/tids';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { twJoin } from 'tailwind-merge';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useUpdateSortQuery } from 'utils/queryParams/useUpdateSortQuery';
-import { SortingBarItem } from './SortingBarItem';
+import { MobileSortingActions } from './MobileSortingActions';
+import { SortingBarOptions } from './SortingBarOptions';
+import { getActiveFilterCount, getIsPriceRelatedSortOption } from './sortingBarUtils';
 
 export type SortingBarProps = {
     totalCount: number;
     sorting: TypeProductOrderingModeEnum | null;
     customSortOptions?: TypeProductOrderingModeEnum[];
 };
+
+export type SortOptionsLabels = Record<TypeProductOrderingModeEnum, string>;
 
 const DEFAULT_SORT_OPTIONS = [
     TypeProductOrderingModeEnum.Priority,
@@ -28,12 +30,15 @@ const DEFAULT_SORT_OPTIONS = [
 
 export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSortOptions }) => {
     const { t } = useTranslation();
-    const router = useRouter();
-    const asPathWithoutQueryParams = router.asPath.split('?')[0];
     const currentSort = useCurrentSortQuery();
     const updateSort = useUpdateSortQuery();
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
     const { canSeePrices } = useAuthorization();
+    const setIsFilterPanelOpen = useSessionStore((s) => s.setIsFilterPanelOpen);
+    const isFilterPanelOpen = useSessionStore((s) => s.isFilterPanelOpen);
+    const defaultProductFiltersMap = useSessionStore((s) => s.defaultProductFiltersMap);
+    const currentFilter = useCurrentFilterQuery();
+    const activeFilterCount = getActiveFilterCount(currentFilter, defaultProductFiltersMap);
 
     const sortOptionsLabels = {
         [TypeProductOrderingModeEnum.Priority]: t('Priority'),
@@ -49,89 +54,60 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     );
 
     const selectedSortOption = currentSort || sorting || DEFAULT_SORT;
+    const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+
+    useEffect(() => {
+        setPortalElement(document.getElementById(OVERLAY_PORTAL_ROOT_ID) ?? document.body);
+    }, []);
+
+    useEffect(() => {
+        if (isFilterPanelOpen) {
+            setIsSortMenuOpen(false);
+        }
+    }, [isFilterPanelOpen]);
 
     const handleChangeSort = (sortOption: TypeProductOrderingModeEnum) => {
         updateSort(sortOption);
         setIsSortMenuOpen(false);
+        scrollToSelectedFilters();
     };
 
     return (
-        <>
-            <Button
-                aria-controls="sort-dropdown"
-                aria-expanded={isSortMenuOpen}
-                aria-haspopup="listbox"
-                variant="inverted"
-                aria-label={t('Sort products by {{ currentSort }}. Click to change sort order.', {
-                    ns: 'accessibility',
-                    currentSort: sortOptionsLabels[selectedSortOption] || t('default order'),
-                })}
-                className={twJoin(
-                    'relative vl:hidden w-full flex-1 justify-start sm:w-auto',
-                    isSortMenuOpen && 'z-aboveOverlay',
+        <div className="vl:relative vl:flex vl:flex-row vl:items-center vl:justify-between vl:gap-2.5 vl:border-border-less vl:border-b">
+            {portalElement &&
+                createPortal(
+                    <MobileSortingActions
+                        activeFilterCount={activeFilterCount}
+                        isFilterPanelOpen={isFilterPanelOpen}
+                        isSortMenuOpen={isSortMenuOpen}
+                        selectedSortOption={selectedSortOption}
+                        sortOptions={sortOptions}
+                        sortOptionsLabels={sortOptionsLabels}
+                        onChangeSort={handleChangeSort}
+                        onFilterPanelOpen={() => setIsFilterPanelOpen(true)}
+                        onSortMenuClose={() => setIsSortMenuOpen(false)}
+                        onSortMenuToggle={() => setIsSortMenuOpen(!isSortMenuOpen)}
+                    />,
+                    portalElement,
                 )}
-                onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
-            >
-                <SortIcon className="size-5" />
-
-                <span className="line-clamp-1 overflow-hidden text-left leading-tight">
-                    {sortOptionsLabels[selectedSortOption] || t('Sort')}
-                </span>
-            </Button>
 
             <div
                 aria-label={t('Sort options', { ns: 'accessibility' })}
-                id="sort-dropdown"
                 role="listbox"
-                className={twJoin(
-                    'vl:flex vl:flex-row flex-col vl:gap-2.5 rounded-xl bg-background-default',
-                    isSortMenuOpen
-                        ? 'absolute top-full right-0 z-aboveOverlay mt-1 flex w-[60%] divide-y divide-border-less px-5 py-2.5'
-                        : 'hidden',
-                )}
+                className="vl:flex hidden vl:flex-row vl:gap-2.5 rounded-xl bg-background-default"
             >
-                {sortOptions.map((sortOption) => {
-                    const { page, ...queriesWithoutPage } = getUrlQueriesWithoutDynamicPageQueries(router.query);
-                    const sortParams = new URLSearchParams({
-                        ...queriesWithoutPage,
-                        sort: sortOption,
-                    }).toString();
-                    const sortHref = `${asPathWithoutQueryParams}?${sortParams}`;
-                    const isSelectedSortOption = sortOption === selectedSortOption;
-
-                    return (
-                        <SortingBarItem
-                            key={sortOption}
-                            href={sortHref}
-                            isActive={isSelectedSortOption}
-                            tid={`${TIDs.blocks_sortingbar_option_}${sortOption}`}
-                            ariaLabel={
-                                isSelectedSortOption
-                                    ? t('Sorted by {{ sortOption }}', {
-                                          ns: 'accessibility',
-                                          sortOption: sortOptionsLabels[sortOption],
-                                      })
-                                    : t('Sort by {{ sortOption }}', {
-                                          ns: 'accessibility',
-                                          sortOption: sortOptionsLabels[sortOption],
-                                      })
-                            }
-                            onClick={() => handleChangeSort(sortOption)}
-                        >
-                            {sortOptionsLabels[sortOption]}
-                        </SortingBarItem>
-                    );
-                })}
+                <SortingBarOptions
+                    itemRole="option"
+                    selectedSortOption={selectedSortOption}
+                    sortOptions={sortOptions}
+                    sortOptionsLabels={sortOptionsLabels}
+                    onChangeSort={handleChangeSort}
+                />
             </div>
 
             <div className="vl:block hidden font-secondary text-input-placeholder-default text-xs">
                 {totalCount} {t('products count', { count: totalCount })}
             </div>
-
-            {isSortMenuOpen && <Overlay isActive={isSortMenuOpen} onClick={() => setIsSortMenuOpen(false)} />}
-        </>
+        </div>
     );
 };
-
-const getIsPriceRelatedSortOption = (sortOption: TypeProductOrderingModeEnum) =>
-    sortOption === TypeProductOrderingModeEnum.PriceAsc || sortOption === TypeProductOrderingModeEnum.PriceDesc;

@@ -104,7 +104,7 @@ export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthentic
                 </MenuIconicItemUserPopover>
             </div>
 
-            <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />
+            {isDesktop && <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />}
         </>
     );
 };

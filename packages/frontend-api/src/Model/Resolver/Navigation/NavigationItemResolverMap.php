@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Navigation;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemTypeEnum;
 
 class NavigationItemResolverMap extends ResolverMap
 {
@@ -18,7 +19,14 @@ class NavigationItemResolverMap extends ResolverMap
                 'name' => static function (NavigationItemDetail $navigationItemDetail) {
                     return $navigationItemDetail->getNavigationItem()->getName();
                 },
+                'type' => static function (NavigationItemDetail $navigationItemDetail) {
+                    return $navigationItemDetail->getNavigationItem()->getType();
+                },
                 'link' => static function (NavigationItemDetail $navigationItemDetail) {
+                    if ($navigationItemDetail->getNavigationItem()->getType() === NavigationItemTypeEnum::CATEGORIES) {
+                        return null;
+                    }
+
                     return $navigationItemDetail->getNavigationItem()->getUrl();
                 },
                 'categoriesByColumns' => static function (NavigationItemDetail $navigationItemDetail) {

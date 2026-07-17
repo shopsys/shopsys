@@ -44,14 +44,12 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                     ref={paginationScrollTargetRef}
                     tabIndex={-1}
                 >
-                    <div className="flex vl:flex-col flex-col-reverse">
-                        <DeferredFilterSelectedParameters filterOptions={productFilterOptions} />
+                    <DeferredFilterSelectedParameters filterOptions={productFilterOptions} />
 
-                        <DeferredFilterAndSortingBar
-                            sorting={flag.products.orderingMode}
-                            totalCount={flag.products.totalCount}
-                        />
-                    </div>
+                    <DeferredFilterAndSortingBar
+                        sorting={flag.products.orderingMode}
+                        totalCount={flag.products.totalCount}
+                    />
 
                     <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
                         <FlagDetailProductsWrapper flag={flag} />

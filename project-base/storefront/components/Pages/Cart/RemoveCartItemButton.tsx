@@ -1,4 +1,4 @@
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { TIDs } from 'cypress/tids';
 import { MouseEventHandler } from 'react';
 
@@ -26,7 +26,7 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({
             title={title}
             onClick={onRemoveFromCart}
         >
-            <RemoveIcon className="size-6" />
+            <TrashCanIcon className="size-6" />
         </button>
     );
 };

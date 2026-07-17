@@ -42,11 +42,18 @@ class NavigationItem implements OrderableEntityInterface
     protected $name;
 
     /**
+     * @var string|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected $url;
+
+    /**
      * @var string
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: false)]
-    protected $url;
+    #[ORM\Column(type: 'string', length: 32, nullable: false)]
+    protected $type;
 
     /**
      * @var int
@@ -89,11 +96,19 @@ class NavigationItem implements OrderableEntityInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -123,8 +138,9 @@ class NavigationItem implements OrderableEntityInterface
 
     protected function setData(NavigationItemData $navigationItemData): void
     {
+        $this->type = $navigationItemData->type;
         $this->name = $navigationItemData->name;
-        $this->url = $navigationItemData->url;
+        $this->url = $navigationItemData->type === NavigationItemTypeEnum::LINK ? $navigationItemData->url : null;
         $this->domainId = $navigationItemData->domainId;
     }
 

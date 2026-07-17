@@ -7,6 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Navigation;
 class NavigationItemData
 {
     /**
+     * @var string
+     */
+    public $type = NavigationItemTypeEnum::LINK;
+
+    /**
      * @var string|null
      */
     public $name;

@@ -1478,12 +1478,14 @@ type Mutation {
 type NavigationItem {
   "Categories separated into columns"
   categoriesByColumns: [NavigationItemCategoriesByColumns!]!
-  "Target URL"
-  link: String!
+  "Target URL for link navigation items"
+  link: String
   "Navigation item name"
   name: String!
   "Friendly route name if exists, NULL for unknown (e.g., external) links"
   routeName: FriendlyUrlRouteEnum
+  "Navigation item type"
+  type: String!
 }
 
 "Represents a single column inside the navigation item"

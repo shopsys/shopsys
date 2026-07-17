@@ -7,12 +7,12 @@ NavigationItemDecorator:
             name:
                 type: "String!"
                 description: "Navigation item name"
-            link:
+            type:
                 type: "String!"
-                description: "Target URL"
-            routeName:
-                type: "FriendlyUrlRouteEnum"
-                description: "Friendly route name if exists, NULL for unknown (e.g., external) links"
+                description: "Navigation item type"
+            link:
+                type: "String"
+                description: "Target URL for link navigation items"
             categoriesByColumns:
                 type: "[NavigationItemCategoriesByColumns!]!"
                 description: "Categories separated into columns"
