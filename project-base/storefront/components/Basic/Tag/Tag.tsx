@@ -47,7 +47,7 @@ export const Tag: FC<TagProps> = ({
     htmlRole,
 }) => {
     const TagTwClassName = twMergeCustom(
-        'flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 rounded-2xl px-3.5 py-1.5 font-secondary font-semibold text-sm no-underline transition-all',
+        'flex cursor-pointer select-none items-center justify-center gap-2 rounded-2xl px-3.5 py-1.5 font-secondary font-semibold text-sm no-underline transition-all',
         'focus-visible:bg-orange-500 focus-visible:text-text-default focus-visible:outline-hidden',
         isActive
             ? 'bg-background-brand-less text-text-inverted'

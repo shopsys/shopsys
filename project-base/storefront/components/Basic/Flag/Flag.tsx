@@ -21,7 +21,7 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColo
         type === 'blog' && 'bg-secondary-500',
         type === 'blog' && href && 'hover:bg-background-accent-more',
         type === 'discount' && 'bg-price-discounted',
-        type === 'highlight' && 'bg-primary-500',
+        type === 'highlight' && 'bg-orange-500 text-text-default',
         className,
     );
 

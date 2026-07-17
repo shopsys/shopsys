@@ -94,6 +94,10 @@ class ArticleDataFixture extends AbstractReferenceFixture
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $locale,
                 ) . '
+                    <div class="gjs-products" data-products="9177759,5964035">
+                        <div data-product="9177759" data-product-name="22&quot; Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div>
+                        <div data-product="5964035" data-product-name="Invisible product" class="gjs-product"></div>
+                    </div>
                     <div class="gjs-products" data-products="9177759,9176508,5965879P,532564,1532564,5960453">
                         <div data-product="9177759" data-product-name="22\" Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div>
                         <div data-product="9176508" data-product-name="32\" Philips 32PFL4308" class="gjs-product"></div>

@@ -433,6 +433,7 @@ staticData.products.philips32PFL4308; // { uuid, catnum: '9176508' }
 staticData.products.televisionPhilipsM; // { uuid }
 staticData.products.a4techMouse; // { uuid, catnum: '5960453', name }
 staticData.products.philips54CRT; // { uuid, catnum: '9176588' }
+staticData.products.panasonicDmcFt5ep; // { catnum: '5965907', name: 'PANASONIC DMC FT5EP' }
 staticData.products.delonghi; // { uuid, catnum: '9771339', name } — has gift plan (gift: giftTicket100czk)
 staticData.products.giftTicket100czk; // { uuid, catnum: '9176544MS', name } — gift product
 ```
@@ -522,6 +523,8 @@ staticData.order.number; // '1234567890'
 staticData.order.numberHeading; // 'Order number 1234567890'
 staticData.order.creationDate; // '10/26/1999 10:10 AM'
 staticData.blogArticle.publicationDate; // '10/26/1999'
+staticData.blogArticle.grapesJs.uuid;
+staticData.article.forPress.uuid;
 ```
 
 ## Translation System
