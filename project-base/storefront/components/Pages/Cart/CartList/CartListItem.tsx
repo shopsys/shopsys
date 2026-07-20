@@ -32,7 +32,11 @@ export const CartListItem: FC<CartListItemProps> = ({
     isRemovingFromCart,
 }) => {
     const spinboxRef = useRef<HTMLInputElement>(null);
+    const confirmedQuantityRef = useRef(quantity);
+    const inFlightQuantityRef = useRef<number | null>(null);
     const lastSubmittedQuantityRef = useRef<number | null>(null);
+    const queuedQuantityRef = useRef<number | null>(null);
+    const [visibleQuantity, setVisibleQuantity] = useState(quantity);
     const [quantityChangeAnnouncement, setQuantityChangeAnnouncement] = useState('');
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
@@ -78,32 +82,74 @@ export const CartListItem: FC<CartListItemProps> = ({
         .filter(Boolean)
         .join(' ');
 
+    const restorePreviousQuantity = useCallback((quantity: number) => {
+        setVisibleQuantity(quantity);
+
+        if (spinboxRef.current) {
+            spinboxRef.current.valueAsNumber = quantity;
+        }
+    }, []);
+
     const onSubmitCartChange = useCallback(
         async (requestedQuantity: number) => {
-            const submittedQuantity = lastSubmittedQuantityRef.current;
-            const quantityToCompare = submittedQuantity ?? quantity;
-
-            if (requestedQuantity === quantityToCompare) {
-                lastSubmittedQuantityRef.current = null;
+            if (inFlightQuantityRef.current !== null) {
+                queuedQuantityRef.current = requestedQuantity;
 
                 return;
             }
 
-            lastSubmittedQuantityRef.current = requestedQuantity;
-            const addToCartResult = await onAddToCart(product.uuid, requestedQuantity, listIndex, true);
+            let quantityToSubmit: number | null = requestedQuantity;
 
-            if (addToCartResult) {
+            while (quantityToSubmit !== null) {
+                const quantityToCompare = lastSubmittedQuantityRef.current ?? confirmedQuantityRef.current;
+
+                if (quantityToSubmit === quantityToCompare) {
+                    quantityToSubmit = null;
+
+                    continue;
+                }
+
+                const submittedQuantity = quantityToSubmit;
+
+                inFlightQuantityRef.current = submittedQuantity;
+                lastSubmittedQuantityRef.current = submittedQuantity;
+                queuedQuantityRef.current = null;
+
+                const addToCartResult = await onAddToCart(product.uuid, submittedQuantity, listIndex, true);
+
+                inFlightQuantityRef.current = null;
+
+                if (!addToCartResult) {
+                    restorePreviousQuantity(confirmedQuantityRef.current);
+                    lastSubmittedQuantityRef.current = null;
+                    queuedQuantityRef.current = null;
+
+                    return;
+                }
+
+                const confirmedQuantity = addToCartResult.addProductResult.cartItem.quantity;
+
+                confirmedQuantityRef.current = confirmedQuantity;
+                lastSubmittedQuantityRef.current = confirmedQuantity;
+
                 setQuantityChangeAnnouncement(
                     t('Quantity of {{ productName }} updated to {{ quantity }} {{ unit }}', {
                         ns: 'accessibility',
                         productName: product.fullName,
-                        quantity: requestedQuantity,
+                        quantity: confirmedQuantity,
                         unit: product.unit.name,
                     }),
                 );
+
+                quantityToSubmit = queuedQuantityRef.current;
+                queuedQuantityRef.current = null;
+
+                if (quantityToSubmit === null) {
+                    restorePreviousQuantity(confirmedQuantity);
+                }
             }
         },
-        [listIndex, onAddToCart, product.fullName, product.unit.name, product.uuid, quantity, t],
+        [listIndex, onAddToCart, product.fullName, product.unit.name, product.uuid, restorePreviousQuantity, t],
     );
 
     useEffect(() => {
@@ -111,10 +157,8 @@ export const CartListItem: FC<CartListItemProps> = ({
             return;
         }
 
-        if (quantity > 0 && spinboxRef.current) {
-            spinboxRef.current.valueAsNumber = quantity;
-        }
-
+        confirmedQuantityRef.current = quantity;
+        setVisibleQuantity(quantity);
         lastSubmittedQuantityRef.current = null;
     }, [quantity]);
 
@@ -211,7 +255,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                 <div className="flex vl:flex-row flex-col vl:items-center justify-between gap-2 vl:gap-8 xl:gap-15">
                     {isProduct ? (
                         <Spinbox
-                            defaultValue={quantity}
+                            defaultValue={visibleQuantity}
                             decreaseAriaLabel={t('Decrease quantity of {{ productName }}', {
                                 ns: 'accessibility',
                                 productName: product.fullName,
@@ -237,7 +281,10 @@ export const CartListItem: FC<CartListItemProps> = ({
                             ref={spinboxRef}
                             className="vl:w-35"
                             step={1}
-                            onChangeValueCallback={onSubmitCartChange}
+                            onChangeValueCallback={(requestedQuantity) => {
+                                setVisibleQuantity(requestedQuantity);
+                                onSubmitCartChange(requestedQuantity);
+                            }}
                             onMinValueDecrease={onRemoveFromCart}
                         />
                     ) : (

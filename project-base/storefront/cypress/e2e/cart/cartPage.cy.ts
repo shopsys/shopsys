@@ -29,6 +29,9 @@ import { TIDs } from 'tids';
 
 const SUBGROUP_INDEX = 2;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CART, SUBGROUP_INDEX);
+type DataLayerWindow = Cypress.AUTWindow & {
+    dataLayer?: Array<{ ecommerce?: { products?: Array<{ quantity?: number }> }; event?: string }>;
+};
 
 describe('Cart Page Tests', () => {
     beforeEach(() => {
@@ -71,6 +74,41 @@ describe('Cart Page Tests', () => {
                 { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
+        });
+    });
+
+    it('[Immediate Quantity Reversal] should submit both cart changes and send matching GTM events', () => {
+        cy.intercept('POST', '/graphql/AddToCartMutation').as('addToCartMutation');
+        cy.window().then((window) => {
+            (window as DataLayerWindow).dataLayer = [];
+        });
+
+        increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
+        cy.wait('@addToCartMutation').then(({ request }) => {
+            expect(request.body.variables.input).to.include({
+                isAbsoluteQuantity: true,
+                quantity: 3,
+            });
+        });
+        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
+
+        decreaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
+        cy.wait('@addToCartMutation').then(({ request }) => {
+            expect(request.body.variables.input).to.include({
+                isAbsoluteQuantity: true,
+                quantity: 2,
+            });
+        });
+
+        cy.window().should((window) => {
+            const cartChangeEvents = (window as DataLayerWindow).dataLayer
+                ?.filter(({ event }) => event === 'ec.add_to_cart' || event === 'ec.remove_from_cart')
+                .map(({ ecommerce, event }) => ({ event, quantity: ecommerce?.products?.[0]?.quantity }));
+
+            expect(cartChangeEvents).to.deep.equal([
+                { event: 'ec.add_to_cart', quantity: 1 },
+                { event: 'ec.remove_from_cart', quantity: 1 },
+            ]);
         });
     });
 
