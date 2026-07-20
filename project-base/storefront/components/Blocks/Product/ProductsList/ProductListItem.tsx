@@ -40,6 +40,8 @@ export type ProductItemProps = {
     allowKeyboardFocus?: boolean;
     highlightBadgeText?: string;
     productListViewMode?: ProductListViewModeType;
+    imageCount?: number;
+    isWithImageGallery?: boolean;
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -62,6 +64,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             allowKeyboardFocus = true,
             highlightBadgeText,
             productListViewMode = 'grid',
+            imageCount,
+            isWithImageGallery = false,
         },
         ref,
     ) => {
@@ -115,8 +119,10 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 gtmMessageOrigin={gtmMessageOrigin}
                 gtmProductListName={gtmProductListName}
                 highlightBadgeText={highlightBadgeText}
+                imageCount={imageCount}
                 isProductInComparison={isProductInComparison}
                 isProductInWishlist={isProductInWishlist}
+                isWithImageGallery={isWithImageGallery}
                 listIndex={listIndex}
                 product={product}
                 shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}

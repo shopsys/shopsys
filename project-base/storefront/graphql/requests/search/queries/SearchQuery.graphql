@@ -61,5 +61,10 @@ query SearchQuery(
             ...ProductFilterOptionsFragment
         }
         ...ListedProductConnectionFragment
+        edges {
+            node {
+                imagesCount
+            }
+        }
     }
 }

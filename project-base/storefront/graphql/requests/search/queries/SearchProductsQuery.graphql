@@ -27,5 +27,10 @@ query SearchProductsQuery(
             ...ProductFilterOptionsFragment
         }
         ...ListedProductConnectionFragment
+        edges {
+            node {
+                imagesCount
+            }
+        }
     }
 }

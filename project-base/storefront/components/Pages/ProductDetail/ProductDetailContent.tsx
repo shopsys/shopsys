@@ -19,6 +19,7 @@ import { DeferredComparisonAndWishlistButtons } from './ComparisonAndWishlistBut
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
+import { ProductDetailTitle } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
@@ -45,23 +46,29 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
             <ProductMetadata product={product} />
 
             <VerticalStack gap="md">
-                <Webline className="flex vl:flex-row flex-col gap-6">
-                    <ProductDetailGallery
-                        categoryName={product.categories[0]?.name}
-                        flags={product.flags}
-                        images={product.images}
-                        percentageDiscount={product.price.percentageDiscount}
-                        productName={product.name}
-                        videoIds={product.productVideos}
+                <Webline className="flex vl:grid vl:grid-cols-[3fr_2fr] vl:grid-rows-[auto_1fr] flex-col gap-6 vl:gap-y-5">
+                    <ProductDetailTitle
+                        className="order-1 vl:col-start-2 vl:row-start-1"
+                        name={product.name}
+                        namePrefix={product.namePrefix}
+                        nameSuffix={product.nameSuffix}
                     />
 
-                    <div className="flex w-full flex-1 flex-col gap-5">
+                    <div className="order-2 vl:col-start-1 vl:row-span-2 vl:row-start-1 min-w-0">
+                        <ProductDetailGallery
+                            categoryName={product.categories[0]?.name}
+                            flags={product.flags}
+                            images={product.images}
+                            percentageDiscount={product.price.percentageDiscount}
+                            productName={product.name}
+                            videoIds={product.productVideos}
+                        />
+                    </div>
+
+                    <div className="order-3 vl:col-start-2 vl:row-start-2 flex w-full flex-1 flex-col gap-5">
                         <ProductDetailInfo
                             brand={product.brand}
                             catalogNumber={product.catalogNumber}
-                            name={product.name}
-                            namePrefix={product.namePrefix}
-                            nameSuffix={product.nameSuffix}
                             shortDescription={product.shortDescription}
                             usps={product.usps}
                         />

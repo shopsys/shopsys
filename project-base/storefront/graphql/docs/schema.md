@@ -6208,6 +6208,20 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainvariant.imagescount">imagesCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of product images
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.isallowednegativestock">isAllowedNegativeStock</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -9511,6 +9525,20 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.imagescount">imagesCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of product images
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.isallowednegativestock">isAllowedNegativeStock</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -11178,6 +11206,20 @@ Product id
 <td>
 
 Product images
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.imagescount">imagesCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of product images
 
 </td>
 </tr>
@@ -15550,6 +15592,20 @@ Product id
 <td>
 
 Product images
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.imagescount">imagesCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of product images
 
 </td>
 </tr>

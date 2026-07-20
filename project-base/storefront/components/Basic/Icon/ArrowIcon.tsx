@@ -1,7 +1,7 @@
 export const ArrowIcon: SvgFC = (props) => (
-    <svg {...props} fill="none" viewBox="0 0 18 19" xmlns="http://www.w3.org/2000/svg">
+    <svg {...props} fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path
-            d="M4.5 7.0376L9 11.5376L13.5 7.0376"
+            d="M8 10L12 14L16 10"
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"

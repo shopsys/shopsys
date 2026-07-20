@@ -244,6 +244,10 @@
         @apply text-text-default! bg-orange-500! outline-hidden!;
     }
 
+    button[data-focus-style='ring']:focus-visible {
+        @apply bg-transparent! ring-2 ring-orange-500 ring-inset;
+    }
+
     a:focus-visible svg,
     a:focus-visible span,
     button:focus-visible svg,

@@ -154,4 +154,22 @@ class ProductImagesTest extends GraphQlTestCase
         ];
         $this->assertSame($expectedData, $responseData);
     }
+
+    public function testFirstTwoProductsImagesCount(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductImagesCountQuery.graphql', [
+            'first' => 2,
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'products');
+
+        $this->assertSame(
+            [
+                'edges' => [
+                    ['node' => ['imagesCount' => 0]],
+                    ['node' => ['imagesCount' => 2]],
+                ],
+            ],
+            $responseData,
+        );
+    }
 }

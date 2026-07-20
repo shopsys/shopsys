@@ -50,4 +50,13 @@ class ImageApiFacade
     {
         return $this->imageApiRepository->getAllImagesIndexedByEntityId($entityIds, $entityName, $type);
     }
+
+    /**
+     * @param int[] $entityIds
+     * @return array<int, int>
+     */
+    public function getImageCountsIndexedByEntityId(array $entityIds, string $entityName, ?string $type): array
+    {
+        return $this->imageApiRepository->getImageCountsIndexedByEntityId($entityIds, $entityName, $type);
+    }
 }

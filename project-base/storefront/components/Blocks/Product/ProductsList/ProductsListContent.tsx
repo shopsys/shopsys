@@ -9,8 +9,10 @@ import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { ProductItemProps, ProductListItem, ProductListViewModeType } from './ProductListItem';
 
+type ProductWithImageCount = TypeListedProductFragment & { imagesCount?: number };
+
 type ProductsListProps = {
-    products: TypeListedProductFragment[];
+    products: ProductWithImageCount[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
     ref?: RefObject<HTMLUListElement | null>;
@@ -22,6 +24,7 @@ type ProductsListProps = {
     productListViewMode?: ProductListViewModeType;
     keyboardFocusableProductIndices?: number[];
     highlightFirstItemBadgeText?: string;
+    isWithImageGallery?: boolean;
 };
 
 export const ProductsListContent: FC<ProductsListProps> = ({
@@ -37,6 +40,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     productListViewMode = 'grid',
     keyboardFocusableProductIndices,
     highlightFirstItemBadgeText,
+    isWithImageGallery,
 }) => {
     const currentPage = useCurrentPageQuery();
     const { toggleProductInComparison, isProductInComparison } = useComparison();
@@ -52,6 +56,8 @@ export const ProductsListContent: FC<ProductsListProps> = ({
                     isProductInComparison={isProductInComparison(product.uuid)}
                     isProductInWishlist={isProductInWishlist(product.uuid)}
                     listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
+                    imageCount={product.imagesCount}
+                    isWithImageGallery={isWithImageGallery}
                     product={product}
                     productListViewMode={productListViewMode}
                     ref={productRefs?.[index]}

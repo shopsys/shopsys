@@ -51,7 +51,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                         data-tid={TIDs.selected_filters}
                         id={FILTER_SELECTED_PARAMETERS_ELEMENT_ID}
                     >
-                        <p className="h6 mb-5 vl:mb-2">{t('Selected filters')}</p>
+                        <p className="h6 mb-2">{t('Selected filters')}</p>
 
                         <div className="flex flex-wrap items-center gap-y-2">
                             {!!currentFilter?.onlyInStock && (

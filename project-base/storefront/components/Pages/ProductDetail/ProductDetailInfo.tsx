@@ -1,12 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { ProductDetailHeading, ProductDetailPrefix } from './ProductDetailElements';
 import { ProductDetailUsps } from './ProductDetailUsps';
 
-type ProductDetailContentProps = {
-    namePrefix: string | null;
-    name: string;
-    nameSuffix: string | null;
+type ProductDetailInfoProps = {
     brand?: {
         name: string;
         slug: string;
@@ -16,27 +12,11 @@ type ProductDetailContentProps = {
     usps?: string[];
 };
 
-export const ProductDetailInfo: FC<ProductDetailContentProps> = ({
-    namePrefix,
-    name,
-    nameSuffix,
-    brand,
-    catalogNumber,
-    shortDescription,
-    usps,
-}) => {
+export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({ brand, catalogNumber, shortDescription, usps }) => {
     const { t } = useTranslation();
 
     return (
         <>
-            <div>
-                {namePrefix && <ProductDetailPrefix>{namePrefix}</ProductDetailPrefix>}
-
-                <ProductDetailHeading>
-                    {name} {nameSuffix}
-                </ProductDetailHeading>
-            </div>
-
             <div className="flex items-center gap-5 text-sm">
                 {brand && (
                     <div>

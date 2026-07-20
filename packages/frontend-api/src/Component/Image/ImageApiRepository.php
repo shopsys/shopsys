@@ -88,4 +88,32 @@ class ImageApiRepository
 
         return $imagesByEntityId;
     }
+
+    /**
+     * @param int[] $entityIds
+     * @return array<int, int>
+     */
+    public function getImageCountsIndexedByEntityId(array $entityIds, string $entityName, ?string $type): array
+    {
+        $imagesCountsByEntityId = array_fill_keys($entityIds, 0);
+        $queryBuilder = $this->entityManager->getRepository(Image::class)
+            ->createQueryBuilder('i')
+            ->select('i.entityId AS entityId, COUNT(i.id) AS imagesCount')
+            ->andWhere('i.entityName = :entityName')->setParameter('entityName', $entityName)
+            ->andWhere('i.entityId IN (:entities)')->setParameter('entities', $entityIds)
+            ->groupBy('i.entityId');
+
+        if ($type === null) {
+            $queryBuilder->andWhere('i.type IS NULL');
+        } else {
+            $queryBuilder->andWhere('i.type = :type')->setParameter('type', $type);
+        }
+
+        /** @var array{entityId: int|string, imagesCount: int|string} $imageCount */
+        foreach ($queryBuilder->getQuery()->getArrayResult() as $imageCount) {
+            $imagesCountsByEntityId[(int)$imageCount['entityId']] = (int)$imageCount['imagesCount'];
+        }
+
+        return $imagesCountsByEntityId;
+    }
 }

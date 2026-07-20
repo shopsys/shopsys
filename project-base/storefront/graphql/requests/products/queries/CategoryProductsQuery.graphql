@@ -13,5 +13,10 @@ query CategoryProductsQuery(
         first: $pageSize
     ) {
         ...ListedProductConnectionFragment
+        edges {
+            node {
+                imagesCount
+            }
+        }
     }
 }

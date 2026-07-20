@@ -1,5 +1,6 @@
 fragment ProductInProductListFragment on Product {
     ...ListedProductFragment
+    imagesCount
     parameters {
         ...ParameterFragment
     }

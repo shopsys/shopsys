@@ -11,6 +11,7 @@ import { useGtmProductDetailViewEvent } from 'gtm/utils/pageReadyEvents/useGtmPr
 import { useRouter } from 'next/router';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
+import { ProductDetailTitle } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
@@ -47,24 +48,28 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             <ProductMetadata product={product} />
 
             <VerticalStack gap="md">
-                <Webline>
-                    <ProductDetailGallery
-                        categoryName={product.categories[0]?.name}
-                        flags={product.flags}
-                        images={mainVariantImagesWithVariantImages}
-                        percentageDiscount={product.price.percentageDiscount}
-                        productName={product.name}
-                        videoIds={product.productVideos}
-                    />
-                </Webline>
-
-                <Webline>
-                    <ProductDetailInfo
-                        catalogNumber={product.catalogNumber}
+                <Webline className="flex flex-col gap-5">
+                    <ProductDetailTitle
+                        className="order-1 vl:order-2 xl:mt-3"
                         name={product.name}
                         namePrefix={product.namePrefix}
                         nameSuffix={product.nameSuffix}
                     />
+
+                    <div className="order-2 vl:order-1 min-w-0">
+                        <ProductDetailGallery
+                            categoryName={product.categories[0]?.name}
+                            flags={product.flags}
+                            images={mainVariantImagesWithVariantImages}
+                            percentageDiscount={product.price.percentageDiscount}
+                            productName={product.name}
+                            videoIds={product.productVideos}
+                        />
+                    </div>
+
+                    <div className="order-3 flex flex-col gap-5">
+                        <ProductDetailInfo catalogNumber={product.catalogNumber} />
+                    </div>
                 </Webline>
 
                 <ProductVariantsTable variants={product.variants} />

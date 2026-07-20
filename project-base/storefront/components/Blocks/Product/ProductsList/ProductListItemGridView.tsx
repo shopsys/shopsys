@@ -4,17 +4,22 @@ import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TIDs } from 'cypress/tids';
-import type { Ref } from 'react';
+import { type Ref, useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import type { ProductItemProps } from './ProductListItem';
 import type { ProductListItemLayoutProps } from './ProductListItemActions';
 import { ProductListItemAddToCart, ProductListItemButtons } from './ProductListItemActions';
-import { ProductListItemImage } from './ProductListItemImage';
+import { ProductListItemGalleryControls } from './ProductListItemGalleryControls';
+import {
+    getProductListItemImageSize,
+    ProductListItemImage,
+    type ProductListItemImageHandle,
+} from './ProductListItemImage';
 
 type ProductListItemGridViewProps = ProductListItemLayoutProps &
-    Pick<ProductItemProps, 'size' | 'textSize' | 'textSizePrice'> & {
+    Pick<ProductItemProps, 'imageCount' | 'isWithImageGallery' | 'size' | 'textSize' | 'textSizePrice'> & {
         forwardedRef: Ref<HTMLLIElement>;
     };
 
@@ -26,8 +31,10 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
     gtmMessageOrigin,
     gtmProductListName,
     highlightBadgeText,
+    imageCount,
     isProductInComparison,
     isProductInWishlist,
+    isWithImageGallery = false,
     listIndex,
     onProductClick,
     product,
@@ -40,6 +47,8 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
     visibleItemsConfig,
 }) => {
     const { t } = useTranslation();
+    const productListItemImageRef = useRef<ProductListItemImageHandle>(null);
+    const isImageGalleryEnabled = isWithImageGallery && (imageCount ?? 0) > 1;
 
     return (
         <li
@@ -78,7 +87,14 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                         size === 'small' && 'py-4 pb-4',
                     )}
                 >
-                    <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
+                    <ProductListItemImage
+                        imageCount={imageCount}
+                        isWithImageGallery={isWithImageGallery}
+                        product={product}
+                        ref={productListItemImageRef}
+                        size={size}
+                        visibleItemsConfig={visibleItemsConfig}
+                    />
 
                     <h3
                         className={twJoin(
@@ -115,6 +131,15 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                     )}
                 </div>
             </ExtendedNextLink>
+
+            {isImageGalleryEnabled && (
+                <ProductListItemGalleryControls
+                    imageHeight={getProductListItemImageSize(size)}
+                    onNext={() => productListItemImageRef.current?.selectNextImage()}
+                    onPrepareGallery={() => productListItemImageRef.current?.prepareGallery()}
+                    onPrevious={() => productListItemImageRef.current?.selectPreviousImage()}
+                />
+            )}
 
             {visibleItemsConfig.productListButtons && (
                 <div className="absolute top-1 right-0 flex justify-end sm:top-3 sm:right-2.5">

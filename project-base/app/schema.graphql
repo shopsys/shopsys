@@ -1330,6 +1330,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  "Number of product images"
+  imagesCount(type: String = null): Int!
   "Whether the product allows purchasing more items than are currently in stock"
   isAllowedNegativeStock: Boolean!
   "Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied"
@@ -2245,6 +2247,8 @@ interface Product {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  "Number of product images"
+  imagesCount(type: String = null): Int!
   "Whether the product allows purchasing more items than are currently in stock"
   isAllowedNegativeStock: Boolean!
   "Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied"
@@ -2795,6 +2799,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  "Number of product images"
+  imagesCount(type: String = null): Int!
   "Whether the product allows purchasing more items than are currently in stock"
   isAllowedNegativeStock: Boolean!
   "Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied"
@@ -3228,6 +3234,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  "Number of product images"
+  imagesCount(type: String = null): Int!
   "Whether the product allows purchasing more items than are currently in stock"
   isAllowedNegativeStock: Boolean!
   "Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied"

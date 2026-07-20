@@ -1,0 +1,9 @@
+query ProductImagesCountQuery($first: Int) {
+    products(first: $first) {
+        edges {
+            node {
+                imagesCount
+            }
+        }
+    }
+}
