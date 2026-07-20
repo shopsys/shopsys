@@ -3118,6 +3118,8 @@ type Transport {
   daysUntilDelivery: Int!
   "Localized transport description (domain dependent)"
   description: String
+  "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised."
+  expectedDeliveryDate(cartUuid: Uuid = null): DateTime
   "Transport group"
   group: TransportGroup
   "Transport images"

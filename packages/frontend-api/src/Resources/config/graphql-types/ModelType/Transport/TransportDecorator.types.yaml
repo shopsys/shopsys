@@ -54,3 +54,11 @@ TransportDecorator:
             group:
                 type: "TransportGroup"
                 description: "Transport group"
+            expectedDeliveryDate:
+                type: "DateTime"
+                description: "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised."
+                resolve: '@=query("transportExpectedDeliveryDateQuery", value, args["cartUuid"], context)'
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                        defaultValue: null

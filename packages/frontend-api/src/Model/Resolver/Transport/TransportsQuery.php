@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Transport;
 
 use ArrayObject;
+use DateTimeImmutable;
+use DateTimeZone;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportUnavailabilityReasonInCartEnum;
@@ -29,6 +33,8 @@ class TransportsQuery extends AbstractQuery
         protected readonly GqlContextHelper $gqlContextHelper,
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly TransportVisibilityCalculation $transportVisibilityCalculation,
+        protected readonly TransportExpectedDeliveryDateCalculation $transportExpectedDeliveryDateCalculation,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -95,6 +101,23 @@ class TransportsQuery extends AbstractQuery
         }
 
         return $productsGroupedByReason;
+    }
+
+    public function transportExpectedDeliveryDateQuery(
+        Transport $transport,
+        ?string $cartUuid = null,
+        ?ArrayObject $context = null,
+    ): ?DateTimeImmutable {
+        $resolvedCartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
+
+        $expectedDeliveryDate = $this->transportExpectedDeliveryDateCalculation->calculateExpectedDeliveryDate(
+            $transport,
+            $this->findCart($resolvedCartUuid),
+            $this->domain->getId(),
+        );
+
+        // the calculation works in the domain display timezone, the API serializes date time values in UTC
+        return $expectedDeliveryDate?->setTimezone(new DateTimeZone('UTC'));
     }
 
     protected function findCart(?string $cartUuid): ?Cart
