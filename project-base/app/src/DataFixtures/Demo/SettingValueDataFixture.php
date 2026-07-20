@@ -12,7 +12,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper;
@@ -142,7 +141,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 );
             }
         }
-        $this->setting->set(BaseSetting::FILE_STRUCTURE_MIGRATED_FOR_RELATIONS, true);
     }
 
     private function setDomainDefaultCurrency(int $domainId): void
