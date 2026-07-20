@@ -6,7 +6,7 @@ import {
 } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -31,6 +31,13 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const { canSeePrices } = useAuthorization();
     const addingToCartProductUuidsRef = useRef(new Set<string>());
+    const cartItemQuantitiesRef = useRef(new Map<string, number>());
+
+    useEffect(() => {
+        cartItemQuantitiesRef.current = new Map(
+            cart?.items.map((item) => [item.product.uuid, item.quantity] as const) ?? [],
+        );
+    }, [cart]);
 
     const addToCart: AddToCart = async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {
         if (addingToCartProductUuidsRef.current.has(productUuid)) {
@@ -41,7 +48,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
 
         try {
             const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
-            const initialQuantity = itemToBeAdded?.quantity ?? 0;
+            const initialQuantity = cartItemQuantitiesRef.current.get(productUuid) ?? itemToBeAdded?.quantity ?? 0;
             const addToCartActionResult = await addToCartMutation({
                 input: { cartUuid, productUuid, quantity, isAbsoluteQuantity },
             });
@@ -79,6 +86,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
             dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
 
             const addedCartItem = addToCartResult.addProductResult.cartItem;
+            cartItemQuantitiesRef.current.set(productUuid, addedCartItem.quantity);
 
             import('gtm/handlers/onGtmChangeCartItemEventHandler').then(({ onGtmChangeCartItemEventHandler }) => {
                 onGtmChangeCartItemEventHandler(
