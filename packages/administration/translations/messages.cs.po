@@ -739,6 +739,9 @@ msgstr "Opravdu chcete smazat tento soubor? Soubor bude nevratně odstraněn a o
 msgid "Do you really want to delete this item?"
 msgstr "Opravdu chcete odstranit tuto položku?"
 
+msgid "Do you really want to mark the order as paid? This cannot be undone."
+msgstr "Opravdu chcete označit objednávku jako zaplacenou? Tuto akci nelze vrátit zpět."
+
 msgid "Do you really want to remove the order?"
 msgstr "Opravdu chcete odstranit objednávku?"
 
@@ -1848,6 +1851,9 @@ msgstr "Publikováno"
 
 msgid "Published (invisible)"
 msgstr "Publikováno (neviditelné)"
+
+msgid "Purchased gift vouchers will be generated and sent."
+msgstr "Zakoupené dárkové poukazy budou vygenerovány a odeslány."
 
 msgid "Quantity"
 msgstr "Množství"

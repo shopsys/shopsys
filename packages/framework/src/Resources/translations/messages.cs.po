@@ -2449,6 +2449,9 @@ msgstr "Slug stránky"
 msgid "Page title"
 msgstr "Titulek stránky"
 
+msgid "Paid"
+msgstr "Zaplaceno"
+
 msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Parametr <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
 

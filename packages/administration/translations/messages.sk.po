@@ -739,6 +739,9 @@ msgstr "Naozaj chcete odstrániť tento súbor? Bude trvalo odstránený a odpoj
 msgid "Do you really want to delete this item?"
 msgstr "Naozaj chcete odstrániť túto položku?"
 
+msgid "Do you really want to mark the order as paid? This cannot be undone."
+msgstr "Naozaj chcete označiť objednávku ako zaplatenú? Túto akciu nie je možné vrátiť späť."
+
 msgid "Do you really want to remove the order?"
 msgstr "Naozaj chcete odstrániť objednávku?"
 
@@ -1848,6 +1851,9 @@ msgstr "Zverejnené"
 
 msgid "Published (invisible)"
 msgstr "Zverejnené (neviditeľné)"
+
+msgid "Purchased gift vouchers will be generated and sent."
+msgstr "Zakúpené darčekové poukazy budú vygenerované a odoslané."
 
 msgid "Quantity"
 msgstr "Množstvo"

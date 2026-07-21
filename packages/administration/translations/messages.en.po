@@ -739,6 +739,9 @@ msgstr ""
 msgid "Do you really want to delete this item?"
 msgstr ""
 
+msgid "Do you really want to mark the order as paid? This cannot be undone."
+msgstr ""
+
 msgid "Do you really want to remove the order?"
 msgstr ""
 
@@ -1847,6 +1850,9 @@ msgid "Published"
 msgstr ""
 
 msgid "Published (invisible)"
+msgstr ""
+
+msgid "Purchased gift vouchers will be generated and sent."
 msgstr ""
 
 msgid "Quantity"

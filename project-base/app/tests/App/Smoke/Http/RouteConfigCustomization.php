@@ -254,6 +254,14 @@ class RouteConfigCustomization
                     ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
                     ->setExpectedStatusCode(302);
             })
+            ->customizeByRouteName('admin_order_edit_markaspaid', function (RouteConfig $config): void {
+                $order = $this->getPersistentReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, entityClassName: Order::class);
+
+                $config->changeDefaultRequestDataSet('Use valid order from fixtures and add CSRF token.')
+                    ->setParameter('id', $order->getId())
+                    ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
+                    ->setExpectedStatusCode(302);
+            })
             ->customizeByRouteName('admin_pricinggroup_delete', function (RouteConfig $config): void {
                 $config->skipRoute('Deleting pricing group is not necessary.');
             })

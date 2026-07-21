@@ -12,6 +12,7 @@ framework:
             Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessage: product_recalculation_priority_high
             Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchProductIdsBatchMessage: product_recalculation_priority_high
             Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessage: placed_order_transport
+            Shopsys\FrameworkBundle\Model\Order\Messenger\OrderMarkedAsPaidMessage: placed_order_transport
             Symfony\Component\Mailer\Messenger\SendEmailMessage: send_email_transport
             Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessage: article_export_transport
             Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessage: send_email_transport

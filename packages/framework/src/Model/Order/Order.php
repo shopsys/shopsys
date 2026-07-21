@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
@@ -378,6 +379,20 @@ class Order implements DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'boolean')]
+    protected $paid;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected $paidAt;
+
+    /**
+     * @var bool
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'boolean')]
     protected $heurekaAgreement;
 
     /**
@@ -458,6 +473,7 @@ class Order implements DomainSeparatedEntityInterface
 
         $this->setCustomerUser($customerUser);
         $this->deleted = false;
+        $this->paid = false;
 
         $this->createdAt = $orderData->createdAt;
         $this->domainId = $orderData->domainId;
@@ -540,6 +556,11 @@ class Order implements DomainSeparatedEntityInterface
 
     public function isPaid(): bool
     {
+        return $this->paid;
+    }
+
+    public function hasPaidPaymentTransaction(): bool
+    {
         foreach ($this->paymentTransactions as $paymentTransaction) {
             if ($paymentTransaction->isPaid()) {
                 return true;
@@ -547,6 +568,56 @@ class Order implements DomainSeparatedEntityInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getPaidAt()
+    {
+        return $this->paidAt;
+    }
+
+    public function hasElectronicGiftVoucherProductItems(): bool
+    {
+        foreach ($this->getProductItems() as $orderItem) {
+            $product = $orderItem->getProduct();
+
+            if ($product !== null && $product->isElectronicGiftVoucher()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasOnlyElectronicGiftVoucherProductItems(): bool
+    {
+        $productItems = $this->getProductItems();
+
+        if ($productItems === []) {
+            return false;
+        }
+
+        foreach ($productItems as $orderItem) {
+            $product = $orderItem->getProduct();
+
+            if ($product === null || !$product->isElectronicGiftVoucher()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function markAsPaid(DateTimeImmutable $paidAt): void
+    {
+        if ($this->paid) {
+            return;
+        }
+
+        $this->paid = true;
+        $this->paidAt = $paidAt;
     }
 
     public function hasPaymentInProcess(): bool

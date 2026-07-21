@@ -80,6 +80,7 @@ class OrderDataFactory
         $orderData->orderPayment = $this->orderItemDataFactory->createFromOrderItem($order->getPaymentItem());
 
         $orderData->goPayBankSwift = $order->getGoPayBankSwift();
+        $orderData->paid = $order->isPaid();
 
         $orderData->heurekaAgreement = $order->isHeurekaAgreement();
         $orderData->trackingNumber = $order->getTrackingNumber();
