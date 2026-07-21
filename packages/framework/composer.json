@@ -55,6 +55,7 @@
         "doctrine/doctrine-fixtures-bundle": "^4.3",
         "doctrine/orm": "^3.6",
         "doctrine/persistence": "^4.1",
+        "dompdf/dompdf": "^3.1",
         "dragonmantank/cron-expression": "^3.0",
         "elasticsearch/elasticsearch": "^7.6.1",
         "endroid/qr-code": "^6.0",

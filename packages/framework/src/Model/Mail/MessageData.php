@@ -17,6 +17,8 @@ class MessageData
      * @param array<string, string|\Closure> $variablesReplacementsForBody
      * @param array<string, string|\Closure> $variablesReplacementsForSubject
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $attachments
+     * @param \Shopsys\FrameworkBundle\Model\Mail\GeneratedMailAttachment[] $generatedAttachments
+     * @param array<string, mixed> $metadata
      */
     public function __construct(
         public string|array $toEmail,
@@ -29,6 +31,8 @@ class MessageData
         array $variablesReplacementsForSubject = [],
         public array $attachments = [],
         public ?string $replyTo = null,
+        public array $generatedAttachments = [],
+        public array $metadata = [],
     ) {
         if (count($variablesReplacementsForSubject) > 0) {
             $this->variablesReplacementsForSubject = $variablesReplacementsForSubject;

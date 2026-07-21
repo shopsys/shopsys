@@ -30,6 +30,7 @@ class GiftVoucherDataFactory
         $giftVoucherData->domainId = $giftVoucher->getDomainId();
         $giftVoucherData->valueWithVat = $giftVoucher->getValueWithVat();
         $giftVoucherData->currencyCode = $giftVoucher->getCurrencyCode();
+        $giftVoucherData->vatPercent = $giftVoucher->getVatPercent();
         $giftVoucherData->status = $giftVoucher->getStatus();
         $giftVoucherData->activatedAt = $giftVoucher->getActivatedAt();
         $giftVoucherData->validUntil = $giftVoucher->getValidUntil();

@@ -34,6 +34,11 @@ class GiftVoucherData
     /**
      * @var string
      */
+    public $vatPercent;
+
+    /**
+     * @var string
+     */
     public $status;
 
     /**
@@ -68,6 +73,7 @@ class GiftVoucherData
 
     public function __construct()
     {
+        $this->vatPercent = '0';
         $this->status = GiftVoucherStatusEnum::STATUS_UNREDEEMED;
     }
 }

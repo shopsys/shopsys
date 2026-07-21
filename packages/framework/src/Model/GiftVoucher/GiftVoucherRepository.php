@@ -67,6 +67,15 @@ class GiftVoucherRepository
         return $this->getGiftVoucherRepository()->findBy(['createdOnOrder' => $order], ['id' => 'ASC']);
     }
 
+    /**
+     * @param int[] $giftVoucherIds
+     * @return \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[]
+     */
+    public function getAllByIds(array $giftVoucherIds): array
+    {
+        return $this->getGiftVoucherRepository()->findBy(['id' => $giftVoucherIds]);
+    }
+
     public function getQueryBuilderByDomainIdAndSearchText(int $domainId, ?string $searchText): QueryBuilder
     {
         $queryBuilder = $this->getGiftVoucherRepository()->createQueryBuilder('gv')

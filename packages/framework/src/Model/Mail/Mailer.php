@@ -52,6 +52,10 @@ class Mailer
 
         $email = new Email($domainId);
 
+        foreach ($messageData->metadata as $metadataKey => $metadataValue) {
+            $email->setMetadata($metadataKey, $metadataValue);
+        }
+
         $body = $this->mailEmbedCollector->setEmbedsToMail($body, $email);
 
         $email
@@ -93,6 +97,14 @@ class Mailer
 
                 continue;
             }
+        }
+
+        foreach ($messageData->generatedAttachments as $generatedAttachment) {
+            $email->attach(
+                $generatedAttachment->content,
+                $generatedAttachment->filename,
+                $generatedAttachment->contentType,
+            );
         }
 
         return $email;

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="{{ domainLocale }}">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ 'Gift voucher'|trans({}, 'messages', domainLocale) }} {{ giftVoucher.code }}</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            @page {
+                margin: 0;
+            }
+
+            body {
+                font-family: 'DejaVu Sans', sans-serif;
+                color: #1c1c3c;
+            }
+
+            .voucher__value-panel-background {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 240pt;
+                height: 420pt;
+            }
+
+            .voucher__value-panel {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 240pt;
+                height: 420pt;
+            }
+
+            .voucher__title {
+                position: absolute;
+                top: 34pt;
+                left: 34pt;
+                color: #ffffff;
+                font-size: 12pt;
+                font-weight: bold;
+                letter-spacing: 2.5pt;
+                text-transform: uppercase;
+            }
+
+            .voucher__title-underline {
+                position: absolute;
+                top: 62pt;
+                left: 34pt;
+                width: 38pt;
+                height: 0;
+                border: 1pt solid #02cac0;
+                border-radius: 1pt;
+            }
+
+            .voucher__value-label {
+                position: absolute;
+                top: 192pt;
+                left: 34pt;
+                color: #c9cdf2;
+                font-size: 9.5pt;
+                font-weight: bold;
+            }
+
+            .voucher__value {
+                position: absolute;
+                top: 197pt;
+                left: 34pt;
+                width: 186pt;
+                color: #ffffff;
+                font-size: 42pt;
+                font-weight: bold;
+                white-space: nowrap;
+            }
+
+            .voucher__value-affix {
+                font-size: 18pt;
+            }
+
+            .voucher__decorative-ring-outer {
+                position: absolute;
+                left: -50pt;
+                top: 300pt;
+                width: 170pt;
+                height: 170pt;
+                border: 2pt solid #2a1cb2;
+                border-radius: 85pt;
+            }
+
+            .voucher__decorative-ring-inner {
+                position: absolute;
+                left: -20pt;
+                top: 330pt;
+                width: 110pt;
+                height: 110pt;
+                border: 2pt solid #2a1cb2;
+                border-radius: 55pt;
+            }
+
+            .voucher__content-panel {
+                position: absolute;
+                top: 0;
+                left: 226pt;
+                width: 370pt;
+                height: 420pt;
+                background-color: #fbfbfd;
+            }
+
+            .voucher__seam-notch-top {
+                position: absolute;
+                top: 0;
+                left: 214pt;
+                width: 12pt;
+                height: 12pt;
+                background-color: #fbfbfd;
+                border: 0.1pt solid #fbfbfd;
+                border-radius: 0 0 0 12pt;
+            }
+
+            .voucher__seam-notch-bottom {
+                position: absolute;
+                top: 408pt;
+                left: 214pt;
+                width: 12pt;
+                height: 12pt;
+                background-color: #fbfbfd;
+                border: 0.1pt solid #fbfbfd;
+                border-radius: 12pt 0 0 0;
+            }
+
+            .voucher__content {
+                position: absolute;
+                top: 30pt;
+                left: 256pt;
+                width: 310pt;
+                height: 390pt;
+            }
+
+            .voucher__header {
+                width: 100%;
+            }
+
+            .voucher__logo {
+                max-height: 28pt;
+            }
+
+            .voucher__shop-name {
+                text-align: right;
+                font-size: 8pt;
+                color: #55546a;
+            }
+
+            .voucher__shop-url {
+                text-align: right;
+                font-size: 8pt;
+                color: #75748a;
+            }
+
+            .voucher__code-box {
+                margin-top: 15pt;
+                padding: 18pt 10pt;
+                background-color: #edeffa;
+                border: 1pt solid #edeffa;
+                border-radius: 14pt;
+                text-align: center;
+            }
+
+            .voucher__code-label {
+                color: #1e9ff2;
+                font-size: 8pt;
+                font-weight: bold;
+                letter-spacing: 2pt;
+                text-transform: uppercase;
+            }
+
+            .voucher__code {
+                margin-top: 10pt;
+                font-family: 'DejaVu Sans Mono', monospace;
+                font-size: 24pt;
+                font-weight: bold;
+                letter-spacing: 4pt;
+                color: #0d049c;
+            }
+
+            .voucher__validity {
+                margin-top: 12pt;
+                text-align: center;
+                font-size: 10pt;
+            }
+
+            .voucher__validity-label {
+                color: #0b0190;
+                font-weight: bold;
+            }
+
+            .voucher__validity-date {
+                margin-left: 8pt;
+                color: #10101f;
+                font-weight: bold;
+            }
+
+            .voucher__redemption {
+                margin-top: 18pt;
+                text-align: center;
+                font-size: 9pt;
+                color: #5f6075;
+            }
+
+            .voucher__redemption-label {
+                color: #0b0190;
+                font-weight: bold;
+            }
+
+            .voucher__conditions {
+                position: absolute;
+                bottom: 33pt;
+                left: 0;
+                width: 310pt;
+                padding-top: 16pt;
+                border-top: 1pt solid #e5e5ed;
+            }
+
+            .voucher__conditions-title {
+                color: #0b0190;
+                font-size: 8.5pt;
+                font-weight: bold;
+                letter-spacing: 2pt;
+                text-transform: uppercase;
+            }
+
+            .voucher__conditions-text {
+                margin-top: 2pt;
+                font-size: 8.5pt;
+                color: #5f6075;
+                line-height: 1.35;
+            }
+        </style>
+    </head>
+    <body>
+        <img class="voucher__value-panel-background" alt="" src="{{ backgroundDataUri }}">
+
+        <div class="voucher__decorative-ring-outer"></div>
+        <div class="voucher__decorative-ring-inner"></div>
+
+        <div class="voucher__value-panel">
+            <div class="voucher__title">{{ 'Gift voucher'|trans({}, 'messages', domainLocale) }}</div>
+            <div class="voucher__title-underline"></div>
+
+            <div class="voucher__value-label">{{ 'Voucher value'|trans({}, 'messages', domainLocale) }}</div>
+            <div class="voucher__value">{% if formattedValuePrefix is not null %}<span class="voucher__value-affix">{{ formattedValuePrefix }}&nbsp;</span>{% endif %}{{ formattedValueMain }}{% if formattedValueSuffix is not null %}<span class="voucher__value-affix">&nbsp;{{ formattedValueSuffix }}</span>{% endif %}</div>
+        </div>
+
+        <div class="voucher__content-panel"></div>
+        <div class="voucher__seam-notch-top"></div>
+        <div class="voucher__seam-notch-bottom"></div>
+
+        <div class="voucher__content">
+            <table class="voucher__header" role="presentation">
+                <tr>
+                    <td>
+                        {% if logoDataUri is not null %}
+                            <img class="voucher__logo" src="{{ logoDataUri }}" alt="{{ shopName }}">
+                        {% else %}
+                            <strong>{{ shopName }}</strong>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="voucher__shop-name">{{ shopName }}</div>
+                        <div class="voucher__shop-url">{{ shopUrl }}</div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="voucher__code-box">
+                <div class="voucher__code-label">{{ 'Code for redemption'|trans({}, 'messages', domainLocale) }}</div>
+                <div class="voucher__code">
+                    {%- for codeChunk in giftVoucher.code|split('', 4) -%}
+                        {{ codeChunk }}{% if not loop.last %}&nbsp;{% endif %}
+                    {%- endfor -%}
+                </div>
+            </div>
+
+            <div class="voucher__validity">
+                <span class="voucher__validity-label">{{ 'Valid until'|trans({}, 'messages', domainLocale) }}:</span>
+                <span class="voucher__validity-date">{{ giftVoucher.validUntil|formatDate(domainLocale) }}</span>
+            </div>
+
+            <div class="voucher__redemption">
+                <span class="voucher__redemption-label">{{ 'Redemption:'|trans({}, 'messages', domainLocale) }}</span>
+                {{ 'enter the code in the cart into the field for discount coupons and gift vouchers.'|trans({}, 'messages', domainLocale) }}
+            </div>
+
+            <div class="voucher__conditions">
+                <div class="voucher__conditions-title">{{ 'Conditions'|trans({}, 'messages', domainLocale) }}</div>
+                <div class="voucher__conditions-text">
+                    {{ 'The gift voucher applies to all goods and services. The gift voucher cannot be redeemed after the stated validity date; after the validity expires, its value is forfeited without any right to compensation. The voucher cannot be exchanged for cash. The goods or services must be of equal or higher value.'|trans({}, 'messages', domainLocale) }}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
