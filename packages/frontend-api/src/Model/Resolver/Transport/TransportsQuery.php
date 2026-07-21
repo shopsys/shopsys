@@ -11,14 +11,19 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\Exception\TransportIsNotPersonalPickupException;
 use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculation;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportUnavailabilityReasonInCartEnum;
 use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
 use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Transport\Exception\TransportNotFoundUserError;
 
 class TransportsQuery extends AbstractQuery
 {
@@ -118,6 +123,32 @@ class TransportsQuery extends AbstractQuery
 
         // the calculation works in the domain display timezone, the API serializes date time values in UTC
         return $expectedDeliveryDate?->setTimezone(new DateTimeZone('UTC'));
+    }
+
+    public function storeExpectedDeliveryDateQuery(
+        Store $store,
+        string $transportUuid,
+        ?string $cartUuid = null,
+        ?ArrayObject $context = null,
+    ): ?DateTimeImmutable {
+        try {
+            $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $this->domain->getId());
+        } catch (TransportNotFoundException $transportNotFoundException) {
+            throw new TransportNotFoundUserError($transportNotFoundException->getMessage());
+        }
+
+        $resolvedCartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
+
+        try {
+            return $this->transportExpectedDeliveryDateCalculation->calculateExpectedDeliveryDateForStore(
+                $transport,
+                $this->findCart($resolvedCartUuid),
+                $this->domain->getId(),
+                $store,
+            );
+        } catch (TransportIsNotPersonalPickupException $transportIsNotPersonalPickupException) {
+            throw new InvalidArgumentUserError($transportIsNotPersonalPickupException->getMessage());
+        }
     }
 
     protected function findCart(?string $cartUuid): ?Cart

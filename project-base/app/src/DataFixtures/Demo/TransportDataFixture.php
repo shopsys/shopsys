@@ -47,6 +47,9 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     {
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 2;
+        $transportData->deliversOnWeekends = true;
+        $transportData->deliversOnPublicHolidays = true;
+        $transportData->deliversOnInternalClosedDays = true;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();

@@ -87,14 +87,38 @@ class ClosedDayRepository
         DateTimeInterface $endDate,
     ): QueryBuilder {
         return $this
+            ->createClosedDaysQueryBuilder($domainId, $startDate, $endDate)
+            ->andWhere('cd.isPublicHoliday = true');
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
+     */
+    public function getClosedDaysWithEagerLoadedExcludedStores(
+        int $domainId,
+        DateTimeInterface $startDate,
+        DateTimeInterface $endDate,
+    ): array {
+        return $this
+            ->createClosedDaysQueryBuilder($domainId, $startDate, $endDate)
+            ->addSelect('es')
+            ->leftJoin('cd.excludedStores', 'es')
+            ->getQuery()
+            ->getResult();
+    }
+
+    protected function createClosedDaysQueryBuilder(
+        int $domainId,
+        DateTimeInterface $startDate,
+        DateTimeInterface $endDate,
+    ): QueryBuilder {
+        return $this
             ->getClosedDayRepository()
             ->createQueryBuilder('cd')
             ->where('cd.domainId = :domainId')
-            ->andWhere('cd.isPublicHoliday = :isPublicHoliday')
             ->andWhere('cd.date >= :startDate')
             ->andWhere('cd.date <= :endDate')
             ->setParameter('domainId', $domainId)
-            ->setParameter('isPublicHoliday', true)
             ->setParameter('startDate', $startDate)
             ->setParameter('endDate', $endDate);
     }

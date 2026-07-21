@@ -3030,6 +3030,8 @@ type Store implements Breadcrumb & Slug {
   distance: Int
   "Store email"
   email: String
+  "Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised."
+  expectedDeliveryDate(cartUuid: Uuid = null, transportUuid: Uuid!): DateTime
   "Store images"
   images(type: String = null): [Image!]!
   "Is set as default store"
@@ -3118,7 +3120,7 @@ type Transport {
   daysUntilDelivery: Int!
   "Localized transport description (domain dependent)"
   description: String
-  "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised."
+  "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised."
   expectedDeliveryDate(cartUuid: Uuid = null): DateTime
   "Transport group"
   group: TransportGroup

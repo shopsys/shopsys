@@ -2218,8 +2218,8 @@ msgstr "Nastavení obchodních podmínek"
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr "Aktuální seznam URL adres lze nalézt v repozitáři projektu v souboru \"storefront/config/routes.ts\"."
 
-msgid "The days are used to display proper stores opening hours and to calculate order withdrawal deadline."
-msgstr "Dny se používají k zobrazení správné otevírací doby prodejen a k výpočtu lhůty pro odstoupení od smlouvy u objednávky."
+msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of transports."
+msgstr "Dny se používají k zobrazení správné otevírací doby prodejen, k výpočtu lhůty pro odstoupení od smlouvy u objednávky a k výpočtu předpokládaného data doručení doprav."
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
 msgstr "Odkaz pro resetování hesla je neplatný, expirovaný nebo již byl použit."

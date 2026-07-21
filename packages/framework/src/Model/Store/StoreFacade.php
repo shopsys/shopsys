@@ -115,6 +115,11 @@ class StoreFacade
         return $this->storeRepository->getStoresByDomainId($domainId, $limit, $offset);
     }
 
+    public function findByUuidAndDomainId(string $uuid, int $domainId): ?Store
+    {
+        return $this->storeRepository->findByUuidAndDomainId($uuid, $domainId);
+    }
+
     public function getByUuidAndDomainId(string $uuid, int $domainId): Store
     {
         return $this->storeRepository->getByUuidAndDomainId($uuid, $domainId);

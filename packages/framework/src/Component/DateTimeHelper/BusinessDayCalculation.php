@@ -37,7 +37,7 @@ class BusinessDayCalculation
      */
     protected function isBusinessDay(DateTimeImmutable $date, array $publicHolidays): bool
     {
-        if ($this->isWeekend($date)) {
+        if (DateTimeHelper::isWeekend($date)) {
             return false;
         }
 
@@ -50,10 +50,5 @@ class BusinessDayCalculation
         }
 
         return true;
-    }
-
-    protected function isWeekend(DateTimeImmutable $date): bool
-    {
-        return (int)$date->format('N') >= 6;
     }
 }

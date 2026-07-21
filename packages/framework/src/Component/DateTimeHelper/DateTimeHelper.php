@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\DateTimeHelper;
 
+use DateTimeInterface;
 use DateTimeZone;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\Exception\CannotParseDateTimeException;
@@ -58,5 +59,10 @@ class DateTimeHelper
         DateTimeZone $dateTimeZone,
     ): DatePoint {
         return (new DatePoint($dateTimeString, $dateTimeZone))->setTimezone(new DateTimeZone('UTC'));
+    }
+
+    public static function isWeekend(DateTimeInterface $date): bool
+    {
+        return (int)$date->format('N') >= 6;
     }
 }

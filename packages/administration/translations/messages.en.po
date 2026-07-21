@@ -2218,7 +2218,7 @@ msgstr ""
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr ""
 
-msgid "The days are used to display proper stores opening hours and to calculate order withdrawal deadline."
+msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of transports."
 msgstr ""
 
 msgid "The password reset link you used is invalid, expired, or has already been used."

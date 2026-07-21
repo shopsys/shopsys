@@ -6,12 +6,14 @@ namespace Tests\FrontendApiBundle\Functional\Transport;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use DateTimeZone;
 use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculation;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -89,6 +91,56 @@ class TransportTest extends GraphQlTestCase
             $cartDeliveryDate,
             'A cart item awaiting restocking is expected to postpone the delivery date',
         );
+    }
+
+    /**
+     * Only checks that the API field is wired to the calculation with the concrete store
+     *
+     * @see \Tests\FrameworkBundle\Unit\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculationTest for the store-specific calculation itself
+     */
+    public function testStoreExpectedDeliveryDateMatchesCalculation(): void
+    {
+        $personalPickupTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreExpectedDeliveryDateQuery.graphql', [
+            'storeUuid' => $store->getUuid(),
+            'transportUuid' => $personalPickupTransport->getUuid(),
+        ]);
+
+        $expectedDeliveryDate = $this->transportExpectedDeliveryDateCalculation
+            ->calculateExpectedDeliveryDateForStore($personalPickupTransport, null, $this->domain->getId(), $store)
+            ?->format(DATE_ATOM);
+
+        $this->assertNotNull($expectedDeliveryDate);
+        $this->assertSame(
+            $expectedDeliveryDate,
+            $this->getResponseDataForGraphQlType($response, 'store')['expectedDeliveryDate'],
+        );
+    }
+
+    public function testStoreExpectedDeliveryDateReturnsUserErrorForUnknownTransport(): void
+    {
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreExpectedDeliveryDateQuery.graphql', [
+            'storeUuid' => $store->getUuid(),
+            'transportUuid' => '00000000-0000-0000-0000-000000000000',
+        ]);
+
+        $this->assertUserError($response, 'transport-not-found');
+    }
+
+    public function testStoreExpectedDeliveryDateReturnsUserErrorForNonPickupTransport(): void
+    {
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreExpectedDeliveryDateQuery.graphql', [
+            'storeUuid' => $store->getUuid(),
+            'transportUuid' => $this->transport->getUuid(),
+        ]);
+
+        $this->assertUserError($response, 'invalid-argument');
     }
 
     private function getExpectedDeliveryDateFromApi(?string $cartUuid = null): ?string
