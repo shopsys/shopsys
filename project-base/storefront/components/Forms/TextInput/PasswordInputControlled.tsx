@@ -3,8 +3,9 @@ import { EyeIcon } from 'components/Basic/Icon/EyeIcon';
 import { FormLine, FormLineWidth } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { InputHTMLAttributes, ReactElement, ReactNode, useState } from 'react';
-import { Control, useController } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { FunctionComponentProps } from 'types/globals';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { TextInput } from './TextInput';
 
@@ -18,23 +19,23 @@ type PasswordInputProps = NativeProps & {
     'aria-labelledby'?: string;
 };
 
-type PasswordInputControlledProps = {
-    name: string;
+type PasswordInputControlledProps<TFieldValues extends FieldValues, TTransformedValues> = {
+    name: FieldPath<TFieldValues>;
     render?: (input: ReactElement) => ReactElement<any, any> | null;
     width?: FormLineWidth;
     passwordInputProps: PasswordInputProps;
-    control: Control<any>;
+    control: Control<TFieldValues, any, TTransformedValues>;
     formName: string;
 };
 
-export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
+export const PasswordInputControlled = <TFieldValues extends FieldValues, TTransformedValues = TFieldValues>({
     name,
     render,
     width,
     control,
     passwordInputProps,
     formName,
-}) => {
+}: PasswordInputControlledProps<TFieldValues, TTransformedValues> & FunctionComponentProps) => {
     const { t } = useTranslation();
     const {
         fieldState: { error },

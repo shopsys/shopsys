@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
@@ -10,6 +9,7 @@ import { FormMeta } from 'types/formMeta';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -17,7 +17,7 @@ export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormTy
     const { t } = useTranslation();
     const user = useCurrentCustomerData();
 
-    const resolver = yupResolver(
+    const resolver = yupResolver<ContactFormType>(
         Yup.object().shape<Record<keyof ContactFormType, any>>({
             email: validateEmail(t),
             name: Yup.string().required(t('Please enter your name')),

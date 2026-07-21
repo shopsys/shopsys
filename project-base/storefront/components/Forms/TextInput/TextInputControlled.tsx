@@ -1,11 +1,12 @@
 import { FormLine, FormLineWidth } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
-import { Control, useController } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { FunctionComponentProps } from 'types/globals';
 import { TextInput, TextInputProps } from './TextInput';
 
-type TextInputControlledProps = {
-    name: string;
+type TextInputControlledProps<TFieldValues extends FieldValues, TTransformedValues> = {
+    name: FieldPath<TFieldValues>;
     render?: (input: ReactElement) => ReactElement<any, any> | null;
     width?: FormLineWidth;
     textInputProps: Pick<
@@ -26,12 +27,12 @@ type TextInputControlledProps = {
         | 'aria-labelledby'
         | 'hasWarning'
     >;
-    control: Control<any>;
+    control: Control<TFieldValues, any, TTransformedValues>;
     formName: string;
     isWithoutFormLineError?: boolean;
 };
 
-export const TextInputControlled: FC<TextInputControlledProps> = ({
+export const TextInputControlled = <TFieldValues extends FieldValues, TTransformedValues = TFieldValues>({
     name,
     render,
     width,
@@ -39,7 +40,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
     textInputProps,
     formName,
     isWithoutFormLineError,
-}) => {
+}: TextInputControlledProps<TFieldValues, TTransformedValues> & FunctionComponentProps) => {
     const {
         fieldState: { error },
         field,

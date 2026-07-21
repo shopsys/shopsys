@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
     validateCity,
     validateCompanyNameRequired,
@@ -24,6 +23,7 @@ import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 import * as Yup from 'yup';
@@ -34,7 +34,7 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
     const contactInformationValues = useCurrentUserContactInformation();
     const { pickupPlace } = useCurrentCart();
 
-    const resolver = yupResolver(
+    const resolver = yupResolver<ContactInformation>(
         Yup.object().shape<Record<keyof ContactInformation, any>>({
             email: validateEmail(t),
             customer: validateCustomer(),

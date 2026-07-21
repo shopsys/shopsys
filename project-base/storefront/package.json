@@ -27,7 +27,7 @@
         "knip": "knip"
     },
     "dependencies": {
-        "@hookform/resolvers": "~2.6.1",
+        "@hookform/resolvers": "~5.4.0",
         "@next/bundle-analyzer": "~15.5.18",
         "@radix-ui/react-popover": "^1.1.15",
         "@sentry/nextjs": "~10.58.0",
@@ -51,7 +51,7 @@
         "react-day-picker": "^10.0.1",
         "react-dom": "~19.2.7",
         "react-dropzone": "^15.0.0",
-        "react-hook-form": "~7.71.2",
+        "react-hook-form": "~7.81.0",
         "react-infinite-scroll-component": "~7.2.1",
         "react-remove-scroll": "^2.7.2",
         "react-swipeable": "~7.0.2",

@@ -1,16 +1,16 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { validateNewPassword, validateNewPasswordConfirm } from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
 import { NewPasswordFormType } from 'types/form';
 import { FormMeta } from 'types/formMeta';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
 export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, NewPasswordFormType] => {
     const { t } = useTranslation();
-    const resolver = yupResolver(
+    const resolver = yupResolver<NewPasswordFormType>(
         Yup.object().shape<Record<keyof NewPasswordFormType, any>>({
             newPassword: validateNewPassword(t),
             newPasswordConfirm: Yup.string().when('newPassword', {
