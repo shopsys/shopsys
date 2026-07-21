@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
     validateBankAccountNumber,
     validateCity,
@@ -24,6 +23,7 @@ import { SelectOptionType } from 'types/selectOptions';
 import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -34,7 +34,7 @@ export const useComplaintForm = (
 ): [UseFormReturn<ComplaintFormType>, ComplaintFormType | undefined] => {
     const { t } = useTranslation();
 
-    const resolver = yupResolver(
+    const resolver = yupResolver<ComplaintFormType>(
         Yup.object().shape<Record<keyof ComplaintFormType, any>>({
             quantity: Yup.string()
                 .matches(/^[1-9][0-9]*$/, t('Please enter quantity'))

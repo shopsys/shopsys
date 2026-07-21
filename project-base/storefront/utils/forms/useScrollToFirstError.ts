@@ -1,15 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 export const useScrollToFirstError = <T extends FieldValues>(
     formName: string,
     formProviderMethods?: UseFormReturn<T>,
 ) => {
-    const { submitCount, errors, isSubmitted } = formProviderMethods?.formState ?? {};
+    const { submitCount, errors } = formProviderMethods?.formState ?? {};
+    const errorsRef = useRef(errors);
+    errorsRef.current = errors;
 
     useEffect(() => {
-        if (isSubmitted && errors && Object.keys(errors).length > 0) {
-            const firstErrorField = Object.keys(errors)[0];
+        const currentErrors = errorsRef.current;
+
+        if (submitCount && currentErrors && Object.keys(currentErrors).length > 0) {
+            const firstErrorField = Object.keys(currentErrors)[0];
             const errorElement = document.getElementById(`${formName}-${firstErrorField}`);
 
             if (errorElement) {
@@ -17,5 +21,5 @@ export const useScrollToFirstError = <T extends FieldValues>(
                 errorElement.focus({ preventScroll: true });
             }
         }
-    }, [submitCount, errors, formName, isSubmitted]);
+    }, [submitCount, formName]);
 };

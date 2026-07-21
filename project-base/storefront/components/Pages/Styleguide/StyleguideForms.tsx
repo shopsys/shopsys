@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
@@ -6,6 +5,7 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { Translate } from 'next-translate';
 import { FormProvider } from 'react-hook-form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 import { StyleguideSection } from './StyleguideElements';
@@ -74,7 +74,7 @@ const StyleguideFormExample: FC = () => {
 };
 
 const getStyleguideExampleFormResolver = (t: Translate) => {
-    return yupResolver(
+    return yupResolver<{ optionalValue: string; requiredValue: string }>(
         Yup.object().shape<Record<keyof { optionalValue: string; requiredValue: string }, any>>({
             optionalValue: Yup.string(),
             requiredValue: Yup.string().required(t('This field is required')),

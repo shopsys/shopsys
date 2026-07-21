@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
     validateEmail,
     validateFirstName,
@@ -14,6 +13,7 @@ import { FormMeta } from 'types/formMeta';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -23,7 +23,7 @@ export const useOrderWithdrawalForm = (
     const { t } = useTranslation();
     const user = useCurrentCustomerData();
 
-    const resolver = yupResolver(
+    const resolver = yupResolver<OrderWithdrawalFormType>(
         Yup.object().shape<Record<keyof OrderWithdrawalFormType, any>>({
             firstName: validateFirstName(t),
             lastName: validateLastName(t),

@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
     validateCompanyNumber,
     validateCompanyTaxNumber,
@@ -13,6 +12,7 @@ import { InquiryFormType } from 'types/form';
 import { FormMeta } from 'types/formMeta';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -21,7 +21,7 @@ export const useInquiryForm = (
 ): [UseFormReturn<InquiryFormType>, InquiryFormType | undefined] => {
     const { t } = useTranslation();
 
-    const resolver = yupResolver(
+    const resolver = yupResolver<InquiryFormType>(
         Yup.object().shape<Record<keyof InquiryFormType, any>>({
             email: validateEmail(t),
             firstName: validateFirstName(t),

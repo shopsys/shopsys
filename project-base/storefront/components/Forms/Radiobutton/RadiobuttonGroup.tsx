@@ -1,25 +1,26 @@
 import { ChangeEventHandler, ReactElement } from 'react';
-import { Control, useController } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { FunctionComponentProps } from 'types/globals';
 import { RadiobuttonOptionType } from 'types/radiobuttonOptions';
 import { Radiobutton } from './Radiobutton';
 
-type RadiobuttonGroupProps = {
-    name: string;
+type RadiobuttonGroupProps<TFieldValues extends FieldValues, TTransformedValues> = {
+    name: FieldPath<TFieldValues>;
     render: (input: ReactElement, key: string) => ReactElement<any, any> | null;
     radiobuttons: RadiobuttonOptionType[];
-    control: Control<any>;
+    control: Control<TFieldValues, any, TTransformedValues>;
     formName: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
 };
 
-export const RadiobuttonGroup: FC<RadiobuttonGroupProps> = ({
+export const RadiobuttonGroup = <TFieldValues extends FieldValues, TTransformedValues = TFieldValues>({
     name,
     radiobuttons,
     control,
     render,
     formName,
     onChange,
-}) => {
+}: RadiobuttonGroupProps<TFieldValues, TTransformedValues> & FunctionComponentProps) => {
     const { field } = useController({ name, control });
 
     const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {

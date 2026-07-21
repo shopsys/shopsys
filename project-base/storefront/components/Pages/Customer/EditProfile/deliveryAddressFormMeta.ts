@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
     validateCity,
     validateCountry,
@@ -14,6 +13,7 @@ import { DeliveryAddressFormType } from 'types/form';
 import { FormMeta } from 'types/formMeta';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -22,7 +22,7 @@ export const useDeliveryAddressForm = (
 ): [UseFormReturn<DeliveryAddressFormType>, DeliveryAddressFormType | undefined] => {
     const { t } = useTranslation();
 
-    const resolver = yupResolver(
+    const resolver = yupResolver<DeliveryAddressFormType>(
         Yup.object().shape<Record<keyof DeliveryAddressFormType, any>>({
             firstName: validateFirstName(t),
             lastName: validateLastName(t),

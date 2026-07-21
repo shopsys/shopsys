@@ -1,26 +1,27 @@
 import { FormLine, FormLineWidth } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
-import { Control, useController } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { FunctionComponentProps } from 'types/globals';
 import { Textarea, TextareaProps } from './Textarea';
 
-type TextareaControlledProps = {
-    name: string;
+type TextareaControlledProps<TFieldValues extends FieldValues, TTransformedValues> = {
+    name: FieldPath<TFieldValues>;
     render?: (input: ReactElement) => ReactElement<any, any> | null;
     width?: FormLineWidth;
     textareaProps: Pick<TextareaProps, 'disabled' | 'label' | 'required' | 'rows' | 'onBlur' | 'onChange'>;
-    control: Control<any>;
+    control: Control<TFieldValues, any, TTransformedValues>;
     formName: string;
 };
 
-export const TextareaControlled: FC<TextareaControlledProps> = ({
+export const TextareaControlled = <TFieldValues extends FieldValues, TTransformedValues = TFieldValues>({
     name,
     render,
     width,
     control,
     formName,
     textareaProps,
-}) => {
+}: TextareaControlledProps<TFieldValues, TTransformedValues> & FunctionComponentProps) => {
     const {
         fieldState: { error },
         field,

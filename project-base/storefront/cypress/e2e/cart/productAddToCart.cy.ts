@@ -60,6 +60,8 @@ describe('Product Add To Cart Tests', () => {
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
                 { tid: TIDs.product_detail_main_image, zIndex: 5 },
+                { tid: TIDs.product_gallery_image, zIndex: 5 },
+                { tid: TIDs.product_gallery_video, zIndex: 5 },
             ],
         });
         checkPopupIsVisible(true);
@@ -203,6 +205,7 @@ describe('Product Add To Cart Tests', () => {
             {
                 blackout: [
                     { tid: TIDs.product_list_item_image, zIndex: 5 },
+                    { tid: TIDs.category_bestseller_image },
                     { tid: TIDs.simple_navigation_image, zIndex: 9999 },
                     { tid: TIDs.footer_social_links },
                     { tid: TIDs.footer_payment_images },

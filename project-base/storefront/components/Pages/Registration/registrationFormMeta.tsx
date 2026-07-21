@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import {
     validateCity,
@@ -26,12 +25,13 @@ import { RegistrationFormType } from 'types/form';
 import { FormMeta } from 'types/formMeta';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
 export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, RegistrationFormType] => {
     const { t } = useTranslation();
-    const resolver = yupResolver(
+    const resolver = yupResolver<RegistrationFormType>(
         Yup.object().shape<Record<keyof RegistrationFormType, any>>({
             email: validateEmail(t),
             password: validatePassword(t),

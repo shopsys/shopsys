@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
@@ -8,6 +7,7 @@ import { WatchdogFormType } from 'types/form';
 import { FormMeta } from 'types/formMeta';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -16,7 +16,7 @@ export const useWatchdogForm = (
 ): [UseFormReturn<WatchdogFormType>, WatchdogFormType | undefined] => {
     const { t } = useTranslation();
 
-    const resolver = yupResolver(
+    const resolver = yupResolver<WatchdogFormType>(
         Yup.object().shape<Record<keyof WatchdogFormType, any>>({
             email: validateEmail(t),
             productUuid: Yup.string().required(),

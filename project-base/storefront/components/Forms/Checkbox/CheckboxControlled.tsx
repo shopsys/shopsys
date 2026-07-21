@@ -1,26 +1,27 @@
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, ReactElement } from 'react';
-import { Control, useController } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { FunctionComponentProps } from 'types/globals';
 import { Checkbox, CheckboxProps } from './Checkbox';
 
-type CheckboxControlledProps = {
-    name: string;
+type CheckboxControlledProps<TFieldValues extends FieldValues, TTransformedValues> = {
+    name: FieldPath<TFieldValues>;
     render?: (input: ReactElement) => ReactElement<any, any> | null;
     checkboxProps: Pick<CheckboxProps, 'count' | 'disabled' | 'label' | 'required' | 'className'>;
-    control: Control<any>;
+    control: Control<TFieldValues, any, TTransformedValues>;
     formName: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
 };
 
-export const CheckboxControlled: FC<CheckboxControlledProps> = ({
+export const CheckboxControlled = <TFieldValues extends FieldValues, TTransformedValues = TFieldValues>({
     name,
     render,
     control,
     formName,
     checkboxProps,
     onChange,
-}) => {
+}: CheckboxControlledProps<TFieldValues, TTransformedValues> & FunctionComponentProps) => {
     const {
         fieldState: { error },
         field,

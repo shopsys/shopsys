@@ -116,6 +116,7 @@ export const staticData = {
         },
     },
     article: {
+        creationDate: '10/26/1999',
         forPress: {
             uuid: 'a7e526ef-34cd-512f-afbf-4984da1fd780',
         },

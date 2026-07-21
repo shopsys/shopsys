@@ -1,10 +1,10 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { UseFormReturn } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';
 import { FormMeta } from 'types/formMeta';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -12,7 +12,7 @@ export const usePromoCodeForm = (): [UseFormReturn<PromoCodeFormType>, PromoCode
     const { t } = useTranslation();
     const { promoCodes } = useCurrentCart();
 
-    const resolver = yupResolver(
+    const resolver = yupResolver<PromoCodeFormType>(
         Yup.object().shape<Record<keyof PromoCodeFormType, any>>({
             promoCode: Yup.string().required(t('This field is required')),
         }),

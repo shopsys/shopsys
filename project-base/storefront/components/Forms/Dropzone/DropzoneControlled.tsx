@@ -4,22 +4,23 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { ReactElement, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Control, Controller, FieldError, useController } from 'react-hook-form';
+import { Control, Controller, FieldError, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { FunctionComponentProps } from 'types/globals';
 import { formatBytes } from 'utils/formaters/formatBytes';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
-type DropzoneControlledProps = {
-    control: Control<any>;
+type DropzoneControlledProps<TFieldValues extends FieldValues, TTransformedValues> = {
+    control: Control<TFieldValues, any, TTransformedValues>;
     formName: string;
-    name: string;
+    name: FieldPath<TFieldValues>;
     render: (dropzone: ReactElement) => ReactElement;
     label: string;
     required?: boolean;
     disabled?: boolean;
 };
 
-export const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
+export const DropzoneControlled = <TFieldValues extends FieldValues, TTransformedValues = TFieldValues>({
     control,
     formName,
     name,
@@ -27,7 +28,7 @@ export const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
     label,
     required = false,
     disabled = false,
-}) => {
+}: DropzoneControlledProps<TFieldValues, TTransformedValues> & FunctionComponentProps) => {
     const { t } = useTranslation();
     const dropzoneId = `${formName}-${name}`;
     const {

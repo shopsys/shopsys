@@ -1,20 +1,20 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { FormProvider } from 'react-hook-form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import * as Yup from 'yup';
 import { StyleguideSection } from './StyleguideElements';
 
 const getStyleguideExampleFormResolver = () =>
-    yupResolver(
+    yupResolver<{ country: 'cz' | 'de' | 'pl' }>(
         Yup.object().shape<Record<keyof { country: 'cz' | 'de' | 'pl' }, any>>({
             country: Yup.string().oneOf(['cz', 'de', 'pl']),
         }),
     );
 
 export const StyleguideRadiogroup: FC = () => {
-    const formProviderMethods = useFormWrapper(getStyleguideExampleFormResolver(), {
+    const formProviderMethods = useFormWrapper<{ country: 'cz' | 'de' | 'pl' }>(getStyleguideExampleFormResolver(), {
         country: 'cz',
     });
 

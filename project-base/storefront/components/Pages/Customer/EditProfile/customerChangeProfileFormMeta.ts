@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
     validateCity,
     validateCompanyNameRequired,
@@ -18,6 +17,7 @@ import { CustomerChangeProfileFormType } from 'types/form';
 import { FormMeta } from 'types/formMeta';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
+import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
@@ -26,7 +26,7 @@ export const useCustomerChangeProfileForm = (
 ): [UseFormReturn<CustomerChangeProfileFormType>, CustomerChangeProfileFormType] => {
     const { t } = useTranslation();
 
-    const resolver = yupResolver(
+    const resolver = yupResolver<CustomerChangeProfileFormType>(
         Yup.object().shape<Record<keyof CustomerChangeProfileFormType, any>>({
             email: validateEmail(t),
             telephonePrefix: validateTelephonePrefix(t),
