@@ -11,6 +11,7 @@ export default class SinglePicker {
         window.SinglePickerInstances[this.instanceId] = this;
         this.$picker = $picker;
         this.onSelectCallback = onSelectCallback;
+        this.modal = null;
 
         if (onSelectCallback === undefined) {
             this.$input = $picker.find('[data-js-single-picker-input]');
@@ -19,33 +20,61 @@ export default class SinglePicker {
             this.$removeButton = $picker.find('[data-js-single-picker-button-remove]');
 
             this.$removeButton.prop('disabled', this.$input.val() === '');
-            this.$removeButton.click(() => {
+            this.$removeButton.off('click.singlePicker').on('click.singlePicker', () => {
                 this.select('', $picker.data('placeholder'));
 
                 return false;
             });
 
-            this.$label.click(event => this.openPickerWindow(event));
+            this.$label.off('click.singlePicker').on('click.singlePicker', event => this.openPickerWindow(event));
         } else {
             this.$addButton = $picker;
         }
 
-        this.$addButton.click(event => this.openPickerWindow(event));
+        this.$addButton.off('click.singlePicker').on('click.singlePicker', event => this.openPickerWindow(event));
     }
 
     openPickerWindow(event) {
+        event.preventDefault();
+        const addButton = this.$addButton.get(0);
+
+        if (addButton.singlePickerModal) {
+            return;
+        }
+
+        addButton.singlePickerModal = true;
+
         const url = this.$picker.data('picker-url').replace('__js_instance_id__', this.instanceId);
 
         const iframeContent = `<iframe src="${url}" style="width: 100%; height: 800px; border: none;"></iframe>`;
 
-        this.modal = new ModalWindow({
-            content: iframeContent,
-            title: this.$picker.data('picker-title') || Translator.trans('Select'),
-            size: 'xl',
-            buttons: [{ text: Translator.trans('Close') }],
-        });
+        let modal;
 
-        event.preventDefault();
+        try {
+            modal = new ModalWindow({
+                content: iframeContent,
+                title: this.$picker.data('picker-title') || Translator.trans('Select'),
+                size: 'xl',
+                buttons: [{ text: Translator.trans('Close') }],
+            });
+        } catch (error) {
+            delete addButton.singlePickerModal;
+
+            throw error;
+        }
+
+        this.modal = modal;
+        addButton.singlePickerModal = modal;
+
+        modal.element.one('hidden.bs.modal', () => {
+            if (this.modal === modal) {
+                this.modal = null;
+            }
+
+            if (addButton.singlePickerModal === modal) {
+                delete addButton.singlePickerModal;
+            }
+        });
     }
 
     select(id, name) {
@@ -81,14 +110,16 @@ export default class SinglePicker {
             new SinglePicker($(this));
         });
 
-        $('[data-js-single-picker-window-select]').click(event => {
-            const $btnElement = $(event.currentTarget);
-            SinglePicker.onClickSelect(
-                $btnElement.data('picker-instance-id'),
-                $btnElement.data('picker-id'),
-                $btnElement.data('picker-name'),
-            );
-        });
+        $('[data-js-single-picker-window-select]')
+            .off('click.singlePicker')
+            .on('click.singlePicker', event => {
+                const $btnElement = $(event.currentTarget);
+                SinglePicker.onClickSelect(
+                    $btnElement.data('picker-instance-id'),
+                    $btnElement.data('picker-id'),
+                    $btnElement.data('picker-name'),
+                );
+            });
     }
 }
 

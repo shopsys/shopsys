@@ -2,14 +2,14 @@
 
 {% if canEdit %}
     <a href="#"
-       class="text-secondary d-inline-flex align-items-center"
+       class="text-primary d-inline-flex align-items-center"
        data-action="live#emit:prevent"
        data-live-event-param="{{ this.openEditorEmitParam() }}"
        data-live-section-param="{{ this.section.getId() }}"
+       data-bs-toggle="tooltip"
+       title="{{ this.section.getModalTitle() }}"
        aria-label="{{ this.section.getModalTitle() }}"
     >
-        <span class="d-inline-flex" data-bs-toggle="tooltip" title="{{ this.section.getModalTitle() }}">
-            {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
-        </span>
+        {{ ux_icon('pencil', { class: 'icon icon-sm' }) }}
     </a>
 {% endif %}
