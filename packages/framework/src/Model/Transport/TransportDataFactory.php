@@ -85,6 +85,9 @@ class TransportDataFactory
         }
 
         $transportData->daysUntilDelivery = $transport->getDaysUntilDelivery();
+        $transportData->deliversOnWeekends = $transport->deliversOnWeekends();
+        $transportData->deliversOnPublicHolidays = $transport->deliversOnPublicHolidays();
+        $transportData->deliversOnInternalClosedDays = $transport->deliversOnInternalClosedDays();
         $transportData->payments = $transport->getPayments();
         $transportData->image = $this->imageUploadDataFactory->createFromEntityAndType($transport);
         $transportData->type = $transport->getType();

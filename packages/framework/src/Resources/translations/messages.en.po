@@ -979,6 +979,18 @@ msgstr ""
 msgid "Delivered at"
 msgstr ""
 
+msgid "Delivers on e-shop internal days as well"
+msgstr ""
+
+msgid "Delivers on public holidays as well"
+msgstr ""
+
+msgid "Delivers on weekends as well"
+msgstr ""
+
+msgid "Delivery"
+msgstr ""
+
 msgid "Delivery address"
 msgstr ""
 
@@ -2797,7 +2809,10 @@ msgstr ""
 msgid "Public holiday"
 msgstr ""
 
-msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
+msgid "Public holidays and e-shop internal days are managed in the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> administration; the carrier's own days off are not taken into account."
+msgstr ""
+
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which transport delivery setting applies to this day."
 msgstr ""
 
 msgid "Published"

@@ -979,6 +979,18 @@ msgstr "Odstrániť"
 msgid "Delivered at"
 msgstr "Doručené dňa"
 
+msgid "Delivers on e-shop internal days as well"
+msgstr "Doručuje aj v interné dni e-shopu"
+
+msgid "Delivers on public holidays as well"
+msgstr "Doručuje aj počas štátnych sviatkov"
+
+msgid "Delivers on weekends as well"
+msgstr "Doručuje aj cez víkendy"
+
+msgid "Delivery"
+msgstr "Doručenie"
+
 msgid "Delivery address"
 msgstr "Dodacia adresa"
 
@@ -2165,7 +2177,7 @@ msgid "New category"
 msgstr "Nová kategória"
 
 msgid "New closed day"
-msgstr "Nový zatvorť deň"
+msgstr "Nový sviatok / interný deň"
 
 msgid "New country"
 msgstr "Nová krajina"
@@ -2797,8 +2809,11 @@ msgstr "Akcia {{ x }} + {{ y }} zadarmo"
 msgid "Public holiday"
 msgstr "Sviatok"
 
-msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
-msgstr "Sviatky sa berú do úvahy pri výpočte lehoty na odstúpenie od objednávky."
+msgid "Public holidays and e-shop internal days are managed in the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> administration; the carrier's own days off are not taken into account."
+msgstr "Štátne sviatky a interné dni e-shopu sa spravujú v administrácii <a href=\"%closedDaysUrl%\" target=\"_blank\">Sviatky a interné dni</a>; voľné dni samotného dopravcu sa nezohľadňujú."
+
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which transport delivery setting applies to this day."
+msgstr "Sviatky sa berú do úvahy pri výpočte lehoty na odstúpenie od objednávky. Príznak zároveň určuje, ktoré nastavenie doručovania dopravy sa na tento deň použije."
 
 msgid "Published"
 msgstr "Zverejnené"

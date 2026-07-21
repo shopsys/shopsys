@@ -979,6 +979,18 @@ msgstr "Smazat"
 msgid "Delivered at"
 msgstr "Doručeno dne"
 
+msgid "Delivers on e-shop internal days as well"
+msgstr "Doručuje i v interní dny e-shopu"
+
+msgid "Delivers on public holidays as well"
+msgstr "Doručuje i o státních svátcích"
+
+msgid "Delivers on weekends as well"
+msgstr "Doručuje i o víkendech"
+
+msgid "Delivery"
+msgstr "Doručení"
+
 msgid "Delivery address"
 msgstr "Dodací adresa"
 
@@ -2797,8 +2809,11 @@ msgstr "Akce {{ x }} + {{ y }} zdarma"
 msgid "Public holiday"
 msgstr "Státní svátek"
 
-msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
-msgstr "Státní svátky se berou v úvahu při výpočtu lhůty pro odstoupení od smlouvy."
+msgid "Public holidays and e-shop internal days are managed in the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> administration; the carrier's own days off are not taken into account."
+msgstr "Státní svátky a interní dny e-shopu se spravují v administraci <a href=\"%closedDaysUrl%\" target=\"_blank\">Svátky a interní dny</a>; volné dny samotného dopravce se nezohledňují."
+
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which transport delivery setting applies to this day."
+msgstr "Státní svátky se berou v úvahu při výpočtu lhůty pro odstoupení od smlouvy. Příznak zároveň určuje, které nastavení doručování dopravy se na tento den použije."
 
 msgid "Published"
 msgstr "Publikováno"

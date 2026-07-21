@@ -36,7 +36,7 @@ final class ClosedDayFormType extends AbstractType
         $builder
             ->add('isPublicHoliday', YesNoType::class, [
                 'label' => 'Public holiday',
-                'help' => t('Public holidays are taken into account when calculating the order withdrawal deadline.'),
+                'help' => t('Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which transport delivery setting applies to this day.'),
             ])
             ->add('date', DatePickerType::class, [
                 'required' => true,

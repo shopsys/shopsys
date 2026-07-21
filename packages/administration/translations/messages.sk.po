@@ -368,7 +368,7 @@ msgid "Close"
 msgstr "Zavrieť"
 
 msgid "Closed days"
-msgstr "Zatvorené dni"
+msgstr "Sviatky a interné dni"
 
 msgid "Closing modules"
 msgstr "Zatvárací moduly"
@@ -1112,7 +1112,7 @@ msgid "Holidays and internal days"
 msgstr "Sviatky a interné dni"
 
 msgid "Holidays and internal days overview"
-msgstr "Prehľad Holidays and internal days"
+msgstr "Prehľad sviatkov a interných dní"
 
 msgid "Holidays import"
 msgstr "Import sviatkov"
@@ -1340,7 +1340,7 @@ msgid "New category"
 msgstr "Nová kategória"
 
 msgid "New closed day"
-msgstr "Nový zatvorený deň"
+msgstr "Nový sviatok / interný deň"
 
 msgid "New country"
 msgstr "Nová krajina"
