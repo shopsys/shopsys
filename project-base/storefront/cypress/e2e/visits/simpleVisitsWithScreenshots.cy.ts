@@ -1,4 +1,7 @@
-import { changeBlogArticleDynamicPartsToStaticDemodata } from './visitsSupport';
+import {
+    changeArticleDynamicPartsToStaticDemodata,
+    changeBlogArticleDynamicPartsToStaticDemodata,
+} from './visitsSupport';
 import { staticData } from 'fixtures/demodata';
 import {
     getSnapshotIndexingFunction,
@@ -79,6 +82,7 @@ describe('Simple page visit tests with screenshots', () => {
 
     it('[Article Detail] should visit article detail with product hero and screenshot', () => {
         visitEntityByUuid('article', staticData.article.forPress.uuid);
+        changeArticleDynamicPartsToStaticDemodata();
         cy.getByTID([TIDs.grapesjs_product_hero]).should('be.visible');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'article detail', {
             blackout: [
