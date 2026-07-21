@@ -6,10 +6,8 @@ namespace Tests\FrontendApiBundle\Functional\Payment;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
-use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Payment\ReturnHash\PaymentReturnHashFacade;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
+use Tests\FrontendApiBundle\Functional\Order\OrderPaidTestHelper;
 use Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClient;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 use Uri\Rfc3986\Uri;
@@ -19,12 +17,7 @@ class PaymentMutationTest extends GraphQlTestCase
     /**
      * @inject
      */
-    private PaymentTransactionFacade $paymentTransactionFacade;
-
-    /**
-     * @inject
-     */
-    private PaymentTransactionDataFactory $paymentTransactionDataFactory;
+    private OrderPaidTestHelper $orderPaidTestHelper;
 
     /**
      * @inject
@@ -106,13 +99,8 @@ class PaymentMutationTest extends GraphQlTestCase
 
     public function testOrderCannotBePaidForAlreadyPaidOrder(): void
     {
-        // set transaction as paid
-        $paymentTransaction = $this->paymentTransactionFacade->getById(1);
-        $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
-        $paymentTransactionData->externalPaymentStatus = PaymentStatus::PAID;
-        $this->paymentTransactionFacade->edit(1, $paymentTransactionData);
-
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $this->orderPaidTestHelper->markOrderAsPaidByPaymentTransactions($order);
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',

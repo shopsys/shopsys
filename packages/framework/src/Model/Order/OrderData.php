@@ -208,6 +208,11 @@ class OrderData
     /**
      * @var bool
      */
+    public $paid;
+
+    /**
+     * @var bool
+     */
     public $heurekaAgreement;
 
     /**
@@ -286,6 +291,7 @@ class OrderData
         $this->heurekaAgreement = false;
         $this->isCompanyCustomer = false;
         $this->freeTransportAndPaymentApplied = false;
+        $this->paid = false;
 
         $this->totalPrice = Price::zero();
         $this->basicTotalItemsPrice = Price::zero();

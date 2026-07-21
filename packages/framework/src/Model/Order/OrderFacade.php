@@ -56,6 +56,7 @@ class OrderFacade
         protected readonly PaymentFacade $paymentFacade,
         protected readonly OrderDeliveryDateFacade $orderDeliveryDateFacade,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
+        protected readonly OrderPaidStatusFacade $orderPaidStatusFacade,
     ) {
     }
 
@@ -96,6 +97,10 @@ class OrderFacade
         if ($orderEditResult->isStatusChanged()) {
             $this->orderMailFacade->sendEmail($order, $order->getStatus());
             $this->orderDeliveryDateFacade->setDeliveredNowIfNecessary($order);
+        }
+
+        if ($orderData->paid) {
+            $this->orderPaidStatusFacade->markOrderAsPaid($order);
         }
 
         $this->processWithdrawalRequest($order, $orderData);

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotEnabledOnDomainExcepti
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderPaidStatusFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
@@ -34,6 +35,7 @@ class PaymentServiceFacade
         GoPayFacade $goPayFacade,
         protected readonly LoggerInterface $logger,
         protected readonly PaymentSetupCreationDataFactory $paymentSetupCreationDataFactory,
+        protected readonly OrderPaidStatusFacade $orderPaidStatusFacade,
     ) {
         $this->paymentServices = [];
         $this->paymentServices[PaymentTypeEnum::TYPE_GOPAY] = $goPayFacade;
@@ -94,11 +96,14 @@ class PaymentServiceFacade
             }
         }
 
+        $this->orderPaidStatusFacade->refreshOrderPaidStatusByPaymentTransactions($order);
+
         return $updated;
     }
 
     public function refundTransaction(PaymentTransaction $paymentTransaction, Money $refundAmount): bool
     {
+        $order = $paymentTransaction->getOrder();
         $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
 
         try {
@@ -135,6 +140,7 @@ class PaymentServiceFacade
 
             if ($update) {
                 $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
+                $this->orderPaidStatusFacade->refreshOrderPaidStatusByPaymentTransactions($order);
             }
 
             if ($refundFailed) {

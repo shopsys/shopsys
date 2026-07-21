@@ -2455,6 +2455,9 @@ msgstr ""
 msgid "Page title"
 msgstr ""
 
+msgid "Paid"
+msgstr ""
+
 msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
