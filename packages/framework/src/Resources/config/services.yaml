@@ -86,6 +86,10 @@ services:
         arguments:
             $routerMatchCommand: '@console.command.router_match'
 
+    Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade:
+        arguments:
+            $googleMapApiKey: '%env(GOOGLE_MAP_API_KEY)%'
+
     Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver:
         arguments: [!tagged_iterator shopsys.breadcrumb_generator]
 

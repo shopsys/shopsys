@@ -712,6 +712,12 @@ msgstr ""
 msgid "Convert values associated with parameter - %name%"
 msgstr ""
 
+msgid "Coordinates could not be loaded for the entered address."
+msgstr "Coordinates could not be loaded for the entered address."
+
+msgid "Coordinates loaded"
+msgstr "Coordinates loaded"
+
 msgid "Copy administrator role group"
 msgstr ""
 
@@ -1995,6 +2001,9 @@ msgstr ""
 
 msgid "Lists and nomenclatures"
 msgstr ""
+
+msgid "Load coordinates by address"
+msgstr "Load coordinates by address"
 
 msgid "Locale \"%locale%\" is not supported. You can choose only from the following locales: \"%supportedLocales%\"."
 msgstr ""

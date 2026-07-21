@@ -1217,6 +1217,7 @@ jobs:
             FACEBOOK_CLIENTSECRET: ${{ secrets.FACEBOOK_CLIENTSECRET }}
             GOOGLE_CLIENTID: ${{ secrets.GOOGLE_CLIENTID }}
             GOOGLE_CLIENTSECRET: ${{ secrets.GOOGLE_CLIENTSECRET }}
+            GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
             SEZNAM_CLIENTID: ${{ secrets.SEZNAM_CLIENTID }}
             SEZNAM_CLIENTSECRET: ${{ secrets.SEZNAM_CLIENTSECRET }}
             GOOGLE_MAP_API_KEY_VALUE: ${{ secrets.GOOGLE_MAP_API_KEY }}

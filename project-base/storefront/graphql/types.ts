@@ -3815,6 +3815,8 @@ export type TypeStoreConnection = {
   edges: Maybe<Array<Maybe<TypeStoreEdge>>>;
   /** Information to aid in pagination. */
   pageInfo: TypePageInfo;
+  /** Coordinates found by the store search text */
+  searchCoordinates: Maybe<TypeStoreSearchCoordinates>;
   /** Total number of stores */
   totalCount: Scalars['Int']['output'];
 };
@@ -3839,6 +3841,14 @@ export enum TypeStoreOpeningStatusEnum {
   /** Store will be opened soon */
   OpenSoon = 'OPEN_SOON'
 }
+
+export type TypeStoreSearchCoordinates = {
+  __typename?: 'StoreSearchCoordinates';
+  /** Search result latitude */
+  latitude: Scalars['Float']['output'];
+  /** Search result longitude */
+  longitude: Scalars['Float']['output'];
+};
 
 export type TypeToken = {
   __typename?: 'Token';
@@ -3904,6 +3914,17 @@ export type TypeTransportPriceArgs = {
 /** Represents a transport */
 export type TypeTransportProductsBlockingSelectionInCartArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+/** Represents a transport */
+export type TypeTransportStoresArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  coordinates?: InputMaybe<TypeCoordinates>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  searchText?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Represents a transport group */

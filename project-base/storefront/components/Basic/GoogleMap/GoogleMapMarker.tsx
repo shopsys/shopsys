@@ -1,16 +1,18 @@
 import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
+import { GoogleMapSearchMarkerIcon } from 'components/Basic/Icon/GoogleMapSearchMarkerIcon';
 import { AnyProps, PointFeature } from 'supercluster';
 import { twJoin } from 'tailwind-merge';
+import { MapMarker } from 'types/map';
 
 const ClusterMarker: FC<{ onClick: () => void }> = ({ onClick, children }) => {
     return (
         <button
-            className="absolute h-[30px] w-6 -translate-x-1/2 -translate-y-full text-background-brand"
+            className="absolute h-7.5 w-6 -translate-x-1/2 -translate-y-full text-background-brand"
             title={`Cluster of ${children} locations`}
             type="button"
             onClick={onClick}
         >
-            <GoogleMapMarkerIcon className={twJoin('h-[30px] w-6')} />
+            <GoogleMapMarkerIcon className={twJoin('h-7.5 w-6')} />
 
             <span className="absolute inset-0 flex justify-center pt-1 font-bold text-text-inverted text-xs">
                 {children}
@@ -19,24 +21,25 @@ const ClusterMarker: FC<{ onClick: () => void }> = ({ onClick, children }) => {
     );
 };
 
-const SingleMarker: FC<{ onClick: () => void; isActive: boolean; isDetail?: boolean }> = ({
+const SingleMarker: FC<{ onClick: () => void; isActive: boolean; isDetail?: boolean; title: string }> = ({
     isActive,
     isDetail,
     onClick,
+    title,
 }) => {
     return (
         <button
             aria-current={isActive ? 'true' : false}
             className="absolute -translate-x-1/2 -translate-y-full"
             tabIndex={0}
-            title="Location marker"
+            title={title}
             type="button"
             onClick={onClick}
         >
             <GoogleMapMarkerIcon
                 isSingle
                 className={twJoin(
-                    'h-[26px] w-5 text-background-brand',
+                    'h-6.5 w-5 text-background-brand',
                     isActive && 'origin-bottom scale-125',
                     isDetail ? 'cursor-default' : 'cursor-pointer',
                 )}
@@ -45,11 +48,23 @@ const SingleMarker: FC<{ onClick: () => void; isActive: boolean; isDetail?: bool
     );
 };
 
+type SearchMarkerProps = {
+    lat: number;
+    lng: number;
+    title: string;
+};
+
+export const GoogleMapSearchMarker: FC<SearchMarkerProps> = ({ title }) => (
+    <div className="absolute -translate-x-1/2 -translate-y-full" title={title}>
+        <GoogleMapSearchMarkerIcon className="h-8 w-6 text-price-discounted" />
+    </div>
+);
+
 type GoogleMapMarkerProps = {
     activeMarkerIdentifier: string;
     cluster: PointFeature<AnyProps>;
     isDetail?: boolean;
-    onMarkerClicked: (identifier: string) => void;
+    onMarkerClicked: (marker: MapMarker) => void;
     onClusterClicked: (cluster: any) => void;
 };
 
@@ -60,12 +75,23 @@ export const GoogleMapMarker: FC<GoogleMapMarkerProps> = ({
     onMarkerClicked,
     onClusterClicked,
 }) => {
-    const { cluster: isCluster, point_count: pointCount, markerIdentifier } = cluster.properties;
+    const { cluster: isCluster, marker, markerIdentifier, point_count: pointCount } = cluster.properties;
     const isActive = markerIdentifier === activeMarkerIdentifier;
 
     if (isCluster) {
         return <ClusterMarker onClick={() => onClusterClicked(cluster)}>{pointCount}</ClusterMarker>;
     }
 
-    return <SingleMarker isActive={isActive} isDetail={isDetail} onClick={() => onMarkerClicked(markerIdentifier)} />;
+    if (!marker) {
+        return null;
+    }
+
+    return (
+        <SingleMarker
+            isActive={isActive}
+            isDetail={isDetail}
+            title={marker.name || 'Location marker'}
+            onClick={() => onMarkerClicked(marker)}
+        />
+    );
 };

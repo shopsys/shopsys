@@ -1,0 +1,11 @@
+StoreSearchCoordinatesDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            latitude:
+                type: "Float!"
+                description: "Search result latitude"
+            longitude:
+                type: "Float!"
+                description: "Search result longitude"

@@ -712,6 +712,12 @@ msgstr "Content-Security-Policy hlavička bola nastavená."
 msgid "Convert values associated with parameter - %name%"
 msgstr "Konvertovať hodnoty priradené k parametru - %name%"
 
+msgid "Coordinates could not be loaded for the entered address."
+msgstr "Súradnice pre zadanú adresu sa nepodarilo načítať."
+
+msgid "Coordinates loaded"
+msgstr "Súradnice načítané"
+
 msgid "Copy administrator role group"
 msgstr "Kopírovať skupinu rolí administrátora"
 
@@ -1995,6 +2001,9 @@ msgstr "Zoznam produktov v objednávke (obrázok, názov, množstvo, cena za jed
 
 msgid "Lists and nomenclatures"
 msgstr "Zoznamy a nomenkláty"
+
+msgid "Load coordinates by address"
+msgstr "Načítať súradnice podľa adresy"
 
 msgid "Locale \"%locale%\" is not supported. You can choose only from the following locales: \"%supportedLocales%\"."
 msgstr "Lokalizácia \"%locale%\" nie je podporovaná. Môžete si vybrať iba z nasledujúcich lokalizácií: \"%supportedLocales%\"."

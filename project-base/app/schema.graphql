@@ -3046,6 +3046,8 @@ type StoreConnection {
   edges: [StoreEdge]
   "Information to aid in pagination."
   pageInfo: PageInfo!
+  "Coordinates found by the store search text"
+  searchCoordinates: StoreSearchCoordinates
   "Total number of stores"
   totalCount: Int!
 }
@@ -3068,6 +3070,13 @@ enum StoreOpeningStatusEnum {
   OPEN
   "Store will be opened soon"
   OPEN_SOON
+}
+
+type StoreSearchCoordinates {
+  "Search result latitude"
+  latitude: Float!
+  "Search result longitude"
+  longitude: Float!
 }
 
 type Token {
@@ -3102,7 +3111,16 @@ type Transport {
   "Cart products that cannot be delivered using this transport, grouped by the reason (empty when the transport can be selected)"
   productsBlockingSelectionInCart(cartUuid: Uuid = null): [ProductsByTransportUnavailabilityReason!]!
   "Stores available for personal pickup"
-  stores: StoreConnection
+  stores(
+    after: String
+    before: String
+    "Returns stores with distance from given coordinates"
+    coordinates: Coordinates = null
+    first: Int
+    last: Int
+    "Search for city or post code"
+    searchText: String = null
+  ): StoreConnection
   "Code of transport type"
   transportTypeCode: TransportTypeEnum!
   "UUID"

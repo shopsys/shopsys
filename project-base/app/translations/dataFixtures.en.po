@@ -274,6 +274,9 @@ msgstr ""
 msgid "A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both."
 msgstr ""
 
+msgid "A compact city store for quick parcel pickup. Please ring the bell if the door is closed during opening hours."
+msgstr ""
+
 msgid "A garden tool is any one of many tools made for gardens and gardening and overlaps with the range of tools made for agriculture and horticulture. Garden tools can also be hand tools and power tools."
 msgstr ""
 
@@ -281,6 +284,9 @@ msgid "A personal computer (PC) is a general-purpose computer whose size, capabi
 msgstr ""
 
 msgid "A printer is a peripheral which makes a persistent human readable representation of graphics or text on paper or similar physical media."
+msgstr ""
+
+msgid "A smaller pickup point for prepaid orders and quick returns. Please use the side entrance after 4 PM."
 msgstr ""
 
 msgid "A telephone is a telecommunications device that permits two or more users to conduct a conversation when they are too far apart to be heard directly. A telephone converts sound, typically and most efficiently the human voice, into electronic signals suitable for transmission via cables or other transmission media over long distances, and replays such signals simultaneously in audible form to its user."
@@ -1225,6 +1231,12 @@ msgstr ""
 msgid "Orava LT-823 C82C"
 msgstr ""
 
+msgid "Orders are available at the pickup counter next to the checkout area. Short-term parking is possible in front of the store."
+msgstr ""
+
+msgid "Orders are prepared at the ground-floor counter next to the showroom. Staff can help you check the product before you leave."
+msgstr ""
+
 msgid "Ordinary customer"
 msgstr ""
 
@@ -1283,6 +1295,12 @@ msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 
 msgstr ""
 
 msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles. Incredible design, giant 5,5palcový display with HD resolution, two front stereo speakers, customized channels with real-time information and a quad-core processor - all combine to form one of the best smartphones in the world."
+msgstr ""
+
+msgid "Pick up your order at the service desk near the entrance. The team can also accept returns on weekdays."
+msgstr ""
+
+msgid "Pick-up counter is right behind the main entrance. Parking is available in the courtyard for short stops."
 msgstr ""
 
 msgid "Pocket-friendly"
@@ -1555,15 +1573,6 @@ msgstr ""
 msgid "Standard rate"
 msgstr ""
 
-msgid "Store in Ostrava Přívoz"
-msgstr ""
-
-msgid "Store in Žilina"
-msgstr ""
-
-msgid "Store v Pardubice"
-msgstr ""
-
 msgid "Suitable for all kinds of goods"
 msgstr ""
 
@@ -1693,6 +1702,9 @@ msgstr ""
 msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
 msgstr ""
 
+msgid "The branch is close to the business center entrance. Staff will prepare your order at the front desk after you show the order number."
+msgstr ""
+
 msgid "The filter carbon OPK-4360/4390"
 msgstr ""
 
@@ -1708,7 +1720,16 @@ msgstr ""
 msgid "The minimum space requirements excels sub-mounting range hood OPP-2060th"
 msgstr ""
 
+msgid "The pickup desk is inside the shopping passage on the first floor. For bulky orders, please call the store before arrival."
+msgstr ""
+
 msgid "The printer uses ChromaLife100 ink system with four colors of ink hidden two print cartridges"
+msgstr ""
+
+msgid "The store is located in the city center close to the tram stop. Larger orders can be loaded from the side entrance."
+msgstr ""
+
+msgid "The store is located near the main road with convenient access by car. Heavy items can be collected from the loading zone."
 msgstr ""
 
 msgid "The switch provides a cost-effective way to create a small network or extend existing ones. Connect not only computers, but also a number of network devices such as IP cameras, network printers and more."
@@ -1718,6 +1739,9 @@ msgid "The telescopic hood is very elegant and practical variant of the classica
 msgstr ""
 
 msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
+msgstr ""
+
+msgid "This branch is suitable for larger orders. Use the marked customer parking spots next to the warehouse ramp."
 msgstr ""
 
 msgid "This is SEO meta description of brand %brandName%."
@@ -1778,6 +1802,9 @@ msgid "Unforgettable Tales"
 msgstr ""
 
 msgid "Unleash Your Gaming Potential"
+msgstr ""
+
+msgid "Use the pickup window on the left side of the building for prepaid orders. The main entrance stays available for returns and complaints."
 msgstr ""
 
 msgid "User"

@@ -9,24 +9,102 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetFilteredStoresTest extends GraphQlTestCase
 {
+    private const int STORES_SEARCH_RATE_LIMIT = 10;
+
     public function testGetFilteredStoresByCity(): void
     {
         $searchTextName = t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain());
 
         $edges = $this->getResponseEdges(searchText: $searchTextName);
-        $this->assertCount(1, $edges);
-        $this->assertSame($edges[0]['node']['name'], $searchTextName);
-        $this->assertNull($edges[0]['node']['distance']);
+        $this->assertCount(8, $edges);
+
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
+
+        $expectedResultsData = [
+            [
+                'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 0,
+            ],
+            [
+                'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 83346,
+            ],
+            [
+                'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 164571,
+            ],
+            [
+                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 174361,
+            ],
+            [
+                'name' => t('Hradec Králové', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 182889,
+            ],
+            [
+                'name' => t('Brno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 241376,
+            ],
+            [
+                'name' => t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 279140,
+            ],
+            [
+                'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 351535,
+            ],
+        ];
+
+        foreach ($edges as $storeNode) {
+            self::assertSame(array_shift($expectedResultsData), $storeNode['node']);
+        }
     }
 
     public function testGetFilteredStoresByPostcode(): void
     {
-        $expectedResultName = t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain());
-
         $edges = $this->getResponseEdges(searchText: '77900');
-        $this->assertCount(1, $edges);
-        $this->assertSame($edges[0]['node']['name'], $expectedResultName);
-        $this->assertNull($edges[0]['node']['distance']);
+        $this->assertCount(8, $edges);
+
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
+
+        $expectedResultsData = [
+            [
+                'name' => t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 0,
+            ],
+            [
+                'name' => t('Brno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 64299,
+            ],
+            [
+                'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 79167,
+            ],
+            [
+                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 116847,
+            ],
+            [
+                'name' => t('Hradec Králové', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 122311,
+            ],
+            [
+                'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 203403,
+            ],
+            [
+                'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 209925,
+            ],
+            [
+                'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 279140,
+            ],
+        ];
+
+        foreach ($edges as $storeNode) {
+            self::assertSame(array_shift($expectedResultsData), $storeNode['node']);
+        }
     }
 
     public function testGetZeroFilteredStores(): void
@@ -85,28 +163,70 @@ class GetFilteredStoresTest extends GraphQlTestCase
     public function testGetFilteredStoresByCoordinatesAndSearchText(): void
     {
         $edges = $this->getResponseEdges(searchText: 'B', coordinates: ['latitude' => 50.538331, 'longitude' => 14.485953]);
-        $this->assertCount(3, $edges);
+        $this->assertCount(8, $edges);
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 
         $expectedResultsData = [
             [
-                'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 47573,
+                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 0,
             ],
             [
-                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 107087,
+                'name' => t('Hradec Králové', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 19884,
+            ],
+            [
+                'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 95889,
+            ],
+            [
+                'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 96494,
             ],
             [
                 'name' => t('Brno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'distance' => 213179,
+                'distance' => 111171,
+            ],
+            [
+                'name' => t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 116847,
+            ],
+            [
+                'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 174361,
+            ],
+            [
+                'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'distance' => 180185,
             ],
         ];
 
         foreach ($edges as $storeNode) {
             self::assertSame(array_shift($expectedResultsData), $storeNode['node']);
         }
+    }
+
+    public function testStoresSearchRateLimitIsConsumedOnlyWhenSearchTextIsFilled(): void
+    {
+        $this->configureCurrentClient(null, null, [
+            'CONTENT_TYPE' => 'application/graphql',
+            'REMOTE_ADDR' => sprintf('10.255.%d.%d', random_int(0, 255), random_int(1, 254)),
+        ]);
+
+        for ($attempt = 0; $attempt < self::STORES_SEARCH_RATE_LIMIT; $attempt++) {
+            $this->getResponseEdges(searchText: '');
+        }
+
+        for ($attempt = 0; $attempt < self::STORES_SEARCH_RATE_LIMIT; $attempt++) {
+            $this->getResponseEdges(searchText: 'Praha');
+        }
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoresFilterQuery.graphql', [
+            'searchText' => 'Praha',
+        ]);
+
+        $this->assertUserError($response, 'too-many-store-search-attempts');
     }
 
     /**

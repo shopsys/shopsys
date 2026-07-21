@@ -11,29 +11,32 @@ type StoreContactItemProps = {
 export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
     const cleanPhone = removeSpaces(phone ?? '');
     const { t } = useTranslation();
+    const linkClassName =
+        'inline-flex items-center rounded-md font-semibold text-sm text-text-default no-underline hover:underline gap-1';
 
     return (
         <div className="inline-flex flex-col gap-2">
             {email && (
                 <a
                     aria-label={t('Mail to {{email}}', { ns: 'accessibility', email })}
-                    className="inline-flex items-center rounded-md font-semibold text-sm text-text-default no-underline"
+                    className={linkClassName}
                     href={`mailto:${email}`}
                     tabIndex={0}
                 >
                     <MailIcon className="size-5" />
-                    &nbsp;{email}
+                    {email}
                 </a>
             )}
+
             {phone && (
                 <a
                     aria-label={t('Call to {{phone}}', { ns: 'accessibility', phone })}
-                    className="inline-flex items-center rounded-md font-semibold text-sm text-text-default no-underline"
+                    className={linkClassName}
                     href={`tel:${cleanPhone}`}
                     tabIndex={0}
                 >
                     <PhoneIcon className="size-5" />
-                    &nbsp;{phone}
+                    {phone}
                 </a>
             )}
         </div>

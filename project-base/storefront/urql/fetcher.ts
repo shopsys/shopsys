@@ -48,8 +48,48 @@ const getAuthBucketFromHeaders = async (headers: Headers, domainId: string | nul
 const FRIENDLY_URL_REGEXP = `@friendlyUrl` as const;
 const CACHE_REGEXP = `@redisCache(?:PerPricingGroup)?\\(\\s?ttl:\\s?([0-9]*)\\s?\\)` as const;
 const PER_PRICING_GROUP_CACHE_REGEXP = `@redisCachePerPricingGroup\\(`;
-const QUERY_NAME_REGEXP = `query\\s([A-z]*)(\\([A-z:!0-9$,\\s]*\\))?\\s@redisCache`;
+const QUERY_NAME_REGEXP = `query\\s+([_A-Za-z][_0-9A-Za-z]*)\\b[\\s\\S]*?@redisCache`;
 const getRedisPrefixPattern = () => `${process.env.REDIS_PREFIX}:fe:queryCache:`;
+
+const getQueryName = (requestBody: string): string | undefined => {
+    try {
+        const parsedBody = JSON.parse(requestBody) as { operationName?: unknown };
+
+        if (typeof parsedBody.operationName === 'string' && parsedBody.operationName !== '') {
+            return parsedBody.operationName;
+        }
+    } catch {
+        // The fetcher can also receive raw GraphQL bodies, which are handled by the regexp below.
+    }
+
+    const [, queryName] = requestBody.match(QUERY_NAME_REGEXP) ?? [];
+
+    return queryName;
+};
+
+const hasSetStoreFilterVariables = (requestBody: string): boolean => {
+    try {
+        const parsedBody = JSON.parse(requestBody) as {
+            variables?: {
+                after?: unknown;
+                coordinates?: unknown;
+                searchText?: unknown;
+            };
+        };
+
+        if (typeof parsedBody.variables !== 'object' || parsedBody.variables === null) {
+            return false;
+        }
+
+        return (
+            parsedBody.variables.searchText != null ||
+            parsedBody.variables.coordinates != null ||
+            parsedBody.variables.after != null
+        );
+    } catch {
+        return false;
+    }
+};
 
 // For URL-encoded: %40redisCache%28ttl%3A%203600%29 -> %40redisCache followed by optional %28...%29
 // For unencoded: @redisCache(ttl: 3600) -> @redisCache followed by optional (...)
@@ -144,7 +184,15 @@ export const fetcher =
             const domainId = headers.get(DOMAIN_ID_HEADER);
             const isPerPricingGroup = init.body.match(PER_PRICING_GROUP_CACHE_REGEXP) !== null;
             const authBucket = isPerPricingGroup ? `${await getAuthBucketFromHeaders(headers, domainId)}:` : '';
-            const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
+            const queryName = getQueryName(init.body);
+
+            if (queryName === undefined || (queryName === 'StoresQuery' && hasSetStoreFilterVariables(init.body))) {
+                return fetch(createCleanedInput(input), {
+                    ...init,
+                    body,
+                });
+            }
+
             const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? `${domainId}:` : ''}${authBucket}`;
             const hash = `${key}${await getHash(body)}`;
             const fromCache = await redisClient.get(hash);

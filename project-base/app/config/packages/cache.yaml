@@ -8,6 +8,10 @@ framework:
                 adapter: cache.adapter.redis
                 provider: snc_redis.bestselling_products
                 default_lifetime: 43200
+            store_search_coordinates_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.store_search_coordinates
+                default_lifetime: 604800
             doctrine.metadata_cache_pool:
                 adapter: cache.adapter.filesystem
             doctrine.query_cache_pool:

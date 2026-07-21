@@ -7,12 +7,14 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Store;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours\OpeningHoursRangeCollectionFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
@@ -22,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFriendlyUrlProvider;
 use Spatie\OpeningHours\Exceptions\Exception;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -29,6 +32,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -41,6 +45,8 @@ final class StoreFormType extends AbstractType
         private readonly StoreFacade $storeFacade,
         private readonly CountryFacade $countryFacade,
         private readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly GoogleAddressCoordinatesFacade $googleAddressCoordinatesFacade,
     ) {
     }
 
@@ -176,11 +182,27 @@ final class StoreFormType extends AbstractType
             ->add('latitude', NumberType::class, [
                 'required' => false,
                 'scale' => 10,
+                'attr' => [
+                    'class' => 'js-store-coordinate-latitude',
+                ],
             ])
             ->add('longitude', NumberType::class, [
                 'required' => false,
                 'scale' => 10,
+                'attr' => [
+                    'class' => 'js-store-coordinate-longitude',
+                ],
             ]);
+
+        if ($this->googleAddressCoordinatesFacade->isGoogleApiAvailable()) {
+            $builderMapGroup->add('loadCoordinates', ButtonType::class, [
+                'label' => 'Load coordinates by address',
+                'attr' => [
+                    'class' => 'btn btn-primary js-load-store-coordinates',
+                    'data-load-coordinates-url' => $this->urlGenerator->generate('admin_store_loadcoordinates'),
+                ],
+            ]);
+        }
 
         return $builderMapGroup;
     }
@@ -195,6 +217,9 @@ final class StoreFormType extends AbstractType
             ->add('street', TextType::class, [
                 'label' => 'Street',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-store-address-street',
+                ],
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter street'),
                     new Constraints\Length(
@@ -206,6 +231,9 @@ final class StoreFormType extends AbstractType
             ->add('city', TextType::class, [
                 'label' => 'City',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-store-address-city',
+                ],
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter city'),
                     new Constraints\Length(
@@ -217,6 +245,9 @@ final class StoreFormType extends AbstractType
             ->add('postcode', TextType::class, [
                 'label' => 'Postcode',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-store-address-postcode',
+                ],
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter zip code'),
                     new Constraints\Length(
@@ -231,6 +262,12 @@ final class StoreFormType extends AbstractType
                 'choices' => $this->countryFacade->getAll(),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'choice_attr' => static fn (Country $country) => [
+                    'data-country-code' => $country->getCode(),
+                ],
+                'attr' => [
+                    'class' => 'js-store-address-country',
+                ],
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please choose country'),
                 ],

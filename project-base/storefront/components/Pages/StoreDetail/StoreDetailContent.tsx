@@ -111,6 +111,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 markers={[
                                     {
                                         identifier: store.uuid,
+                                        name: store.city,
                                         latitude: store.latitude,
                                         longitude: store.longitude,
                                     },
@@ -135,7 +136,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                     storeName: store.storeName,
                                     imageNumber: index + 1,
                                 })}
-                                className="m-0.5 flex h-[190px] w-[280px] cursor-pointer snap-start justify-center overflow-hidden rounded-xl border-0 bg-transparent p-0"
+                                className="m-0.5 flex h-48 w-70 cursor-pointer snap-start justify-center overflow-hidden rounded-xl border-0 bg-transparent p-0"
                                 data-src={image.url}
                                 tabIndex={0}
                                 title={t('View store image')}

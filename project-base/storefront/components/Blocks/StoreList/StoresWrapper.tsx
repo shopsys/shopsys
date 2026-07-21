@@ -1,81 +1,301 @@
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { StoreList } from 'components/Blocks/StoreList/StoreList';
+import { StoreListEmpty } from 'components/Blocks/StoreList/StoreListEmpty';
+import { StoreListLoader } from 'components/Blocks/StoreList/StoreListLoader';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
-import { useStoresQuery } from 'graphql/requests/stores/queries/StoresQuery.generated';
+import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { TypeCoordinates } from 'graphql/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSessionStore } from 'store/useSessionStore';
+import { MapMarker } from 'types/map';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
-import { useDebounce } from 'utils/useDebounce';
+import { twMergeCustom } from 'utils/twMerge';
+import { SkeletonModuleStoreList } from '../Skeleton/SkeletonModuleStoreList';
+import { getStoreListMapFocus } from './getStoreListMapFocus';
+import { StoreListError } from './StoreListError';
 
-export const StoresWrapper: FC = () => {
-    const [searchTextValue, setSearchTextValue] = useState<string>('');
+type StoresWrapperProps = {
+    stores: TypeListedStoreConnectionFragment | null;
+    isDistanceFromSearchText: boolean;
+    isFetchingStores?: boolean;
+    isLoadingMoreStores?: boolean;
+    variant?: 'page' | 'pickupSelection';
+    appliedSearchTextValue: string;
+    searchTextValue: string;
+    priorityStore?: StoreOrPacketeryPoint | null;
+    selectedStoreUuid?: string | null;
+    userCoordinates?: TypeCoordinates | null;
+    scrollableTargetId?: string;
+    storeConnectionErrorMessage?: string;
+    onLoadMoreStoresCallback?: () => void;
+    onSearchTextCallback: (searchText: string) => void;
+    onUserCoordinatesCallback?: (coordinates: TypeCoordinates | null) => void;
+    onSelectStoreCallback?: (storeUuid: string | null) => void;
+};
+
+export const StoresWrapper: FC<StoresWrapperProps> = ({
+    stores,
+    isDistanceFromSearchText,
+    isFetchingStores = false,
+    isLoadingMoreStores = false,
+    variant = 'page',
+    appliedSearchTextValue,
+    searchTextValue,
+    priorityStore = null,
+    selectedStoreUuid,
+    userCoordinates,
+    scrollableTargetId,
+    storeConnectionErrorMessage,
+    onLoadMoreStoresCallback,
+    onSearchTextCallback,
+    onUserCoordinatesCallback,
+    onSelectStoreCallback,
+}) => {
+    const isPickupSelectionVariant = variant === 'pickupSelection';
     const defaultUserCoordinates = useSessionStore((s) => s.coordinates);
     const updateDefaultUserCoordinates = useSessionStore((s) => s.updateCoordinates);
-    const [userCoordinates, setUserCoordinates] = useState<TypeCoordinates | null>(defaultUserCoordinates);
-    const [selectedStore, setSelectedStore] = useState<string | null>(null);
+    const [internalUserCoordinates, setInternalUserCoordinates] = useState<TypeCoordinates | null>(
+        defaultUserCoordinates,
+    );
+    const [internalSelectedStoreUuid, setInternalSelectedStoreUuid] = useState<string | null>(null);
     const { t } = useTranslation();
+    const isControlledSelection = selectedStoreUuid !== undefined;
+    const selectedStore = isControlledSelection ? (selectedStoreUuid ?? null) : internalSelectedStoreUuid;
+    const shouldAllowStoreSelection = onSelectStoreCallback !== undefined;
+    const shouldLoadMoreStores =
+        stores?.pageInfo.hasNextPage === true &&
+        !isFetchingStores &&
+        !isLoadingMoreStores &&
+        onLoadMoreStoresCallback !== undefined;
 
-    const debouncedSearchTextValue = useDebounce(searchTextValue, 700);
-    const [{ data: storesData, fetching: isFetching }] = useStoresQuery({
-        variables: {
-            searchText: debouncedSearchTextValue || null,
-            coordinates: userCoordinates,
-        },
-    });
-    const edges = storesData?.stores.edges || [];
-    const mappedStores = mapConnectionEdges<StoreOrPacketeryPoint>(edges);
+    const mappedStores = useMemo(
+        () => (stores === null ? null : mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges || [])),
+        [stores],
+    );
+    const displayedStores = useMemo(() => {
+        if (mappedStores === null || mappedStores === undefined || priorityStore === null) {
+            return mappedStores;
+        }
+
+        return [
+            priorityStore,
+            ...mappedStores.filter((mappedStore) => mappedStore.identifier !== priorityStore.identifier),
+        ];
+    }, [mappedStores, priorityStore]);
+    const displayedStoreList = displayedStores ?? [];
+    const loadedStoresCount = mappedStores?.length ?? 0;
+    const resolvedUserCoordinates = userCoordinates ?? defaultUserCoordinates ?? internalUserCoordinates;
+    const firstStore = displayedStores?.[0] ?? null;
+    const searchCoordinatesForMapFocus =
+        stores !== null && isDistanceFromSearchText && stores.searchCoordinates !== null
+            ? {
+                  latitude: stores.searchCoordinates.latitude,
+                  longitude: stores.searchCoordinates.longitude,
+              }
+            : null;
+    const mapFocus = getStoreListMapFocus(searchCoordinatesForMapFocus, firstStore);
+    const additionalMapMarker = mapFocus?.searchCoordinatesMarker
+        ? {
+              name: appliedSearchTextValue.trim(),
+              latitude: String(mapFocus.searchCoordinatesMarker.latitude),
+              longitude: String(mapFocus.searchCoordinatesMarker.longitude),
+          }
+        : null;
+    const mapLatitude = mapFocus !== null ? String(mapFocus.latitude) : null;
+    const mapLongitude = mapFocus !== null ? String(mapFocus.longitude) : null;
+    const shouldCenterMapToUserCoordinates = mapFocus === null && searchTextValue === '';
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const coordinates: TypeCoordinates = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-            };
-            setUserCoordinates(coordinates);
-            updateDefaultUserCoordinates(coordinates);
-        });
-    }, [updateDefaultUserCoordinates]);
+        if (defaultUserCoordinates == null) {
+            return;
+        }
 
-    const clickOnMarkerHandler = (uuid: string) => {
-        setSelectedStore(uuid);
+        setInternalUserCoordinates(defaultUserCoordinates);
+
+        if (userCoordinates == null) {
+            onUserCoordinatesCallback?.(defaultUserCoordinates);
+        }
+    }, [defaultUserCoordinates, onUserCoordinatesCallback, userCoordinates]);
+
+    useEffect(() => {
+        if (defaultUserCoordinates != null || userCoordinates != null) {
+            return;
+        }
+
+        if (typeof navigator === 'undefined' || !navigator.geolocation) {
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const coordinates: TypeCoordinates = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                };
+                setInternalUserCoordinates(coordinates);
+                updateDefaultUserCoordinates(coordinates);
+                onUserCoordinatesCallback?.(coordinates);
+            },
+            undefined,
+            {
+                maximumAge: 300000,
+                timeout: 10000,
+            },
+        );
+    }, [defaultUserCoordinates, onUserCoordinatesCallback, updateDefaultUserCoordinates, userCoordinates]);
+
+    const selectStoreHandler = (uuid: string | null) => {
+        if (!isControlledSelection) {
+            setInternalSelectedStoreUuid(uuid);
+        }
+
+        onSelectStoreCallback?.(uuid);
     };
 
-    if (!mappedStores) {
-        return null;
-    }
+    const clickOnMarkerHandler = (marker: MapMarker | null) => {
+        if (marker === null) {
+            selectStoreHandler(null);
 
-    return (
-        <Webline>
-            <h1 className="mb-4">{t('Stores')}</h1>
+            return;
+        }
 
-            <div className="flex flex-col-reverse gap-5 lg:flex-row">
-                <div className="basis-1/2">
-                    <SearchInput
-                        ariaLabelForSearchButton={t('Search for a store', { ns: 'accessibility' })}
-                        label={t('City or postcode')}
-                        shouldShowSpinnerInInput={isFetching}
-                        value={searchTextValue}
-                        onChange={(e) => setSearchTextValue(e.currentTarget.value)}
-                        onClear={() => setSearchTextValue('')}
-                    />
-                    <StoreList selectedStoreUuid={selectedStore} stores={mappedStores} />
-                </div>
-                <div className="basis-1/2" data-tid={TIDs.stores_map}>
-                    <div className="flex aspect-square rounded-xl bg-background-more p-5 lg:sticky lg:top-5">
-                        <GoogleMap
-                            activeMarkerHandler={(uuid) => clickOnMarkerHandler(uuid)}
-                            markers={mappedStores}
-                            shouldCenterToUserCoordinates={debouncedSearchTextValue === ''}
-                            userCoordinates={userCoordinates}
+        const selectedStoreUuid = marker.identifier ?? null;
+        selectStoreHandler(selectedStoreUuid);
+
+        if (
+            selectedStoreUuid === null ||
+            (displayedStores?.some((store) => store.identifier === selectedStoreUuid) ?? false) ||
+            onUserCoordinatesCallback === undefined
+        ) {
+            return;
+        }
+
+        const markerCoordinates = {
+            latitude: parseFloat(marker.latitude),
+            longitude: parseFloat(marker.longitude),
+        };
+
+        setInternalUserCoordinates(markerCoordinates);
+        onUserCoordinatesCallback(markerCoordinates);
+
+        if (searchTextValue !== '') {
+            onSearchTextCallback('');
+        }
+    };
+
+    const searchInput = (
+        <SearchInput
+            ariaLabelForSearchButton={t('Search for a store', { ns: 'accessibility' })}
+            label={t('City or postcode')}
+            shouldShowSpinnerInInput={isFetchingStores}
+            value={searchTextValue}
+            onChange={(e) => onSearchTextCallback(e.currentTarget.value)}
+            onClear={() => onSearchTextCallback('')}
+        />
+    );
+    const shouldShowStores = displayedStoreList.length > 0;
+    const shouldShowStoreListSkeleton =
+        isFetchingStores && !shouldShowStores && storeConnectionErrorMessage === undefined;
+    const isStoreListEmpty =
+        stores !== null &&
+        displayedStoreList.length === 0 &&
+        !isFetchingStores &&
+        storeConnectionErrorMessage === undefined;
+    const shouldShowMap = stores !== null;
+
+    const content = (
+        <div className={twMergeCustom('flex flex-col', isPickupSelectionVariant ? 'min-h-full' : 'min-h-0')}>
+            {!isPickupSelectionVariant && <h1 className="mb-4">{t('Stores')}</h1>}
+
+            <div
+                className={twMergeCustom(
+                    'flex vl:flex-row flex-col gap-5',
+                    !isPickupSelectionVariant && 'min-h-0 flex-1',
+                )}
+            >
+                <div className={twMergeCustom('vl:basis-1/2', !isPickupSelectionVariant && 'vl:min-h-0')}>
+                    {searchInput}
+
+                    {storeConnectionErrorMessage !== undefined && (
+                        <StoreListError message={storeConnectionErrorMessage} />
+                    )}
+
+                    {shouldShowStoreListSkeleton && <SkeletonModuleStoreList />}
+
+                    {isStoreListEmpty && (
+                        <StoreListEmpty
+                            description={t('Try changing the city or postcode.')}
+                            message={t('No stores found')}
                         />
+                    )}
+
+                    {shouldShowStores && (
+                        <InfiniteScroll
+                            dataLength={loadedStoresCount}
+                            hasMore={shouldLoadMoreStores}
+                            loader={<StoreListLoader />}
+                            next={onLoadMoreStoresCallback ?? (() => undefined)}
+                            scrollableTarget={scrollableTargetId}
+                            style={{ overflow: 'visible' }}
+                        >
+                            <StoreList
+                                itemMode={isPickupSelectionVariant ? 'selectOnItemClick' : 'default'}
+                                isDistanceFromSearchText={isDistanceFromSearchText}
+                                selectedStoreUuid={selectedStore}
+                                stores={displayedStoreList}
+                                onSelectStoreCallback={shouldAllowStoreSelection ? selectStoreHandler : undefined}
+                            />
+                        </InfiniteScroll>
+                    )}
+
+                    {isLoadingMoreStores && <StoreListLoader />}
+                </div>
+                <div
+                    className={twMergeCustom(
+                        'vl:basis-1/2',
+                        !isPickupSelectionVariant && 'vl:min-h-0',
+                        !isPickupSelectionVariant && 'max-vl:order-first',
+                    )}
+                    data-tid={TIDs.stores_map}
+                >
+                    <div
+                        className={twMergeCustom(
+                            'vl:sticky flex rounded-xl bg-background-more p-5',
+                            isPickupSelectionVariant
+                                ? 'vl:top-0 h-72 vl:h-[min(520px,calc(80dvh-180px))]'
+                                : 'vl:top-5 aspect-square',
+                        )}
+                    >
+                        {shouldShowMap ? (
+                            <GoogleMap
+                                activeMarkerHandler={clickOnMarkerHandler}
+                                additionalMarker={additionalMapMarker}
+                                defaultZoom={mapFocus?.defaultZoom}
+                                gestureHandling={isPickupSelectionVariant ? 'cooperative' : undefined}
+                                latitude={mapLatitude}
+                                longitude={mapLongitude}
+                                markers={isPickupSelectionVariant ? displayedStoreList : undefined}
+                                shouldCenterToUserCoordinates={shouldCenterMapToUserCoordinates}
+                                userCoordinates={resolvedUserCoordinates}
+                            />
+                        ) : (
+                            <Skeleton className="size-full rounded-lg bg-skeleton-less" />
+                        )}
                     </div>
                 </div>
             </div>
-        </Webline>
+        </div>
     );
+
+    if (isPickupSelectionVariant) {
+        return content;
+    }
+
+    return <Webline>{content}</Webline>;
 };

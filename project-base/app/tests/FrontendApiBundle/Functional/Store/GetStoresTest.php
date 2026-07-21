@@ -51,6 +51,33 @@ class GetStoresTest extends GraphQlTestCase
         }
     }
 
+    public function testGetStoresUsesStoreCoordinatesWhenSearchTextMatchesStore(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoresWithDistanceQuery.graphql', [
+            'first' => 1,
+            'searchText' => 'Praha',
+        ]);
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'stores');
+        $this->assertSame(
+            [
+                'searchCoordinates' => [
+                    'latitude' => 50.0802931,
+                    'longitude' => 14.4208994,
+                ],
+                'edges' => [
+                    [
+                        'node' => [
+                            'city' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                            'distance' => 0,
+                        ],
+                    ],
+                ],
+            ],
+            $responseData,
+        );
+    }
+
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
         foreach ($keys as $key) {
@@ -89,7 +116,7 @@ class GetStoresTest extends GraphQlTestCase
             [
                 'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => true,
-                'description' => t('Store in Ostrava Přívoz', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'description' => t('Pick-up counter is right behind the main entrance. Parking is available in the courtyard for short stops.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Koksární 10',
                 'city' => 'Ostrava',
                 'postcode' => '70200',
@@ -102,7 +129,7 @@ class GetStoresTest extends GraphQlTestCase
             ], [
                 'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => false,
-                'description' => t('Store v Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'description' => t('A compact city store for quick parcel pickup. Please ring the bell if the door is closed during opening hours.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Bratranců Veverkových 2722',
                 'city' => 'Pardubice',
                 'postcode' => '53002',
@@ -115,7 +142,7 @@ class GetStoresTest extends GraphQlTestCase
             ], [
                 'name' => t('Brno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => false,
-                'description' => null,
+                'description' => t('Orders are prepared at the ground-floor counter next to the showroom. Staff can help you check the product before you leave.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Křenová 88',
                 'city' => 'Brno',
                 'postcode' => '60200',
@@ -128,7 +155,7 @@ class GetStoresTest extends GraphQlTestCase
             ], [
                 'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => false,
-                'description' => null,
+                'description' => t('The store is located in the city center close to the tram stop. Larger orders can be loaded from the side entrance.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Vodičkova 791/41',
                 'city' => 'Praha',
                 'postcode' => '11000',
@@ -141,7 +168,7 @@ class GetStoresTest extends GraphQlTestCase
             ], [
                 'name' => t('Hradec Králové', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => false,
-                'description' => null,
+                'description' => t('This branch is suitable for larger orders. Use the marked customer parking spots next to the warehouse ramp.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Pražská 100',
                 'city' => 'Hradec Králové',
                 'postcode' => '50002',
@@ -154,7 +181,7 @@ class GetStoresTest extends GraphQlTestCase
             ], [
                 'name' => t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => false,
-                'description' => null,
+                'description' => t('Use the pickup window on the left side of the building for prepaid orders. The main entrance stays available for returns and complaints.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Křížkovského 8',
                 'city' => 'Olomouc',
                 'postcode' => '77900',
@@ -167,7 +194,7 @@ class GetStoresTest extends GraphQlTestCase
             ], [
                 'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => false,
-                'description' => null,
+                'description' => t('Pick up your order at the service desk near the entrance. The team can also accept returns on weekdays.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Šaldova 1',
                 'city' => 'Liberec',
                 'postcode' => '46001',
@@ -180,7 +207,7 @@ class GetStoresTest extends GraphQlTestCase
             ], [
                 'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => false,
-                'description' => null,
+                'description' => t('The pickup desk is inside the shopping passage on the first floor. For bulky orders, please call the store before arrival.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Klatovská 121',
                 'city' => 'Plzeň',
                 'postcode' => '30100',

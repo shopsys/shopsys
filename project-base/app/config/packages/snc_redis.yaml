@@ -92,6 +92,15 @@ snc_redis:
                 prefix: '%env(REDIS_PREFIX)%:queue:recalculation:'
                 connection_timeout: 2
                 read_write_timeout: 5
+        store_search_coordinates:
+            type: 'phpredis'
+            alias: 'store_search_coordinates'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
+            options:
+                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:store_search_coordinates:'
+                connection_timeout: 2
+                read_write_timeout: 5
         storefront_graphql_query:
             type: 'phpredis'
             alias: 'storefront_graphql_query'

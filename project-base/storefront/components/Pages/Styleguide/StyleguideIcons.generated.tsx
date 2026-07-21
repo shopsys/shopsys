@@ -34,6 +34,7 @@ import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { GoogleIcon } from 'components/Basic/Icon/GoogleIcon';
 import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
+import { GoogleMapSearchMarkerIcon } from 'components/Basic/Icon/GoogleMapSearchMarkerIcon';
 import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { HomeIcon } from 'components/Basic/Icon/HomeIcon';
@@ -200,6 +201,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <GoogleMapMarkerIcon className="size-10" />
                 <span className="text-center text-xs break-all">GoogleMapMarkerIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <GoogleMapSearchMarkerIcon className="size-10" />
+                <span className="text-center text-xs break-all">GoogleMapSearchMarkerIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <HeartFilledIcon className="size-10" />

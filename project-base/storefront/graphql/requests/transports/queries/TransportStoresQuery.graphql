@@ -1,4 +1,10 @@
-query TransportStoresQuery($uuid: Uuid!) {
+query TransportStoresQuery(
+    $uuid: Uuid!
+    $searchText: String = null
+    $coordinates: Coordinates = null
+    $first: Int
+    $after: String
+) {
     transport(uuid: $uuid) {
         ...TransportStoresFragment
     }

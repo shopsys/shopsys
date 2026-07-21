@@ -34,6 +34,37 @@ class StoreRepository
         return (int)$queryBuilder->getQuery()->getSingleScalarResult();
     }
 
+    /**
+     * @return array{latitude: string, longitude: string}|null
+     */
+    public function findStoreCoordinatesBySearchText(int $domainId, string $searchText): ?array
+    {
+        $normalizedSearchText = trim((string)preg_replace('/\s+/', ' ', $searchText));
+
+        if ($normalizedSearchText === '') {
+            return null;
+        }
+
+        $queryBuilder = $this->getBasicFilteredQueryBuilder(
+            $domainId,
+            new StoresFilterOptions($normalizedSearchText),
+        )
+            ->select('s.latitude AS latitude, s.longitude AS longitude')
+            ->andWhere('s.latitude IS NOT NULL')
+            ->andWhere('s.longitude IS NOT NULL')
+            ->orderBy('s.position, s.id', 'ASC')
+            ->setMaxResults(1);
+
+        /** @var array{latitude: string|null, longitude: string|null}|null $coordinates */
+        $coordinates = $queryBuilder->getQuery()->getOneOrNullResult();
+
+        if ($coordinates === null) {
+            return null;
+        }
+
+        return $coordinates;
+    }
+
     protected function getBasicFilteredQueryBuilder(
         int $domainId,
         StoresFilterOptions $storesFilterOptions,
@@ -42,7 +73,7 @@ class StoreRepository
             ->andWhere('s.domainId = :domainId')
             ->setParameter('domainId', $domainId);
 
-        if ($storesFilterOptions->getSearchText() !== null) {
+        if ($storesFilterOptions->getSearchText() !== null && $storesFilterOptions->getCoordinates() === null) {
             $queryBuilder
                 ->andWhere('(normalized(s.city) LIKE normalized(:searchText) OR normalized(s.postcode) LIKE normalized(:searchText))')
                 ->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($storesFilterOptions->getSearchText()));

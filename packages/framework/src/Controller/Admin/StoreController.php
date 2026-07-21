@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\AddressCoordinates\Exception\GoogleAddressCoordinatesException;
+use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -21,9 +23,13 @@ use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 
 #[ForRole(AdminRoleConstant::ROLE_STORE)]
 class StoreController extends AdminBaseController
@@ -34,6 +40,7 @@ class StoreController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly GoogleAddressCoordinatesFacade $addressCoordinatesFacade,
     ) {
     }
 
@@ -137,6 +144,36 @@ class StoreController extends AdminBaseController
         return $this->render('@ShopsysAdministration/content/store/edit.html.twig', [
             'form' => $form->createView(),
             'store' => $store,
+        ]);
+    }
+
+    #[Route(
+        path: '/store/load-coordinates',
+        name: 'admin_store_loadcoordinates',
+        methods: ['post'],
+        condition: 'request.isXmlHttpRequest()',
+    )]
+    #[CanView(methods: [HttpMethod::POST])]
+    public function loadCoordinatesAction(Request $request): JsonResponse
+    {
+        try {
+            $addressCoordinatesData = $this->addressCoordinatesFacade->getCoordinatesByStructuredAddress(
+                $request->request->getString('street'),
+                $request->request->getString('city'),
+                $request->request->getString('countryCode'),
+                $request->request->getString('postcode'),
+            );
+        } catch (GoogleAddressCoordinatesException|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface) {
+            return new JsonResponse();
+        }
+
+        if ($addressCoordinatesData === null) {
+            return new JsonResponse();
+        }
+
+        return new JsonResponse([
+            'latitude' => $addressCoordinatesData->latitude,
+            'longitude' => $addressCoordinatesData->longitude,
         ]);
     }
 

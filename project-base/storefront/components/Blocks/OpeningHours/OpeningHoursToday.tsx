@@ -2,8 +2,14 @@ import { TIDs } from 'cypress/tids';
 import { TypeOpeningHours } from 'graphql/types';
 import { formatAccessibleTime } from 'utils/accessibility/formatAccessibleTime';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { twMergeCustom } from 'utils/twMerge';
 
-export default function OpeningHoursToday({ openingHours }: { openingHours: TypeOpeningHours }) {
+type OpeningHoursTodayProps = {
+    openingHours: TypeOpeningHours;
+    className?: string;
+};
+
+export default function OpeningHoursToday({ openingHours, className }: OpeningHoursTodayProps) {
     const { t, lang } = useTranslation();
 
     const todayOpeningDayRanges = openingHours.openingHoursOfDays[0].openingHoursRanges;
@@ -22,7 +28,12 @@ export default function OpeningHoursToday({ openingHours }: { openingHours: Type
         .join(', ')}`;
 
     return (
-        <div aria-current="date" aria-label={ariaLabel} className="ml-2.5 text-xs" data-tid={TIDs.store_opening_hours}>
+        <div
+            aria-current="date"
+            aria-label={ariaLabel}
+            className={twMergeCustom('ml-2.5 text-xs', className)}
+            data-tid={TIDs.store_opening_hours}
+        >
             {todayOpeningDayRanges.map(({ openingTime, closingTime }, index) => {
                 const openingFormatted = formatAccessibleTime(openingTime, lang);
                 const closingFormatted = formatAccessibleTime(closingTime, lang);

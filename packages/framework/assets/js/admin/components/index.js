@@ -55,5 +55,6 @@ import './SortableValues';
 import './PinnedMenuItem';
 import './Statistics';
 import './StatusDescription';
+import './StoreCoordinates';
 import './TransportPriceWithWeightLimitCollection';
 import './ImportPriceList';

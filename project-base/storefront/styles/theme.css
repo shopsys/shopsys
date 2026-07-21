@@ -228,12 +228,12 @@
     --color-background-error: var(--color-red-700);
     --color-background-more: var(--color-gray-100);
     --color-background-most: var(--color-gray-200);
-    --color-background-success: var(--color-primary-400);
+    --color-background-success: var(--color-green-700);
     --color-background-warning: var(--color-orange-500);
     --color-background-accent-less: var(--color-secondary-100);
     --color-background-accent-more: var(--color-brand-700);
     --color-background-brand-less: var(--color-brand-700);
-    --color-background-success-more: var(--color-primary-400);
+    --color-background-success-more: var(--color-green-800);
     --color-background-warning-more: var(--color-orange-700);
 
     --color-border-active: var(--color-primary-500);
@@ -367,9 +367,12 @@
     --color-link-inverted-disabled: var(--color-text-disabled);
     --color-link-inverted-hovered: var(--color-white-alpha-100);
 
-    --color-opening-status-closed: var(--color-text-error);
-    --color-opening-status-open: var(--color-text-success);
-    --color-opening-status-open-today: var(--color-text-warning);
+    --color-opening-status-text-closed: var(--color-text-inverted);
+    --color-opening-status-bg-closed: var(--color-background-error);
+    --color-opening-status-text-open: var(--color-text-inverted);
+    --color-opening-status-bg-open: var(--color-background-success);
+    --color-opening-status-text-open-today: var(--color-text-default);
+    --color-opening-status-bg-open-today: var(--color-background-warning);
 
     --color-price-before: var(--color-secondary-600);
     --color-price-default: var(--color-primary-500);

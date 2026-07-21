@@ -17,13 +17,13 @@ export const SkeletonPageStores: FC = () => (
                     <div className="flex flex-col gap-2.5">
                         {createEmptyArray(5).map((_, index) => (
                             <div key={index} className="rounded-xl bg-skeleton-less px-5 py-2.5">
-                                <div className="flex w-full flex-col justify-between gap-2.5 xl:flex-row xl:items-center">
+                                <div className="flex w-full flex-col justify-between gap-2.5 md:flex-row md:items-center">
                                     <div className="flex flex-col gap-1">
-                                        <Skeleton className="h-4 w-40 rounded-sm" />
-                                        <Skeleton className="h-4 w-60 rounded-sm" />
+                                        <Skeleton className="h-4.5 w-40 rounded-sm" />
+                                        <Skeleton className="h-3 w-60 rounded-sm" />
                                     </div>
-                                    <div className="flex flex-col gap-1 xl:items-end">
-                                        <Skeleton className="h-4 w-24 rounded-sm" />
+                                    <div className="flex items-center gap-1 pr-8 md:flex-col md:items-end">
+                                        <Skeleton className="h-6 w-24 rounded-sm" />
                                         <Skeleton className="h-3 w-40 rounded-sm" />
                                     </div>
                                 </div>
