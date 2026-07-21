@@ -187,6 +187,17 @@ services:
         labels:
             - traefik.enable=false
 
+    gotenberg:
+        image: gotenberg/gotenberg:8
+        command:
+            - gotenberg
+            - --chromium-deny-private-ips
+            - --api-download-from-deny-private-ips
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
+
     smtp-server:
         image: boky/postfix:latest
         environment:

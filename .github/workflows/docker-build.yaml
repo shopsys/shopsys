@@ -530,8 +530,8 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker compose pull postgres webserver elasticsearch redis php-fpm
-                    docker compose up -d postgres webserver elasticsearch redis php-fpm
+                    docker compose pull postgres webserver elasticsearch redis php-fpm gotenberg
+                    docker compose up -d postgres webserver elasticsearch redis php-fpm gotenberg
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys npm-install-dependencies
             -   name: Run tests
                 run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests
@@ -570,8 +570,8 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker compose pull postgres webserver elasticsearch redis php-fpm
-                    docker compose up -d postgres webserver elasticsearch redis php-fpm
+                    docker compose pull postgres webserver elasticsearch redis php-fpm gotenberg
+                    docker compose up -d postgres webserver elasticsearch redis php-fpm gotenberg
                     docker compose cp ./project-base/app/config/domains.yaml php-fpm:/var/www/html/project-base/app/config/domains.yaml
                     docker compose cp ./project-base/app/src/DataFixtures/Demo/SettingValueDataFixture.php php-fpm:/var/www/html/project-base/app/src/DataFixtures/Demo/SettingValueDataFixture.php
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys npm-install-dependencies

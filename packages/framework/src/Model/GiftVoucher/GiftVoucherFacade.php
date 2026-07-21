@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\GiftVoucher;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
 class GiftVoucherFacade
@@ -53,5 +54,33 @@ class GiftVoucherFacade
         $this->em->flush();
 
         return $giftVoucher;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[] $giftVouchers
+     */
+    public function markEmailAsEnqueued(array $giftVouchers): void
+    {
+        $emailEnqueuedAt = new DateTimeImmutable();
+
+        foreach ($giftVouchers as $giftVoucher) {
+            $giftVoucher->markEmailAsEnqueued($emailEnqueuedAt);
+        }
+
+        $this->em->flush();
+    }
+
+    /**
+     * @param int[] $giftVoucherIds
+     */
+    public function markEmailAsSentByIds(array $giftVoucherIds): void
+    {
+        $emailSentAt = new DateTimeImmutable();
+
+        foreach ($this->giftVoucherRepository->getAllByIds($giftVoucherIds) as $giftVoucher) {
+            $giftVoucher->markEmailAsSent($emailSentAt);
+        }
+
+        $this->em->flush();
     }
 }

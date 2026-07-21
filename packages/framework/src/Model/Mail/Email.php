@@ -11,6 +11,11 @@ use Symfony\Component\Mime\Part\AbstractPart;
 
 class Email extends BaseEmail
 {
+    /**
+     * @var array<string, mixed>
+     */
+    protected array $metadata = [];
+
     public function __construct(
         protected readonly int $domainId,
         ?Headers $headers = null,
@@ -24,13 +29,23 @@ class Email extends BaseEmail
         return $this->domainId;
     }
 
+    public function setMetadata(string $key, mixed $value): void
+    {
+        $this->metadata[$key] = $value;
+    }
+
+    public function getMetadata(string $key): mixed
+    {
+        return $this->metadata[$key] ?? null;
+    }
+
     /**
      * @internal
      */
     #[Override]
     public function __serialize(): array
     {
-        return [$this->domainId, parent::__serialize()];
+        return [$this->domainId, $this->metadata, parent::__serialize()];
     }
 
     /**
@@ -39,7 +54,11 @@ class Email extends BaseEmail
     #[Override]
     public function __unserialize(array $data): void
     {
-        [$this->domainId, $parentData] = $data;
+        if (count($data) === 2) {
+            [$this->domainId, $parentData] = $data;
+        } else {
+            [$this->domainId, $this->metadata, $parentData] = $data;
+        }
 
         parent::__unserialize($parentData);
     }

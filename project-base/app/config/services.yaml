@@ -111,7 +111,9 @@ services:
 
     App\Model\Customer\User\CurrentCustomerUser: ~
 
-    App\Model\Mail\MailTemplateBuilder: ~
+    App\Model\Mail\MailTemplateBuilder:
+        arguments:
+            $mailImagesUrlPrefix: '%shopsys.mail_images_url_prefix%'
 
     App\Model\Mail\MailTemplateConfiguration: ~
 
