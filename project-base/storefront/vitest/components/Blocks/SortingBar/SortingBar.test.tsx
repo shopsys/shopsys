@@ -30,6 +30,10 @@ vi.mock('components/providers/AuthorizationProvider', () => ({
     }),
 }));
 
+vi.mock('components/Blocks/Product/ProductsList/ProductListViewModeToggle', () => ({
+    ProductListViewModeToggle: () => <div data-testid="product-list-view-mode-toggle" />,
+}));
+
 vi.mock('utils/queryParams/useUpdateSortQuery', () => ({
     useUpdateSortQuery: () => mockUpdateSortQuery,
 }));
@@ -149,6 +153,12 @@ describe('SortingBar', () => {
             expect(productCountDiv).toBeInTheDocument();
             expect(productCountDiv).toHaveTextContent('125');
             expect(productCountDiv).toHaveTextContent('Products');
+        });
+
+        test('renders product list view mode toggle', () => {
+            renderSortingBar();
+
+            expect(screen.getByTestId('product-list-view-mode-toggle')).toBeInTheDocument();
         });
 
         test('renders sort button with proper accessibility', () => {

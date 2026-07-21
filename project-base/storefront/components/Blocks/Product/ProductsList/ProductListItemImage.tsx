@@ -48,7 +48,7 @@ export const ProductListItemImage: FC<ProductListItemImageProps> = ({ product, v
             <ProductFlags
                 flags={product.flags}
                 percentageDiscount={product.price.percentageDiscount}
-                variant="list"
+                variant="grid"
                 visibleItemsConfig={visibleItemsConfig}
             />
         </div>

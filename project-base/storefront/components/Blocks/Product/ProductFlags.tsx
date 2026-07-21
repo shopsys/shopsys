@@ -7,7 +7,7 @@ import { ProductVisibleItemsConfigType } from './ProductsList/ProductListItem';
 type ProductFlagsProps = {
     flags: TypeSimpleFlagFragment[];
     percentageDiscount: number | null;
-    variant: 'list' | 'detail' | 'comparison' | 'bestsellers';
+    variant: 'grid' | 'list' | 'detail' | 'comparison' | 'bestsellers';
     visibleItemsConfig?: ProductVisibleItemsConfigType;
 };
 
@@ -28,7 +28,8 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
     }
 
     const variantTwClass = {
-        list: 'top-2.5 sm:top-5 left-2.5 sm:left-5 z-above',
+        grid: 'top-2.5 sm:top-5 left-2.5 sm:left-5 z-above',
+        list: 'flex-row relative flex-wrap gap-2',
         detail: 'top-3 right-0 items-end',
         comparison: 'top-3 left-5',
         bestsellers: 'flex-row relative flex-wrap mb-1 gap-2',

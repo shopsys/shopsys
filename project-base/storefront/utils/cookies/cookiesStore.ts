@@ -4,6 +4,7 @@ import { getCookies, setCookie } from 'cookies-next';
 import { GetServerSidePropsContext } from 'next';
 import { useEffect } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
+import { ProductListViewModeType } from 'types/product';
 import { getCookieName } from 'utils/cookies/cookieNaming';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getIsHttps } from 'utils/requestProtocol';
@@ -14,6 +15,7 @@ export type CookiesStoreState = {
     lastVisitedProductsCatnums: string[] | null;
     userIdentifier: string;
     isUserSnapEnabled: boolean;
+    productListViewMode: ProductListViewModeType;
 };
 
 type CookiesStoreActions = {
@@ -33,6 +35,7 @@ export const getDefaultCookiesStoreState = (): CookiesStoreState => ({
     lastVisitedProductsCatnums: null,
     userIdentifier: uuidV4(),
     isUserSnapEnabled: userSnapEnabledDefaultValue,
+    productListViewMode: 'grid',
 });
 
 export const getCookiesStoreState = (

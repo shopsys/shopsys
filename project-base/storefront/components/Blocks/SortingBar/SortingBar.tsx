@@ -1,5 +1,6 @@
 import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/Portal';
 import { scrollToSelectedFilters } from 'components/Blocks/Product/Filter/filterElementIds';
+import { ProductListViewModeToggle } from 'components/Blocks/Product/ProductsList/ProductListViewModeToggle';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { DEFAULT_SORT } from 'config/constants';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
@@ -105,8 +106,12 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                 />
             </div>
 
-            <div className="vl:block hidden font-secondary text-input-placeholder-default text-xs">
-                {totalCount} {t('products count', { count: totalCount })}
+            <div className="flex w-full items-center justify-between gap-2 sm:w-auto md:ml-auto">
+                <div className="font-secondary text-input-placeholder-default text-xs">
+                    {totalCount} {t('products count', { count: totalCount })}
+                </div>
+
+                <ProductListViewModeToggle />
             </div>
         </div>
     );

@@ -95,6 +95,7 @@ const storesPageProps: ServerSidePropsType = {
     domainConfig: defaultTestDomainConfig,
     cookiesStore: {
         lastVisitedProductsCatnums: null,
+        productListViewMode: 'grid',
         userIdentifier: 'test-user-identifier',
         isUserSnapEnabled: false,
     },

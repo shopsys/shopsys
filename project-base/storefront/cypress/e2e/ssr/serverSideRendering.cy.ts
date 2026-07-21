@@ -1,4 +1,4 @@
-import { staticData } from 'fixtures/demodata';
+import { COOKIES_STORE_NAME, staticData } from 'fixtures/demodata';
 import {
     fetchArticleSlug,
     fetchBlogCategoryLink,
@@ -6,6 +6,7 @@ import {
     fetchEntitySlug,
     normalizeSlug,
 } from 'support/entityData';
+import { TIDs } from 'tids';
 
 describe('Server-side rendering tests', () => {
     const assertMainContentIsVisibleWithoutJavaScript = (html: string) => {
@@ -44,6 +45,46 @@ describe('Server-side rendering tests', () => {
 
     const requestSsrPage = (url: string) => {
         return cy.request({ url, failOnStatusCode: false });
+    };
+
+    const visitProductListingWithCookieListView = (entityType: 'brand' | 'flag', uuid: string) => {
+        const consoleErrors: string[] = [];
+
+        cy.setCookie(COOKIES_STORE_NAME, encodeURIComponent(JSON.stringify({ productListViewMode: 'list' })), {
+            path: '/',
+        });
+
+        fetchEntitySlug(entityType, uuid).then((slug) => {
+            return requestSsrPage(slug)
+                .then((response) => {
+                    expect(response.status).to.eq(200);
+                    expect(response.body, `Expected ${entityType} SSR to use list view`).to.contain(
+                        'class="relative grid grid-cols-1 gap-2"',
+                    );
+                })
+                .then(() =>
+                    cy.visit({
+                        url: slug,
+                        onBeforeLoad(win) {
+                            const originalConsoleError = win.console.error;
+                            win.console.error = (...args) => {
+                                originalConsoleError.apply(win.console, args);
+                                consoleErrors.push(args.map(String).join(' '));
+                            };
+                        },
+                    }),
+                );
+        });
+
+        cy.waitForStableAndInteractiveDOM();
+        cy.getByTID([TIDs.blocks_product_list_view_list]).should('have.attr', 'aria-pressed', 'true');
+        cy.then(() => {
+            const hydrationErrorPattern =
+                /hydrat|server(?:-rendered| rendered)? HTML|did not match|Minified React error #(418|421)/i;
+            const hydrationErrors = consoleErrors.filter((error) => hydrationErrorPattern.test(error));
+
+            expect(hydrationErrors, `Expected ${entityType} listing to hydrate without errors`).to.deep.equal([]);
+        });
     };
 
     it('[Homepage] should return server-rendered HTML', () => {
@@ -102,6 +143,10 @@ describe('Server-side rendering tests', () => {
             });
     });
 
+    it('[Brand Detail] should render and hydrate cookie list view without errors', () => {
+        visitProductListingWithCookieListView('brand', staticData.smokeTestRoutesUuids.brand);
+    });
+
     it('[Flag Detail] should return server-rendered HTML', () => {
         fetchEntitySlug('flag', staticData.smokeTestRoutesUuids.flag)
             .then((slug) => requestSsrPage(slug))
@@ -109,6 +154,10 @@ describe('Server-side rendering tests', () => {
                 expect(response.status).to.eq(200);
                 assertSsrResponse(response.body, [/<title[^>]*>.+<\/title>/, /<h1/]);
             });
+    });
+
+    it('[Flag Detail] should render and hydrate cookie list view without errors', () => {
+        visitProductListingWithCookieListView('flag', staticData.smokeTestRoutesUuids.flag);
     });
 
     it('[Blog Category] should return server-rendered HTML', () => {

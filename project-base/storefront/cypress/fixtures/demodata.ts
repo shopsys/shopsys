@@ -223,6 +223,7 @@ export const b2bUrl = {
 
 export const PERSIST_STORE_NAME = 'shopsys-platform-persist-store-1';
 export const B2B_PERSIST_STORE_NAME = `shopsys-platform-persist-store-${b2bDomain?.domainId ?? 1}`;
+export const COOKIES_STORE_NAME = 'cookiesStore-1';
 
 export const DEFAULT_PERSIST_STORE_STATE = {
     state: {
@@ -236,6 +237,8 @@ export const DEFAULT_PERSIST_STORE_STATE = {
         },
         contactInformation: {
             email: '',
+            telephonePrefix: '',
+            telephonePrefixCountryCode: '',
             telephone: '',
             firstName: '',
             lastName: '',
@@ -251,6 +254,8 @@ export const DEFAULT_PERSIST_STORE_STATE = {
             deliveryFirstName: '',
             deliveryLastName: '',
             deliveryCompanyName: '',
+            deliveryTelephonePrefix: '',
+            deliveryTelephonePrefixCountryCode: '',
             deliveryTelephone: '',
             deliveryStreet: '',
             deliveryCity: '',
@@ -263,5 +268,5 @@ export const DEFAULT_PERSIST_STORE_STATE = {
         },
         packeteryPickupPoint: null,
     },
-    version: 1,
+    version: 3,
 };

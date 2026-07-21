@@ -16,3 +16,5 @@ export type WatchDogProductType =
     | TypeMainVariantDetailFragment
     | TypeMainVariantDetailFragment['variants'][number]
     | TypeListedProductFragment;
+
+export type ProductListViewModeType = 'grid' | 'list';
