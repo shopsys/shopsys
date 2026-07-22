@@ -1,7 +1,8 @@
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { useId } from 'react';
-import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { twMergeCustom } from 'utils/twMerge';
+import { getAvailabilityTextColorClassName } from 'utils/ui/getAvailabilityTextColorClassName';
 
 type ProductAvailabilityProps = {
     availability: TypeAvailability;
@@ -41,11 +42,10 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                 onClick: onClick,
                 onKeyDown: handleKeyDown,
             })}
-            className={twJoin(
-                className,
+            className={twMergeCustom(
                 'flex text-left text-sm',
-                availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availability-in-stock',
-                availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
+                getAvailabilityTextColorClassName(availability.status),
+                className,
             )}
         >
             {availabilityText && <span id={availabilityId}>{availabilityText}</span>}
@@ -64,7 +64,7 @@ const getProductAvailabilityText = (
     }
 
     return `${availability.name}${
-        availability.status !== TypeAvailabilityStatusEnum.OutOfStock && availableStoresCount !== null
+        availability.status === TypeAvailabilityStatusEnum.InStock && availableStoresCount !== null
             ? `, ${t('ready to ship immediately')} ${availableStoresCount !== 0 ? t('or at {{ count }} stores', { count: availableStoresCount }) : ''}`
             : ''
     }`;

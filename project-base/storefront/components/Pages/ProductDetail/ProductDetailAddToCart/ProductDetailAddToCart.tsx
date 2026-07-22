@@ -80,7 +80,9 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     }
 
     const isWatchdogButtonVisible =
-        (product.uuid && product.availability.status === TypeAvailabilityStatusEnum.OutOfStock) ||
+        (product.uuid &&
+            (product.availability.status === TypeAvailabilityStatusEnum.OutOfStock ||
+                product.availability.status === TypeAvailabilityStatusEnum.ExpectedRestock)) ||
         product.isSellingDenied;
 
     return (

@@ -27,7 +27,9 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, si
     const showWatchdogButton =
         product.uuid &&
         !product.isInquiryType &&
-        (product.availability.status === TypeAvailabilityStatusEnum.OutOfStock || product.isSellingDenied);
+        (product.availability.status === TypeAvailabilityStatusEnum.OutOfStock ||
+            product.availability.status === TypeAvailabilityStatusEnum.ExpectedRestock ||
+            product.isSellingDenied);
 
     if (!showWatchdogButton) {
         return null;

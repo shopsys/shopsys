@@ -99,7 +99,9 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                                     buttonVariant={
                                         (variant.uuid &&
                                             !variant.isInquiryType &&
-                                            variant.availability.status === TypeAvailabilityStatusEnum.OutOfStock) ||
+                                            (variant.availability.status === TypeAvailabilityStatusEnum.OutOfStock ||
+                                                variant.availability.status ===
+                                                    TypeAvailabilityStatusEnum.ExpectedRestock)) ||
                                         variant.isSellingDenied
                                             ? 'inverted'
                                             : 'primary'

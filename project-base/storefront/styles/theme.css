@@ -220,6 +220,7 @@
 
     --color-availability-in-stock: var(--color-green-800);
     --color-availability-out-of-stock: var(--color-text-error);
+    --color-availability-expected-restock: var(--color-brand-600);
 
     --color-background-accent: var(--color-brand-600);
     --color-background-brand: var(--color-brand-900);

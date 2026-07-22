@@ -4,9 +4,10 @@ import { OrderItemProductPrice } from 'components/Blocks/OrderItemProductCard/Or
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
-import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailability } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
 import { generateProductImageAlt } from 'utils/productAltText';
+import { getAvailabilityTextColorClassName } from 'utils/ui/getAvailabilityTextColorClassName';
 
 type OrderItemGiftCardProps = {
     availability: TypeAvailability;
@@ -48,10 +49,7 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
                         <span
                             className={twJoin(
                                 'font-semibold text-xs',
-                                availability.status === TypeAvailabilityStatusEnum.InStock &&
-                                    'text-availability-in-stock',
-                                availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
-                                    'text-availability-out-of-stock',
+                                getAvailabilityTextColorClassName(availability.status),
                             )}
                         >
                             {availability.name}
