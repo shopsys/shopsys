@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -13,6 +14,7 @@ class OrderItemResolverMap extends ResolverMap
 {
     public function __construct(
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+        protected readonly DataLoaderInterface $orderItemRelatedItemsBatchLoader,
     ) {
     }
 
@@ -32,6 +34,13 @@ class OrderItemResolverMap extends ResolverMap
                 },
                 'vatRate' => function (OrderItem $orderItem) {
                     return $orderItem->getVatPercent();
+                },
+                'deliveryDaysExtension' => function (OrderItem $orderItem) {
+                    if (!$orderItem->isTypeAdditionalService()) {
+                        return null;
+                    }
+
+                    return $orderItem->getAdditionalService()?->getDeliveryDaysExtension();
                 },
                 'product' => function (OrderItem $orderItem) {
                     if ($orderItem->isTypeProduct()) {
@@ -57,6 +66,9 @@ class OrderItemResolverMap extends ResolverMap
                     }
 
                     return null;
+                },
+                'relatedItems' => function (OrderItem $orderItem) {
+                    return $this->orderItemRelatedItemsBatchLoader->load($orderItem);
                 },
             ],
         ];

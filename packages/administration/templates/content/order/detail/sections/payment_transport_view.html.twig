@@ -38,6 +38,9 @@
         {{ 'Tracking'|trans }}: {{ order.trackingNumber ?: '-' }}
     </div>
     <div class="text-secondary">
+        {{ 'Expected delivery date'|trans }}: {{ order.expectedDeliveryDate ? order.expectedDeliveryDate|formatDate(null, getDomain().getDomainConfigById(order.domainId).dateTimeZone) : '-' }}
+    </div>
+    <div class="text-secondary">
         {{ 'Delivered'|trans }}: {{ order.deliveredAt ? order.deliveredAt|formatDateTime : '-' }}
     </div>
 

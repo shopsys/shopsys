@@ -411,6 +411,15 @@ class ProductFacade
         return $this->productRepository->getAllByIds($ids);
     }
 
+    /**
+     * @param int[] $ids
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product>
+     */
+    public function getAllByIdsWithDomainsIndexedById(array $ids): array
+    {
+        return $this->productRepository->getAllByIdsWithDomainsIndexedById($ids);
+    }
+
     public function findByCatnum(string $catnum): ?Product
     {
         return $this->productRepository->findByCatnum($catnum);

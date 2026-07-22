@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Mail;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -32,6 +33,7 @@ class OrderMail implements MessageFactoryInterface
     public const string MAIL_TEMPLATE_NAME_PREFIX = 'order_status_';
     public const string VARIABLE_NUMBER = '{number}';
     public const string VARIABLE_DATE = '{date}';
+    public const string VARIABLE_EXPECTED_DELIVERY_DATE = '{expected_delivery_date}';
     public const string VARIABLE_URL = '{url}';
     public const string VARIABLE_TRANSPORT = '{transport}';
     public const string VARIABLE_TRANSPORT_INFO = '{transport_info}';
@@ -116,6 +118,7 @@ class OrderMail implements MessageFactoryInterface
         return [
             self::VARIABLE_NUMBER => fn () => htmlspecialchars($order->getNumber(), ENT_QUOTES),
             self::VARIABLE_DATE => fn () => $this->getFormattedDateTime($order),
+            self::VARIABLE_EXPECTED_DELIVERY_DATE => fn () => $this->getFormattedExpectedDeliveryDate($order),
             self::VARIABLE_URL => fn () => $this->domainRouterFactory->getRouter($order->getDomainId())->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
             self::VARIABLE_TRANSPORT => fn () => htmlspecialchars($order->getTransportItem()->getName(), ENT_QUOTES),
             self::VARIABLE_PAYMENT => fn () => htmlspecialchars($order->getPaymentItem()->getName(), ENT_QUOTES),
@@ -175,6 +178,21 @@ class OrderMail implements MessageFactoryInterface
         return $this->dateTimeFormatterExtension->formatDateTime(
             $order->getCreatedAt(),
             $this->getDomainLocaleByOrder($order),
+        );
+    }
+
+    protected function getFormattedExpectedDeliveryDate(Order $order): string
+    {
+        if ($order->getExpectedDeliveryDate() === null) {
+            return '';
+        }
+
+        $domainConfig = $this->getDomainConfigByOrder($order);
+
+        return $this->dateTimeFormatterExtension->formatDate(
+            $order->getExpectedDeliveryDate(),
+            $domainConfig->getLocale(),
+            $domainConfig->getDateTimeZone(),
         );
     }
 
@@ -248,7 +266,12 @@ class OrderMail implements MessageFactoryInterface
 
     protected function getDomainLocaleByOrder(Order $order): string
     {
-        return $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
+        return $this->getDomainConfigByOrder($order)->getLocale();
+    }
+
+    protected function getDomainConfigByOrder(Order $order): DomainConfig
+    {
+        return $this->domain->getDomainConfigById($order->getDomainId());
     }
 
     /**

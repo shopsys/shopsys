@@ -73,10 +73,8 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $orderData->addItem($discountOrderItemData);
         $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
 
-        foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $productItem) {
-            if (in_array($productItem->product->getId(), $validProductIds, true)) {
-                $productItem->relatedOrderItemsData[] = $discountOrderItemData;
-            }
+        foreach ($this->getValidProductItemsData($orderData, $validProductIds) as $productItem) {
+            $productItem->relatedOrderItemsData[] = $discountOrderItemData;
         }
     }
 
@@ -121,9 +119,9 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
     ): PriceInterface {
         $totalPrice = new Price(Money::zero(), Money::zero());
 
-        foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $item) {
-            if (in_array($item->product?->getId(), $validProductIds, true)) {
-                $totalPrice = $totalPrice->add($item->getTotalPrice());
+        foreach ($this->getValidProductItemsData($orderData, $validProductIds) as $productItem) {
+            foreach ($this->getDiscountableItemsDataForProductItem($productItem) as $discountedItem) {
+                $totalPrice = $totalPrice->add($discountedItem->getTotalPrice());
             }
         }
 

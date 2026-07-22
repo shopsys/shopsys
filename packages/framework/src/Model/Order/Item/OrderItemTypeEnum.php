@@ -15,4 +15,5 @@ class OrderItemTypeEnum extends AbstractEnum
     public const string TYPE_ROUNDING = 'rounding';
     public const string TYPE_PRODUCT_GIFT = 'productGift';
     public const string TYPE_PROMOTION = 'promotion';
+    public const string TYPE_ADDITIONAL_SERVICE = 'additionalService';
 }

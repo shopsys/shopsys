@@ -1021,6 +1021,9 @@ msgstr "Chyba"
 msgid "Excl. VAT"
 msgstr "Bez DPH"
 
+msgid "Expected delivery date"
+msgstr "Předpokládaný termín doručení"
+
 msgid "Expired"
 msgstr "Vypršelý"
 

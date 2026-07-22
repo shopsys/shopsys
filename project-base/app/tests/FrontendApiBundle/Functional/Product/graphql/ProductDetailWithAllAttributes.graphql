@@ -43,6 +43,10 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
         accessories {
             name
         }
+        additionalServices {
+            name
+            catnum
+        }
         isSellingDenied
         isPersonalPickupOnly
         isCurrentlyOutOfStock

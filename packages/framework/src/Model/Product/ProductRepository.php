@@ -209,6 +209,21 @@ class ProductRepository
     }
 
     /**
+     * @param int[] $ids
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product>
+     */
+    public function getAllByIdsWithDomainsIndexedById(array $ids): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('p, pd')
+            ->from(Product::class, 'p', 'p.id')
+            ->join('p.domains', 'pd')
+            ->where('p.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()->getResult();
+    }
+
+    /**
      * @return iterable<array{id: int}>
      */
     public function iterateAllProductIdsExceptVariant(): iterable

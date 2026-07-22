@@ -1021,6 +1021,9 @@ msgstr ""
 msgid "Excl. VAT"
 msgstr ""
 
+msgid "Expected delivery date"
+msgstr ""
+
 msgid "Expired"
 msgstr ""
 

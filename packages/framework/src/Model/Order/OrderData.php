@@ -151,6 +151,11 @@ class OrderData
     public $deliveredAt;
 
     /**
+     * @var \DateTimeImmutable|null
+     */
+    public $expectedDeliveryDate;
+
+    /**
      * @var int|null
      */
     public $domainId;
@@ -396,6 +401,12 @@ class OrderData
         }
 
         return $giftVoucherProductItemsPrice;
+    }
+
+    public function getProductsAndAdditionalServicesTotalPriceAfterAppliedDiscounts(): PriceInterface
+    {
+        return $this->getProductsTotalPriceAfterAppliedDiscounts()
+            ->add($this->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE]));
     }
 
     /**

@@ -1,0 +1,14 @@
+query OrderItemsWithRelatedItemsQuery($urlHash: String) {
+    order(urlHash: $urlHash) {
+        expectedDeliveryDate
+        items {
+            catnum
+            type
+            relatedItems {
+                catnum
+                deliveryDaysExtension
+                type
+            }
+        }
+    }
+}

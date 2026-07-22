@@ -1,0 +1,32 @@
+mutation SetCartItemAdditionalServices(
+    $cartUuid: Uuid
+    $cartItemUuid: Uuid!
+    $additionalServiceUuids: [Uuid!]!
+) {
+    SetCartItemAdditionalServices(
+        input: {
+            cartUuid: $cartUuid
+            cartItemUuid: $cartItemUuid
+            additionalServiceUuids: $additionalServiceUuids
+        }
+    ) {
+        uuid
+        totalPrice {
+            priceWithVat
+        }
+        totalItemsPrice {
+            priceWithVat
+            priceWithoutVat
+        }
+        items {
+            uuid
+            quantity
+            additionalServices {
+                catnum
+                price {
+                    priceWithVat
+                }
+            }
+        }
+    }
+}

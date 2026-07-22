@@ -59,6 +59,24 @@ query GetCart(
                         uuid
                     }
                 }
+                cartItemsWithRemovedAdditionalServices {
+                    uuid
+                    product {
+                        uuid
+                    }
+                    additionalServices {
+                        uuid
+                    }
+                }
+                cartItemsWithModifiedAdditionalServicePrices {
+                    uuid
+                    product {
+                        uuid
+                    }
+                    additionalServices {
+                        uuid
+                    }
+                }
             }
             paymentModifications {
                 paymentPriceChanged

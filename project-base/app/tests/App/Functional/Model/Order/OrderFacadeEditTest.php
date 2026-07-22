@@ -10,6 +10,8 @@ use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Order;
 use App\Model\Order\OrderDataFactory;
 use App\Model\Order\OrderFacade;
+use DateTimeImmutable;
+use DateTimeZone;
 use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
@@ -45,6 +47,24 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         parent::setUp();
 
         $this->setOrderForTests();
+    }
+
+    public function testEditExpectedDeliveryDate(): void
+    {
+        $expectedDeliveryDate = new DateTimeImmutable('2026-09-09 22:00:00', new DateTimeZone('UTC'));
+        $orderData = $this->orderDataFactory->createFromOrder($this->order);
+        $orderData->expectedDeliveryDate = $expectedDeliveryDate;
+
+        $this->orderFacade->edit(self::ORDER_ID, $orderData);
+
+        $this->assertEquals($expectedDeliveryDate, $this->order->getExpectedDeliveryDate());
+
+        $orderData = $this->orderDataFactory->createFromOrder($this->order);
+        $orderData->expectedDeliveryDate = null;
+
+        $this->orderFacade->edit(self::ORDER_ID, $orderData);
+
+        $this->assertNull($this->order->getExpectedDeliveryDate());
     }
 
     public function testEditProductItem(): void

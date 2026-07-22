@@ -73,7 +73,7 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
 
     protected function getPromoCodeApplicableProductsPrice(OrderData $orderData): PriceInterface
     {
-        return $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT]
+        return $orderData->getTotalPriceForItemTypes($this->getDiscountableItemTypes())
             ->subtract($orderData->getGiftVoucherProductItemsTotalPrice());
     }
 
@@ -92,4 +92,37 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
      * @return string[]
      */
     abstract protected function getSupportedTypes(): array;
+
+    /**
+     * @return string[]
+     */
+    protected function getDiscountableItemTypes(): array
+    {
+        return [
+            OrderItemTypeEnum::TYPE_PRODUCT,
+        ];
+    }
+
+    /**
+     * @param int[] $validProductIds
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
+     */
+    protected function getValidProductItemsData(OrderData $orderData, array $validProductIds): array
+    {
+        return array_values(array_filter(
+            $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT),
+            static fn (OrderItemData $productItemData) => in_array($productItemData->product?->getId(), $validProductIds, true),
+        ));
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
+     */
+    protected function getDiscountableItemsDataForProductItem(OrderItemData $productItemData): array
+    {
+        return array_values(array_filter(
+            [$productItemData, ...$productItemData->relatedOrderItemsData],
+            fn (OrderItemData $orderItemData) => in_array($orderItemData->type, $this->getDiscountableItemTypes(), true),
+        ));
+    }
 }

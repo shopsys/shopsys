@@ -79,6 +79,11 @@ class OrderItemData
     public $product;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService|null
+     */
+    public $additionalService;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
     public $promoCode;

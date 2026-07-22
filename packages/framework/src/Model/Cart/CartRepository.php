@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Psr\Clock\ClockInterface;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use SortDirection;
 
@@ -34,7 +35,23 @@ class CartRepository
             $criteria['cartIdentifier'] = $customerUserIdentifier->getCartIdentifier();
         }
 
-        return $this->getCartRepository()->findOneBy($criteria, ['id' => SortDirection::Descending]);
+        $cart = $this->getCartRepository()->findOneBy($criteria, ['id' => SortDirection::Descending]);
+
+        if ($cart !== null) {
+            $this->loadItemsWithAdditionalServices($cart);
+        }
+
+        return $cart;
+    }
+
+    protected function loadItemsWithAdditionalServices(Cart $cart): void
+    {
+        $this->em->createQueryBuilder()
+            ->select('ci', 'a')
+            ->from(CartItem::class, 'ci')
+            ->leftJoin('ci.additionalServices', 'a')
+            ->where('ci.cart = :cart')->setParameter('cart', $cart)
+            ->getQuery()->getResult();
     }
 
     public function deleteOldCartsForUnregisteredCustomerUsers(int $daysLimit): void

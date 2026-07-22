@@ -211,6 +211,28 @@ class ProductTest extends GraphQlTestCase
                     'name' => t('Canon PIXMA MG2450', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 ],
             ],
+            'additionalServices' => [
+                [
+                    'name' => t('Professional assembly', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'catnum' => 'SERVICE-ASSEMBLY',
+                ],
+                [
+                    'name' => t('Extended warranty for 5 years', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'catnum' => 'SERVICE-WARRANTY',
+                ],
+                [
+                    'name' => t('Gift wrapping', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'catnum' => 'SERVICE-GIFT-WRAP',
+                ],
+                [
+                    'name' => t('Custom engraving', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'catnum' => 'SERVICE-ENGRAVING',
+                ],
+                [
+                    'name' => t('Old appliance removal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'catnum' => 'SERVICE-APPLIANCE-REMOVAL',
+                ],
+            ],
             'isSellingDenied' => false,
             'isPersonalPickupOnly' => false,
             'isCurrentlyOutOfStock' => false,

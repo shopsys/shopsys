@@ -38,6 +38,19 @@ class MergeCartFacade
         $oldCart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
         $customerCart = $this->cartFacade->getCartCreateIfNotExists($customerUser, null);
 
+        foreach ($oldCart->getItems() as $itemToKeep) {
+            $similarItem = $customerCart->findSimilarItemByItem($itemToKeep);
+
+            if (!($similarItem instanceof CartItem)) {
+                continue;
+            }
+
+            $itemToKeep->setAdditionalServices($this->getMergedAdditionalServices($itemToKeep, $similarItem));
+            $itemToKeep->setWatchedAdditionalServicePrices(
+                $this->getMergedWatchedAdditionalServicePrices($itemToKeep, $similarItem),
+            );
+        }
+
         $this->cartFacade->deleteCart($customerCart);
 
         $oldCart->assignCartToCustomerUser($customerUser);
@@ -52,6 +65,10 @@ class MergeCartFacade
 
             if ($similarItem instanceof CartItem) {
                 $similarItem->changeQuantity($similarItem->getQuantity() + $itemToMerge->getQuantity());
+                $similarItem->setAdditionalServices($this->getMergedAdditionalServices($similarItem, $itemToMerge));
+                $similarItem->setWatchedAdditionalServicePrices(
+                    $this->getMergedWatchedAdditionalServicePrices($similarItem, $itemToMerge),
+                );
             } else {
                 $newCartItem = $this->cartItemFactory->create(
                     $currentCart,
@@ -60,6 +77,8 @@ class MergeCartFacade
                     $itemToMerge->getWatchedPrice(),
                     $itemToMerge->getType(),
                 );
+                $newCartItem->setAdditionalServices($itemToMerge->getAdditionalServices());
+                $newCartItem->setWatchedAdditionalServicePrices($itemToMerge->getWatchedAdditionalServicePrices());
                 $currentCart->addItem($newCartItem);
                 $this->entityManager->persist($newCartItem);
             }
@@ -74,6 +93,28 @@ class MergeCartFacade
         $this->entityManager->flush();
 
         $this->cartFacade->deleteCart($cart);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]
+     */
+    protected function getMergedAdditionalServices(CartItem $similarItem, CartItem $itemToMerge): array
+    {
+        $mergedAdditionalServicesById = [];
+
+        foreach ([...$similarItem->getAdditionalServices(), ...$itemToMerge->getAdditionalServices()] as $additionalService) {
+            $mergedAdditionalServicesById[$additionalService->getId()] = $additionalService;
+        }
+
+        return array_values($mergedAdditionalServicesById);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getMergedWatchedAdditionalServicePrices(CartItem $cartItem, CartItem $cartItemToMerge): array
+    {
+        return $cartItem->getWatchedAdditionalServicePrices() + $cartItemToMerge->getWatchedAdditionalServicePrices();
     }
 
     public function shouldShowCartMergeInfo(): bool

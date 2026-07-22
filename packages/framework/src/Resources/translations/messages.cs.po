@@ -169,6 +169,9 @@ msgstr "Doplňkové informace"
 msgid "Additional login info"
 msgstr "Doplňující informace k přihlášení"
 
+msgid "Additional services"
+msgstr "Doplňkové služby"
+
 msgid "Address"
 msgstr "Adresa"
 
@@ -1531,6 +1534,9 @@ msgstr "Zadejte v lokálním čase prodejny"
 msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)"
 msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 10:12:00)"
 
+msgid "Enter the date in the format dd.mm.yyyy (e.g. 31.12.2023)"
+msgstr "Zadejte datum ve formátu dd.mm.yyyy (např. 31.12.2023)"
+
 msgid "Entered code is not valid"
 msgstr "Zadaný kód není platný"
 
@@ -1587,6 +1593,9 @@ msgstr "Současná ikona"
 
 msgid "Expand"
 msgstr "Rozbalit"
+
+msgid "Expected delivery date"
+msgstr "Předpokládaný termín doručení"
 
 msgid "Expected maximum duration"
 msgstr "Očekávané maximální trvání"
