@@ -69,6 +69,7 @@ export const ProductDetailStickyAction = ({ isVisible, placement, product }: Pro
                     buttonSize="large"
                     buttonTid={TIDs.product_detail_sticky_addtocart_button}
                     product={product}
+                    shouldDisplayAdditionalServices={false}
                     spinboxId={`${product.uuid}-sticky-action`}
                 />
             </div>

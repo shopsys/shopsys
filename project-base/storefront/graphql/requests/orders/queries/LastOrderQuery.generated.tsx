@@ -11,6 +11,7 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** One of possible types of the order item */
 export type TypeOrderItemTypeEnum =
+  | 'additionalService'
   | 'discount'
   | 'payment'
   | 'product'

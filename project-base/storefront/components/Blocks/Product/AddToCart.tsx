@@ -10,6 +10,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useRef } from 'react';
 import { CurrentCartType } from 'types/cart';
 import { useAddToCartAriaLabel } from 'utils/accessibility/useAddToCartAriaLabel';
+import { OnProductAddedToCart } from 'utils/cart/useAddToCart';
 import { useAddToCartHandler } from 'utils/cart/useAddToCartHandler';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -28,6 +29,7 @@ type AddToCartProps = {
     ariaProductName: string;
     ariaPrice: string;
     ariaUnit: string;
+    onProductAddedToCart?: OnProductAddedToCart;
 };
 
 type AddToCartContentProps = AddToCartProps & Pick<CurrentCartType, 'cart' | 'isCartFetchingOrUnavailable'>;
@@ -47,6 +49,7 @@ export const AddToCartContent: FC<AddToCartContentProps> = ({
     ariaProductName,
     ariaPrice,
     ariaUnit,
+    onProductAddedToCart,
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
@@ -61,6 +64,7 @@ export const AddToCartContent: FC<AddToCartContentProps> = ({
         gtmProductListName,
         isWithSpinbox: false,
         listIndex,
+        onProductAddedToCart,
     });
 
     const { ariaLabel, onFocusHandler } = useAddToCartAriaLabel({

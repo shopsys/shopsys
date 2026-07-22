@@ -71,7 +71,6 @@ fragment OrderDetailItemFragment on OrderItem {
         }
     }
     transport {
-        isPersonalPickup
         transportTypeCode
         mainImage {
             url

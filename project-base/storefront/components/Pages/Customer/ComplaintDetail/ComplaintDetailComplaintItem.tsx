@@ -1,12 +1,14 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { ModalGallery } from 'components/Basic/ModalGallery/ModalGallery';
+import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CustomerRecordRowInfo } from 'components/Pages/Customer/CustomerRecordElements';
 import { TypeComplaintItemFragment } from 'graphql/requests/complaints/fragments/ComplaintItemFragment.generated';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { mapOrderItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
 import { isPriceVisible } from 'utils/mappers/price';
 
 type ComplaintDetailComplaintItemProps = {
@@ -23,6 +25,11 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
 
     const galleryLastShownItemIndex = GALLERY_SHOWN_ITEMS_COUNT - 1;
     const galleryAdditionalItemsCount = (complaintItem.files?.length ?? 0) - GALLERY_SHOWN_ITEMS_COUNT;
+    const additionalServiceLines = mapOrderItemAdditionalServiceSummaryLines(
+        complaintItem.orderItem?.relatedItems ?? [],
+        formatPrice,
+        { includeItemDetails: true },
+    );
     const complaintItemUnit = complaintItem.orderItem?.unit;
     const complaintItemTotalPrice = complaintItem.orderItem?.totalPrice;
     const productLink = complaintItem.product?.isVisible ? (
@@ -89,6 +96,8 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                     </span>
                 )}
             </div>
+
+            <AdditionalServiceSummaryList className="vl:pl-25" services={additionalServiceLines} />
 
             <CustomerRecordRowInfo className="items-start" title={t('Description')}>
                 <span className="font-secondary font-semibold">{complaintItem.description}</span>

@@ -8,5 +8,8 @@ fragment MainVariantDetailFragment on MainVariant {
         storeAvailabilities {
             ...SimpleStoreAvailabilityFragment
         }
+        additionalServices {
+            ...AdditionalServiceFragment
+        }
     }
 }

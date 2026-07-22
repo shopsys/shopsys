@@ -47,9 +47,12 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
     const filteredOrderItems = order.items.filter(
         (orderItem) =>
-            ![TypeOrderItemTypeEnum.Payment, TypeOrderItemTypeEnum.Transport, TypeOrderItemTypeEnum.Rounding].includes(
-                orderItem.type,
-            ),
+            ![
+                TypeOrderItemTypeEnum.Payment,
+                TypeOrderItemTypeEnum.Transport,
+                TypeOrderItemTypeEnum.Rounding,
+                TypeOrderItemTypeEnum.AdditionalService,
+            ].includes(orderItem.type),
     );
 
     const showRepeatOrderButton =

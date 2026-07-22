@@ -38,6 +38,7 @@ const ApplicationErrors = {
     'promo-code-apply-error': 'flash-message',
     'promo-code-remove-error': 'flash-message',
     'remove-from-cart-error': 'flash-message',
+    'set-cart-item-additional-services-error': 'flash-message',
     'transport-error': 'flash-message',
 
     // No-flash-message codes (logged but no toast shown to user)

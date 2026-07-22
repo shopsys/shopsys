@@ -8,6 +8,7 @@ import { PageInfoFragment } from '../../pageInfo/fragments/PageInfoFragment.gene
 import { ListedOrderFragment } from './ListedOrderFragment.generated';
 /** One of possible types of the order item */
 export type TypeOrderItemTypeEnum =
+  | 'additionalService'
   | 'discount'
   | 'payment'
   | 'product'

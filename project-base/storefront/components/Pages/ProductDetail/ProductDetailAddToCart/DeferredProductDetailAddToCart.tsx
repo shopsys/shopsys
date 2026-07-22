@@ -15,11 +15,13 @@ export const DeferredProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (
     const shouldRender = useDeferredRender('add_to_cart');
 
     return (
-        <div className="w-full sm:max-w-60">
+        <div className="w-full">
             {shouldRender ? (
                 <ProductDetailAddToCart {...props} />
             ) : (
-                <SkeletonModuleProductDetailAddToCart size={props.buttonSize} />
+                <div className="w-full sm:max-w-60">
+                    <SkeletonModuleProductDetailAddToCart size={props.buttonSize} />
+                </div>
             )}
         </div>
     );

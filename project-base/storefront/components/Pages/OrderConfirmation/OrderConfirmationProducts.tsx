@@ -4,7 +4,9 @@ import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/Ord
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { mapOrderItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
 
 type OrderConfirmationProductsProps = {
     items: TypeOrderDetailItemFragment[] | undefined;
@@ -12,6 +14,7 @@ type OrderConfirmationProductsProps = {
 
 export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ items }) => {
     const { t } = useTranslation();
+    const formatPrice = useFormatPrice();
 
     if (!items) {
         return null;
@@ -28,6 +31,11 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                             return (
                                 <OrderItemProductCard
                                     key={item.uuid}
+                                    additionalServices={mapOrderItemAdditionalServiceSummaryLines(
+                                        item.relatedItems,
+                                        formatPrice,
+                                    )}
+                                    areAdditionalServicePricesHighlighted={false}
                                     categoryName={item.product.categories[0]?.name}
                                     freeQuantity={null}
                                     fullName={item.name}

@@ -111,6 +111,22 @@ const handleCartItemModifications = (itemModifications: TypeCartItemModification
         );
     }
 
+    for (const itemWithRemovedAdditionalServices of itemModifications.cartItemsWithRemovedAdditionalServices) {
+        messages.push(
+            t('Some additional services of item {{ itemName }} are no longer offered and were removed from the cart.', {
+                itemName: itemWithRemovedAdditionalServices.product.fullName,
+            }),
+        );
+    }
+
+    for (const itemWithModifiedAdditionalServicePrices of itemModifications.cartItemsWithModifiedAdditionalServicePrices) {
+        messages.push(
+            t('The price of some additional services of item {{ itemName }} has changed.', {
+                itemName: itemWithModifiedAdditionalServicePrices.product.fullName,
+            }),
+        );
+    }
+
     return messages;
 };
 

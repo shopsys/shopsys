@@ -1,4 +1,5 @@
 import { AddressList } from 'components/Blocks/AddressList/AddressList';
+import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { DropzoneControlled } from 'components/Forms/Dropzone/DropzoneControlled';
@@ -27,8 +28,10 @@ import { ComplaintFormType } from 'types/form';
 import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { useComplaintResolutionsAsSelectOptions } from 'utils/complaints/useComplaintResolutionsAsSelectOptions';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { mapOrderItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -57,6 +60,12 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     const isSubmitting = formProviderMethods.formState.isSubmitting;
     const { setValue } = formProviderMethods;
     const formMeta = useComplaintFormMeta();
+    const formatPrice = useFormatPrice();
+    const additionalServiceLines = mapOrderItemAdditionalServiceSummaryLines(
+        orderItem?.relatedItems ?? [],
+        formatPrice,
+        { includeItemDetails: true },
+    );
     const handleError = useErrorHandler({
         form: formProviderMethods,
         gtmOrigin: GtmMessageOriginType.other,
@@ -186,6 +195,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             )}
 
                             <p className="h5">{orderItem?.name ?? t('Complaint item')}</p>
+
+                            <AdditionalServiceSummaryList services={additionalServiceLines} />
 
                             {isCreationWithoutOrder && (
                                 <TextInputControlled

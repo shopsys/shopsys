@@ -73,6 +73,7 @@ describe('getGtmChangeProductListItemEvent', () => {
                         url: 'https://example.com/test-product',
                         brand: 'Test brand',
                         categories: ['Test category'],
+                        productType: 'product',
                         quantity: 1,
                         listIndex: 3,
                     },

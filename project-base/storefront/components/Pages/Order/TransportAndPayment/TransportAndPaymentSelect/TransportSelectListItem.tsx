@@ -41,7 +41,6 @@ export const TransportListItem: FC<TransportListItemProps> = ({
 }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-
     const ariaLabel = isPriceVisible(transport.price.priceWithVat)
         ? t('Choose transport {{ transportName }} for {{ price }}', {
               ns: 'accessibility',

@@ -8,6 +8,7 @@ import { useOpenReviewPopupFromUrl } from 'components/Blocks/ProductReviews/useO
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { ProductAdditionalServicesSelectionProvider } from 'components/providers/ProductAdditionalServicesSelectionProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
 import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
@@ -44,7 +45,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
     useOpenReviewPopupFromUrl(product.uuid, product.fullName);
 
     return (
-        <>
+        <ProductAdditionalServicesSelectionProvider>
             <ProductMetadata product={product} />
 
             <VerticalStack gap="md">
@@ -138,6 +139,6 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                 <DeferredLastVisitedProducts currentProductCatnum={product.catalogNumber} />
             </VerticalStack>
-        </>
+        </ProductAdditionalServicesSelectionProvider>
     );
 };

@@ -8,6 +8,7 @@ import { OrderItemFragment } from './OrderItemFragment.generated';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 /** One of possible types of the order item */
 export type TypeOrderItemTypeEnum =
+  | 'additionalService'
   | 'discount'
   | 'payment'
   | 'product'

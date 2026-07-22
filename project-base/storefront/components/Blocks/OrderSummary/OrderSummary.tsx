@@ -5,7 +5,9 @@ import { CartPreview } from 'components/Pages/Cart/CartPreview';
 import { TypeCartItemTypeEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { mapCartItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
 
 type OrderSummaryProps = {
     isTransportOrPaymentLoading?: boolean;
@@ -13,6 +15,7 @@ type OrderSummaryProps = {
 
 export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
+    const formatPrice = useFormatPrice();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
 
     if (isCartFetchingOrUnavailable) {
@@ -53,6 +56,12 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                         return (
                             <OrderItemProductCard
                                 key={item.uuid}
+                                additionalServices={mapCartItemAdditionalServiceSummaryLines(
+                                    item.additionalServices,
+                                    item.quantity,
+                                    item.product.unit.name,
+                                    formatPrice,
+                                )}
                                 categoryName={item.product.categories[0]?.name ?? ''}
                                 freeQuantity={item.freeQuantity}
                                 fullName={item.product.fullName}

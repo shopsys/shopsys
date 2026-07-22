@@ -76,6 +76,8 @@ export type TypeAdditionalService = {
   deliveryDaysExtension: Maybe<Scalars['Int']['output']>;
   /** Description of the additional service */
   description: Maybe<Scalars['String']['output']>;
+  /** Additional service id */
+  id: Scalars['Int']['output'];
   /** Additional service image */
   mainImage: Maybe<TypeImage>;
   /** Name of the additional service */
@@ -276,6 +278,8 @@ export type TypeAvailability = {
 
 /** Product Availability statuses */
 export enum TypeAvailabilityStatusEnum {
+  /** Product is out of stock with a known expected restocking date */
+  ExpectedRestock = 'ExpectedRestock',
   /** Product availability status in stock */
   InStock = 'InStock',
   /** Product availability status out of stock */
@@ -546,8 +550,6 @@ export type TypeBreadcrumb = {
 
 export type TypeCart = {
   __typename?: 'Cart';
-  /** By how many working days the additional services chosen in the cart extend the estimated delivery time of the whole order (the services of one product are performed one after another, different products are processed in parallel, so the longest per-product extension wins) */
-  additionalServicesDeliveryDaysExtension: Scalars['Int']['output'];
   /** All items in the cart */
   items: Array<TypeCartItem>;
   modifications: TypeCartModificationsResult;
@@ -604,6 +606,7 @@ export type TypeCartItem = {
 export type TypeCartItemModificationsResult = {
   __typename?: 'CartItemModificationsResult';
   cartItemsWithChangedQuantity: Array<TypeCartItem>;
+  cartItemsWithModifiedAdditionalServicePrices: Array<TypeCartItem>;
   cartItemsWithModifiedPrice: Array<TypeCartItem>;
   cartItemsWithRemovedAdditionalServices: Array<TypeCartItem>;
   noLongerListableCartItems: Array<TypeCartItem>;
@@ -1556,6 +1559,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
+  /** Expected restocking date, filled whenever set and not passed yet */
+  expectedRestockingDate: Maybe<Scalars['DateTime']['output']>;
   files: Array<TypeFile>;
   /** List of flags */
   flags: Array<TypeFlag>;
@@ -2775,6 +2780,8 @@ export type TypeProduct = {
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
+  /** Expected restocking date, filled whenever set and not passed yet */
+  expectedRestockingDate: Maybe<Scalars['DateTime']['output']>;
   files: Array<TypeFile>;
   /** List of flags */
   flags: Array<TypeFlag>;
@@ -3741,6 +3748,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
+  /** Expected restocking date, filled whenever set and not passed yet */
+  expectedRestockingDate: Maybe<Scalars['DateTime']['output']>;
   files: Array<TypeFile>;
   /** List of flags */
   flags: Array<TypeFlag>;
@@ -4034,6 +4043,8 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   distance: Maybe<Scalars['Int']['output']>;
   /** Store email */
   email: Maybe<Scalars['String']['output']>;
+  /** Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised. */
+  expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** Store images */
   images: Array<TypeImage>;
   /** Is set as default store */
@@ -4059,6 +4070,12 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   street: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+};
+
+
+export type TypeStoreExpectedDeliveryDateArgs = {
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+  transportUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -4133,18 +4150,16 @@ export type TypeToken = {
 /** Represents a transport */
 export type TypeTransport = {
   __typename?: 'Transport';
-  /** Number of days until goods are delivered */
-  daysUntilDelivery: Scalars['Int']['output'];
   /** Localized transport description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
+  /** Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. */
+  expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** Transport group */
   group: Maybe<TypeTransportGroup>;
   /** Transport images */
   images: Array<TypeImage>;
   /** Localized transport instruction (domain dependent) */
   instructions: Maybe<Scalars['String']['output']>;
-  /** Pointer telling if the transport is of type personal pickup */
-  isPersonalPickup: Scalars['Boolean']['output'];
   /** Transport image by params */
   mainImage: Maybe<TypeImage>;
   /** Transport name */
@@ -4164,6 +4179,12 @@ export type TypeTransport = {
   /** UUID */
   uuid: Scalars['Uuid']['output'];
   vatPercent: Scalars['String']['output'];
+};
+
+
+/** Represents a transport */
+export type TypeTransportExpectedDeliveryDateArgs = {
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
@@ -4281,6 +4302,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
+  /** Expected restocking date, filled whenever set and not passed yet */
+  expectedRestockingDate: Maybe<Scalars['DateTime']['output']>;
   files: Array<TypeFile>;
   /** List of flags */
   flags: Array<TypeFlag>;

@@ -9,8 +9,8 @@ const { addToCartMock } = vi.hoisted(() => ({
     addToCartMock: vi.fn(),
 }));
 
-vi.mock('next/dynamic', () => ({
-    default: () => () => null,
+vi.mock('components/Blocks/Popup/AddToCartPopup', () => ({
+    AddToCartPopup: () => null,
 }));
 
 vi.mock('utils/cart/useAddToCart', () => ({
@@ -54,5 +54,45 @@ describe('useAddToCartHandler', () => {
 
         expect(useSessionStore.getState().storedFocusElement).toBeNull();
         expect(document.activeElement).toBe(addToCartButton);
+    });
+
+    test('stays in the loading state until additional services are persisted', async () => {
+        let resolveAddToCart: (value: null) => void = () => undefined;
+        const addToCartPromise = new Promise<null>((resolve) => {
+            resolveAddToCart = resolve;
+        });
+        addToCartMock.mockReturnValueOnce(addToCartPromise);
+        const onAddToCartFlowStateChange = vi.fn();
+        const { result } = renderHook(() =>
+            useAddToCartHandler({
+                gtmMessageOrigin: GtmMessageOriginType.other,
+                gtmProductListName: GtmProductListNameType.product_detail,
+                isWithSpinbox: false,
+                onAddToCartFlowStateChange,
+                productUuid: 'product-uuid',
+                spinboxRef: { current: null },
+            }),
+        );
+
+        let addToCartFlow = Promise.resolve();
+        let duplicateAddToCartFlow = Promise.resolve();
+        act(() => {
+            addToCartFlow = result.current.onAddToCartHandler();
+            duplicateAddToCartFlow = result.current.onAddToCartHandler();
+        });
+
+        expect(result.current.isAddingToCart).toBe(true);
+        expect(addToCartMock).toHaveBeenCalledTimes(1);
+        expect(onAddToCartFlowStateChange).toHaveBeenCalledTimes(1);
+        expect(onAddToCartFlowStateChange).toHaveBeenCalledWith(true);
+
+        await act(async () => {
+            resolveAddToCart(null);
+            await Promise.all([addToCartFlow, duplicateAddToCartFlow]);
+        });
+
+        expect(result.current.isAddingToCart).toBe(false);
+        expect(onAddToCartFlowStateChange).toHaveBeenCalledTimes(2);
+        expect(onAddToCartFlowStateChange).toHaveBeenNthCalledWith(2, false);
     });
 });
