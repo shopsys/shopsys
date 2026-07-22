@@ -453,8 +453,14 @@ export const getExpectedDeliveryDateMessage = (
     const todayIsoWeekday = today.getUTCDay() === 0 ? 7 : today.getUTCDay();
     const dayDifferenceOfMondayOfWeekAfterNext = 15 - todayIsoWeekday;
 
+    // a date in the past (clock skew, a page left open over midnight) must not claim "today",
+    // the plain date is the only message that cannot contradict itself
+    if (dayDifference < 0) {
+        return isPersonalPickup ? t('Personal pickup {{ date }}', { date }) : t('Delivery {{ date }}', { date });
+    }
+
     if (isPersonalPickup) {
-        if (dayDifference <= 0) {
+        if (dayDifference === 0) {
             return t('Personal pickup today {{ date }}', { date });
         }
 
@@ -469,7 +475,7 @@ export const getExpectedDeliveryDateMessage = (
         return t('Personal pickup {{ date }}', { date });
     }
 
-    if (dayDifference <= 0) {
+    if (dayDifference === 0) {
         return t('Delivery today {{ date }}', { date });
     }
 

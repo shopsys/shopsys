@@ -644,6 +644,7 @@
     "The page is currently under maintenance.": "Stránka je momentálne v režime údržby.",
     "The payment is being processed": "Platba sa spracováva",
     "The payment you selected is no longer available.": "Vybraná platba nie je momentálne dostupná.",
+    "The pickup date cannot be determined": "Termín vyzdvihnutia nie je možné určiť",
     "The price of item {{ itemName }} has changed.": "Cena produktu {{ itemName }} sa zmenila.",
     "The price of the payment you selected has changed.": "Cena vybranej platby sa zmenila.",
     "The price of the transport you selected has changed.": "Cena vybranej dopravy sa zmenila.",

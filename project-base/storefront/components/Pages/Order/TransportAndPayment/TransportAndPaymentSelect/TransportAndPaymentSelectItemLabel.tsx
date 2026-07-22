@@ -16,6 +16,7 @@ type TransportAndPaymentSelectItemLabelProps = {
     name: string;
     price?: { priceWithVat: string; priceWithoutVat: string; vatAmount: string };
     expectedDeliveryDate?: string | null;
+    isPersonalPickup?: boolean;
     description?: string | null;
     image?: TypeImageFragment | null;
     pickupPlaceDetail?: StoreOrPacketeryPoint;
@@ -32,6 +33,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     name,
     price,
     expectedDeliveryDate,
+    isPersonalPickup = false,
     description,
     image,
     pickupPlaceDetail,
@@ -84,8 +86,11 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
                     {description && <div className="text-text-less text-xs">{description}</div>}
 
-                    {!pickupPlaceDetail && expectedDeliveryDate !== undefined && (
-                        <ExpectedDeliveryDateInfo expectedDeliveryDate={expectedDeliveryDate} />
+                    {!pickupPlaceDetail && expectedDeliveryDate !== undefined && !disabled && (
+                        <ExpectedDeliveryDateInfo
+                            expectedDeliveryDate={expectedDeliveryDate}
+                            isPersonalPickup={isPersonalPickup}
+                        />
                     )}
                 </div>
 

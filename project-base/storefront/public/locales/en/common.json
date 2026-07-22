@@ -616,6 +616,7 @@
     "The page is currently under maintenance.": "The page is currently under maintenance.",
     "The payment is being processed": "The payment is being processed",
     "The payment you selected is no longer available.": "The payment you selected is no longer available.",
+    "The pickup date cannot be determined": "The pickup date cannot be determined",
     "The price of item {{ itemName }} has changed.": "The price of item {{ itemName }} has changed.",
     "The price of the payment you selected has changed.": "The price of the payment you selected has changed.",
     "The price of the transport you selected has changed.": "The price of the transport you selected has changed.",

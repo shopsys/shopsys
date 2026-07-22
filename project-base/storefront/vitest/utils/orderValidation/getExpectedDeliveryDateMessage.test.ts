@@ -18,6 +18,18 @@ describe('getExpectedDeliveryDateMessage test', () => {
         expect(result).toBe('Delivery today 7/16');
     });
 
+    test('should fall back to the plain date message for a delivery date in the past', () => {
+        const result = getExpectedDeliveryDateMessage('2026-07-14T00:00:00+00:00', false, NOW, 'UTC', 'en', mockT);
+
+        expect(result).toBe('Delivery 7/14');
+    });
+
+    test('should fall back to the plain date message for a pickup date in the past', () => {
+        const result = getExpectedDeliveryDateMessage('2026-07-14T00:00:00+00:00', true, NOW, 'UTC', 'en', mockT);
+
+        expect(result).toBe('Personal pickup 7/14');
+    });
+
     test('should return the tomorrow message for a delivery date of tomorrow', () => {
         const result = getExpectedDeliveryDateMessage('2026-07-17T00:00:00+00:00', false, NOW, 'UTC', 'en', mockT);
 

@@ -1,5 +1,7 @@
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
+import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import { useExpectedDeliveryDateMessage } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
+import { useId } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -14,6 +16,7 @@ export const ExpectedDeliveryDateInfo: FC<ExpectedDeliveryDateInfoProps> = ({
     className,
 }) => {
     const { t } = useTranslation();
+    const explanationId = useId();
     const expectedDeliveryDateMessage = useExpectedDeliveryDateMessage(expectedDeliveryDate, isPersonalPickup);
 
     if (expectedDeliveryDateMessage !== null) {
@@ -22,13 +25,25 @@ export const ExpectedDeliveryDateInfo: FC<ExpectedDeliveryDateInfoProps> = ({
         );
     }
 
+    const unknownDeliveryDateExplanation = t(
+        'The cart contains goods that are out of stock and we do not know their restocking date yet',
+    );
+
     return (
-        <div
-            className={twMergeCustom('flex items-center gap-1 text-sm text-text-less', className)}
-            title={t('The cart contains goods that are out of stock and we do not know their restocking date yet')}
-        >
-            <InfoIcon className="size-4 shrink-0" />
-            {t('The delivery date cannot be determined')}
-        </div>
+        <Tooltip label={unknownDeliveryDateExplanation} placement="bottom">
+            <div
+                aria-describedby={explanationId}
+                className={twMergeCustom('flex items-center gap-1 text-text-less text-xs', className)}
+                tabIndex={0}
+            >
+                <InfoIcon className="size-3.5 shrink-0" />
+                {isPersonalPickup
+                    ? t('The pickup date cannot be determined')
+                    : t('The delivery date cannot be determined')}
+                <span className="sr-only" id={explanationId}>
+                    {unknownDeliveryDateExplanation}
+                </span>
+            </div>
+        </Tooltip>
     );
 };
