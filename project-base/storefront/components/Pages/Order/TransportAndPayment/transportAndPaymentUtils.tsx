@@ -33,10 +33,11 @@ import { createIntlDateTimeFormatter } from 'utils/formaters/createIntlDateTimeF
 import { useDisplayTimezone } from 'utils/formatting/useDisplayTimezone';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getOrderPaymentItem, getOrderTransportItem } from 'utils/mappers/order';
-import { isPacketeryTransport, mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
+import { mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
+import { isPacketeryTransport, isPersonalPickupTransport, isPickupPlaceTransport } from 'utils/transport';
 
 const PickupPlacePopup = dynamic(
     () => import('components/Blocks/Popup/PickupPlacePopup').then((component) => component.PickupPlacePopup),
@@ -159,7 +160,7 @@ export const useTransportChangeInSelect = (
             openPacketeryPopup(updatedTransport);
         }
 
-        if (updatedTransport?.isPersonalPickup) {
+        if (updatedTransport && isPersonalPickupTransport(updatedTransport.transportTypeCode)) {
             openPersonalPickupPopup(updatedTransport);
         }
     };
@@ -177,7 +178,7 @@ export const useTransportChangeInSelect = (
             return;
         }
 
-        if (updatedTransport.isPersonalPickup || isPacketeryTransport(updatedTransport.transportTypeCode)) {
+        if (isPickupPlaceTransport(updatedTransport.transportTypeCode)) {
             if (!preSelectedPickupPlace) {
                 openPersonalPickupPopup(updatedTransport);
 

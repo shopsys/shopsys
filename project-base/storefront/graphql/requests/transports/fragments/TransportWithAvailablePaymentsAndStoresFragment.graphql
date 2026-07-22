@@ -20,13 +20,11 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
     payments {
         ...SimplePaymentFragment
     }
-    daysUntilDelivery
     expectedDeliveryDate
     stores {
         ...ListedStoreConnectionFragment
     }
     transportTypeCode
-    isPersonalPickup
     productsBlockingSelectionInCart {
         reason
         products {

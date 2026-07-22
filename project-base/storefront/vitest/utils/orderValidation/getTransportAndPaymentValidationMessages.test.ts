@@ -9,14 +9,12 @@ const mockT = vi.fn((key: string) => key) as any;
 const mockTransport = {
     uuid: 'transport-uuid-1',
     name: 'Test Transport',
-    isPersonalPickup: false,
     transportTypeCode: TypeTransportTypeEnum.Common,
 } as any;
 
 const mockPersonalPickupTransport = {
     uuid: 'transport-uuid-2',
     name: 'Personal Pickup Transport',
-    isPersonalPickup: true,
     transportTypeCode: TypeTransportTypeEnum.PersonalPickup,
 } as any;
 

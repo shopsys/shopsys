@@ -63,7 +63,6 @@ class CartTransportTest extends GraphQlTestCase
             ),
             'instructions' => t('We are looking forward to your visit.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
             'position' => 3,
-            'daysUntilDelivery' => 0,
             'transportTypeCode' => TransportTypeEnum::TYPE_PERSONAL_PICKUP,
             'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
             'images' => [

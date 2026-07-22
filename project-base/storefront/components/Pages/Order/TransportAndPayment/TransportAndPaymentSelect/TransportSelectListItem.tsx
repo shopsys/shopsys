@@ -7,8 +7,8 @@ import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
-import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { isPickupPlaceTransport } from 'utils/transport';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 import { TransportUnavailabilityInfo } from './TransportUnavailabilityInfo';
@@ -78,9 +78,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                         image={transport.mainImage}
                         isActive={isActive}
                         isImageOnWhiteBackground={hasGreyBackground || isActive}
-                        isPersonalPickup={
-                            transport.isPersonalPickup || isPacketeryTransport(transport.transportTypeCode)
-                        }
+                        isPersonalPickup={isPickupPlaceTransport(transport.transportTypeCode)}
                         name={transport.name}
                         openPickupPlacePopup={() => openPickupPlacePopup?.()}
                         pickupPlaceDetail={isActive && pickupPlace ? pickupPlace : undefined}

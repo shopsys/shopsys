@@ -75,7 +75,6 @@ class TransportsTest extends GraphQlTestCase
                 ),
                 'instructions' => t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 0,
-                'daysUntilDelivery' => 2,
                 'transportTypeCode' => TransportTypeEnum::TYPE_PACKETERY,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.95', $vatHigh),
                 'images' => [
@@ -97,7 +96,6 @@ class TransportsTest extends GraphQlTestCase
                 'description' => null,
                 'instructions' => null,
                 'position' => 1,
-                'daysUntilDelivery' => 4,
                 'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
                 'images' => [
@@ -122,7 +120,6 @@ class TransportsTest extends GraphQlTestCase
                 'description' => t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'instructions' => t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 2,
-                'daysUntilDelivery' => 5,
                 'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'images' => [
@@ -150,7 +147,6 @@ class TransportsTest extends GraphQlTestCase
                 ),
                 'instructions' => t('We are looking forward to your visit.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 3,
-                'daysUntilDelivery' => 0,
                 'transportTypeCode' => TransportTypeEnum::TYPE_PERSONAL_PICKUP,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                 'images' => [
@@ -222,7 +218,6 @@ class TransportsTest extends GraphQlTestCase
                 ),
                 'instructions' => t('Expect delivery by the end of next month', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 4,
-                'daysUntilDelivery' => 0,
                 'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                 'images' => [
@@ -274,7 +269,7 @@ class TransportsTest extends GraphQlTestCase
         $hasSeenUnavailableTransport = false;
 
         foreach ($responseData as $transport) {
-            if ($transport['isPersonalPickup']) {
+            if ($transport['transportTypeCode'] === TransportTypeEnum::TYPE_PERSONAL_PICKUP) {
                 $this->assertSame([], $transport['productsBlockingSelectionInCart']);
                 $this->assertFalse(
                     $hasSeenUnavailableTransport,

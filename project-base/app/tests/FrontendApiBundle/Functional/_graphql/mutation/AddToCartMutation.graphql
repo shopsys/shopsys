@@ -70,7 +70,6 @@ mutation AddToCart(
                 description
                 instructions
                 position
-                daysUntilDelivery
                 transportTypeCode
                 price {
                     priceWithVat
