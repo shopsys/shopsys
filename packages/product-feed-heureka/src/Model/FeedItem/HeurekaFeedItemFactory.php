@@ -53,6 +53,7 @@ class HeurekaFeedItemFactory
             $this->productDataBatchLoader->getProductCpc($product, $domainConfig),
             $this->getDeliveryId($product),
             $this->getDeliveryPrice($product, $domainConfig),
+            $this->getSpecialServices($product, $domainConfig),
         );
     }
 
@@ -68,6 +69,14 @@ class HeurekaFeedItemFactory
     protected function getDeliveryId(Product $product): ?string
     {
         return $product->isElectronicGiftVoucher() ? 'ONLINE' : null;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSpecialServices(Product $product, DomainConfig $domainConfig): array
+    {
+        return $this->productDataBatchLoader->getProductAdditionalServiceSpecialServiceNames($product, $domainConfig);
     }
 
     protected function getBrandName(Product $product): ?string

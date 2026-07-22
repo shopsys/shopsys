@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductAdditionalServicesBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -23,6 +24,10 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
 class GoogleFeedItemFactory
 {
+    protected const string CUSTOM_LABEL_SEPARATOR = ';';
+
+    protected const int CUSTOM_LABEL_MAX_LENGTH = 100;
+
     public function __construct(
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly CurrencyFacade $currencyFacade,
@@ -32,6 +37,7 @@ class GoogleFeedItemFactory
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly TransportFacade $transportFacade,
         protected readonly CountryFacade $countryFacade,
+        protected readonly ProductAdditionalServicesBatchLoader $productAdditionalServicesBatchLoader,
     ) {
     }
 
@@ -57,6 +63,7 @@ class GoogleFeedItemFactory
             $this->getShippingServiceName($product, $domainConfig),
             $this->getShippingPrice($product, $domainConfig),
             $this->getShippingCountryCodes($product, $domainConfig),
+            $this->getCustomLabel0($product, $domainConfig),
         );
     }
 
@@ -91,6 +98,48 @@ class GoogleFeedItemFactory
             static fn (Country $country) => $country->getCode(),
             $this->countryFacade->getAllEnabledOnDomain($domainConfig->getId()),
         );
+    }
+
+    protected function getCustomLabel0(Product $product, DomainConfig $domainConfig): ?string
+    {
+        $additionalServiceFeedNames = $this->productAdditionalServicesBatchLoader->getShownInFeedsFeedNames(
+            $product,
+            $domainConfig,
+        );
+
+        if ($additionalServiceFeedNames === []) {
+            return null;
+        }
+
+        $sanitizedFeedNames = str_replace(
+            static::CUSTOM_LABEL_SEPARATOR,
+            ',',
+            $additionalServiceFeedNames,
+        );
+
+        return $this->buildCustomLabelFromWholeFeedNames($sanitizedFeedNames);
+    }
+
+    /**
+     * @param string[] $sanitizedFeedNames
+     */
+    protected function buildCustomLabelFromWholeFeedNames(array $sanitizedFeedNames): ?string
+    {
+        $customLabel = '';
+
+        foreach ($sanitizedFeedNames as $feedName) {
+            $extendedCustomLabel = $customLabel === ''
+                ? $feedName
+                : $customLabel . static::CUSTOM_LABEL_SEPARATOR . $feedName;
+
+            if (mb_strlen($extendedCustomLabel) > static::CUSTOM_LABEL_MAX_LENGTH) {
+                continue;
+            }
+
+            $customLabel = $extendedCustomLabel;
+        }
+
+        return $customLabel === '' ? null : $customLabel;
     }
 
     protected function getAvailability(

@@ -39,6 +39,9 @@
                 <g:price>{{ item.shippingPrice is not null ? item.shippingPrice|moneyFormat(2) : 0 }} {{ item.currency.code }}</g:price>
             </g:shipping>
         {% endfor -%}
+        {% if item.customLabel0 is not null -%}
+            <g:custom_label_0>{{ item.customLabel0 }}</g:custom_label_0>
+        {% endif -%}
     </item>
 {% endblock %}
 

@@ -61,4 +61,18 @@ class AdditionalServiceFacade
         $this->em->remove($additionalService);
         $this->em->flush();
     }
+
+    /**
+     * @param int[] $productIds
+     * @return array<int, \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]>
+     */
+    public function getShownInFeedsIndexedByProductIds(array $productIds, int $domainId): array
+    {
+        return $this->additionalServiceRepository->getShownInFeedsIndexedByProductIds($productIds, $domainId);
+    }
+
+    public function useProductVatRateWhereVatIsMissing(int $domainId): void
+    {
+        $this->additionalServiceRepository->useProductVatRateWhereVatIsMissing($domainId);
+    }
 }
