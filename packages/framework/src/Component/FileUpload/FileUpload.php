@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
 use InvalidArgumentException;
+use League\Flysystem\Config;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use League\Flysystem\StorageAttributes;
+use League\Flysystem\Visibility;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
-use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MissingFileClassDirectoryMappingException;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MissingFileConfigByFileClassException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\Image\Image;
@@ -30,9 +32,15 @@ class FileUpload
     protected const int DELETE_OLD_FILES_SECONDS = 86400;
     protected const string POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE = 'positionByEntityAndType';
 
+    /**
+     * @param array<class-string<\Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface>, array{
+     *      directory: non-empty-string,
+     *      visibility: 'public'|'private',
+     *  }> $filesConfigByFileClass
+     */
     public function __construct(
         protected readonly string $temporaryDir,
-        protected array $directoriesByFileClass,
+        protected array $filesConfigByFileClass,
         protected readonly FileNamingConvention $fileNamingConvention,
         protected readonly MountManager $mountManager,
         protected readonly FilesystemOperator $filesystem,
@@ -54,6 +62,9 @@ class FileUpload
         $this->mountManager->move(
             'local://' . $file->getRealPath(),
             'main://' . $this->getTemporaryDirectory() . '/' . $temporaryFilename,
+            [
+                Config::OPTION_VISIBILITY => Visibility::PRIVATE,
+            ],
         );
 
         return $temporaryFilename;
@@ -174,7 +185,13 @@ class FileUpload
                     $this->filesystem->delete($targetFilename);
                 }
 
-                $this->mountManager->move('main://' . $sourceFilepath, 'main://' . $targetFilename);
+                $this->mountManager->move(
+                    'main://' . $sourceFilepath,
+                    'main://' . $targetFilename,
+                    [
+                        Config::OPTION_VISIBILITY => $this->getVisibilityByFileClass($fileForUpload->getFileClass()),
+                    ],
+                );
                 $entity->setFileKeyAsUploaded($key);
             } catch (IOException $ex) {
                 $message = 'Failed to rename file from temporary directory to entity';
@@ -266,20 +283,36 @@ class FileUpload
         return $uploadEntityType;
     }
 
-    protected function getDirectoryByFileClass(string $fileClass): string
+    /**
+     * @return array{
+     *      directory: non-empty-string,
+     *      visibility: 'public'|'private',
+     *  }
+     */
+    protected function getFileConfigByFileClass(string $fileClass): array
     {
-        if (array_key_exists($fileClass, $this->directoriesByFileClass)) {
-            return $this->directoriesByFileClass[$fileClass];
+        if (array_key_exists($fileClass, $this->filesConfigByFileClass)) {
+            return $this->filesConfigByFileClass[$fileClass];
         }
 
-        foreach ($this->directoriesByFileClass as $class => $dir) {
+        foreach ($this->filesConfigByFileClass as $class => $config) {
             if (is_subclass_of($fileClass, $class)) {
-                return $dir;
+                return $config;
             }
         }
 
-        throw new MissingFileClassDirectoryMappingException(
-            sprintf('Missing directory mapping for file class "%s"', $fileClass),
+        throw new MissingFileConfigByFileClassException(
+            sprintf('Missing file config mapping for file class "%s"', $fileClass),
         );
+    }
+
+    protected function getDirectoryByFileClass(string $fileClass): string
+    {
+        return $this->getFileConfigByFileClass($fileClass)['directory'];
+    }
+
+    protected function getVisibilityByFileClass(string $fileClass): string
+    {
+        return $this->getFileConfigByFileClass($fileClass)['visibility'];
     }
 }

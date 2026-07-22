@@ -73,6 +73,11 @@ data:
             ~^/_next/static/ "*";
         }
 
+        map $uri $uploaded_file_content_disposition {
+            default "";
+            ~^/(?:[^/]+/)?content(?:-test)?/uploadedFiles/ "attachment";
+        }
+
         server {
             listen 80;
             root /var/www/html/web;
@@ -139,6 +144,7 @@ data:
             add_header X-Content-Type-Options "nosniff" always;
             add_header X-XSS-Protection "0" always;
             add_header Permissions-Policy "camera=(), geolocation=(self), microphone=(), payment=(), usb=()" always;
+            add_header Content-Disposition $uploaded_file_content_disposition always;
 
             set $request_host $http_host;
             if ($http_originalhost) {
@@ -275,6 +281,7 @@ data:
                 proxy_buffering         off;
                 proxy_hide_header       Access-Control-Allow-Origin;
                 proxy_hide_header       Access-Control-Allow-Credentials;
+                proxy_hide_header       Content-Disposition;
 
                 proxy_pass              {{S3_ENDPOINT}}/{{PROJECT_NAME}}/web$request_uri;
             }
