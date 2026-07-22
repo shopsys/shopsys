@@ -29,9 +29,14 @@ import { useCustomerUserGroupsAsRadiobuttonOptions } from 'utils/user/useCustome
 type ManageCustomerUserPopupProps = {
     customerUser?: TypeSimpleCustomerUserFragment;
     mode?: 'edit' | 'add';
+    onSuccess?: () => void;
 };
 
-export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ customerUser, mode = 'edit' }) => {
+export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({
+    customerUser,
+    mode = 'edit',
+    onSuccess,
+}) => {
     const { t } = useTranslation();
     const [, customerEditUser] = useEditCustomerUserPersonalDataMutation();
     const [, customerAddUser] = useAddNewCustomerUserMutation();
@@ -108,6 +113,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
         });
 
         if (addUserResult.data?.AddNewCustomerUser !== undefined) {
+            onSuccess?.();
             showSuccessMessage(formMeta.messages.success);
             closePortalContent();
         }

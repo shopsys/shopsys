@@ -85,6 +85,7 @@ describe('Customer Users (B2B) Tests', () => {
             });
             submitManageUserForm();
             checkAndHideSuccessToast();
+            cy.getByTID([TIDs.customer_users_table]).contains(testEmail).should('be.visible');
 
             cy.then(() => {
                 if (createdUserUuid) {
