@@ -2197,6 +2197,9 @@ msgstr "Sufix názvu"
 msgid "Names"
 msgstr "Názvy (web)"
 
+msgid "Names for price comparison feeds of the chosen services are exported to the Google feed custom label with a recommended maximum length of 100 characters (including the separators between the names)."
+msgstr "Názvy pro srovnávače zboží u zvolených služeb se exportují do custom labelu v google feedu s doporučenou maximální délkou 100 znaků (včetně oddělovačů mezi názvy)."
+
 msgid "Namespace"
 msgstr "Jmenný prostor"
 
@@ -2385,6 +2388,9 @@ msgstr "Odvoz starého spotřebiče"
 
 msgid "One domain cannot be used in two groups"
 msgstr "Stejná doména nemůže být použita ve dvou skupinách"
+
+msgid "Only 100 characters will be exported to the Google feed custom label, so not all chosen services may appear in it."
+msgstr "Do custom labelu v google feedu se vyexportuje jen 100 znaků, nemusí se v něm tedy projevit všechny zvolené služby."
 
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"

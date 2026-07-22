@@ -46,6 +46,7 @@ class ProductFacade
         protected readonly ProductFactory $productFactory,
         protected readonly ProductAccessoryFactory $productAccessoryFactory,
         protected readonly ProductCategoryDomainFactory $productCategoryDomainFactory,
+        protected readonly ProductAdditionalServiceDomainFactory $productAdditionalServiceDomainFactory,
         protected readonly ProductParameterValueFactory $productParameterValueFactory,
         protected readonly ProductVisibilityFactory $productVisibilityFactory,
         protected readonly ProductPriceCalculation $productPriceCalculation,
@@ -95,6 +96,13 @@ class ProductFacade
             $productData->categoriesByDomainId,
         );
         $product->setProductCategoryDomains($productCategoryDomains);
+
+        if (!$product->isMainVariant()) {
+            $product->setProductAdditionalServiceDomains($this->productAdditionalServiceDomainFactory->createMultiple(
+                $product,
+                $productData->additionalServicesByDomainId,
+            ));
+        }
         $this->em->flush();
 
         $this->saveParameters($product, $productData->parameters);
@@ -123,6 +131,13 @@ class ProductFacade
             $productData->categoriesByDomainId,
         );
         $product->edit($productCategoryDomains, $productData);
+
+        if (!$product->isMainVariant()) {
+            $product->setProductAdditionalServiceDomains($this->productAdditionalServiceDomainFactory->createMultiple(
+                $product,
+                $productData->additionalServicesByDomainId,
+            ));
+        }
 
         $this->refreshProductPromotions($product, $productData);
 

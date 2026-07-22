@@ -84,6 +84,11 @@ class ProductData
     public $categoriesByDomainId;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[][]
+     */
+    public $additionalServicesByDomainId;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
      */
     public $brand;
@@ -255,6 +260,7 @@ class ProductData
         $this->isAllowedNegativeStock = true;
         $this->productStockData = [];
         $this->categoriesByDomainId = [];
+        $this->additionalServicesByDomainId = [];
         $this->variantAlias = [];
         $this->parameters = [];
         $this->productInputPricesByDomain = [];

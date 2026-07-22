@@ -30,6 +30,8 @@ use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Form\UrlListType;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -71,6 +73,7 @@ final class ProductFormType extends AbstractType
         private readonly ProductTypeEnum $productTypeEnum,
         private readonly SpecialPriceFacade $specialPriceFacade,
         private readonly ClockInterface $clock,
+        private readonly AdditionalServiceFacade $additionalServiceFacade,
     ) {
     }
 
@@ -140,6 +143,7 @@ final class ProductFormType extends AbstractType
         $builder->add($this->createImagesGroup($builder, $options));
         $builder->add($this->createFilesGroup($builder, $options));
         $builder->add($this->createAccessoriesGroup($builder, $product));
+        $builder->add($this->createAdditionalServicesGroup($builder, $product, $disabledItemInMainVariantHelp));
 
         if (!$this->isProductVariant($product)) {
             $builder->add($this->createRelatedProductsGroup($builder, $product));
@@ -764,6 +768,78 @@ final class ProductFormType extends AbstractType
                 'label' => 'Accessories',
             ])
             ->addViewTransformer($this->removeDuplicatesTransformer);
+    }
+
+    private function createAdditionalServicesGroup(
+        FormBuilderInterface $builder,
+        ?Product $product,
+        array $disabledItemInMainVariantHelp,
+    ): FormBuilderInterface {
+        $builderAdditionalServicesGroup = $builder->create('additionalServicesGroup', GroupType::class, [
+            'label' => 'Additional services',
+        ]);
+
+        $additionalServices = $this->additionalServiceFacade->getAllOrderedByPosition();
+
+        $builderAdditionalServicesGroup
+            ->add('additionalServicesByDomainId', MultidomainType::class, [
+                'entry_type' => ChoiceType::class,
+                'entry_options' => [
+                    'choices' => $additionalServices,
+                    'choice_label' => function (AdditionalService $additionalService) {
+                        return $additionalService->getName() ?? t('Name has not been entered in your current language') . ' (ID: ' . $additionalService->getId() . ')';
+                    },
+                    'choice_value' => 'id',
+                    'multiple' => true,
+                    'expanded' => false,
+                ],
+                'options_by_domain_id' => $this->getAdditionalServicesOptionsByDomainId($additionalServices),
+                'required' => false,
+                'label' => false,
+                'help' => t('Names for price comparison feeds of the chosen services are exported to the Google feed custom label with a recommended maximum length of 100 characters (including the separators between the names).'),
+                'disabled' => $this->isProductMainVariant($product),
+                ...$disabledItemInMainVariantHelp,
+            ]);
+
+        return $builderAdditionalServicesGroup;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[] $additionalServices
+     * @return array<int, array{attr: array<string, string>}>
+     */
+    private function getAdditionalServicesOptionsByDomainId(array $additionalServices): array
+    {
+        $optionsByDomainId = [];
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $feedNameLengthsByAdditionalServiceId = [];
+
+            foreach ($additionalServices as $additionalService) {
+                if (!$additionalService->isShownInFeeds($domainConfig->getId())) {
+                    continue;
+                }
+
+                $feedName = $additionalService->getFeedName($domainConfig->getLocale());
+
+                if ($feedName === null) {
+                    continue;
+                }
+
+                $feedNameLengthsByAdditionalServiceId[$additionalService->getId()] = mb_strlen($feedName);
+            }
+
+            $optionsByDomainId[$domainConfig->getId()] = [
+                'attr' => [
+                    'data-js-additional-services-feed-name-lengths' => json_encode(
+                        $feedNameLengthsByAdditionalServiceId,
+                        JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT,
+                    ),
+                ],
+            ];
+        }
+
+        return $optionsByDomainId;
     }
 
     private function createRelatedProductsGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface

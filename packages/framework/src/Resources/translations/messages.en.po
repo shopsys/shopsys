@@ -2197,6 +2197,9 @@ msgstr ""
 msgid "Names"
 msgstr ""
 
+msgid "Names for price comparison feeds of the chosen services are exported to the Google feed custom label with a recommended maximum length of 100 characters (including the separators between the names)."
+msgstr ""
+
 msgid "Namespace"
 msgstr ""
 
@@ -2384,6 +2387,9 @@ msgid "Old appliance removal"
 msgstr ""
 
 msgid "One domain cannot be used in two groups"
+msgstr ""
+
+msgid "Only 100 characters will be exported to the Google feed custom label, so not all chosen services may appear in it."
 msgstr ""
 
 msgid "Only checked products"
