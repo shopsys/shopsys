@@ -1,0 +1,30 @@
+UpdatePaymentStatusResultDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Payment state of the order after checking the payment status"
+        fields:
+            isPaid:
+                type: "Boolean!"
+                description: "Indicates whether the order is paid successfully with GoPay payment type"
+            lastPaymentStatus:
+                type: "String"
+                description: "Current status of the last external payment transaction"
+            hasPaymentInProcess:
+                type: "Boolean!"
+                description: "Indicates whether order payment is still being processed with GoPay payment type"
+            lastExternalPaymentUrl:
+                type: "String"
+                description: "URL for accessing the last payment transaction on a gateway without invoking the new payment transaction"
+            paymentTransactionsCount:
+                type: "Int!"
+                description: "Number of payment transactions created for the order"
+            orderNumber:
+                type: "String!"
+                description: "Unique order number"
+            paymentName:
+                type: "String!"
+                description: "Name of the current order payment method"
+            confirmationPageContent:
+                type: "OrderConfirmationPageContent!"
+                description: "Content to be displayed on the order confirmation page"

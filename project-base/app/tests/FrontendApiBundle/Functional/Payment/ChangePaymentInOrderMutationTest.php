@@ -71,6 +71,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'paymentUuid' => $paymentCreditCard->getUuid(),
             ],
         ]);
@@ -89,6 +90,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'paymentUuid' => $paymentGoPayBankAccount->getUuid(),
                 'paymentGoPayBankSwift' => $swiftForFirstDomain,
             ],
@@ -107,6 +109,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => '00000000-0000-0000-0000-000000000000',
+                'orderUrlHash' => 'non-existing-url-hash',
                 'paymentUuid' => $paymentGoPayBankAccount->getUuid(),
             ],
         ]);
@@ -120,6 +123,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'paymentUuid' => '00000000-0000-0000-0000-000000000000',
             ],
         ]);
@@ -135,6 +139,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'paymentUuid' => $paymentGoPay->getUuid(),
             ],
         ]);
@@ -152,6 +157,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'paymentUuid' => $paymentLater->getUuid(),
             ],
         ]);
@@ -175,6 +181,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'paymentUuid' => $paymentLater->getUuid(),
             ],
         ]);
@@ -192,6 +199,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'paymentUuid' => $paymentLater->getUuid(),
             ],
         ]);
@@ -222,6 +230,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'paymentUuid' => $paymentGoPayBankAccount->getUuid(),
                 'paymentGoPayBankSwift' => $swift,
             ],
@@ -254,6 +263,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'paymentUuid' => $goPayBankAccount->getUuid(),
             ],
         ]);

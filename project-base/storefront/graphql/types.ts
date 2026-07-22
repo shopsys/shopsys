@@ -769,6 +769,8 @@ export type TypeChangePaymentInCartInput = {
 };
 
 export type TypeChangePaymentInOrderInput = {
+  /** Order urlHash as a proof of access to the order for anonymous customers */
+  orderUrlHash?: InputMaybe<Scalars['String']['input']>;
   /** Order identifier */
   orderUuid: Scalars['Uuid']['input'];
   /** Selected bank swift code of goPay payment bank transfer */
@@ -1669,7 +1671,7 @@ export type TypeMutation = {
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: TypeCurrentCustomerUser;
   /** check payment status of order after callback from payment service */
-  UpdatePaymentStatus: TypeOrder;
+  UpdatePaymentStatus: TypeUpdatePaymentStatusResult;
 };
 
 
@@ -1794,6 +1796,7 @@ export type TypeMutationOrderWithdrawalRequestArgs = {
 
 
 export type TypeMutationPayOrderArgs = {
+  orderUrlHash: InputMaybe<Scalars['String']['input']>;
   orderUuid: Scalars['Uuid']['input'];
 };
 
@@ -1864,6 +1867,7 @@ export type TypeMutationSetDefaultDeliveryAddressArgs = {
 
 
 export type TypeMutationUpdatePaymentStatusArgs = {
+  orderUrlHash: InputMaybe<Scalars['String']['input']>;
   orderUuid: Scalars['Uuid']['input'];
 };
 
@@ -3242,6 +3246,7 @@ export type TypeQueryOrderItemsSearchArgs = {
 
 
 export type TypeQueryOrderPaymentsArgs = {
+  orderUrlHash: InputMaybe<Scalars['String']['input']>;
   orderUuid: Scalars['Uuid']['input'];
 };
 
@@ -3964,6 +3969,27 @@ export type TypeUnit = {
   __typename?: 'Unit';
   /** Localized unit name (domain dependent) */
   name: Scalars['String']['output'];
+};
+
+/** Payment state of the order after checking the payment status */
+export type TypeUpdatePaymentStatusResult = {
+  __typename?: 'UpdatePaymentStatusResult';
+  /** Content to be displayed on the order confirmation page */
+  confirmationPageContent: TypeOrderConfirmationPageContent;
+  /** Indicates whether order payment is still being processed with GoPay payment type */
+  hasPaymentInProcess: Scalars['Boolean']['output'];
+  /** Indicates whether the order is paid successfully with GoPay payment type */
+  isPaid: Scalars['Boolean']['output'];
+  /** URL for accessing the last payment transaction on a gateway without invoking the new payment transaction */
+  lastExternalPaymentUrl: Maybe<Scalars['String']['output']>;
+  /** Current status of the last external payment transaction */
+  lastPaymentStatus: Maybe<Scalars['String']['output']>;
+  /** Unique order number */
+  orderNumber: Scalars['String']['output'];
+  /** Name of the current order payment method */
+  paymentName: Scalars['String']['output'];
+  /** Number of payment transactions created for the order */
+  paymentTransactionsCount: Scalars['Int']['output'];
 };
 
 /** Represents a product */

@@ -4,11 +4,12 @@ import {
     removeGtmCreateOrderEventFromLocalStorage,
 } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
-import { getGtmPaymentEventFromOrder } from 'gtm/utils/paymentGtmEventUtils';
+import { getGtmPaymentEventFromPaymentStatusUpdate } from 'gtm/utils/paymentGtmEventUtils';
 import { useEffect, useRef } from 'react';
 
 export const useUpdatePaymentStatus = (
     orderUuid: string | undefined,
+    orderUrlHash: string | null,
     shouldUpdatePaymentStatus: boolean,
     updateTrigger: string | null,
 ) => {
@@ -19,7 +20,7 @@ export const useUpdatePaymentStatus = (
     const lastPaymentStatusUpdateTriggerRef = useRef<string | null>(null);
 
     useEffect(() => {
-        if (!shouldUpdatePaymentStatus || !orderUuid || updateTrigger === null) {
+        if (!shouldUpdatePaymentStatus || !orderUuid || !orderUrlHash || updateTrigger === null) {
             return;
         }
 
@@ -30,6 +31,7 @@ export const useUpdatePaymentStatus = (
         const updatePaymentStatus = async () => {
             const updatePaymentStatusActionResult = await updatePaymentStatusMutation({
                 orderUuid,
+                orderUrlHash,
             });
 
             const { gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart } =
@@ -47,11 +49,11 @@ export const useUpdatePaymentStatus = (
 
         void updatePaymentStatus();
         lastPaymentStatusUpdateTriggerRef.current = updateTrigger;
-    }, [orderUuid, shouldUpdatePaymentStatus, updatePaymentStatusMutation, updateTrigger]);
+    }, [orderUuid, orderUrlHash, shouldUpdatePaymentStatus, updatePaymentStatusMutation, updateTrigger]);
 
     useEffect(() => {
         if (paymentStatusData) {
-            gtmSafePushEvent(getGtmPaymentEventFromOrder(paymentStatusData.UpdatePaymentStatus));
+            gtmSafePushEvent(getGtmPaymentEventFromPaymentStatusUpdate(paymentStatusData.UpdatePaymentStatus));
         }
     }, [paymentStatusData]);
 

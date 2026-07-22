@@ -26,7 +26,7 @@ type OrderConfirmationPageContext =
     | { type: 'invalidPaymentReturn' };
 
 type OrderConfirmationOrder = NonNullable<TypeOrderDetailByHashQuery['order']>;
-type UpdatedPaymentStatusOrder = TypeUpdatePaymentStatusMutation['UpdatePaymentStatus'];
+type UpdatedPaymentStatusResult = TypeUpdatePaymentStatusMutation['UpdatePaymentStatus'];
 
 export const useOrderConfirmationPageContext = (domainUrl: string) => {
     const router = useRouter();
@@ -144,19 +144,20 @@ export const useOrderConfirmationOrder = (
         !!orderData?.order?.hasExternalPayment;
     const paymentStatusUpdate = useUpdatePaymentStatus(
         orderData?.order?.uuid,
+        orderUrlHash,
         shouldUpdatePaymentStatus,
         orderConfirmationPageContext.type === 'ready' ? orderConfirmationPageContext.paymentStatusUpdateTrigger : null,
     );
 
-    const paymentStatusOrder = paymentStatusUpdate.data?.UpdatePaymentStatus;
+    const paymentStatusUpdateResult = paymentStatusUpdate.data?.UpdatePaymentStatus;
     const hasPaymentStatusUpdateError = shouldUpdatePaymentStatus && !!paymentStatusUpdate.error;
     const isWaitingForPaymentStatusUpdate = getIsWaitingForPaymentStatusUpdate(
         shouldUpdatePaymentStatus,
         hasPaymentStatusUpdateError,
-        !!paymentStatusOrder,
+        !!paymentStatusUpdateResult,
     );
 
-    const order = getOrderWithUpdatedPaymentStatus(orderData?.order, paymentStatusOrder);
+    const order = getOrderWithUpdatedPaymentStatus(orderData?.order, paymentStatusUpdateResult);
 
     return {
         hasPaymentStatusUpdateError,
@@ -174,24 +175,24 @@ export const getIsWaitingForPaymentStatusUpdate = (
 
 const getOrderWithUpdatedPaymentStatus = (
     order: OrderConfirmationOrder | null | undefined,
-    paymentStatusOrder: UpdatedPaymentStatusOrder | undefined,
+    paymentStatusUpdateResult: UpdatedPaymentStatusResult | undefined,
 ) => {
     if (!order) {
         return null;
     }
 
-    if (!paymentStatusOrder) {
+    if (!paymentStatusUpdateResult) {
         return order;
     }
 
     return {
         ...order,
-        confirmationPageContent: paymentStatusOrder.confirmationPageContent,
-        hasPaymentInProcess: paymentStatusOrder.hasPaymentInProcess,
-        isPaid: paymentStatusOrder.isPaid,
-        lastExternalPaymentUrl: paymentStatusOrder.lastExternalPaymentUrl,
-        paymentStatus: paymentStatusOrder.paymentStatus,
-        paymentTransactionsCount: paymentStatusOrder.paymentTransactionsCount,
+        confirmationPageContent: paymentStatusUpdateResult.confirmationPageContent,
+        hasPaymentInProcess: paymentStatusUpdateResult.hasPaymentInProcess,
+        isPaid: paymentStatusUpdateResult.isPaid,
+        lastExternalPaymentUrl: paymentStatusUpdateResult.lastExternalPaymentUrl,
+        paymentStatus: paymentStatusUpdateResult.lastPaymentStatus,
+        paymentTransactionsCount: paymentStatusUpdateResult.paymentTransactionsCount,
     };
 };
 

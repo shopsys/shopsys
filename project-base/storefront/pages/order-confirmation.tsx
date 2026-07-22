@@ -146,12 +146,12 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                         <div className="vl:col-span-2 flex vl:flex-col flex-col-reverse gap-4">
                             {shouldShowPaymentGateway && (
                                 <div className="mt-4">
-                                    <GoPayGateway orderUuid={order.uuid} />
+                                    <GoPayGateway orderUrlHash={order.urlHash} orderUuid={order.uuid} />
                                 </div>
                             )}
 
                             {!shouldShowPaymentGateway && isPaymentFailed && order.hasExternalPayment && (
-                                <PaymentsInOrderSelect orderUuid={order.uuid} />
+                                <PaymentsInOrderSelect orderUrlHash={order.urlHash} orderUuid={order.uuid} />
                             )}
 
                             {(!order.hasExternalPayment ||

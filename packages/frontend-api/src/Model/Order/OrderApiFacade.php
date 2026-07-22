@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Order;
 
+use GraphQL\Server\RequestError;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class OrderApiFacade
 {
@@ -19,9 +24,18 @@ class OrderApiFacade
         protected readonly OrderRepository $orderRepository,
         protected readonly OrderFacade $orderFacade,
         protected readonly OrderStatusFacade $orderStatusFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly Domain $domain,
+        protected readonly Security $security,
     ) {
     }
 
+    /**
+     * Resolves an order by UUID without checking that the caller owns it. Use only where access is authorized
+     * separately (e.g. by a voter). For customer-facing operations use getAuthorizedOrder() instead.
+     *
+     * @see \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade::getAuthorizedOrder()
+     */
     public function getByUuid(string $orderUuid): Order
     {
         try {
@@ -29,6 +43,21 @@ class OrderApiFacade
         } catch (OrderNotFoundException) {
             throw new OrderNotFoundUserError('Order with UUID \'' . $orderUuid . '\' not found.');
         }
+    }
+
+    public function getAuthorizedOrder(string $orderUuid, ?string $orderUrlHash): Order
+    {
+        if ($orderUrlHash !== null) {
+            return $this->getByUrlHashWithMatchingUuid($orderUuid, $orderUrlHash);
+        }
+
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        if ($customerUser !== null) {
+            return $this->getAuthorizedOrderForCustomerUser($customerUser, $orderUuid);
+        }
+
+        throw new RequestError('You need to be logged in or provide argument \'orderUrlHash\'.');
     }
 
     /**
@@ -122,6 +151,30 @@ class OrderApiFacade
     public function getByOrderNumberAndCustomer(string $orderNumber, Customer $customer): Order
     {
         return $this->orderRepository->getByOrderNumberAndCustomer($orderNumber, $customer);
+    }
+
+    protected function getByUrlHashWithMatchingUuid(string $orderUuid, string $orderUrlHash): Order
+    {
+        try {
+            $order = $this->orderFacade->getByUrlHashAndDomain($orderUrlHash, $this->domain->getId());
+        } catch (OrderNotFoundException) {
+            throw new OrderNotFoundUserError('Order not found');
+        }
+
+        if (strtolower($orderUuid) !== strtolower($order->getUuid())) {
+            throw new OrderNotFoundUserError('Order not found');
+        }
+
+        return $order;
+    }
+
+    protected function getAuthorizedOrderForCustomerUser(CustomerUser $customerUser, string $orderUuid): Order
+    {
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)) {
+            return $this->getByUuidAndCustomer($orderUuid, $customerUser->getCustomer());
+        }
+
+        return $this->getByUuidAndCustomerUser($orderUuid, $customerUser);
     }
 
     /**

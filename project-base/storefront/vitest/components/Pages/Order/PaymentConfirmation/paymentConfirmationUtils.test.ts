@@ -51,12 +51,25 @@ describe('useUpdatePaymentStatus', () => {
             error: paymentStatusUpdateError,
         });
 
-        const { result } = renderHook(() => useUpdatePaymentStatus('order-uuid', true, 'return-hash'));
+        const { result } = renderHook(() =>
+            useUpdatePaymentStatus('order-uuid', 'order-url-hash', true, 'return-hash'),
+        );
 
-        await waitFor(() => expect(updatePaymentStatusMutationMock).toHaveBeenCalledWith({ orderUuid: 'order-uuid' }));
+        await waitFor(() =>
+            expect(updatePaymentStatusMutationMock).toHaveBeenCalledWith({
+                orderUuid: 'order-uuid',
+                orderUrlHash: 'order-url-hash',
+            }),
+        );
         expect(result.current.error).toBe(paymentStatusUpdateError);
         expect(result.current.fetching).toBe(false);
         expect(result.current.data).toBeUndefined();
         expect(removeGtmCreateOrderEventFromLocalStorageMock).not.toHaveBeenCalled();
+    });
+
+    test('does not call the mutation without the order url hash proof', () => {
+        renderHook(() => useUpdatePaymentStatus('order-uuid', null, true, 'return-hash'));
+
+        expect(updatePaymentStatusMutationMock).not.toHaveBeenCalled();
     });
 });

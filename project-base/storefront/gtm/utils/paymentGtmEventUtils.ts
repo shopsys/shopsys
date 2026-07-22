@@ -1,22 +1,15 @@
-import { TypeOrderConfirmationPageContentStatusEnum, TypeOrderItemTypeEnum } from 'graphql/types';
+import { TypeOrderConfirmationPageContentStatusEnum } from 'graphql/types';
 import { getGtmPaymentEvent } from 'gtm/factories/getGtmPaymentEvent';
 import { GtmPaymentEventType } from 'gtm/types/events';
 
-type GtmPaymentEventOrderItem = {
-    type: TypeOrderItemTypeEnum;
-    payment: {
-        name: string;
-    } | null;
-};
-
-type GtmPaymentEventOrder = {
-    number: string;
-    paymentStatus: string | null;
+type GtmPaymentEventPaymentStatusUpdate = {
+    orderNumber: string;
+    paymentName: string;
+    lastPaymentStatus: string | null;
     paymentTransactionsCount: number;
     confirmationPageContent: {
         status: TypeOrderConfirmationPageContentStatusEnum;
     };
-    items: GtmPaymentEventOrderItem[];
 };
 
 export const getGtmPaymentRetryCount = (paymentTransactionsCount: number): number =>
@@ -36,14 +29,13 @@ export const getIsPaymentSuccessfulByConfirmationStatus = (
     throw new Error(`Unknown order confirmation page content status "${status}".`);
 };
 
-export const getGtmPaymentEventFromOrder = (order: GtmPaymentEventOrder): GtmPaymentEventType => {
-    const paymentItem = order.items.find((item) => item.type === TypeOrderItemTypeEnum.Payment);
-
-    return getGtmPaymentEvent(
-        order.number,
-        paymentItem?.payment?.name ?? '',
-        getIsPaymentSuccessfulByConfirmationStatus(order.confirmationPageContent.status),
-        getGtmPaymentRetryCount(order.paymentTransactionsCount),
-        order.paymentStatus,
+export const getGtmPaymentEventFromPaymentStatusUpdate = (
+    paymentStatusUpdate: GtmPaymentEventPaymentStatusUpdate,
+): GtmPaymentEventType =>
+    getGtmPaymentEvent(
+        paymentStatusUpdate.orderNumber,
+        paymentStatusUpdate.paymentName,
+        getIsPaymentSuccessfulByConfirmationStatus(paymentStatusUpdate.confirmationPageContent.status),
+        getGtmPaymentRetryCount(paymentStatusUpdate.paymentTransactionsCount),
+        paymentStatusUpdate.lastPaymentStatus,
     );
-};

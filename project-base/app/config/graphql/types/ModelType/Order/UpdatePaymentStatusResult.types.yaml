@@ -1,0 +1,4 @@
+UpdatePaymentStatusResult:
+    type: object
+    inherits:
+        - 'UpdatePaymentStatusResultDecorator'

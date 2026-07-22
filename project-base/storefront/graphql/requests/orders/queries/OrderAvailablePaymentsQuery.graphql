@@ -1,5 +1,5 @@
-query OrderAvailablePaymentsQuery($orderUuid: Uuid!) {
-    orderPayments(orderUuid: $orderUuid) {
+query OrderAvailablePaymentsQuery($orderUuid: Uuid!, $orderUrlHash: String) {
+    orderPayments(orderUuid: $orderUuid, orderUrlHash: $orderUrlHash) {
         availablePayments {
             ...SimplePaymentFragment
         }

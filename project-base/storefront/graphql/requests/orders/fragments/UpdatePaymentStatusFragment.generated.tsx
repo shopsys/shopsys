@@ -10,45 +10,22 @@ export type TypeOrderConfirmationPageContentStatusEnum =
   | 'IN_PROCESS'
   | 'SUCCESSFUL';
 
-/** One of possible types of the order item */
-export type TypeOrderItemTypeEnum =
-  | 'discount'
-  | 'payment'
-  | 'product'
-  | 'productGift'
-  | 'promotion'
-  | 'rounding'
-  | 'transport';
-
-/** One of the possible methods of the payment type */
-export type TypePaymentTypeEnum =
-  | 'bankTransfer'
-  | 'basic'
-  | 'goPay';
-
-export type TypeUpdatePaymentStatusFragment = { __typename: 'Order', isPaid: boolean, number: string, paymentTransactionsCount: number, hasPaymentInProcess: boolean, lastExternalPaymentUrl: string | null, paymentStatus: string | null, urlHash: string, items: Array<{ type: Types.TypeOrderItemTypeEnum, payment: { name: string, type: Types.TypePaymentTypeEnum } | null }>, confirmationPageContent: { __typename: 'OrderConfirmationPageContent', content: string, status: Types.TypeOrderConfirmationPageContentStatusEnum } };
+export type TypeUpdatePaymentStatusFragment = { __typename: 'UpdatePaymentStatusResult', isPaid: boolean, orderNumber: string, paymentName: string, paymentTransactionsCount: number, hasPaymentInProcess: boolean, lastExternalPaymentUrl: string | null, lastPaymentStatus: string | null, confirmationPageContent: { __typename: 'OrderConfirmationPageContent', content: string, status: Types.TypeOrderConfirmationPageContentStatusEnum } };
 
 export const UpdatePaymentStatusFragment = gql`
-    fragment UpdatePaymentStatusFragment on Order {
+    fragment UpdatePaymentStatusFragment on UpdatePaymentStatusResult {
   __typename
   isPaid
-  number
+  orderNumber
+  paymentName
   paymentTransactionsCount
-  items {
-    type
-    payment {
-      name
-      type
-    }
-  }
   hasPaymentInProcess
   lastExternalPaymentUrl
-  paymentStatus
+  lastPaymentStatus
   confirmationPageContent {
     __typename
     content
     status
   }
-  urlHash
 }
     `;

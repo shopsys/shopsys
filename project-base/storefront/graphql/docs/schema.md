@@ -120,6 +120,7 @@
     * [Transport](#transport)
     * [TransportGroup](#transportgroup)
     * [Unit](#unit)
+    * [UpdatePaymentStatusResult](#updatepaymentstatusresult)
     * [Variant](#variant)
     * [VideoToken](#videotoken)
   * [Inputs](#inputs)
@@ -915,6 +916,15 @@ Returns list of searched order items that can be paginated using `first`, `last`
 <td>
 
 Returns payments available for the given order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUrlHash</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Order urlHash as a proof of access to the order for anonymous customers
 
 </td>
 </tr>
@@ -1766,6 +1776,15 @@ Pay order(create payment transaction in payment gateway) and get payment setup d
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">orderUrlHash</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Order urlHash as a proof of access to the order for anonymous customers
+
+</td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">orderUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
@@ -1954,10 +1973,19 @@ Set default delivery address by Uuid
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="mutation.updatepaymentstatus">UpdatePaymentStatus</strong></td>
-<td valign="top"><a href="#order">Order</a>!</td>
+<td valign="top"><a href="#updatepaymentstatusresult">UpdatePaymentStatusResult</a>!</td>
 <td>
 
 check payment status of order after callback from payment service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUrlHash</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Order urlHash as a proof of access to the order for anonymous customers
 
 </td>
 </tr>
@@ -10913,6 +10941,95 @@ Localized unit name (domain dependent)
 </tbody>
 </table>
 
+### UpdatePaymentStatusResult
+
+Payment state of the order after checking the payment status
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="updatepaymentstatusresult.confirmationpagecontent">confirmationPageContent</strong></td>
+<td valign="top"><a href="#orderconfirmationpagecontent">OrderConfirmationPageContent</a>!</td>
+<td>
+
+Content to be displayed on the order confirmation page
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="updatepaymentstatusresult.haspaymentinprocess">hasPaymentInProcess</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicates whether order payment is still being processed with GoPay payment type
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="updatepaymentstatusresult.ispaid">isPaid</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicates whether the order is paid successfully with GoPay payment type
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="updatepaymentstatusresult.lastexternalpaymenturl">lastExternalPaymentUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+URL for accessing the last payment transaction on a gateway without invoking the new payment transaction
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="updatepaymentstatusresult.lastpaymentstatus">lastPaymentStatus</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Current status of the last external payment transaction
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="updatepaymentstatusresult.ordernumber">orderNumber</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Unique order number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="updatepaymentstatusresult.paymentname">paymentName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of the current order payment method
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="updatepaymentstatusresult.paymenttransactionscount">paymentTransactionsCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of payment transactions created for the order
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Variant
 
 Represents a product
@@ -11768,6 +11885,15 @@ UUID of a payment that should be added to the cart. If this is set to null, the 
 </tr>
 </thead>
 <tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="changepaymentinorderinput.orderurlhash">orderUrlHash</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Order urlHash as a proof of access to the order for anonymous customers
+
+</td>
+</tr>
 <tr>
 <td colspan="2" valign="top"><strong id="changepaymentinorderinput.orderuuid">orderUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>

@@ -24,9 +24,9 @@ class PaymentsQuery extends AbstractQuery
         return $this->paymentFacade->getVisibleOnCurrentDomain();
     }
 
-    public function orderPaymentsQuery(string $orderUuid): OrderPaymentsConfig
+    public function orderPaymentsQuery(string $orderUuid, ?string $orderUrlHash): OrderPaymentsConfig
     {
-        $order = $this->orderApiFacade->getByUuid($orderUuid);
+        $order = $this->orderApiFacade->getAuthorizedOrder($orderUuid, $orderUrlHash);
 
         return $this->orderPaymentsConfigFactory->createForOrder($order);
     }
