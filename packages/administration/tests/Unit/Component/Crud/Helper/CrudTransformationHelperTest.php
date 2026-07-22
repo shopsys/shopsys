@@ -154,6 +154,76 @@ class CrudTransformationHelperTest extends TestCase
         ];
     }
 
+    #[DataProvider('toSingularEntityNameDataProvider')]
+    public function testToSingularEntityName(string $entityName, string $expectedSingularName): void
+    {
+        $result = CrudTransformationHelper::toSingularEntityName($entityName);
+
+        $this->assertSame($expectedSingularName, $result);
+    }
+
+    /**
+     * @return array<string, array{entityName: string, expectedSingularName: string}>
+     */
+    public static function toSingularEntityNameDataProvider(): array
+    {
+        return [
+            'single word' => [
+                'entityName' => 'Category',
+                'expectedSingularName' => 'Category',
+            ],
+            'multi word' => [
+                'entityName' => 'OrderItem',
+                'expectedSingularName' => 'Order item',
+            ],
+            'word with false inflector singular candidate' => [
+                'entityName' => 'AdditionalService',
+                'expectedSingularName' => 'Additional service',
+            ],
+            'plural entity name' => [
+                'entityName' => 'AdditionalServices',
+                'expectedSingularName' => 'Additional service',
+            ],
+            'word with an explicit inflector rule' => [
+                'entityName' => 'OrderStatus',
+                'expectedSingularName' => 'Order status',
+            ],
+            'known limitation - candidate dropping a trailing "s" passes the round-trip check' => [
+                'entityName' => 'DeliveryAddress',
+                'expectedSingularName' => 'Delivery addres',
+            ],
+        ];
+    }
+
+    #[DataProvider('toPluralEntityNameDataProvider')]
+    public function testToPluralEntityName(string $entityName, string $expectedPluralName): void
+    {
+        $result = CrudTransformationHelper::toPluralEntityName($entityName);
+
+        $this->assertSame($expectedPluralName, $result);
+    }
+
+    /**
+     * @return array<string, array{entityName: string, expectedPluralName: string}>
+     */
+    public static function toPluralEntityNameDataProvider(): array
+    {
+        return [
+            'single word' => [
+                'entityName' => 'Category',
+                'expectedPluralName' => 'Categories',
+            ],
+            'multi word' => [
+                'entityName' => 'OrderItem',
+                'expectedPluralName' => 'Order items',
+            ],
+            'word ending with ice' => [
+                'entityName' => 'AdditionalService',
+                'expectedPluralName' => 'Additional services',
+            ],
+        ];
+    }
+
     #[DataProvider('generateRoleConstantDataProvider')]
     public function testGenerateRoleConstant(
         string $controllerName,

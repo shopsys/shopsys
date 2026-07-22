@@ -62,7 +62,18 @@ final class CrudTransformationHelper
     {
         $humanized = (string)new UnicodeString($entityName)->snake()->replace('_', ' ');
 
-        return ucfirst(self::getInflector()->singularize($humanized)[0]);
+        foreach (self::getInflector()->singularize($humanized) as $singularCandidate) {
+            if (self::pluralizingReturnsToOriginalWord($singularCandidate, $humanized)) {
+                return ucfirst($singularCandidate);
+            }
+        }
+
+        return ucfirst($humanized);
+    }
+
+    private static function pluralizingReturnsToOriginalWord(string $singularCandidate, string $originalWord): bool
+    {
+        return in_array($originalWord, self::getInflector()->pluralize($singularCandidate), true);
     }
 
     /**
