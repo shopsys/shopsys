@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValue;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceDomain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDomain;
 use Shopsys\FrameworkBundle\Model\Country\CountryDomain;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
@@ -40,6 +41,7 @@ class MultidomainEntityClassProvider implements MultidomainEntityClassProviderIn
     public function getManualMultidomainEntitiesNames(): array
     {
         return [
+            AdditionalServiceDomain::class,
             BrandDomain::class,
             CategoryDomain::class,
             MailTemplate::class,

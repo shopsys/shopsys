@@ -10,6 +10,12 @@ msgstr ""
 msgid "Account number cannot be longer than {{ limit }} characters."
 msgstr ""
 
+msgid "Additional description for Zboží.cz cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Additional service with entered catalog number already exists"
+msgstr ""
+
 msgid "Address {{ url }} already exists."
 msgstr ""
 
@@ -151,6 +157,9 @@ msgstr ""
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Name for price comparison feeds cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Only regular spaces are allowed as whitespace characters."
 msgstr ""
 
@@ -256,6 +265,9 @@ msgstr ""
 msgid "Please enter VAT rate"
 msgstr ""
 
+msgid "Please enter VAT rate for domain %domainName%."
+msgstr ""
+
 msgid "Please enter a valid IBAN."
 msgstr ""
 
@@ -266,6 +278,9 @@ msgid "Please enter a year"
 msgstr ""
 
 msgid "Please enter account number for domain %domainName%."
+msgstr ""
+
+msgid "Please enter additional description for Zboží.cz."
 msgstr ""
 
 msgid "Please enter an ID"
@@ -284,6 +299,9 @@ msgid "Please enter at least one price"
 msgstr ""
 
 msgid "Please enter bank account number"
+msgstr ""
+
+msgid "Please enter catalog number"
 msgstr ""
 
 msgid "Please enter city"
@@ -389,6 +407,9 @@ msgid "Please enter login"
 msgstr ""
 
 msgid "Please enter name"
+msgstr ""
+
+msgid "Please enter name for price comparison feeds."
 msgstr ""
 
 msgid "Please enter name of advertisement area"
@@ -566,6 +587,9 @@ msgid "Please select at least one category"
 msgstr ""
 
 msgid "Please select navigation item type"
+msgstr ""
+
+msgid "Please select service type for Zboží.cz."
 msgstr ""
 
 msgid "Please select valid navigation item type"

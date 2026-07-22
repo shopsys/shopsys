@@ -160,6 +160,9 @@ msgstr "Pridať variant"
 msgid "Added"
 msgstr "Pridané"
 
+msgid "Additional description for Zboží.cz"
+msgstr "Doplnkový popis pre Zboží.cz"
+
 msgid "Additional information"
 msgstr "Dodatočné informácie"
 
@@ -246,6 +249,9 @@ msgstr "E-mail so 6-cif. kódom bol odoslaný na vašu e-mailovú adresu."
 
 msgid "Ancestor category"
 msgstr "Rodičovská kategória"
+
+msgid "Applies to Heureka, Google, Zboží.cz and Mergado feeds together."
+msgstr "Platí spoločne pre feedy Heureka, Google, Zboží.cz a Mergado."
 
 msgid "Apply"
 msgstr "Použiť"
@@ -342,6 +348,9 @@ msgstr "Overovací kód"
 
 msgid "Author"
 msgstr "Autor"
+
+msgid "Authorized service"
+msgstr "Autorizovaný servis"
 
 msgid "Autocomplete favorites"
 msgstr "Obľúbené položky v našepkávači"
@@ -513,6 +522,9 @@ msgstr "Kupované množstvo"
 
 msgid "By flag"
 msgstr "Podľa značky"
+
+msgid "By how many working days the service extends the estimated delivery time of the order."
+msgstr "O koľko pracovných dní služba predĺži predpokladaný termín doručenia objednávky."
 
 msgid "CMS"
 msgstr "CMS"
@@ -985,6 +997,9 @@ msgstr "Predvolená jednotka sa použije pri vytváraní nového produktu"
 msgid "Default warehouse"
 msgstr "Predvolený sklad"
 
+msgid "Deferred payment option"
+msgstr "Možnosť odloženej platby"
+
 msgid "Delete"
 msgstr "Odstrániť"
 
@@ -1017,6 +1032,9 @@ msgstr "Dodacia adresa je rovnaká ako fakturačná adresa"
 
 msgid "Delivery city"
 msgstr "Dodacie mesto"
+
+msgid "Delivery extension in working days"
+msgstr "Predĺženie doručenia v pracovných dňoch"
 
 msgid "Delivery last name"
 msgstr "Dodacie priezvisko"
@@ -1573,6 +1591,12 @@ msgstr "Rozšírená SEO kategória - filtre"
 msgid "Extended SEO category - set combinations with SEO values"
 msgstr "Rozšírená SEO kategória - kombinácie s nastavenými SEO hodnotami"
 
+msgid "Extended return period"
+msgstr "Predĺžená doba na vrátenie"
+
+msgid "Extended warranty"
+msgstr "Predĺžená záruka"
+
 msgid "External ID"
 msgstr "Externé ID"
 
@@ -1714,8 +1738,23 @@ msgstr "Zaslanie zabudnutého hesla"
 msgid "Fourth column categories"
 msgstr "Kategórie štvrtého stĺpca"
 
+msgid "Free accessories"
+msgstr "Príslušenstvo zadarmo"
+
+msgid "Free case"
+msgstr "Puzdro zadarmo"
+
+msgid "Free gift"
+msgstr "Darček zadarmo"
+
+msgid "Free installation"
+msgstr "Montáž zadarmo"
+
 msgid "Free quantity"
 msgstr "Množstvo zadarmo"
+
+msgid "Free return shipping"
+msgstr "Vrátenie s dopravou zadarmo"
 
 msgid "Free shipping and payment"
 msgstr "Bezplatná doprava a platba"
@@ -1752,6 +1791,9 @@ msgstr "Generované"
 
 msgid "Generated batches"
 msgstr "Generované dávky"
+
+msgid "Gift packaging"
+msgstr "Darčekové balenie"
 
 msgid "Gift plan <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
 msgstr "Darčekový plán <a href=\"{{ url }}\"><strong>{{ name }}<strong></a> vytvorený"
@@ -1935,6 +1977,9 @@ msgstr "Informácie o dopyte poslané zákazníkovi"
 
 msgid "Instagram URL"
 msgstr "Instagram URL"
+
+msgid "Installment purchase option"
+msgstr "Možnosť nákupu na splátky"
 
 msgid "Instructions"
 msgstr "Návod"
@@ -2124,6 +2169,9 @@ msgstr "Názov"
 
 msgid "Name %locale%"
 msgstr "Názov %locale%"
+
+msgid "Name for price comparison feeds"
+msgstr "Názov pre porovnávače tovaru"
 
 msgid "Name has not been entered in your current language"
 msgstr "Názov nebol vyplnený vo vašom aktuálnom jazyke"
@@ -2331,6 +2379,9 @@ msgstr "Počet hliadacov (watchdogs)"
 
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
 msgstr "Práve ste sa pokúsili prihlásiť pomocou predvolených údajov. To nepovoľujeme v produkčnom prostredí. Ak ste náhodný hacker, prosím choďte niekam inam. Ak ste oprávnený používateľ, prosím použite iný účet alebo kontaktujte vývojárov a zmeňte heslo počas deploy."
+
+msgid "Old appliance removal"
+msgstr "Odvoz starého spotrebiča"
 
 msgid "One domain cannot be used in two groups"
 msgstr "Jedna doména nemôže byť použitá v dvoch skupinách"
@@ -2668,6 +2719,9 @@ msgstr "Náhľad"
 msgid "Price"
 msgstr "Cena"
 
+msgid "Price comparison feeds"
+msgstr "Porovnávače tovaru"
+
 msgid "Price including VAT"
 msgstr "Cena including DPH"
 
@@ -2697,6 +2751,9 @@ msgstr "Cenníky"
 
 msgid "Prices"
 msgstr "Ceny"
+
+msgid "Prices and VAT"
+msgstr "Ceny a DPH"
 
 msgid "Pricing"
 msgstr "Cenové politiky"
@@ -2802,6 +2859,9 @@ msgstr "Produkty s touto značkou"
 
 msgid "Products without this flag"
 msgstr "Produkty bez tejto značky"
+
+msgid "Professional appliance installation"
+msgstr "Odborná inštalácia spotrebiča"
 
 msgid "Promo code"
 msgstr "Promo kód"
@@ -3214,6 +3274,9 @@ msgstr "Odesílanie e-mailov je vypnuté, z aplikácie nebude odoslaný žiadny 
 msgid "Seo"
 msgstr "Seo"
 
+msgid "Service type for Zboží.cz"
+msgstr "Typ služby pre Zboží.cz"
+
 msgid "Set"
 msgstr "Nastaviť"
 
@@ -3261,6 +3324,9 @@ msgstr "Zobraziť combinations"
 
 msgid "Show detail"
 msgstr "Zobraziť detail"
+
+msgid "Show in price comparison feeds"
+msgstr "Zobrazovať vo feedoch pre porovnávače tovaru"
 
 msgid "Show in the category"
 msgstr "Zobraziť in the category"
@@ -3643,6 +3709,9 @@ msgstr "Na dopovedanie"
 msgid "Url address"
 msgstr "URL adresa"
 
+msgid "Use VAT rate of the product"
+msgstr "Použiť sadzbu DPH z produktu"
+
 msgid "User consent policy"
 msgstr "Správa osobných údajov"
 
@@ -3699,6 +3768,9 @@ msgstr "Viditeľnosť"
 
 msgid "Visible on homepage"
 msgstr "Viditelný na domovskej stránke"
+
+msgid "Voucher for next purchase"
+msgstr "Voucher na ďalší nákup"
 
 msgid "Waiting for an offline transfer to be finished"
 msgstr "Čakáme na vykonanie offline platby"
@@ -3780,6 +3852,9 @@ msgstr "Rok"
 
 msgid "Yes"
 msgstr "Áno"
+
+msgid "Yes = the service is an ancillary supply and takes over the VAT rate of the product it is attached to in the cart. No = the service is a separate supply with its own VAT rate."
+msgstr "Áno = služba je vedľajšie plnenie a preberá sadzbu DPH produktu, ku ktorému je v košíku pripojená. Nie = služba je samostatné plnenie s vlastnou sadzbou DPH."
 
 msgid "You are allowed to disable two factor authentication only to yourself."
 msgstr "Môžete vypnúť dvojfaktorové overovanie iba sebe."

@@ -1,3 +1,4 @@
+import './AdditionalService';
 import './Advert';
 import './AdministratorForm';
 import './AdvancedSearch';

@@ -25,6 +25,7 @@ class AdminRoleConstant
     public const string ROLE_TOP_CATEGORY = 'ROLE_TOP_CATEGORY';
     public const string ROLE_AUTOCOMPLETE = 'ROLE_AUTOCOMPLETE';
     public const string ROLE_BRAND = 'ROLE_BRAND';
+    public const string ROLE_ADDITIONAL_SERVICE = 'ROLE_ADDITIONAL_SERVICE';
     public const string ROLE_STOCK = 'ROLE_STOCK';
     public const string ROLE_PRICE_LIST = 'ROLE_PRICE_LIST';
     public const string ROLE_NEWSLETTER = 'ROLE_NEWSLETTER';

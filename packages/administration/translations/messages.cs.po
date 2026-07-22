@@ -115,6 +115,12 @@ msgstr "Přidat parametr"
 msgid "Add video"
 msgstr "Přidat video"
 
+msgid "Additional service"
+msgstr "Doplňková služba"
+
+msgid "Additional services"
+msgstr "Doplňkové služby"
+
 msgid "Administration"
 msgstr "Administrace"
 

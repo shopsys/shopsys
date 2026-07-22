@@ -31,7 +31,8 @@ final class ActionsConfig
             ActionType::LIST,
             Action::create(ActionType::CREATE->value, t('Create new item'))
                 ->linkToCrud($controllerClass, ActionType::CREATE)
-                ->setIcon('circle-plus')
+                ->setIcon('plus')
+                ->setAttribute('class', 'btn-primary', true)
                 ->displayIf(function () use ($defaultActions): bool {
                     return in_array(ActionType::CREATE, $defaultActions, true);
                 }),

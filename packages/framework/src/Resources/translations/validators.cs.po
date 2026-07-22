@@ -10,6 +10,12 @@ msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 msgid "Account number cannot be longer than {{ limit }} characters."
 msgstr "Číslo účtu nesmí být delší než {{ limit }} znaků."
 
+msgid "Additional description for Zboží.cz cannot be longer than {{ limit }} characters"
+msgstr "Doplňkový popis pro Zboží.cz nemůže být delší než {{ limit }} znaků"
+
+msgid "Additional service with entered catalog number already exists"
+msgstr "Doplňková služba s tímto katalogovým číslem již existuje"
+
 msgid "Address {{ url }} already exists."
 msgstr "Adresa {{ url }} již existuje."
 
@@ -151,6 +157,9 @@ msgstr "Odkaz musí být validní URL adresa"
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr "Název nesmí být delší než {{ limit }} znaků"
 
+msgid "Name for price comparison feeds cannot be longer than {{ limit }} characters"
+msgstr "Název pro zbožové srovnávače nemůže být delší než {{ limit }} znaků"
+
 msgid "Only regular spaces are allowed as whitespace characters."
 msgstr "Pouze běžné mezery jsou povoleny jako bílé znaky."
 
@@ -256,6 +265,9 @@ msgstr "Vyplňte prosím název dph"
 msgid "Please enter VAT rate"
 msgstr "Vyplňte prosím výši DPH"
 
+msgid "Please enter VAT rate for domain %domainName%."
+msgstr "Vyplňte prosím sazbu DPH pro doménu %domainName%."
+
 msgid "Please enter a valid IBAN."
 msgstr "Vyplňte prosím validní IBAN"
 
@@ -267,6 +279,9 @@ msgstr "Zadejte prosím rok"
 
 msgid "Please enter account number for domain %domainName%."
 msgstr "Zadejte prosím číslo účtu pro doménu %domainName%."
+
+msgid "Please enter additional description for Zboží.cz."
+msgstr "Vyplňte prosím doplňkový popis pro Zboží.cz."
 
 msgid "Please enter an ID"
 msgstr "Zadejte prosím ID"
@@ -285,6 +300,9 @@ msgstr "Zadejte prosím aspoň jednu cenu"
 
 msgid "Please enter bank account number"
 msgstr "Prosím vyplňte číslo bankovního účtu"
+
+msgid "Please enter catalog number"
+msgstr "Vyplňte prosím katalogové číslo"
 
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
@@ -390,6 +408,9 @@ msgstr "Vyplňte prosím login"
 
 msgid "Please enter name"
 msgstr "Vyplňte prosím název"
+
+msgid "Please enter name for price comparison feeds."
+msgstr "Vyplňte prosím název pro zbožové srovnávače."
 
 msgid "Please enter name of advertisement area"
 msgstr "Zadejte prosím název reklamní plochy"
@@ -567,6 +588,9 @@ msgstr "Prosím vyberte alespoň jednu kategorii"
 
 msgid "Please select navigation item type"
 msgstr "Prosím vyberte typ položky navigace"
+
+msgid "Please select service type for Zboží.cz."
+msgstr "Vyberte prosím typ služby pro Zboží.cz."
 
 msgid "Please select valid navigation item type"
 msgstr "Prosím vyberte platný typ položky navigace"
