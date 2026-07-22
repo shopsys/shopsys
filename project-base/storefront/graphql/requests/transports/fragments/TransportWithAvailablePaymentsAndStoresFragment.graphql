@@ -21,6 +21,7 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
         ...SimplePaymentFragment
     }
     daysUntilDelivery
+    expectedDeliveryDate
     stores {
         ...ListedStoreConnectionFragment
     }

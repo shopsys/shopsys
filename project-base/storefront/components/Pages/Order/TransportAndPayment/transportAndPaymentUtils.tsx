@@ -29,6 +29,8 @@ import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { logException } from 'utils/errors/logException';
+import { createIntlDateTimeFormatter } from 'utils/formaters/createIntlDateTimeFormatter';
+import { useDisplayTimezone } from 'utils/formatting/useDisplayTimezone';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getOrderPaymentItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPacketeryTransport, mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
@@ -440,4 +442,78 @@ export const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: 
     return t('Delivery in {{count}} weeks', {
         count: Math.ceil(daysUntilDelivery / 7),
     });
+};
+
+export const useExpectedDeliveryDateMessage = (expectedDeliveryDate: string | null | undefined): string | null => {
+    const { t } = useTranslation();
+    const { defaultLocale } = useDomainConfig();
+    const timezone = useDisplayTimezone();
+
+    if (!expectedDeliveryDate) {
+        return null;
+    }
+
+    return getExpectedDeliveryDateMessage(expectedDeliveryDate, new Date(), timezone, defaultLocale, t);
+};
+
+export const getExpectedDeliveryDateMessage = (
+    expectedDeliveryDate: string,
+    now: Date,
+    timezone: string,
+    locale: string,
+    t: Translate,
+): string => {
+    const deliveryDay = getStartOfDayInTimezone(new Date(expectedDeliveryDate), timezone);
+    const today = getStartOfDayInTimezone(now, timezone);
+    const dayDifference = Math.round((deliveryDay.getTime() - today.getTime()) / (24 * 60 * 60 * 1000));
+    const date = createIntlDateTimeFormatter({ day: 'numeric', month: 'numeric' }, timezone, locale).format(
+        new Date(expectedDeliveryDate),
+    );
+
+    if (dayDifference <= 0) {
+        return t('Delivery today {{ date }}', { date });
+    }
+
+    if (dayDifference === 1) {
+        return t('Delivery tomorrow {{ date }}', { date });
+    }
+
+    const todayIsoWeekday = today.getUTCDay() === 0 ? 7 : today.getUTCDay();
+    const dayDifferenceOfMondayOfWeekAfterNext = 15 - todayIsoWeekday;
+
+    if (dayDifference < dayDifferenceOfMondayOfWeekAfterNext) {
+        return getDeliveryOnDayOfWeekMessage(deliveryDay.getUTCDay(), date, t);
+    }
+
+    return t('Delivery {{ date }}', { date });
+};
+
+const getDeliveryOnDayOfWeekMessage = (dayOfWeek: number, date: string, t: Translate): string => {
+    switch (dayOfWeek) {
+        case 1:
+            return t('Delivery on Monday {{ date }}', { date });
+        case 2:
+            return t('Delivery on Tuesday {{ date }}', { date });
+        case 3:
+            return t('Delivery on Wednesday {{ date }}', { date });
+        case 4:
+            return t('Delivery on Thursday {{ date }}', { date });
+        case 5:
+            return t('Delivery on Friday {{ date }}', { date });
+        case 6:
+            return t('Delivery on Saturday {{ date }}', { date });
+        default:
+            return t('Delivery on Sunday {{ date }}', { date });
+    }
+};
+
+const getStartOfDayInTimezone = (date: Date, timezone: string): Date => {
+    // en-CA formats the date as YYYY-MM-DD
+    const dateString = createIntlDateTimeFormatter(
+        { year: 'numeric', month: '2-digit', day: '2-digit' },
+        timezone,
+        'en-CA',
+    ).format(date);
+
+    return new Date(`${dateString}T00:00:00Z`);
 };

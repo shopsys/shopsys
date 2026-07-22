@@ -73,6 +73,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                     <TransportAndPaymentSelectItemLabel
                         daysUntilDelivery={transport.daysUntilDelivery}
                         description={transport.description}
+                        expectedDeliveryDate={transport.expectedDeliveryDate}
                         disabled={disabled}
                         image={transport.mainImage}
                         isActive={isActive}
