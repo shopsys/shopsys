@@ -48,7 +48,16 @@ class HeurekaFeedItemFactory
             $this->getProductAvailabilityDays($product, $domainConfig->getId()),
             $this->getHeurekaCategoryFullName($product, $domainConfig),
             $this->productDataBatchLoader->getProductCpc($product, $domainConfig),
+            $this->getSpecialServices($product, $domainConfig),
         );
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSpecialServices(Product $product, DomainConfig $domainConfig): array
+    {
+        return $this->productDataBatchLoader->getProductAdditionalServiceSpecialServiceNames($product, $domainConfig);
     }
 
     protected function getBrandName(Product $product): ?string

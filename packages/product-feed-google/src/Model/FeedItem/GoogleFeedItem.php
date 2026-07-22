@@ -33,6 +33,7 @@ class GoogleFeedItem implements FeedItemInterface
         protected readonly ?string $partno = null,
         protected readonly ?string $imgUrl = null,
         protected readonly ?DateTimeImmutable $availabilityDate = null,
+        protected readonly ?string $customLabel0 = null,
     ) {
     }
 
@@ -106,5 +107,10 @@ class GoogleFeedItem implements FeedItemInterface
             static::IDENTIFIER_TYPE_EAN => $this->ean,
             static::IDENTIFIER_TYPE_PARTNO => $this->partno,
         ]);
+    }
+
+    public function getCustomLabel0(): ?string
+    {
+        return $this->customLabel0;
     }
 }

@@ -41,6 +41,12 @@
         {% if item.maxCpcSearch is not null -%}
             <MAX_CPC_SEARCH>{{ item.maxCpcSearch|moneyFormat(2, ',') }}</MAX_CPC_SEARCH>
         {% endif %}
+        {% for additionalService in item.additionalServices -%}
+            <EXTRA_MESSAGE>{{ additionalService.extraMessage }}</EXTRA_MESSAGE>
+            {% if additionalService.customText is not null -%}
+                <CUSTOM_TEXT>{{ additionalService.customText }}</CUSTOM_TEXT>
+            {% endif -%}
+        {% endfor -%}
     </SHOPITEM>
 {% endblock %}
 

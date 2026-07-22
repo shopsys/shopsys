@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\AdditionalService;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceData;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceDataFactory;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceFacade;
@@ -133,5 +134,50 @@ class AdditionalServiceFacadeTest extends TransactionFunctionalTestCase
 
         $this->assertTrue($additionalService->isProductVatRateUsed($firstDomainId));
         $this->assertNull($additionalService->getVatForDomain($firstDomainId));
+    }
+
+    public function testMissingVatFallsBackToProductVatRate(): void
+    {
+        $firstDomainId = array_key_first($this->additionalServiceDataFactory->create()->enabledByDomainId);
+        $serviceWithMissingVat = $this->createAdditionalServiceWithOwnVatRate('SERVICE-MISSING-VAT', $firstDomainId);
+        $serviceWithOwnVat = $this->createAdditionalServiceWithOwnVatRate('SERVICE-OWN-VAT', $firstDomainId);
+
+        $this->em->getConnection()->executeStatement(
+            'UPDATE additional_service_domains SET vat_id = NULL WHERE additional_service_id = :additionalServiceId AND domain_id = :domainId',
+            [
+                'additionalServiceId' => $serviceWithMissingVat->getId(),
+                'domainId' => $firstDomainId,
+            ],
+        );
+
+        $this->additionalServiceFacade->useProductVatRateWhereVatIsMissing($firstDomainId);
+        $this->em->clear();
+
+        $repairedAdditionalService = $this->additionalServiceFacade->getById($serviceWithMissingVat->getId());
+        $this->assertTrue($repairedAdditionalService->isProductVatRateUsed($firstDomainId));
+        $this->assertNull($repairedAdditionalService->getVatForDomain($firstDomainId));
+
+        $untouchedAdditionalService = $this->additionalServiceFacade->getById($serviceWithOwnVat->getId());
+        $this->assertFalse($untouchedAdditionalService->isProductVatRateUsed($firstDomainId));
+        $this->assertNotNull($untouchedAdditionalService->getVatForDomain($firstDomainId));
+    }
+
+    private function createAdditionalServiceWithOwnVatRate(string $catnum, int $domainId): AdditionalService
+    {
+        $additionalServiceData = $this->additionalServiceDataFactory->create();
+        $additionalServiceData->catnum = $catnum;
+
+        foreach (array_keys($additionalServiceData->name) as $locale) {
+            $additionalServiceData->name[$locale] = 'Service with own VAT rate';
+        }
+
+        foreach (array_keys($additionalServiceData->enabledByDomainId) as $enabledDomainId) {
+            $additionalServiceData->pricesIndexedByDomainId[$enabledDomainId] = Money::create(50);
+        }
+
+        $additionalServiceData->useProductVatRateByDomainId[$domainId] = false;
+        $additionalServiceData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+
+        return $this->additionalServiceFacade->create($additionalServiceData);
     }
 }

@@ -47,6 +47,15 @@
                 {{ flagDescription }}
             </CUSTOM_LABEL_{{ flagOrder }}>
         {% endfor %}
+        {% for specialService in item.specialServices %}
+            <SPECIAL_SERVICE>{{ specialService }}</SPECIAL_SERVICE>
+        {% endfor %}
+        {% for zboziAdditionalServiceEntry in item.zboziAdditionalServiceEntries %}
+            <EXTRA_MESSAGE>{{ zboziAdditionalServiceEntry.extraMessage }}</EXTRA_MESSAGE>
+            {% if zboziAdditionalServiceEntry.customText is not null %}
+                <CUSTOM_TEXT>{{ zboziAdditionalServiceEntry.customText }}</CUSTOM_TEXT>
+            {% endif %}
+        {% endfor %}
     </ITEM>
 {% endblock %}
 

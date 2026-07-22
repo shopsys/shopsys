@@ -89,6 +89,20 @@ class HeurekaFeedItemTest extends TestCase
         self::assertNull($heurekaFeedItem->getCategoryText());
         self::assertEquals([], $heurekaFeedItem->getParams());
         self::assertNull($heurekaFeedItem->getCpc());
+        self::assertEquals([], $heurekaFeedItem->getSpecialServices());
+    }
+
+    public function testHeurekaFeedItemWithSpecialServices(): void
+    {
+        $this->heurekaProductDataBatchLoaderMock->method('getProductAdditionalServiceSpecialServiceNames')
+            ->willReturn(['Assembly', 'Extended warranty']);
+
+        $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+
+        self::assertSame(
+            ['Assembly', 'Extended warranty'],
+            $heurekaFeedItem->getSpecialServices(),
+        );
     }
 
     public function testHeurekaFeedItemWithGroupId(): void

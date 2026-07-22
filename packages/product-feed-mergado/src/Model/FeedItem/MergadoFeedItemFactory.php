@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductAdditionalServicesBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -27,6 +28,7 @@ class MergadoFeedItemFactory
         protected readonly ImageFacade $imageFacade,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly LoggerInterface $logger,
+        protected readonly ProductAdditionalServicesBatchLoader $productAdditionalServicesBatchLoader,
     ) {
     }
 
@@ -58,7 +60,25 @@ class MergadoFeedItemFactory
             $product->getBrand(),
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
             $product->isVariant() ? $product->getMainVariant()->getId() : null,
+            $this->getSpecialServices($product, $domainConfig),
+            $this->getZboziAdditionalServiceEntries($product, $domainConfig),
         );
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSpecialServices(Product $product, DomainConfig $domainConfig): array
+    {
+        return $this->productAdditionalServicesBatchLoader->getShownInFeedsSpecialServiceNames($product, $domainConfig);
+    }
+
+    /**
+     * @return array<int, array{extraMessage: string, customText: string|null}>
+     */
+    protected function getZboziAdditionalServiceEntries(Product $product, DomainConfig $domainConfig): array
+    {
+        return $this->productAdditionalServicesBatchLoader->getShownInFeedsZboziEntries($product, $domainConfig);
     }
 
     protected function getProductUsp(Product $product, int $domainId): array
