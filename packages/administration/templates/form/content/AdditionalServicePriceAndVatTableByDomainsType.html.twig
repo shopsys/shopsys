@@ -1,0 +1,49 @@
+{% block additional_service_price_and_vat_table_by_domains_row %}
+    {% for domainId in enabledDomainIds %}
+        {% if isMultidomain() %}
+            <div class="card mb-3">
+                <div class="card-header card-header-light py-2">
+                    <span>
+                        {{ domain_icon(domainId) }}
+                        {{ 'Domain'|trans }}
+                        <strong>{{ getDomainName(domainId) }}</strong>
+                    </span>
+                </div>
+                <div class="card-body">
+                    {{ _self.render_price_and_vat_row(domainId, form) }}
+                </div>
+            </div>
+        {% else %}
+            {{ _self.render_price_and_vat_row(domainId, form) }}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% macro render_price_and_vat_row(domainId, form) %}
+    <div class="row align-items-center">
+        {{ form_label(form.pricesIndexedByDomainId[domainId]) }}
+
+        <div class="col-12 col-md-6">
+            {{ form_widget(form.pricesIndexedByDomainId[domainId], { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
+            {{ form_errors(form.pricesIndexedByDomainId[domainId]) }}
+        </div>
+    </div>
+    <hr>
+
+    <div class="row" data-js-additional-service-use-product-vat-rate data-domain-id="{{ domainId }}">
+        {{ form_label(form.useProductVatRateByDomainId[domainId]) }}
+        <div class="col-auto">
+            {{ form_widget(form.useProductVatRateByDomainId[domainId]) }}
+            {{ form_errors(form.useProductVatRateByDomainId[domainId]) }}
+        </div>
+        {{ form_help(form.useProductVatRateByDomainId[domainId]) }}
+    </div>
+
+    <div class="row" data-js-additional-service-vat data-domain-id="{{ domainId }}">
+        {{ form_label(form.vatsIndexedByDomainId[domainId]) }}
+        <div class="col-auto">
+            {{ form_widget(form.vatsIndexedByDomainId[domainId]) }}
+            {{ form_errors(form.vatsIndexedByDomainId[domainId]) }}
+        </div>
+    </div>
+{% endmacro %}
