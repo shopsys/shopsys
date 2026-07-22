@@ -1,23 +1,20 @@
-import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { ExpectedDeliveryDateInfo } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateInfo';
 import {
     TransportAndPaymentPickupPlaceDetail,
     TransportAndPaymentPickupPlaceDetailLayout,
     TransportAndPaymentPickupPlaceOpeningHoursDisplay,
 } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentPickupPlaceDetail';
-import { useExpectedDeliveryDateMessage } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type TransportAndPaymentSelectItemLabelProps = {
     name: string;
     price?: { priceWithVat: string; priceWithoutVat: string; vatAmount: string };
-    daysUntilDelivery?: number;
     expectedDeliveryDate?: string | null;
     description?: string | null;
     image?: TypeImageFragment | null;
@@ -34,7 +31,6 @@ type TransportAndPaymentSelectItemLabelProps = {
 export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectItemLabelProps> = ({
     name,
     price,
-    daysUntilDelivery,
     expectedDeliveryDate,
     description,
     image,
@@ -47,9 +43,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     pickupPlaceDetailLayout = 'default',
     openPickupPlacePopup,
 }) => {
-    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const expectedDeliveryDateMessage = useExpectedDeliveryDateMessage(expectedDeliveryDate);
 
     const imageElement = (
         <div
@@ -90,21 +84,9 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
                     {description && <div className="text-text-less text-xs">{description}</div>}
 
-                    {!pickupPlaceDetail &&
-                        expectedDeliveryDate !== undefined &&
-                        (expectedDeliveryDateMessage !== null ? (
-                            <div className="text-sm text-text-success">{expectedDeliveryDateMessage}</div>
-                        ) : (
-                            <div
-                                className="flex items-center gap-1 text-sm text-text-less"
-                                title={t(
-                                    'The cart contains goods that are out of stock and we do not know their restocking date yet',
-                                )}
-                            >
-                                <InfoIcon className="size-4 shrink-0" />
-                                {t('The delivery date cannot be determined')}
-                            </div>
-                        ))}
+                    {!pickupPlaceDetail && expectedDeliveryDate !== undefined && (
+                        <ExpectedDeliveryDateInfo expectedDeliveryDate={expectedDeliveryDate} />
+                    )}
                 </div>
 
                 {priceElement}
@@ -112,8 +94,8 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
             {pickupPlaceDetail && (
                 <TransportAndPaymentPickupPlaceDetail
-                    daysUntilDelivery={daysUntilDelivery}
                     disabled={disabled}
+                    expectedDeliveryDate={expectedDeliveryDate}
                     isActive={isActive}
                     layout={pickupPlaceDetailLayout}
                     openingHoursDisplay={openingHoursDisplay}

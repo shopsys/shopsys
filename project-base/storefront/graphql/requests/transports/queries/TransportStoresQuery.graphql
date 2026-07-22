@@ -1,5 +1,6 @@
 query TransportStoresQuery(
     $uuid: Uuid!
+    $cartUuid: Uuid = null
     $searchText: String = null
     $coordinates: Coordinates = null
     $first: Int

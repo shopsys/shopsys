@@ -71,7 +71,6 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                 value={transport.uuid}
                 label={
                     <TransportAndPaymentSelectItemLabel
-                        daysUntilDelivery={transport.daysUntilDelivery}
                         description={transport.description}
                         expectedDeliveryDate={transport.expectedDeliveryDate}
                         disabled={disabled}

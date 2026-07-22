@@ -36,6 +36,13 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({
     }),
 }));
 
+vi.mock('store/usePersistStore', () => ({
+    usePersistStore: (selector: (state: unknown) => unknown) =>
+        selector({
+            cartUuid: null,
+        }),
+}));
+
 vi.mock('store/useSessionStore', () => ({
     useSessionStore: (selector: (state: unknown) => unknown) =>
         selector({

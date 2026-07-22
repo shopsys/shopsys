@@ -1,7 +1,7 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { ExpectedDeliveryDateInfo } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateInfo';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
-import { getDeliveryMessage } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { AnimatePresence } from 'framer-motion';
 import { ButtonHTMLAttributes, MouseEvent, ReactNode, useId, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -13,7 +13,7 @@ export type TransportAndPaymentPickupPlaceDetailLayout = 'default' | 'compact';
 
 type TransportAndPaymentPickupPlaceDetailProps = {
     pickupPlace: StoreOrPacketeryPoint;
-    daysUntilDelivery?: number;
+    expectedDeliveryDate?: string | null;
     isActive?: boolean;
     disabled?: boolean;
     showChangeButton?: boolean;
@@ -46,7 +46,7 @@ const TransportAndPaymentPickupPlaceDetailActionButton: FC<TransportAndPaymentPi
 
 export const TransportAndPaymentPickupPlaceDetail: FC<TransportAndPaymentPickupPlaceDetailProps> = ({
     pickupPlace,
-    daysUntilDelivery,
+    expectedDeliveryDate,
     isActive,
     disabled,
     showChangeButton,
@@ -79,8 +79,8 @@ export const TransportAndPaymentPickupPlaceDetail: FC<TransportAndPaymentPickupP
                 {pickupPlace.name}, {pickupPlace.city}, {pickupPlace.street}
             </span>
 
-            {daysUntilDelivery !== undefined && (
-                <div className="text-sm text-text-success">{getDeliveryMessage(daysUntilDelivery, true, t)}</div>
+            {expectedDeliveryDate !== undefined && (
+                <ExpectedDeliveryDateInfo isPersonalPickup expectedDeliveryDate={expectedDeliveryDate} />
             )}
 
             <div

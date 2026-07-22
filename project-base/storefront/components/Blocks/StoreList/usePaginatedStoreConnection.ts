@@ -5,7 +5,7 @@ import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragm
 import { TypeCoordinates } from 'graphql/types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import { CombinedError, useClient, useQuery } from 'urql';
+import { CombinedError, RequestPolicy, useClient, useQuery } from 'urql';
 import { useDebounce } from 'utils/useDebounce';
 
 type StoreConnectionQueryVariables = {
@@ -19,6 +19,7 @@ type UsePaginatedStoreConnectionProps<TData, TAdditionalQueryVariables extends R
     queryDocument: DocumentNode;
     additionalQueryVariables?: TAdditionalQueryVariables;
     getStoreConnectionFromData: (data: TData | undefined) => TypeListedStoreConnectionFragment | null | undefined;
+    requestPolicy?: RequestPolicy;
 };
 
 export const usePaginatedStoreConnection = <
@@ -28,6 +29,7 @@ export const usePaginatedStoreConnection = <
     queryDocument,
     additionalQueryVariables,
     getStoreConnectionFromData,
+    requestPolicy,
 }: UsePaginatedStoreConnectionProps<TData, TAdditionalQueryVariables>) => {
     type QueryVariables = StoreConnectionQueryVariables & TAdditionalQueryVariables;
 
@@ -61,6 +63,7 @@ export const usePaginatedStoreConnection = <
     >({
         query: queryDocument,
         variables: queryVariables,
+        requestPolicy,
     });
     const initialStoreConnection = getStoreConnectionFromData(data);
     const [stores, setStores] = useState<TypeListedStoreConnectionFragment | null>(initialStoreConnection ?? null);
@@ -96,10 +99,14 @@ export const usePaginatedStoreConnection = <
 
         try {
             const storesResponse = await client
-                .query<TData, QueryVariables>(queryDocument, {
-                    ...queryVariables,
-                    after: stores.pageInfo.endCursor,
-                })
+                .query<TData, QueryVariables>(
+                    queryDocument,
+                    {
+                        ...queryVariables,
+                        after: stores.pageInfo.endCursor,
+                    },
+                    { requestPolicy },
+                )
                 .toPromise();
 
             if (queryKeyRef.current !== requestedQueryKey) {
@@ -137,6 +144,7 @@ export const usePaginatedStoreConnection = <
         queryDocument,
         queryKey,
         queryVariables,
+        requestPolicy,
         stores,
     ]);
 

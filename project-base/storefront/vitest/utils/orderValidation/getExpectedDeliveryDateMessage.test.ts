@@ -13,31 +13,31 @@ const NOW = new Date('2026-07-16T12:00:00Z'); // Thursday
 
 describe('getExpectedDeliveryDateMessage test', () => {
     test('should return the today message for a delivery date of today', () => {
-        const result = getExpectedDeliveryDateMessage('2026-07-16T00:00:00+00:00', NOW, 'UTC', 'en', mockT);
+        const result = getExpectedDeliveryDateMessage('2026-07-16T00:00:00+00:00', false, NOW, 'UTC', 'en', mockT);
 
         expect(result).toBe('Delivery today 7/16');
     });
 
     test('should return the tomorrow message for a delivery date of tomorrow', () => {
-        const result = getExpectedDeliveryDateMessage('2026-07-17T00:00:00+00:00', NOW, 'UTC', 'en', mockT);
+        const result = getExpectedDeliveryDateMessage('2026-07-17T00:00:00+00:00', false, NOW, 'UTC', 'en', mockT);
 
         expect(result).toBe('Delivery tomorrow 7/17');
     });
 
     test('should return the day of week message for a delivery date within this week', () => {
-        const result = getExpectedDeliveryDateMessage('2026-07-18T00:00:00+00:00', NOW, 'UTC', 'en', mockT);
+        const result = getExpectedDeliveryDateMessage('2026-07-18T00:00:00+00:00', false, NOW, 'UTC', 'en', mockT);
 
         expect(result).toBe('Delivery on Saturday 7/18');
     });
 
     test('should return the day of week message for a delivery date within the next week', () => {
-        const result = getExpectedDeliveryDateMessage('2026-07-26T00:00:00+00:00', NOW, 'UTC', 'en', mockT);
+        const result = getExpectedDeliveryDateMessage('2026-07-26T00:00:00+00:00', false, NOW, 'UTC', 'en', mockT);
 
         expect(result).toBe('Delivery on Sunday 7/26');
     });
 
     test('should omit the day of week from the week after the next one on', () => {
-        const result = getExpectedDeliveryDateMessage('2026-07-27T00:00:00+00:00', NOW, 'UTC', 'en', mockT);
+        const result = getExpectedDeliveryDateMessage('2026-07-27T00:00:00+00:00', false, NOW, 'UTC', 'en', mockT);
 
         expect(result).toBe('Delivery 7/27');
     });
@@ -45,7 +45,14 @@ describe('getExpectedDeliveryDateMessage test', () => {
     test('should keep the day of week for the whole next week when ordering on Monday', () => {
         const mondayNow = new Date('2026-07-20T12:00:00Z');
 
-        const result = getExpectedDeliveryDateMessage('2026-07-28T00:00:00+00:00', mondayNow, 'UTC', 'en', mockT);
+        const result = getExpectedDeliveryDateMessage(
+            '2026-07-28T00:00:00+00:00',
+            false,
+            mondayNow,
+            'UTC',
+            'en',
+            mockT,
+        );
 
         expect(result).toBe('Delivery on Tuesday 7/28');
     });
@@ -53,9 +60,40 @@ describe('getExpectedDeliveryDateMessage test', () => {
     test('should omit the day of week exactly from the Monday of the week after the next one', () => {
         const mondayNow = new Date('2026-07-20T12:00:00Z');
 
-        const result = getExpectedDeliveryDateMessage('2026-08-03T00:00:00+00:00', mondayNow, 'UTC', 'en', mockT);
+        const result = getExpectedDeliveryDateMessage(
+            '2026-08-03T00:00:00+00:00',
+            false,
+            mondayNow,
+            'UTC',
+            'en',
+            mockT,
+        );
 
         expect(result).toBe('Delivery 8/3');
+    });
+
+    test('should return the personal pickup today message for a pickup date of today', () => {
+        const result = getExpectedDeliveryDateMessage('2026-07-16T00:00:00+00:00', true, NOW, 'UTC', 'en', mockT);
+
+        expect(result).toBe('Personal pickup today 7/16');
+    });
+
+    test('should return the personal pickup tomorrow message for a pickup date of tomorrow', () => {
+        const result = getExpectedDeliveryDateMessage('2026-07-17T00:00:00+00:00', true, NOW, 'UTC', 'en', mockT);
+
+        expect(result).toBe('Personal pickup tomorrow 7/17');
+    });
+
+    test('should return the personal pickup day of week message for a pickup date within the next week', () => {
+        const result = getExpectedDeliveryDateMessage('2026-07-26T00:00:00+00:00', true, NOW, 'UTC', 'en', mockT);
+
+        expect(result).toBe('Personal pickup on Sunday 7/26');
+    });
+
+    test('should omit the day of week from the personal pickup message from the week after the next one on', () => {
+        const result = getExpectedDeliveryDateMessage('2026-07-27T00:00:00+00:00', true, NOW, 'UTC', 'en', mockT);
+
+        expect(result).toBe('Personal pickup 7/27');
     });
 
     test('should evaluate the dates in the given timezone', () => {
@@ -64,6 +102,7 @@ describe('getExpectedDeliveryDateMessage test', () => {
 
         const result = getExpectedDeliveryDateMessage(
             '2026-07-17T00:00:00+02:00',
+            false,
             lateNow,
             'Europe/Prague',
             'cs',

@@ -3,5 +3,10 @@ fragment TransportStoresFragment on Transport {
     uuid
     stores(searchText: $searchText, coordinates: $coordinates, first: $first, after: $after) {
         ...ListedStoreConnectionFragment
+        edges {
+            node {
+                expectedDeliveryDate(transportUuid: $uuid, cartUuid: $cartUuid)
+            }
+        }
     }
 }

@@ -1,3 +1,4 @@
+import { ExpectedDeliveryDateInfo } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateInfo';
 import OpeningHoursToday from 'components/Blocks/OpeningHours/OpeningHoursToday';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { TIDs } from 'cypress/tids';
@@ -67,6 +68,14 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
 
                     {formattedDistance !== null && (
                         <p className="whitespace-nowrap text-input-placeholder-default text-xs">{formattedDistance}</p>
+                    )}
+
+                    {store.expectedDeliveryDate !== undefined && (
+                        <ExpectedDeliveryDateInfo
+                            isPersonalPickup
+                            className="text-xs"
+                            expectedDeliveryDate={store.expectedDeliveryDate}
+                        />
                     )}
                 </div>
 

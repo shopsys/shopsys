@@ -414,37 +414,10 @@ export const useTransportAndPaymentPageNavigation = (validationMessages: Partial
 export const getIsGoPayBankTransferPayment = (payment: Maybe<TypeSimplePaymentFragment>) =>
     payment?.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT';
 
-export const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean, t: Translate) => {
-    if (isPersonalPickup) {
-        if (daysUntilDelivery === 0) {
-            return t('Personal pickup today');
-        }
-
-        if (daysUntilDelivery < 7) {
-            return t('Personal pickup in {{ count }} days', { count: daysUntilDelivery });
-        }
-
-        return t('Personal pickup in {{count}} weeks', {
-            count: Math.ceil(daysUntilDelivery / 7),
-        });
-    }
-
-    if (daysUntilDelivery === 0) {
-        return t('Delivery today');
-    }
-
-    if (daysUntilDelivery < 7) {
-        return t('Delivery in {{count}} days', {
-            count: daysUntilDelivery,
-        });
-    }
-
-    return t('Delivery in {{count}} weeks', {
-        count: Math.ceil(daysUntilDelivery / 7),
-    });
-};
-
-export const useExpectedDeliveryDateMessage = (expectedDeliveryDate: string | null | undefined): string | null => {
+export const useExpectedDeliveryDateMessage = (
+    expectedDeliveryDate: string | null | undefined,
+    isPersonalPickup = false,
+): string | null => {
     const { t } = useTranslation();
     const { defaultLocale } = useDomainConfig();
     const timezone = useDisplayTimezone();
@@ -453,11 +426,19 @@ export const useExpectedDeliveryDateMessage = (expectedDeliveryDate: string | nu
         return null;
     }
 
-    return getExpectedDeliveryDateMessage(expectedDeliveryDate, new Date(), timezone, defaultLocale, t);
+    return getExpectedDeliveryDateMessage(
+        expectedDeliveryDate,
+        isPersonalPickup,
+        new Date(),
+        timezone,
+        defaultLocale,
+        t,
+    );
 };
 
 export const getExpectedDeliveryDateMessage = (
     expectedDeliveryDate: string,
+    isPersonalPickup: boolean,
     now: Date,
     timezone: string,
     locale: string,
@@ -469,6 +450,24 @@ export const getExpectedDeliveryDateMessage = (
     const date = createIntlDateTimeFormatter({ day: 'numeric', month: 'numeric' }, timezone, locale).format(
         new Date(expectedDeliveryDate),
     );
+    const todayIsoWeekday = today.getUTCDay() === 0 ? 7 : today.getUTCDay();
+    const dayDifferenceOfMondayOfWeekAfterNext = 15 - todayIsoWeekday;
+
+    if (isPersonalPickup) {
+        if (dayDifference <= 0) {
+            return t('Personal pickup today {{ date }}', { date });
+        }
+
+        if (dayDifference === 1) {
+            return t('Personal pickup tomorrow {{ date }}', { date });
+        }
+
+        if (dayDifference < dayDifferenceOfMondayOfWeekAfterNext) {
+            return getPersonalPickupOnDayOfWeekMessage(deliveryDay.getUTCDay(), date, t);
+        }
+
+        return t('Personal pickup {{ date }}', { date });
+    }
 
     if (dayDifference <= 0) {
         return t('Delivery today {{ date }}', { date });
@@ -477,9 +476,6 @@ export const getExpectedDeliveryDateMessage = (
     if (dayDifference === 1) {
         return t('Delivery tomorrow {{ date }}', { date });
     }
-
-    const todayIsoWeekday = today.getUTCDay() === 0 ? 7 : today.getUTCDay();
-    const dayDifferenceOfMondayOfWeekAfterNext = 15 - todayIsoWeekday;
 
     if (dayDifference < dayDifferenceOfMondayOfWeekAfterNext) {
         return getDeliveryOnDayOfWeekMessage(deliveryDay.getUTCDay(), date, t);
@@ -504,6 +500,25 @@ const getDeliveryOnDayOfWeekMessage = (dayOfWeek: number, date: string, t: Trans
             return t('Delivery on Saturday {{ date }}', { date });
         default:
             return t('Delivery on Sunday {{ date }}', { date });
+    }
+};
+
+const getPersonalPickupOnDayOfWeekMessage = (dayOfWeek: number, date: string, t: Translate): string => {
+    switch (dayOfWeek) {
+        case 1:
+            return t('Personal pickup on Monday {{ date }}', { date });
+        case 2:
+            return t('Personal pickup on Tuesday {{ date }}', { date });
+        case 3:
+            return t('Personal pickup on Wednesday {{ date }}', { date });
+        case 4:
+            return t('Personal pickup on Thursday {{ date }}', { date });
+        case 5:
+            return t('Personal pickup on Friday {{ date }}', { date });
+        case 6:
+            return t('Personal pickup on Saturday {{ date }}', { date });
+        default:
+            return t('Personal pickup on Sunday {{ date }}', { date });
     }
 };
 
