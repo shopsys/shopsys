@@ -1,6 +1,7 @@
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypePromoCode } from 'graphql/types';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
+import { mapGtmServiceCartItems } from 'gtm/mappers/mapGtmServiceCartItems';
 import { GtmCartInfoType } from 'gtm/types/objects';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getStringWithoutLeadingSlash } from 'utils/parsing/stringWIthoutSlash';
@@ -15,7 +16,10 @@ export const getGtmMappedCart = (
     cartUuid: string | null,
 ): GtmCartInfoType => {
     const products = cart.items.length
-        ? cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domain.url, index))
+        ? [
+              ...cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domain.url, index)),
+              ...mapGtmServiceCartItems(cart.items),
+          ]
         : undefined;
 
     const abandonedCartUrl = getAbandonedCartUrl(isUserLoggedIn, domain, cartUuid);

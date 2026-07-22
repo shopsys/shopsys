@@ -39,6 +39,7 @@ const ApplicationErrors = {
     'remove-code-error': 'flash-message',
     'payment-error': 'flash-message',
     'remove-from-cart-error': 'flash-message',
+    'set-cart-item-additional-services-error': 'flash-message',
     'transport-error': 'flash-message',
 
     // No-flash-message codes (logged but no toast shown to user)

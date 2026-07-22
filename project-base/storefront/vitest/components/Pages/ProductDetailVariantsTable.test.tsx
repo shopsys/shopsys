@@ -15,6 +15,10 @@ vi.mock('components/Blocks/Popup/DeliveryOptionsPopup/useOpenDeliveryOptionsPopu
     useOpenDeliveryOptionsPopup: () => openDeliveryOptionsPopupMock,
 }));
 
+vi.mock('components/Blocks/Product/AdditionalServices/AdditionalServices', () => ({
+    AdditionalServices: () => null,
+}));
+
 vi.mock('components/Blocks/Product/ProductAction', () => ({
     PRODUCT_VARIANTS_ID: 'product-variants',
     ProductAction: () => null,
@@ -31,6 +35,16 @@ vi.mock('components/Blocks/Product/Watchdog/WatchDogButton', () => ({
 
 vi.mock('components/Layout/Webline/Webline', () => ({
     Webline: ({ children }: PropsWithChildren) => <div>{children}</div>,
+}));
+
+vi.mock('utils/cart/useProductAdditionalServices', () => ({
+    useProductAdditionalServices: () => ({
+        selectedServiceUuids: [],
+        onToggleService: vi.fn(),
+        persistPendingServicesAfterAddToCart: vi.fn(),
+        isSettingAdditionalServices: false,
+        cartItemQuantity: undefined,
+    }),
 }));
 
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
@@ -60,6 +74,10 @@ const variant = {
     price: {
         priceWithVat: '100',
     },
+    unit: {
+        name: 'pcs',
+    },
+    additionalServices: [],
 } as unknown as TypeMainVariantDetailFragment['variants'][number];
 
 describe('ProductVariantsTable', () => {

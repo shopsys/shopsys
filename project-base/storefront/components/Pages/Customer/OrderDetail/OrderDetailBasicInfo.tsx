@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
+import { ExpectedDeliveryDateSummary } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateSummary';
 import { useCurrentCustomerUserReviewedProductUuids } from 'components/Blocks/ProductReviews/useCurrentCustomerUserReviewedProductUuids';
 import { Button } from 'components/Forms/Button/Button';
 import {
@@ -14,7 +15,7 @@ import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/Payments
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
-import { TypeOrderItemTypeEnum } from 'graphql/types';
+import { TypeOrderItemTypeEnum, TypeOrderStatusEnum } from 'graphql/types';
 import { ReactNode } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
@@ -48,9 +49,12 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
     const filteredOrderItems = order.items.filter(
         (orderItem) =>
-            ![TypeOrderItemTypeEnum.Payment, TypeOrderItemTypeEnum.Transport, TypeOrderItemTypeEnum.Rounding].includes(
-                orderItem.type,
-            ),
+            ![
+                TypeOrderItemTypeEnum.Payment,
+                TypeOrderItemTypeEnum.Transport,
+                TypeOrderItemTypeEnum.Rounding,
+                TypeOrderItemTypeEnum.AdditionalService,
+            ].includes(orderItem.type),
     );
 
     const showRepeatOrderButton =
@@ -116,6 +120,10 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     </div>
                 )}
             </CustomerRecordCard>
+
+            {order.expectedDeliveryDate !== null && order.statusType !== TypeOrderStatusEnum.Done && (
+                <ExpectedDeliveryDateSummary expectedDeliveryDate={order.expectedDeliveryDate} />
+            )}
 
             {canCreateOrder && notPaid && <PaymentsInOrderSelect orderUrlHash={order.urlHash} orderUuid={order.uuid} />}
 

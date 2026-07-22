@@ -74,6 +74,7 @@ describe('useAddToCart', () => {
                 addProductResult: {
                     addedQuantity: quantity,
                     cartItem: {
+                        additionalServices: [],
                         product: { price: { priceWithVat: '1', priceWithoutVat: '1' }, uuid: 'product-uuid' },
                         quantity,
                     },

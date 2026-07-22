@@ -1,5 +1,7 @@
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeCartItemWithGiftsFragment } from 'graphql/requests/cart/fragments/CartItemWithGiftsFragment.generated';
 import {
     TypeAddToCartMutation,
     useAddToCartMutation,
@@ -14,11 +16,14 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
+export type OnProductAddedToCart = (addedCartItem: TypeCartItemWithGiftsFragment) => Promise<TypeCartFragment | null>;
+
 export type AddToCart = (
     productUuid: string,
     quantity: number,
     listIndex?: number,
     isAbsoluteQuantity?: boolean,
+    onProductAddedToCart?: OnProductAddedToCart,
 ) => Promise<TypeAddToCartMutation['AddToCart'] | null>;
 
 export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductListName: GtmProductListNameType) => {
@@ -39,7 +44,13 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
         );
     }, [cart]);
 
-    const addToCart: AddToCart = async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {
+    const addToCart: AddToCart = async (
+        productUuid,
+        quantity,
+        listIndex,
+        isAbsoluteQuantity = false,
+        onProductAddedToCart,
+    ) => {
         if (addingToCartProductUuidsRef.current.has(productUuid)) {
             return null;
         }
@@ -88,12 +99,19 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
             const addedCartItem = addToCartResult.addProductResult.cartItem;
             cartItemQuantitiesRef.current.set(productUuid, addedCartItem.quantity);
 
+            const cartWithAdditionalServices = (await onProductAddedToCart?.(addedCartItem)) ?? null;
+            const updatedCart = cartWithAdditionalServices ?? addToCartResult.cart;
+            const updatedCartItem =
+                cartWithAdditionalServices?.items.find((cartItem) => cartItem.uuid === addedCartItem.uuid) ??
+                addedCartItem;
+
             import('gtm/handlers/onGtmChangeCartItemEventHandler').then(({ onGtmChangeCartItemEventHandler }) => {
                 onGtmChangeCartItemEventHandler(
                     initialQuantity,
                     isAbsoluteQuantity,
                     addToCartResult,
-                    addedCartItem,
+                    updatedCartItem,
+                    updatedCart,
                     domainConfig,
                     listIndex,
                     gtmProductListName,

@@ -1,0 +1,5 @@
+mutation SetCartItemAdditionalServicesMutation($input: SetCartItemAdditionalServicesInput!) {
+    SetCartItemAdditionalServices(input: $input) {
+        ...CartFragment
+    }
+}

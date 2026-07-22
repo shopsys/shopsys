@@ -7,14 +7,16 @@ import { describe, expect, test, vi } from 'vitest';
 vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
     ExtendedNextLink: ({
         children,
+        className,
         href,
         'aria-label': ariaLabel,
     }: {
         children: React.ReactNode;
+        className?: string;
         href: string;
         'aria-label'?: string;
     }) => (
-        <a aria-label={ariaLabel} href={href}>
+        <a aria-label={ariaLabel} className={className} href={href}>
             {children}
         </a>
     ),
@@ -88,11 +90,22 @@ vi.mock('utils/useDebounce', () => ({
     useDebounce: (value: unknown) => value,
 }));
 
+vi.mock('utils/cart/useProductAdditionalServices', () => ({
+    useProductAdditionalServices: () => ({
+        selectedServiceUuids: [],
+        onToggleService: vi.fn(),
+        persistPendingServicesAfterAddToCart: vi.fn(),
+        isSettingAdditionalServices: false,
+    }),
+}));
+
 describe('CartListItem', () => {
     const item = {
+        additionalServices: [],
         freeQuantity: 1,
         product: {
             __typename: 'RegularProduct',
+            additionalServices: [],
             availability: {
                 name: 'In stock',
             },
@@ -143,8 +156,12 @@ describe('CartListItem', () => {
 
         expect(productLinks).toHaveLength(1);
         expect(productLinks[0]).toHaveAccessibleName('Go to product page of 32" Philips TV');
+        expect(productLinks[0]).toHaveClass('w-fit', 'max-w-full');
         expect(within(productLinks[0]).getByRole('img')).toBeInTheDocument();
-        expect(within(productLinks[0]).getByText('32" Philips TV')).toBeInTheDocument();
+        expect(within(productLinks[0]).getByRole('heading', { name: '32" Philips TV' })).toHaveClass(
+            'w-fit',
+            'max-w-full',
+        );
         expect(within(productLinks[0]).queryByText('Code: ABC123')).not.toBeInTheDocument();
         expect(within(productLinks[0]).queryByText('In stock')).not.toBeInTheDocument();
     });
@@ -162,6 +179,24 @@ describe('CartListItem', () => {
 
         expect(screen.getByRole('region', { name: '32" Philips TV' })).toHaveAccessibleDescription(
             'Code: ABC123. Availability: In stock. Quantity: 3 pcs. Unit price with VAT: €10. Item total with VAT: €20. Item total without VAT: €16. 1 pcs is free.',
+        );
+    });
+
+    test('uses the aligned cart table layout from the 1024 pixel breakpoint', () => {
+        render(
+            <CartListItem
+                isRemovingFromCart={false}
+                item={item as any}
+                listIndex={0}
+                onAddToCart={vi.fn()}
+                onRemoveFromCart={vi.fn()}
+            />,
+        );
+
+        expect(screen.getByRole('region', { name: '32" Philips TV' })).toHaveClass(
+            'vl:grid',
+            'vl:grid-cols-[minmax(26rem,1fr)_8.75rem_minmax(7rem,8rem)_minmax(7rem,max-content)_1.5rem]',
+            'xl:grid-cols-[minmax(32rem,1fr)_8.75rem_minmax(8rem,10rem)_minmax(8rem,max-content)_1.5rem]',
         );
     });
 

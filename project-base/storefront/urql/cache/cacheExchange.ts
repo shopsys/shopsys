@@ -12,6 +12,7 @@ const keyCode = (data: Data) => data.code as string | null;
 export const cache = cacheExchange({
     schema: schema as unknown as IntrospectionQuery,
     keys: {
+        AdditionalService: keyUuid,
         Advert: keyUuid,
         AdvertCode: keyUuid,
         AdvertImage: keyUuid,
