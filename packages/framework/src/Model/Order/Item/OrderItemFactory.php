@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -114,5 +115,20 @@ class OrderItemFactory
             $orderItemData,
             $order,
         );
+    }
+
+    public function createAdditionalService(
+        OrderItemData $orderItemData,
+        Order $order,
+        ?AdditionalService $additionalService,
+    ): OrderItem {
+        $orderItem = $this->createOrderItem(
+            $orderItemData,
+            $order,
+        );
+
+        $orderItem->setAdditionalService($additionalService);
+
+        return $orderItem;
     }
 }

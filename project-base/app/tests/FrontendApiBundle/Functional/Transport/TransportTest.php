@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Transport;
 
+use App\DataFixtures\Demo\AdditionalServiceDataFixture;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
@@ -12,6 +13,7 @@ use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculation;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
@@ -92,6 +94,23 @@ class TransportTest extends GraphQlTestCase
         );
     }
 
+    public function testExpectedDeliveryDateIsPostponedByCartAdditionalServices(): void
+    {
+        $everyDayDeliveringTransport = $this->getReference(TransportDataFixture::TRANSPORT_PACKETERY, Transport::class);
+
+        $standardDeliveryDate = $this->getExpectedDeliveryDateFromApi(transport: $everyDayDeliveringTransport);
+
+        $cartUuid = $this->createCartWithDeliveryExtendingAdditionalService();
+        $cartDeliveryDate = $this->getExpectedDeliveryDateFromApi($cartUuid, $everyDayDeliveringTransport);
+
+        $this->assertSame($this->calculateExpectedDeliveryDate($cartUuid, $everyDayDeliveringTransport), $cartDeliveryDate);
+        $this->assertNotSame(
+            $standardDeliveryDate,
+            $cartDeliveryDate,
+            'An additional service with a delivery days extension is expected to postpone the delivery date',
+        );
+    }
+
     /**
      * Only checks that the API field is wired to the calculation with the concrete store
      *
@@ -142,22 +161,22 @@ class TransportTest extends GraphQlTestCase
         $this->assertUserError($response, 'invalid-argument');
     }
 
-    private function getExpectedDeliveryDateFromApi(?string $cartUuid = null): ?string
+    private function getExpectedDeliveryDateFromApi(?string $cartUuid = null, ?Transport $transport = null): ?string
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/TransportQuery.graphql', [
-            'uuid' => $this->transport->getUuid(),
+            'uuid' => ($transport ?? $this->transport)->getUuid(),
             'cartUuid' => $cartUuid,
         ]);
 
         return $this->getResponseDataForGraphQlType($response, 'transport')['expectedDeliveryDate'];
     }
 
-    private function calculateExpectedDeliveryDate(?string $cartUuid = null): ?string
+    private function calculateExpectedDeliveryDate(?string $cartUuid = null, ?Transport $transport = null): ?string
     {
         $cart = $cartUuid === null ? null : $this->cartApiFacade->findCart(null, $cartUuid);
 
         return $this->transportExpectedDeliveryDateCalculation
-            ->calculateExpectedDeliveryDate($this->transport, $cart, $this->domain->getId())
+            ->calculateExpectedDeliveryDate($transport ?? $this->transport, $cart, $this->domain->getId())
             ?->format(DATE_ATOM);
     }
 
@@ -171,5 +190,28 @@ class TransportTest extends GraphQlTestCase
         ]);
 
         return $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['uuid'];
+    }
+
+    private function createCartWithDeliveryExtendingAdditionalService(): string
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $assemblyAdditionalService = $this->getReference(
+            AdditionalServiceDataFixture::ADDITIONAL_SERVICE_ASSEMBLY,
+            AdditionalService::class,
+        );
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $product->getUuid(),
+            'quantity' => 1,
+        ]);
+        $cart = $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart'];
+
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/SetCartItemAdditionalServicesMutation.graphql', [
+            'cartUuid' => $cart['uuid'],
+            'cartItemUuid' => $cart['items'][0]['uuid'],
+            'additionalServiceUuids' => [$assemblyAdditionalService->getUuid()],
+        ]);
+
+        return $cart['uuid'];
     }
 }

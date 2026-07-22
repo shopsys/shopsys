@@ -43,14 +43,16 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
                 $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT),
             );
 
+            $discountableTotalPrice = $orderData->getTotalPriceForItemTypes($this->getDiscountableItemTypes());
+
             try {
                 $validProductIds = $this->currentPromoCodeFacade->validatePromoCode(
                     $appliedPromoCode,
-                    $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT],
+                    $discountableTotalPrice,
                     $products,
                 );
 
-                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT]);
+                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $discountableTotalPrice);
             } catch (PromoCodeException) {
                 continue;
             }
@@ -84,4 +86,14 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
      * @return string[]
      */
     abstract protected function getSupportedTypes(): array;
+
+    /**
+     * @return string[]
+     */
+    protected function getDiscountableItemTypes(): array
+    {
+        return [
+            OrderItemTypeEnum::TYPE_PRODUCT,
+        ];
+    }
 }

@@ -43,6 +43,7 @@ class Order implements DomainSeparatedEntityInterface
     protected const array SORTED_TYPES = [
         OrderItemTypeEnum::TYPE_PRODUCT,
         OrderItemTypeEnum::TYPE_PRODUCT_GIFT,
+        OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE,
         OrderItemTypeEnum::TYPE_DISCOUNT,
         OrderItemTypeEnum::TYPE_PAYMENT,
         OrderItemTypeEnum::TYPE_TRANSPORT,

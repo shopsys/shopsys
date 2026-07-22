@@ -12,6 +12,26 @@ fragment OrderDetailItemFragment on OrderItem {
     quantity
     unit
     type
+    catnum
+    relatedItems {
+        __typename
+        uuid
+        name
+        catnum
+        quantity
+        unit
+        type
+        deliveryDaysExtension
+        mainImage {
+            ...ImageFragment
+        }
+        unitPrice {
+            ...PriceFragment
+        }
+        totalPrice {
+            ...PriceFragment
+        }
+    }
     order {
         uuid
         number
@@ -51,6 +71,7 @@ fragment OrderDetailItemFragment on OrderItem {
         }
     }
     transport {
+        isPersonalPickup
         transportTypeCode
         mainImage {
             url

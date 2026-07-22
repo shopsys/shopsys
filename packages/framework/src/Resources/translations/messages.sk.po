@@ -169,6 +169,9 @@ msgstr "Dodatočné informácie"
 msgid "Additional login info"
 msgstr "Dodatočné prihlasovací informácie"
 
+msgid "Additional services"
+msgstr "Doplnkové služby"
+
 msgid "Address"
 msgstr "Adresa"
 

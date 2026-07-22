@@ -91,6 +91,9 @@ ProductDecorator:
                 type: "String"
             accessories:
                 type: "[Product]"
+            additionalServices:
+                type: "[AdditionalService!]!"
+                description: "Additional services offered with the product on the current domain"
             relatedProducts:
                 type: "[Product!]!"
                 description: "List of related products"

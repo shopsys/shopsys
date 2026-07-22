@@ -178,6 +178,11 @@ class PlaceOrderFacade
                 $orderItemData,
                 $order,
             ),
+            OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE => $this->orderItemFactory->createAdditionalService(
+                $orderItemData,
+                $order,
+                $orderItemData->additionalService,
+            ),
             default => $this->orderItemFactory->createOrderItem($orderItemData, $order),
         };
     }

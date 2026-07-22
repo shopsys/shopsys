@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart\Item;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
@@ -80,6 +82,23 @@ class CartItem
     #[ORM\Column(type: 'string', length: 32, nullable: false)]
     protected $type;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService>
+     */
+    #[ORM\JoinTable(name: 'cart_item_additional_services')]
+    #[ORM\JoinColumn(name: 'cart_item_id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'additional_service_id', onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: AdditionalService::class)]
+    #[ORM\OrderBy(['position' => 'ASC', 'id' => 'ASC'])]
+    protected $additionalServices;
+
+    /**
+     * @var array<int, string>
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'json')]
+    protected $watchedAdditionalServicePrices;
+
     public function __construct(
         Cart $cart,
         Product $product,
@@ -94,6 +113,8 @@ class CartItem
         $this->addedAt = new DatePoint();
         $this->uuid = Uuid::uuid4()->toString();
         $this->setType($type);
+        $this->additionalServices = new ArrayCollection();
+        $this->watchedAdditionalServicePrices = [];
     }
 
     public function changeQuantity(int $newQuantity): void
@@ -216,5 +237,41 @@ class CartItem
         $product = $this->getProduct();
 
         return $product->calculateFreeQuantity($this->getQuantity(), $domainId);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]
+     */
+    public function getAdditionalServices()
+    {
+        return $this->additionalServices->getValues();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[] $additionalServices
+     */
+    public function setAdditionalServices($additionalServices): void
+    {
+        $this->additionalServices->clear();
+
+        foreach ($additionalServices as $additionalService) {
+            $this->additionalServices->add($additionalService);
+        }
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getWatchedAdditionalServicePrices()
+    {
+        return $this->watchedAdditionalServicePrices;
+    }
+
+    /**
+     * @param array<int, string> $watchedAdditionalServicePrices
+     */
+    public function setWatchedAdditionalServicePrices($watchedAdditionalServicePrices): void
+    {
+        $this->watchedAdditionalServicePrices = $watchedAdditionalServicePrices;
     }
 }

@@ -2,12 +2,15 @@
     {% import _self as self %}
     {% set setPricesManually = orderItemForm.vars.data is not null ? orderItemForm.setPricesManually.vars.data : false %}
     {% set isCalculatedPriceReadonly = not setPricesManually %}
+    {% set isAdditionalService = orderItemForm.vars.data is not null and orderItemForm.vars.data.type == 'additionalService' %}
 
     <tr class="js-order-item js-order-item-any" id="{{ orderItemForm.vars.id }}" data-index="{{ orderItemId }}">
         <td>
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2{% if isAdditionalService %} ps-3{% endif %}">
                 {% if productItem and productItem.product %}
                     {{ image(productItem.product, { width: 36, height: 36 }) }}
+                {% elseif isAdditionalService and orderItemForm.vars.data.additionalService %}
+                    {{ image(orderItemForm.vars.data.additionalService, { width: 36, height: 36 }) }}
                 {% endif %}
                 <div class="flex-grow-1">
                     <div class="input-group input-group-flat">

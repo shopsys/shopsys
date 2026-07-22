@@ -372,6 +372,12 @@ class OrderData
         ]);
     }
 
+    public function getProductsAndAdditionalServicesTotalPriceAfterAppliedDiscounts(): PriceInterface
+    {
+        return $this->getProductsTotalPriceAfterAppliedDiscounts()
+            ->add($this->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE]));
+    }
+
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
      */

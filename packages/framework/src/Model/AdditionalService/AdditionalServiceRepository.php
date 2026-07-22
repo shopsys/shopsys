@@ -55,6 +55,53 @@ class AdditionalServiceRepository
             ->getQuery()->getResult();
     }
 
+    /**
+     * @param int[] $productIds
+     * @return array<int, \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]>
+     */
+    public function getEnabledIndexedByProductIds(array $productIds, int $domainId): array
+    {
+        $productAdditionalServiceDomains = $this->createEnabledByProductQueryBuilder($domainId)
+            ->andWhere('pasd.product IN (:productIds)')
+            ->setParameter('productIds', $productIds)
+            ->getQuery()->getResult();
+
+        return $this->indexAdditionalServicesByProductId($productAdditionalServiceDomains);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]
+     */
+    public function getEnabledByProductIdAndDomainId(int $productId, int $domainId): array
+    {
+        return $this->getEnabledIndexedByProductIds([$productId], $domainId)[$productId] ?? [];
+    }
+
+    /**
+     * @param int[] $additionalServiceIds
+     * @return \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]
+     */
+    public function getEnabledByIds(array $additionalServiceIds, int $domainId): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('ads, at')
+            ->from(AdditionalService::class, 'ads')
+            ->leftJoin('ads.translations', 'at')
+            ->join(
+                'ads.domains',
+                'asd',
+                Join::WITH,
+                'asd.domainId = :domainId',
+            )
+            ->where('ads.id IN (:additionalServiceIds)')
+            ->andWhere('asd.enabled = true')
+            ->orderBy('ads.position', 'ASC')
+            ->addOrderBy('ads.id', 'ASC')
+            ->setParameter('additionalServiceIds', $additionalServiceIds)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()->getResult();
+    }
+
     protected function createEnabledByProductQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->em->createQueryBuilder()

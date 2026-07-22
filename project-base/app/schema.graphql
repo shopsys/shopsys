@@ -1,3 +1,23 @@
+"Represents an additional service offered with a product"
+type AdditionalService {
+  "Catalog number of the additional service"
+  catnum: String!
+  "By how many working days the additional service extends the estimated delivery time of the order"
+  deliveryDaysExtension: Int
+  "Description of the additional service"
+  description: String
+  "Additional service id"
+  id: Int!
+  "Additional service image"
+  mainImage(type: String = null): Image
+  "Name of the additional service"
+  name: String!
+  "Price of the additional service for one unit of the product it accompanies"
+  price: Price!
+  "UUID of the additional service"
+  uuid: Uuid!
+}
+
 input AddNewCustomerUserDataInput {
   "Customer user email."
   email: String!
@@ -457,6 +477,8 @@ input CartInput {
 
 "Represent one item in the cart"
 type CartItem {
+  "Additional services chosen for the cart item"
+  additionalServices: [AdditionalService!]!
   "Quantity of free items from X+Y promotion"
   freeQuantity: Int!
   "Product in the cart"
@@ -471,7 +493,9 @@ type CartItem {
 
 type CartItemModificationsResult {
   cartItemsWithChangedQuantity: [CartItem!]!
+  cartItemsWithModifiedAdditionalServicePrices: [CartItem!]!
   cartItemsWithModifiedPrice: [CartItem!]!
+  cartItemsWithRemovedAdditionalServices: [CartItem!]!
   noLongerListableCartItems: [CartItem!]!
 }
 
@@ -1323,6 +1347,8 @@ type MainBlogCategoryData {
 "Represents a product"
 type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
+  "Additional services offered with the product on the current domain"
+  additionalServices: [AdditionalService!]!
   availability: Availability!
   "Number of the stores where the product is available (null for main variants)"
   availableStoresCount: Int
@@ -1504,6 +1530,8 @@ type Mutation {
   RequestPasswordRecovery(email: String!): String!
   "Request access to personal data"
   RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
+  "Set the chosen additional services of a cart item"
+  SetCartItemAdditionalServices(input: SetCartItemAdditionalServicesInput!): Cart!
   "Set default delivery address by Uuid"
   SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CurrentCustomerUser!
   "check payment status of order after callback from payment service"
@@ -1823,6 +1851,10 @@ input OrderInput {
 type OrderItem {
   "Catalog number of the order item product"
   catnum: String
+  "By how many working days the additional service extends the estimated delivery time of the order"
+  deliveryDaysExtension: Int
+  "Main image of the product, additional service, transport or payment the order item represents"
+  mainImage(type: String = null): Image
   "Name of the order item"
   name: String!
   "Order to which the order item belongs"
@@ -1833,6 +1865,8 @@ type OrderItem {
   product: Product
   "Quantity of order items in the order"
   quantity: Int!
+  "Order items related to this order item (e.g. additional services of a product item)"
+  relatedItems: [OrderItem!]!
   "Total price for the quantity of order item"
   totalPrice: Price!
   "Transport method applied to the order"
@@ -1885,6 +1919,7 @@ input OrderItemsFilterInput {
 
 "One of possible types of the order item"
 enum OrderItemTypeEnum {
+  additionalService
   discount
   payment
   product
@@ -2250,6 +2285,8 @@ type PricingSetting {
 "Represents a product"
 interface Product {
   accessories: [Product!]!
+  "Additional services offered with the product on the current domain"
+  additionalServices: [AdditionalService!]!
   availability: Availability!
   "Number of the stores where the product is available (null for main variants)"
   availableStoresCount: Int
@@ -2919,6 +2956,8 @@ type RegularCustomerUser implements BaseCustomerUser {
 "Represents a product"
 type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
+  "Additional services offered with the product on the current domain"
+  additionalServices: [AdditionalService!]!
   availability: Availability!
   "Number of the stores where the product is available (null for main variants)"
   availableStoresCount: Int
@@ -3095,6 +3134,15 @@ type SeoSetting {
   title: String
   "Complement to title"
   titleAddOn: String
+}
+
+input SetCartItemAdditionalServicesInput {
+  "UUIDs of the additional services chosen for the cart item. The previously chosen services are replaced by the provided set."
+  additionalServiceUuids: [Uuid!]!
+  "Cart item UUID"
+  cartItemUuid: Uuid!
+  "Cart identifier, new cart will be created if not provided and customer is not logged in"
+  cartUuid: Uuid = null
 }
 
 "Represents settings of the current domain"
@@ -3362,6 +3410,8 @@ scalar Uuid
 "Represents a product"
 type Variant implements Product & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
+  "Additional services offered with the product on the current domain"
+  additionalServices: [AdditionalService!]!
   availability: Availability!
   "Number of the stores where the product is available (null for main variants)"
   availableStoresCount: Int

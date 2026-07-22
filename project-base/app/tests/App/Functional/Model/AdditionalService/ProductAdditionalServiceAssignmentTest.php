@@ -40,17 +40,18 @@ class ProductAdditionalServiceAssignmentTest extends TransactionFunctionalTestCa
     public function testAdditionalServicesAreAssignedToProductPerDomain(): void
     {
         $additionalService = $this->createAdditionalService();
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 5, Product::class);
 
         $productData = $this->productDataFactory->createFromProduct($product);
         $productData->additionalServicesByDomainId[Domain::FIRST_DOMAIN_ID] = [$additionalService];
         $this->productFacade->edit($product->getId(), $productData);
 
         $this->em->refresh($product);
-        $additionalServicesIndexedByDomainId = $product->getAdditionalServicesIndexedByDomainId();
 
-        $this->assertSame([$additionalService], $additionalServicesIndexedByDomainId[Domain::FIRST_DOMAIN_ID]);
-        $this->assertArrayNotHasKey(Domain::SECOND_DOMAIN_ID, $additionalServicesIndexedByDomainId);
+        $this->assertSame(
+            [Domain::FIRST_DOMAIN_ID => [$additionalService->getId()]],
+            $this->getAdditionalServiceIdsIndexedByDomainId($product),
+        );
     }
 
     public function testAdditionalServicesAreNotAssignableToMainVariant(): void
@@ -65,13 +66,13 @@ class ProductAdditionalServiceAssignmentTest extends TransactionFunctionalTestCa
 
         $this->em->refresh($mainVariant);
 
-        $this->assertSame([], $mainVariant->getAdditionalServicesIndexedByDomainId());
+        $this->assertSame([], $this->getAdditionalServiceIdsIndexedByDomainId($mainVariant));
     }
 
     public function testAdditionalServicesAreAssignableToVariant(): void
     {
         $additionalService = $this->createAdditionalService();
-        $variant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 53, Product::class);
+        $variant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 74, Product::class);
         $this->assertTrue($variant->isVariant());
 
         $variantData = $this->productDataFactory->createFromProduct($variant);
@@ -81,9 +82,26 @@ class ProductAdditionalServiceAssignmentTest extends TransactionFunctionalTestCa
         $this->em->refresh($variant);
 
         $this->assertSame(
-            [Domain::FIRST_DOMAIN_ID => [$additionalService]],
-            $variant->getAdditionalServicesIndexedByDomainId(),
+            [Domain::FIRST_DOMAIN_ID => [$additionalService->getId()]],
+            $this->getAdditionalServiceIdsIndexedByDomainId($variant),
         );
+    }
+
+    /**
+     * @return array<int, int[]>
+     */
+    private function getAdditionalServiceIdsIndexedByDomainId(Product $product): array
+    {
+        $additionalServiceIdsByDomainId = [];
+
+        foreach ($product->getAdditionalServicesIndexedByDomainId() as $domainId => $additionalServices) {
+            $additionalServiceIdsByDomainId[$domainId] = array_map(
+                static fn (AdditionalService $additionalService) => $additionalService->getId(),
+                $additionalServices,
+            );
+        }
+
+        return $additionalServiceIdsByDomainId;
     }
 
     private function createAdditionalService(): AdditionalService

@@ -45,7 +45,7 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         try {
             $transportPrice = $this->transportPriceCalculation->calculatePrice(
                 $transport,
-                $orderProcessingData->orderData->getProductsTotalPriceAfterAppliedDiscounts(),
+                $orderProcessingData->orderData->getProductsAndAdditionalServicesTotalPriceAfterAppliedDiscounts(),
                 $domainId,
                 $cartTotalWeight,
                 $orderProcessingData->orderData->freeTransportAndPaymentApplied,

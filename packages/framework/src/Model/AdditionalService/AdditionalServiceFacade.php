@@ -30,6 +30,32 @@ class AdditionalServiceFacade
         return $this->additionalServiceRepository->getAllOrderedByPosition();
     }
 
+    /**
+     * @param int[] $productIds
+     * @return array<int, \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]>
+     */
+    public function getEnabledIndexedByProductIds(array $productIds, int $domainId): array
+    {
+        return $this->additionalServiceRepository->getEnabledIndexedByProductIds($productIds, $domainId);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]
+     */
+    public function getEnabledByProductIdAndDomainId(int $productId, int $domainId): array
+    {
+        return $this->additionalServiceRepository->getEnabledByProductIdAndDomainId($productId, $domainId);
+    }
+
+    /**
+     * @param int[] $additionalServiceIds
+     * @return \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]
+     */
+    public function getEnabledByIds(array $additionalServiceIds, int $domainId): array
+    {
+        return $this->additionalServiceRepository->getEnabledByIds($additionalServiceIds, $domainId);
+    }
+
     public function create(AdditionalServiceData $additionalServiceData): AdditionalService
     {
         $additionalService = $this->additionalServiceFactory->create($additionalServiceData);

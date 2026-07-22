@@ -4,7 +4,22 @@
 <h2>{% trans into orderLocale %}Order items{% endtrans %}</h2>
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="border-bottom: 1px solid #efefef; min-width: 1px; margin-bottom: 10px;">
     {% for orderItem in order.itemsSortedWithRelatedItems %}
-        {{ self.orderItemRows(orderItem, order, orderLocale, orderItemTotalPricesById, displayPrice) }}
+        {% if not orderItem.isTypeAdditionalService %}
+            {{ self.orderItemRows(orderItem, order, orderLocale, orderItemTotalPricesById, displayPrice) }}
+            {% set additionalServiceItems = orderItem.relatedItems|filter(relatedItem => relatedItem.isTypeAdditionalService) %}
+
+            {% if additionalServiceItems|length > 0 %}
+                <tr>
+                    <td style="padding: 0 0 8px 32px; min-width: 1px;">
+                        <strong>{% trans into orderLocale %}Additional services{% endtrans %}</strong>
+                    </td>
+                </tr>
+
+                {% for relatedItem in additionalServiceItems %}
+                    {{ self.orderItemRows(relatedItem, order, orderLocale, orderItemTotalPricesById, displayPrice) }}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
     {% endfor %}
 </table>
 
@@ -18,12 +33,14 @@
         {% set entity = orderItem.payment %}
     {% elseif orderItem.isTypeProductGift and orderItem.productGift is not null %}
         {% set entity = orderItem.productGift %}
+    {% elseif orderItem.isTypeAdditionalService and orderItem.additionalService is not null %}
+        {% set entity = orderItem.additionalService %}
     {% endif %}
 
 
     {% if not orderItem.isTypeRounding and not orderItem.isTypeTransport and not orderItem.isTypePayment %}
         <tr>
-            <td style="{% if orderItem.isTypeDiscount or orderItem.isTypePromotion %} padding-bottom: 10px; {% else %} padding: 10px 0; border-top: 1px solid #efefef {% endif %}; min-width: 1px; position: relative;">
+            <td style="{% if orderItem.isTypeAdditionalService %} padding: 0 0 8px 32px; {% elseif orderItem.isTypeDiscount or orderItem.isTypePromotion %} padding-bottom: 10px; {% else %} padding: 10px 0; border-top: 1px solid #efefef {% endif %}; min-width: 1px; position: relative;">
                 {% if orderItem.isTypeProductGift %}
                     <div style="position: absolute; top: 10px; left: 0; width: fit-content; max-width: 80px; background: linear-gradient(to right, #9333ea, #db2777); color: #ffffff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 10;">
                         {% trans into orderLocale %}Gift{% endtrans %}
@@ -36,9 +53,9 @@
                             <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                 <tbody>
                                 <tr>
-                                    <td style="width: 80px; padding-right: 15px; text-align: center;">
+                                    <td style="width: {% if orderItem.isTypeAdditionalService %}24{% else %}80{% endif %}px; padding-right: {% if orderItem.isTypeAdditionalService %}8{% else %}15{% endif %}px; text-align: center;">
                                         {% if entity is not null %}
-                                            {{ image(entity, { width: 60, style: 'display: block;' }, order.domainId) }}
+                                            {{ image(entity, { width: orderItem.isTypeAdditionalService ? 24 : 60, style: 'display: block;' }, order.domainId) }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -54,7 +71,27 @@
                                             <tr>
                                                 <td class="product-description">
                                                     <strong>{{ orderItem.name }}</strong><br>
-                                                    {% if orderItem.isTypeProduct or orderItem.isTypeProductGift %}
+                                                    {% if orderItem.isTypeAdditionalService %}
+                                                        {% if orderItem.quantity > 1 %}
+                                                            {% if displayWithoutVat %}
+                                                                {% if not (displayBoth and isZeroPrice) %}
+                                                                    {% trans into orderLocale %}Unit price{% endtrans %}
+                                                                    {% if displayBoth %}
+                                                                        {% trans into orderLocale %}ex VAT{% endtrans %}
+                                                                    {% endif %}
+                                                                    <span style="white-space: nowrap;">{{ orderItem.unitPriceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}</span><br>
+                                                                {% endif %}
+                                                            {% endif %}
+
+                                                            {% if displayWithVat %}
+                                                                {% trans into orderLocale %}Unit price{% endtrans %}
+                                                                {% if displayBoth %}
+                                                                    {% trans into orderLocale %}inc VAT{% endtrans %}
+                                                                {% endif %}
+                                                                <span style="white-space: nowrap;">{{ orderItem.unitPriceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}</span><br>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% elseif orderItem.isTypeProduct or orderItem.isTypeProductGift %}
                                                         {% trans into orderLocale %}Amount{% endtrans %}: {{ orderItem.quantity|formatNumber(orderLocale) }} {{ orderItem.unitName }}<br>
 
                                                         {% if displayWithoutVat %}

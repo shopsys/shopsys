@@ -2156,6 +2156,100 @@ Order urlHash as a proof of access to the order for anonymous customers
 </tbody>
 </table>
 
+### AdditionalService
+
+Represents an additional service offered with a product
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.catnum">catnum</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Catalog number of the additional service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.deliverydaysextension">deliveryDaysExtension</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+By how many working days the additional service extends the estimated delivery time of the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.description">description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Description of the additional service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.id">id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Additional service id
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.mainimage">mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Additional service image
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.name">name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of the additional service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.price">price</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Price of the additional service for one unit of the product it accompanies
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.uuid">uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the additional service
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### AdvertCode
 
 <table>
@@ -3707,6 +3801,11 @@ Cart item UUID
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong id="cartitemmodificationsresult.cartitemswithchangedquantity">cartItemsWithChangedQuantity</strong></td>
+<td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cartitemmodificationsresult.cartitemswithmodifiedadditionalserviceprices">cartItemsWithModifiedAdditionalServicePrices</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td></td>
 </tr>
@@ -7663,6 +7762,29 @@ Represent one item in the order
 Catalog number of the order item product
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderitem.deliverydaysextension">deliveryDaysExtension</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+By how many working days the additional service extends the estimated delivery time of the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderitem.mainimage">mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Main image of the product, additional service, transport or payment the order item represents
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="orderitem.name">name</strong></td>

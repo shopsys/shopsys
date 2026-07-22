@@ -676,6 +676,9 @@ msgstr ""
 msgid "Crevice nozzle VP-4290"
 msgstr ""
 
+msgid "Custom engraving"
+msgstr ""
+
 msgid "Customer activation"
 msgstr ""
 
@@ -719,6 +722,9 @@ msgid "DVB-T Receiver HD - MPEG4, MPEG2, USB recording, timeshift"
 msgstr ""
 
 msgid "DVB-T Receiver HD - MPEG4, MPEG2, USB recording, timeshift, EPG, HDMI 1.3, USB, SCART, coaxial output, power antenna 5V/50mA"
+msgstr ""
+
+msgid "Damage insurance for 2 years"
 msgstr ""
 
 msgid "DeLonghi ECAM 44.660 B Eletta Plus"
@@ -925,6 +931,9 @@ msgstr "Explore electronics"
 msgid "Explore the documentation"
 msgstr "Explore the documentation"
 
+msgid "Extended warranty for 5 years"
+msgstr ""
+
 msgid "Extension rod plastic TM-4610"
 msgstr ""
 
@@ -1031,6 +1040,9 @@ msgid "Genius repro SP-M120 black"
 msgstr ""
 
 msgid "Get to know Shopsys"
+msgstr ""
+
+msgid "Gift wrapping"
 msgstr ""
 
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
@@ -1510,6 +1522,9 @@ msgstr ""
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
 msgstr ""
 
+msgid "Old appliance removal"
+msgstr ""
+
 msgid "Online shopping"
 msgstr "Online shopping"
 
@@ -1707,6 +1722,9 @@ msgstr "Product news | Demo shop"
 
 msgid "Products worth comparing"
 msgstr "Products worth comparing"
+
+msgid "Professional assembly"
+msgstr ""
 
 msgid "Promoted products"
 msgstr ""
@@ -2182,6 +2200,9 @@ msgstr ""
 msgid "The product exceeded my expectations and was delivered quickly."
 msgstr ""
 
+msgid "The product will be assembled and installed by our certified technician."
+msgstr ""
+
 msgid "The quality is excellent and the product works exactly as described."
 msgstr ""
 
@@ -2213,6 +2234,9 @@ msgid "The telescopic hood is very elegant and practical variant of the classica
 msgstr ""
 
 msgid "The television works well, but the remote control buttons could be easier to read."
+msgstr ""
+
+msgid "The warranty of the product is extended to 5 years in total."
 msgstr ""
 
 msgid "These demonstration store terms summarise reservations, personal collection, payment, returns, and complaint handling at sample branches."
@@ -2397,6 +2421,12 @@ msgstr ""
 
 msgid "We welcome curious people who enjoy improving online shopping and solving practical customer problems."
 msgstr "We welcome curious people who enjoy improving online shopping and solving practical customer problems."
+
+msgid "We will collect and ecologically dispose of your old appliance."
+msgstr ""
+
+msgid "We will engrave a text of your choice on the product."
+msgstr ""
 
 msgid "We work with manufacturers, distributors, service partners, and creators who can bring useful products and knowledge to customers."
 msgstr "We work with manufacturers, distributors, service partners, and creators who can bring useful products and knowledge to customers."

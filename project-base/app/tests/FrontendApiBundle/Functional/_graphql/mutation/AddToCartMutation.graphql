@@ -47,6 +47,11 @@ mutation AddToCart(
                 priceWithoutVat
                 vatAmount
             }
+            totalItemsPrice {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
             totalDiscountPrice {
                 priceWithVat
                 priceWithoutVat
@@ -56,6 +61,10 @@ mutation AddToCart(
                 uuid
                 quantity
                 freeQuantity
+                type
+                additionalServices {
+                    catnum
+                }
                 product {
                     ...TestProductFragment
                     ... on Variant {

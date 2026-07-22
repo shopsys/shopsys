@@ -52,13 +52,14 @@ class TransportAndPaymentWatcherFacade
 
         $orderData = $this->orderFacade->createOrderDataFromCart($cart, $this->domain->getCurrentDomainConfig());
 
-        $productsPrice = $orderData->getProductsTotalPriceAfterAppliedDiscounts();
+        $additionalServicesPrice = $orderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE]);
+        $totalItemsPrice = $orderData->getProductsAndAdditionalServicesTotalPriceAfterAppliedDiscounts();
 
         $isFreeTransportAndPaymentPromoCodeApplied = $orderData->freeTransportAndPaymentApplied;
 
         if ($this->freeTransportAndPaymentFacade->isActive($domainId, $isFreeTransportAndPaymentPromoCodeApplied)) {
             $amountForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingAmount(
-                $productsPrice,
+                $totalItemsPrice,
                 $domainId,
                 $isFreeTransportAndPaymentPromoCodeApplied,
             );
@@ -67,8 +68,8 @@ class TransportAndPaymentWatcherFacade
         }
 
         $this->cartWithModificationsResult->setTotalPrice($orderData->totalPrice);
-        $this->cartWithModificationsResult->setTotalItemsPrice($productsPrice);
-        $this->cartWithModificationsResult->setTotalItemsPriceBeforeDiscount($orderData->basicTotalItemsPrice);
+        $this->cartWithModificationsResult->setTotalItemsPrice($totalItemsPrice);
+        $this->cartWithModificationsResult->setTotalItemsPriceBeforeDiscount($orderData->basicTotalItemsPrice->add($additionalServicesPrice));
         $this->cartWithModificationsResult->setTotalProductPriceAdjustmentsDiscount($orderData->totalProductPriceAdjustmentsDiscount);
         $this->cartWithModificationsResult->setTotalDiscountPrice($orderData->getTotalDiscountPrice());
         $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_ROUNDING]);

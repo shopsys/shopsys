@@ -82,6 +82,7 @@ class AdditionalServiceFeedTest extends TransactionFunctionalTestCase
         $feedContent = $this->generateFeedContent('heureka');
 
         $this->assertStringContainsString('<SPECIAL_SERVICE>Assembly included</SPECIAL_SERVICE>', $feedContent);
+        $this->assertStringNotContainsString('Damage insurance for 2 years', $feedContent);
     }
 
     public function testZboziFeedContainsExtraMessageAndCustomText(): void
@@ -90,6 +91,7 @@ class AdditionalServiceFeedTest extends TransactionFunctionalTestCase
 
         $this->assertStringContainsString('<EXTRA_MESSAGE>free_installation</EXTRA_MESSAGE>', $feedContent);
         $this->assertStringContainsString('<CUSTOM_TEXT>Professional assembly of the product</CUSTOM_TEXT>', $feedContent);
+        $this->assertStringNotContainsString('Damage insurance for 2 years', $feedContent);
     }
 
     public function testGoogleFeedContainsCustomLabel0(): void

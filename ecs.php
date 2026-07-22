@@ -119,6 +119,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Product/Parameter/ParameterRepository.php',
                 __DIR__ . '/packages/mcp/src/Component/Database/Query/SqlQueryValidator.php',
                 __DIR__ . '/project-base/app/tests/App/Functional/Model/Product/ProductOnCurrentDomainElasticFacadeCountDataTest.php',
+                __DIR__ . '/packages/framework/tests/Unit/Model/Transport/DeliveryDate/TransportExpectedDeliveryDateCalculationTest.php',
             ],
             CyclomaticComplexitySniff::class => [
                 __DIR__ . '/packages/framework/src/Migrations/Version20231124121921.php',

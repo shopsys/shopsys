@@ -676,6 +676,9 @@ msgstr "Kreditní kartou"
 msgid "Crevice nozzle VP-4290"
 msgstr "Hubice štěrbinová VP-4290"
 
+msgid "Custom engraving"
+msgstr "Vlastní gravírování"
+
 msgid "Customer activation"
 msgstr "Aktivace zákazníka"
 
@@ -720,6 +723,9 @@ msgstr "Kompaktní DVB-T přijímač (Set Top Box) Sencor SDB 4002M4 pro pozemn�
 
 msgid "DVB-T Receiver HD - MPEG4, MPEG2, USB recording, timeshift, EPG, HDMI 1.3, USB, SCART, coaxial output, power antenna 5V/50mA"
 msgstr "Kompaktní DVB-T přijímač (Set Top Box) Sencor SDB 4002M4 pro pozemní digitální vysílání neplacených digitálních programů (FTA) přes vnitřní nebo venkovní anténu. Možnost připojení k televizoru přes SCART kabel."
+
+msgid "Damage insurance for 2 years"
+msgstr "Pojištění proti poškození na 2 roky"
 
 msgid "DeLonghi ECAM 44.660 B Eletta Plus"
 msgstr "DeLonghi ECAM 44.660 B Eletta Plus"
@@ -925,6 +931,9 @@ msgstr "Prozkoumat elektroniku"
 msgid "Explore the documentation"
 msgstr "Prozkoumejte dokumentaci"
 
+msgid "Extended warranty for 5 years"
+msgstr "Prodloužená záruka na 5 let"
+
 msgid "Extension rod plastic TM-4610"
 msgstr "Nástavec tyčový plast TM-4610"
 
@@ -1032,6 +1041,9 @@ msgstr "Genius repro SP-M120 černá"
 
 msgid "Get to know Shopsys"
 msgstr "Poznejte Shopsys"
+
+msgid "Gift wrapping"
+msgstr "Dárkové balení"
 
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr "Čistič skla a sklokeramických desek ( 4019786908123 )"
@@ -1510,6 +1522,9 @@ msgstr "OPP-2060  Odsavač par podstavný 60 cm"
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
 msgstr "OPV-3260 Vestavný odsavač výsuvný 60cm"
 
+msgid "Old appliance removal"
+msgstr "Odvoz starého spotřebiče"
+
 msgid "Online shopping"
 msgstr "Nakupování online"
 
@@ -1707,6 +1722,9 @@ msgstr "Produktové novinky | Demo obchod"
 
 msgid "Products worth comparing"
 msgstr "Produkty, které stojí za porovnání"
+
+msgid "Professional assembly"
+msgstr "Odborná montáž"
 
 msgid "Promoted products"
 msgstr "Promované produkty"
@@ -2182,6 +2200,9 @@ msgstr "Produkt dorazil v pořádku."
 msgid "The product exceeded my expectations and was delivered quickly."
 msgstr "Produkt předčil má očekávání a byl doručen rychle."
 
+msgid "The product will be assembled and installed by our certified technician."
+msgstr "Produkt sestaví a nainstaluje náš certifikovaný technik."
+
 msgid "The quality is excellent and the product works exactly as described."
 msgstr "Kvalita je vynikající a produkt funguje přesně podle popisu."
 
@@ -2214,6 +2235,9 @@ msgstr "<p>Výsuvný odsavač par je velice elegantní a praktickou variantou kl
 
 msgid "The television works well, but the remote control buttons could be easier to read."
 msgstr "Televize funguje dobře, ale tlačítka na dálkovém ovladači by mohla být lépe čitelná."
+
+msgid "The warranty of the product is extended to 5 years in total."
+msgstr "Záruka na produkt je prodloužena na celkem 5 let."
 
 msgid "These demonstration store terms summarise reservations, personal collection, payment, returns, and complaint handling at sample branches."
 msgstr "Tyto ukázkové podmínky prodejen shrnují rezervace, osobní odběr, platby, vrácení a reklamace na ukázkových pobočkách."
@@ -2397,6 +2421,12 @@ msgstr ""
 
 msgid "We welcome curious people who enjoy improving online shopping and solving practical customer problems."
 msgstr "Vítáme zvídavé lidi, které baví zlepšovat online nakupování a řešit praktické potřeby zákazníků."
+
+msgid "We will collect and ecologically dispose of your old appliance."
+msgstr "Odvezeme a ekologicky zlikvidujeme váš starý spotřebič."
+
+msgid "We will engrave a text of your choice on the product."
+msgstr "Na produkt vygravírujeme text dle vašeho přání."
 
 msgid "We work with manufacturers, distributors, service partners, and creators who can bring useful products and knowledge to customers."
 msgstr "Spolupracujeme s výrobci, distributory, servisními partnery a tvůrci, kteří zákazníkům přinášejí užitečné produkty a znalosti."

@@ -11,10 +11,13 @@ use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrontendApiBundle\Model\AdditionalService\AdditionalServiceApiFacade;
+use Shopsys\FrontendApiBundle\Model\Cart\Exception\InvalidAdditionalServiceUserError;
 use Shopsys\FrontendApiBundle\Model\Cart\Exception\InvalidCartItemUserError;
 use Shopsys\FrontendApiBundle\Model\Cart\Exception\UnavailableCartUserError;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
@@ -28,6 +31,7 @@ class CartApiFacade
         protected readonly ProductFacade $productFacade,
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly AdditionalServiceApiFacade $additionalServiceApiFacade,
     ) {
     }
 
@@ -113,5 +117,42 @@ class CartApiFacade
         } catch (InvalidCartItemException $e) {
             throw new InvalidCartItemUserError($e->getMessage());
         }
+    }
+
+    /**
+     * @param string[] $additionalServiceUuids
+     */
+    public function setCartItemAdditionalServicesByUuid(
+        string $cartItemUuid,
+        array $additionalServiceUuids,
+        Cart $cart,
+    ): Cart {
+        try {
+            $cartItem = $cart->getItemByUuid($cartItemUuid);
+            $product = $cartItem->getProduct();
+        } catch (InvalidCartItemException | ProductNotFoundException $e) {
+            throw new InvalidCartItemUserError($e->getMessage());
+        }
+
+        if ($cartItem->getType() !== CartItemTypeEnum::TYPE_PRODUCT) {
+            throw new InvalidCartItemUserError('Only product cart items can have additional services set.');
+        }
+
+        $additionalServices = $this->additionalServiceApiFacade->getEnabledByProductAndUuids(
+            $product,
+            $additionalServiceUuids,
+        );
+
+        if (count($additionalServices) !== count(array_unique($additionalServiceUuids))) {
+            throw new InvalidAdditionalServiceUserError(
+                'Some of the provided additional services are not available for the product in the cart.',
+            );
+        }
+
+        return $this->cartFacade->setItemAdditionalServicesInExistingCartByUuid(
+            $cartItemUuid,
+            $additionalServices,
+            $cart,
+        );
     }
 }

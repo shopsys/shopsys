@@ -19,3 +19,6 @@ CartItemDecorator:
             freeQuantity:
                 type: "Int!"
                 description: "Quantity of free items from X+Y promotion"
+            additionalServices:
+                type: "[AdditionalService!]!"
+                description: "Additional services chosen for the cart item"

@@ -119,14 +119,13 @@ class OrderDataFactory
             }
 
             $orderItemData = $this->orderItemDataFactory->createFromOrderItem($orderItem);
+            $orderData->items[$orderItem->getId()] = $orderItemData;
 
             foreach ($orderItem->getRelatedItems() as $relatedItem) {
                 $relatedOrderItemData = $this->orderItemDataFactory->createFromOrderItem($relatedItem);
                 $orderData->items[$relatedItem->getId()] = $relatedOrderItemData;
                 $orderItemData->relatedOrderItemsData[] = $relatedOrderItemData;
             }
-
-            $orderData->items[$orderItem->getId()] = $orderItemData;
         }
     }
 

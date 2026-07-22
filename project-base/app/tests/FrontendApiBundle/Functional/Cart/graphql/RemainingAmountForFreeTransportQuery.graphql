@@ -1,0 +1,14 @@
+query RemainingAmountForFreeTransport($cartUuid: Uuid) {
+    cart(
+        cartInput: {
+            cartUuid: $cartUuid
+        }) {
+        remainingAmountForFreeTransport
+        totalItemsPrice {
+            priceWithVat
+        }
+        totalPrice {
+            priceWithVat
+        }
+    }
+}
