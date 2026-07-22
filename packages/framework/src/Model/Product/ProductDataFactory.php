@@ -63,6 +63,7 @@ class ProductDataFactory
             $productData->shortDescriptionUsp4ByDomainId[$domainId] = null;
             $productData->shortDescriptionUsp5ByDomainId[$domainId] = null;
             $productData->flagsByDomainId[$domainId] = [];
+            $productData->additionalServicesByDomainId[$domainId] = [];
             $productData->orderingPriorityByDomainId[$domainId] = 0;
             $productData->domainSellingDenied[$domainId] = false;
             $productData->domainHidden[$domainId] = false;
@@ -155,6 +156,7 @@ class ProductDataFactory
         $productData->unit = $product->getUnit();
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();
+        $productData->additionalServicesByDomainId = $product->getAdditionalServicesIndexedByDomainId();
         $productData->brand = $product->getBrand();
         $productData->parameters = $this->getParametersData($product);
         $productData->accessories = $this->getAccessoriesData($product);

@@ -140,6 +140,12 @@ class Product extends AbstractTranslatableEntity
     protected $productCategoryDomains;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\ProductAdditionalServiceDomain>
+     */
+    #[ORM\OneToMany(targetEntity: ProductAdditionalServiceDomain::class, mappedBy: 'product', orphanRemoval: true, cascade: ['persist'])]
+    protected $productAdditionalServiceDomains;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
      */
     #[AsMcpColumn]
@@ -240,6 +246,7 @@ class Product extends AbstractTranslatableEntity
         $this->ean = $productData->ean;
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
+        $this->productAdditionalServiceDomains = new ArrayCollection();
 
         $this->variants = new ArrayCollection();
 
@@ -551,6 +558,45 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductAdditionalServiceDomain[] $productAdditionalServiceDomains
+     */
+    public function setProductAdditionalServiceDomains($productAdditionalServiceDomains): void
+    {
+        foreach ($this->productAdditionalServiceDomains as $productAdditionalServiceDomain) {
+            if ($this->isProductAdditionalServiceDomainInArray($productAdditionalServiceDomain, $productAdditionalServiceDomains) === false) {
+                $this->productAdditionalServiceDomains->removeElement($productAdditionalServiceDomain);
+            }
+        }
+
+        foreach ($productAdditionalServiceDomains as $productAdditionalServiceDomain) {
+            if ($this->isProductAdditionalServiceDomainInArray(
+                $productAdditionalServiceDomain,
+                $this->productAdditionalServiceDomains->getValues(),
+            ) === false) {
+                $this->productAdditionalServiceDomains->add($productAdditionalServiceDomain);
+            }
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductAdditionalServiceDomain[] $productAdditionalServiceDomains
+     */
+    protected function isProductAdditionalServiceDomainInArray(
+        ProductAdditionalServiceDomain $searchProductAdditionalServiceDomain,
+        array $productAdditionalServiceDomains,
+    ): bool {
+        foreach ($productAdditionalServiceDomains as $productAdditionalServiceDomain) {
+            if ($productAdditionalServiceDomain->getAdditionalService() === $searchProductAdditionalServiceDomain->getAdditionalService()
+                && $productAdditionalServiceDomain->getDomainId() === $searchProductAdditionalServiceDomain->getDomainId()
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      */
     protected function isProductCategoryDomainInArray(
@@ -583,6 +629,7 @@ class Product extends AbstractTranslatableEntity
         }
 
         $this->variantType = static::VARIANT_TYPE_MAIN;
+        $this->productAdditionalServiceDomains->clear();
     }
 
     /**
@@ -633,6 +680,20 @@ class Product extends AbstractTranslatableEntity
         }
 
         return $categoriesByDomainId;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[][]
+     */
+    public function getAdditionalServicesIndexedByDomainId()
+    {
+        $additionalServicesByDomainId = [];
+
+        foreach ($this->productAdditionalServiceDomains as $productAdditionalServiceDomain) {
+            $additionalServicesByDomainId[$productAdditionalServiceDomain->getDomainId()][] = $productAdditionalServiceDomain->getAdditionalService();
+        }
+
+        return $additionalServicesByDomainId;
     }
 
     /**
