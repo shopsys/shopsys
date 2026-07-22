@@ -10,7 +10,7 @@ import { generateProductImageAlt } from 'utils/productAltText';
 import { getAvailabilityTextColorClassName } from 'utils/ui/getAvailabilityTextColorClassName';
 
 type OrderItemGiftCardProps = {
-    availability: TypeAvailability;
+    availability?: TypeAvailability;
     mainImage?: TypeImageFragment | null;
     fullName: string;
     categoryName: string;
@@ -46,14 +46,16 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
                 <div className="flex flex-1 items-center justify-between gap-2.5">
                     <div className="flex flex-col gap-0.5">
                         <span className="max-w-44 font-semibold text-sm">{fullName}</span>
-                        <span
-                            className={twJoin(
-                                'font-semibold text-xs',
-                                getAvailabilityTextColorClassName(availability.status),
-                            )}
-                        >
-                            {availability.name}
-                        </span>
+                        {availability !== undefined && (
+                            <span
+                                className={twJoin(
+                                    'font-semibold text-xs',
+                                    getAvailabilityTextColorClassName(availability.status),
+                                )}
+                            >
+                                {availability.name}
+                            </span>
+                        )}
                     </div>
                     <span className="whitespace-nowrap font-semibold text-sm">
                         {quantity} {unit}

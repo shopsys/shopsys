@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { CartItemPartialAvailability } from 'components/Blocks/Product/CartItemPartialAvailability';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
@@ -10,6 +11,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeCartItemTypeEnum } from 'graphql/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { isCartItemPartiallyAvailable } from 'utils/cart/isCartItemPartiallyAvailable';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -243,12 +245,21 @@ export const CartListItem: FC<CartListItemProps> = ({
                             )}
                         </div>
 
-                        <ProductAvailability
-                            availability={product.availability}
-                            availableStoresCount={product.availableStoresCount}
-                            className="xs:w-44 flex-1"
-                            isInquiryType={product.isInquiryType}
-                        />
+                        {isCartItemPartiallyAvailable(product, quantity) ? (
+                            <CartItemPartialAvailability
+                                className="xs:w-52 shrink-0 text-sm"
+                                expectedRestockingDate={product.expectedRestockingDate}
+                                stockQuantity={product.stockQuantity ?? 0}
+                                unitName={product.unit.name}
+                            />
+                        ) : (
+                            <ProductAvailability
+                                availability={product.availability}
+                                availableStoresCount={product.availableStoresCount}
+                                className="xs:w-52 shrink-0"
+                                isInquiryType={product.isInquiryType}
+                            />
+                        )}
                     </div>
                 </div>
 
