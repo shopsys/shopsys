@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { OperationResult } from 'urql';
-import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
+import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 type LoginHandler = (
@@ -23,16 +23,15 @@ export const useLogin = () => {
     const domainConfig = useDomainConfig();
 
     const login: LoginHandler = async (variables, rewriteUrl) => {
-        const loginResult = await loginMutation({
-            ...variables,
-            productListsUuids: Object.values(productListUuids),
-        });
+        const loginResult = await loginMutation(
+            {
+                ...variables,
+                productListsUuids: Object.values(productListUuids),
+            },
+            { fetch: getAuthMutationFetcher(domainConfig) },
+        );
 
         if (loginResult.data) {
-            const { accessToken, refreshToken } = loginResult.data.Login.tokens;
-
-            setTokensToCookies(accessToken, refreshToken, domainConfig);
-
             handleActionsAfterLogin(loginResult.data.Login.showCartMergeInfo, rewriteUrl);
         }
 
@@ -76,16 +75,11 @@ export const useLoginAfterPasswordRecovery = () => {
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const domainConfig = useDomainConfig();
 
-    const handleActionsAfterPasswordRecovery = (
-        showCartMergeInfo: boolean,
-        accessToken: string,
-        refreshToken: string,
-    ) => {
+    const handleActionsAfterPasswordRecovery = (showCartMergeInfo: boolean) => {
         updateCartUuid(null);
         updateProductListUuids({});
 
         updateAuthLoadingState(showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading');
-        setTokensToCookies(accessToken, refreshToken, domainConfig);
         updateUserEntryState('login');
         updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
 

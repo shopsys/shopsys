@@ -3,6 +3,42 @@ import { TypePhoneDataInput, TypePromoCode, TypeRegistrationDataInput } from '..
 import 'cypress-real-events';
 import { b2bDomain, PERSIST_STORE_NAME, staticData } from 'fixtures/demodata';
 
+const getRequiredB2bDomain = () => {
+    if (b2bDomain === null) {
+        throw new Error('B2B domain is not configured. Set B2B_DOMAIN_ID and B2B_BASE_URL before using B2B commands.');
+    }
+
+    return b2bDomain;
+};
+
+const setAuthenticationCookies = (
+    domainId: number,
+    accessToken: string,
+    refreshToken: string,
+    domain?: string,
+): void => {
+    const commonOptions = {
+        domain,
+        log: false,
+        path: '/',
+        sameSite: 'lax' as const,
+        secure: true,
+    };
+    const refreshExpiry = Math.floor(Date.now() / 1000) + 3600 * 24 * 14;
+
+    cy.setCookie(`accessToken-${domainId}`, accessToken, { ...commonOptions, httpOnly: false });
+    cy.setCookie(`refreshToken-${domainId}`, refreshToken, {
+        ...commonOptions,
+        expiry: refreshExpiry,
+        httpOnly: true,
+    });
+    cy.setCookie(`refreshTokenPresent-${domainId}`, '1', {
+        ...commonOptions,
+        expiry: refreshExpiry,
+        httpOnly: false,
+    });
+};
+
 Cypress.Commands.add('checkGQL', { prevSubject: true }, (subject: Cypress.Response<any>, operationName: string) => {
     // Defer all work into Cypress chain so cy.log entries render in GUI before any throw
     return cy.wrap(subject, { log: false }).then((response) => {
@@ -331,11 +367,11 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDa
             if (shouldLogin) {
                 expect(registrationResponse.tokens.accessToken).to.be.a('string').and.not.be.empty;
                 expect(registrationResponse.tokens.refreshToken).to.be.a('string').and.not.be.empty;
-                cy.setCookie('accessToken-1', registrationResponse.tokens.accessToken, { path: '/' });
-                cy.setCookie('refreshToken-1', registrationResponse.tokens.refreshToken, {
-                    expiry: Math.floor(Date.now() / 1000) + 3600 * 24 * 14,
-                    path: '/',
-                });
+                setAuthenticationCookies(
+                    1,
+                    registrationResponse.tokens.accessToken,
+                    registrationResponse.tokens.refreshToken,
+                );
             }
         });
 });
@@ -380,11 +416,8 @@ Cypress.Commands.add('login', (email = staticData.user.email, password = staticD
                 refreshToken = data.Login.tokens.refreshToken;
 
                 cy.log('Customer login - ' + staticData.user.email);
-                if (accessToken) {
-                    cy.setCookie('accessToken-1', accessToken, { log: false });
-                }
-                if (refreshToken) {
-                    cy.setCookie('refreshToken-1', refreshToken, { log: false });
+                if (accessToken && refreshToken) {
+                    setAuthenticationCookies(1, accessToken, refreshToken);
                 }
             });
 
@@ -392,8 +425,7 @@ Cypress.Commands.add('login', (email = staticData.user.email, password = staticD
     }
 
     cy.log('Customer login - ' + email);
-    cy.setCookie('accessToken-1', accessToken, { log: false });
-    cy.setCookie('refreshToken-1', refreshToken, { log: false });
+    setAuthenticationCookies(1, accessToken, refreshToken);
 });
 
 Cypress.Commands.add('logout', () => {
@@ -429,6 +461,7 @@ Cypress.Commands.add('logout', () => {
                 expect(data.Logout).to.be.true;
                 cy.clearCookie('accessToken-1');
                 cy.clearCookie('refreshToken-1');
+                cy.clearCookie('refreshTokenPresent-1');
             });
     });
 });
@@ -532,9 +565,10 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
 });
 
 Cypress.Commands.add('createB2bOrderForTest', () => {
-    const b2bGraphqlUrl = b2bDomain.baseUrl + '/graphql/';
-    const b2bHostname = new URL(b2bDomain.baseUrl).hostname;
-    const cookieName = `accessToken-${b2bDomain.domainId}`;
+    const currentB2bDomain = getRequiredB2bDomain();
+    const b2bGraphqlUrl = currentB2bDomain.baseUrl + '/graphql/';
+    const b2bHostname = new URL(currentB2bDomain.baseUrl).hostname;
+    const cookieName = `accessToken-${currentB2bDomain.domainId}`;
     type TransportForB2bOrder = {
         uuid: string;
         transportTypeCode: string;
@@ -664,11 +698,12 @@ Cypress.Commands.add('createB2bOrderForTest', () => {
 });
 
 Cypress.Commands.add('loginB2b', (email: string, password: string) => {
-    const b2bHostname = new URL(b2bDomain.baseUrl).hostname;
+    const currentB2bDomain = getRequiredB2bDomain();
+    const b2bHostname = new URL(currentB2bDomain.baseUrl).hostname;
 
     cy.request({
         method: 'POST',
-        url: b2bDomain.baseUrl + '/graphql/',
+        url: currentB2bDomain.baseUrl + '/graphql/',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -696,21 +731,20 @@ Cypress.Commands.add('loginB2b', (email: string, password: string) => {
         .checkGQL('LoginMutation')
         .then((data) => {
             cy.log('B2B login - ' + email);
-            cy.setCookie(`accessToken-${b2bDomain.domainId}`, data.Login.tokens.accessToken, {
-                log: false,
-                domain: b2bHostname,
-            });
-            cy.setCookie(`refreshToken-${b2bDomain.domainId}`, data.Login.tokens.refreshToken, {
-                log: false,
-                domain: b2bHostname,
-            });
+            setAuthenticationCookies(
+                currentB2bDomain.domainId,
+                data.Login.tokens.accessToken,
+                data.Login.tokens.refreshToken,
+                b2bHostname,
+            );
         });
 });
 
 const makeB2bGraphqlRequest = (operationName: string, query: string, variables: object) => {
-    const b2bGraphqlUrl = b2bDomain.baseUrl + '/graphql/';
-    const b2bHostname = new URL(b2bDomain.baseUrl).hostname;
-    const cookieName = `accessToken-${b2bDomain.domainId}`;
+    const currentB2bDomain = getRequiredB2bDomain();
+    const b2bGraphqlUrl = currentB2bDomain.baseUrl + '/graphql/';
+    const b2bHostname = new URL(currentB2bDomain.baseUrl).hostname;
+    const cookieName = `accessToken-${currentB2bDomain.domainId}`;
 
     return cy.getCookie(cookieName, { domain: b2bHostname }).then((cookie) => {
         const token = cookie?.value;

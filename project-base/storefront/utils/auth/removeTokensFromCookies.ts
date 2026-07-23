@@ -1,23 +1,34 @@
+import { IncomingMessage, ServerResponse } from 'node:http';
 import { deleteCookie } from 'cookies-next';
-import { GetServerSidePropsContext, NextPageContext } from 'next';
+import {
+    ACCESS_TOKEN_COOKIE_NAME,
+    REFRESH_TOKEN_COOKIE_NAME,
+    REFRESH_TOKEN_PRESENT_COOKIE_NAME,
+} from 'utils/auth/authConstants';
 import { getCookieName } from 'utils/cookies/cookieNaming';
 import { DomainConfigType } from 'utils/domain/domainConfig';
-import { getIsHttps, getProtocol } from 'utils/requestProtocol';
 
-export const removeTokensFromCookies = (
-    domainConfig: DomainConfigType,
-    context?: GetServerSidePropsContext | NextPageContext,
-): void => {
-    deleteCookie(getCookieName('accessToken', domainConfig.domainId), {
+type AuthServerContext = {
+    req?: IncomingMessage;
+    res?: ServerResponse;
+};
+
+const deleteAuthCookie = (cookieName: string, domainConfig: DomainConfigType, context?: AuthServerContext): void => {
+    deleteCookie(getCookieName(cookieName, domainConfig.domainId), {
         req: context?.req,
         res: context?.res,
         path: '/',
-        secure: getIsHttps(getProtocol(context)),
+        sameSite: 'lax',
+        secure: true,
     });
-    deleteCookie(getCookieName('refreshToken', domainConfig.domainId), {
-        req: context?.req,
-        res: context?.res,
-        path: '/',
-        secure: getIsHttps(getProtocol(context)),
-    });
+};
+
+export const removeAccessTokenFromCookies = (domainConfig: DomainConfigType, context?: AuthServerContext): void => {
+    deleteAuthCookie(ACCESS_TOKEN_COOKIE_NAME, domainConfig, context);
+};
+
+export const removeTokensFromCookies = (domainConfig: DomainConfigType, context: AuthServerContext): void => {
+    deleteAuthCookie(ACCESS_TOKEN_COOKIE_NAME, domainConfig, context);
+    deleteAuthCookie(REFRESH_TOKEN_COOKIE_NAME, domainConfig, context);
+    deleteAuthCookie(REFRESH_TOKEN_PRESENT_COOKIE_NAME, domainConfig, context);
 };

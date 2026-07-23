@@ -1,4 +1,3 @@
-import { isIP } from 'net';
 import { GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { getCurrentCustomerUserRoles } from 'utils/auth/getCurrentCustomerUserRoles';
@@ -11,6 +10,7 @@ import { isFullPageRequest } from 'utils/isFullPageRequest';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getServerSideInternationalizedStaticUrl';
 import { applyStorefrontDevelopmentCspAppendices } from './cspHelpers';
+import { getIpAddressFromRequest } from './getIpAddressFromRequest';
 import { BuildServerSidePropsParams, ServerSidePropsType } from './types';
 
 const I18N_NAMESPACES = ['common', 'accessibility'];
@@ -91,7 +91,7 @@ export const buildServerSideProps = async ({
         context.res.statusCode = 503;
     }
 
-    const ipAddress = getIpAddress(context);
+    const ipAddress = getIpAddressFromRequest(context.req);
     const isFullPageLoad = isFullPageRequest(context.req.headers);
     const translationProps = isFullPageLoad
         ? await loadNamespaces({
@@ -125,22 +125,4 @@ export const buildServerSideProps = async ({
             ...additionalProps,
         },
     };
-};
-
-export const getIpAddress = (context: BuildServerSidePropsParams['context']): string | undefined => {
-    const xForwardedFor = context.req?.headers['x-forwarded-for'];
-    const rawXForwardedFor = Array.isArray(xForwardedFor) ? xForwardedFor.join(',') : xForwardedFor;
-    const forwardedIpAddresses = rawXForwardedFor
-        ?.split(',')
-        .map((ipAddress) => ipAddress.trim())
-        .filter(Boolean);
-    const forwardedIpAddress = forwardedIpAddresses?.[forwardedIpAddresses.length - 1];
-
-    if (forwardedIpAddress !== undefined && isIP(forwardedIpAddress)) {
-        return forwardedIpAddress;
-    }
-
-    const remoteAddress = context.req?.socket?.remoteAddress;
-
-    return remoteAddress !== undefined && isIP(remoteAddress) ? remoteAddress : undefined;
 };

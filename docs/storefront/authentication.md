@@ -16,15 +16,18 @@ Proper options for authExchange can be obtained with `getAuthExchangeOptions` fr
 The following options are created for `authExchange`:
 
 `addAuthToOperation`
-Responsible for adding access token as `Authorization: Bearer xxx` header to each request made with URQL.
-The authorization header is not added when no `authState` exists (no previously authenticated user) or when the `RefreshTokens` mutation is performed.
+Responsible for adding access token as `X-Auth-Token: Bearer xxx` header to each request made with URQL.
+The authentication header is not added when no access token exists or when the `RefreshTokens` mutation is performed.
 When the `RefreshToken` mutation is performed, the access token can be already invalid, and FE API blocks every request with an invalid access token.
 
 `didAuthError`
 Check whether an error returned from the API is an authentication error (e.g. HTTP response status code is 401).
 
 `refreshAuth`
-This function parses the refresh token from the token cookie and tries to refresh the access token. It uses `setTokensToCookies` to both refresh them and store them in a cookie. In the case of a successful refresh, tokens are immediately available for subsequent requests.
+On the server, this function reads the refresh token from the request's `HttpOnly` cookie and calls the Frontend API directly.
+In the browser, it calls the allowlisted `/api/auth/token` endpoint, which reads and rotates the refresh token server-side.
+The refresh token is never exposed to client-side JavaScript or sent directly from the browser to the Frontend API.
+In the case of a successful refresh, the endpoint stores the rotated tokens in cookies and the new access token is immediately available for subsequent requests.
 
 While the URQL is refreshing tokens, all other calls are paused.
 After a successful refresh, previously forbidden requests are re-executed with the new access token.
@@ -45,7 +48,9 @@ login(email: string, password: string);
 
 This function calls the API mutation with the provided email and password.
 If everything is OK, the user is logged in.
-`accessToken` and `refreshToken` are then stored in the cookie, and the Zustand state is updated with information that the user is logged in.
+The access token is stored in a JavaScript-readable session cookie and the refresh token is stored in a `Secure`, `HttpOnly`, `SameSite=Lax` cookie.
+A non-sensitive `refreshTokenPresent` cookie lets the client detect that a refresh session exists without exposing the token itself.
+The Zustand state is then updated with information that the user is logged in.
 
 User logout
 
@@ -55,4 +60,4 @@ const [, [, logout]] = useAuth();
 logout();
 ```
 
-Zustand state is updated with information that the user is no longer authenticated, and tokens are deleted from the cookie.
+Zustand state is updated with information that the user is no longer authenticated, and the server-side auth endpoint deletes all authentication cookies.

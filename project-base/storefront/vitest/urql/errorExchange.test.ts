@@ -4,13 +4,26 @@ import { getErrorExchange } from 'urql/errorExchange';
 import { describe, expect, test, vi } from 'vitest';
 import { fromValue, toPromise } from 'wonka';
 
-const { removeTokensFromCookiesMock, logExceptionMock, showErrorMessageMock } = vi.hoisted(() => ({
-    removeTokensFromCookiesMock: vi.fn(),
+const {
+    clearAuthCookiesMock,
+    logExceptionMock,
+    removeAccessTokenFromCookiesMock,
+    removeTokensFromCookiesMock,
+    showErrorMessageMock,
+} = vi.hoisted(() => ({
+    clearAuthCookiesMock: vi.fn().mockResolvedValue(undefined),
     logExceptionMock: vi.fn(),
+    removeAccessTokenFromCookiesMock: vi.fn(),
+    removeTokensFromCookiesMock: vi.fn(),
     showErrorMessageMock: vi.fn(),
 }));
 
+vi.mock('utils/auth/authMutationFetcher', () => ({
+    clearAuthCookies: clearAuthCookiesMock,
+}));
+
 vi.mock('utils/auth/removeTokensFromCookies', () => ({
+    removeAccessTokenFromCookies: removeAccessTokenFromCookiesMock,
     removeTokensFromCookies: removeTokensFromCookiesMock,
 }));
 
@@ -54,11 +67,15 @@ describe('getErrorExchange', () => {
                 } as never),
         } as never);
 
+        clearAuthCookiesMock.mockClear();
+        removeAccessTokenFromCookiesMock.mockClear();
         removeTokensFromCookiesMock.mockClear();
 
         await toPromise(exchange(fromValue(operation)));
 
-        expect(removeTokensFromCookiesMock).toHaveBeenCalledWith(domainConfig, undefined);
+        expect(removeAccessTokenFromCookiesMock).toHaveBeenCalledWith(domainConfig);
+        expect(clearAuthCookiesMock).toHaveBeenCalledWith(domainConfig);
+        expect(removeTokensFromCookiesMock).not.toHaveBeenCalled();
     });
 
     test('should not clear auth cookies for non-auth graphql errors', async () => {
@@ -92,10 +109,14 @@ describe('getErrorExchange', () => {
                 } as never),
         } as never);
 
+        clearAuthCookiesMock.mockClear();
+        removeAccessTokenFromCookiesMock.mockClear();
         removeTokensFromCookiesMock.mockClear();
 
         await toPromise(exchange(fromValue(operation)));
 
         expect(removeTokensFromCookiesMock).not.toHaveBeenCalled();
+        expect(removeAccessTokenFromCookiesMock).not.toHaveBeenCalled();
+        expect(clearAuthCookiesMock).not.toHaveBeenCalled();
     });
 });

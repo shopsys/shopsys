@@ -5,7 +5,7 @@ import {
     useLoginViaExchangeTokenMutation,
 } from 'graphql/requests/auth/mutations/LoginViaExchangeTokenMutation.generated';
 import { OperationResult } from 'urql';
-import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
+import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
 import { useHandleActionsAfterLogin } from 'utils/auth/useLogin';
 
 type LoginViaExchangeTokenHandler = (
@@ -18,14 +18,12 @@ export const useLoginViaExchangeToken = () => {
     const domainConfig = useDomainConfig();
 
     const loginViaExchangeToken: LoginViaExchangeTokenHandler = async (exchangeToken) => {
-        const loginResult = await loginViaExchangeTokenMutation({ exchangeToken });
+        const loginResult = await loginViaExchangeTokenMutation(
+            { exchangeToken },
+            { fetch: getAuthMutationFetcher(domainConfig) },
+        );
 
         if (loginResult.data) {
-            const accessToken = loginResult.data.LoginViaExchangeToken.accessToken;
-            const refreshToken = loginResult.data.LoginViaExchangeToken.refreshToken;
-
-            setTokensToCookies(accessToken, refreshToken, domainConfig);
-
             // For login-as-user from admin, don't show cart merge info and clean URL
             handleActionsAfterLogin(false, '/');
         }

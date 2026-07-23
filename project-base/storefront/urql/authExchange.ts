@@ -8,11 +8,18 @@ import {
 } from 'graphql/requests/auth/mutations/RefreshTokensMutation.generated';
 import { GetServerSidePropsContext, NextPageContext, PreviewData } from 'next';
 import { CombinedError, makeOperation, Operation } from 'urql';
-import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
-import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
+import { clearAuthCookies, getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
+import {
+    getAccessTokenFromCookies,
+    getRefreshTokenFromCookies,
+    hasRefreshTokenInCookies,
+} from 'utils/auth/getTokensFromCookies';
+import { removeAccessTokenFromCookies, removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { isAuthError } from 'utils/errors/isAuthError';
+
+const HTTP_ONLY_REFRESH_TOKEN_PLACEHOLDER = '';
 
 const isRefreshTokenMutation = (operation: Operation) => {
     const query = operation.query as DocumentNode;
@@ -38,9 +45,9 @@ const addAuthToOperation = (
     domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData> | NextPageContext | undefined,
 ): Operation => {
-    const { accessToken, refreshToken } = getTokensFromCookies(domainConfig, context);
+    const accessToken = getAccessTokenFromCookies(domainConfig, context);
 
-    if (!accessToken || !refreshToken || isRefreshTokenMutation(operation)) {
+    if (!accessToken || isRefreshTokenMutation(operation)) {
         return operation;
     }
 
@@ -77,10 +84,15 @@ const doTryRefreshToken = async (
     const { data: refreshTokenData } = await mutate<TypeRefreshTokens, TypeRefreshTokensVariables>(
         RefreshTokensDocument,
         { refreshToken },
+        context ? undefined : { fetch: getAuthMutationFetcher(domainConfig) },
     );
 
     if (!refreshTokenData?.RefreshTokens) {
-        removeTokensFromCookies(domainConfig, context);
+        if (context) {
+            removeTokensFromCookies(domainConfig, context);
+        } else {
+            removeAccessTokenFromCookies(domainConfig);
+        }
 
         if (typeof window !== 'undefined') {
             window.location.reload();
@@ -89,12 +101,14 @@ const doTryRefreshToken = async (
         return;
     }
 
-    setTokensToCookies(
-        refreshTokenData.RefreshTokens.accessToken,
-        refreshTokenData.RefreshTokens.refreshToken,
-        domainConfig,
-        context,
-    );
+    if (context) {
+        setTokensToCookies(
+            refreshTokenData.RefreshTokens.accessToken,
+            refreshTokenData.RefreshTokens.refreshToken,
+            domainConfig,
+            context,
+        );
+    }
 };
 
 const refreshAuth = async (
@@ -102,9 +116,21 @@ const refreshAuth = async (
     domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext | NextPageContext,
 ): Promise<void> => {
-    const { refreshToken } = getTokensFromCookies(domainConfig, context);
+    const refreshToken = context
+        ? getRefreshTokenFromCookies(domainConfig, context)
+        : hasRefreshTokenInCookies(domainConfig)
+          ? HTTP_ONLY_REFRESH_TOKEN_PLACEHOLDER
+          : undefined;
+
     try {
-        if (!refreshToken) {
+        if (refreshToken === undefined) {
+            if (context) {
+                removeTokensFromCookies(domainConfig, context);
+            } else {
+                removeAccessTokenFromCookies(domainConfig);
+                await clearAuthCookies(domainConfig);
+            }
+
             if (typeof window !== 'undefined') {
                 window.location.reload();
             }
@@ -123,11 +149,14 @@ const willAuthError = (
     domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext | NextPageContext,
 ): boolean => {
-    const { accessToken, refreshToken } = getTokensFromCookies(domainConfig, context);
+    const accessToken = getAccessTokenFromCookies(domainConfig, context);
+    const hasRefreshToken = context
+        ? !!getRefreshTokenFromCookies(domainConfig, context)
+        : hasRefreshTokenInCookies(domainConfig);
 
     // If we have a refresh token but no access token, we should refresh
     // This handles the case where access token expired but backend returns 200 with null instead of 401
-    return !!refreshToken && !accessToken;
+    return hasRefreshToken && !accessToken;
 };
 
 export const getAuthExchangeOptions =

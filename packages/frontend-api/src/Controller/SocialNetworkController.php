@@ -4,18 +4,29 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Controller;
 
+use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrontendApiBundle\Model\Security\TokensData;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SocialNetworkController extends AbstractController
 {
+    protected const int REFRESH_TOKEN_EXPIRATION_SECONDS = 3600 * 24 * 14;
+
+    protected const string ACCESS_TOKEN_COOKIE_NAME = 'accessToken';
+
+    protected const string REFRESH_TOKEN_COOKIE_NAME = 'refreshToken';
+
+    protected const string REFRESH_TOKEN_PRESENT_COOKIE_NAME = 'refreshTokenPresent';
+
     protected const string SESSION_REFERER_URL = 'socialLoginRefererUrl';
     public const string SESSION_CART_UUID = 'socialLoginCartUuid';
     public const string SESSION_PRODUCT_LIST_UUIDS = 'socialLoginProductListUuids';
@@ -42,8 +53,7 @@ class SocialNetworkController extends AbstractController
             $redirectUrl = $domainRouter->generate('front_social_network_login', ['type' => $type], UrlGeneratorInterface::ABSOLUTE_URL);
             $loginResultData = $this->socialNetworkFacade->login($type, $redirectUrl, $request->getSession());
 
-            return $this->render('@ShopsysFrontendApi/SocialLogin/loginAsCustomerUser.html.twig', [
-                'tokens' => $loginResultData->tokens,
+            $response = $this->render('@ShopsysFrontendApi/SocialLogin/loginAsCustomerUser.html.twig', [
                 'url' => $this->getRefererUrl(
                     $request,
                     $type,
@@ -54,9 +64,52 @@ class SocialNetworkController extends AbstractController
                 'showCartMergeInfo' => $loginResultData->showCartMergeInfo ? 'true' : 'false',
                 'domainId' => $this->domain->getId(),
             ]);
+
+            $this->setTokenCookies($response, $loginResultData->tokens, $this->domain->getId());
+
+            return $response;
         } catch (SocialNetworkLoginException $exception) {
             return $this->redirect($this->getRefererUrl($request, $type, true));
         }
+    }
+
+    protected function setTokenCookies(Response $response, TokensData $tokens, int $domainId): void
+    {
+        $refreshTokenExpiration = new DateTimeImmutable(sprintf('+%d seconds', static::REFRESH_TOKEN_EXPIRATION_SECONDS));
+
+        $response->headers->setCookie(Cookie::create(
+            sprintf('%s-%d', static::ACCESS_TOKEN_COOKIE_NAME, $domainId),
+            $tokens->accessToken,
+            0,
+            '/',
+            null,
+            true,
+            false,
+            false,
+            Cookie::SAMESITE_LAX,
+        ));
+        $response->headers->setCookie(Cookie::create(
+            sprintf('%s-%d', static::REFRESH_TOKEN_COOKIE_NAME, $domainId),
+            $tokens->refreshToken,
+            $refreshTokenExpiration,
+            '/',
+            null,
+            true,
+            true,
+            false,
+            Cookie::SAMESITE_LAX,
+        ));
+        $response->headers->setCookie(Cookie::create(
+            sprintf('%s-%d', static::REFRESH_TOKEN_PRESENT_COOKIE_NAME, $domainId),
+            '1',
+            $refreshTokenExpiration,
+            '/',
+            null,
+            true,
+            false,
+            false,
+            Cookie::SAMESITE_LAX,
+        ));
     }
 
     /**
