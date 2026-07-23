@@ -113,8 +113,7 @@ export const OpeningHours: FC<{
                                     isCompact ? 'w-36 text-xs' : 'h6 w-44',
                                 )}
                             >
-                                <span>{getDayName(openingHours.dayOfWeek, dayOfWeek)}</span>
-                                <span>{formatDate(date)}</span>
+                                {getDayName(openingHours.dayOfWeek, dayOfWeek)} {formatDate(date)}
                             </span>
 
                             <span aria-hidden="true" className={twMergeCustom(isCompact && 'text-xs')}>
