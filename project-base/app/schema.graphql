@@ -1317,7 +1317,7 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
-  "Expected restocking date, filled whenever set and not passed yet (the 'expecting' availability state additionally requires the product to be out of stock)"
+  "Expected restocking date, filled whenever set and not passed yet"
   expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
@@ -2236,7 +2236,7 @@ interface Product {
   description: String
   "EAN"
   ean: String
-  "Expected restocking date, filled whenever set and not passed yet (the 'expecting' availability state additionally requires the product to be out of stock)"
+  "Expected restocking date, filled whenever set and not passed yet"
   expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
@@ -2790,7 +2790,7 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
-  "Expected restocking date, filled whenever set and not passed yet (the 'expecting' availability state additionally requires the product to be out of stock)"
+  "Expected restocking date, filled whenever set and not passed yet"
   expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
@@ -3116,8 +3116,6 @@ type Token {
 
 "Represents a transport"
 type Transport {
-  "Number of days until goods are delivered"
-  daysUntilDelivery: Int!
   "Localized transport description (domain dependent)"
   description: String
   "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised."
@@ -3128,8 +3126,6 @@ type Transport {
   images(type: String = null): [Image!]!
   "Localized transport instruction (domain dependent)"
   instructions: String
-  "Pointer telling if the transport is of type personal pickup"
-  isPersonalPickup: Boolean!
   "Transport image by params"
   mainImage(type: String = null): Image
   "Transport name"
@@ -3231,7 +3227,7 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
-  "Expected restocking date, filled whenever set and not passed yet (the 'expecting' availability state additionally requires the product to be out of stock)"
+  "Expected restocking date, filled whenever set and not passed yet"
   expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"

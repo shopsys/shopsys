@@ -6135,6 +6135,15 @@ EAN
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainvariant.expectedrestockingdate">expectedRestockingDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected restocking date, filled whenever set and not passed yet
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.files">files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td></td>
@@ -9452,6 +9461,15 @@ EAN
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.expectedrestockingdate">expectedRestockingDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected restocking date, filled whenever set and not passed yet
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.files">files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td></td>
@@ -10355,6 +10373,25 @@ Store email
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="store.expecteddeliverydate">expectedDeliveryDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">cartUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">transportUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="store.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -10685,15 +10722,6 @@ Represents a transport
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong id="transport.daysuntildelivery">daysUntilDelivery</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Number of days until goods are delivered
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="transport.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -10701,6 +10729,20 @@ Number of days until goods are delivered
 Localized transport description (domain dependent)
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="transport.expecteddeliverydate">expectedDeliveryDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">cartUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="transport.group">group</strong></td>
@@ -10731,15 +10773,6 @@ Transport images
 <td>
 
 Localized transport instruction (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="transport.ispersonalpickup">isPersonalPickup</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Pointer telling if the transport is of type personal pickup
 
 </td>
 </tr>
@@ -11138,6 +11171,15 @@ List of categories
 <td>
 
 EAN
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.expectedrestockingdate">expectedRestockingDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected restocking date, filled whenever set and not passed yet
 
 </td>
 </tr>
@@ -13958,6 +14000,14 @@ Product Availability statuses
 </thead>
 <tbody>
 <tr>
+<td valign="top"><strong>ExpectedRestock</strong></td>
+<td>
+
+Product is out of stock with a known expected restocking date
+
+</td>
+</tr>
+<tr>
 <td valign="top"><strong>InStock</strong></td>
 <td>
 
@@ -15524,6 +15574,15 @@ List of categories
 <td>
 
 EAN
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.expectedrestockingdate">expectedRestockingDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected restocking date, filled whenever set and not passed yet
 
 </td>
 </tr>
