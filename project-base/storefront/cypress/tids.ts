@@ -223,4 +223,5 @@ export enum TIDs {
     blog_article_publication_date = 'blog_article_publication_date',
     blog_article_author = 'blog_article_author',
     blog_article_author_box = 'blog_article_author_box',
+    blog_sidebar = 'blog_sidebar',
 }

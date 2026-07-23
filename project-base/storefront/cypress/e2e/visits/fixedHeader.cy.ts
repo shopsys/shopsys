@@ -38,6 +38,26 @@ describe('Fixed Header Tests', { retries: { runMode: 0 } }, () => {
         });
     });
 
+    it('[Sticky Offset] should keep the blog sidebar below the fixed header', () => {
+        cy.getByTID([TIDs.blog_preview_image]).first().closest('a').click();
+        cy.waitForStableAndInteractiveDOM();
+
+        cy.getByTID([TIDs.blog_sidebar]).then(($blogSidebar) => {
+            const ownerWindow = $blogSidebar[0].ownerDocument.defaultView;
+            const blogSidebarDocumentTop = $blogSidebar[0].getBoundingClientRect().top + (ownerWindow?.scrollY ?? 0);
+
+            cy.scrollTo(0, blogSidebarDocumentTop + 1);
+        });
+
+        cy.getByTID([TIDs.fixed_header]).should('be.visible').then(($fixedHeader) => {
+            const fixedHeaderBottom = $fixedHeader[0].getBoundingClientRect().bottom;
+
+            cy.getByTID([TIDs.blog_sidebar]).should(($blogSidebar) => {
+                expect($blogSidebar[0].getBoundingClientRect().top).to.be.greaterThan(fixedHeaderBottom);
+            });
+        });
+    });
+
     it('[Keyboard Navigation] should continue to page content without scrolling back to the original header', () => {
         showFixedHeader();
 
