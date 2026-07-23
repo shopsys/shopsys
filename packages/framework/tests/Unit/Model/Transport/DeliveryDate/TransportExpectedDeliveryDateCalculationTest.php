@@ -348,6 +348,30 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $this->assertDeliveryDateSame($expectedDeliveryDate, $deliveryDate);
     }
 
+    public function testDeliveryDateIsNullWhenNoDayWithinThePostponeBoundIsAllowed(): void
+    {
+        // a pathological configuration closes every single day of the postpone window
+        $closedDays = [];
+        $day = (new DatePoint(self::NOW, new DateTimeZone('UTC')))->modify('midnight');
+
+        for ($i = 0; $i <= 366; $i++) {
+            $closedDays[] = $this->createClosedDayStub(false, [], $day->format('Y-m-d'));
+            $day = $day->modify('+1 day');
+        }
+
+        $closedDayFacadeStub = $this->createStub(ClosedDayFacade::class);
+        $closedDayFacadeStub->method('getClosedDaysWithEagerLoadedExcludedStores')->willReturn($closedDays);
+
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation($closedDayFacadeStub)
+            ->calculateExpectedDeliveryDate(
+                $this->createTransportStubDeliveringOnNoSpecialDay(0),
+                null,
+                Domain::FIRST_DOMAIN_ID,
+            );
+
+        $this->assertNull($deliveryDate);
+    }
+
     public function testDateBeingBothPublicHolidayAndInternalDayIsStillBlockedByTheInternalDay(): void
     {
         // Friday 2026-07-17 is a public holiday and an internal day at once; the transport delivers

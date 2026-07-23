@@ -24,7 +24,8 @@ class TransportExpectedDeliveryDateCalculation
 {
     /**
      * A safety bound for the delivery date postponing so that a pathological closed days configuration
-     * cannot cause an endless loop; a delivery date is expected to be found within a few days
+     * cannot cause an endless loop; a delivery date is expected to be found within a few days — when
+     * no allowed day exists within the bound, no delivery date is promised at all
      */
     protected const int MAX_POSTPONE_DAYS = 366;
 
@@ -157,7 +158,7 @@ class TransportExpectedDeliveryDateCalculation
         DateTimeImmutable $deliveryDate,
         int $domainId,
         ?Store $store,
-    ): DateTimeImmutable {
+    ): ?DateTimeImmutable {
         $closedDaysIndexedByDate = $this->getClosedDaysForPostponeWindowIndexedByDate($domainId, $deliveryDate);
 
         $postponedDays = 0;
@@ -174,6 +175,10 @@ class TransportExpectedDeliveryDateCalculation
         ) {
             $deliveryDate = $deliveryDate->modify('+1 day');
             $postponedDays++;
+        }
+
+        if ($postponedDays === static::MAX_POSTPONE_DAYS) {
+            return null;
         }
 
         return $deliveryDate;
