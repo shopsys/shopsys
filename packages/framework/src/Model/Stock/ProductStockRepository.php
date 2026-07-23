@@ -31,6 +31,14 @@ class ProductStockRepository
             ->setParameter('product', $product);
     }
 
+    protected function getEnabledStocksQueryBuilderByDomainId(int $domainId): QueryBuilder
+    {
+        return $this->getQueryBuilder()
+            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock')
+            ->join(StockDomain::class, 'sd', Join::WITH, 's.id = sd.stock AND sd.domainId = :domainId AND sd.isEnabled = TRUE')
+            ->setParameter('domainId', $domainId);
+    }
+
     /**
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -83,10 +91,7 @@ class ProductStockRepository
 
     public function isProductAvailableOnDomain(Product $product, int $domainId): bool
     {
-        $queryBuilder = $this->getQueryBuilder()
-            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock')
-            ->join(StockDomain::class, 'sd', Join::WITH, 's.id = sd.stock AND sd.domainId = :domainId AND sd.isEnabled = TRUE')
-            ->setParameter('domainId', $domainId)
+        $queryBuilder = $this->getEnabledStocksQueryBuilderByDomainId($domainId)
             ->select('CASE WHEN SUM(ps.productQuantity) > 0 THEN TRUE ELSE FALSE END');
 
         if ($product->isMainVariant()) {
@@ -106,12 +111,43 @@ class ProductStockRepository
      */
     public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
     {
-        return $this->getProductStockQueryBuilderByProduct($product)
-            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock')
-            ->join(StockDomain::class, 'sd', Join::WITH, 's.id = sd.stock AND sd.domainId = :domainId AND sd.isEnabled = TRUE')
-            ->setParameter('domainId', $domainId)
+        return $this->getEnabledStocksQueryBuilderByDomainId($domainId)
+            ->andWhere('ps.product = :product')
+            ->setParameter('product', $product)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return array<int, int>
+     */
+    public function getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(
+        array $products,
+        int $domainId,
+    ): array {
+        if ($products === []) {
+            return [];
+        }
+
+        $rows = $this->getEnabledStocksQueryBuilderByDomainId($domainId)
+            ->select('IDENTITY(ps.product) AS productId, SUM(ps.productQuantity) AS stockQuantity')
+            ->andWhere('ps.product IN (:products)')
+            ->groupBy('ps.product')
+            ->setParameter('products', $products)
+            ->getQuery()
+            ->getResult();
+
+        $stockQuantities = array_column($rows, 'stockQuantity', 'productId');
+
+        $stockQuantitiesIndexedByProductId = [];
+
+        foreach ($products as $product) {
+            $productId = $product->getId();
+            $stockQuantitiesIndexedByProductId[$productId] = (int)($stockQuantities[$productId] ?? 0);
+        }
+
+        return $stockQuantitiesIndexedByProductId;
     }
 
     public function createProductStockRelationForStockId(int $stockId): void

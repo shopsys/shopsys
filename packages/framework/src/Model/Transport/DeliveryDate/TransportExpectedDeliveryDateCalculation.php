@@ -6,11 +6,13 @@ namespace Shopsys\FrameworkBundle\Model\Transport\DeliveryDate;
 
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -26,12 +28,18 @@ class TransportExpectedDeliveryDateCalculation
      */
     protected const int MAX_POSTPONE_DAYS = 366;
 
+    protected const string DATE_INDEX_FORMAT = 'Y-m-d';
+    protected const string DISPATCH_DATE_CACHE_NAMESPACE = 'transportExpectedDeliveryDateDispatchDate';
+    protected const string CLOSED_DAYS_CACHE_NAMESPACE = 'transportExpectedDeliveryDateClosedDays';
+    protected const string STORES_CACHE_NAMESPACE = 'transportExpectedDeliveryDateStores';
+
     public function __construct(
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly ClockInterface $clock,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly StoreFacade $storeFacade,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -72,7 +80,14 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         ?Store $store,
     ): ?DateTimeImmutable {
-        $dispatchDate = $this->findDispatchDate($cart, $domainId);
+        // the dispatch date does not depend on the transport nor the store, so one cart resolves it just once
+        // per request even when the date is being calculated for a whole transport listing or store picker
+        $dispatchDate = $this->inMemoryCache->getOrSaveValue(
+            static::DISPATCH_DATE_CACHE_NAMESPACE,
+            fn (): ?DateTimeImmutable => $this->findDispatchDate($cart, $domainId),
+            $this->getCartCacheKey($cart),
+            $domainId,
+        );
 
         if ($dispatchDate === null) {
             return null;
@@ -81,6 +96,25 @@ class TransportExpectedDeliveryDateCalculation
         $closestPossibleDeliveryDate = $dispatchDate->modify(sprintf('+%d days', $transport->getDaysUntilDelivery()));
 
         return $this->postponeToFirstAllowedDeliveryDay($transport, $closestPossibleDeliveryDate, $domainId, $store);
+    }
+
+    /**
+     * The dispatch date is derived from the cart items, so their fingerprint is a part of the cache key —
+     * a mutation modifying the cart and resolving the delivery date within the same request (mutating the
+     * very same cart instance) gets a fresh value; the stocks are considered stable within a request
+     */
+    protected function getCartCacheKey(?Cart $cart): string
+    {
+        if ($cart === null) {
+            return 'no-cart';
+        }
+
+        $cartItemParts = array_map(
+            static fn (CartItem $cartItem): string => $cartItem->getProduct()->getId() . ':' . $cartItem->getQuantity(),
+            $cart->getItems(),
+        );
+
+        return spl_object_id($cart) . '|' . implode(',', $cartItemParts);
     }
 
     protected function findStoreSelectedInCartForTransport(Transport $transport, ?Cart $cart, int $domainId): ?Store
@@ -124,11 +158,19 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         ?Store $store,
     ): DateTimeImmutable {
+        $closedDaysIndexedByDate = $this->getClosedDaysForPostponeWindowIndexedByDate($domainId, $deliveryDate);
+
         $postponedDays = 0;
 
         while (
             $postponedDays < static::MAX_POSTPONE_DAYS
-            && !$this->isDeliveryAllowedOnDate($transport, $deliveryDate, $domainId, $store)
+            && !$this->isDeliveryAllowedOnDate(
+                $transport,
+                $deliveryDate,
+                $domainId,
+                $store,
+                $closedDaysIndexedByDate[$deliveryDate->format(static::DATE_INDEX_FORMAT)] ?? [],
+            )
         ) {
             $deliveryDate = $deliveryDate->modify('+1 day');
             $postponedDays++;
@@ -137,14 +179,50 @@ class TransportExpectedDeliveryDateCalculation
         return $deliveryDate;
     }
 
+    /**
+     * Fetches all the closed days the postponing may ever need in a single query; the window is cached
+     * per request, so every transport and store sharing the first candidate date reuses the same result
+     *
+     * @return array<string, \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]>
+     */
+    protected function getClosedDaysForPostponeWindowIndexedByDate(
+        int $domainId,
+        DateTimeImmutable $startDate,
+    ): array {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::CLOSED_DAYS_CACHE_NAMESPACE,
+            function () use ($domainId, $startDate): array {
+                $closedDays = $this->closedDayFacade->getClosedDaysWithEagerLoadedExcludedStores(
+                    $domainId,
+                    $startDate,
+                    $startDate->modify(sprintf('+%d days', static::MAX_POSTPONE_DAYS)),
+                );
+
+                $closedDaysIndexedByDate = [];
+
+                foreach ($closedDays as $closedDay) {
+                    $closedDaysIndexedByDate[$closedDay->getDate()->format(static::DATE_INDEX_FORMAT)][] = $closedDay;
+                }
+
+                return $closedDaysIndexedByDate;
+            },
+            $domainId,
+            $startDate->format(static::DATE_INDEX_FORMAT),
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDaysOnDate
+     */
     protected function isDeliveryAllowedOnDate(
         Transport $transport,
         DateTimeImmutable $deliveryDate,
         int $domainId,
         ?Store $store,
+        array $closedDaysOnDate,
     ): bool {
         return !$this->isDeliveryBlockedByWeekend($transport, $deliveryDate)
-            && !$this->isDeliveryBlockedByClosedDays($transport, $deliveryDate, $domainId, $store);
+            && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate, $domainId, $store);
     }
 
     protected function isDeliveryBlockedByWeekend(Transport $transport, DateTimeImmutable $deliveryDate): bool
@@ -152,14 +230,17 @@ class TransportExpectedDeliveryDateCalculation
         return !$transport->deliversOnWeekends() && DateTimeHelper::isWeekend($deliveryDate);
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDaysOnDate
+     */
     protected function isDeliveryBlockedByClosedDays(
         Transport $transport,
-        DateTimeImmutable $deliveryDate,
+        array $closedDaysOnDate,
         int $domainId,
         ?Store $store,
     ): bool {
         $blockingClosedDays = array_filter(
-            $this->closedDayFacade->getClosedDaysWithEagerLoadedExcludedStores($domainId, $deliveryDate, $deliveryDate),
+            $closedDaysOnDate,
             fn (ClosedDay $closedDay): bool => !$this->isTransportDeliveringOnClosedDay($transport, $closedDay),
         );
 
@@ -177,8 +258,20 @@ class TransportExpectedDeliveryDateCalculation
 
         // a personal pickup is blocked only when every store on the domain is closed
         return array_all(
-            $this->storeFacade->getStoresByDomainId($domainId),
+            $this->getStoresByDomainIdCached($domainId),
             fn (Store $domainStore): bool => $this->isStoreClosedByClosedDays($domainStore, $blockingClosedDays),
+        );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
+     */
+    protected function getStoresByDomainIdCached(int $domainId): array
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::STORES_CACHE_NAMESPACE,
+            fn (): array => $this->storeFacade->getStoresByDomainId($domainId),
+            $domainId,
         );
     }
 
@@ -223,16 +316,17 @@ class TransportExpectedDeliveryDateCalculation
      */
     protected function getCartItemsAwaitingRestocking(Cart $cart, int $domainId): array
     {
-        return array_filter(
-            $cart->getItems(),
-            function (CartItem $cartItem) use ($domainId): bool {
-                $stockQuantity = $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId(
-                    $cartItem->getProduct(),
-                    $domainId,
-                ) ?? 0;
+        $cartItems = $cart->getItems();
 
-                return $cartItem->getQuantity() > $stockQuantity;
-            },
+        $stockQuantitiesIndexedByProductId = $this->productAvailabilityFacade
+            ->getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(
+                array_map(static fn (CartItem $cartItem): Product => $cartItem->getProduct(), $cartItems),
+                $domainId,
+            );
+
+        return array_filter(
+            $cartItems,
+            static fn (CartItem $cartItem): bool => $cartItem->getQuantity() > $stockQuantitiesIndexedByProductId[$cartItem->getProduct()->getId()],
         );
     }
 

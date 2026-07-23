@@ -259,6 +259,20 @@ class ProductAvailabilityFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return array<int, int>
+     */
+    public function getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(
+        array $products,
+        int $domainId,
+    ): array {
+        return $this->productStockFacade->getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(
+            $products,
+            $domainId,
+        );
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStock[] $productStocksByDomainIdIndexedByStockId
      */
     protected function sumProductStockQuantities(array $productStocksByDomainIdIndexedByStockId): int

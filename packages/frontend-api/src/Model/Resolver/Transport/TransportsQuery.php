@@ -29,6 +29,7 @@ class TransportsQuery extends AbstractQuery
 {
     protected const string CART_CACHE_NAMESPACE = 'transportsQueryCart';
     protected const string EXCLUDING_PRODUCTS_CACHE_NAMESPACE = 'transportsQueryExcludingProductsByTransportId';
+    protected const string TRANSPORT_CACHE_NAMESPACE = 'transportsQueryTransportByUuid';
     protected const string CURRENT_CUSTOMER_CART_CACHE_KEY = 'currentCustomerCart';
 
     public function __construct(
@@ -131,12 +132,7 @@ class TransportsQuery extends AbstractQuery
         ?string $cartUuid = null,
         ?ArrayObject $context = null,
     ): ?DateTimeImmutable {
-        try {
-            $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $this->domain->getId());
-        } catch (TransportNotFoundException $transportNotFoundException) {
-            throw new TransportNotFoundUserError($transportNotFoundException->getMessage());
-        }
-
+        $transport = $this->getEnabledTransportByUuidCached($transportUuid);
         $resolvedCartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
 
         try {
@@ -149,6 +145,25 @@ class TransportsQuery extends AbstractQuery
         } catch (TransportIsNotPersonalPickupException $transportIsNotPersonalPickupException) {
             throw new InvalidArgumentUserError($transportIsNotPersonalPickupException->getMessage());
         }
+    }
+
+    /**
+     * The store picker resolves the field once per store, always with the same transport uuid
+     */
+    protected function getEnabledTransportByUuidCached(string $transportUuid): Transport
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            self::TRANSPORT_CACHE_NAMESPACE,
+            function () use ($transportUuid): Transport {
+                try {
+                    return $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $this->domain->getId());
+                } catch (TransportNotFoundException $transportNotFoundException) {
+                    throw new TransportNotFoundUserError($transportNotFoundException->getMessage());
+                }
+            },
+            $transportUuid,
+            $this->domain->getId(),
+        );
     }
 
     protected function findCart(?string $cartUuid): ?Cart

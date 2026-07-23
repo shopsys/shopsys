@@ -101,6 +101,20 @@ class ProductStockFacade
         return $this->productStockRepository->isProductAvailableOnDomain($product, $domainId);
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return array<int, int>
+     */
+    public function getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(
+        array $products,
+        int $domainId,
+    ): array {
+        return $this->productStockRepository->getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(
+            $products,
+            $domainId,
+        );
+    }
+
     public function createProductStockRelationForStockId(int $stockId): void
     {
         $this->productStockRepository->createProductStockRelationForStockId($stockId);

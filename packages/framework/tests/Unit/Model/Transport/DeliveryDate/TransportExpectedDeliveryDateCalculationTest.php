@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Transport\DeliveryDate;
 
 use DateTimeImmutable;
-use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -101,13 +101,17 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         int $daysUntilDelivery,
         ?string $expectedDeliveryDate,
     ): void {
-        $stockQuantityMap = [];
+        $stockQuantitiesIndexedByProductId = [];
         $restockingDateMap = [];
         $cartItemStubs = [];
 
-        foreach ($cartItems as $cartItemData) {
+        foreach ($cartItems as $index => $cartItemData) {
+            $productId = $index + 1;
             $productStub = $this->createStub(Product::class);
-            $stockQuantityMap[] = [$productStub, Domain::FIRST_DOMAIN_ID, $cartItemData['stockQuantity']];
+            $productStub->method('getId')->willReturn($productId);
+
+            $stockQuantitiesIndexedByProductId[$productId] = $cartItemData['stockQuantity'] ?? 0;
+
             $restockingDateMap[] = [
                 $productStub,
                 Domain::FIRST_DOMAIN_ID,
@@ -123,8 +127,8 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         }
 
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
-        $productAvailabilityFacadeStub->method('getGroupedStockQuantityByProductAndDomainId')
-            ->willReturnMap($stockQuantityMap);
+        $productAvailabilityFacadeStub->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')
+            ->willReturn($stockQuantitiesIndexedByProductId);
         $productAvailabilityFacadeStub->method('findValidExpectedRestockingDate')
             ->willReturnMap($restockingDateMap);
 
@@ -172,6 +176,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
     {
         // the awaited item is expected to be restocked on Sunday, the transport does not deliver on weekends
         $productStub = $this->createStub(Product::class);
+        $productStub->method('getId')->willReturn(1);
 
         $cartItemStub = $this->createStub(CartItem::class);
         $cartItemStub->method('getProduct')->willReturn($productStub);
@@ -181,7 +186,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $cartStub->method('getItems')->willReturn([$cartItemStub]);
 
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
-        $productAvailabilityFacadeStub->method('getGroupedStockQuantityByProductAndDomainId')->willReturn(0);
+        $productAvailabilityFacadeStub->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')->willReturn([1 => 0]);
         $productAvailabilityFacadeStub->method('findValidExpectedRestockingDate')
             ->willReturn(new DatePoint(self::RESTOCKING_DATE, new DateTimeZone('UTC')));
 
@@ -200,6 +205,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
     {
         // 2026-07-16 22:00 UTC is already Friday 2026-07-17 in Europe/Prague, which is a closed day of the e-shop
         $productStub = $this->createStub(Product::class);
+        $productStub->method('getId')->willReturn(1);
 
         $cartItemStub = $this->createStub(CartItem::class);
         $cartItemStub->method('getProduct')->willReturn($productStub);
@@ -209,7 +215,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $cartStub->method('getItems')->willReturn([$cartItemStub]);
 
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
-        $productAvailabilityFacadeStub->method('getGroupedStockQuantityByProductAndDomainId')->willReturn(0);
+        $productAvailabilityFacadeStub->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')->willReturn([1 => 0]);
         $productAvailabilityFacadeStub->method('findValidExpectedRestockingDate')
             ->willReturn(new DatePoint('2026-07-16 22:00:00', new DateTimeZone('UTC')));
 
@@ -571,11 +577,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
     private function createClosedDayFacadeStubWithClosedFriday(ClosedDay $closedDay): ClosedDayFacade
     {
         $closedDayFacadeStub = $this->createStub(ClosedDayFacade::class);
-        $closedDayFacadeStub->method('getClosedDaysWithEagerLoadedExcludedStores')->willReturnCallback(
-            static fn (int $domainId, DateTimeInterface $startDate): array => $startDate->format('Y-m-d') === '2026-07-17'
-                ? [$closedDay]
-                : [],
-        );
+        $closedDayFacadeStub->method('getClosedDaysWithEagerLoadedExcludedStores')->willReturn([$closedDay]);
 
         return $closedDayFacadeStub;
     }
@@ -583,11 +585,15 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\Store[] $excludedStores
      */
-    private function createClosedDayStub(bool $isPublicHoliday, array $excludedStores = []): ClosedDay
-    {
+    private function createClosedDayStub(
+        bool $isPublicHoliday,
+        array $excludedStores = [],
+        string $date = '2026-07-17',
+    ): ClosedDay {
         $closedDayStub = $this->createStub(ClosedDay::class);
         $closedDayStub->method('isPublicHoliday')->willReturn($isPublicHoliday);
         $closedDayStub->method('getExcludedStores')->willReturn($excludedStores);
+        $closedDayStub->method('getDate')->willReturn(new DatePoint($date, new DateTimeZone('UTC')));
 
         return $closedDayStub;
     }
@@ -598,22 +604,13 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
      */
     private function createClosedDayFacadeStub(array $publicHolidays, array $internalClosedDays): ClosedDayFacade
     {
+        $closedDays = [
+            ...array_map(fn (string $date): ClosedDay => $this->createClosedDayStub(true, [], $date), $publicHolidays),
+            ...array_map(fn (string $date): ClosedDay => $this->createClosedDayStub(false, [], $date), $internalClosedDays),
+        ];
+
         $closedDayFacadeStub = $this->createStub(ClosedDayFacade::class);
-        $closedDayFacadeStub->method('getClosedDaysWithEagerLoadedExcludedStores')->willReturnCallback(
-            function (int $domainId, DateTimeInterface $startDate) use ($publicHolidays, $internalClosedDays): array {
-                $closedDays = [];
-
-                if (in_array($startDate->format('Y-m-d'), $publicHolidays, true)) {
-                    $closedDays[] = $this->createClosedDayStub(true);
-                }
-
-                if (in_array($startDate->format('Y-m-d'), $internalClosedDays, true)) {
-                    $closedDays[] = $this->createClosedDayStub(false);
-                }
-
-                return $closedDays;
-            },
-        );
+        $closedDayFacadeStub->method('getClosedDaysWithEagerLoadedExcludedStores')->willReturn($closedDays);
 
         return $closedDayFacadeStub;
     }
@@ -637,6 +634,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
             $displayTimeZoneProviderStub,
             $closedDayFacade ?? $this->createStub(ClosedDayFacade::class),
             $storeFacade ?? $this->createStub(StoreFacade::class),
+            new InMemoryCache(),
         );
     }
 
