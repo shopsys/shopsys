@@ -111,7 +111,7 @@ export const ArticleAnchorNavigation: FC<ArticleAnchorNavigationProps> = ({ head
             {isBackToTopVisible && (
                 <button
                     type="button"
-                    className="fixed right-5 bottom-5 z-above flex size-12 items-center justify-center rounded-full bg-background-brand-less text-text-inverted shadow-md xl:hidden"
+                    className="fixed right-5 bottom-[calc(5rem+env(safe-area-inset-bottom))] vl:bottom-5 z-above flex size-12 items-center justify-center rounded-full bg-background-brand-less text-text-inverted shadow-md xl:hidden"
                     title={t('Back to top')}
                     onClick={handleBackToTopClick}
                 >
