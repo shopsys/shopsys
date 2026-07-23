@@ -162,9 +162,23 @@ final class ProductAvailabilityFacadeTest extends TestCase
         $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, '2026-07-12 12:00:00');
         $product = $this->createProduct($this->createDate('2026-07-22 00:00:00'));
 
-        $status = $productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, Domain::FIRST_DOMAIN_ID);
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, Domain::FIRST_DOMAIN_ID);
 
-        $this->assertSame(AvailabilityStatusEnum::EXPECTED_RESTOCK, $status);
+        $this->assertSame(AvailabilityStatusEnum::EXPECTED_RESTOCK, $availability->status);
+    }
+
+    public function testAvailabilityInfoIgnoresPassedRestockingDateGivenDirectly(): void
+    {
+        $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, '2026-07-12 12:00:00');
+
+        $availability = $productAvailabilityFacade->createProductAvailabilityInfo(
+            false,
+            $this->createDate('2026-07-10 00:00:00'),
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertSame(AvailabilityStatusEnum::OUT_OF_STOCK, $availability->status);
+        $this->assertSame('Out of stock', $availability->name);
     }
 
     public function testAvailabilityStatusStaysOutOfStockWhenDateHasPassed(): void
@@ -172,9 +186,9 @@ final class ProductAvailabilityFacadeTest extends TestCase
         $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, '2026-07-12 12:00:00');
         $product = $this->createProduct($this->createDate('2026-07-10 00:00:00'));
 
-        $status = $productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, Domain::FIRST_DOMAIN_ID);
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, Domain::FIRST_DOMAIN_ID);
 
-        $this->assertSame(AvailabilityStatusEnum::OUT_OF_STOCK, $status);
+        $this->assertSame(AvailabilityStatusEnum::OUT_OF_STOCK, $availability->status);
     }
 
     public function testAvailabilityStatusStaysInStockRegardlessOfDate(): void
@@ -182,9 +196,9 @@ final class ProductAvailabilityFacadeTest extends TestCase
         $productAvailabilityFacade = $this->createProductAvailabilityFacade(true, '2026-07-12 12:00:00');
         $product = $this->createProduct($this->createDate('2026-07-22 00:00:00'));
 
-        $status = $productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, Domain::FIRST_DOMAIN_ID);
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, Domain::FIRST_DOMAIN_ID);
 
-        $this->assertSame(AvailabilityStatusEnum::IN_STOCK, $status);
+        $this->assertSame(AvailabilityStatusEnum::IN_STOCK, $availability->status);
     }
 
     /**
@@ -316,12 +330,9 @@ final class ProductAvailabilityFacadeTest extends TestCase
         $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, '2026-07-12 12:00:00');
         $product = $this->createProduct($this->createDate('2026-07-22 00:00:00'));
 
-        $availabilityInformation = $productAvailabilityFacade->getProductAvailabilityInformationByDomainId(
-            $product,
-            Domain::FIRST_DOMAIN_ID,
-        );
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, Domain::FIRST_DOMAIN_ID);
 
-        $this->assertSame('Expecting ' . self::FORMATTED_DATE, $availabilityInformation);
+        $this->assertSame('Expecting ' . self::FORMATTED_DATE, $availability->name);
     }
 
     public function testAvailabilityInformationStaysOutOfStockWhenDateHasPassed(): void
@@ -329,12 +340,9 @@ final class ProductAvailabilityFacadeTest extends TestCase
         $productAvailabilityFacade = $this->createProductAvailabilityFacade(false, '2026-07-12 12:00:00');
         $product = $this->createProduct($this->createDate('2026-07-10 00:00:00'));
 
-        $availabilityInformation = $productAvailabilityFacade->getProductAvailabilityInformationByDomainId(
-            $product,
-            Domain::FIRST_DOMAIN_ID,
-        );
+        $availability = $productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, Domain::FIRST_DOMAIN_ID);
 
-        $this->assertSame('Out of stock', $availabilityInformation);
+        $this->assertSame('Out of stock', $availability->name);
     }
 
     private function createDate(string $dateTime): DateTimeImmutable

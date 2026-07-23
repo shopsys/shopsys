@@ -44,21 +44,51 @@ class ProductAvailabilityFacade
     ) {
     }
 
-    public function getProductAvailabilityInformationByDomainId(Product $product, int $domainId): string
+    public function getProductAvailabilityInfoByProduct(Product $product, int $domainId): ProductAvailabilityInfo
     {
+        return $this->createProductAvailabilityInfo(
+            $this->isProductAvailableOnDomainCached($product, $domainId),
+            $this->findValidExpectedRestockingDate($product, $domainId),
+            $domainId,
+        );
+    }
+
+    public function createProductAvailabilityInfo(
+        bool $isProductAvailable,
+        ?DateTimeImmutable $expectedRestockingDate,
+        int $domainId,
+    ): ProductAvailabilityInfo {
         $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
-        if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
-            return $this->getOnStockText($domainLocale);
+        if ($expectedRestockingDate !== null
+            && $this->hasExpectedRestockingDatePassed($expectedRestockingDate, $domainId)
+        ) {
+            $expectedRestockingDate = null;
         }
 
-        $expectedRestockingDate = $this->findEffectiveExpectedRestockingDate($product, $domainId);
+        if ($isProductAvailable) {
+            return $this->createProductAvailabilityInfoInstance(
+                $this->getOnStockText($domainLocale),
+                AvailabilityStatusEnum::IN_STOCK,
+            );
+        }
 
         if ($expectedRestockingDate !== null) {
-            return $this->getExpectedRestockText($expectedRestockingDate, $domainId);
+            return $this->createProductAvailabilityInfoInstance(
+                $this->getExpectedRestockText($expectedRestockingDate, $domainId),
+                AvailabilityStatusEnum::EXPECTED_RESTOCK,
+            );
         }
 
-        return $this->getOutOfStockText($domainLocale);
+        return $this->createProductAvailabilityInfoInstance(
+            $this->getOutOfStockText($domainLocale),
+            AvailabilityStatusEnum::OUT_OF_STOCK,
+        );
+    }
+
+    protected function createProductAvailabilityInfoInstance(string $name, string $status): ProductAvailabilityInfo
+    {
+        return new ProductAvailabilityInfo($name, $status);
     }
 
     protected function getProductAvailabilityDaysForFeedsByDomainId(Product $product, int $domainId): int
@@ -117,21 +147,6 @@ class ProductAvailabilityFacade
         $expectedRestockingDay = $expectedRestockingDate->setTimezone($displayTimeZone)->modify('midnight');
 
         return (int)$today->diff($expectedRestockingDay)->days;
-    }
-
-    public function getProductAvailabilityStatusByDomainId(
-        Product $product,
-        int $domainId,
-    ): string {
-        if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
-            return AvailabilityStatusEnum::IN_STOCK;
-        }
-
-        if ($this->findEffectiveExpectedRestockingDate($product, $domainId) !== null) {
-            return AvailabilityStatusEnum::EXPECTED_RESTOCK;
-        }
-
-        return AvailabilityStatusEnum::OUT_OF_STOCK;
     }
 
     public function getAvailableStoresCount(Product $product, int $domainId): ?int
@@ -341,7 +356,7 @@ class ProductAvailabilityFacade
         return $expectedRestockingDate;
     }
 
-    protected function hasExpectedRestockingDatePassed(
+    public function hasExpectedRestockingDatePassed(
         DateTimeImmutable $expectedRestockingDate,
         int $domainId,
     ): bool {

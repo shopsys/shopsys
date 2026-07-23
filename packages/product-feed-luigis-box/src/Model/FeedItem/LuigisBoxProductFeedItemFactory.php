@@ -46,7 +46,7 @@ class LuigisBoxProductFeedItemFactory
         $domainId = $domainConfig->getId();
 
         $mainCategory = $this->categoryRepository->getProductMainCategoryOnDomain($product, $domainId);
-        $availabilityText = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId);
+        $availabilityText = $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, $domainId)->name;
         $productDescription = $product->isVariant() ? $product->getMainVariant()->getDescriptionAsPlainText($domainId) : $product->getDescriptionAsPlainText($domainId);
 
         $mainVariantId = null;

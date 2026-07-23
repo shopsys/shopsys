@@ -310,12 +310,6 @@
             "personal_pickup_only": {
                 "type": "boolean"
             },
-            "availability": {
-                "type": "text"
-            },
-            "availability_status": {
-                "type": "text"
-            },
             "is_main_variant": {
                 "type": "boolean"
             },

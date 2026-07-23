@@ -29,7 +29,6 @@ class ProductExportFieldProvider
     public const string ORDERING_PRIORITY = 'ordering_priority';
     public const string SELLING_DENIED = 'selling_denied';
     public const string PERSONAL_PICKUP_ONLY = 'personal_pickup_only';
-    public const string AVAILABILITY = 'availability';
     public const string IS_MAIN_VARIANT = 'is_main_variant';
     public const string IS_VARIANT = 'is_variant';
     public const string SLUG = 'slug';
@@ -52,7 +51,6 @@ class ProductExportFieldProvider
     public const string NAME_SUFFIX = 'name_suffix';
     public const string AVAILABLE_STORES_COUNT = 'available_stores_count';
     public const string STORE_AVAILABILITIES_INFORMATION = 'store_availabilities_information';
-    public const string AVAILABILITY_STATUS = 'availability_status';
     public const string VAT_PERCENT = 'vat_percent';
 
     public const string SELLING_FROM = 'selling_from';

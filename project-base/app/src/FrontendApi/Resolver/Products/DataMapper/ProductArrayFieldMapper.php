@@ -9,6 +9,7 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
@@ -46,6 +47,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
         Domain $domain,
         HreflangLinksFacade $hreflangLinksFacade,
+        ProductAvailabilityFacade $productAvailabilityFacade,
         private DataLoaderInterface $categoriesBatchLoader,
         private DataLoaderInterface $flagsBatchLoader,
         private DataLoaderInterface $brandsBatchLoader,
@@ -63,6 +65,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
             $productsVisibleCountByIdsBatchLoader,
             $domain,
             $hreflangLinksFacade,
+            $productAvailabilityFacade,
         );
     }
 

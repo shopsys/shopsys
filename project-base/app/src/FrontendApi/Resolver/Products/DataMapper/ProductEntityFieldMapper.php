@@ -32,7 +32,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method string|null getShortDescription(\App\Model\Product\Product $product)
  * @method string getLink(\App\Model\Product\Product $product)
  * @method \App\Model\Category\Category[] getCategories(\App\Model\Product\Product $product)
- * @method array{name: string, status: string} getAvailability(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo getAvailability(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getAccessoriesPromise(\App\Model\Product\Product $product)
  * @method string|null getDescription(\App\Model\Product\Product $product)
  * @method string|null getSeoH1(\App\Model\Product\Product $product)

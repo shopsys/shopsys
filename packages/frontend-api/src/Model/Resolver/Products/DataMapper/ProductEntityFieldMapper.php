@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
@@ -79,21 +80,9 @@ class ProductEntityFieldMapper
         return $product->getCategoriesIndexedByDomainId()[$this->domain->getId()];
     }
 
-    /**
-     * @return array{name: string, status: string}
-     */
-    public function getAvailability(Product $product): array
+    public function getAvailability(Product $product): ProductAvailabilityInfo
     {
-        return [
-            'name' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId(
-                $product,
-                $this->domain->getId(),
-            ),
-            'status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId(
-                $product,
-                $this->domain->getId(),
-            ),
-        ];
+        return $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, $this->domain->getId());
     }
 
     public function isSellingDenied(Product $product): bool

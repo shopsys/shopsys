@@ -167,7 +167,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
             0 => t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
         };
 
-        $this->assertSame($expected, $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, self::FIRST_DOMAIN_ID));
+        $this->assertSame($expected, $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, self::FIRST_DOMAIN_ID)->name);
     }
 
     public static function getTestProductAvailabilityInformationByDomainIdProvider(): array
@@ -196,14 +196,9 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
             $expectedRestockingDate,
             $this->productAvailabilityFacade->findEffectiveExpectedRestockingDate($product, self::FIRST_DOMAIN_ID),
         );
-        $this->assertSame(
-            AvailabilityStatusEnum::EXPECTED_RESTOCK,
-            $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, self::FIRST_DOMAIN_ID),
-        );
-        $this->assertSame(
-            $this->getExpectedRestockTextForDate($expectedRestockingDate),
-            $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, self::FIRST_DOMAIN_ID),
-        );
+        $availability = $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, self::FIRST_DOMAIN_ID);
+        $this->assertSame(AvailabilityStatusEnum::EXPECTED_RESTOCK, $availability->status);
+        $this->assertSame($this->getExpectedRestockTextForDate($expectedRestockingDate), $availability->name);
     }
 
     public function testAvailabilityStaysOutOfStockWhenRestockingDateHasPassed(): void
@@ -217,13 +212,11 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertNull(
             $this->productAvailabilityFacade->findEffectiveExpectedRestockingDate($product, self::FIRST_DOMAIN_ID),
         );
-        $this->assertSame(
-            AvailabilityStatusEnum::OUT_OF_STOCK,
-            $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, self::FIRST_DOMAIN_ID),
-        );
+        $availability = $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, self::FIRST_DOMAIN_ID);
+        $this->assertSame(AvailabilityStatusEnum::OUT_OF_STOCK, $availability->status);
         $this->assertSame(
             t('Out of stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, self::FIRST_DOMAIN_ID),
+            $availability->name,
         );
     }
 
@@ -240,10 +233,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertNull(
             $this->productAvailabilityFacade->findEffectiveExpectedRestockingDate($product, self::FIRST_DOMAIN_ID),
         );
-        $this->assertSame(
-            AvailabilityStatusEnum::IN_STOCK,
-            $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, self::FIRST_DOMAIN_ID),
-        );
+        $this->assertSame(AvailabilityStatusEnum::IN_STOCK, $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, self::FIRST_DOMAIN_ID)->status);
     }
 
     public function testMainVariantStockQuantityIsNull(): void

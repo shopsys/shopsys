@@ -154,7 +154,6 @@ class ProductExportRepository
             ProductExportFieldProvider::ORDERING_PRIORITY => $product->getOrderingPriority($domainId),
             ProductExportFieldProvider::SELLING_DENIED => $product->isCalculatedSellingDenied($domainId),
             ProductExportFieldProvider::PERSONAL_PICKUP_ONLY => $product->isPersonalPickupOnly(),
-            ProductExportFieldProvider::AVAILABILITY => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
             ProductExportFieldProvider::IS_MAIN_VARIANT => $product->isMainVariant(),
             ProductExportFieldProvider::IS_VARIANT => $product->isVariant(),
             ProductExportFieldProvider::SLUG => $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_product_detail', $product->getId()),
@@ -175,7 +174,6 @@ class ProductExportRepository
             ProductExportFieldProvider::PRIORITY_BY_PRODUCT_TYPE => $this->extractPriorityByProductType($product, $domainId),
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
             ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION => $this->extractStoreAvailabilitiesInformation($product, $domainId),
-            ProductExportFieldProvider::AVAILABILITY_STATUS => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId),
             ProductExportFieldProvider::SELLING_FROM => $product->getSellingFrom()?->format('Y-m-d H:i:s'),
             ProductExportFieldProvider::EXPECTED_RESTOCKING_DATE => $this->productAvailabilityFacade->findValidExpectedRestockingDate($product, $domainId)?->format('Y-m-d H:i:s'),
             ProductExportFieldProvider::PRODUCT_VIDEOS => array_map(function (ProductVideo $productVideo) use ($locale) {
