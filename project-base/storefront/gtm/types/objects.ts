@@ -106,10 +106,13 @@ export type GtmConsentInfoType = {
     preferences: GtmConsent;
 };
 
+export type GtmProductAvailabilityType = 'in_stock' | 'out_of_stock' | 'expected_restock';
+
 export type GtmProductInterface = {
     id: number;
     name: string;
-    availability: string;
+    availability: GtmProductAvailabilityType;
+    availability_date?: string;
     flags: string[];
     priceWithoutVat: number | null;
     priceWithVat: number | null;

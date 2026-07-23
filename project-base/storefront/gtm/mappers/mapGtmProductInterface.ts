@@ -1,6 +1,10 @@
+import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmProductInterface } from 'gtm/types/objects';
+import { getGtmAvailability } from 'gtm/utils/getGtmAvailability';
 import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibility';
 import { ProductInterfaceType } from 'types/product';
+import { getFallbackTimezoneByDomainUrl } from 'utils/domain/domainConfig';
+import { getIsoDate } from 'utils/formaters/getIsoDate';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 
 type ProductInterfaceWithOptionalZboziCategory = ProductInterfaceType & {
@@ -20,11 +24,13 @@ export const mapGtmProductInterface = (
     }
 
     const zboziCategory = getGtmProductInterfaceZboziCategory(productInterface);
+    const availabilityDate = getGtmProductInterfaceAvailabilityDate(productInterface, domainUrl);
 
     return {
         id: productInterface.id,
         name: productInterface.fullName,
-        availability: productInterface.availability.name,
+        availability: getGtmAvailability(productInterface.availability.status),
+        ...(availabilityDate !== undefined && { availability_date: availabilityDate }),
         imageUrl: mapGtmProductInterfaceImageUrl(productInterface),
         flags: productInterface.flags.map((simpleFlagType) => simpleFlagType.name),
         priceWithoutVat: getGtmPriceBasedOnVisibility(productInterface.price.priceWithoutVat),
@@ -37,6 +43,20 @@ export const mapGtmProductInterface = (
             'categories' in productInterface ? productInterface.categories.map((category) => category.name) : [],
         ...(zboziCategory !== undefined && { zboziCategory }),
     };
+};
+
+const getGtmProductInterfaceAvailabilityDate = (
+    productInterface: ProductInterfaceType,
+    domainUrl: string,
+): string | undefined => {
+    if (
+        productInterface.availability.status !== TypeAvailabilityStatusEnum.ExpectedRestock ||
+        !productInterface.expectedRestockingDate
+    ) {
+        return undefined;
+    }
+
+    return getIsoDate(productInterface.expectedRestockingDate, getFallbackTimezoneByDomainUrl(domainUrl));
 };
 
 const getGtmProductInterfaceZboziCategory = (productInterface: ProductInterfaceType): string | undefined => {
