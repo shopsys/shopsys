@@ -54,7 +54,7 @@
 {% endblock abstract_file_upload_widget %}
 
 {% macro uploadedFile(uploadedFile, uploadedFilename, label, iconType, thumbnailUri, class, additionalTypesToRender) %}
-    <div class="card card-sm mb-3 js-file-upload-uploaded-file {{ class|default('') }}" style="max-width: 17.5rem;">
+    <div class="card card-sm mb-3 js-file-upload-uploaded-file {{ class|default('') }}{{ uploadedFile.vars.errors|length > 0 ? ' border-danger' }}" style="max-width: 17.5rem;">
         <div class="card-header py-1">
             <button class="js-file-upload-delete-button ms-auto btn btn-sm btn-ghost-danger" type="button" title="{{ 'Delete'|trans }}">
                 {{ ux_icon('delete', { class: 'icon mx-0 js-file-upload-delete' }) }}
@@ -89,6 +89,7 @@
 
         <div class="card-footer">
             {{ form_widget(uploadedFile, { attr: { class: 'js-file-upload-input' }}) }}
+            {{ form_errors(uploadedFile) }}
 
             <span>
                 {{ form_widget(uploadedFilename, { attr: { class: 'mb-3 js-file-upload-name-input js-validation-no-file-upload' }}) }}
