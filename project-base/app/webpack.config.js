@@ -78,4 +78,14 @@ Encore.addAliases({
     'icons': path.resolve(path.join(__dirname, 'assets/icons'))
 });
 
-module.exports = Encore.getWebpackConfig();
+const webpackConfig = Encore.getWebpackConfig();
+
+// webpack >= 5.109.0 defaults experiments.typescript to "auto", which makes enhanced-resolve read tsconfig.json
+// files found next to resolved modules — vendor/symfony/ux-live-component ships one extending a file
+// that is not part of the composer package, failing the whole build
+webpackConfig.experiments = {
+    ...webpackConfig.experiments,
+    typescript: false,
+};
+
+module.exports = webpackConfig;
