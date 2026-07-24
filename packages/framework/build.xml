@@ -147,7 +147,7 @@
 
     <target name="build-deploy-part-1-db-independent" depends="build-version-generate,clean,composer-prod,dirs-create,assets,npm" description="First part of application build for production preserving your DB (can be run without maintenance page)."/>
 
-    <target name="build-deploy-part-2-db-dependent" depends="check-migrate-uploaded-files,elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,migrate-uploaded-files-force,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
+    <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
 
     <target name="build-deploy-part-3-non-blocking" depends="run-post-deploy-tasks" description="Third part of application build for production. Non-blocking tasks that run after maintenance page is turned off."/>
 
@@ -171,13 +171,6 @@
                 </replacetokens>
             </filterchain>
         </copy>
-    </target>
-
-    <target name="check-migrate-uploaded-files" description="Checks if the uploaded files structure is compatible with 'migrate-uploaded-files'." hidden="true">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:uploaded-files:check-migrate"/>
-        </exec>
     </target>
 
     <target name="checks" depends="checks-internal,standards,tests" description="Runs internal checks, coding standards and runs unit, DB and smoke tests."/>
@@ -844,21 +837,6 @@
             <arg value="prettier-fix"/>
             <arg path="${path.root}/*.md"/>
             <arg path="${path.root}/docs/**/*.md"/>
-        </exec>
-    </target>
-
-    <target name="migrate-uploaded-files" description="Move all uploaded files from subdirectories to the top level directory." hidden="true">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:uploaded-files:migrate"/>
-        </exec>
-    </target>
-
-    <target name="migrate-uploaded-files-force" description="Force move (without check) all uploaded files from subdirectories to the top level directory." hidden="true">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:uploaded-files:migrate"/>
-            <arg value="--force"/>
         </exec>
     </target>
 

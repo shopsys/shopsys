@@ -7,10 +7,6 @@ services:
     Shopsys\FrameworkBundle\Command\:
         resource: '../../Command'
 
-    Shopsys\FrameworkBundle\Command\CheckMigrateUploadedFilesCommand:
-        arguments:
-            - '%shopsys.uploaded_file_dir%'
-
     Shopsys\FrameworkBundle\Command\ConfigureDomainsUrlsCommand:
         arguments:
             $configFilepath: '%shopsys.domain_urls_config_filepath%'
@@ -25,10 +21,6 @@ services:
     # the command is supposed to be used in DEV environment only so it is configured in services_dev.yaml
     Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         autoconfigure: false
-
-    Shopsys\FrameworkBundle\Command\MigrateUploadedFilesCommand:
-        arguments:
-            - '%shopsys.uploaded_file_dir%'
 
     # the command is supposed to be used in DEV environment only so it is configured in services_dev.yaml
     Shopsys\FrameworkBundle\Command\ReplaceObsoleteIconsCommand:
