@@ -240,6 +240,10 @@ services:
         arguments:
             $storesSearchRateLimiter: '@limiter.frontend_api_stores_search'
 
+    Shopsys\FrontendApiBundle\Model\Security\RefreshTokenRedisCacheFacade:
+        arguments:
+            $redisClient: '@snc_redis.frontend_api_refresh_token'
+
     Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory:
         arguments:
             $socialNetworkLoginConfig: '%social_network_login_config%'

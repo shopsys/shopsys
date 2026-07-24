@@ -27,9 +27,11 @@
     },
     "require": {
         "php": "^8.5",
+        "ext-redis": "*",
         "elasticsearch/elasticsearch": "^7.6.1",
         "hybridauth/hybridauth": "^3.13.0",
         "lcobucci/jwt": "^5.4",
+        "nette/utils": "^4.0",
         "overblog/graphql-bundle": "^1.9",
         "overblog/graphiql-bundle": "^1.0",
         "overblog/dataloader-bundle": "^1.1",

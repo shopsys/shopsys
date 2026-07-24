@@ -28,6 +28,15 @@ snc_redis:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:doctrine:query:'
                 connection_timeout: 2
                 read_write_timeout: 5
+        frontend_api_refresh_token:
+            type: 'phpredis'
+            alias: 'frontend_api_refresh_token'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
+            options:
+                prefix: '%env(REDIS_PREFIX)%:frontend_api_refresh_token:'
+                connection_timeout: 2
+                read_write_timeout: 5
         # client is used exclusively for cleaning old versions of redis caches and should not be used for anything else
         global:
             type: 'phpredis'

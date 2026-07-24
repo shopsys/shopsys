@@ -8,33 +8,61 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 final class RefreshTokensTest extends GraphQlTestCase
 {
-    public function testRefreshTokensMutationRotatesTokenAndKeepsExplicitTokenContract(): void
+    public function testRefreshTokenCanBeReusedWithinGracePeriod(): void
+    {
+        $initialRefreshToken = $this->loginAndGetRefreshToken();
+
+        $firstRefreshTokensResponseData = $this->refreshTokens($initialRefreshToken);
+        $secondRefreshTokensResponseData = $this->refreshTokens($initialRefreshToken);
+
+        $this->assertNotSame($initialRefreshToken, $firstRefreshTokensResponseData['refreshToken']);
+        $this->assertSame($firstRefreshTokensResponseData, $secondRefreshTokensResponseData);
+    }
+
+    private function loginAndGetRefreshToken(): string
     {
         $loginResponse = $this->getResponseContentForGql(
             __DIR__ . '/graphql/LoginMutation.graphql',
-            [
-                'email' => 'no-reply@shopsys.com',
-                'password' => 'user123',
-            ],
+            $this->getDefaultCredentials(),
         );
-        $loginData = $this->getResponseDataForGraphQlType($loginResponse, 'Login');
-        $originalRefreshToken = $loginData['tokens']['refreshToken'];
+        $loginResponseData = $this->getResponseDataForGraphQlType($loginResponse, 'Login');
 
-        $refreshResponse = $this->getResponseContentForGql(
+        $this->assertArrayHasKey('tokens', $loginResponseData);
+        $this->assertIsArray($loginResponseData['tokens']);
+        $this->assertArrayHasKey('refreshToken', $loginResponseData['tokens']);
+
+        return $loginResponseData['tokens']['refreshToken'];
+    }
+
+    /**
+     * @return array{accessToken: string, refreshToken: string}
+     */
+    private function refreshTokens(string $refreshToken): array
+    {
+        $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/RefreshTokensMutation.graphql',
-            ['refreshToken' => $originalRefreshToken],
-        );
-        $refreshData = $this->getResponseDataForGraphQlType($refreshResponse, 'RefreshTokens');
-
-        $this->assertIsString($refreshData['accessToken']);
-        $this->assertIsString($refreshData['refreshToken']);
-        $this->assertNotSame($originalRefreshToken, $refreshData['refreshToken']);
-
-        $reusedRefreshTokenResponse = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/RefreshTokensMutation.graphql',
-            ['refreshToken' => $originalRefreshToken],
+            ['refreshToken' => $refreshToken],
         );
 
-        $this->assertUserError($reusedRefreshTokenResponse, 'invalid-token');
+        $responseData = $this->getResponseDataForGraphQlType($response, 'RefreshTokens');
+
+        $this->assertArrayHasKey('accessToken', $responseData);
+        $this->assertArrayHasKey('refreshToken', $responseData);
+
+        return [
+            'accessToken' => $responseData['accessToken'],
+            'refreshToken' => $responseData['refreshToken'],
+        ];
+    }
+
+    /**
+     * @return array{email: string, password: string}
+     */
+    private function getDefaultCredentials(): array
+    {
+        return [
+            'email' => 'no-reply@shopsys.com',
+            'password' => 'user123',
+        ];
     }
 }
