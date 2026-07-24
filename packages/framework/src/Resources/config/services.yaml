@@ -427,6 +427,7 @@ services:
                 - '@snc_redis.global'
                 - '@snc_redis.blog_article_export_queue'
                 - '@snc_redis.product_recalculation_queue'
+                - '@snc_redis.mcp_oauth'
 
     Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade:
         arguments:

@@ -80,7 +80,7 @@ snc_redis:
             dsn: 'redis://%env(REDIS_HOST)%'
             logging: false
             options:
-                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:mcp_oauth:'
+                prefix: '%env(REDIS_PREFIX)%:mcp_oauth:'
                 connection_timeout: 2
                 read_write_timeout: 5
         mcp_rate_limiter:

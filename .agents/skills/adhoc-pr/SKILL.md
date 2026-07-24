@@ -93,6 +93,13 @@ gh pr create --base <default-branch> --head <branch> --title "<title>" --body-fi
 
 Record the PR **title**, **number**, and **URL** — the Jira issue is derived from them.
 
+4. **Backfill the PR number into upgrade notes.** Upgrade notes written before the PR
+   exists (in `upgrade-notes/`) carry the `{pullRequestId}` placeholder from
+   `upgrade-notes/_template.md`. After creating the PR, search the branch for the
+   placeholder (`git grep -l pullRequestId upgrade-notes/`), replace it with the real
+   PR number, and **amend** the commit that introduced the note (then push with
+   `--force-with-lease`) — the placeholder must never survive into the merged history.
+
 ### Step 5: Jira Issue
 
 Use the Atlassian MCP tools with `cloudId: shopsys.atlassian.net`.
