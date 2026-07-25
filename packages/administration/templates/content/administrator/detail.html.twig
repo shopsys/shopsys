@@ -12,8 +12,8 @@
         {% else %}
             <div class="dropdown">
                 <a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">
-                    <span class="d-none d-md-inline-block">{{ 'Enable two factor authentication' }}</span>
-                    <span class="d-md-none">{{ '2FA' }}</span>
+                    <span class="d-none d-md-inline-block">{{ 'Enable two factor authentication'|trans }}</span>
+                    <span class="d-md-none">{{ '2FA'|trans }}</span>
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{ url('admin_administrator_enable-two-factor-authentication', {'id': administrator.id, 'twoFactorAuthenticationType': 'google_auth'}) }}">

@@ -25,6 +25,9 @@ msgstr ""
 msgid "%entityName% (%entityIdentifier%)"
 msgstr ""
 
+msgid "2FA"
+msgstr ""
+
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr ""
 
@@ -943,6 +946,9 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
+msgid "Enable two factor authentication"
+msgstr ""
+
 msgid "Enable two factor authentication via email"
 msgstr ""
 
@@ -1850,6 +1856,9 @@ msgid "Replace file"
 msgstr ""
 
 msgid "Request a one-time passcode by email"
+msgstr ""
+
+msgid "Request authentication code"
 msgstr ""
 
 msgid "Requested at"
