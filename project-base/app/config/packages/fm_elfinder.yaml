@@ -13,6 +13,11 @@ fm_elfinder:
                         flysystem:
                             enabled: true
                             filesystem: 'main_filesystem'
+                        # intentionally below the 32M limits of upload_max_filesize (php-ini-overrides.ini) and client_max_body_size (nginx.conf, orchestration/kubernetes/configmap/nginx.yaml)
+                        # so the whole multipart request fits within them and Elfinder rejects too large files with a clear message instead of a server error
+                        upload_max_size: 30M
+                        # disable chunked uploads entirely (chunks may land on different app replicas), multi-file uploads run serially
+                        upload_max_conn: -1
                         upload_allow:
                             - 'image/png'
                             - 'image/jpg'
@@ -57,6 +62,11 @@ fm_elfinder:
                         flysystem:
                             enabled: true
                             filesystem: 'main_filesystem'
+                        # intentionally below the 32M limits of upload_max_filesize (php-ini-overrides.ini) and client_max_body_size (nginx.conf, orchestration/kubernetes/configmap/nginx.yaml)
+                        # so the whole multipart request fits within them and Elfinder rejects too large files with a clear message instead of a server error
+                        upload_max_size: 30M
+                        # disable chunked uploads entirely (chunks may land on different app replicas), multi-file uploads run serially
+                        upload_max_conn: -1
                         upload_allow:
                             - 'image/png'
                             - 'image/jpg'
