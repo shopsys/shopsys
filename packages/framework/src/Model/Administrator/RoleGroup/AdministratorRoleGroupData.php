@@ -15,10 +15,4 @@ class AdministratorRoleGroupData
      * @var string[]
      */
     public $roles = [];
-
-    public function fillFromEntity(AdministratorRoleGroup $administratorRoleGroup): void
-    {
-        $this->name = $administratorRoleGroup->getName();
-        $this->roles = $administratorRoleGroup->getRoles();
-    }
 }
