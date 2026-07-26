@@ -49,22 +49,10 @@ class ProductCachedAttributesFacade
             function () use ($product, $locale): array {
                 $locale ??= $this->localization->getCurrentLocaleForTranslatableEntities();
 
-                $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
+                return $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
                     $product,
                     $locale,
                 );
-
-                foreach ($productParameterValues as $index => $productParameterValue) {
-                    $parameter = $productParameterValue->getParameter();
-
-                    if ($parameter->getName($locale) === null
-                        || $productParameterValue->getValue()->getLocale() !== $locale
-                    ) {
-                        unset($productParameterValues[$index]);
-                    }
-                }
-
-                return $productParameterValues;
             },
             $product->getId(),
         );
