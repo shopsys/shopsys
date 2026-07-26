@@ -1,0 +1,40 @@
+on:
+    pull_request:
+        branches:
+            - '**'
+concurrency:
+    group: block-fixup-commits-${{ github.ref }}
+    cancel-in-progress: true
+name: Block fixup commits
+permissions:
+    contents: read
+jobs:
+    block-fixup-commits:
+        name: Check PR for fixup commits
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v6
+                with:
+                    ref: ${{ github.ref }}
+                    fetch-depth: 0
+            -   name: Check for fixup commits
+                env:
+                    BASE_SHA: ${{ github.event.pull_request.base.sha }}
+                    HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+                shell: bash
+                run: |
+                    if ! git cat-file -e "${BASE_SHA}^{commit}" 2>/dev/null; then
+                        git fetch --no-tags --depth=1 origin "${BASE_SHA}"
+                    fi
+
+                    COMMITS=$(git log --format='%h %s' "${BASE_SHA}..${HEAD_SHA}")
+                    FIXUP_COMMITS=$(grep -E '^[0-9a-f]+ (fixup|squash|amend)!' <<< "${COMMITS}" || true)
+
+                    if [ -n "${FIXUP_COMMITS}" ]; then
+                        echo "${FIXUP_COMMITS}"
+                        echo "::error::The pull request contains fixup commits. Squash them (git rebase --autosquash) before merging."
+                        exit 1
+                    fi
+
+                    echo "No fixup commits found."
