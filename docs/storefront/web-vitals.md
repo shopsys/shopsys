@@ -1,5 +1,7 @@
 # Web Vitals Improvements on Storefront
 
+[TOC]
+
 ## 1 Reduce DOM size
 
 This is probably the most time consuming part of our improvements. Math is pretty simple here. Bigger DOM size = higher blocking time (our worst metric). It also influences network traffic and from DX experience, it also brings more complex logic for work with styling. Besides one huge refactoring [pull request](https://github.com/shopsys/shopsys/pull/2749/commits) it was taken care of in every other touched task.

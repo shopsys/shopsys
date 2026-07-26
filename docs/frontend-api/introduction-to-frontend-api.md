@@ -1,5 +1,7 @@
 # Introduction to Frontend API
 
+[TOC]
+
 Shopsys Platform Frontend API is an interface to the application that is used for integration with external store frontend, for example, JS Storefront or a mobile app.
 We use [GraphQL](https://graphql.org) (implemented using [overblog/GraphQLBundle](https://github.com/overblog/GraphQLBundle)).
 

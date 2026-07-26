@@ -1,5 +1,7 @@
 # GTM Objects
 
+[TOC]
+
 These objects are used all across the GTM module to represent various objects mapped according to what the data layer requires.
 
 ## GtmReviewConsentsType

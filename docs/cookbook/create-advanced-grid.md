@@ -1,5 +1,7 @@
 # Create Advanced Grid
 
+[TOC]
+
 This article provides step-by-step instructions for advanced grid configurations.
 After finishing this cookbook, you will know how to create a grid with inline editing, and drag&drop sorting.
 
