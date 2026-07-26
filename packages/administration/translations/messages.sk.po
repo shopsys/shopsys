@@ -1990,6 +1990,9 @@ msgstr "Hľadať podľa názvu sekcie…"
 msgid "Search by slug..."
 msgstr "Hľadať podľa slug..."
 
+msgid "Search in transfer issue messages..."
+msgstr "Hľadať v textoch problémov v prenosoch..."
+
 msgid "Search in transfers"
 msgstr "Hľadať v prenosoch"
 
