@@ -21,6 +21,12 @@ const nextConfig = {
     },
     reactStrictMode: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
+    rewrites: async () => [
+        {
+            source: '/.well-known/security.txt',
+            destination: '/security.txt',
+        },
+    ],
     images: {
         loader: 'custom',
         deviceSizes: [480, 768, 1024, 1440], // Do not forget to update the same values in the `app/web/imageResizer.php` file
