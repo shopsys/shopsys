@@ -62,7 +62,10 @@ Following product attributes are exported into Elasticsearch (i.e. the search or
 - calculated_selling_denied (calculated true/false value whether the product is already sold out)
 - selling_denied (true/false value whether the product can be sold)
 - availability (translation of product availability)
-- main_variant (true/false value whether the product is main variant or not. You can find more about behavior of variants [here](../functional/behavior-of-product-variants.md))
+- is_main_variant (true/false value whether the product is main variant or not. You can find more about behavior of variants [here](../functional/behavior-of-product-variants.md))
+- is_variant (true/false value whether the product is variant or not)
+- main_variant_id (ID of the main variant if the product is a variant)
+- variants (IDs of the variants if the product is a main variant)
 - slug (relative url to page with products detail)
 - visibility (all visibilities for all pricing groups and domains)
 - and more, see `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider` and services implementing `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface` for more information
