@@ -149,6 +149,13 @@ export const CustomerUsersTable: FC = () => {
                             <Button
                                 aria-haspopup="dialog"
                                 className="flex-1"
+                                hasDisabledLook={currentCustomerUserUuid === user.uuid}
+                                disabled={currentCustomerUserUuid === user.uuid}
+                                title={
+                                    user.uuid === currentCustomerUserUuid
+                                        ? t('You cannot delete your own account')
+                                        : undefined
+                                }
                                 data-tid={TIDs.customer_users_delete_button}
                                 size="small"
                                 variant="inverted"
