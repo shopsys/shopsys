@@ -64,6 +64,7 @@ export const ProductsList: FC<ProductsListProps> = ({
                     className={currentProductListTwClass}
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
+                    isWithImageGallery
                     productListViewMode={productListViewMode}
                     productItemProps={productItemProps}
                     products={products}

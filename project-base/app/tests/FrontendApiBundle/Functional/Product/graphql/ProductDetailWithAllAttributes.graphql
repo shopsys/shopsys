@@ -17,6 +17,7 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
             status
         }
         stockQuantity
+        imagesCount
         isAllowedNegativeStock
         categories {
             name

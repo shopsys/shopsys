@@ -23,7 +23,7 @@ const nextConfig = {
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
     images: {
         loader: 'custom',
-        deviceSizes: [480, 768, 1024, 1440], // Do not forget to update the same values in the `app/web/imageResizer.php` file
+        deviceSizes: [480, 768, 1024, 1440, 1920], // Do not forget to update the same values in the `app/web/imageResizer.php` file
         imageSizes: [16, 24, 32, 48, 64, 96, 128, 256, 384],
         remotePatterns: [
             {

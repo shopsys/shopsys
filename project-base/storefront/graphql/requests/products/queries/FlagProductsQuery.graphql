@@ -7,5 +7,10 @@ query FlagProductsQuery(
 ) {
     products(flagSlug: $urlSlug, after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
         ...ListedProductConnectionFragment
+        edges {
+            node {
+                imagesCount
+            }
+        }
     }
 }

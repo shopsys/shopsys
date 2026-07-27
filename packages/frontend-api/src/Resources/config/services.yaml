@@ -156,6 +156,10 @@ services:
             $imagesBatchLoader: '@images_batch_loader'
             $firstImageBatchLoader: '@first_image_batch_loader'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\ProductImagesCountQuery:
+        arguments:
+            $imagesCountBatchLoader: '@images_count_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Image\ProductImagesQuery:
         arguments:
             $imagesBatchLoader: '@images_batch_loader'

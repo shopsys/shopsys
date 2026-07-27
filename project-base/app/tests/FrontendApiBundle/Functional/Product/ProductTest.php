@@ -140,6 +140,7 @@ class ProductTest extends GraphQlTestCase
                 'status' => AvailabilityStatusEnum::IN_STOCK,
             ],
             'stockQuantity' => 2700,
+            'imagesCount' => 2,
             'isAllowedNegativeStock' => true,
             'categories' => [
                 [

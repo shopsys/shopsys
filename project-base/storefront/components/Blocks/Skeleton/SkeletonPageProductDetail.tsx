@@ -14,25 +14,25 @@ export const SkeletonPageProductDetail: FC = () => (
 
         <Webline>
             <VerticalStack gap="md">
-                <div className="flex vl:flex-row flex-col gap-6">
-                    <div className="flex w-full basis-1/2 vl:basis-3/5 vl:flex-row flex-col-reverse vl:items-start items-center gap-6">
-                        <div className="flex w-full flex-row vl:flex-col gap-3.5 sm:w-auto">
-                            {createEmptyArray(5).map((_, index) => (
-                                <Skeleton key={index} className="size-16 rounded-lg last:hidden md:last:block" />
-                            ))}
+                <div className="flex vl:grid vl:grid-cols-[3fr_2fr] vl:grid-rows-[auto_1fr] flex-col gap-6 vl:gap-y-5">
+                    <div className="order-1 vl:col-start-2 vl:row-start-1">
+                        <Skeleton className="mb-1 h-6 w-2/6" />
+                        <Skeleton className="h-8 w-5/6 lg:h-10" />
+                    </div>
+
+                    <div className="order-2 vl:col-start-1 vl:row-span-2 vl:row-start-1 flex w-full flex-col items-center gap-6">
+                        <div className="flex w-full flex-col items-center justify-center gap-6">
+                            <Skeleton className="vl:size-125 h-80 w-full lg:h-125" />
                         </div>
 
-                        <div className="flex w-full flex-col items-center justify-center gap-6">
-                            <Skeleton className="h-[300px] w-full sm:size-[300px] md:size-[500px]" />
+                        <div className="mx-auto flex w-fit max-w-full gap-2 overflow-hidden">
+                            {createEmptyArray(6).map((_, index) => (
+                                <Skeleton key={index} className="size-12 shrink-0 rounded-lg sm:size-16" />
+                            ))}
                         </div>
                     </div>
 
-                    <div className="flex w-full flex-1 flex-col gap-5">
-                        <div>
-                            <Skeleton className="mb-1 h-6 w-2/6" />
-                            <Skeleton className="h-8 w-5/6 lg:h-10" />
-                        </div>
-
+                    <div className="order-3 vl:col-start-2 vl:row-start-2 flex w-full flex-1 flex-col gap-5">
                         <div className="flex items-center gap-5">
                             <Skeleton className="h-4 w-20 rounded-sm" />
                             <Skeleton className="h-4 w-20 rounded-sm" />

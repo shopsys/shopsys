@@ -1,7 +1,6 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
     SearchProductsQueryDocument,
     TypeSearchProductsQuery,
@@ -28,6 +27,8 @@ import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useCurrentSearchStringQuery } from 'utils/queryParams/useCurrentSearchStringQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+
+type SearchProductsConnection = TypeSearchProductsQuery['productsSearch'];
 
 export const useSearchProductsData = (totalProductCount?: number) => {
     const client = useClient();
@@ -108,7 +109,7 @@ export const useSearchProductsData = (totalProductCount?: number) => {
                     edges: mergeItemEdges(
                         previousProductsFromCache,
                         searchProductsResponse.data.productsSearch.edges,
-                    ) as TypeListedProductConnectionFragment['edges'],
+                    ) as SearchProductsConnection['edges'],
                 },
             });
             setAreSearchProductsFetching(false);
@@ -145,7 +146,7 @@ const readProductsSearchFromCache = (
     pageSize: number,
     userIdentifier: string,
     parameters?: string[] | null,
-): TypeListedProductConnectionFragment | undefined => {
+): SearchProductsConnection | undefined => {
     const dataFromCache = client.readQuery<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(
         SearchProductsQueryDocument,
         {
@@ -174,7 +175,7 @@ const getPreviousProductsFromCache = (
     userIdentifier: string,
     parameters?: string[] | null,
 ) => {
-    let cachedPartOfProducts: TypeListedProductConnectionFragment['edges'] | undefined;
+    let cachedPartOfProducts: SearchProductsConnection['edges'] | undefined;
     let iterationsCounter = currentLoadMore;
 
     while (iterationsCounter > 0) {
@@ -195,7 +196,7 @@ const getPreviousProductsFromCache = (
                 cachedPartOfProducts = mergeItemEdges(
                     cachedPartOfProducts,
                     productsSearchFromCache.edges,
-                ) as TypeListedProductConnectionFragment['edges'];
+                ) as SearchProductsConnection['edges'];
             } else {
                 cachedPartOfProducts = productsSearchFromCache.edges;
             }

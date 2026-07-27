@@ -1517,6 +1517,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  /** Number of product images */
+  imagesCount: Scalars['Int']['output'];
   /** Whether the product allows purchasing more items than are currently in stock */
   isAllowedNegativeStock: Scalars['Boolean']['output'];
   /** Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied */
@@ -1581,6 +1583,12 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
 
 /** Represents a product */
 export type TypeMainVariantImagesArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Represents a product */
+export type TypeMainVariantImagesCountArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2693,6 +2701,8 @@ export type TypeProduct = {
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  /** Number of product images */
+  imagesCount: Scalars['Int']['output'];
   /** Whether the product allows purchasing more items than are currently in stock */
   isAllowedNegativeStock: Scalars['Boolean']['output'];
   /** Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied */
@@ -2754,6 +2764,12 @@ export type TypeProduct = {
 
 /** Represents a product */
 export type TypeProductImagesArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Represents a product */
+export type TypeProductImagesCountArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -3510,6 +3526,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  /** Number of product images */
+  imagesCount: Scalars['Int']['output'];
   /** Whether the product allows purchasing more items than are currently in stock */
   isAllowedNegativeStock: Scalars['Boolean']['output'];
   /** Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied */
@@ -3571,6 +3589,12 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
 
 /** Represents a product */
 export type TypeRegularProductImagesArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Represents a product */
+export type TypeRegularProductImagesCountArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -4025,6 +4049,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  /** Number of product images */
+  imagesCount: Scalars['Int']['output'];
   /** Whether the product allows purchasing more items than are currently in stock */
   isAllowedNegativeStock: Scalars['Boolean']['output'];
   /** Whether the product is currently out of stock (but may be back in stock later), but selling is not permanently denied */
@@ -4087,6 +4113,12 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
 
 /** Represents a product */
 export type TypeVariantImagesArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Represents a product */
+export type TypeVariantImagesCountArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 

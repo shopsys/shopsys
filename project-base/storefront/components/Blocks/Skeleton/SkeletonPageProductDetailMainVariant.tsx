@@ -12,21 +12,22 @@ export const SkeletonPageProductDetailMainVariant: FC = () => (
 
         <Webline>
             <VerticalStack gap="md">
-                <div className="flex vl:flex-row flex-col-reverse vl:items-start items-center gap-y-6">
-                    <div className="flex w-full flex-row vl:flex-col gap-3.5 sm:w-auto">
-                        {createEmptyArray(5).map((_, index) => (
-                            <Skeleton key={index} className="size-16 rounded-lg last:hidden md:last:block" />
-                        ))}
+                <div className="flex flex-col gap-5">
+                    <Skeleton className="order-1 vl:order-2 h-8 w-3/6 lg:h-10 xl:mt-3" />
+
+                    <div className="order-2 vl:order-1 flex w-full flex-col items-center gap-6">
+                        <div className="flex w-full flex-col items-center justify-center gap-6">
+                            <Skeleton className="vl:size-125 h-80 w-full lg:h-125" />
+                        </div>
+
+                        <div className="mx-auto flex w-fit max-w-full gap-2 overflow-hidden">
+                            {createEmptyArray(6).map((_, index) => (
+                                <Skeleton key={index} className="size-12 shrink-0 rounded-lg sm:size-16" />
+                            ))}
+                        </div>
                     </div>
 
-                    <div className="flex w-full flex-col items-center justify-center gap-6">
-                        <Skeleton className="h-[300px] w-full sm:size-[300px] md:size-[500px]" />
-                    </div>
-                </div>
-
-                <div>
-                    <Skeleton className="mb-1 h-8 w-3/6 lg:h-10" />
-                    <Skeleton className="h-4 w-32 rounded-sm" />
+                    <Skeleton className="order-3 h-4 w-32 rounded-sm" />
                 </div>
 
                 <div className="flex flex-col gap-2">

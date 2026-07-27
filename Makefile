@@ -19,7 +19,7 @@ help: ## Displays list of available commands
 # Phony targets - declaration of targets that are not files
 # ------------------------------------------------------------------------------
 
-.PHONY: help mutagen-up mutagen-up-build mutagen-up-build-no-cache mutagen-stop mutagen-down generate-schema generate-schema-native check-fix php-checks php-lock-icons php-translations \
+.PHONY: help mutagen-up mutagen-up-build mutagen-up-build-no-cache mutagen-stop mutagen-down generate-schema generate-schema-native check-fix markdown-fix php-checks php-lock-icons php-translations \
 	storefront-checks storefront-translations translations-dump check-schema run-acceptance-tests-base \
 	run-acceptance-tests-regression selected-acceptance-tests-base selected-acceptance-tests-regression \
 	run-specific-test-regression run-specific-test-base \
@@ -99,7 +99,10 @@ environment-dev: ## Switches the whole application (backend + storefront) to the
 # ✅ Code Checks and Fixes (PHP and JS/TS)
 # ------------------------------------------------------------------------------
 
-check-fix: generate-schema php-checks php-translations storefront-checks storefront-knip storefront-translations storefront-styles-for-admin check-licenses generate-icons-for-styleguide ## Runs all code checks (backend & storefront) and attempts to fix issues
+check-fix: generate-schema markdown-fix php-checks php-translations storefront-checks storefront-knip storefront-translations storefront-styles-for-admin check-licenses generate-icons-for-styleguide ## Runs all code checks (backend & storefront) and attempts to fix issues
+
+markdown-fix: ## Reformats Markdown files
+	docker compose exec php-fpm php phing markdown-fix
 
 php-checks: ## Runs PHP checks (coding standards, PHPStan) and attempts to fix issues
 	docker compose exec php-fpm php phing standards-fix phpstan

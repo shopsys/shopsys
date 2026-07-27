@@ -44,6 +44,9 @@ overblog_dataloader:
         imagesBatchLoader:
             alias: "images_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Image\\ImagesBatchLoader:loadByBatchData"
+        imagesCountBatchLoader:
+            alias: "images_count_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Image\\ImagesCountBatchLoader:loadByBatchData"
         luigisBoxBatchLoader:
             alias: "luigis_box_batch_loader"
             batch_load_fn: "@Shopsys\\LuigisBoxBundle\\Model\\Batch\\LuigisBoxBatchLoader:loadByBatchData"

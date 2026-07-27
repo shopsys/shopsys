@@ -1,0 +1,7 @@
+query ProductListItemImagesQuery($uuid: Uuid!) {
+    product(uuid: $uuid) {
+        images {
+            ...ImageFragment
+        }
+    }
+}

@@ -36,6 +36,14 @@ Product:
                     type:
                         type: "String"
                         defaultValue: null
+            imagesCount:
+                type: "Int!"
+                description: "Number of product images"
+                resolve: '@=query("imagesCountByProductPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
             accessories:
                 type: "[Product!]!"
             parameters:
