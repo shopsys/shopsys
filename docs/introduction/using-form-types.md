@@ -193,14 +193,15 @@ After a file or files are uploaded it shows box for every file and lets you to d
 #### file_constraints
 
 An array of constraints that should be applied for the uploaded file.
+To restrict the allowed file formats, use the native Symfony `File` constraint with the [`extensions` option](https://symfony.com/doc/current/reference/constraints/File.html#extensions) that validates both the file extension and that the real content of the file matches it.
 
 #### file_entity_class
 
-Defines which entity class (defined in [uploaded_files.yaml]({{github.link}}/project-base/config/uploaded_files.yaml)) should the files be assigned to.
+Defines which entity class (defined in [uploaded_files.yaml]({{github.link}}/project-base/app/config/uploaded_files.yaml)) should the files be assigned to.
 
 #### file_type
 
-Defines which type of file (defined in [uploaded_files.yaml]({{github.link}}/project-base/config/uploaded_files.yaml)) should the files be assigned to.
+Defines which type of file (defined in [uploaded_files.yaml]({{github.link}}/project-base/app/config/uploaded_files.yaml)) should the files be assigned to.
 
 #### info_text
 
@@ -254,6 +255,30 @@ Uses `AbstractFileUploadType` to display a widget for images upload and to work 
 #### entity
 
 Defines which entity should the images be assigned to.
+
+#### image_entity_class
+
+Defines the entity class whose image configuration (defined by the [`EntityImage`]({{github.link}}/packages/framework/src/Component/Image/Config/Attributes/EntityImage.php) attribute on the entity) should be used.
+
+#### image_type
+
+Defines which type of image (the `name` of an `EntityImage` attribute on the entity) should the images be assigned to.
+
+#### multiple
+
+Defines whether multiple images can be uploaded.
+Defaults to the `multiple` setting of the `EntityImage` attribute resolved from `image_entity_class` and `image_type`.
+
+#### file_constraints
+
+An array of additional constraints applied to every uploaded image (typically the `File` constraint with `maxSize`).
+Unless the array already contains a `File` constraint with the [`extensions` option](https://symfony.com/doc/current/reference/constraints/File.html#extensions), the `File` constraint with `ImageProcessor::SUPPORTED_EXTENSIONS` (`jpg`, `jpeg`, `gif`, `png`) is added automatically, so the image format is always validated — both the file extension and that the real content of the file matches it, producing a single validation message.
+To restrict the allowed image formats for a particular form, pass your own `File` constraint with `extensions` (see `DomainFormType` that allows PNG icons only).
+The effective extensions are also used for the `accept` attribute of the file input, so the browser's file picker offers only the allowed formats.
+
+#### hide_delete_button
+
+Hides the delete button of the uploaded images.
 
 ### [OrderListType]({{github.link}}/packages/framework/src/Form/OrderListType.php)
 
