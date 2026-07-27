@@ -88,6 +88,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             ['email' => CompanyDataFixture::B2B_COMPANY_USER_EMAIL],
             ['email' => CompanyDataFixture::B2B_COMPANY_CATALOG_USER_EMAIL],
             ['email' => CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL],
+            ['email' => CompanyDataFixture::B2B_COMPANY_CUSTOMER_MANAGER_EMAIL],
             ['email' => CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL],
             ['email' => CompanyDataFixture::B2B_COMPANY_ACCOUNTANT_EMAIL],
         ];

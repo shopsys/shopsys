@@ -1,4 +1,5 @@
 import {
+    checkRoleGroupOptionsAreEnabled,
     checkUsersTableIsVisible,
     clickAddNewUserButton,
     clickDeleteUserButtonByEmail,
@@ -17,6 +18,7 @@ import {
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
     loginAsB2bAccountant,
+    loginAsB2bCustomerManager,
     loginAsB2bOwner,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
@@ -168,6 +170,50 @@ describe('Customer Users (B2B) Tests', () => {
 
             confirmDeleteUser();
             checkAndHideSuccessToast();
+        });
+    });
+
+    describe('As B2B Customer Manager', () => {
+        beforeEach(() => {
+            loginAsB2bCustomerManager();
+        });
+
+        it('should access the customer users page, enable role groups, and add a new user', () => {
+            const testEmail = 'cypress-customer-manager-test-user@shopsys.com';
+            let createdUserUuid: string | undefined;
+
+            cy.removeCustomerUserByEmailIfExistsViaApi(testEmail);
+
+            cy.intercept('GET', `**${b2bUrl.customer.users}`).as('customerUsersPage');
+            cy.intercept('POST', '**/graphql/', (req) => {
+                if (req.body?.operationName === 'AddNewCustomerUserMutation') {
+                    req.continue((res) => {
+                        createdUserUuid = res.body?.data?.AddNewCustomerUser?.uuid;
+                    });
+                }
+            });
+
+            visitCustomerUsersPage();
+            cy.wait('@customerUsersPage').its('response.statusCode').should('eq', 200);
+            checkUsersTableIsVisible();
+            clickAddNewUserButton();
+            checkRoleGroupOptionsAreEnabled();
+
+            fillAddUserForm({
+                email: testEmail,
+                firstName: 'Cypress',
+                lastName: 'CustomerManager',
+                telephone: '777123457',
+            });
+            submitManageUserForm();
+            checkAndHideSuccessToast();
+            cy.getByTID([TIDs.customer_users_table]).contains(testEmail).should('be.visible');
+
+            cy.then(() => {
+                if (createdUserUuid) {
+                    cy.removeCustomerUserViaApi(createdUserUuid);
+                }
+            });
         });
     });
 
