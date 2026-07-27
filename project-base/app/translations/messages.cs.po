@@ -10,12 +10,6 @@ msgstr "Zavřít"
 msgid "File not found in main filesystem. Please try again later."
 msgstr "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím znovu později."
 
-msgid "GTM ID"
-msgstr "GTM ID"
-
-msgid "GTM creative"
-msgstr ""
-
 msgid "Insert variable"
 msgstr "Vložit proměnnou"
 
@@ -54,12 +48,6 @@ msgstr "Nahrát obrázek pro mobilní zařízení"
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr "Můžete nahrát následující formáty: PNG, JPG"
-
-msgid "e.g. Sale-04-20-2020"
-msgstr "např. Akce-04-20-2020"
-
-msgid "e.g. red-1035x340-jpg-carousel"
-msgstr "např. cervena-1035x340-jpg-carousel"
 
 msgid "from most expensive"
 msgstr "od nejdražšího"

@@ -10,12 +10,6 @@ msgstr "Zavrieť"
 msgid "File not found in main filesystem. Please try again later."
 msgstr "Súbor nebol nájdený v hlavnom súborovom systéme. Prosím, skúste to neskôr."
 
-msgid "GTM ID"
-msgstr "GTM ID"
-
-msgid "GTM creative"
-msgstr "GTM kreativa"
-
 msgid "Insert variable"
 msgstr "Vložiť premennú"
 
@@ -54,12 +48,6 @@ msgstr "Nahrať obrázok pre mobilné zariadenia"
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr "Môžete nahrať nasledujúce formáty: PNG, JPG"
-
-msgid "e.g. Sale-04-20-2020"
-msgstr "napr. Vypredaj-04-20-2020"
-
-msgid "e.g. red-1035x340-jpg-carousel"
-msgstr "napr. cerveny-1035x340-jpg-carousel"
 
 msgid "from most expensive"
 msgstr "od najdrahších"

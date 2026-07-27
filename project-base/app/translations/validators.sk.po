@@ -7,9 +7,6 @@ msgstr ""
 msgid "Image can be only in JPG or PNG format"
 msgstr "Obrázok môže byť len v formáte JPG alebo PNG"
 
-msgid "Please enter GTM ID"
-msgstr "Prosím, zadajte GTM ID"
-
 msgid "Uploaded image is too large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
 msgstr "Nahrávaný obrázok je príliš veľký ({{ size }} {{ suffix }}). Maximálna veľkosť obrázka je {{ limit }} {{ suffix }}."
 

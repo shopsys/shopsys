@@ -13,15 +13,5 @@ class SliderItemData extends BaseSliderItemData
      */
     public $mobileImage;
 
-    /**
-     * @var string
-     */
-    public $gtmId;
-
-    /**
-     * @var string|null
-     */
-    public $gtmCreative;
-
     public ?string $uuid = null;
 }
