@@ -10,36 +10,50 @@ export default class extends Controller {
     };
 
     connect() {
+        this.pendingTabSwitch = null;
+        this.onShow = event => this.prepareTabSwitch(event.target);
         this.onShown = event => {
-            this.loadTab(event.target);
+            const pane = this.findPane(event.target);
+            const loading = this.loadTab(event.target);
+
+            if (loading === null) {
+                this.finishTabSwitch(pane);
+            } else {
+                loading.finally(() => this.finishTabSwitch(pane));
+            }
+
             this.updateActiveTabInUrl(event.target);
         };
         this.onOrderUpdated = () => this.markHistoryTabStale();
 
+        this.element.addEventListener('show.bs.tab', this.onShow);
         this.element.addEventListener('shown.bs.tab', this.onShown);
         document.addEventListener(this.orderUpdatedEventValue, this.onOrderUpdated);
     }
 
     disconnect() {
+        this.element.removeEventListener('show.bs.tab', this.onShow);
         this.element.removeEventListener('shown.bs.tab', this.onShown);
         document.removeEventListener(this.orderUpdatedEventValue, this.onOrderUpdated);
+
+        this.clearPendingTabSwitch();
     }
 
     loadTab(tabLink, force = false) {
         const pane = this.findPane(tabLink);
 
-        this.loadPane(pane, force);
+        return this.loadPane(pane, force);
     }
 
     loadPane(pane, force = false) {
         if (!pane || (!force && pane.dataset.orderDetailTabsLoadedValue === '1')) {
-            return;
+            return null;
         }
 
         pane.dataset.orderDetailTabsLoadedValue = '1';
         pane.innerHTML = `<div class="text-secondary">${Translator.trans('Loading...')}</div>`;
 
-        fetch(pane.dataset.orderDetailTabsContentUrlValue, {
+        return fetch(pane.dataset.orderDetailTabsContentUrlValue, {
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
             },
@@ -60,6 +74,41 @@ export default class extends Controller {
                 pane.dataset.orderDetailTabsLoadedValue = '0';
                 pane.innerHTML = `<div class="alert alert-danger mb-0">${Translator.trans('Tab content could not be loaded.')}</div>`;
             });
+    }
+
+    prepareTabSwitch(tabLink) {
+        const pane = this.findPane(tabLink);
+        const activePane = this.paneTargets.find(paneTarget => paneTarget.classList.contains('active'));
+
+        this.clearPendingTabSwitch();
+
+        if (!pane || !activePane || pane === activePane) {
+            return;
+        }
+
+        const tabContent = activePane.parentElement;
+        const currentMinHeight = Number.parseFloat(tabContent.style.minHeight) || 0;
+
+        tabContent.style.minHeight = `${Math.max(currentMinHeight, activePane.getBoundingClientRect().height)}px`;
+        this.pendingTabSwitch = {
+            pane,
+            scrollPosition: window.scrollY,
+        };
+    }
+
+    finishTabSwitch(pane) {
+        if (!this.pendingTabSwitch || this.pendingTabSwitch.pane !== pane) {
+            return;
+        }
+
+        const { scrollPosition } = this.pendingTabSwitch;
+
+        this.clearPendingTabSwitch();
+        window.requestAnimationFrame(() => window.scrollTo({ top: scrollPosition, behavior: 'instant' }));
+    }
+
+    clearPendingTabSwitch() {
+        this.pendingTabSwitch = null;
     }
 
     markHistoryTabStale() {
