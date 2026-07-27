@@ -100,6 +100,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 >
                     <Header />
                     <DeferredNavigation
+                        isDesktop={isDesktop}
                         isNavigationFetching={isNavigationFetching}
                         navigation={navigationData?.navigation}
                     />

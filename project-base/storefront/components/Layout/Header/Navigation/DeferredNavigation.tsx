@@ -2,19 +2,37 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 import type { NavigationProps } from './Navigation';
-import { Navigation } from './Navigation';
+import { NavigationPlaceholder } from './NavigationPlaceholder';
 
-const NavigationPlaceholder = dynamic(() =>
-    import('./NavigationPlaceholder').then((component) => component.NavigationPlaceholder),
-);
+const Navigation = dynamic<NavigationProps>(() => import('./Navigation').then((component) => component.Navigation), {
+    ssr: false,
+    loading: () => <NavigationPlaceholder />,
+});
 
 type DeferredNavigationProps = {
+    isDesktop?: boolean;
     isNavigationFetching?: boolean;
     navigation?: NavigationProps['navigation'];
 };
 
-export const DeferredNavigation: FC<DeferredNavigationProps> = ({ isNavigationFetching, navigation }) => {
+type DesktopDeferredNavigationProps = {
+    navigation: NavigationProps['navigation'];
+};
+
+const DesktopDeferredNavigation: FC<DesktopDeferredNavigationProps> = ({ navigation }) => {
     const shouldRender = useDeferredRender('navigation');
+
+    return (
+        <Webline className="relative">
+            {shouldRender ? <Navigation navigation={navigation} /> : <NavigationPlaceholder navigation={navigation} />}
+        </Webline>
+    );
+};
+
+export const DeferredNavigation: FC<DeferredNavigationProps> = ({ isDesktop, isNavigationFetching, navigation }) => {
+    if (isDesktop === false) {
+        return null;
+    }
 
     if (!navigation?.length) {
         return isNavigationFetching ? (
@@ -24,9 +42,13 @@ export const DeferredNavigation: FC<DeferredNavigationProps> = ({ isNavigationFe
         ) : null;
     }
 
-    return (
-        <Webline className="relative">
-            {shouldRender ? <Navigation navigation={navigation} /> : <NavigationPlaceholder navigation={navigation} />}
-        </Webline>
-    );
+    if (isDesktop === undefined) {
+        return (
+            <Webline className="relative">
+                <NavigationPlaceholder navigation={navigation} />
+            </Webline>
+        );
+    }
+
+    return <DesktopDeferredNavigation navigation={navigation} />;
 };

@@ -1,20 +1,16 @@
-import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { HomeIcon } from 'components/Basic/Icon/HomeIcon';
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
-import { UserMenu } from 'components/Blocks/UserMenu/UserMenu';
 import { CartCount } from 'components/Layout/Header/Cart/CartCount';
-import { CartInHeaderList } from 'components/Layout/Header/Cart/CartInHeaderList';
-import { MenuIconicItemUserUnauthenticatedContent } from 'components/Layout/Header/MenuIconic/MenuIconicItemUserUnauthenticatedContent';
 import {
     MobileBottomNavigationButton,
     MobileBottomNavigationLink,
 } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomNavigationItem';
 import { MobileBottomSearchWithOverlay } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomSearchWithOverlay';
-import { MobileMenu } from 'components/Layout/Header/MobileMenu/MobileMenu';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
@@ -24,6 +20,22 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 import { useKeypress } from 'utils/useKeyPress';
 
 type OpenPanel = 'catalog' | 'cart' | 'search' | 'account' | null;
+type Panel = Exclude<OpenPanel, null>;
+
+const MobileBottomAccountDrawer = dynamic(
+    () => import('./MobileBottomAccountDrawer').then((component) => component.MobileBottomAccountDrawer),
+    { ssr: false },
+);
+
+const MobileBottomCartDrawer = dynamic(
+    () => import('./MobileBottomCartDrawer').then((component) => component.MobileBottomCartDrawer),
+    { ssr: false },
+);
+
+const MobileMenu = dynamic(
+    () => import('components/Layout/Header/MobileMenu/MobileMenu').then((component) => component.MobileMenu),
+    { ssr: false },
+);
 
 export const MobileBottomNavigation: FC = () => {
     const { t } = useTranslation();
@@ -31,12 +43,13 @@ export const MobileBottomNavigation: FC = () => {
     const { cart } = useCurrentCart();
     const isUserLoggedIn = useIsUserLoggedIn();
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const openedPanelsRef = useRef(new Set<Panel>());
     const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
     const [homeUrl] = getInternationalizedStaticUrls(['/'], url);
 
     const closeOpenPanel = () => setOpenPanel(null);
 
-    const togglePanel = (panel: Exclude<OpenPanel, null>) => {
+    const togglePanel = (panel: Panel) => {
         const shouldOpenPanel = openPanel !== panel;
 
         if (panel === 'search') {
@@ -49,6 +62,10 @@ export const MobileBottomNavigation: FC = () => {
             }
 
             return;
+        }
+
+        if (shouldOpenPanel) {
+            openedPanelsRef.current.add(panel);
         }
 
         setOpenPanel(shouldOpenPanel ? panel : null);
@@ -108,38 +125,35 @@ export const MobileBottomNavigation: FC = () => {
                 </ul>
             </nav>
 
-            <MobileMenu
-                isMenuOpened={openPanel === 'catalog'}
-                shouldRenderTrigger={false}
-                onMenuToggle={() => togglePanel('catalog')}
-            />
+            {openedPanelsRef.current.has('catalog') && (
+                <MobileMenu
+                    isMenuOpened={openPanel === 'catalog'}
+                    shouldRenderTrigger={false}
+                    onMenuToggle={() => togglePanel('catalog')}
+                />
+            )}
 
-            <Drawer
-                isActive={openPanel === 'cart'}
-                setIsActive={(isActive) => setOpenPanel(isActive ? 'cart' : null)}
-                title={t('Cart')}
-            >
-                <CartInHeaderList />
-            </Drawer>
+            {openedPanelsRef.current.has('cart') && (
+                <MobileBottomCartDrawer
+                    isActive={openPanel === 'cart'}
+                    setIsActive={(isActive) => setOpenPanel(isActive ? 'cart' : null)}
+                    title={t('Cart')}
+                />
+            )}
 
             {openPanel === 'search' && (
                 <MobileBottomSearchWithOverlay searchInputRef={searchInputRef} onClose={closeOpenPanel} />
             )}
 
-            <Drawer
-                isActive={openPanel === 'account'}
-                setIsActive={(isActive) => setOpenPanel(isActive ? 'account' : null)}
-                title={t('My account')}
-            >
-                {isUserLoggedIn ? (
-                    <UserMenu />
-                ) : (
-                    <MenuIconicItemUserUnauthenticatedContent
-                        loginFormName="mobile-bottom-navigation-login-form"
-                        onMenuClose={closeOpenPanel}
-                    />
-                )}
-            </Drawer>
+            {openedPanelsRef.current.has('account') && (
+                <MobileBottomAccountDrawer
+                    isActive={openPanel === 'account'}
+                    isUserLoggedIn={isUserLoggedIn}
+                    setIsActive={(isActive) => setOpenPanel(isActive ? 'account' : null)}
+                    title={t('My account')}
+                    onClose={closeOpenPanel}
+                />
+            )}
         </>
     );
 };
