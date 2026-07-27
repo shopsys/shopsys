@@ -68,8 +68,21 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
 
     protected function setData(CustomerUserRoleGroupData $customerUserRoleGroupData): void
     {
-        $this->roles = $customerUserRoleGroupData->roles;
+        $this->roles = $this->removeRolesGrantedByAllRoles($customerUserRoleGroupData->roles);
         $this->setTranslations($customerUserRoleGroupData);
+    }
+
+    /**
+     * @param string[] $roles
+     * @return string[]
+     */
+    protected function removeRolesGrantedByAllRoles(array $roles): array
+    {
+        if (in_array(CustomerUserRole::ROLE_API_ALL, $roles, true)) {
+            return [CustomerUserRole::ROLE_API_ALL];
+        }
+
+        return array_values($roles);
     }
 
     /**

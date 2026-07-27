@@ -17,7 +17,13 @@ class CustomerUserRoleSectionProvider extends AbstractRoleSectionProvider
     #[Override]
     protected function defineSections(): void
     {
-        $this->addSection(new RoleSection(self::ALL, t('All roles'), 10, 'menu'));
+        $this->addSection(new RoleSection(
+            self::ALL,
+            t('All roles'),
+            10,
+            'menu',
+            t('The group is granted all current roles and also any roles added in the future.'),
+        ));
         $this->addSection(new RoleSection(self::INDIVIDUAL, t('Individual roles'), 20, 'puzzle'));
     }
 

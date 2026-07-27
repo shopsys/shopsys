@@ -3652,6 +3652,9 @@ msgstr ""
 msgid "The gift voucher applies to all goods and services. The gift voucher cannot be redeemed after the stated validity date; after the validity expires, its value is forfeited without any right to compensation. The voucher cannot be exchanged for cash. The goods or services must be of equal or higher value."
 msgstr ""
 
+msgid "The group is granted all current roles and also any roles added in the future."
+msgstr ""
+
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr ""
 

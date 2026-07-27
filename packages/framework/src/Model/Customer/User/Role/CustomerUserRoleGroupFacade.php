@@ -36,12 +36,11 @@ class CustomerUserRoleGroupFacade
     ): CustomerUserRoleGroup {
         $customerUserRoleGroup = $this->customerUserRoleGroupRepository->getById($customerUserRoleGroupId);
         $currentRoles = $customerUserRoleGroup->getRoles();
-        $newRoles = $administratorRoleGroupData->roles;
 
         $customerUserRoleGroup->edit($administratorRoleGroupData);
         $this->entityManager->flush();
 
-        $rolesChanged = ExtendedClassNameResolver::resolve(ArrayHelper::class)::haveArraysDifferentValues($currentRoles, $newRoles);
+        $rolesChanged = ExtendedClassNameResolver::resolve(ArrayHelper::class)::haveArraysDifferentValues($currentRoles, $customerUserRoleGroup->getRoles());
 
         if ($rolesChanged) {
             foreach ($this->customerUserRoleGroupRepository->iterateAllCustomerUsersByRoleGroup($customerUserRoleGroup) as $customerUser) {
