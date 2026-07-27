@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfig;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskDescriptor;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskRunEnum;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\RecalculateFileSizesTask;
-use Shopsys\FrameworkBundle\Component\PostDeploy\Task\SetCustomerUploadedFilesPrivateVisibilityTask;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderInterface;
@@ -129,11 +128,6 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
                         'run' => PostDeployTaskRunEnum::ONE_TIME,
                         'priority' => 100,
                         'service' => RecalculateFileSizesTask::class,
-                    ],
-                    'set_customer_uploaded_files_private_visibility' => [
-                        'run' => PostDeployTaskRunEnum::ONE_TIME,
-                        'priority' => 90,
-                        'service' => SetCustomerUploadedFilesPrivateVisibilityTask::class,
                     ],
                 ],
             ],

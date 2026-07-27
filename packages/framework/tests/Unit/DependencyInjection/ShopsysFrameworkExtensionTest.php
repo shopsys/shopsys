@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfig;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskDescriptor;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskRunEnum;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\RecalculateFileSizesTask;
-use Shopsys\FrameworkBundle\Component\PostDeploy\Task\SetCustomerUploadedFilesPrivateVisibilityTask;
 use Shopsys\FrameworkBundle\DependencyInjection\Configuration;
 use Shopsys\FrameworkBundle\DependencyInjection\ShopsysFrameworkExtension;
 use Symfony\Component\Config\Definition\Processor;
@@ -84,16 +83,9 @@ class ShopsysFrameworkExtensionTest extends TestCase
             ->getDefinition(PostDeployTaskConfig::class)
             ->getArgument('$descriptors');
 
-        $this->assertCount(3, $descriptorDefinitions);
+        $this->assertCount(2, $descriptorDefinitions);
         $this->assertDescriptorDefinition($descriptorDefinitions[0], 'recalculate_file_sizes', PostDeployTaskRunEnum::ONE_TIME, 100, RecalculateFileSizesTask::class);
         $this->assertDescriptorDefinition($descriptorDefinitions[1], 'project_task', PostDeployTaskRunEnum::ALWAYS, 100, 'project_service');
-        $this->assertDescriptorDefinition(
-            $descriptorDefinitions[2],
-            'set_customer_uploaded_files_private_visibility',
-            PostDeployTaskRunEnum::ONE_TIME,
-            90,
-            SetCustomerUploadedFilesPrivateVisibilityTask::class,
-        );
     }
 
     private function assertDescriptorDefinition(
