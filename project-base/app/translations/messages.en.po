@@ -10,12 +10,6 @@ msgstr ""
 msgid "File not found in main filesystem. Please try again later."
 msgstr ""
 
-msgid "GTM ID"
-msgstr ""
-
-msgid "GTM creative"
-msgstr ""
-
 msgid "Insert variable"
 msgstr ""
 
@@ -53,12 +47,6 @@ msgid "Upload image for mobile devices"
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG"
-msgstr ""
-
-msgid "e.g. Sale-04-20-2020"
-msgstr ""
-
-msgid "e.g. red-1035x340-jpg-carousel"
 msgstr ""
 
 msgid "from most expensive"

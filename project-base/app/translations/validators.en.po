@@ -7,9 +7,6 @@ msgstr ""
 msgid "Image can be only in JPG or PNG format"
 msgstr ""
 
-msgid "Please enter GTM ID"
-msgstr ""
-
 msgid "Uploaded image is too large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
 msgstr ""
 

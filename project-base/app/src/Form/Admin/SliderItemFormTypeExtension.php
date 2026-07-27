@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Form\Constraints\MustUploadFile;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
 
@@ -25,7 +24,6 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->buildImagesGroup($builder, $options);
-        $this->buildGtmForm($builder);
     }
 
     private function buildImagesGroup(FormBuilderInterface $builder, array $options): void
@@ -81,22 +79,6 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
                 'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
                 'hide_delete_button' => $options['scenario'] === SliderItemFormType::SCENARIO_EDIT,
             ]);
-    }
-
-    private function buildGtmForm(FormBuilderInterface $builder): void
-    {
-        $builder->add('gtmId', TextType::class, [
-            'required' => true,
-            'label' => t('GTM ID'),
-            'constraints' => [
-                new Constraints\NotBlank(message: 'Please enter GTM ID'),
-            ],
-            'attr' => ['placeholder' => t('e.g. Sale-04-20-2020')],
-        ])->add('gtmCreative', TextType::class, [
-            'required' => false,
-            'label' => t('GTM creative'),
-            'attr' => ['placeholder' => t('e.g. red-1035x340-jpg-carousel')],
-        ]);
     }
 
     /**
