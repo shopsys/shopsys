@@ -91,13 +91,7 @@ final class ImageUploadType extends AbstractType
             'choice_label' => 'filename',
             'choice_value' => 'id',
         ])
-        ->add('file', FileType::class, [
-            'multiple' => $this->isMultiple($options),
-            'mapped' => false,
-            'attr' => [
-                'accept' => ImageProcessor::SUPPORTED_IMAGE_MIME_TYPES,
-            ],
-        ]);
+        ->add('file', FileType::class, $this->getFileFieldOptions($options));
 
         $builder
             ->add('uploadedFilenames', CollectionType::class, [
@@ -132,6 +126,29 @@ final class ImageUploadType extends AbstractType
                     ],
                 ]),
             );
+    }
+
+    /**
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>
+     */
+    private function getFileFieldOptions(array $options): array
+    {
+        $extensions = [];
+
+        // File::$extensions supports both a plain list and the associative "extension => mime type(s)" form
+        foreach ($this->getExtensionsFromFileConstraints($options['file_constraints']) as $extension => $mimeTypes) {
+            $extensions[] = is_string($extension) ? $extension : $mimeTypes;
+        }
+
+        return [
+            'multiple' => $this->isMultiple($options),
+            'mapped' => false,
+            'attr' => [
+                // hint the browser's file picker with the same extensions the validation allows
+                'accept' => '.' . implode(',.', $extensions),
+            ],
+        ];
     }
 
     /**
