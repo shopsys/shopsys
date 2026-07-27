@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class PricingGroupSettingFacade
 {
@@ -13,6 +15,7 @@ class PricingGroupSettingFacade
         protected readonly PricingGroupRepository $pricingGroupRepository,
         protected readonly Domain $domain,
         protected readonly Setting $setting,
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -41,6 +44,20 @@ class PricingGroupSettingFacade
         }
 
         return $defaultPricingGroupIdsByDomainId;
+    }
+
+    /**
+     * Returns the default pricing group of the first domain whose default currency is the given currency
+     */
+    public function findDefaultPricingGroupByCurrency(Currency $currency): ?PricingGroup
+    {
+        foreach ($this->domain->getAllIds() as $domainId) {
+            if ($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId) === $currency->getId()) {
+                return $this->getDefaultPricingGroupByDomainId($domainId);
+            }
+        }
+
+        return null;
     }
 
     public function getDefaultPricingGroupByCurrentDomain(): PricingGroup
