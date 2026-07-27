@@ -4204,10 +4204,6 @@ export type TypeSliderItem = {
   __typename?: 'SliderItem';
   /** Slider description */
   description: Maybe<Scalars['String']['output']>;
-  /** GTM creative */
-  gtmCreative: Maybe<Scalars['String']['output']>;
-  /** GTM ID */
-  gtmId: Scalars['String']['output'];
   /** Slider item images */
   images: Array<TypeImage>;
   /** Target link */
