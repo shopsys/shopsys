@@ -97,9 +97,6 @@ msgstr "Externí ID můstku nesmí být delší než {{ limit }} znaků"
 msgid "Field must contain {{ needle }}."
 msgstr "Pole musí obsahovat {{ needle }}."
 
-msgid "File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}."
-msgstr "Přípona souboru {{ value }} není mezi povolenými příponami. Povolené přípony jsou {{ extensions }}."
-
 msgid "File extension {{ value }} is too long. It should have {{ limit }} character or less."
 msgstr "Přípona souboru {{ value }} je příliš dlouhá. Měla by mít {{ limit }} znaků nebo méně."
 
@@ -132,15 +129,6 @@ msgstr "IBAN nesmí být delší než {{ limit }} znaků"
 
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr "IČ nesmí být delší než {{ limit }} znaků"
-
-msgid "Image can be only in JPG or PNG format"
-msgstr "Obrázek může být pouze ve formátech jpg nebo png"
-
-msgid "Image can be only in JPG, GIF or PNG format"
-msgstr "Obrázek může být pouze ve formátech jpg, png nebo gif"
-
-msgid "Image can be only in PNG format"
-msgstr "Obrázek může být pouze ve formátu PNG."
 
 msgid "Invalid header in the CSV file. Use following columns: {{ columns }}"
 msgstr "Neplatná hlavička v CSV souboru. Použijte následující sloupce: {{ columns }}"

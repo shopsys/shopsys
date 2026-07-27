@@ -97,9 +97,6 @@ msgstr "Externé bridge ID nemôže byť dlhšie ako {{ limit }} znakov"
 msgid "Field must contain {{ needle }}."
 msgstr "Pole musí obsahovať {{ needle }}."
 
-msgid "File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}."
-msgstr "Prípona súboru {{ value }} nie je medzi povolenými príponami. Povolené prípony sú {{ extensions }}."
-
 msgid "File extension {{ value }} is too long. It should have {{ limit }} character or less."
 msgstr "Prípona súboru {{ value }} je príliš dlhá. Mala by mať {{ limit }} znakov alebo menej."
 
@@ -132,15 +129,6 @@ msgstr "IBAN nemôže byť dlhší ako {{ limit }} znakov"
 
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr "Identifikačné číslo nemôže byť dlhšie ako {{ limit }} znakov"
-
-msgid "Image can be only in JPG or PNG format"
-msgstr "Obrázok môže byť len vo formáte JPG alebo PNG"
-
-msgid "Image can be only in JPG, GIF or PNG format"
-msgstr "Obrázok môže byť len vo formáte JPG, GIF alebo PNG"
-
-msgid "Image can be only in PNG format"
-msgstr "Obrázok môže byť len vo formáte PNG"
 
 msgid "Invalid header in the CSV file. Use following columns: {{ columns }}"
 msgstr "Neplatná hlavička v CSV súbore. Použite nasledujúce stĺpce: {{ columns }}"

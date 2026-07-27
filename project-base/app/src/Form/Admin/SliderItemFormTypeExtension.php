@@ -45,18 +45,16 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
                 'image_entity_class' => SliderItem::class,
                 'image_type' => SliderItemFacade::IMAGE_TYPE_WEB,
                 'file_constraints' => [
-                    new Constraints\Image(
+                    new Constraints\File(
                         maxSize: '15M',
-                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                        mimeTypesMessage: 'Image can be only in JPG or PNG format',
+                        extensions: [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
                     ),
                 ],
                 'label' => t('Upload image'),
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
-                'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
                 'hide_delete_button' => $options['scenario'] === SliderItemFormType::SCENARIO_EDIT,
             ]);
 
@@ -67,18 +65,16 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
                 'image_entity_class' => SliderItem::class,
                 'image_type' => SliderItemFacade::IMAGE_TYPE_MOBILE,
                 'file_constraints' => [
-                    new Constraints\Image(
+                    new Constraints\File(
                         maxSize: '15M',
-                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                        mimeTypesMessage: 'Image can be only in JPG or PNG format',
+                        extensions: [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
                     ),
                 ],
                 'label' => t('Upload image for mobile devices'),
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
-                'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
                 'hide_delete_button' => $options['scenario'] === SliderItemFormType::SCENARIO_EDIT,
             ]);
     }

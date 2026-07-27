@@ -212,9 +212,7 @@ final class PaymentFormType extends AbstractType
                 'label' => 'Upload image',
                 'image_entity_class' => Payment::class,
                 'file_constraints' => [
-                    new Constraints\Image(
-                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                    new Constraints\File(
                         maxSize: '2M',
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
