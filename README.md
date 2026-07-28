@@ -1,5 +1,7 @@
 # Shopsys Platform
 
+[![MCP Toplist](https://mcptoplist.com/badge/pulsemcp%2Fshopsys.svg)](https://mcptoplist.com/server/pulsemcp%2Fshopsys)
+
 [![Build Status - master](https://github.com/shopsys/shopsys/workflows/Docker%20build/badge.svg?branch=master)](https://github.com/shopsys/shopsys/actions?query=workflow%3A%22Docker+build%22+branch%3A%22master%22)
 
 Shopsys Platform is a **fully functional e-commerce solution for businesses transitioning into tech companies with their own software development team**.
