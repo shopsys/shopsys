@@ -14,6 +14,13 @@ const WatchdogPopup = dynamic(
     },
 );
 
+export const showWatchdogButton = (product: WatchDogProductType): boolean =>
+    !!product.uuid &&
+    !product.isInquiryType &&
+    (product.availability.status === TypeAvailabilityStatusEnum.OutOfStock ||
+        product.availability.status === TypeAvailabilityStatusEnum.ExpectedRestock ||
+        product.isSellingDenied);
+
 type WatchDogButtonProps = {
     product: WatchDogProductType;
     listIndex?: number;
@@ -24,14 +31,7 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, si
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    const showWatchdogButton =
-        product.uuid &&
-        !product.isInquiryType &&
-        (product.availability.status === TypeAvailabilityStatusEnum.OutOfStock ||
-            product.availability.status === TypeAvailabilityStatusEnum.ExpectedRestock ||
-            product.isSellingDenied);
-
-    if (!showWatchdogButton) {
+    if (!showWatchdogButton(product)) {
         return null;
     }
 

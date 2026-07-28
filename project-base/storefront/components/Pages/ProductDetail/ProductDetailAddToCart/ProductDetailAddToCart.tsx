@@ -3,11 +3,12 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
+import { showWatchdogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { Button } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum, TypeCartItemTypeEnum } from 'graphql/types';
+import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useRef } from 'react';
@@ -79,11 +80,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         );
     }
 
-    const isWatchdogButtonVisible =
-        (product.uuid &&
-            (product.availability.status === TypeAvailabilityStatusEnum.OutOfStock ||
-                product.availability.status === TypeAvailabilityStatusEnum.ExpectedRestock)) ||
-        product.isSellingDenied;
+    const isWatchdogButtonVisible = showWatchdogButton(product);
 
     return (
         <div className="relative">
