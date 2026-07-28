@@ -13,6 +13,10 @@ use Symfony\Component\Clock\DatePoint;
 
 class DateTimeHelper
 {
+    public const array WORKING_DAYS_OF_WEEK = [1, 2, 3, 4, 5];
+
+    public const array ALL_DAYS_OF_WEEK = [1, 2, 3, 4, 5, 6, 7];
+
     public function __construct(
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly ClockInterface $clock,

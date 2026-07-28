@@ -85,7 +85,7 @@ class TransportDataFactory
         }
 
         $transportData->daysUntilDelivery = $transport->getDaysUntilDelivery();
-        $transportData->deliversOnWeekends = $transport->deliversOnWeekends();
+        $transportData->deliveryDaysOfWeek = $transport->getDeliveryDaysOfWeek();
         $transportData->deliversOnPublicHolidays = $transport->deliversOnPublicHolidays();
         $transportData->deliversOnInternalClosedDays = $transport->deliversOnInternalClosedDays();
         $transportData->payments = $transport->getPayments();

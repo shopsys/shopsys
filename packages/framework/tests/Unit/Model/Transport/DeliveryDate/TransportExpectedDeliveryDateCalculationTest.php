@@ -7,9 +7,11 @@ namespace Tests\FrameworkBundle\Unit\Model\Transport\DeliveryDate;
 use DateTimeImmutable;
 use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -27,9 +29,6 @@ use Symfony\Component\Clock\DatePoint;
 
 final class TransportExpectedDeliveryDateCalculationTest extends TestCase
 {
-    private const string DELIVERS_ON_WEEKENDS = 'weekends';
-    private const string DELIVERS_ON_PUBLIC_HOLIDAYS = 'publicHolidays';
-    private const string DELIVERS_ON_INTERNAL_CLOSED_DAYS = 'internalClosedDays';
     private const int DAYS_UNTIL_DELIVERY = 4;
     private const string NOW = '2026-07-16 12:00:00'; // Thursday
     private const string STANDARD_DELIVERY_DATE = '2026-07-20 00:00:00'; // today + DAYS_UNTIL_DELIVERY
@@ -174,7 +173,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
 
     public function testDeliveryDateDerivedFromRestockingIsPostponed(): void
     {
-        // the awaited item is expected to be restocked on Sunday, the transport does not deliver on weekends
+        // the awaited item is expected to be restocked on Sunday, the transport delivers on working days only
         $productStub = $this->createStub(Product::class);
         $productStub->method('getId')->willReturn(1);
 
@@ -293,13 +292,15 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
     }
 
     /**
-     * @return iterable<string, array{daysUntilDelivery: int, transportDeliversOn: string, publicHolidays: string[], internalClosedDays: string[], expectedDeliveryDate: string}>
+     * @return iterable<string, array{daysUntilDelivery: int, deliveryDaysOfWeek: int[], deliversOnPublicHolidays: bool, deliversOnInternalClosedDays: bool, publicHolidays: string[], internalClosedDays: string[], expectedDeliveryDate: string}>
      */
     public static function getKeptDeliveryDateData(): iterable
     {
-        yield 'weekend delivery is kept when the transport delivers on weekends' => [
+        yield 'Saturday delivery is kept when the transport delivers every day of the week' => [
             'daysUntilDelivery' => 2, // Saturday
-            'transportDeliversOn' => self::DELIVERS_ON_WEEKENDS,
+            'deliveryDaysOfWeek' => DateTimeHelper::ALL_DAYS_OF_WEEK,
+            'deliversOnPublicHolidays' => false,
+            'deliversOnInternalClosedDays' => false,
             'publicHolidays' => [],
             'internalClosedDays' => [],
             'expectedDeliveryDate' => '2026-07-18 00:00:00',
@@ -307,7 +308,9 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
 
         yield 'public holiday delivery is kept when the transport delivers on public holidays' => [
             'daysUntilDelivery' => 1, // Friday
-            'transportDeliversOn' => self::DELIVERS_ON_PUBLIC_HOLIDAYS,
+            'deliveryDaysOfWeek' => DateTimeHelper::WORKING_DAYS_OF_WEEK,
+            'deliversOnPublicHolidays' => true,
+            'deliversOnInternalClosedDays' => false,
             'publicHolidays' => ['2026-07-17'],
             'internalClosedDays' => [],
             'expectedDeliveryDate' => '2026-07-17 00:00:00',
@@ -315,7 +318,9 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
 
         yield 'internal day delivery is kept when the transport delivers on internal days' => [
             'daysUntilDelivery' => 1, // Friday
-            'transportDeliversOn' => self::DELIVERS_ON_INTERNAL_CLOSED_DAYS,
+            'deliveryDaysOfWeek' => DateTimeHelper::WORKING_DAYS_OF_WEEK,
+            'deliversOnPublicHolidays' => false,
+            'deliversOnInternalClosedDays' => true,
             'publicHolidays' => [],
             'internalClosedDays' => ['2026-07-17'],
             'expectedDeliveryDate' => '2026-07-17 00:00:00',
@@ -323,22 +328,25 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
     }
 
     /**
+     * @param int[] $deliveryDaysOfWeek
      * @param string[] $publicHolidays
      * @param string[] $internalClosedDays
      */
     #[DataProvider('getKeptDeliveryDateData')]
     public function testDeliveryDateIsKeptWhenTheTransportDeliversOnTheSpecialDay(
         int $daysUntilDelivery,
-        string $transportDeliversOn,
+        array $deliveryDaysOfWeek,
+        bool $deliversOnPublicHolidays,
+        bool $deliversOnInternalClosedDays,
         array $publicHolidays,
         array $internalClosedDays,
         string $expectedDeliveryDate,
     ): void {
         $transportStub = $this->createStub(Transport::class);
         $transportStub->method('getDaysUntilDelivery')->willReturn($daysUntilDelivery);
-        $transportStub->method('deliversOnWeekends')->willReturn($transportDeliversOn === self::DELIVERS_ON_WEEKENDS);
-        $transportStub->method('deliversOnPublicHolidays')->willReturn($transportDeliversOn === self::DELIVERS_ON_PUBLIC_HOLIDAYS);
-        $transportStub->method('deliversOnInternalClosedDays')->willReturn($transportDeliversOn === self::DELIVERS_ON_INTERNAL_CLOSED_DAYS);
+        $this->stubDeliveryDaysOfWeek($transportStub, $deliveryDaysOfWeek);
+        $transportStub->method('deliversOnPublicHolidays')->willReturn($deliversOnPublicHolidays);
+        $transportStub->method('deliversOnInternalClosedDays')->willReturn($deliversOnInternalClosedDays);
 
         $closedDayFacadeStub = $this->createClosedDayFacadeStub($publicHolidays, $internalClosedDays);
 
@@ -372,13 +380,28 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $this->assertNull($deliveryDate);
     }
 
+    public function testDeliveryDateIsPostponedToTheNextDayTheTransportDeliversOn(): void
+    {
+        // with NOW being Thursday, a transport delivering only on Tuesdays delivers on Tuesday next week
+        $transportStub = $this->createStub(Transport::class);
+        $transportStub->method('getDaysUntilDelivery')->willReturn(0);
+        $transportStub->method('deliversOnPublicHolidays')->willReturn(true);
+        $transportStub->method('deliversOnInternalClosedDays')->willReturn(true);
+        $this->stubDeliveryDaysOfWeek($transportStub, [2]);
+
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()
+            ->calculateExpectedDeliveryDate($transportStub, null, Domain::FIRST_DOMAIN_ID);
+
+        $this->assertDeliveryDateSame('2026-07-21 00:00:00', $deliveryDate);
+    }
+
     public function testDateBeingBothPublicHolidayAndInternalDayIsStillBlockedByTheInternalDay(): void
     {
         // Friday 2026-07-17 is a public holiday and an internal day at once; the transport delivers
         // on public holidays, but the internal day still blocks it and chains through the weekend
         $transportStub = $this->createStub(Transport::class);
         $transportStub->method('getDaysUntilDelivery')->willReturn(1);
-        $transportStub->method('deliversOnWeekends')->willReturn(false);
+        $this->stubDeliveryDaysOfWeek($transportStub, DateTimeHelper::WORKING_DAYS_OF_WEEK);
         $transportStub->method('deliversOnPublicHolidays')->willReturn(true);
         $transportStub->method('deliversOnInternalClosedDays')->willReturn(false);
 
@@ -666,7 +689,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
     {
         $transportStub = $this->createStub(Transport::class);
         $transportStub->method('getDaysUntilDelivery')->willReturn($daysUntilDelivery);
-        $transportStub->method('deliversOnWeekends')->willReturn(true);
+        $this->stubDeliveryDaysOfWeek($transportStub, DateTimeHelper::ALL_DAYS_OF_WEEK);
         $transportStub->method('deliversOnPublicHolidays')->willReturn(true);
         $transportStub->method('deliversOnInternalClosedDays')->willReturn(true);
 
@@ -681,11 +704,21 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $transportStub->method('getId')->willReturn(1);
         $transportStub->method('getDaysUntilDelivery')->willReturn($daysUntilDelivery);
         $transportStub->method('isPersonalPickup')->willReturn($isPersonalPickup);
-        $transportStub->method('deliversOnWeekends')->willReturn(false);
+        $this->stubDeliveryDaysOfWeek($transportStub, DateTimeHelper::WORKING_DAYS_OF_WEEK);
         $transportStub->method('deliversOnPublicHolidays')->willReturn(false);
         $transportStub->method('deliversOnInternalClosedDays')->willReturn(false);
 
         return $transportStub;
+    }
+
+    /**
+     * @param int[] $deliveryDaysOfWeek
+     */
+    private function stubDeliveryDaysOfWeek(Stub&Transport $transportStub, array $deliveryDaysOfWeek): void
+    {
+        $transportStub->method('deliversOnDayOfWeek')->willReturnCallback(
+            static fn (int $dayOfWeek): bool => in_array($dayOfWeek, $deliveryDaysOfWeek, true),
+        );
     }
 
     private function assertDeliveryDateSame(?string $expectedDeliveryDate, ?DateTimeImmutable $deliveryDate): void

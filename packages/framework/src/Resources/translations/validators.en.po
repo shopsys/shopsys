@@ -199,6 +199,9 @@ msgstr ""
 msgid "Please choose article placement"
 msgstr ""
 
+msgid "Please choose at least one day"
+msgstr ""
+
 msgid "Please choose country"
 msgstr ""
 

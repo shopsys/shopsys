@@ -898,6 +898,9 @@ msgstr "Dátum registrácie a súhlas so zásadami ochrany súkromia"
 msgid "Days for transfer between warehouses"
 msgstr "Dni na presun medzi skladmi"
 
+msgid "Days of the week when the transport delivers"
+msgstr "Dni v týždni, kedy dopravca doručuje"
+
 msgid "Days until delivery"
 msgstr "Dni do doručenia"
 
@@ -984,9 +987,6 @@ msgstr "Doručuje aj v interné dni e-shopu"
 
 msgid "Delivers on public holidays as well"
 msgstr "Doručuje aj počas štátnych sviatkov"
-
-msgid "Delivers on weekends as well"
-msgstr "Doručuje aj cez víkendy"
 
 msgid "Delivery"
 msgstr "Doručenie"
@@ -1720,6 +1720,9 @@ msgstr "Doprava a platba zadarmo"
 msgid "Frequency"
 msgstr "Frekvencia"
 
+msgid "Friday"
+msgstr "Piatok"
+
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr "Priateľské URL \"%slug%\" bolo odstránené."
 
@@ -2091,6 +2094,9 @@ msgstr "Moduly"
 
 msgid "Modules configuration modified"
 msgstr "Konfigurácia modulov upravená"
+
+msgid "Monday"
+msgstr "Pondelok"
 
 msgid "Money return"
 msgstr "Vrátenie peňazí"
@@ -2959,6 +2965,9 @@ msgstr "Ukážkové meno zákazníka"
 msgid "Sample product question."
 msgstr "Ukážková otázka k produktu."
 
+msgid "Saturday"
+msgstr "Sobota"
+
 msgid "Save"
 msgstr "Uložiť"
 
@@ -3310,6 +3319,9 @@ msgstr "Odberateľ newslettera <strong>{{ email }}</strong> bol zmazaný"
 msgid "Successfully uploaded"
 msgstr "Úspešne nahrané"
 
+msgid "Sunday"
+msgstr "Nedeľa"
+
 msgid "Super Administrator"
 msgstr "Super administrátor"
 
@@ -3391,6 +3403,9 @@ msgstr "Tento sklad je predvolený aspoň na jednej doméne. Nie je možné ho o
 msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
 msgstr "Toto pošle e-mail používateľovi zákazníka na obnovu hesla. Naozaj to chcete poslať?"
 
+msgid "Thursday"
+msgstr "Štvrtok"
+
 msgid "TikTok URL"
 msgstr "TikTok URL"
 
@@ -3450,6 +3465,9 @@ msgstr "Skupina dopravy"
 
 msgid "Transport type"
 msgstr "Typ dopravy"
+
+msgid "Tuesday"
+msgstr "Utorok"
 
 msgid "Two factor authentication code"
 msgstr "Kód dvojfaktorového overovania"
@@ -3669,6 +3687,9 @@ msgstr "Watchdog pre e-mail <strong>{{ email }}</strong> bol odstránený"
 
 msgid "Watchdogs"
 msgstr "Watchdogy"
+
+msgid "Wednesday"
+msgstr "Streda"
 
 msgid "Weight (g)"
 msgstr "Hmotnosť (g)"

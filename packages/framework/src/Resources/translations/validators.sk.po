@@ -199,6 +199,9 @@ msgstr "Prosím, vyberte typ reklamy"
 msgid "Please choose article placement"
 msgstr "Prosím, vyberte umiestnenie článku"
 
+msgid "Please choose at least one day"
+msgstr "Vyberte prosím aspoň jeden deň"
+
 msgid "Please choose country"
 msgstr "Prosím, vyberte krajinu"
 

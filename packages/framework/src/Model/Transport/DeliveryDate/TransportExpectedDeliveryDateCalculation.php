@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Transport\DeliveryDate;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
@@ -226,13 +225,13 @@ class TransportExpectedDeliveryDateCalculation
         ?Store $store,
         array $closedDaysOnDate,
     ): bool {
-        return !$this->isDeliveryBlockedByWeekend($transport, $deliveryDate)
+        return !$this->isDeliveryBlockedByDayOfWeek($transport, $deliveryDate)
             && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate, $domainId, $store);
     }
 
-    protected function isDeliveryBlockedByWeekend(Transport $transport, DateTimeImmutable $deliveryDate): bool
+    protected function isDeliveryBlockedByDayOfWeek(Transport $transport, DateTimeImmutable $deliveryDate): bool
     {
-        return !$transport->deliversOnWeekends() && DateTimeHelper::isWeekend($deliveryDate);
+        return !$transport->deliversOnDayOfWeek((int)$deliveryDate->format('N'));
     }
 
     /**

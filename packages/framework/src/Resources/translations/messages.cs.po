@@ -898,6 +898,9 @@ msgstr "Datum registrace a dohody o ochraně soukromí"
 msgid "Days for transfer between warehouses"
 msgstr "Dny pro přesun mezi sklady"
 
+msgid "Days of the week when the transport delivers"
+msgstr "Dny v týdnu, kdy dopravce doručuje"
+
 msgid "Days until delivery"
 msgstr "Dní do doručení"
 
@@ -984,9 +987,6 @@ msgstr "Doručuje i v interní dny e-shopu"
 
 msgid "Delivers on public holidays as well"
 msgstr "Doručuje i o státních svátcích"
-
-msgid "Delivers on weekends as well"
-msgstr "Doručuje i o víkendech"
 
 msgid "Delivery"
 msgstr "Doručení"
@@ -1720,6 +1720,9 @@ msgstr "Doprava a platba zdarma"
 msgid "Frequency"
 msgstr "Frekvence"
 
+msgid "Friday"
+msgstr "Pátek"
+
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr "Hezká URL \"%slug%\" byla smazána."
 
@@ -2091,6 +2094,9 @@ msgstr "Zapínací moduly"
 
 msgid "Modules configuration modified"
 msgstr "Nastavení zapínacích modulů bylo upraveno"
+
+msgid "Monday"
+msgstr "Pondělí"
 
 msgid "Money return"
 msgstr "Vrácení peněz"
@@ -2959,6 +2965,9 @@ msgstr "Ukázkové jméno zákazníka"
 msgid "Sample product question."
 msgstr "Ukázkový dotaz k produktu."
 
+msgid "Saturday"
+msgstr "Sobota"
+
 msgid "Save"
 msgstr "Uložit"
 
@@ -3310,6 +3319,9 @@ msgstr "Odběratel newsletteru <strong>{{ email }}</strong> byl smazán"
 msgid "Successfully uploaded"
 msgstr "Úspěšně nahráno"
 
+msgid "Sunday"
+msgstr "Neděle"
+
 msgid "Super Administrator"
 msgstr "Super administrátor"
 
@@ -3391,6 +3403,9 @@ msgstr "Tento sklad je výchozí alespoň na jedné doméně. Nelze jej smazat."
 msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
 msgstr "Tím se zákazníkovi odešle e-mail pro resetování hesla. Opravdu to chcete poslat?"
 
+msgid "Thursday"
+msgstr "Čtvrtek"
+
 msgid "TikTok URL"
 msgstr "TikTok URL"
 
@@ -3450,6 +3465,9 @@ msgstr "Skupina doprav"
 
 msgid "Transport type"
 msgstr "Typ dopravy"
+
+msgid "Tuesday"
+msgstr "Úterý"
 
 msgid "Two factor authentication code"
 msgstr "Dvoufaktorový ověřovací kód"
@@ -3669,6 +3687,9 @@ msgstr "Hlídací pes pro e-mail <strong>{{ email }}</strong> byl odstraněn."
 
 msgid "Watchdogs"
 msgstr "Hlídací psi"
+
+msgid "Wednesday"
+msgstr "Středa"
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"

@@ -12,6 +12,7 @@ use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Form\DaysOfWeekType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayVariablesType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
@@ -133,8 +134,11 @@ final class TransportFormType extends AbstractType
                 ],
                 'label' => 'Days until delivery',
             ])
-            ->add('deliversOnWeekends', YesNoType::class, [
-                'label' => 'Delivers on weekends as well',
+            ->add('deliveryDaysOfWeek', DaysOfWeekType::class, [
+                'label' => 'Days of the week when the transport delivers',
+                'constraints' => [
+                    new Constraints\Count(min: 1, minMessage: 'Please choose at least one day'),
+                ],
             ])
             ->add('deliversOnPublicHolidays', YesNoType::class, [
                 'label' => 'Delivers on public holidays as well',

@@ -898,6 +898,9 @@ msgstr ""
 msgid "Days for transfer between warehouses"
 msgstr ""
 
+msgid "Days of the week when the transport delivers"
+msgstr ""
+
 msgid "Days until delivery"
 msgstr ""
 
@@ -983,9 +986,6 @@ msgid "Delivers on e-shop internal days as well"
 msgstr ""
 
 msgid "Delivers on public holidays as well"
-msgstr ""
-
-msgid "Delivers on weekends as well"
 msgstr ""
 
 msgid "Delivery"
@@ -1720,6 +1720,9 @@ msgstr ""
 msgid "Frequency"
 msgstr ""
 
+msgid "Friday"
+msgstr ""
+
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr ""
 
@@ -2090,6 +2093,9 @@ msgid "Modules"
 msgstr ""
 
 msgid "Modules configuration modified"
+msgstr ""
+
+msgid "Monday"
 msgstr ""
 
 msgid "Money return"
@@ -2959,6 +2965,9 @@ msgstr ""
 msgid "Sample product question."
 msgstr ""
 
+msgid "Saturday"
+msgstr ""
+
 msgid "Save"
 msgstr ""
 
@@ -3310,6 +3319,9 @@ msgstr ""
 msgid "Successfully uploaded"
 msgstr ""
 
+msgid "Sunday"
+msgstr ""
+
 msgid "Super Administrator"
 msgstr ""
 
@@ -3391,6 +3403,9 @@ msgstr ""
 msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
 msgstr ""
 
+msgid "Thursday"
+msgstr ""
+
 msgid "TikTok URL"
 msgstr ""
 
@@ -3449,6 +3464,9 @@ msgid "Transport group"
 msgstr ""
 
 msgid "Transport type"
+msgstr ""
+
+msgid "Tuesday"
 msgstr ""
 
 msgid "Two factor authentication code"
@@ -3668,6 +3686,9 @@ msgid "Watchdog for email <strong>{{ email }}</strong> has been removed"
 msgstr ""
 
 msgid "Watchdogs"
+msgstr ""
+
+msgid "Wednesday"
 msgstr ""
 
 msgid "Weight (g)"

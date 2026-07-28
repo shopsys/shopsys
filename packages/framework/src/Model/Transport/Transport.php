@@ -106,11 +106,11 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $daysUntilDelivery;
 
     /**
-     * @var bool
+     * @var int[]
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'boolean')]
-    protected $deliversOnWeekends;
+    #[ORM\Column(type: 'json')]
+    protected $deliveryDaysOfWeek;
 
     /**
      * @var bool
@@ -171,7 +171,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     {
         $this->hidden = $transportData->hidden;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
-        $this->deliversOnWeekends = $transportData->deliversOnWeekends;
+        $this->deliveryDaysOfWeek = $transportData->deliveryDaysOfWeek;
         $this->deliversOnPublicHolidays = $transportData->deliversOnPublicHolidays;
         $this->deliversOnInternalClosedDays = $transportData->deliversOnInternalClosedDays;
         $this->type = $transportData->type;
@@ -433,11 +433,16 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @return bool
+     * @return int[]
      */
-    public function deliversOnWeekends()
+    public function getDeliveryDaysOfWeek()
     {
-        return $this->deliversOnWeekends;
+        return $this->deliveryDaysOfWeek;
+    }
+
+    public function deliversOnDayOfWeek(int $dayOfWeek): bool
+    {
+        return in_array($dayOfWeek, $this->deliveryDaysOfWeek, true);
     }
 
     /**

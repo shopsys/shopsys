@@ -10,6 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -47,7 +48,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     {
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 2;
-        $transportData->deliversOnWeekends = true;
+        $transportData->deliveryDaysOfWeek = DateTimeHelper::ALL_DAYS_OF_WEEK;
         $transportData->deliversOnPublicHolidays = true;
         $transportData->deliversOnInternalClosedDays = true;
 

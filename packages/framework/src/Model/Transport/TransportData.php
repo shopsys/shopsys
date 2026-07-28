@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
+
 class TransportData
 {
     /**
@@ -57,9 +59,9 @@ class TransportData
     public $daysUntilDelivery;
 
     /**
-     * @var bool
+     * @var int[]
      */
-    public $deliversOnWeekends;
+    public $deliveryDaysOfWeek;
 
     /**
      * @var bool
@@ -98,7 +100,7 @@ class TransportData
         $this->instructions = [];
         $this->trackingInstructions = [];
         $this->hidden = false;
-        $this->deliversOnWeekends = false;
+        $this->deliveryDaysOfWeek = DateTimeHelper::WORKING_DAYS_OF_WEEK;
         $this->deliversOnPublicHolidays = false;
         $this->deliversOnInternalClosedDays = false;
         $this->enabled = [];
