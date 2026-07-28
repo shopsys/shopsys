@@ -72,6 +72,41 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
+    /**
+     * Created for every domain as product reviews can be enabled on any of them
+     * and the demo reviews are linked to an item of this order
+     */
+    private function createDeliveredYesterdayOrder(int $domainId): void
+    {
+        $orderData = $this->orderDataFactory->create();
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
+        $orderData->firstName = 'Josef';
+        $orderData->lastName = 'Somr';
+        $orderData->email = 'no-reply@shopsys.com';
+        $orderData->telephone = new PhoneData('CZ', '+420', '369852147');
+        $orderData->street = 'Osmá 1';
+        $orderData->city = 'Praha';
+        $orderData->postcode = '30258';
+        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
+        $orderData->deliveryAddressSameAsBillingAddress = true;
+        $orderData->domainId = $domainId;
+        $orderData->fillCurrencyFieldsFromCurrency($this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId));
+        $orderData->createdAt = (new DatePoint())->modify('-5 day')->setTime(9, 11, 59);
+        $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
+        $orderData->deliveredAt = (new DatePoint('now -1 day'))->setTime(16, 45, 30);
+        $order = $this->createOrder(
+            $orderData,
+            [
+                ProductDataFixture::PRODUCT_PREFIX . '1' => 6,
+                ProductDataFixture::PRODUCT_PREFIX . '2' => 1,
+                ProductDataFixture::PRODUCT_PREFIX . '12' => 1,
+            ],
+            TransportDataFixture::TRANSPORT_CZECH_POST,
+            PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
+        );
+        $this->addReferenceForDomain(self::ORDER_DELIVERED_YESTERDAY, $order, $domainId);
+    }
+
     private function loadDefault(int $domainId): void
     {
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -270,33 +305,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
         $this->addReferenceForDomain(self::ORDER_CANCELLED, $order, $domainId);
 
-        $orderData = $this->orderDataFactory->create();
-        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
-        $orderData->firstName = 'Josef';
-        $orderData->lastName = 'Somr';
-        $orderData->email = 'no-reply@shopsys.com';
-        $orderData->telephone = new PhoneData('CZ', '+420', '369852147');
-        $orderData->street = 'Osmá 1';
-        $orderData->city = 'Praha';
-        $orderData->postcode = '30258';
-        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class);
-        $orderData->deliveryAddressSameAsBillingAddress = true;
-        $orderData->domainId = $domainId;
-        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
-        $orderData->createdAt = (new DatePoint())->modify('-5 day')->setTime(9, 11, 59);
-        $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
-        $orderData->deliveredAt = (new DatePoint('now -1 day'))->setTime(16, 45, 30);
-        $order = $this->createOrder(
-            $orderData,
-            [
-                ProductDataFixture::PRODUCT_PREFIX . '1' => 6,
-                ProductDataFixture::PRODUCT_PREFIX . '2' => 1,
-                ProductDataFixture::PRODUCT_PREFIX . '12' => 1,
-            ],
-            TransportDataFixture::TRANSPORT_CZECH_POST,
-            PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
-        );
-        $this->addReferenceForDomain(self::ORDER_DELIVERED_YESTERDAY, $order, $domainId);
+        $this->createDeliveredYesterdayOrder($domainId);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED, OrderStatus::class);
@@ -792,6 +801,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         $this->createOrderWithPromoCodeAndRounding($domainDefaultCurrency, $domainId);
+
+        $this->createDeliveredYesterdayOrder($domainId);
     }
 
     /**
