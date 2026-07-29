@@ -171,10 +171,7 @@
     },
     "config": {
         "process-timeout": 1200,
-        "preferred-install": {
-            "friendsofsymfony/ckeditor-bundle": "source",
-            "*": "dist"
-        },
+        "preferred-install": "dist",
         "component-dir": "web/components",
         "sort-packages": true,
         "platform": {
