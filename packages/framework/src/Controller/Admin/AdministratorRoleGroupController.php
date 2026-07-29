@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorRoleGroupFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
-use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
@@ -34,6 +34,7 @@ class AdministratorRoleGroupController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdministratorFacade $administratorFacade,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly AdministratorRoleGroupDataFactory $administratorRoleGroupDataFactory,
     ) {
     }
 
@@ -63,7 +64,7 @@ class AdministratorRoleGroupController extends AdminBaseController
     #[CanCreate]
     public function newAction(Request $request): Response
     {
-        $roleGroupData = new AdministratorRoleGroupData();
+        $roleGroupData = $this->administratorRoleGroupDataFactory->create();
         $form = $this->createForm(AdministratorRoleGroupFormType::class, $roleGroupData, []);
         $form->handleRequest($request);
 
@@ -105,8 +106,7 @@ class AdministratorRoleGroupController extends AdminBaseController
     public function editAction(Request $request, int $id): Response
     {
         $administratorRoleGroup = $this->administratorRoleGroupFacade->getById($id);
-        $administratorRoleGroupData = new AdministratorRoleGroupData();
-        $administratorRoleGroupData->fillFromEntity($administratorRoleGroup);
+        $administratorRoleGroupData = $this->administratorRoleGroupDataFactory->createFromAdministratorRoleGroup($administratorRoleGroup);
 
         $form = $this->createForm(AdministratorRoleGroupFormType::class, $administratorRoleGroupData, [
             'administrator_role_group' => $administratorRoleGroup,
@@ -156,8 +156,7 @@ class AdministratorRoleGroupController extends AdminBaseController
     {
         try {
             $administratorRoleGroup = $this->administratorRoleGroupFacade->getById($id);
-            $administratorRoleGroupData = new AdministratorRoleGroupData();
-            $administratorRoleGroupData->fillFromEntity($administratorRoleGroup);
+            $administratorRoleGroupData = $this->administratorRoleGroupDataFactory->createFromAdministratorRoleGroup($administratorRoleGroup);
 
             $form = $this->createForm(AdministratorRoleGroupFormType::class, $administratorRoleGroupData, [
                 'action' => $this->generateUrl('admin_administratorrolegroup_new'),
