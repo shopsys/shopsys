@@ -252,7 +252,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                                 </Row>
                                                 <Row>
                                                     <CellMinor>{t('Creation date')}</CellMinor>
-                                                    <Cell>{formatDate(complaint.createdAt, 'l')}</Cell>
+                                                    <Cell>{formatDate(complaint.createdAt)}</Cell>
                                                 </Row>
                                                 <Row>
                                                     <CellMinor>{t('Status')}</CellMinor>

@@ -3,8 +3,8 @@ import { formatDate, formatDateAndTime } from 'utils/formaters/formatDate';
 import { useDisplayTimezone } from 'utils/formatting/useDisplayTimezone';
 
 export const useFormatDate = (): {
-    formatDate: typeof formatDate;
-    formatDateAndTime: typeof formatDateAndTime;
+    formatDate: (date?: Date | string) => string;
+    formatDateAndTime: (date?: Date | string) => string;
 } => {
     const { defaultLocale } = useDomainConfig();
     const timezone = useDisplayTimezone();
