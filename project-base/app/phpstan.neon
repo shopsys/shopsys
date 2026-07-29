@@ -1,6 +1,33 @@
 parameters:
 
     treatPhpDocTypesAsCertain: false
+    shipmonkDeadCode:
+        usageExcluders:
+            tests:
+                # dev paths autodetection crashes on autoload-dev entries without an existing directory
+                enabled: false
+                devPaths: []
+    shopsysDeadCodeDetection:
+        dispatchAttributeClassNames:
+            - Mcp\Capability\Attribute\McpTool
+        dispatchedMethodNamesByClassName:
+            # page objects are constructed by the Codeception dependency injection when declared as Cest method parameters
+            Tests\App\Acceptance\acceptance\PageObject\AbstractPage: [__construct]
+        dispatchedMethodSuffixesByClassName:
+            # getAliases() exposes every suffixed method to the GraphQL resolver maps
+            Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation: [Mutation]
+            Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery: [Query]
+        # the vendor paths cover members wired by the installed shopsys packages (GraphQL types, service method references, templates)
+        twigTemplateDirectoryPaths:
+            - %currentWorkingDirectory%/templates
+            - %currentWorkingDirectory%/vendor/shopsys/administration/templates
+            - %currentWorkingDirectory%/vendor/shopsys/framework/src/Resources/views
+            - %currentWorkingDirectory%/vendor/shopsys/frontend-api/src/Resources/views
+        yamlConfigDirectoryPaths:
+            - %currentWorkingDirectory%/config
+            - %currentWorkingDirectory%/vendor/shopsys/administration/config
+            - %currentWorkingDirectory%/vendor/shopsys/framework/src/Resources/config
+            - %currentWorkingDirectory%/vendor/shopsys/frontend-api/src/Resources/config
     symfony:
         containerXmlPath: '%currentWorkingDirectory%/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false
@@ -14,5 +41,7 @@ includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/shipmonk/dead-code-detector/rules.neon
+    - vendor/shopsys/coding-standards/dead-code-detection.neon
     - vendor/shopsys/coding-standards/extension.neon
     - vendor/shopsys/mcp/extension.neon

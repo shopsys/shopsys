@@ -1,6 +1,7 @@
 parameters:
-
     treatPhpDocTypesAsCertain: false
+    # inline ignores of shipmonk.* errors match only in the monorepo analysis where the dead code detector runs
+    reportUnmatchedIgnoredErrors: false
 
     ignoreErrors:
         # Don't forget to add these rules to phpstan.neon in monorepo
