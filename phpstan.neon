@@ -34,6 +34,8 @@ parameters:
         - %currentWorkingDirectory%/packages/coding-standards/*
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/ClassExtension/Source/*
+        # Exclude translation extractor test fixtures whose exact source line numbers are asserted by tests
+        - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/Translation/Resources/*
         # Exclude intentionally invalid entity test data used by MCP PHPStan rule tests
         - %currentWorkingDirectory%/packages/mcp/tests/Unit/Phpstan/data/*
         # Exclude template files for generating code via maker commands
