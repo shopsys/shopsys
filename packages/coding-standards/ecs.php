@@ -119,6 +119,7 @@ use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInCallSniff;
 use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInClosureUseSniff;
 use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInDeclarationSniff;
+use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
@@ -265,6 +266,7 @@ return ECSConfig::configure()
         RequireOverrideAttributeSniff::class,
         ParameterTypeHintSniff::class,
         ReturnTypeHintSniff::class,
+        UnusedInheritedVariablePassedToClosureSniff::class,
         UselessVariableSniff::class,
     ])
     ->withConfiguredRule(CyclomaticComplexitySniff::class, [
