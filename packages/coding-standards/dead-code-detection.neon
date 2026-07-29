@@ -9,6 +9,10 @@ parameters:
 
 services:
     -
+        class: Shopsys\CodingStandards\Phpstan\CodeceptionUsageProvider
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
         class: Shopsys\CodingStandards\Phpstan\InjectedPropertiesInTestsUsageProvider
         tags:
             - shipmonk.deadCode.memberUsageProvider
