@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\ProductReview;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -23,7 +24,7 @@ use Symfony\Component\Clock\DatePoint;
 #[ORM\Index(columns: ['product_id', 'domain_id', 'status'])]
 #[ORM\UniqueConstraint(columns: ['customer_user_id', 'product_id', 'domain_id'])]
 #[ORM\Entity]
-class ProductReview
+class ProductReview implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -250,6 +251,7 @@ class ProductReview
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

@@ -25,6 +25,9 @@ msgstr "%defaultCurrency% za 1 jednotku"
 msgid "%entityName% (%entityIdentifier%)"
 msgstr "%entityName% (%entityIdentifier%)"
 
+msgid "%rating% out of 5 stars"
+msgstr "%rating% z 5 hvězdiček"
+
 msgid "2FA"
 msgstr "2FA"
 
@@ -186,6 +189,9 @@ msgstr "Použitelné proměnné pro obsah"
 
 msgid "Applicable variables for Subject"
 msgstr "Použitelné proměnné pro předmět"
+
+msgid "Approved"
+msgstr "Schválená"
 
 msgid "Are you sure?"
 msgstr "Opravdu?"
@@ -639,6 +645,9 @@ msgstr "Přehled zákazníků"
 
 msgid "Dashboard"
 msgstr "Nástěnka"
+
+msgid "Date and time"
+msgstr "Datum a čas"
 
 msgid "Date of creation"
 msgstr "Datum vytvoření"
@@ -1693,6 +1702,9 @@ msgstr "Platební transakce"
 msgid "Payments"
 msgstr "Platby"
 
+msgid "Pending"
+msgstr "Čeká na schválení"
+
 msgid "Personal data access pages setting"
 msgstr "Nastavení zobrazení osobních údajů"
 
@@ -1771,6 +1783,12 @@ msgstr "Produkt v této poptávce není již dostupný v katalogu."
 msgid "Product not in e-shop."
 msgstr "Zboží se nenachází v eshopu."
 
+msgid "Product review"
+msgstr "Recenze produktu"
+
+msgid "Product reviews"
+msgstr "Recenze produktů"
+
 msgid "Product with X + Y free promotion"
 msgstr "Produkt s akcí X + Y zdarma"
 
@@ -1822,6 +1840,9 @@ msgstr "Rychlé hledání"
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr "Výši sazby nelze upravit. Je třeba vytvořit novou sazbu a starou odstranit s nahrazením za novou."
 
+msgid "Rating"
+msgstr "Hodnocení"
+
 msgid "Record detail"
 msgstr "Detail položky"
 
@@ -1845,6 +1866,9 @@ msgstr "Refundovaná částka"
 
 msgid "Refunded amount has been changed."
 msgstr "Refundovaná částka byla změněna."
+
+msgid "Rejected"
+msgstr "Zamítnutá"
 
 msgid "Remove"
 msgstr "Odebrat"
@@ -1875,6 +1899,9 @@ msgstr "Resetovat heslo"
 
 msgid "Return back"
 msgstr "Vrátit zpět"
+
+msgid "Reviewer"
+msgstr "Recenzent"
 
 msgid "Robots.txt"
 msgstr "Robots.txt"
@@ -2215,6 +2242,9 @@ msgstr "Obchodní podmínky"
 msgid "Terms and conditions settings"
 msgstr "Nastavení obchodních podmínek"
 
+msgid "Text review"
+msgstr "Textová recenze"
+
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr "Aktuální seznam URL adres lze nalézt v repozitáři projektu v souboru \"storefront/config/routes.ts\"."
 
@@ -2464,6 +2494,9 @@ msgstr "V"
 msgid "Vats"
 msgstr "DPH"
 
+msgid "Verified purchase"
+msgstr "Ověřený nákup"
+
 msgid "Very Weak"
 msgstr "Velmi slabé"
 
@@ -2682,4 +2715,3 @@ msgstr "bez DPH"
 
 msgid "yesterday"
 msgstr "včera"
-

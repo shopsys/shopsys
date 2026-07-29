@@ -1,0 +1,8 @@
+{{ value }}
+{% if row['product.id'] is not null %}
+    <a href="{{ url('admin_product_edit', { id: row['product.id'] }) }}">
+        {{ ux_icon('forward-page', {class: 'icon-sm'}) }}
+    </a>
+{% endif %}
+
+<div class="small text-secondary">{{ row.catnum }}</div>

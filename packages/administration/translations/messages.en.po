@@ -25,6 +25,9 @@ msgstr ""
 msgid "%entityName% (%entityIdentifier%)"
 msgstr ""
 
+msgid "%rating% out of 5 stars"
+msgstr ""
+
 msgid "2FA"
 msgstr ""
 
@@ -185,6 +188,9 @@ msgid "Applicable variables for Content"
 msgstr ""
 
 msgid "Applicable variables for Subject"
+msgstr ""
+
+msgid "Approved"
 msgstr ""
 
 msgid "Are you sure?"
@@ -638,6 +644,9 @@ msgid "Customers overview"
 msgstr ""
 
 msgid "Dashboard"
+msgstr ""
+
+msgid "Date and time"
 msgstr ""
 
 msgid "Date of creation"
@@ -1693,6 +1702,9 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
+msgid "Pending"
+msgstr ""
+
 msgid "Personal data access pages setting"
 msgstr ""
 
@@ -1771,6 +1783,12 @@ msgstr ""
 msgid "Product not in e-shop."
 msgstr ""
 
+msgid "Product review"
+msgstr ""
+
+msgid "Product reviews"
+msgstr ""
+
 msgid "Product with X + Y free promotion"
 msgstr ""
 
@@ -1822,6 +1840,9 @@ msgstr ""
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr ""
 
+msgid "Rating"
+msgstr ""
+
 msgid "Record detail"
 msgstr ""
 
@@ -1844,6 +1865,9 @@ msgid "Refunded amount"
 msgstr ""
 
 msgid "Refunded amount has been changed."
+msgstr ""
+
+msgid "Rejected"
 msgstr ""
 
 msgid "Remove"
@@ -1874,6 +1898,9 @@ msgid "Reset password"
 msgstr ""
 
 msgid "Return back"
+msgstr ""
+
+msgid "Reviewer"
 msgstr ""
 
 msgid "Robots.txt"
@@ -2215,6 +2242,9 @@ msgstr ""
 msgid "Terms and conditions settings"
 msgstr ""
 
+msgid "Text review"
+msgstr ""
+
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr ""
 
@@ -2464,6 +2494,9 @@ msgstr "V"
 msgid "Vats"
 msgstr ""
 
+msgid "Verified purchase"
+msgstr ""
+
 msgid "Very Weak"
 msgstr ""
 
@@ -2682,4 +2715,3 @@ msgstr ""
 
 msgid "yesterday"
 msgstr ""
-

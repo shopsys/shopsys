@@ -1,0 +1,7 @@
+{% if row.status is same as(constant('Shopsys\\FrameworkBundle\\Model\\ProductReview\\ProductReviewStatusEnum::STATUS_PENDING')) %}
+    <span class="badge bg-yellow-lt text-yellow-lt-fg">{{ 'Pending'|trans }}</span>
+{% elseif row.status is same as(constant('Shopsys\\FrameworkBundle\\Model\\ProductReview\\ProductReviewStatusEnum::STATUS_APPROVED')) %}
+    <span class="badge bg-green-lt text-green-lt-fg">{{ 'Approved'|trans }}</span>
+{% else %}
+    <span class="badge bg-red-lt text-red-lt-fg">{{ 'Rejected'|trans }}</span>
+{% endif %}

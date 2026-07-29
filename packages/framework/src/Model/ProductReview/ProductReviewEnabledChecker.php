@@ -17,4 +17,12 @@ class ProductReviewEnabledChecker
     {
         return in_array($domainId, $this->enabledDomainIds, true);
     }
+
+    /**
+     * @return int[]
+     */
+    public function getEnabledDomainIds(): array
+    {
+        return $this->enabledDomainIds;
+    }
 }
