@@ -8,6 +8,10 @@ parameters:
             tests:
                 # usages coming only from tests do not keep production code alive
                 enabled: true
+    shopsysDeadCodeDetection:
+        yamlConfigDirectoryPaths:
+            - %currentWorkingDirectory%/packages
+            - %currentWorkingDirectory%/project-base/app/config
     symfony:
         containerXmlPath: '%currentWorkingDirectory%/project-base/app/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false

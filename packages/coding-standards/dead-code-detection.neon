@@ -1,5 +1,20 @@
+parametersSchema:
+    shopsysDeadCodeDetection: structure([
+        yamlConfigDirectoryPaths: listOf(string())
+    ])
+
+parameters:
+    shopsysDeadCodeDetection:
+        yamlConfigDirectoryPaths: []
+
 services:
     -
         class: Shopsys\CodingStandards\Phpstan\InjectedPropertiesInTestsUsageProvider
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\YamlConfigurationUsageProvider
+        arguments:
+            configDirectoryPaths: %shopsysDeadCodeDetection.yamlConfigDirectoryPaths%
         tags:
             - shipmonk.deadCode.memberUsageProvider

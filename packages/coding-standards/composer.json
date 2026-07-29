@@ -25,6 +25,7 @@
         "slevomat/coding-standard": "^8.27",
         "squizlabs/php_codesniffer": "^4.0",
         "symfony/finder": "^7.4",
+        "symfony/yaml": "^7.4",
         "symplify/easy-coding-standard": "^13.0"
     },
     "require-dev": {
