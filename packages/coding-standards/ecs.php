@@ -129,6 +129,7 @@ use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
+use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
 use Symplify\CodingStandard\Fixer\Annotation\RemovePropertyVariableNameDescriptionFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
@@ -266,6 +267,9 @@ return ECSConfig::configure()
     ])
     ->withConfiguredRule(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
+    ])
+    ->withConfiguredRule(UnusedVariableSniff::class, [
+        'ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach' => true,
     ])
     ->withConfiguredRule(SpaceAfterCastSniff::class, [
         'spacing' => 0,

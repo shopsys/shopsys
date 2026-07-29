@@ -115,7 +115,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $orderData->domainId = $domainId;
         $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-3 day')->setTime(18, 27, 36);
-        $order = $this->createOrder(
+        $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '4' => 6,
@@ -135,7 +135,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $orderData->domainId = $domainId;
         $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-1 day')->setTime(18, 30, 01);
-        $order = $this->createOrder(
+        $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '1' => 1,

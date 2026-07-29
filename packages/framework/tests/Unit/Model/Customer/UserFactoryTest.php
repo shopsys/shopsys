@@ -16,7 +16,7 @@ class UserFactoryTest extends TestCase
     public function testCreate(): void
     {
         $customerUserFactory = $this->getUserFactory();
-        $customerUser = $customerUserFactory->create(TestCustomerProvider::getTestCustomerUserData());
+        $customerUserFactory->create(TestCustomerProvider::getTestCustomerUserData());
     }
 
     private function getUserFactory(): CustomerUserFactory

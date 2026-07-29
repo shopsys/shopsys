@@ -130,6 +130,6 @@ class ImageRepository
 
         $position = $queryBuilder->getQuery()->getSingleScalarResult();
 
-        return $position === null ? 0 : ++$position;
+        return $position === null ? 0 : $position + 1;
     }
 }

@@ -70,7 +70,7 @@ class RoleRegistryTest extends TestCase
         $coreProvider->method('configureRoles')->willReturnCallback(function (): void {});
 
         // Should not throw exception
-        $registry = new RoleRegistry([$coreProvider], $this->contextResolver);
+        new RoleRegistry([$coreProvider], $this->contextResolver);
         $this->addToAssertionCount(1); // Just verify no exception was thrown
     }
 

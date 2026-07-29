@@ -105,7 +105,7 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
 
         $position = $queryBuilder->getQuery()->getSingleScalarResult();
 
-        return $position === null ? 0 : ++$position;
+        return $position === null ? 0 : $position + 1;
     }
 
     protected function checkExists(
