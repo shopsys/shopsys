@@ -2,6 +2,7 @@ parametersSchema:
     shopsysDeadCodeDetection: structure([
         dispatchAttributeClassNames: listOf(string())
         phpTemplateDirectoryPaths: listOf(string())
+        twigTemplateDirectoryPaths: listOf(string())
         yamlConfigDirectoryPaths: listOf(string())
     ])
 
@@ -9,6 +10,7 @@ parameters:
     shopsysDeadCodeDetection:
         dispatchAttributeClassNames: []
         phpTemplateDirectoryPaths: []
+        twigTemplateDirectoryPaths: []
         yamlConfigDirectoryPaths: []
 
 services:
@@ -30,6 +32,12 @@ services:
         class: Shopsys\CodingStandards\Phpstan\PhpTemplateUsageProvider
         arguments:
             templateDirectoryPaths: %shopsysDeadCodeDetection.phpTemplateDirectoryPaths%
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\TwigTemplateUsageProvider
+        arguments:
+            templateDirectoryPaths: %shopsysDeadCodeDetection.twigTemplateDirectoryPaths%
         tags:
             - shipmonk.deadCode.memberUsageProvider
     -

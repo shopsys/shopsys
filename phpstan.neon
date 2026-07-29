@@ -13,6 +13,9 @@ parameters:
             - Mcp\Capability\Attribute\McpTool
         phpTemplateDirectoryPaths:
             - %currentWorkingDirectory%/packages/maker/templates
+        twigTemplateDirectoryPaths:
+            - %currentWorkingDirectory%/packages
+            - %currentWorkingDirectory%/project-base/app
         yamlConfigDirectoryPaths:
             - %currentWorkingDirectory%/packages
             - %currentWorkingDirectory%/project-base/app/config
