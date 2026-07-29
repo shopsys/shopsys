@@ -1,12 +1,14 @@
 parametersSchema:
     shopsysDeadCodeDetection: structure([
         dispatchAttributeClassNames: listOf(string())
+        phpTemplateDirectoryPaths: listOf(string())
         yamlConfigDirectoryPaths: listOf(string())
     ])
 
 parameters:
     shopsysDeadCodeDetection:
         dispatchAttributeClassNames: []
+        phpTemplateDirectoryPaths: []
         yamlConfigDirectoryPaths: []
 
 services:
@@ -22,6 +24,12 @@ services:
             - shipmonk.deadCode.memberUsageProvider
     -
         class: Shopsys\CodingStandards\Phpstan\InjectedPropertiesInTestsUsageProvider
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\PhpTemplateUsageProvider
+        arguments:
+            templateDirectoryPaths: %shopsysDeadCodeDetection.phpTemplateDirectoryPaths%
         tags:
             - shipmonk.deadCode.memberUsageProvider
     -

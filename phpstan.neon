@@ -11,6 +11,8 @@ parameters:
     shopsysDeadCodeDetection:
         dispatchAttributeClassNames:
             - Mcp\Capability\Attribute\McpTool
+        phpTemplateDirectoryPaths:
+            - %currentWorkingDirectory%/packages/maker/templates
         yamlConfigDirectoryPaths:
             - %currentWorkingDirectory%/packages
             - %currentWorkingDirectory%/project-base/app/config
