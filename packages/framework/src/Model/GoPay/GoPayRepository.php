@@ -22,7 +22,7 @@ class GoPayRepository
 
     protected function getQueryBuilderForAllUnpaidGoPayOrders(DateTimeImmutable $fromDate): QueryBuilder
     {
-        $queryBuilder = $this->orderRepository->createOrderQueryBuilder()
+        return $this->orderRepository->createOrderQueryBuilder()
             ->join('o.items', 'oi', Join::WITH, 'oi.payment IS NOT NULL')
             ->join('oi.payment', 'p')
             ->join('o.paymentTransactions', 'pt', Join::WITH, 'p.id = pt.payment')
@@ -33,8 +33,6 @@ class GoPayRepository
             ->setParameter('fromDate', $fromDate)
             ->setParameter('paymentStatuses', [PaymentStatus::PAID, PaymentStatus::CANCELED, PaymentStatus::TIMEOUTED])
             ->setParameter('type', PaymentTypeEnum::TYPE_GOPAY);
-
-        return $queryBuilder;
     }
 
     /**

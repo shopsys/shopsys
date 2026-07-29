@@ -70,12 +70,10 @@ class UploadedFileController
         $uploadedFileSlug = pathinfo($uploadedFilename, PATHINFO_FILENAME);
         $uploadedFileExtension = pathinfo($uploadedFilename, PATHINFO_EXTENSION);
 
-        $uploadedFile = $this->uploadedFileFacade->getByIdSlugAndExtension(
+        return $this->uploadedFileFacade->getByIdSlugAndExtension(
             $uploadedFileId,
             $uploadedFileSlug,
             $uploadedFileExtension,
         );
-
-        return $uploadedFile;
     }
 }
