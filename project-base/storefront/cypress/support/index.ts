@@ -234,6 +234,10 @@ export const loginAsB2bUser = () => {
     cy.loginB2b(staticData.b2bUser.email, staticData.b2bUser.password);
 };
 
+export const loginAsB2bCustomerManager = () => {
+    cy.loginB2b(staticData.b2bCustomerManager.email, staticData.b2bCustomerManager.password);
+};
+
 export const loginAsB2bLimitedUser = () => {
     cy.loginB2b(staticData.b2bLimitedUser.email, staticData.b2bLimitedUser.password);
 };

@@ -41,7 +41,7 @@ export const CustomerUsersTable: FC = () => {
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const [, removeCustomerUser] = useRemoveCustomerUserMutation();
-    const { customerUsers, customerUsersIsFetching } = useCurrentCustomerUsers();
+    const { customerUsers, customerUsersIsFetching, refetchCustomerUsers } = useCurrentCustomerUsers();
     const { currentCustomerUserUuid } = useAuthorization();
     const handleError = useErrorHandler({
         gtmOrigin: GtmMessageOriginType.other,
@@ -82,20 +82,40 @@ export const CustomerUsersTable: FC = () => {
     ) => {
         e.stopPropagation();
         updatePortalContent(
-            <ManageCustomerUserPopup customerUser={customerUser} mode={customerUser ? 'edit' : 'add'} />,
+            <ManageCustomerUserPopup
+                customerUser={customerUser}
+                mode={customerUser ? 'edit' : 'add'}
+                onSuccess={refetchCustomerUsers}
+            />,
         );
     };
 
+    const addNewUserButton = (
+        <Button
+            aria-haspopup="dialog"
+            className="w-fit"
+            data-tid={TIDs.customer_users_add_button}
+            size="small"
+            onClick={(e) => openManageCustomerUserPopup(e)}
+        >
+            {t('Add new user')}
+        </Button>
+    );
+
     if (customerUsersIsFetching) {
         return (
-            <div className="flex w-full flex-col">
-                <SkeletonCustomerUsersTable />
+            <div className="flex w-full flex-col items-center gap-4">
+                {addNewUserButton}
+                <div className="flex w-full flex-col">
+                    <SkeletonCustomerUsersTable />
+                </div>
             </div>
         );
     }
 
     return (
-        <div data-tid={TIDs.customer_users_table}>
+        <div className="flex w-full flex-col items-center gap-4" data-tid={TIDs.customer_users_table}>
+            {addNewUserButton}
             <Table className="w-full border-0 p-0">
                 {customerUsers.map((user) => (
                     <Row
@@ -129,6 +149,13 @@ export const CustomerUsersTable: FC = () => {
                             <Button
                                 aria-haspopup="dialog"
                                 className="flex-1"
+                                hasDisabledLook={currentCustomerUserUuid === user.uuid}
+                                disabled={currentCustomerUserUuid === user.uuid}
+                                title={
+                                    user.uuid === currentCustomerUserUuid
+                                        ? t('You cannot delete your own account')
+                                        : undefined
+                                }
                                 data-tid={TIDs.customer_users_delete_button}
                                 size="small"
                                 variant="inverted"

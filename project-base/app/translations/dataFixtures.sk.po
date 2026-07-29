@@ -553,6 +553,9 @@ msgstr "Štrbinová hubica VP-4290"
 msgid "Customer activation"
 msgstr "Aktivácia zákazníka"
 
+msgid "Customer manager"
+msgstr "Správca zákazníkov"
+
 msgid "Cyklocomputer – cyklonavigation with preset maps, color display 3\", training programmes, WiFi"
 msgstr "Cyklocomputer – cyklonavigácia s prednastavenými mapami, farebný displej 3\", tréningové programy, WiFi"
 

@@ -553,6 +553,9 @@ msgstr ""
 msgid "Customer activation"
 msgstr ""
 
+msgid "Customer manager"
+msgstr ""
+
 msgid "Cyklocomputer – cyklonavigation with preset maps, color display 3\", training programmes, WiFi"
 msgstr ""
 

@@ -60,6 +60,14 @@ export const waitForRoleGroupOptionsToLoad = () => {
     cy.getByTID([TIDs.layout_popup]).find('input[type="radio"]').should('exist');
 };
 
+export const checkRoleGroupOptionsAreEnabled = () => {
+    cy.getByTID([TIDs.layout_popup])
+        .find('input[type="radio"]')
+        .each(($radio) => {
+            cy.wrap($radio).should('not.be.disabled');
+        });
+};
+
 export const fillAddUserForm = (data: { email: string; firstName: string; lastName: string; telephone: string }) => {
     waitForRoleGroupOptionsToLoad();
     // Click the visible label of the first radio button instead of .check() on the sr-only hidden input,

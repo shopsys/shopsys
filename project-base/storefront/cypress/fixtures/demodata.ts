@@ -129,6 +129,10 @@ export const staticData = {
         email: 'marek.horvat@shopsys.com',
         password: 'user123',
     },
+    b2bCustomerManager: {
+        email: 'milan.manager@shopsys.com',
+        password: 'user123',
+    },
     b2bLimitedUser: {
         email: 'peter.kovac@shopsys.com',
         password: 'user123',
