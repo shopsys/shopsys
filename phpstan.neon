@@ -9,6 +9,8 @@ parameters:
                 # usages coming only from tests do not keep production code alive
                 enabled: true
     shopsysDeadCodeDetection:
+        dispatchAttributeClassNames:
+            - Mcp\Capability\Attribute\McpTool
         yamlConfigDirectoryPaths:
             - %currentWorkingDirectory%/packages
             - %currentWorkingDirectory%/project-base/app/config

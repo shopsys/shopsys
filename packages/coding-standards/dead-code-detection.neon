@@ -1,13 +1,21 @@
 parametersSchema:
     shopsysDeadCodeDetection: structure([
+        dispatchAttributeClassNames: listOf(string())
         yamlConfigDirectoryPaths: listOf(string())
     ])
 
 parameters:
     shopsysDeadCodeDetection:
+        dispatchAttributeClassNames: []
         yamlConfigDirectoryPaths: []
 
 services:
+    -
+        class: Shopsys\CodingStandards\Phpstan\AttributeDispatchUsageProvider
+        arguments:
+            attributeClassNames: %shopsysDeadCodeDetection.dispatchAttributeClassNames%
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
     -
         class: Shopsys\CodingStandards\Phpstan\CodeceptionUsageProvider
         tags:
