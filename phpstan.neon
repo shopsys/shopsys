@@ -45,6 +45,7 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
     - vendor/shipmonk/dead-code-detector/rules.neon
+    - %currentWorkingDirectory%/packages/coding-standards/dead-code-detection.neon
     - %currentWorkingDirectory%/packages/coding-standards/extension.neon
     - %currentWorkingDirectory%/packages/mcp/extension.neon
 rules:
