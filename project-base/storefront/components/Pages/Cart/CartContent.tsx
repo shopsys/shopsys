@@ -5,20 +5,19 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
-import { useRef } from 'react';
+import { type RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CartList } from './CartList/CartList';
-import { CartStickyBar } from './CartStickyBar';
 import { CartSummary } from './CartSummary';
 
 type CartContentProps = {
     cart: TypeCartFragment;
+    cartPreviewRef: RefObject<HTMLDivElement | null>;
 };
 
-export const CartContent: FC<CartContentProps> = ({ cart }) => {
+export const CartContent: FC<CartContentProps> = ({ cart, cartPreviewRef }) => {
     const { t } = useTranslation();
     const { url, isLuigisBoxActive } = useDomainConfig();
-    const cartPreviewRef = useRef<HTMLDivElement>(null);
 
     return (
         <VerticalStack gap="md">
@@ -44,8 +43,6 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                     )}
                 />
             )}
-
-            <CartStickyBar originalButtonRef={cartPreviewRef} />
         </VerticalStack>
     );
 };

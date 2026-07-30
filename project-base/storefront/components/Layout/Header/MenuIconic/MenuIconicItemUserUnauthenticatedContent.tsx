@@ -10,6 +10,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 import { useFocusTrap } from 'utils/useFocusTrap';
 
 type MenuIconicItemUserUnauthenticatedContentProps = {
+    hideFocusTrap?: boolean;
     loginFormName: string;
     onMenuClose: () => void;
 };
@@ -33,7 +34,7 @@ const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ idPrefix, registr
     return (
         <section
             aria-labelledby={titleId}
-            className="order-2 vl:order-1 mb-auto vl:w-1/2 rounded-xl bg-background-brand-less p-5 vl:p-9 text-text-inverted"
+            className="vl:order-1 mb-auto vl:w-1/2 rounded-xl bg-background-brand-less p-5 vl:p-9 text-text-inverted"
         >
             <h3 className="h4" id={titleId}>
                 {t('Benefits of registration')}
@@ -66,6 +67,7 @@ const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ idPrefix, registr
 };
 
 export const MenuIconicItemUserUnauthenticatedContent: FC<MenuIconicItemUserUnauthenticatedContentProps> = ({
+    hideFocusTrap,
     loginFormName,
     onMenuClose,
 }) => {
@@ -74,21 +76,21 @@ export const MenuIconicItemUserUnauthenticatedContent: FC<MenuIconicItemUserUnau
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
     const contentRef = useRef<HTMLDivElement>(null);
 
-    useFocusTrap(contentRef);
+    useFocusTrap(hideFocusTrap ? undefined : contentRef);
 
     return (
         <div className="flex w-full vl:flex-row flex-col gap-8 vl:p-5 text-left" ref={contentRef}>
+            <div className="vl:order-2 vl:w-91 w-full">
+                <h3 className="h4 mb-5">{t('Log in to your account')}</h3>
+
+                <LoginForm formName={loginFormName} />
+            </div>
+
             <RegistrationBenefits
                 idPrefix={loginFormName}
                 registrationUrl={registrationUrl}
                 onMenuClose={onMenuClose}
             />
-
-            <div className="order-1 vl:order-2 vl:w-91 w-full">
-                <h3 className="h4 mb-5">{t('Log in to your account')}</h3>
-
-                <LoginForm formName={loginFormName} />
-            </div>
         </div>
     );
 };

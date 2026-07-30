@@ -28,11 +28,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
                 <NotificationBars />
 
-                <header
-                    className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less focus-visible:outline-hidden"
-                    id="site-header"
-                    tabIndex={-1}
-                >
+                <header className="bg-background-brand focus-visible:outline-hidden" id="site-header" tabIndex={-1}>
                     <Header simpleHeader />
                 </header>
 

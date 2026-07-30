@@ -19,9 +19,10 @@ export const MobileBottomAccountDrawer: FC<MobileBottomAccountDrawerProps> = ({
 }) => (
     <Drawer isActive={isActive} setIsActive={setIsActive} title={title}>
         {isUserLoggedIn ? (
-            <UserMenu />
+            <UserMenu hideFocusTrap />
         ) : (
             <MenuIconicItemUserUnauthenticatedContent
+                hideFocusTrap
                 loginFormName="mobile-bottom-navigation-login-form"
                 onMenuClose={onClose}
             />

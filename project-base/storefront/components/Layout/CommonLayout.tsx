@@ -6,7 +6,7 @@ import { useNavigationQuery } from 'graphql/requests/navigation/queries/Navigati
 import { TypeHreflangLink } from 'graphql/types';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
+import { type ReactNode, useEffect, useRef } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
@@ -20,6 +20,7 @@ import { AccessibilityNavigation } from './Header/AccessibilityNavigation/Access
 import { Header } from './Header/Header';
 import { DeferredNavigation } from './Header/Navigation/DeferredNavigation';
 import { useDesktopFixedHeader } from './hooks/useDesktopFixedHeader';
+import { MobileBottomLayer } from './MobileBottomLayer/MobileBottomLayer';
 import { NotificationBars } from './NotificationBars/NotificationBars';
 
 const FixedHeader = dynamic(() => import('./Header/FixedHeader').then((component) => component.FixedHeader), {
@@ -51,6 +52,7 @@ export type CommonLayoutProps = {
     pageTypeOverride?: PageType;
     ogType?: OgTypeEnum | undefined;
     ogImageUrlDefault?: string | undefined;
+    bottomContent?: ReactNode;
 };
 
 export const CommonLayout: FC<CommonLayoutProps> = ({
@@ -65,6 +67,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     pageTypeOverride,
     ogType,
     ogImageUrlDefault,
+    bottomContent,
 }) => {
     const { t } = useTranslation();
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
@@ -183,6 +186,8 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                     <DeferredFooter />
                 </footer>
             </div>
+
+            <MobileBottomLayer>{!isPageLoading && !isFetchingData && bottomContent}</MobileBottomLayer>
         </>
     );
 };
