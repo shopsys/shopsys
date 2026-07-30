@@ -1,4 +1,4 @@
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
@@ -115,7 +115,7 @@ export const Popup: React.FC<PopupProps> = ({
                         tabIndex={-1}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'fixed z-maximum mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl',
+                            'fixed z-maximum mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl focus-visible:outline-hidden',
                             className,
                         )}
                         initial={{
@@ -146,11 +146,14 @@ export const Popup: React.FC<PopupProps> = ({
 
                             {!hideCloseButton && (
                                 <IconButton
-                                    Icon={RemoveIcon}
+                                    Icon={CloseIcon}
                                     ariaLabel={t('Close popup', { ns: 'accessibility' })}
-                                    buttonRef={closeButtonRef}
                                     className="ml-auto"
+                                    ref={closeButtonRef}
+                                    shape="rounded"
+                                    size="small"
                                     title={t('Close popup')}
+                                    variant="ghost"
                                     onClick={handleClosePopup}
                                 />
                             )}

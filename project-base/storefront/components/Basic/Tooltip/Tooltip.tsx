@@ -1,105 +1,69 @@
-import { cloneElement, ReactElement, useLayoutEffect, useRef, useState } from 'react';
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+import { ReactElement, useEffect, useState } from 'react';
 
-type Placement = 'top' | 'bottom' | 'left' | 'right';
+export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 type TooltipProps = {
     label?: string;
-    placement?: Placement;
-    children: ReactElement<any>;
+    placement?: TooltipPlacement;
+    children: ReactElement;
+    disabled?: boolean;
 };
 
 const OFFSET = 8;
+const OPEN_DELAY_MS = 250;
+const SKIP_DELAY_MS = 300;
 
-const getTooltipPosition = (
-    triggerRect: DOMRect,
-    tooltipRect: DOMRect,
-    placement: Placement,
-): { top: number; left: number } => {
-    switch (placement) {
-        case 'bottom':
-            return {
-                top: triggerRect.bottom + OFFSET,
-                left: triggerRect.left + (triggerRect.width - tooltipRect.width) / 2,
-            };
-        case 'left':
-            return {
-                top: triggerRect.top + (triggerRect.height - tooltipRect.height) / 2,
-                left: triggerRect.left - tooltipRect.width - OFFSET,
-            };
-        case 'right':
-            return {
-                top: triggerRect.top + (triggerRect.height - tooltipRect.height) / 2,
-                left: triggerRect.right + OFFSET,
-            };
-        default:
-            return {
-                top: triggerRect.top - tooltipRect.height - OFFSET,
-                left: triggerRect.left + (triggerRect.width - tooltipRect.width) / 2,
-            };
-    }
-};
-
-export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }) => {
+export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top', disabled = false }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [position, setPosition] = useState<{ top: number; left: number } | null>(null);
-    const triggerRef = useRef<HTMLElement>(null);
-    const tooltipRef = useRef<HTMLDivElement>(null);
 
-    const updatePosition = () => {
-        if (!triggerRef.current || !tooltipRef.current) {
-            return;
+    useEffect(() => {
+        if (disabled) {
+            setIsOpen(false);
         }
+    }, [disabled]);
 
-        const triggerRect = triggerRef.current.getBoundingClientRect();
-        const tooltipRect = tooltipRef.current.getBoundingClientRect();
-        const newPosition = getTooltipPosition(triggerRect, tooltipRect, placement);
-
-        setPosition(newPosition);
-    };
-
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (!isOpen) {
             return;
         }
 
-        updatePosition();
-    }, [isOpen, placement]);
+        const handleClose = () => setIsOpen(false);
+        window.addEventListener('blur', handleClose);
+        document.addEventListener('visibilitychange', handleClose);
 
-    const handleOpen = () => {
-        setIsOpen(true);
-    };
+        return () => {
+            window.removeEventListener('blur', handleClose);
+            document.removeEventListener('visibilitychange', handleClose);
+        };
+    }, [isOpen]);
 
-    const handleClose = () => {
-        setIsOpen(false);
-        setPosition(null);
-    };
-
-    const childProps = {
-        ...children.props,
-        ref: triggerRef,
-        onMouseEnter: handleOpen,
-        onMouseLeave: handleClose,
-        onFocus: handleOpen,
-        onBlur: handleClose,
-    };
+    if (!label) {
+        return children;
+    }
 
     return (
-        <>
-            {cloneElement(children, childProps)}
-            {isOpen && label && (
-                <div
-                    className="tooltip fixed z-50 block rounded-md bg-background-most p-2 text-sm"
-                    ref={tooltipRef}
-                    role="tooltip"
-                    style={{
-                        top: position?.top ?? 0,
-                        left: position?.left ?? 0,
-                        visibility: position ? 'visible' : 'hidden',
-                    }}
+        <TooltipPrimitive.Root
+            open={!disabled && isOpen}
+            onOpenChange={(nextIsOpen) => setIsOpen(!disabled && nextIsOpen)}
+        >
+            <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
+
+            <TooltipPrimitive.Portal>
+                <TooltipPrimitive.Content
+                    className="tooltip pointer-events-none z-maximum block origin-(--radix-tooltip-content-transform-origin) scale-100 rounded-md bg-background-dark px-2 py-1 text-text-inverted text-xs leading-4 opacity-100 shadow-sm motion-safe:starting:scale-[0.96] motion-safe:starting:opacity-0 motion-safe:transition-[opacity,scale] motion-safe:duration-140 motion-safe:ease-out"
+                    side={placement}
+                    sideOffset={OFFSET}
                 >
                     {label}
-                </div>
-            )}
-        </>
+                </TooltipPrimitive.Content>
+            </TooltipPrimitive.Portal>
+        </TooltipPrimitive.Root>
     );
 };
+
+export const TooltipProvider: FC = ({ children }) => (
+    <TooltipPrimitive.Provider disableHoverableContent delayDuration={OPEN_DELAY_MS} skipDelayDuration={SKIP_DELAY_MS}>
+        {children}
+    </TooltipPrimitive.Provider>
+);
