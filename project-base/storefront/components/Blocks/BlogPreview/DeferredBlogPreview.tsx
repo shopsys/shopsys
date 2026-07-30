@@ -1,4 +1,3 @@
-import { Webline } from 'components/Layout/Webline/Webline';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
@@ -28,33 +27,33 @@ export const DeferredBlogPreview: FC = () => {
     }
 
     const bgImageTwClass = twJoin(
-        'relative bg-background-dark/80 bg-center bg-cover py-16 xl:rounded-xl',
-        "after:absolute after:inset-0 after:block after:bg-background-dark/80 after:content-[''] after:xl:rounded-xl",
+        'relative bg-background-brand bg-center bg-cover py-16',
+        "after:absolute after:inset-0 after:block after:bg-background-brand/80 after:content-['']",
     );
 
     return (
-        <Webline width="xxl">
-            <div
-                className={bgImageTwClass}
-                style={
-                    blogData?.mainBlogCategoryMainImage?.url
-                        ? { backgroundImage: `url(${blogData.mainBlogCategoryMainImage.url})` }
-                        : {}
-                }
-            >
-                {shouldRender ? (
-                    <BlogPreview
-                        blogArticles={blogPreviewData.blogArticles.edges}
-                        blogUrl={blogData?.mainBlogCategoryUrl}
-                        fetchingArticles={areBlogArticlesFetching}
-                    />
-                ) : (
-                    <BlogPreviewPlaceholder
-                        blogArticles={blogPreviewData.blogArticles.edges}
-                        blogUrl={blogData?.mainBlogCategoryUrl}
-                    />
-                )}
-            </div>
-        </Webline>
+        <div
+            className={bgImageTwClass}
+            style={
+                blogData?.mainBlogCategoryMainImage?.url
+                    ? { backgroundImage: `url(${blogData.mainBlogCategoryMainImage.url})` }
+                    : {}
+            }
+        >
+            {shouldRender ? (
+                <BlogPreview
+                    blogArticles={blogPreviewData.blogArticles.edges}
+                    blogName={blogData?.mainBlogCategoryName}
+                    blogUrl={blogData?.mainBlogCategoryUrl}
+                    fetchingArticles={areBlogArticlesFetching}
+                />
+            ) : (
+                <BlogPreviewPlaceholder
+                    blogArticles={blogPreviewData.blogArticles.edges}
+                    blogName={blogData?.mainBlogCategoryName}
+                    blogUrl={blogData?.mainBlogCategoryUrl}
+                />
+            )}
+        </div>
     );
 };

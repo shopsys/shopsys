@@ -59,7 +59,7 @@ export const BannersDot: FC<BannersDotProps> = ({
                 'group relative block size-4 cursor-pointer rounded-full bg-icon-less transition',
                 'vl:rounded-none vl:first-of-type:rounded-bl-md vl:last-of-type:rounded-br-md',
                 'vl:flex vl:h-auto vl:w-full vl:bg-background-more vl:px-5 vl:py-2 vl:text-left vl:text-text-default',
-                'vl:after:absolute vl:after:inset-0 vl:after:border-border-less vl:after:border-t-[1px] vl:after:border-b-[1px] vl:after:border-l-[1px] vl:after:content-[""] vl:first-of-type:after:rounded-bl-md vl:last-of-type:after:rounded-br-md vl:last-of-type:after:border-r-[1px]',
+                'vl:after:absolute vl:after:inset-0 vl:after:border-border-less vl:after:border-t vl:after:border-b vl:after:border-l vl:after:content-[""] vl:first-of-type:after:rounded-bl-md vl:last-of-type:after:rounded-br-md vl:last-of-type:after:border-r',
                 isActive && 'bg-text-accent vl:bg-background-default vl:text-text-accent',
                 'hover:bg-background-most',
             )}
@@ -69,7 +69,7 @@ export const BannersDot: FC<BannersDotProps> = ({
             <span className="h6 wrap-anywhere vl:line-clamp-4 hidden">{sliderItem.name}</span>
             <span
                 className={twMergeCustom(
-                    'absolute top-0 left-0 z-above vl:block hidden h-[3px] w-0 bg-text-accent transition-all duration-[0s] ease-linear',
+                    'absolute top-0 left-0 z-above vl:block hidden h-0.75 w-0 bg-text-accent transition-all duration-[0s] ease-linear',
                 )}
                 style={
                     isActive && totalItems > 1 && start

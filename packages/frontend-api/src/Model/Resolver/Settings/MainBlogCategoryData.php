@@ -6,6 +6,8 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Settings;
 
 class MainBlogCategoryData
 {
+    public $mainBlogCategoryName;
+
     public $mainBlogCategoryUrl;
 
     public $mainBlogCategoryMainImage;

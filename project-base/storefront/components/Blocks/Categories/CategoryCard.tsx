@@ -39,6 +39,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
     const { t } = useTranslation();
     const isLarge = size === 'large';
     const isCatalogVariant = variant === 'catalog';
+    const imageSize = isCatalogVariant ? 145 : isLarge ? 170 : 110;
     const itemImage = category.mainImage ?? null;
     const href = `${getStringWithoutTrailingSlash(category.slug)}/`;
     const linkType = getLinkType(category.__typename);
@@ -50,36 +51,38 @@ export const CategoryCard: FC<CategoryCardProps> = ({
         categoryName: category.name,
     });
     const imageWrapperClassName = twJoin(
-        'relative flex items-center justify-center',
-        isCatalogVariant ? 'size-[125px] lg:size-[135px] xl:size-[145px]' : 'size-[60px] vl:size-full lg:size-[100px]',
-        variant === 'homepage' && isLarge
-            ? 'vl:max-h-[500px] vl:max-w-[500px]'
-            : !isCatalogVariant && 'lg:max-h-[180px] lg:max-w-[180px]',
+        'relative flex shrink-0 items-center justify-center',
+        isCatalogVariant && 'size-31.25 lg:size-33.75 xl:size-36.25',
+        variant === 'homepage' && !isLarge && 'size-22.5 vl:size-20 xl:size-27.5',
+        variant === 'homepage' && isLarge && 'size-22.5 vl:size-33.75 xl:size-42.5',
+    );
+
+    const imageContent = itemImage ? (
+        <div data-tid={TIDs.simple_navigation_image} className={imageWrapperClassName}>
+            <Image
+                alt={itemImage.name || category.name}
+                className="size-full object-contain mix-blend-multiply"
+                height={imageSize}
+                src={itemImage.url}
+                width={imageSize}
+            />
+        </div>
+    ) : (
+        <div aria-hidden="true" className={imageWrapperClassName} />
     );
 
     const primaryContent = (
         <>
-            {itemImage ? (
-                <div data-tid={TIDs.simple_navigation_image} className={imageWrapperClassName}>
-                    <Image
-                        fill
-                        alt={itemImage.name || category.name}
-                        className="object-contain mix-blend-multiply"
-                        src={itemImage.url}
-                        sizes={
-                            isCatalogVariant
-                                ? '(max-width: 768px) 125px, (max-width: 1023px) 135px, 145px'
-                                : isLarge
-                                  ? '(max-width: 768px) 60px, (max-width: 1023px) 100px, 500px'
-                                  : '(max-width: 768px) 60px, (max-width: 1023px) 100px, 180px'
-                        }
-                    />
-                </div>
-            ) : (
-                <div aria-hidden="true" className={imageWrapperClassName} />
-            )}
+            {imageContent}
 
-            <h3 className="h4 line-clamp-2">{category.name}</h3>
+            <div className={twJoin(isLarge && 'vl:min-w-0')}>
+                <h3 className="h5 line-clamp-2">{category.name}</h3>
+                {variant === 'homepage' && isLarge && (
+                    <p className="mt-2 vl:block hidden font-secondary font-semibold text-sm text-text-less">
+                        {t('Our most popular category')}
+                    </p>
+                )}
+            </div>
         </>
     );
 
@@ -90,12 +93,12 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                 href={href}
                 type={linkType}
                 className={twMergeCustom(
-                    'flex cursor-pointer flex-col items-center gap-5 rounded-xl text-center no-underline transition',
+                    'flex aspect-square size-full max-h-37.5 cursor-pointer flex-col items-center justify-center gap-0 rounded-xl px-5 py-2.5 text-center no-underline transition-[box-shadow,border-color,background-color,color] duration-300 ease-in-out',
                     'border border-background-more bg-background-more text-text-default',
-                    'hover:border-border-less hover:bg-background-default hover:text-text-default hover:no-underline',
-                    'px-5 py-2.5 vl:py-5',
-                    'aspect-square size-full max-h-[150px] lg:max-h-[200px]',
-                    isLarge ? 'vl:max-h-[590px]' : 'vl:max-h-[285px]',
+                    'group-hover:border-border-less group-hover:bg-background-default group-hover:text-text-default group-hover:no-underline',
+                    'pointer-fine:group-hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
+                    'vl:aspect-auto vl:max-h-none vl:px-4 vl:py-2.5',
+                    isLarge && 'vl:gap-4 vl:px-6 vl:py-5 xl:px-8',
                 )}
             >
                 {primaryContent}
@@ -110,8 +113,9 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                 href={href}
                 type={linkType}
                 className={twMergeCustom(
-                    'flex h-full cursor-pointer flex-col items-center gap-4 rounded-xl border border-background-more bg-background-more p-5 text-center text-text-default no-underline transition hover:no-underline',
+                    'flex h-full cursor-pointer flex-col items-center gap-4 rounded-xl border border-background-more bg-background-more p-5 text-center text-text-default no-underline transition-[box-shadow,border-color,background-color,color] duration-200 ease-out hover:no-underline',
                     'hover:border-border-less hover:bg-background-default hover:text-text-default',
+                    'pointer-fine:hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
                 )}
             >
                 {primaryContent}
@@ -122,9 +126,9 @@ export const CategoryCard: FC<CategoryCardProps> = ({
     return (
         <article
             className={twMergeCustom(
-                'flex h-full flex-col rounded-xl border border-background-more bg-background-more p-5 text-text-default',
-                'transition',
+                'flex h-full flex-col rounded-xl border border-background-more bg-background-more p-5 text-text-default transition-[box-shadow,border-color,background-color,color] duration-200 ease-out',
                 'hover:border-border-less hover:bg-background-default',
+                'pointer-fine:hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
                 'justify-start',
             )}
         >

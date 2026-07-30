@@ -18,18 +18,29 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
     return (
         <>
             {articles.map((article) => (
-                <div key={article.uuid} className="flex vl:min-w-0 max-w-80 vl:flex-1 snap-start flex-col gap-5">
-                    <ArticleLink href={article.link} tabIndex={-1} title={t('Article page')}>
+                <ArticleLink
+                    preventRedirectOnTextSelection
+                    ariaLabel={t('Go to article page of {{ articleName }}', {
+                        ns: 'accessibility',
+                        articleName: article.name,
+                    })}
+                    className="group flex max-w-80 select-text snap-start flex-col gap-5 xl:min-w-0 xl:flex-1"
+                    draggable={false}
+                    href={article.link}
+                    key={article.uuid}
+                    title={t('Blog article')}
+                >
+                    <div className="overflow-hidden rounded-xl">
                         <Image
                             alt={article.mainImage?.name || article.name}
-                            className="aspect-video vl:aspect-16/11 size-full rounded-xl object-cover"
+                            className="aspect-video size-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 xl:aspect-16/11"
                             height={220}
                             sizes="(max-width: 600px) 52vw, (max-width: 768px) 35vw, (max-width: 1024px) 28vw, 320px"
                             src={article.mainImage?.url}
                             tid={TIDs.blog_preview_image}
                             width={320}
                         />
-                    </ArticleLink>
+                    </div>
 
                     <div className="flex flex-col items-start gap-2.5">
                         <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 whitespace-nowrap">
@@ -61,21 +72,15 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <ArticleLink
-                            className="h4 text-text-inverted"
-                            href={article.link}
-                            title={t('Blog article')}
-                            ariaLabel={t('Go to article page of {{ articleName }}', {
-                                ns: 'accessibility',
-                                articleName: article.name,
-                            })}
-                        >
-                            {article.name}
-                        </ArticleLink>
+                        <h3 className="h4 text-text-inverted group-hover:underline">
+                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible:bg-orange-500 group-focus-visible:text-text-default!">
+                                {article.name}
+                            </span>
+                        </h3>
 
                         <p className="font-normal text-text-inverted">{article.perex}</p>
                     </div>
-                </div>
+                </ArticleLink>
             ))}
         </>
     );

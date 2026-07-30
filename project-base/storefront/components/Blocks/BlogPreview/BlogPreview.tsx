@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
@@ -12,32 +13,34 @@ import { BlogPreviewSide } from './BlogPreviewSide';
 
 export type BlogPreviewProps = {
     blogArticles: TypeBlogArticleConnectionFragment['edges'] | undefined;
+    blogName: string | null | undefined;
     blogUrl: string | null | undefined;
     fetchingArticles: boolean;
 };
 
-export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetchingArticles }) => {
+export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogName, blogUrl, fetchingArticles }) => {
     const { t } = useTranslation();
 
     const blogItems = mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles);
-    const blogMainItems = blogItems?.slice(0, 2);
-    const blogSideItems = blogItems?.slice(2);
+    const blogMainItems = blogItems?.slice(0, 3);
+    const blogSideItems = blogItems?.slice(3);
 
-    const isDesktop = useMediaMin('vl');
+    const isDesktop = useMediaMin('xl');
 
     return (
         <Webline className="relative z-above">
             <div className="mb-5 flex items-center justify-between">
-                <h2 className="h3 text-text-inverted">{t('Magazine')}</h2>
+                <h2 className="h3 text-text-inverted">{blogName || t('Magazine')}</h2>
 
                 {!!blogUrl && (
                     <ExtendedNextLink
                         aria-label={t('Go to all articles page', { ns: 'accessibility' })}
-                        className="font-secondary font-semibold text-sm text-text-inverted tracking-wide no-underline hover:text-text-inverted hover:underline"
+                        className="group flex items-center gap-2 font-secondary font-semibold text-sm text-text-inverted tracking-wide no-underline hover:text-text-inverted"
                         href={blogUrl}
                         type="blogCategory"
                     >
                         {t('All articles')}
+                        <ArrowSecondaryIcon className="size-3 -rotate-90 transition-transform group-hover:translate-x-0.5" />
                     </ExtendedNextLink>
                 )}
             </div>
@@ -47,7 +50,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
             {!fetchingArticles && !!(blogMainItems || blogSideItems) && (
                 <div
                     className={twJoin(
-                        'hide-scrollbar vl:flex grid snap-x snap-mandatory grid-flow-col vl:justify-between gap-5 vl:gap-16 overflow-x-auto overscroll-x-contain',
+                        'hide-scrollbar grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain xl:flex xl:justify-between xl:gap-10',
                         'auto-cols-[60%] md:auto-cols-[40%] lg:auto-cols-[30%]',
                     )}
                 >

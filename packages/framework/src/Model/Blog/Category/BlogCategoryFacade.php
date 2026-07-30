@@ -285,6 +285,11 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
         return $this->blogCategoryRepository->findVisibleMainBlogCategoryIdOnDomain($this->domain->getId());
     }
 
+    public function findVisibleMainBlogCategoryOnCurrentDomain(): ?BlogCategory
+    {
+        return $this->blogCategoryRepository->findVisibleMainBlogCategoryOnDomain($this->domain->getId());
+    }
+
     /**
      * @return array<int, string>
      */

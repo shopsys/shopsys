@@ -5,7 +5,7 @@ import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategor
 import { DeferredPromotedProducts } from 'components/Blocks/Product/DeferredPromotedProducts';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
-import { UpsList } from 'components/Blocks/UpsList/UpsList';
+import { UspList } from 'components/Blocks/UspList/UspList';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -33,7 +33,7 @@ export const HomePageContent: FC = () => {
 
                     <Banners />
 
-                    <UpsList />
+                    <UspList />
 
                     <PromotedCategories />
 

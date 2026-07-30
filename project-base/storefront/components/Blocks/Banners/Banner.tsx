@@ -14,7 +14,7 @@ type BannerProps = {
 const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, className }) => (
     <div
         className={twMergeCustom(
-            'mt-auto flex flex-col justify-center px-14 py-6 lg:absolute lg:right-0 lg:h-full lg:w-[455px]',
+            'mt-auto flex flex-col justify-center px-14 py-6 lg:absolute lg:right-0 lg:h-full lg:w-113.75',
             className,
         )}
         style={{
@@ -39,14 +39,15 @@ const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, classNa
 
 export const Banner: FC<BannerProps> = ({ banner, order, isFirst }) => {
     const { t } = useTranslation();
+    const imageAlt = `${t('Promotional banner')}: ${banner.name}`;
 
     return (
         <div key={banner.link} className="flex flex-[1_0_100%] basis-full vl:flex-row flex-col" style={{ order }}>
             <BannerImage
-                desktopAlt={`${t('Promotional banner')} - ${banner.webMainImage.name || banner.name} - ${banner.description?.slice(0, 50)}`}
+                desktopAlt={imageAlt}
                 desktopSrc={banner.webMainImage.url}
                 isFirst={isFirst}
-                mobileAlt={`${t('Promotional banner')} - ${banner.mobileMainImage.name || banner.name} - ${banner.description?.slice(0, 50)}`}
+                mobileAlt={imageAlt}
                 mobileSrc={banner.mobileMainImage.url}
             >
                 {banner.description && <BannerContent banner={banner} className="hidden lg:flex" />}

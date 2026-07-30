@@ -17,22 +17,30 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 xl:w-85 xl:shrink-0">
             {articles.map((article) => (
-                <div key={article.uuid} className="flex min-w-96 max-w-[410px] snap-start vl:flex-row flex-col gap-5">
-                    <ArticleLink href={article.link} tabIndex={-1} title={t('Blog article')}>
-                        <div className="aspect-video vl:h-24 vl:w-36 w-full shrink-0 overflow-hidden rounded-xl">
-                            <Image
-                                alt={article.mainImage?.name || article.name}
-                                className="size-full object-cover"
-                                height={220}
-                                sizes="(max-width: 1023px) 0px, 144px"
-                                src={article.mainImage?.url}
-                                tid={TIDs.blog_preview_image}
-                                width={320}
-                            />
-                        </div>
-                    </ArticleLink>
+                <ArticleLink
+                    preventRedirectOnTextSelection
+                    ariaLabel={t('Go to article page of {{ articleName }}', {
+                        ns: 'accessibility',
+                        articleName: article.name,
+                    })}
+                    className="group flex select-text snap-start flex-col gap-5 xl:flex-row"
+                    draggable={false}
+                    href={article.link}
+                    key={article.uuid}
+                    title={t('Blog article')}
+                >
+                    <div className="aspect-video w-full shrink-0 overflow-hidden rounded-xl xl:h-24 xl:w-36">
+                        <Image
+                            alt={article.mainImage?.name || article.name}
+                            className="size-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                            height={96}
+                            src={article.mainImage?.url}
+                            tid={TIDs.blog_preview_image}
+                            width={144}
+                        />
+                    </div>
 
                     <div className="flex flex-col items-start gap-2">
                         <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 whitespace-nowrap">
@@ -64,23 +72,17 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <ArticleLink
-                            className="h5 text-text-inverted"
-                            href={article.link}
-                            title={t('Blog article')}
-                            ariaLabel={t('Go to article page of {{ articleName }}', {
-                                ns: 'accessibility',
-                                articleName: article.name,
-                            })}
-                        >
-                            {article.name}
-                        </ArticleLink>
+                        <h3 className="h5 text-text-inverted group-hover:underline">
+                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible:bg-orange-500 group-focus-visible:text-text-default!">
+                                {article.name}
+                            </span>
+                        </h3>
 
                         <p className={twJoin('font-normal text-text-inverted', !isPlaceholder && 'hidden')}>
                             {article.perex}
                         </p>
                     </div>
-                </div>
+                </ArticleLink>
             ))}
         </div>
     );

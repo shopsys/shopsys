@@ -1296,6 +1296,8 @@ enum LoginTypeEnum {
 type MainBlogCategoryData {
   "Main image of the blog main category"
   mainBlogCategoryMainImage: Image
+  "Name of the blog main category"
+  mainBlogCategoryName: String
   "Absolute URL of the blog main category"
   mainBlogCategoryUrl: String
 }

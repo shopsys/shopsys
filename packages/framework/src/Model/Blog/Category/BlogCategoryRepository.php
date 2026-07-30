@@ -307,6 +307,18 @@ class BlogCategoryRepository extends NestedTreeRepository
         }
     }
 
+    public function findVisibleMainBlogCategoryOnDomain(int $domainId): ?BlogCategory
+    {
+        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId);
+        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+        $this->addTranslation($queryBuilder, $locale);
+
+        return $queryBuilder
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+    }
+
     /**
      * @return array<int, string>
      */

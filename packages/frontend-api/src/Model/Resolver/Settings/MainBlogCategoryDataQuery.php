@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Settings;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
@@ -14,6 +15,7 @@ class MainBlogCategoryDataQuery extends AbstractQuery
 {
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
+        protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ImagesQuery $imagesQuery,
     ) {
@@ -23,13 +25,15 @@ class MainBlogCategoryDataQuery extends AbstractQuery
     {
         $mainBlogCategoryData = new MainBlogCategoryData();
 
-        $mainBlogCategoryId = $this->blogCategoryFacade->findVisibleMainBlogCategoryIdOnCurrentDomain();
+        $mainBlogCategory = $this->blogCategoryFacade->findVisibleMainBlogCategoryOnCurrentDomain();
 
-        if ($mainBlogCategoryId === null) {
+        if ($mainBlogCategory === null) {
             return $mainBlogCategoryData;
         }
 
         try {
+            $mainBlogCategoryId = $mainBlogCategory->getId();
+            $mainBlogCategoryData->mainBlogCategoryName = $mainBlogCategory->getName($this->domain->getLocale());
             $mainBlogCategoryData->mainBlogCategoryUrl = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain(
                 'front_blogcategory_detail',
                 $mainBlogCategoryId,
