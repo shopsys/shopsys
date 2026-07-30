@@ -126,14 +126,20 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
 
 **INCLUDE (only if developer action is required):**
 - Methods/properties/classes removed → show replacement
+- Methods/properties/classes RENAMED → one line: "X was renamed to Y" (call sites break)
 - Signatures changed → show before/after
+- Behavior changes that alter what existing project customizations do → directive "update your customized {X} accordingly" naming the old and new source of truth (e.g. a middleware now reads a different OrderData total method)
 - Manual actions required (DB extensions, etc.)
+- Manual actions invisible in ANY diff — granting a new admin role/permission to role groups, data or admin setup steps
 - Feature movements to packages
 
 **EXCLUDE:**
 - New entities/classes/methods/routes/fields (additions never break existing code)
+- Purely additive interface changes — new OPTIONAL constructor/method parameters, new methods, new enum values, new optional props — even on manually instantiated classes
+- Anything visible in the project-base diff: config registrations (middlewares, dataloaders, services), GraphQL type files in project config, wiring — the closing "see #project-base-diff" line covers ALL of it; never write a bullet or a config snippet for these
 - New migrations (auto-executed)
 - Constructor changes in autowired services
+- Low-impact cosmetic consequences (e.g. derived admin label/msgid changes for edge-case entity names)
 - Feature explanations, descriptions, or context about what was built
 - Any line that merely describes what was added/created without requiring developer action
 
@@ -148,6 +154,7 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
 
 **Code example formatting:**
 - Use ` ```diff ``` ` for code blocks (preferred styling)
+- Config snippets ONLY for changes NOT visible in the project-base diff (rare) — registrations shown by #project-base-diff never get a snippet
 - Use markdown tables for simple value mappings/replacements (e.g., old method → new method)
 - Show actual code from commits as examples, not generic placeholders
 

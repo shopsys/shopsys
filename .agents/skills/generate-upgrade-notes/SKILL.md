@@ -242,6 +242,9 @@ This command uses two specialized subagents (via general-purpose agent with deta
 - Focus exclusively on breaking changes requiring manual action
 - Avoid documenting changes caught by static analysis
 - Always include `#project-base-diff` phrase when project-base changes
+- **Anything visible in the project-base diff is covered by that single line** — config registrations (middlewares, dataloaders), GraphQL type files in project config, wiring: no bullet, no config snippet
+- Renames/removals of public methods/classes get a one-line bullet ("X was renamed to Y"); purely ADDITIVE interface changes (new optional parameters, new methods, new enum values) never do
+- Manual actions invisible in any diff (granting new admin roles/permissions, data setup) always get a bullet
 - Use FQCN (Fully Qualified Class Names) everywhere
 - Before writing each line, ask: "Does the developer need to change their code because of this?" — if NO, omit it
 
