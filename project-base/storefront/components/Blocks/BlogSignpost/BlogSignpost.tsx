@@ -79,7 +79,7 @@ export const BlogSignpost: FC<BlogSignpostProps> = ({ blogCategoryItems, activeI
                         )}
                         onClick={() => setIsBlogSignpostOpen(!isBlogSignpostOpen)}
                     >
-                        {t('Browse by topic')}
+                        {t('Browse articles by topic')}
                         <ArrowIcon
                             className={twJoin('size-6 transition-all xl:hidden', isBlogSignpostOpen && 'rotate-180')}
                         />
@@ -87,7 +87,7 @@ export const BlogSignpost: FC<BlogSignpostProps> = ({ blogCategoryItems, activeI
                 </div>
 
                 <nav
-                    aria-label={t('Browse by topic')}
+                    aria-label={t('Browse articles by topic')}
                     id="blog-signpost-navigation"
                     className={twJoin(
                         'w-full rounded-xl p-4 shadow-[inset_0_0_0_1px] shadow-border-less',
