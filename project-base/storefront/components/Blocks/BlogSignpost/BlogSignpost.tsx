@@ -1,33 +1,75 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
 import { findActiveBlogCategoryPath } from 'utils/blogCategory/findActiveBlogCategoryPath';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { BlogSignpostItem } from './BlogSignpostItem';
+import { BlogSignpostPanel } from './BlogSignpostPanel';
 
-type BlogSingpostProps = {
+type BlogSignpostProps = {
     activeItem: string;
     blogCategoryItems?: ListedBlogCategoryRecursiveType[];
 };
 
-export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) => {
+export const BlogSignpost: FC<BlogSignpostProps> = ({ blogCategoryItems, activeItem }) => {
     const { t } = useTranslation();
     const [isBlogSignpostOpen, setIsBlogSignpostOpen] = useState(false);
-    const activeArticleCategoryPathUuids = findActiveBlogCategoryPath(blogCategoryItems, activeItem);
-    const [openUuids, setOpenUuids] = useState<string[]>(
-        activeArticleCategoryPathUuids.length > 2 ? activeArticleCategoryPathUuids : [],
+    const activeArticleCategoryPathUuids = useMemo(
+        () => findActiveBlogCategoryPath(blogCategoryItems, activeItem),
+        [activeItem, blogCategoryItems],
+    );
+    const mainBlogCategory = blogCategoryItems?.[0];
+    const initialPanelUuid = useMemo(() => {
+        if (!mainBlogCategory) {
+            return undefined;
+        }
+
+        const activeBlogCategory = findBlogCategoryByUuid(blogCategoryItems, activeItem);
+
+        if (activeBlogCategory?.children?.length) {
+            return activeBlogCategory.uuid;
+        }
+
+        return activeArticleCategoryPathUuids[activeArticleCategoryPathUuids.length - 2] ?? mainBlogCategory.uuid;
+    }, [activeArticleCategoryPathUuids, activeItem, blogCategoryItems, mainBlogCategory]);
+    const [activePanelUuid, setActivePanelUuid] = useState(initialPanelUuid);
+    const [previousPanelUuid, setPreviousPanelUuid] = useState<string>();
+    const [panelUuidToFocus, setPanelUuidToFocus] = useState<string>();
+    const activePanelPathUuids = useMemo(
+        () => findActiveBlogCategoryPath(blogCategoryItems, activePanelUuid ?? ''),
+        [activePanelUuid, blogCategoryItems],
     );
 
-    const handleToggle = (uuids: string[]) => setOpenUuids((prevUuids) => (prevUuids.includes(uuids[0]) ? [] : uuids));
+    useEffect(() => {
+        setActivePanelUuid(initialPanelUuid);
+        setPreviousPanelUuid(undefined);
+    }, [initialPanelUuid]);
+
+    const handlePanelChange = (panelUuid: string) => {
+        setPreviousPanelUuid(activePanelUuid);
+        setActivePanelUuid(panelUuid);
+        setPanelUuidToFocus(panelUuid);
+    };
+    const handlePanelTransitionEnd = useCallback((panelUuid: string) => {
+        setPreviousPanelUuid((currentPanelUuid) => (currentPanelUuid === panelUuid ? undefined : currentPanelUuid));
+    }, []);
+    const handlePanelFocused = useCallback((panelUuid: string) => {
+        setPanelUuidToFocus((currentPanelUuid) => (currentPanelUuid === panelUuid ? undefined : currentPanelUuid));
+    }, []);
+
+    if (!mainBlogCategory || !activePanelUuid) {
+        return null;
+    }
 
     return (
         <>
             <div className="relative flex flex-col gap-y-2.5">
                 <div className="cursor-pointer xl:cursor-text">
                     <Button
+                        aria-controls="blog-signpost-navigation"
+                        aria-expanded={isBlogSignpostOpen}
                         variant="secondary"
                         className={twJoin(
                             'relative w-full justify-between text-md!',
@@ -37,39 +79,39 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                         )}
                         onClick={() => setIsBlogSignpostOpen(!isBlogSignpostOpen)}
                     >
-                        {t('Article categories')}
+                        {t('Browse by topic')}
                         <ArrowIcon
                             className={twJoin('size-6 transition-all xl:hidden', isBlogSignpostOpen && 'rotate-180')}
                         />
                     </Button>
                 </div>
 
-                {blogCategoryItems && (
-                    <div
-                        className={twJoin(
-                            'flex w-full flex-col gap-y-2.5',
-                            isBlogSignpostOpen
-                                ? 'max-xl:absolute max-xl:top-full max-xl:z-aboveOverlay max-xl:mt-1 max-xl:rounded-2xl max-xl:bg-background-default max-xl:p-5'
-                                : 'max-xl:hidden',
-                        )}
-                    >
-                        {blogCategoryItems.map((blogCategory) => {
-                            const isActive = activeArticleCategoryPathUuids.includes(blogCategory.uuid);
-
-                            return (
-                                <BlogSignpostItem
-                                    key={blogCategory.uuid}
-                                    activeArticleCategoryPathUuids={activeArticleCategoryPathUuids}
-                                    activeItem={activeItem}
-                                    blogCategory={blogCategory}
-                                    handleToggle={handleToggle}
-                                    isActive={isActive}
-                                    openUuids={openUuids}
-                                />
-                            );
-                        })}
+                <nav
+                    aria-label={t('Browse by topic')}
+                    id="blog-signpost-navigation"
+                    className={twJoin(
+                        'w-full rounded-xl p-4 shadow-[inset_0_0_0_1px] shadow-border-less',
+                        isBlogSignpostOpen
+                            ? 'max-xl:absolute max-xl:top-full max-xl:z-aboveOverlay max-xl:mt-1 max-xl:max-h-[70dvh] max-xl:overflow-y-auto max-xl:rounded-2xl max-xl:bg-background-default max-xl:p-5'
+                            : 'max-xl:hidden',
+                    )}
+                >
+                    <div className="relative overflow-clip">
+                        <BlogSignpostPanel
+                            isRoot
+                            activeArticleCategoryPathUuids={activeArticleCategoryPathUuids}
+                            activeItem={activeItem}
+                            activePanelPathUuids={activePanelPathUuids}
+                            activePanelUuid={activePanelUuid}
+                            blogCategory={mainBlogCategory}
+                            panelUuidToFocus={panelUuidToFocus}
+                            previousPanelUuid={previousPanelUuid}
+                            onPanelChange={handlePanelChange}
+                            onPanelFocused={handlePanelFocused}
+                            onPanelTransitionEnd={handlePanelTransitionEnd}
+                        />
                     </div>
-                )}
+                </nav>
             </div>
 
             {isBlogSignpostOpen && (
@@ -77,4 +119,23 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
             )}
         </>
     );
+};
+
+const findBlogCategoryByUuid = (
+    blogCategories: ListedBlogCategoryRecursiveType[] | undefined,
+    uuid: string,
+): ListedBlogCategoryRecursiveType | undefined => {
+    for (const blogCategory of blogCategories ?? []) {
+        if (blogCategory.uuid === uuid) {
+            return blogCategory;
+        }
+
+        const foundBlogCategory = findBlogCategoryByUuid(blogCategory.children, uuid);
+
+        if (foundBlogCategory) {
+            return foundBlogCategory;
+        }
+    }
+
+    return undefined;
 };

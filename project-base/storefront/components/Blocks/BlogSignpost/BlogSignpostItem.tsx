@@ -1,127 +1,50 @@
-import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { AnimatePresence } from 'framer-motion';
-import { twJoin } from 'tailwind-merge';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
-import { Children } from './Children';
+import { BlogSignpostCategoryLink } from './BlogSignpostCategoryLink';
+import { getBlogSignpostPanelId } from './blogSignpostUtils';
 
 type BlogSignpostItemProps = {
-    isActive: boolean;
-    itemLevel?: number;
     activeItem: string;
     blogCategory: ListedBlogCategoryRecursiveType;
     activeArticleCategoryPathUuids: string[];
-    openUuids: string[];
-    handleToggle: (uuids: string[]) => void;
+    onPanelChange: (uuid: string) => void;
 };
 
 export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
     blogCategory,
-    isActive,
-    itemLevel = 0,
     activeItem,
     activeArticleCategoryPathUuids,
-    handleToggle,
-    openUuids,
+    onPanelChange,
 }) => {
-    const { t } = useTranslation();
-    const isFirstLevel = itemLevel === 0;
-    const isSecondLevel = itemLevel === 1;
-    const isThirdLevel = itemLevel === 2;
     const hasChildren = !!blogCategory.children?.length;
-    const isOpen = openUuids.includes(blogCategory.uuid);
-
-    const level1WrapperTwClassName = [
-        'rounded-xl',
-        hasChildren && isActive && 'flex flex-col bg-background-default  shadow-[inset_0_0_0_1px] shadow-border-less',
-        'max-vl:max-h-[400px] max-vl:overflow-auto vl:overflow-hidden',
-    ];
-
-    const level1ItemTwClassName = [
-        'flex px-5 py-3',
-        (!hasChildren || !isActive) && 'bg-background-more',
-        !hasChildren && isActive && 'bg-background-accent-less',
-    ];
-    const level2ItemTwClassName = [
-        'flex items-center rounded-md py-2 px-2 bg-background-more',
-        isActive && 'bg-background-accent-less',
-    ];
-    const level3ItemTwClassName = ['py-3 px-5 border-l border-border-less', isActive && 'border-background-accent'];
-
-    const level1LinkTwClassName = ['font-semibold', isActive && 'text-link-default'];
-    const level2LinkTwClassName = ['font-semibold pl-2', isActive && 'text-link-default'];
-    const level3LinkTwClassName = isActive && 'text-link-default';
-
-    const level1ChildrenWrapperTwClassName = ['px-12 pb-3 flex flex-col gap-3'];
-    const level2ChildrenWrapperTwClassName = ['px-3 mt-3'];
+    const isCurrent = blogCategory.uuid === activeItem;
+    const isInActivePath = activeArticleCategoryPathUuids.includes(blogCategory.uuid);
 
     return (
-        <div className={twJoin(isFirstLevel && level1WrapperTwClassName)}>
-            <div
-                className={twMergeCustom(
-                    isFirstLevel && level1ItemTwClassName,
-                    isSecondLevel && level2ItemTwClassName,
-                    isThirdLevel && level3ItemTwClassName,
-                )}
-            >
-                {isSecondLevel && hasChildren && (
-                    <button
-                        tabIndex={0}
-                        title={t('Toggle blog category')}
-                        type="button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            handleToggle([blogCategory.uuid]);
-                        }}
-                    >
-                        <ArrowIcon
-                            className={twMergeCustom(
-                                'size-4 -rotate-90 cursor-pointer text-text-less transition-all',
-                                isActive && 'text-link',
-                                isOpen && 'rotate-0',
-                            )}
-                        />
-                    </button>
-                )}
-                <ExtendedNextLink
-                    href={blogCategory.link}
-                    type="blogCategory"
+        <>
+            {hasChildren ? (
+                <button
+                    aria-controls={getBlogSignpostPanelId(blogCategory.uuid)}
                     className={twMergeCustom(
-                        'font-secondary text-sm text-text-default no-underline hover:text-link-hovered',
-                        isFirstLevel && level1LinkTwClassName,
-                        isSecondLevel && level2LinkTwClassName,
-                        isThirdLevel && level3LinkTwClassName,
+                        'group flex w-full cursor-pointer items-center justify-between rounded-md bg-background-more px-3 py-2 text-left font-secondary font-semibold text-sm text-text-default transition-colors hover:bg-background-most focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:outline-offset-2 active:bg-background-most',
+                        isInActivePath &&
+                            'bg-background-accent-less text-link-default hover:bg-background-accent-less active:bg-background-accent-less',
                     )}
+                    type="button"
+                    onClick={() => onPanelChange(blogCategory.uuid)}
                 >
-                    {blogCategory.name}
-                </ExtendedNextLink>
-            </div>
-
-            <AnimatePresence initial={false}>
-                {((hasChildren && isFirstLevel) || isOpen) && (
-                    <AnimateCollapseDiv className="block!">
-                        <div
-                            className={twJoin(
-                                isFirstLevel && level1ChildrenWrapperTwClassName,
-                                isSecondLevel && level2ChildrenWrapperTwClassName,
-                            )}
-                        >
-                            <Children
-                                activeArticleCategoryPathUuids={activeArticleCategoryPathUuids}
-                                activeItem={activeItem}
-                                blogCategory={blogCategory}
-                                handleToggle={handleToggle}
-                                itemLevel={itemLevel}
-                                openUuids={openUuids}
-                            />
-                        </div>
-                    </AnimateCollapseDiv>
-                )}
-            </AnimatePresence>
-        </div>
+                    <span>{blogCategory.name}</span>
+                    <ArrowIcon
+                        className={twMergeCustom(
+                            'size-4 shrink-0 -rotate-90 text-text-less transition-transform group-hover:translate-x-0.5',
+                            isInActivePath && 'text-link',
+                        )}
+                    />
+                </button>
+            ) : (
+                <BlogSignpostCategoryLink blogCategory={blogCategory} isCurrent={isCurrent} variant="item" />
+            )}
+        </>
     );
 };

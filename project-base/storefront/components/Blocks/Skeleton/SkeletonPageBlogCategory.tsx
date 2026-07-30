@@ -11,13 +11,13 @@ export const SkeletonPageBlogCategory: FC = () => (
         <SkeletonModuleBreadcrumbs count={2} />
 
         <div className="flex flex-col gap-6 xl:gap-10">
-            <Webline width="xxl">
+            <Webline>
                 <Skeleton className="h-48 rounded-xl" />
             </Webline>
 
             <Webline>
-                <div className="flex flex-col-reverse gap-3 md:gap-10 xl:flex-row xl:gap-[60px]">
-                    <div className="flex w-full flex-col gap-4 xl:max-w-[840px] xl:flex-1">
+                <div className="flex flex-col-reverse justify-center gap-3 md:gap-10 xl:flex-row xl:gap-5">
+                    <div className="flex w-full flex-col gap-4 xl:max-w-210 xl:flex-1">
                         <VerticalStack gap="sm">
                             {createEmptyArray(DEFAULT_BLOG_PAGE_SIZE).map((_, index) => (
                                 <SkeletonModuleArticleBlog key={index} />
@@ -25,7 +25,7 @@ export const SkeletonPageBlogCategory: FC = () => (
                         </VerticalStack>
                     </div>
 
-                    <Skeleton className="h-11 vl:h-[450px] rounded-xl xl:w-[300px]" />
+                    <Skeleton className="h-11 vl:h-112.5 rounded-xl xl:w-75" />
                 </div>
             </Webline>
         </div>
