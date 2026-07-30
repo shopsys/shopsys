@@ -1,8 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
+import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
+import { StoreIcon } from 'components/Basic/Icon/StoreIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
-import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
-import { useLogout } from 'utils/auth/useLogout';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
@@ -15,69 +16,82 @@ type SubMenuProps = {
 export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const isUserLoggedIn = useIsUserLoggedIn();
-    const [storesUrl, loginUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
-        ['/stores', '/login', '/product-comparison', '/wishlist'],
+    const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
+        ['/stores', '/product-comparison', '/wishlist'],
         url,
     );
-    const logout = useLogout();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
 
     return (
-        <div className="mt-auto flex flex-col bg-backgroundMore px-5 py-2">
-            <SubMenuItem href={storesUrl} type="stores" onClick={onNavigate}>
-                {t('Stores')}
-            </SubMenuItem>
+        <div className="mt-auto">
+            <div className="mx-5 mt-5 border-border-less border-t pt-5 pb-5">
+                <p className="mb-3 font-secondary font-semibold text-text-less text-xs uppercase">{t('Quick links')}</p>
 
-            <SubMenuItem href={productComparisonUrl} type="comparison" onClick={onNavigate}>
-                {t('Comparison')}
-                {!!comparison?.products.length && <span>&nbsp;({comparison.products.length})</span>}
-            </SubMenuItem>
+                <div className="flex flex-col gap-2">
+                    <SubMenuItem
+                        href={storesUrl}
+                        icon={StoreIcon}
+                        label={t('Stores')}
+                        type="stores"
+                        onClick={onNavigate}
+                    />
 
-            <SubMenuItem href={wishlistUrl} type="wishlist" onClick={onNavigate}>
-                {t('Wishlist')}
-                {!!wishlist?.products.length && <span>&nbsp;({wishlist.products.length})</span>}
-            </SubMenuItem>
+                    <SubMenuItem
+                        count={comparison?.products.length}
+                        href={productComparisonUrl}
+                        icon={CompareIcon}
+                        label={t('Comparison')}
+                        type="comparison"
+                        onClick={onNavigate}
+                    />
 
-            {isUserLoggedIn ? (
-                <SubMenuItem
-                    onClick={() => {
-                        onNavigate();
-                        logout();
-                    }}
-                >
-                    {t('Logout')}
-                </SubMenuItem>
-            ) : (
-                <SubMenuItem href={loginUrl} onClick={onNavigate}>
-                    {t('Sign in')}
-                </SubMenuItem>
-            )}
+                    <SubMenuItem
+                        count={wishlist?.products.length}
+                        href={wishlistUrl}
+                        icon={HeartIcon}
+                        label={t('Wishlist')}
+                        type="wishlist"
+                        onClick={onNavigate}
+                    />
+                </div>
+            </div>
         </div>
     );
 };
 
 type SubMenuItemProps = {
-    href?: string;
-    type?: PageType;
+    count?: number;
+    href: string;
+    icon: SvgFC;
+    label: string;
+    type: PageType;
     onClick: () => void;
 };
 
-const subMenuItemTwClass = 'py-3 text-sm text-text-default no-underline font-semibold text-left font-secondary';
-
-const SubMenuItem: FC<SubMenuItemProps> = ({ children, onClick, href, type }) => {
-    if (href) {
-        return (
-            <ExtendedNextLink passHref className={subMenuItemTwClass} href={href} type={type} onClick={onClick}>
-                {children}
-            </ExtendedNextLink>
-        );
-    }
-
+const SubMenuItem: FC<SubMenuItemProps> = ({ count, href, icon: Icon, label, onClick, type }) => {
     return (
-        <button className={subMenuItemTwClass} tabIndex={0} onClick={onClick}>
-            {children}
-        </button>
+        <ExtendedNextLink
+            passHref
+            aria-label={count ? `${label} (${count})` : label}
+            className="flex min-h-12 items-center gap-3 rounded-md bg-background-more px-3 py-3 text-left font-secondary font-semibold text-base text-text-default no-underline transition-colors hover:bg-background-most hover:text-text-default hover:no-underline active:bg-background-most"
+            href={href}
+            type={type}
+            onClick={onClick}
+        >
+            <span className="relative shrink-0">
+                <Icon className="size-6" />
+                {!!count && (
+                    <span
+                        aria-hidden="true"
+                        className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent-red px-0.5 font-bold font-secondary text-text-inverted text-xs leading-normal"
+                    >
+                        {count}
+                    </span>
+                )}
+            </span>
+
+            {label}
+        </ExtendedNextLink>
     );
 };

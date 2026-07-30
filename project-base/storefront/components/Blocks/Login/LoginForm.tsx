@@ -41,6 +41,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 
     const [formProviderMethods] = useLoginForm(defaultEmail);
     const formMeta = useLoginFormMeta(formName);
+    const descriptionId = `${formMeta.formName}-description`;
     const login = useLogin();
     const [{ data: settingsData }] = useSettingsQuery();
     const handleError = useErrorHandler({
@@ -63,7 +64,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 
     return (
         <div className={formWrapperClassName}>
-            <p className="sr-only" id="login-form-description">
+            <p className="sr-only" id={descriptionId}>
                 {t('Login form for logging in to your account. Please fill in your email address and password.')}
             </p>
 
@@ -84,7 +85,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                                 required: true,
                                 type: 'email',
                                 autoComplete: 'email',
-                                'aria-describedby': 'login-form-description',
+                                'aria-describedby': descriptionId,
                             }}
                         />
 

@@ -11,7 +11,7 @@ export const NavigationItemContent: FC<NavigationItemContentProps> = ({ isDropdo
     <>
         {name}
         {isDropdownTrigger && (
-            <div
+            <span
                 className={twJoin(
                     'ml-1 flex items-start motion-safe:transition-transform motion-safe:duration-200',
                     isMenuOpened && 'rotate-180',
@@ -19,11 +19,11 @@ export const NavigationItemContent: FC<NavigationItemContentProps> = ({ isDropdo
             >
                 <ArrowIcon
                     className={twJoin(
-                        'size-5 text-link-inverted-default transition',
+                        'size-6 text-link-inverted-default transition',
                         isMenuOpened && 'group-hover:text-link-inverted-hovered',
                     )}
                 />
-            </div>
+            </span>
         )}
     </>
 );

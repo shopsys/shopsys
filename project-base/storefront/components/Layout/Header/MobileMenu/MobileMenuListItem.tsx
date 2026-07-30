@@ -19,7 +19,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ isHidden, navi
         return (
             <button
                 aria-expanded="false"
-                className="flex w-full cursor-pointer items-center justify-between rounded-none py-4 text-left font-secondary font-semibold text-base text-text-default"
+                className="flex min-h-12 w-full cursor-pointer items-center justify-between rounded-md bg-background-more px-3 py-3 text-left font-secondary font-semibold text-base text-text-default transition-colors hover:bg-background-most active:bg-background-most"
                 tabIndex={isHidden ? -1 : 0}
                 title={t('Open submenu')}
                 type="button"
@@ -38,7 +38,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ isHidden, navi
     if (navigationItem.isViewAllLink) {
         return (
             <ExtendedNextLink
-                className="inline-flex w-full items-center justify-center gap-1.5 rounded-sm py-5 font-secondary font-semibold text-link-default text-sm no-underline"
+                className="mt-2 inline-flex w-full items-center gap-1.5 rounded-none border-border-less border-t px-2 pt-4 font-secondary font-semibold text-link-default text-sm no-underline hover:underline"
                 href={navigationItem.link}
                 skeletonType={DEFAULT_SKELETON_TYPE}
                 tabIndex={isHidden ? -1 : undefined}
@@ -52,7 +52,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ isHidden, navi
 
     return (
         <ExtendedNextLink
-            className="block rounded-none py-4 font-secondary font-semibold text-base text-text-default no-underline"
+            className="flex min-h-12 w-full items-center rounded-md bg-background-more px-3 py-3 font-secondary font-semibold text-base text-text-default no-underline transition-colors hover:bg-background-most hover:text-text-default hover:no-underline active:bg-background-most"
             href={navigationItem.link}
             skeletonType={DEFAULT_SKELETON_TYPE}
             tabIndex={isHidden ? -1 : undefined}

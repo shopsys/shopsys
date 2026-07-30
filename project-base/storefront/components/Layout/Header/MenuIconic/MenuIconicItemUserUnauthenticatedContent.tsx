@@ -15,12 +15,15 @@ type MenuIconicItemUserUnauthenticatedContentProps = {
 };
 
 type RegistrationBenefitsProps = {
+    idPrefix: string;
     registrationUrl: string;
     onMenuClose: () => void;
 };
 
-const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ registrationUrl, onMenuClose }) => {
+const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ idPrefix, registrationUrl, onMenuClose }) => {
     const { t } = useTranslation();
+    const titleId = `${idPrefix}-registration-benefits-title`;
+    const listId = `${idPrefix}-registration-benefits-list`;
     const registrationBenefits = [
         t('Faster checkout for purchases'),
         t('Simplified complaint process'),
@@ -29,14 +32,14 @@ const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ registrationUrl, 
 
     return (
         <section
-            aria-labelledby="registration-benefits-title"
+            aria-labelledby={titleId}
             className="order-2 vl:order-1 mb-auto vl:w-1/2 rounded-xl bg-background-brand-less p-5 vl:p-9 text-text-inverted"
         >
-            <h3 className="h4" id="registration-benefits-title">
+            <h3 className="h4" id={titleId}>
                 {t('Benefits of registration')}
             </h3>
 
-            <ul className="my-4 flex flex-col gap-1" id="registration-benefits-list">
+            <ul className="my-4 flex flex-col gap-1" id={listId}>
                 {registrationBenefits.map((registrationBenefit) => (
                     <li key={registrationBenefit} className="flex items-start gap-2 text-text-inverted">
                         <CheckmarkIcon aria-hidden="true" className="mt-0.5 size-5 shrink-0" focusable="false" />
@@ -46,7 +49,7 @@ const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ registrationUrl, 
             </ul>
 
             <LinkButton
-                aria-describedby="registration-benefits-list"
+                aria-describedby={listId}
                 aria-label={t('Register. Go to registration page', { ns: 'accessibility' })}
                 href={registrationUrl}
                 size="large"
@@ -75,7 +78,11 @@ export const MenuIconicItemUserUnauthenticatedContent: FC<MenuIconicItemUserUnau
 
     return (
         <div className="flex w-full vl:flex-row flex-col gap-8 vl:p-5 text-left" ref={contentRef}>
-            <RegistrationBenefits registrationUrl={registrationUrl} onMenuClose={onMenuClose} />
+            <RegistrationBenefits
+                idPrefix={loginFormName}
+                registrationUrl={registrationUrl}
+                onMenuClose={onMenuClose}
+            />
 
             <div className="order-1 vl:order-2 vl:w-91 w-full">
                 <h3 className="h4 mb-5">{t('Log in to your account')}</h3>

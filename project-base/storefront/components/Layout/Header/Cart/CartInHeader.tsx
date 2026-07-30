@@ -78,7 +78,6 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                 data-tid={TIDs.header_cart}
                 role="button"
                 tabIndex={!cart?.items.length ? -1 : 0}
-                title={t('Cart')}
                 className={twMergeCustom(
                     'group relative vl:flex outline-hidden',
                     isActive && 'z-aboveOverlay',

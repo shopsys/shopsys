@@ -157,7 +157,7 @@ type MenuIconicItemUserPopoverProps = {
 export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
     isHovered,
     isAuthenticated,
-    topClassName = 'top-[54px]',
+    topClassName = 'top-13.5',
     children,
 }) => {
     const isDesktop = useMediaMin('vl');
@@ -167,8 +167,8 @@ export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
     }
 
     const positionClasses = isAuthenticated
-        ? '-right-[100%] min-w-[355px]'
-        : 'right-0 max-w-[335px] lg:right-[-180px] lg:min-w-[740px] vl:min-w-[807px]';
+        ? '-right-full min-w-88.75'
+        : 'right-0 max-w-83.75 lg:-right-45 lg:min-w-185 vl:min-w-201.75';
 
     return (
         <AnimatePresence initial={false}>

@@ -81,7 +81,7 @@ export const MobileBottomNavigation: FC = () => {
         <>
             <nav
                 aria-label={t('Mobile bottom navigation', { ns: 'accessibility' })}
-                className="fixed right-0 -bottom-px left-0 z-overlay vl:hidden bg-brand-700 p-1 pb-[calc(0.25rem+env(safe-area-inset-bottom)+1px)]"
+                className="fixed right-0 -bottom-px left-0 z-overlay vl:hidden bg-background-brand p-1 pb-[calc(0.25rem+env(safe-area-inset-bottom)+1px)] shadow-[0_-8px_24px_rgba(0,0,0,0.35)]"
             >
                 <ul className="grid grid-cols-5">
                     <MobileBottomNavigationLink href={homeUrl} icon={HomeIcon} label={t('Home')} />
@@ -89,7 +89,7 @@ export const MobileBottomNavigation: FC = () => {
                     <MobileBottomNavigationButton
                         icon={UserIcon}
                         isExpanded={openPanel === 'account'}
-                        label={isUserLoggedIn ? t('My account') : t('Account')}
+                        label={t('Account')}
                         onClick={() => togglePanel('account')}
                     >
                         {isUserLoggedIn && (

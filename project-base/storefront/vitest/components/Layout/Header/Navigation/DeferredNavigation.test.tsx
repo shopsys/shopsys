@@ -3,28 +3,45 @@ import { DeferredNavigation } from 'components/Layout/Header/Navigation/Deferred
 import type { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-const { navigationRenderMock, useDeferredRenderMock } = vi.hoisted(() => ({
-    navigationRenderMock: vi.fn(),
-    useDeferredRenderMock: vi.fn(),
-}));
+const { navigationModulePromise, navigationRenderMock, resolveNavigationModule, useDeferredRenderMock } = vi.hoisted(
+    () => {
+        let resolveNavigationModulePromise: () => void;
+        const navigationModulePromise = new Promise<void>((resolve) => {
+            resolveNavigationModulePromise = resolve;
+        });
+
+        return {
+            navigationModulePromise,
+            navigationRenderMock: vi.fn(),
+            resolveNavigationModule: () => resolveNavigationModulePromise(),
+            useDeferredRenderMock: vi.fn(),
+        };
+    },
+);
 
 vi.mock('utils/useDeferredRender', () => ({
     useDeferredRender: useDeferredRenderMock,
 }));
 
 vi.mock('components/Layout/Header/Navigation/NavigationPlaceholder', () => ({
-    NavigationPlaceholder: () => <div>Navigation placeholder</div>,
+    NavigationPlaceholder: ({ navigation }: { navigation?: Array<{ name: string }> }) => (
+        <div>{navigation?.[0]?.name ?? 'Navigation skeleton'}</div>
+    ),
 }));
 
-vi.mock('components/Layout/Header/Navigation/Navigation', () => ({
-    Navigation: () => {
-        navigationRenderMock();
+vi.mock('components/Layout/Header/Navigation/Navigation', async () => {
+    await navigationModulePromise;
 
-        return <div>Desktop navigation</div>;
-    },
-}));
+    return {
+        Navigation: () => {
+            navigationRenderMock();
 
-const navigation = [{} as TypeCategoriesByColumnFragment];
+            return <div>Desktop navigation</div>;
+        },
+    };
+});
+
+const navigation = [{ name: 'Catalog' } as TypeCategoriesByColumnFragment];
 
 describe('DeferredNavigation', () => {
     beforeEach(() => {
@@ -36,7 +53,7 @@ describe('DeferredNavigation', () => {
     test('keeps navigation unmounted on mobile after the deferred wave', () => {
         render(<DeferredNavigation isDesktop={false} navigation={navigation} />);
 
-        expect(screen.queryByText('Navigation placeholder')).not.toBeInTheDocument();
+        expect(screen.queryByText('Catalog')).not.toBeInTheDocument();
         expect(screen.queryByText('Desktop navigation')).not.toBeInTheDocument();
         expect(navigationRenderMock).not.toHaveBeenCalled();
         expect(useDeferredRenderMock).not.toHaveBeenCalled();
@@ -45,7 +62,7 @@ describe('DeferredNavigation', () => {
     test('renders the placeholder before the viewport is recognized', () => {
         render(<DeferredNavigation navigation={navigation} />);
 
-        expect(screen.getByText('Navigation placeholder')).toBeInTheDocument();
+        expect(screen.getByText('Catalog')).toBeInTheDocument();
         expect(useDeferredRenderMock).not.toHaveBeenCalled();
     });
 
@@ -54,12 +71,18 @@ describe('DeferredNavigation', () => {
 
         render(<DeferredNavigation isDesktop navigation={navigation} />);
 
-        expect(screen.getByText('Navigation placeholder')).toBeInTheDocument();
+        expect(screen.getByText('Catalog')).toBeInTheDocument();
         expect(navigationRenderMock).not.toHaveBeenCalled();
     });
 
-    test('mounts desktop navigation after the deferred wave', async () => {
+    test('keeps navigation labels visible while loading the interactive navigation', async () => {
         render(<DeferredNavigation isDesktop navigation={navigation} />);
+
+        expect(screen.getByText('Catalog')).toBeInTheDocument();
+        expect(screen.queryByText('Navigation skeleton')).not.toBeInTheDocument();
+        expect(screen.queryByText('Desktop navigation')).not.toBeInTheDocument();
+
+        resolveNavigationModule();
 
         expect(await screen.findByText('Desktop navigation')).toBeInTheDocument();
         expect(navigationRenderMock).toHaveBeenCalledOnce();
