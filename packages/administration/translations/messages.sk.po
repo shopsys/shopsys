@@ -25,6 +25,9 @@ msgstr "%defaultCurrency% za jednotku"
 msgid "%entityName% (%entityIdentifier%)"
 msgstr "%entityName% (%entityIdentifier%)"
 
+msgid "2FA"
+msgstr "2FA"
+
 msgid "<a href=\"%url%\">Go back</a> to login page."
 msgstr "<a href=\"%url%\">Späť</a> na prihlasovaciu stránku."
 
@@ -943,6 +946,9 @@ msgstr "E-maily budú odoslané iba na adresy, ktoré zodpovedajú aspoň jedné
 msgid "Enable"
 msgstr "Povoliť"
 
+msgid "Enable two factor authentication"
+msgstr "Zapnúť dvojfaktorové overovanie"
+
 msgid "Enable two factor authentication via email"
 msgstr "Zapnúť dvojfaktorové overovanie pomocou e-mailu"
 
@@ -1851,6 +1857,9 @@ msgstr "Nahradiť súbor"
 
 msgid "Request a one-time passcode by email"
 msgstr "Požiadať o jednorazový prístupový kód e-mailom"
+
+msgid "Request authentication code"
+msgstr "Vyžiadajte si overovací kód"
 
 msgid "Requested at"
 msgstr "Vyžiadané dňa"

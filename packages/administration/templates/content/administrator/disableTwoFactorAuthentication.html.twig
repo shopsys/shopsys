@@ -10,7 +10,7 @@
     <div class="card card-md">
         <div class="card-body">
             {% if administrator.emailAuthEnabled %}
-                <h2 class="card-title mb-2">1. {{ 'Request authentication code' }}</h2>
+                <h2 class="card-title mb-2">1. {{ 'Request authentication code'|trans }}</h2>
                 <div class="mb-3">
                     {{ form(formSendEmail) }}
                 </div>
