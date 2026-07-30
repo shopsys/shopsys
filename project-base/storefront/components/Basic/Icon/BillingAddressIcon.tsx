@@ -1,11 +1,23 @@
 export const BillingAddressIcon: SvgFC = ({ ...props }) => (
-    <svg {...props} fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+    <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
-            d="M35 22H25M35 30H25M35 14H25M18 6L18 42M15.6 6H32.4C35.7603 6 37.4405 6 38.7239 6.65396C39.8529 7.2292 40.7708 8.14708 41.346 9.27606C42 10.5595 42 12.2397 42 15.6V32.4C42 35.7603 42 37.4405 41.346 38.7239C40.7708 39.8529 39.8529 40.7708 38.7239 41.346C37.4405 42 35.7603 42 32.4 42H15.6C12.2397 42 10.5595 42 9.27606 41.346C8.14708 40.7708 7.2292 39.8529 6.65396 38.7239C6 37.4405 6 35.7603 6 32.4V15.6C6 12.2397 6 10.5595 6.65396 9.27606C7.2292 8.14708 8.14708 7.2292 9.27606 6.65396C10.5595 6 12.2397 6 15.6 6Z"
+            d="M20 9V4.49752C20 4.11947 19.7868 3.77374 19.449 3.604L18.459 3.10648C18.1785 2.96552 17.8481 2.96446 17.5667 3.10361L15.9942 3.8812L14.4533 3.10713C14.172 2.96581 13.8406 2.96521 13.5588 3.10551L12 3.88151L10.4412 3.10551C10.1594 2.96521 9.82799 2.96581 9.54668 3.10713L8.00578 3.8812L6.4333 3.10361C6.15191 2.96446 5.82151 2.96552 5.54102 3.10648L4.55102 3.604C4.21321 3.77374 4.00001 4.11947 4 4.49752V20C4 20.5523 4.44772 21 5 21H9"
             stroke="currentColor"
+            strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="2"
         />
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M21 19.5V16.3597C21 15.904 20.7928 15.473 20.437 15.1884L18.2493 13.4383C17.5189 12.8539 16.481 12.8539 15.7506 13.4383L13.563 15.1884C13.2072 15.473 13 15.904 13 16.3597V19.5C13 20.3284 13.6716 21 14.5 21H19.5C20.3284 21 21 20.3284 21 19.5Z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path d="M8 9H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9 15H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8 12H12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );

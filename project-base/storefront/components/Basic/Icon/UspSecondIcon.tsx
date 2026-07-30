@@ -1,56 +1,56 @@
-export const DocumentIcon: SvgFC = (props) => (
+export const UspSecondIcon: SvgFC = (props) => (
     <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M18.414 6.414L15.586 3.586C15.211 3.211 14.702 3 14.172 3H7C5.895 3 5 3.895 5 5V19C5 20.105 5.895 21 7 21H17C18.105 21 19 20.105 19 19V7.828C19 7.298 18.789 6.789 18.414 6.414V6.414Z"
+            d="M18.704 18.296C19.323 18.915 19.323 19.918 18.704 20.536C18.085 21.155 17.082 21.155 16.464 20.536C15.845 19.917 15.845 18.914 16.464 18.296C17.083 17.677 18.086 17.677 18.704 18.296"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
         <path
-            d="M19 8H15C14.448 8 14 7.552 14 7V3"
+            d="M7.704 18.296C8.323 18.915 8.323 19.918 7.704 20.536C7.085 21.155 6.082 21.155 5.464 20.536C4.846 19.917 4.845 18.914 5.464 18.296C6.083 17.678 7.085 17.677 7.704 18.296"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
         <path
-            d="M16 11.12H11.25"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-        <path d="M16 14H11.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path
-            d="M16 16.88H11.25"
+            d="M10 4H14C14.552 4 15 4.448 15 5V15H2"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
         <path
-            d="M8.125 11C8.056 11 8 11.056 8 11.125C8 11.194 8.056 11.25 8.125 11.25C8.194 11.25 8.25 11.194 8.25 11.125C8.25 11.056 8.194 11 8.125 11"
+            d="M5 19.416H3C2.448 19.416 2 18.968 2 18.416V13"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
         <path
-            d="M8.125 13.875C8.056 13.875 8 13.931 8 14C8 14.069 8.056 14.125 8.125 14.125C8.194 14.125 8.25 14.069 8.25 14C8.25 13.931 8.194 13.875 8.125 13.875"
+            d="M15 7H19.323C19.732 7 20.1 7.249 20.251 7.629L21.857 11.643C21.951 11.879 22 12.131 22 12.385V18.333C22 18.885 21.552 19.333 21 19.333H19.169"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
         <path
-            d="M8.125 16.75C8.056 16.75 8 16.806 8 16.875C8 16.944 8.056 17 8.125 17C8.194 17 8.25 16.944 8.25 16.875C8.25 16.806 8.194 16.75 8.125 16.75"
+            d="M16 19.42H8.17001"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
+        <path
+            d="M22 14H18V10H21.2"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path d="M2 4H7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M2 7H5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3 10H2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );

@@ -7,23 +7,20 @@ import { StyleguideSection } from './StyleguideElements';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { BillingAddressIcon } from 'components/Basic/Icon/BillingAddressIcon';
-import { BoxPackageHandIcon } from 'components/Basic/Icon/BoxPackageHandIcon';
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
-import { CheckboxCheckedIcon } from 'components/Basic/Icon/CheckboxCheckedIcon';
 import { CheckmarkBadgeIcon } from 'components/Basic/Icon/CheckmarkBadgeIcon';
+import { CheckmarkDoneIcon } from 'components/Basic/Icon/CheckmarkDoneIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { ChevronEmptyDotIcon } from 'components/Basic/Icon/ChevronEmptyDotIcon';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
-import { CrossIcon } from 'components/Basic/Icon/CrossIcon';
-import { DocumentDeleteIcon } from 'components/Basic/Icon/DocumentDeleteIcon';
+import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformationsIcon';
+import { DeliveryAddressIcon } from 'components/Basic/Icon/DeliveryAddressIcon';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
-import { EditIcon } from 'components/Basic/Icon/EditIcon';
-import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { ExternalLinkIcon } from 'components/Basic/Icon/ExternalLinkIcon';
 import { EyeCrossedIcon } from 'components/Basic/Icon/EyeCrossedIcon';
@@ -40,45 +37,40 @@ import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { HomeIcon } from 'components/Basic/Icon/HomeIcon';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
-import { InfoInTriangleIcon } from 'components/Basic/Icon/InfoInTriangleIcon';
 import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
 import { ListIcon } from 'components/Basic/Icon/ListIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { LockCrossIcon } from 'components/Basic/Icon/LockCrossIcon';
 import { LockIcon } from 'components/Basic/Icon/LockIcon';
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
-import { MailSecondaryIcon } from 'components/Basic/Icon/MailSecondaryIcon';
-import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
+import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
 import { PackageDeliveredIcon } from 'components/Basic/Icon/PackageDeliveredIcon';
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
-import { PhoneSecondaryIcon } from 'components/Basic/Icon/PhoneSecondaryIcon';
 import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
-import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
-import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
 import { SeznamIcon } from 'components/Basic/Icon/SeznamIcon';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
-import { ThumbUp } from 'components/Basic/Icon/ThumbUp';
+import { StarIcon } from 'components/Basic/Icon/StarIcon';
+import { StoreIcon } from 'components/Basic/Icon/StoreIcon';
+import { ThumbUpIcon } from 'components/Basic/Icon/ThumbUpIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
-import { TriangleIcon } from 'components/Basic/Icon/TriangleIcon';
 import { TruckClockIcon } from 'components/Basic/Icon/TruckClockIcon';
-import { UpsFifthIcon } from 'components/Basic/Icon/UpsFifthIcon';
-import { UpsFirstIcon } from 'components/Basic/Icon/UpsFirstIcon';
-import { UpsFourthIcon } from 'components/Basic/Icon/UpsFourthIcon';
-import { UpsSecondIcon } from 'components/Basic/Icon/UpsSecondIcon';
-import { UpsThirdIcon } from 'components/Basic/Icon/UpsThirdIcon';
+import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
-import { UserProfileCardsIcon } from 'components/Basic/Icon/UserProfileCardsIcon';
+import { UspFifthIcon } from 'components/Basic/Icon/UspFifthIcon';
+import { UspFirstIcon } from 'components/Basic/Icon/UspFirstIcon';
+import { UspFourthIcon } from 'components/Basic/Icon/UspFourthIcon';
+import { UspSecondIcon } from 'components/Basic/Icon/UspSecondIcon';
+import { UspThirdIcon } from 'components/Basic/Icon/UspThirdIcon';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
-import { WarehouseBoxPackageIcon } from 'components/Basic/Icon/WarehouseBoxPackageIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
+import { WithdrawalIcon } from 'components/Basic/Icon/WithdrawalIcon';
 import { YoutubeIcon } from 'components/Basic/Icon/YoutubeIcon';
 
 export const StyleguideIcons = () => (
@@ -97,10 +89,6 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">BillingAddressIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <BoxPackageHandIcon className="size-10" />
-                <span className="text-center text-xs break-all">BoxPackageHandIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <CartIcon className="size-10" />
                 <span className="text-center text-xs break-all">CartIcon</span>
             </div>
@@ -109,12 +97,12 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">ChatIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <CheckboxCheckedIcon className="size-10" />
-                <span className="text-center text-xs break-all">CheckboxCheckedIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <CheckmarkBadgeIcon className="size-10" />
                 <span className="text-center text-xs break-all">CheckmarkBadgeIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <CheckmarkDoneIcon className="size-10" />
+                <span className="text-center text-xs break-all">CheckmarkDoneIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <CheckmarkIcon className="size-10" />
@@ -141,12 +129,12 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">ComplaintsIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <CrossIcon className="size-10" />
-                <span className="text-center text-xs break-all">CrossIcon</span>
+                <ContactInformationsIcon className="size-10" />
+                <span className="text-center text-xs break-all">ContactInformationsIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <DocumentDeleteIcon className="size-10" />
-                <span className="text-center text-xs break-all">DocumentDeleteIcon</span>
+                <DeliveryAddressIcon className="size-10" />
+                <span className="text-center text-xs break-all">DeliveryAddressIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <DocumentIcon className="size-10" />
@@ -155,14 +143,6 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <DownloadIcon className="size-10" />
                 <span className="text-center text-xs break-all">DownloadIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <EditIcon className="size-10" />
-                <span className="text-center text-xs break-all">EditIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <EmptyCartIcon className="size-10" />
-                <span className="text-center text-xs break-all">EmptyCartIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <ExitIcon className="size-10" />
@@ -229,10 +209,6 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">InfoIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <InfoInTriangleIcon className="size-10" />
-                <span className="text-center text-xs break-all">InfoInTriangleIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <InstagramIcon className="size-10" />
                 <span className="text-center text-xs break-all">InstagramIcon</span>
             </div>
@@ -257,20 +233,16 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">MailIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <MailSecondaryIcon className="size-10" />
-                <span className="text-center text-xs break-all">MailSecondaryIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <MarkerIcon className="size-10" />
-                <span className="text-center text-xs break-all">MarkerIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <MenuIcon className="size-10" />
                 <span className="text-center text-xs break-all">MenuIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <MinusIcon className="size-10" />
                 <span className="text-center text-xs break-all">MinusIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <OrderIcon className="size-10" />
+                <span className="text-center text-xs break-all">OrderIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <PackageDeliveredIcon className="size-10" />
@@ -281,10 +253,6 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">PhoneIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <PhoneSecondaryIcon className="size-10" />
-                <span className="text-center text-xs break-all">PhoneSecondaryIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <PlayIcon className="size-10" />
                 <span className="text-center text-xs break-all">PlayIcon</span>
             </div>
@@ -293,20 +261,8 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">PlusIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <RemoveBoldIcon className="size-10" />
-                <span className="text-center text-xs break-all">RemoveBoldIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <RemoveIcon className="size-10" />
-                <span className="text-center text-xs break-all">RemoveIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <SearchIcon className="size-10" />
                 <span className="text-center text-xs break-all">SearchIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <SearchListIcon className="size-10" />
-                <span className="text-center text-xs break-all">SearchListIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <SeznamIcon className="size-10" />
@@ -321,48 +277,52 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">SpinnerIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ThumbUp className="size-10" />
-                <span className="text-center text-xs break-all">ThumbUp</span>
+                <StarIcon className="size-10" />
+                <span className="text-center text-xs break-all">StarIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <StoreIcon className="size-10" />
+                <span className="text-center text-xs break-all">StoreIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <ThumbUpIcon className="size-10" />
+                <span className="text-center text-xs break-all">ThumbUpIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <TrashCanIcon className="size-10" />
                 <span className="text-center text-xs break-all">TrashCanIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <TriangleIcon className="size-10" />
-                <span className="text-center text-xs break-all">TriangleIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <TruckClockIcon className="size-10" />
                 <span className="text-center text-xs break-all">TruckClockIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UpsFifthIcon className="size-10" />
-                <span className="text-center text-xs break-all">UpsFifthIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UpsFirstIcon className="size-10" />
-                <span className="text-center text-xs break-all">UpsFirstIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UpsFourthIcon className="size-10" />
-                <span className="text-center text-xs break-all">UpsFourthIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UpsSecondIcon className="size-10" />
-                <span className="text-center text-xs break-all">UpsSecondIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UpsThirdIcon className="size-10" />
-                <span className="text-center text-xs break-all">UpsThirdIcon</span>
+                <UserEditIcon className="size-10" />
+                <span className="text-center text-xs break-all">UserEditIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <UserIcon className="size-10" />
                 <span className="text-center text-xs break-all">UserIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UserProfileCardsIcon className="size-10" />
-                <span className="text-center text-xs break-all">UserProfileCardsIcon</span>
+                <UspFifthIcon className="size-10" />
+                <span className="text-center text-xs break-all">UspFifthIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <UspFirstIcon className="size-10" />
+                <span className="text-center text-xs break-all">UspFirstIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <UspFourthIcon className="size-10" />
+                <span className="text-center text-xs break-all">UspFourthIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <UspSecondIcon className="size-10" />
+                <span className="text-center text-xs break-all">UspSecondIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <UspThirdIcon className="size-10" />
+                <span className="text-center text-xs break-all">UspThirdIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <VariantIcon className="size-10" />
@@ -373,16 +333,16 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">WalletIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <WarehouseBoxPackageIcon className="size-10" />
-                <span className="text-center text-xs break-all">WarehouseBoxPackageIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <WarningIcon className="size-10" />
                 <span className="text-center text-xs break-all">WarningIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <WatchdogIcon className="size-10" />
                 <span className="text-center text-xs break-all">WatchdogIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <WithdrawalIcon className="size-10" />
+                <span className="text-center text-xs break-all">WithdrawalIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <YoutubeIcon className="size-10" />

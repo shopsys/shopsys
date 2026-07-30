@@ -1,70 +1,69 @@
-export const TruckClockIcon: SvgFC = (props) => (
+export const UspFirstIcon: SvgFC = (props) => (
     <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
-            d="M22 13.9959H18.5C18.2239 13.9959 18 13.7721 18 13.4959V9.99591H21.2"
+            d="M14.0008 19.9123H21.0037"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
         <path
-            d="M18.5566 18.4393C18.9856 18.8683 19.114 19.5135 18.8819 20.074C18.6497 20.6345 18.1028 21 17.4961 21C16.8894 21.0001 16.3424 20.6346 16.1102 20.0741C15.878 19.5136 16.0063 18.8684 16.4353 18.4394L16.4354 18.4393C17.0212 17.8536 17.9708 17.8536 18.5566 18.4393V18.4393"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-        <path
-            d="M7.55662 18.4393C7.98564 18.8683 8.11401 19.5135 7.88186 20.074C7.64972 20.6345 7.10279 21 6.49609 21C5.8894 21.0001 5.34243 20.6346 5.11023 20.0741C4.87803 19.5136 5.00633 18.8684 5.4353 18.4394V18.4394L5.4356 18.4391C6.02125 17.8535 6.97078 17.8535 7.55643 18.4391L7.5566 18.4393V18.4393"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-        <path
-            d="M16.0815 19H7.91046"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-        <path
-            d="M18.9104 19H21C21.5523 19 22 18.5523 22 18V12.3813C22 12.127 21.9515 11.875 21.857 11.6389L20.5023 8.25302C20.1985 7.49377 19.4632 6.99592 18.6454 6.99591H15"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-        <path
-            d="M5.08159 19H3C2.44772 19 2 18.5523 2 18V12"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-        <path
-            d="M2 14.9959H14C14.5523 14.9959 15 14.5482 15 13.9959V5.99591C15 5.44363 14.5523 4.99591 14 4.99591H13"
+            d="M7.99832 16.752L6.11954 18.6277L4.99707 17.5023"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
         <circle
-            cx="6"
-            cy="6"
-            r="4"
+            cx="6.49769"
+            cy="17.5019"
+            r="4.50187"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
         <path
-            d="M5.75 4.65002V6.25002"
+            d="M19.7832 9.77734V19.9116"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
-        <path d="M5.75 6.25L7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+            d="M13.0004 13H16.0017V16.0013H14.0008"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M4.24975 9.77538V9.77538C3.46709 9.77538 2.74061 9.36881 2.33126 8.70173C1.92191 8.03465 1.88846 7.20282 2.24292 6.50502L3.97864 3.0886C4.31983 2.41713 5.0092 1.99414 5.76238 1.99414H18.2376C18.9908 1.99414 19.6801 2.41713 20.0213 3.0886L21.757 6.50502C22.1115 7.20282 22.0781 8.03465 21.6687 8.70173C21.2594 9.36881 20.5329 9.77538 19.7502 9.77538V9.77538"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M14.5831 9.77634C16.0085 9.77689 17.1649 8.62269 17.1671 7.19727C17.1671 7.88234 17.4393 8.53936 17.9237 9.02378C18.4081 9.5082 19.0651 9.78034 19.7502 9.78034"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M9.41592 9.77634C10.8413 9.77689 11.9978 8.62269 12 7.19727C12 8.62386 13.1565 9.78034 14.5831 9.78034"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M4.24878 9.77634C5.6742 9.77689 6.83065 8.62269 6.83286 7.19727C6.83506 8.6223 7.9909 9.77634 9.41593 9.77634"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
     </svg>
 );

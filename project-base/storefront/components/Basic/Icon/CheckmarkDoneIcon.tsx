@@ -1,14 +1,14 @@
-export const UserIcon: SvgFC = (props) => (
+export const CheckmarkDoneIcon: SvgFC = (props) => (
     <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
-            d="M5 20C5 17.5 7 15.6 9.4 15.6H14.5C17 15.6 18.9 17.6 18.9 20"
+            d="M19.4671 6.68604L12 14.1261L8.96173 11.0879"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
         />
         <path
-            d="M15 5.2C16.7 6.9 16.7 9.6 15 11.2C13.3 12.8 10.6 12.9 9.00001 11.2C7.40001 9.5 7.30001 6.8 9.00001 5.2C10.7 3.6 13.3 3.6 15 5.2"
+            d="M20.2874 10.1165C21.1954 14.1092 19.1291 18.182 15.3708 19.8072C11.6126 21.4324 7.22978 20.1485 4.94251 16.7523C2.65524 13.3561 3.11308 8.81214 6.03188 5.9405C8.95069 3.06886 13.5015 2.6851 16.86 5.02739"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"

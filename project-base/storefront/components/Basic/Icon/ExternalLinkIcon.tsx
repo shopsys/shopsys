@@ -1,16 +1,11 @@
 export const ExternalLinkIcon: SvgFC = (props) => (
-    <svg
-        {...props}
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-    >
-        <path d="M12 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-6" />
-        <path d="M11 13l9-9" />
-        <path d="M15 4h5v5" />
+    <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path d="M12 12L21 3V10V3H14" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+            d="M9 3H5C3.895 3 3 3.895 3 5V19C3 20.105 3.895 21 5 21H19C20.105 21 21 20.105 21 19V15"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
     </svg>
 );
