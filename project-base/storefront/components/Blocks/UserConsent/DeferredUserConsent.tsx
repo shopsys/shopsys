@@ -9,6 +9,7 @@ const UserConsent = dynamic(
         ssr: false,
     },
 );
+
 export const DeferredUserConsent: FC<{ url: string }> = ({ url }) => {
     const [settingsQueryResponse] = useSettingsQuery();
     const shouldRender = useDeferredRender('user_consent');
