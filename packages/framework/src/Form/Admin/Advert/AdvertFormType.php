@@ -144,9 +144,7 @@ final class AdvertFormType extends AbstractType
                 'image_entity_class' => Advert::class,
                 'image_type' => AdvertFacade::IMAGE_TYPE_WEB,
                 'file_constraints' => [
-                    new Constraints\Image(
-                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                    new Constraints\File(
                         maxSize: '15M',
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
@@ -164,9 +162,7 @@ final class AdvertFormType extends AbstractType
                 'image_entity_class' => Advert::class,
                 'image_type' => AdvertFacade::IMAGE_TYPE_MOBILE,
                 'file_constraints' => [
-                    new Constraints\Image(
-                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                    new Constraints\File(
                         maxSize: '15M',
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',

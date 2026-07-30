@@ -82,12 +82,10 @@ final class BlogArticleAuthorFormType extends AbstractType
                 'required' => false,
                 'image_entity_class' => BlogArticleAuthor::class,
                 'file_constraints' => [
-                    new Constraints\Image(
+                    new Constraints\File(
                         maxSize: '2M',
-                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
                     ),
                 ],
                 'entity' => $blogArticleAuthor,

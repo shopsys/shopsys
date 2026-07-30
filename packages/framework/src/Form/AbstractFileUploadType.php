@@ -85,6 +85,10 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
             ->add('uploadedFiles', CollectionType::class, [
                 'entry_type' => HiddenType::class,
                 'allow_add' => true,
+                'entry_options' => [
+                    // keep errors on the entry so they can be displayed at the corresponding uploaded file
+                    'error_bubbling' => false,
+                ],
                 'constraints' => [
                     new Constraints\Callback(
                         callback: [$this, 'validateUploadedFiles'],
@@ -119,7 +123,7 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
         ExecutionContextInterface $context,
         array $fileConstraints,
     ): void {
-        foreach ($uploadedFiles as $uploadedFile) {
+        foreach ($uploadedFiles as $key => $uploadedFile) {
             $filepath = $this->fileUpload->getTemporaryFilepath($uploadedFile);
             $file = new File($filepath, false);
 
@@ -127,7 +131,10 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
             $violations = $validator->validate($file, $fileConstraints);
 
             foreach ($violations as $violation) {
-                $context->addViolation($violation->getMessageTemplate(), $violation->getParameters());
+                $context->buildViolation($violation->getMessageTemplate())
+                    ->setParameters($violation->getParameters())
+                    ->atPath('[' . $key . ']')
+                    ->addViolation();
             }
         }
     }

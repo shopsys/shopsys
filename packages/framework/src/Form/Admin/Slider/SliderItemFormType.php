@@ -116,18 +116,16 @@ final class SliderItemFormType extends AbstractType
                 'constraints' => $imageConstraints,
                 'image_entity_class' => SliderItem::class,
                 'file_constraints' => [
-                    new Constraints\Image(
-                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
-                        mimeTypesMessage: 'Image can be only in JPG or PNG format',
+                    new Constraints\File(
                         maxSize: '2M',
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                        extensions: [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
                     ),
                 ],
                 'label' => 'Upload image',
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
-                'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
                 'hide_delete_button' => $options['scenario'] === self::SCENARIO_EDIT,
             ]);
 

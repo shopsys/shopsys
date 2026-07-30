@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
-use Shopsys\FrameworkBundle\Form\Constraints\FileAllowedExtension;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -22,7 +21,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints;
 
 final class ImageUploadType extends AbstractType
 {
@@ -42,20 +41,20 @@ final class ImageUploadType extends AbstractType
             'image_type' => null,
             'multiple' => null,
             'image_entity_class' => null,
-            'extensions' => ImageProcessor::SUPPORTED_EXTENSIONS,
             'hide_delete_button' => false,
         ]);
 
         $resolver->setNormalizer(
             'file_constraints',
             function (Options $options, $fileConstraints) {
-                if ($options['extensions'] === null || $options['extensions'] === []) {
+                // ensure the image format is always validated, unless the formats are restricted by an own File constraint
+                if ($this->getExtensionsFromFileConstraints($fileConstraints) !== []) {
                     return $fileConstraints;
                 }
 
                 return array_merge(
                     [
-                        new FileAllowedExtension(extensions: $options['extensions']),
+                        new Constraints\File(extensions: ImageProcessor::SUPPORTED_EXTENSIONS),
                     ],
                     $fileConstraints,
                 );
@@ -92,13 +91,7 @@ final class ImageUploadType extends AbstractType
             'choice_label' => 'filename',
             'choice_value' => 'id',
         ])
-        ->add('file', FileType::class, [
-            'multiple' => $this->isMultiple($options),
-            'mapped' => false,
-            'attr' => [
-                'accept' => ImageProcessor::SUPPORTED_IMAGE_MIME_TYPES,
-            ],
-        ]);
+        ->add('file', FileType::class, $this->getFileFieldOptions($options));
 
         $builder
             ->add('uploadedFilenames', CollectionType::class, [
@@ -108,7 +101,7 @@ final class ImageUploadType extends AbstractType
                     'label' => '',
                     'entry_options' => [
                         'constraints' => [
-                            new Assert\Length(
+                            new Constraints\Length(
                                 max: 245,
                                 maxMessage: 'File name cannot be longer than {{ limit }} characters',
                             ),
@@ -124,7 +117,7 @@ final class ImageUploadType extends AbstractType
                         'label' => false,
                         'entry_options' => [
                             'constraints' => [
-                                new Assert\Length(
+                                new Constraints\Length(
                                     max: 245,
                                     maxMessage: 'File name cannot be longer than {{ limit }} characters',
                                 ),
@@ -133,6 +126,44 @@ final class ImageUploadType extends AbstractType
                     ],
                 ]),
             );
+    }
+
+    /**
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>
+     */
+    private function getFileFieldOptions(array $options): array
+    {
+        $extensions = [];
+
+        // File::$extensions supports both a plain list and the associative "extension => mime type(s)" form
+        foreach ($this->getExtensionsFromFileConstraints($options['file_constraints']) as $extension => $mimeTypes) {
+            $extensions[] = is_string($extension) ? $extension : $mimeTypes;
+        }
+
+        return [
+            'multiple' => $this->isMultiple($options),
+            'mapped' => false,
+            'attr' => [
+                // hint the browser's file picker with the same extensions the validation allows
+                'accept' => '.' . implode(',.', $extensions),
+            ],
+        ];
+    }
+
+    /**
+     * @param array<\Symfony\Component\Validator\Constraint> $fileConstraints
+     * @return array<int|string, string|array<string>>
+     */
+    private function getExtensionsFromFileConstraints(array $fileConstraints): array
+    {
+        foreach ($fileConstraints as $fileConstraint) {
+            if ($fileConstraint instanceof Constraints\File && (array)$fileConstraint->extensions !== []) {
+                return (array)$fileConstraint->extensions;
+            }
+        }
+
+        return [];
     }
 
     /**

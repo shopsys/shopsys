@@ -4,9 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Image can be only in JPG or PNG format"
-msgstr ""
-
 msgid "Please enter GTM ID"
 msgstr ""
 

@@ -17,7 +17,6 @@ class ImageProcessor
     public const string EXTENSION_GIF = 'gif';
     public const string EXTENSION_SVG = 'svg';
     public const array SUPPORTED_EXTENSIONS = [self::EXTENSION_JPG, self::EXTENSION_JPEG, self::EXTENSION_GIF, self::EXTENSION_PNG];
-    public const string SUPPORTED_IMAGE_MIME_TYPES = 'image/jpeg|image/gif|image/png';
 
     /**
      * @var string[]

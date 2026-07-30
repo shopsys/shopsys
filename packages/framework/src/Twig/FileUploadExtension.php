@@ -29,15 +29,15 @@ class FileUploadExtension extends AbstractExtension
     public function getLabelByTemporaryFilename(string $temporaryFilename): string
     {
         $filename = $this->fileUpload->getOriginalFilenameByTemporary($temporaryFilename);
-        $filepath = $this->fileUpload->getTemporaryDirectory() . '/' . $temporaryFilename;
+        $filesizeInBytes = $this->fileUpload->getTemporaryFilesize($temporaryFilename);
 
-        if (file_exists($filepath) && is_file($filepath) && is_writable($filepath)) {
-            $fileSize = round((int)filesize($filepath) / 1000 / 1000, 2); // https://en.wikipedia.org/wiki/Binary_prefix
+        if ($filesizeInBytes > 0) {
+            $filesizeInMegabytes = round($filesizeInBytes / 1000 / 1000, 2); // https://en.wikipedia.org/wiki/Binary_prefix
 
-            return $filename . ' (' . $fileSize . ' MB)';
+            return $filename . ' (' . $filesizeInMegabytes . ' MB)';
         }
 
-        return '';
+        return $filename;
     }
 
     public function getName(): string

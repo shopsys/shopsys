@@ -97,9 +97,6 @@ msgstr ""
 msgid "Field must contain {{ needle }}."
 msgstr ""
 
-msgid "File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}."
-msgstr ""
-
 msgid "File extension {{ value }} is too long. It should have {{ limit }} character or less."
 msgstr ""
 
@@ -131,15 +128,6 @@ msgid "IBAN cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Identification number cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Image can be only in JPG or PNG format"
-msgstr ""
-
-msgid "Image can be only in JPG, GIF or PNG format"
-msgstr ""
-
-msgid "Image can be only in PNG format"
 msgstr ""
 
 msgid "Invalid header in the CSV file. Use following columns: {{ columns }}"

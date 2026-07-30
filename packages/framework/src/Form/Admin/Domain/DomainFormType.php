@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Domain;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Symfony\Component\Form\AbstractType;
@@ -33,12 +34,11 @@ final class DomainFormType extends AbstractType
             ->add(self::FIELD_ICON, ImageUploadType::class, [
                 'required' => false,
                 'file_constraints' => [
-                    new Constraints\Image(
-                        mimeTypes: ['image/png'],
-                        mimeTypesMessage: 'Image can be only in PNG format',
+                    new Constraints\File(
                         maxSize: '2M',
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                        extensions: [ImageProcessor::EXTENSION_PNG],
                     ),
                 ],
                 'info_text' => t('The optimal size of the icon is 46x26 px. Only PNG format is allowed.'),

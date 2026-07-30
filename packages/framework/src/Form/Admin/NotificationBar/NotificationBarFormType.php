@@ -19,7 +19,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -85,9 +85,7 @@ final class NotificationBarFormType extends AbstractType
                 'image_entity_class' => NotificationBar::class,
                 'image_type' => null,
                 'file_constraints' => [
-                    new Image(
-                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        mimeTypesMessage: 'Image can be only in JPG, GIF or PNG format',
+                    new File(
                         maxSize: '15M',
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
