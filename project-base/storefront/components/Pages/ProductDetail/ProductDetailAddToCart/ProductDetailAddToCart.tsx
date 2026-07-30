@@ -1,9 +1,9 @@
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
-import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
 import { showWatchdogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
+import { SkeletonModuleProductDetailAddToCart } from 'components/Blocks/Skeleton/SkeletonModuleProductDetailAddToCart';
 import { Button, getButtonIconClassName } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
@@ -12,18 +12,23 @@ import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useRef } from 'react';
-import { useAddToCartAriaLabel } from 'utils/accessibility/useAddToCartAriaLabel';
 import { useAddToCartHandler } from 'utils/cart/useAddToCartHandler';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type ProductDetailAddToCartProps = {
+    buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
+    buttonTid?: string;
     product: TypeProductDetailFragment;
+    spinboxId?: string;
 };
 
-const BUTTON_SIZE = 'xlarge';
-
-export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
+export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
+    buttonSize = 'xlarge',
+    buttonTid = TIDs.pages_productdetail_addtocart_button,
+    product,
+    spinboxId,
+}) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
     const { canCreateOrder } = useAuthorization();
@@ -40,11 +45,11 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         isWithSpinbox: false,
     });
 
-    const { ariaLabel, onFocusHandler } = useAddToCartAriaLabel({
-        spinboxRef,
-        productName: product.name,
-        priceWithVat: product.price.priceWithVat,
-        unitName: product.unit.name,
+    const addToCartAriaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }}', {
+        ns: 'accessibility',
+        productName: product.fullName,
+        quantity: 1,
+        unit: product.unit.name,
     });
 
     if (product.isSellingDenied) {
@@ -60,7 +65,9 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     }
 
     if (product.isInquiryType) {
-        return <ProductInquiryButton buttonSize="xlarge" productName={product.fullName} productUuid={product.uuid} />;
+        return (
+            <ProductInquiryButton buttonSize={buttonSize} productName={product.fullName} productUuid={product.uuid} />
+        );
     }
 
     if (!canCreateOrder) {
@@ -68,7 +75,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     }
 
     if (isCartFetchingOrUnavailable) {
-        return <Skeleton className="h-14 w-full" />;
+        return <SkeletonModuleProductDetailAddToCart size={buttonSize} />;
     }
 
     if (cartItem) {
@@ -77,7 +84,8 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                 cartItem={cartItem}
                 gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
                 gtmProductListName={GtmProductListNameType.product_detail}
-                size={BUTTON_SIZE}
+                size={buttonSize}
+                spinboxId={spinboxId}
             />
         );
     }
@@ -92,18 +100,16 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
             <Button
                 aria-haspopup="dialog"
-                aria-label={ariaLabel}
+                aria-label={addToCartAriaLabel}
                 className="w-full whitespace-nowrap"
                 disabled={isAddingToCart}
                 hasDisabledLook={isAddingToCart}
-                size={BUTTON_SIZE}
-                tid={TIDs.pages_productdetail_addtocart_button}
-                title={t('Add to cart')}
-                variant={isWatchdogButtonVisible ? 'inverted' : 'primary'}
+                size={buttonSize}
+                tid={buttonTid}
+                variant={isWatchdogButtonVisible ? 'secondary' : 'primary'}
                 onClick={onAddToCartHandler}
-                onFocus={onFocusHandler}
             >
-                <CartIcon className={getButtonIconClassName(BUTTON_SIZE)} />
+                <CartIcon className={getButtonIconClassName(buttonSize)} />
                 {t('Add to cart')}
             </Button>
         </div>

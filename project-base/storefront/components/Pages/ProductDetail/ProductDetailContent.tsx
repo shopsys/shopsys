@@ -110,6 +110,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                     description={product.description}
                     files={product.files}
                     parameters={product.parameters}
+                    product={product}
                     relatedProducts={product.relatedProducts}
                 />
 

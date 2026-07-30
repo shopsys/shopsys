@@ -2,6 +2,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useHashNavigation } from 'utils/ui/useHashNavigation';
@@ -16,6 +17,7 @@ type ProductDetailSectionsProps = {
     parameters: TypeParameterFragment[];
     relatedProducts: TypeListedProductFragment[];
     files: TypeFileFragment[];
+    product?: TypeProductDetailFragment;
 };
 
 export const PRODUCT_DETAIL_SECTIONS_IDS = {
@@ -30,6 +32,7 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     parameters,
     relatedProducts,
     files,
+    product,
 }) => {
     const { t } = useTranslation();
 
@@ -37,6 +40,7 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     const parametersRef = useRef<HTMLDivElement>(null);
     const relatedProductsRef = useRef<HTMLDivElement>(null);
     const filesRef = useRef<HTMLDivElement>(null);
+    const stickyActionBoundaryRef = useRef<HTMLDivElement>(null);
 
     // `.filter()` only reads `isVisible`, not `ref.current`.
     const sections = [
@@ -48,12 +52,17 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
             isVisible: !!parameters.length,
         },
         {
+            id: PRODUCT_DETAIL_SECTIONS_IDS.files,
+            label: t('Files'),
+            ref: filesRef,
+            isVisible: !!files.length,
+        },
+        {
             id: PRODUCT_DETAIL_SECTIONS_IDS.relatedProducts,
             label: t('Related Products'),
             ref: relatedProductsRef,
             isVisible: !!relatedProducts.length,
         },
-        { id: PRODUCT_DETAIL_SECTIONS_IDS.files, label: t('Files'), ref: filesRef, isVisible: !!files.length },
     ].filter((section) => section.isVisible);
 
     const { scrollToSection, activeSection } = useHashNavigation(sections);
@@ -62,7 +71,9 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
         <div>
             <ProductDetailSectionNavigation
                 activeSection={activeSection}
+                product={product}
                 sections={sections}
+                stickyActionBoundaryRef={stickyActionBoundaryRef}
                 onSectionClick={scrollToSection}
             />
 
@@ -73,15 +84,17 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
                     <ProductDetailParametersSection parameters={parameters} sectionRef={parametersRef} />
                 )}
 
+                {!!files.length && <ProductDetailFilesSection files={files} sectionRef={filesRef} />}
+
                 {!!relatedProducts.length && (
                     <ProductDetailRelatedProductsSection
                         relatedProducts={relatedProducts}
                         sectionRef={relatedProductsRef}
                     />
                 )}
-
-                {!!files.length && <ProductDetailFilesSection files={files} sectionRef={filesRef} />}
             </VerticalStack>
+
+            <div aria-hidden="true" className="h-px" ref={stickyActionBoundaryRef} />
         </div>
     );
 };

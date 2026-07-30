@@ -23,7 +23,7 @@ type AddToCartProps = {
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
     buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
-    buttonVariant?: 'primary' | 'inverted';
+    buttonVariant?: 'primary' | 'secondary';
     tabIndex?: number;
     ariaProductName: string;
     ariaPrice: string;
