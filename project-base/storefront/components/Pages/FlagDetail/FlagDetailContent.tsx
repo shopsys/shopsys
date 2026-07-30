@@ -6,6 +6,7 @@ import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/Deferr
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { useRef } from 'react';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
@@ -39,7 +40,8 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                 />
 
                 <div
-                    className="flex flex-1 scroll-mt-5 flex-col gap-5"
+                    className="flex flex-1 scroll-mt-fixed-header flex-col gap-5 focus-visible:outline-hidden"
+                    data-tid={TIDs.product_list}
                     id="product-list"
                     ref={paginationScrollTargetRef}
                     tabIndex={-1}

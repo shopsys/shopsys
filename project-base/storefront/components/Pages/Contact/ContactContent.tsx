@@ -1,5 +1,4 @@
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
-import { MailSecondaryIcon } from 'components/Basic/Icon/MailSecondaryIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
@@ -67,7 +66,7 @@ export const ContactContent: FC = () => {
                 {!isSuccess && (
                     <>
                         <PageHero
-                            icon={MailSecondaryIcon}
+                            icon={MailIcon}
                             title={t('Write to us')}
                             description={
                                 settingsData?.settings?.contactFormMainText ? (

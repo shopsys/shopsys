@@ -5,6 +5,7 @@ import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/Deferr
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -41,7 +42,8 @@ export const SearchProducts: FC = () => {
                 />
 
                 <div
-                    className="flex flex-1 scroll-mt-5 flex-col gap-5"
+                    className="flex flex-1 scroll-mt-fixed-header flex-col gap-5 focus-visible:outline-hidden"
+                    data-tid={TIDs.product_list}
                     id="product-list"
                     ref={paginationScrollTargetRef}
                     tabIndex={-1}

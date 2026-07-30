@@ -45,10 +45,10 @@ export const StoreExpandedInfo: FC<StoreExpandedInfoProps> = ({
                 <div className="flex flex-wrap gap-2.5">
                     {shouldShowSelectButton && onSelectStoreCallback !== undefined && (
                         <Button
+                            disabled={isSelected}
                             hasDisabledLook={isSelected}
                             size="small"
                             tid={TIDs.store_select_button}
-                            variant={isSelected ? 'inverted' : 'primary'}
                             onClick={(event) => {
                                 event.stopPropagation();
                                 onSelectStoreCallback(store.identifier);

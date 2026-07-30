@@ -31,8 +31,10 @@ export const Wishlist: FC = () => {
     const handleRemoveAllClick = () => {
         updatePortalContent(
             <RemoveAllProductsPopup
+                description={t('All products in wishlist will be removed ({{ productCount }} in total).', {
+                    productCount: wishlist?.products.length ?? 0,
+                })}
                 removeAllHandler={removeWishlist}
-                title={t('Do you really want to remove all products from wishlist?')}
             />,
         );
     };
@@ -49,7 +51,7 @@ export const Wishlist: FC = () => {
 
                             <Button
                                 aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}
-                                variant="inverted"
+                                variant="tertiary"
                                 onClick={handleRemoveAllClick}
                             >
                                 <TrashCanIcon className="size-4" />

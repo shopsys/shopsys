@@ -31,7 +31,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
     return (
         <ExtendedNextLink
             preventRedirectOnTextSelection
-            className="flex items-center justify-between gap-5 gap-y-4 rounded-md p-3 no-underline transition-colors hover:bg-background-default hover:no-underline"
+            className="group flex items-center justify-between gap-5 gap-y-4 rounded-md p-3 no-underline transition-colors hover:bg-background-default hover:no-underline"
             draggable={false}
             href={productUrl}
             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
@@ -58,7 +58,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                         variant="bestsellers"
                     />
 
-                    {product.fullName}
+                    <span className="group-hover:underline group-focus-visible:underline">{product.fullName}</span>
                 </div>
 
                 <ProductAvailability

@@ -136,7 +136,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                     storeName: store.storeName,
                                     imageNumber: index + 1,
                                 })}
-                                className="m-0.5 flex h-48 w-70 cursor-pointer snap-start justify-center overflow-hidden rounded-xl border-0 bg-transparent p-0"
+                                className="group m-0.5 flex h-48 w-70 cursor-pointer snap-start justify-center overflow-hidden rounded-xl border-0 bg-transparent p-0"
                                 data-src={image.url}
                                 tabIndex={0}
                                 title={t('View store image')}
@@ -145,7 +145,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                             >
                                 <Image
                                     alt={image.name || `${t('Store image of')} ${store.storeName} - ${index + 1}`}
-                                    className="object-cover"
+                                    className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                                     height={190}
                                     loading="lazy"
                                     src={image.url}

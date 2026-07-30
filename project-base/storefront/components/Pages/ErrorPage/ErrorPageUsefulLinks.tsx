@@ -1,8 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { HomeIcon } from 'components/Basic/Icon/HomeIcon';
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
-import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
+import { StoreIcon } from 'components/Basic/Icon/StoreIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -17,8 +17,9 @@ const ErrorPageNavigationLink: FC<{ item: ErrorPageNavigationItem }> = ({ item }
             href={item.href}
             skeletonType={item.skeletonType}
             className={twMergeCustom(
-                'group flex h-full items-center gap-4 rounded-lg border border-background-more bg-background-more p-4 text-text-default no-underline transition hover:no-underline',
+                'group flex h-full items-center gap-4 rounded-lg border border-background-more bg-background-more p-4 text-text-default no-underline transition-[transform,box-shadow,border-color,background-color,color] duration-200 ease-out hover:no-underline',
                 'hover:border-border-less hover:bg-background-default hover:text-text-default',
+                'pointer-fine:hover:-translate-y-0.5 pointer-fine:hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0 motion-reduce:pointer-fine:hover:translate-y-0',
                 'focus-visible:outline-2 focus-visible:outline-border-default focus-visible:-outline-offset-2',
             )}
         >
@@ -82,7 +83,7 @@ export const ErrorPageUsefulLinks: FC = () => {
             href: storesUrl,
             title: t('Stores'),
             description: t('Check store addresses and opening hours.'),
-            icon: MarkerIcon,
+            icon: StoreIcon,
             skeletonType: 'stores',
         },
         {
