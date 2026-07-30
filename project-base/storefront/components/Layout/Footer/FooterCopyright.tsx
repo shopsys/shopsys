@@ -40,9 +40,8 @@ export const FooterCopyright: FC = () => {
                         rel="noreferrer"
                         tabIndex={0}
                         target="_blank"
-                        title={t('Shopsys.com')}
                     >
-                        <Image alt={t('Shopsys.com')} height="24" src={logo} />
+                        <Image alt="" height="24" src={logo} />
                     </a>
                 </div>
 
@@ -61,7 +60,7 @@ export const FooterCopyright: FC = () => {
                 <Button
                     aria-label={t('Go to top of the page', { ns: 'accessibility' })}
                     className="vl:hidden w-auto"
-                    variant="secondary"
+                    variant="tertiary"
                     onClick={handleBackToTop}
                 >
                     {t('Back to top')}
