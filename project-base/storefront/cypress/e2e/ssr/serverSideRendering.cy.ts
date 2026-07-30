@@ -168,4 +168,20 @@ describe('Server-side rendering tests', () => {
                 assertSsrResponse(response.body, [/<title[^>]*>.+<\/title>/, /<h1/]);
             });
     });
+
+    it('[Friendly URL Resolver] should resolve URLs with and without a trailing slash identically', () => {
+        cy.request({
+            method: 'POST',
+            url: '/resolve-friendly-url',
+            body: { slug: '/blog/', domainId: 1 },
+        }).then((responseWithTrailingSlash) => {
+            cy.request({
+                method: 'POST',
+                url: '/resolve-friendly-url',
+                body: { slug: '/blog', domainId: 1 },
+            }).then((responseWithoutTrailingSlash) => {
+                expect(responseWithoutTrailingSlash.body).to.deep.equal(responseWithTrailingSlash.body);
+            });
+        });
+    });
 });

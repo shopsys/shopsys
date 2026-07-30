@@ -58,6 +58,30 @@ function normalizeSlug(string $slug): string
     return implode('/', $encodedSlugSegments);
 }
 
+function getAlternativeTrailingSlashSlug(string $slug): string
+{
+    return str_ends_with($slug, '/') ? substr($slug, 0, -1) : $slug . '/';
+}
+
+/**
+ * @return array<string, mixed>|false
+ */
+function findFriendlyUrl(PDO $connection, string $slug, int $domainId): array|false
+{
+    $statement = $connection->prepare('SELECT route_name, entity_id, main, redirect_to, redirect_code FROM friendly_urls WHERE slug = :slug AND domain_id = :domain_id');
+
+    foreach ([$slug, getAlternativeTrailingSlashSlug($slug)] as $slugVariant) {
+        $statement->execute(['slug' => $slugVariant, 'domain_id' => $domainId]);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($result !== false) {
+            return $result;
+        }
+    }
+
+    return false;
+}
+
 if ($slug === null || $domainId === null) {
     writeToLog(sprintf('400 Bad Request because slug (%s) or domainId (%d) is null',
         $slug,
@@ -77,9 +101,7 @@ try {
         $databasePassword
     );
 
-    $statement = $connection->prepare('SELECT route_name, entity_id, main, redirect_to, redirect_code FROM friendly_urls WHERE slug = :slug AND domain_id = :domain_id');
-    $statement->execute(['slug' => $slug, 'domain_id' => (int)$domainId]);
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    $result = findFriendlyUrl($connection, $slug, (int)$domainId);
 
     if ($result === false) {
         writeToLog(sprintf('404 Not Found because friendly URL not found with slug (%s) and domainId (%d)',
