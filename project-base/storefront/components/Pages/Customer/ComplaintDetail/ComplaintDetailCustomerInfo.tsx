@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { BoxPackageHandIcon } from 'components/Basic/Icon/BoxPackageHandIcon';
-import { UserProfileCardsIcon } from 'components/Basic/Icon/UserProfileCardsIcon';
+import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformationsIcon';
+import { DeliveryAddressIcon } from 'components/Basic/Icon/DeliveryAddressIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { twJoin } from 'tailwind-merge';
@@ -16,7 +16,7 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
 
     return (
         <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-xl bg-background-more p-5 lg:grid-cols-2">
-            <InformationCard heading={t('Contact information')} icon={<UserProfileCardsIcon className="size-8" />}>
+            <InformationCard heading={t('Contact information')} icon={<ContactInformationsIcon className="size-8" />}>
                 <span>
                     {complaint.deliveryFirstName} {complaint.deliveryLastName}
                 </span>
@@ -34,7 +34,7 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
                 <span>{normalizeTelephone(complaint.deliveryTelephone)}</span>
             </InformationCard>
 
-            <InformationCard heading={t('Delivery address')} icon={<BoxPackageHandIcon className="size-8" />}>
+            <InformationCard heading={t('Delivery address')} icon={<DeliveryAddressIcon className="size-8" />}>
                 <span>{complaint.deliveryCompanyName && `${complaint.deliveryCompanyName}, `}</span>
 
                 <span>{complaint.deliveryStreet}</span>

@@ -1,4 +1,4 @@
-import { CrossIcon } from 'components/Basic/Icon/CrossIcon';
+import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -13,7 +13,7 @@ export const PaymentFail: FC<PaymentFailProps> = ({ orderPaymentFailedContent })
         <ConfirmationPageContent
             content={orderPaymentFailedContent}
             heading={t('Your payment was not successful')}
-            headingIcon={CrossIcon}
+            headingIcon={WarningIcon}
             headingVariant="error"
         />
     );

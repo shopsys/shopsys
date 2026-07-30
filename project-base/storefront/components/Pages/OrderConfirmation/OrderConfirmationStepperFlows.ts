@@ -1,4 +1,4 @@
-import { CheckboxCheckedIcon } from 'components/Basic/Icon/CheckboxCheckedIcon';
+import { CheckmarkDoneIcon } from 'components/Basic/Icon/CheckmarkDoneIcon';
 import { PackageDeliveredIcon } from 'components/Basic/Icon/PackageDeliveredIcon';
 import { TruckClockIcon } from 'components/Basic/Icon/TruckClockIcon';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
@@ -28,7 +28,7 @@ export const useOrderConfirmationStepperFlow = () => {
 
     const paymentAwaiting: FlowType[] = [
         {
-            Icon: CheckboxCheckedIcon,
+            Icon: CheckmarkDoneIcon,
             label: t('Order received'),
             state: FlowTypeStateEnum.Active,
         },
@@ -51,7 +51,7 @@ export const useOrderConfirmationStepperFlow = () => {
 
     const paymentSuccess: FlowType[] = [
         {
-            Icon: CheckboxCheckedIcon,
+            Icon: CheckmarkDoneIcon,
             label: t('Order received'),
             state: FlowTypeStateEnum.Active,
         },
@@ -74,7 +74,7 @@ export const useOrderConfirmationStepperFlow = () => {
 
     const paymentFailed: FlowType[] = [
         {
-            Icon: CheckboxCheckedIcon,
+            Icon: CheckmarkDoneIcon,
             label: t('Order received'),
             state: FlowTypeStateEnum.Active,
         },
@@ -97,7 +97,7 @@ export const useOrderConfirmationStepperFlow = () => {
 
     const paymentInProcess: FlowType[] = [
         {
-            Icon: CheckboxCheckedIcon,
+            Icon: CheckmarkDoneIcon,
             label: t('Order received'),
             state: FlowTypeStateEnum.Active,
         },

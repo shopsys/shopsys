@@ -1,9 +1,9 @@
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
-import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
-import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
-import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
+import { LockIcon } from 'components/Basic/Icon/LockIcon';
+import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
+import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import {
     MenuIconicItemUserAuthenticatedContentListItem,
@@ -102,7 +102,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
                                 type="orderList"
                                 onClick={closeUserMenu}
                             >
-                                <SearchListIcon className="size-6" />
+                                <OrderIcon className="size-6" />
                                 {t('My orders')}
                             </MenuIconicSubItemLink>
                         </MenuIconicItemUserAuthenticatedContentListItem>
@@ -149,7 +149,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
                             type="editProfile"
                             onClick={closeUserMenu}
                         >
-                            <EditIcon className="size-6" />
+                            <UserEditIcon className="size-6" />
                             {userProfileSectionLabel}
                         </MenuIconicSubItemLink>
                     </MenuIconicItemUserAuthenticatedContentListItem>
@@ -176,7 +176,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
                             type="changePassword"
                             onClick={closeUserMenu}
                         >
-                            <LockCheckIcon className="size-6" />
+                            <LockIcon className="size-6" />
                             {t('Change password')}
                         </MenuIconicSubItemLink>
                     </MenuIconicItemUserAuthenticatedContentListItem>

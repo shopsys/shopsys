@@ -136,7 +136,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                 {showRepeatOrderButton && !notPaid && (
                     <Button
                         tid={TIDs.order_list_repeat_order_button}
-                        variant="inverted"
+                        variant="secondary"
                         aria-label={t('Repeat order number {{ orderNumber }}', {
                             ns: 'accessibility',
                             orderNumber: order.number,

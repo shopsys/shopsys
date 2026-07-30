@@ -1,5 +1,5 @@
-import { EditIcon } from 'components/Basic/Icon/EditIcon';
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
+import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { SkeletonCustomerUsersTable } from 'components/Blocks/Skeleton/SkeletonModuleCustomerUsers';
 import { Button } from 'components/Forms/Button/Button';
@@ -141,10 +141,10 @@ export const CustomerUsersTable: FC = () => {
                                 className="flex-1"
                                 data-tid={TIDs.customer_users_edit_button}
                                 size="small"
-                                variant="inverted"
+                                variant="tertiary"
                                 onClick={(e) => openManageCustomerUserPopup(e, user)}
                             >
-                                <EditIcon className="size-4" /> <span className="sm:block">{t('Edit')}</span>
+                                <UserEditIcon className="size-4" /> <span className="sm:block">{t('Edit')}</span>
                             </Button>
                             <Button
                                 aria-haspopup="dialog"
@@ -158,10 +158,10 @@ export const CustomerUsersTable: FC = () => {
                                 }
                                 data-tid={TIDs.customer_users_delete_button}
                                 size="small"
-                                variant="inverted"
+                                variant="tertiary"
                                 onClick={(e) => openDeleteCustomerUserPopup(e, user.uuid)}
                             >
-                                <RemoveIcon className="size-4" /> <span className="sm:block">{t('Delete')}</span>
+                                <CloseIcon className="size-4" /> <span className="sm:block">{t('Delete')}</span>
                             </Button>
                         </Cell>
                     </Row>

@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { BoxPackageHandIcon } from 'components/Basic/Icon/BoxPackageHandIcon';
-import { UserProfileCardsIcon } from 'components/Basic/Icon/UserProfileCardsIcon';
-import { WarehouseBoxPackageIcon } from 'components/Basic/Icon/WarehouseBoxPackageIcon';
+import { BillingAddressIcon } from 'components/Basic/Icon/BillingAddressIcon';
+import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformationsIcon';
+import { DeliveryAddressIcon } from 'components/Basic/Icon/DeliveryAddressIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { twJoin } from 'tailwind-merge';
@@ -21,7 +21,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
 
     return (
         <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-xl bg-background-more p-5 lg:grid-cols-2">
-            <InformationCard heading={t('Contact information')} icon={<UserProfileCardsIcon className="size-8" />}>
+            <InformationCard heading={t('Contact information')} icon={<ContactInformationsIcon className="size-8" />}>
                 <span>
                     {order.firstName} {order.lastName}
                 </span>
@@ -40,7 +40,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
 
             <InformationCard
                 heading={isPickupPlaceOrder ? t('Pickup place') : t('Delivery address')}
-                icon={<BoxPackageHandIcon className="size-8" />}
+                icon={<DeliveryAddressIcon className="size-8" />}
             >
                 <span>
                     {order.deliveryCompanyName && `${order.deliveryCompanyName}, `} {order.deliveryFirstName}{' '}
@@ -57,7 +57,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                 <span>{order.deliveryCountry?.name}</span>
             </InformationCard>
 
-            <InformationCard heading={t('Billing address')} icon={<WarehouseBoxPackageIcon className="size-8" />}>
+            <InformationCard heading={t('Billing address')} icon={<BillingAddressIcon className="size-8" />}>
                 <span>{order.companyName}</span>
 
                 <span>{order.street}</span>

@@ -1,4 +1,4 @@
-import { DocumentDeleteIcon } from 'components/Basic/Icon/DocumentDeleteIcon';
+import { WithdrawalIcon } from 'components/Basic/Icon/WithdrawalIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
@@ -69,7 +69,7 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
             <VerticalStack gap="sm">
                 <PageHero
                     descriptionTid={TIDs.order_withdrawal_description}
-                    icon={DocumentDeleteIcon}
+                    icon={WithdrawalIcon}
                     title={t('Withdrawal from contract')}
                     description={t(
                         'Please fill in the following data to request a withdrawal from the order {{ orderNumber }}.',

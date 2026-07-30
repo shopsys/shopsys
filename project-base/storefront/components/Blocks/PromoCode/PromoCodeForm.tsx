@@ -64,7 +64,7 @@ export const PromoCodeForm: FC<PromoCodeFormProps> = ({ isContentVisible }) => {
                                 hasDisabledCursor={!formProviderMethods.formState.isValid}
                                 size="xlarge"
                                 tid={TIDs.blocks_promocode_apply_button}
-                                variant="inverted"
+                                variant="secondary"
                             >
                                 {t('Apply code')}
                             </SubmitButton>

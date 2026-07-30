@@ -135,7 +135,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
             </div>
 
             <div className="mt-3 flex shrink-0 justify-between border-border-less border-t bg-background-default pt-3">
-                <Button variant="inverted" onClick={closePortalContent}>
+                <Button variant="secondary" onClick={closePortalContent}>
                     {t('Close')}
                 </Button>
 

@@ -124,9 +124,9 @@ export const CustomerRecordProductImage: FC<CustomerRecordProductImageProps> = (
         <Image
             alt={imageAlt}
             className="size-12 object-contain mix-blend-multiply"
-            height={96}
+            height={48}
             src={image}
-            width={96}
+            width={48}
         />
     );
 

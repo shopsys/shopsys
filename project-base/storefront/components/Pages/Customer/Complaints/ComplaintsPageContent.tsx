@@ -27,7 +27,7 @@ export const ComplaintsPageContent: FC<ComplaintsPageContentProps> = ({ paginati
         useComplaintsData(filter, statuslessFilter);
 
     return (
-        <div className="flex scroll-mt-5 flex-col gap-5" ref={paginationScrollTargetRef}>
+        <div className="flex scroll-mt-fixed-header flex-col gap-5" ref={paginationScrollTargetRef}>
             <ComplaintsFilter complaintStatusCounts={complaintStatusCounts} />
 
             <ComplaintsContent

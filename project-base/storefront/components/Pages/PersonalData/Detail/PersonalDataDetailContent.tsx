@@ -1,5 +1,5 @@
-import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypePersonalDataDetailQuery } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
@@ -29,9 +29,9 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
             <VerticalStack gap="sm">
                 <h1>{t('Personal data')}</h1>
 
-                <Link isButton isExternal href={exportLink} size="small">
+                <LinkButton href={exportLink} size="small" variant="secondary">
                     {t('Download as XML')}
-                </Link>
+                </LinkButton>
 
                 {!!userData && (
                     <div>

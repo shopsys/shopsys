@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
+import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
@@ -46,7 +46,7 @@ const OrdersPage: FC = () => {
                 title={t('My orders')}
             >
                 <PageHero
-                    icon={SearchListIcon}
+                    icon={OrderIcon}
                     title={t('My orders')}
                     description={t(
                         'View and manage your past orders, track order status, and monitor your shopping history.',
