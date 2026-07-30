@@ -55,6 +55,13 @@ class OrderStatus extends AbstractTranslatableEntity
     protected $type;
 
     /**
+     * @var bool
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'boolean')]
+    protected $productReviewsAllowed;
+
+    /**
      * @param string $type
      * @param string $code
      */
@@ -73,6 +80,8 @@ class OrderStatus extends AbstractTranslatableEntity
 
     protected function setData(OrderStatusData $orderStatusData): void
     {
+        $this->productReviewsAllowed = $orderStatusData->productReviewsAllowed;
+
         $this->setTranslations($orderStatusData);
     }
 
@@ -124,6 +133,14 @@ class OrderStatus extends AbstractTranslatableEntity
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return bool
+     */
+    public function areProductReviewsAllowed()
+    {
+        return $this->productReviewsAllowed;
     }
 
     public function checkForDelete(): void

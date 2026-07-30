@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
 
 class OrderStatusGridFactory implements GridFactoryInterface
 {
@@ -22,6 +23,7 @@ class OrderStatusGridFactory implements GridFactoryInterface
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
     ) {
     }
 
@@ -40,6 +42,10 @@ class OrderStatusGridFactory implements GridFactoryInterface
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'ost.name', t('Name'), true);
+
+        if ($this->productReviewEnabledChecker->isEnabledOnAnyDomain()) {
+            $grid->addColumn('productReviewsAllowed', 'os.productReviewsAllowed', t('Allow product reviews'), true);
+        }
 
         $grid->addDeleteActionColumn('admin_orderstatus_deleteconfirm', ['id' => 'os.id'])
             ->setAjaxConfirm();

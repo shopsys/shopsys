@@ -49,5 +49,6 @@ class OrderStatusDataFactory
             $names[$translate->getLocale()] = $translate->getName();
         }
         $orderStatusData->name = $names;
+        $orderStatusData->productReviewsAllowed = $orderStatus->areProductReviewsAllowed();
     }
 }

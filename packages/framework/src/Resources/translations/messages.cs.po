@@ -226,6 +226,9 @@ msgstr "Všechny výsledky hledání"
 msgid "Allow negative stock"
 msgstr "Povolit nákup do mínusu"
 
+msgid "Allow product reviews"
+msgstr "Povolit recenzování produktů"
+
 msgid "Alternate language domains"
 msgstr "Domény alternativních jazyků"
 

@@ -39,7 +39,7 @@ class ProductReviewController extends AbstractCrudController
             ->setListDomainControl(CrudListDomainControl::QUICK_FILTER, $enabledDomainIds)
             ->setCustomRoleSection(AdminRoleSectionsProvider::PRODUCTS_CATALOG)
             ->registerHandler(ProductReviewEditHandler::class)
-            ->disable($enabledDomainIds === []);
+            ->disable(!$this->productReviewEnabledChecker->isEnabledOnAnyDomain());
     }
 
     #[Override]

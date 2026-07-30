@@ -226,6 +226,9 @@ msgstr ""
 msgid "Allow negative stock"
 msgstr ""
 
+msgid "Allow product reviews"
+msgstr ""
+
 msgid "Alternate language domains"
 msgstr ""
 

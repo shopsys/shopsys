@@ -25,4 +25,9 @@ class ProductReviewEnabledChecker
     {
         return $this->enabledDomainIds;
     }
+
+    public function isEnabledOnAnyDomain(): bool
+    {
+        return count($this->enabledDomainIds) > 0;
+    }
 }
