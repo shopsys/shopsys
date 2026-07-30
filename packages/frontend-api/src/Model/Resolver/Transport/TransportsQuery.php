@@ -6,7 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Transport;
 
 use ArrayObject;
 use DateTimeImmutable;
-use DateTimeZone;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -116,14 +115,11 @@ class TransportsQuery extends AbstractQuery
     ): ?DateTimeImmutable {
         $resolvedCartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
 
-        $expectedDeliveryDate = $this->transportExpectedDeliveryDateCalculation->calculateExpectedDeliveryDate(
+        return $this->transportExpectedDeliveryDateCalculation->calculateExpectedDeliveryDate(
             $transport,
             $this->findCart($resolvedCartUuid),
             $this->domain->getId(),
         );
-
-        // the calculation works in the domain display timezone, the API serializes date time values in UTC
-        return $expectedDeliveryDate?->setTimezone(new DateTimeZone('UTC'));
     }
 
     public function storeExpectedDeliveryDateQuery(

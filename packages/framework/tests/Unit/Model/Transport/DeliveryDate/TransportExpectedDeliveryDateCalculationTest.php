@@ -168,7 +168,8 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
             Domain::FIRST_DOMAIN_ID,
         );
 
-        $this->assertDeliveryDateSame('2026-07-21 00:00:00', $deliveryDate);
+        // the delivery day 2026-07-21 in Europe/Prague, returned as a UTC instant
+        $this->assertDeliveryDateSame('2026-07-20 22:00:00', $deliveryDate);
     }
 
     public function testDeliveryDateDerivedFromRestockingIsPostponed(): void
@@ -230,8 +231,8 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
                 Domain::FIRST_DOMAIN_ID,
             );
 
-        // the closed Friday chains through the weekend to Monday
-        $this->assertDeliveryDateSame('2026-07-20 00:00:00', $deliveryDate);
+        // the closed Friday chains through the weekend to Monday 2026-07-20 in Europe/Prague, returned as a UTC instant
+        $this->assertDeliveryDateSame('2026-07-19 22:00:00', $deliveryDate);
     }
 
     /**
@@ -723,6 +724,10 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
 
     private function assertDeliveryDateSame(?string $expectedDeliveryDate, ?DateTimeImmutable $deliveryDate): void
     {
+        if ($deliveryDate !== null) {
+            $this->assertSame('UTC', $deliveryDate->getTimezone()->getName());
+        }
+
         $this->assertSame($expectedDeliveryDate, $deliveryDate?->format('Y-m-d H:i:s'));
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Transport\DeliveryDate;
 
 use DateTimeImmutable;
+use DateTimeZone;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
@@ -95,7 +96,9 @@ class TransportExpectedDeliveryDateCalculation
 
         $closestPossibleDeliveryDate = $dispatchDate->modify(sprintf('+%d days', $transport->getDaysUntilDelivery()));
 
-        return $this->postponeToFirstAllowedDeliveryDay($transport, $closestPossibleDeliveryDate, $domainId, $store);
+        $deliveryDate = $this->postponeToFirstAllowedDeliveryDay($transport, $closestPossibleDeliveryDate, $domainId, $store);
+
+        return $deliveryDate?->setTimezone(new DateTimeZone('UTC'));
     }
 
     /**

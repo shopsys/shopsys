@@ -10,7 +10,6 @@ use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
-use DateTimeZone;
 use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -159,8 +158,7 @@ class TransportTest extends GraphQlTestCase
 
         return $this->transportExpectedDeliveryDateCalculation
             ->calculateExpectedDeliveryDate($this->transport, $cart, $this->domain->getId())
-            ?->setTimezone(new DateTimeZone('UTC'))
-            ->format(DATE_ATOM);
+            ?->format(DATE_ATOM);
     }
 
     private function createCartWithProductAwaitingRestocking(): string
