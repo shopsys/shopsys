@@ -140,14 +140,6 @@ export const CartItemQuantityControls: FC<CartItemQuantityControlsProps> = ({
                 liveAnnouncement={quantityChangeAnnouncement}
                 hasPendingLook={hasPendingQuantityChange}
                 max={maxQuantity}
-                maxValueReachedTitle={
-                    maxQuantity === null
-                        ? undefined
-                        : t('Maximum that can be purchased is {{ quantity }} {{ unit }}.', {
-                              quantity: maxQuantity,
-                              unit: product.unit.name,
-                          })
-                }
                 min={1}
                 minValueDecreaseAriaLabel={t('Remove from cart product {{ productName }}', {
                     ns: 'accessibility',

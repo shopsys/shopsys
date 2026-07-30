@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
@@ -79,9 +79,9 @@ describe('CartItemQuantityControls', () => {
 
     test('submits changed quantity directly from the spinbox', async () => {
         const user = userEvent.setup();
-        const { container } = renderControls();
+        renderControls();
 
-        const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+        const increaseButton = screen.getByRole('button', { name: 'Increase quantity of Test product' });
 
         await user.click(increaseButton);
 
@@ -95,8 +95,11 @@ describe('CartItemQuantityControls', () => {
         const { getByLabelText, getByRole } = renderControls(createCartItem(2));
 
         expect(getByLabelText('Quantity of Test product')).toBeInTheDocument();
-        expect(getByRole('button', { name: 'Decrease quantity of Test product' })).toBeInTheDocument();
-        expect(getByRole('button', { name: 'Increase quantity of Test product' })).toBeInTheDocument();
+        const decreaseButton = getByRole('button', { name: 'Decrease quantity of Test product' });
+        const increaseButton = getByRole('button', { name: 'Increase quantity of Test product' });
+
+        expect(decreaseButton).not.toHaveAttribute('title');
+        expect(increaseButton).not.toHaveAttribute('title');
     });
 
     test('uses product-specific remove label at minimum quantity', () => {
@@ -107,14 +110,18 @@ describe('CartItemQuantityControls', () => {
 
     test('announces quantity change after successful cart update', async () => {
         const user = userEvent.setup();
-        const { container, getByRole } = renderControls();
+        const { getByRole } = renderControls();
+        const liveRegion = getByRole('status');
 
-        const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+        expect(liveRegion).toBeEmptyDOMElement();
+
+        const increaseButton = screen.getByRole('button', { name: 'Increase quantity of Test product' });
 
         await user.click(increaseButton);
 
         await waitFor(() => {
-            expect(getByRole('status')).toHaveTextContent('Quantity of Test product updated to 2 pcs');
+            expect(getByRole('status')).toBe(liveRegion);
+            expect(liveRegion).toHaveTextContent('Quantity of Test product updated to 2 pcs');
         });
     });
 
@@ -136,10 +143,10 @@ describe('CartItemQuantityControls', () => {
 
     test('submits a correction when value returns to the cart quantity after a pending submit', async () => {
         const user = userEvent.setup();
-        const { container } = renderControls(createCartItem(5));
+        const { getByRole } = renderControls(createCartItem(5));
 
-        const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
-        const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+        const decreaseButton = getByRole('button', { name: 'Decrease quantity of Test product' });
+        const increaseButton = screen.getByRole('button', { name: 'Increase quantity of Test product' });
 
         await user.click(increaseButton);
         await user.click(decreaseButton);
@@ -159,9 +166,9 @@ describe('CartItemQuantityControls', () => {
                 resolveFirstAddToCart = resolve;
             }),
         );
-        const { container } = renderControls(createCartItem(1));
+        const { getByRole } = renderControls(createCartItem(1));
 
-        const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+        const increaseButton = screen.getByRole('button', { name: 'Increase quantity of Test product' });
 
         await user.click(increaseButton);
 
@@ -170,7 +177,7 @@ describe('CartItemQuantityControls', () => {
         });
         expect(addToCartMock).toHaveBeenNthCalledWith(1, 'product-uuid', 2, 7, true);
 
-        const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+        const decreaseButton = getByRole('button', { name: 'Decrease quantity of Test product' });
 
         await user.click(decreaseButton);
 
@@ -189,7 +196,7 @@ describe('CartItemQuantityControls', () => {
         const { container, rerender } = renderControls(createCartItem(1));
 
         const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-        const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+        const increaseButton = screen.getByRole('button', { name: 'Increase quantity of Test product' });
 
         await user.click(increaseButton);
 
@@ -214,16 +221,18 @@ describe('CartItemQuantityControls', () => {
     test('restores previous quantity when the cart update fails', async () => {
         const user = userEvent.setup();
         addToCartMock.mockResolvedValueOnce(null);
-        const { container } = renderControls();
+        const { container, getByRole } = renderControls();
+        const liveRegion = getByRole('status');
 
         const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-        const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+        const increaseButton = screen.getByRole('button', { name: 'Increase quantity of Test product' });
 
         await user.click(increaseButton);
 
         await waitFor(() => {
             expect(input).toHaveValue(1);
         });
-        expect(container.querySelector('[role="status"]')).not.toBeInTheDocument();
+        expect(getByRole('status')).toBe(liveRegion);
+        expect(liveRegion).toBeEmptyDOMElement();
     });
 });

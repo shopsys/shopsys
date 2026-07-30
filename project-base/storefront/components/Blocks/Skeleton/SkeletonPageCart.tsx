@@ -15,8 +15,8 @@ export const SkeletonPageCart: FC = () => (
             </div>
 
             <div className="mt-5 vl:mt-8 flex vl:flex-row flex-col vl:justify-between gap-8">
-                <Skeleton className="h-20 w-full vl:max-w-[424px] rounded-xl" />
-                <Skeleton className="h-52 w-full vl:max-w-[495px] rounded-xl" />
+                <Skeleton className="h-20 w-full vl:max-w-106 rounded-xl" />
+                <Skeleton className="h-52 w-full vl:max-w-123.75 rounded-xl" />
             </div>
         </Webline>
 

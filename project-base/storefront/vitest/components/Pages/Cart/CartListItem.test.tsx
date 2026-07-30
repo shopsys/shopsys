@@ -1,12 +1,22 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { CartListItem } from 'components/Pages/Cart/CartList/CartListItem';
 import { TypeCartItemTypeEnum } from 'graphql/types';
 import type React from 'react';
 import { describe, expect, test, vi } from 'vitest';
 
 vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
-    ExtendedNextLink: ({ children, href }: { children: React.ReactNode; href: string }) => (
-        <a href={href}>{children}</a>
+    ExtendedNextLink: ({
+        children,
+        href,
+        'aria-label': ariaLabel,
+    }: {
+        children: React.ReactNode;
+        href: string;
+        'aria-label'?: string;
+    }) => (
+        <a aria-label={ariaLabel} href={href}>
+            {children}
+        </a>
     ),
 }));
 
@@ -14,8 +24,8 @@ vi.mock('components/Basic/GiftBadge/GiftBadge', () => ({
     GiftBadge: () => <span>Gift</span>,
 }));
 
-vi.mock('components/Basic/Icon/RemoveIcon', () => ({
-    RemoveIcon: () => null,
+vi.mock('components/Basic/Icon/CloseIcon', () => ({
+    CloseIcon: () => null,
 }));
 
 vi.mock('components/Basic/Image/Image', () => ({
@@ -117,6 +127,27 @@ describe('CartListItem', () => {
         uuid: 'cart-item-uuid',
     };
     const createAddToCartResult = (quantity: number) => ({ addProductResult: { cartItem: { quantity } } }) as any;
+
+    test('uses one product detail link for the image and product name only', () => {
+        render(
+            <CartListItem
+                isRemovingFromCart={false}
+                item={item as any}
+                listIndex={0}
+                onAddToCart={vi.fn()}
+                onRemoveFromCart={vi.fn()}
+            />,
+        );
+
+        const productLinks = screen.getAllByRole('link');
+
+        expect(productLinks).toHaveLength(1);
+        expect(productLinks[0]).toHaveAccessibleName('Go to product page of 32" Philips TV');
+        expect(within(productLinks[0]).getByRole('img')).toBeInTheDocument();
+        expect(within(productLinks[0]).getByText('32" Philips TV')).toBeInTheDocument();
+        expect(within(productLinks[0]).queryByText('Code: ABC123')).not.toBeInTheDocument();
+        expect(within(productLinks[0]).queryByText('In stock')).not.toBeInTheDocument();
+    });
 
     test('adds screen reader summary with code, availability, quantity, unit price and totals', () => {
         render(
