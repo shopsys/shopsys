@@ -1,10 +1,9 @@
 import { CopyTextBlock } from 'components/Basic/CopyTextBlock/CopyTextBlock';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
-import { InfoInTriangleIcon } from 'components/Basic/Icon/InfoInTriangleIcon';
+import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { TIDs } from 'cypress/tids';
 import { toast } from 'react-toastify';
-import { useSessionStore } from 'store/useSessionStore';
 import { getErrorIdentifier, isErrorIgnored } from 'utils/errors/ignoredErrors';
 import { isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import { parseGraphqlErrorFromJson } from 'utils/errors/parseGraphqlError';
@@ -19,7 +18,7 @@ const getErrorIdentifierFromMessage = (message: string): string => {
     return getErrorIdentifier(parsed.userCode, parsed.message);
 };
 
-type ShowMessageOptions = {
+export type ShowMessageOptions = {
     toastId?: string;
 };
 
@@ -39,7 +38,6 @@ export const showMessage = (
     type: 'info' | 'error' | 'success',
     options?: ShowMessageOptions,
 ): void => {
-    const { restoreStoredFocus } = useSessionStore.getState();
     const toastId = options?.toastId ?? message;
 
     if (type === 'error') {
@@ -66,7 +64,6 @@ export const showMessage = (
                     autoClose: false,
                     closeOnClick: false,
                     style: { width: '100%' },
-                    onClose: () => restoreStoredFocus(),
                 },
             );
         } else {
@@ -74,22 +71,19 @@ export const showMessage = (
                 toastId,
                 closeOnClick: true,
                 icon: <CloseIcon className="p-1" />,
-                onClose: () => restoreStoredFocus(),
             });
         }
     } else if (type === 'info') {
         toast.info(() => <ToastMessageContent message={message} tid={TIDs.toast_info} />, {
             toastId,
             closeOnClick: true,
-            icon: <InfoInTriangleIcon />,
-            onClose: () => restoreStoredFocus(),
+            icon: <WarningIcon />,
         });
     } else {
         toast.success(() => <ToastMessageContent message={message} tid={TIDs.toast_success} />, {
             toastId,
             closeOnClick: true,
             icon: <CheckmarkIcon />,
-            onClose: () => restoreStoredFocus(),
         });
     }
 };

@@ -25,7 +25,7 @@ type ProductQuestionPopupProps = {
 
 export const ProductQuestionPopup: FC<ProductQuestionPopupProps> = ({ productUuid }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const user = useCurrentCustomerData();
     const [, sendProductQuestion] = useProductQuestionMutation();
 
@@ -64,7 +64,7 @@ export const ProductQuestionPopup: FC<ProductQuestionPopupProps> = ({ productUui
             return;
         }
 
-        updatePortalContent(null);
+        closePortalContent();
         showSuccessMessage(t('Your question has been sent'));
     };
 

@@ -15,17 +15,13 @@ export const addProductToComparisonFromListing = (catnum: string) => {
     cy.getByTID([[TIDs.blocks_product_list_listeditem_, catnum], TIDs.product_compare_button]).click({ force: true });
 };
 
-export const checkComparisonPopupVisible = () => {
-    cy.getByTID([TIDs.comparison_popup]).should('be.visible');
+export const checkComparisonToastVisible = () => {
+    cy.getByTID([TIDs.layout_popup]).should('not.exist');
+    cy.getByTID([TIDs.toast_success]).should('be.visible');
 };
 
-export const closeComparisonPopup = () => {
-    cy.realPress('{esc}');
-};
-
-export const goToComparisonFromPopup = () => {
-    cy.getByTID([TIDs.comparison_popup_link]).click();
-    cy.waitForStableAndInteractiveDOM();
+export const closeComparisonToast = () => {
+    cy.getByTID([TIDs.toast_success]).click().should('not.exist');
 };
 
 export const removeAllFromComparison = () => {

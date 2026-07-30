@@ -1,8 +1,6 @@
 import { TypeProductListTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import dynamic from 'next/dynamic';
-import { useSessionStore } from 'store/useSessionStore';
 import { ProductInterfaceType } from 'types/product';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useProductList } from 'utils/productLists/useProductList';
@@ -11,15 +9,9 @@ import { useUpdateProductListUuid } from 'utils/productLists/useUpdateProductLis
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
-const ProductComparePopup = dynamic(() =>
-    import('components/Blocks/Popup/ProductComparePopup').then((component) => component.ProductComparePopup),
-);
-
 export const useComparison = () => {
     const { t } = useTranslation();
     const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
     const {
         clearProductListGtmContext,
         pushAddProductListGtmEvent,
@@ -35,7 +27,7 @@ export const useComparison = () => {
                 showErrorMessage(t('Unable to add product to comparison.'));
             },
             addProductSuccess: (result, productUuid) => {
-                updatePortalContent(<ProductComparePopup />);
+                showSuccessMessage(t('Product added to comparison.'));
                 updateComparisonUuid(result?.uuid ?? null);
                 pushAddProductListGtmEvent(productUuid);
             },
@@ -63,7 +55,6 @@ export const useComparison = () => {
         gtmProductListName: GtmProductListNameType,
         listIndex?: number,
     ) => {
-        storeCurrentFocus();
         toggleProductInListWithGtm(product, gtmProductListName, listIndex, toggleProductInList);
     };
 

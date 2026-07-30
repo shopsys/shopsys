@@ -1,8 +1,8 @@
 import { isClient } from 'utils/isClient';
-import { showMessage } from './showMessage';
+import { ShowMessageOptions, showMessage } from './showMessage';
 
-export const showSuccessMessage = (message: string): void => {
+export const showSuccessMessage = (message: string, options?: ShowMessageOptions): void => {
     if (isClient) {
-        showMessage(message, 'success');
+        showMessage(message, 'success', options);
     }
 };

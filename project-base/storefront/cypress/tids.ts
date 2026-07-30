@@ -166,8 +166,6 @@ export enum TIDs {
     comparison_empty_state = 'comparison_empty_state',
     comparison_remove_product_button = 'comparison_remove_product_button',
     comparison_table = 'comparison_table',
-    comparison_popup = 'comparison_popup',
-    comparison_popup_link = 'comparison_popup_link',
 
     // Product Wishlist
     product_wishlist_button = 'product_wishlist_button',
