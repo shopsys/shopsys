@@ -23,7 +23,7 @@ const getSrcFromImageUrl = (imageUrl: NextImageProps['src']): string => {
     return '';
 };
 
-export const Image: FC<ImageProps> = ({ src, hash, tid, ...props }) => {
+export const Image: FC<ImageProps> = ({ src, hash, tid, unoptimized, ...props }) => {
     const imageUrl = src ?? null;
     const [error, setError] = useState<SyntheticEvent<HTMLImageElement, Event> | null>(null);
     const shouldLoadFallbackImage = !!error || !imageUrl;
@@ -40,6 +40,7 @@ export const Image: FC<ImageProps> = ({ src, hash, tid, ...props }) => {
     const finalImageUrl = shouldLoadFallbackImage ? fallbackImageSrc : imageUrl;
 
     const finalSrc = getSrcFromImageUrl(finalImageUrl);
+    const shouldSkipOptimization = unoptimized || shouldLoadFallbackImage || finalSrc.split('?', 1)[0].endsWith('.svg');
 
     useEffect(() => {
         setError(null);
@@ -51,7 +52,7 @@ export const Image: FC<ImageProps> = ({ src, hash, tid, ...props }) => {
             loader={loader}
             overrideSrc={finalSrc}
             src={finalImageUrl}
-            unoptimized={shouldLoadFallbackImage}
+            unoptimized={shouldSkipOptimization}
             onError={onError}
             {...props}
         />

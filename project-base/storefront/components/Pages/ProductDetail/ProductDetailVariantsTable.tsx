@@ -1,5 +1,5 @@
 import { Image } from 'components/Basic/Image/Image';
-import { ProductAction } from 'components/Blocks/Product/ProductAction';
+import { PRODUCT_VARIANTS_ID, ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { showWatchdogButton, WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
@@ -39,7 +39,10 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
 
     return (
         <Webline>
-            <ul className="grid grid-cols-1 gap-2 divide-border-default md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
+            <ul
+                className="grid scroll-mt-fixed-header-with-navigation grid-cols-1 gap-2 divide-border-default md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y"
+                id={PRODUCT_VARIANTS_ID}
+            >
                 {variants.map((variant, index) => (
                     <li
                         key={variant.uuid}
@@ -52,7 +55,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                                 priority
                                 alt={variant.mainImage?.name || variant.fullName}
                                 className="object-contain"
-                                sizes="(max-width: 600px) 100vw, (max-width: 768px) 50vw, 64px"
+                                sizes="(max-width: 599px) 100vw, (max-width: 768px) 50vw, 64px"
                                 src={variant.mainImage?.url}
                             />
                         </div>
@@ -96,7 +99,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                                     gtmProductListName={GtmProductListNameType.product_detail_variants_table}
                                     listIndex={index}
                                     product={variant}
-                                    buttonVariant={showWatchdogButton(variant) ? 'inverted' : 'primary'}
+                                    buttonVariant={showWatchdogButton(variant) ? 'secondary' : 'primary'}
                                 />
                             </div>
                         </div>

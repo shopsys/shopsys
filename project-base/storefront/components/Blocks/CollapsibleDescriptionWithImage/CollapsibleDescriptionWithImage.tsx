@@ -29,7 +29,10 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
                 </h1>
             )}
 
-            <section className="flex w-full vl:flex-row flex-col-reverse justify-between gap-5" ref={scrollTargetRef}>
+            <section
+                className="flex w-full scroll-mt-fixed-header vl:flex-row flex-col-reverse justify-between gap-5"
+                ref={scrollTargetRef}
+            >
                 {!!description && currentPage === 1 && (
                     <CollapsibleText scrollTargetRef={scrollTargetRef} text={description} />
                 )}
@@ -39,9 +42,9 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
                         <Image
                             priority
                             alt={imageName}
-                            className="vl:size-[130px] h-[262px] w-full rounded-lg object-contain sm:h-[130px] sm:w-fit"
+                            className="vl:size-32.5 h-65.5 w-full rounded-lg object-contain sm:h-32.5 sm:w-fit"
                             height={262}
-                            sizes="(max-width: 479px) 90vw, (max-width: 1023px) 150px, 130px"
+                            sizes="(max-width: 479px) 90vw, 130px"
                             src={imageUrl}
                             width={262}
                         />

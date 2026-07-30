@@ -31,7 +31,6 @@ export const Logo: FC<LogoProps> = ({ imageClassName }) => {
                         'h-auto vl:w-40 w-32 max-w-full group-focus-visible:brightness-0',
                         imageClassName,
                     )}
-                    sizes="(max-width: 1023px) 128px, 160px"
                     src={logo}
                 />
             </ExtendedNextLink>
