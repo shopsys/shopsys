@@ -11,7 +11,7 @@ export const AutocompleteSkeleton: FC = () => {
 
                 <div className="flex gap-4 overflow-hidden lg:grid lg:grid-cols-5 lg:gap-5">
                     {createEmptyArray(VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE).map((_, index) => (
-                        <Skeleton key={index} className="h-full min-h-[250px] min-w-[138px]" />
+                        <Skeleton key={index} className="h-full min-h-62.5 min-w-34.5" />
                     ))}
                 </div>
             </div>

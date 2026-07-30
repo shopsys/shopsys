@@ -12,7 +12,7 @@ export const ErrorPageBody: FC<ErrorPageBodyProps> = ({ children, heading, statu
 
         <h1 className="text-center">{heading}</h1>
 
-        <p className="mx-auto max-w-[520px] text-balance text-center">{text}</p>
+        <p className="mx-auto max-w-130 text-balance text-center">{text}</p>
 
         {children}
     </section>

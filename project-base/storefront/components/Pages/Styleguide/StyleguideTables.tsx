@@ -14,7 +14,7 @@ export const StyleguideTables: FC = () => {
                             <CellHead align="center">Align center</CellHead>
                             <CellHead align="right">Align right</CellHead>
                             <CellHead isWithoutWrap>Without wrap</CellHead>
-                            <CellHead className="min-w-[150px]">min-w-[150px]</CellHead>
+                            <CellHead className="min-w-37.5">min-w-[150px]</CellHead>
                             <CellHead>Regular head cell</CellHead>
                             <CellHead>Regular head cell</CellHead>
                             <CellHead>Regular head cell</CellHead>

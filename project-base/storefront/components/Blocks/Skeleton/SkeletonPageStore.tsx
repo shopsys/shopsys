@@ -56,7 +56,7 @@ export const SkeletonPageStore: FC = () => (
 
             <div className="mt-8 grid snap-x snap-mandatory gap-4 vl:gap-8 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto max-vl:grid-flow-col lg:flex lg:flex-wrap">
                 {createEmptyArray(3).map((_, index) => (
-                    <Skeleton key={index} className="m-0.5 flex h-[190px] w-[280px] rounded-xl" />
+                    <Skeleton key={index} className="m-0.5 flex h-47.5 w-70 rounded-xl" />
                 ))}
             </div>
         </Webline>

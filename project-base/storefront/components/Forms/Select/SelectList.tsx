@@ -153,7 +153,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             keyName={tid}
             className={twMergeCustom(
                 'overflow-y-auto!',
-                'block! absolute right-0 left-0 z-above max-h-36 rounded-b-md bg-background-default lg:max-h-[200px]',
+                'block! absolute right-0 left-0 z-above max-h-36 rounded-b-md bg-background-default lg:max-h-50',
                 'border-2 border-input-border-default border-t-0 hover:border-input-border-hovered',
                 '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-input-placeholder-default [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-2',
                 listClassName,

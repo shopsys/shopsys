@@ -12,7 +12,7 @@ export const SkeletonPageLogin: FC = () => (
             <VerticalStack gap="sm">
                 <SkeletonModulePageHero />
 
-                <Skeleton className="h-[400px] w-full" />
+                <Skeleton className="h-100 w-full" />
             </VerticalStack>
         </Webline>
     </>

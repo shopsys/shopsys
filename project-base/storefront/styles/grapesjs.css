@@ -3,7 +3,7 @@
 @layer components {
     /* header background */
     .gjs-template-header-bg {
-        @apply from-background-brand to-background-brand-less bg-linear-to-tr/srgb;
+        @apply bg-background-brand;
     }
 
     /* header search button */
@@ -13,7 +13,7 @@
 
     /* article width */
     .gjs-template-article-webline {
-        @apply vl:max-w-[840px] vl:mx-auto;
+        @apply vl:max-w-210 vl:mx-auto;
     }
 
     /* selected element */

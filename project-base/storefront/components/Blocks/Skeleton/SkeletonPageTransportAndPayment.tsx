@@ -3,7 +3,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 
 export const SkeletonPageTransportAndPayment: FC = () => (
     <Webline>
-        <Skeleton className="mx-auto mt-1 mb-5 flex h-16 vl:h-11 w-full max-w-[840px] rounded-xl lg:mt-6 lg:mb-10" />
+        <Skeleton className="mx-auto mt-1 mb-5 flex h-16 vl:h-11 w-full max-w-210 rounded-xl lg:mt-6 lg:mb-10" />
 
         <div className="grid vl:grid-cols-3 vl:gap-10">
             <div className="vl:col-span-2">

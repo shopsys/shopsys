@@ -30,7 +30,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
             <div className="relative">
                 <ul
                     className={twJoin(
-                        'flex max-h-[500px] flex-col gap-2 overflow-y-auto',
+                        'flex max-h-125 flex-col gap-2 overflow-y-auto',
                         cart.items.length > 3 && 'pb-10',
                     )}
                 >

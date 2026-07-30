@@ -5,7 +5,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 export const SkeletonModuleCustomer: FC = ({ children }) => (
     <Webline>
         <div className="flex flex-row items-stretch gap-10">
-            <Skeleton className="hidden h-[500px] w-[275px] rounded-xl lg:block" />
+            <Skeleton className="hidden h-125 w-68.75 rounded-xl lg:block" />
 
             <div className="flex-1">
                 <VerticalStack gap="sm">{children}</VerticalStack>
