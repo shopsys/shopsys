@@ -1,23 +1,30 @@
 import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
 import { GoogleMapSearchMarkerIcon } from 'components/Basic/Icon/GoogleMapSearchMarkerIcon';
+import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import { AnyProps, PointFeature } from 'supercluster';
 import { twJoin } from 'tailwind-merge';
 import { MapMarker } from 'types/map';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
-const ClusterMarker: FC<{ onClick: () => void }> = ({ onClick, children }) => {
+const ClusterMarker: FC<{ count: number; onClick: () => void }> = ({ count, onClick }) => {
+    const { t } = useTranslation();
+    const label = t('Zoom to {{ count }} locations', { count });
+
     return (
-        <button
-            className="absolute h-7.5 w-6 -translate-x-1/2 -translate-y-full text-background-brand"
-            title={`Cluster of ${children} locations`}
-            type="button"
-            onClick={onClick}
-        >
-            <GoogleMapMarkerIcon className={twJoin('h-7.5 w-6')} />
+        <Tooltip label={label}>
+            <button
+                aria-label={label}
+                className="absolute size-11 -translate-x-1/2 -translate-y-full text-background-brand"
+                type="button"
+                onClick={onClick}
+            >
+                <GoogleMapMarkerIcon className="size-11" />
 
-            <span className="absolute inset-0 flex justify-center pt-1 font-bold text-text-inverted text-xs">
-                {children}
-            </span>
-        </button>
+                <span className="absolute -top-1 right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent px-0.5 text-text-inverted text-xs leading-normal">
+                    {count}
+                </span>
+            </button>
+        </Tooltip>
     );
 };
 
@@ -28,23 +35,25 @@ const SingleMarker: FC<{ onClick: () => void; isActive: boolean; isDetail?: bool
     title,
 }) => {
     return (
-        <button
-            aria-current={isActive ? 'true' : false}
-            className="absolute -translate-x-1/2 -translate-y-full"
-            tabIndex={0}
-            title={title}
-            type="button"
-            onClick={onClick}
-        >
-            <GoogleMapMarkerIcon
-                isSingle
-                className={twJoin(
-                    'h-6.5 w-5 text-background-brand',
-                    isActive && 'origin-bottom scale-125',
-                    isDetail ? 'cursor-default' : 'cursor-pointer',
-                )}
-            />
-        </button>
+        <Tooltip label={title}>
+            <button
+                aria-current={isActive ? 'true' : false}
+                aria-label={title}
+                className="absolute -translate-x-1/2 -translate-y-full"
+                tabIndex={0}
+                type="button"
+                onClick={onClick}
+            >
+                <GoogleMapMarkerIcon
+                    isSingle
+                    className={twJoin(
+                        'size-11 text-background-brand',
+                        isActive && 'origin-bottom scale-125',
+                        isDetail ? 'cursor-default' : 'cursor-pointer',
+                    )}
+                />
+            </button>
+        </Tooltip>
     );
 };
 
@@ -56,7 +65,7 @@ type SearchMarkerProps = {
 
 export const GoogleMapSearchMarker: FC<SearchMarkerProps> = ({ title }) => (
     <div className="absolute -translate-x-1/2 -translate-y-full" title={title}>
-        <GoogleMapSearchMarkerIcon className="h-8 w-6 text-price-discounted" />
+        <GoogleMapSearchMarkerIcon className="size-11 text-price-discounted" />
     </div>
 );
 
@@ -79,7 +88,7 @@ export const GoogleMapMarker: FC<GoogleMapMarkerProps> = ({
     const isActive = markerIdentifier === activeMarkerIdentifier;
 
     if (isCluster) {
-        return <ClusterMarker onClick={() => onClusterClicked(cluster)}>{pointCount}</ClusterMarker>;
+        return <ClusterMarker count={pointCount} onClick={() => onClusterClicked(cluster)} />;
     }
 
     if (!marker) {

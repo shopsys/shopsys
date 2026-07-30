@@ -21,7 +21,7 @@ vi.mock('components/Basic/Icon/PlayIcon', () => ({
 
 vi.mock('components/Basic/Image/Image', () => ({
     Image: ({ alt, priority, src, tid }: { alt: string; priority?: boolean; src?: string; tid?: string }) => (
-        <span aria-label={alt} data-priority={priority ? 'true' : 'false'} data-src={src} data-tid={tid} role="img" />
+        <span data-alt={alt} data-priority={priority ? 'true' : 'false'} data-src={src} data-tid={tid} />
     ),
 }));
 
@@ -91,10 +91,7 @@ describe('ProductDetailGallery', () => {
         const firstThumbnailButton = screen.getByRole('button', { name: 'Open item 1 of 3 in gallery' });
         const thirdThumbnailButton = screen.getByRole('button', { name: 'Open item 3 of 3 in gallery' });
 
-        expect(within(mainImageButton).getByRole('img', { name: 'Front view' })).toHaveAttribute(
-            'data-priority',
-            'true',
-        );
+        expect(mainImageButton.querySelector('[data-src="/front.jpg"]')).toHaveAttribute('data-priority', 'true');
         expect(firstThumbnailButton).toHaveAttribute('aria-current', 'true');
         expect(screen.getByLabelText('Test product, slide 1 of 3')).toHaveTextContent('1 / 3');
 
@@ -106,7 +103,7 @@ describe('ProductDetailGallery', () => {
         const modalGalleryElement = sessionStoreMocks.updatePortalContent.mock.calls[0][0];
         expect(modalGalleryElement.props.initialIndex).toBe(2);
         expect(modalGalleryElement.props.items).toEqual(images);
-        expect(within(mainImageButton).getByRole('img', { name: 'Front view' })).toBeInTheDocument();
+        expect(mainImageButton.querySelector('[data-src="/front.jpg"]')).toBeInTheDocument();
         expect(firstThumbnailButton).toHaveAttribute('aria-current', 'true');
         expect(thirdThumbnailButton).not.toHaveAttribute('aria-current');
     });
@@ -143,7 +140,7 @@ describe('ProductDetailGallery', () => {
         const selectedMainImageButton = screen.getByRole('button', {
             name: 'Open image gallery of Test product',
         });
-        expect(within(selectedMainImageButton).getByRole('img', { name: 'Side view' })).toBeInTheDocument();
+        expect(selectedMainImageButton.querySelector('[data-src="/side.jpg"]')).toBeInTheDocument();
         expect(galleryTrack.querySelector('[data-src="/side.jpg"]')).toBeInTheDocument();
         expect(sessionStoreMocks.updatePortalContent).not.toHaveBeenCalled();
     });
@@ -207,7 +204,7 @@ describe('ProductDetailGallery', () => {
         await user.click(screen.getByRole('button', { name: 'Next' }));
 
         const mainImageButton = screen.getByRole('button', { name: 'Open image gallery of Test product' });
-        expect(within(mainImageButton).getByRole('img', { name: 'Product video' })).toHaveAttribute(
+        expect(mainImageButton.querySelector('[data-src]')).toHaveAttribute(
             'data-src',
             'https://img.youtube.com/vi/youtube-token/maxresdefault.jpg',
         );
@@ -232,5 +229,18 @@ describe('ProductDetailGallery', () => {
         const modalGalleryElement = sessionStoreMocks.updatePortalContent.mock.calls[0][0];
         expect(modalGalleryElement.props.initialIndex).toBe(5);
         expect(modalGalleryElement.props.items).toEqual(manyImages);
+    });
+
+    test('renders gallery media as decorative inside descriptively labelled buttons', () => {
+        const { container } = renderGallery(images, [video]);
+
+        const galleryButtons = [
+            screen.getByRole('button', { name: 'Open image gallery of Test product' }),
+            ...screen.getAllByRole('button', { name: /Open item \d of 4 in gallery/ }),
+        ];
+
+        expect(galleryButtons).toHaveLength(5);
+        expect(container.querySelectorAll('[data-alt=""]')).toHaveLength(4);
+        expect(container.querySelectorAll('[data-alt="Front view"]')).toHaveLength(1);
     });
 });

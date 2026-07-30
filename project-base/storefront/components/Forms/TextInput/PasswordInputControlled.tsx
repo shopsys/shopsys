@@ -1,5 +1,6 @@
 import { EyeCrossedIcon } from 'components/Basic/Icon/EyeCrossedIcon';
 import { EyeIcon } from 'components/Basic/Icon/EyeIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { FormLine, FormLineWidth } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { InputHTMLAttributes, ReactElement, ReactNode, useState } from 'react';
@@ -76,15 +77,15 @@ export const PasswordInputControlled = <TFieldValues extends FieldValues, TTrans
                 onBlur={onBlur}
                 onChange={onChange}
             >
-                <button
-                    aria-label={passwordVisibilityLabel}
-                    className="group absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-md p-1.5"
+                <IconButton
+                    Icon={PasswordVisibilityIcon}
+                    className="absolute top-1/2 right-2 -translate-y-1/2"
+                    shape="rounded"
                     title={passwordVisibilityLabel}
-                    type="button"
+                    tooltipLabel={passwordVisibilityLabel}
+                    variant="ghost"
                     onClick={togglePasswordVisibilityHandler}
-                >
-                    <PasswordVisibilityIcon className="size-6 text-icon-less group-hover:text-icon-default" />
-                </button>
+                />
             </TextInput>
             <FormLineError
                 error={error}

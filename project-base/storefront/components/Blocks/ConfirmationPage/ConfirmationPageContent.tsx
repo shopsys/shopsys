@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
-import { PageHero, PageHeroVariant } from 'components/Layout/PageHero/PageHero';
+import { PageHero, type PageHeroDescriptionRole, type PageHeroVariant } from 'components/Layout/PageHero/PageHero';
 import { TIDs } from 'cypress/tids';
 import Trans from 'next-translate/Trans';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
@@ -15,6 +15,7 @@ type ConfirmationPageContentProps = {
     error?: CombinedError;
     heading: string;
     headingDescription?: string;
+    headingDescriptionRole?: PageHeroDescriptionRole;
     headingIcon: React.ElementType;
     headingVariant?: PageHeroVariant;
     orderDetailUrl?: string;
@@ -37,6 +38,7 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
     actionTitle,
     heading,
     headingDescription,
+    headingDescriptionRole,
     headingIcon,
     headingVariant,
     content,
@@ -58,6 +60,7 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
                         actionSkeletonType={actionSkeletonType}
                         actionTitle={actionTitle}
                         description={headingDescription}
+                        descriptionRole={headingDescriptionRole}
                         icon={headingIcon}
                         title={heading}
                         variant={headingVariant}
@@ -65,6 +68,7 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
                 ) : (
                     <PageHero
                         description={headingDescription}
+                        descriptionRole={headingDescriptionRole}
                         icon={headingIcon}
                         title={heading}
                         variant={headingVariant}

@@ -4,14 +4,14 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { SkeletonModuleLastVisitedProducts } from './SkeletonModuleLastVisitedProducts';
-import { SkeletonModuleProductSlider } from './SkeletonModuleProductSlider';
+import { SkeletonModuleProductDetailSections } from './SkeletonModuleProductDetailSections';
 
 export const SkeletonPageProductDetailMainVariant: FC = () => (
     <>
         <SkeletonModuleBreadcrumbs count={3} />
 
-        <Webline>
-            <VerticalStack gap="md">
+        <VerticalStack gap="md">
+            <Webline>
                 <div className="flex flex-col gap-5">
                     <Skeleton className="order-1 vl:order-2 h-8 w-3/6 lg:h-10 xl:mt-3" />
 
@@ -29,36 +29,21 @@ export const SkeletonPageProductDetailMainVariant: FC = () => (
 
                     <Skeleton className="order-3 h-4 w-32 rounded-sm" />
                 </div>
+            </Webline>
 
+            <Webline>
                 <div className="flex flex-col gap-2">
                     {createEmptyArray(5).map((_, index) => (
                         <Skeleton key={index} className="h-20" />
                     ))}
                 </div>
+            </Webline>
 
-                <div className="flex flex-col gap-4">
-                    <div className="hidden flex-row lg:flex lg:gap-5">
-                        <Skeleton className="h-9 w-20 rounded-full" />
-                        <Skeleton className="h-9 w-24 rounded-full" />
-                        <Skeleton className="h-9 w-28 rounded-full" />
-                    </div>
+            <SkeletonModuleProductDetailSections />
 
-                    <div className="hidden flex-col gap-2 lg:flex">
-                        <Skeleton className="mb- h-5" />
-                        <Skeleton className="mb- h-5" />
-                        <Skeleton className="mb- h-5 w-5/6" />
-                        <Skeleton className="mb- h-5 w-4/6" />
-                    </div>
-
-                    <Skeleton className="block h-11 lg:hidden" />
-                    <Skeleton className="block h-11 lg:hidden" />
-                    <Skeleton className="block h-11 lg:hidden" />
-                </div>
-
-                <SkeletonModuleProductSlider />
-
+            <Webline>
                 <SkeletonModuleLastVisitedProducts />
-            </VerticalStack>
-        </Webline>
+            </Webline>
+        </VerticalStack>
     </>
 );

@@ -125,6 +125,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                         <ConfirmationPageContent
                             heading={t('Your order was created')}
                             headingDescription={t('You are being redirected to the payment gateway.')}
+                            headingDescriptionRole="status"
                             headingIcon={SpinnerIcon}
                             headingVariant="info"
                         />

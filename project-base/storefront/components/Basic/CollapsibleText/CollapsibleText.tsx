@@ -27,7 +27,6 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
         setShowFullDescription((prev) => {
             if (prev) {
                 if (scrollTargetRef.current) {
-                    scrollTargetRef.current.style.scrollMarginTop = '116px';
                     scrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
                 }
             }

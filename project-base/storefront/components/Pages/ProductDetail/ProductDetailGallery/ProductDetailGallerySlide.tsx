@@ -97,7 +97,7 @@ export const ProductDetailGallerySlide: FC<ProductDetailGallerySlideProps> = ({
             {isLoaded && isVideo && (
                 <>
                     <YouTubeThumbnail
-                        alt={galleryItem.description ?? t('Product Video')}
+                        alt=""
                         className="vl:size-125 h-80 w-full object-contain lg:h-125"
                         draggable={false}
                         height={500}
@@ -106,7 +106,7 @@ export const ProductDetailGallerySlide: FC<ProductDetailGallerySlideProps> = ({
                         width={500}
                     />
                     <span className="absolute inset-0 flex items-center justify-center">
-                        <PlayIcon className="size-16 rounded-full bg-background-accent text-text-inverted" />
+                        <PlayIcon className="size-14 rounded-full bg-background-accent text-text-inverted" />
                     </span>
                 </>
             )}

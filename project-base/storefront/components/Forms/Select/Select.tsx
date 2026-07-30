@@ -1,6 +1,7 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { AnimatePresence } from 'framer-motion';
 import { ReactElement, ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -104,7 +105,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
             <div className={twMergeCustom('relative w-full', className)} ref={wrapperRef}>
                 <div
                     className={twMergeCustom(
-                        'group flex h-14 rounded-md border-2 border-input-border-default bg-input-bg-default text-input-text-default hover:border-input-border-hovered',
+                        'group flex h-14 rounded-md border-2 border-input-border-default bg-input-bg-default pr-1 text-input-text-default hover:border-input-border-hovered',
                         isOpen && 'rounded-b-none border-input-border-active',
                         (isDisabled || isLoading) &&
                             'pointer-events-none cursor-no-drop border-input-border-disabled bg-input-bg-disabled text-input-text-disabled',
@@ -139,7 +140,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 role="combobox"
                                 value={comboBoxConfig.searchValue}
                                 className={twMergeCustom(
-                                    'h-full w-full bg-transparent px-3 font-secondary font-semibold text-md! outline-hidden',
+                                    'h-full w-full min-w-0 bg-transparent px-3 font-secondary font-semibold text-md! outline-hidden',
                                     label && 'pt-5',
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
@@ -173,7 +174,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         <button
                             aria-describedby={ariaDescribedBy}
                             aria-invalid={ariaInvalid}
-                            className="w-full cursor-pointer px-3 pt-5 text-left outline-hidden"
+                            className="w-full min-w-0 cursor-pointer px-3 pt-5 text-left outline-hidden"
                             data-tid={tid}
                             disabled={isDisabled}
                             id={tid}
@@ -217,32 +218,35 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     )}
 
                     {onResetSelect && activeOption && !isLoading && (
-                        <button
-                            aria-label={t('Clear selected option', { ns: 'accessibility' })}
-                            className="cursor-pointer"
-                            tabIndex={0}
+                        <IconButton
+                            Icon={CloseIcon}
+                            ariaLabel={t('Clear selected option', { ns: 'accessibility' })}
+                            className="self-center"
+                            shape="rounded"
+                            size="compact"
+                            title={t('Clear selected option', { ns: 'accessibility' })}
+                            tooltipLabel={t('Clear selected option', { ns: 'accessibility' })}
                             type="reset"
+                            variant="ghost"
                             onClick={onResetSelect}
-                        >
-                            <RemoveIcon className="mx-1 size-4 transition hover:text-red active:scale-95" />
-                        </button>
+                        />
                     )}
 
-                    <button
+                    <IconButton
+                        Icon={ArrowIcon}
                         aria-describedby={ariaDescribedBy}
                         aria-expanded={isOpen}
                         aria-haspopup="listbox"
                         aria-invalid={ariaInvalid}
-                        aria-label={ariaLabel}
-                        className="cursor-pointer rounded-sm px-2.5"
+                        ariaLabel={ariaLabel}
+                        className="self-center"
                         disabled={isDisabled}
-                        tabIndex={0}
+                        iconClassName={twJoin('transition-transform', isOpen ? 'rotate-180' : 'rotate-0')}
+                        shape="rounded"
                         title={ariaLabel}
-                        type="button"
+                        variant="ghost"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}
-                    >
-                        <ArrowIcon className={twJoin('size-5 transition', isOpen ? 'rotate-180' : 'rotate-0')} />
-                    </button>
+                    />
                 </div>
 
                 <AnimatePresence initial={false}>

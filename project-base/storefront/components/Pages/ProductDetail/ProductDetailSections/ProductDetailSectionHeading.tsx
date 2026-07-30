@@ -6,5 +6,5 @@ type ProductDetailSectionHeadingProps = {
 };
 
 export const ProductDetailSectionHeading = ({ className, children }: ProductDetailSectionHeadingProps) => {
-    return <h2 className={twMergeCustom('mb-4 text-center', className)}>{children}</h2>;
+    return <h2 className={twMergeCustom('h3 mb-4', className)}>{children}</h2>;
 };

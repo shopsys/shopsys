@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Button, ButtonBaseProps } from 'components/Forms/Button/Button';
+import { ButtonBaseProps, getButtonClassName } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
 import { AnchorHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -42,11 +42,13 @@ export const Link: FC<LinkProps> = ({
     target,
     className,
     tid,
+    size = 'small',
     buttonVariant,
 }) => {
     const classNameTwClass = twMergeCustom(
-        linkPlaceholderTwClassSegments[0],
-        isButton ? 'no-underline hover:no-underline' : linkPlaceholderTwClassSegments[1],
+        isButton
+            ? [getButtonClassName(buttonVariant, size, false, false), 'no-underline hover:no-underline']
+            : linkPlaceholderTwClassSegments,
         className,
     );
 
@@ -58,25 +60,17 @@ export const Link: FC<LinkProps> = ({
         tabIndex: 0,
     };
 
-    const content = isButton ? (
-        <Button className={className} variant={buttonVariant}>
-            {children}
-        </Button>
-    ) : (
-        children
-    );
-
     if (isExternal) {
         return (
             <a {...props} data-tid={tid ?? TIDs.basic_link}>
-                {content}
+                {children}
             </a>
         );
     }
 
     return (
         <ExtendedNextLink {...props} passHref href={href} tid={tid ?? TIDs.basic_link}>
-            {content}
+            {children}
         </ExtendedNextLink>
     );
 };

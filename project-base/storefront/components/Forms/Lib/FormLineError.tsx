@@ -1,4 +1,4 @@
-import { CrossIcon } from 'components/Basic/Icon/CrossIcon';
+import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { TIDs } from 'cypress/tids';
 import { FieldError } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
@@ -25,11 +25,11 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
 
     return (
         <div className="relative">
-            <CrossIcon
+            <WarningIcon
                 aria-hidden="true"
                 className={twJoin(
-                    'absolute flex w-4 text-text-error',
-                    isInputOrTextArea && `right-3.5 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
+                    'absolute flex size-5 text-text-error',
+                    isInputOrTextArea && `right-3.5 ${isTextInputSmall ? '-top-8.5' : '-top-9.5'}`,
                     isInputPassword && `right-12 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isCheckbox && 'top-1/2 right-1 -translate-y-1/2',
                     isSelect && '-top-9 right-11 z-2',

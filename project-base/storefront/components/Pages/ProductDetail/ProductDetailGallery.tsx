@@ -79,7 +79,6 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
             {hasMultipleItems && (
                 <ProductDetailGalleryThumbnails
                     galleryItems={galleryItems}
-                    productName={productName}
                     selectedIndex={selectedIndex}
                     onOpenGallery={openGallery}
                 />
