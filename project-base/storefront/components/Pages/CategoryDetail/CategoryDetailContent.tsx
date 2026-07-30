@@ -47,6 +47,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 description={category.description}
                 imageName={category.images[0]?.name || category.name}
                 imageUrl={category.images[0]?.url}
+                textClassName="max-w-5xl"
                 title={title}
             />
 

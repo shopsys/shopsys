@@ -24,7 +24,7 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
         <VerticalStack gap="md">
             <h1 className="sr-only">{t('Cart')}</h1>
 
-            <Webline>
+            <Webline width="xl">
                 <CartSteps activeStep={1} domainUrl={url} />
 
                 <CartList items={cart.items} />

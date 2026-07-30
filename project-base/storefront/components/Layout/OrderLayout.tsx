@@ -29,7 +29,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                 <NotificationBars />
 
                 <header
-                    className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less"
+                    className="bg-linear-to-tr/srgb from-background-brand to-background-brand-less focus-visible:outline-hidden"
                     id="site-header"
                     tabIndex={-1}
                 >
@@ -38,7 +38,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
                 <main
                     aria-label={t('Order process main content', { ns: 'accessibility' })}
-                    className="mt-4 mb-10 flex flex-col"
+                    className="mt-4 mb-10 flex flex-col focus-visible:outline-hidden"
                     id="main-content"
                     tabIndex={-1}
                 >
@@ -47,7 +47,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                         isPageLoading={isPageLoading}
                         pageTypeOverride={page}
                     >
-                        <Webline>{children}</Webline>
+                        <Webline width="xl">{children}</Webline>
                     </SkeletonManager>
                 </main>
 

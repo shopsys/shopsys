@@ -10,6 +10,7 @@ type CollapsibleDescriptionWithImageProps = {
     currentPage: number;
     imageName: string;
     imageUrl: string | undefined;
+    textClassName?: string;
 };
 
 export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImageProps> = ({
@@ -18,6 +19,7 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
     currentPage,
     imageName,
     imageUrl,
+    textClassName,
 }) => {
     const scrollTargetRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +36,11 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
                 ref={scrollTargetRef}
             >
                 {!!description && currentPage === 1 && (
-                    <CollapsibleText scrollTargetRef={scrollTargetRef} text={description} />
+                    <CollapsibleText
+                        scrollTargetRef={scrollTargetRef}
+                        text={description}
+                        textClassName={textClassName}
+                    />
                 )}
 
                 {imageUrl && currentPage === 1 && (

@@ -39,7 +39,7 @@ export const CartStickyBar: FC<CartStickyBarProps> = ({ originalButtonRef }) => 
                 isEndOfList ? 'translate-y-full' : 'translate-y-0'
             }`}
         >
-            <Webline>
+            <Webline width="xl">
                 <div className="flex items-center justify-between gap-4 py-4">
                     <div className="hidden w-full lg:block lg:max-w-106">
                         <FreeTransportRange />

@@ -22,7 +22,7 @@ export const CustomerLayout: FC<CustomerLayoutProps> = ({
         <CommonLayout {...props}>
             <Breadcrumbs key="breadcrumb" breadcrumbs={breadcrumbs ?? []} type={props.breadcrumbsType} />
 
-            <Webline>
+            <Webline width="xl">
                 <div className="grid grid-cols-1 gap-5 lg:grid-cols-[auto_1fr] lg:gap-10">
                     <UserNavigation />
 

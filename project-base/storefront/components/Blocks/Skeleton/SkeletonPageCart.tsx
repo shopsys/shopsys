@@ -5,7 +5,7 @@ import { SkeletonModuleProductSlider } from './SkeletonModuleProductSlider';
 
 export const SkeletonPageCart: FC = () => (
     <>
-        <Webline>
+        <Webline width="xl">
             <Skeleton className="mx-auto mt-1 mb-5 flex h-16 vl:h-11 w-full max-w-[840px] rounded-xl lg:mt-6 lg:mb-10" />
 
             <div className="flex flex-col gap-4">

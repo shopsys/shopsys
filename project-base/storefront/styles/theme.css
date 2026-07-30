@@ -109,7 +109,7 @@
     --breakpoint-xl: 1240px;
     --breakpoint-xxl: 1560px;
 
-    --container-default-max-width: 1400px;
+    --container-default-max-width: 1560px;
     --container-oversized-max-width: var(--breakpoint-xxl);
     --container-padding-desktop: var(--spacing-5);
     --container-padding-mobile: var(--spacing-5);
