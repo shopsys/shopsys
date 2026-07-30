@@ -20,15 +20,18 @@ class GetSliderItemsTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedSliderItemsData = [
             [
-                'name' => t('Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Shopsys Platform', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'description' => t('Build scalable B2C and B2B stores on an open commerce platform designed for complex projects.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'link' => 'https://www.shopsys.cz',
             ],
             [
-                'name' => t('Documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Explore the documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'description' => t('Find practical guides, architecture concepts, and step-by-step instructions for building with Shopsys Platform.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'link' => 'https://docs.shopsys.com',
             ],
             [
-                'name' => t('Become one of us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Join our team', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'description' => t('Help us build ambitious e-commerce projects. Explore open roles and grow with Shopsys.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'link' => 'https://jobs.shopsys.cz',
             ],
         ];
@@ -40,6 +43,7 @@ class GetSliderItemsTest extends GraphQlTestCase
             $this->assertKeysAreSameAsExpected(
                 [
                     'name',
+                    'description',
                     'link',
                 ],
                 $sliderItem,
@@ -60,29 +64,29 @@ class GetSliderItemsTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedSliderItemsWebImagesData = [
             [
-                'name' => t('Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Shopsys Platform', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/web/59.jpg',
-                        'name' => 'Slider item 1 image',
+                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/web/650.jpg',
+                        'name' => t('E-commerce order preparation in a modern warehouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
             ],
             [
-                'name' => t('Documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Explore the documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/web/60.jpg',
-                        'name' => 'Slider item 2 image',
+                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/web/651.jpg',
+                        'name' => t('Developer working with Shopsys Platform documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
             ],
             [
-                'name' => t('Become one of us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Join our team', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/web/61.jpg',
-                        'name' => 'Slider item 3 image',
+                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/web/652.jpg',
+                        'name' => t('Shopsys team collaborating in an office', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
             ],
@@ -115,29 +119,29 @@ class GetSliderItemsTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedSliderItemsWebImagesData = [
             [
-                'name' => t('Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Shopsys Platform', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/mobile/103.jpg',
-                        'name' => 'Slider item 1 image',
+                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/mobile/653.jpg',
+                        'name' => t('E-commerce order preparation in a modern warehouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
             ],
             [
-                'name' => t('Documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Explore the documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/mobile/104.jpg',
-                        'name' => 'Slider item 2 image',
+                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/mobile/654.jpg',
+                        'name' => t('Developer working with Shopsys Platform documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
             ],
             [
-                'name' => t('Become one of us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Join our team', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/mobile/105.jpg',
-                        'name' => 'Slider item 3 image',
+                        'url' => $this->currentBaseDomainUrl . '/content-test/images/sliderItem/mobile/655.jpg',
+                        'name' => t('Shopsys team collaborating in an office', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
             ],

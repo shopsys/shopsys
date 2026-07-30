@@ -6,7 +6,6 @@ namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Override;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -154,14 +153,11 @@ class BlogArticleTest extends GraphQlTestCase
         $this->assertSame($expectedErrorMessage, $errors[0]['message']);
     }
 
-    #[DataProvider('getImagesDataProvider')]
-    public function testGetBlogArticleImages(string $referenceName, string $expectedImage): void
+    public function testGetBlogArticleImages(): void
     {
-        $blogArticle = $this->getReference($referenceName, BlogArticle::class);
-
         $query = '
             query {
-                blogArticle(uuid: "' . $blogArticle->getUuid() . '") {
+                blogArticle(uuid: "' . $this->blogArticle->getUuid() . '") {
                     name
                     images {
                         url
@@ -176,7 +172,26 @@ class BlogArticleTest extends GraphQlTestCase
         $this->assertArrayHasKey('images', $responseData);
         $this->assertCount(1, $responseData['images']);
         $this->assertArrayHasKey('url', $responseData['images'][0]);
-        $this->assertStringEndsWith($expectedImage, $responseData['images'][0]['url']);
+        $this->assertStringEndsWith('602.jpg', $responseData['images'][0]['url']);
+    }
+
+    public function testGetDemoBlogArticleImage(): void
+    {
+        $query = '
+            query {
+                blogArticle(uuid: "' . BlogArticleDataFixture::getDemoBlogArticleUuid(1) . '") {
+                    images {
+                        url
+                    }
+                }
+            }
+        ';
+
+        $response = $this->getResponseContentForQuery($query);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticle');
+
+        $this->assertCount(1, $responseData['images']);
+        $this->assertStringEndsWith('610.jpg', $responseData['images'][0]['url']);
     }
 
     public function testGetBlogArticleAuthor(): void
@@ -236,24 +251,6 @@ class BlogArticleTest extends GraphQlTestCase
         $this->assertNull($responseData['author']);
     }
 
-    public static function getImagesDataProvider(): iterable
-    {
-        yield [
-            'referenceName' => BlogArticleDataFixture::DEMO_BLOG_ARTICLE_PREFIX . '46',
-            'expectedImage' => '600.jpg',
-        ];
-
-        yield [
-            'referenceName' => BlogArticleDataFixture::DEMO_BLOG_ARTICLE_PREFIX . '47',
-            'expectedImage' => '601.jpg',
-        ];
-
-        yield [
-            'referenceName' => BlogArticleDataFixture::DEMO_BLOG_ARTICLE_PREFIX . '48',
-            'expectedImage' => '602.jpg',
-        ];
-    }
-
     private function getExpectedBlogArticleArray(): array
     {
         $locale = $this->getFirstDomainLocale();
@@ -262,37 +259,27 @@ class BlogArticleTest extends GraphQlTestCase
         $firstBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class);
         $firstBlogCategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogCategory->getId()]);
 
-        $description = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
-            <div class="gjs-text-ckeditor">
-                <p>
-                    Blog Article Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate. Accusantium mollitia placeat consequatur.
-                </p>
-            </div>
-            <div class="gjs-text-ckeditor">
-                <h2>Heading H2</h2>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate. Accusantium mollitia placeat consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate. Accusantium mollitia placeat consequatur.
-                </p>
-            </div>
-            <div class="gjs-products" data-products="9177759,5965879P,9184449,9176544M,7700768"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="5965879P"></div><div class="gjs-product" data-product="9184449"></div><div class="gjs-product" data-product="9176544M"></div><div class="gjs-product" data-product="7700768"></div></div>
-        EOT));
-        $description = $this->grapesJsParser->parse($description);
+        $description = $this->grapesJsParser->parse($this->blogArticle->getDescription($locale));
+        $articleTitle = t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $firstBlogSubcategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class);
+        $firstBlogSubcategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogSubcategory->getId()]);
 
         return [
             'data' => [
                 'blogArticle' => [
-                    'name' => t('Blog article example %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    'name' => $articleTitle,
                     'uuid' => $this->blogArticle->getUuid(),
                     'text' => $description,
                     'createdAt' => $this->blogArticle->getCreatedAt()->format(DATE_ATOM),
                     'visibleOnHomepage' => true,
                     'publishDate' => $this->blogArticle->getPublishDate(Domain::FIRST_DOMAIN_ID)->format(DATE_ATOM),
-                    'perex' => t('%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                    'seoTitle' => t('title - Blog article example %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                    'seoMetaDescription' => t('Blog article example %counter% %locale% - Meta description', ['%counter%' => 1, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                    'seoH1' => t('Blog article example %counter% %locale% - H1', ['%counter%' => 1, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    'perex' => $this->blogArticle->getPerex($locale),
+                    'seoTitle' => $this->blogArticle->getSeoTitle(Domain::FIRST_DOMAIN_ID),
+                    'seoMetaDescription' => $this->blogArticle->getSeoMetaDescription(Domain::FIRST_DOMAIN_ID),
+                    'seoH1' => $articleTitle,
                     'blogCategories' => [
                         ['name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+                        ['name' => $firstBlogSubcategory->getName($locale)],
                     ],
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => '/' . $friendlyUrl->getSlug(),
@@ -302,7 +289,11 @@ class BlogArticleTest extends GraphQlTestCase
                             'slug' => $firstBlogCategorySlug,
                         ],
                         [
-                            'name' => t('Blog article example %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                            'name' => $firstBlogSubcategory->getName($locale),
+                            'slug' => $firstBlogSubcategorySlug,
+                        ],
+                        [
+                            'name' => $articleTitle,
                             'slug' => '/' . $friendlyUrl->getSlug(),
                         ],
                     ],

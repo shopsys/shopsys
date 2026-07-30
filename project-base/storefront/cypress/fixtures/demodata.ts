@@ -155,7 +155,7 @@ export const staticData = {
         category: '9808de4b-f953-544e-82ec-8417c2893cbd',
         product: '55bb22ab-bb88-5459-a464-005b948d8c78',
         blogCategory: 'f8129edb-3f92-5dfc-b6e5-261d85279485',
-        blogArticle: 'fd418fec-fcd5-58ac-8e65-1fbbcd4260e3',
+        blogArticle: 'cf500b03-d2e4-5549-b3af-cefed894c1b4',
         brand: 'b077003c-3163-5126-890e-a2942355b17b',
         flag: '1d016b34-f541-576c-a135-e81aaba6be0e',
         store: '4bade3e5-3b8c-5e71-93a5-ae1d84564575',

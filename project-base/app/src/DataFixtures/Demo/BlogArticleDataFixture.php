@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\DataFixtures\Demo\DemoDataFactory\BlogArticleContentFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use InvalidArgumentException;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
@@ -26,12 +29,16 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 {
     private const string UUID_NAMESPACE = '7cd16792-7f6c-433c-b038-34ad5f31a215';
 
-    public const int PAGES_IN_CATEGORY = 15;
+    private const int ARTICLES_IN_ADDITIONAL_SUBCATEGORY = 2;
+    private const int ARTICLE_TITLE_TOPICS_COUNT = 5;
+
+    public const int PAGES_IN_CATEGORY = 7;
 
     public const string FIRST_DEMO_BLOG_ARTICLE = 'first_demo_blog_article';
     public const string FIRST_DEMO_BLOG_SUBCATEGORY = 'first_demo_blog_subcategory';
     public const string FIRST_DEMO_BLOG_CATEGORY = 'first_demo_blog_category';
-    public const string DEMO_BLOG_ARTICLE_PREFIX = 'demo_blog_article_';
+    public const string BLOG_CATEGORY_SCREEN_TECHNOLOGIES = 'blog_category_screen_technologies';
+    public const string BLOG_CATEGORY_TELEVISIONS = 'blog_category_televisions';
     public const string SECOND_DEMO_BLOG_SUBCATEGORY = 'second_demo_blog_subcategory';
     public const string BLOG_ARTICLE_DRAFT = 'blog_article_draft';
     public const string BLOG_ARTICLE_PREVIEW = 'blog_article_preview';
@@ -49,6 +56,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         private readonly BlogCategoryFacade $blogCategoryFacade,
         private readonly BlogVisibilityFacade $blogVisibilityFacade,
         private readonly BlogCategoryDataFactory $blogCategoryDataFactory,
+        private readonly BlogArticleContentFactory $blogArticleContentFactory,
     ) {
     }
 
@@ -72,22 +80,83 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         $this->addReference(self::FIRST_DEMO_BLOG_CATEGORY, $mainPageBlogCategory);
 
-        // only in main category
+        $firstSubcategoryData = $this->createSubcategory($mainPageBlogCategory, 1);
+        $firstSubcategory = $this->blogCategoryFacade->create($firstSubcategoryData);
+        $this->addReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, $firstSubcategory);
+
+        $televisionsCategory = $this->blogCategoryFacade->create($this->createSubcategory($firstSubcategory, 6));
+        $this->addReference(self::BLOG_CATEGORY_TELEVISIONS, $televisionsCategory);
+        $audioCategory = $this->blogCategoryFacade->create($this->createSubcategory($firstSubcategory, 7));
+        $screenTechnologiesCategory = $this->blogCategoryFacade->create($this->createSubcategory($televisionsCategory, 8));
+        $this->addReference(self::BLOG_CATEGORY_SCREEN_TECHNOLOGIES, $screenTechnologiesCategory);
+
+        $secondSubcategoryData = $this->createSubcategory($mainPageBlogCategory, 2);
+        $secondSubcategory = $this->blogCategoryFacade->create($secondSubcategoryData);
+        $this->addReference(self::SECOND_DEMO_BLOG_SUBCATEGORY, $secondSubcategory);
+
+        $additionalCategoriesByArticleGroup = $this->createAdditionalSubcategories($mainPageBlogCategory);
+
+        $mainBlogArticle = $this->createMainBlogArticle(
+            $mainPageBlogCategory,
+            $firstSubcategory,
+        );
+        $this->addReference(self::FIRST_DEMO_BLOG_ARTICLE, $mainBlogArticle);
+        $this->addReference(self::BLOG_ARTICLE_WITH_AUTHOR, $mainBlogArticle);
+
+        $this->createGeneralArticles(
+            $mainPageBlogCategory,
+            $secondSubcategory,
+            $additionalCategoriesByArticleGroup,
+        );
+        $this->createBuyingGuideArticles(
+            $mainPageBlogCategory,
+            $firstSubcategory,
+            $televisionsCategory,
+            $audioCategory,
+            $screenTechnologiesCategory,
+        );
+        $this->createInspirationArticles($mainPageBlogCategory, $secondSubcategory);
+
+        $this->createArticlesInAdditionalSubcategories(
+            $additionalCategoriesByArticleGroup,
+            $mainPageBlogCategory,
+            $screenTechnologiesCategory,
+        );
+
+        $this->blogVisibilityFacade->refreshBlogArticlesVisibility();
+        $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
+    }
+
+    /**
+     * @param array<string, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]> $additionalCategoriesByArticleGroup
+     */
+    private function createGeneralArticles(
+        BlogCategory $mainPageBlogCategory,
+        BlogCategory $secondSubcategory,
+        array $additionalCategoriesByArticleGroup,
+    ): void {
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
-            $blogArticleData = $this->createArticle([$mainPageBlogCategory]);
+            $blogArticleData = $this->createArticle(
+                $this->getGeneralArticleCategories(
+                    $i,
+                    $mainPageBlogCategory,
+                    $secondSubcategory,
+                    $additionalCategoriesByArticleGroup,
+                ),
+                BlogArticleContentFactory::ARTICLE_GROUP_GENERAL,
+                $i,
+            );
             $this->applyStatusDiversity($blogArticleData, $i);
-            $this->forceBlogArticleAuthorForTestReferences($blogArticleData, $i);
+
+            if ($i === 1) {
+                $blogArticleData->blogArticleAuthor = null;
+            }
 
             $blogArticle = $this->blogArticleFacade->create($blogArticleData);
 
-            if ($i === 0) {
-                $this->addReference(self::FIRST_DEMO_BLOG_ARTICLE, $blogArticle);
+            if ($i === 1) {
                 $this->addReference(self::BLOG_ARTICLE_WITHOUT_AUTHOR, $blogArticle);
-            } elseif ($i === 1) {
-                $this->addReference(self::BLOG_ARTICLE_WITH_AUTHOR, $blogArticle);
-            }
-
-            if ($i === self::PAGES_IN_CATEGORY - 1) {
+            } elseif ($i === self::PAGES_IN_CATEGORY - 1) {
                 $this->addReference(self::BLOG_ARTICLE_DRAFT, $blogArticle);
             } elseif ($i === self::PAGES_IN_CATEGORY - 2) {
                 $this->addReference(self::BLOG_ARTICLE_PREVIEW, $blogArticle);
@@ -95,14 +164,28 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
                 $this->addReference(self::BLOG_ARTICLE_PUBLISHED_FUTURE, $blogArticle);
             }
         }
+    }
 
-        $firstSubcategoryData = $this->createSubcategory($mainPageBlogCategory, 1);
-        $firstSubcategory = $this->blogCategoryFacade->create($firstSubcategoryData);
-        $this->addReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, $firstSubcategory);
-
-        // in first subcategory
+    private function createBuyingGuideArticles(
+        BlogCategory $mainPageBlogCategory,
+        BlogCategory $firstSubcategory,
+        BlogCategory $televisionsCategory,
+        BlogCategory $audioCategory,
+        BlogCategory $screenTechnologiesCategory,
+    ): void {
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
-            $blogArticleData = $this->createArticle([$mainPageBlogCategory, $firstSubcategory]);
+            $blogArticleData = $this->createArticle(
+                $this->getBuyingGuideArticleCategories(
+                    $i,
+                    $mainPageBlogCategory,
+                    $firstSubcategory,
+                    $televisionsCategory,
+                    $audioCategory,
+                    $screenTechnologiesCategory,
+                ),
+                BlogArticleContentFactory::ARTICLE_GROUP_BUYING_GUIDE,
+                $i,
+            );
             $this->applyStatusDiversity($blogArticleData, $i);
 
             if ($i === self::PAGES_IN_CATEGORY - 1) {
@@ -110,14 +193,18 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             }
             $this->blogArticleFacade->create($blogArticleData);
         }
+    }
 
-        $secondSubcategoryData = $this->createSubcategory($mainPageBlogCategory, 2);
-        $secondSubcategory = $this->blogCategoryFacade->create($secondSubcategoryData);
-        $this->addReference(self::SECOND_DEMO_BLOG_SUBCATEGORY, $secondSubcategory);
-
-        // in second subcategory
+    private function createInspirationArticles(
+        BlogCategory $mainPageBlogCategory,
+        BlogCategory $secondSubcategory,
+    ): void {
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
-            $blogArticleData = $this->createArticle([$mainPageBlogCategory, $secondSubcategory]);
+            $blogArticleData = $this->createArticle(
+                [$mainPageBlogCategory, $secondSubcategory],
+                BlogArticleContentFactory::ARTICLE_GROUP_INSPIRATION,
+                $i,
+            );
             $this->applyStatusDiversity($blogArticleData, $i);
 
             if ($i === self::PAGES_IN_CATEGORY - 1) {
@@ -125,13 +212,121 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             }
             $this->blogArticleFacade->create($blogArticleData);
         }
+    }
 
-        $this->createBlogArticleForSearchingTest();
-        $this->createBlockArticleForProductsTest();
-        $this->createBlockArticleWithGrapesJs();
+    /**
+     * @return array<string, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]>
+     */
+    private function createAdditionalSubcategories(BlogCategory $mainPageBlogCategory): array
+    {
+        $categoryDataByOrder = [
+            3 => ['articleGroup' => BlogArticleContentFactory::ARTICLE_GROUP_PRODUCT_NEWS],
+            4 => ['articleGroup' => BlogArticleContentFactory::ARTICLE_GROUP_CARE, 'childOrder' => 9],
+            5 => ['articleGroup' => BlogArticleContentFactory::ARTICLE_GROUP_TECHNOLOGY],
+        ];
+        $additionalCategoriesByArticleGroup = [];
 
-        $this->blogVisibilityFacade->refreshBlogArticlesVisibility();
-        $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
+        foreach ($categoryDataByOrder as $subcategoryOrder => $categoryData) {
+            $subcategoryData = $this->createSubcategory($mainPageBlogCategory, $subcategoryOrder);
+            $subcategory = $this->blogCategoryFacade->create($subcategoryData);
+            $articleCategories = [$subcategory];
+
+            if (isset($categoryData['childOrder'])) {
+                $articleCategories[] = $this->blogCategoryFacade->create(
+                    $this->createSubcategory($subcategory, $categoryData['childOrder']),
+                );
+            }
+
+            $additionalCategoriesByArticleGroup[$categoryData['articleGroup']] = $articleCategories;
+        }
+
+        return $additionalCategoriesByArticleGroup;
+    }
+
+    /**
+     * @param array<string, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]> $additionalCategoriesByArticleGroup
+     */
+    private function createArticlesInAdditionalSubcategories(
+        array $additionalCategoriesByArticleGroup,
+        BlogCategory $mainPageBlogCategory,
+        BlogCategory $screenTechnologiesCategory,
+    ): void {
+        foreach ($additionalCategoriesByArticleGroup as $articleGroup => $articleCategories) {
+            for ($i = 0; $i < self::ARTICLES_IN_ADDITIONAL_SUBCATEGORY; $i++) {
+                $assignedCategories = [$articleCategories[$i % count($articleCategories)]];
+
+                if ($articleGroup === BlogArticleContentFactory::ARTICLE_GROUP_CARE && $i === 0) {
+                    $assignedCategories = $articleCategories;
+                }
+
+                if ($articleGroup === BlogArticleContentFactory::ARTICLE_GROUP_TECHNOLOGY && $i === 1) {
+                    $assignedCategories[] = $screenTechnologiesCategory;
+                }
+
+                $blogArticleData = $this->createArticle(
+                    [$mainPageBlogCategory, ...$assignedCategories],
+                    $articleGroup,
+                    $i,
+                );
+                $this->blogArticleFacade->create($blogArticleData);
+            }
+        }
+    }
+
+    /**
+     * @param array<string, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]> $additionalCategoriesByArticleGroup
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     */
+    private function getGeneralArticleCategories(
+        int $index,
+        BlogCategory $mainPageBlogCategory,
+        BlogCategory $inspirationCategory,
+        array $additionalCategoriesByArticleGroup,
+    ): array {
+        $categoriesByTopicIndex = [
+            null,
+            null,
+            $additionalCategoriesByArticleGroup[BlogArticleContentFactory::ARTICLE_GROUP_CARE][0],
+            $additionalCategoriesByArticleGroup[BlogArticleContentFactory::ARTICLE_GROUP_TECHNOLOGY][0],
+            $inspirationCategory,
+        ];
+        $articleCategory = $categoriesByTopicIndex[$index % self::ARTICLE_TITLE_TOPICS_COUNT];
+
+        return $articleCategory === null ? [$mainPageBlogCategory] : [$mainPageBlogCategory, $articleCategory];
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     */
+    private function getBuyingGuideArticleCategories(
+        int $index,
+        BlogCategory $mainPageBlogCategory,
+        BlogCategory $buyingGuideCategory,
+        BlogCategory $televisionsCategory,
+        BlogCategory $audioCategory,
+        BlogCategory $screenTechnologiesCategory,
+    ): array {
+        if ($index === 0) {
+            return [$mainPageBlogCategory];
+        }
+
+        $articleCategories = [$buyingGuideCategory];
+        $topicIndex = $index % self::ARTICLE_TITLE_TOPICS_COUNT;
+
+        if ($topicIndex === 0) {
+            $articleCategories = $index >= self::ARTICLE_TITLE_TOPICS_COUNT
+                ? [$televisionsCategory, $screenTechnologiesCategory]
+                : [$buyingGuideCategory, $televisionsCategory];
+        } elseif ($topicIndex === 1) {
+            $articleCategories[] = $audioCategory;
+        }
+
+        return [$mainPageBlogCategory, ...$articleCategories];
+    }
+
+    public static function getDemoBlogArticleUuid(int $articleNumber): string
+    {
+        return Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article example ' . $articleNumber)->toString();
     }
 
     private function createSubcategory(BlogCategory $parentCategory, int $subcategoryOrder): BlogCategoryData
@@ -143,34 +338,128 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $locale = $domainConfig->getLocale();
             $domainId = $domainConfig->getId();
 
-            if ($subcategoryOrder === 1) {
-                $blogCategoryData->seoH1s[$domainId] = t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->seoTitles[$domainId] = t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->names[$locale] = t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->descriptions[$locale] = t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->seoMetaDescriptions[$domainId] = t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            } else {
-                $blogCategoryData->seoH1s[$domainId] = t('Second subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->seoTitles[$domainId] = t('title - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->names[$locale] = t('Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->descriptions[$locale] = t('description - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->seoMetaDescriptions[$domainId] = t('description - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            }
+            $translatedData = $this->getTranslatedSubcategoryData($subcategoryOrder, $locale);
+            $blogCategoryData->seoH1s[$domainId] = $translatedData['seoH1'];
+            $blogCategoryData->seoTitles[$domainId] = $translatedData['seoTitle'];
+            $blogCategoryData->names[$locale] = $translatedData['name'];
+            $blogCategoryData->descriptions[$locale] = $translatedData['description'];
+            $blogCategoryData->seoMetaDescriptions[$domainId] = $translatedData['description'];
         }
 
-        if ($subcategoryOrder === 1) {
-            $blogCategoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'First subsection')->toString();
-        } else {
-            $blogCategoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Second subsection')->toString();
-        }
+        $blogCategoryData->uuid = Uuid::uuid5(
+            self::UUID_NAMESPACE,
+            $this->getSubcategoryUuidSeed($subcategoryOrder),
+        )->toString();
 
         return $blogCategoryData;
     }
 
     /**
+     * @return array{name: string, seoH1: string, seoTitle: string, description: string}
+     */
+    private function getTranslatedSubcategoryData(int $subcategoryOrder, string $locale): array
+    {
+        return $subcategoryOrder <= 5
+            ? $this->getTranslatedTopLevelSubcategoryData($subcategoryOrder, $locale)
+            : $this->getTranslatedNestedSubcategoryData($subcategoryOrder, $locale);
+    }
+
+    /**
+     * @return array{name: string, seoH1: string, seoTitle: string, description: string}
+     */
+    private function getTranslatedTopLevelSubcategoryData(int $subcategoryOrder, string $locale): array
+    {
+        $parameters = ['%locale%' => $locale];
+
+        return match ($subcategoryOrder) {
+            1 => [
+                'name' => t('First subsection %locale%', $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoH1' => t('First subsection %locale% - h1', $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoTitle' => t('title - First subsection %locale%', $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'description' => t('description - First subsection %locale%', $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            2 => [
+                'name' => t('Second subsection %locale%', $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoH1' => t('Second subsection %locale% - h1', $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoTitle' => t('title - Second subsection %locale%', $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'description' => t('description - Second subsection %locale%', $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            3 => [
+                'name' => t('Product news', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoH1' => t('Product news', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoTitle' => t('Product news | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'description' => t('Discover new products, useful features, and updates from the world of electronics.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            4 => [
+                'name' => t('Care and maintenance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoH1' => t('Care and maintenance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoTitle' => t('Care and maintenance | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'description' => t('Simple advice to keep products working well and looking their best.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            5 => [
+                'name' => t('Technology and trends', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoH1' => t('Technology and trends', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoTitle' => t('Technology and trends | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'description' => t('Understand the technologies and trends shaping modern homes.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            default => throw new InvalidArgumentException(sprintf('Unknown top-level blog subcategory order "%d".', $subcategoryOrder)),
+        };
+    }
+
+    /**
+     * @return array{name: string, seoH1: string, seoTitle: string, description: string}
+     */
+    private function getTranslatedNestedSubcategoryData(int $subcategoryOrder, string $locale): array
+    {
+        return match ($subcategoryOrder) {
+            6 => [
+                'name' => t('Televisions and displays', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoH1' => t('Televisions and displays', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoTitle' => t('Televisions and displays | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'description' => t('Guides for choosing television size, picture quality, and practical features.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            7 => [
+                'name' => t('Audio and headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoH1' => t('Audio and headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoTitle' => t('Audio and headphones | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'description' => t('Advice for comparing headphones, speakers, and home audio equipment.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            8 => [
+                'name' => t('Screen technologies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoH1' => t('Screen technologies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoTitle' => t('Screen technologies | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'description' => t('Understand OLED, QLED, Mini LED, resolution, HDR, and refresh rates.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            9 => [
+                'name' => t('Cleaning and upkeep', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoH1' => t('Cleaning and upkeep', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'seoTitle' => t('Cleaning and upkeep | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'description' => t('Safe cleaning routines and simple maintenance for everyday electronics.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            default => throw new InvalidArgumentException(sprintf('Unknown nested blog subcategory order "%d".', $subcategoryOrder)),
+        };
+    }
+
+    private function getSubcategoryUuidSeed(int $subcategoryOrder): string
+    {
+        return match ($subcategoryOrder) {
+            1 => 'First subsection',
+            2 => 'Second subsection',
+            3 => 'Product news',
+            4 => 'Care and maintenance',
+            5 => 'Technology and trends',
+            6 => 'Televisions and displays',
+            7 => 'Audio and headphones',
+            8 => 'Screen technologies',
+            9 => 'Cleaning and upkeep',
+            default => throw new InvalidArgumentException(sprintf('Unknown blog subcategory order "%d".', $subcategoryOrder)),
+        };
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
      */
-    private function createArticle(array $blogCategories): BlogArticleData
+    private function createArticle(array $blogCategories, string $articleGroup, int $index): BlogArticleData
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
 
@@ -182,23 +471,19 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         }
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article example ' . $this->articleCounter)->toString();
 
+        /** @var array<string, string> $articleTitlesByLocale */
+        $articleTitlesByLocale = [];
+
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-            $blogArticleData->names[$locale] = t('Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
-                <div class="gjs-text-ckeditor">
-                    <p>
-                        Blog Article Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate. Accusantium mollitia placeat consequatur.
-                    </p>
-                </div>
-                <div class="gjs-text-ckeditor">
-                    <h2>Heading H2</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate. Accusantium mollitia placeat consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate. Accusantium mollitia placeat consequatur.
-                    </p>
-                </div>
-                <div class="gjs-products" data-products="9177759,5965879P,9184449,9176544M,7700768"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="5965879P"></div><div class="gjs-product" data-product="9184449"></div><div class="gjs-product" data-product="9176544M"></div><div class="gjs-product" data-product="7700768"></div></div>
-            EOT));
-            $blogArticleData->perexes[$locale] = t('%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $articleTitle = $this->blogArticleContentFactory->createTitle($articleGroup, $index, $locale);
+            $articleTitlesByLocale[$locale] = $articleTitle;
+            $blogArticleData->names[$locale] = $articleTitle;
+            $blogArticleData->descriptions[$locale] = $this->blogArticleContentFactory->createDescription(
+                $articleTitle,
+                $articleGroup,
+                $locale,
+            );
+            $blogArticleData->perexes[$locale] = t('Clear advice and practical tips for %articleTitle%.', ['%articleTitle%' => $articleTitle], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
@@ -206,9 +491,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $domainId = $domainConfig->getId();
 
             $blogArticleData->blogCategoriesByDomainId[$domainId] = $blogCategories;
-            $blogArticleData->seoTitles[$domainId] = t('title - Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domainId] = t('Blog article example %counter% %locale% - H1', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoMetaDescriptions[$domainId] = t('Blog article example %counter% %locale% - Meta description', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seoTitles[$domainId] = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seoH1s[$domainId] = $articleTitlesByLocale[$locale];
+            $blogArticleData->seoMetaDescriptions[$domainId] = t('Read practical advice in the article: %articleTitle%', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->assignBlogArticleAuthor($blogArticleData);
@@ -237,18 +522,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $this->blogArticleAuthorRotation++;
     }
 
-    private function forceBlogArticleAuthorForTestReferences(BlogArticleData $blogArticleData, int $index): void
-    {
-        if ($index === 0) {
-            $blogArticleData->blogArticleAuthor = null;
-        } elseif ($index === 1) {
-            $blogArticleData->blogArticleAuthor = $this->getReference(
-                BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_1,
-                BlogArticleAuthor::class,
-            );
-        }
-    }
-
     private function applyStatusDiversity(BlogArticleData $blogArticleData, int $index): void
     {
         $domainIds = $this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds();
@@ -271,196 +544,46 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         }
     }
 
-    private function createBlogArticleForSearchingTest(): void
-    {
+    private function createMainBlogArticle(
+        BlogCategory $mainPageBlogCategory,
+        BlogCategory $buyingGuideCategory,
+    ): BlogArticle {
         $blogArticleData = $this->blogArticleDataFactory->create();
-        $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for search testing')->toString();
+        $blogArticleData->blogArticleAuthor = $this->getReference(
+            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_1,
+            BlogArticleAuthor::class,
+        );
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
-            $blogArticleData->publishDates[$domainId] = (new DatePoint())->modify('-1 days');
-            $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_PUBLISHED;
-        }
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-            $blogArticleData->names[$locale] = t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->descriptions[$locale] = t(
-                '<div class="gjs-text-ckeditor"><p>Blog article text for search testing, the search phrase is &#34;Dina&#34;.</p></div>',
-                [],
-                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale,
-            );
-            $blogArticleData->perexes[$locale] = 'Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum.';
-        }
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
-            $locale = $domainConfig->getLocale();
-            $domainId = $domainConfig->getId();
-
-            $blogArticleData->blogCategoriesByDomainId[$domainId] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
-            $blogArticleData->seoTitles[$domainId] = t('title', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domainId] = t('Heading', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        }
-
-        $blogArticle = $this->blogArticleFacade->create($blogArticleData);
-        $this->addReference(self::DEMO_BLOG_ARTICLE_PREFIX . $blogArticle->getId(), $blogArticle);
-
-        $this->articleCounter++;
-    }
-
-    private function createBlockArticleForProductsTest(): void
-    {
-        $blogArticleData = $this->blogArticleDataFactory->create();
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
-            $blogArticleData->publishDates[$domainId] = (new DatePoint())->modify('-2 days');
-            $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_PUBLISHED;
-        }
-        $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for products testing')->toString();
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-            $blogArticleData->names[$locale] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
-                <div class="gjs-text-ckeditor">
-                    <h2>Products</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate. Accusantium mollitia placeat consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate. Accusantium mollitia placeat consequatur.
-                    </p>
-                </div>
-                <div class="gjs-products" data-products="9177759,5965879P,9184449,9176544M,7700768">
-                    <div class="gjs-product" data-product="9177759"></div>
-                    <div class="gjs-product" data-product="5965879P"></div>
-                    <div class="gjs-product" data-product="9184449"></div>
-                    <div class="gjs-product" data-product="9176544M"></div>
-                    <div class="gjs-product" data-product="7700768"></div>
-                </div>
-                <div class="gjs-text-ckeditor">
-                    <h2>More products</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium.
-                    </p>
-                </div>
-                <div class="gjs-products" data-products="9177759,5965879P,9184449">
-                    <div class="gjs-product" data-product="9177759"></div>
-                    <div class="gjs-product" data-product="5965879P"></div>
-                    <div class="gjs-product" data-product="9184449"></div>
-                </div>
-            EOT));
-            $blogArticleData->perexes[$locale] = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium';
-        }
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
-            $locale = $domainConfig->getLocale();
-            $domainId = $domainConfig->getId();
-
-            $blogArticleData->blogCategoriesByDomainId[$domainId] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
-            $blogArticleData->seoTitles[$domainId] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domainId] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        }
-
-        $blogArticle = $this->blogArticleFacade->create($blogArticleData);
-        $this->addReference(self::DEMO_BLOG_ARTICLE_PREFIX . $blogArticle->getId(), $blogArticle);
-
-        $this->articleCounter++;
-    }
-
-    private function createBlockArticleWithGrapesJs(): void
-    {
-        $blogArticleData = $this->blogArticleDataFactory->create();
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
-            $blogArticleData->publishDates[$domainId] = (new DatePoint())->modify('-3 days');
+            $blogArticleData->publishDates[$domainId] = (new DatePoint())->modify('-1 day');
             $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_PUBLISHED;
         }
         $firstDomainUrl = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getUrl();
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'GrapesJS page')->toString();
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-            $blogArticleData->names[$locale] = t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
-                <div class="gjs-text-ckeditor">
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit magnam illum ex asperiores, non vitae laborum, dignissimos commodi a necessitatibus nobis saepe, soluta sapiente id quisquam quod vel quam hic. Fusce tellu:</p>
-
-                    <ul>
-                        <li>Praesent dapibus</li>
-                        <ul>
-                            <li>Donec vitae arcu</li>
-                            <li>Morbi scelerisque luctus velit</li>
-                            <ul>
-                                <li>Donec vitae arcu</li>
-                                <li>Morbi scelerisque luctus velit</li>
-                                <li>Donec vitae arcu</li>
-                            </ul>
-                        </ul>
-                        <li>Nam libero tempore, cum soluta nobis est eligendi</li>
-                    </ul>
-
-                    <h2>Praesent dapibus</h2>
-                    <p>
-                        Aliquam ante. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Ut enim ad minim veniam, <strong>quis nostrud exercitation</strong> ullamco laboris nisi ut aliquip ex ea commodo consequat. In enim a arcu imperdiet malesuada. Fusce nibh. Integer lacinia. Fusce <strong>aliquam vestibulum</strong> ipsum. Fusce consectetuer risus a nunc. Donec iaculis gravida nulla. Phasellus enim erat, vestibulum vel, aliquam a, <strong>posuere eu</strong>, velit. Morbi imperdiet, mauris ac auctor dictum, nisl ligula egestas nulla, et sollicitudin sem purus in lacus.
-                    </p> 
-
-                    <p>
-                        <strong>TIP:</strong> <a href="{$firstDomainUrl}" id="ieevs4" tabindex="0">Mauris suscipit, ligula sit amet pharetra semper</a>
-                    </p>
-
-                    <h3>Donec vitae arcu</h3>
-                    <p>
-                        Aenean fermentum risus id tortor. Vivamus ac leo pretium faucibus. Duis risus. Mauris elementum <strong>mauris vitae</strong> tortor. Nulla quis diam. In rutrum. In enim a arcu imperdiet malesuada. Fusce wisi. Integer imperdiet lectus quis justo. Pellentesque ipsum. Aliquam erat volutpat. Etiam <strong>dictum tincidunt</strong> diam.
-                    </p>
-                    
-                    <p>
-                        <strong>TIP:</strong> <a href="{$firstDomainUrl}" id="iauj76" tabindex="0">Mauris tincidunt sem sed arcu</a>
-                    </p>
-
-                    <h4>Morbi scelerisque luctus velit</h4>
-                    <p>
-                        Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus faucibus molestie nisl. Nullam faucibus mi quis velit. Integer imperdiet lectus quis justo. Nulla accumsan, elit sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel leo.
-                    </p>
-
-                    <p>
-                        <strong>TIP:</strong> Mauris vehicula lacinia, quis nostrud exercitation ullamco laboris ...
-                    </p>
-                </div>
-
-                <div class="gjs-text-ckeditor">
-                    <h6>Recommended product</h6>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium, aliquam commodi molestiae atque laudantium in dolorem esse error blanditiis, debitis facere id voluptate.
-                    </p>
-                </div>
-
-                <div class="gjs-products" data-products="5965907">
-                    <div data-product="5965907" data-product-name="PANASONIC DMC FT5EP" class="gjs-product"></div>
-                </div>
-
-                <div class="gjs-text-ckeditor">
-                    <h5>Nam libero tempore, cum soluta nobis est eligendi</h5>
-                    <p>
-                        Proin in tellus sit amet nibh dignissim sagittis. Integer in sapien. Curabitur sagittis hendrerit ante. Praesent in mauris eu tortor porttitor accumsan. Aliquam in lorem sit amet leo accumsan lacinia. Nullam rhoncus aliquam metus. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Aliquam erat volutpat. Duis ante orci, molestie vitae vehicula venenatis, tincidunt ac pede. Duis condimentum augue id magna semper rutrum. Etiam bibendum elit eget erat.
-                    </p>
-
-                    <h6>Products</h6>
-                </div>
-
-                <div class="gjs-products" data-products="9177759,9176508,5965879P">
-                    <div data-product="9177759" data-product-name="22&quot; Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div>
-                    <div data-product="9176508" data-product-name="32&quot; Philips 32PFL4308" class="gjs-product"></div>
-                    <div data-product="5965879P" data-product-name="47&quot; LG 47LA790V (FHD)" class="gjs-product"></div>
-                </div>
-            EOT));
+            $articleTitle = t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->names[$locale] = $articleTitle;
+            $blogArticleData->descriptions[$locale] = $this->blogArticleContentFactory->createMainArticleDescription(
+                $firstDomainUrl,
+            );
+            $blogArticleData->perexes[$locale] = t('A practical guide to screen size, picture quality, connectivity, and the features worth considering before buying a new television.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $domainId = $domainConfig->getId();
+            $locale = $domainConfig->getLocale();
+            $articleTitle = $blogArticleData->names[$locale];
             $blogArticleData->blogCategoriesByDomainId[$domainId] = [
-                $this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class),
-                $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class),
+                $mainPageBlogCategory,
+                $buyingGuideCategory,
             ];
+            $blogArticleData->seoTitles[$domainId] = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitle], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seoH1s[$domainId] = $articleTitle;
+            $blogArticleData->seoMetaDescriptions[$domainId] = $blogArticleData->perexes[$locale];
         }
 
-        $blogArticle = $this->blogArticleFacade->create($blogArticleData);
-        $this->addReference(self::DEMO_BLOG_ARTICLE_PREFIX . $blogArticle->getId(), $blogArticle);
-
-        $this->articleCounter++;
+        return $this->blogArticleFacade->create($blogArticleData);
     }
 
     /**

@@ -70,7 +70,7 @@ describe('Simple page visit tests with screenshots', () => {
         changeBlogArticleDynamicPartsToStaticDemodata();
         cy.getByTID([TIDs.grapesjs_product_hero])
             .should('be.visible')
-            .and('have.attr', 'data-product-catnum', staticData.products.panasonicDmcFt5ep.catnum);
+            .and('have.attr', 'data-product-catnum', staticData.products.philips32PFL4308.catnum);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'blog article detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },

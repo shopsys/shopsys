@@ -1,0 +1,14 @@
+query HomepageBlogArticleCategoriesQuery {
+    blogArticles(first: 100, onlyHomepageArticles: true) {
+        edges {
+            node {
+                blogCategories {
+                    name
+                    parent {
+                        name
+                    }
+                }
+            }
+        }
+    }
+}

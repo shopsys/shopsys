@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class CategoryHierarchyTest extends GraphQlTestCase
+final class CategoryHierarchyTest extends GraphQlTestCase
 {
     private const QUERY_FOLDER = __DIR__ . '/../_graphql/query/CategoryHierarchy';
 
@@ -95,7 +95,7 @@ class CategoryHierarchyTest extends GraphQlTestCase
                 'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryBooks]),
             ],
             [
-                'name' => t('Newest toys in stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryToys]),
             ],
             [
@@ -147,13 +147,53 @@ class CategoryHierarchyTest extends GraphQlTestCase
                     ],
                 ],
             ],
-            ['children' => []],
-            ['children' => []],
-            ['children' => []],
-            ['children' => []],
+            [
+                'children' => $this->getExpectedCategoryChildren($this->categoryBooks, [
+                    CategoryDataFixture::CATEGORY_FICTION,
+                    CategoryDataFixture::CATEGORY_NON_FICTION,
+                    CategoryDataFixture::CATEGORY_CHILDRENS_BOOKS,
+                ]),
+            ],
+            [
+                'children' => $this->getExpectedCategoryChildren($this->categoryToys, [
+                    CategoryDataFixture::CATEGORY_BUILDING_SETS,
+                    CategoryDataFixture::CATEGORY_BOARD_GAMES,
+                    CategoryDataFixture::CATEGORY_OUTDOOR_TOYS,
+                ]),
+            ],
+            [
+                'children' => $this->getExpectedCategoryChildren($this->categoryGardenTools, [
+                    CategoryDataFixture::CATEGORY_HAND_TOOLS,
+                    CategoryDataFixture::CATEGORY_POWER_TOOLS,
+                    CategoryDataFixture::CATEGORY_WATERING_SYSTEMS,
+                ]),
+            ],
+            [
+                'children' => $this->getExpectedCategoryChildren($this->categoryFood, [
+                    CategoryDataFixture::CATEGORY_SNACKS,
+                    CategoryDataFixture::CATEGORY_COFFEE_AND_TEA,
+                    CategoryDataFixture::CATEGORY_PANTRY_STAPLES,
+                ]),
+            ],
         ];
 
         self::assertSame($expected, $data);
+    }
+
+    /**
+     * @param string[] $childCategoryReferenceNames
+     * @return array<int, array{name: string, categoryHierarchy: array<int, array{id: int, name: string, uuid: string}>}>
+     */
+    private function getExpectedCategoryChildren(Category $parentCategory, array $childCategoryReferenceNames): array
+    {
+        return array_map(function (string $childCategoryReferenceName) use ($parentCategory) {
+            $childCategory = $this->getReference($childCategoryReferenceName, Category::class);
+
+            return [
+                'name' => $childCategory->getName($this->getLocaleForFirstDomain()),
+                'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$parentCategory, $childCategory]),
+            ];
+        }, $childCategoryReferenceNames);
     }
 
     /**

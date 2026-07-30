@@ -31,6 +31,36 @@ class CategoryDataFixture extends AbstractReferenceFixture
     public const string CATEGORY_TOYS = 'category_toys';
     public const string CATEGORY_GARDEN_TOOLS = 'category_garden_tools';
     public const string CATEGORY_FOOD = 'category_food';
+    public const string CATEGORY_LAPTOPS = 'category_laptops';
+    public const string CATEGORY_DESKTOP_COMPUTERS = 'category_desktop_computers';
+    public const string CATEGORY_COMPUTER_ACCESSORIES = 'category_computer_accessories';
+    public const string CATEGORY_TELEVISIONS = 'category_televisions';
+    public const string CATEGORY_HEADPHONES = 'category_headphones';
+    public const string CATEGORY_HOME_CINEMA_SYSTEMS = 'category_home_cinema_systems';
+    public const string CATEGORY_DIGITAL_CAMERAS = 'category_digital_cameras';
+    public const string CATEGORY_CAMERA_LENSES = 'category_camera_lenses';
+    public const string CATEGORY_CAMERA_ACCESSORIES = 'category_camera_accessories';
+    public const string CATEGORY_INKJET_PRINTERS = 'category_inkjet_printers';
+    public const string CATEGORY_LASER_PRINTERS = 'category_laser_printers';
+    public const string CATEGORY_PRINTER_SUPPLIES = 'category_printer_supplies';
+    public const string CATEGORY_SMARTPHONES = 'category_smartphones';
+    public const string CATEGORY_MOBILE_PHONE_ACCESSORIES = 'category_mobile_phone_accessories';
+    public const string CATEGORY_SMARTWATCHES = 'category_smartwatches';
+    public const string CATEGORY_AUTOMATIC_COFFEE_MACHINES = 'category_automatic_coffee_machines';
+    public const string CATEGORY_CAPSULE_COFFEE_MACHINES = 'category_capsule_coffee_machines';
+    public const string CATEGORY_COFFEE_GRINDERS = 'category_coffee_grinders';
+    public const string CATEGORY_FICTION = 'category_fiction';
+    public const string CATEGORY_NON_FICTION = 'category_non_fiction';
+    public const string CATEGORY_CHILDRENS_BOOKS = 'category_childrens_books';
+    public const string CATEGORY_BUILDING_SETS = 'category_building_sets';
+    public const string CATEGORY_BOARD_GAMES = 'category_board_games';
+    public const string CATEGORY_OUTDOOR_TOYS = 'category_outdoor_toys';
+    public const string CATEGORY_HAND_TOOLS = 'category_hand_tools';
+    public const string CATEGORY_POWER_TOOLS = 'category_power_tools';
+    public const string CATEGORY_WATERING_SYSTEMS = 'category_watering_systems';
+    public const string CATEGORY_SNACKS = 'category_snacks';
+    public const string CATEGORY_COFFEE_AND_TEA = 'category_coffee_and_tea';
+    public const string CATEGORY_PANTRY_STAPLES = 'category_pantry_staples';
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
@@ -194,7 +224,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
-            $categoryData->name[$locale] = t('Newest toys in stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $categoryData->name[$locale] = t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
                 'A toy is an item that can be used for play. Toys are generally played with by children and pets. '
                     . 'Playing with toys is an enjoyable means of training young children for life in society. Different materials are '
@@ -239,6 +269,105 @@ class CategoryDataFixture extends AbstractReferenceFixture
             );
         }
         $this->createCategory($categoryData, self::CATEGORY_FOOD);
+
+        $this->createSubcategories();
+    }
+
+    private function createSubcategories(): void
+    {
+        $subcategoryNamesByLocale = [];
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            foreach ($this->getSubcategoryNames($domainConfig->getLocale()) as $referenceName => $translatedName) {
+                $subcategoryNamesByLocale[$referenceName][$domainConfig->getLocale()] = $translatedName;
+            }
+        }
+
+        foreach ($this->getSubcategoryParentReferences() as $referenceName => $parentReferenceName) {
+            $categoryData = $this->categoryDataFactory->create();
+            $categoryData->name = $subcategoryNamesByLocale[$referenceName];
+            $categoryData->parent = $this->getReference($parentReferenceName, Category::class);
+
+            $this->createCategory($categoryData, $referenceName);
+        }
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getSubcategoryNames(string $locale): array
+    {
+        return [
+            self::CATEGORY_LAPTOPS => t('Laptops', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_DESKTOP_COMPUTERS => t('Desktop computers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_COMPUTER_ACCESSORIES => t('Computer accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_TELEVISIONS => t('Televisions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_HEADPHONES => t('Headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_HOME_CINEMA_SYSTEMS => t('Home cinema systems', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_DIGITAL_CAMERAS => t('Digital cameras', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_CAMERA_LENSES => t('Camera lenses', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_CAMERA_ACCESSORIES => t('Camera accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_INKJET_PRINTERS => t('Inkjet printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_LASER_PRINTERS => t('Laser printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_PRINTER_SUPPLIES => t('Printer supplies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_SMARTPHONES => t('Smartphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_MOBILE_PHONE_ACCESSORIES => t('Mobile phone accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_SMARTWATCHES => t('Smartwatches', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_AUTOMATIC_COFFEE_MACHINES => t('Automatic coffee machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_CAPSULE_COFFEE_MACHINES => t('Capsule coffee machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_COFFEE_GRINDERS => t('Coffee grinders', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_FICTION => t('Fiction', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_NON_FICTION => t('Non-fiction', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_CHILDRENS_BOOKS => t('Children\'s books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_BUILDING_SETS => t('Building sets', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_BOARD_GAMES => t('Board games', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_OUTDOOR_TOYS => t('Outdoor toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_HAND_TOOLS => t('Hand tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_POWER_TOOLS => t('Power tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_WATERING_SYSTEMS => t('Watering systems', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_SNACKS => t('Snacks', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_COFFEE_AND_TEA => t('Coffee & tea', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::CATEGORY_PANTRY_STAPLES => t('Pantry staples', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getSubcategoryParentReferences(): array
+    {
+        return [
+            self::CATEGORY_LAPTOPS => self::CATEGORY_PC,
+            self::CATEGORY_DESKTOP_COMPUTERS => self::CATEGORY_PC,
+            self::CATEGORY_COMPUTER_ACCESSORIES => self::CATEGORY_PC,
+            self::CATEGORY_TELEVISIONS => self::CATEGORY_TV,
+            self::CATEGORY_HEADPHONES => self::CATEGORY_TV,
+            self::CATEGORY_HOME_CINEMA_SYSTEMS => self::CATEGORY_TV,
+            self::CATEGORY_DIGITAL_CAMERAS => self::CATEGORY_PHOTO,
+            self::CATEGORY_CAMERA_LENSES => self::CATEGORY_PHOTO,
+            self::CATEGORY_CAMERA_ACCESSORIES => self::CATEGORY_PHOTO,
+            self::CATEGORY_INKJET_PRINTERS => self::CATEGORY_PRINTERS,
+            self::CATEGORY_LASER_PRINTERS => self::CATEGORY_PRINTERS,
+            self::CATEGORY_PRINTER_SUPPLIES => self::CATEGORY_PRINTERS,
+            self::CATEGORY_SMARTPHONES => self::CATEGORY_PHONES,
+            self::CATEGORY_MOBILE_PHONE_ACCESSORIES => self::CATEGORY_PHONES,
+            self::CATEGORY_SMARTWATCHES => self::CATEGORY_PHONES,
+            self::CATEGORY_AUTOMATIC_COFFEE_MACHINES => self::CATEGORY_COFFEE,
+            self::CATEGORY_CAPSULE_COFFEE_MACHINES => self::CATEGORY_COFFEE,
+            self::CATEGORY_COFFEE_GRINDERS => self::CATEGORY_COFFEE,
+            self::CATEGORY_FICTION => self::CATEGORY_BOOKS,
+            self::CATEGORY_NON_FICTION => self::CATEGORY_BOOKS,
+            self::CATEGORY_CHILDRENS_BOOKS => self::CATEGORY_BOOKS,
+            self::CATEGORY_BUILDING_SETS => self::CATEGORY_TOYS,
+            self::CATEGORY_BOARD_GAMES => self::CATEGORY_TOYS,
+            self::CATEGORY_OUTDOOR_TOYS => self::CATEGORY_TOYS,
+            self::CATEGORY_HAND_TOOLS => self::CATEGORY_GARDEN_TOOLS,
+            self::CATEGORY_POWER_TOOLS => self::CATEGORY_GARDEN_TOOLS,
+            self::CATEGORY_WATERING_SYSTEMS => self::CATEGORY_GARDEN_TOOLS,
+            self::CATEGORY_SNACKS => self::CATEGORY_FOOD,
+            self::CATEGORY_COFFEE_AND_TEA => self::CATEGORY_FOOD,
+            self::CATEGORY_PANTRY_STAPLES => self::CATEGORY_FOOD,
+        ];
     }
 
     /**

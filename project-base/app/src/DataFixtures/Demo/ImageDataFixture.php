@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\DataFixtures\Demo\DemoDataFactory\ImageDataFixtureNameFactory;
 use App\Model\Category\Category;
 use App\Model\Payment\Payment;
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Product;
 use App\Model\Slider\SliderItemFacade;
 use App\Model\Transport\Transport;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -15,12 +17,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use LogicException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Model\Advert\Advert;
+use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
 use Symfony\Component\Clock\DatePoint;
@@ -33,12 +39,44 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     public const string IMAGE_TYPE = 'jpg';
     public const string IMAGE_TYPE_PNG = 'png';
 
+    // Repeated image motifs are deliberately spread across six-item storefront pages.
+    private const array DEMO_BLOG_ARTICLE_IMAGE_IDS_BY_ARTICLE_NUMBER = [
+        1 => 610,
+        2 => 611,
+        3 => 612,
+        4 => 628,
+        5 => 614,
+        6 => 625,
+        7 => 617,
+        8 => 618,
+        9 => 613,
+        10 => 619,
+        11 => 620,
+        12 => 621,
+        13 => 623,
+        14 => 622,
+        15 => 629,
+        16 => 615,
+        17 => 616,
+        18 => 627,
+        19 => 634,
+        20 => 624,
+        21 => 632,
+        22 => 631,
+        23 => 635,
+        24 => 633,
+        25 => 630,
+        26 => 626,
+        27 => 636,
+    ];
+
     public function __construct(
         FilesystemOperator $filesystem,
         Filesystem $localFilesystem,
         MountManager $mountManager,
         EntityManagerInterface $em,
         TransformStringHelper $transformStringHelper,
+        private readonly ImageDataFixtureNameFactory $imageDataFixtureNameFactory,
         private readonly string $dataFixturesResourcesDirectory,
         private readonly string $targetImagesDirectory,
         private readonly string $targetDomainImagesDirectory,
@@ -80,10 +118,12 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processTransportGroupsImages();
         $this->processProductsImages();
         $this->processSliderItemsImages();
+        $this->processAdvertImages();
         $this->processStoresImages();
         $this->processBlogCategoryImages();
         $this->processBlogArticleImages();
         $this->processBlogArticleAuthorImages();
+        $this->processSalesRepresentativeImages();
 
         $this->syncDatabaseSequences(['images.id']);
     }
@@ -272,73 +312,124 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $positions = [];
 
         foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
-            $names = [];
-
-            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-                $names[$locale] = 'Product ' . $productId . ' image';
-            }
-
             $positions[$productId] = 0;
-            $this->saveImageIntoDb($productId, 'product', $productId, $names, null, $positions[$productId]);
+            $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId, Product::class);
+            $this->saveImageIntoDb(
+                $productId,
+                'product',
+                $productId,
+                $this->imageDataFixtureNameFactory->createProductImageNames(
+                    $product,
+                    false,
+                    $positions[$productId],
+                ),
+                null,
+                $positions[$productId],
+            );
         }
 
         foreach ($specificProductsIdsIndexedByImagesIds as $imageId => $productId) {
-            $names = [];
-
-            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-                $names[$locale] = 'Product ' . $productId . ' image';
-            }
-
             $positions[$productId] = array_key_exists($productId, $positions) ? ++$positions[$productId] : 0;
-            $this->saveImageIntoDb($productId, 'product', $imageId, $names, null, $positions[$productId]);
+            $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId, Product::class);
+            $this->saveImageIntoDb(
+                $productId,
+                'product',
+                $imageId,
+                $this->imageDataFixtureNameFactory->createProductImageNames(
+                    $product,
+                    $imageId === 64,
+                    $positions[$productId],
+                ),
+                null,
+                $positions[$productId],
+            );
         }
     }
 
     private function processSliderItemsImages(): void
     {
         $imagesIdsIndexedBySliderItemsIds = [
-            1 => 59,
-            2 => 60,
-            3 => 61,
-            4 => 208,
-            5 => 209,
-            6 => 210,
-            7 => 603,
-            8 => 604,
-            9 => 605,
+            1 => 650,
+            2 => 651,
+            3 => 652,
+            4 => 656,
+            5 => 657,
+            6 => 658,
+            7 => 662,
+            8 => 663,
+            9 => 664,
         ];
 
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
-            $names = [];
-
-            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-                $names[$locale] = 'Slider item ' . $sliderItemId . ' image';
-            }
-
+            $names = $this->imageDataFixtureNameFactory->createSliderItemImageNames($sliderItemId);
             $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_WEB);
         }
 
         // mobile version
         $imagesIdsIndexedBySliderItemsIds = [
-            1 => 103,
-            2 => 104,
-            3 => 105,
-            4 => 211,
-            5 => 212,
-            6 => 213,
-            7 => 606,
-            8 => 607,
-            9 => 608,
+            1 => 653,
+            2 => 654,
+            3 => 655,
+            4 => 659,
+            5 => 660,
+            6 => 661,
+            7 => 665,
+            8 => 666,
+            9 => 667,
         ];
 
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
+            $names = $this->imageDataFixtureNameFactory->createSliderItemImageNames($sliderItemId);
+            $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_MOBILE);
+        }
+    }
+
+    private function processAdvertImages(): void
+    {
+        $this->processAdvertImagesByReferencePrefix(
+            AdvertDataFixture::FOOTER_ADVERT_REFERENCE_PREFIX,
+            727,
+            730,
+        );
+        $this->processAdvertImagesByReferencePrefix(
+            AdvertDataFixture::CATEGORY_ADVERT_REFERENCE_PREFIX,
+            733,
+            736,
+        );
+    }
+
+    private function processAdvertImagesByReferencePrefix(
+        string $advertReferencePrefix,
+        int $webImageId,
+        int $mobileImageId,
+    ): void {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $advert = $this->getReference(
+                $advertReferencePrefix . $domainConfig->getId(),
+                Advert::class,
+            );
             $names = [];
 
             foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-                $names[$locale] = 'Slider item ' . $sliderItemId . ' image';
+                $names[$locale] = $advert->getName();
             }
 
-            $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_MOBILE);
+            $this->saveImageIntoDb(
+                $advert->getId(),
+                'noticer',
+                $webImageId++,
+                $names,
+                AdvertFacade::IMAGE_TYPE_WEB,
+                extension: self::IMAGE_TYPE,
+            );
+            $this->saveImageIntoDb(
+                $advert->getId(),
+                'noticer',
+                $mobileImageId++,
+                $names,
+                AdvertFacade::IMAGE_TYPE_MOBILE,
+                extension: self::IMAGE_TYPE,
+            );
         }
     }
 
@@ -364,14 +455,24 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
 
     private function processBlogArticleImages(): void
     {
-        $blogArticlesImagesData = [
-            46 => 600,
-            47 => 601,
-            48 => 602,
-        ];
+        $blogArticle = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_ARTICLE, BlogArticle::class);
+        $names = [];
 
-        foreach ($blogArticlesImagesData as $blogArticleId => $imageId) {
-            $blogArticle = $this->getReference(BlogArticleDataFixture::DEMO_BLOG_ARTICLE_PREFIX . $blogArticleId, BlogArticle::class);
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+            $names[$locale] = sprintf('%s', $blogArticle->getName($locale));
+        }
+
+        $this->saveImageIntoDb($blogArticle->getId(), 'blogArticle', 602, $names);
+
+        foreach (self::DEMO_BLOG_ARTICLE_IMAGE_IDS_BY_ARTICLE_NUMBER as $articleNumber => $imageId) {
+            $blogArticle = $this->em->getRepository(BlogArticle::class)->findOneBy([
+                'uuid' => BlogArticleDataFixture::getDemoBlogArticleUuid($articleNumber),
+            ]);
+
+            if (!$blogArticle instanceof BlogArticle) {
+                throw new LogicException(sprintf('Demo blog article %d not found', $articleNumber));
+            }
+
             $names = [];
 
             foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
@@ -385,8 +486,8 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     private function processBlogArticleAuthorImages(): void
     {
         $blogArticleAuthorsImagesData = [
-            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_1 => 723,
-            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_2 => 724,
+            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_1 => 725,
+            BlogArticleAuthorDataFixture::BLOG_ARTICLE_AUTHOR_2 => 726,
         ];
 
         foreach ($blogArticleAuthorsImagesData as $blogArticleAuthorReferenceName => $imageId) {
@@ -399,6 +500,29 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             }
 
             $this->saveImageIntoDb($blogArticleAuthor->getId(), 'blogArticleAuthor', $imageId, $names);
+        }
+    }
+
+    private function processSalesRepresentativeImages(): void
+    {
+        $salesRepresentativesImagesData = [
+            SalesRepresentativeDataFixture::SALES_REPRESENTATIVE_1 => 739,
+            SalesRepresentativeDataFixture::SALES_REPRESENTATIVE_2 => 740,
+        ];
+
+        foreach ($salesRepresentativesImagesData as $salesRepresentativeReferenceName => $imageId) {
+            $salesRepresentative = $this->getReference(
+                $salesRepresentativeReferenceName,
+                SalesRepresentative::class,
+            );
+
+            $names = [];
+
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = $salesRepresentative->getFullName();
+            }
+
+            $this->saveImageIntoDb($salesRepresentative->getId(), 'salesRepresentative', $imageId, $names);
         }
     }
 
@@ -493,11 +617,13 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     public function getDependencies(): array
     {
         return [
+            AdvertDataFixture::class,
             BlogArticleAuthorDataFixture::class,
             BlogArticleDataFixture::class,
             BrandDataFixture::class,
             CategoryDataFixture::class,
             PaymentDataFixture::class,
+            SalesRepresentativeDataFixture::class,
             TransportDataFixture::class,
             TransportGroupDataFixture::class,
             ProductDataFixture::class,

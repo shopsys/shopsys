@@ -47,15 +47,22 @@ class GetArticlesTest extends GraphQlTestCase
                     [
                         'name',
                         'placement',
-                        'text',
-                        'seoH1',
-                        'seoTitle',
-                        'seoMetaDescription',
                     ],
                     $edge['node'],
                     array_shift($expectedArticlesData),
                     '#' . $index,
                 );
+
+                $this->assertNotEmpty($edge['node']['text'], '#' . $index);
+                $this->assertStringNotContainsString('Morbi posuere', $edge['node']['text'], '#' . $index);
+                $this->assertStringNotContainsString('Lorem ipsum', $edge['node']['text'], '#' . $index);
+                $this->assertSame($edge['node']['name'], $edge['node']['seoH1'], '#' . $index);
+                $this->assertSame(
+                    t('%articleTitle% | Demo shop', ['%articleTitle%' => $edge['node']['name']], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    $edge['node']['seoTitle'],
+                    '#' . $index,
+                );
+                $this->assertNotEmpty($edge['node']['seoMetaDescription'], '#' . $index);
             }
         }
     }
@@ -468,7 +475,7 @@ class GetArticlesTest extends GraphQlTestCase
                 'seoMetaDescription' => null,
             ],
             [
-                'name' => t('Article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('How Dina chooses reliable electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'placement' => Article::PLACEMENT_NONE,
                 'text' => t('<p>Article text for search testing, the search phrase is &#34;Dina&#34;.</p>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'seoH1' => null,

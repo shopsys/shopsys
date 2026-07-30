@@ -39,6 +39,12 @@ class BlogCategoriesTest extends GraphQlTestCase
                     name
                     children {
                         name
+                        children {
+                            name
+                            children {
+                                name
+                            }
+                        }
                     }
                 }
             }
@@ -48,8 +54,42 @@ class BlogCategoriesTest extends GraphQlTestCase
         $expected = [
             'name' => t('Main blog page - %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'children' => [
-                ['name' => t('First subsection %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-                ['name' => t('Second subsection %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                [
+                    'name' => t('First subsection %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'children' => [
+                        [
+                            'name' => t('Televisions and displays', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'children' => [
+                                ['name' => t('Screen technologies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                            ],
+                        ],
+                        [
+                            'name' => t('Audio and headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'children' => [],
+                        ],
+                    ],
+                ],
+                [
+                    'name' => t('Second subsection %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'children' => [],
+                ],
+                [
+                    'name' => t('Product news', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'children' => [],
+                ],
+                [
+                    'name' => t('Care and maintenance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'children' => [
+                        [
+                            'name' => t('Cleaning and upkeep', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'children' => [],
+                        ],
+                    ],
+                ],
+                [
+                    'name' => t('Technology and trends', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'children' => [],
+                ],
             ],
         ];
 

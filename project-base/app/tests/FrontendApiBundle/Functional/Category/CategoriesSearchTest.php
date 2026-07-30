@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class CategoriesSearchTest extends GraphQlTestCase
+final class CategoriesSearchTest extends GraphQlTestCase
 {
     public function testSearch(): void
     {
@@ -36,8 +36,16 @@ class CategoriesSearchTest extends GraphQlTestCase
             'userIdentifier' => $userIdentifier,
         ]);
 
+        $expectedCategoryTranslationKey = $this->getFirstDomainLocale() === 'cs' ? 'TV, audio' : 'Televisions';
         $categoriesExpected = [
-            ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
+            [
+                'name' => t(
+                    $expectedCategoryTranslationKey,
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $this->getFirstDomainLocale(),
+                ),
+            ],
         ];
 
         $this->assertCategories($response, $categoriesExpected);
@@ -60,7 +68,7 @@ class CategoriesSearchTest extends GraphQlTestCase
         $this->assertCategories($response, $categoriesExpected);
     }
 
-    protected function assertCategories(array $response, array $categories, bool $found = true): void
+    private function assertCategories(array $response, array $categories, bool $found = true): void
     {
         $graphQlType = 'categoriesSearch';
 

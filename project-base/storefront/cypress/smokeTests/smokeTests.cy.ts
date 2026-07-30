@@ -204,8 +204,7 @@ context('Smoke tests', () => {
             uuid: staticData.smokeTestRoutesUuids.blogCategory,
             entityType: 'blogCategory',
             test: () => {
-                const expectedText = 'Main blog page - ' + TEST_LOCALE;
-                checktHeadlineText(expectedText);
+                checktHeadlineText('Advice and inspiration');
             },
         },
         ['blog-article']: {
@@ -213,8 +212,7 @@ context('Smoke tests', () => {
             uuid: staticData.smokeTestRoutesUuids.blogArticle,
             entityType: 'blogArticle',
             test: () => {
-                const expectedText = 'Blog article example 1 ' + TEST_LOCALE + ' - H1';
-                checktHeadlineText(expectedText);
+                checktHeadlineText('How to choose the right TV for your living room');
             },
         },
         ['brand']: {
