@@ -1,3 +1,1 @@
-<span title="{{ '%rating% out of 5 stars'|trans({ '%rating%': value }) }}">
-    {% for rating in 1..5 %}{{ rating <= value ? '★' : '☆' }}{% endfor %}
-</span>
+{{ include('@ShopsysAdministration/content/productReview/_rating.html.twig', {rating: value}) }}

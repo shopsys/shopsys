@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\ProductReview;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -24,7 +26,7 @@ use Symfony\Component\Clock\DatePoint;
 #[ORM\Index(columns: ['product_id', 'domain_id', 'status'])]
 #[ORM\UniqueConstraint(columns: ['customer_user_id', 'product_id', 'domain_id'])]
 #[ORM\Entity]
-class ProductReview implements DomainSeparatedEntityInterface
+class ProductReview implements Presentable, DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -408,5 +410,11 @@ class ProductReview implements DomainSeparatedEntityInterface
     public function getResponseCreatedAt()
     {
         return $this->responseCreatedAt;
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->productName . ' - ' . $this->getFullName();
     }
 }

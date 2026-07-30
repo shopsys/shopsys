@@ -181,6 +181,9 @@ msgstr ""
 msgid "An error occurred while saving <strong>{{ objectName }}</strong>."
 msgstr ""
 
+msgid "Anonymous"
+msgstr ""
+
 msgid "Applicable variables"
 msgstr ""
 
@@ -1126,6 +1129,9 @@ msgstr ""
 msgid "Holidays import"
 msgstr ""
 
+msgid "IP address"
+msgstr ""
+
 msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
 msgstr ""
 
@@ -1591,6 +1597,9 @@ msgstr ""
 msgid "Open user menu"
 msgstr ""
 
+msgid "Order"
+msgstr ""
+
 msgid "Order Nr."
 msgstr ""
 
@@ -1898,6 +1907,9 @@ msgid "Reset password"
 msgstr ""
 
 msgid "Return back"
+msgstr ""
+
+msgid "Reviewed product"
 msgstr ""
 
 msgid "Reviewer"
@@ -2260,6 +2272,9 @@ msgstr ""
 msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
 msgstr ""
 
+msgid "The product is no longer in the catalogue."
+msgstr ""
+
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr ""
 
@@ -2423,6 +2438,9 @@ msgid "Unlimited"
 msgstr ""
 
 msgid "Unpin"
+msgstr ""
+
+msgid "Unregistered"
 msgstr ""
 
 msgid "Unused friendly URL list"

@@ -181,6 +181,9 @@ msgstr "Pri odstraňovaní položky „<strong>{{ objectName }}</strong>\" došl
 msgid "An error occurred while saving <strong>{{ objectName }}</strong>."
 msgstr "Pri ukladaní položky „<strong>{{ objectName }}</strong>\" došlo k chybe."
 
+msgid "Anonymous"
+msgstr "Anonymne"
+
 msgid "Applicable variables"
 msgstr "Použiteľné premenné"
 
@@ -1126,6 +1129,9 @@ msgstr "Prehľad sviatkov a interných dní"
 msgid "Holidays import"
 msgstr "Import sviatkov"
 
+msgid "IP address"
+msgstr "IP adresa"
+
 msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
 msgstr "Ak nemôžete nascánovať QR kód, môžete ručne zadať nasledujúci tajný kľúč:"
 
@@ -1591,6 +1597,9 @@ msgstr "Otvoriť detail produktu"
 msgid "Open user menu"
 msgstr "Otvoriť menu používateľa"
 
+msgid "Order"
+msgstr "Objednávka"
+
 msgid "Order Nr."
 msgstr "Č. objednávky"
 
@@ -1899,6 +1908,9 @@ msgstr "Resetovať heslo"
 
 msgid "Return back"
 msgstr "Vrátiť späť"
+
+msgid "Reviewed product"
+msgstr "Recenzovaný produkt"
 
 msgid "Reviewer"
 msgstr "Recenzent"
@@ -2260,6 +2272,9 @@ msgstr "Produkt nemá stanovený názov pre daný jazyk."
 msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
 msgstr "Produkt už nie je v katalógu. Toto bolo katalógové číslo v čase dopytovánia."
 
+msgid "The product is no longer in the catalogue."
+msgstr "Produkt už nie je v katalógu."
+
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr "Hodnota sa používa pre: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> nastavenie v Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> nastavenie v Mergado XML feed </li> </ul> Hodnota sa použije iba pri produktoch, ktoré nemajú vyplnený \"Predpokladaný dátum naskladnenia\". Inak sa počet dní odvodzuje z tohto dátumu."
 
@@ -2424,6 +2439,9 @@ msgstr "Neobmedzené"
 
 msgid "Unpin"
 msgstr "Odopnúť"
+
+msgid "Unregistered"
+msgstr "Neregistrovaný"
 
 msgid "Unused friendly URL list"
 msgstr "Zoznam Unused friendly URL"

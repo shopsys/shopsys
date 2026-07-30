@@ -265,6 +265,9 @@ msgstr "Aplikovat na vybrané kategorie"
 msgid "Apply to selected products"
 msgstr "Aplikovat na vybrané produkty"
 
+msgid "Approved"
+msgstr "Schválená"
+
 msgid "Approved with zero amount"
 msgstr "Schváleno s nulovou částkou"
 
@@ -1246,6 +1249,9 @@ msgstr "Identifikace e-shopu"
 msgid "E-shop name"
 msgstr "Název e-shopu"
 
+msgid "E-shop response"
+msgstr "Reakce e-shopu"
+
 msgid "EAN"
 msgstr "EAN"
 
@@ -2083,6 +2089,9 @@ msgstr "Minimální počet desetinných míst"
 msgid "Minimal duration from all runs in last seven days"
 msgstr "Minimální trvání všech cronů za posledních sedm dní"
 
+msgid "Moderation"
+msgstr "Moderace"
+
 msgid "Modifications"
 msgstr "Úpravy"
 
@@ -2563,6 +2572,9 @@ msgstr "Obsah stránky po dokončené platbě"
 msgid "Payment was not paid in full"
 msgstr "Platba nebyla uhrazena v plné výši"
 
+msgid "Pending"
+msgstr "Čeká na schválení"
+
 msgid "Percent"
 msgstr "Procent"
 
@@ -2821,11 +2833,17 @@ msgstr "Státní svátky se berou v úvahu při výpočtu lhůty pro odstoupení
 msgid "Published"
 msgstr "Publikováno"
 
+msgid "Published anonymously"
+msgstr "Zveřejněno anonymně"
+
 msgid "QR code"
 msgstr "QR kód"
 
 msgid "RGB Hex"
 msgstr "RGB Hex"
+
+msgid "Reason for rejection"
+msgstr "Důvod zamítnutí"
 
 msgid "Redirect target"
 msgstr "Cíl přesměrování"
@@ -2842,6 +2860,9 @@ msgstr "Refundovaná částka"
 msgid "Registration confirmation"
 msgstr "Potvrzení registrace"
 
+msgid "Rejected"
+msgstr "Zamítnutá"
+
 msgid "Related products"
 msgstr "Související produkty"
 
@@ -2857,6 +2878,9 @@ msgstr "Nahradit soubor"
 msgid "Requested at"
 msgstr "Požadováno dne"
 
+msgid "Required when the review is rejected."
+msgstr "Povinné, pokud je recenze zamítnutá."
+
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr "Žádost o resetování hesla byla odeslána na adresu <strong>{{ email }}</strong>"
 
@@ -2865,6 +2889,12 @@ msgstr "Způsob vyřešení"
 
 msgid "Resolved"
 msgstr "Vyřízena"
+
+msgid "Response published on %date%"
+msgstr "Reakce zveřejněna %date%"
+
+msgid "Review content"
+msgstr "Obsah recenze"
 
 msgid "Robots.txt"
 msgstr "Robots.txt"
@@ -3354,6 +3384,9 @@ msgstr "Testovací email odeslán na adresu %email%."
 
 msgid "Text"
 msgstr "Text"
+
+msgid "Text review"
+msgstr "Textová recenze"
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. Státy se stejnou prioritou budou seřazeny abecedně."

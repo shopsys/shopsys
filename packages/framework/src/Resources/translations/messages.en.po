@@ -265,6 +265,9 @@ msgstr ""
 msgid "Apply to selected products"
 msgstr ""
 
+msgid "Approved"
+msgstr ""
+
 msgid "Approved with zero amount"
 msgstr ""
 
@@ -1246,6 +1249,9 @@ msgstr ""
 msgid "E-shop name"
 msgstr ""
 
+msgid "E-shop response"
+msgstr ""
+
 msgid "EAN"
 msgstr ""
 
@@ -2083,6 +2089,9 @@ msgstr ""
 msgid "Minimal duration from all runs in last seven days"
 msgstr ""
 
+msgid "Moderation"
+msgstr ""
+
 msgid "Modifications"
 msgstr ""
 
@@ -2563,6 +2572,9 @@ msgstr ""
 msgid "Payment was not paid in full"
 msgstr ""
 
+msgid "Pending"
+msgstr ""
+
 msgid "Percent"
 msgstr ""
 
@@ -2821,10 +2833,16 @@ msgstr ""
 msgid "Published"
 msgstr ""
 
+msgid "Published anonymously"
+msgstr ""
+
 msgid "QR code"
 msgstr ""
 
 msgid "RGB Hex"
+msgstr ""
+
+msgid "Reason for rejection"
 msgstr ""
 
 msgid "Redirect target"
@@ -2842,6 +2860,9 @@ msgstr ""
 msgid "Registration confirmation"
 msgstr ""
 
+msgid "Rejected"
+msgstr ""
+
 msgid "Related products"
 msgstr ""
 
@@ -2857,6 +2878,9 @@ msgstr ""
 msgid "Requested at"
 msgstr ""
 
+msgid "Required when the review is rejected."
+msgstr ""
+
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr ""
 
@@ -2864,6 +2888,12 @@ msgid "Resolution"
 msgstr ""
 
 msgid "Resolved"
+msgstr ""
+
+msgid "Response published on %date%"
+msgstr ""
+
+msgid "Review content"
 msgstr ""
 
 msgid "Robots.txt"
@@ -3353,6 +3383,9 @@ msgid "Test email sent to %email%."
 msgstr ""
 
 msgid "Text"
+msgstr ""
+
+msgid "Text review"
 msgstr ""
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."

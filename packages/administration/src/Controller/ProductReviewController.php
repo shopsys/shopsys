@@ -9,8 +9,12 @@ use Override;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
+use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
+use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
+use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
+use Shopsys\FrameworkBundle\Form\Admin\ProductReview\ProductReviewFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
@@ -20,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewStatusEnum;
 class ProductReviewController extends AbstractCrudController
 {
     public function __construct(
+        protected readonly EntityLogFacade $entityLogFacade,
         protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
     ) {
     }
@@ -33,6 +38,7 @@ class ProductReviewController extends AbstractCrudController
             ->setMenuSection(SideMenuBuilder::ROOT_PRODUCT, null, ['after' => SideMenuBuilder::LIST_PRODUCT])
             ->setListDomainControl(CrudListDomainControl::QUICK_FILTER, $enabledDomainIds)
             ->setCustomRoleSection(AdminRoleSectionsProvider::PRODUCTS_CATALOG)
+            ->registerHandler(ProductReviewEditHandler::class)
             ->disable($enabledDomainIds === []);
     }
 
@@ -101,10 +107,39 @@ class ProductReviewController extends AbstractCrudController
                 'property' => 'hasTextReview',
             ]);
 
-        if (count($this->getListDomainIds()) > 1) {
+        if ($this->domain->isMultidomain()) {
             $datagrid->add('domainId', [
                 'label' => t('Domain'),
             ]);
         }
+    }
+
+    #[Override]
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+    {
+        $formConfigurator->useFormType(ProductReviewFormType::class, [
+            'productReview' => $entity,
+        ]);
+    }
+
+    #[Override]
+    protected function getEditTemplate(): string
+    {
+        return '@ShopsysAdministration/content/productReview/edit.html.twig';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    #[Override]
+    protected function getEditViewData(object $entity): array
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\ProductReview\ProductReview $productReview */
+        $productReview = $entity;
+
+        return [
+            'entityLogEntityName' => $this->entityLogFacade->getEntityNameByEntity(ProductReview::class),
+            'productReview' => $productReview,
+        ];
     }
 }
