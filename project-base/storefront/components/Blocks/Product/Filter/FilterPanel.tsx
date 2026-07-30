@@ -1,5 +1,5 @@
 import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { DrawerCloseButton } from 'components/Basic/Drawer/DrawerCloseButton';
 import { Button } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
@@ -14,7 +14,7 @@ import { FilterGroupGeneric } from './FilterGroupGeneric';
 import { FilterGroupInStock } from './FilterGroupInStock';
 import { FilterGroupParameters } from './FilterGroupParameters';
 import { FilterGroupPrice } from './FilterGroupPrice';
-import { scrollToProductList, scrollToSelectedFilters } from './filterElementIds';
+import { scrollToProductListControls } from './filterElementIds';
 
 export type FilterPanelProps = {
     productFilterOptions: TypeProductFilterOptionsFragment;
@@ -45,15 +45,14 @@ export const FilterPanel: FC<FilterPanelProps> = ({
     const shouldDisplayInStockFilter =
         !!filterOptions.inStock && !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
 
-    const handleShowProductsClick = () => {
+    const closeFilterPanel = () => {
         setIsFilterPanelOpen(false);
-        scrollToSelectedFilters();
+        scrollToProductListControls();
     };
 
     const handleClearAllFiltersClick = () => {
         resetAllFilterQueries();
-        setIsFilterPanelOpen(false);
-        scrollToProductList();
+        closeFilterPanel();
     };
 
     return (
@@ -69,19 +68,14 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 title={t('Skip filters', { ns: 'accessibility' })}
             />
 
-            <div className="flex vl:hidden items-center justify-between p-5">
-                <span className="w-full text-center font-secondary font-semibold">{t('Product filter')}</span>
-
-                <button
+            <div className="grid vl:hidden grid-cols-[2.25rem_1fr_2.25rem] items-center p-5">
+                <span aria-hidden="true" />
+                <span className="min-w-0 truncate text-center font-secondary font-semibold">{t('Product filter')}</span>
+                <DrawerCloseButton
                     aria-label={t('Close filter panel', { ns: 'accessibility' })}
-                    className="flex cursor-pointer items-center justify-center text-icon-less hover:text-icon-default"
-                    tabIndex={0}
                     title={t('Close filter panel')}
-                    type="button"
-                    onClick={() => setIsFilterPanelOpen(false)}
-                >
-                    <RemoveIcon className="size-6" />
-                </button>
+                    onClick={closeFilterPanel}
+                />
             </div>
 
             <div className="vl:static h-full vl:overflow-visible overflow-y-scroll px-5 vl:px-0">
@@ -145,14 +139,14 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                         aria-label={t('Clear all active filters', { ns: 'accessibility' })}
                         size="large"
                         tid={TIDs.clear_all_filters_button}
-                        variant="inverted"
+                        variant="tertiary"
                         onClick={handleClearAllFiltersClick}
                     >
                         {t('Clear all')}
                     </Button>
                 )}
 
-                <Button className="ml-auto" size="large" onClick={handleShowProductsClick}>
+                <Button className="ml-auto" size="large" onClick={closeFilterPanel}>
                     {t('Show')} {totalCount} {t('products count', { count: totalCount })}
                 </Button>
             </div>

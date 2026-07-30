@@ -15,6 +15,7 @@ type CartItemQuantityControlsProps = {
     gtmProductListName: GtmProductListNameType;
     listIndex?: number;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
+    spinboxId?: string;
 };
 
 export const CartItemQuantityControls: FC<CartItemQuantityControlsProps> = ({
@@ -24,6 +25,7 @@ export const CartItemQuantityControls: FC<CartItemQuantityControlsProps> = ({
     gtmProductListName,
     listIndex,
     size = 'medium',
+    spinboxId,
 }) => {
     const spinboxRef = useRef<HTMLInputElement>(null);
     const confirmedQuantityRef = useRef(cartItem.quantity);
@@ -126,7 +128,7 @@ export const CartItemQuantityControls: FC<CartItemQuantityControlsProps> = ({
                     ns: 'accessibility',
                     productName: product.fullName,
                 })}
-                id={cartItem.uuid}
+                id={spinboxId ?? cartItem.uuid}
                 increaseAriaLabel={t('Increase quantity of {{ productName }}', {
                     ns: 'accessibility',
                     productName: product.fullName,

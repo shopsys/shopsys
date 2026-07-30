@@ -1,12 +1,12 @@
 import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmSliderProductListViewEvent';
 import { createRef, RefObject, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
-import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { isTextSelected } from 'utils/ui/isTextSelected';
@@ -16,12 +16,64 @@ import { wait } from 'utils/wait';
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductsListContent } from './ProductsList/ProductsListContent';
 
-export const VISIBLE_SLIDER_ITEMS = 5;
-export const VISIBLE_SLIDER_ITEMS_LAST_VISITED = 8;
+export const VISIBLE_SLIDER_ITEMS = 6;
+export const VISIBLE_SLIDER_ITEMS_BASKET_POPUP = 4;
+export const VISIBLE_SLIDER_ITEMS_LAST_VISITED = 9;
 export const VISIBLE_SLIDER_ITEMS_ARTICLE = 3;
 export const VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE = 5;
 
-type ProductsSliderVariant = 'default' | 'article' | 'lastVisited' | 'autocomplete';
+export type ProductsSliderVariant = 'default' | 'article' | 'lastVisited' | 'autocomplete' | 'basketPopup';
+
+export const getProductsSliderTwClass = (variant: ProductsSliderVariant) => {
+    switch (variant) {
+        case 'default':
+            return 'auto-cols-[225px] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] xl:auto-cols-[20%] xxl:auto-cols-[16.6667%]';
+        case 'article':
+            return 'auto-cols-[80%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[33.33%]';
+        case 'lastVisited':
+            return 'auto-cols-[140px] sm:auto-cols-[30%] lg:auto-cols-[19.5%] vl:auto-cols-[14.5%] xl:auto-cols-[12.5%] xxl:auto-cols-[11.1111%]';
+        case 'autocomplete':
+            return 'auto-cols-[140px] sm:auto-cols-[32%] md:auto-cols-[24%] lg:auto-cols-[20%]';
+        case 'basketPopup':
+            return 'auto-cols-[225px] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%]';
+    }
+};
+
+type CurrentVisibleSliderItemsParams = {
+    visibleSliderItems: number;
+    variant: ProductsSliderVariant;
+    isMobile: boolean;
+    isLargeDesktop: boolean;
+    isVeryLargeDesktop: boolean;
+};
+
+export const getCurrentVisibleSliderItems = ({
+    visibleSliderItems,
+    variant,
+    isMobile,
+    isLargeDesktop,
+    isVeryLargeDesktop,
+}: CurrentVisibleSliderItemsParams) => {
+    const minimumVisibleItemsOnSmallDesktop = 3;
+
+    if (isMobile || visibleSliderItems <= minimumVisibleItemsOnSmallDesktop || variant === 'basketPopup') {
+        return visibleSliderItems;
+    }
+
+    const isResponsiveToVeryLargeDesktop = variant === 'default' || variant === 'lastVisited';
+    const hiddenItemsCount = isResponsiveToVeryLargeDesktop
+        ? isVeryLargeDesktop
+            ? 0
+            : isLargeDesktop
+              ? 1
+              : 2
+        : isLargeDesktop
+          ? 0
+          : 1;
+
+    return Math.max(visibleSliderItems - hiddenItemsCount, minimumVisibleItemsOnSmallDesktop);
+};
+
 export type ProductsSliderProps = {
     products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
@@ -55,12 +107,15 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement | null>>>();
     const [activeIndex, setActiveIndex] = useState(0);
     const isMobile = !useMediaMin('vl');
-    const isSmallDesktop = !useMediaMin('xl') && !isMobile;
-    const minimumVisibleItemsOnSmallDesktop = 3;
-    const currentVisibleItems =
-        isSmallDesktop && visibleSliderItems > minimumVisibleItemsOnSmallDesktop
-            ? visibleSliderItems - 1
-            : visibleSliderItems;
+    const isLargeDesktop = useMediaMin('xl') ?? false;
+    const isVeryLargeDesktop = useMediaMin('xxl') ?? false;
+    const currentVisibleItems = getCurrentVisibleSliderItems({
+        visibleSliderItems,
+        variant,
+        isMobile,
+        isLargeDesktop,
+        isVeryLargeDesktop,
+    });
     const isWithControls = products.length > currentVisibleItems && isWithArrows;
 
     const keyboardFocusableProductIndices = Array.from(
@@ -150,21 +205,6 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         trackMouse: true,
     });
 
-    const productSliderTwClass = (variant: ProductsSliderVariant) => {
-        switch (variant) {
-            case 'default':
-                return 'auto-cols-[225px] sm:auto-cols-[60%]  md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] xl:auto-cols-[20%]';
-            case 'article':
-                return 'auto-cols-[80%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[33.33%]';
-            case 'lastVisited':
-                return 'auto-cols-[140px] sm:auto-cols-[30%] lg:auto-cols-[19.5%] vl:auto-cols-[14.5%] xl:auto-cols-[12.5%]';
-            case 'autocomplete':
-                return 'auto-cols-[140px] sm:auto-cols-[32%] md:auto-cols-[24%] lg:auto-cols-[20%]';
-            default:
-                return '';
-        }
-    };
-
     useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
 
     return (
@@ -193,7 +233,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     </div>
                 )}
 
-                <div ref={sliderRef} tabIndex={-1}>
+                <div className="focus-visible:outline-hidden" ref={sliderRef} tabIndex={-1}>
                     <ProductsListContent
                         gtmMessageOrigin={gtmMessageOrigin}
                         gtmProductListName={gtmProductListName}
@@ -203,8 +243,8 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                         products={products}
                         swipeHandlers={handlers}
                         className={twMergeCustom([
-                            'hide-scrollbar grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain',
-                            productSliderTwClass(variant),
+                            'hide-scrollbar -my-2 grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain py-2',
+                            getProductsSliderTwClass(variant),
                             wrapperClassName,
                         ])}
                         productItemProps={{
@@ -218,7 +258,11 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 </div>
             </div>
 
-            <span className="sr-only" id={ariaAnchorName} tabIndex={-1}>
+            <span
+                className="sr-only scroll-mt-fixed-header focus-visible:outline-hidden"
+                id={ariaAnchorName}
+                tabIndex={-1}
+            >
                 {t('End of product slider', { ns: 'accessibility' })}
             </span>
         </>
@@ -234,14 +278,15 @@ type SliderButtonProps = {
 };
 
 const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title, ariaLabel }) => (
-    <button
-        aria-label={ariaLabel}
-        className="cursor-pointer rounded-sm border-none p-1 text-icon outline-hidden transition hover:text-icon-accent disabled:cursor-auto disabled:text-text-disabled"
+    <IconButton
+        Icon={ArrowSecondaryIcon}
+        ariaLabel={ariaLabel}
         disabled={isDisabled}
-        tabIndex={0}
+        iconClassName={type === 'prev' ? 'rotate-90' : '-rotate-90'}
+        shape="rounded"
+        size="small"
         title={title}
+        variant="ghost"
         onClick={onClick}
-    >
-        <ArrowSecondaryIcon className={twJoin('w-5', type === 'prev' ? 'rotate-90' : '-rotate-90')} />
-    </button>
+    />
 );

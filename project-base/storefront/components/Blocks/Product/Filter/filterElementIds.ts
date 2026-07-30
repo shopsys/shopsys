@@ -1,9 +1,9 @@
-export const FILTER_SELECTED_PARAMETERS_ELEMENT_ID = 'filter-selected-parameters';
+export const PRODUCT_LIST_CONTROLS_ELEMENT_ID = 'product-list-controls';
 
 const PRODUCT_LIST_ELEMENT_ID = 'product-list';
 const FILTER_SCROLL_ATTEMPTS = 6;
 
-export const scrollToProductList = (attempt = 0) => {
+const scrollToProductList = (attempt = 0) => {
     if (typeof window === 'undefined' || typeof document === 'undefined') {
         return;
     }
@@ -27,7 +27,7 @@ export const scrollToProductList = (attempt = 0) => {
     });
 };
 
-export const scrollToSelectedFilters = (attempt = 0) => {
+export const scrollToProductListControls = (attempt = 0) => {
     if (typeof window === 'undefined' || typeof document === 'undefined') {
         return;
     }
@@ -37,16 +37,16 @@ export const scrollToSelectedFilters = (attempt = 0) => {
             return;
         }
 
-        const selectedFiltersElement = document.getElementById(FILTER_SELECTED_PARAMETERS_ELEMENT_ID);
+        const productListControlsElement = document.getElementById(PRODUCT_LIST_CONTROLS_ELEMENT_ID);
 
-        if (selectedFiltersElement) {
-            selectedFiltersElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (productListControlsElement) {
+            productListControlsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
             return;
         }
 
         if (attempt < FILTER_SCROLL_ATTEMPTS) {
-            window.setTimeout(() => scrollToSelectedFilters(attempt + 1), 50);
+            window.setTimeout(() => scrollToProductListControls(attempt + 1), 50);
 
             return;
         }

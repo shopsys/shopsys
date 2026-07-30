@@ -22,17 +22,17 @@ export const ProductListItemGalleryControls: FC<ProductListItemGalleryControlsPr
             style={{ height: imageHeight }}
         >
             <MediaCarouselNavigationButton
-                className="pointer-events-auto size-6 border border-border-less bg-background-default/90 text-icon-default shadow-sm backdrop-blur-xs transition hover:text-icon-accent"
+                className="pointer-events-auto"
                 direction="previous"
-                iconClassName="size-4"
+                size="compact"
                 title={t('Previous')}
                 onClick={onPrevious}
                 onFocus={onPrepareGallery}
             />
             <MediaCarouselNavigationButton
-                className="pointer-events-auto size-6 border border-border-less bg-background-default/90 text-icon-default shadow-sm backdrop-blur-xs transition hover:text-icon-accent"
+                className="pointer-events-auto"
                 direction="next"
-                iconClassName="size-4"
+                size="compact"
                 title={t('Next')}
                 onClick={onNext}
                 onFocus={onPrepareGallery}

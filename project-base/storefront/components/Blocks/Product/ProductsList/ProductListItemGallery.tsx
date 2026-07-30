@@ -162,7 +162,7 @@ export const ProductListItemGallery = forwardRef<ProductListItemGalleryHandle, P
                 <MediaCarouselTrack
                     ariaLabel={t('Product media gallery', { ns: 'accessibility' })}
                     className="shrink-0 grid-rows-1"
-                    itemClassName="bg-background-more vl:group-hover:bg-background-default"
+                    itemClassName="bg-background-more px-0 vl:group-hover:bg-background-default"
                     items={galleryItems}
                     ref={carouselTrackRef}
                     selectedIndex={selectedIndex}

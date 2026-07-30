@@ -64,7 +64,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 <ProductAvailability
                     availability={product.availability}
                     availableStoresCount={product.availableStoresCount}
-                    className="md:basis-3/12"
+                    className="md:basis-3/12 min-[1380px]:shrink-0 min-[1380px]:basis-auto min-[1380px]:whitespace-nowrap"
                     isInquiryType={product.isInquiryType}
                 />
 

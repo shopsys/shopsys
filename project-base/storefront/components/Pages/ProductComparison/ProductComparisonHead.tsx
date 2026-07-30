@@ -3,6 +3,9 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
 
+export const PRODUCT_COMPARISON_STICKY_TRIGGER_ID = 'js-product-comparison-sticky-trigger';
+export const PRODUCT_COMPARISON_END_TRIGGER_ID = 'js-table-compare-wrap';
+
 type ProductComparisonHeadProps = {
     comparedProducts: TypeProductInProductListFragment[];
 };
@@ -20,6 +23,7 @@ export const ProductComparisonHead: FC<ProductComparisonHeadProps> = ({ compared
                         key={`head-${product.uuid}`}
                         listIndex={index}
                         product={product}
+                        stickyTriggerId={index === 0 ? PRODUCT_COMPARISON_STICKY_TRIGGER_ID : undefined}
                         toggleProductInComparison={() =>
                             toggleProductInComparison(product, GtmProductListNameType.product_comparison_page, index)
                         }

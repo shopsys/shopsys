@@ -1,5 +1,4 @@
 import { SkeletonModuleProductSlider } from 'components/Blocks/Skeleton/SkeletonModuleProductSlider';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecommendedProductsQuery } from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
 import { TypeRecommendationType } from 'graphql/types';
@@ -10,6 +9,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { useDeferredRender } from 'utils/useDeferredRender';
+import { VISIBLE_SLIDER_ITEMS_BASKET_POPUP } from './ProductsSlider';
 import { ProductsSliderPlaceholder } from './ProductsSliderPlaceholder';
 
 const ProductsSlider = dynamic(() => import('./ProductsSlider').then((component) => component.ProductsSlider), {
@@ -44,6 +44,14 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
 
     const shouldRender = useDeferredRender('recommended_products');
     const isBasketPopup = recommendationType === TypeRecommendationType.BasketPopup;
+    const sliderVariant = isBasketPopup ? ('basketPopup' as const) : undefined;
+    const visibleSliderItems = isBasketPopup ? VISIBLE_SLIDER_ITEMS_BASKET_POPUP : undefined;
+    const productItemStyleProps = {
+        size: isBasketPopup ? ('medium' as const) : ('large' as const),
+        visibleItemsConfig: isBasketPopup
+            ? { price: true, addToCart: true, flags: true, storeAvailability: true }
+            : undefined,
+    };
 
     useEffect(() => {
         setIsClientMounted(true);
@@ -54,24 +62,19 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
         (isBasketPopup && !recommendedProductsData?.recommendedProducts.length && areRecommendedProductsFetching);
 
     if (shouldShowSkeleton) {
-        return (
-            <Webline>
-                <SkeletonModuleProductSlider isWithSimpleCards={isBasketPopup} />
-            </Webline>
+        return render(
+            <SkeletonModuleProductSlider
+                isHeadingHidden
+                productItemProps={productItemStyleProps}
+                variant={sliderVariant}
+                visibleSliderItems={visibleSliderItems}
+            />,
         );
     }
 
     if (!recommendedProductsData?.recommendedProducts.length) {
         return null;
     }
-
-    const productItemStyleProps = {
-        size: recommendationType === TypeRecommendationType.BasketPopup ? ('medium' as const) : ('large' as const),
-        visibleItemsConfig:
-            recommendationType === TypeRecommendationType.BasketPopup
-                ? { price: true, addToCart: true, flags: true, storeAvailability: true }
-                : undefined,
-    };
 
     return (
         <>
@@ -83,13 +86,17 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
                           gtmProductListName={GtmProductListNameType.luigis_box_recommended_products}
                           productItemProps={productItemStyleProps}
                           products={recommendedProductsData.recommendedProducts}
+                          variant={sliderVariant}
+                          visibleSliderItems={visibleSliderItems}
                       />,
                   )
                 : render(
                       <ProductsSliderPlaceholder
                           products={recommendedProductsData.recommendedProducts}
                           size={productItemStyleProps.size}
+                          variant={sliderVariant}
                           visibleItemsConfig={productItemStyleProps.visibleItemsConfig}
+                          visibleSliderItems={visibleSliderItems}
                       />,
                   )}
         </>

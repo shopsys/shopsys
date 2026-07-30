@@ -1,10 +1,11 @@
-import { render, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { renderWithTooltipProvider as render } from 'vitest/helpers/renderWithTooltipProvider';
 
 const { addToCartMock, removeFromCartMock } = vi.hoisted(() => ({
     addToCartMock: vi.fn(),
@@ -120,9 +121,9 @@ describe('CartItemQuantityControls', () => {
     test('removes the item when decreasing minimum quantity', async () => {
         const user = userEvent.setup();
         const cartItem = createCartItem(1);
-        const { container } = renderControls(cartItem);
+        const { getByRole } = renderControls(cartItem);
 
-        const decreaseButton = container.querySelector('button[title="Remove from cart"]') as HTMLButtonElement;
+        const decreaseButton = getByRole('button', { name: 'Remove from cart product Test product' });
 
         await user.click(decreaseButton);
 

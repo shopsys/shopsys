@@ -13,19 +13,20 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { generateProductImageAlt } from 'utils/productAltText';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 type ProductComparisonItemProps = {
     product: TypeProductInProductListFragment;
     listIndex: number;
+    stickyTriggerId?: string;
     toggleProductInComparison: () => void;
 };
 
 export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
     product,
     listIndex,
+    stickyTriggerId,
     toggleProductInComparison,
 }) => {
     const { t } = useTranslation();
@@ -50,20 +51,11 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
         >
             <div className="flex w-45.5 flex-col gap-2 sm:w-51.25">
                 <div className="flex flex-col gap-2">
-                    <div
-                        className="flex h-46.25 w-full items-center justify-center pt-4 pb-3"
-                        data-tid={TIDs.comparison_product_image}
-                    >
-                        <Image
-                            alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
-                            className="max-h-full w-auto"
-                            height={185}
-                            src={product.mainImage?.url}
-                            width={200}
-                        />
-                    </div>
-
                     <ExtendedNextLink
+                        preventRedirectOnTextSelection
+                        className="group/product-link flex flex-col gap-2 text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden"
+                        data-focus-color="preserve"
+                        draggable={false}
                         href={product.slug}
                         type="product"
                         aria-label={t('Go to product page of {{ productName }}', {
@@ -78,7 +70,25 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                             )
                         }
                     >
-                        <span className="line-clamp-4 min-h-20 font-secondary text-sm">{product.fullName}</span>
+                        <div
+                            className="flex h-46.25 w-full items-center justify-center pt-4 pb-3"
+                            data-tid={TIDs.comparison_product_image}
+                        >
+                            <Image
+                                alt=""
+                                className="max-h-full w-auto"
+                                height={185}
+                                src={product.mainImage?.url}
+                                width={200}
+                            />
+                        </div>
+
+                        <span
+                            className="-mx-1 line-clamp-4 min-h-20 rounded-sm box-decoration-clone px-1 font-secondary text-link-default text-sm underline group-hover/product-link:text-link-hovered group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!"
+                            id={stickyTriggerId}
+                        >
+                            {product.fullName}
+                        </span>
                     </ExtendedNextLink>
 
                     <span className="text-xs">

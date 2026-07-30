@@ -16,10 +16,12 @@ type ProductActionProps = {
     gtmMessageOrigin: GtmMessageOriginType;
     listIndex: number;
     buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
-    buttonVariant?: 'primary' | 'inverted';
+    buttonVariant?: 'primary' | 'secondary';
     skipKeyboardNavigation?: boolean;
     currentCart?: Pick<CurrentCartType, 'cart' | 'isCartFetchingOrUnavailable'>;
 } & FunctionComponentProps;
+
+export const PRODUCT_VARIANTS_ID = 'product-variants';
 
 export const ProductAction: FC<ProductActionProps> = ({
     currentCart,
@@ -63,7 +65,7 @@ export const ProductAction: FC<ProductActionProps> = ({
         return (
             <LinkButton
                 className="w-full"
-                href={product.slug}
+                href={`${product.slug}#${PRODUCT_VARIANTS_ID}`}
                 tabIndex={skipKeyboardNavigation ? -1 : 0}
                 type="productMainVariant"
                 aria-label={t('Go to page with product variants of {{ productName }}', {

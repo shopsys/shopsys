@@ -15,8 +15,16 @@ import {
     pressSpaceKey,
 } from 'vitest/utils/accessibility/keyboard-navigation';
 
+const { mockScrollToProductListControls } = vi.hoisted(() => ({
+    mockScrollToProductListControls: vi.fn(),
+}));
 const mockUpdateSortQuery = vi.fn();
 const mockCanSeePrices = vi.fn().mockReturnValue(true);
+
+vi.mock('components/Blocks/Product/Filter/filterElementIds', () => ({
+    PRODUCT_LIST_CONTROLS_ELEMENT_ID: 'product-list-controls',
+    scrollToProductListControls: mockScrollToProductListControls,
+}));
 
 vi.mock('utils/auth/useAuth', () => ({
     useAuth: () => ({
@@ -169,13 +177,6 @@ describe('SortingBar', () => {
             expect(sortButton).toHaveAttribute('tabIndex', '0');
         });
 
-        test('button has correct styling classes', () => {
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            expect(sortButton).toHaveClass('flex');
-        });
-
         test('dropdown is closed by default', () => {
             renderSortingBar();
 
@@ -232,6 +233,7 @@ describe('SortingBar', () => {
             const sortMenu = screen.getByRole('menu', { name: 'Sort options' });
             const sortMenuItems = within(sortMenu).getAllByRole('menuitem');
 
+            expect(sortButton.parentElement).toContainElement(sortMenu);
             expect(sortMenuItems).toHaveLength(6);
             expect(sortMenuItems[0]).not.toHaveAttribute('aria-selected');
         });
@@ -410,6 +412,7 @@ describe('SortingBar', () => {
             await user.click(priceAscLink!);
 
             expect(mockUpdateSortQuery).toHaveBeenCalledWith('PRICE_ASC');
+            expect(mockScrollToProductListControls).toHaveBeenCalledOnce();
         });
 
         test('closes dropdown after option selection', async () => {

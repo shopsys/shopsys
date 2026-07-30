@@ -1,7 +1,7 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ColorPreview } from 'components/Basic/ColorPreview/ColorPreview';
 import { Flag } from 'components/Basic/Flag/Flag';
-import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
+import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
@@ -13,7 +13,6 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
-import { FILTER_SELECTED_PARAMETERS_ELEMENT_ID } from './filterElementIds';
 
 export type FilterSelectedParametersProps = {
     filterOptions: TypeProductFilterOptionsFragment;
@@ -46,11 +45,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
         <AnimatePresence initial={false}>
             {!currentFilter && !getHasDefaultFilters(defaultProductFiltersMap) ? null : (
                 <AnimateCollapseDiv className="block!" keyName="selected-parameters">
-                    <div
-                        className="vl:mb-5 scroll-mt-5"
-                        data-tid={TIDs.selected_filters}
-                        id={FILTER_SELECTED_PARAMETERS_ELEMENT_ID}
-                    >
+                    <div className="mt-5 vl:mt-0 vl:mb-5" data-tid={TIDs.selected_filters}>
                         <p className="h6 mb-2">{t('Selected filters')}</p>
 
                         <div className="flex flex-wrap items-center gap-y-2">
@@ -282,7 +277,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 };
 
 const SelectedParametersIcon: FC = () => (
-    <RemoveBoldIcon className="size-3 cursor-pointer text-icon-less group-hover:text-icon-error" />
+    <CloseIcon className="size-5 cursor-pointer text-icon-less group-hover:text-icon-error" />
 );
 
 const getCheckedFlags = (

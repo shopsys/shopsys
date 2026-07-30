@@ -32,8 +32,10 @@ export const ProductComparison: FC = () => {
     const handleRemoveAllClick = () => {
         updatePortalContent(
             <RemoveAllProductsPopup
+                description={t('All products in comparison will be removed ({{ productCount }} in total).', {
+                    productCount: comparison?.products.length ?? 0,
+                })}
                 removeAllHandler={removeComparison}
-                title={t('Do you really want to remove all products from comparison?')}
             />,
         );
     };
@@ -53,7 +55,7 @@ export const ProductComparison: FC = () => {
                             <Button
                                 aria-label={t('Remove all products from comparison', { ns: 'accessibility' })}
                                 data-tid={TIDs.comparison_remove_all_button}
-                                variant="inverted"
+                                variant="tertiary"
                                 onClick={handleRemoveAllClick}
                             >
                                 <TrashCanIcon className="size-4" />

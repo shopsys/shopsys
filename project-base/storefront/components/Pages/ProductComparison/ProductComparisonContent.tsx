@@ -1,13 +1,11 @@
-import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { Button } from 'components/Forms/Button/Button';
+import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { useEffect } from 'react';
-import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
-import { twMergeCustom } from 'utils/twMerge';
 import { ProductComparisonBody } from './ProductComparisonBody';
-import { ProductComparisonHead } from './ProductComparisonHead';
+import { PRODUCT_COMPARISON_END_TRIGGER_ID, ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 
 type ProductComparisonContentProps = {
@@ -47,11 +45,11 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
     const {
         isArrowLeftActive,
         isArrowRightActive,
-        isArrowLeftShowed,
-        isArrowRightShowed,
+        shouldShowArrows,
         handleSlideLeft,
         handleSlideRight,
         calcMaxMarginLeft,
+        tableFirstColumnWidth,
         tableMarginLeft,
     } = useComparisonTable(comparedProducts.length);
 
@@ -62,22 +60,19 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
     }, [comparedProducts, calcMaxMarginLeft]);
 
     return (
-        <div className="relative mb-24 overflow-hidden" id="js-table-compare-wrap">
-            <div className="mb-1 flex justify-between">
-                <ContentArrow
-                    isActive={isArrowLeftActive}
-                    isShowed={isArrowLeftShowed}
-                    onClick={() => handleSlideLeft()}
-                />
-                <ContentArrow
-                    isRight
-                    isActive={isArrowRightActive}
-                    isShowed={isArrowRightShowed}
-                    onClick={() => handleSlideRight()}
-                />
-            </div>
+        <div className="relative mb-24 overflow-hidden" id={PRODUCT_COMPARISON_END_TRIGGER_ID}>
+            {shouldShowArrows && (
+                <div className="mb-4 flex justify-end gap-2">
+                    <ContentArrow isActive={isArrowLeftActive} onClick={() => handleSlideLeft()} />
+                    <ContentArrow isRight isActive={isArrowRightActive} onClick={() => handleSlideRight()} />
+                </div>
+            )}
 
-            <ProductComparisonHeadSticky comparedProducts={comparedProducts} tableMarginLeft={tableMarginLeft} />
+            <ProductComparisonHeadSticky
+                comparedProducts={comparedProducts}
+                tableFirstColumnWidth={tableFirstColumnWidth}
+                tableMarginLeft={tableMarginLeft}
+            />
 
             <div>
                 <table
@@ -96,26 +91,27 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
     );
 };
 
-type ContentArrowProps = { onClick: () => void; isActive: boolean; isRight?: boolean; isShowed?: boolean };
+type ContentArrowProps = { onClick: () => void; isActive: boolean; isRight?: boolean };
 
-const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onClick }) => {
+const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, onClick }) => {
     const { t } = useTranslation();
 
     return (
-        <Button
-            className={twMergeCustom(isShowed ? 'flex' : 'hidden')}
-            hasDisabledLook={!isActive}
-            tabIndex={isActive ? 0 : -1}
-            title={isRight ? t('Next product') : t('Previous product')}
-            variant="secondary"
-            aria-label={
+        <IconButton
+            Icon={ArrowSecondaryIcon}
+            ariaLabel={
                 isRight
                     ? t('Show next product in comparison', { ns: 'accessibility' })
                     : t('Show previous product in comparison', { ns: 'accessibility' })
             }
+            disabled={!isActive}
+            iconClassName={isRight ? '-rotate-90' : 'rotate-90'}
+            shape="rounded"
+            size="large"
+            tabIndex={isActive ? 0 : -1}
+            title={isRight ? t('Next product') : t('Previous product')}
+            variant="ghost"
             onClick={onClick}
-        >
-            <ArrowIcon className={twJoin('size-5', isRight ? '-rotate-90' : 'rotate-90')} />
-        </Button>
+        />
     );
 };

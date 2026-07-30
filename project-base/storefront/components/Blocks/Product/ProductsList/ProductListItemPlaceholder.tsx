@@ -37,7 +37,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
                 )}
             >
                 <ExtendedNextLink
-                    className="grid min-w-0 grid-cols-[80px_minmax(0,1fr)] gap-3 rounded-xl text-text-default no-underline hover:text-link-default hover:no-underline sm:gap-4 xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,280px)] xl:items-center"
+                    className="grid min-w-0 grid-cols-[80px_minmax(0,1fr)] gap-3 rounded-xl text-text-default no-underline hover:text-text-default hover:no-underline sm:gap-4 xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,280px)] xl:items-center min-[1380px]:grid-cols-[88px_minmax(0,280px)_max-content]"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -58,7 +58,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
                             visibleItemsConfig={visibleItemsConfig}
                         />
 
-                        <div className="wrap-break-word overflow-hidden font-secondary font-semibold text-sm group-hover:text-link-default group-hover:underline xl:max-w-70">
+                        <div className="wrap-break-word overflow-hidden font-secondary font-semibold text-sm group-hover:text-text-default group-hover:underline xl:max-w-70">
                             {product.fullName}
                         </div>
 
@@ -71,7 +71,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
                         <ProductAvailability
                             availability={product.availability}
                             availableStoresCount={product.availableStoresCount}
-                            className="col-span-2 min-h-0 text-sm leading-5 xl:col-span-1 xl:max-w-70 xl:justify-self-start"
+                            className="col-span-2 min-h-0 text-sm leading-5 xl:col-span-1 xl:max-w-70 xl:justify-self-start min-[1380px]:max-w-none min-[1380px]:whitespace-nowrap"
                             isInquiryType={product.isInquiryType}
                         />
                     )}
@@ -109,14 +109,14 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
             )}
         >
             <ExtendedNextLink
-                className="flex select-none flex-col gap-2.5 text-text-default no-underline hover:text-link-default hover:no-underline"
+                className="flex select-none flex-col gap-2.5 text-text-default no-underline hover:text-text-default hover:no-underline"
                 draggable={false}
                 href={product.slug}
                 type={product.isMainVariant ? 'productMainVariant' : 'product'}
             >
                 <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                <div className="line-clamp-3 min-h-15 font-secondary font-semibold text-sm group-hover:text-link-default group-hover:underline">
+                <div className="line-clamp-3 min-h-15 font-secondary font-semibold text-sm group-hover:text-text-default group-hover:underline">
                     {product.fullName}
                 </div>
 

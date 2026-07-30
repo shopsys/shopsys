@@ -55,8 +55,8 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
             data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
             ref={forwardedRef}
             className={twMergeCustom(
-                'group relative flex select-text flex-col rounded-xl border border-background-more bg-background-more pt-10 pb-2.5 text-left transition sm:pb-5',
-                size === 'small' && 'gap-0 pb-0',
+                'group relative flex select-text flex-col rounded-xl border border-background-more bg-background-more pt-10 pb-2.5 text-left transition-[box-shadow,border-color,background-color,color] duration-200 ease-out pointer-fine:hover:shadow-[0_8px_18px_-12px_rgb(37_40_61/30%),0_2px_6px_-4px_rgb(37_40_61/16%)] sm:pb-5',
+                size === 'small' && 'gap-0 pt-0 pb-0 sm:pb-0',
                 'hover:border-border-less hover:bg-background-default',
                 highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
                 className,
@@ -70,7 +70,8 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
 
             <ExtendedNextLink
                 preventRedirectOnTextSelection
-                className="flex grow select-text rounded-xl text-text-default no-underline hover:text-link-default hover:no-underline"
+                className="group/product-link flex grow select-text rounded-xl text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden"
+                data-focus-color="preserve"
                 draggable={false}
                 href={product.slug}
                 tabIndex={allowKeyboardFocus ? 0 : -1}
@@ -98,16 +99,18 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
 
                     <h3
                         className={twJoin(
-                            'wrap-break-word grow overflow-hidden font-secondary font-semibold group-hover:text-link-default group-hover:underline',
+                            'wrap-break-word grow overflow-hidden font-secondary font-semibold group-hover:text-text-default group-hover:underline',
                             textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
                         )}
                     >
-                        {product.fullName}
+                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                            {product.fullName}
+                        </span>
                     </h3>
 
                     {product.__typename === 'MainVariant' && (
                         <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
-                            <VariantIcon className="size-3 text-text-accent" />
+                            <VariantIcon className="size-4 text-text-accent" fill="currentColor" />
                             {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                         </div>
                     )}

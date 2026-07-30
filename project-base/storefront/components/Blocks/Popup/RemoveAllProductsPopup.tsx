@@ -5,11 +5,11 @@ import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type RemoveAllProductsPopupProps = {
-    title: string;
+    description: string;
     removeAllHandler: () => void;
 };
 
-export const RemoveAllProductsPopup: FC<RemoveAllProductsPopupProps> = ({ title, removeAllHandler }) => {
+export const RemoveAllProductsPopup: FC<RemoveAllProductsPopupProps> = ({ description, removeAllHandler }) => {
     const { t } = useTranslation();
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
@@ -23,14 +23,28 @@ export const RemoveAllProductsPopup: FC<RemoveAllProductsPopupProps> = ({ title,
     };
 
     return (
-        <Popup className="vl:w-auto w-11/12 lg:w-4/5" contentClassName="overflow-y-auto" title={title}>
-            <div className="flex flex-row flex-nowrap justify-between">
-                <Button variant="inverted" onClick={handleClose}>
-                    {t('No')}
-                </Button>
-                <Button tid={TIDs.popup_confirm_button} onClick={handleConfirm}>
-                    {t('Yes')}
-                </Button>
+        <Popup
+            ariaDescription={description}
+            className="w-[calc(100vw-40px)] max-w-120"
+            role="alertdialog"
+            title={t('Remove all products?')}
+        >
+            <div className="flex flex-col gap-6">
+                <p>{description}</p>
+
+                <div className="flex flex-col justify-end gap-3 sm:flex-row">
+                    <Button className="w-full sm:w-auto" variant="secondary" onClick={handleClose}>
+                        {t('Cancel')}
+                    </Button>
+                    <Button
+                        className="w-full sm:w-auto"
+                        tid={TIDs.popup_confirm_button}
+                        variant="danger"
+                        onClick={handleConfirm}
+                    >
+                        {t('Remove all')}
+                    </Button>
+                </div>
             </div>
         </Popup>
     );

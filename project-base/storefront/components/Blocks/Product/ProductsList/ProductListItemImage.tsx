@@ -64,7 +64,7 @@ export const ProductListItemImage = forwardRef<ProductListItemImageHandle, Produ
                         <div className="flex w-full items-center justify-center" style={{ height: imageSize }}>
                             <Image
                                 alt={imageAlt}
-                                className="h-full w-full object-contain px-2 mix-blend-multiply"
+                                className="h-full w-full object-contain mix-blend-multiply"
                                 draggable={false}
                                 height={imageSize}
                                 src={product.mainImage?.url}

@@ -21,7 +21,15 @@ vi.mock('framer-motion', () => ({
     },
 }));
 
+const { mockScrollToProductListControls } = vi.hoisted(() => ({
+    mockScrollToProductListControls: vi.fn(),
+}));
 const mockSetIsFilterPanelOpen = vi.fn();
+
+vi.mock('components/Blocks/Product/Filter/filterElementIds', () => ({
+    scrollToProductListControls: mockScrollToProductListControls,
+}));
+
 vi.mock('store/useSessionStore', () => ({
     useSessionStore: (selector: any) => {
         const mockState = {
@@ -316,6 +324,7 @@ describe('FilterPanel Component', () => {
             await user.click(closeButton);
 
             expect(mockSetIsFilterPanelOpen).toHaveBeenCalledWith(false);
+            expect(mockScrollToProductListControls).toHaveBeenCalledOnce();
         });
 
         test('show results button closes filter panel', async () => {

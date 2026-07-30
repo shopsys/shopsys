@@ -1,5 +1,8 @@
 import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/Portal';
-import { scrollToSelectedFilters } from 'components/Blocks/Product/Filter/filterElementIds';
+import {
+    PRODUCT_LIST_CONTROLS_ELEMENT_ID,
+    scrollToProductListControls,
+} from 'components/Blocks/Product/Filter/filterElementIds';
 import { ProductListViewModeToggle } from 'components/Blocks/Product/ProductsList/ProductListViewModeToggle';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { DEFAULT_SORT } from 'config/constants';
@@ -11,7 +14,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useUpdateSortQuery } from 'utils/queryParams/useUpdateSortQuery';
-import { MobileSortingActions } from './MobileSortingActions';
+import { MobileFilterAction, MobileSortingActions } from './MobileSortingActions';
 import { SortingBarOptions } from './SortingBarOptions';
 import { getActiveFilterCount, getIsPriceRelatedSortOption } from './sortingBarUtils';
 
@@ -70,24 +73,30 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     const handleChangeSort = (sortOption: TypeProductOrderingModeEnum) => {
         updateSort(sortOption);
         setIsSortMenuOpen(false);
-        scrollToSelectedFilters();
+        scrollToProductListControls();
     };
 
     return (
-        <div className="vl:relative vl:flex vl:flex-row vl:items-center vl:justify-between vl:gap-2.5 vl:border-border-less vl:border-b">
+        <div
+            className="relative flex scroll-mt-fixed-header flex-col gap-2.5 vl:border-border-less vl:border-b sm:flex-row sm:items-center sm:justify-between"
+            id={PRODUCT_LIST_CONTROLS_ELEMENT_ID}
+        >
+            <MobileSortingActions
+                isSortMenuOpen={isSortMenuOpen}
+                selectedSortOption={selectedSortOption}
+                sortOptions={sortOptions}
+                sortOptionsLabels={sortOptionsLabels}
+                onChangeSort={handleChangeSort}
+                onSortMenuClose={() => setIsSortMenuOpen(false)}
+                onSortMenuToggle={() => setIsSortMenuOpen(!isSortMenuOpen)}
+            />
+
             {portalElement &&
                 createPortal(
-                    <MobileSortingActions
+                    <MobileFilterAction
                         activeFilterCount={activeFilterCount}
                         isFilterPanelOpen={isFilterPanelOpen}
-                        isSortMenuOpen={isSortMenuOpen}
-                        selectedSortOption={selectedSortOption}
-                        sortOptions={sortOptions}
-                        sortOptionsLabels={sortOptionsLabels}
-                        onChangeSort={handleChangeSort}
                         onFilterPanelOpen={() => setIsFilterPanelOpen(true)}
-                        onSortMenuClose={() => setIsSortMenuOpen(false)}
-                        onSortMenuToggle={() => setIsSortMenuOpen(!isSortMenuOpen)}
                     />,
                     portalElement,
                 )}
