@@ -1,5 +1,5 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
-import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
+import { Link } from 'components/Basic/Link/Link';
+import { validateEmail } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import { UseFormReturn } from 'react-hook-form';
@@ -11,23 +11,25 @@ import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
+const newsletterAgreementLinkTwClass =
+    'text-link-inverted-default text-sm underline hover:text-link-inverted-default hover:underline';
+const newsletterAgreementTextTwClass = 'text-text-inverted text-sm';
+
 export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, NewsletterFormType] => {
     const { t } = useTranslation();
     const resolver = yupResolver<NewsletterFormType>(
         Yup.object().shape<Record<keyof NewsletterFormType, any>>({
             email: validateEmail(t),
-            privacyPolicy: validatePrivacyPolicy(t),
         }),
     );
-    const defaultValues = { email: '', privacyPolicy: false };
+    const defaultValues = { email: '' };
 
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
 export const useNewsletterFormMeta = (): FormMeta<NewsletterFormType, { error: string; success: string }> => {
     const { t } = useTranslation();
-    const [{ data: settingsData }] = useSettingsQuery();
-    const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
+
     return {
         formName: 'newsletter-form',
         messages: {
@@ -36,24 +38,31 @@ export const useNewsletterFormMeta = (): FormMeta<NewsletterFormType, { error: s
         },
         fields: createFields<NewsletterFormType>({
             email: t('Your email'),
-            privacyPolicy: (
-                <Trans
-                    defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
-                    i18nKey="PrivacyPolicyCheckbox"
-                    components={{
-                        lnk1: privacyPolicyArticleUrl ? (
-                            <Link
-                                aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                className="inline text-sm"
-                                href={privacyPolicyArticleUrl}
-                                target="_blank"
-                            />
-                        ) : (
-                            <span className={linkPlaceholderTwClass} />
-                        ),
-                    }}
-                />
-            ),
         }),
     };
+};
+
+export const useNewsletterSubscriptionAgreement = () => {
+    const { t } = useTranslation();
+    const [{ data: settingsData }] = useSettingsQuery();
+    const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
+
+    return (
+        <Trans
+            defaultTrans="By submitting, you agree to receive our newsletter. <lnk1>Personal data processing</lnk1>."
+            i18nKey="NewsletterSubscriptionAgreement"
+            components={{
+                lnk1: privacyPolicyArticleUrl ? (
+                    <Link
+                        aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
+                        className={newsletterAgreementLinkTwClass}
+                        href={privacyPolicyArticleUrl}
+                        target="_blank"
+                    />
+                ) : (
+                    <span className={newsletterAgreementTextTwClass} />
+                ),
+            }}
+        />
+    );
 };
