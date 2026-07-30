@@ -269,7 +269,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                             'vl:sticky flex rounded-xl bg-background-more p-5',
                             isPickupSelectionVariant
                                 ? 'vl:top-0 h-72 vl:h-[min(520px,calc(80dvh-180px))]'
-                                : 'vl:top-5 aspect-square',
+                                : 'vl:top-[calc(var(--sticky-navigation-offset,0px)+var(--spacing-5))] aspect-square',
                         )}
                     >
                         {shouldShowMap ? (

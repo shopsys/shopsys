@@ -229,4 +229,8 @@ export enum TIDs {
     blog_article_author = 'blog_article_author',
     blog_article_author_box = 'blog_article_author_box',
     blog_sidebar = 'blog_sidebar',
+    blog_article_anchor_navigation = 'blog_article_anchor_navigation',
+    blog_article_anchor_navigation_link_ = 'blog_article_anchor_navigation_link_',
+    blog_article_content = 'blog_article_content',
+    blog_article_list = 'blog_article_list',
 }

@@ -10,8 +10,6 @@ type UseHashNavigationReturn = {
     activeSection: string | null;
 };
 
-const SCROLL_OFFSET = 150;
-
 export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationReturn => {
     const [activeSection, setActiveSection] = useState<string | null>(null);
     const isUserScrollingRef = useRef(true);
@@ -39,9 +37,23 @@ export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationRetu
     useEffect(() => {
         const hash = window.location.hash.slice(1);
 
-        if (hash) {
-            setActiveSection(hash);
+        if (!hash) {
+            return undefined;
         }
+
+        setActiveSection(hash);
+        const section = sections.find(({ id }) => id === hash);
+
+        if (!section?.ref.current) {
+            return undefined;
+        }
+
+        isUserScrollingRef.current = false;
+        const animationFrameId = window.requestAnimationFrame(() =>
+            section.ref.current?.scrollIntoView({ block: 'start' }),
+        );
+
+        return () => window.cancelAnimationFrame(animationFrameId);
     }, []);
 
     // Detect user scroll (wheel/touch) to re-enable scroll detection
@@ -68,9 +80,13 @@ export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationRetu
         let active: string | null = null;
 
         for (const section of sections) {
-            const rect = section.ref.current?.getBoundingClientRect();
+            const sectionElement = section.ref.current;
+            const rect = sectionElement?.getBoundingClientRect();
+            const scrollOffset = sectionElement
+                ? Number.parseFloat(window.getComputedStyle(sectionElement).scrollMarginTop) || 0
+                : 0;
 
-            if (rect && rect.top <= SCROLL_OFFSET) {
+            if (rect && rect.top <= scrollOffset) {
                 active = section.id;
             }
         }

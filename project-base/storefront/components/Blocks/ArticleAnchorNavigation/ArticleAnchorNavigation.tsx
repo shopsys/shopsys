@@ -1,10 +1,13 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
+import { TIDs } from 'cypress/tids';
 import { type MouseEvent, useEffect, useState } from 'react';
 import { type ArticleHeading } from 'types/articleHeading';
+import { ARTICLE_INTRODUCTION_ANCHOR_ID } from 'utils/articleHeadingAnchors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
-export const ARTICLE_INTRODUCTION_ANCHOR_ID = 'article-introduction';
+export { ARTICLE_INTRODUCTION_ANCHOR_ID } from 'utils/articleHeadingAnchors';
 
 type ArticleAnchorNavigationProps = {
     headings: ArticleHeading[];
@@ -20,6 +23,7 @@ type ArticleAnchorNavigationLinkProps = {
 const ArticleAnchorNavigationLink: FC<ArticleAnchorNavigationLinkProps> = ({ href, isActive, title, onClick }) => (
     <li>
         <a
+            data-tid={`${TIDs.blog_article_anchor_navigation_link_}${href.slice(1)}`}
             href={href}
             className={twMergeCustom(
                 'flex items-center gap-1 rounded-sm font-secondary font-semibold text-sm text-text-default no-underline hover:text-link-hovered',
@@ -39,7 +43,14 @@ export const ArticleAnchorNavigation: FC<ArticleAnchorNavigationProps> = ({ head
     const [isBackToTopVisible, setIsBackToTopVisible] = useState(false);
 
     useEffect(() => {
-        setActiveHeadingId(window.location.hash.slice(1) || ARTICLE_INTRODUCTION_ANCHOR_ID);
+        const updateActiveHeadingFromHash = () => {
+            setActiveHeadingId(window.location.hash.slice(1) || ARTICLE_INTRODUCTION_ANCHOR_ID);
+        };
+
+        updateActiveHeadingFromHash();
+        window.addEventListener('hashchange', updateActiveHeadingFromHash);
+
+        return () => window.removeEventListener('hashchange', updateActiveHeadingFromHash);
     }, []);
 
     useEffect(() => {
@@ -85,7 +96,11 @@ export const ArticleAnchorNavigation: FC<ArticleAnchorNavigationProps> = ({ head
 
     return (
         <>
-            <nav aria-label={t('Article content')} className="flex flex-col gap-2.5">
+            <nav
+                aria-label={t('Article content')}
+                className="flex flex-col gap-2.5"
+                data-tid={TIDs.blog_article_anchor_navigation}
+            >
                 <p className="font-secondary font-semibold">{t('Article content')}</p>
 
                 <ul className="flex flex-col gap-2.5 rounded-xl bg-background-more p-5">
@@ -109,15 +124,14 @@ export const ArticleAnchorNavigation: FC<ArticleAnchorNavigationProps> = ({ head
             </nav>
 
             {isBackToTopVisible && (
-                <button
-                    type="button"
-                    className="fixed right-5 bottom-[calc(5rem+env(safe-area-inset-bottom))] vl:bottom-5 z-above flex size-12 items-center justify-center rounded-full bg-background-brand-less text-text-inverted shadow-md xl:hidden"
+                <IconButton
+                    Icon={ArrowIcon}
+                    className="fixed right-5 bottom-[calc(5rem+env(safe-area-inset-bottom))] vl:bottom-5 z-above xl:hidden"
+                    iconClassName="rotate-180"
+                    size="large"
                     title={t('Back to top')}
                     onClick={handleBackToTopClick}
-                >
-                    <ArrowIcon className="size-6 rotate-180" />
-                    <span className="sr-only">{t('Back to top')}</span>
-                </button>
+                />
             )}
         </>
     );

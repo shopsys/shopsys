@@ -83,6 +83,39 @@ describe('StoresWrapper layout states', () => {
         expect(screen.getByTestId('google-map')).toBeInTheDocument();
     });
 
+    test('offsets the sticky map below the fixed header on the stores page only', () => {
+        const { container, unmount } = render(
+            <StoresWrapper
+                appliedSearchTextValue=""
+                isDistanceFromSearchText={false}
+                searchTextValue=""
+                stores={storesWithoutResults}
+                onSearchTextCallback={vi.fn()}
+            />,
+        );
+
+        expect(container.querySelector(`[data-tid="${TIDs.stores_map}"]`)?.firstElementChild).toHaveClass(
+            'vl:top-[calc(var(--sticky-navigation-offset,0px)+var(--spacing-5))]',
+        );
+
+        unmount();
+
+        const { container: pickupSelectionContainer } = render(
+            <StoresWrapper
+                appliedSearchTextValue=""
+                isDistanceFromSearchText={false}
+                searchTextValue=""
+                stores={storesWithoutResults}
+                variant="pickupSelection"
+                onSearchTextCallback={vi.fn()}
+            />,
+        );
+
+        expect(
+            pickupSelectionContainer.querySelector(`[data-tid="${TIDs.stores_map}"]`)?.firstElementChild,
+        ).toHaveClass('vl:top-0');
+    });
+
     test('passes browser geolocation coordinates to the store query callback', async () => {
         const coordinates = { latitude: 50.087, longitude: 14.421 };
         const onUserCoordinatesCallback = vi.fn();
