@@ -1,4 +1,5 @@
 import grapesjs from 'grapesjs';
+import { addRelNoopenerToComponentWithBlankTarget } from '../shared/linkNoopener';
 
 export const LINK_POSITION_DATA_ATTRIBUTE = 'data-link-position';
 
@@ -16,6 +17,9 @@ export default grapesjs.plugins.add('link', editor => {
         model: {
             init() {
                 this.on(`change:attributes:${LINK_POSITION_DATA_ATTRIBUTE}`, this.handleLinkPositionChange);
+                this.on('change:attributes:target', addRelNoopenerToComponentWithBlankTarget);
+
+                addRelNoopenerToComponentWithBlankTarget(this);
             },
 
             handleLinkPositionChange(element) {

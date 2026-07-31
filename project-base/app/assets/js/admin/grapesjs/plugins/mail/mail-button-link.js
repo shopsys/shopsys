@@ -1,5 +1,6 @@
 import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
+import { addRelNoopenerToComponentWithBlankTarget } from '../shared/linkNoopener';
 
 const LINK_POSITION_DATA_ATTRIBUTE = 'data-link-position';
 const BUTTON_COLOR_ATTRIBUTE = 'backgroundColor';
@@ -52,6 +53,9 @@ export default grapesjs.plugins.add('mail-button-link', editor => {
             init() {
                 this.on(`change:attributes:${LINK_POSITION_DATA_ATTRIBUTE}`, this.handleLinkPositionChange);
                 this.on(`change:attributes:${BUTTON_COLOR_ATTRIBUTE}`, this.handleColorChange);
+                this.on('change:attributes:target', addRelNoopenerToComponentWithBlankTarget);
+
+                addRelNoopenerToComponentWithBlankTarget(this);
             },
 
             handleLinkPositionChange(component) {
