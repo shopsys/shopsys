@@ -258,11 +258,11 @@ Defines which entity should the images be assigned to.
 
 #### image_entity_class
 
-Defines the entity class whose image configuration (defined by the [`EntityImage`]({{github.link}}/packages/framework/src/Component/Image/Config/Attributes/EntityImage.php) attribute on the entity) should be used.
+Defines the entity class whose image configuration (defined by the [`EntityImage`](../cookbook/adding-images-to-an-entity.md) attribute on the entity) should be used.
 
 #### image_type
 
-Defines which type of image (the `name` of an `EntityImage` attribute on the entity) should the images be assigned to.
+Defines which type of image (the `name` of an `EntityImage` attribute on the entity) should the images be assigned to. See [Adding Images to an Entity](../cookbook/adding-images-to-an-entity.md) for how to declare named image types.
 
 #### multiple
 

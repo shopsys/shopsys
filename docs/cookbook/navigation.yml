@@ -3,6 +3,7 @@ arrange:
     - dumping-and-importing-the-database.md
     - adding-a-new-entity.md
     - adding-new-attribute-to-an-entity.md
+    - adding-images-to-an-entity.md
     - adding-a-new-elasticsearch-index.md
     - adding-a-new-administration-page.md
     - extending-order-detail-page.md

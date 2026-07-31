@@ -3,6 +3,7 @@
 - [Dumping and Importing the Database](./dumping-and-importing-the-database.md)
 - [Adding a New Entity](./adding-a-new-entity.md)
 - [Adding New Attribute to an Entity](./adding-new-attribute-to-an-entity.md)
+- [Adding Images to an Entity](./adding-images-to-an-entity.md)
 - [Adding a New Elasticsearch Index](./adding-a-new-elasticsearch-index.md)
 - [Adding a New Administration Page](./adding-a-new-administration-page.md)
 - [Adding a New Advert Position](./adding-a-new-advert-position.md)
