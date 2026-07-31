@@ -139,6 +139,7 @@ use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 return ECSConfig::configure()
     ->withParallel()
     ->withSpacing(indentation: Option::INDENTATION_SPACES, lineEnding: PHP_EOL)
+    ->withFileExtensions(['php', 'html.twig'])
     ->withSets([
         SetList::PSR_12,
         SetList::CLEAN_CODE,

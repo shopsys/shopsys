@@ -14,6 +14,10 @@ use SplFileInfo;
 
 final class MissingButtonTypeFixer implements FixerInterface
 {
+    use AppendsHtmlAttributeTrait;
+
+    private const string BUTTON_OPENING_TAG_PATTERN = '@(<button\b)((?:"[^"]*"|\'[^\']*\'|[^>"\'])*?)(\s*/?>)@imsu';
+
     /**
      * {@inheritdoc}
      */
@@ -55,14 +59,14 @@ final class MissingButtonTypeFixer implements FixerInterface
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         $code = preg_replace_callback(
-            '@(<button\b)(.*?)(\s*/?>)@imsu',
+            static::BUTTON_OPENING_TAG_PATTERN,
             function ($matches) {
                 $beginning = $matches[1];
                 $attributes = $matches[2];
                 $end = $matches[3];
 
-                if (!preg_match('@(?:^|\s+)type=@', $attributes)) {
-                    $attributes .= ' type="button"';
+                if (!preg_match('@(?:^|\s)type\s*=@i', $attributes)) {
+                    $attributes = $this->appendHtmlAttribute($attributes, 'type="button"');
                 }
 
                 return $beginning . $attributes . $end;

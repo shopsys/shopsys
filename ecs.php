@@ -10,7 +10,9 @@ use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
 use Shopsys\CodingStandards\CsFixer\FinalCompilerPassFixer;
 use Shopsys\CodingStandards\CsFixer\FinalFormTypeFixer;
 use Shopsys\CodingStandards\CsFixer\FinalMigrationFixer;
+use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
+use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenDumpSniff;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenSuperGlobalSniff;
@@ -36,6 +38,7 @@ foreach ($packagesDirectoryIterator as $path) {
         $pathCandidates = [
             $path->getPathname() . '/src',
             $path->getPathname() . '/tests',
+            $path->getPathname() . '/templates',
         ];
 
         foreach ($pathCandidates as $pathCandidate) {
@@ -66,6 +69,7 @@ return ECSConfig::configure()
         ...$packagePaths,
         __DIR__ . '/project-base/app/app',
         __DIR__ . '/project-base/app/src',
+        __DIR__ . '/project-base/app/templates',
         __DIR__ . '/project-base/app/tests',
         __DIR__ . '/utils/releaser/src',
         __DIR__ . '/utils/releaser/tests',
@@ -136,6 +140,10 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Component/Filesystem/Flysystem/VolumeDriver.php',
                 __DIR__ . '/packages/framework/src/Model/AdminNavigation/RoutingExtension.php',
             ],
+            ForbiddenDumpFixer::class => [
+                // the profiler collector renders the dumped data on purpose, it is not a forgotten debug dump
+                __DIR__ . '/packages/framework/src/Resources/views/Components/Collector/elasticSearch.html.twig',
+            ],
             ForbiddenDumpSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/DateTimeHelper/Exception/CannotParseDateTimeException.php',
                 __DIR__ . '/packages/framework/src/Twig/VarDumperExtension.php',
@@ -178,6 +186,10 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/product-feed-zbozi/src/DataFixtures/ZboziPluginDataFixture.php',
                 __DIR__ . '/utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php',
                 __DIR__ . '/utils/releaser/src/ReleaseWorker/Release/TagPhpImageReleaseWorker.php',
+            ],
+            MissingButtonTypeFixer::class => [
+                // the type attribute is a part of the attributes bag passed to the button
+                __DIR__ . '/packages/administration/templates/components/live_action_button.html.twig',
             ],
             ParentCallSpacingSniff::class . '.IncorrectLinesCountBeforeControlStructure' => [
                 __DIR__ . '/packages/framework/src/Component/Filesystem/Flysystem/VolumeDriver.php',

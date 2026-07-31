@@ -11,6 +11,7 @@ return ECSConfig::configure()
     ->withPaths([
         __DIR__ . '/app',
         __DIR__ . '/src',
+        __DIR__ . '/templates',
         __DIR__ . '/tests',
     ])
     ->withSets([
