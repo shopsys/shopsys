@@ -13,7 +13,6 @@ use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\Filesystem\Path;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 class ShopsysMcpBundle extends AbstractBundle
@@ -79,14 +78,6 @@ TEXT;
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $builder->prependExtensionConfig('mcp', [
-            'discovery' => [
-                'scan_dirs' => [
-                    Path::makeRelative(
-                        Path::canonicalize(__DIR__ . '/Tool'),
-                        $builder->getParameter('kernel.project_dir'),
-                    ),
-                ],
-            ],
             'instructions' => self::MCP_INSTRUCTIONS,
         ]);
         $builder->prependExtensionConfig('doctrine_migrations', [

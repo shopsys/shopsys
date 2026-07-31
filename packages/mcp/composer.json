@@ -36,7 +36,7 @@
         "symfony/dependency-injection": "^7.4",
         "symfony/http-foundation": "^7.4",
         "symfony/http-kernel": "^7.4",
-        "symfony/mcp-bundle": "^0.8",
+        "symfony/mcp-bundle": "^0.12",
         "symfony/password-hasher": "^7.4",
         "symfony/routing": "^7.4",
         "symfony/security-core": "^7.4",

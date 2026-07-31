@@ -5,6 +5,8 @@ mcp:
         stdio: false
     description: 'Shopsys MCP server'
     http:
+        # the MCP endpoint is protected by OAuth tokens, DNS rebinding protection would block public domains
+        allowed_hosts: false
         session:
             store: cache
             prefix: mcp_http_session
