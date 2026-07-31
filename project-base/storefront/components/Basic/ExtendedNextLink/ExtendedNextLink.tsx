@@ -11,6 +11,7 @@ import {
     FriendlyPagesTypesKey,
     FriendlyPagesTypesKeys,
 } from 'types/friendlyUrl';
+import { addRelNoopenerWhenTargetIsBlank } from 'utils/links/addRelNoopenerWhenTargetIsBlank';
 import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { isTextSelected } from 'utils/ui/isTextSelected';
 
@@ -32,6 +33,8 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     skeletonType,
     className,
     tid,
+    rel,
+    target,
     preventRedirectOnTextSelection = false,
     ...props
 }) => {
@@ -51,7 +54,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         const mouseWheelClick = e.button === 1;
-        const isTargetBlank = props.target === '_blank';
+        const isTargetBlank = target === '_blank';
         const isWithoutOpeningInNewTab = !e.ctrlKey && !e.metaKey && !mouseWheelClick && !isTargetBlank;
 
         if (preventRedirectOnTextSelection && isTextSelected()) {
@@ -79,7 +82,9 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
             data-tid={tid}
             href={urlHref}
             prefetch={false}
+            rel={addRelNoopenerWhenTargetIsBlank(rel, target)}
             tabIndex={0}
+            target={target}
             onClick={handleOnClick}
             {...props}
         >

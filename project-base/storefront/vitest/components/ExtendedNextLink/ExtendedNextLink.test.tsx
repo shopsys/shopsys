@@ -91,4 +91,58 @@ describe('ExtendedNextLink snapshot tests', () => {
 
         expect(component).toMatchFileSnapshot('snap-4.test.tsx.snap');
     });
+
+    test('render ExtendedNextLink opening in a new tab, which gets rel="noopener"', async () => {
+        const component = render(
+            <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
+                <ExtendedNextLink href="/test-href" target="_blank">
+                    <div>
+                        <span>link text</span>
+                    </div>
+                </ExtendedNextLink>
+            </DomainConfigProvider>,
+        );
+
+        await waitFor(() => {
+            expect(component.container).toBeInTheDocument();
+        });
+
+        expect(component).toMatchFileSnapshot('snap-5.test.tsx.snap');
+    });
+
+    test.each([
+        ['nofollow', 'nofollow noopener'],
+        ['noreferrer noopener', 'noreferrer noopener'],
+        ['noopener', 'noopener'],
+    ])('render ExtendedNextLink merging noopener into rel="%s"', async (rel, expectedRel) => {
+        const component = render(
+            <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
+                <ExtendedNextLink href="/test-href" rel={rel} target="_blank">
+                    <div>
+                        <span>link text</span>
+                    </div>
+                </ExtendedNextLink>
+            </DomainConfigProvider>,
+        );
+
+        await waitFor(() => {
+            expect(component.container.querySelector('a')).toHaveAttribute('rel', expectedRel);
+        });
+    });
+
+    test('render ExtendedNextLink without a target, which keeps rel untouched', async () => {
+        const component = render(
+            <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
+                <ExtendedNextLink href="/test-href" rel="nofollow">
+                    <div>
+                        <span>link text</span>
+                    </div>
+                </ExtendedNextLink>
+            </DomainConfigProvider>,
+        );
+
+        await waitFor(() => {
+            expect(component.container.querySelector('a')).toHaveAttribute('rel', 'nofollow');
+        });
+    });
 });
