@@ -91,6 +91,7 @@ use PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer;
 use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
+use Shopsys\CodingStandards\CsFixer\MissingLinkRelNoopenerFixer;
 use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\InheritDocFormatFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
@@ -165,6 +166,7 @@ return ECSConfig::configure()
         InheritDocFormatFixer::class,
         ForbiddenDumpFixer::class,
         MissingButtonTypeFixer::class,
+        MissingLinkRelNoopenerFixer::class,
         OrmJoinColumnRequireNullableFixer::class,
         ObjectIsCreatedByFactorySniff::class,
         ForbiddenDumpSniff::class,
