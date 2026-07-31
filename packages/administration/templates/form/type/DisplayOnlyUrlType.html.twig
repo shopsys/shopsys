@@ -6,7 +6,7 @@
             {% set url = url(route, route_params) %}
         {% endif %}
 
-        <a href="{{ url }}" target="{{ link_target }}" {% with {attr: route_attr} %}{{ block('attributes') }}{% endwith %}>
+        <a href="{{ url }}" target="{{ link_target }}"{% if link_target is same as('_blank') %} rel="noopener"{% endif %} {% with {attr: route_attr} %}{{ block('attributes') }}{% endwith %}>
             {% if link_target is same as('_blank') %}
                 {{ ux_icon('forward-page') }}
             {% endif %}
