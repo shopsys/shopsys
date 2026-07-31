@@ -40,6 +40,7 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
                 'format_tags' => static::ALLOWED_FORMAT_TAGS,
             ],
             'available_variables' => [],
+            'contains_html' => true,
         ]);
 
         $resolver->setAllowedTypes('available_variables', 'array');

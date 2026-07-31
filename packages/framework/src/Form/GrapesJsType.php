@@ -51,6 +51,7 @@ final class GrapesJsType extends AbstractType
             ->setAllowedTypes('allow_products', 'boolean')
             ->setDefaults([
                 'allow_products' => false,
+                'contains_html' => true,
                 'entry_options' => [
                     'attr' => [
                         'class' => 'js-grapesjs_textarea',

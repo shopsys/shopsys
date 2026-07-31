@@ -53,6 +53,7 @@ final class GrapesJsMailType extends AbstractType
             ->setDefaults([
                 'body_variables' => [],
                 'custom_plugins' => [],
+                'contains_html' => true,
             ]);
     }
 }
