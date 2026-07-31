@@ -510,6 +510,7 @@ php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModul
 - Be careful with the order of your data transfers.
     - For example, products have an association with their categories,
       so first, you want to transfer products and then their relation to categories.
+- When the transfer includes images, see [Adding Images to an Entity → Attaching images outside the administration](adding-images-to-an-entity.md#attaching-images-outside-the-administration).
 
 ## Pitfalls
 

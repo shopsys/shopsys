@@ -83,6 +83,54 @@ $this->imageFacade->manageImages($sliderItem, $sliderItemData->image, self::IMAG
 $this->imageFacade->manageImages($sliderItem, $sliderItemData->mobileImage, self::IMAGE_TYPE_MOBILE);
 ```
 
+## Attaching images outside the administration
+
+When images come from an ERP transfer or a migration from another platform, there is no form to build the `ImageUploadData`. Create it yourself and call the same `ImageFacade::manageImages()`.
+
+`ImageUploadData::$uploadedFiles` holds names of temporary files that must already exist in the upload directory of the [abstract filesystem](../introduction/abstract-filesystem.md), so copy the file there first using [`FileUpload`]({{github.link}}/packages/framework/src/Component/FileUpload/FileUpload.php) and the Flysystem `MountManager`:
+
+```php
+$temporaryFilename = $this->fileUpload->getTemporaryFilename('logo.png');
+$this->mountManager->copy(
+    'local://' . $localPath,
+    'main://' . $this->fileUpload->getTemporaryFilepath($temporaryFilename),
+);
+```
+
+When the source is a remote URL, no local file is needed, you can write the downloaded content straight to the temporary directory:
+
+```php
+$content = $this->httpClient->request('GET', $imageUrl)->getContent();
+$this->mountManager->write(
+    'main://' . $this->fileUpload->getTemporaryFilepath($temporaryFilename),
+    $content,
+);
+```
+
+The image format is recognized from the filename extension (`jpg`, `jpeg`, `png`, `gif`, or `svg` are supported), so make sure the temporary filename has one.
+
+Then build the `ImageUploadData` using [`ImageUploadDataFactory::createFromEntityAndType()`]({{github.link}}/packages/framework/src/Component/FileUpload/ImageUploadDataFactory.php) — unlike a plain `new ImageUploadData()`, it pre-fills the entity's existing images, so replacing the image of a non-`multiple` type works correctly:
+
+```php
+$imageUploadData = $this->imageUploadDataFactory->createFromEntityAndType($brand);
+$imageUploadData->uploadedFiles[] = $temporaryFilename;
+$imageUploadData->uploadedFilenames[] = ['en' => 'Brand logo'];
+$this->imageFacade->manageImages($brand, $imageUploadData);
+```
+
+A few things to keep in mind in an import:
+
+- The entity must already have an ID, just like in the form scenario above.
+- `manageImages()` flushes the entity manager internally — mind that when batching with `EntityManager::clear()`.
+- The temporary file is consumed (converted and removed) during the upload, so an `ImageUploadData` instance cannot be reused for a second entity.
+- For a named image type, pass its name as the third argument of `manageImages()`; for the default type, pass `null`.
+- A recurring transfer needs its own change detection — `manageImages()` cannot tell an already-imported image from a new one, so each run of the transfer would add the same images again.
+  Extend the `Image` entity with an identifier from the external system (e.g. a file hash) and compare it against the incoming data to decide which images to add, keep, or put into `$imagesToDelete`.
+
+For the overall structure of an import (cron module, external IDs, batching), see [Basic Data Import](basic-data-import.md).
+
+The demo [`ImageDataFixture`]({{github.link}}/project-base/app/src/DataFixtures/Demo/ImageDataFixture.php) is usually **not** an example to follow — it inserts image database rows with raw SQL and hard-coded IDs as a performance shortcut for demo data.
+
 ## Displaying the image
 
 This section is about **administration Twig templates only**.
