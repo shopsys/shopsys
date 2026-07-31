@@ -15,7 +15,7 @@
                     <span class="text-secondary d-inline-flex align-items-center">
                         {{ ux_icon('company', { class: 'icon icon-inline' }) }}
                     </span>
-                    <a href="{{ url('admin_customer_edit', { id: order.customerUser.customer.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                    <a href="{{ url('admin_customer_edit', { id: order.customerUser.customer.id }) }}" target="_blank" class="d-flex align-items-center gap-1" rel="noopener">
                         {{ registeredCompanyName }} {{ ux_icon('forward-page', { class: 'icon icon-inline' }) }}
                     </a>
                 </span>
@@ -24,7 +24,7 @@
                 <span class="text-secondary d-inline-flex align-items-center">
                     {{ ux_icon('user', { class: 'icon icon-inline' }) }}
                 </span>
-                <a href="{{ url('admin_customer_user_edit', { id: order.customerUser.id }) }}" target="_blank" class="d-flex align-items-center gap-1">
+                <a href="{{ url('admin_customer_user_edit', { id: order.customerUser.id }) }}" target="_blank" class="d-flex align-items-center gap-1" rel="noopener">
                     {{ order.customerUser.firstName }} {{ order.customerUser.lastName }} {{ ux_icon('forward-page', { class: 'icon icon-inline' }) }}
                 </a>
             </span>

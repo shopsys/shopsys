@@ -42,7 +42,7 @@
                             {% for order in orders %}
                                 <tr>
                                     <td>
-                                        <a href="{{ url('admin_order_edit', { id: order.id }) }}" target="_blank">
+                                        <a href="{{ url('admin_order_edit', { id: order.id }) }}" target="_blank" rel="noopener">
                                             {{ order.number }}{{ ux_icon('forward-page', { class: 'ms-1 icon icon-sm' }) }}
                                         </a>
                                     </td>

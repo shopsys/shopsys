@@ -3,7 +3,7 @@
         {% if user is null %}
             {{ 'unregistered customer'|trans }}
         {% else %}
-            <a href="{{ path('admin_customer_edit', { id: user.id }) }}" target="_blank">
+            <a href="{{ path('admin_customer_edit', { id: user.id }) }}" target="_blank" rel="noopener">
                 {% if user.customer.billingAddress.companyCustomer %}
                     {{ user.customer.billingAddress.companyName }} -
                 {% endif %}

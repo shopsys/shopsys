@@ -46,7 +46,7 @@
 
             <div class="col">
                 {% if isVisible %}
-                    <a href="{{ url }}" target="_blank">
+                    <a href="{{ url }}" target="_blank" rel="noopener">
                         {% if isMultidomain() %}
                             {{ getDomainName(domain.id) }}
                             {{ ux_icon('forward-page') }}

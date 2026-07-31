@@ -8,7 +8,7 @@
 {% block btn %}
     {% if uploadedFileExists(entity) %}
         {% if isUploadedFileViewableInBrowser(entity) %}
-            <a href="{{ uploadedFileViewUrl(entity) }}" target="_blank" class="btn btn-secondary">
+            <a href="{{ uploadedFileViewUrl(entity) }}" target="_blank" class="btn btn-secondary" rel="noopener">
                 {{ ux_icon('forward-page') }}
                 {{ 'View'|trans }}
             </a>

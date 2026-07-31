@@ -25,7 +25,7 @@
                                         {{ form_widget(complaintItemForm.productName) }}
                                         <span class="input-group-text">
                                         {% if product %}
-                                            <a href="{{ path('admin_product_edit', { id: product.id }) }}" target="_blank">
+                                            <a href="{{ path('admin_product_edit', { id: product.id }) }}" target="_blank" rel="noopener">
                                                 {{ ux_icon('forward-page') }}
                                             </a>
                                         {% else %}
@@ -56,7 +56,7 @@
                                 <td>
                                     {% for file in files.orderedFiles %}
                                         {% if customerUploadedFileExists(file) %}
-                                            <a class="btn btn-sm" href="{{ customerUploadedFileUrl(file) }}" target="_blank">
+                                            <a class="btn btn-sm" href="{{ customerUploadedFileUrl(file) }}" target="_blank" rel="noopener">
                                                 {{ file.name }}.{{ file.extension }}
                                             </a>
                                         {% else %}

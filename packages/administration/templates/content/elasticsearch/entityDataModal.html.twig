@@ -83,6 +83,7 @@
                            class="btn btn-sm"
                            data-bs-toggle="tooltip"
                            title="{{ 'Open in a new tab'|trans }}"
+                           rel="noopener"
                         >
                             {{ ux_icon('forward-page', {class: 'icon-sm'}) }}
                         </a>
@@ -90,6 +91,7 @@
                     <button class="btn btn-sm btn-secondary"
                             data-js-clipboard-copy="{{ elasticsearchEntityData.prettyJson }}"
                             data-js-clipboard-copy-title="{{ 'Copy the entire JSON document'|trans }}"
+                            type="button"
                     >
                         {{ ux_icon('duplicate') }}
                         {{ 'Copy JSON'|trans }}

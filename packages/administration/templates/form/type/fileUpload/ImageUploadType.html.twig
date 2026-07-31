@@ -24,7 +24,7 @@
                                 <div class="d-flex align-items-center gap-1">
                                     {% set currentImageUrl = imageUrl(image, image_type) %}
                                     {% if currentImageUrl %}
-                                        <a href="{{ currentImageUrl }}" target="_blank" class="btn btn-sm btn-ghost-secondary" title="{{ 'View'|trans }}">
+                                        <a href="{{ currentImageUrl }}" target="_blank" class="btn btn-sm btn-ghost-secondary" title="{{ 'View'|trans }}" rel="noopener">
                                             {{ ux_icon('forward-page', {class: 'icon mx-0'}) }}
                                         </a>
                                         <a href="{{ currentImageUrl }}" download class="btn btn-sm btn-ghost-secondary" title="{{ 'Download'|trans }}">

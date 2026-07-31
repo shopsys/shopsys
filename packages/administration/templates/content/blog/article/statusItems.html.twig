@@ -19,7 +19,7 @@
 
             <div class="col">
                 {% if url is not null and blogArticle.isAccessibleOnStorefront(domain.id) %}
-                    <a href="{{ url }}" target="_blank">
+                    <a href="{{ url }}" target="_blank" rel="noopener">
                         {% if isMultidomain() %}
                             {{ getDomainName(domain.id) }}
                             {{ ux_icon('forward-page') }}

@@ -14,7 +14,7 @@
             <h3 class="card-title">{{ 'Personal information overview'|trans }}</h3>
             <div class="card-actions">
                 {{ 'Storefront URL:'|trans }}
-                <a href="{{ findUrlByDomainId('front_personal_data', {}, domainId) }}" target="_blank">
+                <a href="{{ findUrlByDomainId('front_personal_data', {}, domainId) }}" target="_blank" rel="noopener">
                     {{ findUrlByDomainId('front_personal_data', {}, domainId) }}
                 </a>
             </div>
@@ -29,7 +29,7 @@
             <h3 class="card-title">{{ 'Personal information export'|trans }}</h3>
             <div class="card-actions">
                 {{ 'Storefront URL:'|trans }}
-                <a href="{{ findUrlByDomainId('front_personal_data_export', {}, domainId) }}" target="_blank">
+                <a href="{{ findUrlByDomainId('front_personal_data_export', {}, domainId) }}" target="_blank" rel="noopener">
                     {{ findUrlByDomainId('front_personal_data_export', {}, domainId) }}
                 </a>
             </div>

@@ -1,7 +1,7 @@
 {% block display_only_order_widget %}
     <div class="form-control-plaintext">
         {% if order is not null %}
-            <a href="{{ path('admin_order_edit', { id: order.id }) }}" target="_blank">
+            <a href="{{ path('admin_order_edit', { id: order.id }) }}" target="_blank" rel="noopener">
                 {{ order.number }}
                 {{ ux_icon('forward-page') }}
             </a>
