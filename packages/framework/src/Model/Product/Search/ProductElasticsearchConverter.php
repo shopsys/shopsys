@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
+use Shopsys\FrameworkBundle\Model\ProductReview\Elasticsearch\ProductReviewDocumentMapper;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class ProductElasticsearchConverter
@@ -14,6 +15,7 @@ class ProductElasticsearchConverter
      * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
      */
     public function __construct(
+        protected readonly ProductReviewDocumentMapper $productReviewDocumentMapper,
         #[AutowireIterator('shopsys.product_export_data_provider')]
         protected readonly iterable $productExportDataProviders = [],
     ) {
@@ -90,6 +92,9 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::SEARCHING_SEO_TITLES] = $product[ProductExportFieldProvider::SEARCHING_SEO_TITLES] ?? '';
         $result[ProductExportFieldProvider::SEARCHING_SEO_H1S] = $product[ProductExportFieldProvider::SEARCHING_SEO_H1S] ?? '';
         $result[ProductExportFieldProvider::SEARCHING_SEO_META_DESCRIPTIONS] = $product[ProductExportFieldProvider::SEARCHING_SEO_META_DESCRIPTIONS] ?? '';
+
+        $result[ProductExportFieldProvider::REVIEWS] = $product[ProductExportFieldProvider::REVIEWS] ?? [];
+        $result[ProductExportFieldProvider::REVIEW_SUMMARY] = $product[ProductExportFieldProvider::REVIEW_SUMMARY] ?? $this->productReviewDocumentMapper->mapSummary([]);
 
         $result[ProductExportFieldProvider::IS_PROMOTED] = $product[ProductExportFieldProvider::IS_PROMOTED] ?? false;
         $result[ProductExportFieldProvider::TOP_PRODUCT_POSITION] = $product[ProductExportFieldProvider::TOP_PRODUCT_POSITION] ?? null;

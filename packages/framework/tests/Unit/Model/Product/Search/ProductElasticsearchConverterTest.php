@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Product\Search;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter;
+use Shopsys\FrameworkBundle\Model\ProductReview\Elasticsearch\ProductReviewDocumentMapper;
 
 class ProductElasticsearchConverterTest extends TestCase
 {
@@ -75,11 +76,23 @@ class ProductElasticsearchConverterTest extends TestCase
             'searching_seo_titles' => '',
             'searching_seo_h1s' => '',
             'searching_seo_meta_descriptions' => '',
+            'reviews' => [],
+            'review_summary' => [
+                'average_rating' => null,
+                'total_count' => 0,
+                'rating_counts' => [
+                    0 => ['rating' => 5, 'count' => 0],
+                    1 => ['rating' => 4, 'count' => 0],
+                    2 => ['rating' => 3, 'count' => 0],
+                    3 => ['rating' => 2, 'count' => 0],
+                    4 => ['rating' => 1, 'count' => 0],
+                ],
+            ],
             'is_promoted' => false,
             'top_product_position' => null,
         ];
 
-        $converter = new ProductElasticsearchConverter();
+        $converter = new ProductElasticsearchConverter(new ProductReviewDocumentMapper());
         $this->assertSame($expected, $converter->fillEmptyFields($product));
     }
 
@@ -171,11 +184,23 @@ class ProductElasticsearchConverterTest extends TestCase
             'searching_seo_titles' => '',
             'searching_seo_h1s' => '',
             'searching_seo_meta_descriptions' => '',
+            'reviews' => [],
+            'review_summary' => [
+                'average_rating' => null,
+                'total_count' => 0,
+                'rating_counts' => [
+                    0 => ['rating' => 5, 'count' => 0],
+                    1 => ['rating' => 4, 'count' => 0],
+                    2 => ['rating' => 3, 'count' => 0],
+                    3 => ['rating' => 2, 'count' => 0],
+                    4 => ['rating' => 1, 'count' => 0],
+                ],
+            ],
             'is_promoted' => false,
             'top_product_position' => null,
         ];
 
-        $converter = new ProductElasticsearchConverter();
+        $converter = new ProductElasticsearchConverter(new ProductReviewDocumentMapper());
         $this->assertSame($expected, $converter->fillEmptyFields($product));
     }
 }

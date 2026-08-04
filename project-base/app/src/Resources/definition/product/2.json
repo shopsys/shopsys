@@ -581,6 +581,24 @@
             },
             "zbozi_category": {
                 "type": "text"
+            },
+            "reviews": {
+                "type": "object",
+                "enabled": false
+            },
+            "review_summary": {
+                "properties": {
+                    "average_rating": {
+                        "type": "half_float"
+                    },
+                    "total_count": {
+                        "type": "integer"
+                    },
+                    "rating_counts": {
+                        "type": "object",
+                        "enabled": false
+                    }
+                }
             }
         }
     }

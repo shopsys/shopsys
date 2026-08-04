@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter;
+use Shopsys\FrameworkBundle\Model\ProductReview\Elasticsearch\ProductReviewDocumentMapper;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\Elasticsearch\ZboziProductExportDataProvider;
 use Symfony\Component\Finder\Finder;
 
@@ -21,7 +22,10 @@ class ProductElasticsearchConverterTest extends TestCase
     #[DataProvider('getProductMappingFiles')]
     public function testAllFieldsAreMentionedInConverter(string $mappingFile): void
     {
-        $productElasticsearchConverter = new ProductElasticsearchConverter([$this->createProductExportDataProvider()]);
+        $productElasticsearchConverter = new ProductElasticsearchConverter(
+            new ProductReviewDocumentMapper(),
+            [$this->createProductExportDataProvider()],
+        );
 
         $product = [
             'parameters' => [[]],

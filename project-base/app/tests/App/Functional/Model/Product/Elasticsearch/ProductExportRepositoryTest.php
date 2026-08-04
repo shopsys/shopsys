@@ -105,6 +105,8 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             ...$this->getSearchingFields(),
             'available_stores_count',
             'related_products',
+            'review_summary',
+            'reviews',
             'breadcrumb',
             'product_videos',
             'hreflang_links',
