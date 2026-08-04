@@ -2,7 +2,7 @@ import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
-import { Button } from 'components/Forms/Button/Button';
+import { Button, getButtonIconClassName } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -113,7 +113,7 @@ export const AddToCartContent: FC<AddToCartContentProps> = ({
                 onClick={onAddToCartHandler}
                 onFocus={onFocusHandler}
             >
-                <CartIcon className="size-4 md:size-5" />
+                <CartIcon className={getButtonIconClassName(buttonSize)} />
                 {t('Add to cart')}
             </Button>
         </div>
