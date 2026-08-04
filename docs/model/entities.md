@@ -414,6 +414,8 @@ See [Working with date-time values](../introduction/working-with-date-time-value
 
 To transfer images via the system, use PHPDoc annotation `\Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData` and initialize the field in the constructor as you can see in `BrandData` example above.
 
+To make the entity itself support image uploads, see [Adding Images to an Entity](../cookbook/adding-images-to-an-entity.md).
+
 #### URL addresses
 
 To transfer URL addresses via the system, use PHPDoc annotation `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData` and initialize the field in the constructor as you can see in `BrandData` example above.
