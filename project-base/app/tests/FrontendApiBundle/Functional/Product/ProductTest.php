@@ -450,6 +450,18 @@ class ProductTest extends GraphQlTestCase
             'promotionFreeQuantity' => null,
             'relatedProducts' => $this->getExpectedRelatedProducts($firstDomainLocale),
             'isMainVariant' => false,
+            'reviewsSummary' => [
+                'averageRating' => 3.44,
+                'ratingCounts' => [
+                    ['rating' => 5, 'count' => 2],
+                    ['rating' => 4, 'count' => 3],
+                    ['rating' => 3, 'count' => 2],
+                    ['rating' => 2, 'count' => 1],
+                    ['rating' => 1, 'count' => 1],
+                ],
+                'totalCount' => 9,
+            ],
+
         ];
     }
 

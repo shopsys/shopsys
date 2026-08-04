@@ -1,0 +1,11 @@
+ProductReviewRatingCountDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            rating:
+                type: "Int!"
+                description: "Star rating"
+            count:
+                type: "Int!"
+                description: "Number of reviews with the rating"

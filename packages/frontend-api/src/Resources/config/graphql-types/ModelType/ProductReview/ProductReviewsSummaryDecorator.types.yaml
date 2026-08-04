@@ -1,0 +1,15 @@
+ProductReviewsSummaryDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Aggregated rating of the approved reviews of a product and its visible variants"
+        fields:
+            averageRating:
+                type: "Float"
+                description: "Average rating, null when there are no reviews"
+            totalCount:
+                type: "Int!"
+                description: "Total number of reviews"
+            ratingCounts:
+                type: "[ProductReviewRatingCount!]!"
+                description: "Number of reviews per star rating, from 5 stars to 1"

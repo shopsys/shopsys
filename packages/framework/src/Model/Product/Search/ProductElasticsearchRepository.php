@@ -69,7 +69,7 @@ class ProductElasticsearchRepository
 
     public function getSortedProductsResultByFilterQuery(FilterQuery $filterQuery): ProductsResult
     {
-        $result = $this->client->search($filterQuery->getQuery());
+        $result = $this->client->search($this->excludeReviewsFromSource($filterQuery->getQuery()));
 
         return new ProductsResult($this->extractTotalCount($result), $this->extractHits($result));
     }
@@ -122,7 +122,7 @@ class ProductElasticsearchRepository
 
     public function getProductsByFilterQuery(FilterQuery $filterQuery): array
     {
-        $result = $this->client->search($filterQuery->getQuery());
+        $result = $this->client->search($this->excludeReviewsFromSource($filterQuery->getQuery()));
 
         return $this->extractHits($result);
     }

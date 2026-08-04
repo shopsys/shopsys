@@ -39,6 +39,20 @@ QueryDecorator:
                     urlSlug:
                         type: "String"
                 description: "Returns product filtered using UUID or URL slug"
+            productReviews:
+                type: "ProductReviewConnection!"
+                argsBuilder: "ProductReviewPaginatorArgumentsBuilder"
+                resolve: "@=query('productReviewsQuery', args)"
+                description: "Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords"
+            currentCustomerUserProductReviews:
+                type: "CustomerUserProductReviewConnection!"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=query('currentCustomerUserProductReviewsQuery', args)"
+                access: "@=isAuthenticated()"
+                args:
+                    productUuid:
+                        type: "Uuid"
+                description: "Returns reviews written by the current customer user, regardless of their moderation status, newest first. When a product UUID is provided, only the reviews of the product and its variants are returned. The list can be paginated using `first`, `last`, `before` and `after` keywords"
             productsSearch:
                 type: "ProductConnection!"
                 argsBuilder:

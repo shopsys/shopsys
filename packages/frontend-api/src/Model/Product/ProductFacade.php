@@ -24,6 +24,11 @@ class ProductFacade
         return $this->productRepository->getSellableByUuid($uuid, $domainId, $pricingGroup);
     }
 
+    public function getVisibleByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
+    {
+        return $this->productRepository->getVisibleByUuid($uuid, $domainId, $pricingGroup);
+    }
+
     public function getFilteredProductsCountOnCurrentDomain(
         ProductFilterData $productFilterData,
         string $search = '',

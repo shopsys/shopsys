@@ -1,0 +1,30 @@
+query CurrentCustomerUserProductReviews($productUuid: Uuid, $first: Int, $after: String) {
+    currentCustomerUserProductReviews(productUuid: $productUuid, first: $first, after: $after) {
+        totalCount
+        edges {
+            node {
+                uuid
+                reviewerName
+                rating
+                text
+                createdAt
+                isVerifiedPurchase
+                responseText
+                responseCreatedAt
+                status
+                rejectionReason
+                productUuid
+                productName
+                product {
+                    uuid
+                    slug
+                    isVisible
+                }
+            }
+        }
+        pageInfo {
+            hasNextPage
+            endCursor
+        }
+    }
+}

@@ -31,4 +31,21 @@ class ProductRepository
 
         return $product;
     }
+
+    public function getVisibleByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
+    {
+        $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainId, $pricingGroup);
+        $queryBuilder->andWhere('p.uuid = :uuid');
+        $queryBuilder->setParameter('uuid', $uuid);
+
+        $product = $queryBuilder->getQuery()->getOneOrNullResult();
+
+        if ($product === null) {
+            throw new ProductNotFoundException(
+                sprintf('Product with UUID "%s" does not exist.', $uuid),
+            );
+        }
+
+        return $product;
+    }
 }

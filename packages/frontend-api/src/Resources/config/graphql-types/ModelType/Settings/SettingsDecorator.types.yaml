@@ -28,6 +28,10 @@ SettingsDecorator:
                 type: Boolean!
                 resolve: "@=query('heurekaEnabledQuery')"
                 description: "Returns true if Heureka is available for the current domain"
+            productReviewsEnabled:
+                type: Boolean!
+                resolve: "@=query('productReviewsEnabledQuery')"
+                description: "Returns true if product reviews are enabled on the current domain"
             termsAndConditionsArticleUrl:
                 type: String
                 resolve: "@=query('termsAndConditionsArticleUrlQuery')"

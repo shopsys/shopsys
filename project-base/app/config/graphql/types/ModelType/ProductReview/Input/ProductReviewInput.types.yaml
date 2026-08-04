@@ -1,0 +1,4 @@
+ProductReviewInput:
+    type: input-object
+    inherits:
+        - 'ProductReviewInputDecorator'

@@ -2,7 +2,8 @@
     "settings": {
         "index": {
             "number_of_shards": 1,
-            "number_of_replicas": 1
+            "number_of_replicas": 1,
+            "max_inner_result_window": 1000
         },
         "analysis": {
             "filter": {
@@ -583,8 +584,51 @@
                 "type": "text"
             },
             "reviews": {
-                "type": "object",
-                "enabled": false
+                "type": "nested",
+                "properties": {
+                    "uuid": {
+                        "type": "keyword",
+                        "index": false,
+                        "doc_values": false
+                    },
+                    "product_uuid": {
+                        "type": "keyword",
+                        "index": false,
+                        "doc_values": false
+                    },
+                    "product_name": {
+                        "type": "text",
+                        "index": false
+                    },
+                    "reviewer_name": {
+                        "type": "text",
+                        "index": false
+                    },
+                    "rating": {
+                        "type": "integer"
+                    },
+                    "text": {
+                        "type": "text",
+                        "index": false
+                    },
+                    "created_at": {
+                        "type": "date"
+                    },
+                    "is_verified_purchase": {
+                        "type": "boolean",
+                        "index": false,
+                        "doc_values": false
+                    },
+                    "response_text": {
+                        "type": "text",
+                        "index": false
+                    },
+                    "response_created_at": {
+                        "type": "date",
+                        "index": false,
+                        "doc_values": false
+                    }
+                }
             },
             "review_summary": {
                 "properties": {

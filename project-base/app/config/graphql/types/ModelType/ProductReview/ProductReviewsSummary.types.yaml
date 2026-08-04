@@ -1,0 +1,4 @@
+ProductReviewsSummary:
+    type: object
+    inherits:
+        - 'ProductReviewsSummaryDecorator'
