@@ -3364,6 +3364,9 @@ msgstr ""
 msgid "The instructions are presented to the customer after they submit the order withdrawal request."
 msgstr ""
 
+msgid "The number of days between the order dispatch and the delivery. 0 means the goods are delivered on the dispatch day itself."
+msgstr ""
+
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr ""
 

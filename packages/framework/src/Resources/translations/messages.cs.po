@@ -3364,6 +3364,9 @@ msgstr "Ikona má přednost před hodnotou barvy RGB. Můžete nahrát soubor ve
 msgid "The instructions are presented to the customer after they submit the order withdrawal request."
 msgstr "Instrukce jsou zákazníkovi zobrazeny poté, co odešle žádost o odstoupení od smlouvy."
 
+msgid "The number of days between the order dispatch and the delivery. 0 means the goods are delivered on the dispatch day itself."
+msgstr "Počet dní mezi expedicí objednávky a doručením. 0 znamená doručení ještě v den expedice."
+
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
 

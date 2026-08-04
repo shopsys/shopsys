@@ -133,6 +133,7 @@ final class TransportFormType extends AbstractType
                     new Constraints\Regex(pattern: '/^\d+$/'),
                 ],
                 'label' => 'Days until delivery',
+                'help' => t('The number of days between the order dispatch and the delivery. 0 means the goods are delivered on the dispatch day itself.'),
             ])
             ->add('deliveryDaysOfWeek', DaysOfWeekType::class, [
                 'label' => 'Days of the week when the transport delivers',
