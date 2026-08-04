@@ -34,6 +34,7 @@ export const ExpectedDeliveryDateInfo: FC<ExpectedDeliveryDateInfoProps> = ({
             <div
                 aria-describedby={explanationId}
                 className={twMergeCustom('flex items-center gap-1 text-text-less text-xs', className)}
+                // biome-ignore lint/a11y/noNoninteractiveTabindex: The focus makes the tooltip explanation reachable for keyboard users.
                 tabIndex={0}
             >
                 <InfoIcon className="size-3.5 shrink-0" />
