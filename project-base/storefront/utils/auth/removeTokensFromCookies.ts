@@ -19,7 +19,7 @@ const deleteAuthCookie = (cookieName: string, domainConfig: DomainConfigType, co
         res: context?.res,
         path: '/',
         sameSite: 'lax',
-        secure: true,
+        secure: domainConfig.url.startsWith('https'),
     });
 };
 

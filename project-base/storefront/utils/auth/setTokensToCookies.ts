@@ -26,7 +26,7 @@ export const setTokensToCookies = (
         res: context?.res,
         path: '/',
         sameSite: 'lax',
-        secure: true,
+        secure: domainConfig.url.startsWith('https'),
     });
     setCookie(getCookieName(REFRESH_TOKEN_COOKIE_NAME, domainConfig.domainId), refreshToken, {
         httpOnly: true,
@@ -35,7 +35,7 @@ export const setTokensToCookies = (
         maxAge: REFRESH_TOKEN_COOKIE_MAX_AGE,
         path: '/',
         sameSite: 'lax',
-        secure: true,
+        secure: domainConfig.url.startsWith('https'),
     });
     setCookie(getCookieName(REFRESH_TOKEN_PRESENT_COOKIE_NAME, domainConfig.domainId), '1', {
         httpOnly: false,
@@ -44,6 +44,6 @@ export const setTokensToCookies = (
         maxAge: REFRESH_TOKEN_COOKIE_MAX_AGE,
         path: '/',
         sameSite: 'lax',
-        secure: true,
+        secure: domainConfig.url.startsWith('https'),
     });
 };
