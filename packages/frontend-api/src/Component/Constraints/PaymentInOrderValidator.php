@@ -8,6 +8,8 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
+use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentUnavailableForRemainingAmountToPayInCartException;
+use Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -18,6 +20,7 @@ class PaymentInOrderValidator extends ConstraintValidator
         protected readonly PaymentFacade $paymentFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
+        protected readonly PaymentValidationFacade $paymentValidationFacade,
     ) {
     }
 
@@ -44,6 +47,16 @@ class PaymentInOrderValidator extends ConstraintValidator
         }
 
         if ($this->paymentFacade->isPaymentVisibleAndEnabledOnCurrentDomain($paymentInCart) === false) {
+            $this->context->buildViolation($constraint->unavailablePaymentMessage)
+                ->setCode($constraint::UNAVAILABLE_PAYMENT_ERROR)
+                ->addViolation();
+
+            return;
+        }
+
+        try {
+            $this->paymentValidationFacade->checkPaymentSuitabilityForRemainingAmountToPay($paymentInCart, $cart);
+        } catch (PaymentUnavailableForRemainingAmountToPayInCartException $exception) {
             $this->context->buildViolation($constraint->unavailablePaymentMessage)
                 ->setCode($constraint::UNAVAILABLE_PAYMENT_ERROR)
                 ->addViolation();

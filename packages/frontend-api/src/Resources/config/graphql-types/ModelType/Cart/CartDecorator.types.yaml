@@ -27,6 +27,9 @@ CartDecorator:
             remainingAmountToPay:
                 type: "Money!"
                 description: "Total price with VAT reduced by applied gift vouchers, never below zero"
+            remainingItemsAmountToPay:
+                type: "Money!"
+                description: "Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step"
             isNothingLeftToPay:
                 type: "Boolean!"
                 description: "Whether the applied gift vouchers cover the whole amount to pay"
