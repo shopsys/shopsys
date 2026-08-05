@@ -45,10 +45,13 @@ export const staticData = {
         cash: { uuid: '6e48952e-0f71-503c-8b58-f0ae9fc350c0' },
         onDelivery: { uuid: '2c3d2ede-bf1a-56bc-8c7d-44b7a672ef23' },
         goPayCreditCard: { uuid: '486d828e-226a-5e01-9de5-26aef2849ca7' },
+        giftVoucher: { uuid: '2f9e0a48-3f7c-4b0e-9a5d-6c1e8b24d7a3' },
     },
     giftVouchers: {
         unredeemed1000: 'HAPPYDAY2345',
         fullPaymentMatchingOrderTotal: 'MAXPAY234567',
+        lastOrderCashMatchingCartTotal: 'CASHLASTPAY1',
+        lastOrderVoucherMatchingOrderTotal: 'VOUCHERLAST1',
     },
     transport: {
         personalCollection: {

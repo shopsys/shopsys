@@ -106,6 +106,8 @@ export enum TIDs {
     pages_order_transport = 'pages_order_transport',
     pages_order_payment = 'pages_order_payment',
     pages_order_email_gift_voucher_info = 'pages_order_email_gift_voucher_info',
+    pages_order_no_available_payment_info = 'pages_order_no_available_payment_info',
+    pages_order_paid_by_gift_voucher_info = 'pages_order_paid_by_gift_voucher_info',
     pages_order_gift_vouchers_exceed_payable_amount_warning = 'pages_order_gift_vouchers_exceed_payable_amount_warning',
     transport_group_button = 'transport_group_button',
     transport_group_panel = 'transport_group_panel',

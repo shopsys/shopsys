@@ -16,11 +16,18 @@ type ChangePayment = (
 type PaymentListItemProps = {
     payment: TypeSimplePaymentFragment;
     isActive?: boolean;
+    isSelectable?: boolean;
     disabled?: boolean;
     changePayment: ChangePayment;
 };
 
-export const PaymentListItem: FC<PaymentListItemProps> = ({ payment, isActive = false, disabled, changePayment }) => {
+export const PaymentListItem: FC<PaymentListItemProps> = ({
+    payment,
+    isActive = false,
+    isSelectable = true,
+    disabled,
+    changePayment,
+}) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
@@ -35,6 +42,17 @@ export const PaymentListItem: FC<PaymentListItemProps> = ({ payment, isActive = 
               paymentName: payment.name,
           });
 
+    const paymentLabel = (
+        <TransportAndPaymentSelectItemLabel
+            description={payment.description}
+            image={payment.mainImage}
+            isActive={isActive}
+            isImageOnWhiteBackground
+            name={payment.name}
+            price={payment.price}
+        />
+    );
+
     return (
         <TransportAndPaymentListItem
             key={payment.uuid}
@@ -44,29 +62,24 @@ export const PaymentListItem: FC<PaymentListItemProps> = ({ payment, isActive = 
                 !isActive && 'hover:border-border-less hover:bg-background-default',
             )}
         >
-            <Radiobutton
-                aria-label={ariaLabel}
-                checked={isActive}
-                disabled={disabled}
-                id={payment.uuid}
-                name="payment"
-                shouldUseFocusOnlyArrowKeys
-                value={payment.uuid}
-                label={
-                    <TransportAndPaymentSelectItemLabel
-                        description={payment.description}
-                        image={payment.mainImage}
-                        isActive={isActive}
-                        isImageOnWhiteBackground
-                        name={payment.name}
-                        price={payment.price}
-                    />
-                }
-                labelWrapperClassName={twJoin(
-                    'px-4 vl:px-5 py-4 peer-focus-visible:outline-2 peer-focus-visible:outline-input-border-active peer-focus-visible:outline-offset-2 [&>span:first-child]:hidden',
-                )}
-                onClick={changePayment}
-            />
+            {isSelectable ? (
+                <Radiobutton
+                    aria-label={ariaLabel}
+                    checked={isActive}
+                    disabled={disabled}
+                    id={payment.uuid}
+                    label={paymentLabel}
+                    labelWrapperClassName={twJoin(
+                        'px-4 vl:px-5 py-4 peer-focus-visible:outline-2 peer-focus-visible:outline-input-border-active peer-focus-visible:outline-offset-2 [&>span:first-child]:hidden',
+                    )}
+                    name="payment"
+                    shouldUseFocusOnlyArrowKeys
+                    value={payment.uuid}
+                    onClick={changePayment}
+                />
+            ) : (
+                <div className="w-full px-4 vl:px-5 py-4 font-secondary font-semibold text-sm">{paymentLabel}</div>
+            )}
         </TransportAndPaymentListItem>
     );
 };

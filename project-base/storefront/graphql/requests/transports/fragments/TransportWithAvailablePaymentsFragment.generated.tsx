@@ -11,6 +11,7 @@ import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFra
 export type TypePaymentTypeEnum =
   | 'bankTransfer'
   | 'basic'
+  | 'giftVoucher'
   | 'goPay';
 
 /** One of the possible methods of the transport type */

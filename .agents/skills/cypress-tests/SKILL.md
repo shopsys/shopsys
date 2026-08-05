@@ -543,6 +543,8 @@ staticData.transport.ppl.uuid;
 staticData.promoCode; // 'test'
 staticData.giftVouchers.unredeemed1000; // 'HAPPYDAY2345' — 1000 CZK demo gift voucher (apply/remove in cart, do NOT complete orders with it)
 staticData.giftVouchers.fullPaymentMatchingOrderTotal; // 'MAXPAY234567' — gift voucher whose value matches the test order total exactly, dedicated to full-payment order tests
+staticData.giftVouchers.lastOrderCashMatchingCartTotal; // 'CASHLASTPAY1' — gift voucher matching the A4tech mouse with free personal collection and cash payment
+staticData.giftVouchers.lastOrderVoucherMatchingOrderTotal; // 'VOUCHERLAST1' — gift voucher matching an order that is repeated without its voucher
 staticData.openingHours; // '09:00 - 11:00, 13:00 - 17:00'
 staticData.orderNote; // 'Just a tiny note in the order.'
 staticData.expectedDeliveryDateMessage; // 'Delivery on Tuesday 10/26'

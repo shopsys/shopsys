@@ -35,6 +35,11 @@ export const TransportAndPaymentContent: FC = () => {
         .filter((cartItem) => cartItem.product.productType === TypeProductTypeEnum.ElectronicGiftVoucher)
         .reduce((totalQuantity, cartItem) => totalQuantity + cartItem.quantity, 0);
     const hasElectronicGiftVouchers = electronicGiftVoucherQuantity > 0;
+    const cartContainsGiftVoucherProducts = cartItems.some(
+        (cartItem) =>
+            cartItem.product.productType === TypeProductTypeEnum.ElectronicGiftVoucher ||
+            cartItem.product.productType === TypeProductTypeEnum.PrintedGiftVoucher,
+    );
     const hasOnlyElectronicGiftVouchers =
         cartItems.length > 0 &&
         cartItems.every((cartItem) => cartItem.product.productType === TypeProductTypeEnum.ElectronicGiftVoucher);
@@ -59,6 +64,8 @@ export const TransportAndPaymentContent: FC = () => {
             autoSelectEmailTransport();
         }
     }, [hasOnlyElectronicGiftVouchers, emailTransport?.uuid, transport?.uuid]);
+
+    const isNothingLeftToPay = !!cart?.isNothingLeftToPay;
 
     const [isLoadingTransportAndPaymentFromLastOrder, lastOrderPickupPlace] = useLoadTransportAndPaymentFromLastOrder(
         changeTransportInCart,
@@ -86,9 +93,13 @@ export const TransportAndPaymentContent: FC = () => {
                     <TransportAndPaymentSelect
                         changePaymentInCart={changePaymentInCart}
                         changeTransportInCart={changeTransportInCart}
+                        cartContainsGiftVoucherProducts={cartContainsGiftVoucherProducts}
+                        giftVouchersExceedPayableAmount={!!cart?.giftVouchersExceedPayableAmount}
                         hasElectronicGiftVouchers={hasElectronicGiftVouchers}
                         isEmailTransportPreselected={isEmailTransportPreselected}
+                        isNothingLeftToPay={isNothingLeftToPay}
                         isSingularElectronicGiftVoucher={isSingularElectronicGiftVoucher}
+                        isChangingTransportInCart={isChangingTransportInCart}
                         isTransportSelectionLoading={isChangingTransportInCart || isChangingPaymentInCart}
                         lastOrderPickupPlace={lastOrderPickupPlace}
                         transports={transportsData.transports}

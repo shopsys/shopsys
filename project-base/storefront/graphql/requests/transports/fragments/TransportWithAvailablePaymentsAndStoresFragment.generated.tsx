@@ -12,6 +12,7 @@ import { ListedStoreConnectionFragment } from '../../stores/fragments/ListedStor
 export type TypePaymentTypeEnum =
   | 'bankTransfer'
   | 'basic'
+  | 'giftVoucher'
   | 'goPay';
 
 /** Status of store opening */
