@@ -1747,6 +1747,9 @@ msgstr "Pokyny k platbe"
 msgid "Payment method"
 msgstr "Platobná metóda"
 
+msgid "Payment of type Gift voucher cannot be deleted, exactly one must always exist."
+msgstr "Platbu typu Darčekový poukaz nie je možné zmazať, vždy musí existovať práve jedna."
+
 msgid "Payment transactions"
 msgstr "Platobné transakcie"
 

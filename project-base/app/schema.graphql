@@ -454,6 +454,8 @@ type Cart {
   remainingAmountForFreeTransport: Money
   "Total price with VAT reduced by applied gift vouchers, never below zero"
   remainingAmountToPay: Money!
+  "Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step"
+  remainingItemsAmountToPay: Money!
   "Rounding amount if payment has rounding allowed"
   roundingPrice: Price
   "Selected pickup place identifier if provided"
@@ -2166,6 +2168,7 @@ type PaymentSetupCreationData {
 enum PaymentTypeEnum {
   bankTransfer
   basic
+  giftVoucher
   goPay
 }
 

@@ -46,6 +46,24 @@ class OrderPriceCalculation
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[] $giftVouchers
+     */
+    public function calculateRemainingAmountToPay(Money $totalPriceWithVat, array $giftVouchers): Money
+    {
+        $remainingAmountToPay = $totalPriceWithVat;
+
+        foreach ($giftVouchers as $giftVoucher) {
+            $remainingAmountToPay = $remainingAmountToPay->subtract($giftVoucher->getValueWithVat());
+        }
+
+        if ($remainingAmountToPay->isNegative()) {
+            return Money::zero();
+        }
+
+        return $remainingAmountToPay;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     public function calculateOrderRoundingPrice(

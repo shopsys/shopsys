@@ -2617,6 +2617,12 @@ msgstr "Platba nebyla provedena - Uživatel není oprávněn k provedení operac
 msgid "Payment not completed yet"
 msgstr "Platba zatím nebyla provedena"
 
+msgid "Payment of type Gift voucher cannot be created, exactly one must always exist."
+msgstr "Platbu typu Dárkový poukaz nelze vytvořit, vždy musí existovat právě jedna."
+
+msgid "Payment of type Gift voucher cannot be deleted, exactly one must always exist."
+msgstr "Platbu typu Dárkový poukaz nelze smazat, vždy musí existovat právě jedna."
+
 msgid "Payment paid"
 msgstr "Platba zaplacena"
 
@@ -2628,6 +2634,9 @@ msgstr "Refundovaná platba"
 
 msgid "Payment successful page content"
 msgstr "Obsah stránky po dokončené platbě"
+
+msgid "Payment type cannot be changed from or to type Gift voucher, exactly one payment of type Gift voucher must always exist."
+msgstr "Typ platby nelze změnit z typu Dárkový poukaz ani na typ Dárkový poukaz, vždy musí existovat právě jedna platba typu Dárkový poukaz."
 
 msgid "Payment was not paid in full"
 msgstr "Platba nebyla uhrazena v plné výši"
@@ -3774,6 +3783,9 @@ msgstr "Viditelnost"
 
 msgid "Visible on homepage"
 msgstr "Viditelný na domovské stránce"
+
+msgid "Voucher"
+msgstr "Poukazem"
 
 msgid "Voucher value"
 msgstr "Hodnota poukazu"

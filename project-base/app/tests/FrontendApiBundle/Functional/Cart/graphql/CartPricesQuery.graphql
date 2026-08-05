@@ -9,10 +9,14 @@ query CartPricesQuery(
         totalPrice {
             priceWithVat
         }
+        totalItemsPrice {
+            priceWithVat
+        }
         totalDiscountPrice {
             priceWithVat
         }
         remainingAmountToPay
+        remainingItemsAmountToPay
         giftVouchersExceedPayableAmount
     }
 }

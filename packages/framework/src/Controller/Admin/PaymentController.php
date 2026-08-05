@@ -14,10 +14,12 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Payment\Exception\GiftVoucherPaymentCannotBeDeletedException;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +49,12 @@ class PaymentController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($paymentData->type === PaymentTypeEnum::TYPE_GIFT_VOUCHER) {
+                $this->addErrorFlash(t('Payment of type Gift voucher cannot be created, exactly one must always exist.'));
+
+                return $this->redirectToRoute('admin_payment_new');
+            }
+
             $payment = $this->paymentFacade->create($paymentData);
 
             $this->addSuccessFlashTwig(
@@ -84,6 +92,14 @@ class PaymentController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $isGiftVoucherTypeSubmitted = $paymentData->type === PaymentTypeEnum::TYPE_GIFT_VOUCHER;
+
+            if ($payment->isGiftVoucherType() !== $isGiftVoucherTypeSubmitted) {
+                $this->addErrorFlash(t('Payment type cannot be changed from or to type Gift voucher, exactly one payment of type Gift voucher must always exist.'));
+
+                return $this->redirectToRoute('admin_payment_edit', ['id' => $payment->getId()]);
+            }
+
             $this->paymentFacade->edit($payment, $paymentData);
 
             $this->addSuccessFlashTwig(
@@ -128,6 +144,8 @@ class PaymentController extends AdminBaseController
             );
         } catch (PaymentNotFoundException $ex) {
             $this->addErrorFlash(t('Selected payment doesn\'t exist.'));
+        } catch (GiftVoucherPaymentCannotBeDeletedException $ex) {
+            $this->addErrorFlash(t('Payment of type Gift voucher cannot be deleted, exactly one must always exist.'));
         }
 
         return $this->redirectToRoute('admin_transportandpayment_list');

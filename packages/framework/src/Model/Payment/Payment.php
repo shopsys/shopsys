@@ -32,7 +32,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[EntityImage]
 class Payment extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
-    protected const int GEDMO_SORTABLE_LAST_POSITION = -1;
+    public const int GEDMO_SORTABLE_LAST_POSITION = -1;
 
     /**
      * @var int
@@ -336,6 +336,11 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     public function isGoPay(): bool
     {
         return $this->type === PaymentTypeEnum::TYPE_GOPAY;
+    }
+
+    public function isGiftVoucherType(): bool
+    {
+        return $this->type === PaymentTypeEnum::TYPE_GIFT_VOUCHER;
     }
 
     public function isHiddenByGoPayByDomainId(int $domainId): bool

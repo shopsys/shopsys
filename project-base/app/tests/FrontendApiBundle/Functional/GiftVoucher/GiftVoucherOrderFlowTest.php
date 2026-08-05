@@ -32,8 +32,13 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\TransportUnavailabilityReasonInCartEnum;
+use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInCart;
+use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder;
 use Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart;
+use Symfony\Component\Mailer\Envelope;
+use Symfony\Component\Mailer\Event\SentMessageEvent;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
+use Symfony\Component\Mailer\SentMessage;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
@@ -181,27 +186,83 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
     public function testOrderFullyCoveredByGiftVoucherIsRedeemedAndMarkedAsPaidImmediately(): void
     {
         $this->addProductToCart($this->getProductByCatnum(ProductDataFixture::PRODUCT_CATNUM_A4TECH_MOUSE));
-        $this->selectTransportAndPaymentInCart(TransportDataFixture::TRANSPORT_CZECH_POST, PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        $this->selectTransportInCart(TransportDataFixture::TRANSPORT_CZECH_POST);
 
         $giftVoucher = $this->createUnredeemedGiftVoucherWithValue($this->getCurrentCartTotalPriceWithVat());
         $this->applyGiftVoucherToCart($giftVoucher->getCode());
+        $this->selectPaymentInCart(PaymentDataFixture::PAYMENT_GIFT_VOUCHER);
 
         $data = $this->getResponseDataForGraphQlType($this->createOrderFromCurrentCart(), 'CreateOrder');
         $order = $this->orderFacade->getByUuid($data['order']['uuid']);
         $giftVoucher = $this->giftVoucherFacade->getById($giftVoucher->getId());
 
+        self::assertTrue($order->getPayment()->isGiftVoucherType());
+        self::assertTrue($order->getPaymentItem()->getTotalPriceWithVat()->isZero());
         self::assertTrue($order->isPaid());
-        self::assertTrue($order->getRemainingToPay()->isZero());
+        self::assertTrue($order->getRemainingAmountToPay()->isZero());
         self::assertFalse($giftVoucher->isUnredeemed());
         self::assertSame($order->getId(), $giftVoucher->getRedeemedOnOrder()?->getId());
         self::assertNotNull($giftVoucher->getRedeemedAt());
+    }
+
+    public function testPaymentIsStillRequiredWhenOrderIsFullyCoveredByGiftVoucher(): void
+    {
+        $this->addProductToCart($this->getProductByCatnum(ProductDataFixture::PRODUCT_CATNUM_A4TECH_MOUSE));
+        $this->selectTransportInCart(TransportDataFixture::TRANSPORT_CZECH_POST);
+
+        $giftVoucher = $this->createUnredeemedGiftVoucherWithValue($this->getCurrentCartTotalPriceWithVat());
+        $this->applyGiftVoucherToCart($giftVoucher->getCode());
+
+        $response = $this->createOrderFromCurrentCart();
+
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        self::assertSame(PaymentInOrder::PAYMENT_NOT_SET_ERROR, $validationErrors['input'][0]['code']);
+    }
+
+    public function testGiftVoucherPaymentIsNotAvailableWhenSomethingRemainsToPay(): void
+    {
+        $this->addProductToCart($this->getProductByCatnum(ProductDataFixture::PRODUCT_CATNUM_A4TECH_MOUSE));
+        $this->selectTransportInCart(TransportDataFixture::TRANSPORT_CZECH_POST);
+
+        $giftVoucher = $this->createUnredeemedGiftVoucherWithValue(
+            $this->getCurrentCartTotalPriceWithVat()->subtract(Money::create(1)),
+        );
+        $this->applyGiftVoucherToCart($giftVoucher->getCode());
+
+        $giftVoucherPayment = $this->getReference(PaymentDataFixture::PAYMENT_GIFT_VOUCHER, Payment::class);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
+            'paymentUuid' => $giftVoucherPayment->getUuid(),
+        ]);
+
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        self::assertSame(PaymentInCart::UNAVAILABLE_PAYMENT_ERROR, $validationErrors['input.paymentUuid'][0]['code']);
+    }
+
+    public function testRegularPaymentIsNotAvailableWhenNothingRemainsToPay(): void
+    {
+        $this->addProductToCart($this->getProductByCatnum(ProductDataFixture::PRODUCT_CATNUM_A4TECH_MOUSE));
+        $this->selectTransportInCart(TransportDataFixture::TRANSPORT_CZECH_POST);
+
+        $giftVoucher = $this->createUnredeemedGiftVoucherWithValue($this->getCurrentCartTotalPriceWithVat());
+        $this->applyGiftVoucherToCart($giftVoucher->getCode());
+
+        $cashOnDeliveryPayment = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY, Payment::class);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
+            'paymentUuid' => $cashOnDeliveryPayment->getUuid(),
+        ]);
+
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        self::assertSame(PaymentInCart::UNAVAILABLE_PAYMENT_ERROR, $validationErrors['input.paymentUuid'][0]['code']);
     }
 
     public function testOrderIsNotPlacedWhenGiftVouchersExceedPayableAmount(): void
     {
         $this->addProductToCart($this->getProductByCatnum(ProductDataFixture::PRODUCT_CATNUM_A4TECH_MOUSE));
         $this->applyGiftVoucherToCart(GiftVoucherDataFixture::GIFT_VOUCHER_UNREDEEMED_CODE);
-        $this->selectTransportAndPaymentInCart(TransportDataFixture::TRANSPORT_CZECH_POST, PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        $this->selectTransportAndPaymentInCart(TransportDataFixture::TRANSPORT_CZECH_POST, PaymentDataFixture::PAYMENT_GIFT_VOUCHER);
 
         $response = $this->createOrderFromCurrentCart();
 
@@ -215,10 +276,11 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
     public function testGiftVoucherExpiringBeforeCheckoutIsRemovedFromCartWithModification(): void
     {
         $this->addProductToCart($this->getProductByCatnum(ProductDataFixture::PRODUCT_CATNUM_A4TECH_MOUSE));
-        $this->selectTransportAndPaymentInCart(TransportDataFixture::TRANSPORT_CZECH_POST, PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        $this->selectTransportInCart(TransportDataFixture::TRANSPORT_CZECH_POST);
 
         $giftVoucher = $this->createUnredeemedGiftVoucherWithValue($this->getCurrentCartTotalPriceWithVat());
         $this->applyGiftVoucherToCart($giftVoucher->getCode());
+        $this->selectPaymentInCart(PaymentDataFixture::PAYMENT_GIFT_VOUCHER);
 
         $expiredGiftVoucherData = $this->giftVoucherDataFactory->createFromGiftVoucher($giftVoucher);
         $expiredGiftVoucherData->validUntil = (new DateTimeImmutable())->modify('-1 second');
@@ -240,9 +302,16 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
 
         ($this->orderMarkedAsPaidMessageGiftVoucherHandler)(new OrderMarkedAsPaidMessage($order->getId()));
 
-        self::assertSame(1, $this->popCollectedSendEmailMessagesCount());
+        $sendEmailMessages = $this->popCollectedSendEmailMessages();
+
+        self::assertCount(1, $sendEmailMessages);
 
         $giftVoucher = array_first($this->giftVoucherRepository->getAllCreatedOnOrder($order));
+
+        self::assertNotNull($giftVoucher->getEmailEnqueuedAt());
+        self::assertNull($giftVoucher->getEmailSentAt());
+
+        $this->dispatchSentMessageEventFor(array_first($sendEmailMessages));
 
         self::assertNotNull($giftVoucher->getEmailSentAt());
 
@@ -255,7 +324,7 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
     {
         $this->addProductToCart($this->getProductByCatnum(ProductDataFixture::PRODUCT_CATNUM_A4TECH_MOUSE));
         $this->applyGiftVoucherToCart(GiftVoucherDataFixture::GIFT_VOUCHER_UNREDEEMED_CODE);
-        $this->selectTransportAndPaymentInCart(TransportDataFixture::TRANSPORT_CZECH_POST, PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        $this->selectTransportAndPaymentInCart(TransportDataFixture::TRANSPORT_CZECH_POST, PaymentDataFixture::PAYMENT_GIFT_VOUCHER);
 
         $giftVoucher = $this->getReference(GiftVoucherDataFixture::GIFT_VOUCHER_UNREDEEMED, GiftVoucher::class);
         $orderRedeemingGiftVoucherInTheMeantime = $this->getReference(OrderDataFixture::ORDER_PREFIX . '1', Order::class);
@@ -370,15 +439,31 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
 
     private function popCollectedSendEmailMessagesCount(): int
     {
-        $sendEmailMessagesCount = 0;
+        return count($this->popCollectedSendEmailMessages());
+    }
+
+    /**
+     * @return \Symfony\Component\Mailer\Messenger\SendEmailMessage[]
+     */
+    private function popCollectedSendEmailMessages(): array
+    {
+        $sendEmailMessages = [];
 
         foreach ($this->delayedEnvelopesCollector->popEnvelopes() as $envelope) {
             if ($envelope->getMessage() instanceof SendEmailMessage) {
-                $sendEmailMessagesCount++;
+                $sendEmailMessages[] = $envelope->getMessage();
             }
         }
 
-        return $sendEmailMessagesCount;
+        return $sendEmailMessages;
+    }
+
+    private function dispatchSentMessageEventFor(SendEmailMessage $sendEmailMessage): void
+    {
+        $message = $sendEmailMessage->getMessage();
+        $envelope = $sendEmailMessage->getEnvelope() ?? Envelope::create($message);
+
+        $this->eventDispatcher->dispatch(new SentMessageEvent(new SentMessage($message, $envelope)));
     }
 
     private function getProductByCatnum(string $catnum): Product
@@ -400,17 +485,26 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
         string $transportReferenceName,
         string $paymentReferenceName,
     ): void {
-        $transport = $this->getReference($transportReferenceName, Transport::class);
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
-            'transportUuid' => $transport->getUuid(),
-        ]);
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'ChangeTransportInCart');
+        $this->selectTransportInCart($transportReferenceName);
+        $this->selectPaymentInCart($paymentReferenceName);
+    }
 
+    private function selectPaymentInCart(string $paymentReferenceName): void
+    {
         $payment = $this->getReference($paymentReferenceName, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
             'paymentUuid' => $payment->getUuid(),
         ]);
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'ChangePaymentInCart');
+    }
+
+    private function selectTransportInCart(string $transportReferenceName): void
+    {
+        $transport = $this->getReference($transportReferenceName, Transport::class);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'transportUuid' => $transport->getUuid(),
+        ]);
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'ChangeTransportInCart');
     }
 
     private function applyGiftVoucherToCart(string $giftVoucherCode): void

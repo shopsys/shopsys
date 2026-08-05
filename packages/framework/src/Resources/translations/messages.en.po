@@ -2617,6 +2617,12 @@ msgstr ""
 msgid "Payment not completed yet"
 msgstr ""
 
+msgid "Payment of type Gift voucher cannot be created, exactly one must always exist."
+msgstr ""
+
+msgid "Payment of type Gift voucher cannot be deleted, exactly one must always exist."
+msgstr ""
+
 msgid "Payment paid"
 msgstr ""
 
@@ -2627,6 +2633,9 @@ msgid "Payment refunded"
 msgstr ""
 
 msgid "Payment successful page content"
+msgstr ""
+
+msgid "Payment type cannot be changed from or to type Gift voucher, exactly one payment of type Gift voucher must always exist."
 msgstr ""
 
 msgid "Payment was not paid in full"
@@ -3770,6 +3779,9 @@ msgid "Visibility"
 msgstr ""
 
 msgid "Visible on homepage"
+msgstr ""
+
+msgid "Voucher"
 msgstr ""
 
 msgid "Voucher value"

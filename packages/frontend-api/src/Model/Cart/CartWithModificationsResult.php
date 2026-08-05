@@ -88,6 +88,10 @@ class CartWithModificationsResult
 
     protected ?Money $remainingAmountForFreeTransport = null;
 
+    protected ?Money $remainingAmountToPay = null;
+
+    protected ?Money $remainingItemsAmountToPay = null;
+
     protected ?PriceInterface $roundingPrice = null;
 
     /**
@@ -288,16 +292,32 @@ class CartWithModificationsResult
         return $this->cart->getAllAppliedGiftVouchers();
     }
 
-    public function getRemainingToPay(): Money
+    public function getRemainingAmountToPay(): Money
     {
-        $remainingToPay = $this->getTotalPrice()->getPriceWithVat()
-            ->subtract($this->getAppliedGiftVouchersTotalValueWithVat());
-
-        if ($remainingToPay->isNegative()) {
-            return Money::zero();
+        if ($this->remainingAmountToPay === null) {
+            throw new LogicException('Remaining to pay must be set before calling the getter.');
         }
 
-        return $remainingToPay;
+        return $this->remainingAmountToPay;
+    }
+
+    public function setRemainingAmountToPay(Money $remainingAmountToPay): void
+    {
+        $this->remainingAmountToPay = $remainingAmountToPay;
+    }
+
+    public function getRemainingItemsAmountToPay(): Money
+    {
+        if ($this->remainingItemsAmountToPay === null) {
+            throw new LogicException('Remaining items amount to pay must be set before calling the getter.');
+        }
+
+        return $this->remainingItemsAmountToPay;
+    }
+
+    public function setRemainingItemsAmountToPay(Money $remainingItemsAmountToPay): void
+    {
+        $this->remainingItemsAmountToPay = $remainingItemsAmountToPay;
     }
 
     public function isNothingLeftToPay(): bool
