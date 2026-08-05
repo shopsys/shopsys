@@ -12,7 +12,7 @@ import {
     TypeStoreQueryVariables,
 } from 'graphql/requests/stores/queries/StoreQuery.generated';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
-import { Maybe, TypeTransportUnavailabilityReasonInCartEnum } from 'graphql/types';
+import { Maybe, TypePaymentTypeEnum, TypeTransportUnavailabilityReasonInCartEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -356,12 +356,22 @@ export const useLoadTransportAndPaymentFromLastOrder = (
                 !!newCart?.selectedPickupPlaceIdentifier &&
                 newCart.selectedPickupPlaceIdentifier === lastOrderPickupPlace?.identifier;
 
-            if (successfullyChangedTransport) {
+            if (successfullyChangedTransport && newCart) {
+                const lastOrderPayment = newCart.transport?.payments.find(
+                    (payment) => payment.uuid === orderPayment?.payment?.uuid,
+                );
+
                 if (successfullyChangedPickupPlace) {
                     setLastOrderPickupPlace(lastOrderPickupPlace);
                 }
 
-                await changePaymentInCart(orderPayment?.payment?.uuid ?? null, null);
+                if (
+                    !newCart.isNothingLeftToPay &&
+                    lastOrderPayment &&
+                    lastOrderPayment.type !== TypePaymentTypeEnum.GiftVoucher
+                ) {
+                    await changePaymentInCart(lastOrderPayment.uuid, null);
+                }
             }
         } catch (e: unknown) {
             const error = e as Error;

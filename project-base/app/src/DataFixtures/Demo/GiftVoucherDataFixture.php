@@ -30,6 +30,8 @@ class GiftVoucherDataFixture extends AbstractReferenceFixture implements Depende
     public const string GIFT_VOUCHER_EXPIRED = 'gift_voucher_expired';
     public const string GIFT_VOUCHER_DOMAIN_PREFIX = 'gift_voucher_domain_';
     public const string GIFT_VOUCHER_FULL_PAYMENT = 'gift_voucher_full_payment';
+    public const string GIFT_VOUCHER_LAST_ORDER_CASH_PAYMENT = 'gift_voucher_last_order_cash_payment';
+    public const string GIFT_VOUCHER_LAST_ORDER_VOUCHER_PAYMENT = 'gift_voucher_last_order_voucher_payment';
 
     public const string GIFT_VOUCHER_UNREDEEMED_CODE = 'HAPPYDAY2345';
     public const string GIFT_VOUCHER_REDEEMED_CODE = 'REDEEMED2345';
@@ -37,8 +39,12 @@ class GiftVoucherDataFixture extends AbstractReferenceFixture implements Depende
     public const string GIFT_VOUCHER_EXPIRED_CODE = 'EXPIRED23456';
     public const string GIFT_VOUCHER_SECOND_DOMAIN_CODE = 'DVADVADVA234';
     public const string GIFT_VOUCHER_FULL_PAYMENT_CODE = 'MAXPAY234567';
+    public const string GIFT_VOUCHER_LAST_ORDER_CASH_PAYMENT_CODE = 'CASHLASTPAY1';
+    public const string GIFT_VOUCHER_LAST_ORDER_VOUCHER_PAYMENT_CODE = 'VOUCHERLAST1';
 
     public const string GIFT_VOUCHER_FULL_PAYMENT_VALUE = '22.44';
+    public const string GIFT_VOUCHER_LAST_ORDER_CASH_PAYMENT_VALUE = '12.76';
+    public const string GIFT_VOUCHER_LAST_ORDER_VOUCHER_PAYMENT_VALUE = '22.44';
 
     public function __construct(
         private readonly GiftVoucherFacade $giftVoucherFacade,
@@ -85,6 +91,24 @@ class GiftVoucherDataFixture extends AbstractReferenceFixture implements Depende
             GiftVoucherStatusEnum::STATUS_UNREDEEMED,
             $sourceOrder,
             Money::create(self::GIFT_VOUCHER_FULL_PAYMENT_VALUE),
+        );
+
+        $this->createGiftVoucher(
+            self::GIFT_VOUCHER_LAST_ORDER_CASH_PAYMENT,
+            self::GIFT_VOUCHER_LAST_ORDER_CASH_PAYMENT_CODE,
+            Domain::FIRST_DOMAIN_ID,
+            GiftVoucherStatusEnum::STATUS_UNREDEEMED,
+            $sourceOrder,
+            Money::create(self::GIFT_VOUCHER_LAST_ORDER_CASH_PAYMENT_VALUE),
+        );
+
+        $this->createGiftVoucher(
+            self::GIFT_VOUCHER_LAST_ORDER_VOUCHER_PAYMENT,
+            self::GIFT_VOUCHER_LAST_ORDER_VOUCHER_PAYMENT_CODE,
+            Domain::FIRST_DOMAIN_ID,
+            GiftVoucherStatusEnum::STATUS_UNREDEEMED,
+            $sourceOrder,
+            Money::create(self::GIFT_VOUCHER_LAST_ORDER_VOUCHER_PAYMENT_VALUE),
         );
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {

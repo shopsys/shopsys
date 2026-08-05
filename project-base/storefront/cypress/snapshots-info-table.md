@@ -123,7 +123,7 @@
 |-------------|-----------|-----------------|------|
 | 17-0-0 | [Redeem In Cart] should apply a gift voucher in the cart, show remaining to pay, and remove the voucher again | cart page with applied gift voucher | giftVouchers.cy.ts |
 | 17-0-1 | [Voucher Only Transport Step] should skip transport selection and show the email delivery info for a voucher-only cart | transport step with voucher-only cart | giftVouchers.cy.ts |
-| 17-0-2 | [Full Voucher Payment] should create an order fully covered by a gift voucher without redirecting to the payment gateway | order confirmation fully covered by gift voucher | giftVouchers.cy.ts |
+| 17-0-2 | [Full Voucher Payment] should replace the previously selected payment and create an order fully covered by a gift voucher without redirecting to the payment gateway | order confirmation fully covered by gift voucher | giftVouchers.cy.ts |
 
 ## Snapshot Group - FREE_SHIPPING
 
