@@ -1771,9 +1771,6 @@ msgstr "Titulek"
 msgid "Heureka"
 msgstr "Heureka"
 
-msgid "Heureka Widget code"
-msgstr "Kód Heureka Widgetu"
-
 msgid "Hidden"
 msgstr "Skryté"
 

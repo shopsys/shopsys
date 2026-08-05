@@ -41,7 +41,6 @@ class HeurekaController extends AdminBaseController
         if ($this->heurekaFacade->isDomainLocaleSupported($locale)) {
             $heurekaShopCertificationData = [
                 'heurekaApiKey' => $this->heurekaSetting->getApiKeyByDomainId($domainId),
-                'heurekaWidgetCode' => $this->heurekaSetting->getHeurekaShopCertificationWidgetByDomainId($domainId),
             ];
 
             $form = $this->createForm(HeurekaShopCertificationFormType::class, $heurekaShopCertificationData, [
@@ -53,10 +52,6 @@ class HeurekaController extends AdminBaseController
                 $heurekaShopCertificationData = $form->getData();
 
                 $this->heurekaSetting->setApiKeyForDomain($heurekaShopCertificationData['heurekaApiKey'] ?? '', $domainId);
-                $this->heurekaSetting->setHeurekaShopCertificationWidgetForDomain(
-                    $heurekaShopCertificationData['heurekaWidgetCode'] ?? '',
-                    $domainId,
-                );
 
                 $this->addSuccessFlash(t('Settings modified.'));
             }
