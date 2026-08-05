@@ -33,27 +33,77 @@ export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationRetu
         }
     };
 
-    // Handle initial hash
+    const onSectionAnchorClick = useEffectEvent((event: MouseEvent) => {
+        if (
+            event.defaultPrevented ||
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey ||
+            !(event.target instanceof Element)
+        ) {
+            return;
+        }
+
+        const anchor = event.target.closest<HTMLAnchorElement>('a[href^="#"]');
+        const sectionId = anchor?.hash.slice(1);
+
+        if (!sectionId || !sections.some((section) => section.id === sectionId)) {
+            return;
+        }
+
+        // Prevent native fragment scrolling from racing with the scroll-based section detection.
+        event.preventDefault();
+        scrollToSection(sectionId);
+    });
+
     useEffect(() => {
-        const hash = window.location.hash.slice(1);
+        document.addEventListener('click', onSectionAnchorClick);
 
-        if (!hash) {
-            return undefined;
-        }
+        return () => document.removeEventListener('click', onSectionAnchorClick);
+    }, []);
 
-        setActiveSection(hash);
-        const section = sections.find(({ id }) => id === hash);
+    // Handle initial hash and same-page anchor navigation
+    useEffect(() => {
+        let animationFrameId: number | null = null;
 
-        if (!section?.ref.current) {
-            return undefined;
-        }
+        const scrollToCurrentHash = () => {
+            const hash = window.location.hash.slice(1);
 
-        isUserScrollingRef.current = false;
-        const animationFrameId = window.requestAnimationFrame(() =>
-            section.ref.current?.scrollIntoView({ block: 'start' }),
-        );
+            if (!hash) {
+                return;
+            }
 
-        return () => window.cancelAnimationFrame(animationFrameId);
+            const section = sections.find(({ id }) => id === hash);
+
+            if (!section?.ref.current) {
+                return;
+            }
+
+            setActiveSection(hash);
+            isUserScrollingRef.current = false;
+
+            if (animationFrameId !== null) {
+                window.cancelAnimationFrame(animationFrameId);
+            }
+
+            animationFrameId = window.requestAnimationFrame(() => {
+                section.ref.current?.scrollIntoView({ block: 'start' });
+                animationFrameId = null;
+            });
+        };
+
+        scrollToCurrentHash();
+        window.addEventListener('hashchange', scrollToCurrentHash);
+
+        return () => {
+            window.removeEventListener('hashchange', scrollToCurrentHash);
+
+            if (animationFrameId !== null) {
+                window.cancelAnimationFrame(animationFrameId);
+            }
+        };
     }, []);
 
     // Detect user scroll (wheel/touch) to re-enable scroll detection

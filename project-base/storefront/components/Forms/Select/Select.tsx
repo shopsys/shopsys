@@ -198,7 +198,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             {activeOption?.label && (
                                 <span
                                     className={twJoin(
-                                        'font-secondary font-semibold',
+                                        'block truncate font-secondary font-semibold',
                                         isDisabled ? 'text-input-text-disabled' : 'text-input-text-default',
                                     )}
                                 >

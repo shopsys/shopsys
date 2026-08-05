@@ -1,5 +1,5 @@
 import { Image } from 'components/Basic/Image/Image';
-import { PRODUCT_VARIANTS_ID, ProductAction } from 'components/Blocks/Product/ProductAction';
+import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { showWatchdogButton, WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
@@ -39,10 +39,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
 
     return (
         <Webline>
-            <ul
-                className="grid scroll-mt-fixed-header-with-navigation grid-cols-1 gap-2 divide-border-default md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y"
-                id={PRODUCT_VARIANTS_ID}
-            >
+            <ul className="grid grid-cols-1 gap-2 divide-border-default md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
                 {variants.map((variant, index) => (
                     <li
                         key={variant.uuid}

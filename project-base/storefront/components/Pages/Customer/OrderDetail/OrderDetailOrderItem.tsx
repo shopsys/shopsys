@@ -1,10 +1,12 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
+import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
@@ -12,11 +14,19 @@ import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
+import {
+    WRITE_REVIEW_ORDER_HASH_QUERY_PARAMETER_NAME,
+    WRITE_REVIEW_PRODUCT_QUERY_PARAMETER_NAME,
+} from 'utils/queryParamNames';
 import { twMergeCustom } from 'utils/twMerge';
 
 type OrderDetailOrderItemProps = {
     orderItem: TypeOrderDetailItemFragment;
     orderUuid: string;
+    orderUrlHash: string;
+    productReviewsAllowed: boolean;
+    reviewedProductUuids: Set<string>;
+    isReviewAvailabilityLoading: boolean;
     isDiscount?: boolean;
     isOrderFromRegisteredCustomer: boolean;
 };
@@ -24,6 +34,10 @@ type OrderDetailOrderItemProps = {
 export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     orderItem,
     orderUuid,
+    orderUrlHash,
+    productReviewsAllowed,
+    reviewedProductUuids,
+    isReviewAvailabilityLoading,
     isDiscount,
     isOrderFromRegisteredCustomer,
 }) => {
@@ -31,6 +45,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     const formatPrice = useFormatPrice();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { canCreateComplaint } = useAuthorization();
+    const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const isProductGift = orderItem.type === TypeOrderItemTypeEnum.ProductGift;
     const showComplaintButton =
         canCreateComplaint &&
@@ -38,6 +53,27 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
         isOrderFromRegisteredCustomer &&
         orderItem.order.withdrawalRequest === null &&
         orderItem.type === TypeOrderItemTypeEnum.Product;
+    const canShowProductReviewAction =
+        !isReviewAvailabilityLoading &&
+        settingsData?.settings?.productReviewsEnabled === true &&
+        productReviewsAllowed &&
+        orderItem.type === TypeOrderItemTypeEnum.Product &&
+        !!orderItem.product?.isVisible;
+    const hasAlreadyReviewed =
+        canShowProductReviewAction && orderItem.product !== null && reviewedProductUuids.has(orderItem.product.uuid);
+    const showWriteReviewButton = canShowProductReviewAction && !hasAlreadyReviewed;
+
+    const getWriteReviewUrl = (): string => {
+        const writeReviewQueryParams = new URLSearchParams({
+            [WRITE_REVIEW_PRODUCT_QUERY_PARAMETER_NAME]: orderItem.product?.uuid ?? '',
+        });
+
+        if (!isUserLoggedIn) {
+            writeReviewQueryParams.set(WRITE_REVIEW_ORDER_HASH_QUERY_PARAMETER_NAME, orderUrlHash);
+        }
+
+        return `${orderItem.product?.slug}?${writeReviewQueryParams.toString()}`;
+    };
 
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const openCreateComplaintPopup = async (
@@ -113,7 +149,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                         {showComplaintButton && (
                             <button
                                 aria-haspopup="dialog"
-                                className="cursor-pointer self-baseline whitespace-nowrap rounded-sm text-link-default text-sm underline outline-hidden hover:text-link-hovered"
+                                className="inline-flex cursor-pointer items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm underline outline-hidden hover:text-link-hovered"
                                 data-tid={TIDs.order_detail_create_complaint_button}
                                 tabIndex={0}
                                 aria-label={t('Create complaint for product {{ productName }}', {
@@ -122,9 +158,32 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                                 })}
                                 onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
                             >
-                                <FillIcon className="mr-2 size-6" />
+                                <FillIcon className="mr-1 size-5" />
                                 {t('Create complaint')}
                             </button>
+                        )}
+
+                        {showWriteReviewButton && (
+                            <ExtendedNextLink
+                                className="inline-flex items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm hover:text-link-hovered"
+                                href={getWriteReviewUrl()}
+                                tid={TIDs.order_detail_write_review_button}
+                                skeletonType="product"
+                                aria-label={t('Write a review for product {{ productName }}', {
+                                    ns: 'accessibility',
+                                    productName: orderItem.name,
+                                })}
+                            >
+                                <StarIcon className="mr-1 size-5" />
+                                {t('Write a review')}
+                            </ExtendedNextLink>
+                        )}
+
+                        {hasAlreadyReviewed && (
+                            <p className="inline-flex items-center self-baseline whitespace-nowrap text-sm text-text-less">
+                                <StarIcon aria-hidden className="mr-1 size-5" />
+                                {t('Already reviewed.')}
+                            </p>
                         )}
                     </div>
                 </div>

@@ -20,6 +20,7 @@ export enum SkeletonEnum {
     ResetPassword = 'reset-password',
     Homepage = 'homepage',
     Login = 'login',
+    MyReviews = 'myReviews',
     OrderConfirmation = 'order-confirmation',
     OrderDetail = 'orderDetail',
     OrderList = 'orderList',

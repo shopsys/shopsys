@@ -1,6 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
+import { CURRENT_CUSTOMER_USER_REVIEWS_LIMIT } from 'components/Blocks/ProductReviews/useCurrentCustomerUserReviewedProductUuids';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
@@ -18,6 +19,15 @@ import {
     TypeOrderDetailQueryVariables,
     useOrderDetailQuery,
 } from 'graphql/requests/orders/queries/OrderDetailQuery.generated';
+import {
+    CurrentCustomerUserProductReviewsQueryDocument,
+    TypeCurrentCustomerUserProductReviewsQueryVariables,
+} from 'graphql/requests/productReviews/queries/CurrentCustomerUserProductReviewsQuery.generated';
+import {
+    SettingsQueryDocument,
+    TypeSettingsQuery,
+    TypeSettingsQueryVariables,
+} from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
@@ -94,6 +104,11 @@ export const getServerSideProps = getServerSidePropsWrapper(
             let orderUuid = null;
             let orderUrlHash = null;
 
+            const settingsResult: OperationResult<TypeSettingsQuery, TypeSettingsQueryVariables> = await client
+                .query(SettingsQueryDocument, {})
+                .toPromise();
+            const areProductReviewsEnabled = settingsResult.data?.settings?.productReviewsEnabled === true;
+
             const customerResult = await client.query(CurrentCustomerUserQueryDocument, {}).toPromise();
 
             if (customerResult.data?.currentCustomerUser) {
@@ -106,7 +121,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 orderUrlHash = orderResponse.data?.order?.urlHash ?? null;
             }
 
-            return initServerSideProps<TypeOrderAvailablePaymentsQueryVariables>({
+            return initServerSideProps<
+                TypeCurrentCustomerUserProductReviewsQueryVariables | TypeOrderAvailablePaymentsQueryVariables
+            >({
                 currentCustomerUserPrefetchMode: 'full',
                 authenticationConfig: {
                     authenticationRequired: true,
@@ -121,6 +138,14 @@ export const getServerSideProps = getServerSidePropsWrapper(
                               query: OrderAvailablePaymentsQueryDocument,
                               variables: { orderUuid: orderUuid, orderUrlHash: orderUrlHash },
                           },
+                          ...(areProductReviewsEnabled
+                              ? [
+                                    {
+                                        query: CurrentCustomerUserProductReviewsQueryDocument,
+                                        variables: { first: CURRENT_CUSTOMER_USER_REVIEWS_LIMIT },
+                                    },
+                                ]
+                              : []),
                       ]
                     : [],
                 context,

@@ -3,6 +3,7 @@ import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { LockIcon } from 'components/Basic/Icon/LockIcon';
 import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
+import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import {
@@ -14,6 +15,7 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { usePathname } from 'next/navigation';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
@@ -43,9 +45,12 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
     const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
         useAuthorization();
     const { url } = useDomainConfig();
+    const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
+    const areProductReviewsEnabled = settingsData?.settings?.productReviewsEnabled === true;
     const [
         customerOrdersUrl,
         customerComplaintsUrl,
+        customerMyReviewsUrl,
         customerEditProfileUrl,
         wishlistUrl,
         customerChangePasswordUrl,
@@ -54,6 +59,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
         [
             '/customer/orders',
             '/customer/complaints',
+            '/customer/my-reviews',
             '/customer/edit-profile',
             '/wishlist',
             '/customer/change-password',
@@ -120,6 +126,22 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
                             >
                                 <ComplaintsIcon className="size-6" />
                                 {t('My complaints')}
+                            </MenuIconicSubItemLink>
+                        </MenuIconicItemUserAuthenticatedContentListItem>
+                    )}
+
+                    {areProductReviewsEnabled && (
+                        <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerMyReviewsUrl}>
+                            <MenuIconicSubItemLink
+                                ariaLabel={t('Go to my reviews page', { ns: 'accessibility' })}
+                                href={customerMyReviewsUrl}
+                                isActive={pathname === customerMyReviewsUrl}
+                                tid={TIDs.user_menu_my_reviews_link}
+                                type="myReviews"
+                                onClick={closeUserMenu}
+                            >
+                                <StarIcon className="size-6" />
+                                {t('My reviews')}
                             </MenuIconicSubItemLink>
                         </MenuIconicItemUserAuthenticatedContentListItem>
                     )}

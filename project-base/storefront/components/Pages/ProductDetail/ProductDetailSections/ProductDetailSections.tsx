@@ -1,8 +1,10 @@
+import type { ReviewedProductVariantType } from 'components/Blocks/ProductReviews/productReviewTypes';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useHashNavigation } from 'utils/ui/useHashNavigation';
@@ -10,6 +12,7 @@ import { ProductDetailFilesSection } from './ProductDetailFilesSection';
 import { ProductDetailOverviewSection } from './ProductDetailOverviewSection';
 import { ProductDetailParametersSection } from './ProductDetailParametersSection';
 import { ProductDetailRelatedProductsSection } from './ProductDetailRelatedProductsSection';
+import { ProductDetailReviewsSection } from './ProductDetailReviewsSection';
 import { ProductDetailSectionNavigation } from './ProductDetailSectionNavigation';
 
 type ProductDetailSectionsProps = {
@@ -18,13 +21,18 @@ type ProductDetailSectionsProps = {
     relatedProducts: TypeListedProductFragment[];
     files: TypeFileFragment[];
     product?: TypeProductDetailFragment;
+    productUuid: string;
+    productFullName: string;
+    productVariants?: ReviewedProductVariantType[];
+    reviewsTotalCount?: number;
 };
 
 export const PRODUCT_DETAIL_SECTIONS_IDS = {
     overview: 'overview',
     parameters: 'parameters',
-    relatedProducts: 'related-products',
+    reviews: 'reviews',
     files: 'files',
+    relatedProducts: 'related-products',
 } as const;
 
 export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
@@ -33,14 +41,21 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     relatedProducts,
     files,
     product,
+    productUuid,
+    productFullName,
+    productVariants,
+    reviewsTotalCount,
 }) => {
     const { t } = useTranslation();
+    const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
+    const areProductReviewsEnabled = settingsData?.settings?.productReviewsEnabled === true;
 
     const overviewRef = useRef<HTMLDivElement>(null);
     const parametersRef = useRef<HTMLDivElement>(null);
-    const relatedProductsRef = useRef<HTMLDivElement>(null);
-    const filesRef = useRef<HTMLDivElement>(null);
     const stickyActionBoundaryRef = useRef<HTMLDivElement>(null);
+    const reviewsRef = useRef<HTMLDivElement>(null);
+    const filesRef = useRef<HTMLDivElement>(null);
+    const relatedProductsRef = useRef<HTMLDivElement>(null);
 
     // `.filter()` only reads `isVisible`, not `ref.current`.
     const sections = [
@@ -52,11 +67,12 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
             isVisible: !!parameters.length,
         },
         {
-            id: PRODUCT_DETAIL_SECTIONS_IDS.files,
-            label: t('Files'),
-            ref: filesRef,
-            isVisible: !!files.length,
+            id: PRODUCT_DETAIL_SECTIONS_IDS.reviews,
+            label: reviewsTotalCount ? `${t('Reviews')} (${reviewsTotalCount})` : t('Reviews'),
+            ref: reviewsRef,
+            isVisible: areProductReviewsEnabled,
         },
+        { id: PRODUCT_DETAIL_SECTIONS_IDS.files, label: t('Files'), ref: filesRef, isVisible: !!files.length },
         {
             id: PRODUCT_DETAIL_SECTIONS_IDS.relatedProducts,
             label: t('Related Products'),
@@ -82,6 +98,15 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
 
                 {!!parameters.length && (
                     <ProductDetailParametersSection parameters={parameters} sectionRef={parametersRef} />
+                )}
+
+                {areProductReviewsEnabled && (
+                    <ProductDetailReviewsSection
+                        productName={productFullName}
+                        productUuid={productUuid}
+                        sectionRef={reviewsRef}
+                        variants={productVariants}
+                    />
                 )}
 
                 {!!files.length && <ProductDetailFilesSection files={files} sectionRef={filesRef} />}

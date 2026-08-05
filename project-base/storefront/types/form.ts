@@ -165,6 +165,16 @@ export type ProductQuestionFormType = {
     productUuid: string;
 };
 
+export type ProductReviewFormType = {
+    productUuid: string;
+    rating: number;
+    text: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    isAnonymous: boolean;
+};
+
 export type WatchdogFormType = {
     email: string;
     productUuid: string;

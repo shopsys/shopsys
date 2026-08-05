@@ -9,6 +9,7 @@ query SettingsQuery @redisCache(ttl: 3600) {
         contactFormMainText
         displayTimezone
         heurekaEnabled
+        productReviewsEnabled
         mainBlogCategoryData {
             mainBlogCategoryName
             mainBlogCategoryUrl
@@ -17,6 +18,7 @@ query SettingsQuery @redisCache(ttl: 3600) {
             }
         }
         privacyPolicyArticleUrl
+        productReviewPolicyArticleUrl
         termsAndConditionsArticleUrl
         userConsentPolicyArticleUrl
         socialNetworkLoginConfig

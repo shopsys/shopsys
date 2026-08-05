@@ -67,4 +67,7 @@ fragment ProductDetailInterfaceFragment on Product {
     gifts {
         ...ProductGiftFragment
     }
+    reviewsSummary {
+        ...ProductReviewsSummaryFragment
+    }
 }

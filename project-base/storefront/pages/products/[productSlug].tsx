@@ -115,9 +115,14 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 productResponse.data?.product?.__typename === 'Variant' &&
                 productResponse.data.product.mainVariant?.slug
             ) {
+                // keep GET parameters so links like "write a review" from the order detail survive the redirect
+                const queryString = context.resolvedUrl.split('?')[1];
+
                 return {
                     redirect: {
-                        destination: getBasePathWithLocale(productResponse.data.product.mainVariant.slug, context),
+                        destination: `${getBasePathWithLocale(productResponse.data.product.mainVariant.slug, context)}${
+                            queryString ? `?${queryString}` : ''
+                        }`,
                         permanent: false,
                     },
                 };

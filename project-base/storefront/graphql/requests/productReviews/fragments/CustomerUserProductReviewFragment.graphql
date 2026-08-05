@@ -1,0 +1,23 @@
+fragment CustomerUserProductReviewFragment on ProductReview {
+    __typename
+    uuid
+    reviewerName
+    rating
+    text
+    createdAt
+    isVerifiedPurchase
+    status
+    rejectionReason
+    responseText
+    responseCreatedAt
+    productUuid
+    productName
+    product {
+        slug
+        isVisible
+        fullName
+        mainImage {
+            url
+        }
+    }
+}

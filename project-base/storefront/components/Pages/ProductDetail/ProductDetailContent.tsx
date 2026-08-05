@@ -4,6 +4,7 @@ import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisit
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
 import { ProductGift } from 'components/Blocks/Product/ProductGift';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
+import { useOpenReviewPopupFromUrl } from 'components/Blocks/ProductReviews/useOpenReviewPopupFromUrl';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -40,19 +41,21 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
     useGtmPageReadyEvent(pageReadyEvent, isProductDetailFetching);
     useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
+    useOpenReviewPopupFromUrl(product.uuid, product.fullName);
 
     return (
         <>
             <ProductMetadata product={product} />
 
             <VerticalStack gap="md">
-                <Webline className="flex vl:grid vl:grid-cols-[3fr_2fr] vl:grid-rows-[auto_1fr] flex-col gap-6 vl:gap-y-5">
-                    <ProductDetailTitle
-                        className="order-1 vl:col-start-2 vl:row-start-1"
-                        name={product.name}
-                        namePrefix={product.namePrefix}
-                        nameSuffix={product.nameSuffix}
-                    />
+                <Webline className="flex vl:grid vl:grid-cols-[3fr_2fr] vl:grid-rows-[auto_1fr] flex-col gap-6 vl:gap-y-2">
+                    <div className="order-1 vl:col-start-2 vl:row-start-1 flex flex-col">
+                        <ProductDetailTitle
+                            name={product.name}
+                            namePrefix={product.namePrefix}
+                            nameSuffix={product.nameSuffix}
+                        />
+                    </div>
 
                     <div className="order-2 vl:col-start-1 vl:row-span-2 vl:row-start-1 min-w-0">
                         <ProductDetailGallery
@@ -69,6 +72,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         <ProductDetailInfo
                             brand={product.brand}
                             catalogNumber={product.catalogNumber}
+                            reviewsSummary={product.reviewsSummary}
                             shortDescription={product.shortDescription}
                             usps={product.usps}
                         />
@@ -111,7 +115,10 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                     files={product.files}
                     parameters={product.parameters}
                     product={product}
+                    productFullName={product.fullName}
+                    productUuid={product.uuid}
                     relatedProducts={product.relatedProducts}
+                    reviewsTotalCount={product.reviewsSummary?.totalCount}
                 />
 
                 {isLuigisBoxActive && (

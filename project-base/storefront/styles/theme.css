@@ -153,7 +153,9 @@
     --color-orange-100: #fcf6e2;
     --color-orange-200: #fff0c4;
     --color-orange-500: #fcbd46;
+    --color-orange-600: #b07f00;
     --color-orange-700: #9a6800;
+    --color-orange-800: #895c00;
 
     --color-primary-50: #eff8ff;
     --color-primary-100: #dff1ff;
@@ -202,6 +204,13 @@
 
     --color-skeleton-default: var(--color-gray-200);
     --color-skeleton-less: var(--color-gray-100);
+
+    --color-status-badge-bg-error: var(--color-red-100);
+    --color-status-badge-bg-success: var(--color-green-100);
+    --color-status-badge-bg-warning: var(--color-orange-100);
+    --color-status-badge-text-error: var(--color-red-800);
+    --color-status-badge-text-success: var(--color-green-800);
+    --color-status-badge-text-warning: var(--color-orange-800);
 
     --color-toast-bg-default: var(--color-brand-50);
     --color-toast-bg-error: var(--color-red-100);

@@ -1,0 +1,14 @@
+query CurrentCustomerUserProductReviewsQuery($productUuid: Uuid, $first: Int, $after: String) {
+    currentCustomerUserProductReviews(productUuid: $productUuid, first: $first, after: $after) {
+        totalCount
+        pageInfo {
+            ...PageInfoFragment
+        }
+        edges {
+            cursor
+            node {
+                ...CustomerUserProductReviewFragment
+            }
+        }
+    }
+}

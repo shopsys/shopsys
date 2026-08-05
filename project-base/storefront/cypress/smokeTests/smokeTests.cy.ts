@@ -49,6 +49,13 @@ context('Smoke tests', () => {
                 checktHeadlineText('Edit profile');
             },
         },
+        ['/customer/my-reviews']: {
+            skip: false,
+            logged: true,
+            test: () => {
+                checktHeadlineText('My reviews');
+            },
+        },
         ['/customer/new-complaint']: {
             skip: false,
             logged: true,

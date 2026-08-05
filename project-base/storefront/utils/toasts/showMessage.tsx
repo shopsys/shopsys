@@ -1,6 +1,6 @@
 import { CopyTextBlock } from 'components/Basic/CopyTextBlock/CopyTextBlock';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
-import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
+import { RejectedIcon } from 'components/Basic/Icon/RejectedIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { TIDs } from 'cypress/tids';
 import { toast } from 'react-toastify';
@@ -70,7 +70,7 @@ export const showMessage = (
             toast.error(() => <ToastMessageContent message={message} tid={TIDs.toast_error} />, {
                 toastId,
                 closeOnClick: true,
-                icon: <CloseIcon className="p-1" />,
+                icon: <RejectedIcon className="p-1" />,
             });
         }
     } else if (type === 'info') {

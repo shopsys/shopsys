@@ -1,0 +1,12 @@
+fragment ProductReviewFragment on ProductReview {
+    __typename
+    uuid
+    productName
+    reviewerName
+    rating
+    text
+    createdAt
+    isVerifiedPurchase
+    responseText
+    responseCreatedAt
+}

@@ -1,0 +1,10 @@
+fragment ProductReviewsSummaryFragment on ProductReviewsSummary {
+    __typename
+    averageRating
+    totalCount
+    ratingCounts {
+        __typename
+        rating
+        count
+    }
+}

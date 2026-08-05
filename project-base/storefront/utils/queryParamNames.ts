@@ -10,3 +10,5 @@ export const ORDER_STATUS_QUERY_PARAMETER_NAME = 'status' as const;
 export const COMPLAINT_CREATED_AFTER_QUERY_PARAMETER_NAME = 'createdAfter' as const;
 export const COMPLAINT_CREATED_BEFORE_QUERY_PARAMETER_NAME = 'createdBefore' as const;
 export const COMPLAINT_STATUS_QUERY_PARAMETER_NAME = 'status' as const;
+export const WRITE_REVIEW_PRODUCT_QUERY_PARAMETER_NAME = 'writeReviewProduct' as const;
+export const WRITE_REVIEW_ORDER_HASH_QUERY_PARAMETER_NAME = 'writeReviewOrderHash' as const;

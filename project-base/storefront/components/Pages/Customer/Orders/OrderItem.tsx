@@ -19,7 +19,7 @@ import { getOrderPaymentItem, getOrderTransportItem } from 'utils/mappers/order'
 import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { OrderItemProducts } from './OrderItemProducts';
-import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';
+import { OrderPaymentStatusBadge } from './OrderPaymentStatusBadge';
 
 type OrderItemProps = {
     order: TypeListedOrderFragment;
@@ -95,10 +95,10 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     </CustomerRecordColumnInfo>
 
                     {isPriceVisible(order.totalPrice.priceWithVat) && (
-                        <CustomerRecordColumnInfo title={t('Price')}>
-                            {formatPrice(order.totalPrice.priceWithVat)}
+                        <CustomerRecordColumnInfo valueClassName="flex flex-col items-start gap-1" title={t('Price')}>
+                            <span>{formatPrice(order.totalPrice.priceWithVat)}</span>
 
-                            <OrderPaymentStatusBar
+                            <OrderPaymentStatusBadge
                                 orderHasExternalPayment={order.hasExternalPayment}
                                 orderHasPaymentInProcess={order.hasPaymentInProcess}
                                 orderIsPaid={order.isPaid}

@@ -212,6 +212,9 @@ export const cacheUpdates: UpdatesConfig = {
         CreateComplaint(_result, _args, cache) {
             invalidateFields(cache, ['complaints']);
         },
+        CreateProductReview(_result, _args, cache) {
+            invalidateFields(cache, ['currentCustomerUserProductReviews']);
+        },
     },
 };
 
