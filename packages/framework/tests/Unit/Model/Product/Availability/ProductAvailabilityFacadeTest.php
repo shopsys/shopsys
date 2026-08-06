@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
@@ -380,6 +381,7 @@ final class ProductAvailabilityFacadeTest extends TestCase
             $clockStub,
             $dateTimeFormatterStub,
             $displayTimeZoneProviderStub,
+            $this->createStub(ProductSellableVariantsProvider::class),
         );
     }
 

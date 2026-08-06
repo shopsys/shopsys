@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterf
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 
@@ -41,6 +42,7 @@ class ProductAvailabilityFacade
         protected readonly ClockInterface $clock,
         protected readonly DateTimeFormatterInterface $dateTimeFormatter,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
+        protected readonly ProductSellableVariantsProvider $productSellableVariantsProvider,
     ) {
     }
 
@@ -175,9 +177,25 @@ class ProductAvailabilityFacade
     {
         return $this->inMemoryCache->getOrSaveValue(
             static::PRODUCT_AVAILABILITY_CACHE_NAMESPACE,
-            fn () => $this->productStockFacade->isProductAvailableOnDomain($product, $domainId),
+            fn () => $this->isProductAvailableOnDomain($product, $domainId),
             $product->getId(),
             $domainId,
+        );
+    }
+
+    protected function isProductAvailableOnDomain(Product $product, int $domainId): bool
+    {
+        if (!$product->isMainVariant()) {
+            return $this->productStockFacade->isProductAvailableOnDomain($product, $domainId);
+        }
+
+        $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
+        $stockQuantitiesIndexedByProductId = $this->productStockFacade
+            ->getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId($variants, $domainId);
+
+        return array_any(
+            $stockQuantitiesIndexedByProductId,
+            static fn (int $stockQuantity): bool => $stockQuantity > 0,
         );
     }
 
@@ -345,6 +363,10 @@ class ProductAvailabilityFacade
      */
     public function findValidExpectedRestockingDate(Product $product, int $domainId): ?DateTimeImmutable
     {
+        if ($product->isMainVariant()) {
+            return $this->findEarliestValidExpectedRestockingDateOfVariants($product, $domainId);
+        }
+
         $expectedRestockingDate = $product->getExpectedRestockingDate();
 
         if ($expectedRestockingDate === null
@@ -354,6 +376,27 @@ class ProductAvailabilityFacade
         }
 
         return $expectedRestockingDate;
+    }
+
+    protected function findEarliestValidExpectedRestockingDateOfVariants(
+        Product $mainVariant,
+        int $domainId,
+    ): ?DateTimeImmutable {
+        $earliestExpectedRestockingDate = null;
+
+        $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($mainVariant, $domainId);
+
+        foreach ($variants as $variant) {
+            $expectedRestockingDate = $this->findValidExpectedRestockingDate($variant, $domainId);
+
+            if ($expectedRestockingDate !== null
+                && ($earliestExpectedRestockingDate === null || $expectedRestockingDate < $earliestExpectedRestockingDate)
+            ) {
+                $earliestExpectedRestockingDate = $expectedRestockingDate;
+            }
+        }
+
+        return $earliestExpectedRestockingDate;
     }
 
     public function hasExpectedRestockingDatePassed(

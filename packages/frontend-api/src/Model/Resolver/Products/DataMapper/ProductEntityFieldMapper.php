@@ -9,7 +9,6 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo;
@@ -19,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
@@ -48,7 +48,7 @@ class ProductEntityFieldMapper
         protected readonly ProductRepository $productRepository,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly ParameterValueFileResolver $parameterValueFileResolver,
-        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly ProductSellableVariantsProvider $productSellableVariantsProvider,
     ) {
     }
 
@@ -311,10 +311,9 @@ class ProductEntityFieldMapper
         $variants = [];
 
         if ($product->isMainVariant() === true) {
-            $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
+            $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup(
                 $product,
                 $this->domain->getId(),
-                $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($this->domain->getId()),
             );
         }
 

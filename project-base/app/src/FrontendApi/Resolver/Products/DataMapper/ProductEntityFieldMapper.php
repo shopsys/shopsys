@@ -14,12 +14,12 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
@@ -90,7 +90,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductRepository $productRepository,
         ParameterRepository $parameterRepository,
         ParameterValueFileResolver $parameterValueFileResolver,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
+        ProductSellableVariantsProvider $productSellableVariantsProvider,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
@@ -114,7 +114,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productRepository,
             $parameterRepository,
             $parameterValueFileResolver,
-            $pricingGroupSettingFacade,
+            $productSellableVariantsProvider,
         );
     }
 

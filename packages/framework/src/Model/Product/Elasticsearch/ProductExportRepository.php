@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -28,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -39,7 +39,6 @@ use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class ProductExportRepository
 {
-    protected const string VARIANTS_CACHE_NAMESPACE = 'variants';
     protected const string TOP_PRODUCTS_CACHE_NAMESPACE = 'top_products';
     protected const string VALUE_SEPARATOR = ' ';
 
@@ -58,8 +57,8 @@ class ProductExportRepository
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly ProductExportFieldProvider $productExportFieldProvider,
-        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductRepository $productRepository,
+        protected readonly ProductSellableVariantsProvider $productSellableVariantsProvider,
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly SpecialPriceFacade $specialPriceFacade,
         protected readonly ProductPriceCalculation $productPriceCalculation,
@@ -265,7 +264,7 @@ class ProductExportRepository
         $variants = [];
 
         if ($product->isMainVariant() === true) {
-            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+            $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
         }
 
         foreach ($variants as $variant) {
@@ -301,7 +300,7 @@ class ProductExportRepository
         $products = [];
 
         if ($product->isMainVariant() === true) {
-            $products = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+            $products = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
         }
         $products[] = $product;
 
@@ -321,7 +320,7 @@ class ProductExportRepository
     protected function extractProductType(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
-            foreach ($this->getVariantsForDefaultPricingGroup($product, $domainId) as $variant) {
+            foreach ($this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId) as $variant) {
                 if ($variant->getProductType() === ProductTypeEnum::TYPE_BASIC) {
                     return ProductTypeEnum::TYPE_BASIC;
                 }
@@ -372,7 +371,7 @@ class ProductExportRepository
     {
         $variantIds = array_map(
             static fn (Product $variant) => $variant->getId(),
-            $this->getVariantsForDefaultPricingGroup($product, $domainId),
+            $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId),
         );
 
         $specialPrices = $this->specialPriceFacade->getCurrentAndFutureSpecialPrices(
@@ -491,29 +490,9 @@ class ProductExportRepository
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    protected function getVariantsForDefaultPricingGroup(Product $mainVariant, int $domainId): array
-    {
-        $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-
-        return $this->inMemoryCache->getOrSaveValue(
-            static::VARIANTS_CACHE_NAMESPACE,
-            fn () => $this->productRepository->getAllSellableVariantsByMainVariant(
-                $mainVariant,
-                $domainId,
-                $defaultPricingGroup,
-            ),
-            $mainVariant->getId(),
-            $defaultPricingGroup->getId(),
-            $domainId,
-        );
-    }
-
     protected function reset(): void
     {
-        $this->inMemoryCache->deleteAllItemsInNamespace(static::VARIANTS_CACHE_NAMESPACE);
+        $this->productSellableVariantsProvider->resetCache();
     }
 
     /**
@@ -581,7 +560,7 @@ class ProductExportRepository
     {
         if ($product->isMainVariant()) {
             $variantSeoTitles = [$product->getSeoTitle($domainId) ?? ''];
-            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+            $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
 
             foreach ($variants as $variant) {
                 $variantSeoTitles[] = $variant->getSeoTitle($domainId) ?? '';
@@ -597,7 +576,7 @@ class ProductExportRepository
     {
         if ($product->isMainVariant()) {
             $variantSeoH1s = [$product->getSeoH1($domainId) ?? ''];
-            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+            $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
 
             foreach ($variants as $variant) {
                 $variantSeoH1s[] = $variant->getSeoH1($domainId) ?? '';
@@ -613,7 +592,7 @@ class ProductExportRepository
     {
         if ($product->isMainVariant()) {
             $variantSeoMetaDescriptions = [$product->getSeoMetaDescription($domainId) ?? ''];
-            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+            $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
 
             foreach ($variants as $variant) {
                 $variantSeoMetaDescriptions[] = $variant->getSeoMetaDescription($domainId) ?? '';
