@@ -6,5 +6,6 @@ query SettingsQuery {
         termsAndConditionsArticleUrl
         privacyPolicyArticleUrl
         userConsentPolicyArticleUrl
+        productReviewPolicyArticleUrl
     }
 }

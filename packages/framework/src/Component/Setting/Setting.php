@@ -17,6 +17,7 @@ class Setting
     public const string TERMS_AND_CONDITIONS_ARTICLE_ID = 'termsAndConditionsArticleId';
     public const string PRIVACY_POLICY_ARTICLE_ID = 'privacyPolicyArticleId';
     public const string USER_CONSENT_POLICY_ARTICLE_ID = 'userConsentPolicyArticleId';
+    public const string PRODUCT_REVIEW_POLICY_ARTICLE_ID = 'productReviewPolicyArticleId';
     public const string DOMAIN_DATA_CREATED = 'domainDataCreated';
     public const string FEED_HASH = 'feedHash';
     public const string DEFAULT_UNIT = 'defaultUnitId';

@@ -1144,6 +1144,9 @@ msgstr ""
 msgid "How to clean a television screen safely"
 msgstr "Ako bezpečne vyčistiť obrazovku televízora"
 
+msgid "How we work with reviews"
+msgstr "Ako pracujeme s recenziami"
+
 msgid "ISO"
 msgstr "ISO"
 
@@ -2673,4 +2676,3 @@ msgstr "roky"
 
 msgid "| Demo eshop"
 msgstr "| Demo e-shop SK"
-

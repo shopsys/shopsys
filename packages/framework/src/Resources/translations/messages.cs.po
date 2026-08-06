@@ -4,6 +4,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "<a href=\"%url%\">Product review policy article for domain %domainName% is not set.</a>"
+msgstr "<a href=\"%url%\">Článek se zásadami recenzí pro doménu %domainName% není nastaven.</a>"
+
+msgid "Article \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
+msgstr "Článek \"%name%\" je nastaven pro zobrazení zásad recenzí. Toto nastavení bude ztraceno. Opravdu jej chcete smazat?"
+
+msgid "Choose the article that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
+msgstr "Vyberte článek, který vysvětluje, jak jsou na této doméně recenze produktů získávány, ověřovány a moderovány. Zákazníci uvidí odkaz na něj u recenzí."
+
+msgid "Product review policy"
+msgstr "Zásady recenzí"
+
+msgid "Product review policy article"
+msgstr "Článek se zásadami recenzí"
+
+msgid "Product review policy settings modified."
+msgstr "Nastavení zásad recenzí bylo uloženo"
+
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 

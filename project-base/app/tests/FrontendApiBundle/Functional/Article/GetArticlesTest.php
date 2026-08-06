@@ -110,11 +110,11 @@ class GetArticlesTest extends GraphQlTestCase
             ],
             [
                 $this->getLastCountOfArticlesResponse(1),
-                array_slice($this->getExpectedArticles(), 16, 1),
+                array_slice($this->getExpectedArticles(), 17, 1),
             ],
             [
                 $this->getLastCountOfArticlesResponse(2),
-                array_slice($this->getExpectedArticles(), 15, 2),
+                array_slice($this->getExpectedArticles(), 16, 2),
             ],
             [
                 $this->getFirstArticlesCountResponse(1, [Article::PLACEMENT_FOOTER_4]),
@@ -463,6 +463,19 @@ class GetArticlesTest extends GraphQlTestCase
             ],
             [
                 'name' => t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'placement' => Article::PLACEMENT_NONE,
+                'text' => t(
+                    '<p>Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</p>',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $firstDomainLocale,
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('How we work with reviews', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'placement' => Article::PLACEMENT_NONE,
                 'text' => t(
                     '<p>Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</p>',

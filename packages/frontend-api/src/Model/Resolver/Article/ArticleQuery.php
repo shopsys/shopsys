@@ -54,6 +54,11 @@ class ArticleQuery extends AbstractQuery
         return '/' . $this->getSpecialArticle(Setting::USER_CONSENT_POLICY_ARTICLE_ID, 'user-consent-policy')['mainSlug'];
     }
 
+    public function productReviewPolicyArticleUrlQuery(): string
+    {
+        return '/' . $this->getSpecialArticle(Setting::PRODUCT_REVIEW_POLICY_ARTICLE_ID, 'product-review-policy')['mainSlug'];
+    }
+
     protected function getSpecialArticle(string $settingName, string $articleIdentifier): array
     {
         try {

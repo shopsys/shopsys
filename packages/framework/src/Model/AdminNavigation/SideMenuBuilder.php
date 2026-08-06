@@ -9,6 +9,7 @@ use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorPinnedMenuItem;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SideMenuBuilder
@@ -101,6 +102,7 @@ class SideMenuBuilder
     public const string PRIVACY_POLICY = 'privacy_policy';
     public const string PERSONAL_DATA = 'personal_data';
     public const string USER_CONSENT_POLICY = 'user_consent_policy';
+    public const string PRODUCT_REVIEW_POLICY = 'product_review_policy';
     public const string AUTOCOMPLETE_SETTING = 'autocomplete';
     public const string ROOT_FILE = 'files';
     public const string LIST_FILE = 'files';
@@ -201,6 +203,7 @@ class SideMenuBuilder
         protected readonly Domain $domain,
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly CurrentAdministrator $currentAdministrator,
+        protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
     ) {
     }
 
@@ -630,6 +633,13 @@ class SideMenuBuilder
             ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')],
         );
         $legalMenu->addChild(static::USER_CONSENT_POLICY, ['route' => 'admin_userconsentpolicy_setting', 'label' => t('User consent policy')]);
+
+        if ($this->productReviewEnabledChecker->isEnabledOnAnyDomain()) {
+            $legalMenu->addChild(
+                static::PRODUCT_REVIEW_POLICY,
+                ['route' => 'shopsys_administration_productreviewpolicy_setting', 'label' => t('Product review policy')],
+            );
+        }
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
 

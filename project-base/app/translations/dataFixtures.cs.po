@@ -1144,6 +1144,9 @@ msgstr "Jak vybrat správnou televizi do obývacího pokoje"
 msgid "How to clean a television screen safely"
 msgstr "Jak bezpečně vyčistit obrazovku televize"
 
+msgid "How we work with reviews"
+msgstr "Jak pracujeme s recenzemi"
+
 msgid "ISO"
 msgstr ""
 
@@ -2673,4 +2676,3 @@ msgstr "roky"
 
 msgid "| Demo eshop"
 msgstr "| Demo e-shop"
-

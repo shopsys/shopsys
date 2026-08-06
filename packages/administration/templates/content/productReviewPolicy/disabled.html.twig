@@ -1,0 +1,15 @@
+{% extends '@ShopsysAdministration/content/productReviewPolicy/_base.html.twig' %}
+
+{% block review_policy_page_content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="empty">
+                <div class="empty-icon">
+                    {{ ux_icon('notes-off', { class: 'text-secondary' }) }}
+                </div>
+                <p class="empty-title">{{ 'Reviews are not enabled on this domain'|trans }}</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
