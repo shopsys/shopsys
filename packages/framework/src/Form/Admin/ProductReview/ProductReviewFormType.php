@@ -26,6 +26,7 @@ use Symfony\Component\Validator\Constraints;
 final class ProductReviewFormType extends AbstractType
 {
     protected const string VALIDATION_GROUP_STATUS_REJECTED = 'statusRejected';
+    protected const string VALIDATION_GROUP_CONTENT_EDITED = 'contentEdited';
 
     public function __construct(
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
@@ -63,6 +64,8 @@ final class ProductReviewFormType extends AbstractType
                 'data_class' => ProductReviewData::class,
                 'attr' => [
                     'novalidate' => 'novalidate',
+                    'data-controller' => 'product-review-form',
+                    'data-product-review-form-rejected-status-value' => ProductReviewStatusEnum::STATUS_REJECTED,
                 ],
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
@@ -72,6 +75,13 @@ final class ProductReviewFormType extends AbstractType
 
                     if ($productReviewData->status === ProductReviewStatusEnum::STATUS_REJECTED) {
                         $validationGroups[] = self::VALIDATION_GROUP_STATUS_REJECTED;
+                    }
+
+                    /** @var \Shopsys\FrameworkBundle\Model\ProductReview\ProductReview $productReview */
+                    $productReview = $form->getConfig()->getOption('productReview');
+
+                    if ($productReview->isContentEdited($productReviewData)) {
+                        $validationGroups[] = self::VALIDATION_GROUP_CONTENT_EDITED;
                     }
 
                     return $validationGroups;
@@ -89,6 +99,7 @@ final class ProductReviewFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'label' => 'First name',
                 'required' => true,
+                'attr' => $this->getContentFieldAttributes(),
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter first name'),
                     new Constraints\Length(
@@ -100,6 +111,7 @@ final class ProductReviewFormType extends AbstractType
             ->add('lastName', TextType::class, [
                 'label' => 'Last name',
                 'required' => true,
+                'attr' => $this->getContentFieldAttributes(),
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter last name'),
                     new Constraints\Length(
@@ -111,6 +123,7 @@ final class ProductReviewFormType extends AbstractType
             ->add('email', TextType::class, [
                 'label' => 'Email',
                 'required' => true,
+                'attr' => $this->getContentFieldAttributes(),
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter email'),
                     new Email(message: 'Please enter valid email'),
@@ -123,13 +136,40 @@ final class ProductReviewFormType extends AbstractType
             ->add('isAnonymous', CheckboxType::class, [
                 'label' => 'Published anonymously',
                 'required' => false,
+                'attr' => $this->getContentFieldAttributes(),
             ])
             ->add('text', TextareaType::class, [
                 'label' => 'Text review',
                 'required' => false,
+                'attr' => $this->getContentFieldAttributes(),
+            ])
+            ->add('contentChangeReason', TextareaType::class, [
+                'label' => 'Reason for content change',
+                'required' => true,
+                'row_attr' => [
+                    'data-product-review-form-target' => 'contentChangeReason',
+                ],
+                'help' => t('Required when the review content is changed. The reason is stored in the review history only.'),
+                'constraints' => [
+                    new Constraints\NotBlank(
+                        message: 'Please enter reason for content change',
+                        groups: [self::VALIDATION_GROUP_CONTENT_EDITED],
+                    ),
+                ],
             ]);
 
         return $builderReviewContentGroup;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getContentFieldAttributes(): array
+    {
+        return [
+            'data-product-review-form-target' => 'contentField',
+            'data-action' => 'product-review-form#updateContentChangeReasonVisibility',
+        ];
     }
 
     private function createModerationGroup(
@@ -138,10 +178,6 @@ final class ProductReviewFormType extends AbstractType
     ): FormBuilderInterface {
         $builderModerationGroup = $builder->create('moderationGroup', GroupType::class, [
             'label' => 'Moderation',
-            'row_attr' => [
-                'data-controller' => 'product-review-form',
-                'data-product-review-form-rejected-status-value' => ProductReviewStatusEnum::STATUS_REJECTED,
-            ],
         ]);
 
         $builderModerationGroup

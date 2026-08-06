@@ -53,6 +53,9 @@ class ProductReviewEditHandler implements EditHandlerInterface
     }
 
     /**
+     * Editing the customer-entered content has to be explained, so its reason is recorded in the entity log
+     * with the changes themselves (the form makes the reason mandatory whenever the content is edited)
+     *
      * {@inheritdoc}
      */
     #[Override]

@@ -94,6 +94,11 @@ class ProductReviewData
     /**
      * @var string|null
      */
+    public $contentChangeReason;
+
+    /**
+     * @var string|null
+     */
     public $responseText;
 
     /**

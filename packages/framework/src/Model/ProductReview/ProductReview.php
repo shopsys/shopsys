@@ -234,6 +234,15 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
         $this->setData($productReviewData);
     }
 
+    public function isContentEdited(ProductReviewData $productReviewData): bool
+    {
+        return $this->firstName !== $productReviewData->firstName
+            || $this->lastName !== $productReviewData->lastName
+            || $this->email !== $productReviewData->email
+            || $this->isAnonymous !== $productReviewData->isAnonymous
+            || $this->text !== $productReviewData->text;
+    }
+
     /**
      * @return int
      */

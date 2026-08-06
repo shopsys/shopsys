@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\ProductReview;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogNoteRegistry;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -18,6 +19,7 @@ class ProductReviewFacade
         protected readonly ProductReviewRepository $productReviewRepository,
         protected readonly ProductReviewFactory $productReviewFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
     ) {
     }
 
@@ -42,6 +44,10 @@ class ProductReviewFacade
 
     public function edit(ProductReview $productReview, ProductReviewData $productReviewData): void
     {
+        if ($productReview->isContentEdited($productReviewData) && $productReviewData->contentChangeReason !== null) {
+            $this->entityLogNoteRegistry->registerNote($productReview, $productReviewData->contentChangeReason);
+        }
+
         $productReview->edit($productReviewData);
 
         $this->em->flush();

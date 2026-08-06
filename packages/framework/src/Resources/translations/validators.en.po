@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "Please enter reason for content change"
+msgstr ""
+
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 

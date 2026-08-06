@@ -22,6 +22,12 @@ msgstr "Článek se zásadami recenzí"
 msgid "Product review policy settings modified."
 msgstr "Nastavení zásad recenzí bylo uloženo"
 
+msgid "Reason for content change"
+msgstr "Důvod změny obsahu"
+
+msgid "Required when the review content is changed. The reason is stored in the review history only."
+msgstr "Povinné při změně obsahu recenze. Důvod se ukládá pouze do historie recenze."
+
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 
