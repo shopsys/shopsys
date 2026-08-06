@@ -18,6 +18,7 @@ class EntityLogFacade
         protected readonly EntityLogFactory $entityLogFactory,
         protected readonly EntityLogDataFactory $entityLogDataFactory,
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
+        protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
     ) {
     }
 
@@ -65,6 +66,7 @@ class EntityLogFacade
             ?
             call_user_func([$parentEntity, $parentEntityIdentityFunctionName])
             : null;
+        $entityLogData->note = $this->entityLogNoteRegistry->findNote($entity);
 
         return $this->entityLogFactory->create($entityLogData);
     }

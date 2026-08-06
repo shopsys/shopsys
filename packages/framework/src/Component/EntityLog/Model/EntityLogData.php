@@ -50,4 +50,9 @@ class EntityLogData
      * @var int|null
      */
     public $parentEntityId = null;
+
+    /**
+     * @var string|null
+     */
+    public $note = null;
 }

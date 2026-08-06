@@ -125,6 +125,49 @@ class OrderStatus extends AbstractTranslatableEntity
 }
 ```
 
+## Recording why a change was made
+
+The change set says what changed, but not why it changed.
+When the reason matters for auditing, register a note for the entity before the change is flushed and the logs created by that flush will carry it in the `note` column.
+
+```php
+use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogNoteRegistry;
+
+class ProductReviewFacade
+{
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
+    ) {
+    }
+
+    public function edit(ProductReview $productReview, ProductReviewData $productReviewData): void
+    {
+        if ($productReviewData->contentChangeReason !== null) {
+            $this->entityLogNoteRegistry->registerNote($productReview, $productReviewData->contentChangeReason);
+        }
+
+        $productReview->edit($productReviewData);
+
+        $this->em->flush();
+    }
+}
+```
+
+!!! note
+
+    The registry is emptied after every flush, so the note has to be registered right before the flush that performs the change.
+    Do not detach or clear the entity manager in between either — a re-fetched entity is a different object and its note would no longer be found.
+
+### How many records the note ends up in
+
+Doctrine reports an update once per changed entity, not once per changed property, and one log record is created for each such report.
+Changing several properties of one entity therefore produces a single record holding the whole change set, and the note is stored on it exactly once.
+This includes properties behind an association — a changed `$product` is just another entry in the change set of the same record, not a record of its own.
+
+A flush that changes more entities is different.
+Every changed entity — a `LoggableChild` entity, or an entity reached through a logged collection — gets its own record, and all records of that flush share a `logCollectionNumber`.
+
 ## List of results
 
 The administration displays the logged changes as a timeline rendered by the `Admin:EntityLogTimeline` Twig component (`Shopsys\AdministrationBundle\Component\EntityLog\Timeline\TwigComponent\EntityLogTimelineComponent`).
@@ -144,7 +187,7 @@ You can get it from the `Shopsys\FrameworkBundle\Component\EntityLog\Model\Entit
 $entityName = $this->entityLogFacade->getEntityNameByEntity($order);
 ```
 
-The timeline groups records from the same save operation by `logCollectionNumber` and displays the details needed for reviewing changes: action, entity, readable identifier, user, date, and formatted changes.
+The timeline groups records from the same save operation by `logCollectionNumber` and displays the details needed for reviewing changes: action, entity, readable identifier, user, date, note, and formatted changes.
 
 As an implemented sample, you can study the "History" tab on the order detail page in the administration.
 The tab is provided by the live component `Shopsys\AdministrationBundle\Component\OrderDetail\LiveComponent\HistoryTabComponent`, which resolves the entity name via `EntityLogFacade` and renders the timeline for the displayed order.
