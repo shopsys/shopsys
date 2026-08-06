@@ -141,6 +141,9 @@
         "symfony/var-dumper": "^7.4",
         "symfony/yaml": "^7.4"
     },
+    "conflict": {
+        "doctrine/orm": ">=3.6.8"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
