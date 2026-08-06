@@ -4,9 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Please enter reason for content change"
-msgstr ""
-
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 
@@ -461,6 +458,9 @@ msgid "Please enter promo code"
 msgstr ""
 
 msgid "Please enter quantity"
+msgstr ""
+
+msgid "Please enter reason for content change"
 msgstr ""
 
 msgid "Please enter reason for rejection"

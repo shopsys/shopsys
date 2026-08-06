@@ -4,30 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
-msgid "<a href=\"%url%\">Product review policy article for domain %domainName% is not set.</a>"
-msgstr "<a href=\"%url%\">Článek se zásadami recenzí pro doménu %domainName% není nastaven.</a>"
-
-msgid "Article \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
-msgstr "Článek \"%name%\" je nastaven pro zobrazení zásad recenzí. Toto nastavení bude ztraceno. Opravdu jej chcete smazat?"
-
-msgid "Choose the article that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
-msgstr "Vyberte článek, který vysvětluje, jak jsou na této doméně recenze produktů získávány, ověřovány a moderovány. Zákazníci uvidí odkaz na něj u recenzí."
-
-msgid "Product review policy"
-msgstr "Zásady recenzí"
-
-msgid "Product review policy article"
-msgstr "Článek se zásadami recenzí"
-
-msgid "Product review policy settings modified."
-msgstr "Nastavení zásad recenzí bylo uloženo"
-
-msgid "Reason for content change"
-msgstr "Důvod změny obsahu"
-
-msgid "Required when the review content is changed. The reason is stored in the review history only."
-msgstr "Povinné při změně obsahu recenze. Důvod se ukládá pouze do historie recenze."
-
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 
@@ -105,6 +81,9 @@ msgstr "<a href=\"%url%\">Telefonní předvolby nejsou nakonfigurovány pro dom�
 
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Není nastaven článek zásady ochrany osobních údajů pro doménu %domainName%.</a>"
+
+msgid "<a href=\"%url%\">Product review policy article for domain %domainName% is not set.</a>"
+msgstr "<a href=\"%url%\">Článek se zásadami recenzí pro doménu %domainName% není nastaven.</a>"
 
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr "<a href=\"%url%\">Státní svátky pro rok %year% nejsou nastaveny.</a>"
@@ -293,7 +272,7 @@ msgid "Apply to selected products"
 msgstr "Aplikovat na vybrané produkty"
 
 msgid "Approved"
-msgstr "Schválená"
+msgstr "Schváleno"
 
 msgid "Approved with zero amount"
 msgstr "Schváleno s nulovou částkou"
@@ -309,6 +288,9 @@ msgstr "Článek"
 
 msgid "Article \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
 msgstr "Článek \"%name%\" je nastaven pro zobrazení právních podmínek. Toto nastavení bude ztraceno. Opravdu si jej přejete smazat?"
+
+msgid "Article \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
+msgstr "Článek \"%name%\" je nastaven pro zobrazení zásad recenzí. Toto nastavení bude ztraceno. Opravdu jej chcete smazat?"
 
 msgid "Article \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
 msgstr "Článek \"%name%\" je nastaven pro zobrazení informací o správě osobních údajů. Toto nastavení bude ztraceno. Opravdu si jej přejete smazat?"
@@ -606,6 +588,9 @@ msgstr "Vybrat autora"
 
 msgid "Choose product"
 msgstr "Vyberte produkt"
+
+msgid "Choose the article that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
+msgstr "Vyberte článek, který vysvětluje, jak jsou na této doméně recenze produktů získávány, ověřovány a moderovány. Zákazníci uvidí odkaz na něj u recenzí."
 
 msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
 msgstr "Vyberte článek, který poskytuje informace o tom, jak je na této doméně získáván, spravován a odvoláván souhlas se správou osobních údajů."
@@ -2785,6 +2770,12 @@ msgstr "Dotaz k produktu odeslaný administrátorovi"
 msgid "Product question sent to customer"
 msgstr "Dotaz k produktu odeslaný zákazníkovi"
 
+msgid "Product review policy"
+msgstr "Zásady recenzí"
+
+msgid "Product review policy article"
+msgstr "Článek se zásadami recenzí"
+
 msgid "Product settings on the main page successfully changed"
 msgstr "Nastavení zboží na titulce bylo úspěšně změněno."
 
@@ -2869,6 +2860,9 @@ msgstr "QR kód"
 msgid "RGB Hex"
 msgstr "RGB Hex"
 
+msgid "Reason for content change"
+msgstr "Důvod změny obsahu"
+
 msgid "Reason for rejection"
 msgstr "Důvod zamítnutí"
 
@@ -2888,7 +2882,7 @@ msgid "Registration confirmation"
 msgstr "Potvrzení registrace"
 
 msgid "Rejected"
-msgstr "Zamítnutá"
+msgstr "Zamítnuto"
 
 msgid "Related products"
 msgstr "Související produkty"
@@ -2904,6 +2898,9 @@ msgstr "Nahradit soubor"
 
 msgid "Requested at"
 msgstr "Požadováno dne"
+
+msgid "Required when the review content is changed. The reason is stored in the review history only."
+msgstr "Povinné při změně obsahu recenze. Důvod se ukládá pouze do historie recenze."
 
 msgid "Required when the review is rejected."
 msgstr "Povinné, pokud je recenze zamítnutá."

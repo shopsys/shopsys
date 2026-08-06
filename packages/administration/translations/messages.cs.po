@@ -194,7 +194,7 @@ msgid "Applicable variables for Subject"
 msgstr "Použitelné proměnné pro předmět"
 
 msgid "Approved"
-msgstr "Schválená"
+msgstr "Schváleno"
 
 msgid "Are you sure?"
 msgstr "Opravdu?"
@@ -1108,6 +1108,9 @@ msgstr "Uděleno"
 msgid "Heureka - Verified by Customer"
 msgstr "Heureka - Ověřeno zákazníky"
 
+msgid "Heureka - Verified by Customer service does not support the language of this domain."
+msgstr "Služba Heureka - Ověřeno zákazníky nepodporuje jazyk této domény."
+
 msgid "Heureka agreement"
 msgstr "Souhlas s Heureka Ověřeno zákazníky"
 
@@ -1795,11 +1798,17 @@ msgstr "Zboží se nenachází v eshopu."
 msgid "Product review"
 msgstr "Recenze produktu"
 
+msgid "Product review policy"
+msgstr "Zásady recenzí"
+
 msgid "Product review policy article setting"
 msgstr "Nastavení článku se zásadami recenzí"
 
 msgid "Product review policy settings"
 msgstr "Nastavení zásad recenzí"
+
+msgid "Product review policy settings modified."
+msgstr "Nastavení zásad recenzí bylo uloženo"
 
 msgid "Product reviews"
 msgstr "Recenze produktů"
@@ -1883,7 +1892,7 @@ msgid "Refunded amount has been changed."
 msgstr "Refundovaná částka byla změněna."
 
 msgid "Rejected"
-msgstr "Zamítnutá"
+msgstr "Zamítnuto"
 
 msgid "Remove"
 msgstr "Odebrat"
@@ -1920,6 +1929,9 @@ msgstr "Recenzovaný produkt"
 
 msgid "Reviewer"
 msgstr "Recenzent"
+
+msgid "Reviews are not enabled on this domain"
+msgstr "Recenze nejsou na této doméně povolené"
 
 msgid "Robots.txt"
 msgstr "Robots.txt"
@@ -2739,3 +2751,4 @@ msgstr "bez DPH"
 
 msgid "yesterday"
 msgstr "včera"
+

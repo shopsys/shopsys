@@ -310,6 +310,9 @@ msgstr "Oddělení zahradního náčiní je jedno z největších oddělení v n
 msgid "A good partnership starts with reliable data, clear commercial terms, and responsible customer support. Potential partners can contact our demo purchasing team."
 msgstr "Dobré partnerství začíná spolehlivými daty, jasnými obchodními podmínkami a odpovědnou zákaznickou podporou. Zájemci mohou kontaktovat náš ukázkový nákupní tým."
 
+msgid "A great product for a very reasonable price."
+msgstr "Skvělý produkt za velmi rozumnou cenu."
+
 msgid "A personal computer (PC) is a general-purpose computer whose size, capabilities, and original sale price make it useful for individuals, and is intended to be operated directly by an end-user with no intervening computer time-sharing models that allowed larger, more expensive minicomputer and mainframe systems to be used by many people, usually at the same time."
 msgstr "Počítač je zařízení a výpočetní technika, která zpracovává data pomocí předem vytvořeného programu. Současný počítač je elektronický a skládá se z hardwaru, který představuje fyzické části počítače (mikroprocesor, klávesnice, monitor atd.) a ze softwaru (operační systém a programy). Počítač je zpravidla ovládán uživatelem, který poskytuje počítači data ke zpracování prostřednictvím jeho vstupních zařízení a počítač výsledky prezentuje pomocí výstupních zařízení. V současnosti jsou počítače využívány téměř ve všech oborech lidské činnosti."
 
@@ -562,6 +565,9 @@ msgstr "Katalog"
 msgid "Catalog user"
 msgstr "Katalogový uživatel"
 
+msgid "Channel tuning was confusing and took much longer than expected."
+msgstr "Ladění kanálů bylo nepřehledné a trvalo mnohem déle, než jsem očekávala."
+
 msgid "Check the details that affect daily use"
 msgstr "Prověřte detaily ovlivňující každodenní používání"
 
@@ -628,6 +634,9 @@ msgstr "Kompaktní design, velká hodnota"
 msgid "Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers."
 msgstr "REPRO Genius SP-U150X černozelené 4W 2.0"
 
+msgid "Compact, easy to set up and ideal for a smaller room."
+msgstr "Kompaktní, snadno se nastavuje a je ideální do menšího pokoje."
+
 msgid "Compare dimensions, controls, connectivity, energy consumption, and warranty conditions before making the final choice."
 msgstr "Před konečným výběrem porovnejte rozměry, ovládání, konektivitu, spotřebu energie a záruční podmínky."
 
@@ -687,6 +696,9 @@ msgstr "Zákaznická péče vysvětlí další postup včetně předání do ser
 
 msgid "Customer manager"
 msgstr "Správce zákazníků"
+
+msgid "Customer reviews help shoppers make informed decisions and share their experience with purchased products."
+msgstr ""
 
 msgid "Cyklocomputer – cyklonavigation with preset maps, color display 3\", training programmes, WiFi"
 msgstr "Cyklocomputer - cyklonavigace s předinstalovanými mapami silnic a cyklotras, barevný dotykový displej 3\"."
@@ -807,6 +819,9 @@ msgstr "Rozměry"
 
 msgid "Dina is preparing a comfortable home office and compares a monitor, headphones, and practical accessories before ordering."
 msgstr "Dina si zařizuje pohodlnou domácí kancelář a před objednáním porovnává monitor, sluchátka a praktické příslušenství."
+
+msgid "Discontinued product"
+msgstr "Vyřazený produkt"
 
 msgid "Discover new products, useful features, and updates from the world of electronics."
 msgstr "Objevte nové produkty, užitečné funkce a novinky ze světa elektroniky."
@@ -1147,6 +1162,15 @@ msgstr "Jak bezpečně vyčistit obrazovku televize"
 msgid "How we work with reviews"
 msgstr "Jak pracujeme s recenzemi"
 
+msgid "I have mixed feelings about this variant."
+msgstr "Z této varianty mám smíšené pocity."
+
+msgid "I need a few more days to form a final opinion."
+msgstr "Potřebuji ještě pár dní, abych si udělal konečný názor."
+
+msgid "I would like to see this product available again."
+msgstr "Rád bych, aby byl tento produkt opět v nabídce."
+
 msgid "ISO"
 msgstr ""
 
@@ -1182,6 +1206,9 @@ msgstr "Rozhraní"
 
 msgid "Intuitive operation with its easy to handle even a novice in this field. Another big advantage is the use of technology burning \"on the fly\", which is spared not only your time but also the capacity of the disk, because the process does not create any storage (temporary) files on your hard disk."
 msgstr "Existují stovky programů pro vypalování, avšak vyznat se v nich není ani pro zkušeného uživatele vůbec jednoduché. Právě proto jsme pro vás s autorem českých bestsellerů připravili 2. aktualizované vydání této úspěšné publikace. S knihou získáte nejen průvodce nejrůznějším vypalováním na CD a DVD, ale všechny programy a aplikace si můžete okamžitě vyzkoušet, neboť je obsahuje přiložené DVD."
+
+msgid "It does the job, but I expected a bit more."
+msgstr "Svůj účel splní, ale čekal jsem trochu víc."
 
 msgid "Items on sale"
 msgstr "Produkty ve výprodeji"
@@ -1374,6 +1401,9 @@ msgstr ""
 
 msgid "Multimedia"
 msgstr "Multimédia"
+
+msgid "My daughter loves it and the Full HD picture is surprisingly good for this size."
+msgstr "Moje dcera ji miluje a Full HD obraz je na tuto velikost překvapivě dobrý."
 
 msgid "NFC"
 msgstr "NFC"
@@ -1590,6 +1620,9 @@ msgstr "Objednávku si vyzvednete u servisního pultu poblíž vchodu. Tým při
 
 msgid "Pick-up counter is right behind the main entrance. Parking is available in the courtyard for short stops."
 msgstr "Výdejní pult je hned za hlavním vchodem. Pro krátké zastavení je k dispozici parkování ve dvoře."
+
+msgid "Please contact our support team. We will guide you through the channel setup step by step."
+msgstr "Kontaktujte prosím naši podporu. Provedeme vás nastavením kanálů krok za krokem."
 
 msgid "Pocket-friendly"
 msgstr "Kapesní vydání"
@@ -2098,6 +2131,15 @@ msgstr "Obchodní podmínky obchodních domů"
 msgid "Terms and conditions of eshop"
 msgstr "Obchodní podmínky e-shopu"
 
+msgid "Thank you for the feedback. We have passed your note about the remote control to the manufacturer."
+msgstr "Děkujeme za zpětnou vazbu. Vaši připomínku k dálkovému ovladači jsme předali výrobci."
+
+msgid "Thank you for your review. We are sorry the product did not fully meet your expectations."
+msgstr "Děkujeme za vaši recenzi. Mrzí nás, že produkt zcela nesplnil vaše očekávání."
+
+msgid "That is wonderful to hear. Thank you for choosing our shop."
+msgstr "To rádi slyšíme. Děkujeme, že jste si vybrali náš obchod."
+
 msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
 msgstr "Televizní monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP+, 2x HDMI, MHL, USB, CI, Scart, 2x 5W repro, dálkový ovladač"
 
@@ -2109,6 +2151,12 @@ msgstr "Pobočka je blízko vchodu do business centra. Po předložení čísla 
 
 msgid "The checkout always shows the current price and estimated delivery time before the order is confirmed."
 msgstr "Košík před potvrzením objednávky vždy zobrazí aktuální cenu a odhadovaný čas doručení."
+
+msgid "The colors are vivid and the size is just right for a desk."
+msgstr "Barvy jsou živé a velikost je tak akorát na stůl."
+
+msgid "The design is lovely, but the built-in speakers sound weaker than I expected."
+msgstr "Design je krásný, ale vestavěné reproduktory znějí slaběji, než jsem očekávala."
 
 msgid "The filter carbon OPK-4360/4390"
 msgstr "Filtr uhlíkový OPK-4360/4390"
@@ -2131,8 +2179,29 @@ msgstr "Nejužitečnější inovace zlepšují obraz, zvuk, pohodlí nebo úspor
 msgid "The pickup desk is inside the shopping passage on the first floor. For bulky orders, please call the store before arrival."
 msgstr "Výdejní pult najdete v obchodní pasáži v prvním patře. U objemnějších objednávek prosím před příjezdem zavolejte na prodejnu."
 
+msgid "The picture is sharp and the pink design looks great in the children's room."
+msgstr "Obraz je ostrý a růžový design vypadá skvěle v dětském pokoji."
+
 msgid "The printer uses ChromaLife100 ink system with four colors of ink hidden two print cartridges"
 msgstr "Stylové kompaktní multifunkční zařízení s Wi-Fi a snadným mobilním tiskem."
+
+msgid "The product arrived in good condition."
+msgstr "Produkt dorazil v pořádku."
+
+msgid "The product exceeded my expectations and was delivered quickly."
+msgstr "Produkt předčil má očekávání a byl doručen rychle."
+
+msgid "The quality is excellent and the product works exactly as described."
+msgstr "Kvalita je vynikající a produkt funguje přesně podle popisu."
+
+msgid "The review contains promotional content unrelated to the product."
+msgstr "Recenze obsahuje reklamní obsah, který nesouvisí s produktem."
+
+msgid "The review does not meet our review guidelines."
+msgstr "Recenze neodpovídá našim pravidlům pro recenze."
+
+msgid "The selected variant did not meet my needs."
+msgstr "Vybraná varianta nesplnila mé potřeby."
 
 msgid "The selections below demonstrate how product recommendations can be embedded directly into editorial content."
 msgstr "Níže uvedené výběry ukazují, jak lze doporučení produktů vložit přímo do redakčního obsahu."
@@ -2151,6 +2220,9 @@ msgstr "Výsuvný odsavač par je velice elegantní a praktickou variantou klasi
 
 msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
 msgstr "<p>Výsuvný odsavač par je velice elegantní a praktickou variantou klasického odsavače s minimální prostorovou náročností, proto je vhodný i pro malé kuchyně. Nerezová přední lišta s kolébkovým přepínačem umožňuje snadné ovládání.</p><br /><br /><h2>Důvody, proč se rozhodnout právě pro výsuvný odsavač par Concept OPV-3260:</h2><br /><br /><ol><li>Výkon je nejdůležitějším parametrem odsavačů  a měl by odpovídat minimálně desetinásobku objemu místnosti. Výsuvný odsavač par značky Concept  OPV-3260 Vás překvapí <strong>výkonem 198 m3 za hodinu</strong>.</li><li>Model OPV-3260 je vybaven <strong>dvěma</strong> praktickými <strong>kovovými filtry proti mastnotám</strong>, jejichž údržba je velice snadná a životnost neomezená. Pokud nemáte možnost odvést páry ven, můžete zvolit namísto klasického odtahu <strong>systém recirkulace</strong> s užitím 2 uhlíkových filtrů, které lze dokoupit (kat.číslo: 61990005).</li></ol><br /><h2>Technické parametry:</h2><br /><br /><ul><li>Výška: 175 mm</li><li>Šířka: 600 mm</li><li>Hloubka: 310-470 mm</li><li>Příslušenství: zpětná klapka</li><li>Nerezová přední lišta</li><li>Možnost horního odtahu nebo recirkulace</li><li>Kolébkový přepínač</li><li>2 stupně výkonu</li><li>Max. výkon: 198 m3/hod.</li><li>Max.hlučnost na nejvyšším stupni 66dB (A)</li><li>Žárovka 40 W</li><li>2x kovový filtr proti mastnotám</li><li>Průměr odtahu: 120 mm</li></ul><br /><h2>Detailní popis:</h2><br /><ul><li>Volitelné příslušenství: 2x uhlíkový filtr 61990005</li><li>1 motor/ventilátor</li><li>Minimální vzdálenost od elektrické varné desky: 650 mm</li><li>Minimální vzdálenost od plynové varné desky: 750 mm</li><li>Rozměry pro zabudování (vxšxh): 133 x 560 x 272 mm</li><li>Netto hmotnost: 5,9 kg</li><li>Napětí: 230 V ~ 50 Hz</li><li>Příkon: 150 W</li><li>Délka přívodního kabelu: 2,2 m</li></ul>"
+
+msgid "The television works well, but the remote control buttons could be easier to read."
+msgstr "Televize funguje dobře, ale tlačítka na dálkovém ovladači by mohla být lépe čitelná."
 
 msgid "These demonstration store terms summarise reservations, personal collection, payment, returns, and complaint handling at sample branches."
 msgstr "Tyto ukázkové podmínky prodejen shrnují rezervace, osobní odběr, platby, vrácení a reklamace na ukázkových pobočkách."
@@ -2187,6 +2259,18 @@ msgstr "Konec nemotornému odkládání hrnců na novou kuchyňskou linku nebo n
 
 msgid "This product is not an independently functional unit and may require professional installation."
 msgstr "Přenosný pevný disk GT SuperSpeed USB 3.0 se inspiruje dlouhou historií sportovních vozů"
+
+msgid "This product is terrible, and anyone who buys it has no idea what they are doing."
+msgstr "Tento produkt je hrozný a každý, kdo si ho koupí, vůbec neví, co dělá."
+
+msgid "This review contains an external advertisement."
+msgstr "Tato recenze obsahuje externí reklamu."
+
+msgid "This review contains content that cannot be published."
+msgstr "Tato recenze obsahuje obsah, který nelze publikovat."
+
+msgid "This review contains content that is not suitable for publication."
+msgstr "Tato recenze obsahuje obsah, který není vhodný ke zveřejnění."
 
 msgid "Three new televisions worth knowing about"
 msgstr "Tři nové televize, které stojí za pozornost"
@@ -2302,11 +2386,23 @@ msgstr "Objem zásobníku na vodu"
 msgid "Watering systems"
 msgstr "Zavlažovací systémy"
 
+msgid "We are glad the television found the perfect place in your home."
+msgstr "Jsme rádi, že televize našla ve vaší domácnosti to pravé místo."
+
 msgid "We are looking forward to your visit."
 msgstr "Těšíme se na Vaši návštěvu."
 
+msgid "We are sorry the selected variant did not meet your needs. Our customer care team will be happy to help you choose a more suitable product."
+msgstr "Mrzí nás, že vybraná varianta nesplnila vaše potřeby. Náš tým zákaznické péče vám rád pomůže vybrat vhodnější produkt."
+
+msgid "We are sorry the sound did not meet your expectations. Our support team can help you choose compatible external speakers."
+msgstr "Mrzí nás, že zvuk nesplnil vaše očekávání. Naše podpora vám pomůže vybrat kompatibilní externí reproduktory."
+
 msgid "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
 msgstr "Zaměřujeme se na srozumitelné informace o produktech, jednoduchou objednávku a užitečnou péči od výběru po doručení."
+
+msgid "We publish reviews after checking that they comply with our review guidelines. Reviews from customers whose purchase we can confirm are marked as verified purchases."
+msgstr ""
 
 msgid "We welcome curious people who enjoy improving online shopping and solving practical customer problems."
 msgstr "Vítáme zvídavé lidi, které baví zlepšovat online nakupování a řešit praktické potřeby zákazníků."
@@ -2676,3 +2772,4 @@ msgstr "roky"
 
 msgid "| Demo eshop"
 msgstr "| Demo e-shop"
+

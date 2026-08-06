@@ -1108,6 +1108,9 @@ msgstr ""
 msgid "Heureka - Verified by Customer"
 msgstr ""
 
+msgid "Heureka - Verified by Customer service does not support the language of this domain."
+msgstr ""
+
 msgid "Heureka agreement"
 msgstr ""
 
@@ -1795,10 +1798,16 @@ msgstr ""
 msgid "Product review"
 msgstr ""
 
+msgid "Product review policy"
+msgstr ""
+
 msgid "Product review policy article setting"
 msgstr ""
 
 msgid "Product review policy settings"
+msgstr ""
+
+msgid "Product review policy settings modified."
 msgstr ""
 
 msgid "Product reviews"
@@ -1919,6 +1928,9 @@ msgid "Reviewed product"
 msgstr ""
 
 msgid "Reviewer"
+msgstr ""
+
+msgid "Reviews are not enabled on this domain"
 msgstr ""
 
 msgid "Robots.txt"
@@ -2739,3 +2751,4 @@ msgstr ""
 
 msgid "yesterday"
 msgstr ""
+

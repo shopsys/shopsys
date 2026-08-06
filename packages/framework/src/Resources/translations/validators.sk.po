@@ -4,9 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
 
-msgid "Please enter reason for content change"
-msgstr "Prosím, zadajte dôvod zmeny obsahu"
-
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platné do\" musí byť väčšie ako \"Platné od\""
 
@@ -462,6 +459,9 @@ msgstr "Prosím, zadajte promo kód"
 
 msgid "Please enter quantity"
 msgstr "Prosím, zadajte množstvo"
+
+msgid "Please enter reason for content change"
+msgstr "Prosím, zadajte dôvod zmeny obsahu"
 
 msgid "Please enter reason for rejection"
 msgstr "Prosím, zadajte dôvod zamietnutia"
