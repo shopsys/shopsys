@@ -1,0 +1,41 @@
+name: AI Jira MCP test
+
+on:
+    workflow_dispatch:
+        inputs:
+            pr_number:
+                description: 'Existing PR number to find the Jira issue for'
+                required: true
+                type: string
+            create_test_issue:
+                description: 'Also verify write access by creating an "[AI connection test]" issue in SSP'
+                required: false
+                type: boolean
+                default: false
+
+permissions:
+    contents: read
+    pull-requests: read
+
+jobs:
+    jira-mcp-test:
+        name: Claude Jira MCP connection test
+        runs-on: ubuntu-22.04
+        timeout-minutes: 15
+        steps:
+            -   name: GIT checkout
+                uses: actions/checkout@v6
+
+            -   name: Run Claude Jira MCP test
+                uses: anthropics/claude-code-action@v1
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                with:
+                    github_token: ${{ github.token }}
+                    claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                    prompt: "/jira-pr-issue ${{ github.repository }}#${{ inputs.pr_number }}${{ inputs.create_test_issue == true && ' create-test-issue' || '' }}"
+                    claude_args: |
+                        --model claude-opus-4-8
+                        --max-turns 30
+                        --mcp-config '{"mcpServers":{"jira":{"type":"stdio","command":"docker","args":["run","--rm","-i","-e","JIRA_URL","-e","JIRA_USERNAME","-e","JIRA_API_TOKEN","ghcr.io/sooperset/mcp-atlassian:latest"],"env":{"JIRA_URL":"${{ secrets.JIRA_URL }}","JIRA_USERNAME":"${{ secrets.JIRA_EMAIL }}","JIRA_API_TOKEN":"${{ secrets.JIRA_API_TOKEN }}"}}}}'
+                        --allowedTools "Read,Grep,Glob,Write,Bash(gh pr view:*),Bash(cat:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__jira__jira_create_issue"
