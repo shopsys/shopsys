@@ -14,3 +14,16 @@ updates:
                 update-types: [ "version-update:semver-major" ]
         pull-request-branch-name:
             separator: "-"
+
+    -   package-ecosystem: github-actions
+        directories:
+            - "/"
+            - "/packages/*"
+            - "/project-base"
+            - "/.github/actions/*"
+        schedule:
+            interval: "weekly"
+        groups:
+            github-actions:
+                patterns:
+                    - "*"
