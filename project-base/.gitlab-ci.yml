@@ -298,6 +298,77 @@ regenerate-storefront-screenshots:
     interruptible: true
     when: manual
 
+ai:standards-fix:
+    image: node:24.14.0-alpine3.22
+    stage: regenerate
+    tags:
+        - tests
+    needs:
+        -   job: test:standards-with-graphql-schema-check
+            artifacts: false
+    before_script: []
+    rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
+        -   if: '$CLAUDE_CODE_OAUTH_TOKEN == null || $CLAUDE_CODE_OAUTH_TOKEN == ""'
+            when: never
+        -   if: '$API_TOKEN == null || $API_TOKEN == ""'
+            when: never
+        -   if: '$CI_MERGE_REQUEST_SOURCE_PROJECT_ID && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID != $CI_PROJECT_ID'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+            when: never
+        -   if: '$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+            when: never
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+            when: on_failure
+        -   if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
+            when: on_failure
+    variables:
+        GIT_DEPTH: "0"
+        STANDARDS_JOB_NAME: test:standards-with-graphql-schema-check
+    allow_failure: true
+    interruptible: true
+    script:
+        - apk add --no-cache bash git curl jq ripgrep
+        - npm install -g @anthropic-ai/claude-code
+        - git config --global user.name "Shopsys Bot"
+        - git config --global user.email "bot@shopsys.com"
+        - git config --global core.hooksPath /dev/null
+        - |
+            TARGET_BRANCH="${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME:-$CI_COMMIT_REF_NAME}"
+            git fetch origin "+refs/heads/${TARGET_BRANCH}:refs/remotes/origin/${TARGET_BRANCH}"
+            git checkout "$TARGET_BRANCH"
+            git reset --hard "origin/${TARGET_BRANCH}"
+        - |
+            BASE_BRANCH="${CI_MERGE_REQUEST_TARGET_BRANCH_NAME:-$CI_DEFAULT_BRANCH}"
+            git fetch origin "$BASE_BRANCH"
+            MERGE_BASE=$(git merge-base HEAD "origin/${BASE_BRANCH}")
+            STANDARDS_JOB_ID=$(curl --silent --fail --header "PRIVATE-TOKEN: ${API_TOKEN}" \
+                "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/pipelines/${CI_PIPELINE_ID}/jobs?per_page=100" \
+                | jq -r --arg name "$STANDARDS_JOB_NAME" '[.[] | select(.name == $name)][0].id')
+            curl --silent --fail --header "PRIVATE-TOKEN: ${API_TOKEN}" \
+                "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/jobs/${STANDARDS_JOB_ID}/trace" > /tmp/standards.log
+            echo "Downloaded $(wc -l < /tmp/standards.log) lines from job ${STANDARDS_JOB_ID}."
+            env -i PATH="$PATH" HOME="$HOME" TERM=dumb USE_BUILTIN_RIPGREP=0 CLAUDE_CODE_OAUTH_TOKEN="$CLAUDE_CODE_OAUTH_TOKEN" claude -p "/standards-autofix --merge-base=${MERGE_BASE} --standards-log=/tmp/standards.log" --model claude-opus-5 --max-turns 120 --allowedTools "Read,Grep,Glob,Edit,Write,Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git blame:*),Bash(git show:*),Bash(git add:*),Bash(git commit:*),Bash(git apply:*)" --disallowedTools "Bash(git push:*),Bash(git remote:*),Bash(git config:*),Bash(git fetch:*),Bash(git rebase:*)"
+        - |
+            if [ -n "$(git log --format='%h' "origin/${TARGET_BRANCH}..HEAD")" ]; then
+                git log --format='%h %s' "origin/${TARGET_BRANCH}..HEAD"
+                if git log --format='%s' "origin/${TARGET_BRANCH}..HEAD" | grep -qvE '^(fixup! |Fix pre-existing coding standards violations$)'; then
+                    echo "Refusing to push - the autofixer produced a commit that is not a fixup."
+                    exit 1
+                fi
+                if ! git diff --quiet "origin/${TARGET_BRANCH}..HEAD" -- .gitlab-ci.yml gitlab .agents .claude AGENTS.md CLAUDE.md; then
+                    echo "Refusing to push - the autofixer modified CI or agent-instruction files."
+                    exit 1
+                fi
+                git -c credential.helper= -c "credential.${CI_SERVER_URL}.helper=!f() { echo username=shopsys_bot; echo \"password=\${API_TOKEN}\"; }; f" push "${CI_PROJECT_URL}.git" "$TARGET_BRANCH"
+            else
+                echo "No fix commits were created."
+            fi
+
 review:
     stage: review
     environment:

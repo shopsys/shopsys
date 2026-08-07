@@ -339,6 +339,80 @@ jobs:
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev npm-install-dependencies standards
             -   name: Check GraphQl schema
                 run: docker compose exec -T php-fpm project-base/app/check-schema.sh
+    ai-standards-fix:
+        name: AI fix of failed standards
+        needs: standards
+        if: |
+            always() && !cancelled() &&
+            needs.standards.result == 'failure' &&
+            github.event_name == 'pull_request' &&
+            github.event.pull_request.draft == false &&
+            github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
+        runs-on: ubuntu-22.04
+        permissions:
+            contents: read
+            pull-requests: read
+        steps:
+            -   name: GIT checkout branch - ${{ github.head_ref }}
+                uses: actions/checkout@v6
+                with:
+                    ref: ${{ github.head_ref }}
+                    fetch-depth: 0
+                    persist-credentials: false
+            -   name: Disable git hooks so the autofixer cannot plant executable files
+                run: git config --global core.hooksPath /dev/null
+            -   name: Download the failed standards check log
+                id: standards_log
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    BASE_REF: ${{ github.base_ref }}
+                run: |
+                    MERGE_BASE=$(git merge-base HEAD "origin/${BASE_REF}")
+                    echo "MERGE_BASE=${MERGE_BASE}" >> $GITHUB_OUTPUT
+
+                    STANDARDS_JOB_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/jobs" --paginate \
+                        --jq '[.jobs[] | select(.name == "Check standards")][0].id')
+
+                    curl --silent --show-error --location --fail \
+                        --header "Authorization: Bearer ${GH_TOKEN}" \
+                        --header "Accept: application/vnd.github+json" \
+                        "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/jobs/${STANDARDS_JOB_ID}/logs" > /tmp/standards.log
+
+                    echo "Downloaded $(wc -l < /tmp/standards.log) lines from job ${STANDARDS_JOB_ID}."
+            -   name: Run Claude standards autofix
+                uses: anthropics/claude-code-action@v1
+                with:
+                    github_token: ${{ github.token }}
+                    claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                    prompt: "/standards-autofix --merge-base=${{ steps.standards_log.outputs.MERGE_BASE }} --standards-log=/tmp/standards.log"
+                    claude_args: |
+                        --model claude-opus-5
+                        --max-turns 120
+                        --allowedTools "Read,Grep,Glob,Edit,Write,Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git blame:*),Bash(git show:*),Bash(git add:*),Bash(git commit:*),Bash(git apply:*)"
+                        --disallowedTools "Bash(git push:*),Bash(git remote:*),Bash(git config:*),Bash(git fetch:*),Bash(git rebase:*)"
+            -   name: Push fix commits
+                env:
+                    HEAD_REF: ${{ github.head_ref }}
+                    PUSH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
+                run: |
+                    if [ -z "$(git log --format='%h' "origin/${HEAD_REF}..HEAD")" ]; then
+                        echo "No fix commits were created."
+                        exit 0
+                    fi
+
+                    git log --format='%h %s' "origin/${HEAD_REF}..HEAD"
+
+                    if git log --format='%s' "origin/${HEAD_REF}..HEAD" | grep -qvE '^(fixup! |Fix pre-existing coding standards violations$)'; then
+                        echo "::error::Refusing to push - the autofixer produced a commit that is not a fixup."
+                        exit 1
+                    fi
+
+                    if ! git diff --quiet "origin/${HEAD_REF}..HEAD" -- .github .agents .claude AGENTS.md CLAUDE.md project-base/.agents project-base/.claude project-base/AGENTS.md project-base/CLAUDE.md; then
+                        echo "::error::Refusing to push - the autofixer modified CI or agent-instruction files."
+                        exit 1
+                    fi
+
+                    git -c credential.helper='!f() { echo username=x-access-token; echo "password=${PUSH_TOKEN}"; }; f' push "https://github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/${HEAD_REF}"
     standards-storefront:
         name: Check Storefront standards
         needs: [build-php-fpm-image, build-storefront-ci-image]
