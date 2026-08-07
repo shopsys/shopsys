@@ -4,8 +4,9 @@ description: >
   Rebase a branch onto the latest base branch and apply its fixup commits
   (git rebase --autosquash), resolving conflicts semantically along the way. Works on
   a pull request (rebases its head branch, force-pushes with --force-with-lease only,
-  and posts a report comment) or on the currently checked-out local branch — no PR
-  needed. Verifies the result with git range-diff. Use when a PR is stale, blocked by
+  and posts a report comment) or on the currently checked-out local branch — then it
+  stays local: no push, no PR comment, pushing is left to the user. Verifies the
+  result with git range-diff. Use when a PR is stale, blocked by
   fixup commits, or conflicts with its base, when the user asks to rebase and apply
   fixups on the current branch, or when the user invokes /rebase-autosquash. Runs
   locally or in CI (wrapped by the rebase-pr workflow).
@@ -26,12 +27,14 @@ monorepo (GitHub-hosted, `gh` available) adds a **PR mode** on top:
 ## Mode selection
 
 - **PR mode** — a PR reference was given (bare number, full URL, or
-  `owner/repo#number`), or running in CI: the flow below applies.
+  `owner/repo#number`), or running in CI: the flow below applies. These are the
+  only two ways into PR mode.
 - **Branch mode** — no PR reference, running locally: follow the canonical on the
-  currently checked-out branch. If the branch has an open PR
-  (`gh pr view --json number,state`), adopt its base and continue as PR mode.
-  Otherwise resolve the base per the canonical, preferring
-  `gh repo view --json defaultBranchRef --jq .defaultBranchRef.name`.
+  currently checked-out branch, resolving the base per the canonical (prefer
+  `gh repo view --json defaultBranchRef --jq .defaultBranchRef.name`). Branch mode
+  is strictly local: do not look up whether the branch has an open PR, never push,
+  and never comment — per the canonical, pushing stays with the user. If the user
+  wants the PR updated, they say so (or pass the PR reference to get PR mode).
 
 ## PR mode — additions to the canonical
 
