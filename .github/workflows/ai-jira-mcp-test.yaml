@@ -40,9 +40,16 @@ jobs:
                     github_token: ${{ github.token }}
                     claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
                     show_full_output: true
-                    prompt: "/jira-pr-issue ${{ github.repository }}#${{ inputs.pr_number || '4753' }} create-test-issue"
+                    prompt: "/jira-pr-issue ${{ github.repository }}#${{ inputs.pr_number || '4753' }}${{ inputs.create_test_issue == true && ' create-test-issue' || '' }}"
                     claude_args: |
                         --model claude-opus-4-8
                         --max-turns 30
                         --mcp-config '{"mcpServers":{"jira":{"type":"stdio","command":"docker","args":["run","--rm","-i","-e","JIRA_URL","-e","JIRA_USERNAME","-e","JIRA_API_TOKEN","ghcr.io/sooperset/mcp-atlassian:latest"],"env":{"JIRA_URL":"${{ secrets.JIRA_URL }}","JIRA_USERNAME":"${{ secrets.JIRA_EMAIL }}","JIRA_API_TOKEN":"${{ secrets.JIRA_TOKEN }}"}}}}'
                         --allowedTools "Read,Grep,Glob,Write,Bash(gh pr view:*),Bash(cat:*),Bash(printenv:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__jira__jira_create_issue"
+
+            -   name: Publish report to job summary
+                if: always()
+                run: |
+                    if [ -f jira-mcp-report.md ]; then
+                        cat jira-mcp-report.md >> "$GITHUB_STEP_SUMMARY"
+                    fi

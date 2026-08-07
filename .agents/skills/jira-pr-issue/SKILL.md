@@ -99,9 +99,10 @@ incomplete from the search, fetch the issue directly by key first.
 
 Summarize: PR (number, title, URL) → found issue (all Step 3 fields, or "none") →
 created test issue (key/URL, or "not requested"). In CI (the `GITHUB_STEP_SUMMARY` env
-var is set), also write the summary as markdown to a file and append it:
-`cat <file> >> "$GITHUB_STEP_SUMMARY"` — the job summary is where the operator reads
-the result.
+var is set), also Write the summary as markdown to `jira-mcp-report.md` in the
+repository root — a follow-up workflow step publishes it to the job summary. Do not
+append to `$GITHUB_STEP_SUMMARY` directly; it lives outside the workspace and the
+sandbox blocks the write in non-interactive runs.
 
 ## Rules
 
