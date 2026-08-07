@@ -1,4 +1,6 @@
-on: [push]
+on:
+    push:
+    workflow_dispatch:
 concurrency:
     group: ${{ github.ref }}
     cancel-in-progress: true
