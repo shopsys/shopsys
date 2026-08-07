@@ -30,6 +30,9 @@ class HeurekaSetting
         $this->setting->setForDomain(static::HEUREKA_API_KEY, $apiKey, $domainId);
     }
 
+    /**
+     * Certification is considered active as soon as a non-null API key is set for the domain.
+     */
     public function isHeurekaShopCertificationActivated(int $domainId): bool
     {
         return $this->setting->getForDomain(static::HEUREKA_API_KEY, $domainId) !== null;
