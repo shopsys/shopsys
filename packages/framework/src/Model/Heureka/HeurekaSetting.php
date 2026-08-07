@@ -21,6 +21,12 @@ class HeurekaSetting
 
     public function setApiKeyForDomain(?string $apiKey, int $domainId): void
     {
+        $apiKey = trim($apiKey);
+
+        if ($apiKey === '') {
+            $apiKey = null;
+        }
+
         $this->setting->setForDomain(static::HEUREKA_API_KEY, $apiKey, $domainId);
     }
 
