@@ -63,13 +63,18 @@ Record the number, title, and URL — the lookup and any created issue derive fr
 
 ### Step 2: Find the issue
 
-1. Search JQL `project = SSP AND summary ~ "<PR number>" ORDER BY created DESC`
+1. Primary lookup — exact match on the Merge Request field:
+   `project = SSP AND cf[10031] = "<PR URL>"`
    requesting `fields: ["summary", "status", "assignee", "customfield_10020", "customfield_10031"]`.
-2. Jira text search tokenizes, so post-filter the results: the matching issue's summary
-   must **end with** `#<PR number>` (e.g. `… #4753` — not `#47531`).
-3. If nothing matches, fall back to searching the Merge Request field:
-   `project = SSP AND cf[10031] ~ "<PR URL>"`. This may fail on some field types —
-   treat a JQL error here as "not found", not as a connection failure.
+   Use the `=` operator — `~` is rejected on this field type. The URL must be the
+   canonical `https://github.com/<owner>/<repo>/pull/<number>` form `gh pr view` returns.
+2. Multiple matches are possible (several issues can reference the same PR). Prefer the
+   one following the ad-hoc convention — summary ends with ` #<PR number>`; report the
+   others as related.
+3. Fallback when the field search returns nothing (issue created without the field):
+   `project = SSP AND summary ~ "<PR number>" ORDER BY created DESC` — Jira text search
+   tokenizes, so post-filter: the summary must **end with** `#<PR number>`
+   (e.g. `… #4753` — not `#47531`).
 4. No issue is a valid outcome — report "no Jira issue found for PR #<number>" and,
    unless `create-test-issue` was requested, stop.
 
