@@ -36,7 +36,9 @@ jobs:
                     fi
             -   name: Resolve target ref
                 id: ref
-                run: echo "target-ref=${{ github.event.inputs.target-ref || '20.0' }}" >> $GITHUB_OUTPUT
+                env:
+                    INPUT_TARGET_REF: ${{ github.event.inputs.target-ref || '20.0' }}
+                run: echo "target-ref=$INPUT_TARGET_REF" >> "$GITHUB_OUTPUT"
             -   name: Collect packages with a dispatchable CI workflow
                 id: targets
                 run: |
@@ -230,10 +232,12 @@ jobs:
                 id: previous
                 env:
                     GH_TOKEN: ${{ github.token }}
+                    REF_NAME: ${{ github.ref_name }}
+                    RUN_ID: ${{ github.run_id }}
                 run: |
                     PREV_RUN=$(gh run list --repo "${{ github.repository }}" --workflow "Nightly verification" \
-                        --branch "${{ github.ref_name }}" --status completed --limit 5 --json databaseId \
-                        --jq "[.[] | select(.databaseId != ${{ github.run_id }})][0].databaseId // empty")
+                        --branch "$REF_NAME" --status completed --limit 5 --json databaseId \
+                        --jq "[.[] | select(.databaseId != ${RUN_ID})][0].databaseId // empty")
                     PREV_SIGNATURE=""
                     PREV_STREAK=0
                     if [[ -n "$PREV_RUN" ]]; then
@@ -340,12 +344,15 @@ jobs:
                     github_token: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
                     claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
                     prompt: "/nightly-triage ${{ github.repository }} ${{ github.run_id }}"
-                    # wildcard mcp__jira__* silently does not work in allowedTools — the Jira tools must be listed explicitly
+                    # wildcard mcp__jira__* silently does not work in allowedTools — the Jira tools must be listed explicitly.
+                    # The allowlist is the security boundary (the skill's guardrails are intent, not enforcement),
+                    # so it is deliberately narrow: gh api is GET-only, docker run is pinned to the CI images with
+                    # fixed container names, and git push only reaches nightly-autofix/* branches — never 20.0.
                     claude_args: |
                         --model claude-opus-4-8
                         --max-turns 100
                         --mcp-config '{"mcpServers":{"jira":{"type":"stdio","command":"docker","args":["run","--rm","-i","-e","JIRA_URL","-e","JIRA_USERNAME","-e","JIRA_API_TOKEN","ghcr.io/sooperset/mcp-atlassian:latest"],"env":{"JIRA_URL":"${{ secrets.JIRA_URL }}","JIRA_USERNAME":"${{ secrets.JIRA_EMAIL }}","JIRA_API_TOKEN":"${{ secrets.JIRA_TOKEN }}"}}}}'
-                        --allowedTools "Read,Grep,Glob,Write,Edit,Skill(adhoc-pr),Skill(commit),Skill(pr-description),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git blame:*),Bash(git status:*),Bash(git fetch:*),Bash(git checkout:*),Bash(git branch:*),Bash(git apply:*),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(gh run view:*),Bash(gh run list:*),Bash(gh run download:*),Bash(gh pr list:*),Bash(gh pr view:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh pr close:*),Bash(gh repo view:*),Bash(gh api:*),Bash(docker pull:*),Bash(docker run:*),Bash(docker exec:*),Bash(docker cp:*),Bash(docker rm:*),Bash(sha1sum:*),Bash(date:*),Bash(cat:*),Bash(tail:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__jira__jira_create_issue,mcp__jira__jira_update_issue,mcp__jira__jira_get_transitions,mcp__jira__jira_transition_issue"
+                        --allowedTools "Read,Grep,Glob,Write,Edit,Skill(adhoc-pr),Skill(commit),Skill(pr-description),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git blame:*),Bash(git status:*),Bash(git fetch:*),Bash(git checkout:*),Bash(git branch:*),Bash(git apply:*),Bash(git add:*),Bash(git commit:*),Bash(git push -u origin nightly-autofix/:*),Bash(gh run view:*),Bash(gh run list:*),Bash(gh run download:*),Bash(gh pr list:*),Bash(gh pr view:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh pr close:*),Bash(gh repo view:*),Bash(gh api --method GET:*),Bash(docker pull ghcr.io/shopsys/:*),Bash(docker run -d --name autofix-standards ghcr.io/shopsys/php-fpm:*),Bash(docker run -d --name autofix-translations ghcr.io/shopsys/php-fpm:*),Bash(docker run -d --name autofix-storefront ghcr.io/shopsys/storefront:*),Bash(docker run -d --name autofix-verify ghcr.io/shopsys/php-fpm:*),Bash(docker exec autofix-:*),Bash(docker cp:*),Bash(docker rm -f autofix-:*),Bash(sha1sum:*),Bash(date:*),Bash(cat:*),Bash(tail:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__jira__jira_create_issue,mcp__jira__jira_update_issue,mcp__jira__jira_get_transitions,mcp__jira__jira_transition_issue"
             # the sandbox blocks Claude from writing to $GITHUB_STEP_SUMMARY directly —
             # the skill writes its report to a workspace file and this step publishes it
             -   name: Publish triage report to job summary
