@@ -98,8 +98,9 @@ incomplete from the search, fetch the issue directly by key first.
 ### Step 5: Report
 
 Summarize: PR (number, title, URL) → found issue (all Step 3 fields, or "none") →
-created test issue (key/URL, or "not requested"). In CI (the `GITHUB_STEP_SUMMARY` env
-var is set), also Write the summary as markdown to `jira-mcp-report.md` in the
+created test issue (key/URL, or "not requested"). In CI (detect with the single
+command `printenv GITHUB_STEP_SUMMARY` — compound shell tests are blocked by the CI
+tool allowlist), also Write the summary as markdown to `jira-mcp-report.md` in the
 repository root — a follow-up workflow step publishes it to the job summary. Do not
 append to `$GITHUB_STEP_SUMMARY` directly; it lives outside the workspace and the
 sandbox blocks the write in non-interactive runs.
