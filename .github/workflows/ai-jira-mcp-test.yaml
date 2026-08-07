@@ -37,5 +37,5 @@ jobs:
                     claude_args: |
                         --model claude-opus-4-8
                         --max-turns 30
-                        --mcp-config '{"mcpServers":{"jira":{"type":"stdio","command":"docker","args":["run","--rm","-i","-e","JIRA_URL","-e","JIRA_USERNAME","-e","JIRA_API_TOKEN","ghcr.io/sooperset/mcp-atlassian:latest"],"env":{"JIRA_URL":"${{ secrets.JIRA_URL }}","JIRA_USERNAME":"${{ secrets.JIRA_EMAIL }}","JIRA_API_TOKEN":"${{ secrets.JIRA_API_TOKEN }}"}}}}'
+                        --mcp-config '{"mcpServers":{"jira":{"type":"stdio","command":"docker","args":["run","--rm","-i","-e","JIRA_URL","-e","JIRA_USERNAME","-e","JIRA_API_TOKEN","ghcr.io/sooperset/mcp-atlassian:latest"],"env":{"JIRA_URL":"${{ secrets.JIRA_URL }}","JIRA_USERNAME":"${{ secrets.JIRA_EMAIL }}","JIRA_API_TOKEN":"${{ secrets.JIRA_TOKEN }}"}}}}'
                         --allowedTools "Read,Grep,Glob,Write,Bash(gh pr view:*),Bash(cat:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__jira__jira_create_issue"
