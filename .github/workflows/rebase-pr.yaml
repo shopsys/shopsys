@@ -1,0 +1,166 @@
+name: Rebase PR with autosquash
+
+on:
+    workflow_dispatch:
+        inputs:
+            pr_number:
+                description: 'Pull request number to rebase'
+                required: true
+                type: string
+    issue_comment:
+        types: [created]
+
+permissions:
+    contents: read
+    pull-requests: write
+    issues: write
+
+concurrency:
+    group: rebase-pr-${{ github.event.inputs.pr_number || github.event.issue.number }}
+    cancel-in-progress: false
+
+jobs:
+    rebase:
+        name: Claude rebase with autosquash
+        if: github.event_name == 'workflow_dispatch' || (github.event.issue.pull_request && (github.event.comment.body == '/rebase' || startsWith(github.event.comment.body, '/rebase ')))
+        runs-on: ubuntu-22.04
+        timeout-minutes: 30
+        env:
+            PR_NUMBER: ${{ github.event.inputs.pr_number || github.event.issue.number }}
+        steps:
+            -   name: Check commenter has write permission
+                id: permission
+                if: github.event_name == 'issue_comment'
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+                run: |
+                    PERMISSION=$(gh api "repos/${{ github.repository }}/collaborators/${COMMENT_AUTHOR}/permission" --jq '.permission')
+                    if [ "${PERMISSION}" != "admin" ] && [ "${PERMISSION}" != "write" ]; then
+                        gh api "repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions" -f content=-1 || true
+                        echo "::error::User ${COMMENT_AUTHOR} does not have write permission to trigger a rebase."
+                        exit 1
+                    fi
+
+            -   name: Ensure the PR is open and not from a fork
+                id: pr
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                run: |
+                    if ! [[ "${PR_NUMBER}" =~ ^[0-9]+$ ]]; then
+                        echo "::error::Invalid PR number: ${PR_NUMBER}"
+                        exit 1
+                    fi
+                    PR_JSON=$(gh api "repos/${{ github.repository }}/pulls/${PR_NUMBER}")
+                    STATE=$(jq -r '.state' <<< "${PR_JSON}")
+                    HEAD_REPO=$(jq -r '.head.repo.full_name' <<< "${PR_JSON}")
+                    if [ "${STATE}" != "open" ]; then
+                        echo "::error::PR #${PR_NUMBER} is not open (state: ${STATE})."
+                        exit 1
+                    fi
+                    if [ "${HEAD_REPO}" != "${{ github.repository }}" ]; then
+                        echo "::error::PR #${PR_NUMBER} comes from a fork (${HEAD_REPO}) — its branch cannot be rebased here."
+                        exit 1
+                    fi
+                    HEAD_REF=$(jq -r '.head.ref' <<< "${PR_JSON}")
+                    BASE_REF=$(jq -r '.base.ref' <<< "${PR_JSON}")
+                    for REF in "${BASE_REF}" "${HEAD_REF}"; do
+                        if ! [[ "${REF}" =~ ^[A-Za-z0-9._/-]+$ ]]; then
+                            echo "::error::Unsafe ref name: ${REF}"
+                            exit 1
+                        fi
+                    done
+                    {
+                        echo "head_ref=${HEAD_REF}"
+                        echo "base_ref=${BASE_REF}"
+                    } >> "${GITHUB_OUTPUT}"
+
+            -   name: React to the triggering comment
+                if: github.event_name == 'issue_comment'
+                continue-on-error: true
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                run: gh api "repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions" -f content=eyes
+
+            -   name: GIT checkout
+                uses: actions/checkout@v6
+                with:
+                    fetch-depth: 0
+                    persist-credentials: false
+
+            -   name: Configure git identity
+                run: |
+                    git config user.name "github-actions[bot]"
+                    git config user.email "41898024+github-actions[bot]@users.noreply.github.com"
+
+            -   name: Run Claude rebase
+                uses: anthropics/claude-code-action@v1
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    GIT_SEQUENCE_EDITOR: ':'
+                    GIT_EDITOR: 'true'
+                with:
+                    github_token: ${{ github.token }}
+                    claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                    prompt: |
+                        /rebase-autosquash ${{ github.repository }}#${{ env.PR_NUMBER }}
+
+                        You are running in CI: do NOT push and do NOT post any PR comment yourself — a follow-up workflow step force-pushes the branch and posts the report. Instead, write the report body (Markdown) to ${{ runner.temp }}/rebase-report.md. On failure, write the explanation of what blocked the rebase to the same file.
+                    claude_args: |
+                        --model claude-opus-4-8
+                        --max-turns 100
+                        --allowedTools "Read,Grep,Glob,Edit,Write,Bash(git fetch:*),Bash(git checkout:*),Bash(git rebase -i --autosquash --empty=drop origin/${{ steps.pr.outputs.base_ref }}),Bash(git rebase --continue),Bash(git rebase --abort),Bash(git rebase --skip),Bash(git rebase --show-current-patch),Bash(git add:*),Bash(git rm:*),Bash(git commit:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git range-diff:*),Bash(git merge-base:*),Bash(git rev-parse:*),Bash(gh pr view:*)"
+
+            -   name: Force-push the rebased branch
+                id: push
+                env:
+                    HEAD_REF: ${{ steps.pr.outputs.head_ref }}
+                    BASE_REF: ${{ steps.pr.outputs.base_ref }}
+                    PUSH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
+                run: |
+                    if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
+                        echo "::error::A rebase is still in progress — not pushing."
+                        exit 1
+                    fi
+                    if [ "$(git rev-parse --abbrev-ref HEAD)" != "${HEAD_REF}" ]; then
+                        echo "Branch ${HEAD_REF} is not checked out — nothing to push."
+                        exit 0
+                    fi
+                    if [ -n "$(git status --porcelain)" ]; then
+                        echo "::error::The working tree is not clean — not pushing."
+                        exit 1
+                    fi
+                    if [ "$(git rev-parse HEAD)" = "$(git rev-parse "origin/${HEAD_REF}")" ]; then
+                        echo "Branch unchanged — nothing to push."
+                        exit 0
+                    fi
+                    if ! git merge-base --is-ancestor "origin/${BASE_REF}" HEAD; then
+                        echo "::error::HEAD is not rebased onto origin/${BASE_REF} — not pushing."
+                        exit 1
+                    fi
+                    if git log --format='%s' "origin/${BASE_REF}..HEAD" | grep -qE '^(fixup|squash|amend)!'; then
+                        echo "::error::Fixup commits remain after the rebase — not pushing."
+                        exit 1
+                    fi
+                    git config http.https://github.com/.extraheader "AUTHORIZATION: basic $(printf 'x-access-token:%s' "${PUSH_TOKEN}" | base64 -w0)"
+                    trap 'git config --unset-all http.https://github.com/.extraheader' EXIT
+                    git push --force-with-lease origin "${HEAD_REF}"
+                    echo "pushed=true" >> "${GITHUB_OUTPUT}"
+
+            -   name: Post the report comment
+                if: always() && (github.event_name == 'workflow_dispatch' || steps.permission.outcome == 'success')
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+                run: |
+                    if ! [[ "${PR_NUMBER}" =~ ^[0-9]+$ ]]; then
+                        echo "No valid PR number — skipping the comment."
+                        exit 0
+                    fi
+                    if [ -f "${RUNNER_TEMP}/rebase-report.md" ]; then
+                        gh pr comment "${PR_NUMBER}" --repo "${{ github.repository }}" --body-file "${RUNNER_TEMP}/rebase-report.md"
+                    elif [ "${{ steps.push.outputs.pushed }}" = "true" ]; then
+                        gh pr comment "${PR_NUMBER}" --repo "${{ github.repository }}" --body "The branch was rebased and force-pushed, but no detailed report was produced — see the run: ${RUN_URL}"
+                    elif [ "${{ job.status }}" != "success" ]; then
+                        gh pr comment "${PR_NUMBER}" --repo "${{ github.repository }}" --body "The rebase workflow failed before producing a report — see the run: ${RUN_URL}"
+                    fi
