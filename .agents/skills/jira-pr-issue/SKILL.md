@@ -53,8 +53,11 @@ the sooperset server does not (the site is fixed by its `JIRA_URL` env).
 ### Step 1: Resolve the PR
 
 ```bash
-gh pr view <ref> --json number,title,url,state
+gh pr view <number> --repo <owner>/<repo> --json number,title,url,state
 ```
+
+(`gh pr view` does not understand the `owner/repo#number` form as one argument —
+split it into `--repo owner/repo` + the bare number.)
 
 Record the number, title, and URL — the lookup and any created issue derive from them.
 
