@@ -17,6 +17,7 @@ NC="\e[0m"
 #   project-base/app/config/bundles.php
 #   "replace", "autoload", and "autoload-dev" sections in monorepo's composer.json
 #   if the package has unit tests, add the configuration into the "tests-unit" and "tests-unit-single" targets in monorepo's build.xml
+#   if the package has a .github/workflows/run-checks-tests.yaml, it must declare the "workflow_dispatch:" trigger so the nightly verification can dispatch it in the split repository
 get_all_packages() {
     echo "administration \
         biome-config \

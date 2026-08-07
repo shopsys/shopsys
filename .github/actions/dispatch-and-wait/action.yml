@@ -1,0 +1,37 @@
+name: 'Dispatch and wait'
+description: 'Dispatches a workflow in a target repository and waits for its conclusion. Requires GH_TOKEN in the calling job env (with Actions read/write on the target repository).'
+inputs:
+    target-repo:
+        description: 'Target repository, e.g. "shopsys/framework"'
+        required: true
+    target-workflow:
+        description: 'Workflow file name in the target repository, e.g. "run-checks-tests.yaml"'
+        required: true
+    target-ref:
+        description: 'Branch to dispatch the workflow on'
+        required: true
+    wait-timeout-min:
+        description: 'Soft deadline in minutes (set the job timeout-minutes ~5 min higher)'
+        required: true
+outputs:
+    conclusion:
+        description: 'success | failure | cancelled | superseded | timed_out | not_dispatchable | dispatch_failed | correlation_failed'
+        value: ${{ steps.dispatch-and-wait.outputs.conclusion }}
+    run-id:
+        description: 'Correlated run databaseId (empty when correlation never happened)'
+        value: ${{ steps.dispatch-and-wait.outputs.run-id }}
+    run-url:
+        description: 'Correlated run URL (empty when correlation never happened)'
+        value: ${{ steps.dispatch-and-wait.outputs.run-url }}
+runs:
+    using: 'composite'
+    steps:
+        -   name: Dispatch and wait for conclusion
+            id: dispatch-and-wait
+            shell: bash
+            env:
+                TARGET_REPO: ${{ inputs.target-repo }}
+                TARGET_WORKFLOW: ${{ inputs.target-workflow }}
+                TARGET_REF: ${{ inputs.target-ref }}
+                WAIT_TIMEOUT_MIN: ${{ inputs.wait-timeout-min }}
+            run: bash "${{ github.action_path }}/../../scripts/dispatch-and-wait.sh"
