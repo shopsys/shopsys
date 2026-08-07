@@ -26,11 +26,6 @@ class HeurekaFacade
         return $this->heurekaSetting->isHeurekaShopCertificationActivated($domainId);
     }
 
-    public function isHeurekaWidgetActivated(int $domainId): bool
-    {
-        return $this->heurekaSetting->isHeurekaWidgetActivated($domainId);
-    }
-
     public function isDomainLocaleSupported(string $locale): bool
     {
         return $this->heurekaShopCertificationLocaleHelper->isDomainLocaleSupported($locale);

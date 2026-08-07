@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,10 +34,6 @@ final class HeurekaShopCertificationFormType extends AbstractType
                 ],
                 'label' => 'Code of service Heureka - Verified by Customer',
                 'help' => t('Enter 32-digit code which will be sent to server') . ' ' . $options['server_name'],
-            ])
-            ->add('heurekaWidgetCode', TextareaType::class, [
-                'required' => false,
-                'label' => 'Heureka Widget code',
             ]);
 
         $builder
