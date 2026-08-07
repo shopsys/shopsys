@@ -2,10 +2,11 @@ name: AI Jira MCP test
 
 on:
     # TEMPORARY trigger for testing from a feature branch (workflow_dispatch only works
-    # once the workflow exists in the default branch) — remove before merging to 20.0
-    push:
-        branches:
-            - rv/github-jira-test
+    # once the workflow exists in the default branch, and claude-code-action does not
+    # support push events) — remove before merging to 20.0
+    pull_request:
+        paths:
+            - .github/workflows/ai-jira-mcp-test.yaml
     workflow_dispatch:
         inputs:
             pr_number:
