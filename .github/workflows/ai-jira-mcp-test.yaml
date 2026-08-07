@@ -1,6 +1,11 @@
 name: AI Jira MCP test
 
 on:
+    # TEMPORARY trigger for testing from a feature branch (workflow_dispatch only works
+    # once the workflow exists in the default branch) — remove before merging to 20.0
+    push:
+        branches:
+            - rv/github-jira-test
     workflow_dispatch:
         inputs:
             pr_number:
@@ -33,7 +38,7 @@ jobs:
                 with:
                     github_token: ${{ github.token }}
                     claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-                    prompt: "/jira-pr-issue ${{ github.repository }}#${{ inputs.pr_number }}${{ inputs.create_test_issue == true && ' create-test-issue' || '' }}"
+                    prompt: "/jira-pr-issue ${{ github.repository }}#${{ inputs.pr_number || '4753' }}${{ inputs.create_test_issue == true && ' create-test-issue' || '' }}"
                     claude_args: |
                         --model claude-opus-4-8
                         --max-turns 30
