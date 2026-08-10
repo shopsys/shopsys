@@ -6,7 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Advert;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImageFolder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -20,7 +22,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[EntityImage]
 #[EntityImage('web')]
 #[EntityImage('mobile')]
-class Advert
+class Advert implements DomainSeparatedEntityInterface
 {
     public const TYPE_IMAGE = 'image';
     public const TYPE_CODE = 'code';
@@ -165,6 +167,7 @@ class Advert
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

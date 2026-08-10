@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Store\ClosedDay;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -13,7 +15,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[AsMcpTable]
 #[ORM\Table(name: 'closed_days')]
 #[ORM\Entity]
-class ClosedDay
+class ClosedDay implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -83,6 +85,7 @@ class ClosedDay
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

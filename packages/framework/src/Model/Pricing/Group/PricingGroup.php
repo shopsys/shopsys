@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'pricing_groups')]
 #[ORM\Entity]
-class PricingGroup
+class PricingGroup implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -74,6 +76,7 @@ class PricingGroup
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

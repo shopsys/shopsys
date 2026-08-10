@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
@@ -13,7 +15,7 @@ use Symfony\Component\Clock\DatePoint;
 #[AsMcpTable]
 #[ORM\Table(name: 'price_lists')]
 #[ORM\Entity]
-class PriceList
+class PriceList implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -107,6 +109,7 @@ class PriceList
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

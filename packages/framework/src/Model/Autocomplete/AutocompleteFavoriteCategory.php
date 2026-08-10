@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Autocomplete;
 
 use Doctrine\ORM\Mapping as ORM;
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -14,7 +15,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[AsMcpTable]
 #[ORM\Table(name: 'autocomplete_favorite_categories')]
 #[ORM\Entity]
-class AutocompleteFavoriteCategory implements OrderableEntityInterface
+class AutocompleteFavoriteCategory implements OrderableEntityInterface, DomainSeparatedEntityInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
@@ -58,6 +59,7 @@ class AutocompleteFavoriteCategory implements OrderableEntityInterface
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

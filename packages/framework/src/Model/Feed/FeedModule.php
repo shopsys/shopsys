@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'feed_modules')]
 #[ORM\Entity]
-class FeedModule
+class FeedModule implements DomainSeparatedEntityInterface
 {
     /**
      * @var string
@@ -54,6 +56,7 @@ class FeedModule
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

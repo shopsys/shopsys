@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Country\Country;
@@ -21,7 +22,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'stores')]
 #[ORM\Entity]
 #[EntityImage(multiple: true)]
-class Store implements OrderableEntityInterface
+class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface
 {
     protected const GEDMO_SORTABLE_LAST_POSITION = -1;
 
@@ -373,6 +374,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;
