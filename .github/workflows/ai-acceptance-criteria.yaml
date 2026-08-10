@@ -75,6 +75,11 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
                     fetch-depth: 0
+                    # Without this, checkout persists the token as an "AUTHORIZATION: basic <base64>" header in
+                    # .git/config - which sits inside the "Read" scope the agent trusts, and the base64 form slips
+                    # past the verbatim secret scan. The agent has no git tool and never needs the credential, so
+                    # it is not written at all. The diff is materialised from the local history in the next step.
+                    persist-credentials: false
             -   name: Prepare the agent's working files
                 if: steps.jira-precheck.outputs.ISSUE_FOUND == 'true'
                 id: prepare
@@ -209,10 +214,18 @@ jobs:
                     # workspace, or /proc/self/environ and paste them into the published report. Grep and Glob are
                     # withheld rather than scoped: their path confinement is not something this rule can express, and
                     # the agent has the diff as a file plus scoped Read for anything else it needs.
+                    # "disableAllHooks" is what stops the checked-out pull request from running code on this
+                    # secrets-bearing runner: settings.json hooks execute shell commands outside the allowedTools
+                    # allowlist, so without this a PR that edits ".claude/settings.json" would get that command run
+                    # here. It is set through "--settings" (an injected source that outranks the repo's settings)
+                    # rather than "--setting-sources", which would also drop the project skills this check needs.
+                    # "--strict-mcp-config" is the matching guard for MCP: it pins the agent to the injected config
+                    # and ignores any ".mcp.json" committed in the pull request.
                     claude_args: |
                         --model claude-opus-4-8
                         --max-turns 120
                         --strict-mcp-config
+                        --settings '{"disableAllHooks": true}'
                         --mcp-config ${{ steps.prepare.outputs.MCP_CONFIG_FILE }}
                         --allowedTools "Read(/${{ github.workspace }}/**),Read(/${{ steps.prepare.outputs.PLAYWRIGHT_OUTPUT_DIR }}/**),Edit(/${{ steps.prepare.outputs.PLAYWRIGHT_OUTPUT_DIR }}/**),TodoWrite,Skill(acceptance-criteria-check),Skill(find-jira-task-by-pr),Bash(ls:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_click,mcp__playwright__browser_type,mcp__playwright__browser_fill_form,mcp__playwright__browser_select_option,mcp__playwright__browser_press_key,mcp__playwright__browser_hover,mcp__playwright__browser_wait_for,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_console_messages,mcp__playwright__browser_network_requests,mcp__playwright__browser_tabs,mcp__playwright__browser_resize"
             -   name: Refuse evidence that repeats a secret

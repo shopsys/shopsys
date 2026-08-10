@@ -377,6 +377,14 @@ ai:acceptance-criteria:
         - apk add --no-cache bash curl git jq nodejs npm
         - npm install -g @anthropic-ai/claude-code@2.1.226
         - chmod +x ./gitlab/scripts/ai-acceptance-criteria.sh
+        # The runner persists the clone credential as an "AUTHORIZATION: basic <base64(gitlab-ci-token:...)>"
+        # header in .git/config, which sits inside the agent's "Read" scope - and its base64 form would slip past
+        # the verbatim secret scan. The agent has no git tool and the diff is fetched through the wrapper script,
+        # so the header is stripped here before the agent starts. "--name-only" keeps the token out of this log.
+        - |
+            git config --local --name-only --get-regexp '^http\..*\.extraheader$' | while read -r HEADER_KEY; do
+                git config --local --unset-all "${HEADER_KEY}"
+            done
         # The MCP configuration is written to a private file rather than passed on the command line, so the Jira
         # credentials are not visible in "ps" output - the "${...}" placeholders below are expanded by the agent
         # from its own environment, so no secret is written to disk either. The browser is confined to the review
@@ -436,7 +444,9 @@ ai:acceptance-criteria:
             JSON
         # The agent's exit code is captured instead of aborting the job right here, so the evidence is always
         # extracted and scanned below - in the script itself, because GitLab ignores after_script exit codes and a
-        # scan hit there could never fail the job.
+        # scan hit there could never fail the job. "--strict-mcp-config" and "--settings disableAllHooks" stop the
+        # checked-out merge request from running its own code on this runner: the first ignores a committed
+        # ".mcp.json", the second stops ".claude/settings.json" hooks (shell commands outside the allowlist).
         - |
             CLAUDE_EXIT_CODE=0
             claude -p "/acceptance-criteria-check ${CI_MERGE_REQUEST_PROJECT_URL}/-/merge_requests/${CI_MERGE_REQUEST_IID} review-url=${REVIEW_BASE_URL} report-file=${REPORT_FILE}" \
@@ -444,6 +454,7 @@ ai:acceptance-criteria:
                 --max-turns 120 \
                 --permission-mode dontAsk \
                 --strict-mcp-config \
+                --settings '{"disableAllHooks": true}' \
                 --mcp-config "${MCP_CONFIG_FILE}" \
                 --allowedTools "Read(/${CI_PROJECT_DIR}/**),Edit(/${PLAYWRIGHT_OUTPUT_DIR}/**),Edit(/${REPORT_FILE}),TodoWrite,Bash(./gitlab/scripts/ai-acceptance-criteria.sh:*),Bash(ls:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_click,mcp__playwright__browser_type,mcp__playwright__browser_fill_form,mcp__playwright__browser_select_option,mcp__playwright__browser_press_key,mcp__playwright__browser_hover,mcp__playwright__browser_wait_for,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_console_messages,mcp__playwright__browser_network_requests,mcp__playwright__browser_tabs,mcp__playwright__browser_resize" \
                 || CLAUDE_EXIT_CODE=$?
