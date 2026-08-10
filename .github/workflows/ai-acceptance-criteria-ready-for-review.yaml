@@ -1,0 +1,34 @@
+name: AI acceptance criteria on ready for review
+# A draft pull request already runs the full docker-build pipeline on every push, including the review deployment,
+# but docker-build's AI acceptance criteria job skips drafts. Marking the draft ready must therefore start the AI
+# check - and only the AI check: the review environment is already deployed, so nothing else needs rebuilding.
+on:
+    pull_request:
+        types:
+            - ready_for_review
+jobs:
+    variables:
+        name: Extract variables
+        if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
+        runs-on: ubuntu-22.04
+        timeout-minutes: 5
+        outputs:
+            BRANCH_NAME_ESCAPED: ${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}
+        steps:
+            -   name: Extract variables to output
+                id: variables
+                # The same escaping the docker-build "variables" job applies, so both workflows address the same
+                # review environment.
+                run: |
+                    BRANCH_NAME="${GITHUB_HEAD_REF,,}"
+                    echo "BRANCH_NAME_ESCAPED=${BRANCH_NAME//[\/.]/-}" >> "${GITHUB_OUTPUT}"
+    ai-acceptance-criteria:
+        name: AI acceptance criteria
+        needs: variables
+        permissions:
+            contents: read
+            pull-requests: write
+        uses: ./.github/workflows/ai-acceptance-criteria.yaml
+        with:
+            review_base_url: https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
+        secrets: inherit

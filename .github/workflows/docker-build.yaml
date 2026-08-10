@@ -1304,6 +1304,25 @@ jobs:
                           - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                           - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}/sk
                     delete-previous-comment: false
+    ai-acceptance-criteria:
+        name: AI acceptance criteria
+        needs: [variables, review]
+        # Advisory only - deliberately not part of the "Build successful" gate. A draft marked ready for review is
+        # picked up by the ai-acceptance-criteria-ready-for-review workflow instead, so that event does not rebuild
+        # this whole pipeline.
+        if: |
+            !cancelled() &&
+            github.event_name == 'pull_request' &&
+            github.event.pull_request.draft == false &&
+            github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' &&
+            needs.review.result == 'success'
+        permissions:
+            contents: read
+            pull-requests: write
+        uses: ./.github/workflows/ai-acceptance-criteria.yaml
+        with:
+            review_base_url: https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
+        secrets: inherit
     build-successful:
         if: |
             always()

@@ -1,0 +1,372 @@
+name: AI acceptance criteria
+# Reusable advisory check called from two places: docker-build runs it after every review deployment, and the
+# ai-acceptance-criteria-ready-for-review workflow runs it alone when a draft is marked ready - the draft's pushes
+# already deployed the review environment, so nothing needs rebuilding for that event.
+on:
+    workflow_call:
+        inputs:
+            review_base_url:
+                description: Root URL of the deployed review environment
+                required: true
+                type: string
+jobs:
+    ai-acceptance-criteria:
+        name: AI acceptance criteria check
+        if: |
+            github.event_name == 'pull_request' &&
+            github.event.pull_request.draft == false &&
+            github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
+        runs-on: [self-hosted, linux, playwright]
+        timeout-minutes: 30
+        # Both calling workflows can have a run in flight for the same pull request, and two agents must never
+        # drive the same review environment at once. The stale run is cancelled rather than queued ahead: the
+        # check is advisory and the newest deployment is the only one worth a verdict, so finishing a superseded
+        # ~15-minute agent run would waste the runner and the tokens just to post an outdated report.
+        concurrency:
+            group: ai-acceptance-criteria-${{ github.event.pull_request.number }}
+            cancel-in-progress: true
+        # This job runs an agent over text other people wrote, so it gets no write access of any kind. It only
+        # produces evidence; the separate report job below is what touches the repository.
+        permissions:
+            contents: read
+        env:
+            REVIEW_BASE_URL: ${{ inputs.review_base_url }}
+        steps:
+            -   name: Check the pull request has a linked Jira issue
+                id: jira-precheck
+                # Booting the agent costs a Claude session and two MCP containers just to report "no linked issue"
+                # on a pull request without one - a single Jira API call answers that first, and every later step
+                # is skipped on a miss. It mirrors both lookups of find-jira-task-by-pr (the Merge Request field
+                # and the ad-hoc "... #<number>" summary convention) and overmatching is fine - the agent still
+                # does the exact resolution. On any curl failure it fails open and runs the agent: this gate is a
+                # cost saving, and a Jira outage must not silently disable the whole check. The credentials reach
+                # curl through a config file on process substitution, not argv, so they are not visible in "ps" on
+                # this shared runner. The GitLab side has no such pre-check on purpose: project keys and custom
+                # field ids differ per client Jira, and a wrong guess there would skip the check on every merge
+                # request without anyone noticing.
+                env:
+                    JIRA_URL: ${{ secrets.JIRA_URL }}
+                    JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+                    JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+                    PR_URL: ${{ github.event.pull_request.html_url }}
+                    PR_NUMBER: ${{ github.event.pull_request.number }}
+                run: |
+                    JQL="project = SSP AND (cf[10031] = \"${PR_URL}\" OR summary ~ \"${PR_NUMBER}\")"
+                    SEARCH_BODY="$(jq --null-input --arg jql "${JQL}" '{jql: $jql, maxResults: 1, fields: ["id"]}')"
+
+                    if RESPONSE="$(curl --silent --show-error --fail \
+                        --config <(printf 'user = "%s:%s"\n' "${JIRA_EMAIL}" "${JIRA_TOKEN}") \
+                        --header 'Content-Type: application/json' --header 'Accept: application/json' \
+                        --data "${SEARCH_BODY}" "${JIRA_URL}/rest/api/3/search/jql")"; then
+                        ISSUE_FOUND="$(printf '%s' "${RESPONSE}" | jq --raw-output 'if (.issues | length) > 0 then "true" else "false" end')"
+                    else
+                        echo "The Jira pre-check request failed, running the agent anyway."
+                        ISSUE_FOUND="true"
+                    fi
+
+                    if [ "${ISSUE_FOUND}" = "false" ]; then
+                        echo "No Jira issue references this pull request, skipping the agent."
+                    fi
+
+                    echo "ISSUE_FOUND=${ISSUE_FOUND}" >> "${GITHUB_OUTPUT}"
+            -   name: GIT checkout branch - ${{ github.ref }}
+                if: steps.jira-precheck.outputs.ISSUE_FOUND == 'true'
+                uses: actions/checkout@v6
+                with:
+                    ref: ${{ github.ref }}
+                    fetch-depth: 0
+            -   name: Prepare the agent's working files
+                if: steps.jira-precheck.outputs.ISSUE_FOUND == 'true'
+                id: prepare
+                # The "runner" context is not available in job-level "env", so the paths are resolved here. They are
+                # handed to the following steps as step outputs, not through GITHUB_ENV - outputs are ingested the
+                # moment this step ends, while GITHUB_ENV stays a writable file the agent could be talked into
+                # appending to, redirecting what the later steps upload and delete. The MCP
+                # configuration is written to a private file rather than passed on the command line, so the Jira
+                # credentials are not visible in "ps" output on this shared runner - the "${...}" placeholders are
+                # expanded by the agent from its own environment, so no secret is written to disk either.
+                # The browser runs as this user (so the evidence directory need not be world-writable), on the host
+                # network (the review environment answers 403 to Docker's NAT address but allows the runner's own),
+                # and is confined to the review origins so an instruction smuggled into a ticket cannot send it
+                # somewhere else.
+                env:
+                    PLAYWRIGHT_IMAGE: mcr.microsoft.com/playwright/mcp@sha256:18c0a9c934004fe9580cc79f1e8e6e6cde7c667348b215335e8a23fd3e509804
+                    JIRA_IMAGE: ghcr.io/sooperset/mcp-atlassian@sha256:d2bb29af785bc44bbb16eee4e577eceabe208cdbe1bcac80c4be9915864de45d
+                run: |
+                    RUN_ID="${{ github.run_id }}-${{ github.run_attempt }}"
+                    PLAYWRIGHT_OUTPUT_DIR="${RUNNER_TEMP}/playwright-${RUN_ID}"
+                    MCP_CONFIG_FILE="${RUNNER_TEMP}/mcp-config-${RUN_ID}.json"
+                    REVIEW_HOST="${REVIEW_BASE_URL#https://}"
+
+                    # Every origin the browser may reach is derived from the review environment's domain list - the
+                    # same three domains the review job posts into the pull request - so adding a domain is a one-line
+                    # change here rather than an edit to a concatenated string, and the two CI platforms confine the
+                    # browser the same way. Each host is built from the branch name, which the calling workflow only
+                    # strips of slashes and dots - a quote in a branch name would otherwise break out of the JSON
+                    # below and add arguments to the browser container, so each host is validated rather than trusting
+                    # that guarantee. A path-only domain (like /sk) collapses into its host's origin.
+                    REVIEW_DOMAINS="${REVIEW_HOST} cz.${REVIEW_HOST} ${REVIEW_HOST}/sk"
+                    ALLOWED_ORIGINS=""
+
+                    for DOMAIN_ENTRY in ${REVIEW_DOMAINS}; do
+                        HOST_ONLY="${DOMAIN_ENTRY%%/*}"
+
+                        if ! printf '%s' "${HOST_ONLY}" | grep -qE '^[a-z0-9][a-z0-9.-]*$'; then
+                            echo "The review host [${HOST_ONLY}] contains unexpected characters, refusing to continue."
+                            exit 1
+                        fi
+
+                        case ";${ALLOWED_ORIGINS};" in
+                            *";https://${HOST_ONLY};"*) ;;
+                            *) ALLOWED_ORIGINS="${ALLOWED_ORIGINS:+${ALLOWED_ORIGINS};}https://${HOST_ONLY}" ;;
+                        esac
+                    done
+
+                    mkdir -p "${PLAYWRIGHT_OUTPUT_DIR}"
+                    chmod 700 "${PLAYWRIGHT_OUTPUT_DIR}"
+
+                    # The diff and commit messages are materialised here rather than granting the agent "git" as a
+                    # tool: "git diff"/"git log" accept "--output=<path>" (and a plain redirect), which would let a
+                    # smuggled instruction write attacker-controlled commit-message text anywhere the runner can
+                    # write - escaping the evidence-directory confinement the Edit rule sets up. The checkout is the
+                    # pull request's merge ref, so HEAD^1 is the base tip and this is exactly the PR's changes. Both
+                    # files are secret-scanned before upload and neither is among the paths the upload ships.
+                    git diff HEAD^1 HEAD > "${PLAYWRIGHT_OUTPUT_DIR}/pr.diff"
+                    git log HEAD^1..HEAD > "${PLAYWRIGHT_OUTPUT_DIR}/pr-commits.txt"
+
+                    install -m 600 /dev/null "${MCP_CONFIG_FILE}"
+                    cat > "${MCP_CONFIG_FILE}" <<JSON
+                    {
+                        "mcpServers": {
+                            "jira": {
+                                "type": "stdio",
+                                "command": "docker",
+                                "args": ["run", "--rm", "-i", "-e", "JIRA_URL", "-e", "JIRA_USERNAME", "-e", "JIRA_API_TOKEN", "${JIRA_IMAGE}"],
+                                "env": {
+                                    "JIRA_URL": "\${JIRA_URL}",
+                                    "JIRA_USERNAME": "\${JIRA_USERNAME}",
+                                    "JIRA_API_TOKEN": "\${JIRA_API_TOKEN}"
+                                }
+                            },
+                            "playwright": {
+                                "type": "stdio",
+                                "command": "docker",
+                                "args": [
+                                    "run", "--rm", "-i", "--init", "--ipc=host", "--network", "host",
+                                    "--user", "$(id -u):$(id -g)", "-e", "HOME=/out",
+                                    "-v", "${PLAYWRIGHT_OUTPUT_DIR}:/out", "${PLAYWRIGHT_IMAGE}",
+                                    "--output-dir", "/out", "--isolated",
+                                    "--viewport-size", "1280x720",
+                                    "--allowed-origins", "${ALLOWED_ORIGINS}"
+                                ]
+                            }
+                        }
+                    }
+                    JSON
+
+                    {
+                        echo "PLAYWRIGHT_OUTPUT_DIR=${PLAYWRIGHT_OUTPUT_DIR}"
+                        echo "MCP_CONFIG_FILE=${MCP_CONFIG_FILE}"
+                        echo "REPORT_FILE=${PLAYWRIGHT_OUTPUT_DIR}/report.md"
+                        echo "DIFF_FILE=${PLAYWRIGHT_OUTPUT_DIR}/pr.diff"
+                        echo "COMMITS_FILE=${PLAYWRIGHT_OUTPUT_DIR}/pr-commits.txt"
+                    } >> "${GITHUB_OUTPUT}"
+            -   name: Run Claude acceptance criteria check
+                if: steps.jira-precheck.outputs.ISSUE_FOUND == 'true'
+                uses: anthropics/claude-code-action@v1
+                env:
+                    JIRA_URL: ${{ secrets.JIRA_URL }}
+                    JIRA_USERNAME: ${{ secrets.JIRA_EMAIL }}
+                    JIRA_API_TOKEN: ${{ secrets.JIRA_TOKEN }}
+                with:
+                    github_token: ${{ github.token }}
+                    claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                    # The agent's own output would otherwise land in this repository's world-readable Actions log,
+                    # and it holds credentials it could be talked into printing. Turn it on temporarily when a
+                    # failure needs diagnosing, and accept that the whole session becomes public while it is on.
+                    show_full_output: false
+                    # The review URL and the report path are passed in so the agent does not have to discover them.
+                    # Note this is convenience, not a control - what keeps the credentials in the agent's
+                    # environment out of the published report is the path-confined "Read" rule below (which locks
+                    # away /proc/self/environ along with everything else outside the checkout and the evidence
+                    # directory), with the verbatim secret scans as the second line behind it.
+                    prompt: "/acceptance-criteria-check ${{ github.event.pull_request.html_url }} review-url=${{ env.REVIEW_BASE_URL }} report-file=${{ steps.prepare.outputs.REPORT_FILE }} diff-file=${{ steps.prepare.outputs.DIFF_FILE }} commits-file=${{ steps.prepare.outputs.COMMITS_FILE }}"
+                    # File writes are confined to the evidence directory (the leading slash anchors the rule to an
+                    # absolute path) - everywhere else is somebody else's file, and GITHUB_ENV in particular would
+                    # let a smuggled instruction redirect what the later steps upload and delete. The rule is an
+                    # "Edit(...)" rule, not "Write(...)": path-scoped file rules only match under "Edit", which
+                    # covers every file-editing tool including Write - a "Write(path)" rule is silently ignored and
+                    # would leave the agent unable to write its report at all.
+                    # The Playwright tools are listed one by one rather than as "mcp__playwright__*": an MCP wildcard
+                    # is silently dropped from allowedTools, and listing them explicitly also withholds the
+                    # arbitrary-JS tools (browser_evaluate, browser_run_code_unsafe) and file upload from an agent
+                    # that reads instructions other people wrote.
+                    # The agent is given no "git" tool: the diff and commit messages are pre-materialised into the
+                    # evidence directory (see the prepare step) and read as files. "git diff"/"git log" would accept
+                    # "--output=<path>", an arbitrary-write primitive that escapes the Edit confinement.
+                    # Reads are confined to the checkout and the evidence directory (same leading-slash anchoring as
+                    # the Edit rule), so the agent cannot open the runner's own credentials, another job's leftover
+                    # workspace, or /proc/self/environ and paste them into the published report. Grep and Glob are
+                    # withheld rather than scoped: their path confinement is not something this rule can express, and
+                    # the agent has the diff as a file plus scoped Read for anything else it needs.
+                    claude_args: |
+                        --model claude-opus-4-8
+                        --max-turns 120
+                        --strict-mcp-config
+                        --mcp-config ${{ steps.prepare.outputs.MCP_CONFIG_FILE }}
+                        --allowedTools "Read(/${{ github.workspace }}/**),Read(/${{ steps.prepare.outputs.PLAYWRIGHT_OUTPUT_DIR }}/**),Edit(/${{ steps.prepare.outputs.PLAYWRIGHT_OUTPUT_DIR }}/**),TodoWrite,Skill(acceptance-criteria-check),Skill(find-jira-task-by-pr),Bash(ls:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_click,mcp__playwright__browser_type,mcp__playwright__browser_fill_form,mcp__playwright__browser_select_option,mcp__playwright__browser_press_key,mcp__playwright__browser_hover,mcp__playwright__browser_wait_for,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_console_messages,mcp__playwright__browser_network_requests,mcp__playwright__browser_tabs,mcp__playwright__browser_resize"
+            -   name: Refuse evidence that repeats a secret
+                if: always()
+                # The artifact below is world-readable on this public repository, so it must get the same verbatim
+                # secret scan the report job applies to the comment - only here it has to happen *before* the upload,
+                # otherwise a credential smuggled into any evidence file is already published by the time the report
+                # job looks at it. On a hit the evidence is deleted, because the upload step runs even when this one
+                # fails. This catches a verbatim copy, not an encoded one, so it is one line of defence and not the
+                # only one.
+                env:
+                    PLAYWRIGHT_OUTPUT_DIR: ${{ steps.prepare.outputs.PLAYWRIGHT_OUTPUT_DIR }}
+                    SECRET_JIRA_URL: ${{ secrets.JIRA_URL }}
+                    SECRET_JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+                    SECRET_JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+                    SECRET_CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                    # This job's own token is read-only and expires with the job, but the artifact uploads while it
+                    # is still valid - so it gets scanned for too. The report job cannot repeat this check: it runs
+                    # under a different token, and this one is already expired and unknowable there.
+                    SECRET_GITHUB_TOKEN: ${{ github.token }}
+                    # A tripwire with no other purpose: a long random repository secret that exists only to be
+                    # planted into the evidence on a test branch, proving the refuse-and-delete path actually fires.
+                    # While the secret is unset the scan skips it (shorter than 8 characters).
+                    SECRET_TEST_CANARY: ${{ secrets.TEST_CANARY }}
+                run: |
+                    if [ ! -d "${PLAYWRIGHT_OUTPUT_DIR}" ]; then
+                        echo "No evidence directory exists, nothing to scan."
+                        exit 0
+                    fi
+
+                    for NAME in $(compgen -e | grep '^SECRET_'); do
+                        SECRET="${!NAME}"
+
+                        if [ ${#SECRET} -gt 8 ] && grep -rqF -- "${SECRET}" "${PLAYWRIGHT_OUTPUT_DIR}"; then
+                            rm -rf "${PLAYWRIGHT_OUTPUT_DIR}"
+                            echo "The evidence repeats a secret value verbatim, refusing to upload it."
+                            exit 1
+                        fi
+                    done
+            -   name: Upload Playwright evidence
+                if: always()
+                uses: actions/upload-artifact@v7
+                with:
+                    name: ai-acceptance-criteria-evidence
+                    # Only the report and the screenshots - any other file the agent could be talked into leaving
+                    # here never ships.
+                    path: |
+                        ${{ steps.prepare.outputs.PLAYWRIGHT_OUTPUT_DIR }}/report.md
+                        ${{ steps.prepare.outputs.PLAYWRIGHT_OUTPUT_DIR }}/*.png
+                    if-no-files-found: ignore
+                    # A re-run of the agent job reuses the run id, and the artifact name is immutable per run, so the
+                    # second attempt would otherwise collide on the name - replace the previous attempt's evidence.
+                    overwrite: true
+                    retention-days: 7
+            -   name: Clean up Playwright output directory
+                if: always()
+                # Best effort - the evidence is already uploaded by this point, so a leftover file must not turn the
+                # job red. It is owned by the runner because the Playwright container runs as that user.
+                env:
+                    PLAYWRIGHT_OUTPUT_DIR: ${{ steps.prepare.outputs.PLAYWRIGHT_OUTPUT_DIR }}
+                run: rm -rf "${PLAYWRIGHT_OUTPUT_DIR}" || echo "Could not remove the evidence files, continuing."
+    ai-acceptance-criteria-report:
+        name: AI acceptance criteria report
+        needs: ai-acceptance-criteria
+        if: "!cancelled() && needs.ai-acceptance-criteria.result == 'success'"
+        # Separate from the agent job on purpose: the write access needed to post the comment must not be held by
+        # the job that runs an agent over text other people wrote.
+        runs-on: ubuntu-22.04
+        timeout-minutes: 10
+        permissions:
+            pull-requests: write
+        env:
+            EVIDENCE_DIR: evidence
+        steps:
+            -   name: Download the evidence
+                # A no-report outcome is normal (no linked issue, unreachable environment): the agent writes no
+                # file, the upload step creates no artifact, and this download then finds nothing. That is not a
+                # failure - the publish step below handles a missing report gracefully - so it must not turn the
+                # job red.
+                continue-on-error: true
+                uses: actions/download-artifact@v8
+                with:
+                    name: ai-acceptance-criteria-evidence
+                    path: ${{ env.EVIDENCE_DIR }}
+            -   name: Publish the report
+                uses: actions/github-script@v7
+                env:
+                    SECRET_JIRA_URL: ${{ secrets.JIRA_URL }}
+                    SECRET_JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+                    SECRET_JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+                    SECRET_CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                    SECRET_TEST_CANARY: ${{ secrets.TEST_CANARY }}
+                with:
+                    script: |
+                        const fs = require('fs')
+                        const path = require('path')
+                        const marker = '<!-- claude-acceptance-criteria -->'
+                        const { owner, repo } = context.repo
+                        const issueNumber = context.payload.pull_request.number
+                        const evidenceDir = process.env.EVIDENCE_DIR
+                        const reportFile = path.join(evidenceDir, 'report.md')
+
+                        if (!fs.existsSync(reportFile)) {
+                            core.warning('The check wrote no report, so there is nothing to publish.')
+                            return
+                        }
+
+                        let body = fs.readFileSync(reportFile, 'utf8')
+
+                        if (!body.startsWith(marker)) {
+                            core.setFailed('The report does not start with the sticky marker, refusing to publish it.')
+                            return
+                        }
+
+                        // The agent reads text other people wrote, so an injected instruction could try to copy a
+                        // credential out of its environment into what gets published. This catches a verbatim copy,
+                        // not an encoded one, so it is the last line of defence and not the only one.
+                        const leakedCount = Object.entries(process.env)
+                            .filter(([name]) => name.startsWith('SECRET_'))
+                            .filter(([, secret]) => secret && secret.length > 8 && body.includes(secret))
+                            .length
+
+                        if (leakedCount > 0) {
+                            core.setFailed(`The report repeats ${leakedCount} secret value(s) verbatim, refusing to publish it.`)
+                            return
+                        }
+
+                        // A comment cannot render an image straight from an artifact, so the screenshots stay in
+                        // the run's evidence artifact and the comment points the reader there.
+                        const screenshotCount = fs.readdirSync(evidenceDir).filter((name) => name.endsWith('.png')).length
+
+                        if (screenshotCount > 0) {
+                            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`
+                            body += `\n_Screenshots (${screenshotCount}) are in the [evidence artifact of the run](${runUrl})._\n`
+                        }
+
+                        const comments = await github.paginate(github.rest.issues.listComments, {
+                            owner,
+                            repo,
+                            issue_number: issueNumber,
+                        })
+                        // Only a comment this workflow itself posted counts - anyone can start a comment with the
+                        // marker, and the report must never be written into (and later spoofed inside) somebody
+                        // else's comment.
+                        const previousReport = comments.find(
+                            (comment) => comment.user.login === 'github-actions[bot]' && comment.body.startsWith(marker),
+                        )
+
+                        if (previousReport) {
+                            await github.rest.issues.updateComment({ owner, repo, comment_id: previousReport.id, body })
+                            core.info(`Updated the existing report comment ${previousReport.id}.`)
+                        } else {
+                            await github.rest.issues.createComment({ owner, repo, issue_number: issueNumber, body })
+                            core.info('Created a new report comment.')
+                        }
+
+                        await core.summary.addRaw(body).write()
