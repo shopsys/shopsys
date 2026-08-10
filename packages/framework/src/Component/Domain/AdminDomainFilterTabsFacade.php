@@ -19,9 +19,12 @@ class AdminDomainFilterTabsFacade
     ) {
     }
 
-    public function getSelectedDomainId(string $namespace): ?int
+    /**
+     * @param int[]|null $allowedDomainIds A selected domain outside these IDs is cleared. Null allows all domains available to the administrator.
+     */
+    public function getSelectedDomainId(string $namespace, ?array $allowedDomainIds = null): ?int
     {
-        return $this->getSelectedDomainConfig($namespace)?->getId();
+        return $this->getSelectedDomainConfig($namespace, $allowedDomainIds)?->getId();
     }
 
     public function setSelectedDomainId(string $namespace, ?int $domainId): void
@@ -29,7 +32,10 @@ class AdminDomainFilterTabsFacade
         $this->requestStack->getSession()->set($this->getSessionKey($namespace), $domainId);
     }
 
-    public function getSelectedDomainConfig(string $namespace): ?DomainConfig
+    /**
+     * @param int[]|null $allowedDomainIds A selected domain outside these IDs is cleared. Null allows all domains available to the administrator.
+     */
+    public function getSelectedDomainConfig(string $namespace, ?array $allowedDomainIds = null): ?DomainConfig
     {
         try {
             $domainId = $this->requestStack->getSession()->get($this->getSessionKey($namespace));
@@ -38,7 +44,9 @@ class AdminDomainFilterTabsFacade
                 return null;
             }
 
-            if (!in_array($domainId, $this->domain->getAdminEnabledDomainIds(), true)) {
+            if (!in_array($domainId, $this->domain->getAdminEnabledDomainIds(), true)
+                || ($allowedDomainIds !== null && !in_array($domainId, $allowedDomainIds, true))
+            ) {
                 throw new InvalidDomainIdException();
             }
 

@@ -1,4 +1,4 @@
-{% if isMultidomain() %}
+{% if domainConfigs|length > 1 %}
     <div class="card">
         <div class="card-body">
             <div class="card-title text-secondary">{{ 'Quick Domain Filter'|trans }}</div>
