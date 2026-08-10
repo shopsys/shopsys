@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Watchdog;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -13,7 +15,7 @@ use Symfony\Component\Clock\DatePoint;
 #[AsMcpTable]
 #[ORM\Table(name: 'watchdogs')]
 #[ORM\Entity]
-class Watchdog
+class Watchdog implements DomainSeparatedEntityInterface
 {
     protected const string VALIDITY_PERIOD = '2 years';
 
@@ -136,6 +138,7 @@ class Watchdog
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

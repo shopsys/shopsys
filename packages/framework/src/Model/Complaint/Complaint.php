@@ -6,7 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Complaint;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
@@ -19,7 +21,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[AsMcpTable]
 #[ORM\Table(name: 'complaints')]
 #[ORM\Entity]
-class Complaint
+class Complaint implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -245,6 +247,7 @@ class Complaint
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

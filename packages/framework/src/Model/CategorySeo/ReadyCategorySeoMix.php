@@ -6,7 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -17,7 +19,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'ready_category_seo_mixes')]
 #[ORM\UniqueConstraint(name: 'selected_category_seo_mix_combination_json', columns: ['selected_category_seo_mix_combination_json'])]
 #[ORM\Entity]
-class ReadyCategorySeoMix
+class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -261,6 +263,7 @@ class ReadyCategorySeoMix
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\BestsellingProduct;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -15,7 +17,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\UniqueConstraint(columns: ['product_id', 'category_id', 'domain_id'])]
 #[ORM\UniqueConstraint(columns: ['position', 'category_id', 'domain_id'])]
 #[ORM\Entity]
-class ManualBestsellingProduct
+class ManualBestsellingProduct implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -95,6 +97,7 @@ class ManualBestsellingProduct
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

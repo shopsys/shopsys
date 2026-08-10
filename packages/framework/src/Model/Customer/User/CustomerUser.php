@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
@@ -27,7 +28,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Index(columns: ['email'])]
 #[ORM\UniqueConstraint(name: 'email_domain', columns: ['email', 'domain_id'])]
 #[ORM\Entity]
-class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface, ResetPasswordInterface
+class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface, ResetPasswordInterface, DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -269,6 +270,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

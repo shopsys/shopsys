@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -14,7 +16,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'mail_templates')]
 #[ORM\UniqueConstraint(name: 'name_domain', columns: ['name', 'domain_id'])]
 #[ORM\Entity]
-class MailTemplate
+class MailTemplate implements DomainSeparatedEntityInterface
 {
     public const REGISTRATION_CONFIRM_NAME = 'registration_confirm';
     public const RESET_PASSWORD_NAME = 'reset_password';
@@ -128,6 +130,7 @@ class MailTemplate
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

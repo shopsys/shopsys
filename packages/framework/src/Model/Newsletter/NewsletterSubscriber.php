@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Newsletter;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -13,7 +15,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'newsletter_subscribers')]
 #[ORM\UniqueConstraint(name: 'newsletter_subscribers_uni', columns: ['email', 'domain_id'])]
 #[ORM\Entity]
-class NewsletterSubscriber
+class NewsletterSubscriber implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -74,5 +76,14 @@ class NewsletterSubscriber
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return int
+     */
+    #[Override]
+    public function getDomainId()
+    {
+        return $this->domainId;
     }
 }

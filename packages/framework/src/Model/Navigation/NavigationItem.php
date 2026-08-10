@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Navigation;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -15,7 +16,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'navigation_items')]
 #[ORM\Index(name: 'domain_id_idx', columns: ['domain_id'])]
 #[ORM\Entity]
-class NavigationItem implements OrderableEntityInterface
+class NavigationItem implements OrderableEntityInterface, DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -131,6 +132,7 @@ class NavigationItem implements OrderableEntityInterface
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

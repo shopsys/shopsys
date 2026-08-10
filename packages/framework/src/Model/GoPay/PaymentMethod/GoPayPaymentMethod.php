@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -13,7 +15,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'gopay_payment_methods')]
 #[ORM\UniqueConstraint(name: 'gopay_payment_method_unique', columns: ['domain_id', 'identifier'])]
 #[ORM\Entity]
-class GoPayPaymentMethod
+class GoPayPaymentMethod implements DomainSeparatedEntityInterface
 {
     public const IDENTIFIER_PAYMENT_CARD = 'PAYMENT_CARD';
     public const IDENTIFIER_BANK_TRANSFER = 'BANK_ACCOUNT';
@@ -166,6 +168,7 @@ class GoPayPaymentMethod
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;
