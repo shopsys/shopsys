@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Tests\AdministrationBundle\Unit\Component\Config;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\AssociationMapping;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ManyToOneAssociationMapping;
+use Doctrine\ORM\Mapping\OneToManyAssociationMapping;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 use LogicException;
@@ -44,6 +48,25 @@ final class CrudListDomainControlTest extends TestCase
 
         $this->assertSame(CrudListDomainControl::SWITCHER, $crudConfigData->getListDomainControl());
         $this->assertNull($crudConfigData->getListAllowedDomainIds());
+    }
+
+    public function testDomainIdFieldConfigurationIsStored(): void
+    {
+        $crudConfig = new CrudConfig('Product review');
+
+        $crudConfig->setListDomainControl(CrudListDomainControl::QUICK_FILTER, domainIdField: 'domains.domainId');
+
+        $this->assertSame('domains.domainId', $crudConfig->getConfig()->getListDomainIdField());
+    }
+
+    public function testInvalidDomainIdFieldThrowsException(): void
+    {
+        $crudConfig = new CrudConfig('Product review');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Domain ID field "domains.article.domainId" is not valid');
+
+        $crudConfig->setListDomainControl(CrudListDomainControl::QUICK_FILTER, domainIdField: 'domains.article.domainId');
     }
 
     public function testDomainSwitcherWithAllowedDomainIdsThrowsException(): void
@@ -229,6 +252,94 @@ final class CrudListDomainControlTest extends TestCase
         $this->assertCount(0, $queryBuilder->getParameters());
     }
 
+    public function testListDomainFilterAppliesConfiguredDomainIdField(): void
+    {
+        $crudConfig = new CrudConfig('Product review');
+        $crudConfig->setListDomainControl(CrudListDomainControl::QUICK_FILTER, domainIdField: 'relatedDomainId');
+        $crudController = $this->createCrudController($crudConfig);
+        $domainFilterTabsFacadeStub = $this->createStub(AdminDomainFilterTabsFacade::class);
+        $domainFilterTabsFacadeStub->method('getSelectedDomainId')->willReturn(2);
+        $crudController->adminDomainFilterTabsFacade = $domainFilterTabsFacadeStub;
+        $crudController->adminDomainTabsFacade = $this->createStub(AdminDomainTabsFacade::class);
+        $queryBuilder = $this->createQueryBuilder();
+
+        $crudController->applyListDomainFilterForTest($queryBuilder);
+
+        $this->assertStringContainsString('o.relatedDomainId IN (:listDomainFilterDomainIds)', (string)$queryBuilder->getDQLPart('where'));
+        $this->assertSame([2], $queryBuilder->getParameter('listDomainFilterDomainIds')->getValue());
+    }
+
+    public function testListDomainFilterAppliesConfiguredDomainIdFieldThroughToManyAssociation(): void
+    {
+        $crudConfig = new CrudConfig('Product review');
+        $crudConfig->setListDomainControl(CrudListDomainControl::QUICK_FILTER, domainIdField: 'domains.domainId');
+        $crudController = $this->createCrudController($crudConfig);
+        $domainFilterTabsFacadeStub = $this->createStub(AdminDomainFilterTabsFacade::class);
+        $domainFilterTabsFacadeStub->method('getSelectedDomainId')->willReturn(null);
+        $crudController->adminDomainFilterTabsFacade = $domainFilterTabsFacadeStub;
+        $crudController->adminDomainTabsFacade = $this->createStub(AdminDomainTabsFacade::class);
+        $queryBuilder = $this->createQueryBuilderWithAssociation(
+            new OneToManyAssociationMapping('domains', stdClass::class, TestEntityDomain::class),
+        );
+
+        $crudController->applyListDomainFilterForTest($queryBuilder);
+
+        $this->assertStringContainsString(
+            sprintf(
+                'EXISTS (SELECT 1 FROM %s listDomainFilterRelation'
+                    . ' WHERE listDomainFilterRelation MEMBER OF o.domains'
+                    . ' AND listDomainFilterRelation.domainId IN (:listDomainFilterDomainIds))',
+                TestEntityDomain::class,
+            ),
+            (string)$queryBuilder->getDQLPart('where'),
+        );
+        $this->assertSame([1, 2, 3], $queryBuilder->getParameter('listDomainFilterDomainIds')->getValue());
+    }
+
+    public function testListDomainFilterAppliesConfiguredDomainIdFieldThroughToOneAssociation(): void
+    {
+        $crudConfig = new CrudConfig('Product review');
+        $crudConfig->setListDomainControl(CrudListDomainControl::QUICK_FILTER, domainIdField: 'settings.domainId');
+        $crudController = $this->createCrudController($crudConfig);
+        $domainFilterTabsFacadeStub = $this->createStub(AdminDomainFilterTabsFacade::class);
+        $domainFilterTabsFacadeStub->method('getSelectedDomainId')->willReturn(3);
+        $crudController->adminDomainFilterTabsFacade = $domainFilterTabsFacadeStub;
+        $crudController->adminDomainTabsFacade = $this->createStub(AdminDomainTabsFacade::class);
+        $queryBuilder = $this->createQueryBuilderWithAssociation(
+            new ManyToOneAssociationMapping('settings', stdClass::class, TestEntityDomain::class),
+        );
+
+        $crudController->applyListDomainFilterForTest($queryBuilder);
+
+        $this->assertStringContainsString(
+            sprintf(
+                'EXISTS (SELECT 1 FROM %s listDomainFilterRelation'
+                    . ' WHERE o.settings = listDomainFilterRelation'
+                    . ' AND listDomainFilterRelation.domainId IN (:listDomainFilterDomainIds))',
+                TestEntityDomain::class,
+            ),
+            (string)$queryBuilder->getDQLPart('where'),
+        );
+        $this->assertSame([3], $queryBuilder->getParameter('listDomainFilterDomainIds')->getValue());
+    }
+
+    public function testListDomainFilterWithDomainIdFieldExcludesEverythingWithoutAvailableDomains(): void
+    {
+        $crudConfig = new CrudConfig('Product review');
+        $crudConfig->setListDomainControl(CrudListDomainControl::QUICK_FILTER, [4], 'domains.domainId');
+        $crudController = $this->createCrudController($crudConfig);
+        $domainFilterTabsFacadeStub = $this->createStub(AdminDomainFilterTabsFacade::class);
+        $domainFilterTabsFacadeStub->method('getSelectedDomainId')->willReturn(null);
+        $crudController->adminDomainFilterTabsFacade = $domainFilterTabsFacadeStub;
+        $crudController->adminDomainTabsFacade = $this->createStub(AdminDomainTabsFacade::class);
+        $queryBuilder = $this->createQueryBuilder();
+
+        $crudController->applyListDomainFilterForTest($queryBuilder);
+
+        $this->assertStringContainsString('1 = 0', (string)$queryBuilder->getDQLPart('where'));
+        $this->assertCount(0, $queryBuilder->getParameters());
+    }
+
     /**
      * @param int[] $adminEnabledDomainIds
      * @param class-string $entityClass
@@ -262,6 +373,19 @@ final class CrudListDomainControlTest extends TestCase
 
         return $queryBuilder;
     }
+
+    private function createQueryBuilderWithAssociation(AssociationMapping $associationMapping): QueryBuilder
+    {
+        $classMetadataStub = $this->createStub(ClassMetadata::class);
+        $classMetadataStub->method('getAssociationMapping')->willReturn($associationMapping);
+        $entityManagerStub = $this->createStub(EntityManagerInterface::class);
+        $entityManagerStub->method('getClassMetadata')->willReturn($classMetadataStub);
+
+        $queryBuilder = new QueryBuilder($entityManagerStub);
+        $queryBuilder->select('o')->from(stdClass::class, 'o');
+
+        return $queryBuilder;
+    }
 }
 
 final class TestCrudController extends AbstractCrudController
@@ -292,4 +416,8 @@ final class TestDomainSeparatedEntity implements DomainSeparatedEntityInterface
     {
         return 1;
     }
+}
+
+final class TestEntityDomain
+{
 }

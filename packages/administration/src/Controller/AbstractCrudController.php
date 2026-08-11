@@ -163,20 +163,80 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     /**
-     * Applies the configured domain condition to the list query of a domain-separated entity.
+     * Applies the configured domain condition to the list query.
      *
+     * A domain ID field configured via `CrudConfig::setListDomainControl()` takes precedence;
+     * without it, the condition is applied on the `domainId` field of a domain-separated entity.
      * Override with an empty body to opt out, or with custom logic when the domain relation
-     * cannot be expressed as a condition on the root entity's `domainId` field.
+     * cannot be expressed as a single domain ID field.
      */
     protected function applyListDomainFilter(QueryBuilder $queryBuilder): void
     {
-        if ($this->definition->getConfig()->getListDomainControl() === null
-            || !is_a($this->definition->entityClass, DomainSeparatedEntityInterface::class, true)
-        ) {
+        $config = $this->definition->getConfig();
+
+        if ($config->getListDomainControl() === null) {
+            return;
+        }
+
+        $listDomainIdField = $config->getListDomainIdField();
+
+        if ($listDomainIdField !== null) {
+            if (str_contains($listDomainIdField, '.')) {
+                [$associationName, $domainIdFieldName] = explode('.', $listDomainIdField);
+                $this->addListDomainIdsConditionThroughAssociation($queryBuilder, $associationName, $domainIdFieldName);
+            } else {
+                $this->addListDomainIdsCondition($queryBuilder, $queryBuilder->getRootAliases()[0] . '.' . $listDomainIdField);
+            }
+
+            return;
+        }
+
+        if (!is_a($this->definition->entityClass, DomainSeparatedEntityInterface::class, true)) {
             return;
         }
 
         $this->addListDomainIdsCondition($queryBuilder, $queryBuilder->getRootAliases()[0] . '.domainId');
+    }
+
+    /**
+     * Adds the list domain condition on a field of an associated entity (e.g. BlogArticle -> domains -> domainId);
+     * matches nothing when no domain is available.
+     *
+     * An EXISTS subquery is used instead of a join so entities present on multiple domains do not produce duplicate rows.
+     */
+    protected function addListDomainIdsConditionThroughAssociation(
+        QueryBuilder $queryBuilder,
+        string $associationName,
+        string $domainIdFieldName,
+    ): void {
+        $domainIds = $this->getEffectiveListDomainIds();
+
+        if ($domainIds === []) {
+            $queryBuilder->andWhere('1 = 0');
+
+            return;
+        }
+
+        $rootAlias = $queryBuilder->getRootAliases()[0];
+        $associationMapping = $queryBuilder->getEntityManager()
+            ->getClassMetadata($queryBuilder->getRootEntities()[0])
+            ->getAssociationMapping($associationName);
+
+        $subQueryAlias = 'listDomainFilterRelation';
+        $relationCondition = $associationMapping->isToOne()
+            ? sprintf('%s.%s = %s', $rootAlias, $associationName, $subQueryAlias)
+            : sprintf('%s MEMBER OF %s.%s', $subQueryAlias, $rootAlias, $associationName);
+
+        $queryBuilder
+            ->andWhere(sprintf(
+                'EXISTS (SELECT 1 FROM %s %s WHERE %s AND %s.%s IN (:listDomainFilterDomainIds))',
+                $associationMapping->targetEntity,
+                $subQueryAlias,
+                $relationCondition,
+                $subQueryAlias,
+                $domainIdFieldName,
+            ))
+            ->setParameter('listDomainFilterDomainIds', $domainIds);
     }
 
     /**

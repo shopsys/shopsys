@@ -54,6 +54,8 @@ final class CrudConfig
      */
     private ?array $listAllowedDomainIds = null;
 
+    private ?string $listDomainIdField = null;
+
     /**
      * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>|null>
      */
@@ -252,11 +254,15 @@ final class CrudConfig
      * Sets the domain control displayed on the list page.
      *
      * @param int[]|null $allowedDomainIds Domain IDs available in the quick domain filter. Null allows all domains available to the administrator.
+     * @param string|null $domainIdField Field holding the domain ID the list query is filtered by, either a field of the entity ('domainId')
+     *   or a field reached through one of its associations ('domains.domainId'). Null filters by the entity's own `domainId` field
+     *   when the entity implements DomainSeparatedEntityInterface, and leaves the query unfiltered otherwise.
      * @return $this
      */
     public function setListDomainControl(
         CrudListDomainControl $listDomainControl,
         ?array $allowedDomainIds = null,
+        ?string $domainIdField = null,
     ): self {
         if ($listDomainControl === CrudListDomainControl::SWITCHER && $allowedDomainIds !== null) {
             throw new InvalidArgumentException('Domain switcher does not support allowed domain IDs.');
@@ -264,8 +270,16 @@ final class CrudConfig
 
         Assert::allInteger($allowedDomainIds ?? []);
 
+        if ($domainIdField !== null && preg_match('/^\w+(\.\w+)?$/', $domainIdField) !== 1) {
+            throw new InvalidArgumentException(sprintf(
+                'Domain ID field "%s" is not valid, expected a field name ("domainId") or an association field ("domains.domainId").',
+                $domainIdField,
+            ));
+        }
+
         $this->listDomainControl = $listDomainControl;
         $this->listAllowedDomainIds = $allowedDomainIds;
+        $this->listDomainIdField = $domainIdField;
 
         return $this;
     }
@@ -362,6 +376,7 @@ final class CrudConfig
             $this->menuIcon,
             $this->listDomainControl,
             $this->listAllowedDomainIds,
+            $this->listDomainIdField,
         );
     }
 }

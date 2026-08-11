@@ -126,17 +126,31 @@ A selected domain limits the list to that domain, and the "All domains" option o
 
 #### Entities without `DomainSeparatedEntityInterface`
 
-When the entity is related to a domain in another way (e.g. through a joined entity), apply the condition yourself in `configureQuery()` using `addListDomainIdsCondition()` with the DQL field holding the domain ID:
+When the entity is related to a domain in another way, declare the field holding the domain ID via the `$domainIdField` argument:
+
+```php
+public function configure(CrudConfig $config): void
+{
+    $config->setListDomainControl(CrudListDomainControl::QUICK_FILTER, domainIdField: 'domains.domainId');
+}
+```
+
+The field is either a field of the entity itself (`'domainId'`), or a field reached through one of the entity's associations (`'domains.domainId'`).
+An association field is applied as an `EXISTS` subquery, so entities present on multiple domains do not produce duplicate rows — no `configureQuery()` code is needed.
+
+The condition respects the selected domain (or all domains available to the list when "All domains" is selected in a quick filter) and matches nothing when no domain is available to the administrator.
+
+For conditions that cannot be expressed as a single domain ID field (e.g. spanning multiple joins), apply them yourself in `configureQuery()` using `addListDomainIdsCondition()` with the DQL field holding the domain ID:
 
 ```php
 protected function configureQuery(QueryBuilder $queryBuilder): void
 {
     $queryBuilder->join('o.settings', 'settings');
-    $this->addListDomainIdsCondition($queryBuilder, 'settings.domainId');
+    $queryBuilder->join('settings.configuration', 'configuration');
+    $this->addListDomainIdsCondition($queryBuilder, 'configuration.domainId');
 }
 ```
 
-The condition respects the selected domain (or all domains available to the list when "All domains" is selected in a quick filter) and matches nothing when no domain is available to the administrator.
 For fully custom conditions, use `getSelectedListDomainId()` and `getListDomainIds()` directly.
 
 ### `configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void`
