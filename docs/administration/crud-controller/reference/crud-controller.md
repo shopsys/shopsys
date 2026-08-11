@@ -102,6 +102,43 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 }
 ```
 
+### List domain control
+
+Use `setListDomainControl()` in `configure()` to display a domain control above the datagrid.
+
+```php
+use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
+
+public function configure(CrudConfig $config): void
+{
+    $config->setListDomainControl(CrudListDomainControl::QUICK_FILTER, [1, 3]);
+}
+```
+
+- `CrudListDomainControl::QUICK_FILTER` displays a per-list filter with an "All domains" option.
+  The filter stores its selection under a namespace generated from the controller name.
+  The optional `$allowedDomainIds` argument restricts the filter to the specified domain IDs; the list is always intersected with the domains available to the administrator.
+- `CrudListDomainControl::SWITCHER` displays the global administration domain switcher.
+  It always returns one selected domain ID and does not support `$allowedDomainIds`.
+
+When the entity implements `\Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface`, the domain condition is applied to the list query automatically (no `configureQuery()` code is needed).
+A selected domain limits the list to that domain, and the "All domains" option of a quick filter limits it to the domains available to the administrator (intersected with the configured allowed domain IDs).
+
+#### Entities without `DomainSeparatedEntityInterface`
+
+When the entity is related to a domain in another way (e.g. through a joined entity), apply the condition yourself in `configureQuery()` using `addListDomainIdsCondition()` with the DQL field holding the domain ID:
+
+```php
+protected function configureQuery(QueryBuilder $queryBuilder): void
+{
+    $queryBuilder->join('o.settings', 'settings');
+    $this->addListDomainIdsCondition($queryBuilder, 'settings.domainId');
+}
+```
+
+The condition respects the selected domain (or all domains available to the list when "All domains" is selected in a quick filter) and matches nothing when no domain is available to the administrator.
+For fully custom conditions, use `getSelectedListDomainId()` and `getListDomainIds()` directly.
+
 ### `configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void`
 
 Configure the form for create and edit pages. The `$entity` parameter is `null` for create action and contains the entity being edited for edit action.
