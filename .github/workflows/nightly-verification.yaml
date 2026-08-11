@@ -285,7 +285,7 @@ jobs:
                     retention-days: 7
             -   name: Send Slack notification
                 if: steps.decision.outputs.SEND != 'none'
-                uses: slackapi/slack-github-action@v2.1.1
+                uses: slackapi/slack-github-action@v4.0.0
                 with:
                     errors: true
                     method: chat.postMessage

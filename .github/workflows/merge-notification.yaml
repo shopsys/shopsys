@@ -20,7 +20,7 @@ jobs:
         if: github.event_name == 'pull_request'
         steps:
             -   name: Checkout repository
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
             -   name: Resolve author Slack mention
                 id: author-mention
                 uses: ./.github/actions/resolve-slack-mention
@@ -47,7 +47,7 @@ jobs:
             -   name: Merge started
                 id: merge-started
                 if: github.event.action == 'auto_merge_enabled'
-                uses: slackapi/slack-github-action@v2.1.1
+                uses: slackapi/slack-github-action@v4.0.0
                 with:
                     errors: true
                     method: chat.postMessage
@@ -80,7 +80,7 @@ jobs:
                     steps.extract-timestamp.outputs.timestamp != '' &&
                     ((github.event.action == 'closed' && github.event.pull_request.merged == true) ||
                     github.event.action == 'auto_merge_disabled')
-                uses: slackapi/slack-github-action@v2.1.1
+                uses: slackapi/slack-github-action@v4.0.0
                 with:
                     errors: true
                     method: reactions.add
@@ -94,7 +94,7 @@ jobs:
                     github.event.action == 'closed' &&
                     github.event.pull_request.merged == true &&
                     steps.extract-timestamp.outputs.timestamp != ''
-                uses: slackapi/slack-github-action@v2.1.1
+                uses: slackapi/slack-github-action@v4.0.0
                 with:
                     errors: true
                     method: chat.postMessage
@@ -107,7 +107,7 @@ jobs:
                 if: |
                     github.event.action == 'auto_merge_disabled' &&
                     steps.extract-timestamp.outputs.timestamp != ''
-                uses: slackapi/slack-github-action@v2.1.1
+                uses: slackapi/slack-github-action@v4.0.0
                 with:
                     errors: true
                     method: chat.postMessage
@@ -126,7 +126,7 @@ jobs:
             github.event.workflow_run.conclusion == 'cancelled')
         steps:
             -   name: Checkout repository
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
             -   name: Get PR with auto-merge enabled
                 id: get-pr
                 env:
@@ -174,7 +174,7 @@ jobs:
                     steps.get-pr.outputs.PR_NUMBER != '' &&
                     steps.extract-timestamp.outputs.timestamp != '' &&
                     github.event.workflow_run.conclusion == 'failure'
-                uses: slackapi/slack-github-action@v2.1.1
+                uses: slackapi/slack-github-action@v4.0.0
                 with:
                     errors: true
                     method: chat.postMessage
@@ -206,7 +206,7 @@ jobs:
                     steps.extract-timestamp.outputs.timestamp != '' &&
                     github.event.workflow_run.conclusion == 'cancelled' &&
                     steps.check-concurrency.outputs.CANCELLED_BY_CONCURRENCY != 'true'
-                uses: slackapi/slack-github-action@v2.1.1
+                uses: slackapi/slack-github-action@v4.0.0
                 with:
                     errors: true
                     method: chat.postMessage
