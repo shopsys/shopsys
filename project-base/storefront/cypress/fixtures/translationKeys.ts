@@ -27,6 +27,7 @@ export const translationKeys = {
         czechPost: 'Czech post',
         ppl: 'PPL',
         droneDelivery: 'Drone delivery',
+        personalPickup: 'Personal pickup',
     },
     transportGroup: {
         deliveryToAddress: 'Delivery to address',

@@ -352,6 +352,13 @@ changeElementText(TIDs.store_opening_hours, staticData.openingHours, false);
 changeElementText(TIDs.blog_article_publication_date, staticData.blogArticle.publicationDate);
 ```
 
+The expected delivery date message (computed from the current date) is shown on the transport-and-payment
+page and on pickup places. Before EVERY snapshot of that page, call
+`changeExpectedDeliveryDateMessagesToStaticDemodata()` from `transportAndPaymentSupport.ts` — it replaces
+each `TIDs.expected_delivery_date_message` element with `staticData.expectedDeliveryDateMessage`, or with
+`staticData.expectedPersonalPickupDateMessage` when the element's real text starts with the translated
+"Personal pickup" prefix (the delivery vs. pickup wording is deterministic, so snapshots keep it truthful).
+
 ## Known Gotcha: .within() + waitForStableAndInteractiveDOM
 
 **NEVER** call `cy.waitForStableAndInteractiveDOM()` inside `.within()` — it does `cy.get('body[data-hydrated="true"]')` which fails when scoped to a non-body element.
@@ -519,6 +526,8 @@ staticData.transport.ppl.uuid;
 staticData.promoCode; // 'test'
 staticData.openingHours; // '09:00 - 11:00, 13:00 - 17:00'
 staticData.orderNote; // 'Just a tiny note in the order.'
+staticData.expectedDeliveryDateMessage; // 'Delivery on Tuesday 10/26'
+staticData.expectedPersonalPickupDateMessage; // 'Personal pickup on Tuesday 10/26'
 staticData.order.number; // '1234567890'
 staticData.order.numberHeading; // 'Order number 1234567890'
 staticData.order.creationDate; // '10/26/1999 10:10 AM'

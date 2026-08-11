@@ -1,6 +1,7 @@
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import { useExpectedDeliveryDateMessage } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
+import { TIDs } from 'cypress/tids';
 import { useId } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
@@ -21,7 +22,12 @@ export const ExpectedDeliveryDateInfo: FC<ExpectedDeliveryDateInfoProps> = ({
 
     if (expectedDeliveryDateMessage !== null) {
         return (
-            <div className={twMergeCustom('text-sm text-text-success', className)}>{expectedDeliveryDateMessage}</div>
+            <div
+                className={twMergeCustom('text-sm text-text-success', className)}
+                data-tid={TIDs.expected_delivery_date_message}
+            >
+                {expectedDeliveryDateMessage}
+            </div>
         );
     }
 

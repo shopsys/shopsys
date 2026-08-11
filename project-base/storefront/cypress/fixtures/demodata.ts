@@ -105,6 +105,8 @@ export const staticData = {
         numberHeading: 'Order number 1234567890',
         creationDate: '10/26/1999',
     },
+    expectedDeliveryDateMessage: 'Delivery on Tuesday 10/26',
+    expectedPersonalPickupDateMessage: 'Personal pickup on Tuesday 10/26',
     complaint: {
         number: '1234567890',
         creationDate: '10/26/1999',
