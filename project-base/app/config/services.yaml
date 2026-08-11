@@ -20,7 +20,7 @@ services:
     App\:
         exclude:
             - '../src/{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-        resource: '../src/**/*{Calculation,Collector,Context,Dispatcher,Enum,Executor,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Task,Transformer,Validator,Transfer,Helper,Converter,DataFetcher,Mutation,Query}.php'
+        resource: '../src/**/*{Calculation,Collector,Context,Dispatcher,Enum,Executor,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Processor,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Task,Transformer,Validator,Transfer,Helper,Converter,DataFetcher,Mutation,Query}.php'
 
     App\Command\:
         resource: '../src/Command'

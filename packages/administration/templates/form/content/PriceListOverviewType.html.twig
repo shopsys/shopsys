@@ -16,7 +16,7 @@
                     {% for specialPrice in specialPrices %}
                         <tr class="{{ not isHighlighted and specialPrice.isNowActive ? "table-success" }}">
                             <td>
-                                <a href="{{ url('admin_pricelist_edit', {id: specialPrice.priceListId}) }}" target="_blank">
+                                <a href="{{ url('admin_pricelist_edit', {id: specialPrice.priceListId}) }}" target="_blank" rel="noopener">
                                     <span>{{ specialPrice.priceListName }}</span>&nbsp;
                                     {{ ux_icon('forward-page') }}
                                 </a>

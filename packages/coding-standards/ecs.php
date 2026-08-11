@@ -91,6 +91,7 @@ use PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer;
 use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
+use Shopsys\CodingStandards\CsFixer\MissingLinkRelNoopenerFixer;
 use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\InheritDocFormatFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
@@ -138,6 +139,7 @@ use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 return ECSConfig::configure()
     ->withParallel()
     ->withSpacing(indentation: Option::INDENTATION_SPACES, lineEnding: PHP_EOL)
+    ->withFileExtensions(['php', 'html.twig'])
     ->withSets([
         SetList::PSR_12,
         SetList::CLEAN_CODE,
@@ -165,6 +167,7 @@ return ECSConfig::configure()
         InheritDocFormatFixer::class,
         ForbiddenDumpFixer::class,
         MissingButtonTypeFixer::class,
+        MissingLinkRelNoopenerFixer::class,
         OrmJoinColumnRequireNullableFixer::class,
         ObjectIsCreatedByFactorySniff::class,
         ForbiddenDumpSniff::class,

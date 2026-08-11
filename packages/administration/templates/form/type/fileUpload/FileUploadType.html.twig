@@ -24,7 +24,7 @@
                                 <div class="d-flex align-items-center gap-1">
                                     {% if uploadedFileExists(file) %}
                                         {% if isUploadedFileViewableInBrowser(file) %}
-                                            <a href="{{ uploadedFileViewUrl(file) }}" target="_blank" class="btn btn-sm btn-ghost-secondary" title="{{ 'View'|trans }}">
+                                            <a href="{{ uploadedFileViewUrl(file) }}" target="_blank" class="btn btn-sm btn-ghost-secondary" title="{{ 'View'|trans }}" rel="noopener">
                                                 {{ ux_icon('forward-page', {class: 'icon mx-0'}) }}
                                             </a>
                                         {% endif %}

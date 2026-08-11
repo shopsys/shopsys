@@ -3,6 +3,7 @@ import { Button, ButtonBaseProps } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
 import { AnchorHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { addRelNoopenerWhenTargetIsBlank } from 'utils/links/addRelNoopenerWhenTargetIsBlank';
 import { twMergeCustom } from 'utils/twMerge';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
@@ -52,7 +53,7 @@ export const Link: FC<LinkProps> = ({
     const props = {
         className: classNameTwClass,
         href: isExternal ? href : undefined,
-        rel,
+        rel: addRelNoopenerWhenTargetIsBlank(rel, target),
         target,
         tabIndex: 0,
     };

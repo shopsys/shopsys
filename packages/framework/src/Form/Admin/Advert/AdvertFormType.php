@@ -107,6 +107,7 @@ final class AdvertFormType extends AbstractType
             ->add('code', TextareaType::class, [
                 'label' => 'Code',
                 'required' => true,
+                'contains_html' => true,
                 'constraints' => [
                     new Constraints\NotBlank(
                         message: 'Please enter HTML code for advertisement area',

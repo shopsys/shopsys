@@ -16,7 +16,7 @@
                         {% set isNewItem = orderItemId starts with constant('Shopsys\\FrameworkBundle\\Model\\Order\\OrderData::NEW_ITEM_PREFIX') %}
                         {% if productItem and productItem.product %}
                             <span class="input-group-text">
-                                <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="input-group-link" target="_blank">
+                                <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="input-group-link" target="_blank" rel="noopener">
                                     {{ ux_icon('forward-page') }}
                                 </a>
                             </span>

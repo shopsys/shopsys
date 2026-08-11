@@ -13,7 +13,7 @@ services:
 
     Shopsys\FrameworkBundle\:
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-        resource: '../../**/*{CategoryAutomatedFilter,Calculation,Context,Dispatcher,Enum,Executor,Extractor,Facade,Factory,Formatter,Freezer,Generator,Handler,Helper,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Task,Transformer,DataFetcher}.php'
+        resource: '../../**/*{CategoryAutomatedFilter,Calculation,Context,Dispatcher,Enum,Executor,Extractor,Facade,Factory,Formatter,Freezer,Generator,Handler,Helper,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Processor,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Task,Transformer,DataFetcher}.php'
 
     Shopsys\FrameworkBundle\Controller\:
         resource: '../../Controller/'
@@ -380,8 +380,6 @@ services:
     Shopsys\FrameworkBundle\Component\Image\ImageLocator:
         arguments: ['%shopsys.image_dir%']
 
-    Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor: ~
-
     Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface:
         class: 'Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter'
 
@@ -729,8 +727,6 @@ services:
             $logger: '@monolog.logger.queue'
 
     Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack: ~
-
-    Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor: ~
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\ProductPromoCodeFiller: ~
 

@@ -6,7 +6,7 @@
 {% block h1 %}{{ 'Order Nr.'|trans }} {{ order.number }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ findUrlByDomainId('front_customer_order_detail_unregistered', { urlHash: order.urlHash }, order.domainId) }}" target="_blank" class="btn btn-outline-primary">
+    <a href="{{ findUrlByDomainId('front_customer_order_detail_unregistered', { urlHash: order.urlHash }, order.domainId) }}" target="_blank" class="btn btn-outline-primary" rel="noopener">
         {{ ux_icon('forward-page') }}
         {{ 'View order on Frontend'|trans }}
     </a>

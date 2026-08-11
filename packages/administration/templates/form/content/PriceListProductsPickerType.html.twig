@@ -82,6 +82,7 @@
                 {% if product is not null %}
                     <a href="{{ url('admin_product_edit', {id: product.id}) }}"
                        target="_blank"
+                       rel="noopener"
                     >
                         {{ product.getName(getDomain().getDomainConfigById(domainId).getLocale()) }}
                         {{ ux_icon('forward-page') }}
