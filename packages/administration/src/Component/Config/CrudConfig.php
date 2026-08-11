@@ -47,6 +47,13 @@ final class CrudConfig
 
     private ?string $menuIcon = null;
 
+    private ?CrudListDomainControl $listDomainControl = null;
+
+    /**
+     * @var int[]|null
+     */
+    private ?array $listAllowedDomainIds = null;
+
     /**
      * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>|null>
      */
@@ -242,6 +249,28 @@ final class CrudConfig
     }
 
     /**
+     * Sets the domain control displayed on the list page.
+     *
+     * @param int[]|null $allowedDomainIds Domain IDs available in the quick domain filter. Null allows all domains available to the administrator.
+     * @return $this
+     */
+    public function setListDomainControl(
+        CrudListDomainControl $listDomainControl,
+        ?array $allowedDomainIds = null,
+    ): self {
+        if ($listDomainControl === CrudListDomainControl::SWITCHER && $allowedDomainIds !== null) {
+            throw new InvalidArgumentException('Domain switcher does not support allowed domain IDs.');
+        }
+
+        Assert::allInteger($allowedDomainIds ?? []);
+
+        $this->listDomainControl = $listDomainControl;
+        $this->listAllowedDomainIds = $allowedDomainIds;
+
+        return $this;
+    }
+
+    /**
      * @template T of \Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface
      *
      * Register handler class or classes for CRUD actions.
@@ -331,6 +360,8 @@ final class CrudConfig
             $this->customRoleSection,
             $this->handlerClasses,
             $this->menuIcon,
+            $this->listDomainControl,
+            $this->listAllowedDomainIds,
         );
     }
 }

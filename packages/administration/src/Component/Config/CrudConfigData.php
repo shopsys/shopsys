@@ -17,6 +17,7 @@ final readonly class CrudConfigData
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType[] $enabledActions
      * @param MenuItemPosition $menuSectionPosition
      * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, null|class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>> $handlerClasses
+     * @param int[]|null $listAllowedDomainIds
      */
     public function __construct(
         private ?string $entityNameSingular,
@@ -34,6 +35,8 @@ final readonly class CrudConfigData
         private ?string $customRoleSection,
         private array $handlerClasses,
         private ?string $menuIcon,
+        private ?CrudListDomainControl $listDomainControl,
+        private ?array $listAllowedDomainIds,
     ) {
         foreach ($this->enabledActions as $action) {
             if (array_key_exists($action->value, $this->handlerClasses) && $this->handlerClasses[$action->value] === null) {
@@ -166,5 +169,18 @@ final readonly class CrudConfigData
     public function getMenuIcon(): ?string
     {
         return $this->menuIcon;
+    }
+
+    public function getListDomainControl(): ?CrudListDomainControl
+    {
+        return $this->listDomainControl;
+    }
+
+    /**
+     * @return int[]|null
+     */
+    public function getListAllowedDomainIds(): ?array
+    {
+        return $this->listAllowedDomainIds;
     }
 }
