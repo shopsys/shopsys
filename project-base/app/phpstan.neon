@@ -4,9 +4,8 @@ parameters:
     shipmonkDeadCode:
         usageExcluders:
             tests:
-                # dev paths autodetection crashes on autoload-dev entries without an existing directory
-                enabled: false
-                devPaths: []
+                # usages coming only from tests do not keep production code alive
+                enabled: true
     shopsysDeadCodeDetection:
         dispatchAttributeClassNames:
             - Mcp\Capability\Attribute\McpTool

@@ -6,9 +6,8 @@ parameters:
     shipmonkDeadCode:
         usageExcluders:
             tests:
-                # dev paths autodetection crashes on autoload-dev entries without an existing directory
-                enabled: false
-                devPaths: []
+                # usages coming only from tests do not keep production code alive
+                enabled: true
     symfony:
         containerXmlPath: '%currentWorkingDirectory%/project-base/app/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false
