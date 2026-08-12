@@ -1,6 +1,8 @@
 parametersSchema:
     shopsysDeadCodeDetection: structure([
         dispatchAttributeClassNames: listOf(string())
+        dispatchedMethodNamesByClassName: arrayOf(listOf(string()), string())
+        dispatchedMethodSuffixesByClassName: arrayOf(listOf(string()), string())
         phpTemplateDirectoryPaths: listOf(string())
         twigTemplateDirectoryPaths: listOf(string())
         yamlConfigDirectoryPaths: listOf(string())
@@ -9,6 +11,8 @@ parametersSchema:
 parameters:
     shopsysDeadCodeDetection:
         dispatchAttributeClassNames: []
+        dispatchedMethodNamesByClassName: []
+        dispatchedMethodSuffixesByClassName: []
         phpTemplateDirectoryPaths: []
         twigTemplateDirectoryPaths: []
         yamlConfigDirectoryPaths: []
@@ -22,6 +26,13 @@ services:
             - shipmonk.deadCode.memberUsageProvider
     -
         class: Shopsys\CodingStandards\Phpstan\CodeceptionUsageProvider
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\DispatchedMethodUsageProvider
+        arguments:
+            dispatchedMethodNamesByClassName: %shopsysDeadCodeDetection.dispatchedMethodNamesByClassName%
+            dispatchedMethodSuffixesByClassName: %shopsysDeadCodeDetection.dispatchedMethodSuffixesByClassName%
         tags:
             - shipmonk.deadCode.memberUsageProvider
     -

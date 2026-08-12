@@ -11,6 +11,19 @@ parameters:
     shopsysDeadCodeDetection:
         dispatchAttributeClassNames:
             - Mcp\Capability\Attribute\McpTool
+        dispatchedMethodNamesByClassName:
+            # crud controller actions are routed by CrudRouteProvider via generateController
+            Shopsys\AdministrationBundle\Controller\AbstractCrudController: [listAction, detailAction, editAction, createAction, deleteAction]
+            # tagged shopsys.role_section_provider services are indexed by the AutowireIterator defaultIndexMethod
+            Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider: [getTargetContext]
+            # maker MakeCommandRegistrationPass reads the command description via method_exists
+            Symfony\Bundle\MakerBundle\MakerInterface: [getCommandDescription]
+            # page objects are constructed by the Codeception dependency injection when declared as Cest method parameters
+            Tests\App\Acceptance\acceptance\PageObject\AbstractPage: [__construct]
+        dispatchedMethodSuffixesByClassName:
+            # getAliases() exposes every suffixed method to the GraphQL resolver maps
+            Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation: [Mutation]
+            Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery: [Query]
         phpTemplateDirectoryPaths:
             - %currentWorkingDirectory%/packages/maker/templates
         twigTemplateDirectoryPaths:
