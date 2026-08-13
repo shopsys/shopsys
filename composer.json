@@ -167,6 +167,7 @@
         "symfony/clock": "^7.4",
         "symfony/console": "^7.4",
         "symfony/css-selector": "^7.4",
+        "symfony/doctrine-bridge": "^7.4.16",
         "symfony/doctrine-messenger": "^7.4",
         "symfony/dom-crawler": "^7.4",
         "symfony/dotenv": "^7.4",
@@ -240,8 +241,7 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0",
-        "doctrine/orm": ">=3.6.8"
+        "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0"
     },
     "scripts": {
         "post-install-cmd": [

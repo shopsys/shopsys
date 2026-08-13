@@ -47,6 +47,6 @@
         "phpunit/phpunit": "^12.5"
     },
     "conflict": {
-        "doctrine/orm": ">=3.6.8"
+        "symfony/doctrine-bridge": "<7.4.16"
     }
 }

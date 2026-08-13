@@ -99,6 +99,7 @@
         "symfony/intl": "^7.4",
         "symfony/clock": "^7.4",
         "symfony/css-selector": "^7.4",
+        "symfony/doctrine-bridge": "^7.4.16",
         "symfony/doctrine-messenger": "^7.4",
         "symfony/dom-crawler": "^7.4",
         "symfony/error-handler": "^7.4",
@@ -140,9 +141,6 @@
         "symfony/process": "^7.4",
         "symfony/var-dumper": "^7.4",
         "symfony/yaml": "^7.4"
-    },
-    "conflict": {
-        "doctrine/orm": ">=3.6.8"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
