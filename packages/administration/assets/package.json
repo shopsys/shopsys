@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@melloware/coloris": "^0.25.0",
-        "@tabler/core": "^1.2.0",
+        "@tabler/core": "1.4.0",
         "autosize": "^6.0.1",
         "bazinga-translator": "^8.0.0",
         "bootstrap": "^5.3.8",

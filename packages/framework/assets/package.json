@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@melloware/coloris": "^0.25.0",
-        "@tabler/core": "^1.2.0",
+        "@tabler/core": "1.4.0",
         "bazinga-translator": "^8.0.0",
         "chart.js": "^4.5.1",
         "flatpickr": "^4.6.13",
