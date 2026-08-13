@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\ProductReview;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
@@ -15,6 +16,7 @@ class ProductReviewPolicyFacade
         protected readonly ArticleFacade $articleFacade,
         protected readonly Setting $setting,
         protected readonly Domain $domain,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -39,6 +41,8 @@ class ProductReviewPolicyFacade
             $productReviewPolicyArticle?->getId(),
             $domainId,
         );
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SETTINGS_QUERY_KEY_PART);
     }
 
     public function isArticleUsedAsProductReviewPolicyArticle(Article $article): bool

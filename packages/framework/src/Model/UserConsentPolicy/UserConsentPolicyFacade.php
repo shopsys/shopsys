@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\UserConsentPolicy;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
@@ -15,6 +16,7 @@ class UserConsentPolicyFacade
         protected readonly ArticleFacade $articleFacade,
         protected readonly Setting $setting,
         protected readonly Domain $domain,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -38,6 +40,8 @@ class UserConsentPolicyFacade
             $userConsentPolicyArticle?->getId(),
             $domainId,
         );
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SETTINGS_QUERY_KEY_PART);
     }
 
     public function isArticleUsedAsUserConsentPolicyArticle(Article $article): bool

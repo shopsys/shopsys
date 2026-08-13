@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseL
  * @method \App\Model\Article\Article|null findArticle(string $settingKey, int $domainId)
  * @method void setArticle(string $settingKey, int $domainId, \App\Model\Article\Article|null $article = null)
  * @property \App\Component\Setting\Setting $setting
- * @method __construct(\Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade)
  */
 class LegalConditionsFacade extends BaseLegalConditionsFacade
 {
