@@ -10,13 +10,16 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Form\DaysOfWeekType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayVariablesType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
+use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\TransportInputPricesType;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -46,6 +49,7 @@ final class TransportFormType extends AbstractType
         private readonly TransportGroupFacade $transportGroupFacade,
         private readonly Domain $domain,
         private readonly TransportTypeProvider $transportTypeProvider,
+        private readonly AdministrationRouter $administrationRouter,
     ) {
     }
 
@@ -114,7 +118,13 @@ final class TransportFormType extends AbstractType
                 'choice_value' => 'id',
                 'placeholder' => t('-- Choose transport group --'),
                 'label' => 'Transport group',
-            ])
+            ]);
+
+        $builderDeliveryGroup = $builder->create('delivery', GroupType::class, [
+            'label' => 'Delivery',
+        ]);
+
+        $builderDeliveryGroup
             ->add('daysUntilDelivery', TextType::class, [
                 'required' => true,
                 'constraints' => [
@@ -123,6 +133,25 @@ final class TransportFormType extends AbstractType
                     new Constraints\Regex(pattern: '/^\d+$/'),
                 ],
                 'label' => 'Days until delivery',
+                'help' => t('The number of days between the order dispatch and the delivery. 0 means the goods are delivered on the dispatch day itself.'),
+            ])
+            ->add('deliveryDaysOfWeek', DaysOfWeekType::class, [
+                'label' => 'Days of the week when the transport delivers',
+                'constraints' => [
+                    new Constraints\Count(min: 1, minMessage: 'Please choose at least one day'),
+                ],
+            ])
+            ->add('deliversOnPublicHolidays', YesNoType::class, [
+                'label' => 'Delivers on public holidays as well',
+            ])
+            ->add('deliversOnInternalClosedDays', YesNoType::class, [
+                'label' => 'Delivers on e-shop internal days as well',
+            ])
+            ->add('deliveryDaysInfo', MessageType::class, [
+                'message_level' => MessageType::MESSAGE_LEVEL_INFO,
+                'data' => t('Public holidays and e-shop internal days are managed in the <a href="%closedDaysUrl%" target="_blank">Holidays and internal days</a> administration; the carrier\'s own days off are not taken into account.', [
+                    '%closedDaysUrl%' => $this->administrationRouter->generate('admin_closedday_list'),
+                ]),
             ]);
 
         $builderPricesGroup = $builder->create('prices', GroupType::class, [
@@ -230,6 +259,7 @@ final class TransportFormType extends AbstractType
 
         $builder
             ->add($builderBasicInformationGroup)
+            ->add($builderDeliveryGroup)
             ->add($builderPricesGroup)
             ->add($builderAdditionalInformationGroup)
             ->add($builderImageGroup)

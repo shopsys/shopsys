@@ -12,6 +12,7 @@ import {
     clickAddNewAddressButton,
     fillAndSaveNewDeliveryAddressInPopup,
 } from './orderSupport';
+import { changeExpectedDeliveryDateMessagesToStaticDemodata } from 'e2e/transportAndPayment/transportAndPaymentSupport';
 import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
@@ -49,6 +50,7 @@ describe('Contact Information Page Tests', () => {
         checkContactInformationFormIsNotVisible();
         checkTransportSelectionIsVisible();
         checkUrl(url.order.transportAndPayment);
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -83,6 +85,7 @@ describe('Contact Information Page Tests', () => {
             checkContactInformationFormIsNotVisible();
             checkTransportSelectionIsVisible();
             checkUrl(url.order.transportAndPayment);
+            changeExpectedDeliveryDateMessagesToStaticDemodata();
             takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page', {
                 blackout: [
                     { tid: TIDs.transport_and_payment_list_item_image },

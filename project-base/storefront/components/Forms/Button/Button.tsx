@@ -46,6 +46,14 @@ export const Button: FC<ButtonProps> = forwardRef(
     },
 );
 
+export const getButtonIconClassName = (size: ButtonBaseProps['size']) =>
+    twJoin(
+        size === 'small' && 'size-4',
+        size === 'medium' && 'size-4 md:size-5',
+        size === 'large' && 'size-5',
+        size === 'xlarge' && 'size-6',
+    );
+
 export const getButtonClassName = (
     variant: ButtonBaseProps['variant'],
     size: ButtonBaseProps['size'],

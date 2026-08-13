@@ -20,9 +20,8 @@ fragment TransportWithAvailablePaymentsFragment on Transport {
     payments {
         ...SimplePaymentFragment
     }
-    daysUntilDelivery
+    expectedDeliveryDate
     transportTypeCode
-    isPersonalPickup
     productsBlockingSelectionInCart {
         reason
         products {

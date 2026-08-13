@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\DateTimeHelper;
 
+use DateTimeInterface;
 use DateTimeZone;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\Exception\CannotParseDateTimeException;
@@ -12,6 +13,10 @@ use Symfony\Component\Clock\DatePoint;
 
 class DateTimeHelper
 {
+    public const array WORKING_DAYS_OF_WEEK = [1, 2, 3, 4, 5];
+
+    public const array ALL_DAYS_OF_WEEK = [1, 2, 3, 4, 5, 6, 7];
+
     public function __construct(
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly ClockInterface $clock,
@@ -58,5 +63,10 @@ class DateTimeHelper
         DateTimeZone $dateTimeZone,
     ): DatePoint {
         return (new DatePoint($dateTimeString, $dateTimeZone))->setTimezone(new DateTimeZone('UTC'));
+    }
+
+    public static function isWeekend(DateTimeInterface $date): bool
+    {
+        return (int)$date->format('N') >= 6;
     }
 }

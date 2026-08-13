@@ -8,7 +8,7 @@ import { twJoin } from 'tailwind-merge';
 import { normalizeTelephone } from 'utils/formaters/normalizeTelephone';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getOrderTransportItem } from 'utils/mappers/order';
-import { isPacketeryTransport } from 'utils/packetery';
+import { isPickupPlaceTransport } from 'utils/transport';
 
 type OrderCustomerInfoProps = {
     order: TypeOrderDetailFragment;
@@ -17,10 +17,7 @@ type OrderCustomerInfoProps = {
 export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
     const { t } = useTranslation();
     const orderTransport = getOrderTransportItem(order.items);
-    const isPickupPlaceTransport =
-        orderTransport &&
-        (orderTransport.transport?.isPersonalPickup ||
-            isPacketeryTransport(orderTransport.transport?.transportTypeCode));
+    const isPickupPlaceOrder = orderTransport && isPickupPlaceTransport(orderTransport.transport?.transportTypeCode);
 
     return (
         <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-xl bg-background-more p-5 lg:grid-cols-2">
@@ -42,7 +39,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
             </InformationCard>
 
             <InformationCard
-                heading={isPickupPlaceTransport ? t('Pickup place') : t('Delivery address')}
+                heading={isPickupPlaceOrder ? t('Pickup place') : t('Delivery address')}
                 icon={<BoxPackageHandIcon className="size-8" />}
             >
                 <span>

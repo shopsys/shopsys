@@ -31,6 +31,9 @@ const normalizeDomainHost = (domainUrl: string, protocol: string): string => {
     return requestUrl.host;
 };
 
+export const getFallbackTimezoneByDomainUrl = (domainUrl: string): string =>
+    domainsConfig.find((domainConfig) => domainConfig.url === domainUrl)?.fallbackTimezone ?? 'UTC';
+
 const findDomainConfigByHost = (host: string): DomainConfigType | undefined => {
     const matchingDomainConfigs = domainsConfig.filter((domainConfig) => new URL(domainConfig.url || '').host === host);
 

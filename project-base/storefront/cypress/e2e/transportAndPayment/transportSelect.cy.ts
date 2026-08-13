@@ -1,6 +1,7 @@
 import {
     changeDayOfWeekInChangeTransportMutationResponse,
     changeDayOfWeekInTransportsApiResponse,
+    changeExpectedDeliveryDateMessagesToStaticDemodata,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
     openTransportGroupByName,
@@ -35,6 +36,7 @@ describe('Transport Select Tests', () => {
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -56,6 +58,7 @@ describe('Transport Select Tests', () => {
             translations.transportGroup.pickupPoint,
         );
         waitForTransportAndPaymentToBeInteractive();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -135,6 +138,7 @@ describe('Transport Select Tests', () => {
         waitForTransportAndPaymentToBeInteractive();
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting, deselecting, and selecting again', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -150,6 +154,7 @@ describe('Transport Select Tests', () => {
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -160,6 +165,7 @@ describe('Transport Select Tests', () => {
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -175,6 +181,7 @@ describe('Transport Select Tests', () => {
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -185,6 +192,7 @@ describe('Transport Select Tests', () => {
 
         removeTransportSelectionUsingButton();
         waitForTransportAndPaymentToBeInteractive();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -221,6 +229,7 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page with too few products', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -243,6 +252,7 @@ describe('Transport Select Tests', () => {
         goToNextOrderStep();
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page with enough products', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },

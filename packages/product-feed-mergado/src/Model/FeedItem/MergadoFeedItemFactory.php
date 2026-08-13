@@ -45,7 +45,9 @@ class MergadoFeedItemFactory
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
             $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain($product, $domainConfig),
             $this->getProductUsp($product, $domainId),
-            $this->availabilityFacade->getProductAvailabilityDaysForFeedsByDomainId($product, $domainId),
+            // a dispatch time over the limit resolves to a concrete date — even though the Mergado specification
+            // declares DELIVERY_DAYS as a number of days only, mirroring the Zbozi feed logic is deliberate here
+            $this->availabilityFacade->getProductAvailabilityDaysOrDateForFeedsByDomainId($product, $domainId),
             $productPricesResult->sellingProductPrice->getPrice(),
             $this->getOtherProductImages($product, $domainConfig),
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),

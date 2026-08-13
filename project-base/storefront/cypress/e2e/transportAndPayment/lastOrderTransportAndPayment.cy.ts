@@ -1,4 +1,5 @@
 import {
+    changeExpectedDeliveryDateMessagesToStaticDemodata,
     changeSelectionOfPaymentByName,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
@@ -35,6 +36,7 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
     it('[Preselect T&P] should preselect transport and payment from last order for logged-in user', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'preselected transport and payment', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -54,6 +56,7 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
         waitForTransportAndPaymentToBeInteractive();
         cy.reloadAndWaitForStableAndInteractiveDOM();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first change and refresh', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -73,6 +76,7 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         changeSelectionOfPaymentByName(translations.payment.cash);
         waitForTransportAndPaymentToBeInteractive();
         cy.reloadAndWaitForStableAndInteractiveDOM();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after second change and refresh', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },

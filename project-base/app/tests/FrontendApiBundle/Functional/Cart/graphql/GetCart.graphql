@@ -17,7 +17,6 @@ query GetCart(
             description
             instructions
             position
-            daysUntilDelivery
             transportTypeCode
             price {
                 priceWithVat

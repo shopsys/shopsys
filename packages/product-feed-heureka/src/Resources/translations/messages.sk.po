@@ -28,6 +28,6 @@ msgstr "Maximálna cena za klik"
 msgid "Number of delivery days for out of stock products for Heureka XML feed"
 msgstr "Počet dní doručenia pre produkty, ktoré nie sú skladom pre Heureka XML feed"
 
-msgid "The value is used for DELIVERY_DATE setting in Heureka XML feed. See <a href=\"https://sluzby.heureka.cz/napoveda/xml-feed/#DELIVERY_DATE\">the docs</a> for more information."
-msgstr "Hodnota sa používa pre nastavenie DELIVERY_DATE v Heureka XML feede. Viac informácií nájdete v <a href=\"https://sluzby.heureka.cz/napoveda/xml-feed/#DELIVERY_DATE\">dokumentácii</a>."
+msgid "The value is used for DELIVERY_DATE setting in Heureka XML feed. See <a href=\"https://sluzby.heureka.cz/napoveda/xml-feed/#DELIVERY_DATE\">the docs</a> for more information. <br/>The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
+msgstr "Hodnota sa používa pre nastavenie DELIVERY_DATE v Heureka XML feede. Viac informácií nájdete v <a href=\"https://sluzby.heureka.cz/napoveda/xml-feed/#DELIVERY_DATE\">dokumentácii</a>. <br/>Hodnota sa použije iba pri produktoch, ktoré nemajú vyplnený \"Predpokladaný dátum naskladnenia\". Inak sa počet dní odvodzuje z tohto dátumu."
 

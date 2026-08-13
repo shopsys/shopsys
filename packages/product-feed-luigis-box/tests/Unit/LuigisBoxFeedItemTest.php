@@ -21,7 +21,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
@@ -102,6 +104,20 @@ class LuigisBoxFeedItemTest extends TestCase
         return $domainConfigStub;
     }
 
+    private function createProductAvailabilityFacadeStub(
+        bool $isProductAvailableOnStock,
+    ): ProductAvailabilityFacade {
+        $productAvailabilityFacade = $this->createStub(ProductAvailabilityFacade::class);
+        $productAvailabilityFacade->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
+        $productAvailabilityFacade->method('getProductAvailabilityInfoByProduct')->willReturn(
+            $isProductAvailableOnStock
+                ? new ProductAvailabilityInfo('In stock', AvailabilityStatusEnum::IN_STOCK)
+                : new ProductAvailabilityInfo('Out of stock', AvailabilityStatusEnum::OUT_OF_STOCK),
+        );
+
+        return $productAvailabilityFacade;
+    }
+
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
         $productPrice = new ProductPrice($price, $this->createStub(PricingGroup::class), false);
@@ -131,7 +147,7 @@ class LuigisBoxFeedItemTest extends TestCase
         $this->assertCommonFields($luigisBoxProductFeedItem);
 
         self::assertSame(
-            $productIsAvailableOnStock ? t('Out of stock', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN) : t('In stock', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN),
+            $productIsAvailableOnStock ? 'In stock' : 'Out of stock',
             $luigisBoxProductFeedItem->getAvailabilityRankText(),
         );
         self::assertSame($expectedRank, $luigisBoxProductFeedItem->getAvailabilityRank());
@@ -236,8 +252,7 @@ class LuigisBoxFeedItemTest extends TestCase
         $productCachedAttributesFacade = $this->createStub(ProductCachedAttributesFacade::class);
         $productCachedAttributesFacade->method('getProductParameterValues')->willReturn([$productParameterValue]);
 
-        $productAvailabilityFacade = $this->createStub(ProductAvailabilityFacade::class);
-        $productAvailabilityFacade->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
+        $productAvailabilityFacade = $this->createProductAvailabilityFacadeStub($isProductAvailableOnStock);
 
         $settingStub = $this->createStub(Setting::class);
         $settingStub->method('getForDomain')->willReturn(self::MOCKED_LUIGIS_BOX_RANK_SETTING);

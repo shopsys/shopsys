@@ -28,6 +28,9 @@ msgstr "Obchodní domy"
 msgid "Exchange"
 msgstr "Výměna"
 
+msgid "Expecting %date%"
+msgstr "Očekáváme %date%"
+
 msgid "Fix"
 msgstr "Oprava"
 

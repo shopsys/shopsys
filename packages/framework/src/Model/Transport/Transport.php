@@ -106,6 +106,27 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $daysUntilDelivery;
 
     /**
+     * @var int[]
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'json')]
+    protected $deliveryDaysOfWeek;
+
+    /**
+     * @var bool
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'boolean')]
+    protected $deliversOnPublicHolidays;
+
+    /**
+     * @var bool
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'boolean')]
+    protected $deliversOnInternalClosedDays;
+
+    /**
      * @var string|null
      */
     #[AsMcpColumn]
@@ -150,6 +171,9 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     {
         $this->hidden = $transportData->hidden;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
+        $this->deliveryDaysOfWeek = $transportData->deliveryDaysOfWeek;
+        $this->deliversOnPublicHolidays = $transportData->deliversOnPublicHolidays;
+        $this->deliversOnInternalClosedDays = $transportData->deliversOnInternalClosedDays;
         $this->type = $transportData->type;
         $this->group = $transportData->group;
         $this->trackingUrl = $transportData->trackingUrl;
@@ -406,6 +430,35 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function getDaysUntilDelivery()
     {
         return $this->daysUntilDelivery;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getDeliveryDaysOfWeek()
+    {
+        return $this->deliveryDaysOfWeek;
+    }
+
+    public function deliversOnDayOfWeek(int $dayOfWeek): bool
+    {
+        return in_array($dayOfWeek, $this->deliveryDaysOfWeek, true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function deliversOnPublicHolidays()
+    {
+        return $this->deliversOnPublicHolidays;
+    }
+
+    /**
+     * @return bool
+     */
+    public function deliversOnInternalClosedDays()
+    {
+        return $this->deliversOnInternalClosedDays;
     }
 
     public function isPersonalPickup(): bool

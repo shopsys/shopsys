@@ -1,4 +1,5 @@
 import { checkFreeTransportBannerShowsFree, checkFreeTransportBannerShowsRemaining } from './freeShippingSupport';
+import { changeExpectedDeliveryDateMessagesToStaticDemodata } from 'e2e/transportAndPayment/transportAndPaymentSupport';
 import { staticData, url } from 'fixtures/demodata';
 import {
     changeCartItemQuantityWithSpinboxInput,
@@ -58,6 +59,7 @@ describe('Free Shipping Threshold Tests (SSP-1734)', () => {
         cy.waitForStableAndInteractiveDOM();
         cy.url().should('contain', url.order.transportAndPayment);
         cy.getByTID([TIDs.pages_order_transport]).should('be.visible');
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport step with free shipping', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },

@@ -1,15 +1,13 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { formatDate, formatDateAndTime } from 'utils/formaters/formatDate';
+import { useDisplayTimezone } from 'utils/formatting/useDisplayTimezone';
 
 export const useFormatDate = (): {
-    formatDate: typeof formatDate;
-    formatDateAndTime: typeof formatDateAndTime;
+    formatDate: (date?: Date | string) => string;
+    formatDateAndTime: (date?: Date | string) => string;
 } => {
-    const { fallbackTimezone, defaultLocale } = useDomainConfig();
-    const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
-
-    const timezone = settingsData?.settings?.displayTimezone || fallbackTimezone;
+    const { defaultLocale } = useDomainConfig();
+    const timezone = useDisplayTimezone();
 
     return {
         formatDate: (date) => formatDate(date, timezone, defaultLocale),

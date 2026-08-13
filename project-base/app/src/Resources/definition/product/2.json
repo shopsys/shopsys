@@ -302,12 +302,6 @@
             "personal_pickup_only": {
                 "type": "boolean"
             },
-            "availability": {
-                "type": "text"
-            },
-            "availability_status": {
-                "type": "text"
-            },
             "is_main_variant": {
                 "type": "boolean"
             },
@@ -559,6 +553,10 @@
                 }
             },
             "selling_from": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss"
+            },
+            "expected_restocking_date": {
                 "type": "date",
                 "format": "yyyy-MM-dd HH:mm:ss"
             },

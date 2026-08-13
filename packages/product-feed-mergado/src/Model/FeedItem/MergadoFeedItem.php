@@ -25,7 +25,7 @@ class MergadoFeedItem implements FeedItemInterface
         protected readonly string $url,
         protected readonly array $categoryPath,
         protected readonly array $shortDescriptionUsp,
-        protected readonly int $deliveryDays,
+        protected readonly int|string $deliveryDays,
         protected readonly PriceInterface $price,
         protected readonly array $galleryImageUrls,
         protected readonly array $parameters,
@@ -76,7 +76,7 @@ class MergadoFeedItem implements FeedItemInterface
         return $this->description;
     }
 
-    public function getDeliveryDays(): int
+    public function getDeliveryDays(): int|string
     {
         return $this->deliveryDays;
     }

@@ -194,7 +194,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->weight = 200;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '263.6');
         $this->productDemoDataSetter->setSellingFrom($productData, '9.1.2000');
-        $this->productDemoDataSetter->setStocksQuantity($productData, 10);
+        $this->productDemoDataSetter->setStocksQuantity($productData, 2);
+        $this->productDemoDataSetter->setExpectedRestockingDate($productData, 'midnight +2 weeks');
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_PC]);
         $this->productDemoDataSetter->setBrand($productData, BrandDataFixture::BRAND_A4TECH);
 
@@ -422,6 +423,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '818');
         $this->productDemoDataSetter->setSellingFrom($productData, '22.1.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 0);
+        $this->productDemoDataSetter->setExpectedRestockingDate($productData, 'midnight +2 weeks');
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
@@ -755,6 +757,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '1238');
         $this->productDemoDataSetter->setSellingFrom($productData, '23.1.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 0);
+        $this->productDemoDataSetter->setExpectedRestockingDate($productData, 'midnight -2 days');
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->productDemoDataSetter->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
         $this->productDemoDataSetter->setBrand($productData, BrandDataFixture::BRAND_HP);
@@ -792,6 +795,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '8421.5');
         $this->productDemoDataSetter->setSellingFrom($productData, '10.2.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 0);
+        $this->productDemoDataSetter->setExpectedRestockingDate($productData, 'midnight +2 weeks');
+        $productData->isAllowedNegativeStock = false;
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->productDemoDataSetter->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
         $this->productDemoDataSetter->setBrand($productData, BrandDataFixture::BRAND_HTC);

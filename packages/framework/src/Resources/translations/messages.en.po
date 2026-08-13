@@ -898,6 +898,9 @@ msgstr ""
 msgid "Days for transfer between warehouses"
 msgstr ""
 
+msgid "Days of the week when the transport delivers"
+msgstr ""
+
 msgid "Days until delivery"
 msgstr ""
 
@@ -977,6 +980,15 @@ msgid "Delete"
 msgstr ""
 
 msgid "Delivered at"
+msgstr ""
+
+msgid "Delivers on e-shop internal days as well"
+msgstr ""
+
+msgid "Delivers on public holidays as well"
+msgstr ""
+
+msgid "Delivery"
 msgstr ""
 
 msgid "Delivery address"
@@ -1531,6 +1543,9 @@ msgstr ""
 msgid "Expected maximum duration"
 msgstr ""
 
+msgid "Expected restocking date"
+msgstr ""
+
 msgid "Ext."
 msgstr ""
 
@@ -1705,6 +1720,9 @@ msgstr ""
 msgid "Frequency"
 msgstr ""
 
+msgid "Friday"
+msgstr ""
+
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr ""
 
@@ -1838,6 +1856,9 @@ msgid "If enabled, a cart containing this product can only use personal pickup a
 msgstr ""
 
 msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
+msgstr ""
+
+msgid "If the product is out of stock, its availability is displayed as \"Expecting [date]\". A date in the past is ignored."
 msgstr ""
 
 msgid "If the slug contains non-ASCII characters (e.g. \"café\"), encode it as URL-encoded form (e.g. \"caf%C3%A9\"). You can use https://www.urlencoder.org/."
@@ -2072,6 +2093,9 @@ msgid "Modules"
 msgstr ""
 
 msgid "Modules configuration modified"
+msgstr ""
+
+msgid "Monday"
 msgstr ""
 
 msgid "Money return"
@@ -2791,7 +2815,10 @@ msgstr ""
 msgid "Public holiday"
 msgstr ""
 
-msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
+msgid "Public holidays and e-shop internal days are managed in the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> administration; the carrier's own days off are not taken into account."
+msgstr ""
+
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which transport delivery setting applies to this day."
 msgstr ""
 
 msgid "Published"
@@ -2936,6 +2963,9 @@ msgid "Sample customer name"
 msgstr ""
 
 msgid "Sample product question."
+msgstr ""
+
+msgid "Saturday"
 msgstr ""
 
 msgid "Save"
@@ -3289,6 +3319,9 @@ msgstr ""
 msgid "Successfully uploaded"
 msgstr ""
 
+msgid "Sunday"
+msgstr ""
+
 msgid "Super Administrator"
 msgstr ""
 
@@ -3331,6 +3364,9 @@ msgstr ""
 msgid "The instructions are presented to the customer after they submit the order withdrawal request."
 msgstr ""
 
+msgid "The number of days between the order dispatch and the delivery. 0 means the goods are delivered on the dispatch day itself."
+msgstr ""
+
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr ""
 
@@ -3368,6 +3404,9 @@ msgid "This warehouse is default on at least one domain. You cannot delete it."
 msgstr ""
 
 msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
+msgstr ""
+
+msgid "Thursday"
 msgstr ""
 
 msgid "TikTok URL"
@@ -3428,6 +3467,9 @@ msgid "Transport group"
 msgstr ""
 
 msgid "Transport type"
+msgstr ""
+
+msgid "Tuesday"
 msgstr ""
 
 msgid "Two factor authentication code"
@@ -3647,6 +3689,9 @@ msgid "Watchdog for email <strong>{{ email }}</strong> has been removed"
 msgstr ""
 
 msgid "Watchdogs"
+msgstr ""
+
+msgid "Wednesday"
 msgstr ""
 
 msgid "Weight (g)"

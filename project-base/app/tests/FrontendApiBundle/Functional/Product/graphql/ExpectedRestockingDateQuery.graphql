@@ -1,0 +1,8 @@
+query ExpectedRestockingDate($uuid: Uuid!) {
+    product(uuid: $uuid) {
+        expectedRestockingDate
+        availability {
+            status
+        }
+    }
+}

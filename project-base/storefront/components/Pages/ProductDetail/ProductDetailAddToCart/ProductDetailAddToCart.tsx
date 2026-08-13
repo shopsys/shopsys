@@ -3,11 +3,12 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
-import { Button } from 'components/Forms/Button/Button';
+import { showWatchdogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
+import { Button, getButtonIconClassName } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum, TypeCartItemTypeEnum } from 'graphql/types';
+import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useRef } from 'react';
@@ -19,6 +20,8 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 export type ProductDetailAddToCartProps = {
     product: TypeProductDetailFragment;
 };
+
+const BUTTON_SIZE = 'xlarge';
 
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
@@ -74,14 +77,12 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                 cartItem={cartItem}
                 gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
                 gtmProductListName={GtmProductListNameType.product_detail}
-                size="xlarge"
+                size={BUTTON_SIZE}
             />
         );
     }
 
-    const isWatchdogButtonVisible =
-        (product.uuid && product.availability.status === TypeAvailabilityStatusEnum.OutOfStock) ||
-        product.isSellingDenied;
+    const isWatchdogButtonVisible = showWatchdogButton(product);
 
     return (
         <div className="relative">
@@ -95,14 +96,14 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                 className="w-full whitespace-nowrap"
                 disabled={isAddingToCart}
                 hasDisabledLook={isAddingToCart}
-                size="xlarge"
+                size={BUTTON_SIZE}
                 tid={TIDs.pages_productdetail_addtocart_button}
                 title={t('Add to cart')}
                 variant={isWatchdogButtonVisible ? 'inverted' : 'primary'}
                 onClick={onAddToCartHandler}
                 onFocus={onFocusHandler}
             >
-                <CartIcon className="size-6" />
+                <CartIcon className={getButtonIconClassName(BUTTON_SIZE)} />
                 {t('Add to cart')}
             </Button>
         </div>

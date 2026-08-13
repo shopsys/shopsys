@@ -39,7 +39,9 @@ export const ProductAction: FC<ProductActionProps> = ({
     }
 
     if (product.isCurrentlyOutOfStock) {
-        return <WatchDogButton listIndex={listIndex} product={product} />;
+        return (
+            <WatchDogButton className="w-full" listIndex={listIndex} product={product} size={buttonSize ?? 'medium'} />
+        );
     }
 
     if (!product.isMainVariant && product.isInquiryType) {

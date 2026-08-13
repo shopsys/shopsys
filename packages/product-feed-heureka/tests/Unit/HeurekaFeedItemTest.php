@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\ProductFeed\HeurekaBundle\Unit;
 
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -185,16 +186,59 @@ class HeurekaFeedItemTest extends TestCase
         self::assertThat($heurekaFeedItem->getCpc(), new IsMoneyEqual(Money::create(5)));
     }
 
-    public function testHeurekaFeedItemOutOfStock(): void
+    /**
+     * @return iterable<string, array{isProductAvailableOnDomain: bool, daysUntilExpectedRestocking: int|null, heurekaFeedDeliveryDays: int|null, expectedDeliveryDate: int|null}>
+     */
+    public static function getDeliveryDateData(): iterable
     {
-        $this->doSetUp(false);
-        $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+        yield 'product in stock' => [
+            'isProductAvailableOnDomain' => true,
+            'daysUntilExpectedRestocking' => null,
+            'heurekaFeedDeliveryDays' => self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS,
+            'expectedDeliveryDate' => 0,
+        ];
 
-        self::assertEquals(self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS, $heurekaFeedItem->getDeliveryDate());
+        yield 'out of stock with expected restocking date' => [
+            'isProductAvailableOnDomain' => false,
+            'daysUntilExpectedRestocking' => 10,
+            'heurekaFeedDeliveryDays' => self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS,
+            'expectedDeliveryDate' => 10,
+        ];
+
+        yield 'out of stock without a date falls back to the setting' => [
+            'isProductAvailableOnDomain' => false,
+            'daysUntilExpectedRestocking' => null,
+            'heurekaFeedDeliveryDays' => self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS,
+            'expectedDeliveryDate' => self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS,
+        ];
+
+        yield 'out of stock without a date and without the setting stays empty' => [
+            'isProductAvailableOnDomain' => false,
+            'daysUntilExpectedRestocking' => null,
+            'heurekaFeedDeliveryDays' => null,
+            'expectedDeliveryDate' => null,
+        ];
     }
 
-    private function doSetUp(bool $isProductAvailableOnDomain): void
-    {
+    #[DataProvider('getDeliveryDateData')]
+    public function testHeurekaFeedItemDeliveryDate(
+        bool $isProductAvailableOnDomain,
+        ?int $daysUntilExpectedRestocking,
+        ?int $heurekaFeedDeliveryDays,
+        ?int $expectedDeliveryDate,
+    ): void {
+        $this->doSetUp($isProductAvailableOnDomain, $daysUntilExpectedRestocking, $heurekaFeedDeliveryDays);
+
+        $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+
+        self::assertSame($expectedDeliveryDate, $heurekaFeedItem->getDeliveryDate());
+    }
+
+    private function doSetUp(
+        bool $isProductAvailableOnDomain,
+        ?int $daysUntilExpectedRestocking = null,
+        ?int $heurekaFeedDeliveryDays = self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS,
+    ): void {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(
             ProductPriceCalculationForCustomerUser::class,
         );
@@ -203,13 +247,11 @@ class HeurekaFeedItemTest extends TestCase
         $this->categoryFacadeStub = $this->createStub(CategoryFacade::class);
         $this->productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
         $this->productAvailabilityFacadeStub->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnDomain);
+        $this->productAvailabilityFacadeStub->method('findDaysUntilExpectedRestocking')->willReturn($daysUntilExpectedRestocking);
         $this->settingStub = $this->createStub(Setting::class);
-
-        if ($isProductAvailableOnDomain === false) {
-            $this->settingStub->method('getForDomain')->willReturnMap([
-                [HeurekaFeedSettingEnum::HEUREKA_FEED_DELIVERY_DAYS, Domain::FIRST_DOMAIN_ID, self::MOCKED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS],
-            ]);
-        }
+        $this->settingStub->method('getForDomain')->willReturnMap([
+            [HeurekaFeedSettingEnum::HEUREKA_FEED_DELIVERY_DAYS, Domain::FIRST_DOMAIN_ID, $heurekaFeedDeliveryDays],
+        ]);
 
         $this->heurekaFeedItemFactory = new HeurekaFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,

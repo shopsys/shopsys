@@ -4,12 +4,13 @@ import { OrderItemProductPrice } from 'components/Blocks/OrderItemProductCard/Or
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
-import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailability } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
 import { generateProductImageAlt } from 'utils/productAltText';
+import { getAvailabilityTextColorClassName } from 'utils/ui/getAvailabilityTextColorClassName';
 
 type OrderItemGiftCardProps = {
-    availability: TypeAvailability;
+    availability?: TypeAvailability;
     mainImage?: TypeImageFragment | null;
     fullName: string;
     categoryName: string;
@@ -45,17 +46,16 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
                 <div className="flex flex-1 items-center justify-between gap-2.5">
                     <div className="flex flex-col gap-0.5">
                         <span className="max-w-44 font-semibold text-sm">{fullName}</span>
-                        <span
-                            className={twJoin(
-                                'font-semibold text-xs',
-                                availability.status === TypeAvailabilityStatusEnum.InStock &&
-                                    'text-availability-in-stock',
-                                availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
-                                    'text-availability-out-of-stock',
-                            )}
-                        >
-                            {availability.name}
-                        </span>
+                        {availability !== undefined && (
+                            <span
+                                className={twJoin(
+                                    'font-semibold text-xs',
+                                    getAvailabilityTextColorClassName(availability.status),
+                                )}
+                            >
+                                {availability.name}
+                            </span>
+                        )}
                     </div>
                     <span className="whitespace-nowrap font-semibold text-sm">
                         {quantity} {unit}

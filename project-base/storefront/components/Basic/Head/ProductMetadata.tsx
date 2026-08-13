@@ -38,10 +38,7 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                             priceCurrency: currencyCode,
                             price: product.price.priceWithVat,
                             itemCondition: 'https://schema.org/NewCondition',
-                            availability:
-                                product.availability.status === TypeAvailabilityStatusEnum.InStock
-                                    ? 'https://schema.org/InStock'
-                                    : 'https://schema.org/OutOfStock',
+                            availability: getSchemaOrgAvailability(product.availability.status),
                         },
                     }),
                 }}
@@ -49,3 +46,12 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
         </Head>
     );
 };
+
+const schemaOrgAvailabilityByStatus: Record<TypeAvailabilityStatusEnum, string> = {
+    [TypeAvailabilityStatusEnum.InStock]: 'https://schema.org/InStock',
+    [TypeAvailabilityStatusEnum.OutOfStock]: 'https://schema.org/OutOfStock',
+    [TypeAvailabilityStatusEnum.ExpectedRestock]: 'https://schema.org/BackOrder',
+};
+
+const getSchemaOrgAvailability = (availabilityStatus: TypeAvailabilityStatusEnum): string =>
+    schemaOrgAvailabilityByStatus[availabilityStatus];

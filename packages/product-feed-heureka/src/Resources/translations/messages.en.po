@@ -28,6 +28,6 @@ msgstr ""
 msgid "Number of delivery days for out of stock products for Heureka XML feed"
 msgstr ""
 
-msgid "The value is used for DELIVERY_DATE setting in Heureka XML feed. See <a href=\"https://sluzby.heureka.cz/napoveda/xml-feed/#DELIVERY_DATE\">the docs</a> for more information."
+msgid "The value is used for DELIVERY_DATE setting in Heureka XML feed. See <a href=\"https://sluzby.heureka.cz/napoveda/xml-feed/#DELIVERY_DATE\">the docs</a> for more information. <br/>The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr ""
 

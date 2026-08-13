@@ -91,13 +91,18 @@ class StoreRepository
         return $this->getStoreRepository()->findOneBy(['externalId' => $externalId]);
     }
 
-    public function getByUuidAndDomainId(string $uuid, int $domainId): Store
+    public function findByUuidAndDomainId(string $uuid, int $domainId): ?Store
     {
-        $store = $this->getStoresByDomainIdQueryBuilder($domainId)
+        return $this->getStoresByDomainIdQueryBuilder($domainId)
             ->andWhere('s.uuid = :uuid')
             ->setParameter('uuid', $uuid)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getByUuidAndDomainId(string $uuid, int $domainId): Store
+    {
+        $store = $this->findByUuidAndDomainId($uuid, $domainId);
 
         if ($store === null) {
             throw new StoreByUuidNotFoundException(sprintf('Store with UUID "%s" does not exist.', $uuid));

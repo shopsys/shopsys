@@ -3,8 +3,8 @@ import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/req
 import { Maybe } from 'graphql/types';
 import { getGtmPickupPlaceFromLastOrder } from 'gtm/mappers/getGtmPickupPlaceFromLastOrder';
 import { getGtmPickupPlaceFromStore } from 'gtm/mappers/getGtmPickupPlaceFromStore';
-import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { isPacketeryTransport } from 'utils/transport';
 
 export const PICKUP_POINT_NOT_SET_ERROR_MESSAGE = 'Packetery pickup point is not set';
 

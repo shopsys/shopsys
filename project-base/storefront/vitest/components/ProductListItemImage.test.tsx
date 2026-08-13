@@ -57,6 +57,7 @@ const product = {
             priceWithVat: '121',
         },
     },
+    expectedRestockingDate: null,
     availability: { __typename: 'Availability', name: 'In stock', status: TypeAvailabilityStatusEnum.InStock },
     availableStoresCount: 1,
     catalogNumber: 'TEST-42',

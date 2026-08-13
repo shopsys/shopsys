@@ -27,6 +27,7 @@ export type TypeStoreOpeningStatusEnum =
 
 export type TypeTransportStoresQueryVariables = Exact<{
   uuid: string;
+  cartUuid?: string | null | undefined;
   searchText?: string | null | undefined;
   coordinates?: Types.TypeCoordinates | null | undefined;
   first?: number | null | undefined;
@@ -34,11 +35,11 @@ export type TypeTransportStoresQueryVariables = Exact<{
 }>;
 
 
-export type TypeTransportStoresQuery = { transport: { __typename: 'Transport', uuid: string, stores: { __typename: 'StoreConnection', searchCoordinates: { latitude: number, longitude: number } | null, pageInfo: { hasNextPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'StoreEdge', node: { __typename: 'Store', slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, distance: number | null, email: string | null, phone: string | null, specialMessage: string | null, identifier: string, openingHours: { status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ date: string, dayOfWeek: number, openingHoursRanges: Array<{ openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null } | null> | null } | null } | null };
+export type TypeTransportStoresQuery = { transport: { __typename: 'Transport', uuid: string, stores: { __typename: 'StoreConnection', edges: Array<{ __typename: 'StoreEdge', node: { __typename: 'Store', expectedDeliveryDate: string | null, slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, distance: number | null, email: string | null, phone: string | null, specialMessage: string | null, identifier: string, openingHours: { status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ date: string, dayOfWeek: number, openingHoursRanges: Array<{ openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null } | null> | null, searchCoordinates: { latitude: number, longitude: number } | null, pageInfo: { hasNextPage: boolean, endCursor: string | null } } | null } | null };
 
 
 export const TransportStoresQueryDocument = gql`
-    query TransportStoresQuery($uuid: Uuid!, $searchText: String = null, $coordinates: Coordinates = null, $first: Int, $after: String) {
+    query TransportStoresQuery($uuid: Uuid!, $cartUuid: Uuid = null, $searchText: String = null, $coordinates: Coordinates = null, $first: Int, $after: String) {
   transport(uuid: $uuid) {
     ...TransportStoresFragment
   }

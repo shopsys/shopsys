@@ -6,16 +6,15 @@ namespace App\Model\Product\Elasticsearch;
 
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Product;
-use App\Model\Product\ProductRepository;
 use InvalidArgumentException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeRule;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
+use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 
 final class ProductExportDataProvider implements ProductExportDataProviderInterface
 {
@@ -37,15 +36,9 @@ final class ProductExportDataProvider implements ProductExportDataProviderInterf
 
     private const string VALUE_SEPARATOR = ' ';
 
-    /**
-     * @var array<int, \App\Model\Product\Product[]>
-     */
-    private array $variantsIndexedByMainVariantId = [];
-
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
-        private readonly ProductRepository $productRepository,
-        private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        private readonly ProductSellableVariantsProvider $productSellableVariantsProvider,
         private readonly BreadcrumbFacade $breadcrumbFacade,
     ) {
     }
@@ -122,7 +115,7 @@ final class ProductExportDataProvider implements ProductExportDataProviderInterf
     #[Override]
     public function loadProductExportData(array $products, int $domainId, string $locale): void
     {
-        $this->variantsIndexedByMainVariantId = [];
+        $this->productSellableVariantsProvider->resetCache();
     }
 
     /**
@@ -300,15 +293,9 @@ final class ProductExportDataProvider implements ProductExportDataProviderInterf
      */
     private function getVariantsForDefaultPricingGroup(Product $mainVariant, int $domainId): array
     {
-        if (!array_key_exists($mainVariant->getId(), $this->variantsIndexedByMainVariantId)) {
-            $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-            $this->variantsIndexedByMainVariantId[$mainVariant->getId()] = $this->productRepository->getAllSellableVariantsByMainVariant(
-                $mainVariant,
-                $domainId,
-                $defaultPricingGroup,
-            );
-        }
+        /** @var \App\Model\Product\Product[] $variants */
+        $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($mainVariant, $domainId);
 
-        return $this->variantsIndexedByMainVariantId[$mainVariant->getId()];
+        return $variants;
     }
 }

@@ -14,12 +14,12 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
@@ -32,7 +32,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method string|null getShortDescription(\App\Model\Product\Product $product)
  * @method string getLink(\App\Model\Product\Product $product)
  * @method \App\Model\Category\Category[] getCategories(\App\Model\Product\Product $product)
- * @method array{name: string, status: string} getAvailability(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo getAvailability(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getAccessoriesPromise(\App\Model\Product\Product $product)
  * @method string|null getDescription(\App\Model\Product\Product $product)
  * @method string|null getSeoH1(\App\Model\Product\Product $product)
@@ -64,6 +64,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method array getParameters(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getRelatedProductsPromise(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Flag\Flag[] getFlags(\App\Model\Product\Product $product)
+ * @method \DateTimeImmutable|null getExpectedRestockingDate(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -89,7 +90,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductRepository $productRepository,
         ParameterRepository $parameterRepository,
         ParameterValueFileResolver $parameterValueFileResolver,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
+        ProductSellableVariantsProvider $productSellableVariantsProvider,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
@@ -113,7 +114,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productRepository,
             $parameterRepository,
             $parameterValueFileResolver,
-            $pricingGroupSettingFacade,
+            $productSellableVariantsProvider,
         );
     }
 

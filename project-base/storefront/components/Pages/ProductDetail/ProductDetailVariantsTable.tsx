@@ -2,7 +2,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
+import { showWatchdogButton, WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
@@ -96,14 +96,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                                     gtmProductListName={GtmProductListNameType.product_detail_variants_table}
                                     listIndex={index}
                                     product={variant}
-                                    buttonVariant={
-                                        (variant.uuid &&
-                                            !variant.isInquiryType &&
-                                            variant.availability.status === TypeAvailabilityStatusEnum.OutOfStock) ||
-                                        variant.isSellingDenied
-                                            ? 'inverted'
-                                            : 'primary'
-                                    }
+                                    buttonVariant={showWatchdogButton(variant) ? 'inverted' : 'primary'}
                                 />
                             </div>
                         </div>

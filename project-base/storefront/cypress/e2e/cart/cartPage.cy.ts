@@ -11,7 +11,10 @@ import {
     removePromoCodeOnCartPage,
 } from './cartSupport';
 import { checkTransportSelectionIsVisible } from 'e2e/order/orderSupport';
-import { changeSelectionOfTransportByName } from 'e2e/transportAndPayment/transportAndPaymentSupport';
+import {
+    changeExpectedDeliveryDateMessagesToStaticDemodata,
+    changeSelectionOfTransportByName,
+} from 'e2e/transportAndPayment/transportAndPaymentSupport';
 import { staticData, url } from 'fixtures/demodata';
 import {
     checkAndHideInfoToast,
@@ -221,6 +224,7 @@ describe('Cart Page Tests', () => {
         goToNextOrderStep();
         checkUrl(url.order.transportAndPayment);
         checkTransportSelectionIsVisible();
+        changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(),
             'transport and payment page after applying first promocode',

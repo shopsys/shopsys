@@ -78,6 +78,7 @@ export type PacketeryPickFunction = (
 ) => void;
 
 export type StoreOrPacketeryPoint = TypeListedStoreFragment & {
+    expectedDeliveryDate?: string | null;
     openingHours: TypeListedStoreFragment['openingHours'] & {
         exceptionDays?: PacketeryExceptionDay[];
     };

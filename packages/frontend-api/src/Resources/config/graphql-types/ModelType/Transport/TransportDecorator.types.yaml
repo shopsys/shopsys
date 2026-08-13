@@ -38,6 +38,28 @@ TransportDecorator:
             payments:
                 type: "[Payment!]!"
                 description: "List of assigned payments"
+            mainImage:
+                type: "Image"
+                description: "Transport image by params"
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+            stores:
+                type: "StoreConnection"
+                argsBuilder: "Relay::Connection"
+                description: "Stores available for personal pickup"
+                resolve: "@=query('storesByTransportQuery', value, args)"
+                args:
+                    searchText:
+                        type: "String"
+                        defaultValue: null
+                        description: "Search for city or post code"
+                    coordinates:
+                        type: "Coordinates"
+                        defaultValue: null
+                        description: "Returns stores with distance from given coordinates"
             transportTypeCode:
                 type: "TransportTypeEnum!"
                 description: "Code of transport type"
@@ -54,3 +76,11 @@ TransportDecorator:
             group:
                 type: "TransportGroup"
                 description: "Transport group"
+            expectedDeliveryDate:
+                type: "DateTime"
+                description: "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised."
+                resolve: '@=query("transportExpectedDeliveryDateQuery", value, args["cartUuid"], context)'
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                        defaultValue: null

@@ -82,4 +82,15 @@ class ClosedDayFacade
     ): bool {
         return $this->closedDayRepository->hasPublicHolidays($domainId, $startDate, $endDate);
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
+     */
+    public function getClosedDaysWithEagerLoadedExcludedStores(
+        int $domainId,
+        DateTimeInterface $startDate,
+        DateTimeInterface $endDate,
+    ): array {
+        return $this->closedDayRepository->getClosedDaysWithEagerLoadedExcludedStores($domainId, $startDate, $endDate);
+    }
 }

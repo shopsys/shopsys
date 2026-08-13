@@ -1,9 +1,6 @@
+import { TypeTransportTypeEnum } from 'graphql/types';
 import { getSelectedPickupPlace } from 'utils/cart/pickupPlaceCalculations';
-import { describe, expect, it, vi } from 'vitest';
-
-vi.mock('utils/packetery', () => ({
-    isPacketeryTransport: vi.fn((transportTypeCode: string) => transportTypeCode === 'packetery'),
-}));
+import { describe, expect, it } from 'vitest';
 
 describe('getSelectedPickupPlace', () => {
     const mockPacketeryPoint = {
@@ -21,14 +18,14 @@ describe('getSelectedPickupPlace', () => {
     };
 
     const mockTransportWithStores = {
-        transportTypeCode: 'personal_pickup',
+        transportTypeCode: TypeTransportTypeEnum.PersonalPickup,
         stores: {
             edges: [{ node: mockStorePoint }, { node: { identifier: 'store-789', name: 'Another Store' } }],
         },
     } as any;
 
     const mockPacketeryTransport = {
-        transportTypeCode: 'packetery',
+        transportTypeCode: TypeTransportTypeEnum.Packetery,
         stores: null,
     } as any;
 
@@ -106,7 +103,7 @@ describe('getSelectedPickupPlace', () => {
 
         it('should return null when stores edges is empty', () => {
             const transportWithEmptyStores = {
-                transportTypeCode: 'personal_pickup',
+                transportTypeCode: TypeTransportTypeEnum.PersonalPickup,
                 stores: { edges: [] },
             } as any;
 
@@ -117,7 +114,7 @@ describe('getSelectedPickupPlace', () => {
 
         it('should return null when stores is null', () => {
             const transportWithNullStores = {
-                transportTypeCode: 'personal_pickup',
+                transportTypeCode: TypeTransportTypeEnum.PersonalPickup,
                 stores: null,
             } as any;
 
@@ -130,7 +127,7 @@ describe('getSelectedPickupPlace', () => {
     describe('edge cases', () => {
         it('should handle store edge with null node', () => {
             const transportWithNullNode = {
-                transportTypeCode: 'personal_pickup',
+                transportTypeCode: TypeTransportTypeEnum.PersonalPickup,
                 stores: {
                     edges: [{ node: null }, { node: mockStorePoint }],
                 },
@@ -143,7 +140,7 @@ describe('getSelectedPickupPlace', () => {
 
         it('should handle store edge with undefined node', () => {
             const transportWithUndefinedNode = {
-                transportTypeCode: 'personal_pickup',
+                transportTypeCode: TypeTransportTypeEnum.PersonalPickup,
                 stores: {
                     edges: [{ node: undefined }, { node: mockStorePoint }],
                 },
@@ -156,7 +153,7 @@ describe('getSelectedPickupPlace', () => {
 
         it('should return matching store node with partial properties', () => {
             const transportWithMatchingNode = {
-                transportTypeCode: 'personal_pickup',
+                transportTypeCode: TypeTransportTypeEnum.PersonalPickup,
                 stores: {
                     edges: [{ node: { identifier: 'store-456' } }],
                 },

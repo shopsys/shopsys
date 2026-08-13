@@ -24,7 +24,6 @@ class ProductElasticsearchConverter
         $result = $product;
 
         $result[ProductExportFieldProvider::ID] = $product[ProductExportFieldProvider::ID] ?? 0;
-        $result[ProductExportFieldProvider::AVAILABILITY] = $product[ProductExportFieldProvider::AVAILABILITY] ?? '';
         $result[ProductExportFieldProvider::CATNUM] = $product[ProductExportFieldProvider::CATNUM] ?? '';
         $result[ProductExportFieldProvider::DESCRIPTION] = $product[ProductExportFieldProvider::DESCRIPTION] ?? '';
         $result[ProductExportFieldProvider::SLUG] = $product[ProductExportFieldProvider::SLUG] ?? '';
@@ -69,7 +68,6 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::NAME_PREFIX] = $product[ProductExportFieldProvider::NAME_PREFIX] ?? null;
         $result[ProductExportFieldProvider::NAME_SUFFIX] = $product[ProductExportFieldProvider::NAME_SUFFIX] ?? $product['name_sufix'] ?? null;
 
-        $result[ProductExportFieldProvider::AVAILABILITY_STATUS] = $product[ProductExportFieldProvider::AVAILABILITY_STATUS] ?? '';
         $result[ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION] = $product[ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION] ?? [];
         $result[ProductExportFieldProvider::AVAILABLE_STORES_COUNT] = $product[ProductExportFieldProvider::AVAILABLE_STORES_COUNT] ?? null;
         $result[ProductExportFieldProvider::STOCK_QUANTITY] = $product[ProductExportFieldProvider::STOCK_QUANTITY] ?? null;
@@ -79,6 +77,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::UNIT] = $product[ProductExportFieldProvider::UNIT] ?? '';
 
         $result[ProductExportFieldProvider::SELLING_FROM] = $product[ProductExportFieldProvider::SELLING_FROM] ?? null;
+        $result[ProductExportFieldProvider::EXPECTED_RESTOCKING_DATE] = $product[ProductExportFieldProvider::EXPECTED_RESTOCKING_DATE] ?? null;
 
         $result[ProductExportFieldProvider::PRODUCT_VIDEOS] = $product[ProductExportFieldProvider::PRODUCT_VIDEOS] ?? [];
 

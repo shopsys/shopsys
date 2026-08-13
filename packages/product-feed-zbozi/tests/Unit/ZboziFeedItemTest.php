@@ -49,7 +49,7 @@ class ZboziFeedItemTest extends TestCase
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
         $this->productParametersBatchLoaderStub = $this->createStub(ProductParametersBatchLoader::class);
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
-        $productAvailabilityFacadeStub->method('getProductAvailabilityDaysForFeedsByDomainId')->willReturn(0);
+        $productAvailabilityFacadeStub->method('getProductAvailabilityDaysOrDateForFeedsByDomainId')->willReturn(0);
 
         $this->zboziFeedItemFactory = new ZboziFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
@@ -105,6 +105,29 @@ class ZboziFeedItemTest extends TestCase
         self::assertEquals([], $zboziFeedItem->getParams());
         self::assertNull($zboziFeedItem->getMaxCpc());
         self::assertNull($zboziFeedItem->getMaxCpcSearch());
+    }
+
+    /**
+     * @see \Tests\FrameworkBundle\Unit\Model\Product\Availability\ProductAvailabilityFacadeTest for the days/date derivation logic itself
+     */
+    public function testZboziFeedItemDeliveryDateIsTakenFromTheAvailabilityFacade(): void
+    {
+        $productAvailabilityFacadeMock = $this->createMock(ProductAvailabilityFacade::class);
+        $productAvailabilityFacadeMock->expects($this->once())
+            ->method('getProductAvailabilityDaysOrDateForFeedsByDomainId')
+            ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID)
+            ->willReturn('2026-07-26');
+
+        $zboziFeedItemFactory = new ZboziFeedItemFactory(
+            $this->productPriceCalculationForCustomerUserMock,
+            $this->productUrlsBatchLoaderMock,
+            $this->productParametersBatchLoaderStub,
+            $productAvailabilityFacadeMock,
+        );
+
+        $zboziFeedItem = $zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
+
+        self::assertSame('2026-07-26', $zboziFeedItem->getDeliveryDate());
     }
 
     public function testZboziFeedItemWithZboziCategoryText(): void

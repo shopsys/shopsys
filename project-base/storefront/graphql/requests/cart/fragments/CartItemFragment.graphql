@@ -25,6 +25,7 @@ fragment CartItemFragment on CartItem {
         }
         stockQuantity
         isAllowedNegativeStock
+        expectedRestockingDate
         availability {
             ...AvailabilityFragment
         }

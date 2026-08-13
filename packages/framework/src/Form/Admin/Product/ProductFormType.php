@@ -466,6 +466,13 @@ final class ProductFormType extends AbstractType
                 'help' => t('If you allow negative stock, it is possible to order more items than are currently in stock.'),
             ]);
 
+            $stockGroupBuilder->add('expectedRestockingDate', DatePickerType::class, [
+                'required' => false,
+                'invalid_message' => 'Enter date in DD.MM.YYYY format',
+                'label' => 'Expected restocking date',
+                'help' => t('If the product is out of stock, its availability is displayed as "Expecting [date]". A date in the past is ignored.'),
+            ]);
+
             $stockGroupBuilder->add('productStockData', CollectionType::class, [
                 'required' => false,
                 'entry_type' => ProductStockFormType::class,

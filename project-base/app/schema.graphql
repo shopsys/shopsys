@@ -210,6 +210,8 @@ type Availability {
 
 "Product Availability statuses"
 enum AvailabilityStatusEnum {
+  "Product is out of stock with a known expected restocking date"
+  ExpectedRestock
   "Product availability status in stock"
   InStock
   "Product availability status out of stock"
@@ -1315,6 +1317,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
+  "Expected restocking date, filled whenever set and not passed yet"
+  expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
   flags: [Flag!]!
@@ -2232,6 +2236,8 @@ interface Product {
   description: String
   "EAN"
   ean: String
+  "Expected restocking date, filled whenever set and not passed yet"
+  expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
   flags: [Flag!]!
@@ -2784,6 +2790,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
+  "Expected restocking date, filled whenever set and not passed yet"
+  expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
   flags: [Flag!]!
@@ -3022,6 +3030,8 @@ type Store implements Breadcrumb & Slug {
   distance: Int
   "Store email"
   email: String
+  "Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised."
+  expectedDeliveryDate(cartUuid: Uuid = null, transportUuid: Uuid!): DateTime
   "Store images"
   images(type: String = null): [Image!]!
   "Is set as default store"
@@ -3106,18 +3116,16 @@ type Token {
 
 "Represents a transport"
 type Transport {
-  "Number of days until goods are delivered"
-  daysUntilDelivery: Int!
   "Localized transport description (domain dependent)"
   description: String
+  "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised."
+  expectedDeliveryDate(cartUuid: Uuid = null): DateTime
   "Transport group"
   group: TransportGroup
   "Transport images"
   images(type: String = null): [Image!]!
   "Localized transport instruction (domain dependent)"
   instructions: String
-  "Pointer telling if the transport is of type personal pickup"
-  isPersonalPickup: Boolean!
   "Transport image by params"
   mainImage(type: String = null): Image
   "Transport name"
@@ -3219,6 +3227,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
+  "Expected restocking date, filled whenever set and not passed yet"
+  expectedRestockingDate: DateTime
   files: [File!]!
   "List of flags"
   flags: [Flag!]!

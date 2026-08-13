@@ -3,6 +3,7 @@ import type { TypeTransportWithAvailablePaymentsFragment } from 'graphql/request
 import type { Maybe } from 'graphql/types';
 import type { Translate } from 'next-translate';
 import type { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { isPersonalPickupTransport } from 'utils/transport';
 
 export type TransportAndPaymentErrorsType = {
     transport: {
@@ -40,7 +41,7 @@ export const getTransportAndPaymentValidationMessages = (
         return errors;
     }
 
-    if (transport.isPersonalPickup && !pickupPlace?.identifier) {
+    if (isPersonalPickupTransport(transport.transportTypeCode) && !pickupPlace?.identifier) {
         errors.transport = {
             name: 'transport',
             label: t('Choose transport'),

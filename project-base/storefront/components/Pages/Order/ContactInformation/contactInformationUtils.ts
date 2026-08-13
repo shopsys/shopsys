@@ -28,9 +28,9 @@ import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { saveOrderConfirmationContext } from 'utils/order/orderConfirmationContextStorage';
-import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { isPacketeryTransport } from 'utils/transport';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 import { ContactInformationFormMetaType } from './contactInformationFormMeta';
 import {

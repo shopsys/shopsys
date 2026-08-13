@@ -23,6 +23,7 @@ fragment SimpleProductFragment on Product {
     flags {
         ...SimpleFlagFragment
     }
+    expectedRestockingDate
     availability {
         ...AvailabilityFragment
     }

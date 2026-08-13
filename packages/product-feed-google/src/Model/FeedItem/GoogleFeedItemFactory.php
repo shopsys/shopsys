@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\GoogleBundle\Model\FeedItem;
 
+use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -31,11 +32,12 @@ class GoogleFeedItemFactory
     public function create(Product $product, DomainConfig $domainConfig): GoogleFeedItem
     {
         $basicPrice = $this->getBasicPrice($product, $domainConfig);
+        $availabilityDate = $this->findAvailabilityDate($product, $domainConfig);
 
         return new GoogleFeedItem(
             $product->getId(),
             $product->getFullName($domainConfig->getLocale()),
-            !$this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainConfig->getId()),
+            $this->getAvailability($product, $domainConfig, $availabilityDate),
             $basicPrice,
             $this->getSpecialPrice($basicPrice, $product, $domainConfig),
             $this->getCurrency($domainConfig),
@@ -45,7 +47,31 @@ class GoogleFeedItemFactory
             $product->getEan(),
             $product->getPartno(),
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
+            $availabilityDate,
         );
+    }
+
+    protected function getAvailability(
+        Product $product,
+        DomainConfig $domainConfig,
+        ?DateTimeImmutable $availabilityDate,
+    ): string {
+        if ($availabilityDate !== null) {
+            return GoogleFeedItem::AVAILABILITY_BACKORDER;
+        }
+
+        return $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainConfig->getId())
+            ? GoogleFeedItem::AVAILABILITY_IN_STOCK
+            : GoogleFeedItem::AVAILABILITY_OUT_OF_STOCK;
+    }
+
+    protected function findAvailabilityDate(Product $product, DomainConfig $domainConfig): ?DateTimeImmutable
+    {
+        if (!$product->isAllowedNegativeStock()) {
+            return null;
+        }
+
+        return $this->productAvailabilityFacade->findEffectiveExpectedRestockingDate($product, $domainConfig->getId());
     }
 
     protected function getBrandName(Product $product): ?string

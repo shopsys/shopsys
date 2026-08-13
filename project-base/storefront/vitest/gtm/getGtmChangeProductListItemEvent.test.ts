@@ -29,6 +29,7 @@ const listedProduct = {
             priceWithVat: '121',
         },
     },
+    expectedRestockingDate: null,
     availability: { __typename: 'Availability', name: 'In stock', status: TypeAvailabilityStatusEnum.InStock },
     availableStoresCount: 1,
     catalogNumber: 'TEST-42',
@@ -62,7 +63,7 @@ describe('getGtmChangeProductListItemEvent', () => {
                     {
                         id: 42,
                         name: 'Test product',
-                        availability: 'In stock',
+                        availability: 'in_stock',
                         imageUrl: 'https://example.com/image.jpg',
                         flags: ['Action'],
                         priceWithoutVat: 100,

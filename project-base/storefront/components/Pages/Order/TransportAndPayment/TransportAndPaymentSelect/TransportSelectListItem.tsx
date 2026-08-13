@@ -8,6 +8,7 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { isPickupPlaceTransport } from 'utils/transport';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 import { TransportUnavailabilityInfo } from './TransportUnavailabilityInfo';
@@ -71,12 +72,13 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                 value={transport.uuid}
                 label={
                     <TransportAndPaymentSelectItemLabel
-                        daysUntilDelivery={transport.daysUntilDelivery}
                         description={transport.description}
+                        expectedDeliveryDate={transport.expectedDeliveryDate}
                         disabled={disabled}
                         image={transport.mainImage}
                         isActive={isActive}
                         isImageOnWhiteBackground={hasGreyBackground || isActive}
+                        isPersonalPickup={isPickupPlaceTransport(transport.transportTypeCode)}
                         name={transport.name}
                         openPickupPlacePopup={() => openPickupPlacePopup?.()}
                         pickupPlaceDetail={isActive && pickupPlace ? pickupPlace : undefined}

@@ -8,8 +8,13 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use DateTimeImmutable;
+use IntlDateFormatter;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -50,6 +55,16 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
      * @inject
      */
     private StockFacade $stockFacade;
+
+    /**
+     * @inject
+     */
+    private DateTimeFormatterInterface $dateTimeFormatter;
+
+    /**
+     * @inject
+     */
+    private DisplayTimeZoneProviderInterface $displayTimeZoneProvider;
 
     #[DataProvider('getTestIsProductAvailableOnDomainProvider')]
     public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain): void
@@ -152,7 +167,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
             0 => t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
         };
 
-        $this->assertSame($expected, $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, self::FIRST_DOMAIN_ID));
+        $this->assertSame($expected, $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, self::FIRST_DOMAIN_ID)->name);
     }
 
     public static function getTestProductAvailabilityInformationByDomainIdProvider(): array
@@ -169,6 +184,56 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
                 'transfer' => 10,
             ],
         ];
+    }
+
+    public function testAvailabilityIsExpectedRestockWhenOutOfStockWithFutureRestockingDate(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '10', Product::class);
+        $expectedRestockingDate = $product->getExpectedRestockingDate();
+
+        $this->assertNotNull($expectedRestockingDate);
+        $this->assertEquals(
+            $expectedRestockingDate,
+            $this->productAvailabilityFacade->findEffectiveExpectedRestockingDate($product, self::FIRST_DOMAIN_ID),
+        );
+        $availability = $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, self::FIRST_DOMAIN_ID);
+        $this->assertSame(AvailabilityStatusEnum::EXPECTED_RESTOCK, $availability->status);
+        $this->assertSame($this->getExpectedRestockTextForDate($expectedRestockingDate), $availability->name);
+    }
+
+    public function testAvailabilityStaysOutOfStockWhenRestockingDateHasPassed(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '21', Product::class);
+
+        $this->assertNotNull($product->getExpectedRestockingDate());
+        $this->assertNull(
+            $this->productAvailabilityFacade->findValidExpectedRestockingDate($product, self::FIRST_DOMAIN_ID),
+        );
+        $this->assertNull(
+            $this->productAvailabilityFacade->findEffectiveExpectedRestockingDate($product, self::FIRST_DOMAIN_ID),
+        );
+        $availability = $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, self::FIRST_DOMAIN_ID);
+        $this->assertSame(AvailabilityStatusEnum::OUT_OF_STOCK, $availability->status);
+        $this->assertSame(
+            t('Out of stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            $availability->name,
+        );
+    }
+
+    public function testRestockingDateIsIgnoredForAvailabilityWhenProductIsInStock(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4', Product::class);
+        $expectedRestockingDate = $product->getExpectedRestockingDate();
+
+        $this->assertNotNull($expectedRestockingDate);
+        $this->assertEquals(
+            $expectedRestockingDate,
+            $this->productAvailabilityFacade->findValidExpectedRestockingDate($product, self::FIRST_DOMAIN_ID),
+        );
+        $this->assertNull(
+            $this->productAvailabilityFacade->findEffectiveExpectedRestockingDate($product, self::FIRST_DOMAIN_ID),
+        );
+        $this->assertSame(AvailabilityStatusEnum::IN_STOCK, $this->productAvailabilityFacade->getProductAvailabilityInfoByProduct($product, self::FIRST_DOMAIN_ID)->status);
     }
 
     public function testMainVariantStockQuantityIsNull(): void
@@ -206,6 +271,20 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->setProductOutOfStock($onlyAvailableVariant);
 
         $this->assertFalse($this->productAvailabilityFacade->isProductAvailableOnDomainCached($mainVariant, self::FIRST_DOMAIN_ID));
+    }
+
+    private function getExpectedRestockTextForDate(DateTimeImmutable $expectedRestockingDate): string
+    {
+        $formattedDate = (string)$this->dateTimeFormatter->format(
+            $expectedRestockingDate->setTimezone(
+                $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId(self::FIRST_DOMAIN_ID),
+            ),
+            IntlDateFormatter::MEDIUM,
+            IntlDateFormatter::NONE,
+            $this->getFirstDomainLocale(),
+        );
+
+        return t('Expecting %date%', ['%date%' => $formattedDate], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
     }
 
     private function setProductOutOfStock(Product $onlyAvailableVariant): void

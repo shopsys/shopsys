@@ -1,0 +1,5 @@
+query StoreExpectedDeliveryDate($storeUuid: Uuid!, $transportUuid: Uuid!, $cartUuid: Uuid) {
+    store(uuid: $storeUuid) {
+        expectedDeliveryDate(transportUuid: $transportUuid, cartUuid: $cartUuid)
+    }
+}

@@ -77,3 +77,13 @@ StoreDecorator:
                     type:
                         type: "String"
                         defaultValue: null
+            expectedDeliveryDate:
+                type: "DateTime"
+                description: "Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised."
+                resolve: '@=query("storeExpectedDeliveryDateQuery", value, args["transportUuid"], args["cartUuid"], context)'
+                args:
+                    transportUuid:
+                        type: "Uuid!"
+                    cartUuid:
+                        type: "Uuid"
+                        defaultValue: null

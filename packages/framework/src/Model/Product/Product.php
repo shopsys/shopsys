@@ -97,6 +97,13 @@ class Product extends AbstractTranslatableEntity
     protected $sellingTo;
 
     /**
+     * @var \DateTimeImmutable|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected $expectedRestockingDate;
+
+    /**
      * @var bool
      */
     #[AsMcpColumn]
@@ -271,6 +278,7 @@ class Product extends AbstractTranslatableEntity
     {
         $this->sellingFrom = $productData->sellingFrom;
         $this->sellingTo = $productData->sellingTo;
+        $this->expectedRestockingDate = $productData->expectedRestockingDate;
         $this->sellingDenied = $productData->sellingDenied;
         $this->hidden = $productData->hidden;
         $this->brand = $productData->brand;
@@ -440,6 +448,14 @@ class Product extends AbstractTranslatableEntity
     public function getSellingTo()
     {
         return $this->sellingTo;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getExpectedRestockingDate()
+    {
+        return $this->expectedRestockingDate;
     }
 
     /**

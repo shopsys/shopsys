@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 
+use DateTimeImmutable;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -33,6 +36,7 @@ class ProductArrayFieldMapper
         protected readonly DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
+        protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
     }
 
@@ -67,15 +71,13 @@ class ProductArrayFieldMapper
         return $this->flagFacade->getByIds($data['flags']);
     }
 
-    /**
-     * @return array{name: string, status: string}
-     */
-    public function getAvailability(array $data): array
+    public function getAvailability(array $data): ProductAvailabilityInfo
     {
-        return [
-            'name' => $data['availability'],
-            'status' => $data['availability_status'],
-        ];
+        return $this->productAvailabilityFacade->createProductAvailabilityInfo(
+            $data['in_stock'],
+            $this->getExpectedRestockingDate($data),
+            $this->domain->getId(),
+        );
     }
 
     /**
@@ -122,6 +124,29 @@ class ProductArrayFieldMapper
         }
 
         return ($this->getStockQuantity($data) ?? 0) <= 0;
+    }
+
+    /**
+     * A date that has passed since the product was exported is treated as absent
+     */
+    public function getExpectedRestockingDate(array $data): ?DateTimeImmutable
+    {
+        $expectedRestockingDate = $data['expected_restocking_date'];
+
+        if ($expectedRestockingDate === null) {
+            return null;
+        }
+
+        $expectedRestockingDate = new DateTimeImmutable($expectedRestockingDate);
+
+        if ($this->productAvailabilityFacade->hasExpectedRestockingDatePassed(
+            $expectedRestockingDate,
+            $this->domain->getId(),
+        )) {
+            return null;
+        }
+
+        return $expectedRestockingDate;
     }
 
     public function getAccessoriesPromise(array $data): Promise

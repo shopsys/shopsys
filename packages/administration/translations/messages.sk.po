@@ -368,7 +368,7 @@ msgid "Close"
 msgstr "Zavrieť"
 
 msgid "Closed days"
-msgstr "Zatvorené dni"
+msgstr "Sviatky a interné dni"
 
 msgid "Closing modules"
 msgstr "Zatvárací moduly"
@@ -1112,7 +1112,7 @@ msgid "Holidays and internal days"
 msgstr "Sviatky a interné dni"
 
 msgid "Holidays and internal days overview"
-msgstr "Prehľad Holidays and internal days"
+msgstr "Prehľad sviatkov a interných dní"
 
 msgid "Holidays import"
 msgstr "Import sviatkov"
@@ -1340,7 +1340,7 @@ msgid "New category"
 msgstr "Nová kategória"
 
 msgid "New closed day"
-msgstr "Nový zatvorený deň"
+msgstr "Nový sviatok / interný deň"
 
 msgid "New country"
 msgstr "Nová krajina"
@@ -2218,8 +2218,8 @@ msgstr "Nastavenia Terms and conditions"
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr "Aktuálny zoznam URL adries sa nachádza v repozitári projektu v súbore \"storefront/config/routes.ts\"."
 
-msgid "The days are used to display proper stores opening hours and to calculate order withdrawal deadline."
-msgstr "Tieto dni sa používajú na zobrazenie správnych otváracích hodín obchodov a na výpočet lehoty na odstúpenie od objednávky."
+msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of transports."
+msgstr "Tieto dni sa používajú na zobrazenie správnych otváracích hodín obchodov, na výpočet lehoty na odstúpenie od objednávky a na výpočet predpokladaného dátumu doručenia dopráv."
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
 msgstr "Odkaz na resetovanie hesla je neplatný, expirovaný alebo už bol použitý."
@@ -2230,8 +2230,8 @@ msgstr "Produkt nemá stanovený názov pre daný jazyk."
 msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
 msgstr "Produkt už nie je v katalógu. Toto bolo katalógové číslo v čase dopytovánia."
 
-msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul>"
-msgstr "Hodnota sa používa pre: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> nastavenie v Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> nastavenie v Mergado XML feed </li> </ul>"
+msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
+msgstr "Hodnota sa používa pre: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> nastavenie v Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> nastavenie v Mergado XML feed </li> </ul> Hodnota sa použije iba pri produktoch, ktoré nemajú vyplnený \"Predpokladaný dátum naskladnenia\". Inak sa počet dní odvodzuje z tohto dátumu."
 
 msgid "There are no parameter values of type color yet."
 msgstr "Zatiaľ nie sú žiadne hodnoty parametrov typu farba."

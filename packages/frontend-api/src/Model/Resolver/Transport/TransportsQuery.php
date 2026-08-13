@@ -5,21 +5,30 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Transport;
 
 use ArrayObject;
+use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\Exception\TransportIsNotPersonalPickupException;
+use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculation;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportUnavailabilityReasonInCartEnum;
 use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
 use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Transport\Exception\TransportNotFoundUserError;
 
 class TransportsQuery extends AbstractQuery
 {
     protected const string CART_CACHE_NAMESPACE = 'transportsQueryCart';
     protected const string EXCLUDING_PRODUCTS_CACHE_NAMESPACE = 'transportsQueryExcludingProductsByTransportId';
+    protected const string TRANSPORT_CACHE_NAMESPACE = 'transportsQueryTransportByUuid';
     protected const string CURRENT_CUSTOMER_CART_CACHE_KEY = 'currentCustomerCart';
 
     public function __construct(
@@ -29,6 +38,8 @@ class TransportsQuery extends AbstractQuery
         protected readonly GqlContextHelper $gqlContextHelper,
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly TransportVisibilityCalculation $transportVisibilityCalculation,
+        protected readonly TransportExpectedDeliveryDateCalculation $transportExpectedDeliveryDateCalculation,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -95,6 +106,60 @@ class TransportsQuery extends AbstractQuery
         }
 
         return $productsGroupedByReason;
+    }
+
+    public function transportExpectedDeliveryDateQuery(
+        Transport $transport,
+        ?string $cartUuid = null,
+        ?ArrayObject $context = null,
+    ): ?DateTimeImmutable {
+        $resolvedCartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
+
+        return $this->transportExpectedDeliveryDateCalculation->calculateExpectedDeliveryDate(
+            $transport,
+            $this->findCart($resolvedCartUuid),
+            $this->domain->getId(),
+        );
+    }
+
+    public function storeExpectedDeliveryDateQuery(
+        Store $store,
+        string $transportUuid,
+        ?string $cartUuid = null,
+        ?ArrayObject $context = null,
+    ): ?DateTimeImmutable {
+        $transport = $this->getEnabledTransportByUuidCached($transportUuid);
+        $resolvedCartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
+
+        try {
+            return $this->transportExpectedDeliveryDateCalculation->calculateExpectedDeliveryDateForStore(
+                $transport,
+                $this->findCart($resolvedCartUuid),
+                $this->domain->getId(),
+                $store,
+            );
+        } catch (TransportIsNotPersonalPickupException $transportIsNotPersonalPickupException) {
+            throw new InvalidArgumentUserError($transportIsNotPersonalPickupException->getMessage());
+        }
+    }
+
+    /**
+     * The store picker resolves the field once per store, always with the same transport uuid
+     */
+    protected function getEnabledTransportByUuidCached(string $transportUuid): Transport
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            self::TRANSPORT_CACHE_NAMESPACE,
+            function () use ($transportUuid): Transport {
+                try {
+                    return $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $this->domain->getId());
+                } catch (TransportNotFoundException $transportNotFoundException) {
+                    throw new TransportNotFoundUserError($transportNotFoundException->getMessage());
+                }
+            },
+            $transportUuid,
+            $this->domain->getId(),
+        );
     }
 
     protected function findCart(?string $cartUuid): ?Cart

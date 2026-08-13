@@ -1,5 +1,5 @@
 import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
-import { Button } from 'components/Forms/Button/Button';
+import { Button, getButtonIconClassName } from 'components/Forms/Button/Button';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
@@ -14,6 +14,13 @@ const WatchdogPopup = dynamic(
     },
 );
 
+export const showWatchdogButton = (product: WatchDogProductType): boolean =>
+    !!product.uuid &&
+    !product.isInquiryType &&
+    (product.availability.status === TypeAvailabilityStatusEnum.OutOfStock ||
+        product.availability.status === TypeAvailabilityStatusEnum.ExpectedRestock ||
+        product.isSellingDenied);
+
 type WatchDogButtonProps = {
     product: WatchDogProductType;
     listIndex?: number;
@@ -24,12 +31,7 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, si
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    const showWatchdogButton =
-        product.uuid &&
-        !product.isInquiryType &&
-        (product.availability.status === TypeAvailabilityStatusEnum.OutOfStock || product.isSellingDenied);
-
-    if (!showWatchdogButton) {
+    if (!showWatchdogButton(product)) {
         return null;
     }
 
@@ -54,7 +56,7 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, si
             variant="primary"
             onClick={openWatchDogPopup}
         >
-            <WatchdogIcon className="size-6" />
+            <WatchdogIcon className={getButtonIconClassName(size)} />
             {t('Watch the goods')}
         </Button>
     );

@@ -54,6 +54,7 @@ const listedProduct = {
             priceWithVat: '121.00',
         },
     },
+    expectedRestockingDate: null,
     availability: {
         __typename: 'Availability',
         name: 'Out of stock',
@@ -89,7 +90,7 @@ describe('getGtmCreateWatchDogEvent', () => {
                     {
                         id: 12345,
                         name: 'Watched Product',
-                        availability: 'Out of stock',
+                        availability: 'out_of_stock',
                         flags: ['Action'],
                         priceWithoutVat: 100,
                         priceWithVat: 121,

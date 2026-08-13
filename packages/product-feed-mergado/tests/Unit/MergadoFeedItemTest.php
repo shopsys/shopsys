@@ -61,6 +61,26 @@ class MergadoFeedItemTest extends TestCase
         self::assertSame($expectedAvailability, $mergadoFeedItem->getAvailability());
     }
 
+    /**
+     * @see \Tests\FrameworkBundle\Unit\Model\Product\Availability\ProductAvailabilityFacadeTest for the days/date derivation logic itself
+     */
+    public function testMergadoFeedItemDeliveryDaysAreTakenFromTheAvailabilityFacade(): void
+    {
+        $this->doSetUp(true);
+
+        $productAvailabilityFacadeMock = $this->createMock(ProductAvailabilityFacade::class);
+        $productAvailabilityFacadeMock->expects($this->once())
+            ->method('getProductAvailabilityDaysOrDateForFeedsByDomainId')
+            ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID)
+            ->willReturn('2026-07-26');
+
+        $mergadoFeedItemFactory = $this->createMergadoFeedItemFactory($productAvailabilityFacadeMock);
+
+        $mergadoFeedItem = $mergadoFeedItemFactory->createForProduct($this->defaultProduct, $this->defaultDomain);
+
+        self::assertSame('2026-07-26', $mergadoFeedItem->getDeliveryDays());
+    }
+
     public static function mergadoFeedItemDataProvider(): iterable
     {
         yield 'product is available on stock' => [
@@ -105,28 +125,14 @@ class MergadoFeedItemTest extends TestCase
     private function doSetUp(bool $isProductAvailableOnStock): void
     {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
-        $productParametersBatchLoaderStub = $this->createStub(ProductParametersBatchLoader::class);
-        $categoryFacadeStub = $this->createStub(CategoryFacade::class);
-        $categoryFacadeStub->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')->willReturn(['category1', 'category2']);
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
-        $imageFacadeStub = $this->createStub(ImageFacade::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
-        $loggerStub = $this->createStub(LoggerInterface::class);
 
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
         $productAvailabilityFacadeStub->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
-        $productAvailabilityFacadeStub->method('getProductAvailabilityDaysForFeedsByDomainId')->willReturn($isProductAvailableOnStock ? 0 : self::MOCKED_SETTING_FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS);
+        $productAvailabilityFacadeStub->method('getProductAvailabilityDaysOrDateForFeedsByDomainId')->willReturn($isProductAvailableOnStock ? 0 : self::MOCKED_SETTING_FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS);
 
-        $this->mergadoFeedItemFactory = new MergadoFeedItemFactory(
-            $this->productUrlsBatchLoaderMock,
-            $productParametersBatchLoaderStub,
-            $categoryFacadeStub,
-            $productAvailabilityFacadeStub,
-            $this->productPriceCalculationForCustomerUserMock,
-            $imageFacadeStub,
-            $this->currencyFacadeMock,
-            $loggerStub,
-        );
+        $this->mergadoFeedItemFactory = $this->createMergadoFeedItemFactory($productAvailabilityFacadeStub);
 
         $defaultCurrency = $this->createCurrencyStub(1, 'EUR');
         $this->defaultDomain = $this->createDomainConfigStub(
@@ -146,6 +152,24 @@ class MergadoFeedItemTest extends TestCase
         $this->mockProductPrice($this->defaultProduct, $this->defaultDomain, Price::zero());
         $this->mockProductUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/product-1');
         $this->mockProductImageUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/img/product/1');
+    }
+
+    private function createMergadoFeedItemFactory(
+        ProductAvailabilityFacade $productAvailabilityFacade,
+    ): MergadoFeedItemFactory {
+        $categoryFacadeStub = $this->createStub(CategoryFacade::class);
+        $categoryFacadeStub->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')->willReturn(['category1', 'category2']);
+
+        return new MergadoFeedItemFactory(
+            $this->productUrlsBatchLoaderMock,
+            $this->createStub(ProductParametersBatchLoader::class),
+            $categoryFacadeStub,
+            $productAvailabilityFacade,
+            $this->productPriceCalculationForCustomerUserMock,
+            $this->createStub(ImageFacade::class),
+            $this->currencyFacadeMock,
+            $this->createStub(LoggerInterface::class),
+        );
     }
 
     private function createCurrencyStub(int $id, string $code): Currency

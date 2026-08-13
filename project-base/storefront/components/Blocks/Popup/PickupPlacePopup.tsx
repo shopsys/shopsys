@@ -9,6 +9,7 @@ import {
     TypeTransportStoresQuery,
 } from 'graphql/requests/transports/queries/TransportStoresQuery.generated';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -40,10 +41,14 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
 }) => {
     const { t } = useTranslation();
     const { pickupPlace } = useCurrentCart();
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const [selectedStoreUuid, setSelectedStoreUuid] = useState(pickupPlace?.identifier ?? '');
     const [selectedPickupPlace, setSelectedPickupPlace] = useState<StoreOrPacketeryPoint | null>(pickupPlace ?? null);
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
-    const transportStoresAdditionalQueryVariables = useMemo(() => ({ uuid: transportUuid }), [transportUuid]);
+    const transportStoresAdditionalQueryVariables = useMemo(
+        () => ({ uuid: transportUuid, cartUuid }),
+        [transportUuid, cartUuid],
+    );
     const getStoreConnectionFromData = useCallback(
         (data: TypeTransportStoresQuery | undefined) => data?.transport?.stores,
         [],
@@ -60,10 +65,13 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
         storeConnectionError,
         stores: transportStores,
         userCoordinates,
-    } = usePaginatedStoreConnection<TypeTransportStoresQuery, { uuid: string }>({
+    } = usePaginatedStoreConnection<TypeTransportStoresQuery, { uuid: string; cartUuid: string | null }>({
         queryDocument: TransportStoresQueryDocument,
         additionalQueryVariables: transportStoresAdditionalQueryVariables,
         getStoreConnectionFromData,
+        // the per-store expected delivery dates change with the cart contents and with time, but the query
+        // variables (the cache key) stay the same — a cached response could therefore promise outdated dates
+        requestPolicy: 'network-only',
     });
     const storeConnectionErrorMessage = t('Stores could not be loaded. Please try again later.');
     const findSelectableStoreByUuid = useCallback(

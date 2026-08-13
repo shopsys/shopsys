@@ -4,5 +4,6 @@ query TransportQuery ($uuid: Uuid!, $cartUuid: Uuid) {
         price (cartUuid: $cartUuid) {
             priceWithVat
         }
+        expectedDeliveryDate (cartUuid: $cartUuid)
     }
 }

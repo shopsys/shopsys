@@ -898,6 +898,9 @@ msgstr "Datum registrace a dohody o ochraně soukromí"
 msgid "Days for transfer between warehouses"
 msgstr "Dny pro přesun mezi sklady"
 
+msgid "Days of the week when the transport delivers"
+msgstr "Dny v týdnu, kdy dopravce doručuje"
+
 msgid "Days until delivery"
 msgstr "Dní do doručení"
 
@@ -978,6 +981,15 @@ msgstr "Smazat"
 
 msgid "Delivered at"
 msgstr "Doručeno dne"
+
+msgid "Delivers on e-shop internal days as well"
+msgstr "Doručuje i v interní dny e-shopu"
+
+msgid "Delivers on public holidays as well"
+msgstr "Doručuje i o státních svátcích"
+
+msgid "Delivery"
+msgstr "Doručení"
 
 msgid "Delivery address"
 msgstr "Dodací adresa"
@@ -1531,6 +1543,9 @@ msgstr "Rozbalit"
 msgid "Expected maximum duration"
 msgstr "Očekávané maximální trvání"
 
+msgid "Expected restocking date"
+msgstr "Předpokládané datum naskladnění"
+
 msgid "Ext."
 msgstr "Příp."
 
@@ -1705,6 +1720,9 @@ msgstr "Doprava a platba zdarma"
 msgid "Frequency"
 msgstr "Frekvence"
 
+msgid "Friday"
+msgstr "Pátek"
+
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr "Hezká URL \"%slug%\" byla smazána."
 
@@ -1839,6 +1857,9 @@ msgstr "Pokud je zapnuto, košík obsahující tento produkt lze doručit pouze 
 
 msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
 msgstr "Pokud země není uvedena, musíte ji nejprve <a href=\"%countryCreateUrl%\" target=\"_blank\">vytvořit</a>. Nebo ve vzácných případech váš kód země nemusí být <a href=\"%supportedCountriesUrl%\" target=\"_blank\">podporován</a>."
+
+msgid "If the product is out of stock, its availability is displayed as \"Expecting [date]\". A date in the past is ignored."
+msgstr "Pokud produkt není skladem, jeho dostupnost se zobrazuje jako „Očekáváme [datum]“. Datum v minulosti je ignorováno."
 
 msgid "If the slug contains non-ASCII characters (e.g. \"café\"), encode it as URL-encoded form (e.g. \"caf%C3%A9\"). You can use https://www.urlencoder.org/."
 msgstr "Pokud slug obsahuje jiné než ASCII znaky (např. \"café\"), zakódujte jej do URL-zakódované formy (např. \"caf%C3%A9\"). Můžete použít https://www.urlencoder.org/."
@@ -2073,6 +2094,9 @@ msgstr "Zapínací moduly"
 
 msgid "Modules configuration modified"
 msgstr "Nastavení zapínacích modulů bylo upraveno"
+
+msgid "Monday"
+msgstr "Pondělí"
 
 msgid "Money return"
 msgstr "Vrácení peněz"
@@ -2791,8 +2815,11 @@ msgstr "Akce {{ x }} + {{ y }} zdarma"
 msgid "Public holiday"
 msgstr "Státní svátek"
 
-msgid "Public holidays are taken into account when calculating the order withdrawal deadline."
-msgstr "Státní svátky se berou v úvahu při výpočtu lhůty pro odstoupení od smlouvy."
+msgid "Public holidays and e-shop internal days are managed in the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> administration; the carrier's own days off are not taken into account."
+msgstr "Státní svátky a interní dny e-shopu se spravují v administraci <a href=\"%closedDaysUrl%\" target=\"_blank\">Svátky a interní dny</a>; volné dny samotného dopravce se nezohledňují."
+
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which transport delivery setting applies to this day."
+msgstr "Státní svátky se berou v úvahu při výpočtu lhůty pro odstoupení od smlouvy. Příznak zároveň určuje, které nastavení doručování dopravy se na tento den použije."
 
 msgid "Published"
 msgstr "Publikováno"
@@ -2937,6 +2964,9 @@ msgstr "Ukázkové jméno zákazníka"
 
 msgid "Sample product question."
 msgstr "Ukázkový dotaz k produktu."
+
+msgid "Saturday"
+msgstr "Sobota"
 
 msgid "Save"
 msgstr "Uložit"
@@ -3289,6 +3319,9 @@ msgstr "Odběratel newsletteru <strong>{{ email }}</strong> byl smazán"
 msgid "Successfully uploaded"
 msgstr "Úspěšně nahráno"
 
+msgid "Sunday"
+msgstr "Neděle"
+
 msgid "Super Administrator"
 msgstr "Super administrátor"
 
@@ -3331,6 +3364,9 @@ msgstr "Ikona má přednost před hodnotou barvy RGB. Můžete nahrát soubor ve
 msgid "The instructions are presented to the customer after they submit the order withdrawal request."
 msgstr "Instrukce jsou zákazníkovi zobrazeny poté, co odešle žádost o odstoupení od smlouvy."
 
+msgid "The number of days between the order dispatch and the delivery. 0 means the goods are delivered on the dispatch day itself."
+msgstr "Počet dní mezi expedicí objednávky a doručením. 0 znamená doručení ještě v den expedice."
+
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
 
@@ -3369,6 +3405,9 @@ msgstr "Tento sklad je výchozí alespoň na jedné doméně. Nelze jej smazat."
 
 msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
 msgstr "Tím se zákazníkovi odešle e-mail pro resetování hesla. Opravdu to chcete poslat?"
+
+msgid "Thursday"
+msgstr "Čtvrtek"
 
 msgid "TikTok URL"
 msgstr "TikTok URL"
@@ -3429,6 +3468,9 @@ msgstr "Skupina doprav"
 
 msgid "Transport type"
 msgstr "Typ dopravy"
+
+msgid "Tuesday"
+msgstr "Úterý"
 
 msgid "Two factor authentication code"
 msgstr "Dvoufaktorový ověřovací kód"
@@ -3648,6 +3690,9 @@ msgstr "Hlídací pes pro e-mail <strong>{{ email }}</strong> byl odstraněn."
 
 msgid "Watchdogs"
 msgstr "Hlídací psi"
+
+msgid "Wednesday"
+msgstr "Středa"
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"

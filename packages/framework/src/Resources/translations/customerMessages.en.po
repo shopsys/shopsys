@@ -28,6 +28,9 @@ msgstr ""
 msgid "Exchange"
 msgstr ""
 
+msgid "Expecting %date%"
+msgstr ""
+
 msgid "Fix"
 msgstr ""
 

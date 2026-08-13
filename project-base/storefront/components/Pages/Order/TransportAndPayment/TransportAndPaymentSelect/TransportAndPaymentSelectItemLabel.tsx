@@ -1,22 +1,22 @@
 import { Image } from 'components/Basic/Image/Image';
+import { ExpectedDeliveryDateInfo } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateInfo';
 import {
     TransportAndPaymentPickupPlaceDetail,
     TransportAndPaymentPickupPlaceDetailLayout,
     TransportAndPaymentPickupPlaceOpeningHoursDisplay,
 } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentPickupPlaceDetail';
-import { getDeliveryMessage } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type TransportAndPaymentSelectItemLabelProps = {
     name: string;
     price?: { priceWithVat: string; priceWithoutVat: string; vatAmount: string };
-    daysUntilDelivery?: number;
+    expectedDeliveryDate?: string | null;
+    isPersonalPickup?: boolean;
     description?: string | null;
     image?: TypeImageFragment | null;
     pickupPlaceDetail?: StoreOrPacketeryPoint;
@@ -32,7 +32,8 @@ type TransportAndPaymentSelectItemLabelProps = {
 export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectItemLabelProps> = ({
     name,
     price,
-    daysUntilDelivery,
+    expectedDeliveryDate,
+    isPersonalPickup = false,
     description,
     image,
     pickupPlaceDetail,
@@ -44,7 +45,6 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     pickupPlaceDetailLayout = 'default',
     openPickupPlacePopup,
 }) => {
-    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     const imageElement = (
@@ -86,10 +86,11 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
                     {description && <div className="text-text-less text-xs">{description}</div>}
 
-                    {daysUntilDelivery !== undefined && !pickupPlaceDetail && (
-                        <div className="text-sm text-text-success">
-                            {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
-                        </div>
+                    {!pickupPlaceDetail && expectedDeliveryDate !== undefined && !disabled && (
+                        <ExpectedDeliveryDateInfo
+                            expectedDeliveryDate={expectedDeliveryDate}
+                            isPersonalPickup={isPersonalPickup}
+                        />
                     )}
                 </div>
 
@@ -98,8 +99,8 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
             {pickupPlaceDetail && (
                 <TransportAndPaymentPickupPlaceDetail
-                    daysUntilDelivery={daysUntilDelivery}
                     disabled={disabled}
+                    expectedDeliveryDate={expectedDeliveryDate}
                     isActive={isActive}
                     layout={pickupPlaceDetailLayout}
                     openingHoursDisplay={openingHoursDisplay}

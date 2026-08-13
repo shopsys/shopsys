@@ -1,5 +1,7 @@
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { TypeOpeningHoursOfDay, TypeStoreOpeningStatusEnum } from '../../../graphql/types';
+import { staticData } from 'fixtures/demodata';
+import { translations } from 'support';
 import { TIDs } from 'tids';
 
 const getTransportGroupButtonByName = (transportGroupName: string) =>
@@ -243,6 +245,23 @@ const getStaticOpeningHoursOfDays = (): TypeOpeningHoursOfDay[] => [
         ],
     },
 ];
+
+export const changeExpectedDeliveryDateMessagesToStaticDemodata = () => {
+    cy.get('body').then(($body) => {
+        // the "Delivery" vs "Personal pickup" wording is deterministic, only the rest varies with the run day
+        $body.find(`[data-tid="${TIDs.expected_delivery_date_message}"]`).each((_, messageElement) => {
+            const isPersonalPickupMessage = !!messageElement.textContent?.startsWith(
+                translations.transport.personalPickup,
+            );
+
+            Cypress.$(messageElement).text(
+                isPersonalPickupMessage
+                    ? staticData.expectedPersonalPickupDateMessage
+                    : staticData.expectedDeliveryDateMessage,
+            );
+        });
+    });
+};
 
 export const removePaymentSelectionUsingButton = () => {
     cy.getByTID([TIDs.reset_payment_button]).click();
