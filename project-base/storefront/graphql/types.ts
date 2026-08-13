@@ -544,6 +544,8 @@ export type TypeCart = {
   giftVouchers: Array<TypeAppliedGiftVoucher>;
   /** Applied gift vouchers exceed the amount payable by them (total price without gift voucher products), so the order cannot be completed */
   giftVouchersExceedPayableAmount: Scalars['Boolean']['output'];
+  /** Whether the applied gift vouchers cover the whole amount to pay */
+  isNothingLeftToPay: Scalars['Boolean']['output'];
   /** All items in the cart */
   items: Array<TypeCartItem>;
   modifications: TypeCartModificationsResult;
@@ -2085,6 +2087,8 @@ export type TypeOrder = {
   isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['output'];
   /** Indicates whether the order is paid (either marked as paid, fully covered by gift vouchers, or paid successfully with GoPay payment type) */
   isPaid: Scalars['Boolean']['output'];
+  /** Returns whether withdrawal cannot be requested because a gift voucher purchased in the order has already been redeemed or cancelled */
+  isWithdrawalBlockedByPurchasedGiftVoucher: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
   items: Array<TypeOrderItem>;
   /** URL for accessing the last payment transaction on a gateway without invoking the new payment transaction. Depending on the payment status, user might see the payment details or even retry the transaction if possible. */
@@ -2107,6 +2111,8 @@ export type TypeOrder = {
   productItems: Array<TypeOrderItem>;
   /** Promo code (coupon) used in the order */
   promoCode: Maybe<Scalars['String']['output']>;
+  /** Gift vouchers generated from the order */
+  purchasedGiftVouchers: Array<TypePurchasedGiftVoucher>;
   /** Total price with VAT reduced by redeemed gift vouchers, never below zero */
   remainingAmountToPay: Scalars['Money']['output'];
   /** Current status of the order */
@@ -2612,6 +2618,7 @@ export type TypePaymentSetupCreationData = {
 export enum TypePaymentTypeEnum {
   BankTransfer = 'bankTransfer',
   Basic = 'basic',
+  GiftVoucher = 'giftVoucher',
   GoPay = 'goPay'
 }
 
@@ -3019,6 +3026,21 @@ export enum TypePromoCodeTypeEnum {
   /** Discount type percent */
   Percent = 'percent'
 }
+
+/** Gift voucher purchased in the order */
+export type TypePurchasedGiftVoucher = {
+  __typename?: 'PurchasedGiftVoucher';
+  /** Code of the gift voucher */
+  code: Scalars['String']['output'];
+  /** URL for downloading the gift voucher PDF */
+  pdfUrl: Scalars['String']['output'];
+  /** Catalog number of the purchased gift voucher product the voucher was generated from */
+  productCatnum: Maybe<Scalars['String']['output']>;
+  /** Date and time until the gift voucher is valid */
+  validUntil: Scalars['DateTime']['output'];
+  /** Value of the gift voucher including VAT */
+  valueWithVat: Scalars['Money']['output'];
+};
 
 export type TypeQuery = {
   __typename?: 'Query';

@@ -106,6 +106,7 @@
     * [ProductPrice](#productprice)
     * [ProductsByTransportUnavailabilityReason](#productsbytransportunavailabilityreason)
     * [PromoCode](#promocode)
+    * [PurchasedGiftVoucher](#purchasedgiftvoucher)
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
     * [SalesRepresentative](#salesrepresentative)
@@ -3479,6 +3480,15 @@ Applied gift vouchers if provided
 <td>
 
 Applied gift vouchers exceed the amount payable by them (total price without gift voucher products), so the order cannot be completed
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.isnothinglefttopay">isNothingLeftToPay</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the applied gift vouchers cover the whole amount to pay
 
 </td>
 </tr>
@@ -7242,6 +7252,15 @@ Indicates whether the order is paid (either marked as paid, fully covered by gif
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.iswithdrawalblockedbypurchasedgiftvoucher">isWithdrawalBlockedByPurchasedGiftVoucher</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Returns whether withdrawal cannot be requested because a gift voucher purchased in the order has already been redeemed or cancelled
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.items">items</strong></td>
 <td valign="top">[<a href="#orderitem">OrderItem</a>!]!</td>
 <td>
@@ -7337,6 +7356,15 @@ All product items in the order
 <td>
 
 Promo code (coupon) used in the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.purchasedgiftvouchers">purchasedGiftVouchers</strong></td>
+<td valign="top">[<a href="#purchasedgiftvoucher">PurchasedGiftVoucher</a>!]!</td>
+<td>
+
+Gift vouchers generated from the order
 
 </td>
 </tr>
@@ -9339,6 +9367,68 @@ Total discount provided by this promo code
 <td>
 
 Type of the promo code
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PurchasedGiftVoucher
+
+Gift voucher purchased in the order
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.code">code</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Code of the gift voucher
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.pdfurl">pdfUrl</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+URL for downloading the gift voucher PDF
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.productcatnum">productCatnum</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Catalog number of the purchased gift voucher product the voucher was generated from
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.validuntil">validUntil</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time until the gift voucher is valid
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.valuewithvat">valueWithVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Value of the gift voucher including VAT
 
 </td>
 </tr>
@@ -14589,6 +14679,10 @@ One of the possible methods of the payment type
 </tr>
 <tr>
 <td valign="top"><strong>basic</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>giftVoucher</strong></td>
 <td></td>
 </tr>
 <tr>
