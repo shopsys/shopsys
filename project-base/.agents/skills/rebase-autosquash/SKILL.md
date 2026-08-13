@@ -8,7 +8,8 @@ description: >
   when the user asks to rebase and apply fixups, or when the user invokes
   /rebase-autosquash.
 user_invocable: true
-version: 1.0.0
+disable-model-invocation: true
+version: 1.1.0
 ---
 
 # Rebase with Autosquash
