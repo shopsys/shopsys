@@ -20,7 +20,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
                     fetch-depth: 0
@@ -86,7 +86,7 @@ jobs:
             TRAEFIK_HOSTS: ${{ steps.variables.outputs.TRAEFIK_HOSTS }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Extract variables to output
@@ -208,7 +208,7 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
@@ -246,7 +246,7 @@ jobs:
             SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
@@ -274,7 +274,7 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
@@ -302,7 +302,7 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
@@ -354,7 +354,7 @@ jobs:
             pull-requests: read
         steps:
             -   name: GIT checkout branch - ${{ github.head_ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.head_ref }}
                     fetch-depth: 0
@@ -427,7 +427,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -493,7 +493,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -521,7 +521,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -555,11 +555,11 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Change first domain locale to CS
-                uses: mikefarah/yq@v4.45.1
+                uses: mikefarah/yq@v4.53.3
                 with:
                     cmd: yq e -i '( .domains[] | select(.id == 1) ).locale = "cs" | ( .domains[] | select(.id == 2) ).locale = "en"' ./project-base/app/config/domains.yaml
             -   name: Change first domain currency to CZK
@@ -597,11 +597,11 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Set load_demo_data to false for domains 2 and 3
-                uses: mikefarah/yq@v4.45.1
+                uses: mikefarah/yq@v4.53.3
                 with:
                     cmd: yq e -i '( .domains[] | select(.id == 2) ).load_demo_data = false | ( .domains[] | select(.id == 3) ).load_demo_data = false' ./project-base/app/config/domains.yaml
             -   name: Download docker-compose.yml from artifacts
@@ -631,7 +631,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -672,7 +672,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.cypress.yml from artifacts
@@ -737,7 +737,7 @@ jobs:
                     fi
             -   name: GIT checkout branch - ${{ github.ref }}
                 if: env.SHOULD_RUN_TESTS == 'true'
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.cypress.yml from artifacts
@@ -840,7 +840,7 @@ jobs:
                     fi
             -   name: GIT checkout branch - ${{ github.head_ref }}
                 if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.head_ref }}
             -   name: Download docker-compose.cypress.yml from artifacts
@@ -904,7 +904,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.head_ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.head_ref }}
             -   name: Download all snapshot artifacts
@@ -957,7 +957,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -1013,7 +1013,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -1051,7 +1051,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -1079,7 +1079,7 @@ jobs:
         needs: variables
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Build Elasticsearch image
@@ -1422,7 +1422,7 @@ jobs:
             CHECK_UPGRADE_NOTES_RESULT: ${{ needs.check-upgrade-notes.result }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Build successful

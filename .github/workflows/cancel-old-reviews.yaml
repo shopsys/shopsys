@@ -9,7 +9,7 @@ jobs:
         runs-on: [ self-hosted, linux, review-stage ]
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
                     path: cancel-old-reviews

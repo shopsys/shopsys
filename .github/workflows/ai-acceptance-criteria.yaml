@@ -71,7 +71,7 @@ jobs:
                     echo "ISSUE_FOUND=${ISSUE_FOUND}" >> "${GITHUB_OUTPUT}"
             -   name: GIT checkout branch - ${{ github.ref }}
                 if: steps.jira-precheck.outputs.ISSUE_FOUND == 'true'
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
                     fetch-depth: 0
@@ -311,7 +311,7 @@ jobs:
                     name: ai-acceptance-criteria-evidence
                     path: ${{ env.EVIDENCE_DIR }}
             -   name: Publish the report
-                uses: actions/github-script@v7
+                uses: actions/github-script@v9
                 env:
                     SECRET_JIRA_URL: ${{ secrets.JIRA_URL }}
                     SECRET_JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
