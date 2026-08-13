@@ -220,6 +220,7 @@ export enum TIDs {
 
     // Articles & Blog
     article_creation_date = 'article_creation_date',
+    article_map_iframe = 'article_map_iframe',
     blog_preview_image = 'blog_preview_image',
     blog_article_publication_date = 'blog_article_publication_date',
     blog_article_author = 'blog_article_author',
