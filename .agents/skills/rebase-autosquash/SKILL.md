@@ -11,7 +11,8 @@ description: >
   fixups on the current branch, or when the user invokes /rebase-autosquash. Runs
   locally or in CI (wrapped by the rebase-pr workflow).
 user_invocable: true
-version: 1.0.0
+disable-model-invocation: true
+version: 1.1.0
 ---
 
 # rebase-autosquash (monorepo)
