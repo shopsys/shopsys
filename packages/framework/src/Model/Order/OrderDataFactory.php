@@ -86,7 +86,7 @@ class OrderDataFactory
         $orderData->promoCode = $order->getPromoCode();
         $orderData->freeTransportAndPaymentApplied = $order->isFreeTransportAndPaymentApplied();
 
-        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+        $withdrawalRequest = $this->withdrawalRequestFacade->findConfirmedByOrder($order);
 
         if ($withdrawalRequest !== null) {
             $orderData->withdrawalRequestData = $this->withdrawalRequestDataFactory->createFromWithdrawalRequest($withdrawalRequest);

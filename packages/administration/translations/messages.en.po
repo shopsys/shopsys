@@ -223,6 +223,9 @@ msgstr ""
 msgid "Autocomplete favorites"
 msgstr ""
 
+msgid "Awaiting email confirmation"
+msgstr ""
+
 msgid "Awesome"
 msgstr ""
 

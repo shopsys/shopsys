@@ -39,6 +39,10 @@ services:
         tags:
             - { name: shopsys.cron, cron: '5 3 * * *', instanceName: service, readableName: 'Remove expired payment return hashes', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
+    Shopsys\FrameworkBundle\Model\Order\Withdrawal\DeleteUnconfirmedWithdrawalRequestsCronModule:
+        tags:
+            - { name: shopsys.cron, cron: '10 3 * * *', instanceName: service, readableName: 'Remove unconfirmed withdrawal requests', sentryMonitoring: true, sentryFailureThreshold: 3 }
+
     Shopsys\FrameworkBundle\Model\Customer\User\RemoveOldCustomerUserRefreshTokenChainsCronModule:
         tags:
             - { name: shopsys.cron, cron: '0 4 * * *', instanceName: service, readableName: 'Remove old customer user refresh token chains', sentryMonitoring: true, sentryFailureThreshold: 3 }

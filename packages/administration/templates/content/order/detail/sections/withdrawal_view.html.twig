@@ -1,6 +1,11 @@
 {% block section_content %}
     <div class="subheader d-flex justify-content-between align-items-center mb-3">
-        {{ 'Withdrawal request'|trans }}
+        <span class="d-inline-flex align-items-center gap-2">
+            {{ 'Withdrawal request'|trans }}
+            {% if not withdrawalRequest.confirmed %}
+                <span class="badge bg-orange-lt">{{ 'Awaiting email confirmation'|trans }}</span>
+            {% endif %}
+        </span>
         {{ component('OrderDetail:SectionEditButton', {
             section: section,
             canEdit: canEdit,

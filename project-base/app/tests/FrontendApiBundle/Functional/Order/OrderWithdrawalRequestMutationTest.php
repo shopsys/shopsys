@@ -40,7 +40,7 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
         $this->assertTrue($data);
 
         $this->em->clear();
-        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($validOrder);
+        $withdrawalRequest = $this->withdrawalRequestFacade->findConfirmedByOrder($validOrder);
 
         $this->assertNotNull($withdrawalRequest);
         $this->assertSame($inputData['firstName'], $withdrawalRequest->getFirstName());

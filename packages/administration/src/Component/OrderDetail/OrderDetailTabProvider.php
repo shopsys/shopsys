@@ -32,7 +32,7 @@ class OrderDetailTabProvider implements OrderDetailTabProviderInterface
             t('Withdrawal'),
             WithdrawalTabComponent::COMPONENT_NAME,
             10,
-            visibleWhen: fn (Order $order): bool => $this->withdrawalRequestFacade->findByOrder($order) !== null,
+            visibleWhen: fn (Order $order): bool => $this->withdrawalRequestFacade->findIncludingUnconfirmedByOrder($order) !== null,
         );
 
         yield new OrderDetailTab(

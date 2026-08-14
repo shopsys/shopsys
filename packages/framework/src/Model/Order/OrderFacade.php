@@ -109,16 +109,34 @@ class OrderFacade
             return;
         }
 
-        $existingWithdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+        $existingConfirmedWithdrawalRequest = $this->withdrawalRequestFacade->findConfirmedByOrder($order);
 
-        if ($existingWithdrawalRequest !== null) {
+        if ($existingConfirmedWithdrawalRequest !== null) {
             $this->withdrawalRequestFacade->edit(
-                $existingWithdrawalRequest->getId(),
+                $existingConfirmedWithdrawalRequest->getId(),
                 $orderData->withdrawalRequestData,
             );
-        } elseif ($orderData->status === $this->orderStatusFacade->getByType(OrderStatusTypeEnum::TYPE_WITHDRAWN)) {
-            $this->withdrawalRequestFacade->createOnly($order, $orderData->withdrawalRequestData);
+
+            return;
         }
+
+        if ($orderData->status !== $this->orderStatusFacade->getByType(OrderStatusTypeEnum::TYPE_WITHDRAWN)) {
+            return;
+        }
+
+        $orderData->withdrawalRequestData->confirmed = true;
+        $existingUnconfirmedWithdrawalRequest = $this->withdrawalRequestFacade->findIncludingUnconfirmedByOrder($order);
+
+        if ($existingUnconfirmedWithdrawalRequest !== null) {
+            $this->withdrawalRequestFacade->edit(
+                $existingUnconfirmedWithdrawalRequest->getId(),
+                $orderData->withdrawalRequestData,
+            );
+
+            return;
+        }
+
+        $this->withdrawalRequestFacade->createOnly($order, $orderData->withdrawalRequestData);
     }
 
     public function deleteById(int $orderId): void

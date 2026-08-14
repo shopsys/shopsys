@@ -223,6 +223,9 @@ msgstr "Overovací kód"
 msgid "Autocomplete favorites"
 msgstr "Obľúbené položky v našepkávači"
 
+msgid "Awaiting email confirmation"
+msgstr "Čaká na potvrdenie emailom"
+
 msgid "Awesome"
 msgstr "Úžasné"
 

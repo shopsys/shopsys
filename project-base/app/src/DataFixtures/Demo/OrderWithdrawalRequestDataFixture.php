@@ -39,6 +39,7 @@ class OrderWithdrawalRequestDataFixture extends AbstractReferenceFixture impleme
             $withdrawalRequestData->email = 'no-reply@shopsys.com';
             $withdrawalRequestData->note = t('Product does not match description, I want to return the entire order.', domain: Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, locale: $domainConfig->getLocale());
             $withdrawalRequestData->requestedAt = new DateTimeImmutable('now -1 day')->setTime(22, 55, 15);
+            $withdrawalRequestData->confirmed = true;
 
             $this->withdrawalRequestFacade->createOnly($orderReference, $withdrawalRequestData);
         }

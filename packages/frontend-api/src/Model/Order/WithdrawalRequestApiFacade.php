@@ -35,7 +35,7 @@ class WithdrawalRequestApiFacade
 
         $this->orderFacade->edit($order->getId(), $orderData);
 
-        $withdrawalRequest = $this->withdrawalRequestFacade->getByOrder($order);
+        $withdrawalRequest = $this->withdrawalRequestFacade->getConfirmedByOrder($order);
         $this->withdrawalRequestMessageDispatcher->dispatchWithdrawalCreatedMessage($withdrawalRequest->getId());
     }
 }

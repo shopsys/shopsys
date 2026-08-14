@@ -69,6 +69,7 @@ class WithdrawalStatusModalComponent
         }
 
         $order = $this->getOrder();
+        $this->withdrawalRequestData->confirmed = true;
         $orderData = $this->orderDataFactory->createFromOrder($order);
         $orderData->status = $this->orderStatusFacade->getById($this->statusId);
         $orderData->withdrawalRequestData = $this->withdrawalRequestData;
@@ -91,7 +92,7 @@ class WithdrawalStatusModalComponent
         $order = $this->getOrder();
         $this->withdrawalRequestData = $this->withdrawalRequestDataFactory->createFromWithdrawalRequestOrPrefilledFromOrder(
             $order,
-            $this->withdrawalRequestFacade->findByOrder($order),
+            $this->withdrawalRequestFacade->findConfirmedByOrder($order),
         );
 
         return $this->formFactory->createNamed(

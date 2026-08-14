@@ -78,7 +78,7 @@ final class OrderFormType extends AbstractType
 
                     /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
                     $order = $form->getConfig()->getOption('order');
-                    $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+                    $withdrawalRequest = $this->withdrawalRequestFacade->findConfirmedByOrder($order);
 
                     if (
                         $withdrawalRequest !== null ||
