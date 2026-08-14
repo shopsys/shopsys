@@ -40,6 +40,8 @@ class WithdrawalRequestDataFactory
         $withdrawalRequestData->telephone = $withdrawalRequest->getTelephoneData();
         $withdrawalRequestData->note = $withdrawalRequest->getNote();
         $withdrawalRequestData->requestedAt = $withdrawalRequest->getRequestedAt();
+        $withdrawalRequestData->confirmed = $withdrawalRequest->isConfirmed();
+        $withdrawalRequestData->confirmationHash = $withdrawalRequest->getConfirmationHash();
 
         return $withdrawalRequestData;
     }

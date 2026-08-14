@@ -137,7 +137,7 @@ class WithdrawalCheckerTest extends TestCase
         $withdrawalDeadlineCalculation->method('getWithdrawalDeadline')->willReturn($withdrawalDeadline);
 
         $withdrawalRequestRepository = $this->createStub(WithdrawalRequestRepository::class);
-        $withdrawalRequestRepository->method('findByOrder')->willReturn(null);
+        $withdrawalRequestRepository->method('findConfirmedByOrder')->willReturn(null);
 
         $giftVoucherRepository = $this->createStub(GiftVoucherRepository::class);
         $giftVoucherRepository->method('getAllCreatedOnOrder')->willReturn($giftVouchers);

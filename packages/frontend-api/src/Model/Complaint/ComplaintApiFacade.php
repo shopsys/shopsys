@@ -294,7 +294,7 @@ class ComplaintApiFacade
 
     protected function checkOrderHasNoWithdrawalRequest(Order $order): void
     {
-        if ($this->withdrawalRequestFacade->findByOrder($order) !== null) {
+        if ($this->withdrawalRequestFacade->findConfirmedByOrder($order) !== null) {
             throw new InvalidAccessUserError('Cannot create complaint for order with withdrawal request');
         }
     }
