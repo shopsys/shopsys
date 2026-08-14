@@ -48,6 +48,7 @@ import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
 import { PackageDeliveredIcon } from 'components/Basic/Icon/PackageDeliveredIcon';
+import { PackageUnavailableIcon } from 'components/Basic/Icon/PackageUnavailableIcon';
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
@@ -254,6 +255,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <PackageDeliveredIcon className="size-10" />
                 <span className="text-center text-xs break-all">PackageDeliveredIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <PackageUnavailableIcon className="size-10" />
+                <span className="text-center text-xs break-all">PackageUnavailableIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <PhoneIcon className="size-10" />

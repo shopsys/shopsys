@@ -1,4 +1,5 @@
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
+import { DeliveryOptionsLink } from 'components/Blocks/Popup/DeliveryOptionsPopup/DeliveryOptionsLink';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
 import { PRODUCT_VARIANTS_ID } from 'components/Blocks/Product/ProductAction';
@@ -12,6 +13,7 @@ import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyE
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageReadyEvents/useGtmProductDetailViewEvent';
 import { useRouter } from 'next/router';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
+import { isProductSellable } from 'utils/product/isProductSellable';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { ProductDetailTitle } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
@@ -39,6 +41,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
     }, [] as TypeImageFragment[]);
 
     const mainVariantImagesWithVariantImages = [...product.images, ...variantImages];
+    const sellableVariants = product.variants.filter(isProductSellable);
 
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(product);
     useGtmPageReadyEvent(pageReadyEvent, isProductDetailFetching);
@@ -75,15 +78,17 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                         />
                     </div>
 
-                    <div className="order-3 vl:-mt-3 flex flex-col gap-5">
+                    <div className="order-3 flex flex-col gap-5">
                         <ProductDetailInfo
                             catalogNumber={product.catalogNumber}
                             reviewsSummary={product.reviewsSummary}
                         />
+
+                        {sellableVariants.length > 0 && <DeliveryOptionsLink products={sellableVariants} />}
                     </div>
                 </Webline>
 
-                <ProductVariantsTable variants={product.variants} />
+                <ProductVariantsTable deliveryOptionsProducts={sellableVariants} variants={product.variants} />
 
                 <ProductDetailSections
                     description={product.description}

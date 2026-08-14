@@ -3,7 +3,7 @@ import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { AnimatePresence } from 'framer-motion';
-import { ReactElement, ReactNode, useRef, useState } from 'react';
+import { KeyboardEvent, ReactElement, ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
 import { SelectOptionType } from 'types/selectOptions';
@@ -22,6 +22,7 @@ type SelectProps<T = string> = {
     isDisabled?: boolean;
     isLoading?: boolean;
     onSelectOption: (data: SelectOptionType<T>) => void;
+    renderValue?: (option: SelectOptionType<T>) => ReactNode;
     renderAdditionalItem?: (
         isOpen: boolean,
         setIsOpen: (isOpen: boolean) => void,
@@ -57,6 +58,8 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
     activeOption,
     className,
     renderAdditionalItem,
+    renderOption,
+    renderValue,
     selectClassName,
     isRequired,
     tid,
@@ -71,11 +74,26 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
     const wrapperRef = useRef(null);
     const additionalItemRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [initialFocusedIndex, setInitialFocusedIndex] = useState<number>();
     const listboxId = `${tid}-listbox`;
 
     const onSelectToggleOpenHandler = (isOpenFromArguments: boolean) => {
+        if (!isOpenFromArguments) {
+            setInitialFocusedIndex(undefined);
+        }
+
         externalSetIsSelectOpen?.(isOpenFromArguments);
         setIsOpen(isOpenFromArguments);
+    };
+
+    const toggleButtonKeyDownHandler = (event: KeyboardEvent<HTMLButtonElement>) => {
+        if (!isOpen && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+            event.preventDefault();
+            setInitialFocusedIndex(
+                filteredOptions.length > 0 ? (event.key === 'ArrowDown' ? 0 : filteredOptions.length - 1) : undefined,
+            );
+            onSelectToggleOpenHandler(true);
+        }
     };
 
     useClickClosePopup([wrapperRef, additionalItemRef], () => {
@@ -172,38 +190,55 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         </>
                     ) : (
                         <button
+                            aria-controls={listboxId}
                             aria-describedby={ariaDescribedBy}
+                            aria-expanded={isOpen}
+                            aria-haspopup="listbox"
                             aria-invalid={ariaInvalid}
-                            className="w-full min-w-0 cursor-pointer px-3 pt-5 text-left outline-hidden"
                             data-tid={tid}
                             disabled={isDisabled}
                             id={tid}
                             tabIndex={-1}
                             type="button"
+                            className={twJoin(
+                                'w-full min-w-0 cursor-pointer px-3 text-left outline-hidden',
+                                renderValue ? 'py-1' : 'pt-5',
+                            )}
                             onClick={() => onSelectToggleOpenHandler(!isOpen)}
+                            onKeyDown={toggleButtonKeyDownHandler}
                         >
-                            <span
-                                className={twJoin(
-                                    'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
-                                    isOpen || activeOption
-                                        ? 'top-2.25 text-sm'
-                                        : 'top-1/2 -translate-y-1/2 font-semibold text-md',
-                                )}
-                            >
-                                {label}
+                            {renderValue ? (
+                                activeOption ? (
+                                    renderValue(activeOption)
+                                ) : (
+                                    <span className="text-input-placeholder-default">{label}</span>
+                                )
+                            ) : (
+                                <>
+                                    <span
+                                        className={twJoin(
+                                            'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
+                                            isOpen || activeOption
+                                                ? 'top-2.25 text-sm'
+                                                : 'top-1/2 -translate-y-1/2 font-semibold text-md',
+                                        )}
+                                    >
+                                        {label}
 
-                                {isRequired && <span className="ml-1 text-text-error">*</span>}
-                            </span>
+                                        {isRequired && <span className="ml-1 text-text-error">*</span>}
+                                    </span>
 
-                            {activeOption?.label && (
-                                <span
-                                    className={twJoin(
-                                        'block truncate font-secondary font-semibold',
-                                        isDisabled ? 'text-input-text-disabled' : 'text-input-text-default',
+                                    {activeOption?.label && (
+                                        <span
+                                            className={twJoin(
+                                                'block truncate font-secondary font-semibold',
+                                                isDisabled ? 'text-input-text-disabled' : 'text-input-text-default',
+                                            )}
+                                        >
+                                            {activeOption.label}
+                                        </span>
                                     )}
-                                >
-                                    {activeOption.label}
-                                </span>
+                                </>
                             )}
                         </button>
                     )}
@@ -234,6 +269,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
 
                     <IconButton
                         Icon={ArrowIcon}
+                        aria-controls={listboxId}
                         aria-describedby={ariaDescribedBy}
                         aria-expanded={isOpen}
                         aria-haspopup="listbox"
@@ -246,6 +282,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         title={ariaLabel}
                         variant="ghost"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}
+                        onKeyDown={toggleButtonKeyDownHandler}
                     />
                 </div>
 
@@ -254,12 +291,14 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         <SelectList
                             activeOption={activeOption}
                             infinityScrollConfig={infinityScrollConfig}
+                            initialFocusedIndex={initialFocusedIndex}
                             itemAfterText={itemAfterText}
                             itemBeforeText={itemBeforeText}
                             listClassName={listClassName}
                             listId={listboxId}
                             options={filteredOptions}
-                            setIsOpen={setIsOpen}
+                            renderOption={renderOption}
+                            setIsOpen={onSelectToggleOpenHandler}
                             tid={tid}
                             onSelectOption={onSelectOptionExtended}
                         />

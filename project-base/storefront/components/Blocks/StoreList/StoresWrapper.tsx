@@ -1,24 +1,18 @@
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
-import { StoreList } from 'components/Blocks/StoreList/StoreList';
-import { StoreListEmpty } from 'components/Blocks/StoreList/StoreListEmpty';
-import { StoreListLoader } from 'components/Blocks/StoreList/StoreListLoader';
-import { SearchInput } from 'components/Forms/TextInput/SearchInput';
+import { StoreSearchList } from 'components/Blocks/StoreList/StoreSearchList';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { TypeCoordinates } from 'graphql/types';
 import { useEffect, useMemo, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSessionStore } from 'store/useSessionStore';
 import { MapMarker } from 'types/map';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
-import { SkeletonModuleStoreList } from '../Skeleton/SkeletonModuleStoreList';
 import { getStoreListMapFocus } from './getStoreListMapFocus';
-import { StoreListError } from './StoreListError';
 
 type StoresWrapperProps = {
     stores: TypeListedStoreConnectionFragment | null;
@@ -68,11 +62,6 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     const isControlledSelection = selectedStoreUuid !== undefined;
     const selectedStore = isControlledSelection ? (selectedStoreUuid ?? null) : internalSelectedStoreUuid;
     const shouldAllowStoreSelection = onSelectStoreCallback !== undefined;
-    const shouldLoadMoreStores =
-        stores?.pageInfo.hasNextPage === true &&
-        !isFetchingStores &&
-        !isLoadingMoreStores &&
-        onLoadMoreStoresCallback !== undefined;
 
     const mappedStores = useMemo(
         () => (stores === null ? null : mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges || [])),
@@ -189,24 +178,6 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
         }
     };
 
-    const searchInput = (
-        <SearchInput
-            ariaLabelForSearchButton={t('Search for a store', { ns: 'accessibility' })}
-            label={t('City or postcode')}
-            shouldShowSpinnerInInput={isFetchingStores}
-            value={searchTextValue}
-            onChange={(e) => onSearchTextCallback(e.currentTarget.value)}
-            onClear={() => onSearchTextCallback('')}
-        />
-    );
-    const shouldShowStores = displayedStoreList.length > 0;
-    const shouldShowStoreListSkeleton =
-        isFetchingStores && !shouldShowStores && storeConnectionErrorMessage === undefined;
-    const isStoreListEmpty =
-        stores !== null &&
-        displayedStoreList.length === 0 &&
-        !isFetchingStores &&
-        storeConnectionErrorMessage === undefined;
     const shouldShowMap = stores !== null;
 
     const content = (
@@ -220,41 +191,22 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                 )}
             >
                 <div className={twMergeCustom('vl:basis-1/2', !isPickupSelectionVariant && 'vl:min-h-0')}>
-                    {searchInput}
-
-                    {storeConnectionErrorMessage !== undefined && (
-                        <StoreListError message={storeConnectionErrorMessage} />
-                    )}
-
-                    {shouldShowStoreListSkeleton && <SkeletonModuleStoreList />}
-
-                    {isStoreListEmpty && (
-                        <StoreListEmpty
-                            description={t('Try changing the city or postcode.')}
-                            message={t('No stores found')}
-                        />
-                    )}
-
-                    {shouldShowStores && (
-                        <InfiniteScroll
-                            dataLength={loadedStoresCount}
-                            hasMore={shouldLoadMoreStores}
-                            loader={<StoreListLoader />}
-                            next={onLoadMoreStoresCallback ?? (() => undefined)}
-                            scrollableTarget={scrollableTargetId}
-                            style={{ overflow: 'visible' }}
-                        >
-                            <StoreList
-                                itemMode={isPickupSelectionVariant ? 'selectOnItemClick' : 'default'}
-                                isDistanceFromSearchText={isDistanceFromSearchText}
-                                selectedStoreUuid={selectedStore}
-                                stores={displayedStoreList}
-                                onSelectStoreCallback={shouldAllowStoreSelection ? selectStoreHandler : undefined}
-                            />
-                        </InfiniteScroll>
-                    )}
-
-                    {isLoadingMoreStores && <StoreListLoader />}
+                    <StoreSearchList
+                        displayedStores={displayedStoreList}
+                        isDistanceFromSearchText={isDistanceFromSearchText}
+                        isFetchingStores={isFetchingStores}
+                        isLoadingMoreStores={isLoadingMoreStores}
+                        itemMode={isPickupSelectionVariant ? 'selectOnItemClick' : 'default'}
+                        loadedStoresCount={loadedStoresCount}
+                        scrollableTargetId={scrollableTargetId}
+                        searchTextValue={searchTextValue}
+                        selectedStoreUuid={selectedStore}
+                        storeConnectionErrorMessage={storeConnectionErrorMessage}
+                        stores={stores}
+                        onLoadMoreStoresCallback={onLoadMoreStoresCallback}
+                        onSearchTextCallback={onSearchTextCallback}
+                        onSelectStoreCallback={shouldAllowStoreSelection ? selectStoreHandler : undefined}
+                    />
                 </div>
                 <div
                     className={twMergeCustom(

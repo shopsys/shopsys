@@ -82,6 +82,8 @@ export const cache = cacheExchange({
         Price: keyNull,
         PricingSetting: keyNull,
         Product: keyUuid,
+        ProductDeliveryOption: keyNull,
+        ProductDeliveryStore: keyNull,
         ProductFilterOptions: keyNull,
         ProductPrice: keyNull,
         ProductReview: keyUuid,

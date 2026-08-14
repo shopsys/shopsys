@@ -9,8 +9,8 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { isPickupPlaceTransport } from 'utils/transport';
+import { TransportAndPaymentItemLabel } from './TransportAndPaymentItemLabel';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
-import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 import { TransportUnavailabilityInfo } from './TransportUnavailabilityInfo';
 
 type ChangeTransport = (
@@ -71,7 +71,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                 shouldUseFocusOnlyArrowKeys
                 value={transport.uuid}
                 label={
-                    <TransportAndPaymentSelectItemLabel
+                    <TransportAndPaymentItemLabel
                         description={transport.description}
                         expectedDeliveryDate={transport.expectedDeliveryDate}
                         disabled={disabled}
@@ -79,6 +79,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                         isActive={isActive}
                         isImageOnWhiteBackground={hasGreyBackground || isActive}
                         isPersonalPickup={isPickupPlaceTransport(transport.transportTypeCode)}
+                        isPriceNextToDeliveryDateOnSmallScreen
                         name={transport.name}
                         openPickupPlacePopup={() => openPickupPlacePopup?.()}
                         pickupPlaceDetail={isActive && pickupPlace ? pickupPlace : undefined}

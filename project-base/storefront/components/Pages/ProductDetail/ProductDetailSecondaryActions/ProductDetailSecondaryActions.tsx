@@ -1,23 +1,23 @@
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
+import { ProductQuestionButton } from 'components/Blocks/Product/ButtonsAction/ProductQuestionButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
-import { ProductQuestionButton } from 'components/Blocks/Product/ProductQuestionButton';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
-export type ComparisonAndWishlistButtonsProps = {
+export type ProductDetailSecondaryActionsProps = {
     product: TypeProductDetailFragment;
 };
 
-export const ComparisonAndWishlistButtons: FC<ComparisonAndWishlistButtonsProps> = ({ product }) => {
+export const ProductDetailSecondaryActions: FC<ProductDetailSecondaryActionsProps> = ({ product }) => {
     const { isProductInComparison, toggleProductInComparison } = useComparison();
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 
-    const iconButtonClassNames = 'min-w-0 flex-col items-center gap-1 text-center sm:flex-row sm:gap-2 sm:text-left';
+    const iconButtonClassNames = 'min-w-0 flex-col items-center gap-1 text-center sm:shrink-0 sm:flex-row sm:text-left';
 
     return (
-        <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-nowrap sm:items-center sm:gap-x-4 sm:overflow-hidden">
+        <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-3">
             <ProductCompareButton
                 isWithText
                 isWithShortText

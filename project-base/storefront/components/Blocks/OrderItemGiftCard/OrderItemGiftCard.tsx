@@ -1,13 +1,12 @@
 import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { Image } from 'components/Basic/Image/Image';
 import { OrderItemProductPrice } from 'components/Blocks/OrderItemProductCard/OrderItemProductPrice';
+import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { TypeAvailability } from 'graphql/types';
-import { twJoin } from 'tailwind-merge';
 import { generateProductImageAlt } from 'utils/productAltText';
-import { getAvailabilityTextColorClassName } from 'utils/ui/getAvailabilityTextColorClassName';
 
 type OrderItemGiftCardProps = {
     availability?: TypeAvailability;
@@ -47,14 +46,12 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
                     <div className="flex flex-col gap-0.5">
                         <span className="max-w-44 font-semibold text-sm">{fullName}</span>
                         {availability !== undefined && (
-                            <span
-                                className={twJoin(
-                                    'font-semibold text-xs',
-                                    getAvailabilityTextColorClassName(availability.status),
-                                )}
-                            >
-                                {availability.name}
-                            </span>
+                            <ProductAvailability
+                                availability={availability}
+                                availableStoresCount={null}
+                                displayMode="compact"
+                                isInquiryType={false}
+                            />
                         )}
                     </div>
                     <span className="whitespace-nowrap font-semibold text-sm">

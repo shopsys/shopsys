@@ -12,7 +12,7 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
-type TransportAndPaymentSelectItemLabelProps = {
+type TransportAndPaymentItemLabelProps = {
     name: string;
     price?: { priceWithVat: string; priceWithoutVat: string; vatAmount: string };
     expectedDeliveryDate?: string | null;
@@ -23,13 +23,15 @@ type TransportAndPaymentSelectItemLabelProps = {
     isActive?: boolean;
     isImageOnWhiteBackground?: boolean;
     disabled?: boolean;
+    isPriceNextToDeliveryDateOnSmallScreen?: boolean;
     showChangeButton?: boolean;
     openingHoursDisplay?: TransportAndPaymentPickupPlaceOpeningHoursDisplay;
     pickupPlaceDetailLayout?: TransportAndPaymentPickupPlaceDetailLayout;
+    unknownDeliveryDateExplanation?: string;
     openPickupPlacePopup?: () => void;
 };
 
-export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectItemLabelProps> = ({
+export const TransportAndPaymentItemLabel: FC<TransportAndPaymentItemLabelProps> = ({
     name,
     price,
     expectedDeliveryDate,
@@ -40,9 +42,11 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     isActive,
     isImageOnWhiteBackground,
     disabled,
+    isPriceNextToDeliveryDateOnSmallScreen = false,
     showChangeButton,
     openingHoursDisplay = 'accordion',
     pickupPlaceDetailLayout = 'default',
+    unknownDeliveryDateExplanation,
     openPickupPlacePopup,
 }) => {
     const formatPrice = useFormatPrice();
@@ -67,30 +71,66 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     );
 
     const priceElement = price && isPriceVisible(price.priceWithVat) && (
-        <div className="ml-auto text-text-default">{formatPrice(price.priceWithVat)}</div>
+        <div
+            className={twJoin(
+                'ml-auto font-secondary font-semibold text-sm text-text-default',
+                isPriceNextToDeliveryDateOnSmallScreen &&
+                    'max-sm:col-start-3 max-sm:row-start-2 max-sm:whitespace-nowrap',
+            )}
+        >
+            {formatPrice(price.priceWithVat)}
+        </div>
     );
 
     return (
         <div className="flex w-full flex-col">
-            <div className="flex flex-row items-center gap-3">
+            <div
+                className={twJoin(
+                    'items-center',
+                    isPriceNextToDeliveryDateOnSmallScreen
+                        ? 'grid grid-cols-[auto_1fr_auto] gap-x-3 gap-y-2 sm:flex sm:flex-row sm:gap-3'
+                        : 'flex flex-row gap-3',
+                )}
+            >
                 {imageElement}
 
-                <div className="flex min-w-0 flex-col gap-1">
+                <div
+                    className={twJoin(
+                        'flex min-w-0 flex-col gap-1',
+                        isPriceNextToDeliveryDateOnSmallScreen && 'max-sm:contents',
+                    )}
+                >
                     <div
-                        className="text-text-default"
-                        data-tid={TIDs.pages_order_selectitem_label_name}
-                        id={`${pickupPlaceDetail?.identifier}-${pickupPlaceDetail?.name}`}
+                        className={twJoin(
+                            'flex min-w-0 flex-col gap-1',
+                            isPriceNextToDeliveryDateOnSmallScreen &&
+                                'max-sm:col-span-2 max-sm:col-start-2 max-sm:row-start-1',
+                            isPriceNextToDeliveryDateOnSmallScreen && !image && 'max-sm:col-span-3 max-sm:col-start-1',
+                        )}
                     >
-                        {name}
+                        <div
+                            className="text-text-default"
+                            data-tid={TIDs.pages_order_selectitem_label_name}
+                            id={`${pickupPlaceDetail?.identifier}-${pickupPlaceDetail?.name}`}
+                        >
+                            {name}
+                        </div>
+
+                        {description && <div className="text-text-less text-xs">{description}</div>}
                     </div>
 
-                    {description && <div className="text-text-less text-xs">{description}</div>}
-
                     {!pickupPlaceDetail && expectedDeliveryDate !== undefined && !disabled && (
-                        <ExpectedDeliveryDateInfo
-                            expectedDeliveryDate={expectedDeliveryDate}
-                            isPersonalPickup={isPersonalPickup}
-                        />
+                        <div
+                            className={twJoin(
+                                isPriceNextToDeliveryDateOnSmallScreen && 'max-sm:col-span-2 max-sm:row-start-2',
+                            )}
+                        >
+                            <ExpectedDeliveryDateInfo
+                                expectedDeliveryDate={expectedDeliveryDate}
+                                isPersonalPickup={isPersonalPickup}
+                                unknownDeliveryDateExplanation={unknownDeliveryDateExplanation}
+                            />
+                        </div>
                     )}
                 </div>
 

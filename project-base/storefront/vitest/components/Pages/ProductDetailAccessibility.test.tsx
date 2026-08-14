@@ -15,7 +15,11 @@ vi.mock('components/Basic/Image/Image', () => ({
 }));
 
 vi.mock('components/Blocks/Product/ProductAvailability', () => ({
-    ProductAvailability: () => <span>In stock</span>,
+    ProductAvailability: ({ availableStoresCount }: { availableStoresCount: number | null }) => (
+        <span>
+            {availableStoresCount === null ? 'In stock' : `In stock, Ready to ship · ${availableStoresCount} store`}
+        </span>
+    ),
 }));
 
 vi.mock('components/Blocks/Product/ProductPrice', () => ({
@@ -138,5 +142,12 @@ describe('Product detail accessibility', () => {
 
         expect(container.querySelector('[data-alt]')).toHaveAttribute('data-alt', '');
         expect(screen.getByText(product.fullName)).not.toHaveAttribute('title');
+    });
+
+    test('shows only concise availability in the sticky action', () => {
+        render(<ProductDetailStickyAction isVisible placement="inline" product={product} />);
+
+        expect(screen.getAllByText('In stock')).toHaveLength(2);
+        expect(screen.queryByText(/Ready to ship/)).not.toBeInTheDocument();
     });
 });

@@ -9,11 +9,13 @@ import { twMergeCustom } from 'utils/twMerge';
 type ExpectedDeliveryDateInfoProps = {
     expectedDeliveryDate: string | null;
     isPersonalPickup?: boolean;
+    unknownDeliveryDateExplanation?: string;
 };
 
 export const ExpectedDeliveryDateInfo: FC<ExpectedDeliveryDateInfoProps> = ({
     expectedDeliveryDate,
     isPersonalPickup = false,
+    unknownDeliveryDateExplanation,
     className,
 }) => {
     const { t } = useTranslation();
@@ -23,7 +25,7 @@ export const ExpectedDeliveryDateInfo: FC<ExpectedDeliveryDateInfoProps> = ({
     if (expectedDeliveryDateMessage !== null) {
         return (
             <div
-                className={twMergeCustom('text-sm text-text-success', className)}
+                className={twMergeCustom('font-secondary font-semibold text-sm text-text-success', className)}
                 data-tid={TIDs.expected_delivery_date_message}
             >
                 {expectedDeliveryDateMessage}
@@ -31,12 +33,12 @@ export const ExpectedDeliveryDateInfo: FC<ExpectedDeliveryDateInfoProps> = ({
         );
     }
 
-    const unknownDeliveryDateExplanation = t(
-        'The cart contains goods that are out of stock and we do not know their restocking date yet',
-    );
+    const resolvedUnknownDeliveryDateExplanation =
+        unknownDeliveryDateExplanation ??
+        t('The cart contains goods that are out of stock and we do not know their restocking date yet');
 
     return (
-        <Tooltip label={unknownDeliveryDateExplanation} placement="bottom">
+        <Tooltip label={resolvedUnknownDeliveryDateExplanation} placement="bottom">
             <div
                 aria-describedby={explanationId}
                 className={twMergeCustom('flex items-center gap-1 text-text-less text-xs', className)}
@@ -48,7 +50,7 @@ export const ExpectedDeliveryDateInfo: FC<ExpectedDeliveryDateInfoProps> = ({
                     ? t('The pickup date cannot be determined')
                     : t('The delivery date cannot be determined')}
                 <span className="sr-only" id={explanationId}>
-                    {unknownDeliveryDateExplanation}
+                    {resolvedUnknownDeliveryDateExplanation}
                 </span>
             </div>
         </Tooltip>

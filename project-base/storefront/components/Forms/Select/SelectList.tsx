@@ -1,4 +1,6 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { useIsPresent } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { ReactNode, useEffect, useEffectEvent, useRef, useState } from 'react';
 import type { Props as InfiniteScrollProps } from 'react-infinite-scroll-component';
@@ -22,6 +24,8 @@ export type SelectListProps<T = string> = {
     activeOption?: SelectOptionType<T> | null;
     infinityScrollConfig?: Pick<InfiniteScrollProps, 'hasMore' | 'next' | 'dataLength'> & { pageSize: number };
     listClassName?: string;
+    renderOption?: (option: SelectOptionType<T>) => ReactNode;
+    initialFocusedIndex?: number;
     setIsOpen?: (isOpen: boolean) => void;
 };
 
@@ -36,15 +40,36 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     infinityScrollConfig,
     listClassName,
     setIsOpen,
+    renderOption,
+    initialFocusedIndex,
 }: SelectListProps<T> & FunctionComponentProps) => {
-    const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+    const [focusedIndex, setFocusedIndex] = useState<number | null>(initialFocusedIndex ?? null);
     const listRef = useRef<HTMLDivElement>(null);
+    const returnFocusRef = useRef<HTMLElement | null>(null);
+    const isPresent = useIsPresent();
     const optionsLength = options.length;
 
-    useFocusTrap(listRef);
+    useFocusTrap(isPresent ? listRef : undefined);
+
+    useEffect(() => {
+        returnFocusRef.current ??= document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    }, []);
+
+    useEffect(() => {
+        // The exit animation keeps the list mounted after closing; release focus before it disappears.
+        if (!isPresent && listRef.current?.contains(document.activeElement)) {
+            returnFocusRef.current?.focus();
+        }
+    }, [isPresent]);
 
     const onKeyDown = useEffectEvent((k: KeyboardEvent) => {
+        if (!isPresent) {
+            return;
+        }
+
         if (k.key === 'Escape') {
+            // A select inside a popup must close before the popup's window-level Escape handler runs.
+            k.stopPropagation();
             setIsOpen?.(false);
             setFocusedIndex(null);
             return;
@@ -85,12 +110,19 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
         } else if (k.key === 'ArrowUp') {
             k.preventDefault();
             setFocusedIndex((prevIndex) => (prevIndex === null ? options.length - 1 : Math.max(prevIndex - 1, 0)));
+        } else if (k.key === 'Home') {
+            k.preventDefault();
+            setFocusedIndex(0);
+        } else if (k.key === 'End') {
+            k.preventDefault();
+            setFocusedIndex(options.length - 1);
         } else if (
-            k.key === 'Enter' &&
+            (k.key === 'Enter' || k.key === ' ') &&
             focusedIndex !== null &&
             focusedIndex < options.length &&
             !options[focusedIndex]?.isDisabled
         ) {
+            k.preventDefault();
             onSelectOption(options[focusedIndex], undefined, k);
             setFocusedIndex(null);
         }
@@ -106,6 +138,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             tabIndex={option.isDisabled ? -1 : 0}
             className={twMergeCustom(
                 'list-none font-semibold outline-hidden hover:bg-input-bg-hovered',
+                option.value === activeOption?.value && 'bg-fill-accent-less',
                 option.isDisabled && 'pointer-events-none cursor-no-drop bg-input-bg-disabled text-input-text-disabled',
                 'focus-visible:bg-orange-500 focus-visible:text-text-default',
             )}
@@ -122,12 +155,16 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             >
                 {itemBeforeText && itemBeforeText}
 
-                {option.label}
+                {renderOption ? renderOption(option) : option.label}
 
                 {option.count !== undefined && (
                     <span className="whitespace-nowrap font-secondary text-input-placeholder-default">
                         ({option.count})
                     </span>
+                )}
+
+                {option.value === activeOption?.value && (
+                    <CheckmarkIcon aria-hidden="true" className="size-4 shrink-0 text-icon-accent" />
                 )}
             </div>
 

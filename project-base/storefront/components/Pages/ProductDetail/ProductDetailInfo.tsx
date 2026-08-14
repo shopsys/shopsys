@@ -2,7 +2,6 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { ProductReviewsSummaryBadge } from 'components/Blocks/ProductReviews/ProductReviewsSummaryBadge';
 import { TypeProductReviewsSummaryFragment } from 'graphql/requests/productReviews/fragments/ProductReviewsSummaryFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { ProductDetailUsps } from './ProductDetailUsps';
 
 type ProductDetailInfoProps = {
     brand?: {
@@ -12,7 +11,6 @@ type ProductDetailInfoProps = {
     catalogNumber: string;
     reviewsSummary?: TypeProductReviewsSummaryFragment | null;
     shortDescription?: string | null;
-    usps?: string[];
 };
 
 export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({
@@ -20,7 +18,6 @@ export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({
     catalogNumber,
     reviewsSummary,
     shortDescription,
-    usps,
 }) => {
     const { t } = useTranslation();
 
@@ -54,8 +51,6 @@ export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({
             <ProductReviewsSummaryBadge reviewsSummary={reviewsSummary ?? null} />
 
             {shortDescription && <div className="text-sm">{shortDescription}</div>}
-
-            {usps && !!usps.length && <ProductDetailUsps usps={usps} />}
         </>
     );
 };

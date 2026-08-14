@@ -1,0 +1,19 @@
+query ProductDeliveryStoresQuery(
+    $productUuid: Uuid!
+    $transportUuid: Uuid!
+    $searchText: String = null
+    $coordinates: Coordinates = null
+    $first: Int
+    $after: String
+) {
+    productDeliveryStores(
+        productUuid: $productUuid
+        transportUuid: $transportUuid
+        searchText: $searchText
+        coordinates: $coordinates
+        first: $first
+        after: $after
+    ) {
+        ...ProductDeliveryStoreConnectionFragment
+    }
+}

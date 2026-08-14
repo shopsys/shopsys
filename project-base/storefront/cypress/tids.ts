@@ -224,6 +224,14 @@ export enum TIDs {
     // Popups
     popup_confirm_button = 'popup_confirm_button',
 
+    // Delivery options popup
+    product_detail_delivery_options_link = 'product_detail_delivery_options_link',
+    product_detail_delivery_options_popup = 'product_detail_delivery_options_popup',
+    delivery_options_variant_select = 'delivery_options_variant_select',
+    delivery_options_address_panel = 'delivery_options_address_panel',
+    delivery_options_pickup_panel = 'delivery_options_pickup_panel',
+    delivery_options_transport_row_ = 'delivery_options_transport_row_',
+
     // Articles & Blog
     article_creation_date = 'article_creation_date',
     article_map_iframe = 'article_map_iframe',

@@ -2,8 +2,5 @@ fragment ProductDetailFragment on RegularProduct {
     ...ProductDetailInterfaceFragment
     shortDescription
     usps
-    storeAvailabilities {
-        ...SimpleStoreAvailabilityFragment
-    }
     availableStoresCount
 }

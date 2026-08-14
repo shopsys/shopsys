@@ -15,6 +15,7 @@ type StoreSummaryProps = {
     isSelected: boolean;
     hasTodayOpeningHours: boolean;
     isSelectionMode: boolean;
+    unknownDeliveryDateExplanation?: string;
     onClick: (event: MouseEvent<HTMLDivElement>) => void;
     onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => void;
 };
@@ -27,6 +28,7 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
     isSelected,
     hasTodayOpeningHours,
     isSelectionMode,
+    unknownDeliveryDateExplanation,
     onClick,
     onKeyDown,
 }) => {
@@ -75,6 +77,7 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
                             isPersonalPickup
                             className="text-xs"
                             expectedDeliveryDate={store.expectedDeliveryDate}
+                            unknownDeliveryDateExplanation={unknownDeliveryDateExplanation}
                         />
                     )}
                 </div>

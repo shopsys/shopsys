@@ -13,6 +13,7 @@ type StoreListItemProps = {
     isSelected: boolean;
     isDistanceFromSearchText: boolean;
     mode?: 'default' | 'selectOnItemClick';
+    unknownDeliveryDateExplanation?: string;
     onSelectStoreCallback?: (storeUuid: string | null) => void;
 };
 
@@ -21,6 +22,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({
     isSelected,
     isDistanceFromSearchText,
     mode = 'default',
+    unknownDeliveryDateExplanation,
     onSelectStoreCallback,
 }) => {
     const isSelectionMode = mode === 'selectOnItemClick' && onSelectStoreCallback !== undefined;
@@ -94,6 +96,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({
             <div aria-label={t('Store info', { ns: 'accessibility' })} className="flex items-center justify-between">
                 <StoreSummary
                     formattedDistance={formattedDistance}
+                    unknownDeliveryDateExplanation={unknownDeliveryDateExplanation}
                     hasTodayOpeningHours={hasTodayOpeningHours}
                     isExpanded={isExpanded}
                     isSelected={isSelected}

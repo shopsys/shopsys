@@ -38,8 +38,9 @@ export const ProductDetailStickyAction = ({ isVisible, placement, product }: Pro
                 <div className="vl:block hidden">
                     <ProductAvailability
                         availability={product.availability}
-                        availableStoresCount={product.availableStoresCount}
+                        availableStoresCount={null}
                         className="max-w-full text-xs [&>span]:truncate"
+                        displayMode="compact"
                         isInquiryType={product.isInquiryType}
                     />
                 </div>
@@ -56,6 +57,7 @@ export const ProductDetailStickyAction = ({ isVisible, placement, product }: Pro
                             availability={product.availability}
                             availableStoresCount={null}
                             className="min-w-0 text-xs [&>span]:truncate"
+                            displayMode="compact"
                             isInquiryType={product.isInquiryType}
                         />
                     )}

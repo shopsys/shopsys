@@ -1,8 +1,0 @@
-fragment SimpleStoreAvailabilityFragment on StoreAvailability {
-    availabilityInformation
-    availabilityStatus
-    store {
-        slug
-        storeName: name
-    }
-}

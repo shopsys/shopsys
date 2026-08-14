@@ -12,6 +12,7 @@ import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useRef } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { useAddToCartHandler } from 'utils/cart/useAddToCartHandler';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -93,7 +94,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     const isWatchdogButtonVisible = showWatchdogButton(product);
 
     return (
-        <div className="relative">
+        <div className="relative flex w-full flex-1">
             {isAddingToCart && (
                 <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
             )}
@@ -101,7 +102,12 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
             <Button
                 aria-haspopup="dialog"
                 aria-label={addToCartAriaLabel}
-                className="w-full whitespace-nowrap"
+                className={twJoin(
+                    'h-auto w-full whitespace-normal text-balance',
+                    buttonSize !== 'xlarge' && 'min-h-9',
+                    buttonSize === 'large' && 'sm:min-h-10',
+                    buttonSize === 'xlarge' && 'min-h-10 sm:min-h-14',
+                )}
                 disabled={isAddingToCart}
                 hasDisabledLook={isAddingToCart}
                 size={buttonSize}

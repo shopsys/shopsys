@@ -1,0 +1,17 @@
+import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
+
+export const getInStockAvailabilityDetails = (
+    availabilityStatus: TypeAvailabilityStatusEnum,
+    availableStoresCount: number | null,
+    t: ReturnType<typeof useTranslation>['t'],
+): string | null => {
+    if (availabilityStatus !== TypeAvailabilityStatusEnum.InStock || availableStoresCount === null) {
+        return null;
+    }
+
+    const storeCountText =
+        availableStoresCount > 0 ? `\u00a0·\u00a0${t('{{ count }} stores', { count: availableStoresCount })}` : '';
+
+    return `${t('Ready to ship')}${storeCountText}`;
+};

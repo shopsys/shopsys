@@ -80,7 +80,7 @@ const CATEGORY_PAGE_DEFER_WAVES = [
 
 const PRODUCT_PAGE_DEFER_WAVES = [
     [150, ['loaders']],
-    [300, ['secondary_loaders', 'footer', 'add_to_cart', 'countdown', 'comparison_and_wishlist_button']],
+    [300, ['secondary_loaders', 'footer', 'add_to_cart', 'countdown', 'secondary_actions']],
     [
         500,
         ['tertiary_loaders', 'related_products_tab', 'reviews', 'recommended_products', 'accessories', 'last_visited'],

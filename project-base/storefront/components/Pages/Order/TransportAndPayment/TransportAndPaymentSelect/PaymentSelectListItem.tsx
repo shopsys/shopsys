@@ -5,8 +5,8 @@ import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
+import { TransportAndPaymentItemLabel } from './TransportAndPaymentItemLabel';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
-import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 
 type ChangePayment = (
     updatedPaymentUuid: string | null,
@@ -53,7 +53,7 @@ export const PaymentListItem: FC<PaymentListItemProps> = ({ payment, isActive = 
                 shouldUseFocusOnlyArrowKeys
                 value={payment.uuid}
                 label={
-                    <TransportAndPaymentSelectItemLabel
+                    <TransportAndPaymentItemLabel
                         description={payment.description}
                         image={payment.mainImage}
                         isActive={isActive}
