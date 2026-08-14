@@ -29,6 +29,7 @@ describe('isFlashMessageError', () => {
         'too-many-code-application-attempts',
         'too-many-login-attempts',
         'too-many-store-search-attempts',
+        'too-many-withdrawal-request-attempts',
     ])('should return true for flash-message code: %s', (code) => {
         expect(isFlashMessageError(code)).toBe(true);
     });
@@ -82,6 +83,7 @@ describe('isNoFlashMessageError', () => {
         'order-item-not-found',
         'order-process-payment',
         'order-withdrawal-already-requested',
+        'order-withdrawal-confirmation-invalid',
         'order-withdrawal-deadline-passed',
         'payment-not-found',
         'product-already-in-list',
@@ -177,6 +179,7 @@ describe('error code classification coverage', () => {
             'too-many-code-application-attempts',
             'too-many-login-attempts',
             'too-many-store-search-attempts',
+            'too-many-withdrawal-request-attempts',
             // No-flash-message codes (logged but no toast)
             'advert-position-without-category',
             'article-not-found',
@@ -205,6 +208,7 @@ describe('error code classification coverage', () => {
             'order-item-not-found',
             'order-process-payment',
             'order-withdrawal-already-requested',
+            'order-withdrawal-confirmation-invalid',
             'order-withdrawal-deadline-passed',
             'payment-not-found',
             'product-already-in-list',

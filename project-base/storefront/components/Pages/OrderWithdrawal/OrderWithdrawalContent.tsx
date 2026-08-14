@@ -1,4 +1,6 @@
+import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { WithdrawalIcon } from 'components/Basic/Icon/WithdrawalIcon';
+import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
@@ -13,11 +15,14 @@ import { TypeOrderWithdrawalDataFragment } from 'graphql/requests/orders/fragmen
 import { useOrderWithdrawalRequestMutation } from 'graphql/requests/orders/mutations/OrderWithdrawalRequestMutation.generated';
 import { onGtmWithdrawalEventHandler } from 'gtm/handlers/onGtmWithdrawalEventHandler';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { OrderWithdrawalFormType } from 'types/form';
+import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { useOrderWithdrawalForm, useOrderWithdrawalFormMeta } from './orderWithdrawalFormMeta';
 
 type OrderWithdrawalContentProps = {
@@ -32,6 +37,8 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
     const [formProviderMethods] = useOrderWithdrawalForm(order);
     const formMeta = useOrderWithdrawalFormMeta();
     const [, orderWithdrawalRequest] = useOrderWithdrawalRequestMutation();
+    const [confirmationEmailState, setConfirmationEmailState] = useState<'sent' | 'already-sent' | null>(null);
+    const isGuestOrder = order.customerUser === null;
 
     const onSubmitHandler: SubmitHandler<OrderWithdrawalFormType> = async (values) => {
         const { firstName, lastName, email, note } = values;
@@ -52,7 +59,35 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
             },
         });
 
+        if (isGuestOrder && result.error) {
+            const { applicationError } = getUserFriendlyErrors(result.error, t);
+
+            if (applicationError?.type === 'order-withdrawal-already-requested') {
+                setConfirmationEmailState('already-sent');
+
+                return;
+            }
+
+            if (applicationError?.type === 'order-withdrawal-deadline-passed') {
+                showErrorMessage(t('The deadline for withdrawal from the contract has passed for this order.'));
+
+                return;
+            }
+
+            if (applicationError?.type === 'order-cancelled') {
+                showErrorMessage(t('Withdrawal from contract is not possible for a cancelled order.'));
+            }
+
+            return;
+        }
+
         if (result.data?.OrderWithdrawalRequest) {
+            if (isGuestOrder) {
+                setConfirmationEmailState('sent');
+
+                return;
+            }
+
             onGtmWithdrawalEventHandler(order.number);
 
             const [orderWithdrawalSuccessUrl] = getInternationalizedStaticUrls(
@@ -63,6 +98,29 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
             router.replace(orderWithdrawalSuccessUrl);
         }
     };
+
+    if (confirmationEmailState !== null) {
+        return (
+            <Webline width="lg">
+                <ConfirmationPageContent
+                    heading={t('Confirm the withdrawal request in your email')}
+                    headingIcon={MailIcon}
+                    headingVariant="success"
+                    headingDescription={
+                        confirmationEmailState === 'sent'
+                            ? t(
+                                  'We have sent an email with a confirmation link to the order email address. The withdrawal request for the order {{ orderNumber }} will be submitted once you open the link. The link is valid for 24 hours.',
+                                  { orderNumber: order.number },
+                              )
+                            : t(
+                                  'We have already sent an email with a confirmation link to the order email address. The withdrawal request for the order {{ orderNumber }} will be submitted once you open the link.',
+                                  { orderNumber: order.number },
+                              )
+                    }
+                />
+            </Webline>
+        );
+    }
 
     return (
         <Webline width="lg">
