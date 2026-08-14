@@ -1,5 +1,9 @@
 framework:
     rate_limiter:
+        frontend_api_order_withdrawal_request:
+            policy: fixed_window
+            limit: 5
+            interval: '1 minute'
         frontend_api_stores_search:
             policy: fixed_window
             limit: 10

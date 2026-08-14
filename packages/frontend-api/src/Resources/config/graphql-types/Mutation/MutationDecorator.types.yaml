@@ -271,10 +271,22 @@ MutationDecorator:
                 resolve: "@=mutation('createWatchdogMutation', args)"
             OrderWithdrawalRequest:
                 type: 'Boolean!'
-                description: "Request withdrawal from contract for an order"
+                description: "Request withdrawal from contract for an order. For orders of registered customers the withdrawal request is created directly, for guest orders a confirmation email is sent to the order email"
                 args:
                     input:
                         type: OrderWithdrawalRequestInput!
                         validation: cascade
                 resolve: "@=mutation('orderWithdrawalRequestMutation', args)"
                 access: "@=isGranted('create_withdrawal_voter', args)"
+            ConfirmOrderWithdrawalRequest:
+                type: 'String!'
+                description: "Confirm withdrawal from contract for a guest order using the hash received by email, returns the order urlHash"
+                args:
+                    confirmationHash:
+                        type: "String!"
+                        validation:
+                            -   Length:
+                                    min: 64
+                                    max: 64
+                resolve: "@=mutation('confirmOrderWithdrawalRequestMutation', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"

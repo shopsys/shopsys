@@ -1,0 +1,3 @@
+mutation ConfirmOrderWithdrawalRequest($confirmationHash: String!) {
+    ConfirmOrderWithdrawalRequest(confirmationHash: $confirmationHash)
+}
