@@ -1593,8 +1593,6 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   slug: Scalars['String']['output'];
   /** Count of quantity on stock */
   stockQuantity: Maybe<Scalars['Int']['output']>;
-  /** List of availabilities in individual stores (empty for main variants) */
-  storeAvailabilities: Array<TypeStoreAvailability>;
   unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
@@ -2792,8 +2790,6 @@ export type TypeProduct = {
   slug: Scalars['String']['output'];
   /** Count of quantity on stock */
   stockQuantity: Maybe<Scalars['Int']['output']>;
-  /** List of availabilities in individual stores (empty for main variants) */
-  storeAvailabilities: Array<TypeStoreAvailability>;
   unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
@@ -2836,6 +2832,48 @@ export type TypeProductConnection = {
   productFilterOptions: TypeProductFilterOptions;
   /** Total number of products (-1 means that the total count is not available) */
   totalCount: Scalars['Int']['output'];
+};
+
+/** Delivery option of a transport for a single piece of a product, independent of any cart */
+export type TypeProductDeliveryOption = {
+  __typename?: 'ProductDeliveryOption';
+  /** Expected delivery date of an order with a single piece of the product placed today. For a personal pickup transport the best possible date across all stores is used. Null when no delivery date can be promised. */
+  expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
+  /** Transport price for an order with a single piece of the product */
+  price: TypePrice;
+  /** The transport of this delivery option */
+  transport: TypeTransport;
+};
+
+/** Store where a single piece of a product can be picked up using a personal pickup transport */
+export type TypeProductDeliveryStore = {
+  __typename?: 'ProductDeliveryStore';
+  /** Expected pickup date at this store for an order with a single piece of the product placed today. Null when no pickup date can be promised. */
+  expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
+  /** The store */
+  store: TypeStore;
+};
+
+/** A connection to a list of items. */
+export type TypeProductDeliveryStoreConnection = {
+  __typename?: 'ProductDeliveryStoreConnection';
+  /** Information to aid in pagination. */
+  edges: Maybe<Array<Maybe<TypeProductDeliveryStoreEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: TypePageInfo;
+  /** Coordinates found by the store search text */
+  searchCoordinates: Maybe<TypeStoreSearchCoordinates>;
+  /** Total number of stores */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** An edge in a connection. */
+export type TypeProductDeliveryStoreEdge = {
+  __typename?: 'ProductDeliveryStoreEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Maybe<TypeProductDeliveryStore>;
 };
 
 /** An edge in a connection. */
@@ -3236,6 +3274,10 @@ export type TypeQuery = {
   personalDataPage: Maybe<TypePersonalDataPage>;
   /** Returns product filtered using UUID or URL slug */
   product: Maybe<TypeProduct>;
+  /** Returns the delivery options usable for a single piece of the given product, independently of any cart */
+  productDeliveryOptions: Array<TypeProductDeliveryOption>;
+  /** Returns the stores where a single piece of the given product can be picked up using the given personal pickup transport, together with the expected pickup dates, independently of any cart */
+  productDeliveryStores: TypeProductDeliveryStoreConnection;
   /** Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list. */
   productList: Maybe<TypeProductList>;
   productListsByType: Array<TypeProductList>;
@@ -3464,6 +3506,23 @@ export type TypeQueryPaymentArgs = {
 export type TypeQueryProductArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type TypeQueryProductDeliveryOptionsArgs = {
+  productUuid: Scalars['Uuid']['input'];
+};
+
+
+export type TypeQueryProductDeliveryStoresArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  coordinates?: InputMaybe<TypeCoordinates>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  productUuid: Scalars['Uuid']['input'];
+  searchText?: InputMaybe<Scalars['String']['input']>;
+  transportUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -3758,8 +3817,6 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   slug: Scalars['String']['output'];
   /** Count of quantity on stock */
   stockQuantity: Maybe<Scalars['Int']['output']>;
-  /** List of availabilities in individual stores (empty for main variants) */
-  storeAvailabilities: Array<TypeStoreAvailability>;
   unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
@@ -3977,7 +4034,7 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   distance: Maybe<Scalars['Int']['output']>;
   /** Store email */
   email: Maybe<Scalars['String']['output']>;
-  /** Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised. */
+  /** Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryStores query instead. */
   expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** Store images */
   images: Array<TypeImage>;
@@ -4020,17 +4077,6 @@ export type TypeStoreImagesArgs = {
 
 export type TypeStoreMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Represents an availability in an individual store */
-export type TypeStoreAvailability = {
-  __typename?: 'StoreAvailability';
-  /** Detailed information about availability */
-  availabilityInformation: Scalars['String']['output'];
-  /** Availability status in a format suitable for usage in the code */
-  availabilityStatus: TypeAvailabilityStatusEnum;
-  /** Store */
-  store: Maybe<TypeStore>;
 };
 
 /** A connection to a list of items. */
@@ -4086,7 +4132,7 @@ export type TypeTransport = {
   __typename?: 'Transport';
   /** Localized transport description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
-  /** Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. */
+  /** Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead. */
   expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** Transport group */
   group: Maybe<TypeTransportGroup>;
@@ -4102,7 +4148,7 @@ export type TypeTransport = {
   payments: Array<TypePayment>;
   /** Transport position */
   position: Scalars['Int']['output'];
-  /** Transport price */
+  /** Transport price based on the current cart state. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead. */
   price: TypePrice;
   /** Cart products that cannot be delivered using this transport, grouped by the reason (empty when the transport can be selected) */
   productsBlockingSelectionInCart: Array<TypeProductsByTransportUnavailabilityReason>;
@@ -4302,8 +4348,6 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   slug: Scalars['String']['output'];
   /** Count of quantity on stock */
   stockQuantity: Maybe<Scalars['Int']['output']>;
-  /** List of availabilities in individual stores (empty for main variants) */
-  storeAvailabilities: Array<TypeStoreAvailability>;
   unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;

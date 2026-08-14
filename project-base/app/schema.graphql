@@ -1404,8 +1404,6 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   slug: String!
   "Count of quantity on stock"
   stockQuantity: Int
-  "List of availabilities in individual stores (empty for main variants)"
-  storeAvailabilities: [StoreAvailability!]!
   unit: Unit!
   "List of product's unique selling propositions"
   usps: [String!]!
@@ -2331,8 +2329,6 @@ interface Product {
   slug: String!
   "Count of quantity on stock"
   stockQuantity: Int
-  "List of availabilities in individual stores (empty for main variants)"
-  storeAvailabilities: [StoreAvailability!]!
   unit: Unit!
   "List of product's unique selling propositions"
   usps: [String!]!
@@ -2356,6 +2352,44 @@ type ProductConnection {
   productFilterOptions: ProductFilterOptions!
   "Total number of products (-1 means that the total count is not available)"
   totalCount: Int!
+}
+
+"Delivery option of a transport for a single piece of a product, independent of any cart"
+type ProductDeliveryOption {
+  "Expected delivery date of an order with a single piece of the product placed today. For a personal pickup transport the best possible date across all stores is used. Null when no delivery date can be promised."
+  expectedDeliveryDate: DateTime
+  "Transport price for an order with a single piece of the product"
+  price: Price!
+  "The transport of this delivery option"
+  transport: Transport!
+}
+
+"Store where a single piece of a product can be picked up using a personal pickup transport"
+type ProductDeliveryStore {
+  "Expected pickup date at this store for an order with a single piece of the product placed today. Null when no pickup date can be promised."
+  expectedDeliveryDate: DateTime
+  "The store"
+  store: Store!
+}
+
+"A connection to a list of items."
+type ProductDeliveryStoreConnection {
+  "Information to aid in pagination."
+  edges: [ProductDeliveryStoreEdge]
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "Coordinates found by the store search text"
+  searchCoordinates: StoreSearchCoordinates
+  "Total number of stores"
+  totalCount: Int!
+}
+
+"An edge in a connection."
+type ProductDeliveryStoreEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: ProductDeliveryStore
 }
 
 "An edge in a connection."
@@ -2744,6 +2778,21 @@ type Query {
   personalDataPage: PersonalDataPage
   "Returns product filtered using UUID or URL slug"
   product(urlSlug: String, uuid: Uuid): Product
+  "Returns the delivery options usable for a single piece of the given product, independently of any cart"
+  productDeliveryOptions(productUuid: Uuid!): [ProductDeliveryOption!]!
+  "Returns the stores where a single piece of the given product can be picked up using the given personal pickup transport, together with the expected pickup dates, independently of any cart"
+  productDeliveryStores(
+    after: String
+    before: String
+    "Returns stores with distance from given coordinates"
+    coordinates: Coordinates = null
+    first: Int
+    last: Int
+    productUuid: Uuid!
+    "Search for city or post code"
+    searchText: String = null
+    transportUuid: Uuid!
+  ): ProductDeliveryStoreConnection!
   "Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."
   productList(input: ProductListInput!): ProductList
   productListsByType(productListType: ProductListTypeEnum!): [ProductList!]!
@@ -3000,8 +3049,6 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   slug: String!
   "Count of quantity on stock"
   stockQuantity: Int
-  "List of availabilities in individual stores (empty for main variants)"
-  storeAvailabilities: [StoreAvailability!]!
   unit: Unit!
   "List of product's unique selling propositions"
   usps: [String!]!
@@ -3179,7 +3226,7 @@ type Store implements Breadcrumb & Slug {
   distance: Int
   "Store email"
   email: String
-  "Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised."
+  "Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryStores query instead."
   expectedDeliveryDate(cartUuid: Uuid = null, transportUuid: Uuid!): DateTime
   "Store images"
   images(type: String = null): [Image!]!
@@ -3207,16 +3254,6 @@ type Store implements Breadcrumb & Slug {
   street: String!
   "UUID"
   uuid: Uuid!
-}
-
-"Represents an availability in an individual store"
-type StoreAvailability {
-  "Detailed information about availability"
-  availabilityInformation: String!
-  "Availability status in a format suitable for usage in the code"
-  availabilityStatus: AvailabilityStatusEnum!
-  "Store"
-  store: Store
 }
 
 "A connection to a list of items."
@@ -3267,7 +3304,7 @@ type Token {
 type Transport {
   "Localized transport description (domain dependent)"
   description: String
-  "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised."
+  "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead."
   expectedDeliveryDate(cartUuid: Uuid = null): DateTime
   "Transport group"
   group: TransportGroup
@@ -3283,7 +3320,7 @@ type Transport {
   payments: [Payment!]!
   "Transport position"
   position: Int!
-  "Transport price"
+  "Transport price based on the current cart state. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead."
   price(cartUuid: Uuid = null): Price!
   "Cart products that cannot be delivered using this transport, grouped by the reason (empty when the transport can be selected)"
   productsBlockingSelectionInCart(cartUuid: Uuid = null): [ProductsByTransportUnavailabilityReason!]!
@@ -3444,8 +3481,6 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   slug: String!
   "Count of quantity on stock"
   stockQuantity: Int
-  "List of availabilities in individual stores (empty for main variants)"
-  storeAvailabilities: [StoreAvailability!]!
   unit: Unit!
   "List of product's unique selling propositions"
   usps: [String!]!
