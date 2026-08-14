@@ -1,0 +1,15 @@
+ProductDeliveryOptionDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Delivery option of a transport for a single piece of a product, independent of any cart"
+        fields:
+            transport:
+                type: "Transport!"
+                description: "The transport of this delivery option"
+            price:
+                type: "Price!"
+                description: "Transport price for an order with a single piece of the product"
+            expectedDeliveryDate:
+                type: "DateTime"
+                description: "Expected delivery date of an order with a single piece of the product placed today. For a personal pickup transport the best possible date across all stores is used. Null when no delivery date can be promised."

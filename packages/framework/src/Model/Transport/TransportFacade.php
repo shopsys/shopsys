@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportFacade
@@ -226,12 +227,34 @@ class TransportFacade
      */
     public function getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(?Cart $cart = null): array
     {
+        return $this->getVisibleByTotalWeightOnCurrentDomainWithEagerLoadedDomainsAndTranslations($cart?->getTotalWeight());
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function getVisibleByTotalWeightOnCurrentDomainWithEagerLoadedDomainsAndTranslations(
+        ?int $totalWeight,
+    ): array {
         $domainId = $this->domain->getId();
-        $transports = $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig(), $cart?->getTotalWeight());
+        $transports = $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig(), $totalWeight);
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         return $this->transportVisibilityCalculation->filterVisible($transports, $visiblePayments, $domainId);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function getUsableForSingleProductOnCurrentDomainWithEagerLoadedDomainsAndTranslations(
+        Product $product,
+    ): array {
+        $transports = $this->getVisibleByTotalWeightOnCurrentDomainWithEagerLoadedDomainsAndTranslations(
+            $product->getWeight() ?? 0,
+        );
+
+        return $this->transportVisibilityCalculation->filterTransportsUsableForProduct($transports, $product);
     }
 
     protected function deleteAllPricesByTransport(Transport $transport): void

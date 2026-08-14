@@ -27,6 +27,8 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade as BaseTransportFaca
  * @method \App\Model\Transport\Transport[] getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(\App\Model\Cart\Cart|null $cart = null)
  * @method void deleteAllPricesByTransport(\App\Model\Transport\Transport $transport)
  * @method \App\Model\Transport\Transport[] getAll()
+ * @method \App\Model\Transport\Transport[] getVisibleByTotalWeightOnCurrentDomainWithEagerLoadedDomainsAndTranslations(int|null $totalWeight)
+ * @method \App\Model\Transport\Transport[] getUsableForSingleProductOnCurrentDomainWithEagerLoadedDomainsAndTranslations(\App\Model\Product\Product $product)
  */
 class TransportFacade extends BaseTransportFacade
 {

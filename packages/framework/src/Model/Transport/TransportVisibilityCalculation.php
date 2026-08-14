@@ -82,23 +82,39 @@ class TransportVisibilityCalculation
      */
     protected function getExcludedTransportIdsByProductsInCart(Cart $cart): array
     {
-        return array_keys($this->getProductIdsIndexedByExcludedTransportId($cart));
+        return array_keys($this->getProductIdsIndexedByExcludedTransportId($cart->getProducts()));
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function filterTransportsUsableForProduct(array $transports, Product $product): array
+    {
+        $excludingProductsByTransportId = $this->getExcludingProductsByTransportIdForProducts([$product]);
+
+        return array_values(array_filter(
+            $transports,
+            fn (Transport $transport): bool => ($excludingProductsByTransportId[$transport->getId()] ?? []) === []
+                && ($transport->isPersonalPickup() || !$product->isPersonalPickupOnly()),
+        ));
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product[]>
      */
-    public function getExcludingProductsByTransportIdForCart(Cart $cart): array
+    public function getExcludingProductsByTransportIdForProducts(array $products): array
     {
         $productsById = [];
 
-        foreach ($cart->getProducts() as $product) {
+        foreach ($products as $product) {
             $productsById[$product->getId()] = $product;
         }
 
         $excludingProductsByTransportId = [];
 
-        foreach ($this->getProductIdsIndexedByExcludedTransportId($cart) as $transportId => $productIds) {
+        foreach ($this->getProductIdsIndexedByExcludedTransportId($products) as $transportId => $productIds) {
             foreach ($productIds as $productId) {
                 if (isset($productsById[$productId])) {
                     $excludingProductsByTransportId[$transportId][] = $productsById[$productId];
@@ -110,11 +126,12 @@ class TransportVisibilityCalculation
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return array<int, int[]>
      */
-    protected function getProductIdsIndexedByExcludedTransportId(Cart $cart): array
+    protected function getProductIdsIndexedByExcludedTransportId(array $products): array
     {
-        $productIds = array_map(static fn (Product $product) => $product->getId(), $cart->getProducts());
+        $productIds = array_map(static fn (Product $product) => $product->getId(), $products);
 
         return $this->transportRepository->getProductIdsIndexedByExcludedTransportId($productIds);
     }

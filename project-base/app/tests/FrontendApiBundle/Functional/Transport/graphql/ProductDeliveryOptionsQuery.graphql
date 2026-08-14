@@ -1,0 +1,14 @@
+query ProductDeliveryOptions($productUuid: Uuid!) {
+    productDeliveryOptions(productUuid: $productUuid) {
+        transport {
+            name
+            transportTypeCode
+        }
+        price {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+        expectedDeliveryDate
+    }
+}

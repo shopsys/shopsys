@@ -104,6 +104,31 @@ QueryDecorator:
                     cartUuid:
                         type: "Uuid"
                 description: "Returns available transport methods based on the current cart state"
+            productDeliveryOptions:
+                type: '[ProductDeliveryOption!]!'
+                resolve: "@=query('productDeliveryOptionsQuery', args['productUuid'])"
+                args:
+                    productUuid:
+                        type: "Uuid!"
+                description: "Returns the delivery options usable for a single piece of the given product, independently of any cart"
+            productDeliveryStores:
+                type: 'ProductDeliveryStoreConnection!'
+                argsBuilder: "Relay::Connection"
+                resolve: "@=query('productDeliveryStoresQuery', args['productUuid'], args['transportUuid'], args)"
+                args:
+                    productUuid:
+                        type: "Uuid!"
+                    transportUuid:
+                        type: "Uuid!"
+                    searchText:
+                        type: "String"
+                        defaultValue: null
+                        description: "Search for city or post code"
+                    coordinates:
+                        type: "Coordinates"
+                        defaultValue: null
+                        description: "Returns stores with distance from given coordinates"
+                description: "Returns the stores where a single piece of the given product can be picked up using the given personal pickup transport, together with the expected pickup dates, independently of any cart"
             transport:
                 type: 'Transport'
                 resolve: "@=query('transportByTransportUuidQuery', args['uuid'])"

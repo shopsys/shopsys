@@ -244,10 +244,6 @@ services:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Store\StoresQuery:
-        arguments:
-            $storesSearchRateLimiter: '@limiter.frontend_api_stores_search'
-
     Shopsys\FrontendApiBundle\Model\Security\RefreshTokenRedisCacheFacade:
         arguments:
             $redisClient: '@snc_redis.frontend_api_refresh_token'
@@ -259,6 +255,10 @@ services:
     Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade:
         arguments:
             $logger: '@monolog.logger'
+
+    Shopsys\FrontendApiBundle\Model\Store\StoreConnectionFactory:
+        arguments:
+            $storesSearchRateLimiter: '@limiter.frontend_api_stores_search'
 
     Shopsys\FrontendApiBundle\Model\Store\StoreSearchTextCoordinatesProvider:
         arguments:
