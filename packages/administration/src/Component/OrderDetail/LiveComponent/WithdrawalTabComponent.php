@@ -37,7 +37,7 @@ class WithdrawalTabComponent
 
     public function getWithdrawalRequest(): ?WithdrawalRequest
     {
-        return $this->withdrawalRequestFacade->findByOrder($this->orderFacade->getById($this->orderId));
+        return $this->withdrawalRequestFacade->findIncludingUnconfirmedByOrder($this->orderFacade->getById($this->orderId));
     }
 
     #[LiveListener(SectionEditorFormComponent::ORDER_DETAIL_SECTION_UPDATED_EVENT)]

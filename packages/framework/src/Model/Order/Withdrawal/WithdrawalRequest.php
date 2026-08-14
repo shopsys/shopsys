@@ -93,6 +93,20 @@ class WithdrawalRequest
         }
     }
 
+    /**
+     * @var bool
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'boolean')]
+    protected $confirmed;
+
+    /**
+     * @var string|null
+     */
+    #[AsMcpColumn(exposed: false)]
+    #[ORM\Column(type: 'string', length: 64, unique: true, nullable: true)]
+    protected $confirmationHash;
+
     public function __construct(Order $order, WithdrawalRequestData $withdrawalRequestData)
     {
         $this->order = $order;
@@ -107,6 +121,8 @@ class WithdrawalRequest
         $this->email = $withdrawalRequestData->email;
         $this->note = $withdrawalRequestData->note;
         $this->requestedAt = $withdrawalRequestData->requestedAt;
+        $this->confirmed = $withdrawalRequestData->confirmed;
+        $this->confirmationHash = $withdrawalRequestData->confirmationHash;
     }
 
     public function edit(WithdrawalRequestData $withdrawalRequestData): void
@@ -207,5 +223,27 @@ class WithdrawalRequest
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isConfirmed()
+    {
+        return $this->confirmed;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getConfirmationHash()
+    {
+        return $this->confirmationHash;
+    }
+
+    public function confirm(): void
+    {
+        $this->confirmed = true;
+        $this->confirmationHash = null;
     }
 }
