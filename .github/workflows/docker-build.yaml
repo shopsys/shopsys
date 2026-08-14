@@ -1284,7 +1284,7 @@ jobs:
             BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
             BRANCH_NAME_ESCAPED: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
             TRAEFIK_HOSTS: ${{ needs.variables.outputs.TRAEFIK_HOSTS }}
-            GOPAY_CONFIG_VALUE: ${{ secrets.GOPAY_CONFIG }}
+            GOPAY_CONFIG_VALUE: ${{ secrets.GOPAY_CONFIG || '[]' }}
             GTM_ID_VALUE: ${{ secrets.GTM_ID }}
             PACKETERY_API_KEY_VALUE: ${{ secrets.PACKETERY_API_KEY }}
             PACKETERY_API_PASSWORD_VALUE: ${{ secrets.PACKETERY_API_PASSWORD }}
