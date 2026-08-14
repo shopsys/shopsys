@@ -12,7 +12,7 @@ jobs:
         name: Split ${{ github.ref_name }} branch
         steps:
             -   name: GIT checkout branch - ${{ github.ref_name }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
             -   name: Ensure ${{ github.ref_name }} branch dependencies in project-base/composer.json

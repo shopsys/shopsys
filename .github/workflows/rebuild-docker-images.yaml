@@ -16,7 +16,7 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - refs/heads/${{ matrix.branches }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: refs/heads/${{ matrix.branches }}
             -   name: Login to GitHub Container Registry
@@ -43,7 +43,7 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - refs/heads/${{ matrix.branches }}
-                uses: actions/checkout@v6
+                uses: actions/checkout@v7
                 with:
                     ref: refs/heads/${{ matrix.branches }}
             -   name: Login to GitHub Container Registry

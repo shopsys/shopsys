@@ -15,7 +15,7 @@ jobs:
             EXEMPT_LABELS: 'Security :skull_and_crossbones:,Priority :warning:,Status: in implementation,In Backlog'
         steps:
             -   name: Mark stale issues and pull requests
-                uses: actions/stale@v10
+                uses: actions/stale@v11
                 with:
                     days-before-stale: 120
                     days-before-close: 60
