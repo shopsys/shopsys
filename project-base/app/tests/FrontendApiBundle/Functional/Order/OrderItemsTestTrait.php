@@ -118,6 +118,7 @@ trait OrderItemsTestTrait
             'lastName' => 'Doe',
             'email' => 'no-reply@shopsys.com',
         ]);
+        $withRequestData->confirmed = true;
 
         $this->withdrawalRequestFacade->createOnly($order, $withRequestData);
     }

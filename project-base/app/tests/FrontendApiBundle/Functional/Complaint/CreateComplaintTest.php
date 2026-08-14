@@ -372,6 +372,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
             'lastName' => 'Doe',
             'email' => 'no-reply@shopsys.com',
         ]);
+        $withRequestData->confirmed = true;
 
         $this->withdrawalRequestFacade->createOnly($order, $withRequestData);
 

@@ -31,3 +31,6 @@ framework:
             form_spam_protection_rate_limiter_cache:
                 adapter: cache.adapter.filesystem
                 provider: ~
+            frontend_api_order_withdrawal_request_rate_limiter_cache:
+                adapter: cache.adapter.filesystem
+                provider: ~

@@ -47,6 +47,15 @@ snc_redis:
                 prefix: '%env(REDIS_PREFIX)%:rate_limiter:form_spam_protection:'
                 connection_timeout: 2
                 read_write_timeout: 5
+        frontend_api_order_withdrawal_request_rate_limiter:
+            type: 'phpredis'
+            alias: 'frontend_api_order_withdrawal_request_rate_limiter'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
+            options:
+                prefix: '%env(REDIS_PREFIX)%:rate_limiter:frontend_api_order_withdrawal_request:'
+                connection_timeout: 2
+                read_write_timeout: 5
         frontend_api_password_recovery_rate_limiter:
             type: 'phpredis'
             alias: 'frontend_api_password_recovery_rate_limiter'

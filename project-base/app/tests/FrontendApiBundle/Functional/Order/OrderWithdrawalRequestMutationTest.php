@@ -18,7 +18,7 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
      */
     private WithdrawalRequestFacade $withdrawalRequestFacade;
 
-    public function testSuccessfulWithdrawalRequest(): void
+    public function testGuestWithdrawalRequestIsCreatedAsUnconfirmedAndConfirmedByEmailHash(): void
     {
         $validOrder = $this->getReferenceForDomain(OrderDataFixture::ORDER_DELIVERED_YESTERDAY, 1, Order::class);
 
@@ -40,9 +40,32 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
         $this->assertTrue($data);
 
         $this->em->clear();
+        $this->assertNull(
+            $this->withdrawalRequestFacade->findConfirmedByOrder($validOrder),
+            'Withdrawal request of a guest order must not be confirmed before the email confirmation',
+        );
+
+        $unconfirmedWithdrawalRequest = $this->withdrawalRequestFacade->findIncludingUnconfirmedByOrder($validOrder);
+        $this->assertNotNull($unconfirmedWithdrawalRequest);
+        $this->assertFalse($unconfirmedWithdrawalRequest->isConfirmed());
+        $this->assertNotNull($unconfirmedWithdrawalRequest->getConfirmationHash());
+        $this->assertSame($inputData['firstName'], $unconfirmedWithdrawalRequest->getFirstName());
+        $this->assertSame($inputData['lastName'], $unconfirmedWithdrawalRequest->getLastName());
+        $this->assertSame($inputData['email'], $unconfirmedWithdrawalRequest->getEmail());
+
+        $confirmationResponse = $this->getResponseContentForGql(
+            __DIR__ . '/../_graphql/mutation/ConfirmOrderWithdrawalRequestMutation.graphql',
+            ['confirmationHash' => $unconfirmedWithdrawalRequest->getConfirmationHash()],
+        );
+
+        $this->assertSame($validOrder->getUrlHash(), $confirmationResponse['data']['ConfirmOrderWithdrawalRequest']);
+
+        $this->em->clear();
         $withdrawalRequest = $this->withdrawalRequestFacade->findConfirmedByOrder($validOrder);
 
         $this->assertNotNull($withdrawalRequest);
+        $this->assertTrue($withdrawalRequest->isConfirmed());
+        $this->assertNull($withdrawalRequest->getConfirmationHash());
         $this->assertSame($inputData['firstName'], $withdrawalRequest->getFirstName());
         $this->assertSame($inputData['lastName'], $withdrawalRequest->getLastName());
         $this->assertSame($inputData['email'], $withdrawalRequest->getEmail());

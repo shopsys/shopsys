@@ -11,6 +11,11 @@ framework:
             limit: 3
             interval: '5 minutes'
             cache_pool: form_spam_protection_rate_limiter_cache
+        frontend_api_order_withdrawal_request:
+            policy: fixed_window
+            limit: 5
+            interval: '1 minute'
+            cache_pool: frontend_api_order_withdrawal_request_rate_limiter_cache
         frontend_api_password_recovery_email:
             policy: sliding_window
             limit: 10
