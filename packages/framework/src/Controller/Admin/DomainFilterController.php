@@ -21,13 +21,21 @@ class DomainFilterController extends AdminBaseController
     ) {
     }
 
+    /**
+     * @param int[]|null $domainIds
+     */
     #[RequireRole(SystemRole::ADMIN)]
-    public function domainFilterTabsAction(string $namespace): Response
+    public function domainFilterTabsAction(string $namespace, ?array $domainIds = null): Response
     {
         return $this->render('@ShopsysAdministration/partial/quick_domain_filter.html.twig', [
-            'domainConfigs' => $this->domain->getAdminEnabledDomains(),
+            'domainConfigs' => $domainIds === null
+                ? $this->domain->getAdminEnabledDomains()
+                : array_filter(
+                    $this->domain->getAdminEnabledDomains(),
+                    static fn ($domainConfig): bool => in_array($domainConfig->getId(), $domainIds, true),
+                ),
             'namespace' => $namespace,
-            'selectedDomainId' => $this->adminDomainFilterTabsFacade->getSelectedDomainId($namespace),
+            'selectedDomainId' => $this->adminDomainFilterTabsFacade->getSelectedDomainId($namespace, $domainIds),
         ]);
     }
 

@@ -6,7 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Product\GiftPlan;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -16,7 +18,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Index(columns: ['domain_id', 'valid_from', 'valid_to'])]
 #[ORM\Index(columns: ['gift_product_id'])]
 #[ORM\Entity]
-class GiftPlan
+class GiftPlan implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -133,6 +135,7 @@ class GiftPlan
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Inquiry;
 
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -16,7 +18,7 @@ use Symfony\Component\Clock\DatePoint;
 #[AsMcpTable]
 #[ORM\Table(name: 'inquiries')]
 #[ORM\Entity]
-class Inquiry
+class Inquiry implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -197,6 +199,7 @@ class Inquiry
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

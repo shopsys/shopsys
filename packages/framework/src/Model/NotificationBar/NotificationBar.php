@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -14,7 +16,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'notification_bars')]
 #[ORM\Entity]
 #[EntityImage]
-class NotificationBar
+class NotificationBar implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -114,6 +116,7 @@ class NotificationBar
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

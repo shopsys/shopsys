@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'vats')]
 #[ORM\Entity]
-class Vat
+class Vat implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -116,6 +118,7 @@ class Vat
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

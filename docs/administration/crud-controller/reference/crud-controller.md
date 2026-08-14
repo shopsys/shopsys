@@ -102,6 +102,78 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 }
 ```
 
+### List domain control
+
+Use `setListDomainControl()` in `configure()` to display a domain control above the datagrid.
+
+```php
+use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
+
+public function configure(CrudConfig $config): void
+{
+    $config->setListDomainControl(CrudListDomainControl::QUICK_FILTER, [1, 3]);
+}
+```
+
+- `CrudListDomainControl::QUICK_FILTER` displays a per-list filter with an "All domains" option.
+  The filter stores its selection under a namespace generated from the controller name.
+  The optional `$allowedDomainIds` argument restricts the filter to the specified domain IDs; the list is always intersected with the domains available to the administrator.
+- `CrudListDomainControl::SWITCHER` displays the global administration domain switcher.
+  It always returns one selected domain ID and does not support `$allowedDomainIds`.
+
+When the entity implements `\Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface`, the domain condition is applied to the list query automatically (no `configureQuery()` code is needed).
+A selected domain limits the list to that domain, and the "All domains" option of a quick filter limits it to the domains available to the administrator (intersected with the configured allowed domain IDs).
+
+#### Entities without `DomainSeparatedEntityInterface`
+
+When the entity is related to a domain in another way (e.g. through a joined entity), nothing is applied to the list query automatically.
+Decide first what the domain control should affect on your list — the two cases need different code and can be combined.
+
+**Limiting which entities are listed** — apply the condition in `configureQuery()` using `addListDomainIdsCondition()` with the DQL field holding the domain ID:
+
+```php
+protected function configureQuery(QueryBuilder $queryBuilder): void
+{
+    $queryBuilder->join('o.domains', 'od');
+    $this->addListDomainIdsCondition($queryBuilder, 'od.domainId');
+}
+```
+
+The condition respects the selected domain (or all domains available to the list when "All domains" is selected in a quick filter) and matches nothing when no domain is available to the administrator.
+It excludes an entity only when the entity has no row for the given domain — joined entities that are created for every domain are never excluded.
+
+The join lists the entity once per matching domain, so use it only where a single domain is always selected (`SWITCHER`).
+With "All domains" selected, an entity related to three domains is listed three times.
+
+**Showing per-domain values in a column** (status, publish date, …) — select the value for the selected domain, or aggregate it over the domains of the list when "All domains" is selected:
+
+```php
+protected function configureQuery(QueryBuilder $queryBuilder): void
+{
+    $queryBuilder
+        ->addSelect(sprintf(
+            '(SELECT MIN(bad.status) FROM %s bad WHERE bad.blogArticle = o AND bad.domainId IN (:domainIds)) AS domainStatus',
+            BlogArticleDomain::class,
+        ))
+        ->setParameter('domainIds', $this->getEffectiveListDomainIds());
+}
+```
+
+`getEffectiveListDomainIds()` returns the selected domain, or the domains of the list when "All domains" is selected.
+A subselect is used instead of a join to keep one row per entity, and each subselect needs its own DQL alias, as aliases are unique within the whole query.
+
+Such a value does not map to a property of the listed entity, so display it with a `virtual` datagrid field whose `transform` reads it from the row:
+
+```php
+$datagrid->add('status', [
+    'label' => t('Status'),
+    'virtual' => true,
+    'transform' => fn (mixed $value, array $row): mixed => $row['domainStatus'] ?? null,
+]);
+```
+
+For fully custom conditions, use `getSelectedListDomainId()` and `getEffectiveListDomainIds()`.
+
 ### `configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void`
 
 Configure the form for create and edit pages. The `$entity` parameter is `null` for create action and contains the entity being edited for edit action.

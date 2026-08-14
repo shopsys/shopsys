@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Slider;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -21,7 +22,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[EntityImage]
 #[EntityImage('web')]
 #[EntityImage('mobile')]
-class SliderItem implements OrderableEntityInterface
+class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -161,6 +162,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

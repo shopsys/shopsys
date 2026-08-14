@@ -58,6 +58,7 @@ $pathsExcludedFromStrictTyping = [
     __DIR__ . '/packages/framework/src/Model/Localization/TranslatableEntityTrait.php',
     __DIR__ . '/packages/framework/src/Model/Security/UniqueLoginInterface.php',
     __DIR__ . '/packages/framework/src/Model/Security/TimelimitLoginInterface.php',
+    __DIR__ . '/packages/framework/src/Component/Domain/Entity/DomainSeparatedEntityInterface.php',
     __DIR__ . '/packages/framework/src/Component/Security/ResetPasswordInterface.php',
     __DIR__ . '/packages/framework/src/Component/FileUpload/EntityFileUploadInterface.php',
     __DIR__ . '/packages/framework/src/Component/AbstractUploadedFile/UploadedFileInterface.php',

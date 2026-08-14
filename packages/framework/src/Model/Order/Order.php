@@ -6,7 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
@@ -34,7 +36,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 #[ORM\Table(name: 'orders')]
 #[ORM\Entity]
-class Order
+class Order implements DomainSeparatedEntityInterface
 {
     public const int MAX_TRANSACTION_COUNT = 2;
 
@@ -1231,6 +1233,7 @@ class Order
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

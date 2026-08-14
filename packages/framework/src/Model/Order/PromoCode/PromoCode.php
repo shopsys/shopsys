@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -12,7 +14,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'promo_codes')]
 #[ORM\UniqueConstraint(name: 'domain_code_unique', columns: ['domain_id', 'code'])]
 #[ORM\Entity]
-class PromoCode
+class PromoCode implements DomainSeparatedEntityInterface
 {
     public const int MASS_GENERATED_CODE_LENGTH = 6;
 
@@ -154,6 +156,7 @@ class PromoCode
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

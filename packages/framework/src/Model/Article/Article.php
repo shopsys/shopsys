@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -15,7 +16,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[AsMcpTable]
 #[ORM\Table(name: 'articles')]
 #[ORM\Entity]
-class Article implements OrderableEntityInterface
+class Article implements OrderableEntityInterface, DomainSeparatedEntityInterface
 {
     public const PLACEMENT_NONE = 'none';
     public const PLACEMENT_FOOTER_1 = 'footer1';
@@ -185,6 +186,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

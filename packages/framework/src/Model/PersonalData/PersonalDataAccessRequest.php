@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'personal_data_access_request')]
 #[ORM\Entity]
-class PersonalDataAccessRequest
+class PersonalDataAccessRequest implements DomainSeparatedEntityInterface
 {
     public const TYPE_DISPLAY = 'display';
     public const TYPE_EXPORT = 'export';
@@ -104,6 +106,7 @@ class PersonalDataAccessRequest
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

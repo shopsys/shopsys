@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\PhonePrefix\Settings;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -12,7 +14,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'phone_prefixes')]
 #[ORM\UniqueConstraint(name: 'phone_prefixes_domain_code', columns: ['domain_id', 'code'])]
 #[ORM\Entity]
-class PhonePrefix
+class PhonePrefix implements DomainSeparatedEntityInterface
 {
     /**
      * @var int
@@ -62,6 +64,7 @@ class PhonePrefix
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;

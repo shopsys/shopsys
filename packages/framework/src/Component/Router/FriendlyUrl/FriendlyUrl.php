@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -13,7 +15,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Index(columns: ['route_name', 'entity_id'])]
 #[ORM\Index(columns: ['route_name', 'entity_id', 'domain_id', 'main'])]
 #[ORM\Entity]
-class FriendlyUrl
+class FriendlyUrl implements DomainSeparatedEntityInterface
 {
     /**
      * @var string
@@ -111,6 +113,7 @@ class FriendlyUrl
     /**
      * @return int
      */
+    #[Override]
     public function getDomainId()
     {
         return $this->domainId;
