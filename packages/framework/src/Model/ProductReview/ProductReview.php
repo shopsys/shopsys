@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\ProductReview;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
@@ -15,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImage;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
@@ -180,8 +182,16 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $responseCreatedAt;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImage>
+     */
+    #[ORM\OneToMany(targetEntity: ProductReviewImage::class, mappedBy: 'productReview', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
+    protected $images;
+
     public function __construct(ProductReviewData $productReviewData)
     {
+        $this->images = new ArrayCollection();
         $this->uuid = $productReviewData->uuid ?? Uuid::uuid4()->toString();
         $this->createdAt = $productReviewData->createdAt ?? new DatePoint();
         $this->domainId = $productReviewData->domainId;
@@ -419,6 +429,14 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
     public function getResponseCreatedAt()
     {
         return $this->responseCreatedAt;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImage[]
+     */
+    public function getImages()
+    {
+        return $this->images->getValues();
     }
 
     #[Override]

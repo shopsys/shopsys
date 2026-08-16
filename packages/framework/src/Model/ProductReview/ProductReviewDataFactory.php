@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\ProductReview;
 
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageDataFactory;
+
 class ProductReviewDataFactory
 {
+    public function __construct(
+        protected readonly ProductReviewImageDataFactory $productReviewImageDataFactory,
+    ) {
+    }
+
     public function create(): ProductReviewData
     {
         return $this->createInstance();
@@ -35,6 +42,12 @@ class ProductReviewDataFactory
         $productReviewData->responseText = $productReview->getResponseText();
         $productReviewData->responseCreatedAt = $productReview->getResponseCreatedAt();
         $productReviewData->createdAt = $productReview->getCreatedAt();
+
+        foreach ($productReview->getImages() as $productReviewImage) {
+            $productReviewData->images[] = $this->productReviewImageDataFactory->createFromProductReviewImage(
+                $productReviewImage,
+            );
+        }
 
         return $productReviewData;
     }
