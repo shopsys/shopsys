@@ -123,6 +123,8 @@ export type GtmProductInterface = {
     categories: string[];
     zboziCategory?: string;
     imageUrl?: string;
+    reviewCount?: number;
+    reviewValue?: number;
 };
 
 export type GtmListedProductType = GtmProductInterface & {

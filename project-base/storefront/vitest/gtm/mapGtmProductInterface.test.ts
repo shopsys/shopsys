@@ -44,6 +44,27 @@ const listedProduct = {
 } satisfies TypeListedProductFragment;
 
 describe('mapGtmProductInterface', () => {
+    test('maps the product family reviews summary for a listed variant', () => {
+        const result = mapGtmProductInterface(
+            {
+                ...listedProduct,
+                __typename: 'Variant',
+                mainVariant: {
+                    __typename: 'MainVariant',
+                    reviewsSummary: {
+                        __typename: 'ProductReviewsSummary',
+                        averageRating: 4.5,
+                        totalCount: 2,
+                    },
+                },
+            },
+            'https://example.com',
+        );
+
+        expect(result.reviewCount).toBe(2);
+        expect(result.reviewValue).toBe(4.5);
+    });
+
     test('should map the in stock availability status to the in_stock slug without the availability date', () => {
         const result = mapGtmProductInterface(
             // an in-stock product exposes a valid restocking date as well, but the data layer must not send it

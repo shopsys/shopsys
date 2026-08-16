@@ -12,6 +12,11 @@ fragment CartItemFragment on CartItem {
         ... on Variant {
             mainVariant {
                 slug
+                reviewsSummary {
+                    __typename
+                    averageRating
+                    totalCount
+                }
             }
         }
         fullName
@@ -46,6 +51,11 @@ fragment CartItemFragment on CartItem {
         }
         categories {
             name
+        }
+        reviewsSummary {
+            __typename
+            averageRating
+            totalCount
         }
         parameters {
             ...ParameterFragment
