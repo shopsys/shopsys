@@ -25,6 +25,16 @@ const cartItem = {
         vatPercent: '21',
         mainVariant: {
             slug: '/main-variant',
+            reviewsSummary: {
+                __typename: 'ProductReviewsSummary',
+                averageRating: 4.5,
+                totalCount: 2,
+            },
+        },
+        reviewsSummary: {
+            __typename: 'ProductReviewsSummary',
+            averageRating: 3.5,
+            totalCount: 4,
         },
         flags: [],
         mainImage: null,
@@ -88,6 +98,14 @@ const cartItem = {
     },
 } as unknown as TypeCartItemFragment;
 
+const regularProductCartItem = {
+    ...cartItem,
+    product: {
+        ...cartItem.product,
+        __typename: 'RegularProduct',
+    },
+} as unknown as TypeCartItemFragment;
+
 describe('mapGtmCartItemType', () => {
     test('should add variant parameters for variant cart items', () => {
         const result = mapGtmCartItemType(cartItem, 'https://example.com', 0);
@@ -101,6 +119,13 @@ describe('mapGtmCartItemType', () => {
         });
     });
 
+    test('should map the main variant review summary for variant cart items', () => {
+        const result = mapGtmCartItemType(cartItem, 'https://example.com');
+
+        expect(result.reviewCount).toBe(2);
+        expect(result.reviewValue).toBe(4.5);
+    });
+
     test('should keep explicit quantity override', () => {
         const result = mapGtmCartItemType(cartItem, 'https://example.com', undefined, 1);
 
@@ -108,17 +133,15 @@ describe('mapGtmCartItemType', () => {
     });
 
     test('should not add variant parameters for regular product cart items', () => {
-        const result = mapGtmCartItemType(
-            {
-                ...cartItem,
-                product: {
-                    ...cartItem.product,
-                    __typename: 'RegularProduct',
-                },
-            } as unknown as TypeCartItemFragment,
-            'https://example.com',
-        );
+        const result = mapGtmCartItemType(regularProductCartItem, 'https://example.com');
 
         expect(result.variant).toBeUndefined();
+    });
+
+    test('should map the review summary for regular product cart items', () => {
+        const result = mapGtmCartItemType(regularProductCartItem, 'https://example.com');
+
+        expect(result.reviewCount).toBe(4);
+        expect(result.reviewValue).toBe(3.5);
     });
 });

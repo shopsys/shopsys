@@ -1,3 +1,4 @@
+import { getProductReviewsSummary } from 'components/Blocks/ProductReviews/productReviewUtils';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmProductInterface } from 'gtm/types/objects';
 import { getGtmAvailability } from 'gtm/utils/getGtmAvailability';
@@ -25,6 +26,7 @@ export const mapGtmProductInterface = (
 
     const zboziCategory = getGtmProductInterfaceZboziCategory(productInterface);
     const availabilityDate = getGtmProductInterfaceAvailabilityDate(productInterface, domainUrl);
+    const reviews = getGtmProductInterfaceReviews(productInterface);
 
     return {
         id: productInterface.id,
@@ -42,6 +44,22 @@ export const mapGtmProductInterface = (
         categories:
             'categories' in productInterface ? productInterface.categories.map((category) => category.name) : [],
         ...(zboziCategory !== undefined && { zboziCategory }),
+        ...(reviews !== undefined && reviews),
+    };
+};
+
+const getGtmProductInterfaceReviews = (
+    productInterface: ProductInterfaceType,
+): { reviewCount: number; reviewValue: number } | undefined => {
+    const reviewsSummary = getProductReviewsSummary(productInterface);
+
+    if (reviewsSummary === null || reviewsSummary.averageRating === null) {
+        return undefined;
+    }
+
+    return {
+        reviewCount: reviewsSummary.totalCount,
+        reviewValue: reviewsSummary.averageRating,
     };
 };
 
