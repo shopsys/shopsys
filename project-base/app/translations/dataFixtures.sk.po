@@ -2167,6 +2167,9 @@ msgstr "Minimálnou priestorovou náročnosťou vyniká podstavný odsaváč par
 msgid "The most useful innovations improve picture, sound, comfort, or energy efficiency without making everyday operation more complicated."
 msgstr ""
 
+msgid "The photo does not meet our review guidelines."
+msgstr "Fotografia nezodpovedá našim pravidlám pre recenzie."
+
 msgid "The pickup desk is inside the shopping passage on the first floor. For bulky orders, please call the store before arrival."
 msgstr "Výdajný pult nájdete v obchodnej pasáži na prvom poschodí. Pri objemnejších objednávkach pred príchodom zavolajte na predajňu."
 

@@ -67,7 +67,7 @@ class ProductReviewFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageData[] $imagesData
      */
-    protected function createImages(ProductReview $productReview, array $imagesData): void
+    public function createImages(ProductReview $productReview, array $imagesData): void
     {
         $imagesData = array_values($imagesData);
 
