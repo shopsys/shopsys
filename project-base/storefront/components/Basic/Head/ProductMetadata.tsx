@@ -1,9 +1,13 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import { useProductReviewsQuery } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
+import { TypeAvailabilityStatusEnum, TypeProductReviewOrderingModeEnum } from 'graphql/types';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
+
+export const STRUCTURED_DATA_REVIEWS_COUNT = 5;
 
 type ProductMetadataProps = {
     product: TypeProductDetailFragment | TypeMainVariantDetailFragment;
@@ -12,6 +16,37 @@ type ProductMetadataProps = {
 export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
     const { currencyCode } = useDomainConfig();
     const router = useRouter();
+    const { t } = useTranslation();
+
+    const reviewsSummary = product.reviewsSummary;
+    const hasReviews = !!reviewsSummary && reviewsSummary.totalCount > 0;
+    const [{ data: productReviewsData }] = useProductReviewsQuery({
+        variables: {
+            productUuid: product.uuid,
+            orderingMode: TypeProductReviewOrderingModeEnum.Newest,
+            first: STRUCTURED_DATA_REVIEWS_COUNT,
+            after: null,
+        },
+        pause: !hasReviews,
+    });
+
+    const reviews = (productReviewsData?.productReviews.edges ?? [])
+        .flatMap((edge) => (edge?.node ? [edge.node] : []))
+        .map((productReview) => ({
+            '@type': 'Review',
+            author: {
+                '@type': 'Person',
+                name: productReview.reviewerName ?? t('Anonymous customer'),
+            },
+            datePublished: productReview.createdAt.slice(0, 10),
+            ...(productReview.text !== null && { reviewBody: productReview.text }),
+            reviewRating: {
+                '@type': 'Rating',
+                ratingValue: productReview.rating,
+                bestRating: 5,
+                worstRating: 1,
+            },
+        }));
 
     return (
         <Head>
@@ -40,6 +75,17 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                             itemCondition: 'https://schema.org/NewCondition',
                             availability: getSchemaOrgAvailability(product.availability.status),
                         },
+                        ...(hasReviews &&
+                            reviewsSummary.averageRating !== null && {
+                                aggregateRating: {
+                                    '@type': 'AggregateRating',
+                                    ratingValue: reviewsSummary.averageRating,
+                                    reviewCount: reviewsSummary.totalCount,
+                                    bestRating: 5,
+                                    worstRating: 1,
+                                },
+                            }),
+                        ...(reviews.length > 0 && { review: reviews }),
                     }),
                 }}
             />

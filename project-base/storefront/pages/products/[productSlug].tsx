@@ -1,13 +1,15 @@
+import { STRUCTURED_DATA_REVIEWS_COUNT } from 'components/Basic/Head/ProductMetadata';
 import { SkeletonPageProductDetail } from 'components/Blocks/Skeleton/SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from 'components/Blocks/Skeleton/SkeletonPageProductDetailMainVariant';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PageDefer } from 'components/Layout/PageDefer';
+import { ProductReviewsQueryDocument } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
 import {
     ProductDetailQueryDocument,
     useProductDetailQuery,
 } from 'graphql/requests/products/queries/ProductDetailQuery.generated';
 import { RecommendedProductsQueryDocument } from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
-import { TypeRecommendationType } from 'graphql/types';
+import { TypeProductReviewOrderingModeEnum, TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -129,6 +131,23 @@ export const getServerSideProps = getServerSidePropsWrapper(
             }
 
             const productData = productResponse.data?.product;
+
+            if (
+                (productData?.__typename === 'RegularProduct' || productData?.__typename === 'MainVariant') &&
+                productData.reviewsSummary !== null &&
+                productData.reviewsSummary.totalCount > 0
+            ) {
+                // warms the cache for the newest reviews rendered into the structured data by ProductMetadata
+                await client
+                    .query(ProductReviewsQueryDocument, {
+                        productUuid: productData.uuid,
+                        orderingMode: TypeProductReviewOrderingModeEnum.Newest,
+                        first: STRUCTURED_DATA_REVIEWS_COUNT,
+                        after: null,
+                    })
+                    .toPromise();
+            }
+
             if (domainConfig.isLuigisBoxActive && productData?.__typename === 'RegularProduct') {
                 await client
                     .query(RecommendedProductsQueryDocument, {
