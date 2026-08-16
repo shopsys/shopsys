@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Settings;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewPolicyFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -22,6 +23,11 @@ final class GetSettingsTest extends GraphQlTestCase
      */
     private TransformStringHelper $transformStringHelper;
 
+    /**
+     * @inject
+     */
+    private readonly ProductReviewPolicyFacade $productReviewPolicyFacade;
+
     #[DataProvider('dataProvider')]
     public function testGetSettings(?string $robotsTxtContent, ?string $robotsTxtData): void
     {
@@ -33,6 +39,16 @@ final class GetSettingsTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
         self::assertSame($expectedSettingsData, $responseData);
+    }
+
+    public function testGetSettingsReturnsMinimalAverageRatingForListingWhenSet(): void
+    {
+        $this->productReviewPolicyFacade->setMinimalAverageRatingForListingOnDomain(3.5, $this->domain->getId());
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SettingsQuery.graphql');
+        $responseData = $this->getResponseDataForGraphQlType($response, 'settings');
+
+        self::assertSame(3.5, $responseData['productReviewMinimalAverageRatingForListing']);
     }
 
     public static function dataProvider(): array
@@ -68,6 +84,7 @@ CONTENT,
             'privacyPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
             'userConsentPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
             'productReviewPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('How we work with reviews', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+            'productReviewMinimalAverageRatingForListing' => null,
         ];
     }
 }
