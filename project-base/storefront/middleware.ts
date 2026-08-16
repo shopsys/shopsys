@@ -34,7 +34,7 @@ export const middleware: NextMiddleware = async (request) => {
             return staticRouteResponse;
         }
 
-        const slugTypeResponse = handleSlugTypeQueryParam(search, request.url, currentLocale);
+        const slugTypeResponse = handleSlugTypeQueryParam(search, request.url, currentLocale, pathname);
 
         if (slugTypeResponse) {
             return slugTypeResponse;
