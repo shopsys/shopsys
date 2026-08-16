@@ -2098,6 +2098,9 @@ msgstr ""
 msgid "Min fraction digits"
 msgstr ""
 
+msgid "Minimal average rating in product lists"
+msgstr ""
+
 msgid "Minimal duration from all runs in last seven days"
 msgstr ""
 
@@ -2795,6 +2798,9 @@ msgid "Products overview"
 msgstr ""
 
 msgid "Products parameters of selected category"
+msgstr ""
+
+msgid "Products with a lower average rating do not show stars in product lists (the product detail always shows them). Leave empty to show stars for every reviewed product. It's possible to set a value from 1 to 5 with one decimal place (e.g., 4.5)."
 msgstr ""
 
 msgid "Products with this flag"

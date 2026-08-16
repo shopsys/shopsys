@@ -2098,6 +2098,9 @@ msgstr "Minimálne trvanie"
 msgid "Min fraction digits"
 msgstr "Min. desatinné miesta"
 
+msgid "Minimal average rating in product lists"
+msgstr "Minimálne priemerné hodnotenie vo výpisoch produktov"
+
 msgid "Minimal duration from all runs in last seven days"
 msgstr "Minimálne trvanie zo všetkých behov za posledných sedem dní"
 
@@ -2796,6 +2799,9 @@ msgstr "Prehľad Products"
 
 msgid "Products parameters of selected category"
 msgstr "Parametre produktov vybratej kategórie"
+
+msgid "Products with a lower average rating do not show stars in product lists (the product detail always shows them). Leave empty to show stars for every reviewed product. It's possible to set a value from 1 to 5 with one decimal place (e.g., 4.5)."
+msgstr "Produkty s nižším priemerným hodnotením nezobrazujú vo výpisoch produktov hviezdičky (na detaile produktu sa zobrazujú vždy). Ponechajte prázdne, ak sa majú hviezdičky zobrazovať pri všetkých produktoch s recenziou. Je možné nastaviť hodnotu od 1 do 5 s jedným desatinným miestom (napr. 4,5)."
 
 msgid "Products with this flag"
 msgstr "Produkty s touto značkou"

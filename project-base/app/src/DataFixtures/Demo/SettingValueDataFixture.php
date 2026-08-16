@@ -77,6 +77,10 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $productReviewPolicyArticle = $this->getReferenceForDomain(ArticleDataFixture::PRODUCT_REVIEW_POLICY_ARTICLE, $domainId, Article::class);
             $this->setting->setForDomain(Setting::PRODUCT_REVIEW_POLICY_ARTICLE_ID, $productReviewPolicyArticle->getId(), $domainId);
 
+            if ($domainId === 2) {
+                $this->setting->setForDomain(Setting::PRODUCT_REVIEW_MINIMAL_AVERAGE_RATING_FOR_LISTING, 3.0, $domainId);
+            }
+
             $personalDataDisplaySiteContent = t(
                 'By entering an email below, you can view your personal information that we register in our online store.
                 An email with a link will be sent to you after entering your email address, to verify your identity.
