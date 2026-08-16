@@ -7,7 +7,7 @@ import { ProductVisibleItemsConfigType } from './ProductsList/ProductListItem';
 type ProductFlagsProps = {
     flags: TypeSimpleFlagFragment[];
     percentageDiscount: number | null;
-    variant: 'grid' | 'list' | 'detail' | 'comparison' | 'bestsellers';
+    variant: 'grid' | 'gridHeader' | 'list' | 'detail' | 'comparison' | 'bestsellers';
     visibleItemsConfig?: ProductVisibleItemsConfigType;
 };
 
@@ -29,6 +29,7 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
 
     const variantTwClass = {
         grid: 'top-2.5 sm:top-5 left-2.5 sm:left-5 z-above',
+        gridHeader: 'relative',
         list: 'flex-row relative flex-wrap gap-2',
         detail: 'top-0 left-0',
         comparison: 'top-3 left-5',
@@ -41,8 +42,16 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
                 flags.length > 0 &&
                 flags.map(({ uuid, name, rgbColor }) => {
                     return (
-                        <Flag key={uuid} rgbBgColor={rgbColor}>
-                            {name}
+                        <Flag
+                            key={uuid}
+                            className={variant === 'gridHeader' ? 'max-w-full' : undefined}
+                            rgbBgColor={rgbColor}
+                        >
+                            {variant === 'gridHeader' ? (
+                                <span className="wrap-break-word line-clamp-2">{name}</span>
+                            ) : (
+                                name
+                            )}
                         </Flag>
                     );
                 })}

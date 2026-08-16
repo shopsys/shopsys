@@ -20,6 +20,7 @@ export type ProductVisibleItemsConfigType = {
     flags?: boolean;
     discount?: boolean;
     priceFromWord?: boolean;
+    reviews?: boolean;
 };
 
 export type { ProductListViewModeType } from 'types/product';
@@ -145,6 +146,7 @@ export const PREDEFINED_VISIBLE_ITEMS_CONFIGS = {
         price: true,
         storeAvailability: true,
         priceFromWord: true,
+        reviews: true,
     } as ProductVisibleItemsConfigType,
     mediumItem: {
         flags: true,
@@ -152,5 +154,6 @@ export const PREDEFINED_VISIBLE_ITEMS_CONFIGS = {
         price: true,
         storeAvailability: true,
         priceFromWord: true,
+        reviews: true,
     } as ProductVisibleItemsConfigType,
 } as const;

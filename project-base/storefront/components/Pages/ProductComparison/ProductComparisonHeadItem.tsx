@@ -4,6 +4,7 @@ import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/Pr
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
+import { ProductListReviewsSummaryLink } from 'components/Blocks/ProductReviews/ProductListReviewsSummaryLink';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -51,45 +52,52 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
         >
             <div className="flex w-45.5 flex-col gap-2 sm:w-51.25">
                 <div className="flex flex-col gap-2">
-                    <ExtendedNextLink
-                        preventRedirectOnTextSelection
-                        className="group/product-link flex flex-col gap-2 text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden"
-                        data-focus-color="preserve"
-                        draggable={false}
-                        href={product.slug}
-                        type="product"
-                        aria-label={t('Go to product page of {{ productName }}', {
-                            ns: 'accessibility',
-                            productName: product.fullName,
-                        })}
-                        onClick={() =>
-                            onProductDetailRedirectHandler(
-                                product,
-                                GtmProductListNameType.product_comparison_page,
-                                listIndex,
-                            )
-                        }
-                    >
-                        <div
-                            className="flex h-46.25 w-full items-center justify-center pt-4 pb-3"
-                            data-tid={TIDs.comparison_product_image}
+                    <div className="grid grid-cols-1 grid-rows-[auto_auto_auto] gap-2">
+                        <ExtendedNextLink
+                            preventRedirectOnTextSelection
+                            className="group/product-link col-start-1 row-start-1 row-end-4 grid grid-cols-1 grid-rows-subgrid text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden"
+                            data-focus-color="preserve"
+                            draggable={false}
+                            href={product.slug}
+                            type="product"
+                            aria-label={t('Go to product page of {{ productName }}', {
+                                ns: 'accessibility',
+                                productName: product.fullName,
+                            })}
+                            onClick={() =>
+                                onProductDetailRedirectHandler(
+                                    product,
+                                    GtmProductListNameType.product_comparison_page,
+                                    listIndex,
+                                )
+                            }
                         >
-                            <Image
-                                alt=""
-                                className="max-h-full w-auto"
-                                height={185}
-                                src={product.mainImage?.url}
-                                width={200}
-                            />
-                        </div>
+                            <div
+                                className="row-start-1 flex h-46.25 w-full items-center justify-center pt-4 pb-3"
+                                data-tid={TIDs.comparison_product_image}
+                            >
+                                <Image
+                                    alt=""
+                                    className="max-h-full w-auto"
+                                    height={185}
+                                    src={product.mainImage?.url}
+                                    width={200}
+                                />
+                            </div>
 
-                        <span
-                            className="-mx-1 line-clamp-4 min-h-20 rounded-sm box-decoration-clone px-1 font-secondary text-link-default text-sm underline group-hover/product-link:text-link-hovered group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!"
-                            id={stickyTriggerId}
-                        >
-                            {product.fullName}
-                        </span>
-                    </ExtendedNextLink>
+                            <span
+                                className="row-start-3 -mx-1 line-clamp-4 min-h-20 rounded-sm box-decoration-clone px-1 font-secondary text-sm group-hover/product-link:underline group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!"
+                                id={stickyTriggerId}
+                            >
+                                {product.fullName}
+                            </span>
+                        </ExtendedNextLink>
+
+                        <ProductListReviewsSummaryLink
+                            className="relative z-above col-start-1 row-start-2 font-normal"
+                            product={product}
+                        />
+                    </div>
 
                     <span className="text-xs">
                         {t('Code')}: {product.catalogNumber}

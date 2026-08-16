@@ -38,6 +38,7 @@ const listedProduct = {
     categories: [{ __typename: 'Category', name: 'Test category' }],
     isMainVariant: false,
     isInquiryType: false,
+    reviewsSummary: null,
     unit: { __typename: 'Unit', name: 'pcs' },
 } satisfies TypeListedProductFragment;
 

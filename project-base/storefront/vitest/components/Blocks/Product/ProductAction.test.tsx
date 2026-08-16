@@ -104,6 +104,7 @@ const inStockProduct = {
     availability: { __typename: 'Availability', name: 'In stock', status: TypeAvailabilityStatusEnum.InStock },
     brand: null,
     categories: [],
+    reviewsSummary: null,
 } satisfies TypeListedProductFragment;
 
 const createProduct = (overrides: Partial<TypeListedProductFragment>) =>

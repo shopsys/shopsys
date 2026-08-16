@@ -18,6 +18,7 @@ type ProductListItemImageProps = {
     product: ProductItemProps['product'];
     visibleItemsConfig: ProductItemProps['visibleItemsConfig'];
     tid?: string;
+    isProductFlagsVisible?: boolean;
 };
 
 export type ProductListItemImageHandle = ProductListItemGalleryHandle;
@@ -40,7 +41,18 @@ export const getProductListItemImageSize = (size: ProductItemProps['size']): num
 };
 
 export const ProductListItemImage = forwardRef<ProductListItemImageHandle, ProductListItemImageProps>(
-    ({ product, visibleItemsConfig, size, imageCount = 0, isWithImageGallery = false, tid }, ref) => {
+    (
+        {
+            product,
+            visibleItemsConfig,
+            size,
+            imageCount = 0,
+            isWithImageGallery = false,
+            tid,
+            isProductFlagsVisible = true,
+        },
+        ref,
+    ) => {
         const imageSize = getProductListItemImageSize(size);
         const imageAlt = generateProductImageAlt(product.fullName, product.categories[0]?.name);
         const isGalleryEnabled = isWithImageGallery && imageCount > 1;
@@ -76,12 +88,14 @@ export const ProductListItemImage = forwardRef<ProductListItemImageHandle, Produ
                     </>
                 )}
 
-                <ProductFlags
-                    flags={product.flags}
-                    percentageDiscount={product.price.percentageDiscount}
-                    variant="grid"
-                    visibleItemsConfig={visibleItemsConfig}
-                />
+                {isProductFlagsVisible && (
+                    <ProductFlags
+                        flags={product.flags}
+                        percentageDiscount={product.price.percentageDiscount}
+                        variant="grid"
+                        visibleItemsConfig={visibleItemsConfig}
+                    />
+                )}
             </div>
         );
     },

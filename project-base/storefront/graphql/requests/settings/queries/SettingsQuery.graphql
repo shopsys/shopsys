@@ -19,6 +19,7 @@ query SettingsQuery @redisCache(ttl: 3600) {
         }
         privacyPolicyArticleUrl
         productReviewPolicyArticleUrl
+        productReviewMinimalAverageRatingForListing
         termsAndConditionsArticleUrl
         userConsentPolicyArticleUrl
         socialNetworkLoginConfig
