@@ -3117,6 +3117,8 @@ type Settings {
   pricing: PricingSetting!
   "Returns privacy policy article's url"
   privacyPolicyArticleUrl: String
+  "Minimal average rating a product needs to show review stars in product lists, null means no limit"
+  productReviewMinimalAverageRatingForListing: Float
   "Returns product review policy article's url"
   productReviewPolicyArticleUrl: String
   "Returns true if product reviews are enabled on the current domain"

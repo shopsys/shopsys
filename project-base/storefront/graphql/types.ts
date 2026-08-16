@@ -3903,6 +3903,8 @@ export type TypeSettings = {
   pricing: TypePricingSetting;
   /** Returns privacy policy article's url */
   privacyPolicyArticleUrl: Maybe<Scalars['String']['output']>;
+  /** Minimal average rating a product needs to show review stars in product lists, null means no limit */
+  productReviewMinimalAverageRatingForListing: Maybe<Scalars['Float']['output']>;
   /** Returns product review policy article's url */
   productReviewPolicyArticleUrl: Maybe<Scalars['String']['output']>;
   /** Returns true if product reviews are enabled on the current domain */
