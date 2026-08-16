@@ -3,6 +3,7 @@ import { ProductAvailability } from 'components/Blocks/Product/ProductAvailabili
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { ProductListItemImage } from 'components/Blocks/Product/ProductsList/ProductListItemImage';
+import { ProductListReviewsSummaryLink } from 'components/Blocks/ProductReviews/ProductListReviewsSummaryLink';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -28,48 +29,67 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
-    return (
-        <ExtendedNextLink
-            preventRedirectOnTextSelection
-            className="group flex items-center justify-between gap-5 gap-y-4 rounded-md p-3 no-underline transition-colors hover:bg-background-default hover:no-underline"
-            draggable={false}
-            href={productUrl}
-            type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
-            aria-label={t('Go to bestseller product page of {{ productName }}', {
-                ns: 'accessibility',
-                productName: product.fullName,
-            })}
-            onMouseUp={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices)}
-        >
-            <div className="flex w-20 shrink-0">
-                <ProductListItemImage
-                    product={product}
-                    size="extraSmall"
-                    tid={TIDs.category_bestseller_image}
-                    visibleItemsConfig={{ flags: false }}
-                />
-            </div>
+    const productLinkType = product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant';
 
-            <div className="flex w-full select-text flex-col justify-between gap-x-4 gap-y-2.5 md:flex-row md:items-center">
-                <div className="line-clamp-5 max-w-80 flex-1 items-center font-secondary font-semibold text-sm text-text-default">
+    return (
+        <div className="group relative grid grid-cols-[80px_minmax(0,1fr)] xxl:grid-cols-[80px_minmax(0,280px)_200px_minmax(240px,1fr)_auto] grid-rows-[1fr_auto_auto_0_1fr_auto_auto] gap-x-5 rounded-md p-3 transition-colors hover:bg-background-default has-[.product-list-reviews]:grid-rows-[1fr_auto_auto_auto_1fr_auto_auto] md:grid-cols-[80px_minmax(0,1fr)_minmax(0,1fr)_auto]">
+            <ExtendedNextLink
+                preventRedirectOnTextSelection
+                className="group/product-link col-start-1 col-end-3 xxl:col-end-6 row-start-1 row-end-8 grid min-w-0 grid-cols-subgrid grid-rows-subgrid rounded-md text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden md:col-end-5"
+                data-focus-color="preserve"
+                draggable={false}
+                href={productUrl}
+                type={productLinkType}
+                aria-label={t('Go to bestseller product page of {{ productName }}', {
+                    ns: 'accessibility',
+                    productName: product.fullName,
+                })}
+                onMouseUp={() =>
+                    onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices)
+                }
+            >
+                <div className="col-start-1 row-start-1 row-end-6 flex w-20 shrink-0 items-center">
+                    <ProductListItemImage
+                        product={product}
+                        size="extraSmall"
+                        tid={TIDs.category_bestseller_image}
+                        visibleItemsConfig={{ flags: false }}
+                    />
+                </div>
+
+                <div className="col-start-2 row-start-2 min-w-0 empty:hidden xl:max-w-80">
                     <ProductFlags
                         flags={product.flags}
                         percentageDiscount={product.price.percentageDiscount}
-                        variant="bestsellers"
+                        variant="list"
                     />
-
-                    <span className="group-hover:underline group-focus-visible:underline">{product.fullName}</span>
                 </div>
+
+                <h3 className="wrap-break-word col-start-2 row-start-3 mt-1.5 overflow-hidden font-secondary font-semibold text-sm group-hover:text-text-default group-hover:underline xl:max-w-80">
+                    <span className="group-hover:underline group-focus-visible/product-link:underline">
+                        {product.fullName}
+                    </span>
+                </h3>
 
                 <ProductAvailability
                     availability={product.availability}
                     availableStoresCount={product.availableStoresCount}
-                    className="md:basis-3/12 min-[1380px]:shrink-0 min-[1380px]:basis-auto min-[1380px]:whitespace-nowrap"
+                    className="col-start-2 xxl:col-start-4 row-start-6 mt-2.5 md:col-start-3 md:row-start-1 md:row-end-6 md:mt-0 md:self-center md:justify-self-start min-[1380px]:whitespace-nowrap"
                     isInquiryType={product.isInquiryType}
                 />
 
-                <ProductPrice className="md:basis-3/12 md:flex-col md:items-end" productPrice={product.price} />
-            </div>
-        </ExtendedNextLink>
+                <ProductPrice
+                    className="col-start-2 xxl:col-start-5 row-start-7 mt-2.5 md:col-start-4 md:row-start-1 md:row-end-6 md:mt-0 md:flex-col md:items-end md:self-center"
+                    productPrice={product.price}
+                />
+            </ExtendedNextLink>
+
+            <ProductListReviewsSummaryLink
+                className="product-list-reviews relative z-above col-start-2 xxl:col-start-3 row-start-4 xxl:row-start-1 xxl:row-end-6 mt-1.5 xxl:mt-0 min-w-0 xxl:self-center"
+                linkType={productLinkType}
+                product={product}
+                productUrl={productUrl}
+            />
+        </div>
     );
 };

@@ -1,0 +1,17 @@
+query ProductVariantReviewsSummaryByCatnum($catnums: [String!]!) {
+    productsByCatnums(catnums: $catnums) {
+        __typename
+        reviewsSummary {
+            averageRating
+            totalCount
+        }
+        ... on Variant {
+            mainVariant {
+                reviewsSummary {
+                    averageRating
+                    totalCount
+                }
+            }
+        }
+    }
+}

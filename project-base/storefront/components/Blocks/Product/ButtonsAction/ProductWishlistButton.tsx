@@ -55,6 +55,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
                 className={className}
                 iconClassName={isProductInWishlist ? 'text-icon-accent-red' : undefined}
                 shape="rounded"
+                size="small"
                 tabIndex={tabIndex}
                 tid={TIDs.product_wishlist_button}
                 title={tooltipLabel}

@@ -26,6 +26,7 @@ const listedProduct = {
     catalogNumber: 'WATCH-1',
     isMainVariant: false,
     isInquiryType: false,
+    reviewsSummary: null,
     unit: {
         __typename: 'Unit',
         name: 'pcs',

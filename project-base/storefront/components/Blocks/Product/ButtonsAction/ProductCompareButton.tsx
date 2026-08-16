@@ -52,6 +52,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
                 className={className}
                 iconClassName={isProductInComparison ? 'text-icon-accent-red' : undefined}
                 shape="rounded"
+                size="small"
                 tabIndex={tabIndex}
                 tid={TIDs.product_compare_button}
                 title={tooltipLabel}
