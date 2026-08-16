@@ -110,4 +110,9 @@ class ProductReviewData
      * @var \DateTimeImmutable|null
      */
     public $createdAt;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageData[]
+     */
+    public $images = [];
 }

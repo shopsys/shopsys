@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\ProductReview;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogNoteRegistry;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageFactory;
 
 class ProductReviewFacade
 {
@@ -21,6 +24,8 @@ class ProductReviewFacade
         protected readonly ProductReviewFactory $productReviewFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
+        protected readonly ProductReviewImageFactory $productReviewImageFactory,
+        protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
     ) {
     }
 
@@ -36,6 +41,8 @@ class ProductReviewFacade
         $this->em->persist($productReview);
         $this->em->flush();
 
+        $this->createImages($productReview, $productReviewData->images);
+
         if ($productReview->getStatus() === ProductReviewStatusEnum::STATUS_APPROVED) {
             $this->dispatchReviewsExport($productReview);
         }
@@ -50,10 +57,71 @@ class ProductReviewFacade
         }
 
         $productReview->edit($productReviewData);
+        $this->editImages($productReview, $productReviewData->images);
 
         $this->em->flush();
 
         $this->dispatchReviewsExport($productReview);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageData[] $imagesData
+     */
+    protected function createImages(ProductReview $productReview, array $imagesData): void
+    {
+        $imagesData = array_values($imagesData);
+
+        if (count($imagesData) === 0) {
+            return;
+        }
+
+        $productReviewImages = [];
+
+        foreach ($imagesData as $position => $productReviewImageData) {
+            $productReviewImage = $this->productReviewImageFactory->create(
+                $productReview,
+                $productReviewImageData,
+                $position,
+            );
+
+            $this->em->persist($productReviewImage);
+            $productReviewImages[] = $productReviewImage;
+        }
+
+        $this->em->flush();
+
+        foreach ($productReviewImages as $index => $productReviewImage) {
+            if ($imagesData[$index]->file === null) {
+                continue;
+            }
+
+            $this->customerUploadedFileFacade->manageFiles(
+                $productReviewImage,
+                $imagesData[$index]->file,
+                UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+                $productReview->getCustomerUser(),
+            );
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageData[] $imagesData
+     */
+    protected function editImages(ProductReview $productReview, array $imagesData): void
+    {
+        $imagesDataById = [];
+
+        foreach ($imagesData as $productReviewImageData) {
+            if ($productReviewImageData->id !== null) {
+                $imagesDataById[$productReviewImageData->id] = $productReviewImageData;
+            }
+        }
+
+        foreach ($productReview->getImages() as $productReviewImage) {
+            if (array_key_exists($productReviewImage->getId(), $imagesDataById)) {
+                $productReviewImage->edit($imagesDataById[$productReviewImage->getId()]);
+            }
+        }
     }
 
     protected function dispatchReviewsExport(ProductReview $productReview): void
