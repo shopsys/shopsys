@@ -1,0 +1,39 @@
+# Dead code detection exemptions: intentional downstream api surface and members kept for hidden callers.
+# Api classes whose whole public surface is downstream contract are exempt per file; individual members
+# are exempt by exact message. Every entry must match a currently reported error (reportUnmatched stays
+# at the default true), so entries whose members come alive again must be removed.
+
+parameters:
+    ignoreErrors:
+        # whole api classes
+        -
+            identifier: shipmonk.deadMethod
+            path: tests/FrontendApiBundle/Test/GraphQlTestCase.php
+        # individual members
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ App\\Component\\DataBridge\\BridgeConfig::getBaseUri$#'
+            path: src/Component/DataBridge/BridgeConfig.php
+        # called from config/shopsys-routing/routing_friendly_url.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ App\\Component\\FriendlyUrl\\FriendlyUrlRouteEnum::getOptionsForCase$#'
+            path: src/Component/FriendlyUrl/FriendlyUrlRouteEnum.php
+        # dispatched by name via loadRoutesForConfiguration
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ App\\Kernel::configureRoutesApp$#'
+            path: src/Kernel.php
+        # dispatched by name via loadRoutesForConfiguration
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ App\\Kernel::configureRoutesAdministration$#'
+            path: src/Kernel.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ App\\Model\\LegalConditions\\LegalConditionsFacade::getTermsAndConditionsDownloadFilename$#'
+            path: src/Model/LegalConditions/LegalConditionsFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ App\\Model\\Product\\Filter\\FlagFilterChoiceRepository::getFlagFilterChoicesInCategory\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: src/Model/Product/Filter/FlagFilterChoiceRepository.php

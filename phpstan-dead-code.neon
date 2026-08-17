@@ -144,3 +144,367 @@ parameters:
         -
             identifier: shipmonk.deadMethod
             path: packages/http-smoke-testing/src/RouteInfo.php
+        # individual members
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\AdministrationBundle\\Component\\Security\\AccessControl\\RouteAccessControlDataProvider::clearCache$#'
+            path: packages/administration/src/Component/Security/AccessControl/RouteAccessControlDataProvider.php
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            message: '#^Property\ Shopsys\\AdministrationBundle\\Twig\\Runtime\\DomainIconRuntime::\$domainFacade\ is\ never\ read$#'
+            path: packages/administration/src/Twig/Runtime/DomainIconRuntime.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\AbstractUploadedFile\\AbstractUploadedFileLocator::getRelativeUploadedFileFilepath\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Component/AbstractUploadedFile/AbstractUploadedFileLocator.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Cron\\CronModuleRun::getCronModule$#'
+            path: packages/framework/src/Component/Cron/CronModuleRun.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\CustomerUploadedFile\\CustomerUploadedFile::getPosition$#'
+            path: packages/framework/src/Component/CustomerUploadedFile/CustomerUploadedFile.php
+        # called by jms/translation-bundle annotation extractors
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Doctrine\\Common\\Annotations\\DocParser::parse$#'
+            path: packages/framework/src/Component/Doctrine/DocParserPolyfill.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\EntityLog\\Model\\EntityLogRepository::getEntityLogsFromLastLogCollection\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Component/EntityLog/Model/EntityLogRepository.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Image\\Config\\Exception\\DuplicateTypeNameExceptionInvalid::getTypeName$#'
+            path: packages/framework/src/Component/Image/Config/Exception/DuplicateTypeNameExceptionInvalid.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Image\\Config\\Exception\\ImageEntityConfigNotFoundException::getEntityClassOrName$#'
+            path: packages/framework/src/Component/Image/Config/Exception/ImageEntityConfigNotFoundException.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Image\\Config\\Exception\\ImageTypeNotFoundException::getEntityClass$#'
+            path: packages/framework/src/Component/Image/Config/Exception/ImageTypeNotFoundException.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Image\\Config\\Exception\\ImageTypeNotFoundException::getImageType$#'
+            path: packages/framework/src/Component/Image/Config/Exception/ImageTypeNotFoundException.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Image\\Image::getPosition$#'
+            path: packages/framework/src/Component/Image/Image.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Image\\Image::getModifiedAt$#'
+            path: packages/framework/src/Component/Image/Image.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Security\\Role\\Role::addPermission\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Component/Security/Role/Role.php
+        # translation domain dedicated to tests
+        -
+            identifier: shipmonk.deadConstant
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Translation\\Translator::TESTS_TRANSLATION_DOMAIN\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Component/Translation/Translator.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\UploadedFile\\Config\\Exception\\UploadedFileConfigurationParseException::getEntityClass$#'
+            path: packages/framework/src/Component/UploadedFile/Config/Exception/UploadedFileConfigurationParseException.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\UploadedFile\\UploadedFileRelation::getPosition$#'
+            path: packages/framework/src/Component/UploadedFile/UploadedFileRelation.php
+        -
+            identifier: trait.unused
+            path: packages/framework/src/DependencyInjection/SetterInjectionTrait.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\AdminNavigation\\ConfigureMenuEvent::getMenuFactory$#'
+            path: packages/framework/src/Model/AdminNavigation/ConfigureMenuEvent.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Administrator\\AdministratorFacade::getCurrentlyLoggedAdministrator$#'
+            path: packages/framework/src/Model/Administrator/AdministratorFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Administrator\\Exception\\RememberGridLimitException::getGridId$#'
+            path: packages/framework/src/Model/Administrator/Exception/RememberGridLimitException.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Administrator\\Role\\AdministratorRoleDataFactory::createFromAdministratorRole$#'
+            path: packages/framework/src/Model/Administrator/Role/AdministratorRoleDataFactory.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\AdvancedSearch\\Filter\\AdvancedSearchFilterRegistry::getAllFilters\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/AdvancedSearch/Filter/AdvancedSearchFilterRegistry.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Article\\ArticleRepository::getVisibleById$#'
+            path: packages/framework/src/Model/Article/ArticleRepository.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Autocomplete\\AutocompleteFavoriteBrand::getPosition$#'
+            path: packages/framework/src/Model/Autocomplete/AutocompleteFavoriteBrand.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Autocomplete\\AutocompleteFavoriteCategory::getPosition$#'
+            path: packages/framework/src/Model/Autocomplete/AutocompleteFavoriteCategory.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Autocomplete\\AutocompleteFavoriteProduct::getPosition$#'
+            path: packages/framework/src/Model/Autocomplete/AutocompleteFavoriteProduct.php
+        # GraphQL field on AddProductResultDecorator.types.yaml
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\AddProductResult::getIsNew$#'
+            path: packages/framework/src/Model/Cart/AddProductResult.php
+        # GraphQL field on AddProductResultDecorator.types.yaml
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\AddProductResult::getAddedQuantity$#'
+            path: packages/framework/src/Model/Cart/AddProductResult.php
+        # GraphQL field on AddProductResultDecorator.types.yaml
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\AddProductResult::getNotOnStockQuantity$#'
+            path: packages/framework/src/Model/Cart/AddProductResult.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\Cart::setModifiedAt\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Cart/Cart.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\Exception\\InvalidQuantityException::getInvalidValue$#'
+            path: packages/framework/src/Model/Cart/Exception/InvalidQuantityException.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\Item\\CartItem::getAddedAt$#'
+            path: packages/framework/src/Model/Cart/Item/CartItem.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Category\\CategoryFacade::getProductMainCategoriesIndexedByDomainId$#'
+            path: packages/framework/src/Model/Category/CategoryFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Category\\CategoryFacade::getListableProductCountsIndexedByCategoryId$#'
+            path: packages/framework/src/Model/Category/CategoryFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Category\\CategoryFacade::getProductMainCategoryOnCurrentDomain$#'
+            path: packages/framework/src/Model/Category/CategoryFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\CategorySeo\\ReadyCategorySeoMix::setFlag$#'
+            path: packages/framework/src/Model/CategorySeo/ReadyCategorySeoMix.php
+        -
+            identifier: shipmonk.deadConstant
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\CombinedArticle\\CombinedArticleElasticsearchRepository::TYPE_BLOG_ARTICLE$#'
+            path: packages/framework/src/Model/CombinedArticle/CombinedArticleElasticsearchRepository.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Customer\\BillingAddressFacade::getByUuid$#'
+            path: packages/framework/src/Model/Customer/BillingAddressFacade.php
+        -
+            identifier: shipmonk.deadConstant
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Customer\\User\\CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH$#'
+            path: packages/framework/src/Model/Customer/User/CustomerUserPasswordFacade.php
+        # downstream feed listing api; stubbed in FeedCronModuleTest
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Feed\\FeedFacade::getFeedNames$#'
+            path: packages/framework/src/Model/Feed/FeedFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Feed\\FeedRegistry::getFeedsForCurrentTime\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Feed/FeedRegistry.php
+        # diagnostic payload for debugging failed GoPay calls
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            message: '#^Property\ Shopsys\\FrameworkBundle\\Model\\GoPay\\Exception\\GoPayPaymentDownloadException::\$expectedCode\ is\ never\ read$#'
+            path: packages/framework/src/Model/GoPay/Exception/GoPayPaymentDownloadException.php
+        # diagnostic payload for debugging failed GoPay calls
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            message: '#^Property\ Shopsys\\FrameworkBundle\\Model\\GoPay\\Exception\\GoPayPaymentDownloadException::\$responseData\ is\ never\ read$#'
+            path: packages/framework/src/Model/GoPay/Exception/GoPayPaymentDownloadException.php
+        # project-implemented terms download filename api
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\LegalConditions\\LegalConditionsFacade::getTermsAndConditionsDownloadFilename$#'
+            path: packages/framework/src/Model/LegalConditions/LegalConditionsFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Mail\\Exception\\MailTemplateAlreadyExistsException::getMailTemplate$#'
+            path: packages/framework/src/Model/Mail/Exception/MailTemplateAlreadyExistsException.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Navigation\\NavigationItemCategory::getPosition$#'
+            path: packages/framework/src/Model/Navigation/NavigationItemCategory.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItem::checkTypeDiscount$#'
+            path: packages/framework/src/Model/Order/Item/OrderItem.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItem::checkTypeRounding$#'
+            path: packages/framework/src/Model/Order/Item/OrderItem.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItem::checkTypePromotion$#'
+            path: packages/framework/src/Model/Order/Item/OrderItem.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Order\\PromoCode\\CurrentPromoCodeFacade::getPromoCodePerProductByDomainId$#'
+            path: packages/framework/src/Model/Order/PromoCode/CurrentPromoCodeFacade.php
+        # GraphQL field on PaymentSetupCreationDataDecorator.types.yaml
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Payment\\PaymentSetupCreationData::getGoPayCreatePaymentSetup$#'
+            path: packages/framework/src/Model/Payment/PaymentSetupCreationData.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Payment\\ReturnHash\\PaymentReturnHash::getHash$#'
+            path: packages/framework/src/Model/Payment/ReturnHash/PaymentReturnHash.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\PostDeploy\\OneTimePostDeployTaskRecord::getExecutedAt$#'
+            path: packages/framework/src/Model/PostDeploy/OneTimePostDeployTaskRecord.php
+        -
+            identifier: shipmonk.deadConstant
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Pricing\\Currency\\Currency::CODE_EUR\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Pricing/Currency/Currency.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Pricing\\Group\\PricingGroupEvent::getPricingGroup$#'
+            path: packages/framework/src/Model/Pricing/Group/PricingGroupEvent.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Filter\\BrandFilterChoiceRepository::getBrandFilterChoicesInCategory\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Product/Filter/BrandFilterChoiceRepository.php
+        # calls bind to the project-base override
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Filter\\FlagFilterChoiceRepository::getFlagFilterChoicesInCategory$#'
+            path: packages/framework/src/Model/Product/Filter/FlagFilterChoiceRepository.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Parameter\\ParameterFacade::getParameterValueByUuid$#'
+            path: packages/framework/src/Model/Product/Parameter/ParameterFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Parameter\\ParameterFacade::getParameterValueIdByText$#'
+            path: packages/framework/src/Model/Product/Parameter/ParameterFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Product::createMainVariant\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Product/Product.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\ProductElasticsearchProvider::getSellableProductArrayByUuids$#'
+            path: packages/framework/src/Model/Product/ProductElasticsearchProvider.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\ProductFactory::createMainVariant\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Product/ProductFactory.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\ProductRepository::getSellableById$#'
+            path: packages/framework/src/Model/Product/ProductRepository.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\ProductRepository::getOfferedByIds\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Product/ProductRepository.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Recalculation\\ProductRecalculationDispatcher::dispatchProducts$#'
+            path: packages/framework/src/Model/Product/Recalculation/ProductRecalculationDispatcher.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\TopProduct\\TopProduct::getPosition$#'
+            path: packages/framework/src/Model/Product/TopProduct/TopProduct.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\ProductVideo\\ProductVideoTranslations::getProductVideo$#'
+            path: packages/framework/src/Model/ProductVideo/ProductVideoTranslations.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Seo\\Page\\SeoPageDomain::getSeoPage$#'
+            path: packages/framework/src/Model/Seo/Page/SeoPageDomain.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Stock\\StockEvent::getStock$#'
+            path: packages/framework/src/Model/Stock/StockEvent.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Stock\\StockFacade::getStocksEnabledOnDomainIndexedByStockId\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Stock/StockFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Transfer\\Issue\\TransferIssue::getSeverity$#'
+            path: packages/framework/src/Model/Transfer/Issue/TransferIssue.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Transfer\\Issue\\TransferIssue::getDeletedAt$#'
+            path: packages/framework/src/Model/Transfer/Issue/TransferIssue.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Transport\\TransportFacade::getVisibleOnCurrentDomain\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Transport/TransportFacade.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Transport\\TransportFacade::getByUuid$#'
+            path: packages/framework/src/Model/Transport/TransportFacade.php
+        -
+            identifier: shipmonk.deadProperty.neverWritten
+            message: '#^Property\ Shopsys\\FrameworkBundle\\Model\\Watchdog\\WatchdogData::\$updatedAt\ is\ never\ written\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Watchdog/WatchdogData.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Watchdog\\WatchdogDataFactory::createFromWatchdog$#'
+            path: packages/framework/src/Model/Watchdog/WatchdogDataFactory.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Tests\\FrameworkBundle\\Test\\Provider\\TestOrderProvider::createPaymentDataInstance$#'
+            path: packages/framework/tests/Test/Provider/TestOrderProvider.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Tests\\FrameworkBundle\\Test\\Provider\\TestOrderProvider::createPaymentInstance$#'
+            path: packages/framework/tests/Test/Provider/TestOrderProvider.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser::getAdministratorUuid$#'
+            path: packages/frontend-api/src/Model/User/FrontendApiUser.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\HttpSmokeTesting\\RequestDataSetGenerator::skipRoute\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/http-smoke-testing/src/RequestDataSetGenerator.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\HttpSmokeTesting\\RequestDataSetGenerator::changeDefaultRequestDataSet\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/http-smoke-testing/src/RequestDataSetGenerator.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\HttpSmokeTesting\\RouteConfigCustomizer::customize\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/http-smoke-testing/src/RouteConfigCustomizer.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\HttpSmokeTesting\\RouteConfigCustomizer::customizeByRouteName\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/http-smoke-testing/src/RouteConfigCustomizer.php
+        # captured by the Enum class maker question; generated code does not use it yet
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            message: '#^Property\ Shopsys\\MakerBundle\\EntityConfig\\ScalarProperty::\$enumType\ is\ never\ read$#'
+            path: packages/maker/src/EntityConfig/ScalarProperty.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\McpBundle\\Model\\Administrator\\McpToken\\AdministratorMcpToken::getPublicTokenId$#'
+            path: packages/mcp/src/Model/Administrator/McpToken/AdministratorMcpToken.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\McpBundle\\Model\\Administrator\\McpToken\\AdministratorMcpToken::getLastUsedAt$#'
+            path: packages/mcp/src/Model/Administrator/McpToken/AdministratorMcpToken.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\McpBundle\\Model\\Administrator\\McpToken\\AdministratorMcpToken::isManual\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/mcp/src/Model/Administrator/McpToken/AdministratorMcpToken.php

@@ -36,6 +36,7 @@ parameters:
             message: '#^Service "test.service_container" is not registered in the container.$#'
             path: %currentWorkingDirectory%/tests/*
 includes:
+    - phpstan-dead-code.neon
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon

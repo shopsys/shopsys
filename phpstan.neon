@@ -65,6 +65,7 @@ parameters:
         - %currentWorkingDirectory%/packages/maker/templates/*
 includes:
     - phpstan-dead-code.neon
+    - project-base/app/phpstan-dead-code.neon
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
