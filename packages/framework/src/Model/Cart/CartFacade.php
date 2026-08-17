@@ -6,19 +6,15 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class CartFacade
 {
@@ -27,11 +23,8 @@ class CartFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CartFactory $cartFactory,
-        protected readonly ProductRepository $productRepository,
         protected readonly CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         protected readonly Domain $domain,
-        protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculation,
         protected readonly CartItemFactory $cartItemFactory,
         protected readonly CartRepository $cartRepository,
@@ -108,30 +101,10 @@ class CartFacade
         $this->em->flush();
     }
 
-    public function getProductByCartItemId(int $cartItemId): Product
-    {
-        $cart = $this->findCartOfCurrentCustomerUser();
-
-        if ($cart === null) {
-            $message = 'CartItem with id = ' . $cartItemId . ' not found in cart.';
-
-            throw new InvalidCartItemException($message);
-        }
-
-        return $cart->getItemById($cartItemId)->getProduct();
-    }
-
     public function findCartByCustomerUserIdentifier(
         CustomerUserIdentifier $customerUserIdentifier,
     ): ?Cart {
         return $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
-    }
-
-    public function findCartOfCurrentCustomerUser(): ?Cart
-    {
-        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
-
-        return $this->findCartByCustomerUserIdentifier($customerUserIdentifier);
     }
 
     public function getCartByCustomerUserIdentifierCreateIfNotExists(

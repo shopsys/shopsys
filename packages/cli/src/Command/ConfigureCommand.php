@@ -94,9 +94,9 @@ HELP,
             $configFile = $input->getOption(self::OPTION_CONFIG);
 
             if ($configFile !== null) {
-                $config = $this->yamlConfigLoader->load($configFile, $projectPath);
+                $config = $this->yamlConfigLoader->load($configFile);
             } else {
-                $config = $this->interactiveInputCollector->collect($projectPath, $io);
+                $config = $this->interactiveInputCollector->collect($io);
             }
         } catch (CancelledException) {
             $io->warning('Configuration cancelled by user.');

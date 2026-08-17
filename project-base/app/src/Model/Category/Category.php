@@ -30,8 +30,6 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[Gedmo\Tree(type: 'nested')]
 class Category extends BaseCategory
 {
-    private const CATEGORY_LEVEL_0 = 0;
-
     /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
@@ -48,17 +46,5 @@ class Category extends BaseCategory
     protected function setData(BaseCategoryData $categoryData): void
     {
         parent::setData($categoryData);
-    }
-
-    /**
-     * @return \App\Model\Category\Category[]
-     */
-    public function getParentsWithoutRootCategory(): array
-    {
-        if ($this->parent === null || $this->parent->getLevel() === self::CATEGORY_LEVEL_0) {
-            return [];
-        }
-
-        return array_merge([$this->parent], $this->parent->getParentsWithoutRootCategory());
     }
 }

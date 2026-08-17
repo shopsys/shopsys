@@ -16,9 +16,9 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 class ScalarProperty extends Property
 {
     public function __construct(
-        public string $propertyName,
+        string $propertyName,
         public string $type,
-        public EntityTypeEnum $entityType = EntityTypeEnum::ENTITY,
+        EntityTypeEnum $entityType = EntityTypeEnum::ENTITY,
         public ?int $length = null,
         public ?bool $nullable = null,
         public array $options = [],
@@ -27,6 +27,8 @@ class ScalarProperty extends Property
         public bool $unique = false,
         public ?string $enumType = null,
     ) {
+        $this->propertyName = $propertyName;
+        $this->entityType = $entityType;
     }
 
     /**

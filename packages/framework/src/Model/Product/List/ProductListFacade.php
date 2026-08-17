@@ -17,7 +17,6 @@ class ProductListFacade
         protected readonly EntityManagerInterface $entityManager,
         protected readonly ProductListFactory $productListFactory,
         protected readonly ProductListRepository $productListRepository,
-        protected readonly ProductListDataFactory $productListDataFactory,
         protected readonly ProductListItemFactory $productListItemFactory,
     ) {
     }

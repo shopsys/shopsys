@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministra
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade;
-use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AdministratorFacade
@@ -21,7 +20,6 @@ class AdministratorFacade
         protected readonly AdministratorRepository $administratorRepository,
         protected readonly AdministratorFactory $administratorFactory,
         protected readonly AdministratorRoleFacade $administratorRoleFacade,
-        protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
         protected readonly TokenStorageInterface $tokenStorage,
         protected readonly ClockInterface $clock,
         protected readonly CurrentAdministrator $currentAdministrator,

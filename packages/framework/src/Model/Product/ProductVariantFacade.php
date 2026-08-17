@@ -5,17 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class ProductVariantFacade
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly ProductFacade $productFacade,
-        protected readonly ProductDataFactory $productDataFactory,
-        protected readonly ImageFacade $imageFacade,
-        protected readonly ProductFactory $productFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }

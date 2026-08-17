@@ -196,14 +196,6 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
         return $this->ordering;
     }
 
-    /**
-     * @param string $ordering
-     */
-    public function setOrdering($ordering): void
-    {
-        $this->ordering = $ordering;
-    }
-
     public function hasPriceBasedOrdering(): bool
     {
         return in_array($this->ordering, [

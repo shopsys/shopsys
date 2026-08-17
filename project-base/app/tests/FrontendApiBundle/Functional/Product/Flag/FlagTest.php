@@ -7,7 +7,6 @@ namespace Tests\FrontendApiBundle\Functional\Product\Flag;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -17,11 +16,6 @@ class FlagTest extends GraphQlTestCase
      * @inject
      */
     private UrlGeneratorInterface $urlGenerator;
-
-    /**
-     * @inject
-     */
-    protected FlagFacade $flagFacade;
 
     public function testFlagByUuid(): void
     {

@@ -29,15 +29,6 @@ class SocialLoginSection implements DomainConfigSectionInterface
      * {@inheritdoc}
      */
     #[Override]
-    public static function getPriority(): int
-    {
-        return 30;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function collectInteractive(SymfonyStyle $io, int $domainId): void
     {
         $io->section(sprintf('Social Login Settings for Domain %d', $domainId));

@@ -10,7 +10,6 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
-use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Search\SearchSetting;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
@@ -26,7 +25,6 @@ class CategoryRepository extends NestedTreeRepository
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
-        protected readonly OrderByCollationHelper $orderByCollationHelper,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
         protected readonly InMemoryCache $inMemoryCache,
     ) {
@@ -265,23 +263,6 @@ class CategoryRepository extends NestedTreeRepository
         return $queryBuilder;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function getTranslatedVisibleSubcategoriesByDomain(
-        Category $parentCategory,
-        DomainConfig $domainConfig,
-    ): array {
-        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId());
-        $this->addTranslation($queryBuilder, $domainConfig->getLocale());
-
-        $queryBuilder
-            ->andWhere('c.parent = :parentCategory')
-            ->setParameter('parentCategory', $parentCategory);
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
     public function addTranslation(QueryBuilder $categoriesQueryBuilder, string $locale): void
     {
         $categoriesQueryBuilder
@@ -492,31 +473,6 @@ class CategoryRepository extends NestedTreeRepository
             ->setParameter('categoryIds', $categoryIds);
 
         return $queryBuilder->getQuery()->getResult();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
-     */
-    protected function getCategoriesWithVisibleChildrenQueryBuilder(array $categories, int $domainId): QueryBuilder
-    {
-        return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
-            ->join('c.children', 'cc')
-            ->join('cc.domains', 'ccd')
-            ->andWhere('ccd.domainId = :domainId')
-            ->andWhere('ccd.visible = TRUE')
-            ->andWhere('c IN (:categories)')
-            ->setParameter('categories', $categories);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function getCategoriesWithVisibleChildren(array $categories, int $domainId): array
-    {
-        return $this->getCategoriesWithVisibleChildrenQueryBuilder($categories, $domainId)
-            ->getQuery()
-            ->getResult();
     }
 
     /**

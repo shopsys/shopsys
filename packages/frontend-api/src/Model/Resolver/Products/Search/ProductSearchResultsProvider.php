@@ -6,7 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\Search;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Override;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
@@ -16,7 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvide
 class ProductSearchResultsProvider implements ProductSearchResultsProviderInterface
 {
     public function __construct(
-        protected readonly ProductFilterDataFactory $productFilterDataFactory,
         protected readonly ProductConnectionFactory $productConnectionFactory,
         protected readonly ProductFacade $productFacade,
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,

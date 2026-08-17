@@ -8,7 +8,6 @@ use Doctrine\DBAL\Connection;
 use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\McpBundle\Component\Database\Schema\AllowedDatabaseColumnsProvider;
-use Shopsys\McpBundle\Component\Database\Schema\AllowedDatabaseTablesProvider;
 use Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider;
 use Shopsys\McpBundle\Component\Database\Schema\SchemaNameNormalizer;
 
@@ -95,7 +94,6 @@ class ExposedSchemaProviderTest extends TestCase
 
         return new ExposedSchemaProvider(
             $this->createStub(Connection::class),
-            $this->createStub(AllowedDatabaseTablesProvider::class),
             $this->createStub(AllowedDatabaseColumnsProvider::class),
             $this->createStub(SchemaNameNormalizer::class),
             $temporarySchemaDirectory,

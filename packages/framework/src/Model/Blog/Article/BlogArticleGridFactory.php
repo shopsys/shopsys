@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
@@ -15,9 +14,7 @@ use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 class BlogArticleGridFactory
 {
     public function __construct(
-        protected readonly BlogArticleRepository $blogArticleRepository,
         protected readonly GridFactory $gridFactory,
-        protected readonly Domain $domain,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }

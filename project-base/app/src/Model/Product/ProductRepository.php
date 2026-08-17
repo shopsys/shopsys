@@ -25,8 +25,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
  * @method \App\Model\Product\Product getSellableById(int $id, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Product[] getOfferedByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
- * @method \App\Model\Product\Product[] getListableByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
- * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getOneByUuid(string $uuid)
  * @method \App\Model\Product\Product[] getAllSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Product[] getAllOfferedProductsPaginated(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $offset, int $limit)
@@ -37,22 +35,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
  */
 class ProductRepository extends BaseProductRepository
 {
-    /**
-     * @return \App\Model\Product\Product[]
-     */
-    public function getVisibleProductsByCatnumsAndDomainId(
-        array $productCatnums,
-        int $domainId,
-        PricingGroup $pricingGroup,
-    ): array {
-        return $this->getAllVisibleQueryBuilder($domainId, $pricingGroup)
-            ->andWhere('p.catnum IN (:catnums)')
-            ->andWhere('p.sellingDenied = FALSE')
-            ->setParameter('catnums', $productCatnums)
-            ->getQuery()
-            ->getResult();
-    }
-
     /**
      * @return iterable<\App\Model\Product\Product>
      */

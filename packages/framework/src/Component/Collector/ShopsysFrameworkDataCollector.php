@@ -37,7 +37,6 @@ class ShopsysFrameworkDataCollector extends DataCollector
     {
         $this->data = [
             'version' => ShopsysFrameworkBundle::VERSION,
-            'docsVersion' => $this->resolveDocsVersion(ShopsysFrameworkBundle::VERSION),
             'docsUrl' => sprintf('https://docs.shopsys.com/en/%s/', $this->resolveDocsVersion(ShopsysFrameworkBundle::VERSION)),
             'domains' => $this->domain->getAll(),
             'systemTimeZone' => date_default_timezone_get(),
@@ -138,11 +137,6 @@ class ShopsysFrameworkDataCollector extends DataCollector
     public function getName(): string
     {
         return 'shopsys_framework_core';
-    }
-
-    public function getDocsVersion(): string
-    {
-        return $this->data['docsVersion'];
     }
 
     public function getDocsUrl(): string

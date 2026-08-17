@@ -59,32 +59,10 @@ class Client extends KernelBrowser
     }
 
     /**
-     * @param mixed[] $body
-     * @param mixed[] $headers
-     */
-    public function put(string $uri, array $body, array $headers = []): Crawler
-    {
-        return $this->request('PUT', $uri, [], [], $headers, Json::encode($body));
-    }
-
-    /**
-     * @param mixed[] $headers
-     */
-    public function delete(string $uri, array $headers = []): Crawler
-    {
-        return $this->request('DELETE', $uri, [], [], $headers);
-    }
-
-    /**
      * @return mixed[]
      */
     public function getResponseData(): array
     {
         return Json::decode((string)$this->getResponse()->getContent(), true);
-    }
-
-    public function getStatusCode(): int
-    {
-        return $this->getResponse()->getStatusCode();
     }
 }

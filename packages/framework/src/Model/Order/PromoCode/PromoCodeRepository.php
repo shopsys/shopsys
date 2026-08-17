@@ -46,19 +46,6 @@ class PromoCodeRepository
         return $promoCode;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
-     */
-    public function getAll(): array
-    {
-        $queryBuilder = $this->getAllQueryBuilder();
-        $queryBuilder
-            ->select('pc')
-            ->from(PromoCode::class, 'pc');
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
     public function getAllQueryBuilder(): QueryBuilder
     {
         return $this->getPromoCodeRepository()

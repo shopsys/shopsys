@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\GoPay;
 
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use GoPay\Definition\Response\PaymentStatus;
@@ -15,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 class GoPayRepository
 {
     public function __construct(
-        protected readonly EntityManagerInterface $em,
         protected readonly OrderRepository $orderRepository,
     ) {
     }

@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 class EntityLogFacade
 {
     public function __construct(
-        protected readonly EntityLogRepository $entityLogRepository,
         protected readonly Localization $localization,
         protected readonly DetectionFacade $detectionFacade,
         protected readonly EntityLogFactory $entityLogFactory,

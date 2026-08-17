@@ -8,7 +8,6 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 
 class AdvertResolverMap extends ResolverMap
@@ -18,7 +17,6 @@ class AdvertResolverMap extends ResolverMap
     protected const string RESOLVER_CATEGORIES_FIELD = 'categories';
 
     public function __construct(
-        protected readonly ImageFacade $imageFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
     ) {
     }

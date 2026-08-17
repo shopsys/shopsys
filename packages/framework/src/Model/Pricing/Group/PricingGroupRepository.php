@@ -23,7 +23,7 @@ class PricingGroupRepository
 
     public function getById(int $pricingGroupId): PricingGroup
     {
-        $pricingGroup = $this->getPricingGroupRepository()->find($pricingGroupId);
+        $pricingGroup = $this->findById($pricingGroupId);
 
         if ($pricingGroup === null) {
             $message = 'Pricing group with ID ' . $pricingGroupId . ' not found.';
@@ -32,6 +32,11 @@ class PricingGroupRepository
         }
 
         return $pricingGroup;
+    }
+
+    public function findById(int $pricingGroupId): ?PricingGroup
+    {
+        return $this->getPricingGroupRepository()->find($pricingGroupId);
     }
 
     /**
@@ -48,11 +53,6 @@ class PricingGroupRepository
     public function getPricingGroupsByDomainId(int $domainId): array
     {
         return $this->getPricingGroupRepository()->findBy(['domainId' => $domainId]);
-    }
-
-    public function findById(int $pricingGroupId): ?PricingGroup
-    {
-        return $this->getPricingGroupRepository()->find($pricingGroupId);
     }
 
     /**

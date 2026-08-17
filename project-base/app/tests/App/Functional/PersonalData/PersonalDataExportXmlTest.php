@@ -44,7 +44,6 @@ use Twig\Environment;
 
 class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
 {
-    protected const string EMAIL = 'no-reply@shopsys.com';
     protected const string EXPECTED_XML_FILE_NAME = 'test.xml';
 
     /**

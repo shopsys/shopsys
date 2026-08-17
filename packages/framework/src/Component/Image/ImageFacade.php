@@ -6,11 +6,8 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
-use League\Flysystem\MountManager;
-use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\EntityIdentifierException;
@@ -30,11 +27,8 @@ class ImageFacade
         protected readonly ImageConfig $imageConfig,
         protected readonly ImageRepository $imageRepository,
         protected readonly FilesystemOperator $filesystem,
-        protected readonly FileUpload $fileUpload,
         protected readonly ImageLocator $imageLocator,
         protected readonly ImageFactory $imageFactory,
-        protected readonly MountManager $mountManager,
-        protected readonly LoggerInterface $logger,
         protected readonly CdnFacade $cdnFacade,
         protected readonly CacheInterface|AdapterInterface $cache,
         protected readonly TransformStringHelper $transformStringHelper,

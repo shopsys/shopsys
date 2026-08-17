@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory as BasePayment
 /**
  * @property \App\Model\Payment\PaymentRepository $paymentRepository
  * @property \App\Model\Payment\PaymentFacade $paymentFacade
- * @method __construct(\Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \App\Model\Payment\PaymentRepository $paymentRepository, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Payment\PaymentFacade $paymentFacade, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory)
+ * @method __construct(\Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \App\Model\Payment\PaymentRepository $paymentRepository, \App\Model\Payment\PaymentFacade $paymentFacade, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory)
  * @method \Shopsys\FrameworkBundle\Component\Money\Money getDisplayPrice(\App\Model\Payment\Payment $payment)
  */
 class PaymentGridFactory extends BasePaymentGridFactory

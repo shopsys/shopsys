@@ -223,20 +223,11 @@ msgstr "Vybraný spôsob riešenia reklamácie nie je podporovaný"
 msgid "Selected complaint resolution requires bank account number to be filled"
 msgstr "Vybraný spôsob riešenia reklamácie vyžaduje vyplnenie čísla bankového účtu"
 
-msgid "Selected payment price has changed"
-msgstr "Cena vybranej platby sa zmenila"
-
-msgid "Selected pickup place is not available"
-msgstr "Vybrané výdajné miesto nie je dostupné"
-
 msgid "Selected transport is not available"
 msgstr "Vybraná doprava nie je dostupná"
 
 msgid "Selected transport needs to have pickup place identifier set"
 msgstr "Vybraná doprava vyžaduje nastavenie identifikátora výdajného miesta"
-
-msgid "Selected transport price has changed"
-msgstr "Cena vybranej dopravy sa zmenila"
 
 msgid "Selected transport weight limit has been exceeded"
 msgstr "Hmotnostný limit vybranej dopravy bol prekročený"

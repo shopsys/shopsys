@@ -9,12 +9,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as FrameworkOrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
 class OrderDataFactory
 {
@@ -23,12 +19,8 @@ class OrderDataFactory
     public function __construct(
         protected readonly FrameworkOrderDataFactory $orderDataFactory,
         protected readonly Domain $domain,
-        protected readonly PaymentFacade $paymentFacade,
-        protected readonly TransportFacade $transportFacade,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly CountryFacade $countryFacade,
-        protected readonly ProductFacade $productFacade,
-        protected readonly StoreFacade $storeFacade,
     ) {
     }
 

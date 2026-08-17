@@ -12,11 +12,6 @@ interface ConfigSectionInterface
     public static function getKey(): string;
 
     /**
-     * Order for interactive questions (higher = earlier)
-     */
-    public static function getPriority(): int;
-
-    /**
      * Populate from parsed YAML/array data
      *
      * @param array<string, mixed> $data

@@ -59,13 +59,4 @@ class ProductFacade
 
         return $productsResult->getHits();
     }
-
-    public function getSellableProductsByIds(array $productIds, ?int $limit = null): array
-    {
-        $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds, $limit);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-
-        return $productsResult->getHits();
-    }
 }

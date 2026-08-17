@@ -26,15 +26,6 @@ class MetatagSiteNameSection implements ProjectConfigSectionInterface
      * {@inheritdoc}
      */
     #[Override]
-    public static function getPriority(): int
-    {
-        return 40;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function collectInteractive(SymfonyStyle $io): void
     {
         $io->section('Metatag Site Name');

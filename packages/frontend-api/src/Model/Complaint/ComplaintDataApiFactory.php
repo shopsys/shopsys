@@ -6,7 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -19,7 +18,6 @@ class ComplaintDataApiFactory
     public function __construct(
         protected readonly ComplaintDataFactory $complaintDataFactory,
         protected readonly CountryFacade $countryFacade,
-        protected readonly FileUpload $fileUpload,
         protected readonly Domain $domain,
     ) {
     }

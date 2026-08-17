@@ -7,7 +7,6 @@ namespace Shopsys\Releaser\Guzzle;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\Psr7\Request;
-use Nette\Utils\Json;
 use Throwable;
 
 final class ApiCaller
@@ -25,19 +24,6 @@ final class ApiCaller
         } catch (Throwable) {
             return false;
         }
-    }
-
-    /**
-     * @return mixed[]
-     */
-    public function sendGetToJsonArray(string $url): array
-    {
-        $request = new Request('GET', $url);
-        $response = $this->client->send($request);
-
-        $json = $response->getBody()->getContents();
-
-        return Json::decode($json, true);
     }
 
     /**

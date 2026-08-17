@@ -367,12 +367,6 @@ class ProductFacade
         }
     }
 
-    public function getOneByCatnumExcludeMainVariants(
-        string $productCatnum,
-    ): Product {
-        return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
-    }
-
     public function getByUuid(string $uuid): Product
     {
         return $this->productRepository->getOneByUuid($uuid);

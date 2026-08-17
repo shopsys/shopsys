@@ -36,14 +36,6 @@ class CategoryManyToManyBidirectionalEntity
         return $this->name;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory[]
-     */
-    public function getCategories(): array
-    {
-        return $this->categories->getValues();
-    }
-
     public function addCategory(ExtendedCategory $category): void
     {
         $this->categories->add($category);

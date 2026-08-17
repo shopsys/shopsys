@@ -6,7 +6,6 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory;
 
 class ZboziCategoryDownloader
 {
-    protected const string SOURCE_ENCODING = 'Windows-1250';
     protected const string CSV_DELIMITER = ';';
 
     protected const int CELL_INDEX_ID = 0;

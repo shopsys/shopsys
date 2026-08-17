@@ -30,15 +30,6 @@ class MapSettingsSection implements DomainConfigSectionInterface
      * {@inheritdoc}
      */
     #[Override]
-    public static function getPriority(): int
-    {
-        return 50;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
     public function collectInteractive(SymfonyStyle $io, int $domainId): void
     {
         $io->section(sprintf('Map Settings for Domain %d', $domainId));

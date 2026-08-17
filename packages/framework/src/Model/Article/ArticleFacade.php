@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageDispatcher;
@@ -16,7 +15,6 @@ class ArticleFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ArticleRepository $articleRepository,
-        protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ArticleFactory $articleFactory,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,

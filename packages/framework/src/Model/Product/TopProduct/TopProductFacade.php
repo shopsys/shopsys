@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\TopProduct;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
@@ -27,14 +26,6 @@ class TopProductFacade
     public function getAll(int $domainId): array
     {
         return $this->topProductRepository->getAll($domainId);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getOfferedProducts(int $domainId, PricingGroup $pricingGroup, ?int $limit): array
-    {
-        return $this->topProductRepository->getOfferedProductsForTopProductsOnDomain($domainId, $pricingGroup, $limit);
     }
 
     /**

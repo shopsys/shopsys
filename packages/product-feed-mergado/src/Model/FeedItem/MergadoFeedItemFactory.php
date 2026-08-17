@@ -53,7 +53,6 @@ class MergadoFeedItemFactory
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
             $currency->getCode(),
             $product->getDescription($domainId),
-            $productPricesResult->basicProductPrice->getPrice(),
             [],
             $this->availabilityFacade->isProductAvailableOnDomainCached($product, $domainId) ? 'in stock' : 'out of stock',
             $product->getBrand(),

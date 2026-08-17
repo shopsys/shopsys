@@ -56,8 +56,6 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Entity]
 class Product extends BaseProduct
 {
-    public const PDF_SUFFIX = '.pdf';
-
     /**
      * @var string
      */

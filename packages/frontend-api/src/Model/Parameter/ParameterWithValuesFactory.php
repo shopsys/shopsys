@@ -4,15 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Parameter;
 
-use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
-
 class ParameterWithValuesFactory
 {
-    public function __construct(
-        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
-    ) {
-    }
-
     public function createParametersArrayFromProductArray(array $productData): array
     {
         $parametersWithValues = [];

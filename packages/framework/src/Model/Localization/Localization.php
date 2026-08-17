@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 use Locale;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\NoRequestException;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class Localization
@@ -17,13 +16,8 @@ class Localization
      */
     protected ?array $allLocales = null;
 
-    /**
-     * @param string[] $allowedAdminLocales
-     */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly array $allowedAdminLocales,
-        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
         protected readonly RequestStack $requestStack,
     ) {
     }

@@ -76,14 +76,6 @@ class ProductsBatchLoader
         return $this->promiseAdapter->all($this->productElasticsearchBatchProvider->getBatchedSellableInCategoryByIds($sellableInCategoryBatchLoadData)[ProductElasticsearchBatchRepository::PRODUCTS_KEY]);
     }
 
-    /**
-     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadData[] $sellableInCategoryBatchLoadData
-     */
-    public function loadSellableCountInCategoryByIds(array $sellableInCategoryBatchLoadData): Promise
-    {
-        return $this->promiseAdapter->all($this->productElasticsearchBatchProvider->getBatchedSellableInCategoryByIds($sellableInCategoryBatchLoadData)[ProductElasticsearchBatchRepository::TOTALS_KEY]);
-    }
-
     public static function getTotalByBatchLoadDataId(string $batchLoadDataId): int
     {
         return self::$totalsIndexedByBatchLoadDataId[$batchLoadDataId] ?? 0;

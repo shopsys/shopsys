@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper, \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper, \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper, \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache)
  * @method \App\Model\Category\Category[] getAll()
  * @method \App\Model\Category\Category[] getAllCategoriesOfCollapsedTree(\App\Model\Category\Category[] $selectedCategories)
  * @method \App\Model\Category\Category getRootCategory()
@@ -24,16 +24,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Category\Category getOneByUuid(string $uuid)
  * @method \App\Model\Category\Category[] getPreOrderTreeTraversalForAllCategories(string $locale)
  * @method \App\Model\Category\Category[] getPreOrderTreeTraversalForVisibleCategoriesByDomain(int $domainId, string $locale)
- * @method \App\Model\Category\Category[] getTranslatedVisibleSubcategoriesByDomain(\App\Model\Category\Category $parentCategory, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method \App\Model\Category\Category[] getAllVisibleChildrenByCategoryAndDomainId(\App\Model\Category\Category $category, int $domainId)
  * @method \App\Model\Category\Category|null findProductMainCategoryOnDomain(\App\Model\Product\Product $product, int $domainId)
  * @method \App\Model\Category\Category getProductMainCategoryOnDomain(\App\Model\Product\Product $product, int $domainId)
  * @method \App\Model\Category\Category[] getVisibleCategoriesInPathFromRootOnDomain(\App\Model\Category\Category $category, int $domainId)
  * @method string[] getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, string|null $locale = null)
  * @method array<int, \App\Model\Category\Category> getCategoriesByIds(int[] $categoryIds)
- * @method \App\Model\Category\Category[] getCategoriesWithVisibleChildren(\App\Model\Category\Category[] $categories, int $domainId)
  * @method \App\Model\Category\Category[] getAllTranslated(string $locale)
- * @method \Doctrine\ORM\QueryBuilder getCategoriesWithVisibleChildrenQueryBuilder(\App\Model\Category\Category[] $categories, int $domainId)
  */
 class CategoryRepository extends BaseCategoryRepository
 {

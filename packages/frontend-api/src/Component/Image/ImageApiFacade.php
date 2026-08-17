@@ -4,26 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Image;
 
-use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
-
 class ImageApiFacade
 {
     public function __construct(
-        protected readonly ImageRepository $imageRepository,
         protected readonly ImageApiRepository $imageApiRepository,
     ) {
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
-     */
-    public function getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, ?string $type): array
-    {
-        return $this->imageRepository->getImagesByEntityIndexedById(
-            $entityName,
-            $entityId,
-            $type,
-        );
     }
 
     /**

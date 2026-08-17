@@ -104,22 +104,6 @@ class OrderMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[] $mailTemplates
-     */
-    public static function findMailTemplateForOrderStatus(
-        array $mailTemplates,
-        OrderStatus $orderStatus,
-    ): ?MailTemplate {
-        foreach ($mailTemplates as $mailTemplate) {
-            if ($mailTemplate->getName() === self::getMailTemplateNameByStatus($orderStatus)) {
-                return $mailTemplate;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @return array<string, \Closure>
      */
     protected function getVariablesReplacementsForBody(Order $order): array

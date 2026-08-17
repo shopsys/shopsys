@@ -6,8 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterGroupFacade
@@ -17,8 +15,6 @@ class ParameterGroupFacade
         protected readonly ParameterGroupFactory $parameterGroupFactory,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly EventDispatcherInterface $eventDispatcher,
-        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
-        protected readonly ProductFacade $productFacade,
     ) {
     }
 
@@ -27,6 +23,8 @@ class ParameterGroupFacade
         $parameterGroup = $this->parameterGroupFactory->create($parameterGroupData);
         $this->em->persist($parameterGroup);
         $this->em->flush();
+
+        $this->dispatchParameterGroupEvent($parameterGroup, ParameterGroupEvent::CREATE);
 
         return $parameterGroup;
     }

@@ -12,16 +12,11 @@ use Monolog\Logger;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Controller\SocialNetworkController;
-use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
-use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
-use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
-use Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\Constraints\Email;
@@ -39,11 +34,6 @@ class SocialNetworkFacade
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly LoginAsUserFacade $loginAsUserFacade,
         protected readonly ValidatorInterface $validator,
-        protected readonly MergeCartFacade $mergeCartFacade,
-        protected readonly LoginResultDataFactory $loginResultDataFactory,
-        protected readonly ProductListFacade $productListFacade,
-        protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
-        protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
         protected readonly Domain $domain,
     ) {
     }

@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\Module\ModulesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\InputPriceTypeFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\MailWhitelistFormType;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
@@ -29,8 +27,6 @@ class SuperadminController extends AdminBaseController
         protected readonly ModuleFacade $moduleFacade,
         protected readonly PricingSetting $pricingSetting,
         protected readonly DelayedPricingSetting $delayedPricingSetting,
-        protected readonly Localization $localization,
-        protected readonly LocalizedRouterFactory $localizedRouterFactory,
         protected readonly MailSettingFacade $mailSettingFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly Setting $setting,

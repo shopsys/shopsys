@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Iterator;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
@@ -22,7 +21,6 @@ class ProductInputPriceFacade
 
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly PricingSetting $pricingSetting,
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
         protected readonly ProductRepository $productRepository,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,

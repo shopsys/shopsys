@@ -130,9 +130,6 @@ msgstr ""
 msgid "Account number"
 msgstr ""
 
-msgid "Action"
-msgstr ""
-
 msgid "Active"
 msgstr ""
 
@@ -560,9 +557,6 @@ msgid "Category name"
 msgstr ""
 
 msgid "Category with prefilled filters"
-msgstr ""
-
-msgid "Changes"
 msgstr ""
 
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
@@ -1484,12 +1478,6 @@ msgid "Entity"
 msgstr ""
 
 msgid "Entity ID"
-msgstr ""
-
-msgid "Entity identifier"
-msgstr ""
-
-msgid "Entity log"
 msgstr ""
 
 msgid "Entry price type"
@@ -3584,9 +3572,6 @@ msgid "Upon inquiry"
 msgstr ""
 
 msgid "Url address"
-msgstr ""
-
-msgid "User"
 msgstr ""
 
 msgid "User consent policy"

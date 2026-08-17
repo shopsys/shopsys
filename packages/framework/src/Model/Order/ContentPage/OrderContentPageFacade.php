@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\ContentPage;
 
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade;
 
@@ -17,7 +16,6 @@ class OrderContentPageFacade
     public const VARIABLE_NUMBER = '{number}';
 
     public function __construct(
-        protected readonly OrderFacade $orderFacade,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
         protected readonly OrderContentPageSettingFacade $orderContentPageSettingFacade,
         protected readonly PaymentInstructionFacade $paymentInstructionFacade,

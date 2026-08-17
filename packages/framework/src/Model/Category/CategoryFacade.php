@@ -35,7 +35,6 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
         protected readonly ImageFacade $imageFacade,
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         protected readonly CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
-        protected readonly CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
         protected readonly CategoryFactory $categoryFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly EventDispatcherInterface $eventDispatcher,
@@ -238,22 +237,6 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
     public function getVisibleCategoriesInPathFromRootOnDomain(Category $category, int $domainId): array
     {
         return $this->categoryRepository->getVisibleCategoriesInPathFromRootOnDomain($category, $domainId);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren[]
-     */
-    public function getCategoriesWithLazyLoadedVisibleChildrenForParent(
-        Category $parentCategory,
-        DomainConfig $domainConfig,
-    ): array {
-        $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
-            $parentCategory,
-            $domainConfig,
-        );
-
-        return $this->categoryWithLazyLoadedVisibleChildrenFactory
-            ->createCategoriesWithLazyLoadedVisibleChildren($categories, $domainConfig);
     }
 
     /**

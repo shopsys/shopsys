@@ -147,10 +147,9 @@ class TokenFacadeTest extends TestCase
 
     private function createJwtConfiguration(): Configuration
     {
-        $domain = $this->createDomain();
         $parameterBag = new ParameterBag(['shopsys.frontend_api.keys_filepath' => __DIR__ . '/testKeys']);
 
-        return (new JwtConfigurationProvider($parameterBag, $domain))->getConfiguration();
+        return (new JwtConfigurationProvider($parameterBag))->getConfiguration();
     }
 
     private function createDomain(): Domain

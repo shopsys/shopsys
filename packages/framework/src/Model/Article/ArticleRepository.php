@@ -59,19 +59,6 @@ class ArticleRepository
             ->getQuery()->getSingleScalarResult());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
-     */
-    public function getVisibleArticlesForPlacement(int $domainId, string $placement): array
-    {
-        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
-            $domainId,
-            $placement,
-        );
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
     public function getById(int $articleId): Article
     {
         $article = $this->getArticleRepository()->find($articleId);
@@ -119,15 +106,6 @@ class ArticleRepository
         return $this->getArticleRepository()->findBy([
             'domainId' => $domainId,
         ]);
-    }
-
-    public function getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
-        int $domainId,
-        string $placement,
-    ): QueryBuilder {
-        return $this->getVisibleArticlesByDomainIdQueryBuilder($domainId)
-            ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
-            ->orderBy('a.position, a.id');
     }
 
     /**

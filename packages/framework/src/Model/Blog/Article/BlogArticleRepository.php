@@ -10,24 +10,19 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class BlogArticleRepository
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly Domain $domain,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
         protected readonly TransformStringHelper $transformStringHelper,
-        protected readonly Localization $localization,
         protected readonly ClockInterface $clock,
     ) {
     }
@@ -74,21 +69,6 @@ class BlogArticleRepository
             ->join('ba.blogArticleBlogCategoryDomains', 'babcd')
             ->where('babcd.domainId = :domainId')
             ->setParameter('domainId', $domainId);
-    }
-
-    public function getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory(
-        int $domainId,
-        string $locale,
-    ): QueryBuilder {
-        $queryBuilder = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale);
-        $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
-            ->select('1')
-            ->from(BlogCategory::class, 'bc')
-            ->join('ba.blogArticleBlogCategoryDomains', 'babcd', Join::WITH, 'bc = babcd.blogCategory AND babcd.domainId = :domainId');
-        $queryBuilder->andWhere('EXISTS(' . $subquery->getDQL() . ')')
-            ->setParameter('domainId', $domainId);
-
-        return $queryBuilder;
     }
 
     public function getBlogArticlesByDomainIdAndLocaleQueryBuilder(int $domainId, string $locale): QueryBuilder
@@ -168,13 +148,6 @@ class BlogArticleRepository
             ]);
     }
 
-    public function getAllBlogArticlesCountByDomainId(int $domainId): int
-    {
-        return (int)($this->getBlogArticlesByDomainIdQueryBuilder($domainId)
-            ->select('COUNT(ba)')
-            ->getQuery()->getSingleScalarResult());
-    }
-
     public function getById(int $blogArticleId): BlogArticle
     {
         $blogArticle = $this->getBlogArticleRepository()->find($blogArticleId);
@@ -229,17 +202,5 @@ class BlogArticleRepository
             ->getResult();
 
         return array_column($result, 'id');
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
-     */
-    public function getAllVisibleOnDomain(DomainConfig $domainConfig): array
-    {
-        $blogArticleQueryBuilder = $this->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder($domainConfig->getId(), $domainConfig->getLocale());
-
-        return $blogArticleQueryBuilder
-            ->getQuery()
-            ->getResult();
     }
 }

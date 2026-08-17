@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Article;
 
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetArticleTest extends GraphQlTestCase
@@ -14,11 +13,6 @@ class GetArticleTest extends GraphQlTestCase
      * @inject
      */
     private ArticleFacade $articleFacade;
-
-    /**
-     * @inject
-     */
-    protected UrlGeneratorInterface $urlGenerator;
 
     public function testGetArticle(): void
     {

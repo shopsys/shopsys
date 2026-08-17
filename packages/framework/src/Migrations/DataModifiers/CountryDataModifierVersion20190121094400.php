@@ -16,17 +16,6 @@ final class CountryDataModifierVersion20190121094400
         $this->tmpIds = [];
     }
 
-    public function getGroupedByCode(): array
-    {
-        $tmp = [];
-
-        foreach ($this->data as $row) {
-            $tmp[$row['code']][] = $row;
-        }
-
-        return $tmp;
-    }
-
     public function getNewIdCodePair(): array
     {
         $data = $this->groupDataIntoDomains($this->data);

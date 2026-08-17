@@ -180,33 +180,6 @@ class Cart
         return $this->getItemsCount() === 0;
     }
 
-    public function changeQuantities(array $quantitiesByItemId): void
-    {
-        foreach ($this->items as $item) {
-            if (array_key_exists($item->getId(), $quantitiesByItemId)) {
-                $item->changeQuantity((int)$quantitiesByItemId[$item->getId()]);
-            }
-        }
-
-        $this->setModifiedNow();
-    }
-
-    /**
-     * @param int $itemId
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
-     */
-    public function getItemById($itemId)
-    {
-        foreach ($this->items as $item) {
-            if ($item->getId() === $itemId) {
-                return $item;
-            }
-        }
-        $message = 'CartItem with id = ' . $itemId . ' not found in cart.';
-
-        throw new InvalidCartItemException($message);
-    }
-
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */

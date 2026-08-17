@@ -13,14 +13,4 @@ class ExtendedProductTranslation extends ProductTranslation
 {
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected string $productDetailName;
-
-    public function getProductDetailName(): string
-    {
-        return $this->productDetailName;
-    }
-
-    public function setProductDetailName(string $productDetailName): void
-    {
-        $this->productDetailName = $productDetailName;
-    }
 }

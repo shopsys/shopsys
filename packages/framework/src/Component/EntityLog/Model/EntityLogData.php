@@ -50,14 +50,4 @@ class EntityLogData
      * @var int|null
      */
     public $parentEntityId = null;
-
-    /**
-     * @var string|null
-     */
-    public $logCollectionNumber = null;
-
-    /**
-     * @var \DateTimeImmutable|null
-     */
-    public $createdAt = null;
 }

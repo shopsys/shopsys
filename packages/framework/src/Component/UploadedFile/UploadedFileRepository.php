@@ -26,19 +26,6 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
-    public function getAllUploadedFilesByEntity(string $entityName, int $entityId): array
-    {
-        return $this->getUploadedFileRepository()->findBy(
-            [
-                'entityName' => $entityName,
-                'entityId' => $entityId,
-            ],
-        );
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
-     */
     #[Override]
     public function getUploadedFilesByEntity(string $entityName, int $entityId, string $type): array
     {

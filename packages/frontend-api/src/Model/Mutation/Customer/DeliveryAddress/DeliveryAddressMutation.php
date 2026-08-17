@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Country\Exception\CountryNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress\Exception\DeliveryAddressNotFoundUserError;
@@ -21,7 +20,6 @@ class DeliveryAddressMutation extends BaseTokenMutation
     public function __construct(
         TokenStorageInterface $tokenStorage,
         protected readonly DeliveryAddressFacade $deliveryAddressFacade,
-        protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly DeliveryAddressDataApiFactory $deliveryAddressDataApiFactory,
     ) {

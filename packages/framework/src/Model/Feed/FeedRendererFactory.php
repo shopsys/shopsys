@@ -17,6 +17,6 @@ class FeedRendererFactory
         $templateFilepath = $feed->getTemplateFilepath();
         $twigTemplate = $this->twig->load($templateFilepath);
 
-        return new FeedRenderer($this->twig, $twigTemplate);
+        return new FeedRenderer($twigTemplate);
     }
 }

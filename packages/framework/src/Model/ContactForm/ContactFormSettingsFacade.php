@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\ContactForm;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
@@ -14,7 +13,6 @@ class ContactFormSettingsFacade
 
     public function __construct(
         protected readonly Setting $setting,
-        protected readonly Domain $domain,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }

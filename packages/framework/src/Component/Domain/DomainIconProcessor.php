@@ -15,7 +15,6 @@ class DomainIconProcessor
 {
     public function __construct(
         protected readonly Logger $logger,
-        protected readonly ImageProcessor $imageProcessor,
         protected readonly FilesystemOperator $filesystem,
     ) {
     }

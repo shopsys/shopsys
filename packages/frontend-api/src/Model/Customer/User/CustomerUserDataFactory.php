@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 
 use Overblog\GraphQLBundle\Definition\Argument;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
@@ -17,7 +16,6 @@ class CustomerUserDataFactory
 {
     public function __construct(
         protected readonly BaseCustomerUserDataFactory $customerUserDataFactory,
-        protected readonly Domain $domain,
         protected readonly CustomerUserRoleGroupRepository $customerUserRoleGroupRepository,
     ) {
     }

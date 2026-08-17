@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Customer\User;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -30,7 +29,6 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\CannotDelet
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\CustomerUserNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\LastCustomerUserWithDefaultRoleGroupError;
-use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Customer\Error\CustomerUserAccessDeniedUserError;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory;
@@ -57,12 +55,10 @@ class CustomerUserMutation extends BaseTokenMutation
         protected readonly RegistrationFacade $registrationFacade,
         protected readonly RegistrationDataFactory $registrationDataFactory,
         protected readonly MergeCartFacade $mergeCartFacade,
-        protected readonly OrderApiFacade $orderFacade,
         protected readonly LoginResultDataFactory $loginResultDataFactory,
         protected readonly TokensDataFactory $tokensDataFactory,
         protected readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
         protected readonly CustomerFacade $customerFacade,
-        protected readonly Domain $domain,
         protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
         protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
         protected readonly WatchdogFacade $watchdogFacade,

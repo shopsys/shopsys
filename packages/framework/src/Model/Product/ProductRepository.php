@@ -298,45 +298,6 @@ class ProductRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    /**
-     * @param int[] $sortedProductIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getListableByIds(int $domainId, PricingGroup $pricingGroup, array $sortedProductIds): array
-    {
-        if (count($sortedProductIds) === 0) {
-            return [];
-        }
-
-        $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
-        $queryBuilder
-            ->andWhere('p.id IN (:productIds)')
-            ->setParameter('productIds', $sortedProductIds)
-            ->addSelect('field(p.id, ' . implode(',', $sortedProductIds) . ') AS HIDDEN relevance')
-            ->orderBy('relevance');
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
-    public function getOneByCatnumExcludeMainVariants(
-        string $productCatnum,
-    ): Product {
-        $queryBuilder = $this->getProductRepository()->createQueryBuilder('p')
-            ->andWhere('p.catnum = :catnum')
-            ->andWhere('p.variantType != :variantTypeMain')
-            ->setParameter('catnum', $productCatnum)
-            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN);
-        $product = $queryBuilder->getQuery()->getOneOrNullResult();
-
-        if ($product === null) {
-            throw new ProductNotFoundException(
-                'Product with catnum ' . $productCatnum . ' does not exist.',
-            );
-        }
-
-        return $product;
-    }
-
     public function getOneByUuid(string $uuid): Product
     {
         $product = $this->getProductRepository()->findOneBy(['uuid' => $uuid]);

@@ -130,9 +130,6 @@ msgstr "Příslušenství v mezikošíku"
 msgid "Account number"
 msgstr "Číslo účtu"
 
-msgid "Action"
-msgstr "Akce"
-
 msgid "Active"
 msgstr "Aktivní"
 
@@ -561,9 +558,6 @@ msgstr "Název kategorie"
 
 msgid "Category with prefilled filters"
 msgstr "Kategorie s předvyplněnými filtry"
-
-msgid "Changes"
-msgstr "Změny"
 
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr "Změnou domény ztratíte neuložené změny. Chcete pokračovat?"
@@ -1485,12 +1479,6 @@ msgstr "Entita"
 
 msgid "Entity ID"
 msgstr "ID entity"
-
-msgid "Entity identifier"
-msgstr "Identifikárot entity"
-
-msgid "Entity log"
-msgstr "Protokol entity"
 
 msgid "Entry price type"
 msgstr "Typ vstupní ceny"
@@ -3585,9 +3573,6 @@ msgstr "Na poptávku"
 
 msgid "Url address"
 msgstr "Url adresa"
-
-msgid "User"
-msgstr "Uživatel"
 
 msgid "User consent policy"
 msgstr "Správa osobních údajů"

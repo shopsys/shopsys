@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
-use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper as BaseProductArrayFieldMapper;
@@ -40,7 +39,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         BrandFacade $brandFacade,
         ProductElasticsearchProvider $productElasticsearchProvider,
         ParameterWithValuesFactory $parameterWithValuesFactory,
-        ProductFrontendLimitProvider $productFrontendLimitProvider,
         DataLoaderInterface $productsSellableByIdsBatchLoader,
         CurrentCustomerUser $currentCustomerUser,
         DataLoaderInterface $productsVisibleByIdsBatchLoader,
@@ -58,7 +56,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
             $brandFacade,
             $productElasticsearchProvider,
             $parameterWithValuesFactory,
-            $productFrontendLimitProvider,
             $productsSellableByIdsBatchLoader,
             $currentCustomerUser,
             $productsVisibleByIdsBatchLoader,

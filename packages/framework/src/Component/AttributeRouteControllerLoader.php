@@ -21,9 +21,4 @@ class AttributeRouteControllerLoader extends BaseAttributeRouteControllerLoader
     {
         return preg_replace('/^(app_|shopsys_framework_|shopsys_frontendapi_)/', '', $routeName);
     }
-
-    public function getRouteName(ReflectionClass $class, ReflectionMethod $method): string
-    {
-        return $this->getDefaultRouteName($class, $method);
-    }
 }

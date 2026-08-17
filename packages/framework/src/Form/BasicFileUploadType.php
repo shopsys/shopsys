@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -23,13 +20,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class BasicFileUploadType extends AbstractType
 {
-    public function __construct(
-        protected readonly UploadedFileFacade $uploadedFileFacade,
-        protected readonly UploadedFileConfig $uploadedFileConfig,
-        protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
-    ) {
-    }
-
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {

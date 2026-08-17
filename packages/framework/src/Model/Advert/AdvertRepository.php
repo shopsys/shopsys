@@ -75,26 +75,6 @@ class AdvertRepository
             ->setParameter('now', $dateToday);
     }
 
-    public function findRandomAdvertByPosition(
-        string $positionName,
-        int $domainId,
-        ?Category $category = null,
-    ): ?Advert {
-        $count = $this->getVisibleAdvertByPositionsQueryBuilder([$positionName], $domainId, $category)
-            ->select('COUNT(a)')
-            ->getQuery()->getSingleScalarResult();
-
-        // COUNT() returns BIGINT which is hydrated into string on 32-bit architecture
-        if ((int)$count === 0) {
-            return null;
-        }
-
-        return $this->getVisibleAdvertByPositionsQueryBuilder([$positionName], $domainId, $category)
-            ->setFirstResult(random_int(0, $count - 1))
-            ->setMaxResults(1)
-            ->getQuery()->getSingleResult();
-    }
-
     public function getById(int $advertId): Advert
     {
         $advert = $this->getAdvertRepository()->find($advertId);

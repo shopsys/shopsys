@@ -13,7 +13,6 @@ class CustomerUserRoleGroupFacade
     public function __construct(
         protected readonly CustomerUserRoleGroupRepository $customerUserRoleGroupRepository,
         protected readonly CustomerUserRoleGroupSetting $customerUserRoleGroupSetting,
-        protected readonly CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory,
         protected readonly EntityManagerInterface $entityManager,
         protected readonly CustomerUserRoleGroupFactory $customerUserRoleGroupFactory,
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,

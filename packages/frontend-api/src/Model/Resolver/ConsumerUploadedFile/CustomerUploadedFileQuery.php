@@ -7,19 +7,13 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\ConsumerUploadedFile;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig;
-use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrontendApiBundle\Component\CustomerUploadedFile\CustomerUploadedFileApiFacade;
 use Shopsys\FrontendApiBundle\Component\CustomerUploadedFile\CustomerUploadedFileBatchLoadData;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class CustomerUploadedFileQuery extends AbstractQuery
 {
     public function __construct(
-        protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
         protected readonly CustomerUploadedFileConfig $customerUploadedFileConfig,
-        protected readonly Domain $domain,
-        protected readonly CustomerUploadedFileApiFacade $customerUploadedFileApiFacade,
         protected readonly DataLoaderInterface $customerUploadedFilesBatchLoader,
     ) {
     }

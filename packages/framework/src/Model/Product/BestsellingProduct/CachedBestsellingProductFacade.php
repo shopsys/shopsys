@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class CachedBestsellingProductFacade
@@ -16,7 +15,6 @@ class CachedBestsellingProductFacade
     public function __construct(
         protected readonly CacheInterface $cache,
         protected readonly BestsellingProductFacade $bestsellingProductFacade,
-        protected readonly ProductRepository $productRepository,
         protected readonly PricingGroupRepository $pricingGroupRepository,
     ) {
     }

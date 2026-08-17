@@ -21,13 +21,6 @@ class FrontendApiUserProvider implements UserProviderInterface
         return $this->frontendApiUserFactory->createFromToken($token);
     }
 
-    public function loadUserByUsername(string $username): UserInterface
-    {
-        throw new NotImplementedException(
-            'Method "loadUserByUsername" is not implement. Use method  "loadUserByToken"',
-        );
-    }
-
     #[Override]
     public function loadUserByIdentifier(string $identifier): UserInterface
     {

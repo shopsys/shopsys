@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
@@ -22,7 +21,6 @@ class PaymentGridFactory implements GridFactoryInterface
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly PaymentRepository $paymentRepository,
-        protected readonly Localization $localization,
         protected readonly PaymentFacade $paymentFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,

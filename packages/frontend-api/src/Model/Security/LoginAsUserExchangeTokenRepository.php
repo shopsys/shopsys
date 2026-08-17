@@ -39,12 +39,6 @@ class LoginAsUserExchangeTokenRepository
         return null;
     }
 
-    public function remove(LoginAsUserExchangeToken $exchangeToken): void
-    {
-        $this->entityManager->remove($exchangeToken);
-        $this->entityManager->flush();
-    }
-
     public function deleteAllExpired(): void
     {
         $this->entityManager->createQueryBuilder()

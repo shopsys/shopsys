@@ -67,7 +67,6 @@ class LuigisBoxProductFeedItemFactory
         return new LuigisBoxProductFeedItem(
             $product->getId(),
             $product->getFullName($domainConfig->getLocale()),
-            $product->getCatnum(),
             $availabilityText,
             $this->getAvailabilityRank($product, $domainConfig),
             $this->getProperAmountUsingSellingPriceType($productPrices->sellingProductPrice),
@@ -79,7 +78,6 @@ class LuigisBoxProductFeedItemFactory
             $product->isMainVariant(),
             array_map(static fn (Flag $flag): string => $flag->getName($locale), $product->getFlags($domainId)),
             $this->getParameterValuesIndexedByName($product, $locale),
-            $mainCategory->getName($locale),
             $product->getEan(),
             $product->getCatnum(),
             $product->getBrand()?->getName(),

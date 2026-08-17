@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
-use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
@@ -29,7 +28,6 @@ class ProductArrayFieldMapper
         protected readonly BrandFacade $brandFacade,
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
         protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
-        protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
         protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly DataLoaderInterface $productsVisibleByIdsBatchLoader,

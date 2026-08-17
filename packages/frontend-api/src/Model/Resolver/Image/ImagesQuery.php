@@ -6,20 +6,14 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrontendApiBundle\Component\Image\ImageApiFacade;
 use Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ImagesQuery extends AbstractQuery
 {
     public function __construct(
-        protected readonly ImageFacade $imageFacade,
         protected readonly ImageConfig $imageConfig,
-        protected readonly Domain $domain,
-        protected readonly ImageApiFacade $imageApiFacade,
         protected readonly DataLoaderInterface $imagesBatchLoader,
         protected readonly DataLoaderInterface $firstImageBatchLoader,
     ) {

@@ -41,25 +41,6 @@ class OrderRepository
             ->where('o.deleted = FALSE');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
-     */
-    public function getOrdersByCustomerUserId(int $customerUserId): array
-    {
-        return $this->createOrderQueryBuilder()
-            ->andWhere('o.customerUser = :user')->setParameter(':user', $customerUserId)
-            ->getQuery()->getResult();
-    }
-
-    public function findLastByCustomerUserId(int $customerUserId): ?Order
-    {
-        return $this->createOrderQueryBuilder()
-            ->andWhere('o.customerUser = :user')->setParameter(':user', $customerUserId)
-            ->orderBy('o.createdAt', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()->getOneOrNullResult();
-    }
-
     public function findById(int $id): ?Order
     {
         return $this->createOrderQueryBuilder()
@@ -215,23 +196,6 @@ class OrderRepository
                 'Order with urlHash "%s" was not found.',
                 $urlHash,
             ));
-        }
-
-        return $order;
-    }
-
-    public function getByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): Order
-    {
-        $order = $this->createOrderQueryBuilder()
-            ->andWhere('o.number = :number')->setParameter(':number', $orderNumber)
-            ->andWhere('o.customerUser = :customerUser')->setParameter(':customerUser', $customerUser)
-            ->setMaxResults(1)
-            ->getQuery()->getOneOrNullResult();
-
-        if ($order === null) {
-            $message = 'Order with number "' . $orderNumber . '" and customerUserId "' . $customerUser->getId() . '" not found.';
-
-            throw new OrderNotFoundException($message);
         }
 
         return $order;

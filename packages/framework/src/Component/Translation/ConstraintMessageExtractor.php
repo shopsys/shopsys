@@ -12,7 +12,6 @@ use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\New_;
-use PhpParser\Node\Identifier;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\NodeTraverser;
@@ -166,11 +165,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     protected function isMessageParamName(string $paramName): bool
     {
         return strtolower(substr($paramName, -7)) === 'message';
-    }
-
-    protected function isMessageArgName(Identifier $name): bool
-    {
-        return $this->isMessageParamName($name->name);
     }
 
     /**

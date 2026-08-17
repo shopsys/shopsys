@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 
 class SalesRepresentativeGridFactory implements GridFactoryInterface
 {
     public function __construct(
-        protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
-        protected readonly Localization $localization,
         protected readonly SalesRepresentativeFacade $salesRepresentativeFacade,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {

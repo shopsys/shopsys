@@ -9,7 +9,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 class MessageDispatcherDependency
 {
     public function __construct(
-        public readonly string $transportDsn,
         public readonly MessageBusInterface $messageBus,
     ) {
     }

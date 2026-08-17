@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
@@ -21,7 +20,6 @@ class TransportGridFactory implements GridFactoryInterface
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly TransportRepository $transportRepository,
-        protected readonly Localization $localization,
         protected readonly TransportFacade $transportFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,

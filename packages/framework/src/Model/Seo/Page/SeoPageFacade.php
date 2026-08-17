@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\DefaultSeoPageCannotBeDeletedException;
 
 class SeoPageFacade
@@ -16,9 +14,7 @@ class SeoPageFacade
     public const string IMAGE_TYPE_OG = 'og';
 
     public function __construct(
-        protected readonly Domain $domain,
         protected readonly EntityManagerInterface $em,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly SeoPageRepository $seoPageRepository,
         protected readonly ImageFacade $imageFacade,
         protected readonly SeoPageFactory $seoPageFactory,

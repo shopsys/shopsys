@@ -26,16 +26,6 @@ class TopCategoryFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function getVisibleCategoriesByDomainId(int $domainId): array
-    {
-        $topCategories = $this->topCategoryRepository->getVisibleByDomainId($domainId);
-
-        return $this->getCategoriesFromTopCategories($topCategories);
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory[] $topCategories
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */

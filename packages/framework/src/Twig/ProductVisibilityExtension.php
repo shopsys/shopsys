@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -18,7 +17,6 @@ class ProductVisibilityExtension extends AbstractExtension
     public function __construct(
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
-        protected readonly Domain $domain,
         protected readonly ProductFacade $productFacade,
     ) {
     }

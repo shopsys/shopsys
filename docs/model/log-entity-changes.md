@@ -127,28 +127,8 @@ class OrderStatus extends AbstractTranslatableEntity
 
 ## List of results
 
-`Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory::createByEntityNameAndEntityId($entityName,$entityId)` is available to display the logs.
-You can then write this grid, for example, under the editing form.
-
-```php
-$entityLogGrid = $this->entityLogGridFactory->createByEntityNameAndEntityId(
-    EntityLogFacade::getEntityNameByEntity($order),
-    $order->getId()
-);
-
-return $this->render('@ShopsysAdministration/content/order/edit.html.twig', [
-    ...
-    'entityLogGridView' => $entityLogGrid->createView(),
-]);
-```
-
-and render it
-
-```twig
-{{ entityLogGridView.render() }}
-```
-
-Alternatively, administration pages can render the same entity logs as a timeline:
+The administration displays the logged changes as a timeline rendered by the `Admin:EntityLogTimeline` Twig component (`Shopsys\AdministrationBundle\Component\EntityLog\Timeline\TwigComponent\EntityLogTimelineComponent`).
+You can render the timeline in any administration template by passing the logged entity name and its ID:
 
 ```twig
 {{ component('Admin:EntityLogTimeline', {
@@ -157,4 +137,14 @@ Alternatively, administration pages can render the same entity logs as a timelin
 }) }}
 ```
 
+The `entityName` is the short name of the entity used in the logs.
+You can get it from the `Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade::getEntityNameByEntity()` method, which accepts both an entity instance and a class name:
+
+```php
+$entityName = $this->entityLogFacade->getEntityNameByEntity($order);
+```
+
 The timeline groups records from the same save operation by `logCollectionNumber` and displays the details needed for reviewing changes: action, entity, readable identifier, user, date, and formatted changes.
+
+As an implemented sample, you can study the "History" tab on the order detail page in the administration.
+The tab is provided by the live component `Shopsys\AdministrationBundle\Component\OrderDetail\LiveComponent\HistoryTabComponent`, which resolves the entity name via `EntityLogFacade` and renders the timeline for the displayed order.

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Security;
 
-use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\ResetPasswordHashNotValidException;
@@ -15,7 +14,6 @@ class NewPasswordUrlProvider
     public function __construct(
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly AdministrationRouter $administrationRouter,
-        protected readonly ClockInterface $clock,
     ) {
     }
 
