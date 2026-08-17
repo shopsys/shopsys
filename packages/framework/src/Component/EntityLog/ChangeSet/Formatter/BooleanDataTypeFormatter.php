@@ -11,9 +11,9 @@ class BooleanDataTypeFormatter extends AbstractChangeSetFormatter
      */
     public function formatChanges(array $changes): string
     {
-        $changes['oldReadableValue'] = $this->formatCode($changes['oldValue'] ? t('Yes') : t('No'));
-        $changes['newReadableValue'] = $this->formatCode($changes['newValue'] ? t('Yes') : t('No'));
-
-        return t('from oldReadableValue to newReadableValue', $changes);
+        return $this->formatFromToChanges(
+            $changes['oldValue'] ? t('Yes') : t('No'),
+            $changes['newValue'] ? t('Yes') : t('No'),
+        );
     }
 }

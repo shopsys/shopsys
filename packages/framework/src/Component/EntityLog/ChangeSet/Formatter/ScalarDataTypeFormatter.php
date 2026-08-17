@@ -11,9 +11,9 @@ class ScalarDataTypeFormatter extends AbstractChangeSetFormatter
      */
     public function formatChanges(array $changes): string
     {
-        $changes['oldReadableValue'] = $this->formatCode($changes['oldReadableValue'] ?: t('empty value'));
-        $changes['newReadableValue'] = $this->formatCode($changes['newReadableValue'] ?: t('empty value'));
-
-        return t('from oldReadableValue to newReadableValue', $changes);
+        return $this->formatFromToChanges(
+            $changes['oldReadableValue'] ?: t('empty value'),
+            $changes['newReadableValue'] ?: t('empty value'),
+        );
     }
 }
