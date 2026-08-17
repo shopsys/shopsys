@@ -17,9 +17,6 @@ abstract class AbstractChangeSetFormatter
     /**
      * Only escaped values may be passed to the translator - the result is rendered as raw HTML
      * and a translation referencing raw change values would inject unescaped customer input
-     *
-     * @param mixed $oldReadableValue
-     * @param mixed $newReadableValue
      */
     protected function formatFromToChanges(mixed $oldReadableValue, mixed $newReadableValue): string
     {
