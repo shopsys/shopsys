@@ -45,6 +45,16 @@ final class ProductReviewFormType extends AbstractType
         $builder->add($this->createReviewContentGroup($builder));
         $builder->add($this->createModerationGroup($builder, $productReview));
 
+        if (count($productReview->getImages()) > 0) {
+            $builder->add('images', ProductReviewImagesType::class, [
+                'label' => false,
+                'entry_type' => ProductReviewImageFormType::class,
+                'error_bubbling' => false,
+                'allow_add' => false,
+                'allow_delete' => false,
+            ]);
+        }
+
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_crud_product_review_list',
             'entity' => $productReview,

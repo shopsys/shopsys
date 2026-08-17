@@ -2641,6 +2641,9 @@ msgstr ""
 msgid "Please enter phone prefix"
 msgstr ""
 
+msgid "Please enter reason for photo rejection"
+msgstr ""
+
 msgid "Please fill all default values before creating a product"
 msgstr ""
 
@@ -2863,6 +2866,9 @@ msgstr ""
 msgid "Reason for content change"
 msgstr ""
 
+msgid "Reason for photo rejection"
+msgstr ""
+
 msgid "Reason for rejection"
 msgstr ""
 
@@ -2897,6 +2903,9 @@ msgid "Replace file"
 msgstr ""
 
 msgid "Requested at"
+msgstr ""
+
+msgid "Required when the photo is rejected."
 msgstr ""
 
 msgid "Required when the review content is changed. The reason is stored in the review history only."

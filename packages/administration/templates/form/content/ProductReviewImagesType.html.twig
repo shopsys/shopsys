@@ -1,0 +1,44 @@
+{% block product_review_images_widget %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Images'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row row-cards">
+                {% for imageForm in form.children %}
+                    {% set imageData = imageForm.vars.data %}
+                    {% set file = imageData.file is not null ? imageData.file.orderedFiles|first : null %}
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2"
+                         data-controller="product-review-photo"
+                         data-product-review-photo-displayed-label-value="{{ 'Approved'|trans }}"
+                         data-product-review-photo-hidden-label-value="{{ 'Rejected'|trans }}"
+                    >
+                        <div class="card card-sm h-100">
+                            <div class="ribbon bg-red d-none" data-product-review-photo-target="ribbon">
+                                {{- 'Rejected'|trans -}}
+                            </div>
+                            {% if file and customerUploadedFileExists(file) %}
+                                <a href="{{ customerUploadedFileViewUrl(file) }}" target="_blank" rel="noopener" class="d-block">
+                                    <img src="{{ customerUploadedFileViewUrl(file) }}"
+                                         alt="{{ file.nameWithExtension }}"
+                                         class="card-img-top bg-light object-fit-contain"
+                                         style="height: 10rem;"
+                                         data-product-review-photo-target="thumbnail"
+                                    >
+                                </a>
+                            {% else %}
+                                <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 10rem">
+                                    <span class="text-secondary">{{ 'The photo file is missing'|trans }}</span>
+                                </div>
+                            {% endif %}
+                            <div class="card-body">
+                                {{ form_row(imageForm.isShown) }}
+                                {{ form_row(imageForm.rejectionReason) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

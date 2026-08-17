@@ -2641,6 +2641,9 @@ msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 msgid "Please enter phone prefix"
 msgstr "Zadejte prosím telefonní předvolbu"
 
+msgid "Please enter reason for photo rejection"
+msgstr "Zadejte prosím důvod zamítnutí fotografie"
+
 msgid "Please fill all default values before creating a product"
 msgstr "Prosím vyplňte všechny výchozí hodnoty před vytvořením produktu"
 
@@ -2863,6 +2866,9 @@ msgstr "RGB Hex"
 msgid "Reason for content change"
 msgstr "Důvod změny obsahu"
 
+msgid "Reason for photo rejection"
+msgstr "Důvod zamítnutí fotografie"
+
 msgid "Reason for rejection"
 msgstr "Důvod zamítnutí"
 
@@ -2898,6 +2904,9 @@ msgstr "Nahradit soubor"
 
 msgid "Requested at"
 msgstr "Požadováno dne"
+
+msgid "Required when the photo is rejected."
+msgstr "Povinné při zamítnutí fotografie."
 
 msgid "Required when the review content is changed. The reason is stored in the review history only."
 msgstr "Povinné při změně obsahu recenze. Důvod se ukládá pouze do historie recenze."

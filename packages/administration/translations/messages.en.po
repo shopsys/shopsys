@@ -1147,6 +1147,9 @@ msgstr ""
 msgid "Image will be deleted after saving"
 msgstr ""
 
+msgid "Images"
+msgstr ""
+
 msgid "Import CSV"
 msgstr ""
 
@@ -2282,6 +2285,9 @@ msgid "The days are used to display proper stores opening hours, to calculate or
 msgstr ""
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
+msgstr ""
+
+msgid "The photo file is missing"
 msgstr ""
 
 msgid "The product has no specified name for the locale."
