@@ -23,6 +23,7 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getOrderPaymentItem, getOrderRoundingItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPriceVisible } from 'utils/mappers/price';
+import { isProductSellable } from 'utils/product/isProductSellable';
 import { OrderDetailOrderItem } from './OrderDetailOrderItem';
 
 type OrderDetailBasicInfoProps = {
@@ -53,14 +54,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
     );
 
     const showRepeatOrderButton =
-        canCreateOrder &&
-        filteredOrderItems.some(
-            (item) =>
-                item.product?.isVisible &&
-                !item.product.isSellingDenied &&
-                !item.product.isInquiryType &&
-                !item.product.isCurrentlyOutOfStock,
-        );
+        canCreateOrder && filteredOrderItems.some((item) => item.product !== null && isProductSellable(item.product));
 
     const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
 

@@ -8,6 +8,7 @@ import { forwardRef } from 'react';
 import type { FunctionComponentProps } from 'types/globals';
 import type { ProductListViewModeType } from 'types/product';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { isProductSellable } from 'utils/product/isProductSellable';
 import { ProductListItemGridView } from './ProductListItemGridView';
 import { ProductListItemListView } from './ProductListItemListView';
 
@@ -74,12 +75,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
         const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
         const currentCart = { cart, isCartFetchingOrUnavailable };
         const isProductActionDependentOnCart =
-            visibleItemsConfig.addToCart &&
-            canCreateOrder &&
-            !product.isSellingDenied &&
-            !product.isCurrentlyOutOfStock &&
-            (product.isMainVariant || !product.isInquiryType) &&
-            !product.isMainVariant;
+            visibleItemsConfig.addToCart && canCreateOrder && isProductSellable(product);
         const shouldShowProductActionSkeleton = !!isProductActionDependentOnCart && isCartFetchingOrUnavailable;
 
         const handleProductClick = () => {
