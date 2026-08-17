@@ -64,6 +64,7 @@ parameters:
         # Exclude template files for generating code via maker commands
         - %currentWorkingDirectory%/packages/maker/templates/*
 includes:
+    - phpstan-dead-code.neon
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon

@@ -1,0 +1,146 @@
+# Dead code detection exemptions: intentional downstream api surface and members kept for hidden callers.
+# Api classes whose whole public surface is downstream contract are exempt per file; individual members
+# are exempt by exact message. Every entry must match a currently reported error (reportUnmatched stays
+# at the default true), so entries whose members come alive again must be removed.
+
+parameters:
+    ignoreErrors:
+        # whole api classes
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Action/AbstractRoutableAction.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Action/RowAction.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Config/ActionsConfig.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Config/CrudConfig.php
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            path: packages/administration/src/Component/Crud/CrudRegistryItem.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Adapter/Orm/ProxyQuery.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Datagrid.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/DatagridRowActions.php
+        -
+            identifier: shipmonk.deadEnumCase
+            path: packages/administration/src/Component/Datagrid/OrderingEnum.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Router/CrudRouteItem.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Security/AccessControl/AccessControlDataProviderInterface.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/ArrayUtils/ArraySorterHelper.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Cache/InMemoryCache.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Deprecations/DeprecationHelper.php
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            path: packages/framework/src/Component/EntityLog/Attribute/EntityLogIdentify.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/EntityLog/Attribute/Loggable.php
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            path: packages/framework/src/Component/EntityLog/ChangeSet/CollectionChanges.php
+        -
+            identifier: shipmonk.deadConstant
+            path: packages/framework/src/Component/EntityLog/Enum/EntityLogSourceEnum.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Environment/EnvironmentType.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/FlashMessage/FlashMessageTrait.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Grid/ActionColumn.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Grid/Grid.php
+        -
+            identifier: shipmonk.deadConstant
+            path: packages/framework/src/Component/Locale/LocaleHelper.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Money/HiddenMoney.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Paginator/PaginationResult.php
+        -
+            identifier: shipmonk.deadConstant
+            path: packages/framework/src/Component/PostDeploy/Task/PostDeployTaskRunEnum.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Security/AccessControl/AccessChecker.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Security/AccessControl/AccessCheckerInterface.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Security/Role/RoleCollection.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/UploadedFile/Config/UploadedFileConfigInterface.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Utils/Utils.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/DependencyInjection/SetterInjectionTrait.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Category/CategoryNestedSetCalculatorHelper.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Mail/MessageFactoryInterface.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Pricing/PriceInterface.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Product/Elasticsearch/Scope/ProductExportScopeConfig.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Product/Listing/ProductListOrderingConfig.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Product/Pricing/ProductPriceInterface.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Product/Search/FilterQuery.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Product/Search/ProductsResult.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Security/TimelimitLoginInterface.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Transfer/TransferLogger.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Model/Transfer/TransferLoggerInterface.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/http-smoke-testing/src/RequestDataSetConfig.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/http-smoke-testing/src/RouteConfig.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/http-smoke-testing/src/RouteInfo.php
