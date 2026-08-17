@@ -126,7 +126,7 @@ export const ArticleAnchorNavigation: FC<ArticleAnchorNavigationProps> = ({ head
             {isBackToTopVisible && (
                 <IconButton
                     Icon={ArrowIcon}
-                    className="fixed right-5 bottom-[calc(5rem+env(safe-area-inset-bottom))] vl:bottom-5 z-above xl:hidden"
+                    className="fixed right-5 bottom-[calc(5rem+env(safe-area-inset-bottom))] vl:bottom-5 z-floatingAction xl:hidden"
                     iconClassName="rotate-180"
                     size="large"
                     title={t('Back to top')}
