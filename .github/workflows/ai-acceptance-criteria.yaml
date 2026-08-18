@@ -186,6 +186,9 @@ jobs:
                 with:
                     github_token: ${{ github.token }}
                     claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                    # The run is re-triggered with the github-actions actor when CI pushes the regenerated
+                    # Cypress snapshots commit, and the action refuses bot actors unless listed here.
+                    allowed_bots: github-actions
                     # The agent's own output would otherwise land in this repository's world-readable Actions log,
                     # and it holds credentials it could be talked into printing. Turn it on temporarily when a
                     # failure needs diagnosing, and accept that the whole session becomes public while it is on.
@@ -223,7 +226,7 @@ jobs:
                     # and ignores any ".mcp.json" committed in the pull request.
                     claude_args: |
                         --model claude-opus-4-8
-                        --max-turns 120
+                        --max-turns 180
                         --strict-mcp-config
                         --settings '{"disableAllHooks": true}'
                         --mcp-config ${{ steps.prepare.outputs.MCP_CONFIG_FILE }}

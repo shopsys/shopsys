@@ -38,6 +38,9 @@ jobs:
                 with:
                     github_token: ${{ github.token }}
                     claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                    # the run is re-triggered with the github-actions actor when CI pushes the regenerated
+                    # Cypress snapshots commit, and the action refuses bot actors unless listed here
+                    allowed_bots: github-actions
                     prompt: "/security-audit ${{ github.repository }}#${{ github.event.pull_request.number }}"
                     claude_args: |
                         --model claude-opus-5
