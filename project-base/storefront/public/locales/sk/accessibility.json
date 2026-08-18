@@ -118,7 +118,6 @@
     "Open {{ count }} more items in gallery_few": "Otvoriť {{ count }} ďalšie položky v galérii",
     "Open {{ count }} more items in gallery_many": "Otvoriť ďalších {{ count }} položiek v galérii",
     "Open {{ count }} more items in gallery_other": "Otvoriť ďalších {{ count }} položiek v galérii",
-    "Open delivery options popup": "Otvoriť popup s možnosťami doručenia",
     "Open image gallery of {{ productName }}": "Otvoriť galériu obrázkov {{ productName }}",
     "Open image gallery of store {{ storeName }}, image {{ imageNumber }}": "Otvoriť galériu obrázkov predajne {{ storeName }}, obrázok {{ imageNumber }}",
     "Open inquiry popup for product {{ productName }}": "Otvoriť popup pre poptávku produktu {{ productName }}",

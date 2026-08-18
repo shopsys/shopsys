@@ -114,7 +114,6 @@
     "Navigation": "Navigation",
     "Open {{ count }} more items in gallery_one": "Open {{ count }} more item in gallery",
     "Open {{ count }} more items in gallery_other": "Open {{ count }} more items in gallery",
-    "Open delivery options popup": "Open delivery options popup",
     "Open image gallery of {{ productName }}": "Open image gallery of {{ productName }}",
     "Open image gallery of store {{ storeName }}, image {{ imageNumber }}": "Open image gallery of store {{ storeName }}, image {{ imageNumber }}",
     "Open inquiry popup for product {{ productName }}": "Open inquiry popup for product {{ productName }}",

@@ -7,9 +7,6 @@ msgstr ""
 msgid "Amount"
 msgstr "Množstvo"
 
-msgid "Available immediately"
-msgstr "Dostupné ihneď"
-
 msgid "Billing address"
 msgstr "Fakturačná adresa"
 
@@ -70,9 +67,6 @@ msgstr "Prehľad osobných údajov"
 msgid "Transport"
 msgstr "Doprava"
 
-msgid "Unavailable"
-msgstr "Nedostupné"
-
 msgid "Unit price"
 msgstr "Jednotková cena"
 
@@ -81,7 +75,4 @@ msgstr "bez DPH"
 
 msgid "inc VAT"
 msgstr "s DPH"
-
-msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
-msgstr "{0,1} Dostupné za jeden týždeň|[2,4] Dostupné za %count% týždne|[5,Inf] Dostupné za %count% týždňov"
 
