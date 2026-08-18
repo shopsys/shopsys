@@ -15,6 +15,8 @@ export type TypeProductReviewInput = {
   email?: string | null | undefined;
   /** First name of the reviewer */
   firstName?: string | null | undefined;
+  /** Photos of the review (JPG or PNG, up to 5 files of 10 MB each) */
+  images: Array<File>;
   /** The review will be published without the reviewer name */
   isAnonymous: boolean;
   /** Last name of the reviewer */
@@ -43,11 +45,11 @@ export type TypeCreateProductReviewMutationVariables = Exact<{
 }>;
 
 
-export type TypeCreateProductReviewMutation = { CreateProductReview: { __typename: 'ProductReview', uuid: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, status: Types.TypeProductReviewStatusEnum, rejectionReason: string | null, responseText: string | null, responseCreatedAt: string | null, productUuid: string | null, productName: string, product:
+export type TypeCreateProductReviewMutation = { CreateProductReview: { __typename: 'ProductReview', uuid: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, status: Types.TypeProductReviewStatusEnum, rejectionReason: string | null, responseText: string | null, responseCreatedAt: string | null, rejectedImagesCount: number, productUuid: string | null, productName: string, product:
       | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
       | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
       | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
-     | null } };
+     | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> } };
 
 
 export const CreateProductReviewMutationDocument = gql`
