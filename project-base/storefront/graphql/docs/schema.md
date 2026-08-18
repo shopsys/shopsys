@@ -9352,6 +9352,15 @@ Date and time when the review was created
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="productreview.images">images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
+<td>
+
+Photos attached to the review, without the photos rejected in moderation; photos of a not yet approved review are served unresized
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="productreview.isverifiedpurchase">isVerifiedPurchase</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -9393,6 +9402,15 @@ UUID of the reviewed product (the concrete variant), null when the product no lo
 <td>
 
 Star rating from 1 to 5
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.rejectedimagescount">rejectedImagesCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of photos rejected in moderation, meaningful for the customer's own reviews (public listings always return zero)
 
 </td>
 </tr>
@@ -14082,6 +14100,15 @@ Email of the reviewer, required for a customer that is not logged in (the accoun
 <td>
 
 First name of the reviewer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewinput.images">images</strong></td>
+<td valign="top">[<a href="#fileupload">FileUpload</a>!]!</td>
+<td>
+
+Photos of the review (JPG or PNG, up to 5 files of 10 MB each)
 
 </td>
 </tr>

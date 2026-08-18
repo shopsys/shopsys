@@ -2982,6 +2982,8 @@ export type TypeProductReview = {
   __typename?: 'ProductReview';
   /** Date and time when the review was created */
   createdAt: Scalars['DateTime']['output'];
+  /** Photos attached to the review, without the photos rejected in moderation; photos of a not yet approved review are served unresized */
+  images: Array<TypeImage>;
   /** The review is linked to an order of the reviewed product */
   isVerifiedPurchase: Scalars['Boolean']['output'];
   /** Currently associated reviewed product, null when the product no longer exists */
@@ -2992,6 +2994,8 @@ export type TypeProductReview = {
   productUuid: Maybe<Scalars['Uuid']['output']>;
   /** Star rating from 1 to 5 */
   rating: Scalars['Int']['output'];
+  /** Number of photos rejected in moderation, meaningful for the customer's own reviews (public listings always return zero) */
+  rejectedImagesCount: Scalars['Int']['output'];
   /** Reason why the customer's own review was not published, null for reviews that were not rejected */
   rejectionReason: Maybe<Scalars['String']['output']>;
   /** Date and time when the response was published */
@@ -3038,6 +3042,8 @@ export type TypeProductReviewInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   /** First name of the reviewer */
   firstName?: InputMaybe<Scalars['String']['input']>;
+  /** Photos of the review (JPG or PNG, up to 5 files of 10 MB each) */
+  images: Array<Scalars['FileUpload']['input']>;
   /** The review will be published without the reviewer name */
   isAnonymous: Scalars['Boolean']['input'];
   /** Last name of the reviewer */
