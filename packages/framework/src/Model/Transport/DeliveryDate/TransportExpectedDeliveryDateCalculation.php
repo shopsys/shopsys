@@ -134,6 +134,8 @@ class TransportExpectedDeliveryDateCalculation
             return null;
         }
 
+        $dispatchDate = $this->postponeDispatchDateByTransferDaysIfNeeded($transport, $dispatchDate, $quantifiedProducts, $domainId, $store);
+
         $closestPossibleDeliveryDate = $dispatchDate->modify(sprintf('+%d days', $transport->getDaysUntilDelivery()));
 
         $deliveryDate = $this->postponeToFirstAllowedDeliveryDay($transport, $closestPossibleDeliveryDate, $domainId, $store);
@@ -197,6 +199,49 @@ class TransportExpectedDeliveryDateCalculation
         }
 
         return $this->getStartOfDay($worstExpectedRestockingDate, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     */
+    protected function postponeDispatchDateByTransferDaysIfNeeded(
+        Transport $transport,
+        DateTimeImmutable $dispatchDate,
+        array $quantifiedProducts,
+        int $domainId,
+        ?Store $store,
+    ): DateTimeImmutable {
+        if (
+            $quantifiedProducts === []
+            || !$this->isTransferNeeded($transport, $quantifiedProducts, $domainId, $store)
+        ) {
+            return $dispatchDate;
+        }
+
+        return $dispatchDate->modify(sprintf('+%d days', $this->productAvailabilityFacade->getTransferDaysByDomainId($domainId)));
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     */
+    protected function isTransferNeeded(
+        Transport $transport,
+        array $quantifiedProducts,
+        int $domainId,
+        ?Store $store,
+    ): bool {
+        if ($store !== null) {
+            return $this->productAvailabilityFacade->isTransferToStoreNeeded($quantifiedProducts, $store, $domainId);
+        }
+
+        if (!$transport->isPersonalPickup()) {
+            return false;
+        }
+
+        return array_all(
+            $this->getStoresByDomainIdCached($domainId),
+            fn (Store $domainStore): bool => $this->productAvailabilityFacade->isTransferToStoreNeeded($quantifiedProducts, $domainStore, $domainId),
+        );
     }
 
     protected function postponeToFirstAllowedDeliveryDay(

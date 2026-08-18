@@ -578,6 +578,157 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $this->assertDeliveryDateSame($expectedDeliveryDate, $deliveryDate);
     }
 
+    /**
+     * @return iterable<string, array{isTransferToStoreNeeded: bool, expectedDeliveryDate: string}>
+     */
+    public static function getExpectedDeliveryDateForStoreTransferData(): iterable
+    {
+        yield 'store stock covers the product quantity, so transfer between stocks is not included in the calculation' => [
+            'isTransferToStoreNeeded' => false,
+            'expectedDeliveryDate' => '2026-07-16 00:00:00',
+        ];
+
+        yield 'store stock does not cover the product quantity, so transfer between stocks is included in the calculation' => [
+            'isTransferToStoreNeeded' => true,
+            'expectedDeliveryDate' => '2026-07-19 00:00:00',
+        ];
+    }
+
+    #[DataProvider('getExpectedDeliveryDateForStoreTransferData')]
+    public function testProductDeliveryDateForStoreIsPostponedByTransferDaysWhenStoreStockDoesNotCoverTheQuantity(
+        bool $isTransferToStoreNeeded,
+        string $expectedDeliveryDate,
+    ): void {
+        $storeStub = $this->createStub(Store::class);
+        $storeStub->method('getId')->willReturn(1);
+
+        $productAvailabilityFacadeStub = $this->createTransferProductAvailabilityFacadeStub(
+            static fn (): bool => $isTransferToStoreNeeded,
+        );
+
+        $deliveryDate = $this
+            ->createTransportExpectedDeliveryDateCalculation(productAvailabilityFacade: $productAvailabilityFacadeStub)
+            ->calculateExpectedDeliveryDateForStoreAndProduct(
+                $this->createTransportStubDeliveringAnyDay(0, true),
+                $this->createProductStub(),
+                Domain::FIRST_DOMAIN_ID,
+                $storeStub,
+            );
+
+        $this->assertDeliveryDateSame($expectedDeliveryDate, $deliveryDate);
+    }
+
+    /**
+     * @return iterable<string, array{someStoreCoversTheProductQuantity: bool, expectedDeliveryDate: string}>
+     */
+    public static function getBestPickupDeliveryDateTransferData(): iterable
+    {
+        yield 'some store covers the product quantity from its own stock, so transfer between stocks is not included in the calculation' => [
+            'someStoreCoversTheProductQuantity' => true,
+            'expectedDeliveryDate' => '2026-07-16 00:00:00',
+        ];
+
+        yield 'no store covers the product quantity from its own stock, so transfer between stocks is included in the calculation' => [
+            'someStoreCoversTheProductQuantity' => false,
+            'expectedDeliveryDate' => '2026-07-19 00:00:00',
+        ];
+    }
+
+    #[DataProvider('getBestPickupDeliveryDateTransferData')]
+    public function testPickupDeliveryDateWithoutStoreIsPostponedByTransferDaysWhenNoStoreStockCoversTheQuantity(
+        bool $someStoreCoversTheProductQuantity,
+        string $expectedDeliveryDate,
+    ): void {
+        $storeWithoutStockStub = $this->createStub(Store::class);
+        $coveringStoreStub = $this->createStub(Store::class);
+
+        $storeFacadeStub = $this->createStub(StoreFacade::class);
+        $storeFacadeStub->method('getStoresByDomainId')->willReturn([$storeWithoutStockStub, $coveringStoreStub]);
+
+        $productAvailabilityFacadeStub = $this->createTransferProductAvailabilityFacadeStub(
+            static fn (Store $store): bool => $store !== $coveringStoreStub || !$someStoreCoversTheProductQuantity,
+        );
+
+        $deliveryDate = $this
+            ->createTransportExpectedDeliveryDateCalculation(
+                storeFacade: $storeFacadeStub,
+                productAvailabilityFacade: $productAvailabilityFacadeStub,
+            )
+            ->calculateExpectedDeliveryDateForProduct(
+                $this->createTransportStubDeliveringAnyDay(0, true),
+                $this->createProductStub(),
+                Domain::FIRST_DOMAIN_ID,
+            );
+
+        $this->assertDeliveryDateSame($expectedDeliveryDate, $deliveryDate);
+    }
+
+    public function testDeliveryDateOfNonPickupTransportIsNeverPostponedByTransferDays(): void
+    {
+        $storeFacadeStub = $this->createStub(StoreFacade::class);
+        $storeFacadeStub->method('getStoresByDomainId')->willReturn([$this->createStub(Store::class)]);
+
+        $deliveryDate = $this
+            ->createTransportExpectedDeliveryDateCalculation(
+                storeFacade: $storeFacadeStub,
+                productAvailabilityFacade: $this->createTransferProductAvailabilityFacadeStub(static fn (): bool => true),
+            )
+            ->calculateExpectedDeliveryDateForProduct(
+                $this->createTransportStubDeliveringAnyDay(0),
+                $this->createProductStub(),
+                Domain::FIRST_DOMAIN_ID,
+            );
+
+        $this->assertDeliveryDateSame('2026-07-16 00:00:00', $deliveryDate);
+    }
+
+    /**
+     * Creates a facade stub resolving the single product created by createProductStub() as stocked
+     * on the domain, with the given callback deciding the transfer need per store and 3 transfer days
+     *
+     * @param callable(\Shopsys\FrameworkBundle\Model\Store\Store): bool $isTransferToStoreNeededResolver
+     */
+    private function createTransferProductAvailabilityFacadeStub(
+        callable $isTransferToStoreNeededResolver,
+        int $stockQuantity = 1,
+        ?string $expectedRestockingDate = null,
+    ): ProductAvailabilityFacade {
+        $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
+        $productAvailabilityFacadeStub->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')
+            ->willReturn([1 => $stockQuantity]);
+        $productAvailabilityFacadeStub->method('findValidExpectedRestockingDate')
+            ->willReturn($expectedRestockingDate === null ? null : new DatePoint($expectedRestockingDate, new DateTimeZone('UTC')));
+        $productAvailabilityFacadeStub->method('isTransferToStoreNeeded')
+            ->willReturnCallback(
+                static fn (array $quantifiedProducts, Store $store): bool => $isTransferToStoreNeededResolver($store),
+            );
+        $productAvailabilityFacadeStub->method('getTransferDaysByDomainId')
+            ->willReturn(3);
+
+        return $productAvailabilityFacadeStub;
+    }
+
+    public function testProductDeliveryDateForStoreIncludesTransferDaysAfterRestocking(): void
+    {
+        $productAvailabilityFacadeStub = $this->createTransferProductAvailabilityFacadeStub(
+            static fn (): bool => true,
+            stockQuantity: 0,
+            expectedRestockingDate: self::RESTOCKING_DATE,
+        );
+
+        $deliveryDate = $this
+            ->createTransportExpectedDeliveryDateCalculation(productAvailabilityFacade: $productAvailabilityFacadeStub)
+            ->calculateExpectedDeliveryDateForStoreAndProduct(
+                $this->createTransportStubDeliveringAnyDay(0, true),
+                $this->createProductStub(),
+                Domain::FIRST_DOMAIN_ID,
+                $this->createStub(Store::class),
+            );
+
+        // RESTOCKING_DATE + 3 transfer days
+        $this->assertDeliveryDateSame('2026-07-29 00:00:00', $deliveryDate);
+    }
+
     public function testProductCalculationForStoreRejectsNonPersonalPickupTransport(): void
     {
         $this->expectException(TransportIsNotPersonalPickupException::class);
@@ -743,10 +894,13 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         );
     }
 
-    private function createTransportStubDeliveringAnyDay(int $daysUntilDelivery): Transport
-    {
+    private function createTransportStubDeliveringAnyDay(
+        int $daysUntilDelivery,
+        bool $isPersonalPickup = false,
+    ): Transport {
         $transportStub = $this->createStub(Transport::class);
         $transportStub->method('getDaysUntilDelivery')->willReturn($daysUntilDelivery);
+        $transportStub->method('isPersonalPickup')->willReturn($isPersonalPickup);
         $this->stubDeliveryDaysOfWeek($transportStub, DateTimeHelper::ALL_DAYS_OF_WEEK);
         $transportStub->method('deliversOnPublicHolidays')->willReturn(true);
         $transportStub->method('deliversOnInternalClosedDays')->willReturn(true);

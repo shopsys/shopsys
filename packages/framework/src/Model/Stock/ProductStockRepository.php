@@ -96,6 +96,32 @@ class ProductStockRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return array<int, array<int, int>> stock quantities indexed by product id and stock id
+     */
+    public function getStockQuantitiesByProductsIndexedByProductIdAndStockId(array $products): array
+    {
+        if ($products === []) {
+            return [];
+        }
+
+        $rows = $this->getQueryBuilder()
+            ->select('IDENTITY(ps.product) AS productId, IDENTITY(ps.stock) AS stockId, ps.productQuantity AS stockQuantity')
+            ->where('ps.product IN (:products)')
+            ->setParameter('products', $products)
+            ->getQuery()
+            ->getResult();
+
+        $stockQuantitiesIndexedByProductIdAndStockId = [];
+
+        foreach ($rows as $row) {
+            $stockQuantitiesIndexedByProductIdAndStockId[(int)$row['productId']][(int)$row['stockId']] = (int)$row['stockQuantity'];
+        }
+
+        return $stockQuantitiesIndexedByProductIdAndStockId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return array<int, int>
      */
     public function getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
@@ -23,6 +24,7 @@ class ProductAvailabilityFacade
     protected const int DAYS_IN_WEEK = 7;
 
     protected const string PRODUCT_AVAILABILITY_CACHE_NAMESPACE = 'productAvailabilityDomain';
+    protected const string STOCK_QUANTITIES_CACHE_NAMESPACE = 'productAvailabilityStockQuantities';
 
     /**
      * A deliberate product decision: up to this many days the feeds present the dispatch time
@@ -278,6 +280,52 @@ class ProductAvailabilityFacade
     public function getTransferDaysByDomainId(int $domainId): int
     {
         return $this->setting->getForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     */
+    public function isTransferToStoreNeeded(array $quantifiedProducts, Store $store, int $domainId): bool
+    {
+        $stock = $store->getStock();
+
+        if ($stock === null || !$stock->isEnabled($domainId)) {
+            return true;
+        }
+
+        $stockQuantitiesIndexedByProductIdAndStockId = $this->getStockQuantitiesIndexedByProductIdAndStockIdCached(
+            $quantifiedProducts,
+        );
+
+        foreach ($quantifiedProducts as $quantifiedProduct) {
+            $stockQuantity = $stockQuantitiesIndexedByProductIdAndStockId[$quantifiedProduct->getProduct()->getId()][$stock->getId()] ?? 0;
+
+            if ($quantifiedProduct->getQuantity() > $stockQuantity) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @return array<int, array<int, int>> stock quantities indexed by product id and stock id
+     */
+    protected function getStockQuantitiesIndexedByProductIdAndStockIdCached(array $quantifiedProducts): array
+    {
+        $products = array_map(
+            static fn (QuantifiedProduct $quantifiedProduct): Product => $quantifiedProduct->getProduct(),
+            $quantifiedProducts,
+        );
+        $productIds = array_map(static fn (Product $product): int => $product->getId(), $products);
+        sort($productIds);
+
+        return $this->inMemoryCache->getOrSaveValue(
+            static::STOCK_QUANTITIES_CACHE_NAMESPACE,
+            fn (): array => $this->productStockFacade->getStockQuantitiesByProductsIndexedByProductIdAndStockId($products),
+            implode(',', array_unique($productIds)),
+        );
     }
 
     public function getGroupedStockQuantityByProductAndDomainId(Product $product, int $domainId): ?int
