@@ -173,6 +173,7 @@ export type ProductReviewFormType = {
     lastName: string;
     email: string;
     isAnonymous: boolean;
+    images: File[];
 };
 
 export type WatchdogFormType = {

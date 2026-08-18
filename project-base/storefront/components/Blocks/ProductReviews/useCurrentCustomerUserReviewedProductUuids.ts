@@ -1,8 +1,6 @@
 import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
-import { TypeCustomerUserProductReviewFragment } from 'graphql/requests/productReviews/fragments/CustomerUserProductReviewFragment.generated';
-import { useCurrentCustomerUserProductReviewsQuery } from 'graphql/requests/productReviews/queries/CurrentCustomerUserProductReviewsQuery.generated';
+import { useCurrentCustomerUserReviewedProductUuidsQuery } from 'graphql/requests/productReviews/queries/CurrentCustomerUserReviewedProductUuidsQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import { mapConnectionEdges } from 'utils/mappers/connection';
 
 export const CURRENT_CUSTOMER_USER_REVIEWS_LIMIT = 50;
 
@@ -21,24 +19,21 @@ export const useCurrentCustomerUserReviewedProductUuids = (): CurrentCustomerUse
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const areProductReviewsEnabled = settingsData?.settings?.productReviewsEnabled === true;
 
-    const [{ data: currentCustomerUserProductReviewsData, fetching: areOwnReviewsFetching }] =
-        useCurrentCustomerUserProductReviewsQuery({
+    const [{ data: currentCustomerUserReviewedProductUuidsData, fetching: areOwnReviewsFetching }] =
+        useCurrentCustomerUserReviewedProductUuidsQuery({
             variables: { first: CURRENT_CUSTOMER_USER_REVIEWS_LIMIT },
             pause: !isUserLoggedIn || !areProductReviewsEnabled,
             requestPolicy: 'cache-and-network',
         });
 
-    const ownReviews =
-        mapConnectionEdges<TypeCustomerUserProductReviewFragment>(
-            currentCustomerUserProductReviewsData?.currentCustomerUserProductReviews.edges ?? undefined,
-        ) ?? [];
+    const edges = currentCustomerUserReviewedProductUuidsData?.currentCustomerUserProductReviews.edges ?? [];
 
     return {
         isLoading: isCurrentCustomerUserFetching || (isUserLoggedIn && areOwnReviewsFetching),
         reviewedProductUuids: new Set(
-            ownReviews
-                .map((review) => review.productUuid)
-                .filter((reviewedProductUuid): reviewedProductUuid is string => reviewedProductUuid !== null),
+            edges
+                .map((edge) => edge?.node?.productUuid)
+                .filter((reviewedProductUuid): reviewedProductUuid is string => !!reviewedProductUuid),
         ),
     };
 };

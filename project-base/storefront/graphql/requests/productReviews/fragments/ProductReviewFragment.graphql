@@ -9,4 +9,7 @@ fragment ProductReviewFragment on ProductReview {
     isVerifiedPurchase
     responseText
     responseCreatedAt
+    images {
+        ...ImageFragment
+    }
 }

@@ -1,4 +1,10 @@
-import { validateEmail, validateFirstName, validateLastName } from 'components/Forms/validationRules';
+import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
+import {
+    validateEmail,
+    validateFirstName,
+    validateLastName,
+    validateOptionalImageFiles,
+} from 'components/Forms/validationRules';
 import { UseFormReturn } from 'react-hook-form';
 import { ProductReviewFormType } from 'types/form';
 import { FormMeta } from 'types/formMeta';
@@ -26,6 +32,7 @@ export const useCreateProductReviewForm = (
             lastName: validateLastName(t),
             email: isUserLoggedIn ? Yup.string() : validateEmail(t),
             isAnonymous: Yup.boolean(),
+            images: validateOptionalImageFiles(t, VALIDATION_CONSTANTS.reviewMaxFilesCount),
         }),
     );
 
@@ -46,6 +53,7 @@ export const useCreateProductReviewFormMeta = (): FormMeta<ProductReviewFormType
             lastName: t('Last name'),
             email: t('Your email'),
             isAnonymous: t('Publish anonymously'),
+            images: t('Photos'),
         }),
     };
 };

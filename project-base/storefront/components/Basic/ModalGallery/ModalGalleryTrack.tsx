@@ -73,8 +73,9 @@ export const ModalGalleryTrack = forwardRef<MediaCarouselTrackHandle, ModalGalle
                                     alt={galleryItem.name || `${galleryName}-${index}`}
                                     className="max-h-full object-contain mix-blend-multiply"
                                     draggable={false}
+                                    hash={galleryItem.url.split('?')[1]}
                                     sizes="100vw"
-                                    src={galleryItem.url}
+                                    src={galleryItem.url.split('?')[0]}
                                     onLoad={() => markMediaAsLoaded(index)}
                                 />
                             )}

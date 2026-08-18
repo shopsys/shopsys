@@ -21,9 +21,11 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({
 
 const productReview = {
     reviewerName: 'John Doe',
+    productName: 'Product',
     rating: 4,
     text: 'Review text',
     createdAt: '2026-06-05T12:00:00+00:00',
+    images: [],
 };
 
 describe('ProductReviewItem', () => {

@@ -10,6 +10,7 @@ fragment CustomerUserProductReviewFragment on ProductReview {
     rejectionReason
     responseText
     responseCreatedAt
+    rejectedImagesCount
     productUuid
     productName
     product {
@@ -19,5 +20,8 @@ fragment CustomerUserProductReviewFragment on ProductReview {
         mainImage {
             url
         }
+    }
+    images {
+        ...ImageFragment
     }
 }
