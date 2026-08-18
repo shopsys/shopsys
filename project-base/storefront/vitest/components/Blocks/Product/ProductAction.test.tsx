@@ -291,11 +291,12 @@ describe('ProductAction', () => {
             expect(screen.getByTestId('product-inquiry')).toBeInTheDocument();
         });
 
-        test('offers nothing to a customer who cannot create an order', () => {
+        test('offers only the watchdog to a customer who cannot create an order', () => {
             canCreateOrder = false;
 
             renderProductAction(expectedRestockProduct, props);
 
+            expect(getWatchdogButtons()).toHaveLength(1);
             expect(screen.queryByTestId('add-to-cart')).not.toBeInTheDocument();
         });
 
