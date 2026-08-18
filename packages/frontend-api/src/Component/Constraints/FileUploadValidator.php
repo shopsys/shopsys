@@ -28,6 +28,7 @@ class FileUploadValidator extends ConstraintValidator
                 $this->checkUploadedFile($uploadedFile, $constraint);
                 $this->checkFileSize($uploadedFile, $constraint);
                 $this->checkMimeType($uploadedFile, $constraint);
+                $this->checkExtension($uploadedFile, $constraint);
             } catch (FileUploadValidationException) {
                 continue;
             }
@@ -85,6 +86,29 @@ class FileUploadValidator extends ConstraintValidator
                 ['{{ fileName }}' => $uploadedFile->getClientOriginalName()],
             )
             ->setCode(FileUpload::MIMETYPE_ERROR)
+            ->addViolation();
+
+        throw new FileUploadValidationException();
+    }
+
+    protected function checkExtension(UploadedFile $uploadedFile, FileUpload $constraint): void
+    {
+        if ($constraint->extensions === null) {
+            return;
+        }
+
+        $extension = strtolower($uploadedFile->getClientOriginalExtension());
+
+        if (in_array($extension, $constraint->extensions, true)) {
+            return;
+        }
+
+        $this->context
+            ->buildViolation(
+                $constraint->extensionsMessage,
+                ['{{ fileName }}' => $uploadedFile->getClientOriginalName()],
+            )
+            ->setCode(FileUpload::EXTENSION_ERROR)
             ->addViolation();
 
         throw new FileUploadValidationException();

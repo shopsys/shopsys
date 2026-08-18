@@ -34,6 +34,9 @@ ProductReviewDecorator:
             rejectionReason:
                 type: "String"
                 description: "Reason why the customer's own review was not published, null for reviews that were not rejected"
+            rejectedImagesCount:
+                type: "Int!"
+                description: "Number of photos rejected in moderation, meaningful for the customer's own reviews (public listings always return zero)"
             productUuid:
                 type: "Uuid"
                 description: "UUID of the reviewed product (the concrete variant), null when the product no longer exists"
@@ -43,3 +46,6 @@ ProductReviewDecorator:
             product:
                 type: "Product"
                 description: "Currently associated reviewed product, null when the product no longer exists"
+            images:
+                type: "[Image!]!"
+                description: "Photos attached to the review, without the photos rejected in moderation; photos of a not yet approved review are served unresized"
