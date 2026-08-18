@@ -2,7 +2,6 @@ import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { showWatchdogButton, WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
@@ -88,15 +87,13 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                             <ProductPrice className="lg:flex-col lg:items-end" productPrice={variant.price} />
 
                             <div className="flex w-45 flex-col gap-2">
-                                <WatchDogButton listIndex={index} product={variant} />
-
                                 <ProductAction
                                     buttonSize="large"
+                                    isWatchdogButtonShownWithPurchaseAction
                                     gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
                                     gtmProductListName={GtmProductListNameType.product_detail_variants_table}
                                     listIndex={index}
                                     product={variant}
-                                    buttonVariant={showWatchdogButton(variant) ? 'secondary' : 'primary'}
                                 />
                             </div>
                         </div>
