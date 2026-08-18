@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageFactory;
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImagePublisher;
 
 class ProductReviewFacade
 {
@@ -26,6 +27,7 @@ class ProductReviewFacade
         protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
         protected readonly ProductReviewImageFactory $productReviewImageFactory,
         protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
+        protected readonly ProductReviewImagePublisher $productReviewImagePublisher,
     ) {
     }
 
@@ -57,9 +59,9 @@ class ProductReviewFacade
         }
 
         $productReview->edit($productReviewData);
-        $this->editImages($productReview, $productReviewData->images);
-
         $this->em->flush();
+
+        $this->editImages($productReview, $productReviewData->images);
 
         $this->dispatchReviewsExport($productReview);
     }
@@ -102,6 +104,8 @@ class ProductReviewFacade
                 $productReview->getCustomerUser(),
             );
         }
+
+        $this->productReviewImagePublisher->reconcile($productReview);
     }
 
     /**
@@ -122,6 +126,10 @@ class ProductReviewFacade
                 $productReviewImage->edit($imagesDataById[$productReviewImage->getId()]);
             }
         }
+
+        $this->em->flush();
+
+        $this->productReviewImagePublisher->reconcile($productReview);
     }
 
     protected function dispatchReviewsExport(ProductReview $productReview): void

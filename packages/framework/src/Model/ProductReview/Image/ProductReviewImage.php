@@ -57,6 +57,7 @@ class ProductReviewImage
         int $position,
     ) {
         $this->productReview = $productReview;
+        $productReview->addImage($this);
         $this->position = $position;
 
         $this->setData($productReviewImageData);
