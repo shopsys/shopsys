@@ -97,7 +97,6 @@ export const cache = cacheExchange({
         Settings: keyNull,
         SliderItem: keyUuid,
         Store: keyUuid,
-        StoreAvailability: keyNull,
         Transport: keyUuid,
         Unit: keyName,
         Variant: keyUuid,
