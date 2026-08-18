@@ -20,8 +20,13 @@ export const useErrorPopup = <T extends FieldValues>(
     gtmMessageOrigin?: GtmMessageOriginType,
 ) => {
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const { submitCount } = formProviderMethods.formState;
 
     const onShowError = useEffectEvent(() => {
+        if (Object.keys(formProviderMethods.formState.errors).length === 0 && !overrideVisibility) {
+            return;
+        }
+
         updatePortalContent(
             <ErrorPopup
                 errors={formProviderMethods.formState.errors as FieldErrors}
@@ -31,12 +36,10 @@ export const useErrorPopup = <T extends FieldValues>(
         );
     });
 
+    // deliberately not depending on errors, revalidation would reopen a popup the user already closed
     useEffect(() => {
-        if (
-            formProviderMethods.formState.isSubmitted &&
-            (Object.keys(formProviderMethods.formState.errors).length > 0 || overrideVisibility)
-        ) {
+        if (submitCount > 0) {
             onShowError();
         }
-    }, [formProviderMethods.formState.isSubmitted, formProviderMethods.formState.errors, overrideVisibility]);
+    }, [submitCount, overrideVisibility]);
 };

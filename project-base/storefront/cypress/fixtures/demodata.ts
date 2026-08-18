@@ -7,6 +7,7 @@ export const staticData = {
         password: 'user123',
         uuid: '7b817d8b-41a3-4fc0-8570-08c9989f6dd9',
     },
+    invalidEmail: 'no-reply123@',
     customer1: {
         email: 'no-reply123@shopsys.com',
         emailRegistered: 'no-reply@shopsys.com',

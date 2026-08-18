@@ -15,7 +15,7 @@ import {
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { FormMeta } from 'types/formMeta';
@@ -183,13 +183,16 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
     };
     const formProviderMethods = useFormWrapper(resolver, defaultValues);
 
-    useEffect(() => {
-        if (defaultValues.email && defaultValues.email.length > 0) {
+    const validatePrefilledEmail = useEffectEvent(() => {
+        if (defaultValues.email) {
             formProviderMethods.trigger('email', { shouldFocus: false });
-        } else {
-            formProviderMethods.clearErrors('email');
         }
-    }, [defaultValues.email, formProviderMethods]);
+    });
+
+    // deliberately mount-only, defaultValues.email mirrors every keystroke through the persist store
+    useEffect(() => {
+        validatePrefilledEmail();
+    }, []);
 
     return [formProviderMethods, defaultValues];
 };
