@@ -46,6 +46,7 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
             ),
             'responseCreatedAt' => '2026-06-02T09:00:00+00:00',
             'status' => 'APPROVED',
+            'rejectedImagesCount' => 0,
             'productUuid' => $product->getUuid(),
             'productName' => $product->getName($this->getFirstDomainLocale()),
         ], $data['edges'][0]['node']);

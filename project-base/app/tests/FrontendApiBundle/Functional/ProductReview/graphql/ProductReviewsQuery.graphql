@@ -21,6 +21,7 @@ query ProductReviews($productUuid: Uuid!, $first: Int, $after: String, $ordering
                 responseText
                 responseCreatedAt
                 status
+                rejectedImagesCount
                 productUuid
                 productName
             }

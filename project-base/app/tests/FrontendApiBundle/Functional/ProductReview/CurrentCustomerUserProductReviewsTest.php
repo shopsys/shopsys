@@ -65,6 +65,7 @@ final class CurrentCustomerUserProductReviewsTest extends GraphQlWithLoginTestCa
         $this->assertTrue($data['edges'][0]['node']['product']['isVisible']);
         $this->assertNull($data['edges'][0]['node']['responseText']);
         $this->assertNull($data['edges'][0]['node']['responseCreatedAt']);
+        $this->assertSame(1, $data['edges'][0]['node']['rejectedImagesCount']);
     }
 
     public function testCustomerSeesOwnPendingReviewForFirstProductWithoutVerificationOrResponse(): void
@@ -74,6 +75,7 @@ final class CurrentCustomerUserProductReviewsTest extends GraphQlWithLoginTestCa
         $this->assertSame(1, $data['totalCount']);
         $this->assertSame('PENDING', $data['edges'][0]['node']['status']);
         $this->assertNull($data['edges'][0]['node']['rejectionReason']);
+        $this->assertSame(0, $data['edges'][0]['node']['rejectedImagesCount']);
         $this->assertFalse($data['edges'][0]['node']['isVerifiedPurchase']);
         $this->assertNull($data['edges'][0]['node']['responseText']);
         $this->assertNull($data['edges'][0]['node']['responseCreatedAt']);
