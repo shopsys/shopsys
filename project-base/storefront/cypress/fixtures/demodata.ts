@@ -79,8 +79,6 @@ export const staticData = {
         },
         televisionHyundaiM: {
             uuid: '0c625610-00b3-5a9a-bccd-a271db880461',
-            catnum: '32PFL4400',
-            name: 'Television Hyundai [M]',
             outOfStockVariantCatnum: '9176578',
             expectedRestockVariantCatnum: '91765782',
             inStockVariantCatnum: '9176554',
