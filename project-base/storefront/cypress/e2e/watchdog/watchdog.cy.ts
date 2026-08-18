@@ -27,6 +27,10 @@ describe('Watchdog Button Tests (SSP-4259)', () => {
             [TIDs.pages_productdetail_variant_, staticData.products.televisionHyundaiM.expectedRestockVariantCatnum],
             TIDs.blocks_product_watchdog_button,
         ]).should('have.length', 1);
+        cy.getByTID([
+            [TIDs.pages_productdetail_variant_, staticData.products.televisionHyundaiM.expectedRestockVariantCatnum],
+            TIDs.blocks_product_addtocart,
+        ]).should('have.length', 1);
 
         cy.getByTID([
             [TIDs.pages_productdetail_variant_, staticData.products.televisionHyundaiM.inStockVariantCatnum],

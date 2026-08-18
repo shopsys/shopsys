@@ -4000,7 +4000,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productDemoDataSetter->setSellingFrom($productData, '15.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 0);
         $this->productDemoDataSetter->setExpectedRestockingDate($productData, 'midnight +2 weeks');
-        $productData->isAllowedNegativeStock = false;
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->productDemoDataSetter->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
         $this->productDemoDataSetter->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
