@@ -9,3 +9,7 @@ export const changeBlogArticleDynamicPartsToStaticDemodata = () => {
 export const changeArticleDynamicPartsToStaticDemodata = () => {
     changeElementText(TIDs.article_creation_date, staticData.article.creationDate, false);
 };
+
+export const markArticleMapIframeForBlackout = () => {
+    cy.get('iframe[src*="maps.google.com"]').invoke('attr', 'data-tid', TIDs.article_map_iframe);
+};

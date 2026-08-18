@@ -1,6 +1,7 @@
 import {
     changeArticleDynamicPartsToStaticDemodata,
     changeBlogArticleDynamicPartsToStaticDemodata,
+    markArticleMapIframeForBlackout,
 } from './visitsSupport';
 import { staticData } from 'fixtures/demodata';
 import {
@@ -83,10 +84,12 @@ describe('Simple page visit tests with screenshots', () => {
     it('[Article Detail] should visit article detail with product hero and screenshot', () => {
         visitEntityByUuid('article', staticData.article.forPress.uuid);
         changeArticleDynamicPartsToStaticDemodata();
+        markArticleMapIframeForBlackout();
         cy.getByTID([TIDs.grapesjs_product_hero]).should('be.visible');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'article detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
+                { tid: TIDs.article_map_iframe },
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
