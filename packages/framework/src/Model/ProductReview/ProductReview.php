@@ -439,6 +439,11 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
         return $this->images->getValues();
     }
 
+    public function addImage(ProductReviewImage $productReviewImage): void
+    {
+        $this->images->add($productReviewImage);
+    }
+
     #[Override]
     public function toHumanReadable(): string
     {

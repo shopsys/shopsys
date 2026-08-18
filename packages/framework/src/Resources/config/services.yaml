@@ -775,6 +775,16 @@ services:
 
     Shopsys\FrameworkBundle\Model\ProductQuestion\Mail\ProductQuestionMail: ~
 
+    Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageDeleteDoctrineListener:
+        tags:
+            # must run before CustomerUploadedFileDeleteDoctrineListener, which removes and flushes the file rows unpublish() needs
+            - { name: doctrine.event_listener, event: preRemove, priority: 10 }
+
+    Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImagePublisher:
+        arguments:
+            $imageDir: '%shopsys.image_dir%'
+            $imageUrlPrefix: '%shopsys.image_url_prefix%'
+
     Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker: ~
 
     Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter\:
