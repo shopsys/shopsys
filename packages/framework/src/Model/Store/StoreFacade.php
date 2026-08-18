@@ -130,15 +130,6 @@ class StoreFacade
         return $this->storeRepository->getByIdAndDomainId($id, $domainId);
     }
 
-    /**
-     * @param int[] $storeIds
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
-     */
-    public function getStoresByIds(array $storeIds): array
-    {
-        return $this->storeRepository->getStoresByIds($storeIds);
-    }
-
     public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->storeRepository->getStoresByDomainIdQueryBuilder($domainId);

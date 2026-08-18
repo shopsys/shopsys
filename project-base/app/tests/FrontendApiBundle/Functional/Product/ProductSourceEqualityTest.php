@@ -106,13 +106,6 @@ class ProductSourceEqualityTest extends GraphQlTestCase
             partNumber
             ean
             usps
-            storeAvailabilities {
-                store {
-                    name
-                }
-                availabilityInformation
-                availabilityStatus
-            }
             availableStoresCount
             breadcrumb {
                 name

@@ -253,11 +253,6 @@ class ProductArrayFieldMapper
         );
     }
 
-    public function getStoreAvailabilities(array $data): array
-    {
-        return $data['store_availabilities_information'];
-    }
-
     public function getAvailableStoresCount(array $data): ?int
     {
         return $data['available_stores_count'];

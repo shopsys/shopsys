@@ -127,20 +127,6 @@ class StoreRepository
     }
 
     /**
-     * @param int[] $storeIds
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
-     */
-    public function getStoresByIds(array $storeIds): array
-    {
-        $queryBuilder = $this->getAllStoresQueryBuilder()
-            ->select('s')
-            ->where('s.id IN (:storeIds)')
-            ->setParameter('storeIds', $storeIds);
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
-    /**
      * @return int[]
      */
     public function getStoreCountsByDomainIdIndexedByStockId(int $domainId): array

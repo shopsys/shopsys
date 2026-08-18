@@ -54,13 +54,6 @@ query Product($uuid: Uuid) {
         partNumber
         ean
         usps
-        storeAvailabilities {
-            store {
-                name
-            }
-            availabilityInformation
-            availabilityStatus
-        }
         availableStoresCount
         breadcrumb {
             name

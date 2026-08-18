@@ -49,7 +49,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method string|null getNamePrefix(\App\Model\Product\Product $product)
  * @method string getFullName(\App\Model\Product\Product $product)
  * @method int|null getStockQuantity(\App\Model\Product\Product $product)
- * @method array getStoreAvailabilities(\App\Model\Product\Product $product)
  * @method int|null getAvailableStoresCount(\App\Model\Product\Product $product)
  * @method array getProductVideos(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getSlug(\App\Model\Product\Product $product)

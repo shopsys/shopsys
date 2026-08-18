@@ -53,7 +53,6 @@ class ProductVariantTest extends GraphQlTestCase
                 'name' => t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'status' => AvailabilityStatusEnum::IN_STOCK,
             ],
-            'storeAvailabilities' => [],
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/mainVariantByUuid.graphql', [

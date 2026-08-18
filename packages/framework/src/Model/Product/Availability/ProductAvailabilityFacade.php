@@ -17,12 +17,11 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 
 class ProductAvailabilityFacade
 {
-    protected const int DAYS_IN_WEEK = 7;
-
     protected const string PRODUCT_AVAILABILITY_CACHE_NAMESPACE = 'productAvailabilityDomain';
     protected const string STOCK_QUANTITIES_CACHE_NAMESPACE = 'productAvailabilityStockQuantities';
 
@@ -199,82 +198,6 @@ class ProductAvailabilityFacade
             $stockQuantitiesIndexedByProductId,
             static fn (int $stockQuantity): bool => $stockQuantity > 0,
         );
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\ProductStoreAvailabilityInformation[]
-     */
-    public function getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId(
-        Product $product,
-        int $domainId,
-    ): array {
-        if ($product->isMainVariant()) {
-            return [];
-        }
-
-        $stores = $this->storeFacade->getStoresByDomainId($domainId);
-
-        $isAvailable = $this->isProductAvailableOnDomainCached($product, $domainId);
-
-        $productStocksIndexedByStockId = $this->productStockFacade->getProductStocksByProductIndexedByStockId($product);
-
-        $productStoresAvailabilityInformationList = [];
-
-        $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
-
-        foreach ($stores as $store) {
-            $availabilityStatus = AvailabilityStatusEnum::IN_STOCK;
-            $availabilityInformation = t('Available immediately', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $domainLocale);
-
-            if (!$isAvailable) {
-                $availabilityStatus = AvailabilityStatusEnum::OUT_OF_STOCK;
-                $availabilityInformation = t('Unavailable', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $domainLocale);
-            } else {
-                $stock = $store->getStock();
-
-                $productStock = null;
-
-                if ($stock !== null && $stock->isEnabled($domainId)) {
-                    $productStock = $productStocksIndexedByStockId[$stock->getId()];
-                }
-
-                if ($productStock === null || $productStock->getProductQuantity() <= 0) {
-                    $weeks = $this->getTransferWeeksByDomainId($domainId);
-                    $availabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($weeks, $domainId);
-                }
-            }
-
-            $productStoresAvailabilityInformationList[$store->getId()] = new ProductStoreAvailabilityInformation(
-                $store->getName(),
-                $store->getId(),
-                $availabilityInformation,
-                $availabilityStatus,
-            );
-        }
-
-        return $productStoresAvailabilityInformationList;
-    }
-
-    protected function getWeeksAvailabilityMessageByWeeks(int $weeks, int $domainId): string
-    {
-        $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
-
-        return t(
-            '{0,1} Available in one week|[2,Inf] Available in %count% weeks',
-            ['%count%' => $weeks],
-            Translator::CUSTOMER_TRANSLATION_DOMAIN,
-            $domainLocale,
-        );
-    }
-
-    public function calculateDaysToWeeks(int $days): int
-    {
-        return (int)ceil($days / static::DAYS_IN_WEEK);
-    }
-
-    protected function getTransferWeeksByDomainId(int $domainId): int
-    {
-        return $this->calculateDaysToWeeks($this->getTransferDaysByDomainId($domainId));
     }
 
     public function getTransferDaysByDomainId(int $domainId): int

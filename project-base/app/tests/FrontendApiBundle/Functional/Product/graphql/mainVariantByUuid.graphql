@@ -15,8 +15,5 @@ query mainVariantByUuid ($uuid: Uuid!) {
             name
             status
         }
-        storeAvailabilities {
-            __typename
-        }
     }
 }

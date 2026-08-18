@@ -90,7 +90,6 @@ class ProductExportScopeConfig
             ProductExportFieldProvider::STOCK_QUANTITY,
             ProductExportFieldProvider::IS_ALLOWED_NEGATIVE_STOCK,
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT,
-            ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION,
             ProductExportFieldProvider::EXPECTED_RESTOCKING_DATE,
         ]);
         $this->addNewExportScopeRule(self::SCOPE_URL, [

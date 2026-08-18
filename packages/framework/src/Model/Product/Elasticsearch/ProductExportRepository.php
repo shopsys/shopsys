@@ -184,7 +184,6 @@ class ProductExportRepository
             ProductExportFieldProvider::PRODUCT_TYPE => $this->extractProductType($product, $domainId),
             ProductExportFieldProvider::PRIORITY_BY_PRODUCT_TYPE => $this->extractPriorityByProductType($product, $domainId),
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
-            ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION => $this->extractStoreAvailabilitiesInformation($product, $domainId),
             ProductExportFieldProvider::SELLING_FROM => $product->getSellingFrom()?->format('Y-m-d H:i:s'),
             ProductExportFieldProvider::EXPECTED_RESTOCKING_DATE => $this->productAvailabilityFacade->findValidExpectedRestockingDate($product, $domainId)?->format('Y-m-d H:i:s'),
             ProductExportFieldProvider::PRODUCT_VIDEOS => array_map(function (ProductVideo $productVideo) use ($locale) {
@@ -549,24 +548,6 @@ class ProductExportRepository
     protected function getTopProductPosition(Product $product, int $domainId): ?int
     {
         return $this->getTopProductPositionsForDomain($domainId)[$product->getId()] ?? null;
-    }
-
-    protected function extractStoreAvailabilitiesInformation(Product $product, int $domainId): array
-    {
-        $storeAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId($product, $domainId);
-
-        $result = [];
-
-        foreach ($storeAvailabilitiesInformation as $item) {
-            $result[] = [
-                'store_name' => $item->getStoreName(),
-                'store_id' => $item->getStoreId(),
-                'availability_information' => $item->getAvailabilityInformation(),
-                'availability_status' => $item->getAvailabilityStatus(),
-            ];
-        }
-
-        return $result;
     }
 
     protected function getVariantPrices(Product $product, PricingGroup $pricingGroup, int $domainId): array
