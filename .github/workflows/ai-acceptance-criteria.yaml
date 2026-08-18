@@ -226,7 +226,7 @@ jobs:
                     # and ignores any ".mcp.json" committed in the pull request.
                     claude_args: |
                         --model claude-opus-4-8
-                        --max-turns 120
+                        --max-turns 180
                         --strict-mcp-config
                         --settings '{"disableAllHooks": true}'
                         --mcp-config ${{ steps.prepare.outputs.MCP_CONFIG_FILE }}
