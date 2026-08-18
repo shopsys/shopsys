@@ -1,3 +1,4 @@
+import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Link } from 'components/Basic/Link/Link';
 import { ProductReviewItem } from 'components/Blocks/ProductReviews/ProductReviewItem';
 import { getProductReviewHtmlId } from 'components/Blocks/ProductReviews/productReviewUtils';
@@ -27,6 +28,7 @@ export const MyReviewItem: FC<MyReviewItemProps> = ({ productReview }) => {
 
     return (
         <ProductReviewItem
+            arePhotosOnGreyBackground
             className="scroll-mt-fixed-header"
             id={getProductReviewHtmlId(productReview.uuid)}
             leadingContent={
@@ -38,6 +40,16 @@ export const MyReviewItem: FC<MyReviewItemProps> = ({ productReview }) => {
             reviewStatus={productReview.status}
             status={productReview.isVerifiedPurchase ? 'verifiedPurchase' : undefined}
         >
+            {productReview.rejectedImagesCount > 0 && (
+                <div className="flex items-center gap-2 rounded-md border border-toast-border-warning bg-toast-bg-warning p-3">
+                    <InfoIcon className="size-5 shrink-0 text-icon-warning" />
+                    <p className="m-0 text-sm">
+                        {t('{{ count }} attached photos were rejected during moderation.', {
+                            count: productReview.rejectedImagesCount,
+                        })}
+                    </p>
+                </div>
+            )}
             {productReview.status === TypeProductReviewStatusEnum.Rejected && productReview.rejectionReason && (
                 <div className="flex flex-col gap-1 rounded-md border border-toast-border-error bg-toast-bg-error p-3">
                     <p className="m-0 font-semibold text-sm text-toast-text-error">{t('Rejection reason')}</p>

@@ -24,7 +24,10 @@ vi.mock('utils/formatting/useFormatDate', () => ({
 
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
     default: () => ({
-        t: (key: string) => (key === 'reviews@shopsys.cz' ? 'reviews@example.com' : key),
+        t: (key: string, options?: { count?: number }) =>
+            key === 'reviews@shopsys.cz'
+                ? 'reviews@example.com'
+                : key.replace('{{ count }}', String(options?.count ?? '{{ count }}')),
     }),
 }));
 
@@ -40,9 +43,11 @@ const productReview: TypeCustomerUserProductReviewFragment = {
     rejectionReason: 'The review violates the rules.',
     responseText: null,
     responseCreatedAt: null,
+    rejectedImagesCount: 0,
     productUuid: 'product-uuid',
     productName: 'Product',
     product: null,
+    images: [],
 };
 
 describe('MyReviewItem', () => {
@@ -139,5 +144,17 @@ describe('MyReviewItem', () => {
             'group-hover/product-link:underline',
         );
         expect(screen.getByAltText('Linked Product').parentElement).not.toHaveClass('hover:border-border-less');
+    });
+
+    test('shows the number of rejected photos', () => {
+        render(<MyReviewItem productReview={{ ...productReview, rejectedImagesCount: 2 }} />);
+
+        expect(screen.getByText('2 attached photos were rejected during moderation.')).toBeInTheDocument();
+    });
+
+    test('does not show rejected photos information when all photos are approved', () => {
+        render(<MyReviewItem productReview={productReview} />);
+
+        expect(screen.queryByText(/attached photos were rejected/)).not.toBeInTheDocument();
     });
 });

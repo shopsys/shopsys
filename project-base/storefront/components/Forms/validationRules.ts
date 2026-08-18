@@ -236,6 +236,23 @@ export const validateNewPasswordConfirm = (t: Translate): Schema => {
     return passwordConfirmValidationSchema(t, 'newPassword', t('Please enter new password again'));
 };
 
+export const validateOptionalImageFiles = (t: Translate, maxFilesCount: number): Schema => {
+    return Yup.array()
+        .of(
+            Yup.mixed().test(
+                'fileSize',
+                t('Maximum file size is {{ max }}', {
+                    max: formatBytes(VALIDATION_CONSTANTS.fileMaxSize),
+                }),
+                (value) => {
+                    const file = value as File;
+                    return file.size <= VALIDATION_CONSTANTS.fileMaxSize && file.size > 0;
+                },
+            ),
+        )
+        .max(maxFilesCount, t('Maximum files count is {{ max }}', { max: maxFilesCount }));
+};
+
 export const validateImageFile = (t: Translate): Schema => {
     return Yup.array()
         .of(

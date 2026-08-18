@@ -27,6 +27,7 @@ const createReviewEdge = (index: number) => ({
         isVerifiedPurchase: false,
         responseText: null,
         responseCreatedAt: null,
+        images: [],
     },
 });
 

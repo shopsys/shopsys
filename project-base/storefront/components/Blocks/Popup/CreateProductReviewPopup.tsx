@@ -8,6 +8,7 @@ import { StarRatingPicker } from 'components/Blocks/ProductReviews/StarRatingPic
 import { useProductReviewPolicyArticleUrl } from 'components/Blocks/ProductReviews/useProductReviewPolicyArticleUrl';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
+import { DropzoneControlled } from 'components/Forms/Dropzone/DropzoneControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
@@ -15,6 +16,7 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateProductReviewMutation } from 'graphql/requests/productReviews/mutations/CreateProductReviewMutation.generated';
@@ -24,6 +26,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { ProductReviewFormType } from 'types/form';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
+import { formatBytes } from 'utils/formaters/formatBytes';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -51,6 +54,7 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
             lastName: user?.lastName ?? guestPrefill?.lastName ?? '',
             email: user?.email ?? guestPrefill?.email ?? '',
             isAnonymous: false,
+            images: [],
         },
         isUserLoggedIn,
     );
@@ -78,6 +82,7 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
                 email: isUserLoggedIn ? null : productReviewFormData.email,
                 isAnonymous: productReviewFormData.isAnonymous,
                 orderUrlHash: orderUrlHash ?? null,
+                images: productReviewFormData.images,
             },
         });
 
@@ -212,6 +217,23 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
                                     }}
                                 />
                             )}
+
+                            <DropzoneControlled
+                                showPreviews
+                                control={formProviderMethods.control}
+                                disabled={isSubmitting}
+                                formName={formMeta.formName}
+                                label={t('Drag & drop some files here, or click to select files')}
+                                name={formMeta.fields.images.name}
+                                render={(dropzone) => <FormLine>{dropzone}</FormLine>}
+                                legend={t(
+                                    'You can attach up to {{ maxFilesCount }} photos in JPG or PNG format, each up to {{ max }}.',
+                                    {
+                                        maxFilesCount: VALIDATION_CONSTANTS.reviewMaxFilesCount,
+                                        max: formatBytes(VALIDATION_CONSTANTS.fileMaxSize),
+                                    },
+                                )}
+                            />
 
                             <CheckboxControlled
                                 control={formProviderMethods.control}
