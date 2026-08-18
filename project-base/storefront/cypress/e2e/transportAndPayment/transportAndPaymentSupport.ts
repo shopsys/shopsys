@@ -134,7 +134,7 @@ export const changeDayOfWeekInChangeTransportMutationResponse = (dayOfWeek: numb
     });
 };
 
-const getStaticOpeningHoursOfDays = (): TypeOpeningHoursOfDay[] => [
+export const getStaticOpeningHoursOfDays = (): TypeOpeningHoursOfDay[] => [
     {
         __typename: 'OpeningHoursOfDay',
         date: '2024-02-19T00:00:00+01:00',

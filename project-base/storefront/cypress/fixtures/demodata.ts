@@ -91,6 +91,7 @@ export const staticData = {
         philips54CRT: {
             uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb',
             catnum: '9176588',
+            name: '54" Philips CRT [V]',
         },
         panasonicDmcFt5ep: {
             catnum: '5965907',

@@ -65,6 +65,7 @@
 | 2-3-3 | [Product Variant Add] should add variant product to cart from product detail | add to cart popup | productAddToCart.cy.ts |
 | 2-3-4 | [Promoted Products Add] should add product to cart from promoted products on homepage | add to cart popup | productAddToCart.cy.ts |
 | 2-3-5 | [Search Page Add] should add product to cart from search results page | add to cart popup | productAddToCart.cy.ts |
+| 2-3-6 | [Product Card Quantity Adjust] should switch between add to cart button and quantity spinbox | product card quantity spinbox | productAddToCart.cy.ts |
 
 ## Snapshot Group - COMPARISON
 
@@ -84,10 +85,18 @@
 | 6-0-2 | should open edit user popup and edit a user | edit-user-popup | customerUsers.cy.ts |
 | 6-0-3 | should open delete user popup and delete a user | delete-user-popup | customerUsers.cy.ts |
 
+## Snapshot Group - DELIVERY_OPTIONS
+
+| Snapshot Id | Test Name | Snapshot Detail | File |
+|-------------|-----------|-----------------|------|
+| 17-0-0 | [Regular Product] should open the delivery options popup without a variant select | popup for a regular product | deliveryOptionsPopup.cy.ts |
+| 17-0-1 | [Main Variant] should require choosing a variant and load its delivery options after the choice | popup with an unselected variant select | deliveryOptionsPopup.cy.ts |
+
 ## Snapshot Group - FILTER
 
 | Snapshot Id | Test Name | Snapshot Detail | File |
 |-------------|-----------|-----------------|------|
+| 12-0-0 | [Product List View Mode] should switch product listing to list view and persist it after reload | product listing in list view | categoryDetailFilterAndSort.cy.ts |
 | 12-1-0 | [Parameter Checkbox Filter] should filter products by parameter checkbox and verify URL persistence | parameter checkbox filter applied | parameterFilter.cy.ts |
 | 12-1-1 | [Multiple Parameter Filters] should combine multiple parameter filters and verify product count changes | multiple parameter filters | parameterFilter.cy.ts |
 | 12-1-2 | [Sort With Parameter Filter] should change sort order while parameter filter is active | sorted with parameter filter | parameterFilter.cy.ts |
@@ -217,3 +226,4 @@
 | 5-0-1 | [Product Detail] should visit product detail with screenshot | product detail | simpleVisitsWithScreenshots.cy.ts |
 | 5-0-2 | [Category Detail] should visit category detail with screenshot | category detail | simpleVisitsWithScreenshots.cy.ts |
 | 5-0-3 | [Blog Detail] should visit blog article detail with screenshot | blog article detail | simpleVisitsWithScreenshots.cy.ts |
+| 5-0-4 | [Article Detail] should visit article detail with product hero and screenshot | article detail | simpleVisitsWithScreenshots.cy.ts |

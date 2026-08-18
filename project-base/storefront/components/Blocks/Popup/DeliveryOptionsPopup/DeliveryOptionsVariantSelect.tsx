@@ -31,18 +31,23 @@ export const DeliveryOptionsVariantSelect: FC<DeliveryOptionsVariantSelectProps>
             renderValue={({ value }) => <DeliveryOptionsVariantContent product={value} />}
             selectClassName="h-auto min-h-14"
             tid={TIDs.delivery_options_variant_select}
-            renderOption={({ value }) => <DeliveryOptionsVariantContent product={value} />}
+            renderOption={({ value }) => (
+                <DeliveryOptionsVariantContent
+                    product={value}
+                    tid={TIDs.delivery_options_variant_option_ + value.uuid}
+                />
+            )}
             onSelectOption={({ value }) => onSelectProduct(value.uuid)}
         />
     );
 };
 
-const DeliveryOptionsVariantContent: FC<{ product: DeliveryOptionsProduct }> = ({ product }) => {
+const DeliveryOptionsVariantContent: FC<{ product: DeliveryOptionsProduct; tid?: string }> = ({ product, tid }) => {
     const formatPrice = useFormatPrice();
 
     return (
-        <span className="flex min-w-0 flex-1 items-center gap-3">
-            <span className="relative h-10 w-10 shrink-0">
+        <span className="flex min-w-0 flex-1 items-center gap-3" data-tid={tid}>
+            <span className="relative h-10 w-10 shrink-0" data-tid={TIDs.delivery_options_variant_image}>
                 <Image
                     fill
                     alt={product.mainImage?.name ?? product.fullName}
