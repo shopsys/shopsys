@@ -67,9 +67,8 @@ opcache.use_cwd=1
 | openssl        | needed by Composer for secure communication                                                                                                                   |
 | pdo            | required by package `doctrine/orm`                                                                                                                            |
 | pdo_pgsql      | required to support `pdo_pgsql` database driver                                                                                                               |
-| pgsql          | used in acceptance for fast repopulating of database using `COPY` command                                                                                     |
 | redis          | required by package `snc/redis-bundle` and sessions stored in Redis (minimal version is 4.1.1 because of lazyloading)                                         |
 | simplexml      | used by Heureka product feed module in `\Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule`                                   |
 | tokenizer      | used for `T_*` constants by `shopsys\coding-standards` package                                                                                                |
 | xml            | used by Phing for XML parsing                                                                                                                                 |
-| zip            | used by facebook package during the acceptance tests                                                                                                          |
+| zip            | used by Composer to extract downloaded packages                                                                                                               |

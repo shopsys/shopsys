@@ -20,12 +20,6 @@
 
 1.  Check if all tests are passing using `php phing tests`
 
-1.  Run acceptance tests `php phing tests-acceptance`
-
-    !!! tip
-
-        We suggest you running acceptance tests on your Continuous Integration server because it takes several minutes to run them.
-
 1.  [Create commit](https://git-scm.com/docs/git-commit) with descriptive commit message about changes you have made.
 
     !!! tip

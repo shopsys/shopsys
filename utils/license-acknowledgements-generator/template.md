@@ -45,11 +45,6 @@ Image: `ghcr.io/joeferner/redis-commander:latest`
 License: MIT  
 https://github.com/joeferner/redis-commander/blob/master/LICENSE
 
-### Selenium Docker
-Image: `seleniarm/standalone-firefox:4.9.0`  
-License: Apache License 2.0  
-https://github.com/seleniumhq-community/docker-seleniarm/blob/trunk/LICENSE.md
-
 ### Adminer
 Image: `adminer:4.7`  
 License: Apache License 2.0 or GPL 2  

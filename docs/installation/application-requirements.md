@@ -14,7 +14,6 @@ To be able to install, develop and run Shopsys Platform, the system should have 
     - [Java SDK](https://www.oracle.com/technetwork/java/javase/overview/index.html)
     - [ICU Analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
 - [SMTP server](https://github.com/mailhog/MailHog)
-- [Selenium Server](https://www.npmjs.com/package/selenium-standalone#install--run)
 - (_optional_) [Nginx](http://nginx.org/en/docs/install.html)
 
 ## Windows
@@ -33,7 +32,6 @@ To be able to install, develop and run Shopsys Platform, the system should have 
     - [Java SDK](https://www.oracle.com/technetwork/java/javase/overview/index.html)
     - [ICU Analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
 - [SMTP server](https://www.hmailserver.com/)
-- [Selenium Server](https://www.npmjs.com/package/selenium-standalone#install--run)
 - (_optional_) [Nginx](http://nginx.org/en/docs/install.html)
 
 !!! note "Info"

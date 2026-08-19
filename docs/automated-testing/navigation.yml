@@ -1,5 +1,3 @@
 arrange:
     - index.md
     - introduction-to-automated-testing.md
-    - running-acceptance-tests.md
-    - best-practices-for-writing-acceptance-tests.md

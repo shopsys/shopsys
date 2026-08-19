@@ -4,7 +4,7 @@ description: >
   This skill MUST be used when the user asks to write tests, add tests, create test cases,
   run/execute/re-run/debug tests, test a specific class or method, or when working on any
   *Test.php file in this Shopsys application. Applies codebase-specific best practices across
-  unit, functional, GraphQL API, smoke, and acceptance test layers.
+  unit, functional, GraphQL API, and smoke test layers.
 version: 1.0.0
 ---
 
