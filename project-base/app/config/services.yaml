@@ -82,6 +82,11 @@ services:
 
     App\FrontendApi\Model\Token\TokenAuthenticator: ~
 
+    App\FrontendApi\Mutation\Customer\User\CustomerUserPasswordRecoveryMutation:
+        arguments:
+            $passwordRecoveryIpRateLimiter: '@limiter.frontend_api_password_recovery_ip'
+            $passwordRecoveryEmailRateLimiter: '@limiter.frontend_api_password_recovery_email'
+
     App\FrontendApi\Mutation\Login\LoginMutation:
         arguments:
             $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
@@ -402,6 +407,9 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation:
         alias: App\FrontendApi\Mutation\Customer\User\CustomerUserMutation
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserPasswordRecoveryMutation:
+        alias: App\FrontendApi\Mutation\Customer\User\CustomerUserPasswordRecoveryMutation
 
     Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
         alias: App\FrontendApi\Mutation\Login\LoginMutation

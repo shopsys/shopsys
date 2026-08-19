@@ -28,6 +28,15 @@ snc_redis:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:doctrine:query:'
                 connection_timeout: 2
                 read_write_timeout: 5
+        frontend_api_password_recovery_rate_limiter:
+            type: 'phpredis'
+            alias: 'frontend_api_password_recovery_rate_limiter'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
+            options:
+                prefix: '%env(REDIS_PREFIX)%:rate_limiter:frontend_api_password_recovery:'
+                connection_timeout: 2
+                read_write_timeout: 5
         frontend_api_refresh_token:
             type: 'phpredis'
             alias: 'frontend_api_refresh_token'

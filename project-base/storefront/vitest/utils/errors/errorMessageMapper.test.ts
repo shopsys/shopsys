@@ -92,6 +92,14 @@ describe('getErrorMessage', () => {
         expect(result).toContain('Too many login attempts');
     });
 
+    test('should return translated message for too-many-password-recovery-attempts', () => {
+        const { t } = createMockT();
+
+        const result = getErrorMessage('too-many-password-recovery-attempts', t);
+
+        expect(result).toContain('Too many password recovery attempts');
+    });
+
     test('should return translated message for too-many-store-search-attempts', () => {
         const { t } = createMockT();
 
@@ -180,6 +188,7 @@ describe('getErrorMessage', () => {
             ['register-by-order-is-not-possible', 'It was not possible to create register new user from the order'],
             ['store-not-found', 'Store not found.'],
             ['too-many-login-attempts', 'Too many login attempts. Try again later.'],
+            ['too-many-password-recovery-attempts', 'Too many password recovery attempts. Try again later.'],
             ['too-many-store-search-attempts', 'Too many store search attempts. Try again later.'],
         ] as const)('should return translation for %s', (code, expectedMessage) => {
             const { t } = createMockT();

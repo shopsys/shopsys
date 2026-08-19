@@ -1,5 +1,15 @@
 framework:
     rate_limiter:
+        frontend_api_password_recovery_email:
+            policy: sliding_window
+            limit: 10
+            interval: '1 hour'
+            cache_pool: frontend_api_password_recovery_rate_limiter_cache
+        frontend_api_password_recovery_ip:
+            policy: sliding_window
+            limit: 40
+            interval: '1 hour'
+            cache_pool: frontend_api_password_recovery_rate_limiter_cache
         frontend_api_stores_search:
             policy: fixed_window
             limit: 10

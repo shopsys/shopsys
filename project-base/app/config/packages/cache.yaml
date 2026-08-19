@@ -30,3 +30,6 @@ framework:
             mcp_rate_limiter_cache:
                 adapter: cache.adapter.redis
                 provider: snc_redis.mcp_rate_limiter
+            frontend_api_password_recovery_rate_limiter_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.frontend_api_password_recovery_rate_limiter
