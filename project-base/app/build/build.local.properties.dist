@@ -1,2 +1,1 @@
-path.chromedriver.executable=/opt/chromedriver/bin/chromedriver
 path.composer.executable=composer
