@@ -3805,7 +3805,7 @@ msgstr ""
 msgid "exists"
 msgstr ""
 
-msgid "from oldReadableValue to newReadableValue"
+msgid "from %oldReadableValue% to %newReadableValue%"
 msgstr ""
 
 msgid "full"

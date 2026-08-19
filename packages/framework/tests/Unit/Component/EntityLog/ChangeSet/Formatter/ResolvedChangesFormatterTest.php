@@ -128,7 +128,7 @@ class ResolvedChangesFormatterTest extends TestCase
     {
         // simulates a project translation where the translator mistakenly referenced the raw values instead of the readable ones
         $this->injectTranslatorStub([
-            'from oldReadableValue to newReadableValue' => 'z oldValue na newValue',
+            'from %oldReadableValue% to %newReadableValue%' => 'z %oldValue% na %newValue%',
         ]);
 
         $formattedChanges = $this->resolvedChangesFormatter->formatResolvedChanges([
@@ -142,7 +142,7 @@ class ResolvedChangesFormatterTest extends TestCase
         ]);
 
         $this->assertSame(
-            'Attribute <code>note</code> was changed z oldValue na newValue',
+            'Attribute <code>note</code> was changed z %oldValue% na %newValue%',
             $formattedChanges,
         );
     }

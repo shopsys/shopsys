@@ -20,9 +20,9 @@ abstract class AbstractChangeSetFormatter
      */
     protected function formatFromToChanges(mixed $oldReadableValue, mixed $newReadableValue): string
     {
-        return t('from oldReadableValue to newReadableValue', [
-            'oldReadableValue' => $this->formatCode($oldReadableValue),
-            'newReadableValue' => $this->formatCode($newReadableValue),
+        return t('from %oldReadableValue% to %newReadableValue%', [
+            '%oldReadableValue%' => $this->formatCode($oldReadableValue),
+            '%newReadableValue%' => $this->formatCode($newReadableValue),
         ]);
     }
 }
