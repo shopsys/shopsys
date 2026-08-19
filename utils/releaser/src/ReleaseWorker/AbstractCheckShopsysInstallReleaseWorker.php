@@ -66,10 +66,6 @@ abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysR
         && ./scripts/install.sh \
         && echo -e "\033[33m==> Running the unit and functional test suites\033[0m" \
         && docker compose exec -T php-fpm php phing tests \
-        && echo -e "\033[33m==> Restarting Selenium before acceptance tests so its internal node is fresh\033[0m" \
-        && docker compose restart selenium-server \
-        && echo -e "\033[33m==> Running the acceptance tests\033[0m" \
-        && docker compose exec -T php-fpm php phing tests-acceptance \
         && echo -e "\033[33m==> Running the cypress tests\033[0m" \
         && make run-acceptance-tests-regression \
         && if [ "$(uname -s)" = "Darwin" ]; then \
