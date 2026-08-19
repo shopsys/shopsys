@@ -80,14 +80,18 @@ const FooterMenuItemTitle: FC<{ title: string }> = ({ title }) => {
 };
 
 const FooterMenuItemLink: FC<{ item: TypeSimpleNotBlogArticleFragment }> = ({ item }) => {
+    // ArticleLink can point to any URL (product, category, external site, ...), so it must not be
+    // routed as an article detail page and has to go through the friendly URL resolution instead
+    const isArticleSite = item.__typename === 'ArticleSite';
+
     return (
         <ExtendedNextLink
             className="block font-secondary font-semibold text-sm text-text-default tracking-wider no-underline hover:text-text-default hover:underline"
-            href={item.__typename === 'ArticleSite' ? item.slug : item.url}
+            href={isArticleSite ? item.slug : item.url}
             rel={item.external ? 'nofollow noreferrer noopener' : undefined}
-            skeletonType="article"
+            skeletonType={isArticleSite ? 'article' : undefined}
             target={item.external ? '_blank' : undefined}
-            type="article"
+            type={isArticleSite ? 'article' : undefined}
         >
             {item.name}
         </ExtendedNextLink>

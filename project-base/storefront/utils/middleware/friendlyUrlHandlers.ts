@@ -8,9 +8,16 @@ export const handleSlugTypeQueryParam = (
     search: string,
     requestUrl: string,
     currentLocale: string | undefined,
+    pathname: string,
 ): NextResponse | null => {
     const queryParams = new URLSearchParams(search);
     const slugTypeQueryParam = queryParams.get('slugType');
+
+    // the slugType param can be carried over to the error page route when a friendly URL page fails,
+    // in which case it must not rewrite the error page back to the dynamic page (e.g. querying slug "404")
+    if (isErrorPagePath(pathname)) {
+        return null;
+    }
 
     if (slugTypeQueryParam && isFriendlyPageTypesValue(slugTypeQueryParam)) {
         return rewriteDynamicPages(slugTypeQueryParam as FriendlyPageTypesValue, requestUrl, search, currentLocale);
@@ -107,6 +114,9 @@ const createErrorResponse = (statusCode: number, request: NextRequest): NextResp
 };
 
 const isInRange = (number: number, start: number, end: number): boolean => number >= start && number <= end;
+
+// pathname comes normalized without the leading slash and may be prefixed with a locale (e.g. "sk/404")
+const isErrorPagePath = (pathname: string): boolean => `/${pathname}`.endsWith(ERROR_PAGE_ROUTE);
 
 function isFriendlyPageTypesValue(value: string): value is FriendlyPageTypesValue {
     return Object.values(FriendlyPagesTypes).includes(value as FriendlyPageTypesValue);
