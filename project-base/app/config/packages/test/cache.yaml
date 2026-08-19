@@ -25,3 +25,6 @@ framework:
             apply_code_to_cart_rate_limiter_cache:
                 adapter: cache.adapter.array
                 provider: ~
+            frontend_api_password_recovery_rate_limiter_cache:
+                adapter: cache.adapter.filesystem
+                provider: ~

@@ -32,6 +32,7 @@ const ApplicationErrors = {
     'store-not-found': 'flash-message',
     'too-many-code-application-attempts': 'flash-message',
     'too-many-login-attempts': 'flash-message',
+    'too-many-password-recovery-attempts': 'flash-message',
     'too-many-store-search-attempts': 'flash-message',
     // Cart mutation errors - handled by hooks, messages centralized here
     'add-order-items-error': 'flash-message',
