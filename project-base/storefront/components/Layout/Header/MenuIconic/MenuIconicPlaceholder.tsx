@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
-import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
+import { StoreIcon } from 'components/Basic/Icon/StoreIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -19,7 +19,7 @@ export const MenuIconicPlaceholder: FC = () => {
         <ul className="flex lg:gap-7">
             <li className="max-lg:hidden">
                 <ExtendedNextLink className={placeholderItemTwClass} href={storesUrl} type="stores">
-                    <MarkerIcon className="size-6" />
+                    <StoreIcon className="size-6" />
                     {t('Stores')}
                 </ExtendedNextLink>
             </li>

@@ -158,7 +158,8 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
             {requiresAction && !isMaxTransactionCountReached && (
                 <Button
                     className={className}
-                    hasDisabledLook={isDisabled}
+                    disabled={isDisabled || initiatedPaymentGate}
+                    hasDisabledLook={isDisabled || initiatedPaymentGate}
                     size="xlarge"
                     onClick={handlePaymentButtonClick}
                 >

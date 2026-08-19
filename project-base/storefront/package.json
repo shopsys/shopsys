@@ -30,6 +30,7 @@
         "@hookform/resolvers": "~5.4.0",
         "@next/bundle-analyzer": "~15.5.18",
         "@radix-ui/react-popover": "^1.1.15",
+        "@radix-ui/react-tooltip": "^1.2.16",
         "@sentry/nextjs": "~10.58.0",
         "@urql/devtools": "~2.0.3",
         "@urql/exchange-auth": "~2.2.1",

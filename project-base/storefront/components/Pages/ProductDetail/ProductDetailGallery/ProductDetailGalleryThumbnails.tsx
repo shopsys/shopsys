@@ -11,7 +11,6 @@ import { ProductDetailGalleryItem } from './ProductDetailGallery.types';
 type ProductDetailGalleryThumbnailsProps = {
     galleryItems: ProductDetailGalleryItem[];
     selectedIndex: number;
-    productName: string;
     onOpenGallery: (initialIndex: number) => void;
 };
 
@@ -20,7 +19,6 @@ const VISIBLE_THUMBNAIL_COUNT = 5;
 export const ProductDetailGalleryThumbnails: FC<ProductDetailGalleryThumbnailsProps> = ({
     galleryItems,
     selectedIndex,
-    productName,
     onOpenGallery,
 }) => {
     const { t } = useTranslation();
@@ -69,10 +67,9 @@ export const ProductDetailGalleryThumbnails: FC<ProductDetailGalleryThumbnailsPr
                         >
                             {isImage && (
                                 <Image
-                                    alt={galleryItem.name || `${productName}-${index}`}
+                                    alt=""
                                     className="size-full object-contain object-center p-1 mix-blend-multiply"
                                     height={64}
-                                    sizes="(max-width: 1023px) 60px, 56px"
                                     src={galleryItem.url}
                                     tid={TIDs.product_gallery_image}
                                     width={64}
@@ -82,15 +79,15 @@ export const ProductDetailGalleryThumbnails: FC<ProductDetailGalleryThumbnailsPr
                             {isVideo && (
                                 <>
                                     <YouTubeThumbnail
-                                        alt={galleryItem.description ?? t('Product Video')}
+                                        alt=""
                                         className="size-full object-contain object-center p-1 mix-blend-multiply"
                                         height={64}
                                         tid={TIDs.product_gallery_video}
                                         videoId={galleryItem.token}
                                         width={64}
                                     />
-                                    <span className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-lg">
-                                        <PlayIcon className="size-6 rounded-full bg-background-accent text-text-inverted sm:size-8" />
+                                    <span className="absolute inset-0 flex items-center justify-center">
+                                        <PlayIcon className="size-4 rounded-full bg-background-accent text-text-inverted sm:size-8" />
                                     </span>
                                 </>
                             )}

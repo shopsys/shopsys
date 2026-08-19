@@ -65,9 +65,9 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         <Image
                             alt={complaintItem.product?.mainImage?.name ?? complaintItem.productName}
                             className="size-full object-contain mix-blend-multiply"
-                            height={96}
+                            height={80}
                             src={complaintItem.product?.mainImage?.url}
-                            width={96}
+                            width={80}
                         />
                     </div>
 
@@ -122,9 +122,9 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                                             alt={file.anchorText || `${complaintItem.productName}-${index}`}
                                             className="size-12 object-contain mix-blend-multiply"
                                             hash={file.url.split('?')[1]}
-                                            height={96}
+                                            height={48}
                                             src={file.url.split('?')[0]}
-                                            width={96}
+                                            width={48}
                                         />
 
                                         {isWithAdditionalImages && (

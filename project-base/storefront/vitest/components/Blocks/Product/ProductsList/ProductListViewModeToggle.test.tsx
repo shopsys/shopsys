@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ProductListViewModeType } from 'components/Blocks/Product/ProductsList/ProductListItem';
 import { ProductListViewModeToggle } from 'components/Blocks/Product/ProductsList/ProductListViewModeToggle';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { renderWithTooltipProvider as render } from 'vitest/helpers/renderWithTooltipProvider';
 
 type TestCookiesStore = {
     productListViewMode: ProductListViewModeType;
@@ -90,5 +91,16 @@ describe('ProductListViewModeToggle', () => {
         await user.keyboard('{Enter}');
 
         expect(setCookiesStoreStateMock).toHaveBeenCalledWith({ productListViewMode: 'list' });
+    });
+
+    test.each([
+        { buttonName: 'Show products in grid view', tooltipLabel: 'Grid view' },
+        { buttonName: 'Show products in list view', tooltipLabel: 'List view' },
+    ])('shows the $tooltipLabel tooltip on focus', ({ buttonName, tooltipLabel }) => {
+        render(<ProductListViewModeToggle />);
+
+        fireEvent.focus(screen.getByRole('button', { name: buttonName }));
+
+        expect(screen.getByRole('tooltip')).toHaveTextContent(tooltipLabel);
     });
 });

@@ -31,7 +31,8 @@ export const CategoryDetailProductsWrapperPlaceholder: FC<CategoryDetailProducts
                     productListViewMode={productListViewMode}
                 />
             ))}
-            <li className="col-span-full row-start-2 mx-auto justify-center">
+
+            <li className="col-span-full row-start-2 mx-auto w-full min-w-0 justify-center">
                 <Adverts isSingle currentCategory={category} positionName="productListSecondRow" />
             </li>
         </ul>

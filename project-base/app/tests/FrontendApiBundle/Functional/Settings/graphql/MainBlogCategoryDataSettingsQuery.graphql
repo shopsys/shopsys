@@ -1,6 +1,7 @@
 query MainBlogCategoryDataSettingsQuery {
     settings {
         mainBlogCategoryData {
+            mainBlogCategoryName
             mainBlogCategoryUrl
             mainBlogCategoryMainImage {
                 name

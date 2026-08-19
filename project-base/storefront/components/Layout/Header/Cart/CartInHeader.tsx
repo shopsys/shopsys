@@ -78,7 +78,6 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                 data-tid={TIDs.header_cart}
                 role="button"
                 tabIndex={!cart?.items.length ? -1 : 0}
-                title={t('Cart')}
                 className={twMergeCustom(
                     'group relative vl:flex outline-hidden',
                     isActive && 'z-aboveOverlay',
@@ -156,8 +155,13 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                     <CartCount>{cart?.items.length ?? 0}</CartCount>
                 </button>
 
-                <Drawer isActive={isActive} setIsActive={setIsActive} title={t('Cart')}>
-                    <CartInHeaderList />
+                <Drawer
+                    className="flex flex-col overflow-hidden"
+                    isActive={isActive}
+                    setIsActive={setIsActive}
+                    title={t('Cart')}
+                >
+                    <CartInHeaderList hideFocusTrap isDrawer />
                 </Drawer>
 
                 <CartInHeaderPopover isActive={isActiveDelayed} isCartEmpty={!cart?.items.length}>

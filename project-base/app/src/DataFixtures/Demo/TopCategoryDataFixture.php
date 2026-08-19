@@ -23,14 +23,14 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     {
         $categories = [
             $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
+            $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
+            $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class),
+            $this->getReference(CategoryDataFixture::CATEGORY_PHONES, Category::class),
+            $this->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class),
             $this->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class),
             $this->getReference(CategoryDataFixture::CATEGORY_TOYS, Category::class),
-            $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
-            $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS, Category::class),
-            $this->getReference(CategoryDataFixture::CATEGORY_COFFEE, Category::class),
             $this->getReference(CategoryDataFixture::CATEGORY_GARDEN_TOOLS, Category::class),
             $this->getReference(CategoryDataFixture::CATEGORY_FOOD, Category::class),
-            $this->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class),
         ];
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {

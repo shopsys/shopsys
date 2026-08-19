@@ -1,5 +1,5 @@
-import { MailSecondaryIcon } from 'components/Basic/Icon/MailSecondaryIcon';
-import { PhoneSecondaryIcon } from 'components/Basic/Icon/PhoneSecondaryIcon';
+import { MailIcon } from 'components/Basic/Icon/MailIcon';
+import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { removeSpaces } from 'utils/removeSpaces';
 import { useContacts } from 'utils/useContacts';
@@ -19,7 +19,7 @@ export const FooterContacts: FC = () => {
                     openingHours,
                 })}
                 href={`tel:${cleanPhone}`}
-                icon={<PhoneSecondaryIcon className="size-6" />}
+                icon={<PhoneIcon className="size-6" />}
                 subtitle={openingHours}
                 title={phone}
             />
@@ -31,7 +31,7 @@ export const FooterContacts: FC = () => {
                     emailSubtitle,
                 })}
                 href="mailto:info@shopsys.cz"
-                icon={<MailSecondaryIcon className="size-6" />}
+                icon={<MailIcon className="size-6" />}
                 subtitle={emailSubtitle}
                 title={email}
             />

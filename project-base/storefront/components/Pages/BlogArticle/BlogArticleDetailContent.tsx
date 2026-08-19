@@ -26,17 +26,22 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
 
     return (
         <VerticalStack gap="md">
-            <BlogLayout activeCategoryUuid={blogArticle.mainBlogCategoryUuid} headings={headings}>
-                <h1 id={ARTICLE_INTRODUCTION_ANCHOR_ID} className="scroll-mt-3">
-                    {blogArticle.seoH1 || blogArticle.name}
-                </h1>
-
+            <BlogLayout
+                activeCategoryUuid={blogArticle.mainBlogCategoryUuid}
+                heading={
+                    <h1 id={ARTICLE_INTRODUCTION_ANCHOR_ID} className="scroll-mt-fixed-header">
+                        {blogArticle.seoH1 || blogArticle.name}
+                    </h1>
+                }
+                headings={headings}
+            >
                 {blogArticle.mainImage && (
-                    <div className="flex overflow-hidden">
+                    <div className="flex overflow-hidden rounded-xl">
                         <Image
                             priority
                             alt={blogArticle.mainImage.name || blogArticle.name}
                             height={600}
+                            sizes="(max-width: 1239px) 100vw, 840px"
                             src={blogArticle.mainImage.url}
                             width={1280}
                         />
@@ -54,7 +59,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                         <div className="mr-3.5 flex items-center gap-2" data-tid={TIDs.blog_article_author}>
                             {blogArticle.author.mainImage ? (
                                 <Image
-                                    alt={blogArticle.author.mainImage.name || blogArticle.author.name}
+                                    alt=""
                                     className="size-6 rounded-full object-cover"
                                     height={24}
                                     src={blogArticle.author.mainImage.url}
@@ -85,7 +90,12 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                 </div>
 
                 {!!blogArticle.text && (
-                    <GrapesJsParser text={htmlWithHeadingAnchors} visibleSliderItems={VISIBLE_SLIDER_ITEMS_ARTICLE} />
+                    <div data-tid={TIDs.blog_article_content}>
+                        <GrapesJsParser
+                            text={htmlWithHeadingAnchors}
+                            visibleSliderItems={VISIBLE_SLIDER_ITEMS_ARTICLE}
+                        />
+                    </div>
                 )}
 
                 {blogArticle.author && <BlogArticleAuthorBox author={blogArticle.author} />}

@@ -85,7 +85,7 @@ export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthentic
                     {shouldShowLabel && <span className="hidden lg:inline-block">{t('Account')}</span>}
                 </MenuIconicItemLink>
 
-                <Drawer isActive={isActive} setIsActive={setIsActive} title={t('My account')}>
+                <Drawer isActive={isActive} setIsActive={setIsActive} title={t('Account')}>
                     <MenuIconicItemUserUnauthenticatedContent
                         loginFormName={loginFormName}
                         onMenuClose={() => setIsActive(false)}

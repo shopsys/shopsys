@@ -8,6 +8,9 @@ query NavigationQuery {
             columnNumber
             categories {
                 name
+                children {
+                    name
+                }
             }
         }
     }

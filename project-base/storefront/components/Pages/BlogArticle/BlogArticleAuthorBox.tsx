@@ -18,7 +18,7 @@ export const BlogArticleAuthorBox: FC<BlogArticleAuthorBoxProps> = ({ author }) 
             <div className="flex items-start gap-4">
                 {author.mainImage ? (
                     <Image
-                        alt={author.mainImage.name || author.name}
+                        alt=""
                         className="size-16 shrink-0 rounded-full object-cover"
                         height={64}
                         src={author.mainImage.url}

@@ -1,13 +1,14 @@
 import { Webline } from 'components/Layout/Webline/Webline';
-import dynamic from 'next/dynamic';
+import { lazy, Suspense } from 'react';
 import { useDeferredRender } from 'utils/useDeferredRender';
 import type { NavigationProps } from './Navigation';
 import { NavigationPlaceholder } from './NavigationPlaceholder';
 
-const Navigation = dynamic<NavigationProps>(() => import('./Navigation').then((component) => component.Navigation), {
-    ssr: false,
-    loading: () => <NavigationPlaceholder />,
-});
+const Navigation = lazy(() =>
+    import('./Navigation').then((component) => ({
+        default: component.Navigation,
+    })),
+);
 
 type DeferredNavigationProps = {
     isDesktop?: boolean;
@@ -24,7 +25,13 @@ const DesktopDeferredNavigation: FC<DesktopDeferredNavigationProps> = ({ navigat
 
     return (
         <Webline className="relative">
-            {shouldRender ? <Navigation navigation={navigation} /> : <NavigationPlaceholder navigation={navigation} />}
+            {shouldRender ? (
+                <Suspense fallback={<NavigationPlaceholder navigation={navigation} />}>
+                    <Navigation navigation={navigation} />
+                </Suspense>
+            ) : (
+                <NavigationPlaceholder navigation={navigation} />
+            )}
         </Webline>
     );
 };

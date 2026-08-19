@@ -20,6 +20,7 @@ type CellProps = {
     isWithoutWrap?: boolean;
     isHead?: boolean;
     colSpan?: number;
+    scope?: 'col' | 'colgroup' | 'row' | 'rowgroup';
 };
 
 export const Row: FC = ({ children, className }) => (
@@ -28,12 +29,13 @@ export const Row: FC = ({ children, className }) => (
     </tr>
 );
 
-export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, className, colSpan }) => {
+export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, className, colSpan, scope }) => {
     const Tag = isHead ? 'th' : 'td';
 
     return (
         <Tag
             colSpan={colSpan}
+            scope={isHead ? scope : undefined}
             className={twMergeCustom(
                 'px-2 py-4 text-sm',
 

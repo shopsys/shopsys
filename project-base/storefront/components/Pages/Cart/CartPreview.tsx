@@ -60,7 +60,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
     return (
         <div
             className={twJoin(
-                'relative flex w-full vl:max-w-[495px] flex-col gap-4 rounded-xl bg-background-more px-4 py-6 font-secondary font-semibold sm:p-8',
+                'relative flex w-full vl:max-w-123.75 flex-col gap-4 rounded-xl bg-background-more px-4 py-6 font-secondary font-semibold sm:p-8',
                 !isFirstStep && 'text-sm',
             )}
         >
@@ -108,7 +108,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
             )}
 
             {(hasProductDiscounts || promoCodes.length > 0) && (
-                <div className={twJoin('flex flex-col gap-4', !isFirstStep && 'border-border-less border-t-1 pt-4')}>
+                <div className={twJoin('flex flex-col gap-4', !isFirstStep && 'border-border-less border-t pt-4')}>
                     {isPriceVisible(cart.totalItemsPriceBeforeDiscount.priceWithVat) && hasTotalDiscounts && (
                         <div className="flex items-center justify-between">
                             <span>{t('Price before discount')}</span>
@@ -164,7 +164,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
                     )}
 
                     {hasTotalDiscounts && (
-                        <div className="flex items-center justify-between border-border-less border-t-1 pt-4">
+                        <div className="flex items-center justify-between border-border-less border-t pt-4">
                             <span className="text-price-discounted">{t('Save in total')}</span>
 
                             <span className="whitespace-nowrap text-price-discounted">
@@ -181,7 +181,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
                     className={twJoin(
                         'flex justify-between gap-2 align-baseline',
                         (!isFirstStep || hasProductDiscounts || promoCodes.length > 0) &&
-                            'border-border-less border-t-[3px] pt-4',
+                            'border-border-less border-t-3 pt-4',
                     )}
                 >
                     <span>{t('Total')}</span>

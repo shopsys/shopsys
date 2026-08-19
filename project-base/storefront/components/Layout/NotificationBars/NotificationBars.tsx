@@ -61,6 +61,7 @@ export const NotificationBars: FC = () => {
                     </Webline>
                 </section>
             ))}
+
             {loggedAsUserEmail && (
                 <section className="bg-background-error py-2">
                     <Webline>

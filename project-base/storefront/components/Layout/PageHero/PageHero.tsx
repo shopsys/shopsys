@@ -5,12 +5,14 @@ import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 
 export type PageHeroVariant = 'default' | 'error' | 'info' | 'success';
+export type PageHeroDescriptionRole = 'alert' | 'status';
 
 type BasePageHeroProps = {
     icon: React.ElementType;
     title: string | ReactNode;
     titleTid?: string;
     description?: string | ReactNode;
+    descriptionRole?: PageHeroDescriptionRole;
     descriptionTid?: string;
     variant?: PageHeroVariant;
 };
@@ -34,6 +36,7 @@ export const PageHero: FC<PageHeroProps> = ({
     title,
     titleTid,
     description,
+    descriptionRole,
     descriptionTid,
     actionHref,
     actionTitle,
@@ -64,11 +67,9 @@ export const PageHero: FC<PageHeroProps> = ({
 
             {description && (
                 <p
-                    aria-atomic="true"
-                    aria-live="polite"
                     className="mx-auto max-w-130 text-balance text-center"
                     data-tid={descriptionTid}
-                    role="alert"
+                    role={descriptionRole}
                 >
                     {description}
                 </p>

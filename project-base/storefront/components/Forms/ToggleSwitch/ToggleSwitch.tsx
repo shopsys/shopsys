@@ -15,12 +15,12 @@ type ToggleSwitchProps = NativeProps & {
 
 export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
     ({ id, name, onChange, value, onBlur, ariaLabel }, toggleSwitchForwardedRef) => (
-        <div className="relative flex h-6 w-11 items-center justify-center">
+        <div className="relative flex h-6 w-11 shrink-0 items-center justify-center">
             <input
                 aria-label={ariaLabel}
-                aria-checked={value}
-                checked={value}
-                className="peer h-5 w-10 outline-hidden"
+                aria-checked={!!value}
+                checked={!!value}
+                className="peer absolute inset-0 z-above size-full cursor-pointer appearance-none rounded-full outline-hidden"
                 id={id}
                 name={name}
                 ref={toggleSwitchForwardedRef}
@@ -29,18 +29,15 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
                 onBlur={onBlur}
                 onChange={onChange}
             />
-            <label
-                htmlFor={id}
+            <span
+                aria-hidden="true"
                 className={twJoin(
-                    'absolute size-full cursor-pointer rounded-full',
-                    'bg-input-border-default peer-not-checked:hover:bg-input-border-hovered',
-                    "after:my-0.5 after:ml-0.5 after:block after:size-5 after:rounded-full after:bg-icon-inverted after:transition-all after:content-[''] hover:after:bg-fill-accent-less",
-                    'peer-checked:after:ml-5.5 peer-checked:after:block',
-                    'peer-checked:bg-input-fill',
+                    'pointer-events-none absolute inset-0 rounded-full bg-input-border-default transition-colors duration-200 ease-out',
+                    "after:absolute after:top-0.5 after:left-0.5 after:size-5 after:rounded-full after:bg-icon-inverted after:shadow-sm after:transition-transform after:duration-200 after:ease-out after:content-['']",
+                    'peer-checked:bg-input-fill peer-checked:after:translate-x-5 peer-hover:bg-input-border-hovered peer-active:after:scale-95',
+                    'peer-focus-visible:outline-2 peer-focus-visible:outline-input-border-active peer-focus-visible:outline-offset-2',
                 )}
-            >
-                <span className="sr-only">{name}</span>
-            </label>
+            />
         </div>
     ),
 );

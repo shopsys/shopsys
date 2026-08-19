@@ -27,7 +27,7 @@ export const SymfonyDebugToolbar: FC<SymfonyDebugToolbarProps> = ({
         <div className="group fixed right-2 bottom-2 z-maximum flex flex-col items-end gap-2 rounded-sm bg-background-most p-3">
             <div className="relative order-2 h-6 w-6">
                 <Image alt="Symfony Logo" height={24} src={symfonyImage} width={24} />
-                <span className="absolute -right-[5px] -bottom-[5px] flex h-4 w-4 items-center justify-center rounded-full bg-background-accent font-bold text-text-inverted text-xs leading-normal">
+                <span className="absolute -right-1.25 -bottom-1.25 flex h-4 w-4 items-center justify-center rounded-full bg-background-accent font-bold text-text-inverted text-xs leading-normal">
                     {responses.length}
                 </span>
             </div>

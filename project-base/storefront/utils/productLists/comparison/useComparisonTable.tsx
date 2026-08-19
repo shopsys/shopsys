@@ -7,19 +7,19 @@ export const useComparisonTable = (
 ): {
     isArrowLeftActive: boolean;
     isArrowRightActive: boolean;
-    isArrowLeftShowed: boolean;
-    isArrowRightShowed: boolean;
+    shouldShowArrows: boolean;
     handleSlideLeft: () => void;
     handleSlideRight: () => void;
     calcMaxMarginLeft: () => void;
+    tableFirstColumnWidth: number | undefined;
     tableMarginLeft: number;
 } => {
     const [isArrowLeftActive, setArrowLeftActive] = useState(true);
     const [isArrowRightActive, setArrowRightActive] = useState(true);
-    const [isArrowLeftShowed, setArrowLeftShowed] = useState(true);
-    const [isArrowRightShowed, setArrowRightShowed] = useState(true);
     const [tableMarginLeft, setTableMarginLeft] = useState(0);
     const [tableMaxMarginLeft, setTableMaxMarginLeft] = useState(0);
+    const [tableFirstColumnWidth, setTableFirstColumnWidth] = useState<number>();
+    const shouldShowArrows = tableMaxMarginLeft > 0;
     const { width } = useGetWindowSize();
     const getProductColumnWidth = () =>
         document.getElementById('js-table-compare-product')?.getBoundingClientRect().width ?? 0;
@@ -74,30 +74,27 @@ export const useComparisonTable = (
     const calcMaxMarginLeft = () => {
         const tableWrapperWidth = document.getElementById('js-table-compare-wrap')?.getBoundingClientRect().width ?? 0;
         const columnsWidth = document.getElementById('js-table-compare')?.getBoundingClientRect().width ?? 0;
+        const firstColumnWidth = document
+            .getElementById('js-table-compare-head')
+            ?.firstElementChild?.getBoundingClientRect().width;
+
         setTableMaxMarginLeft(Math.max(0, columnsWidth - tableWrapperWidth));
+        setTableFirstColumnWidth(firstColumnWidth);
     };
 
     useComponentUpdate(() => {
         calcMaxMarginLeft();
         setMargin(tableMarginLeft);
-
-        if (tableMaxMarginLeft > 0) {
-            setArrowLeftShowed(true);
-            setArrowRightShowed(true);
-        } else {
-            setArrowLeftShowed(false);
-            setArrowRightShowed(false);
-        }
     }, [width, tableMaxMarginLeft]);
 
     return {
         isArrowLeftActive,
         isArrowRightActive,
-        isArrowLeftShowed,
-        isArrowRightShowed,
+        shouldShowArrows,
         handleSlideLeft,
         handleSlideRight,
         calcMaxMarginLeft,
+        tableFirstColumnWidth,
         tableMarginLeft,
     };
 };

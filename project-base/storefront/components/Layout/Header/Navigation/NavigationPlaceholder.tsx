@@ -14,7 +14,12 @@ type NavigationPlaceholderProps = {
 
 export const NavigationPlaceholder: FC<NavigationPlaceholderProps> = ({ navigation }) => {
     return (
-        <nav aria-hidden={navigation?.length ? undefined : true} id="main-navigation" tabIndex={-1}>
+        <nav
+            aria-hidden={navigation?.length ? undefined : true}
+            className="focus-visible:outline-hidden"
+            id="main-navigation"
+            tabIndex={-1}
+        >
             <ul className="mask-[linear-gradient(to_right,black_calc(100%-32px),transparent_100%)] relative vl:flex hidden w-full overflow-hidden">
                 {navigation?.length
                     ? navigation.map((navigationItem, index) => {
@@ -24,7 +29,7 @@ export const NavigationPlaceholder: FC<NavigationPlaceholderProps> = ({ navigati
                           const isExternalLink =
                               link !== null && (link.startsWith('http://') || link.startsWith('https://'));
                           const navigationItemClassName =
-                              'relative m-0 flex cursor-pointer items-center whitespace-nowrap border-0 bg-transparent p-5 font-secondary font-semibold text-link-inverted-default text-sm vl:text-base no-underline hover:text-link-inverted-hovered hover:no-underline active:text-link-inverted-hovered disabled:text-link-inverted-disabled group-first-of-type:pl-0 group-last-of-type:pr-0 group-hover:text-link-inverted-hovered group-hover:no-underline';
+                              'relative m-0 flex cursor-pointer items-center whitespace-nowrap rounded-sm border-0 bg-transparent p-5 font-secondary font-semibold text-link-inverted-default text-sm vl:text-base no-underline hover:text-link-inverted-hovered hover:no-underline active:text-link-inverted-hovered disabled:text-link-inverted-disabled group-first-of-type:pl-0 group-last-of-type:pr-0 group-hover:text-link-inverted-hovered group-hover:no-underline';
                           const content = (
                               <NavigationItemContent
                                   isDropdownTrigger={isDropdownTrigger}

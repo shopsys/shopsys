@@ -7,9 +7,9 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 export type FormLineWidth = 'half' | 'narrow' | 'wide';
 
 const formLineWidthClassNameByWidth: Record<FormLineWidth, string> = {
-    half: 'col-span-12 min-md:col-span-6',
-    narrow: 'col-span-12  min-md:col-span-4 vl:col-span-3',
-    wide: 'col-span-12  min-md:col-span-8 vl:col-span-9',
+    half: 'col-span-12 md:col-span-6',
+    narrow: 'col-span-12  md:col-span-4 vl:col-span-3',
+    wide: 'col-span-12  md:col-span-8 vl:col-span-9',
 };
 
 type FormLineProps = NativeProps & {

@@ -1,6 +1,7 @@
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { InputHTMLAttributes, KeyboardEventHandler, RefObject } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -86,28 +87,27 @@ export const SearchInput: FC<SearchInputProps> = ({
                 onKeyDown={handleKeyDown}
             />
 
-            <button
-                aria-label={ariaLabelForSearchButton}
-                className="group gjs-template-header-search-button absolute top-1/2 left-1 flex size-10 -translate-y-1/2 items-center justify-center rounded-md hover:cursor-pointer"
-                tabIndex={0}
+            <IconButton
+                Icon={SearchIcon}
+                ariaLabel={ariaLabelForSearchButton}
+                className="gjs-template-header-search-button absolute top-1/2 left-1 -translate-y-1/2"
+                shape="rounded"
                 title={t('Search')}
                 type="submit"
+                variant="ghost"
                 onClick={onSearch}
-            >
-                <SearchIcon className="size-6 text-icon-less group-hover:text-icon-accent" />
-            </button>
+            />
 
             {shouldShowClearButton && (
-                <button
+                <IconButton
+                    Icon={CloseIcon}
                     aria-label={value ? t('Clear search input', { ns: 'accessibility' }) : t('Close')}
-                    className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-md p-1.5"
-                    tabIndex={0}
+                    className="absolute top-1/2 right-2 -translate-y-1/2"
+                    shape="rounded"
                     title={value ? t('Clear search') : t('Close')}
-                    type="button"
+                    variant="ghost"
                     onClick={handleClear}
-                >
-                    <CloseIcon className="size-4 text-icon-less hover:text-icon-default" />
-                </button>
+                />
             )}
             {shouldShowSpinnerInInput && (
                 <SpinnerIcon

@@ -14,24 +14,8 @@ const { onGtmConsentUpdateEventHandlerMock, storeState, updateUserConsentMock } 
     updateUserConsentMock: vi.fn(),
 }));
 
-vi.mock('graphql/requests/settings/queries/SettingsQuery.generated', () => ({
-    useSettingsQuery: () => [
-        {
-            data: {
-                settings: {
-                    userConsentPolicyArticleUrl: '/user-consent',
-                },
-            },
-        },
-    ],
-}));
-
 vi.mock('gtm/handlers/onGtmConsentUpdateEventHandler', () => ({
     onGtmConsentUpdateEventHandler: onGtmConsentUpdateEventHandlerMock,
-}));
-
-vi.mock('next-translate/Trans', () => ({
-    default: ({ defaultTrans }: { defaultTrans: string }) => <span>{defaultTrans}</span>,
 }));
 
 vi.mock('store/usePersistStore', () => ({
@@ -74,5 +58,20 @@ describe('UserConsentForm', () => {
             preferences: 'denied',
             statistics: 'denied',
         });
+    });
+
+    test('renders the compact layout and toggles a preference by clicking its row', () => {
+        render(<UserConsentForm layout="compact" />);
+
+        fireEvent.click(screen.getByText('Marketing'));
+
+        expect(screen.getByRole('switch', { name: 'Toggle marketing consent' })).toBeChecked();
+    });
+
+    test('does not render the surrounding consent context', () => {
+        render(<UserConsentForm />);
+
+        expect(screen.queryByRole('heading', { name: 'User consent' })).not.toBeInTheDocument();
+        expect(screen.queryByText(/To learn more, you can read our/)).not.toBeInTheDocument();
     });
 });

@@ -12,7 +12,7 @@ export const SkeletonPageResetPassword: FC = () => (
             <VerticalStack gap="sm">
                 <SkeletonModulePageHero />
 
-                <Skeleton className="h-[120px] rounded-xl" />
+                <Skeleton className="h-30 rounded-xl" />
 
                 <Skeleton className="mx-auto h-9 w-32" />
             </VerticalStack>

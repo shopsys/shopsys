@@ -193,7 +193,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
         /* biome-ignore lint/a11y/noNoninteractiveElementInteractions: The navigation wrapper needs pointer tracking to keep the detached submenu open while preserving its navigation semantics. */
         <nav
             aria-label={t('Main navigation', { ns: 'accessibility' })}
-            className="relative"
+            className="relative focus-visible:outline-hidden"
             id={id}
             tabIndex={-1}
             onBlur={handleNavigationBlur}

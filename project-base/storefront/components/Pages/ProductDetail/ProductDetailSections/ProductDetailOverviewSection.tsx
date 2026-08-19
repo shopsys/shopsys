@@ -1,5 +1,6 @@
 import { UserText } from 'components/Basic/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { TIDs } from 'cypress/tids';
 import { RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
@@ -15,11 +16,12 @@ export const ProductDetailOverviewSection = ({ description, sectionRef }: Produc
 
     return (
         <div
-            className="scroll-mt-[calc(var(--sticky-navigation-offset,0)+5rem)]"
+            className="scroll-mt-fixed-header-with-navigation"
+            data-tid={`${TIDs.product_detail_section_}${PRODUCT_DETAIL_SECTIONS_IDS.overview}`}
             id={PRODUCT_DETAIL_SECTIONS_IDS.overview}
             ref={sectionRef}
         >
-            <Webline>
+            <Webline width="vl">
                 <ProductDetailSectionHeading>{t('Overview')}</ProductDetailSectionHeading>
 
                 {description && <UserText htmlContent={description} />}

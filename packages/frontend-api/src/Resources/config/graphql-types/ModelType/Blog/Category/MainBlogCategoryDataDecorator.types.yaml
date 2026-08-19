@@ -3,6 +3,9 @@ MainBlogCategoryDataDecorator:
     decorator: true
     config:
         fields:
+            mainBlogCategoryName:
+                type: String
+                description: "Name of the blog main category"
             mainBlogCategoryUrl:
                 type: String
                 description: "Absolute URL of the blog main category"

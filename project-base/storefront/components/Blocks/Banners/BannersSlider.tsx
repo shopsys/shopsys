@@ -173,7 +173,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                                 ) : (
                                     <div
                                         key={item.uuid}
-                                        className="h-[250px] vl:h-[425px] flex-[1_0_100%] basis-full md:h-[345px]"
+                                        className="h-62.5 vl:h-106.25 flex-[1_0_100%] basis-full md:h-86.25"
                                         style={{ order }}
                                     />
                                 );

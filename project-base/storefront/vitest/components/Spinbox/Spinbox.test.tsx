@@ -1,8 +1,9 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { renderWithTooltipProvider as render } from 'vitest/helpers/renderWithTooltipProvider';
 
 const { maxCartItemQuantity: MAX_CART_ITEM_QUANTITY } = VALIDATION_CONSTANTS;
 
@@ -41,10 +42,10 @@ describe('Spinbox Component', () => {
         });
 
         test('renders decrease and increase buttons', () => {
-            const { container } = render(<Spinbox {...defaultProps} />);
+            render(<Spinbox {...defaultProps} />);
 
-            const decreaseButton = container.querySelector('button[title="Decrease"]');
-            const increaseButton = container.querySelector('button[title="Increase"]');
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             expect(decreaseButton).toBeInTheDocument();
             expect(increaseButton).toBeInTheDocument();
@@ -72,7 +73,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             await user.click(increaseButton);
 
@@ -84,7 +85,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
 
             await user.click(decreaseButton);
 
@@ -96,7 +97,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} defaultValue={1} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
 
             await user.click(decreaseButton);
 
@@ -110,6 +111,7 @@ describe('Spinbox Component', () => {
                 <Spinbox
                     {...defaultProps}
                     defaultValue={1}
+                    minValueDecreaseAriaLabel="Remove product from cart"
                     minValueDecreaseIcon={<span data-testid="remove-icon" />}
                     minValueDecreaseTitle="Remove from cart"
                     onMinValueDecrease={onMinValueDecrease}
@@ -117,9 +119,14 @@ describe('Spinbox Component', () => {
             );
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const decreaseButton = container.querySelector('button[title="Remove from cart"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Remove product from cart' });
 
             expect(container.querySelector('[data-testid="remove-icon"]')).toBeInTheDocument();
+
+            fireEvent.focus(decreaseButton);
+
+            expect(decreaseButton).not.toHaveAttribute('title');
+            expect(screen.getByRole('tooltip')).toHaveTextContent('Remove from cart');
 
             await user.click(decreaseButton);
 
@@ -127,30 +134,42 @@ describe('Spinbox Component', () => {
             expect(input).toHaveValue(1);
         });
 
+        test('preserves focus when the decrease button changes to the remove action', async () => {
+            const user = userEvent.setup();
+            const { getByRole, getByTestId } = render(
+                <Spinbox
+                    {...defaultProps}
+                    defaultValue={2}
+                    minValueDecreaseAriaLabel="Remove product from cart"
+                    minValueDecreaseIcon={<span data-testid="remove-icon" />}
+                    minValueDecreaseTitle="Remove from cart"
+                    onMinValueDecrease={vi.fn()}
+                />,
+            );
+            const decreaseButton = getByRole('button', { name: 'Decrease quantity' });
+
+            fireEvent.focus(decreaseButton);
+            expect(decreaseButton).not.toHaveAttribute('title');
+            expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+
+            await user.click(decreaseButton);
+
+            const removeButton = getByRole('button', { name: 'Remove product from cart' });
+            expect(removeButton).toBe(decreaseButton);
+            expect(removeButton).toHaveFocus();
+            expect(getByTestId('remove-icon')).toBeInTheDocument();
+        });
+
         test('does not increase above maximum value', async () => {
             const user = userEvent.setup();
             const { container } = render(<Spinbox {...defaultProps} defaultValue={MAX_CART_ITEM_QUANTITY} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             await user.click(increaseButton);
 
             expect(input).toHaveValue(MAX_CART_ITEM_QUANTITY);
-        });
-
-        test('uses max value reached title when increase button is disabled', async () => {
-            const user = userEvent.setup();
-            const { container } = render(
-                <Spinbox {...defaultProps} defaultValue={5} max={5} maxValueReachedTitle="Maximum is 5 pcs." />,
-            );
-
-            const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Maximum is 5 pcs."]') as HTMLButtonElement;
-
-            await user.click(increaseButton);
-
-            expect(input).toHaveValue(5);
         });
 
         test('handles continuous button press', async () => {
@@ -158,7 +177,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             await user.click(increaseButton);
             await user.click(increaseButton);
@@ -322,7 +341,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} step={1000} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             await user.click(increaseButton);
 
@@ -344,9 +363,9 @@ describe('Spinbox Component', () => {
     describe('Callback Functionality', () => {
         test('calls onChange callback when value changes via buttons', () => {
             const onChangeCallback = vi.fn();
-            const { container } = render(<Spinbox {...defaultProps} onChangeValueCallback={onChangeCallback} />);
+            render(<Spinbox {...defaultProps} onChangeValueCallback={onChangeCallback} />);
 
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             fireEvent.click(increaseButton);
 
@@ -368,26 +387,26 @@ describe('Spinbox Component', () => {
 
     describe('Button States', () => {
         test('decrease button disabled at minimum value', () => {
-            const { container } = render(<Spinbox {...defaultProps} defaultValue={1} />);
+            render(<Spinbox {...defaultProps} defaultValue={1} />);
 
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
             expect(decreaseButton.getAttribute('tabIndex')).toBe('-1');
             expect(decreaseButton).toHaveAttribute('aria-disabled', 'true');
         });
 
         test('increase button disabled at maximum value', () => {
-            const { container } = render(<Spinbox {...defaultProps} defaultValue={MAX_CART_ITEM_QUANTITY} />);
+            render(<Spinbox {...defaultProps} defaultValue={MAX_CART_ITEM_QUANTITY} />);
 
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
             expect(increaseButton.getAttribute('tabIndex')).toBe('-1');
             expect(increaseButton).toHaveAttribute('aria-disabled', 'true');
         });
 
         test('both buttons enabled at middle values', () => {
-            const { container } = render(<Spinbox {...defaultProps} defaultValue={10} />);
+            render(<Spinbox {...defaultProps} defaultValue={10} />);
 
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             expect(decreaseButton.getAttribute('tabIndex')).toBe('0');
             expect(increaseButton.getAttribute('tabIndex')).toBe('0');
@@ -401,7 +420,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} step={100} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             fireEvent.click(increaseButton);
 
@@ -431,14 +450,13 @@ describe('Spinbox Component', () => {
             expect(input.getAttribute('aria-label')).toBe('Quantity');
         });
 
-        test('uses custom accessibility labels and live announcement', () => {
+        test('uses custom accessibility labels', () => {
             const { container, getByRole } = render(
                 <Spinbox
                     {...defaultProps}
                     decreaseAriaLabel="Decrease quantity of Product"
                     increaseAriaLabel="Increase quantity of Product"
                     inputAriaLabel="Quantity of Product"
-                    liveAnnouncement="Quantity of Product updated to 5 pcs"
                 />,
             );
 
@@ -450,17 +468,29 @@ describe('Spinbox Component', () => {
             expect(description).toBeInTheDocument();
             expect(getByRole('button', { name: 'Decrease quantity of Product' })).toBeInTheDocument();
             expect(getByRole('button', { name: 'Increase quantity of Product' })).toBeInTheDocument();
-            expect(getByRole('status')).toHaveTextContent('Quantity of Product updated to 5 pcs');
+            expect(getByRole('status')).toBeEmptyDOMElement();
         });
 
-        test('buttons have proper titles', () => {
-            const { container } = render(<Spinbox {...defaultProps} />);
+        test('updates the existing live region', () => {
+            const { getByRole, rerender } = render(<Spinbox {...defaultProps} />);
+            const liveRegion = getByRole('status');
 
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            expect(liveRegion).toBeEmptyDOMElement();
 
-            expect(decreaseButton.getAttribute('title')).toBe('Decrease');
-            expect(increaseButton.getAttribute('title')).toBe('Increase');
+            rerender(<Spinbox {...defaultProps} liveAnnouncement="Quantity of Product updated to 5 pcs" />);
+
+            expect(getByRole('status')).toBe(liveRegion);
+            expect(liveRegion).toHaveTextContent('Quantity of Product updated to 5 pcs');
+        });
+
+        test('quantity buttons use accessible names without titles', () => {
+            const { getByRole } = render(<Spinbox {...defaultProps} />);
+
+            const decreaseButton = getByRole('button', { name: 'Decrease quantity' });
+            const increaseButton = getByRole('button', { name: 'Increase quantity' });
+
+            expect(decreaseButton).not.toHaveAttribute('title');
+            expect(increaseButton).not.toHaveAttribute('title');
         });
     });
 
@@ -469,9 +499,9 @@ describe('Spinbox Component', () => {
             const user = userEvent.setup();
             const { container } = render(<Spinbox {...defaultProps} />);
 
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             decreaseButton.focus();
             expect(document.activeElement).toBe(decreaseButton);
@@ -487,9 +517,9 @@ describe('Spinbox Component', () => {
             const user = userEvent.setup();
             const { container } = render(<Spinbox {...defaultProps} />);
 
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             increaseButton.focus();
             expect(document.activeElement).toBe(increaseButton);
@@ -506,7 +536,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             increaseButton.focus();
             await user.keyboard('{Enter}');
@@ -519,7 +549,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
 
             decreaseButton.focus();
             await user.keyboard('{Enter}');
@@ -532,7 +562,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             increaseButton.focus();
             await user.keyboard(' ');
@@ -545,7 +575,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
 
             decreaseButton.focus();
             await user.keyboard(' ');
@@ -584,7 +614,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             input.focus();
             await user.clear(input);
@@ -601,7 +631,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
 
             input.focus();
             await user.clear(input);
@@ -618,7 +648,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} defaultValue={1} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
 
             expect(decreaseButton.getAttribute('tabIndex')).toBe('-1');
 
@@ -637,8 +667,8 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} defaultValue={MAX_CART_ITEM_QUANTITY} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             expect(increaseButton.getAttribute('tabIndex')).toBe('-1');
             expect(decreaseButton.getAttribute('tabIndex')).toBe('0');
@@ -667,8 +697,8 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} onChangeValueCallback={onChangeCallback} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             decreaseButton.focus();
             expect(document.activeElement).toBe(decreaseButton);
@@ -698,7 +728,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+            const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
             input.focus();
             await user.clear(input);

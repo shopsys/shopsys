@@ -16,6 +16,13 @@ describe('getArticleHtmlHeadingAnchors', () => {
         );
     });
 
+    test('keeps the article introduction id reserved for the introduction heading', () => {
+        const result = getArticleHtmlHeadingAnchors('<h2>Article introduction</h2>');
+
+        expect(result.headings).toEqual([{ id: 'article-introduction-2', title: 'Article introduction' }]);
+        expect(result.htmlWithHeadingAnchors).toBe('<h2 id="article-introduction-2">Article introduction</h2>');
+    });
+
     test('replaces existing heading ids with ids generated from heading title', () => {
         const result = getArticleHtmlHeadingAnchors('<h2 id="custom-id">Custom heading</h2>');
 

@@ -1,4 +1,4 @@
-import { EditIcon } from 'components/Basic/Icon/EditIcon';
+import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
 import { AddressActionButton } from 'components/Blocks/AddressList/AddressActionButton';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
@@ -30,7 +30,7 @@ export const EditAddressAction: FC<EditAddressActionProps> = ({ address }) => {
             ariaLabel={t('Edit this delivery address', { ns: 'accessibility' })}
             onClick={handleEditDeliveryAddress}
         >
-            <EditIcon className="size-6" /> {t('Edit data')}
+            <UserEditIcon className="size-6" /> {t('Edit data')}
         </AddressActionButton>
     );
 };

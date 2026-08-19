@@ -6,6 +6,7 @@ export const mobileFirstSizes = {
     lg: 769,
     vl: 1024,
     xl: 1240,
+    xxl: 1560,
 } as const;
 
 export const desktopFirstSizes = {

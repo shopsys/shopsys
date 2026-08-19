@@ -44,7 +44,7 @@ class BlogArticlesTest extends GraphQlTestCase
             ],
             'case 4' => [
                 $this->getLastBlogArticleQuery(),
-                [['name' => t('Blog article example %counter% %locale%', ['%counter%' => 42, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
+                [['name' => $this->translateArticleTitle('OLED, QLED, and Mini LED explained', $firstDomainLocale)]],
             ],
             'case 5' => [
                 $this->getHomepageBlogArticlesQuery(3),
@@ -75,6 +75,47 @@ class BlogArticlesTest extends GraphQlTestCase
                 $this->assertSame($expectedBlogArticlesData[$key]['name'], $edge['node']['name'], $case);
             }
         }
+    }
+
+    public function testHomepageBlogArticlesProvideVariedBadgeCounts(): void
+    {
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $expectedCategoryNamesByArticle = [
+            [
+                t('First subsection %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            ],
+            [],
+            [],
+            [t('Care and maintenance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [t('Technology and trends', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [],
+        ];
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/HomepageBlogArticleCategoriesQuery.graphql');
+        $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticles');
+        $actualCategoryNamesByArticle = [];
+        $badgeCounts = [];
+
+        foreach ($responseData['edges'] as $edge) {
+            $visibleCategories = array_filter(
+                $edge['node']['blogCategories'],
+                static fn (array $category): bool => $category['parent'] !== null,
+            );
+            $badgeCounts[] = count($visibleCategories);
+            $this->assertLessThanOrEqual(2, count($visibleCategories));
+            $actualCategoryNamesByArticle[] = array_values(array_map(
+                static fn (array $category): string => $category['name'],
+                $visibleCategories,
+            ));
+        }
+
+        $this->assertContains(0, $badgeCounts);
+        $this->assertContains(1, $badgeCounts);
+        $this->assertContains(2, $badgeCounts);
+        $this->assertSame(
+            $expectedCategoryNamesByArticle,
+            array_slice($actualCategoryNamesByArticle, 0, count($expectedCategoryNamesByArticle)),
+        );
     }
 
     private function getAllBlogArticlesQuery(): string
@@ -147,16 +188,30 @@ class BlogArticlesTest extends GraphQlTestCase
     private function getExpectedBlogArticlesData(string $firstDomainLocale): array
     {
         return [
-            ['name' => t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 1, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 2, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 3, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 4, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 5, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 6, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 7, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => $this->translateArticleTitle('%topic%: practical advice from our experts', $firstDomainLocale, 'Energy-efficient home')],
+            ['name' => $this->translateArticleTitle('%topic%: practical advice from our experts', $firstDomainLocale, 'Online shopping')],
+            ['name' => $this->translateArticleTitle('%topic%: practical advice from our experts', $firstDomainLocale, 'Product care')],
+            ['name' => $this->translateArticleTitle('%topic%: practical advice from our experts', $firstDomainLocale, 'Smart technology')],
+            ['name' => $this->translateArticleTitle('%topic%: how to choose', $firstDomainLocale, 'Television')],
+            ['name' => $this->translateArticleTitle('%topic%: how to choose', $firstDomainLocale, 'Headphones')],
+            ['name' => $this->translateArticleTitle('%topic%: how to choose', $firstDomainLocale, 'Laptop')],
+            ['name' => $this->translateArticleTitle('%topic%: how to choose', $firstDomainLocale, 'Coffee machine')],
+            ['name' => $this->translateArticleTitle('%topic%: ideas for a more comfortable home', $firstDomainLocale, 'Home cinema')],
         ];
+    }
+
+    private function translateArticleTitle(
+        string $translationKey,
+        string $locale,
+        ?string $topicTranslationKey = null,
+    ): string {
+        $parameters = [];
+
+        if ($topicTranslationKey !== null) {
+            $parameters['%topic%'] = t($topicTranslationKey, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        return t($translationKey, $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
     }
 }

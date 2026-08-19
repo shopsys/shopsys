@@ -65,7 +65,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
 const BodyItem: FC<{ isSticky?: boolean }> = ({ children, isSticky }) => (
     <td
         className={twJoin(
-            'wrap-break-word w-[182px] bg-table-bg-default p-3 text-sm sm:w-[207px] sm:px-5 sm:text-md',
+            'wrap-break-word w-45.5 bg-table-bg-default p-3 text-sm sm:w-51.75 sm:px-5 sm:text-md',
             isSticky && 'sticky left-0 z-above text-md text-text-accent',
         )}
     >

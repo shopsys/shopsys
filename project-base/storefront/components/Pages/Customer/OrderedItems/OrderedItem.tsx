@@ -50,7 +50,6 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                     alt={orderedItem.product?.mainImage?.name || ''}
                     className="size-20 max-h-full object-contain mix-blend-multiply"
                     height={80}
-                    sizes="(max-width: 768px) 100vw, 50vw"
                     src={orderedItem.product?.mainImage?.url}
                     tid={TIDs.ordered_item_image}
                     width={80}
@@ -97,7 +96,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                                 title={t('Price')}
                                 value={formatPrice(orderedItem.totalPrice.priceWithVat)}
                                 valueClassName="text-price-default"
-                                wrapperClassName="min-w-[80px]"
+                                wrapperClassName="min-w-20"
                             />
                         )}
                     </div>
@@ -107,6 +106,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                         aria-haspopup="dialog"
                         className="w-full md:w-auto"
                         size="small"
+                        variant="secondary"
                         onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
                     >
                         {t('Create complaint')}

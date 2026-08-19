@@ -29,6 +29,7 @@ export const useAddToCartHandler = ({
     const { addToCart, isAddingToCart } = useAddToCart(gtmMessageOrigin, gtmProductListName);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
+    const clearStoredFocus = useSessionStore((s) => s.clearStoredFocus);
 
     const onAddToCartHandler = async () => {
         if (isWithSpinbox && spinboxRef.current === null) {
@@ -57,6 +58,8 @@ export const useAddToCartHandler = ({
                     addedCartItem={addToCartResult.addProductResult.cartItem}
                 />,
             );
+        } else {
+            clearStoredFocus();
         }
     };
 

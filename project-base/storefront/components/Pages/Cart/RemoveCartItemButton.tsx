@@ -1,4 +1,5 @@
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { MouseEventHandler } from 'react';
 
@@ -17,16 +18,19 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({
     disabled,
 }) => {
     return (
-        <button
-            aria-label={ariaLabel}
+        <IconButton
+            Icon={TrashCanIcon}
+            ariaLabel={ariaLabel}
             className={className}
-            data-tid={TIDs.pages_cart_removecartitembutton}
             disabled={disabled}
-            tabIndex={0}
+            shape="rounded"
+            size="small"
+            tid={TIDs.pages_cart_removecartitembutton}
             title={title}
+            tooltipLabel={title}
+            tooltipPlacement="left"
+            variant="ghost"
             onClick={onRemoveFromCart}
-        >
-            <TrashCanIcon className="size-6" />
-        </button>
+        />
     );
 };

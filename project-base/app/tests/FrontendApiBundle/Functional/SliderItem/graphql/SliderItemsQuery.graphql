@@ -2,6 +2,7 @@ query SliderItemsQuery ($imageType: String) {
     sliderItems {
         uuid
         name
+        description
         link
         images (type: $imageType) {
             url

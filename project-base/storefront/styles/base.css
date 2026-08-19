@@ -14,8 +14,12 @@
         @apply h-full min-h-full;
     }
 
+    :target {
+        scroll-margin-top: calc(var(--fixed-header-height, 0px) + var(--spacing-5));
+    }
+
     body {
-        @apply min-h-full [font-feature-settings:'lnum'_1];
+        @apply min-h-full font-features-['lnum'_1];
     }
 
     body,
@@ -121,7 +125,7 @@
     }
 
     svg {
-        @apply inline-flex w-[14px] text-center leading-none font-normal normal-case;
+        @apply inline-flex w-3.5 text-center leading-none font-normal normal-case;
     }
 
     /* Firefox */
@@ -239,7 +243,7 @@
 
     /* accessibility */
 
-    a:focus-visible,
+    a:focus-visible:not([data-focus-color='preserve']),
     button:focus-visible {
         @apply text-text-default! bg-orange-500! outline-hidden!;
     }
@@ -248,8 +252,8 @@
         @apply bg-transparent! ring-2 ring-orange-500 ring-inset;
     }
 
-    a:focus-visible svg,
-    a:focus-visible span,
+    a:focus-visible:not([data-focus-color='preserve']) svg,
+    a:focus-visible:not([data-focus-color='preserve']) span,
     button:focus-visible svg,
     button:focus-visible span {
         @apply text-text-default!;

@@ -1,6 +1,7 @@
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { renderWithTooltipProvider as render } from 'vitest/helpers/renderWithTooltipProvider';
 
 vi.mock('next-translate/useTranslation', () => ({
     __esModule: true,
@@ -28,9 +29,9 @@ describe('Spinbox debounce behavior', () => {
 
     test('reports rapid clicks once with the final value', () => {
         const onChangeCallback = vi.fn();
-        const { container } = render(<Spinbox {...defaultProps} onChangeValueCallback={onChangeCallback} />);
+        render(<Spinbox {...defaultProps} onChangeValueCallback={onChangeCallback} />);
 
-        const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+        const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
         fireEvent.click(increaseButton);
         fireEvent.click(increaseButton);
@@ -49,12 +50,10 @@ describe('Spinbox debounce behavior', () => {
 
     test('reports returning to the original value after a previous reported change', () => {
         const onChangeCallback = vi.fn();
-        const { container } = render(
-            <Spinbox {...defaultProps} defaultValue={5} onChangeValueCallback={onChangeCallback} />,
-        );
+        render(<Spinbox {...defaultProps} defaultValue={5} onChangeValueCallback={onChangeCallback} />);
 
-        const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
-        const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+        const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
+        const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
         fireEvent.click(increaseButton);
 
@@ -75,12 +74,10 @@ describe('Spinbox debounce behavior', () => {
 
     test('reports the final value after rapid changes even when it returns to the original value', () => {
         const onChangeCallback = vi.fn();
-        const { container } = render(
-            <Spinbox {...defaultProps} defaultValue={5} onChangeValueCallback={onChangeCallback} />,
-        );
+        render(<Spinbox {...defaultProps} defaultValue={5} onChangeValueCallback={onChangeCallback} />);
 
-        const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
-        const increaseButton = container.querySelector('button[title="Increase"]') as HTMLButtonElement;
+        const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
+        const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
 
         fireEvent.click(increaseButton);
         fireEvent.click(decreaseButton);
@@ -96,7 +93,7 @@ describe('Spinbox debounce behavior', () => {
     test('does not report the minimum value after rapid decrease followed by remove', () => {
         const onChangeCallback = vi.fn();
         const onMinValueDecrease = vi.fn();
-        const { container } = render(
+        render(
             <Spinbox
                 {...defaultProps}
                 defaultValue={4}
@@ -106,7 +103,7 @@ describe('Spinbox debounce behavior', () => {
             />,
         );
 
-        const decreaseButton = container.querySelector('button[title="Decrease"]') as HTMLButtonElement;
+        const decreaseButton = screen.getByRole('button', { name: 'Decrease quantity' });
 
         fireEvent.click(decreaseButton);
         fireEvent.click(decreaseButton);

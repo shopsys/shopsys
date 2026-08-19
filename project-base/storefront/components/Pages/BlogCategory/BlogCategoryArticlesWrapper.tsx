@@ -2,6 +2,7 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
+import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
@@ -38,7 +39,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
     );
 
     return (
-        <div ref={paginationScrollTargetRef}>
+        <div className="scroll-mt-fixed-header" data-tid={TIDs.blog_article_list} ref={paginationScrollTargetRef}>
             {areBlogCategoryArticlesFetching ? (
                 <div className="flex flex-1 flex-col gap-y-5">
                     {createEmptyArray(DEFAULT_BLOG_PAGE_SIZE).map((_, index) => (

@@ -32,7 +32,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                     return (
                         <li
                             key={columnCategory.uuid}
-                            className="group/main-category min-w-0 rounded-md p-2 transition-colors hover:bg-background-more"
+                            className="group/main-category min-w-0 rounded-lg p-2 transition-colors hover:bg-background-more"
                             style={{
                                 gridColumn: columnCategories.columnNumber,
                                 gridRow: columnCategoryIndex + 1,
@@ -40,7 +40,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                         >
                             <ExtendedNextLink
                                 className={twJoin(
-                                    'inline-grid min-h-10 max-w-full items-center gap-3 rounded-sm font-bold font-secondary text-text-default no-underline hover:underline',
+                                    'grid min-h-10 max-w-full items-center gap-3 rounded-sm font-bold font-secondary text-text-default no-underline hover:underline',
                                     hasMainImage ? 'grid-cols-[40px_1fr]' : 'ml-13 w-fit',
                                 )}
                                 href={columnCategory.slug}
@@ -48,12 +48,12 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                                 onClick={onLinkClick}
                             >
                                 {hasMainImage && (
-                                    <div className="relative size-12 w-auto" aria-hidden="true">
+                                    <div className="flex size-12 w-auto items-center justify-center" aria-hidden="true">
                                         <Image
-                                            fill
                                             alt=""
                                             className="object-contain mix-blend-multiply"
-                                            sizes="40px"
+                                            height={40}
+                                            width={40}
                                             src={mainImageUrl}
                                         />
                                     </div>
@@ -63,7 +63,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                             </ExtendedNextLink>
 
                             {!!columnCategory.children.length && (
-                                <ul className="ml-13 flex flex-col gap-1.5">
+                                <ul className="mt-0 ml-13 flex flex-col gap-1.5">
                                     {columnCategory.children.map((columnCategoryChild) => (
                                         <li key={columnCategoryChild.name} className="group/child-category">
                                             <ExtendedNextLink

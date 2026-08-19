@@ -9,22 +9,16 @@ type BlogCategoryHeaderProps = {
 
 export const BlogCategoryHeader: FC<BlogCategoryHeaderProps> = ({ title, description, image }) => {
     return (
-        <Webline width="xxl">
+        <Webline>
             <div
-                className="rounded-xl bg-text-accent"
-                style={
-                    image?.url
-                        ? {
-                              background: `linear-gradient(rgba(37, 40, 61, 0.8), rgba(37, 40, 61, 0.8)), url("${image.url}") center/cover no-repeat`,
-                          }
-                        : undefined
-                }
+                className="relative overflow-hidden rounded-xl bg-background-brand bg-center bg-cover after:absolute after:inset-0 after:block after:bg-background-brand/80 after:content-['']"
+                style={image?.url ? { backgroundImage: `url("${image.url}")` } : undefined}
             >
-                <Webline className="py-14">
+                <Webline className="relative z-above px-10 py-14">
                     <h1 className="mb-3 text-text-inverted">{title}</h1>
                     {description && (
                         <p
-                            className="text-text-inverted [&_*]:text-text-inverted [&_*]:hover:text-text-inverted"
+                            className="text-text-inverted **:text-text-inverted **:hover:text-text-inverted"
                             dangerouslySetInnerHTML={{ __html: description }}
                         />
                     )}

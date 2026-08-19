@@ -12,7 +12,12 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 import { useFocusTrap } from 'utils/useFocusTrap';
 import { CartInHeaderListItem } from './CartInHeaderListItem';
 
-export const CartInHeaderList: FC = () => {
+type CartInHeaderListProps = {
+    hideFocusTrap?: boolean;
+    isDrawer?: boolean;
+};
+
+export const CartInHeaderList: FC<CartInHeaderListProps> = ({ hideFocusTrap, isDrawer }) => {
     const { t } = useTranslation();
     const { cart } = useCurrentCart();
     const { url } = useDomainConfig();
@@ -22,7 +27,7 @@ export const CartInHeaderList: FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [hasScrollableItems, setHasScrollableItems] = useState(false);
 
-    useFocusTrap(contentRef);
+    useFocusTrap(hideFocusTrap ? undefined : contentRef);
 
     useEffect(() => {
         const scrollContainer = scrollContainerRef.current;
@@ -65,12 +70,13 @@ export const CartInHeaderList: FC = () => {
     }
 
     return (
-        <div ref={contentRef}>
+        <div className={twJoin(isDrawer && 'flex min-h-0 flex-1 flex-col')} ref={contentRef}>
             {isRemovingFromCart && <LoaderWithOverlay className="w-16" overlayClassName="rounded-xl" />}
             <div
                 ref={scrollContainerRef}
                 className={twJoin(
-                    'max-h-[50dvh] w-full overflow-y-auto overflow-x-hidden md:w-127',
+                    'w-full overflow-y-auto overflow-x-hidden md:w-127',
+                    isDrawer ? 'min-h-0 flex-1' : 'max-h-[50dvh]',
                     hasScrollableItems && 'pr-2',
                 )}
             >
@@ -86,7 +92,7 @@ export const CartInHeaderList: FC = () => {
                     ))}
                 </ul>
             </div>
-            <div className={twJoin('flex items-center justify-between gap-4 pt-5')}>
+            <div className="flex shrink-0 items-center justify-between gap-4 pt-5">
                 <div className="vl:max-w-75 text-center md:text-left">
                     <FreeTransportRange />
                 </div>

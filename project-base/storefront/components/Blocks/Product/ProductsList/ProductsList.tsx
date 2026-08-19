@@ -31,6 +31,7 @@ export const productListTwClass = twJoin(
     'xs:grid-cols-2',
     'lg:grid-cols-3',
     'xl:grid-cols-4',
+    'xxl:grid-cols-5',
 );
 
 export const productListViewModeListTwClass = 'relative grid grid-cols-1 gap-2';
@@ -60,6 +61,7 @@ export const ProductsList: FC<ProductsListProps> = ({
         return (
             <>
                 <h2 className="sr-only">{t('Product list')}</h2>
+
                 <ProductsListContent
                     className={currentProductListTwClass}
                     gtmMessageOrigin={gtmMessageOrigin}
@@ -70,7 +72,7 @@ export const ProductsList: FC<ProductsListProps> = ({
                     products={products}
                 >
                     {category && (
-                        <li className="col-span-full row-start-2 mx-auto justify-center">
+                        <li className="col-span-full row-start-2 mx-auto w-full min-w-0 justify-center">
                             <Adverts isSingle currentCategory={category} positionName="productListSecondRow" />
                         </li>
                     )}

@@ -75,7 +75,7 @@ export const SetDefaultAddressAction: FC<SetDefaultAddressActionProps> = ({ addr
             aria-label={getSetDefaultAriaLabel()}
             className="self-start"
             size="small"
-            variant="inverted"
+            variant="secondary"
             onClick={handleSetDefaultDeliveryAddress}
             onKeyDown={handleSetDefaultDeliveryAddressKeyDown}
         >

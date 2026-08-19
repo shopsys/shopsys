@@ -29,10 +29,10 @@ export const FreeTransportRange: FC = () => {
                     : t('Your delivery and payment is now free of charge!')}
             </span>
 
-            <div className="relative order-1 vl:order-0 h-[4px]">
-                <div className="absolute top-1/2 left-0 h-[4px] w-full bg-border-less">
+            <div className="relative order-1 vl:order-0 h-1">
+                <div className="absolute top-1/2 left-0 h-1 w-full bg-border-less">
                     <div
-                        className="relative h-[4px] rounded-md bg-background-success transition-width duration-200 ease-defaultTransition"
+                        className="relative h-1 rounded-md bg-background-success transition-width duration-200 ease-defaultTransition"
                         style={{
                             width: totalPriceRemaining > 0 ? `${Math.min(totalPriceRemainingPercents, 100)}%` : '100%',
                         }}

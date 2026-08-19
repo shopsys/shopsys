@@ -202,7 +202,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 'flex items-center justify-between gap-2',
                                 isPriceVisible(order.totalPrice.priceWithVat) &&
                                     isPriceVisible(order.totalPrice.priceWithoutVat) &&
-                                    'border-border-less border-b-[3px] pb-4',
+                                    'border-border-less border-b-3 pb-4',
                             )}
                         >
                             {t('Promo code')}

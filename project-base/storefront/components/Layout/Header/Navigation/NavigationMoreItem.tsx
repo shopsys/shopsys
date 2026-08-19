@@ -62,7 +62,7 @@ export const NavigationMoreItem: FC<NavigationMoreItemProps> = ({
                 aria-controls={menuId}
                 aria-expanded={isOpened}
                 className={twMergeCustom(
-                    'relative m-0 flex cursor-pointer items-center whitespace-nowrap border-0 bg-transparent p-5 font-secondary font-semibold text-sm vl:text-base group-first-of-type:pl-0 group-last-of-type:pr-0',
+                    'relative m-0 flex cursor-pointer items-center whitespace-nowrap rounded-sm border-0 bg-transparent p-5 font-secondary font-semibold text-sm vl:text-base group-first-of-type:pl-0 group-last-of-type:pr-0',
                     'text-link-inverted-default',
                     'hover:text-link-inverted-hovered group-hover:text-link-inverted-hovered',
                     'active:text-link-inverted-hovered',

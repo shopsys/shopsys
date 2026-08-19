@@ -50,7 +50,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
             data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
             ref={forwardedRef}
             className={twMergeCustom(
-                'group relative grid select-text gap-2 rounded-xl border border-background-more bg-background-more p-3 text-left transition',
+                'group relative grid select-text gap-2 rounded-xl border border-background-more bg-background-more p-3 text-left transition-[box-shadow,border-color,background-color,color] duration-200 ease-out pointer-fine:hover:shadow-[0_8px_18px_-12px_rgb(37_40_61/30%),0_2px_6px_-4px_rgb(37_40_61/16%)]',
                 'hover:border-border-less hover:bg-background-default',
                 'sm:p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center',
                 highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
@@ -65,7 +65,8 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
 
             <ExtendedNextLink
                 preventRedirectOnTextSelection
-                className="grid min-w-0 grid-cols-[80px_minmax(0,1fr)] gap-2 rounded-md text-text-default no-underline hover:text-link-default hover:no-underline xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,240px)] xl:items-center"
+                className="group/product-link grid min-w-0 grid-cols-[80px_minmax(0,1fr)] gap-2 rounded-md text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,240px)] xl:items-center min-[1380px]:grid-cols-[88px_minmax(0,280px)_max-content]"
+                data-focus-color="preserve"
                 draggable={false}
                 href={product.slug}
                 tabIndex={allowKeyboardFocus ? 0 : -1}
@@ -95,8 +96,10 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                         />
                     </div>
 
-                    <h3 className="wrap-break-word overflow-hidden font-secondary font-semibold text-sm group-hover:text-link-default group-hover:underline xl:max-w-70">
-                        {product.fullName}
+                    <h3 className="wrap-break-word overflow-hidden font-secondary font-semibold text-sm group-hover:text-text-default group-hover:underline xl:max-w-70">
+                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                            {product.fullName}
+                        </span>
                     </h3>
 
                     <div className="text-text-less text-xs">
@@ -115,7 +118,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                     <ProductAvailability
                         availability={product.availability}
                         availableStoresCount={product.availableStoresCount}
-                        className="col-span-2 min-h-0 text-sm leading-5 xl:col-span-1 xl:max-w-70 xl:justify-self-start"
+                        className="col-span-2 min-h-0 text-sm leading-5 xl:col-span-1 xl:max-w-70 xl:justify-self-start min-[1380px]:max-w-none min-[1380px]:whitespace-nowrap"
                         isInquiryType={product.isInquiryType}
                     />
                 )}
@@ -136,7 +139,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                     onMouseDownCapture={preventProductActionTextSelection}
                 >
                     {visibleItemsConfig.productListButtons && (
-                        <div className="flex shrink-0 items-center gap-1">
+                        <div className="flex shrink-0 items-center">
                             <ProductListItemButtons
                                 allowKeyboardFocus={allowKeyboardFocus}
                                 isProductInComparison={isProductInComparison}

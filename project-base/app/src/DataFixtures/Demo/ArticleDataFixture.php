@@ -69,7 +69,9 @@ class ArticleDataFixture extends AbstractReferenceFixture
             ? $this->generateUrlForCategoryOnDomain(CategoryDataFixture::CATEGORY_ELECTRONICS, $domainConfig->getId())
             : '';
 
-        return [
+        $placeholderText = t('<p>Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</p>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        $articles = [
             [
                 self::ATTRIBUTE_PLAIN_NAME_KEY => 'About us',
                 self::ATTRIBUTE_NAME_KEY => t('About us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -315,6 +317,177 @@ class ArticleDataFixture extends AbstractReferenceFixture
                 self::ATTRIBUTE_PLACEMENT_KEY => Article::PLACEMENT_NONE,
             ],
         ];
+
+        foreach ($articles as &$article) {
+            if ($article[self::ATTRIBUTE_PLAIN_NAME_KEY] === 'For press') {
+                $article[self::ATTRIBUTE_TEXT_KEY] = $this->createForPressArticleText($locale, $homepageUrl, $categoryUrl);
+            } elseif ($article[self::ATTRIBUTE_PLAIN_NAME_KEY] === 'Article for search testing') {
+                $article[self::ATTRIBUTE_NAME_KEY] = t('How Dina chooses reliable electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $article[self::ATTRIBUTE_TEXT_KEY] = $this->createSearchArticleText($locale);
+            } elseif ($article[self::ATTRIBUTE_TEXT_KEY] === $placeholderText) {
+                $article[self::ATTRIBUTE_TEXT_KEY] = $this->createStandardArticleText($article[self::ATTRIBUTE_PLAIN_NAME_KEY], $locale);
+            }
+
+            $articleTitle = $article[self::ATTRIBUTE_NAME_KEY];
+            $article[self::ATTRIBUTE_SEO_H1_KEY] = $articleTitle;
+            $article[self::ATTRIBUTE_SEO_TITLE_KEY] = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitle], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $article[self::ATTRIBUTE_SEO_META_DESCRIPTION_KEY] = t('Useful information from Demo shop: %articleTitle%.', ['%articleTitle%' => $articleTitle], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        unset($article);
+
+        return $articles;
+    }
+
+    private function createStandardArticleText(string $articleName, string $locale): string
+    {
+        $contentTranslationKeysByArticleName = [
+            'About us' => [
+                'intro' => t('Demo shop is a sample electronics retailer built to demonstrate a complete modern shopping experience.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Job at Shopsys' => [
+                'intro' => t('We welcome curious people who enjoy improving online shopping and solving practical customer problems.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('Our demo team brings together technology, logistics, content, and customer care. Open roles would normally be listed here with responsibilities and contact details.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Cooperation' => [
+                'intro' => t('We work with manufacturers, distributors, service partners, and creators who can bring useful products and knowledge to customers.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('A good partnership starts with reliable data, clear commercial terms, and responsible customer support. Potential partners can contact our demo purchasing team.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Goods care' => [
+                'intro' => t('Regular care helps electronics remain safe, reliable, and pleasant to use for longer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('Follow the manufacturer instructions, disconnect devices before cleaning, use suitable accessories, and avoid moisture, heat, and blocked ventilation.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Installment plan' => [
+                'intro' => t('Selected purchases may be divided into regular payments through an external financing provider.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('Before confirming financing, compare the total cost, repayment period, interest, fees, and eligibility conditions shown during checkout.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Complaint' => [
+                'intro' => t('If a product develops a fault, prepare the order number, a clear description of the problem, and any useful photographs.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('Customer care will explain the next steps, including delivery to a service centre, assessment, repair, replacement, or another available resolution.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Frequently Asked Questions FAQ' => [
+                'intro' => t('Here you can find quick answers about orders, availability, delivery, payment, returns, complaints, and customer accounts.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('If the answer is not listed, contact customer care with your order number so the team can help without unnecessary delay.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Transport and payment' => [
+                'intro' => t('Available delivery and payment methods depend on the destination, order size, stock location, and selected products.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('The checkout always shows the current price and estimated delivery time before the order is confirmed.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Withdrawal from contract' => [
+                'intro' => t('Consumers may return eligible online purchases within the period shown in the applicable terms and conditions.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('Return the product complete, safely packed, and with its accessories. This demonstration text is not a substitute for the legally required instructions of a real merchant.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Terms and conditions of eshop' => [
+                'intro' => t('These demonstration terms describe the usual flow of ordering, payment, delivery, complaints, and returns in a sample online store.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('They are illustrative demo content only and must not be used as legal terms for a real business without professional review and company-specific information.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Where to find us' => [
+                'intro' => t('Demo stores provide personal collection, product advice, and selected customer-care services.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('Check the store detail before visiting for its current address, opening hours, available services, and holiday schedule.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Department stores services' => [
+                'intro' => t('Our sample stores combine personal collection with practical assistance before and after purchase.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('Typical services include order pickup, basic product advice, complaint intake, returns, and information about delivery options.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Terms and conditions of department stores' => [
+                'intro' => t('These demonstration store terms summarise reservations, personal collection, payment, returns, and complaint handling at sample branches.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('They are intended only for product demonstration and require legal and operational adaptation before use by a real retailer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'Privacy policy' => [
+                'intro' => t('This demonstration privacy policy explains how a sample online store may process account, order, communication, and technical data.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('A real policy must identify the controller, purposes, legal bases, retention periods, recipients, security measures, and all rights available to customers.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'User consent policy' => [
+                'intro' => t('Optional consent can be used for clearly described purposes such as personalised marketing or selected analytics.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('Consent must be voluntary, specific, informed, and easy to withdraw. Refusing optional consent must not prevent completion of an ordinary purchase.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+        ];
+        $contentTranslationKeys = $contentTranslationKeysByArticleName[$articleName];
+        $intro = $contentTranslationKeys['intro'];
+        $heading = t('What you should know', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $detail = $contentTranslationKeys['detail'];
+
+        return sprintf('<div class="gjs-text-ckeditor"><p>%s</p><h2>%s</h2><p>%s</p></div>', $intro, $heading, $detail);
+    }
+
+    private function createSearchArticleText(string $locale): string
+    {
+        $intro = t('Dina is preparing a comfortable home office and compares a monitor, headphones, and practical accessories before ordering.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $heading = t('A simple checklist before purchase', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $detail = t('She checks dimensions, compatibility, warranty conditions, and delivery options so every product fits the way she works.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        return sprintf('<div class="gjs-text-ckeditor"><p>%s</p><h2>%s</h2><p>%s</p></div>', $intro, $heading, $detail);
+    }
+
+    private function createForPressArticleText(string $locale, string $homepageUrl, string $categoryUrl): string
+    {
+        $intro = t('Welcome to the Demo shop press centre. Here you can find company information, product selections, visual materials, and contacts for media enquiries.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mediaContact = t('Media contact', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mediaContactText = t('For interviews, comments, and background information, contact press@demo-shop.example.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $assets = t('Product materials', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $assetsText = t('The selections below demonstrate how product recommendations can be embedded directly into editorial content.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $markets = t('3 language versions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $categories = t('Electronics and home', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $support = t('Customer care every workday', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $aboutHeading = t('About Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $aboutText = t('Demo shop presents a complete sample e-commerce experience, from product discovery and content to ordering and after-sales care.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $aboutImageAlt = t('Demo shop presentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $factsHeading = t('Key facts', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $videoHeading = t('Video materials', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $storesHeading = t('Stores and locations', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $imagesHeading = t('Downloadable images', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $downloadableImageAlt = t('Downloadable Demo shop press image', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $moreProducts = t('Explore electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        return str_replace(['    ', PHP_EOL], '', trim(<<<EOT
+            <div class="gjs-text-ckeditor"><p>{$intro}</p></div>
+            <div class="gjs-products" data-products="9177759,5964035">
+                <div data-product="9177759" class="gjs-product"></div>
+                <div data-product="5964035" class="gjs-product"></div>
+            </div>
+            <div class="gjs-products" data-products="9177759,9176508,5965879P,532564,1532564,5960453">
+                <div data-product="9177759" class="gjs-product"></div>
+                <div data-product="9176508" class="gjs-product"></div>
+                <div data-product="5965879P" class="gjs-product"></div>
+                <div data-product="532564" class="gjs-product"></div>
+                <div data-product="1532564" class="gjs-product"></div>
+                <div data-product="5960453" class="gjs-product"></div>
+            </div>
+            <div class="row">
+                <div class="column"><div class="gjs-text-ckeditor" style="text-align: center"><strong>{$mediaContact}</strong><br />{$mediaContactText}</div></div>
+                <div class="column"><div class="gjs-text-ckeditor" style="text-align: center"><strong>{$assets}</strong><br />{$assetsText}</div></div>
+            </div>
+            <div class="row">
+                <div class="column" style="text-align: center"><div class="gjs-text-ckeditor">{$markets}</div></div>
+                <div class="column" style="text-align: center"><div class="gjs-text-ckeditor">{$categories}</div></div>
+                <div class="column" style="text-align: center"><div class="gjs-text-ckeditor">{$support}</div></div>
+            </div>
+            <div class="gjs-text-ckeditor"><h2>{$aboutHeading}</h2></div>
+            <div class="gjs-text-with-image gjs-text-with-image-float-left">
+                <img src="{$homepageUrl}content/images/blogArticle/default/600.jpg" class="image" alt="{$aboutImageAlt}" />
+                <div class="gjs-text-ckeditor text">{$aboutText}</div>
+            </div>
+            <div class="gjs-text-ckeditor"><h3>{$factsHeading}</h3></div>
+            <div class="row" role="list">
+                <div class="column" role="presentation">
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$markets}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$categories}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$support}</div></div>
+                </div>
+                <div class="column" role="presentation">
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$mediaContact}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$assets}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$assetsText}</div></div>
+                </div>
+            </div>
+            <div class="gjs-text-ckeditor"><h4>{$videoHeading}</h4></div>
+            <video src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImZpbGw6IHJnYmEoMCwwLDAsMC4xNSk7IHRyYW5zZm9ybTogc2NhbGUoMC43NSkiPgogICAgICAgIDxwYXRoIGQ9Ik04LjUgMTMuNWwyLjUgMyAzLjUtNC41IDQuNSA2SDVtMTYgMVY1YTIgMiAwIDAgMC0yLTJINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMnoiPjwvcGF0aD4KICAgICAgPC9zdmc+" controls></video>
+            <div class="gjs-text-ckeditor"><h5>{$storesHeading}</h5></div>
+            <iframe src="https://maps.google.com/maps?&z=1&t=q&output=embed" style="height: 350px; width: 100%; border: 0"></iframe>
+            <div class="gjs-text-ckeditor"><h6>{$imagesHeading}</h6></div>
+            <img src="{$homepageUrl}content/images/blogArticle/default/601.jpg" class="image-position-left" alt="{$downloadableImageAlt}" />
+            <a class="gjs-button-link button-link-position-center" title="{$moreProducts}" href="{$categoryUrl}"><div class="gjs-text-ckeditor text">{$moreProducts}</div></a>
+        EOT));
     }
 
     private function createArticlesFromArray(array $articles, int $domainId): void

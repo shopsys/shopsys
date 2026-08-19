@@ -80,7 +80,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
 
     return (
         <Popup
-            className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5"
+            className="vl:w-2xl w-11/12 overflow-x-auto lg:w-4/5"
             title={t('Inquiry')}
             ariaDescription={t(
                 'This product is available on inquiry. Please fill in your information below to submit your inquiry request.',

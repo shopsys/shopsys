@@ -129,7 +129,8 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
 
                             <Button
                                 className="w-fit"
-                                hasDisabledLook={!selectedPaymentForChange}
+                                disabled={!selectedPaymentForChange || isChangePaymentInOrderFetching}
+                                hasDisabledLook={!selectedPaymentForChange || isChangePaymentInOrderFetching}
                                 size="xlarge"
                                 onClick={changePaymentSubmitHandler}
                             >

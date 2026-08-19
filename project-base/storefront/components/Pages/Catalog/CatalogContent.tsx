@@ -16,7 +16,7 @@ export const CatalogContent: FC = () => {
 
     return (
         <Webline>
-            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
                 {catalogCategoriesData.categories.map((category) => (
                     <CategoryCard key={category.uuid} showChildren category={category} variant="catalog" />
                 ))}

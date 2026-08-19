@@ -55,6 +55,11 @@ export enum TIDs {
     blocks_sortingbar_option_ = 'blocks_sortingbar_option_',
     blocks_simplenavigation_ = 'blocks_simplenavigation_',
     product_detail_main_image = 'product_detail_main_image',
+    product_detail_section_ = 'product_detail_section_',
+    product_detail_section_navigation = 'product_detail_section_navigation',
+    product_detail_sticky_action = 'product_detail_sticky_action',
+    product_detail_sticky_addtocart_button = 'product_detail_sticky_addtocart_button',
+    product_list = 'product_list',
     product_list_item_image = 'product_list_item_image',
     grapesjs_product_hero = 'grapesjs_product_hero',
     product_gallery_image = 'product_gallery_image',
@@ -161,8 +166,6 @@ export enum TIDs {
     comparison_empty_state = 'comparison_empty_state',
     comparison_remove_product_button = 'comparison_remove_product_button',
     comparison_table = 'comparison_table',
-    comparison_popup = 'comparison_popup',
-    comparison_popup_link = 'comparison_popup_link',
 
     // Product Wishlist
     product_wishlist_button = 'product_wishlist_button',
@@ -226,4 +229,8 @@ export enum TIDs {
     blog_article_author = 'blog_article_author',
     blog_article_author_box = 'blog_article_author_box',
     blog_sidebar = 'blog_sidebar',
+    blog_article_anchor_navigation = 'blog_article_anchor_navigation',
+    blog_article_anchor_navigation_link_ = 'blog_article_anchor_navigation_link_',
+    blog_article_content = 'blog_article_content',
+    blog_article_list = 'blog_article_list',
 }

@@ -20,7 +20,7 @@ export const DeferredProductDetailAccessories: FC<ProductDetailAccessoriesProps>
 
     return (
         <Webline>
-            <h2 className="h5 mb-3">{t('You can also buy')}</h2>
+            <h2 className="h3 mb-3">{t('You can also buy')}</h2>
 
             {shouldRender ? (
                 <ProductDetailAccessories accessories={accessories} />

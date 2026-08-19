@@ -1,4 +1,4 @@
-import { ThumbUp } from 'components/Basic/Icon/ThumbUp';
+import { ThumbUpIcon } from 'components/Basic/Icon/ThumbUpIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
@@ -105,7 +105,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({
             <ul className="flex flex-col gap-2 py-5">
                 {registrationAfterOrderUsp.map((text) => (
                     <li key={text} className="flex items-center gap-2">
-                        <ThumbUp className="size-6 text-text-accent" />
+                        <ThumbUpIcon className="size-6 text-text-accent" />
                         <span className="h5 text-text-accent">{text}</span>
                     </li>
                 ))}

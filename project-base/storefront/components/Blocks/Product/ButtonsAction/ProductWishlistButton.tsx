@@ -1,5 +1,6 @@
 import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -34,37 +35,54 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
         : isProductInWishlist
           ? t('Remove from wishlist')
           : t('Add to wishlist');
+    const tooltipLabel = isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist');
+    const ariaLabel = isProductInWishlist
+        ? t('Remove from wishlist product {{ productName }}', {
+              ns: 'accessibility',
+              productName: productName,
+          })
+        : t('Add to wishlist product {{ productName }}', {
+              ns: 'accessibility',
+              productName: productName,
+          });
+    const WishlistIcon = isProductInWishlist ? HeartFilledIcon : HeartIcon;
+
+    if (!isWithText) {
+        return (
+            <IconButton
+                Icon={WishlistIcon}
+                ariaLabel={ariaLabel}
+                className={className}
+                iconClassName={isProductInWishlist ? 'text-icon-accent-red' : undefined}
+                shape="rounded"
+                tabIndex={tabIndex}
+                tid={TIDs.product_wishlist_button}
+                title={tooltipLabel}
+                tooltipLabel={tooltipLabel}
+                variant="ghost"
+                onClick={toggleProductInWishlist}
+            />
+        );
+    }
 
     return (
         <button
             data-tid={TIDs.product_wishlist_button}
             tabIndex={tabIndex}
-            title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
-            aria-label={
-                isProductInWishlist
-                    ? t('Remove from wishlist product {{ productName }}', {
-                          ns: 'accessibility',
-                          productName: productName,
-                      })
-                    : t('Add to wishlist product {{ productName }}', {
-                          ns: 'accessibility',
-                          productName: productName,
-                      })
-            }
+            title={tooltipLabel}
+            aria-label={ariaLabel}
             className={twMergeCustom(
                 'flex cursor-pointer items-center justify-center gap-2 text-icon-less hover:text-icon-accent',
-                'rounded-sm outline-hidden',
-                !isWithText && 'size-9',
+                'rounded-sm outline-hidden transition-colors',
                 className,
             )}
             onClick={toggleProductInWishlist}
         >
-            {isProductInWishlist ? (
-                <HeartFilledIcon className="size-6 shrink-0 text-icon-accent-red" />
-            ) : (
-                <HeartIcon className="size-6 shrink-0" />
-            )}
-            {isWithText && <span className="truncate text-sm">{buttonText}</span>}
+            <WishlistIcon
+                aria-hidden="true"
+                className={twMergeCustom('size-6 shrink-0', isProductInWishlist && 'text-icon-accent-red')}
+            />
+            <span className="truncate text-sm">{buttonText}</span>
         </button>
     );
 };

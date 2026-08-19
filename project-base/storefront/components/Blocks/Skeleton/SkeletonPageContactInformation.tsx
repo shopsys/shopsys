@@ -2,14 +2,14 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { Webline } from 'components/Layout/Webline/Webline';
 
 export const SkeletonPageContactInformation: FC = () => (
-    <Webline>
-        <Skeleton className="mx-auto mt-1 mb-5 flex h-16 vl:h-11 w-full max-w-[840px] rounded-xl lg:mt-6 lg:mb-10" />
+    <Webline width="xl">
+        <Skeleton className="mx-auto mt-1 mb-5 flex h-16 vl:h-11 w-full max-w-210 rounded-xl lg:mt-6 lg:mb-10" />
 
         <div className="grid vl:grid-cols-3 vl:gap-10">
             <div className="vl:col-span-2 flex flex-col gap-5">
                 <Skeleton className="h-80 rounded-xl" />
 
-                <Skeleton className="h-[640px] rounded-xl" />
+                <Skeleton className="h-160 rounded-xl" />
 
                 <Skeleton className="h-20 rounded-xl" />
 

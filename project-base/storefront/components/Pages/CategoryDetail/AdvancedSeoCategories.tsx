@@ -18,7 +18,7 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
             {readyCategorySeoMixLinks.map((item) => (
                 <Tag
                     key={item.slug}
-                    className="min-w-0 max-w-full shrink whitespace-normal break-words bg-background-accent-less text-center text-text-default"
+                    className="wrap-break-word min-w-0 max-w-full shrink whitespace-normal bg-background-accent-less text-center text-text-default"
                     href={item.slug}
                     type="category"
                 >

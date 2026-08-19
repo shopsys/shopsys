@@ -1,28 +1,26 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
-import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { onGtmConsentUpdateEventHandler } from 'gtm/handlers/onGtmConsentUpdateEventHandler';
 import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
-import Trans from 'next-translate/Trans';
 import { JSX, ReactElement } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { twMergeCustom } from 'utils/twMerge';
 import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
 
 type UserConsentFormProps = {
+    layout?: 'compact' | 'default';
     onSetCallback?: () => void;
 };
 
-export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => {
+export const UserConsentForm: FC<UserConsentFormProps> = ({ layout = 'default', onSetCallback }) => {
     const { t } = useTranslation();
     const [formProviderMethods] = useUserConsentForm();
     const formMeta = useUserConsentFormMeta();
-    const [{ data: settingsData }] = useSettingsQuery();
-    const userConsentPolicyArticleUrl = settingsData?.settings?.userConsentPolicyArticleUrl;
     const updateUserConsent = usePersistStore((store) => store.updateUserConsent);
+    const isCompact = layout === 'compact';
 
     const saveUserConsentChoices = () => {
         const formValues = formProviderMethods.getValues();
@@ -52,83 +50,93 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 
     return (
         <FormProvider {...formProviderMethods}>
-            <p className="sr-only" id="user-consent-policy-link">
-                {t('This page is about the consent and tracking policy. You can read more about it here.')}
-            </p>
-
-            <p>
-                <Trans
-                    defaultTrans="To learn more, you can read our <link>consent and tracking policy</link>"
-                    i18nKey="userConsentPolicyLink"
-                    components={{
-                        link: userConsentPolicyArticleUrl ? (
-                            <ExtendedNextLink
-                                aria-describedby="user-consent-policy-link"
-                                href={userConsentPolicyArticleUrl}
-                                rel="noreferrer"
-                                tabIndex={0}
-                                target="_blank"
-                                title={t('Consent and tracking policy')}
+            <div className={twMergeCustom('flex flex-col gap-5', isCompact ? 'gap-4' : 'mx-auto w-full max-w-2xl')}>
+                <div className="divide-y divide-border-less overflow-hidden rounded-xl border border-border-less bg-background-more">
+                    <ToggleSwitchControlled
+                        ariaLabel={t('Toggle marketing consent', { ns: 'accessibility' })}
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.marketing.name}
+                        render={(toggleSwitch, toggleSwitchId) => (
+                            <ToggleContent
+                                isCompact={isCompact}
+                                name={formMeta.fields.marketing.label}
+                                toggleSwitch={toggleSwitch}
+                                toggleSwitchId={toggleSwitchId}
                             />
-                        ) : (
-                            <span />
-                        ),
-                    }}
-                />
-            </p>
+                        )}
+                    />
 
-            <div className="flex flex-col gap-4 rounded-xl bg-background-more p-4 vl:p-8">
-                <ToggleSwitchControlled
-                    ariaLabel={t('Toggle marketing consent', { ns: 'accessibility' })}
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.marketing.name}
-                    render={(toggleSwitch) => (
-                        <ToggleContent name={formMeta.fields.marketing.label} toggleSwitch={toggleSwitch} />
-                    )}
-                />
+                    <ToggleSwitchControlled
+                        ariaLabel={t('Toggle statistics consent', { ns: 'accessibility' })}
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.statistics.name}
+                        render={(toggleSwitch, toggleSwitchId) => (
+                            <ToggleContent
+                                isCompact={isCompact}
+                                name={formMeta.fields.statistics.label}
+                                toggleSwitch={toggleSwitch}
+                                toggleSwitchId={toggleSwitchId}
+                            />
+                        )}
+                    />
 
-                <ToggleSwitchControlled
-                    ariaLabel={t('Toggle statistics consent', { ns: 'accessibility' })}
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.statistics.name}
-                    render={(toggleSwitch) => (
-                        <ToggleContent name={formMeta.fields.statistics.label} toggleSwitch={toggleSwitch} />
-                    )}
-                />
+                    <ToggleSwitchControlled
+                        ariaLabel={t('Toggle preferences consent', { ns: 'accessibility' })}
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.preferences.name}
+                        render={(toggleSwitch, toggleSwitchId) => (
+                            <ToggleContent
+                                isCompact={isCompact}
+                                name={formMeta.fields.preferences.label}
+                                toggleSwitch={toggleSwitch}
+                                toggleSwitchId={toggleSwitchId}
+                            />
+                        )}
+                    />
+                </div>
 
-                <ToggleSwitchControlled
-                    ariaLabel={t('Toggle preferences consent', { ns: 'accessibility' })}
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.preferences.name}
-                    render={(toggleSwitch) => (
-                        <ToggleContent name={formMeta.fields.preferences.label} toggleSwitch={toggleSwitch} />
-                    )}
-                />
-            </div>
+                <div className="flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
+                    <Button className="w-full sm:w-auto" size="small" variant="tertiary" onClick={rejectUserConsent}>
+                        {t('Reject all')}
+                    </Button>
 
-            <div className="flex flex-wrap justify-end gap-3">
-                <Button size="small" onClick={saveUserConsentChoices}>
-                    {t('Save choices')}
-                </Button>
+                    <Button
+                        className="w-full sm:w-auto"
+                        size="small"
+                        variant="secondary"
+                        onClick={saveUserConsentChoices}
+                    >
+                        {t('Save choices')}
+                    </Button>
 
-                <Button size="small" onClick={giveFullUserConsent}>
-                    {t('Accept all')}
-                </Button>
-
-                <Button size="small" variant="inverted" onClick={rejectUserConsent}>
-                    {t('Reject all')}
-                </Button>
+                    <Button className="w-full sm:w-auto" size="small" onClick={giveFullUserConsent}>
+                        {t('Accept all')}
+                    </Button>
+                </div>
             </div>
         </FormProvider>
     );
 };
 
-const ToggleContent: FC<{ name: string | ReactElement; toggleSwitch: JSX.Element }> = ({ toggleSwitch, name }) => (
-    <div className="flex items-center justify-between">
-        <span>{name}</span>
+type ToggleContentProps = {
+    isCompact: boolean;
+    name: string | ReactElement;
+    toggleSwitch: JSX.Element;
+    toggleSwitchId: string;
+};
+
+const ToggleContent: FC<ToggleContentProps> = ({ isCompact, name, toggleSwitch, toggleSwitchId }) => (
+    <label
+        className={twMergeCustom(
+            'flex cursor-pointer items-center justify-between gap-4 px-4 font-secondary font-semibold text-sm transition-colors hover:bg-background-default',
+            isCompact ? 'min-h-13 py-2.5' : 'min-h-16 py-3',
+        )}
+        htmlFor={toggleSwitchId}
+    >
+        <span className="text-text-default">{name}</span>
         {toggleSwitch}
-    </div>
+    </label>
 );

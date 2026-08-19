@@ -6,7 +6,7 @@ export type ButtonBaseProps = {
     hasDisabledLook?: boolean;
     hasDisabledCursor?: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
-    variant?: 'primary' | 'secondary' | 'inverted' | 'transparent';
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'inverted';
     shouldShowSpinner?: boolean;
 };
 
@@ -61,7 +61,7 @@ export const getButtonClassName = (
     hasDisabledCursor: ButtonBaseProps['hasDisabledCursor'],
 ) => {
     return twJoin(
-        'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button text-center font-bold font-secondary transition-all hover:no-underline',
+        'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button text-center font-secondary font-semibold transition-all hover:no-underline',
         'outline-2 -outline-offset-2',
         size === 'small' && 'px-3 py-2.5 text-xs',
         size === 'medium' && 'px-3 py-2.5 text-xs sm:px-4 sm:py-2 sm:text-sm',
@@ -85,6 +85,24 @@ export const getButtonClassName = (
             hasDisabledLook &&
                 'bg-button-secondary-bg-disabled text-button-secondary-text-disabled outline-button-secondary-border-disabled',
         ],
+        variant === 'tertiary' && [
+            'bg-button-tertiary-bg-default text-button-tertiary-text-default outline-button-tertiary-border-default',
+            !hasDisabledLook &&
+                'hover:bg-button-tertiary-bg-hovered hover:text-button-tertiary-text-hovered hover:outline-button-tertiary-border-hovered',
+            !hasDisabledLook &&
+                'active:bg-button-tertiary-bg-active active:text-button-tertiary-text-active active:outline-button-tertiary-border-active',
+            hasDisabledLook &&
+                'bg-button-tertiary-bg-disabled text-button-tertiary-text-disabled outline-button-tertiary-border-disabled',
+        ],
+        variant === 'danger' && [
+            'bg-button-danger-bg-default text-button-danger-text-default outline-button-danger-border-default',
+            !hasDisabledLook &&
+                'hover:bg-button-danger-bg-hovered hover:text-button-danger-text-hovered hover:outline-button-danger-border-hovered',
+            !hasDisabledLook &&
+                'active:bg-button-danger-bg-active active:text-button-danger-text-active active:outline-button-danger-border-active',
+            hasDisabledLook &&
+                'bg-button-danger-bg-disabled text-button-danger-text-disabled outline-button-danger-border-disabled',
+        ],
         variant === 'inverted' && [
             'bg-button-inverted-bg-default text-button-inverted-text-default outline-button-inverted-border-default',
             !hasDisabledLook &&
@@ -93,15 +111,6 @@ export const getButtonClassName = (
                 'active:bg-button-inverted-bg-active active:text-button-inverted-text-active active:outline-button-inverted-border-active',
             hasDisabledLook &&
                 'bg-button-inverted-bg-disabled text-button-inverted-text-disabled outline-button-inverted-border-disabled',
-        ],
-        variant === 'transparent' && [
-            'bg-button-transparent-bg-default text-button-transparent-text-default outline-button-transparent-border-default',
-            !hasDisabledLook &&
-                'hover:bg-button-transparent-bg-hovered hover:text-button-transparent-text-hovered hover:outline-button-transparent-border-disabled',
-            !hasDisabledLook &&
-                'active:bg-button-transparent-bg-active active:text-button-transparent-text-active active:outline-button-transparent-border-active',
-            hasDisabledLook &&
-                'bg-button-transparent-bg-disabled text-button-transparent-text-disabled outline-button-transparent-border-disabled',
         ],
         (hasDisabledLook || hasDisabledCursor) && 'cursor-no-drop',
     );

@@ -70,7 +70,7 @@ export const Pagination: FC<PaginationProps> = ({
     return (
         <div className="mt-5 flex vl:flex-row flex-col items-center justify-between gap-5">
             {isWithLoadMore && hasNextPage && loadMoreCount > 0 && (
-                <Button variant="inverted" onClick={loadMore}>
+                <Button variant="secondary" onClick={loadMore}>
                     {t('Load {{ count }} more {{ items }}', { count: loadMoreCount, items: itemsLabel })}
                 </Button>
             )}
@@ -140,8 +140,8 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                     'flex size-8 items-center justify-center rounded-lg border-2 font-bold no-underline hover:no-underline md:size-12',
                     (isActive || isDotButton) && 'border-none hover:cursor-default',
                     isActive
-                        ? 'border-button-inverted-border-active bg-button-inverted-bg-active text-button-inverted-text-active'
-                        : 'border-button-inverted-border-default bg-button-inverted-bg-default text-button-inverted-text-default hover:border-button-inverted-border-hovered hover:bg-button-inverted-bg-hovered hover:text-button-inverted-text-hovered',
+                        ? 'border-button-secondary-border-active bg-button-secondary-bg-active text-button-secondary-text-active'
+                        : 'border-button-secondary-border-default bg-button-secondary-bg-default text-button-secondary-text-default hover:border-button-secondary-border-hovered hover:bg-button-secondary-bg-hovered hover:text-button-secondary-text-hovered',
                 )}
                 onClick={handleOnClick}
             >

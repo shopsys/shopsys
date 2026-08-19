@@ -6040,6 +6040,15 @@ Main image of the blog main category
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainblogcategorydata.mainblogcategoryname">mainBlogCategoryName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name of the blog main category
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainblogcategorydata.mainblogcategoryurl">mainBlogCategoryUrl</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>

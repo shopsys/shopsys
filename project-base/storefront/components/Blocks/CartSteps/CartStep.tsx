@@ -32,7 +32,7 @@ export const CartStep: FC<CartStepProps> = ({
                 disabled={isDisabled}
                 tabIndex={0}
                 className={twJoin(
-                    'group flex max-w-[70px] flex-col items-center gap-2.5 outline-hidden md:max-w-none lg:flex-row lg:gap-5',
+                    'group flex max-w-17.5 flex-col items-center gap-2.5 outline-hidden md:max-w-none lg:flex-row lg:gap-5',
                     'rounded-md',
                     isDisabled ? 'cursor-default' : 'cursor-pointer',
                 )}

@@ -49,7 +49,6 @@ export enum SNAPSHOT_GROUP {
 }
 
 const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
-    '[for="newsletter-form-privacyPolicy"]',
     TIDs.simple_header_contact,
     TIDs.header_cart,
 ];

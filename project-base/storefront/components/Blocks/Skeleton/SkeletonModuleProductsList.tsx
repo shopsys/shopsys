@@ -28,14 +28,14 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
             </div>
 
             {!isWithoutNavigation && (
-                <div className="grid vl:grid-cols-5 gap-3 md:grid-cols-3 lg:grid-cols-4">
-                    {createEmptyArray(5).map((_, index) => (
+                <div className="grid vl:grid-cols-6 gap-3 md:grid-cols-3 lg:grid-cols-4">
+                    {createEmptyArray(6).map((_, index) => (
                         <Skeleton key={index} className="h-20" />
                     ))}
                 </div>
             )}
 
-            <div className="flex scroll-mt-5 vl:flex-row flex-col vl:flex-wrap vl:gap-4">
+            <div className="flex scroll-mt-fixed-header vl:flex-row flex-col vl:flex-wrap vl:gap-4">
                 <SkeletonModuleFilterPanel />
 
                 <div className="flex-1">

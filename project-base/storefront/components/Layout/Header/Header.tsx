@@ -5,7 +5,6 @@ import { DeferredAutocompleteSearch } from './AutocompleteSearch/DeferredAutocom
 import { DeferredCartInHeader } from './Cart/DeferredCartInHeader';
 import { Logo } from './Logo/Logo';
 import { DeferredMenuIconic } from './MenuIconic/DeferredMenuIconic';
-import { MobileBottomNavigation } from './MobileBottomNavigation/MobileBottomNavigation';
 
 const HeaderContact = dynamic(() => import('./Contact/HeaderContact').then((component) => component.HeaderContact));
 
@@ -38,8 +37,6 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                     </div>
 
                     <DeferredCartInHeader />
-
-                    <MobileBottomNavigation />
                 </div>
             )}
         </Webline>

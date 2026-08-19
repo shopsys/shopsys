@@ -66,7 +66,8 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
         >
             <ExtendedNextLink
                 preventRedirectOnTextSelection
-                className="group/product-link contents select-text text-text-default no-underline hover:no-underline"
+                className="group/product-link grid select-text pt-12 text-text-default no-underline hover:no-underline focus-visible:outline-hidden sm:pt-0 md:pointer-events-none md:col-span-2 md:col-start-1 md:row-span-2 md:row-start-1 md:grid-cols-subgrid md:grid-rows-subgrid"
+                data-focus-color="preserve"
                 draggable={false}
                 href={product.slug}
                 type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -78,7 +79,7 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
             >
                 <div
                     data-tid={TIDs.product_list_item_image}
-                    className="mb-5 flex items-center justify-center md:row-span-2 md:mb-0"
+                    className="mb-5 flex items-center justify-center md:pointer-events-auto md:row-span-2 md:mb-0"
                 >
                     <Image
                         alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
@@ -90,7 +91,7 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                     />
                 </div>
 
-                <div className="mb-2 flex min-w-0 flex-col justify-center gap-2">
+                <div className="mb-2 flex min-w-0 flex-col justify-center gap-2 md:pointer-events-auto">
                     <div className="flex flex-wrap items-center gap-2">
                         <Flag type="highlight" className="mb-1">
                             {t('Recommended product')}
@@ -104,8 +105,10 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                         />
                     </div>
 
-                    <h3 className="wrap-break-word overflow-hidden font-secondary font-semibold text-lg leading-tight group-hover:text-link-default group-hover:underline group-focus-visible/product-link:text-link-default group-focus-visible/product-link:underline sm:text-xl">
-                        {product.fullName}
+                    <h3 className="wrap-break-word overflow-hidden font-secondary font-semibold text-lg leading-tight group-hover:text-text-default group-hover:underline sm:text-xl">
+                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                            {product.fullName}
+                        </span>
                     </h3>
 
                     {product.__typename === 'MainVariant' && (
@@ -151,7 +154,7 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                 />
             </div>
 
-            <div className="relative z-above w-full max-w-60 md:col-start-2">
+            <div className="relative z-above w-full max-w-60 md:col-start-2 md:row-start-2">
                 {shouldShowProductActionSkeleton ? (
                     <ProductActionSkeleton className="w-full" isWithAddToCart isWithProductListButtons={false} />
                 ) : (

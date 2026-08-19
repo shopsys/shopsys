@@ -1482,6 +1482,8 @@ export type TypeMainBlogCategoryData = {
   __typename?: 'MainBlogCategoryData';
   /** Main image of the blog main category */
   mainBlogCategoryMainImage: Maybe<TypeImage>;
+  /** Name of the blog main category */
+  mainBlogCategoryName: Maybe<Scalars['String']['output']>;
   /** Absolute URL of the blog main category */
   mainBlogCategoryUrl: Maybe<Scalars['String']['output']>;
 };

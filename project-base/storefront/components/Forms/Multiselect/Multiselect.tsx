@@ -1,7 +1,8 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
+import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { SelectList } from 'components/Forms/Select/SelectList';
 import { ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -139,7 +140,7 @@ export function MultiSelect<T extends string | number = string>({
                                 className={twJoin(
                                     'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || comboBoxConfig.searchValue || selectedOptions.length > 0
-                                        ? 'top-[9px] text-sm'
+                                        ? 'top-2.25 text-sm'
                                         : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                 )}
                             >
@@ -160,7 +161,7 @@ export function MultiSelect<T extends string | number = string>({
                                 className={twJoin(
                                     'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || selectedOptions.length > 0
-                                        ? 'top-[9px] text-sm'
+                                        ? 'top-2.25 text-sm'
                                         : 'top-1/2 -translate-y-1/2 font-semibold text-md',
                                 )}
                             >
@@ -182,15 +183,15 @@ export function MultiSelect<T extends string | number = string>({
                         </div>
                     )}
 
-                    <button
-                        className="cursor-pointer rounded-sm px-3"
+                    <IconButton
+                        Icon={ArrowIcon}
                         disabled={isDisabled}
-                        tabIndex={0}
-                        type="button"
+                        iconClassName={isOpen ? 'rotate-180' : 'rotate-0'}
+                        shape="rounded"
+                        title={isOpen ? t('Close') : t('Open')}
+                        variant="ghost"
                         onClick={handleArrowIconClick}
-                    >
-                        <ArrowIcon className={twJoin('size-5 transition', isOpen ? 'rotate-180' : 'rotate-0')} />
-                    </button>
+                    />
                 </div>
 
                 {isOpen && (
@@ -213,7 +214,7 @@ export function MultiSelect<T extends string | number = string>({
                             >
                                 {selected.label}
 
-                                <RemoveBoldIcon className="ml-2 w-3 cursor-pointer text-icon-less group-hover/tag:text-icon-inverted" />
+                                <CloseIcon className="ml-2 w-3 cursor-pointer text-icon-less group-hover/tag:text-icon-inverted" />
                             </Tag>
                         ))}
                     </div>

@@ -8,7 +8,7 @@ export const Banners: FC = () => {
 
     if (areSliderItemsFetching) {
         return (
-            <Webline width="xxl">
+            <Webline>
                 <SkeletonModuleBanners />
             </Webline>
         );
@@ -19,7 +19,7 @@ export const Banners: FC = () => {
     }
 
     return (
-        <Webline width="xxl">
+        <Webline>
             <BannersSlider sliderItems={sliderItemsData.sliderItems} />
         </Webline>
     );

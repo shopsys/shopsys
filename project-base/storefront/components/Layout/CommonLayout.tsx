@@ -5,7 +5,8 @@ import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/B
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { TypeHreflangLink } from 'graphql/types';
 import dynamic from 'next/dynamic';
-import { useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+import { type ReactNode, useEffect, useRef } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
@@ -19,11 +20,26 @@ import { AccessibilityNavigation } from './Header/AccessibilityNavigation/Access
 import { Header } from './Header/Header';
 import { DeferredNavigation } from './Header/Navigation/DeferredNavigation';
 import { useDesktopFixedHeader } from './hooks/useDesktopFixedHeader';
+import { MobileBottomLayer } from './MobileBottomLayer/MobileBottomLayer';
 import { NotificationBars } from './NotificationBars/NotificationBars';
 
 const FixedHeader = dynamic(() => import('./Header/FixedHeader').then((component) => component.FixedHeader), {
     ssr: false,
 });
+
+const getCurrentHashTarget = (): HTMLElement | null => {
+    const hash = window.location.hash.slice(1);
+
+    if (!hash) {
+        return null;
+    }
+
+    try {
+        return document.getElementById(decodeURIComponent(hash));
+    } catch {
+        return document.getElementById(hash);
+    }
+};
 
 export type CommonLayoutProps = {
     title?: string | null;
@@ -36,6 +52,7 @@ export type CommonLayoutProps = {
     pageTypeOverride?: PageType;
     ogType?: OgTypeEnum | undefined;
     ogImageUrlDefault?: string | undefined;
+    bottomContent?: ReactNode;
 };
 
 export const CommonLayout: FC<CommonLayoutProps> = ({
@@ -50,12 +67,15 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     pageTypeOverride,
     ogType,
     ogImageUrlDefault,
+    bottomContent,
 }) => {
     const { t } = useTranslation();
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
     const setIsUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
+    const router = useRouter();
     const siteHeaderRef = useRef<HTMLElement>(null);
-    const { fixedHeaderRef, isDesktop, isFixedHeaderVisible, showDesktopFixedHeader } =
+    const correctedHashUrlRef = useRef<string | null>(null);
+    const { fixedHeaderHeight, fixedHeaderRef, isDesktop, isFixedHeaderVisible, showDesktopFixedHeader } =
         useDesktopFixedHeader(siteHeaderRef);
     const [{ data: navigationData, fetching: isNavigationFetching }] = useNavigationQuery();
     const isOriginalHeaderHidden = isDesktop && showDesktopFixedHeader;
@@ -65,6 +85,30 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             setIsUserMenuOpen(false);
         }
     }, [setIsUserMenuOpen, showDesktopFixedHeader]);
+
+    useEffect(() => {
+        if (!isDesktop || fixedHeaderHeight === 0 || isPageLoading || isFetchingData) {
+            return undefined;
+        }
+
+        const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+        const hashTarget = getCurrentHashTarget();
+
+        if (!hashTarget) {
+            correctedHashUrlRef.current = null;
+
+            return undefined;
+        }
+
+        if (correctedHashUrlRef.current === currentUrl) {
+            return undefined;
+        }
+
+        correctedHashUrlRef.current = currentUrl;
+        const animationFrameId = window.requestAnimationFrame(() => hashTarget.scrollIntoView({ block: 'start' }));
+
+        return () => window.cancelAnimationFrame(animationFrameId);
+    }, [fixedHeaderHeight, isDesktop, isFetchingData, isPageLoading, router.asPath]);
 
     return (
         <>
@@ -82,7 +126,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
                 <NotificationBars />
 
-                {isDesktop && showDesktopFixedHeader && (
+                {isDesktop && (
                     <FixedHeader
                         fixedHeaderRef={fixedHeaderRef}
                         isVisible={isFixedHeaderVisible}
@@ -92,7 +136,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
                 <header
                     aria-hidden={isOriginalHeaderHidden || undefined}
-                    className="bg-background-brand"
+                    className="bg-background-brand focus-visible:outline-hidden"
                     id="site-header"
                     inert={isOriginalHeaderHidden || undefined}
                     ref={siteHeaderRef}
@@ -107,7 +151,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 </header>
 
                 <main
-                    className="mt-4 mb-10 flex flex-col"
+                    className="mt-4 mb-10 flex scroll-mt-fixed-header flex-col focus-visible:outline-hidden"
                     id="main-content"
                     tabIndex={-1}
                     aria-label={
@@ -135,13 +179,15 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
                 <footer
                     aria-label={t('Site information and navigation', { ns: 'accessibility' })}
-                    className="mt-auto h-fit"
+                    className="mt-auto h-fit bg-secondary-50"
                 >
                     <DeferredNewsletterForm />
 
                     <DeferredFooter />
                 </footer>
             </div>
+
+            <MobileBottomLayer>{!isPageLoading && !isFetchingData && bottomContent}</MobileBottomLayer>
         </>
     );
 };

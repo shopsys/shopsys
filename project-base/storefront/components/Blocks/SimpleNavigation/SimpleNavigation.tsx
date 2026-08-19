@@ -10,7 +10,6 @@ type SimpleNavigationProps = {
     title?: string;
     listedItems: ListedItemPropType[];
     isWithoutSlider?: true;
-    itemClassName?: string;
     linkTypeOverride?: PageType;
     ariaLabel?: string;
 };
@@ -20,7 +19,6 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
     listedItems,
     isWithoutSlider,
     className,
-    itemClassName,
     linkTypeOverride,
     ariaLabel,
 }) => {
@@ -44,7 +42,6 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
                 {listedItems.map((listedItem, index) => (
                     <SimpleNavigationListItem
                         key={listedItem.slug}
-                        className={itemClassName}
                         linkTypeOverride={linkTypeOverride}
                         listedItem={listedItem}
                         tid={TIDs.blocks_simplenavigation_ + index}

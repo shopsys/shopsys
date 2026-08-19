@@ -28,12 +28,12 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                             'hover:border-border-less hover:bg-background-default hover:no-underline',
                         )}
                     >
-                        <div className="w-full text-center md:w-[250px] lg:w-80">
+                        <div className="w-full overflow-hidden rounded-xl text-center md:w-62.5 lg:w-80">
                             <Image
                                 alt={blogArticle.mainImage?.name || blogArticle.name}
-                                className="rounded-xl"
+                                className="transition-transform duration-300 ease-out group-hover:scale-105"
                                 height={351}
-                                sizes="(max-width: 600px) 85vw, (min-width: 768px) 250px, 320px"
+                                sizes="(max-width: 599px) 85vw, (max-width: 768px) 250px, 320px"
                                 src={blogArticle.mainImage?.url}
                                 width={510}
                             />
@@ -48,19 +48,18 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                 />
 
                                 <div className="flex flex-wrap gap-2">
-                                    {blogArticle.blogCategories.map((blogArticleCategory) => (
-                                        <>
-                                            {blogArticleCategory.parent && (
+                                    {blogArticle.blogCategories.map(
+                                        (blogArticleCategory) =>
+                                            blogArticleCategory.parent && (
                                                 <Flag key={blogArticleCategory.uuid} type="blog">
                                                     {blogArticleCategory.name}
                                                 </Flag>
-                                            )}
-                                        </>
-                                    ))}
+                                            ),
+                                    )}
                                 </div>
                             </div>
 
-                            <h2 className="h5 mb-0 font-bold! text-text-default group-hover:text-link-default group-hover:underline max-md:text-md">
+                            <h2 className="h5 mb-0 font-bold! text-text-default group-hover:underline max-md:text-md">
                                 {blogArticle.name}
                             </h2>
 

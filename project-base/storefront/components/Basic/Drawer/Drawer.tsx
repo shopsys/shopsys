@@ -1,10 +1,9 @@
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { DrawerCloseButton } from 'components/Basic/Drawer/DrawerCloseButton';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/Portal';
 import { AnimatePresence, m } from 'framer-motion';
 import { AriaRole, ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useFocusTrap } from 'utils/useFocusTrap';
@@ -37,7 +36,6 @@ export const Drawer: FC<DrawerProps> = ({
     className,
 }) => {
     const isDesktop = useMediaMin('vl');
-    const { t } = useTranslation();
     const drawerRef = useRef<HTMLDivElement>(null);
     const previousActiveElementRef = useRef<HTMLElement | null>(null);
     const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
@@ -118,24 +116,19 @@ export const Drawer: FC<DrawerProps> = ({
                         tabIndex={-1}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'pointer-events-auto fixed top-0 right-0 z-maximum h-dvh min-w-90 overflow-y-auto rounded-none bg-background-default p-5',
+                            'pointer-events-auto fixed top-0 right-0 z-maximum h-dvh min-w-90 overflow-y-auto rounded-none bg-background-default p-5 focus-visible:outline-hidden',
                             className,
                         )}
                     >
                         {shouldRenderHeader &&
                             (headerContent ?? (
-                                <div className="mb-5 flex flex-row items-center justify-between">
-                                    <span className="w-full text-center font-secondary font-semibold">{title}</span>
+                                <div className="mb-5 grid grid-cols-[2.25rem_1fr_2.25rem] items-center">
+                                    <span aria-hidden="true" />
+                                    <span className="min-w-0 truncate text-center font-secondary font-semibold">
+                                        {title}
+                                    </span>
 
-                                    <button
-                                        className="flex cursor-pointer items-center justify-center text-icon-less"
-                                        tabIndex={0}
-                                        title={t('Close')}
-                                        type="button"
-                                        onClick={closeDrawer}
-                                    >
-                                        <RemoveIcon className="size-6" />
-                                    </button>
+                                    <DrawerCloseButton onClick={closeDrawer} />
                                 </div>
                             ))}
 

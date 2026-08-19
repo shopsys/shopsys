@@ -144,9 +144,9 @@ class BlogCategoryTest extends GraphQlTestCase
                 'blogCategory' => [
                     'blogArticles' => [
                         'edges' => [
-                            ['node' => ['name' => t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                            ['node' => ['name' => t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                            ['node' => ['name' => t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Laptop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
                         ],
                     ],
                 ],
@@ -179,9 +179,9 @@ class BlogCategoryTest extends GraphQlTestCase
                 'blogCategory' => [
                     'blogArticles' => [
                         'edges' => [
-                            ['node' => ['name' => t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                            ['node' => ['name' => t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                            ['node' => ['name' => t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Laptop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
                         ],
                     ],
                 ],
@@ -289,7 +289,10 @@ class BlogCategoryTest extends GraphQlTestCase
                     'parent' => [
                         'name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     ],
-                    'children' => [],
+                    'children' => [
+                        ['name' => t('Televisions and displays', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+                        ['name' => t('Audio and headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+                    ],
                     'seoTitle' => t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     'seoH1' => t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     'seoMetaDescription' => t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -313,6 +316,12 @@ class BlogCategoryTest extends GraphQlTestCase
                                     'name' => t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                                 ], [
                                     'name' => t('Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                                ], [
+                                    'name' => t('Product news', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                                ], [
+                                    'name' => t('Care and maintenance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                                ], [
+                                    'name' => t('Technology and trends', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                                 ],
                             ],
                         ],

@@ -33,9 +33,9 @@ export const SalesRepresentative: FC<SalesRepresentativeProps> = ({ onContactCli
                     <Image
                         alt={t('Need advice?')}
                         className="size-12 rounded-full object-cover"
-                        height={100}
+                        height={48}
                         src={salesRepresentative.image.url}
-                        width={100}
+                        width={48}
                     />
                 )}
                 <div className="flex flex-col">

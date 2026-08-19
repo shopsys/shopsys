@@ -79,7 +79,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
             {hasTotalDiscounts && (
                 <div className="flex flex-col gap-4">
                     {totalItemsPriceBeforeDiscount && isPriceVisible(totalItemsPriceBeforeDiscount.priceWithVat) && (
-                        <div className="flex items-center justify-between gap-4 border-border-less border-t-1 pt-4">
+                        <div className="flex items-center justify-between gap-4 border-border-less border-t pt-4">
                             <span>{t('Price before discount')}</span>
 
                             <span className="whitespace-nowrap">
@@ -99,7 +99,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
             )}
 
             {isPriceVisible(totalPrice.priceWithVat) && isPriceVisible(totalPrice.priceWithoutVat) && (
-                <div className="flex items-center justify-between gap-4 border-border-less border-t-[3px] pt-4">
+                <div className="flex items-center justify-between gap-4 border-border-less border-t-3 pt-4">
                     <span>{t('Total')}</span>
                     <div className="flex flex-col gap-2">
                         <span className="font-bold text-lg text-price-default">

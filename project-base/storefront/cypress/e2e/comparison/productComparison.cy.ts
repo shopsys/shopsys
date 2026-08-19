@@ -2,17 +2,15 @@ import {
     addProductToComparisonFromDetail,
     addProductToComparisonFromListing,
     checkComparisonIsEmpty,
-    checkComparisonPopupVisible,
     checkComparisonProductCount,
-    closeComparisonPopup,
-    goToComparisonFromPopup,
+    checkComparisonToastVisible,
+    closeComparisonToast,
     removeAllFromComparison,
     removeProductFromComparison,
     visitComparisonPage,
 } from './comparisonSupport';
-import { staticData, url } from 'fixtures/demodata';
+import { staticData } from 'fixtures/demodata';
 import {
-    checkUrl,
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
@@ -41,12 +39,11 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
         });
     });
 
-    it('[Add From Listing] should add a product to comparison from category listing and navigate to comparison page', () => {
+    it('[Add From Listing] should add a product from category listing and show it in comparison', () => {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
         addProductToComparisonFromListing(staticData.products.helloKitty.catnum);
-        checkComparisonPopupVisible();
-        goToComparisonFromPopup();
-        checkUrl(url.productComparison);
+        checkComparisonToastVisible();
+        visitComparisonPage();
         checkComparisonProductCount(1);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'comparison with one product from listing', {
             blackout: [
@@ -58,19 +55,18 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
         });
     });
 
-    it('[Add And Navigate] should add products from listing and detail, then navigate to comparison page', () => {
+    it('[Add And Display] should add products from listing and detail and show them in comparison', () => {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         addProductToComparisonFromListing(staticData.products.helloKitty.catnum);
-        checkComparisonPopupVisible();
-        closeComparisonPopup();
+        checkComparisonToastVisible();
+        closeComparisonToast();
 
         visitEntityByUuid('product', staticData.products.a4techMouse.uuid);
         addProductToComparisonFromDetail();
-        checkComparisonPopupVisible();
+        checkComparisonToastVisible();
 
-        goToComparisonFromPopup();
-        checkUrl(url.productComparison);
+        visitComparisonPage();
         checkComparisonProductCount(2);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'comparison with two products', {
             blackout: [
@@ -87,13 +83,13 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         addProductToComparisonFromListing(staticData.products.helloKitty.catnum);
-        checkComparisonPopupVisible();
-        closeComparisonPopup();
+        checkComparisonToastVisible();
+        closeComparisonToast();
 
         visitEntityByUuid('product', staticData.products.a4techMouse.uuid);
         addProductToComparisonFromDetail();
-        checkComparisonPopupVisible();
-        goToComparisonFromPopup();
+        checkComparisonToastVisible();
+        visitComparisonPage();
 
         checkComparisonProductCount(2);
         removeProductFromComparison(staticData.products.a4techMouse.catnum);
@@ -115,13 +111,13 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         addProductToComparisonFromListing(staticData.products.helloKitty.catnum);
-        checkComparisonPopupVisible();
-        closeComparisonPopup();
+        checkComparisonToastVisible();
+        closeComparisonToast();
 
         visitEntityByUuid('product', staticData.products.a4techMouse.uuid);
         addProductToComparisonFromDetail();
-        checkComparisonPopupVisible();
-        goToComparisonFromPopup();
+        checkComparisonToastVisible();
+        visitComparisonPage();
 
         removeAllFromComparison();
         checkComparisonIsEmpty();

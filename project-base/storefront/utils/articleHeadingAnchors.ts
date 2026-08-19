@@ -1,5 +1,7 @@
 import { type ArticleHeading } from 'types/articleHeading';
 
+export const ARTICLE_INTRODUCTION_ANCHOR_ID = 'article-introduction';
+
 type ArticleHtmlHeadingAnchors = {
     headings: ArticleHeading[];
     htmlWithHeadingAnchors: string;
@@ -62,7 +64,7 @@ const createHeadingId = (headingTitle: string, existingIds: Set<string>): string
 };
 
 export const getArticleHtmlHeadingAnchors = (htmlString: string): ArticleHtmlHeadingAnchors => {
-    const usedHeadingIds = new Set<string>();
+    const usedHeadingIds = new Set<string>([ARTICLE_INTRODUCTION_ANCHOR_ID]);
     const headings: ArticleHeading[] = [];
 
     const htmlWithHeadingAnchors = htmlString.replace(HEADING_REGEX, (heading, attributes: string, content: string) => {

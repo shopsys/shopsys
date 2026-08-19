@@ -4,14 +4,41 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
 
+msgid "%articleTitle% | Demo shop"
+msgstr "%articleTitle% | Demo obchod"
+
 msgid "%brandName% SEO H1"
 msgstr "%brandName% SEO H1"
 
 msgid "%brandName% SEO Title"
 msgstr "%brandName% SEO Názov"
 
-msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
-msgstr "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
+msgid "%topic%: answers to the most frequent questions"
+msgstr "%topic%: odpovede na najčastejšie otázky"
+
+msgid "%topic%: common mistakes and how to avoid them"
+msgstr "%topic%: časté chyby a ako sa im vyhnúť"
+
+msgid "%topic%: five practical tips"
+msgstr "%topic%: päť praktických tipov"
+
+msgid "%topic%: how to choose"
+msgstr "%topic%: ako si vybrať"
+
+msgid "%topic%: ideas for a more comfortable home"
+msgstr "%topic%: nápady pre pohodlnejší domov"
+
+msgid "%topic%: inspiration for every day"
+msgstr "%topic%: inšpirácia na každý deň"
+
+msgid "%topic%: practical advice from our experts"
+msgstr "%topic%: praktické rady našich odborníkov"
+
+msgid "%topic%: simple upgrades that make a difference"
+msgstr "%topic%: jednoduché vylepšenia, ktoré majú zmysel"
+
+msgid "%topic%: what to look for"
+msgstr "%topic%: na čo sa zamerať"
 
 msgid "100 Czech crowns ticket"
 msgstr "Lístok za 100 českých korún"
@@ -78,6 +105,9 @@ msgstr "295 x 245 x 15 mm <br /> náplnč s aktívnym uhlíkom"
 
 msgid "2W"
 msgstr "2W"
+
+msgid "3 language versions"
+msgstr ""
 
 msgid "30\" Hyundai 22MT44D"
 msgstr "30\" Hyundai 22MT44D"
@@ -162,9 +192,6 @@ msgstr "<b>Zvolili ste platenú bránu GoPay, bude vám zobrazená platebná br�
 
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
 msgstr "<b>Zvolili ste platbu kreditnou kartou. Prosím, dokončte ju do dvoch pracovných dní.</b>"
-
-msgid "<div class=\"gjs-text-ckeditor\"><p>Blog article text for search testing, the search phrase is &#34;Dina&#34;.</p></div>"
-msgstr "<div class=\"gjs-text-ckeditor\"><p>Text blog článku na testovanie vyhľadávania, vyhľadávaná fráza je &#34;Dina&#34;.</p></div>"
 
 msgid "<h2> Cookbook </h2> <br /> <br /> <p> What can be cooked in a steam oven? <br /> Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts. <br /> 75 pages of cookbooks Concept - cook healthy steamed - contains recipes with practical procedures. Each recipe includes: </p> <br /> <br /> <p> The list of ingredients </p> <br /> <p> Method </p> <br /> <p> How many people </p > <br /> <p> Preparation time </p> <br /> <p> The degree of difficulty </p> <br /> <p> + time + temperature </p> <br /> <br /> From under the lids give you some tips - Asparagus with tuna sauce, salmon in vermouth sauce, soup minestrone, chicken mint surprise Cabbage leaves stuffed with minced meat, grilled chop with vegetables, potatoes baked with blue cheese, pear with chocolate sauce, roasted mandelimi and ice cream, etc."
 msgstr "<h2> Kuchárska kniha </h2> <br /> <br /> <p> Čo sa dá uvariť v parnej rúre? <br /> Používanie parného hrnca Concept je prekvapivo všestranné. Môže sa použiť na prípravu predkrmov, polievok, mäsa, rýb, zeleniny, vegetariánskych jedál, knedlíkov, ryže, ovocia a dezertov. <br /> 75 strán kuchárskych kníh Concept - varte zdravo na pare - obsahuje recepty s praktickými postupmi. Každý recept obsahuje: </p> <br /> <br /> <p> Zoznam ingrediencií </p> <br /> <p> Postup </p> <br /> <p> Pre koľko ľudí </p > <br /> <p> Čas prípravy </p> <br /> <p> Stupeň obtiažnosti </p> <br /> <p> + čas + teplota </p> <br /> <br /> Spod pokličiek vám dávame niekoľko tipov - Špargľa s tuniakovým nálevom, losos vo vermutu, polievka minestrone, kurča s mätou prekvapenie Kapustné listy plnené mletým mäsom, grilovaný kotlet so zeleninou, zemiaky pečené s modrou plesňou, hruška s čokoládovou omáčkou, pražené mandle a zmrzlina atď."
@@ -280,11 +307,23 @@ msgstr "Kompaktná mestská predajňa na rýchle vyzdvihnutie zásielok. Ak sú 
 msgid "A garden tool is any one of many tools made for gardens and gardening and overlaps with the range of tools made for agriculture and horticulture. Garden tools can also be hand tools and power tools."
 msgstr "Záhradné náradie je akýkoľvek z mnohých nástrojov vyrobených pre záhrady a záhradníctvo a prekrýva sa s radou nástrojov vyrobených pre poľnohospodárstvo a záhradníctvo. Záhradné náradie môže byť aj ručné náradie a elektrické náradie."
 
+msgid "A good partnership starts with reliable data, clear commercial terms, and responsible customer support. Potential partners can contact our demo purchasing team."
+msgstr ""
+
 msgid "A personal computer (PC) is a general-purpose computer whose size, capabilities, and original sale price make it useful for individuals, and is intended to be operated directly by an end-user with no intervening computer time-sharing models that allowed larger, more expensive minicomputer and mainframe systems to be used by many people, usually at the same time."
 msgstr "Osobný počítač (PC) je univerzálny počítač, ktorého veľkosť, schopnosti a pôvodná predajná cena ho robia užitočným pre jednotlivcov a je určený na priame ovládanie koncovým používateľom bez zasahovania počítačových modelov zdieľania času, ktoré umožnili väčším, drahším minipočítačom a mainframovým systémom byť používané mnohými ľuďmi, obvykle súčasne."
 
+msgid "A practical guide to screen size, picture quality, connectivity, and the features worth considering before buying a new television."
+msgstr ""
+
 msgid "A printer is a peripheral which makes a persistent human readable representation of graphics or text on paper or similar physical media."
 msgstr "Tlačiareň je periférne zariadenie, ktoré vytvára trvalé človekom čitateľné zobrazenie grafiky alebo textu na papieri alebo podobnom fyzickom médiu."
+
+msgid "A real policy must identify the controller, purposes, legal bases, retention periods, recipients, security measures, and all rights available to customers."
+msgstr ""
+
+msgid "A simple checklist before purchase"
+msgstr ""
 
 msgid "A smaller pickup point for prepaid orders and quick returns. Please use the side entrance after 4 PM."
 msgstr "Menšie výdajné miesto pre predplatené objednávky a rýchle vrátenie tovaru. Po 16. hodine použite, prosím, bočný vchod."
@@ -307,6 +346,9 @@ msgstr "A4tech X710BK Hrací počítačová myš má päť tlačítok a rolovac�
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr "A4tech myš X-710BK, OSCAR Game, 2000DPI, čierna,"
 
+msgid "About Demo shop"
+msgstr ""
+
 msgid "About us"
 msgstr "O nás"
 
@@ -325,8 +367,14 @@ msgstr "Aktívny/Pasívny"
 msgid "Adaptive Sync Technology"
 msgstr "Technológia Adaptive Sync"
 
+msgid "Advice for comparing headphones, speakers, and home audio equipment."
+msgstr "Rady na porovnanie slúchadiel, reproduktorov a domácej audiotechniky."
+
 msgid "All kind of electronic devices."
 msgstr "Všetky druhy elektronických zariadení."
+
+msgid "Alternative view of %productName%"
+msgstr "Alternatívny pohľad na %productName%"
 
 msgid "Annual energy consumption"
 msgstr "Ročná spotreba energie"
@@ -343,35 +391,41 @@ msgstr "Aquila Aquagym nesýtená prameňová voda, popis."
 msgid "Article for search testing"
 msgstr "Článok na testovanie vyhľadávania"
 
+msgid "Audio and headphones"
+msgstr "Audio a slúchadlá"
+
+msgid "Audio and headphones | Demo shop"
+msgstr "Audio a slúchadlá | Demo shop"
+
+msgid "Automatic coffee machines"
+msgstr "Automatické kávovary"
+
+msgid "Available delivery and payment methods depend on the destination, order size, stock location, and selected products."
+msgstr ""
+
 msgid "BROTHER PT-H300"
 msgstr "BROTHER PT-H300"
 
 msgid "Bank transfer"
 msgstr "Bankový prevod"
 
-msgid "Become one of us"
-msgstr "Staňte sa jedným z nás"
+msgid "Before confirming financing, compare the total cost, repayment period, interest, fees, and eligibility conditions shown during checkout."
+msgstr ""
 
-msgid "Blog article example %counter% %locale%"
-msgstr "Príklad článku blogu %counter% %locale%"
+msgid "Begin with the room, the people who use it, and the atmosphere you want to create. A good solution should feel natural rather than forced."
+msgstr ""
 
-msgid "Blog article example %counter% %locale% - H1"
-msgstr "Príklad článku blogu %counter% %locale% - H1"
-
-msgid "Blog article example %counter% %locale% - Meta description"
-msgstr "Príklad článku blogu %counter% %locale% - Meta popis"
-
-msgid "Blog article for products testing"
-msgstr "Článok blogu na testovanie produktov"
-
-msgid "Blog article for search testing"
-msgstr "Článok blogu na testovanie vyhľadávania"
+msgid "Better sleep"
+msgstr "Lepší spánok"
 
 msgid "Blue wednesday"
 msgstr "Modrá streda"
 
 msgid "Bluetooth"
 msgstr "Bluetooth"
+
+msgid "Board games"
+msgstr "Stolové hry"
 
 msgid "Book 55 best programs for burning CDs and DVDs"
 msgstr "Kniha 55 najlepších programov na vypáľovanie CD a DVD"
@@ -394,6 +448,15 @@ msgstr "Knihy"
 msgid "Bookworm"
 msgstr "Knihomoľ"
 
+msgid "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
+msgstr "Vytvárajte škálovateľné B2C a B2B e-shopy na otvorenej e-commerce platforme navrhnutej pre komplexné projekty."
+
+msgid "Build the idea around your space"
+msgstr ""
+
+msgid "Building sets"
+msgstr "Stavebnice"
+
 msgid "Bundle promotion – buy three and get one Samsung Smart TV for free."
 msgstr "Balíková akcia – kúpte tri a získajte jeden Samsung Smart TV zadarmo."
 
@@ -408,6 +471,15 @@ msgstr "CD-R VERBATIM 210MB"
 
 msgid "CRT"
 msgstr "CRT"
+
+msgid "Camera"
+msgstr "Fotoaparát"
+
+msgid "Camera accessories"
+msgstr "Príslušenstvo k fotoaparátom"
+
+msgid "Camera lenses"
+msgstr "Objektívy"
 
 msgid "Camera type"
 msgstr "Typ fotoaparátu"
@@ -469,6 +541,15 @@ msgstr "Šiltovka so solárnym ventilatorom, biela"
 msgid "Capacity"
 msgstr "Kapacita"
 
+msgid "Capsule coffee machines"
+msgstr "Kapsulové kávovary"
+
+msgid "Care and maintenance"
+msgstr "Starostlivosť a údržba"
+
+msgid "Care and maintenance | Demo shop"
+msgstr "Starostlivosť a údržba | Demo obchod"
+
 msgid "Cash"
 msgstr "Hotovosť"
 
@@ -480,6 +561,18 @@ msgstr "Katalóg"
 
 msgid "Catalog user"
 msgstr "Katalógový používateľ"
+
+msgid "Check the details that affect daily use"
+msgstr ""
+
+msgid "Check the store detail before visiting for its current address, opening hours, available services, and holiday schedule."
+msgstr ""
+
+msgid "Children's books"
+msgstr "Detské knihy"
+
+msgid "Choose a solution that will last"
+msgstr ""
 
 msgid "Christmas Day"
 msgstr "Prvý sviat vianočný"
@@ -493,11 +586,29 @@ msgstr "Circumaural"
 msgid "Cleaner 3in1 stainless steel appliances (4039286078461)"
 msgstr "Čistič 3v1 na nerĚavejú oceľ spotrebiče (4039286078461)"
 
+msgid "Cleaning and upkeep"
+msgstr "Čistenie a údržba"
+
+msgid "Cleaning and upkeep | Demo shop"
+msgstr "Čistenie a údržba | Demo shop"
+
+msgid "Clear advice and practical tips for %articleTitle%."
+msgstr ""
+
 msgid "Coarse grater blade RM-3240/3250"
 msgstr "Hrubé strúhacie čepiele RM-3240/3250"
 
+msgid "Coffee & tea"
+msgstr "Káva a čaj"
+
 msgid "Coffee Machines"
 msgstr "Kávovary"
+
+msgid "Coffee grinders"
+msgstr "Mlynčeky na kávu"
+
+msgid "Coffee machine"
+msgstr "Kávovar"
 
 msgid "Coffeemakers or coffee machines are cooking appliances used to brew coffee. While there are many different types of coffeemakers using a number of different brewing principles, in the most common devices, coffee grounds are placed in a paper or metal filter inside a funnel, which is set over a glass or ceramic coffee pot, a cooking pot in the kettle family. Cold water is poured into a separate chamber, which is than heated up to the boiling point, and directed into the funnel."
 msgstr "Kávovary alebo kávostroje sú kuchynské spotrebiče používané na prípravu kávy. Hoci existuje mnoho rôznych typov kávovarov používajúcich množstvo odlišných princípov varenia, v najbežnejších zariadeniach je mletá káva umiestnená do papierového alebo kovového filtra vo vnútri nálevky, ktorá je postavená nad sklenenú alebo keramickú kanvicu na kávu, nádobu na varenie z rodiny konvíc. Studená voda sa naleje do samostatnej komory, kde sa následne ohreje na bod varu a je vedená do nálevky."
@@ -517,8 +628,14 @@ msgstr "Kompaktný dizajn, veľká hodnota"
 msgid "Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers."
 msgstr "Kompaktné reproduktory Genius SP-HF150 sú perfektným príslušenstvom pre prenosné počítače."
 
+msgid "Compare dimensions, controls, connectivity, energy consumption, and warranty conditions before making the final choice."
+msgstr ""
+
 msgid "Complaint"
 msgstr "Reklamcia"
+
+msgid "Computer accessories"
+msgstr "Počítačové príslušenstvo"
 
 msgid "Connection method"
 msgstr "Spôsob pripojenia"
@@ -529,8 +646,17 @@ msgstr "Pripojenie na dosáh ruky"
 msgid "Connectors"
 msgstr "Konektory"
 
+msgid "Consent must be voluntary, specific, informed, and easy to withdraw. Refusing optional consent must not prevent completion of an ordinary purchase."
+msgstr ""
+
+msgid "Consider how the product or idea will fit into your daily routine, available space, and household budget. Clear priorities make every following decision easier."
+msgstr ""
+
 msgid "Construction"
 msgstr "Konštrukcia"
+
+msgid "Consumers may return eligible online purchases within the period shown in the applicable terms and conditions."
+msgstr ""
 
 msgid "Cooperation"
 msgstr "Spolupráca"
@@ -552,6 +678,12 @@ msgstr "Štrbinová hubica VP-4290"
 
 msgid "Customer activation"
 msgstr "Aktivácia zákazníka"
+
+msgid "Customer care every workday"
+msgstr ""
+
+msgid "Customer care will explain the next steps, including delivery to a service centre, assessment, repair, replacement, or another available resolution."
+msgstr ""
 
 msgid "Customer manager"
 msgstr "Správca zákazníkov"
@@ -613,11 +745,29 @@ msgstr "Demo reklama"
 msgid "Demo category advert"
 msgstr "Demo kategória reklamy"
 
+msgid "Demo shop is a sample electronics retailer built to demonstrate a complete modern shopping experience."
+msgstr ""
+
+msgid "Demo shop presentation"
+msgstr ""
+
+msgid "Demo shop presents a complete sample e-commerce experience, from product discovery and content to ordering and after-sales care."
+msgstr ""
+
+msgid "Demo stores provide personal collection, product advice, and selected customer-care services."
+msgstr ""
+
 msgid "Department stores services"
 msgstr "Služby obchodných domov"
 
+msgid "Desktop computers"
+msgstr "Stolové počítače"
+
 msgid "Determination"
 msgstr "Odhodlanie"
+
+msgid "Developer working with Shopsys Platform documentation"
+msgstr "Vývojár pracujúci s dokumentáciou Shopsys Platform"
 
 msgid "Digital Camera - Waterproof, shockproof, freezeproof, 16.1 Mpx CCD"
 msgstr "Digitálny fotoaparát - Voddotrný, nárazuodrný, mrazuodrný, 16.1 Mpx CCD"
@@ -649,8 +799,17 @@ msgstr "Digitálny hlasový záznamník Olympus VN-733PC sa vyznačuje predovše
 msgid "Digital Voice Reco.rder Olympus VN-733PC is profiled primarily intuitive operation and long battery life . Its user offers 4 gigabytes internal memory and a new slot for microSD cards. O capacity certainly will not be a shortage in power saving mode, LP handle record up to 1600 hours of recording"
 msgstr "Digitálny hlasový záznamník Olympus VN-733PC sa vyznačuje predovšetkým intuitívnou obsluhou a dlhou výdržou batérie. Používateľovi ponúka 4 gigabajty internej pamäte a nový slot pre microSD karty. O kapacitu určite nebude núdza, v úspornom režime LP dokáže zaznamenať až 1600 hodín záznamu"
 
+msgid "Digital cameras"
+msgstr "Digitálne fotoaparáty"
+
 msgid "Dimensions"
 msgstr "Rozmery"
+
+msgid "Dina is preparing a comfortable home office and compares a monitor, headphones, and practical accessories before ordering."
+msgstr ""
+
+msgid "Discover new products, useful features, and updates from the world of electronics."
+msgstr "Objavte nové produkty, užitočné funkcie a novinky zo sveta elektroniky."
 
 msgid "Discover the secret of people with us."
 msgstr "Objavte s nami tajomstvo ľudí."
@@ -664,17 +823,23 @@ msgstr "Veľkosť displeja"
 msgid "Display type"
 msgstr "Typ displeja"
 
-msgid "Documentation"
-msgstr "Dokumentácia"
-
 msgid "Done"
 msgstr "Hotovo"
+
+msgid "Downloadable Demo shop press image"
+msgstr ""
+
+msgid "Downloadable images"
+msgstr ""
 
 msgid "Drone delivery"
 msgstr "Doručenie dronom"
 
 msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
 msgstr "DéLonghi ECAM 44.660.B. Začnite ráno so svojim obľúbeným nápojom s automatickým kávovarom DeLonghi ECAM 44.660.B Eletta"
+
+msgid "E-commerce order preparation in a modern warehouse"
+msgstr "Príprava e-commerce objednávky v modernom sklade"
 
 msgid "Ear Coupling"
 msgstr "Uchučenie na ucho"
@@ -696,6 +861,9 @@ msgstr "Elektronické veci"
 
 msgid "Electronics"
 msgstr "Elektronika"
+
+msgid "Electronics and home"
+msgstr ""
 
 msgid "Electronics from most expensive"
 msgstr "Elektronika od najdrahšej"
@@ -727,6 +895,9 @@ msgstr "Trieda energetickej účinnosti"
 msgid "Energy-Efficient Design"
 msgstr "Energeticky účinný dizajn"
 
+msgid "Energy-efficient home"
+msgstr "Energeticky úsporná domácnosť"
+
 msgid "Enjoy quick cooking with special cooking HI-LIGHT zones"
 msgstr "Užite si rýchle varenie so špeciálnymi varnými zónami HI-LIGHT"
 
@@ -742,14 +913,23 @@ msgstr "Ergonómia"
 msgid "Expect delivery by the end of next month"
 msgstr "Očakávajte doručenie do konca nasledujúceho mesiaca"
 
-msgid "Explore our comprehensive documentation to get the most out of our platform. Find guides, tutorials, and detailed information to help you navigate and utilize all features effectively. Click the link to access the full documentation."
-msgstr "Preskúmajte našu úplnú dokumentáciu, aby ste z našej platformy čopakovali maximum. Nájdite príručky, tutoriály a podrobné informácie, ktoré vám pomôžu efektívne navigovať a využívať všetky funkcie. Kliknite na odkaz pre prístup k úplnéj dokumentácii."
+msgid "Explore electronics"
+msgstr ""
+
+msgid "Explore the documentation"
+msgstr "Preskúmajte dokumentáciu"
 
 msgid "Extension rod plastic TM-4610"
 msgstr "Predlžovacia tyč plastová TM-4610"
 
+msgid "Family entertainment"
+msgstr "Rodinná zábava"
+
 msgid "Features of modern and elegantly prepared MFPs with new wireless capabilities. Function automatic two-sided printing"
 msgstr "Funkcie moderných a elegantne pripravených MFP s novými bezdrôtovými schopnosťami. Funkcia automatickej obojstrannej tlače"
+
+msgid "Fiction"
+msgstr "Beletria"
 
 msgid "Filter carbon OPK4290"
 msgstr "Filter s aktívnym uhlíkom OPK4290"
@@ -757,11 +937,14 @@ msgstr "Filter s aktívnym uhlíkom OPK4290"
 msgid "Filter input VP-9161 / SF-9162 / SF-8210"
 msgstr "Vstupný filter VP-9161 / SF-9162 / SF-8210"
 
+msgid "Find practical guides, architecture concepts, and step-by-step instructions for building with Shopsys Platform."
+msgstr "Nájdite praktické príručky, popis architektúry a podrobné návody na vývoj na Shopsys Platform."
+
 msgid "First subsection %locale%"
-msgstr "Prvá podsekcia %locale%"
+msgstr "Nákupný poradca"
 
 msgid "First subsection %locale% - h1"
-msgstr "Prvá podsekcia %locale% - h1"
+msgstr "Nákupný poradca"
 
 msgid "Floor nozzle metal VP-9310"
 msgstr "Podlahová hubica kovová VP-9310"
@@ -778,17 +961,29 @@ msgstr "Fluorescenčné šnúrovinky, zelené"
 msgid "Fold-up"
 msgstr "Skladacie"
 
+msgid "Follow the manufacturer instructions, disconnect devices before cleaning, use suitable accessories, and avoid moisture, heat, and blocked ventilation."
+msgstr ""
+
+msgid "Follow the manufacturer instructions, disconnect the device when necessary, and avoid aggressive cleaners or excessive moisture."
+msgstr ""
+
 msgid "Food"
 msgstr "Jedlo"
 
 msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
 msgstr "Potrava je akákoľvek látka konzumovaná na poskytnutie výživovej podpory telu. Je zvyčajne rastlinného alebo živočíšneho pôvodu a obsahuje základné živiny, ako sú tuky, bielkoviny, vitamíny alebo minerály. Látka je prijímaná organizmom a asimilovaná bunkami organizmu na poskytnutie energie, udržanie života alebo stimuláciu rastu."
 
+msgid "For interviews, comments, and background information, contact press@demo-shop.example."
+msgstr ""
+
 msgid "For press"
 msgstr "Pre tlač"
 
 msgid "Frequently Asked Questions FAQ"
 msgstr "Často kladené otázky FAQ"
+
+msgid "Front view of %productName%"
+msgstr "Predný pohľad na %productName%"
 
 msgid "Full HD Electronics with LED technology and USB"
 msgstr "Full HD elektronika s LED technológiou a USB"
@@ -844,11 +1039,11 @@ msgstr "GoPay - Rýchly bankový prevod"
 msgid "Goods care"
 msgstr "Starostlivosť o tovar"
 
-msgid "GrapesJS page"
-msgstr "GrapesJS stránka"
-
 msgid "Growing"
 msgstr "Rastie"
+
+msgid "Guides for choosing television size, picture quality, and practical features."
+msgstr "Sprievodcovia výberom veľkosti televízora, kvality obrazu a praktických funkcií."
 
 msgid "HDMI"
 msgstr "HDMI"
@@ -880,11 +1075,14 @@ msgstr "HTC Desire 816 White"
 msgid "Hand printing adhesive labels Brother especially suitable for easy marking in warehouses, offices and wherever it is required records or quickly usable labels. The printer boasts a very easy to us"
 msgstr "Hand printing adhesive labels Brother especially suitable for easy marking in warehouses, offices and wherever it je povinné records or quickly usable labels. The printer boasts a very easy to us"
 
+msgid "Hand tools"
+msgstr "Ručné náradie"
+
 msgid "Have you ever experienced an accident and didn't know how to react? Or are you going to? This book is just for you!"
 msgstr "Zažili ste niekedý nehodu a nevedeli ste, ako reagovať? Alebo sa na to chystáte? Táto kniha je presne pre vás!"
 
-msgid "Heading"
-msgstr "Nadpis"
+msgid "Headphones"
+msgstr "Slúchadlá"
 
 msgid "Height"
 msgstr "Výška"
@@ -901,6 +1099,12 @@ msgstr "Hello Kitty televízor"
 msgid "Hello Kitty approved"
 msgstr "Hello Kitty schválené"
 
+msgid "Help us build ambitious e-commerce projects. Explore open roles and grow with Shopsys."
+msgstr "Pomáhajte nám tvoriť ambiciózne e-commerce projekty. Pozrite si voľné pozície a rozvíjajte s nami svoju kariéru."
+
+msgid "Here you can find quick answers about orders, availability, delivery, payment, returns, complaints, and customer accounts."
+msgstr ""
+
 msgid "Hewlett-Packard was founded in the difficult times of the Great Depression."
 msgstr "Hewlett-Packard bol založený v ťažkých časoch Veľkej hospodárskej krízy."
 
@@ -913,17 +1117,44 @@ msgstr "Vysokokvalitné, elegantné, mäkké a zároveň spoláhlivo chrániace 
 msgid "Home Listening"
 msgstr "Domáce počúvanie"
 
+msgid "Home cinema"
+msgstr "Domáce kino"
+
+msgid "Home cinema systems"
+msgstr "Systémy domáceho kina"
+
+msgid "Home office"
+msgstr "Domáca pracovňa"
+
 msgid "Hose VP-9241"
 msgstr "Hadica VP-9241"
 
 msgid "Hose VP-9310"
 msgstr "Hadica VP-9310"
 
+msgid "How Dina chooses reliable electronics"
+msgstr ""
+
+msgid "How the technology works"
+msgstr ""
+
+msgid "How to choose the right TV for your living room"
+msgstr ""
+
+msgid "How to clean a television screen safely"
+msgstr "Ako bezpečne vyčistiť obrazovku televízora"
+
 msgid "ISO"
 msgstr "ISO"
 
 msgid "Iconic Design"
 msgstr "Ikonický dizajn"
+
+msgid "If a product develops a fault, prepare the order number, a clear description of the problem, and any useful photographs."
+msgstr ""
+
+msgid "If the answer is not listed, contact customer care with your order number so the team can help without unnecessary delay."
+msgstr ""
 
 msgid "If you take buses 9, 13 and 24 from the main station, get off at the Outlet Arena Moravia stop. There is no train stop, but there is a parking lot for horses."
 msgstr "Ak budete cestovať autobusmi číslo 9, 13 a 24 z hlavnej stanice, vystúpte na zastávke Outlet Arena Moravia. Neexistuje tu železničná zastávka, ale je tu parkovisko pre kone."
@@ -933,6 +1164,9 @@ msgstr "Pútavé Full HD rozlíšenie"
 
 msgid "In Progress"
 msgstr "V procese"
+
+msgid "Inkjet printers"
+msgstr "Atramentové tlačiarne"
 
 msgid "Innovative Technology"
 msgstr "Inovatívna technológia"
@@ -955,11 +1189,14 @@ msgstr "JURA Impressa J9 TFT Carbon"
 msgid "Job at Shopsys"
 msgstr "Práca v Shopsys"
 
-msgid "Join our team and be part of an innovative company. Explore exciting career opportunities and grow with us!"
-msgstr "Pripojte sa k nášmu tímu a staňte sa súčasťou inovatívnej spoločnosti. Objavte vzrušujúce kariérne možnosti a rastite s nami!"
+msgid "Join our team"
+msgstr "Pridajte sa k nášmu tímu"
 
 msgid "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
 msgstr "Kábel HDMI A - HDMI A M/M 2m pozlátené konektory High Speed HD"
+
+msgid "Key facts"
+msgstr ""
 
 msgid "Knife potato RM-3240/3250"
 msgstr "Nôž na zemiaky RM-3240/3250"
@@ -991,6 +1228,15 @@ msgstr "LG 58LA790W (FHD)"
 msgid "LG E410 Optimus L1 II White"
 msgstr "LG E410 Optimus L1 II White"
 
+msgid "Laptop"
+msgstr "Notebook"
+
+msgid "Laptops"
+msgstr "Notebooky"
+
+msgid "Laser printers"
+msgstr "Laserové tlačiarne"
+
 msgid "Limited user"
 msgstr "Obmedzený používateľ"
 
@@ -1002,6 +1248,9 @@ msgstr "Lokalizácia"
 
 msgid "Logitech S120 black"
 msgstr "Logitech S120 čierne"
+
+msgid "Look beyond the first impression and compare durability, running costs, service options, and features you will genuinely use."
+msgstr ""
 
 msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
 msgstr "Luxusný automatický kávovar Jura Impressa Z9 One Touch plný švajčiarskej presnosti a elegantnosti, ktorý nastavuje nové štandardy. Tento stroj vám prináša radosť na niekoľkých úrovniach, ako je kvalita kávy, jednoduché používanie a atraktívny dizajn."
@@ -1028,16 +1277,16 @@ msgid "Magical Journeys Await Within"
 msgstr "Magické cesty čakajú vo vnútri"
 
 msgid "Main blog page - %locale%"
-msgstr "Hlavná stránka blogu - %locale%"
+msgstr "Rady a inšpirácia"
 
 msgid "Main blog page - %locale% - H1"
-msgstr "Hlavná stránka blogu - %locale% - H1"
+msgstr "Rady a inšpirácia"
 
 msgid "Main blog page - %locale% - Title"
-msgstr "Hlavná stránka blogu - %locale% - Názov"
+msgstr "Rady a inšpirácia | Demo obchod"
 
 msgid "Main blog page - %locale% - meta description"
-msgstr "Hlavná stránka blogu - %locale% - meta popis"
+msgstr "Praktické návody, produktové tipy a inšpirácia, ktoré vám pomôžu vybrať správne produkty a využiť ich naplno."
 
 msgid "Main information"
 msgstr "Základné informácie"
@@ -1050,6 +1299,9 @@ msgstr "Materiál"
 
 msgid "Maximum size"
 msgstr "Maximálna veľkosť"
+
+msgid "Media contact"
+msgstr ""
 
 msgid "Media type"
 msgstr "Typ média"
@@ -1102,6 +1354,12 @@ msgstr "Mobilný telefón pochádza z oficiálnej slovenskéj distribúcie, má 
 msgid "Mobile phone 4.7\" 720x1280, procesor 1,5GHz, internal memory 16GB, camera 8mpx, GPS, WiFi, Bluetooth, 3G, FM, microSD, micro USB, Android 4.0"
 msgstr "Model LG E410 Optimus L1 II zaujme používateľa elegantným vzhľadom rady L style a praktickou veľkosťou."
 
+msgid "Mobile phone accessories"
+msgstr "Príslušenstvo k mobilným telefónom"
+
+msgid "Modern features combine sensors, software, and efficient hardware. Understanding their purpose makes technical specifications easier to compare."
+msgstr ""
+
 msgid "Modern stereo speakers in a stylish black design, with an output of 2.3 W, suitable only for desktops and laptops, but also for CD or MP3 players."
 msgstr "Moderné stereo reproduktory v štýlovom čiernom dizajne, s výkonom 2,3 W, vhodné len pre stolové počítače a notebooky, ale aj pre CD alebo MP3 prehrávače."
 
@@ -1147,8 +1405,8 @@ msgstr "Nové počítače s USB"
 msgid "New driving rules and tips just for you!"
 msgstr "Nové pravidlá jazdy a tipy práve pre vás!"
 
-msgid "Newest toys in stock"
-msgstr "Najnovšie hračky na sklade"
+msgid "New features make sense when they solve a real need. Compare them with the equipment you already own and the way you use it."
+msgstr ""
 
 msgid "Nikon COS 700D"
 msgstr "Nikon COS 700D"
@@ -1177,6 +1435,9 @@ msgstr "Bez expirácie"
 msgid "No Obligations"
 msgstr "Bez záväzkov"
 
+msgid "Non-fiction"
+msgstr "Náučná literatúra"
+
 msgid "Notification in the bar, notification of a new event."
 msgstr "Notifikácia v lište, upozornenie na novú akciu."
 
@@ -1197,6 +1458,9 @@ msgstr "OKI MC861cdxm"
 
 msgid "OKI MC861cdxn+ (01318206)"
 msgstr "OKI MC861cdxn+ (01318206)"
+
+msgid "OLED, QLED, and Mini LED explained"
+msgstr "OLED, QLED a Mini LED jednoducho vysvetlené"
 
 msgid "OLYMPUS ME-34 Compact directional microphone suitable for recording lectures"
 msgstr "OLYMPUS ME-34 Kompaktný smerový mikrofon vhodný na nahrávanie prednášok"
@@ -1222,11 +1486,17 @@ msgstr "OPP-2060 Odsaváč pary podstavný 60 cm"
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
 msgstr "OPV-3260 Vestavný odsaváč výsuvý 60cm"
 
+msgid "Online shopping"
+msgstr "Nakupovanie online"
+
 msgid "Open"
 msgstr "Otvoriť"
 
 msgid "Optical"
 msgstr "Optická"
+
+msgid "Optional consent can be used for clearly described purposes such as personalised marketing or selected analytics."
+msgstr ""
 
 msgid "Orava LT-823 C82B"
 msgstr "Orava LT-823 C82B"
@@ -1246,8 +1516,17 @@ msgstr "Bežný zákazník"
 msgid "Other"
 msgstr "Iné"
 
+msgid "Our demo team brings together technology, logistics, content, and customer care. Open roles would normally be listed here with responsibilities and contact details."
+msgstr ""
+
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr "Spotrebná elektronika zahŕa elektronické zariadenia každodenného (alebo aspoň častého) použitia pre komunikáciu, v kancelárii i doma."
+
+msgid "Our sample stores combine personal collection with practical assistance before and after purchase."
+msgstr ""
+
+msgid "Outdoor toys"
+msgstr "Vonkajšie hračky"
 
 msgid "Overall performance"
 msgstr "Celkový výkon"
@@ -1275,6 +1554,9 @@ msgstr "Doručovacia spoločnosť Packeta"
 
 msgid "Pages count"
 msgstr "Počet stránok"
+
+msgid "Pantry staples"
+msgstr "Trvanlivé potraviny"
 
 msgid "Parallel port"
 msgstr "Paralelný port"
@@ -1315,6 +1597,9 @@ msgstr "Chyták na hrnce, čierny"
 msgid "Power supply"
 msgstr "Napájanie"
 
+msgid "Power tools"
+msgstr "Elektrické náradie"
+
 msgid "Powerful color inkjet printer A4 size, quality photo printing"
 msgstr "Výkonná farebná atramentová tlačiareň, formát A4, kvalitný tlač fotografií"
 
@@ -1330,6 +1615,9 @@ msgstr "Táto USB myš funguje spoločhivo na témer akýkoľvek povrch a je uzp
 msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
 msgstr "Táto USB myš funguje spoločhlivo na témer akýkoľvek povrch a je uzpôsobená pre ovládanie pravou i ľavou rukou."
 
+msgid "Prefer improvements you will use every day"
+msgstr ""
+
 msgid "Premium Performance"
 msgstr "Prémiový výkon"
 
@@ -1338,6 +1626,9 @@ msgstr "PremiumCord micro USB, A-B, 1m"
 
 msgid "Pressure"
 msgstr "Tlak"
+
+msgid "Prevent common problems"
+msgstr ""
 
 msgid "Price hit"
 msgstr "Cenovka hit"
@@ -1354,6 +1645,9 @@ msgstr "Rozlíšenie tlače"
 msgid "Print technology"
 msgstr "Technológia tlače"
 
+msgid "Printer supplies"
+msgstr "Spotrebný materiál pre tlačiarne"
+
 msgid "Printers"
 msgstr "Tlačiarne"
 
@@ -1366,11 +1660,26 @@ msgstr "Pravdepodobne najlepšia voľba"
 msgid "Processor frequency"
 msgstr "Frekvencia procesora"
 
+msgid "Product care"
+msgstr "Starostlivosť o produkty"
+
 msgid "Product does not match description, I want to return the entire order."
 msgstr "Produkt nezodpovedá popisu, chcem vrátiť celú objednávku."
 
 msgid "Product gift"
 msgstr "Darčekový produkt"
+
+msgid "Product materials"
+msgstr ""
+
+msgid "Product news"
+msgstr "Produktové novinky"
+
+msgid "Product news | Demo shop"
+msgstr "Produktové novinky | Demo obchod"
+
+msgid "Products worth comparing"
+msgstr ""
 
 msgid "Promoted products"
 msgstr "Propagované produkty"
@@ -1396,6 +1705,9 @@ msgstr "RAM"
 msgid "ROCCAT Kone Pure Optical Gaming Mouse"
 msgstr "ROCCAT Kone Pure Optical Gaming Mouse"
 
+msgid "Read practical advice in the article: %articleTitle%"
+msgstr "Prečítajte si praktické rady v článku: %articleTitle%"
+
 msgid "Recording on"
 msgstr "Nahrávanie na"
 
@@ -1414,6 +1726,15 @@ msgstr "Redukcia priem. OPK OPO 150/120mm"
 msgid "Reflective tape for safe movement on the road"
 msgstr "Reflexná páska pre bezpečný pohyb na ceste"
 
+msgid "Regular care helps electronics remain safe, reliable, and pleasant to use for longer."
+msgstr ""
+
+msgid "Regular light maintenance, careful storage, and timely replacement of worn accessories help products work reliably for longer."
+msgstr ""
+
+msgid "Remote control of %productName%"
+msgstr "Diaľkový ovládač k %productName%"
+
 msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
 msgstr "Náhradný textilíny sáčok pre vysavače CONCEPT Sprinter - VP9070. Balenie: 1 ks"
 
@@ -1428,6 +1749,9 @@ msgstr "Rozlíšenie snímača"
 
 msgid "Responsive and Reliable"
 msgstr "Vysoká odozva a spoločhlivosť"
+
+msgid "Return the product complete, safely packed, and with its accessories. This demonstration text is not a substitute for the legally required instructions of a real merchant."
+msgstr ""
 
 msgid "Right-handed"
 msgstr "Pravoruká"
@@ -1449,6 +1773,9 @@ msgstr "SONY DSCRX100"
 
 msgid "SONY Xperia SP C5303"
 msgstr "SONY Xperia SP C5303"
+
+msgid "Safe cleaning routines and simple maintenance for everyday electronics."
+msgstr "Bezpečné čistenie a jednoduchá údržba bežnej elektroniky."
 
 msgid "Sale"
 msgstr "Výpredož"
@@ -1480,6 +1807,12 @@ msgstr "Samsung UE75HU7500 (UHD)"
 msgid "Screen size"
 msgstr "Veľkosť obrazovky"
 
+msgid "Screen technologies"
+msgstr "Technológie obrazoviek"
+
+msgid "Screen technologies | Demo shop"
+msgstr "Technológie obrazoviek | Demo shop"
+
 msgid "Seamless Control"
 msgstr "Bezproblémové ovládanie"
 
@@ -1490,10 +1823,13 @@ msgid "Second reduced rate"
 msgstr "Druhá znížená sadzba"
 
 msgid "Second subsection %locale%"
-msgstr "Druhá podsekcia %locale%"
+msgstr "Inšpirácia"
 
 msgid "Second subsection %locale% - h1"
-msgstr "Druhá podsekcia %locale% - h1"
+msgstr "Inšpirácia"
+
+msgid "Selected purchases may be divided into regular payments through an external financing provider."
+msgstr ""
 
 msgid "Sencor SDB 4002M4"
 msgstr "Sencor SDB 4002M4 (HDMI)"
@@ -1504,11 +1840,23 @@ msgstr "Sennheiser HD 700"
 msgid "Sensitivity"
 msgstr "Citlivosť"
 
+msgid "Set priorities before comparing models"
+msgstr ""
+
+msgid "She checks dimensions, compatibility, warranty conditions, and delivery options so every product fits the way she works."
+msgstr ""
+
+msgid "Shopsys Platform"
+msgstr "Shopsys Platform"
+
 msgid "Shopsys Platform - Title page"
 msgstr "Shopsys Platform - Titulná stránka"
 
 msgid "Shopsys Platform - the best solution for your eshop."
 msgstr "Shopsys Platform - najlepšie riešenie pre váš internetový obchod."
+
+msgid "Shopsys team collaborating in an office"
+msgstr "Tím Shopsys spolupracujúci v kancelárii"
 
 msgid "Side mount plates - few ETV-2860"
 msgstr "Bočný držiak plechov - pár ETV-2860"
@@ -1518,6 +1866,12 @@ msgstr "myš optická, konektor USB, 1200dpi, vhodná pre notebooky"
 
 msgid "Simple Genius Mouse NetScroll 310 offers the most widely used functional elements of a basic ergonomics. It has an optical sensor with a resolution of 800 DPI, which can handle work on a large number of standard surfaces. There are two classic buttons and the third with the paging function wheel. Genius NetScroll 310 is equipped with modern USB interface and finds use in conserving ambidextrous or in an office environment. <br><strong> Specifications: </strong><br><strong> Supported OS: </strong><br> Microsoft Windows 7, Vista, XP, 2003, 2000, 98SE <br> Mac OS 8.6 or later"
 msgstr "myš optická, konektor USB, 1200dpi, vhodná pre notebooky"
+
+msgid "Simple advice to keep products working well and looking their best."
+msgstr "Jednoduché rady, vďaka ktorým budú produkty dobre fungovať a dlhšie vyzerať ako nové."
+
+msgid "Simple maintenance that extends appliance life"
+msgstr "Jednoduchá údržba, ktorá predĺži životnosť spotrebičov"
 
 msgid "Size and weight"
 msgstr "Rozmery a hmotnosť"
@@ -1534,8 +1888,26 @@ msgstr "Tenký profil"
 msgid "Slovakia"
 msgstr "Slovensko"
 
+msgid "Small, thoughtful changes often bring more comfort than a complete redesign. Focus on practical details that simplify familiar routines."
+msgstr ""
+
+msgid "Smart kitchen"
+msgstr "Inteligentná kuchyňa"
+
+msgid "Smart technology"
+msgstr "Inteligentné technológie"
+
+msgid "Smartphones"
+msgstr "Smartfóny"
+
+msgid "Smartwatches"
+msgstr "Inteligentné hodinky"
+
 msgid "Snack"
 msgstr "Niečo na zub"
+
+msgid "Snacks"
+msgstr "Pochutiny"
 
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
 msgstr "Náhradné papierové sáčky pre vysavače CONCEPT Clipper VP 9030/31/32/33 a VP 9130/31/32"
@@ -1575,6 +1947,12 @@ msgstr "Špeciálne nabídky"
 
 msgid "Standard rate"
 msgstr "Štandardná sadzba"
+
+msgid "Start with your everyday needs"
+msgstr ""
+
+msgid "Stores and locations"
+msgstr ""
 
 msgid "Suitable for all kinds of goods"
 msgstr "Vhodné pre všetky druhy tovaru"
@@ -1639,6 +2017,12 @@ msgstr "Televízia, audio plasma s HDMI"
 msgid "Technology"
 msgstr "Technológie"
 
+msgid "Technology and trends"
+msgstr "Technológie a trendy"
+
+msgid "Technology and trends | Demo shop"
+msgstr "Technológie a trendy | Demo obchod"
+
 msgid "Telescopic metal pipes VP-9161"
 msgstr "Trúbky teleskopické kovové VP-9161"
 
@@ -1696,6 +2080,15 @@ msgstr "Televízny monitor IPS, 5M:1, 250cd/m2, 5ms GTG, FullHD 1920x1080, DVB-T
 msgid "Television or TV is a telecommunication medium used for transmitting sound with moving images in monochrome (black-and-white), or in color, and in two or three dimensions"
 msgstr "Televízia (z gréckeho tele – ďaleko a latinského vízie – vidieť) je široko používané jednosmervé diaľkové plošné vysielanie (tzv. broadcasting) a individuálne prijímanie televízneho vysielania – obrazu a zvuku do televízora. Výrazne prispîva k celkovej socializácii ľudí takmer po celom svete."
 
+msgid "Televisions"
+msgstr "Televízory"
+
+msgid "Televisions and displays"
+msgstr "Televízory a obrazovky"
+
+msgid "Televisions and displays | Demo shop"
+msgstr "Televízory a obrazovky | Demo shop"
+
 msgid "Terms and conditions of department stores"
 msgstr "Obchodné podmienky obchodných domov"
 
@@ -1705,8 +2098,14 @@ msgstr "Obchodné podmienky e-shopu"
 msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
 msgstr "Televízny monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP+, 2x HDMI, MHL, USB, CI, Scart, 2x 5W repro, diaľkový ovládač"
 
+msgid "The best technology saves time, reduces energy consumption, or improves comfort while remaining simple to control and maintain."
+msgstr ""
+
 msgid "The branch is close to the business center entrance. Staff will prepare your order at the front desk after you show the order number."
 msgstr "Pobočka je blízko vchodu do business centra. Po predložení čísla objednávky vám personál pripraví objednávku pri prednom pulte."
+
+msgid "The checkout always shows the current price and estimated delivery time before the order is confirmed."
+msgstr ""
 
 msgid "The filter carbon OPK-4360/4390"
 msgstr "Filter uhľíkový OPK-4360/4390"
@@ -1723,11 +2122,17 @@ msgstr "Filter uhľíkový OPP-2060"
 msgid "The minimum space requirements excels sub-mounting range hood OPP-2060th"
 msgstr "Minimálnou priestorovou náročnosťou vyniká podstavný odsaváč pary OPP-2060."
 
+msgid "The most useful innovations improve picture, sound, comfort, or energy efficiency without making everyday operation more complicated."
+msgstr ""
+
 msgid "The pickup desk is inside the shopping passage on the first floor. For bulky orders, please call the store before arrival."
 msgstr "Výdajný pult nájdete v obchodnej pasáži na prvom poschodí. Pri objemnejších objednávkach pred príchodom zavolajte na predajňu."
 
 msgid "The printer uses ChromaLife100 ink system with four colors of ink hidden two print cartridges"
 msgstr "Štýlové kompatktaie multifunkčné zariadenie s Wi-Fi a jednoduchým mobilným tlačom."
+
+msgid "The selections below demonstrate how product recommendations can be embedded directly into editorial content."
+msgstr ""
 
 msgid "The store is located in the city center close to the tram stop. Larger orders can be loaded from the side entrance."
 msgstr "Predajňa sa nachádza v centre mesta blízko električkovej zastávky. Väčšie objednávky je možné naložiť pri bočnom vchode."
@@ -1744,8 +2149,26 @@ msgstr "Výsuvý odsaváč pary je veľmi elegantná a praktická varianta klasi
 msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
 msgstr "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and by malo byť at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
 
+msgid "These demonstration store terms summarise reservations, personal collection, payment, returns, and complaint handling at sample branches."
+msgstr ""
+
+msgid "These demonstration terms describe the usual flow of ordering, payment, delivery, complaints, and returns in a sample online store."
+msgstr ""
+
+msgid "They are illustrative demo content only and must not be used as legal terms for a real business without professional review and company-specific information."
+msgstr ""
+
+msgid "They are intended only for product demonstration and require legal and operational adaptation before use by a real retailer."
+msgstr ""
+
 msgid "This branch is suitable for larger orders. Use the marked customer parking spots next to the warehouse ramp."
 msgstr "Táto pobočka je vhodná pre väčšie objednávky. Použite označené zákaznícke parkovacie miesta vedľa skladovej rampy."
+
+msgid "This demonstration privacy policy explains how a sample online store may process account, order, communication, and technical data."
+msgstr ""
+
+msgid "This guide takes a practical look at %articleTitle% and focuses on decisions that make a real difference in everyday use."
+msgstr ""
 
 msgid "This is SEO meta description of brand %brandName%."
 msgstr "Toto je SEO meta popisok značky %brandName%."
@@ -1762,8 +2185,8 @@ msgstr "Koniec nemotornému odkládaniu hrncov na novú kuchynskú linku alebo n
 msgid "This product is not an independently functional unit and may require professional installation."
 msgstr "Prenosný pevný disk GT SuperSpeed USB 3.0 sa inspíruje dlhou históriou športových vozidiel"
 
-msgid "This slider item promotes our latest offers and updates. Stay tuned for more exciting news and promotions. Click the link to learn more!"
-msgstr "Tento posuvník propaguje naše najnovšie nabídky a aktualizácie. Buďte v obraze a sledujte ďalšie vzrušujúce novinky a akcie. Kliknite na odkaz a dozviete sa viac!"
+msgid "Three new televisions worth knowing about"
+msgstr "Tri nové televízory, ktoré stoja za pozornosť"
 
 msgid "Ticket for 100 CZK"
 msgstr "Poukážka na 100 CZK"
@@ -1786,6 +2209,9 @@ msgstr "Zajtra bude 20% zľava na všetky produkty"
 msgid "Toner for MC861/ 851, 7000 pages"
 msgstr "OKI MC861cdxn+, farebná A3 34/26 ppm ProQ2400 dpi PCL/PS,USB 2.0,LPT,LAN"
 
+msgid "Toys"
+msgstr "Hračky"
+
 msgid "Transport and payment"
 msgstr "Doprava a platba"
 
@@ -1798,8 +2224,17 @@ msgstr "Tuner"
 msgid "Type nozzles: Universal. Diameter: 32 mm. Turbobrush: Big."
 msgstr "Typ hubice: Univerzálna. Priemer: 32 mm. Turbokartáč: Veľký."
 
+msgid "Typical services include order pickup, basic product advice, complaint intake, returns, and information about delivery options."
+msgstr ""
+
 msgid "USB"
 msgstr "USB"
+
+msgid "Understand OLED, QLED, Mini LED, resolution, HDR, and refresh rates."
+msgstr "Zrozumiteľne o OLED, QLED, Mini LED, rozlíšení, HDR a obnovovacej frekvencii."
+
+msgid "Understand the technologies and trends shaping modern homes."
+msgstr "Spoznajte technológie a trendy, ktoré formujú moderné domácnosti."
 
 msgid "Unforgettable Tales"
 msgstr "Nezabudnuteľné príbehy"
@@ -1809,6 +2244,15 @@ msgstr "Povol otěze hrania"
 
 msgid "Use the pickup window on the left side of the building for prepaid orders. The main entrance stays available for returns and complaints."
 msgstr "Pre predplatené objednávky použite výdajné okienko na ľavej strane budovy. Hlavný vchod zostáva k dispozícii pre vratky a reklamácie."
+
+msgid "Use the related products as a starting point and compare the parameters that matter for your situation."
+msgstr ""
+
+msgid "Use the right tools and a gentle routine"
+msgstr ""
+
+msgid "Useful information from Demo shop: %articleTitle%."
+msgstr ""
 
 msgid "User"
 msgstr "Používateľ"
@@ -1831,6 +2275,9 @@ msgstr "VIP"
 msgid "Video"
 msgstr "Video"
 
+msgid "Video materials"
+msgstr ""
+
 msgid "Viewfinder type"
 msgstr "Typ hľadáčku"
 
@@ -1849,17 +2296,53 @@ msgstr "Sledujte vysielanie v úžasnom rozlíšení Full HD a zároveň na tom 
 msgid "Water reservoir capacity"
 msgstr "Kapacita zásobníka na vodu"
 
+msgid "Watering systems"
+msgstr "Zavlažovacie systémy"
+
 msgid "We are looking forward to your visit."
 msgstr "Tešíme sa na vašu návštevu."
+
+msgid "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
+msgstr ""
+
+msgid "We welcome curious people who enjoy improving online shopping and solving practical customer problems."
+msgstr ""
+
+msgid "We work with manufacturers, distributors, service partners, and creators who can bring useful products and knowledge to customers."
+msgstr ""
+
+msgid "Weekend photography"
+msgstr "Víkendové fotografovanie"
 
 msgid "Weight"
 msgstr "Hmotnosť"
 
+msgid "Welcome to the Demo shop press centre. Here you can find company information, product selections, visual materials, and contacts for media enquiries."
+msgstr ""
+
 msgid "Well known USB cable with A and micro B connectors."
 msgstr "Známy USB kábel s konektormi A a micro B."
 
+msgid "What artificial intelligence changes in home electronics"
+msgstr "Čo mení umelá inteligencia v domácej elektronike"
+
+msgid "What is genuinely new"
+msgstr ""
+
+msgid "What is new in wireless headphones"
+msgstr "Čo je nové pri bezdrôtových slúchadlách"
+
+msgid "What it means in everyday use"
+msgstr ""
+
+msgid "What you should know"
+msgstr ""
+
 msgid "Where to find us"
 msgstr "Kde nás nájdete"
+
+msgid "Who will benefit most"
+msgstr ""
 
 msgid "WiFi"
 msgstr "WiFi"
@@ -1881,6 +2364,9 @@ msgstr "Odstúpenie od zmluvy"
 
 msgid "Withdrawn"
 msgstr "Odstúpené od zmluvy"
+
+msgid "Write down the features you need, the limits of your space, and a realistic budget. This quickly separates useful options from unnecessary extras."
+msgstr ""
 
 msgid "Xtreamer SW4"
 msgstr "Xtreamer SW4"
@@ -1934,13 +2420,13 @@ msgid "cm"
 msgstr "cm"
 
 msgid "description - First subsection %locale%"
-msgstr "popis - Prvá podsekcia %locale%"
+msgstr "Zrozumiteľné rady, ktoré vám pomôžu porovnať parametre a vybrať správny produkt."
 
 msgid "description - Main blog page - %locale%"
-msgstr "popis - Hlavná stránka blogu - %locale%"
+msgstr "Praktické návody, produktové tipy a inšpirácia, ktoré vám pomôžu vybrať správne produkty a využiť ich naplno."
 
 msgid "description - Second subsection %locale%"
-msgstr "popis - Druhá podsekcia %locale%"
+msgstr "Nápady pre pohodlnejší, inteligentnejší a príjemnejší domov."
 
 msgid "description of 2 litre coffeemakers in sale seo category"
 msgstr "popis 2 litrových kávovarov v akci seo kategória"
@@ -2128,17 +2614,11 @@ msgstr "t"
 msgid "the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman."
 msgstr "Slovenská pošta sa pokúsi doručiť vašu zásielku včas, ale nepodarí sa jej to a napriek stálej prítomnosti vašej osoby doma vás nezastihne a budete si musieť vyzdvihnúť zásielku osobne na prepážke. Tu však musíte vydržať nekonečne dlhý rad a večne nevľúdnú pani poštárku."
 
-msgid "title"
-msgstr "názov"
-
-msgid "title - Blog article example %counter% %locale%"
-msgstr "názov - Príklad blogového článku %counter% %locale%"
-
 msgid "title - First subsection %locale%"
-msgstr "názov - Prvá podsekcia %locale%"
+msgstr "Nákupný poradca | Demo obchod"
 
 msgid "title - Second subsection %locale%"
-msgstr "názov - Druhá podsekcia %locale%"
+msgstr "Inšpirácia | Demo obchod"
 
 msgid "title of 2 litre coffeemakers in sale seo category"
 msgstr "názov 2 litrových kávovarov v akci seo kategória"

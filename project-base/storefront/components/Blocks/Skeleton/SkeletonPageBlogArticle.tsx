@@ -8,11 +8,15 @@ export const SkeletonPageBlogArticle: FC = () => (
         <SkeletonModuleBreadcrumbs count={3} />
 
         <Webline>
-            <div className="flex flex-col-reverse gap-3 md:gap-10 xl:flex-row xl:gap-[60px]">
-                <div className="flex w-full flex-col gap-4 xl:max-w-[840px] xl:flex-1">
+            <div className="grid grid-cols-[minmax(0,52.5rem)] justify-center gap-3 md:gap-10 xl:grid-cols-[minmax(0,52.5rem)_18.75rem] xl:gap-x-5 xl:gap-y-4">
+                <Skeleton className="h-10 w-3/5 xl:col-start-1 xl:row-start-1" />
+
+                <Skeleton className="h-10 rounded-xl xl:col-start-2 xl:row-span-2 xl:row-start-1 xl:h-112.5" />
+
+                <div className="flex w-full min-w-0 flex-col gap-4 xl:col-start-1 xl:row-start-2">
                     <VerticalStack gap="sm">
-                        <Skeleton className="h-10 w-3/5" />
-                        <Skeleton className="h-96" />
+                        <Skeleton className="aspect-32/15 w-full rounded-xl" />
+
                         <div className="flex flex-wrap gap-2.5">
                             <Skeleton className="h-5 w-20" />
                             <Skeleton className="h-5 w-32" />
@@ -26,8 +30,6 @@ export const SkeletonPageBlogArticle: FC = () => (
                         <Skeleton className="h-4" />
                     </VerticalStack>
                 </div>
-
-                <Skeleton className="h-10 rounded-xl xl:h-[450px] xl:w-[300px]" />
             </div>
         </Webline>
     </>

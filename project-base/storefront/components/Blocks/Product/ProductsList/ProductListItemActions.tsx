@@ -32,6 +32,7 @@ export const ProductListItemButtons: FC<ProductListItemButtonsProps> = ({
             tabIndex={allowKeyboardFocus ? 0 : -1}
             toggleProductInComparison={toggleProductInComparison}
         />
+
         <ProductWishlistButton
             isProductInWishlist={isProductInWishlist}
             productName={productName}

@@ -4,14 +4,41 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "%articleTitle% | Demo shop"
+msgstr "%articleTitle% | Demo shop"
+
 msgid "%brandName% SEO H1"
 msgstr ""
 
 msgid "%brandName% SEO Title"
 msgstr ""
 
-msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
-msgstr ""
+msgid "%topic%: answers to the most frequent questions"
+msgstr "%topic%: answers to the most frequent questions"
+
+msgid "%topic%: common mistakes and how to avoid them"
+msgstr "%topic%: common mistakes and how to avoid them"
+
+msgid "%topic%: five practical tips"
+msgstr "%topic%: five practical tips"
+
+msgid "%topic%: how to choose"
+msgstr "%topic%: how to choose"
+
+msgid "%topic%: ideas for a more comfortable home"
+msgstr "%topic%: ideas for a more comfortable home"
+
+msgid "%topic%: inspiration for every day"
+msgstr "%topic%: inspiration for every day"
+
+msgid "%topic%: practical advice from our experts"
+msgstr "%topic%: practical advice from our experts"
+
+msgid "%topic%: simple upgrades that make a difference"
+msgstr "%topic%: simple upgrades that make a difference"
+
+msgid "%topic%: what to look for"
+msgstr "%topic%: what to look for"
 
 msgid "100 Czech crowns ticket"
 msgstr ""
@@ -78,6 +105,9 @@ msgstr ""
 
 msgid "2W"
 msgstr ""
+
+msgid "3 language versions"
+msgstr "3 language versions"
 
 msgid "30\" Hyundai 22MT44D"
 msgstr ""
@@ -161,9 +191,6 @@ msgid "<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b
 msgstr ""
 
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
-msgstr ""
-
-msgid "<div class=\"gjs-text-ckeditor\"><p>Blog article text for search testing, the search phrase is &#34;Dina&#34;.</p></div>"
 msgstr ""
 
 msgid "<h2> Cookbook </h2> <br /> <br /> <p> What can be cooked in a steam oven? <br /> Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts. <br /> 75 pages of cookbooks Concept - cook healthy steamed - contains recipes with practical procedures. Each recipe includes: </p> <br /> <br /> <p> The list of ingredients </p> <br /> <p> Method </p> <br /> <p> How many people </p > <br /> <p> Preparation time </p> <br /> <p> The degree of difficulty </p> <br /> <p> + time + temperature </p> <br /> <br /> From under the lids give you some tips - Asparagus with tuna sauce, salmon in vermouth sauce, soup minestrone, chicken mint surprise Cabbage leaves stuffed with minced meat, grilled chop with vegetables, potatoes baked with blue cheese, pear with chocolate sauce, roasted mandelimi and ice cream, etc."
@@ -280,11 +307,23 @@ msgstr ""
 msgid "A garden tool is any one of many tools made for gardens and gardening and overlaps with the range of tools made for agriculture and horticulture. Garden tools can also be hand tools and power tools."
 msgstr ""
 
+msgid "A good partnership starts with reliable data, clear commercial terms, and responsible customer support. Potential partners can contact our demo purchasing team."
+msgstr "A good partnership starts with reliable data, clear commercial terms, and responsible customer support. Potential partners can contact our demo purchasing team."
+
 msgid "A personal computer (PC) is a general-purpose computer whose size, capabilities, and original sale price make it useful for individuals, and is intended to be operated directly by an end-user with no intervening computer time-sharing models that allowed larger, more expensive minicomputer and mainframe systems to be used by many people, usually at the same time."
 msgstr ""
 
+msgid "A practical guide to screen size, picture quality, connectivity, and the features worth considering before buying a new television."
+msgstr "A practical guide to screen size, picture quality, connectivity, and the features worth considering before buying a new television."
+
 msgid "A printer is a peripheral which makes a persistent human readable representation of graphics or text on paper or similar physical media."
 msgstr ""
+
+msgid "A real policy must identify the controller, purposes, legal bases, retention periods, recipients, security measures, and all rights available to customers."
+msgstr "A real policy must identify the controller, purposes, legal bases, retention periods, recipients, security measures, and all rights available to customers."
+
+msgid "A simple checklist before purchase"
+msgstr "A simple checklist before purchase"
 
 msgid "A smaller pickup point for prepaid orders and quick returns. Please use the side entrance after 4 PM."
 msgstr ""
@@ -307,6 +346,9 @@ msgstr ""
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr ""
 
+msgid "About Demo shop"
+msgstr "About Demo shop"
+
 msgid "About us"
 msgstr ""
 
@@ -325,7 +367,13 @@ msgstr ""
 msgid "Adaptive Sync Technology"
 msgstr ""
 
+msgid "Advice for comparing headphones, speakers, and home audio equipment."
+msgstr "Advice for comparing headphones, speakers, and home audio equipment."
+
 msgid "All kind of electronic devices."
+msgstr ""
+
+msgid "Alternative view of %productName%"
 msgstr ""
 
 msgid "Annual energy consumption"
@@ -343,35 +391,41 @@ msgstr ""
 msgid "Article for search testing"
 msgstr ""
 
+msgid "Audio and headphones"
+msgstr "Audio and headphones"
+
+msgid "Audio and headphones | Demo shop"
+msgstr "Audio and headphones | Demo shop"
+
+msgid "Automatic coffee machines"
+msgstr "Automatic coffee machines"
+
+msgid "Available delivery and payment methods depend on the destination, order size, stock location, and selected products."
+msgstr "Available delivery and payment methods depend on the destination, order size, stock location, and selected products."
+
 msgid "BROTHER PT-H300"
 msgstr ""
 
 msgid "Bank transfer"
 msgstr ""
 
-msgid "Become one of us"
-msgstr ""
+msgid "Before confirming financing, compare the total cost, repayment period, interest, fees, and eligibility conditions shown during checkout."
+msgstr "Before confirming financing, compare the total cost, repayment period, interest, fees, and eligibility conditions shown during checkout."
 
-msgid "Blog article example %counter% %locale%"
-msgstr ""
+msgid "Begin with the room, the people who use it, and the atmosphere you want to create. A good solution should feel natural rather than forced."
+msgstr "Begin with the room, the people who use it, and the atmosphere you want to create. A good solution should feel natural rather than forced."
 
-msgid "Blog article example %counter% %locale% - H1"
-msgstr ""
-
-msgid "Blog article example %counter% %locale% - Meta description"
-msgstr ""
-
-msgid "Blog article for products testing"
-msgstr ""
-
-msgid "Blog article for search testing"
-msgstr ""
+msgid "Better sleep"
+msgstr "Better sleep"
 
 msgid "Blue wednesday"
 msgstr ""
 
 msgid "Bluetooth"
 msgstr ""
+
+msgid "Board games"
+msgstr "Board games"
 
 msgid "Book 55 best programs for burning CDs and DVDs"
 msgstr ""
@@ -394,6 +448,15 @@ msgstr ""
 msgid "Bookworm"
 msgstr ""
 
+msgid "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
+msgstr "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
+
+msgid "Build the idea around your space"
+msgstr "Build the idea around your space"
+
+msgid "Building sets"
+msgstr "Building sets"
+
 msgid "Bundle promotion – buy three and get one Samsung Smart TV for free."
 msgstr ""
 
@@ -408,6 +471,15 @@ msgstr ""
 
 msgid "CRT"
 msgstr ""
+
+msgid "Camera"
+msgstr "Camera"
+
+msgid "Camera accessories"
+msgstr "Camera accessories"
+
+msgid "Camera lenses"
+msgstr "Camera lenses"
 
 msgid "Camera type"
 msgstr ""
@@ -469,6 +541,15 @@ msgstr ""
 msgid "Capacity"
 msgstr ""
 
+msgid "Capsule coffee machines"
+msgstr "Capsule coffee machines"
+
+msgid "Care and maintenance"
+msgstr "Care and maintenance"
+
+msgid "Care and maintenance | Demo shop"
+msgstr "Care and maintenance | Demo shop"
+
 msgid "Cash"
 msgstr ""
 
@@ -480,6 +561,18 @@ msgstr ""
 
 msgid "Catalog user"
 msgstr ""
+
+msgid "Check the details that affect daily use"
+msgstr "Check the details that affect daily use"
+
+msgid "Check the store detail before visiting for its current address, opening hours, available services, and holiday schedule."
+msgstr "Check the store detail before visiting for its current address, opening hours, available services, and holiday schedule."
+
+msgid "Children's books"
+msgstr "Children's books"
+
+msgid "Choose a solution that will last"
+msgstr "Choose a solution that will last"
 
 msgid "Christmas Day"
 msgstr ""
@@ -493,11 +586,29 @@ msgstr ""
 msgid "Cleaner 3in1 stainless steel appliances (4039286078461)"
 msgstr ""
 
+msgid "Cleaning and upkeep"
+msgstr "Cleaning and upkeep"
+
+msgid "Cleaning and upkeep | Demo shop"
+msgstr "Cleaning and upkeep | Demo shop"
+
+msgid "Clear advice and practical tips for %articleTitle%."
+msgstr "Clear advice and practical tips for %articleTitle%."
+
 msgid "Coarse grater blade RM-3240/3250"
 msgstr ""
 
+msgid "Coffee & tea"
+msgstr "Coffee & tea"
+
 msgid "Coffee Machines"
 msgstr ""
+
+msgid "Coffee grinders"
+msgstr "Coffee grinders"
+
+msgid "Coffee machine"
+msgstr "Coffee machine"
 
 msgid "Coffeemakers or coffee machines are cooking appliances used to brew coffee. While there are many different types of coffeemakers using a number of different brewing principles, in the most common devices, coffee grounds are placed in a paper or metal filter inside a funnel, which is set over a glass or ceramic coffee pot, a cooking pot in the kettle family. Cold water is poured into a separate chamber, which is than heated up to the boiling point, and directed into the funnel."
 msgstr ""
@@ -517,8 +628,14 @@ msgstr ""
 msgid "Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers."
 msgstr ""
 
+msgid "Compare dimensions, controls, connectivity, energy consumption, and warranty conditions before making the final choice."
+msgstr "Compare dimensions, controls, connectivity, energy consumption, and warranty conditions before making the final choice."
+
 msgid "Complaint"
 msgstr ""
+
+msgid "Computer accessories"
+msgstr "Computer accessories"
 
 msgid "Connection method"
 msgstr ""
@@ -529,8 +646,17 @@ msgstr ""
 msgid "Connectors"
 msgstr ""
 
+msgid "Consent must be voluntary, specific, informed, and easy to withdraw. Refusing optional consent must not prevent completion of an ordinary purchase."
+msgstr "Consent must be voluntary, specific, informed, and easy to withdraw. Refusing optional consent must not prevent completion of an ordinary purchase."
+
+msgid "Consider how the product or idea will fit into your daily routine, available space, and household budget. Clear priorities make every following decision easier."
+msgstr "Consider how the product or idea will fit into your daily routine, available space, and household budget. Clear priorities make every following decision easier."
+
 msgid "Construction"
 msgstr ""
+
+msgid "Consumers may return eligible online purchases within the period shown in the applicable terms and conditions."
+msgstr "Consumers may return eligible online purchases within the period shown in the applicable terms and conditions."
 
 msgid "Cooperation"
 msgstr ""
@@ -552,6 +678,12 @@ msgstr ""
 
 msgid "Customer activation"
 msgstr ""
+
+msgid "Customer care every workday"
+msgstr "Customer care every workday"
+
+msgid "Customer care will explain the next steps, including delivery to a service centre, assessment, repair, replacement, or another available resolution."
+msgstr "Customer care will explain the next steps, including delivery to a service centre, assessment, repair, replacement, or another available resolution."
 
 msgid "Customer manager"
 msgstr ""
@@ -613,11 +745,29 @@ msgstr ""
 msgid "Demo category advert"
 msgstr ""
 
+msgid "Demo shop is a sample electronics retailer built to demonstrate a complete modern shopping experience."
+msgstr "Demo shop is a sample electronics retailer built to demonstrate a complete modern shopping experience."
+
+msgid "Demo shop presentation"
+msgstr ""
+
+msgid "Demo shop presents a complete sample e-commerce experience, from product discovery and content to ordering and after-sales care."
+msgstr "Demo shop presents a complete sample e-commerce experience, from product discovery and content to ordering and after-sales care."
+
+msgid "Demo stores provide personal collection, product advice, and selected customer-care services."
+msgstr "Demo stores provide personal collection, product advice, and selected customer-care services."
+
 msgid "Department stores services"
 msgstr ""
 
+msgid "Desktop computers"
+msgstr "Desktop computers"
+
 msgid "Determination"
 msgstr ""
+
+msgid "Developer working with Shopsys Platform documentation"
+msgstr "Developer working with Shopsys Platform documentation"
 
 msgid "Digital Camera - Waterproof, shockproof, freezeproof, 16.1 Mpx CCD"
 msgstr ""
@@ -649,8 +799,17 @@ msgstr ""
 msgid "Digital Voice Reco.rder Olympus VN-733PC is profiled primarily intuitive operation and long battery life . Its user offers 4 gigabytes internal memory and a new slot for microSD cards. O capacity certainly will not be a shortage in power saving mode, LP handle record up to 1600 hours of recording"
 msgstr ""
 
+msgid "Digital cameras"
+msgstr "Digital cameras"
+
 msgid "Dimensions"
 msgstr ""
+
+msgid "Dina is preparing a comfortable home office and compares a monitor, headphones, and practical accessories before ordering."
+msgstr "Dina is preparing a comfortable home office and compares a monitor, headphones, and practical accessories before ordering."
+
+msgid "Discover new products, useful features, and updates from the world of electronics."
+msgstr "Discover new products, useful features, and updates from the world of electronics."
 
 msgid "Discover the secret of people with us."
 msgstr ""
@@ -664,17 +823,23 @@ msgstr ""
 msgid "Display type"
 msgstr ""
 
-msgid "Documentation"
-msgstr ""
-
 msgid "Done"
 msgstr ""
+
+msgid "Downloadable Demo shop press image"
+msgstr ""
+
+msgid "Downloadable images"
+msgstr "Downloadable images"
 
 msgid "Drone delivery"
 msgstr ""
 
 msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
 msgstr ""
+
+msgid "E-commerce order preparation in a modern warehouse"
+msgstr "E-commerce order preparation in a modern warehouse"
 
 msgid "Ear Coupling"
 msgstr ""
@@ -696,6 +861,9 @@ msgstr ""
 
 msgid "Electronics"
 msgstr ""
+
+msgid "Electronics and home"
+msgstr "Electronics and home"
 
 msgid "Electronics from most expensive"
 msgstr ""
@@ -727,6 +895,9 @@ msgstr ""
 msgid "Energy-Efficient Design"
 msgstr ""
 
+msgid "Energy-efficient home"
+msgstr "Energy-efficient home"
+
 msgid "Enjoy quick cooking with special cooking HI-LIGHT zones"
 msgstr ""
 
@@ -742,14 +913,23 @@ msgstr ""
 msgid "Expect delivery by the end of next month"
 msgstr ""
 
-msgid "Explore our comprehensive documentation to get the most out of our platform. Find guides, tutorials, and detailed information to help you navigate and utilize all features effectively. Click the link to access the full documentation."
-msgstr ""
+msgid "Explore electronics"
+msgstr "Explore electronics"
+
+msgid "Explore the documentation"
+msgstr "Explore the documentation"
 
 msgid "Extension rod plastic TM-4610"
 msgstr ""
 
+msgid "Family entertainment"
+msgstr "Family entertainment"
+
 msgid "Features of modern and elegantly prepared MFPs with new wireless capabilities. Function automatic two-sided printing"
 msgstr ""
+
+msgid "Fiction"
+msgstr "Fiction"
 
 msgid "Filter carbon OPK4290"
 msgstr ""
@@ -757,11 +937,14 @@ msgstr ""
 msgid "Filter input VP-9161 / SF-9162 / SF-8210"
 msgstr ""
 
+msgid "Find practical guides, architecture concepts, and step-by-step instructions for building with Shopsys Platform."
+msgstr "Find practical guides, architecture concepts, and step-by-step instructions for building with Shopsys Platform."
+
 msgid "First subsection %locale%"
-msgstr ""
+msgstr "Buying guides"
 
 msgid "First subsection %locale% - h1"
-msgstr ""
+msgstr "Buying guides"
 
 msgid "Floor nozzle metal VP-9310"
 msgstr ""
@@ -778,16 +961,28 @@ msgstr ""
 msgid "Fold-up"
 msgstr ""
 
+msgid "Follow the manufacturer instructions, disconnect devices before cleaning, use suitable accessories, and avoid moisture, heat, and blocked ventilation."
+msgstr "Follow the manufacturer instructions, disconnect devices before cleaning, use suitable accessories, and avoid moisture, heat, and blocked ventilation."
+
+msgid "Follow the manufacturer instructions, disconnect the device when necessary, and avoid aggressive cleaners or excessive moisture."
+msgstr "Follow the manufacturer instructions, disconnect the device when necessary, and avoid aggressive cleaners or excessive moisture."
+
 msgid "Food"
 msgstr ""
 
 msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
 msgstr ""
 
+msgid "For interviews, comments, and background information, contact press@demo-shop.example."
+msgstr "For interviews, comments, and background information, contact press@demo-shop.example."
+
 msgid "For press"
 msgstr ""
 
 msgid "Frequently Asked Questions FAQ"
+msgstr ""
+
+msgid "Front view of %productName%"
 msgstr ""
 
 msgid "Full HD Electronics with LED technology and USB"
@@ -844,11 +1039,11 @@ msgstr ""
 msgid "Goods care"
 msgstr ""
 
-msgid "GrapesJS page"
-msgstr ""
-
 msgid "Growing"
 msgstr ""
+
+msgid "Guides for choosing television size, picture quality, and practical features."
+msgstr "Guides for choosing television size, picture quality, and practical features."
 
 msgid "HDMI"
 msgstr ""
@@ -880,11 +1075,14 @@ msgstr ""
 msgid "Hand printing adhesive labels Brother especially suitable for easy marking in warehouses, offices and wherever it is required records or quickly usable labels. The printer boasts a very easy to us"
 msgstr ""
 
+msgid "Hand tools"
+msgstr "Hand tools"
+
 msgid "Have you ever experienced an accident and didn't know how to react? Or are you going to? This book is just for you!"
 msgstr ""
 
-msgid "Heading"
-msgstr ""
+msgid "Headphones"
+msgstr "Headphones"
 
 msgid "Height"
 msgstr ""
@@ -901,6 +1099,12 @@ msgstr ""
 msgid "Hello Kitty approved"
 msgstr ""
 
+msgid "Help us build ambitious e-commerce projects. Explore open roles and grow with Shopsys."
+msgstr "Help us build ambitious e-commerce projects. Explore open roles and grow with Shopsys."
+
+msgid "Here you can find quick answers about orders, availability, delivery, payment, returns, complaints, and customer accounts."
+msgstr "Here you can find quick answers about orders, availability, delivery, payment, returns, complaints, and customer accounts."
+
 msgid "Hewlett-Packard was founded in the difficult times of the Great Depression."
 msgstr ""
 
@@ -913,17 +1117,44 @@ msgstr ""
 msgid "Home Listening"
 msgstr ""
 
+msgid "Home cinema"
+msgstr "Home cinema"
+
+msgid "Home cinema systems"
+msgstr "Home cinema systems"
+
+msgid "Home office"
+msgstr "Home office"
+
 msgid "Hose VP-9241"
 msgstr ""
 
 msgid "Hose VP-9310"
 msgstr ""
 
+msgid "How Dina chooses reliable electronics"
+msgstr "How Dina chooses reliable electronics"
+
+msgid "How the technology works"
+msgstr "How the technology works"
+
+msgid "How to choose the right TV for your living room"
+msgstr "How to choose the right TV for your living room"
+
+msgid "How to clean a television screen safely"
+msgstr "How to clean a television screen safely"
+
 msgid "ISO"
 msgstr ""
 
 msgid "Iconic Design"
 msgstr ""
+
+msgid "If a product develops a fault, prepare the order number, a clear description of the problem, and any useful photographs."
+msgstr "If a product develops a fault, prepare the order number, a clear description of the problem, and any useful photographs."
+
+msgid "If the answer is not listed, contact customer care with your order number so the team can help without unnecessary delay."
+msgstr "If the answer is not listed, contact customer care with your order number so the team can help without unnecessary delay."
 
 msgid "If you take buses 9, 13 and 24 from the main station, get off at the Outlet Arena Moravia stop. There is no train stop, but there is a parking lot for horses."
 msgstr ""
@@ -933,6 +1164,9 @@ msgstr ""
 
 msgid "In Progress"
 msgstr ""
+
+msgid "Inkjet printers"
+msgstr "Inkjet printers"
 
 msgid "Innovative Technology"
 msgstr ""
@@ -955,11 +1189,14 @@ msgstr ""
 msgid "Job at Shopsys"
 msgstr ""
 
-msgid "Join our team and be part of an innovative company. Explore exciting career opportunities and grow with us!"
-msgstr ""
+msgid "Join our team"
+msgstr "Join our team"
 
 msgid "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
 msgstr ""
+
+msgid "Key facts"
+msgstr "Key facts"
 
 msgid "Knife potato RM-3240/3250"
 msgstr ""
@@ -991,6 +1228,15 @@ msgstr ""
 msgid "LG E410 Optimus L1 II White"
 msgstr ""
 
+msgid "Laptop"
+msgstr "Laptop"
+
+msgid "Laptops"
+msgstr "Laptops"
+
+msgid "Laser printers"
+msgstr "Laser printers"
+
 msgid "Limited user"
 msgstr ""
 
@@ -1002,6 +1248,9 @@ msgstr ""
 
 msgid "Logitech S120 black"
 msgstr ""
+
+msgid "Look beyond the first impression and compare durability, running costs, service options, and features you will genuinely use."
+msgstr "Look beyond the first impression and compare durability, running costs, service options, and features you will genuinely use."
 
 msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
 msgstr ""
@@ -1028,16 +1277,16 @@ msgid "Magical Journeys Await Within"
 msgstr ""
 
 msgid "Main blog page - %locale%"
-msgstr ""
+msgstr "Advice and inspiration"
 
 msgid "Main blog page - %locale% - H1"
-msgstr ""
+msgstr "Advice and inspiration"
 
 msgid "Main blog page - %locale% - Title"
-msgstr ""
+msgstr "Advice and inspiration | Demo shop"
 
 msgid "Main blog page - %locale% - meta description"
-msgstr ""
+msgstr "Practical guides, product tips, and inspiration to help you choose the right products and get the most from them."
 
 msgid "Main information"
 msgstr ""
@@ -1050,6 +1299,9 @@ msgstr ""
 
 msgid "Maximum size"
 msgstr ""
+
+msgid "Media contact"
+msgstr "Media contact"
 
 msgid "Media type"
 msgstr ""
@@ -1102,6 +1354,12 @@ msgstr ""
 msgid "Mobile phone 4.7\" 720x1280, procesor 1,5GHz, internal memory 16GB, camera 8mpx, GPS, WiFi, Bluetooth, 3G, FM, microSD, micro USB, Android 4.0"
 msgstr ""
 
+msgid "Mobile phone accessories"
+msgstr "Mobile phone accessories"
+
+msgid "Modern features combine sensors, software, and efficient hardware. Understanding their purpose makes technical specifications easier to compare."
+msgstr "Modern features combine sensors, software, and efficient hardware. Understanding their purpose makes technical specifications easier to compare."
+
 msgid "Modern stereo speakers in a stylish black design, with an output of 2.3 W, suitable only for desktops and laptops, but also for CD or MP3 players."
 msgstr ""
 
@@ -1147,8 +1405,8 @@ msgstr ""
 msgid "New driving rules and tips just for you!"
 msgstr ""
 
-msgid "Newest toys in stock"
-msgstr ""
+msgid "New features make sense when they solve a real need. Compare them with the equipment you already own and the way you use it."
+msgstr "New features make sense when they solve a real need. Compare them with the equipment you already own and the way you use it."
 
 msgid "Nikon COS 700D"
 msgstr ""
@@ -1177,6 +1435,9 @@ msgstr ""
 msgid "No Obligations"
 msgstr ""
 
+msgid "Non-fiction"
+msgstr "Non-fiction"
+
 msgid "Notification in the bar, notification of a new event."
 msgstr ""
 
@@ -1197,6 +1458,9 @@ msgstr ""
 
 msgid "OKI MC861cdxn+ (01318206)"
 msgstr ""
+
+msgid "OLED, QLED, and Mini LED explained"
+msgstr "OLED, QLED, and Mini LED explained"
 
 msgid "OLYMPUS ME-34 Compact directional microphone suitable for recording lectures"
 msgstr ""
@@ -1222,11 +1486,17 @@ msgstr ""
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
 msgstr ""
 
+msgid "Online shopping"
+msgstr "Online shopping"
+
 msgid "Open"
 msgstr ""
 
 msgid "Optical"
 msgstr ""
+
+msgid "Optional consent can be used for clearly described purposes such as personalised marketing or selected analytics."
+msgstr "Optional consent can be used for clearly described purposes such as personalised marketing or selected analytics."
 
 msgid "Orava LT-823 C82B"
 msgstr ""
@@ -1246,8 +1516,17 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
+msgid "Our demo team brings together technology, logistics, content, and customer care. Open roles would normally be listed here with responsibilities and contact details."
+msgstr "Our demo team brings together technology, logistics, content, and customer care. Open roles would normally be listed here with responsibilities and contact details."
+
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr ""
+
+msgid "Our sample stores combine personal collection with practical assistance before and after purchase."
+msgstr "Our sample stores combine personal collection with practical assistance before and after purchase."
+
+msgid "Outdoor toys"
+msgstr "Outdoor toys"
 
 msgid "Overall performance"
 msgstr ""
@@ -1275,6 +1554,9 @@ msgstr ""
 
 msgid "Pages count"
 msgstr ""
+
+msgid "Pantry staples"
+msgstr "Pantry staples"
 
 msgid "Parallel port"
 msgstr ""
@@ -1315,6 +1597,9 @@ msgstr ""
 msgid "Power supply"
 msgstr ""
 
+msgid "Power tools"
+msgstr "Power tools"
+
 msgid "Powerful color inkjet printer A4 size, quality photo printing"
 msgstr ""
 
@@ -1330,6 +1615,9 @@ msgstr ""
 msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
 msgstr ""
 
+msgid "Prefer improvements you will use every day"
+msgstr "Prefer improvements you will use every day"
+
 msgid "Premium Performance"
 msgstr ""
 
@@ -1338,6 +1626,9 @@ msgstr ""
 
 msgid "Pressure"
 msgstr ""
+
+msgid "Prevent common problems"
+msgstr "Prevent common problems"
 
 msgid "Price hit"
 msgstr ""
@@ -1354,6 +1645,9 @@ msgstr ""
 msgid "Print technology"
 msgstr ""
 
+msgid "Printer supplies"
+msgstr "Printer supplies"
+
 msgid "Printers"
 msgstr ""
 
@@ -1366,11 +1660,26 @@ msgstr ""
 msgid "Processor frequency"
 msgstr ""
 
+msgid "Product care"
+msgstr "Product care"
+
 msgid "Product does not match description, I want to return the entire order."
 msgstr ""
 
 msgid "Product gift"
 msgstr ""
+
+msgid "Product materials"
+msgstr "Product materials"
+
+msgid "Product news"
+msgstr "Product news"
+
+msgid "Product news | Demo shop"
+msgstr "Product news | Demo shop"
+
+msgid "Products worth comparing"
+msgstr "Products worth comparing"
 
 msgid "Promoted products"
 msgstr ""
@@ -1396,6 +1705,9 @@ msgstr ""
 msgid "ROCCAT Kone Pure Optical Gaming Mouse"
 msgstr ""
 
+msgid "Read practical advice in the article: %articleTitle%"
+msgstr "Read practical advice in the article: %articleTitle%"
+
 msgid "Recording on"
 msgstr ""
 
@@ -1414,6 +1726,15 @@ msgstr ""
 msgid "Reflective tape for safe movement on the road"
 msgstr ""
 
+msgid "Regular care helps electronics remain safe, reliable, and pleasant to use for longer."
+msgstr "Regular care helps electronics remain safe, reliable, and pleasant to use for longer."
+
+msgid "Regular light maintenance, careful storage, and timely replacement of worn accessories help products work reliably for longer."
+msgstr "Regular light maintenance, careful storage, and timely replacement of worn accessories help products work reliably for longer."
+
+msgid "Remote control of %productName%"
+msgstr ""
+
 msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
 msgstr ""
 
@@ -1428,6 +1749,9 @@ msgstr ""
 
 msgid "Responsive and Reliable"
 msgstr ""
+
+msgid "Return the product complete, safely packed, and with its accessories. This demonstration text is not a substitute for the legally required instructions of a real merchant."
+msgstr "Return the product complete, safely packed, and with its accessories. This demonstration text is not a substitute for the legally required instructions of a real merchant."
 
 msgid "Right-handed"
 msgstr ""
@@ -1449,6 +1773,9 @@ msgstr ""
 
 msgid "SONY Xperia SP C5303"
 msgstr ""
+
+msgid "Safe cleaning routines and simple maintenance for everyday electronics."
+msgstr "Safe cleaning routines and simple maintenance for everyday electronics."
 
 msgid "Sale"
 msgstr ""
@@ -1480,6 +1807,12 @@ msgstr ""
 msgid "Screen size"
 msgstr ""
 
+msgid "Screen technologies"
+msgstr "Screen technologies"
+
+msgid "Screen technologies | Demo shop"
+msgstr "Screen technologies | Demo shop"
+
 msgid "Seamless Control"
 msgstr ""
 
@@ -1490,10 +1823,13 @@ msgid "Second reduced rate"
 msgstr ""
 
 msgid "Second subsection %locale%"
-msgstr ""
+msgstr "Inspiration"
 
 msgid "Second subsection %locale% - h1"
-msgstr ""
+msgstr "Inspiration"
+
+msgid "Selected purchases may be divided into regular payments through an external financing provider."
+msgstr "Selected purchases may be divided into regular payments through an external financing provider."
 
 msgid "Sencor SDB 4002M4"
 msgstr ""
@@ -1504,11 +1840,23 @@ msgstr ""
 msgid "Sensitivity"
 msgstr ""
 
+msgid "Set priorities before comparing models"
+msgstr "Set priorities before comparing models"
+
+msgid "She checks dimensions, compatibility, warranty conditions, and delivery options so every product fits the way she works."
+msgstr "She checks dimensions, compatibility, warranty conditions, and delivery options so every product fits the way she works."
+
+msgid "Shopsys Platform"
+msgstr "Shopsys Platform"
+
 msgid "Shopsys Platform - Title page"
 msgstr ""
 
 msgid "Shopsys Platform - the best solution for your eshop."
 msgstr ""
+
+msgid "Shopsys team collaborating in an office"
+msgstr "Shopsys team collaborating in an office"
 
 msgid "Side mount plates - few ETV-2860"
 msgstr ""
@@ -1518,6 +1866,12 @@ msgstr ""
 
 msgid "Simple Genius Mouse NetScroll 310 offers the most widely used functional elements of a basic ergonomics. It has an optical sensor with a resolution of 800 DPI, which can handle work on a large number of standard surfaces. There are two classic buttons and the third with the paging function wheel. Genius NetScroll 310 is equipped with modern USB interface and finds use in conserving ambidextrous or in an office environment. <br><strong> Specifications: </strong><br><strong> Supported OS: </strong><br> Microsoft Windows 7, Vista, XP, 2003, 2000, 98SE <br> Mac OS 8.6 or later"
 msgstr ""
+
+msgid "Simple advice to keep products working well and looking their best."
+msgstr "Simple advice to keep products working well and looking their best."
+
+msgid "Simple maintenance that extends appliance life"
+msgstr "Simple maintenance that extends appliance life"
 
 msgid "Size and weight"
 msgstr ""
@@ -1534,8 +1888,26 @@ msgstr ""
 msgid "Slovakia"
 msgstr ""
 
+msgid "Small, thoughtful changes often bring more comfort than a complete redesign. Focus on practical details that simplify familiar routines."
+msgstr "Small, thoughtful changes often bring more comfort than a complete redesign. Focus on practical details that simplify familiar routines."
+
+msgid "Smart kitchen"
+msgstr "Smart kitchen"
+
+msgid "Smart technology"
+msgstr "Smart technology"
+
+msgid "Smartphones"
+msgstr "Smartphones"
+
+msgid "Smartwatches"
+msgstr "Smartwatches"
+
 msgid "Snack"
 msgstr ""
+
+msgid "Snacks"
+msgstr "Snacks"
 
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
 msgstr ""
@@ -1575,6 +1947,12 @@ msgstr ""
 
 msgid "Standard rate"
 msgstr ""
+
+msgid "Start with your everyday needs"
+msgstr "Start with your everyday needs"
+
+msgid "Stores and locations"
+msgstr "Stores and locations"
 
 msgid "Suitable for all kinds of goods"
 msgstr ""
@@ -1639,6 +2017,12 @@ msgstr ""
 msgid "Technology"
 msgstr ""
 
+msgid "Technology and trends"
+msgstr "Technology and trends"
+
+msgid "Technology and trends | Demo shop"
+msgstr "Technology and trends | Demo shop"
+
 msgid "Telescopic metal pipes VP-9161"
 msgstr ""
 
@@ -1696,6 +2080,15 @@ msgstr ""
 msgid "Television or TV is a telecommunication medium used for transmitting sound with moving images in monochrome (black-and-white), or in color, and in two or three dimensions"
 msgstr ""
 
+msgid "Televisions"
+msgstr "Televisions"
+
+msgid "Televisions and displays"
+msgstr "Televisions and displays"
+
+msgid "Televisions and displays | Demo shop"
+msgstr "Televisions and displays | Demo shop"
+
 msgid "Terms and conditions of department stores"
 msgstr ""
 
@@ -1705,8 +2098,14 @@ msgstr ""
 msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
 msgstr ""
 
+msgid "The best technology saves time, reduces energy consumption, or improves comfort while remaining simple to control and maintain."
+msgstr "The best technology saves time, reduces energy consumption, or improves comfort while remaining simple to control and maintain."
+
 msgid "The branch is close to the business center entrance. Staff will prepare your order at the front desk after you show the order number."
 msgstr ""
+
+msgid "The checkout always shows the current price and estimated delivery time before the order is confirmed."
+msgstr "The checkout always shows the current price and estimated delivery time before the order is confirmed."
 
 msgid "The filter carbon OPK-4360/4390"
 msgstr ""
@@ -1723,11 +2122,17 @@ msgstr ""
 msgid "The minimum space requirements excels sub-mounting range hood OPP-2060th"
 msgstr ""
 
+msgid "The most useful innovations improve picture, sound, comfort, or energy efficiency without making everyday operation more complicated."
+msgstr "The most useful innovations improve picture, sound, comfort, or energy efficiency without making everyday operation more complicated."
+
 msgid "The pickup desk is inside the shopping passage on the first floor. For bulky orders, please call the store before arrival."
 msgstr ""
 
 msgid "The printer uses ChromaLife100 ink system with four colors of ink hidden two print cartridges"
 msgstr ""
+
+msgid "The selections below demonstrate how product recommendations can be embedded directly into editorial content."
+msgstr "The selections below demonstrate how product recommendations can be embedded directly into editorial content."
 
 msgid "The store is located in the city center close to the tram stop. Larger orders can be loaded from the side entrance."
 msgstr ""
@@ -1744,8 +2149,26 @@ msgstr ""
 msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
 msgstr ""
 
+msgid "These demonstration store terms summarise reservations, personal collection, payment, returns, and complaint handling at sample branches."
+msgstr "These demonstration store terms summarise reservations, personal collection, payment, returns, and complaint handling at sample branches."
+
+msgid "These demonstration terms describe the usual flow of ordering, payment, delivery, complaints, and returns in a sample online store."
+msgstr "These demonstration terms describe the usual flow of ordering, payment, delivery, complaints, and returns in a sample online store."
+
+msgid "They are illustrative demo content only and must not be used as legal terms for a real business without professional review and company-specific information."
+msgstr "They are illustrative demo content only and must not be used as legal terms for a real business without professional review and company-specific information."
+
+msgid "They are intended only for product demonstration and require legal and operational adaptation before use by a real retailer."
+msgstr "They are intended only for product demonstration and require legal and operational adaptation before use by a real retailer."
+
 msgid "This branch is suitable for larger orders. Use the marked customer parking spots next to the warehouse ramp."
 msgstr ""
+
+msgid "This demonstration privacy policy explains how a sample online store may process account, order, communication, and technical data."
+msgstr "This demonstration privacy policy explains how a sample online store may process account, order, communication, and technical data."
+
+msgid "This guide takes a practical look at %articleTitle% and focuses on decisions that make a real difference in everyday use."
+msgstr "This guide takes a practical look at %articleTitle% and focuses on decisions that make a real difference in everyday use."
 
 msgid "This is SEO meta description of brand %brandName%."
 msgstr ""
@@ -1762,8 +2185,8 @@ msgstr ""
 msgid "This product is not an independently functional unit and may require professional installation."
 msgstr ""
 
-msgid "This slider item promotes our latest offers and updates. Stay tuned for more exciting news and promotions. Click the link to learn more!"
-msgstr ""
+msgid "Three new televisions worth knowing about"
+msgstr "Three new televisions worth knowing about"
 
 msgid "Ticket for 100 CZK"
 msgstr ""
@@ -1786,6 +2209,9 @@ msgstr ""
 msgid "Toner for MC861/ 851, 7000 pages"
 msgstr ""
 
+msgid "Toys"
+msgstr ""
+
 msgid "Transport and payment"
 msgstr ""
 
@@ -1798,8 +2224,17 @@ msgstr ""
 msgid "Type nozzles: Universal. Diameter: 32 mm. Turbobrush: Big."
 msgstr ""
 
+msgid "Typical services include order pickup, basic product advice, complaint intake, returns, and information about delivery options."
+msgstr "Typical services include order pickup, basic product advice, complaint intake, returns, and information about delivery options."
+
 msgid "USB"
 msgstr ""
+
+msgid "Understand OLED, QLED, Mini LED, resolution, HDR, and refresh rates."
+msgstr "Understand OLED, QLED, Mini LED, resolution, HDR, and refresh rates."
+
+msgid "Understand the technologies and trends shaping modern homes."
+msgstr "Understand the technologies and trends shaping modern homes."
 
 msgid "Unforgettable Tales"
 msgstr ""
@@ -1809,6 +2244,15 @@ msgstr ""
 
 msgid "Use the pickup window on the left side of the building for prepaid orders. The main entrance stays available for returns and complaints."
 msgstr ""
+
+msgid "Use the related products as a starting point and compare the parameters that matter for your situation."
+msgstr "Use the related products as a starting point and compare the parameters that matter for your situation."
+
+msgid "Use the right tools and a gentle routine"
+msgstr "Use the right tools and a gentle routine"
+
+msgid "Useful information from Demo shop: %articleTitle%."
+msgstr "Useful information from Demo shop: %articleTitle%."
 
 msgid "User"
 msgstr ""
@@ -1831,6 +2275,9 @@ msgstr ""
 msgid "Video"
 msgstr ""
 
+msgid "Video materials"
+msgstr "Video materials"
+
 msgid "Viewfinder type"
 msgstr ""
 
@@ -1849,17 +2296,53 @@ msgstr ""
 msgid "Water reservoir capacity"
 msgstr ""
 
+msgid "Watering systems"
+msgstr "Watering systems"
+
 msgid "We are looking forward to your visit."
 msgstr ""
+
+msgid "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
+msgstr "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
+
+msgid "We welcome curious people who enjoy improving online shopping and solving practical customer problems."
+msgstr "We welcome curious people who enjoy improving online shopping and solving practical customer problems."
+
+msgid "We work with manufacturers, distributors, service partners, and creators who can bring useful products and knowledge to customers."
+msgstr "We work with manufacturers, distributors, service partners, and creators who can bring useful products and knowledge to customers."
+
+msgid "Weekend photography"
+msgstr "Weekend photography"
 
 msgid "Weight"
 msgstr ""
 
+msgid "Welcome to the Demo shop press centre. Here you can find company information, product selections, visual materials, and contacts for media enquiries."
+msgstr "Welcome to the Demo shop press centre. Here you can find company information, product selections, visual materials, and contacts for media enquiries."
+
 msgid "Well known USB cable with A and micro B connectors."
 msgstr ""
 
+msgid "What artificial intelligence changes in home electronics"
+msgstr "What artificial intelligence changes in home electronics"
+
+msgid "What is genuinely new"
+msgstr "What is genuinely new"
+
+msgid "What is new in wireless headphones"
+msgstr "What is new in wireless headphones"
+
+msgid "What it means in everyday use"
+msgstr "What it means in everyday use"
+
+msgid "What you should know"
+msgstr "What you should know"
+
 msgid "Where to find us"
 msgstr ""
+
+msgid "Who will benefit most"
+msgstr "Who will benefit most"
 
 msgid "WiFi"
 msgstr ""
@@ -1881,6 +2364,9 @@ msgstr ""
 
 msgid "Withdrawn"
 msgstr ""
+
+msgid "Write down the features you need, the limits of your space, and a realistic budget. This quickly separates useful options from unnecessary extras."
+msgstr "Write down the features you need, the limits of your space, and a realistic budget. This quickly separates useful options from unnecessary extras."
 
 msgid "Xtreamer SW4"
 msgstr ""
@@ -1934,13 +2420,13 @@ msgid "cm"
 msgstr ""
 
 msgid "description - First subsection %locale%"
-msgstr ""
+msgstr "Clear advice to help you compare features and choose the right product."
 
 msgid "description - Main blog page - %locale%"
-msgstr ""
+msgstr "Practical guides, product tips, and inspiration to help you choose the right products and get the most from them."
 
 msgid "description - Second subsection %locale%"
-msgstr ""
+msgstr "Ideas for making your home more comfortable, connected, and enjoyable."
 
 msgid "description of 2 litre coffeemakers in sale seo category"
 msgstr ""
@@ -2128,17 +2614,11 @@ msgstr ""
 msgid "the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman."
 msgstr ""
 
-msgid "title"
-msgstr ""
-
-msgid "title - Blog article example %counter% %locale%"
-msgstr ""
-
 msgid "title - First subsection %locale%"
-msgstr ""
+msgstr "Buying guides | Demo shop"
 
 msgid "title - Second subsection %locale%"
-msgstr ""
+msgstr "Inspiration | Demo shop"
 
 msgid "title of 2 litre coffeemakers in sale seo category"
 msgstr ""

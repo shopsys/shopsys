@@ -1,5 +1,8 @@
+import { DrawerCloseButton } from 'components/Basic/Drawer/DrawerCloseButton';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
+import { DEFAULT_SKELETON_TYPE } from 'config/constants';
 import { AnimationSequence, useAnimate, useReducedMotion } from 'framer-motion';
 import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { useEffect, useState } from 'react';
@@ -30,6 +33,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
     const shouldReduceMotion = useReducedMotion();
 
     const currentGroupTitle = currentMenuItems[0].parentItem;
+    const menuSectionTitle = currentGroupTitle ?? t('Categories');
 
     useEffect(() => {
         // Set initial positions programmatically to ensure first navigation animations work correctly
@@ -102,48 +106,43 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
 
     return (
         <div className="flex h-full flex-col" ref={scope}>
-            <div className="flex items-center p-5">
-                {!!historyMenuGroups?.length && (
-                    <button
-                        className="flex cursor-pointer items-center justify-center text-icon-less hover:text-icon-default"
-                        tabIndex={0}
+            <div className="grid grid-cols-[2.25rem_1fr_2.25rem] items-center gap-3 p-5">
+                {historyMenuGroups?.length ? (
+                    <IconButton
+                        Icon={ArrowIcon}
+                        iconClassName="rotate-90"
                         title={t('Back')}
                         onClick={() => handleBackClick(historyMenuGroups)}
-                    >
-                        <ArrowIcon className="size-6 rotate-90" />
-                    </button>
+                    />
+                ) : (
+                    <span aria-hidden="true" />
                 )}
 
-                <span className="h-6 flex-1 text-center font-secondary font-semibold">
-                    {currentGroupTitle ? currentGroupTitle : t('Menu')}
-                </span>
+                <span className="min-w-0 truncate text-center font-secondary font-semibold">{t('Menu')}</span>
 
-                <button
-                    className="flex cursor-pointer items-center justify-center text-icon-less hover:text-icon-default"
-                    tabIndex={0}
-                    title={t('Close')}
-                    onClick={onMenuToggleHandler}
-                >
-                    <RemoveIcon className="size-6" />
-                </button>
+                <DrawerCloseButton onClick={onMenuToggleHandler} />
             </div>
 
-            <MenuItems
-                id="animation-visible-element"
-                isHidden={false}
-                menuItems={currentMenuItems}
-                onExpand={handleExpandClick}
-                onNavigate={onMenuToggleHandler}
-            />
+            <div className="relative">
+                <MenuItems
+                    id="animation-visible-element"
+                    isHidden={false}
+                    menuItems={currentMenuItems}
+                    title={menuSectionTitle}
+                    onExpand={handleExpandClick}
+                    onNavigate={onMenuToggleHandler}
+                />
 
-            <MenuItems
-                className="absolute top-16"
-                id="animation-hidden-element"
-                isHidden
-                menuItems={currentMenuItems}
-                onExpand={handleExpandClick}
-                onNavigate={onMenuToggleHandler}
-            />
+                <MenuItems
+                    className="absolute inset-x-0 top-0"
+                    id="animation-hidden-element"
+                    isHidden
+                    menuItems={currentMenuItems}
+                    title={menuSectionTitle}
+                    onExpand={handleExpandClick}
+                    onNavigate={onMenuToggleHandler}
+                />
+            </div>
 
             <SubMenu onNavigate={onMenuToggleHandler} />
         </div>
@@ -154,20 +153,53 @@ const MenuItems: FC<{
     id: string;
     isHidden: boolean;
     menuItems: MenuItem[];
+    title?: string;
     onExpand: (item: MenuItem) => void;
     onNavigate: () => void;
-}> = ({ className, id, isHidden, menuItems, onExpand, onNavigate }) => {
+}> = ({ className, id, isHidden, menuItems, title, onExpand, onNavigate }) => {
+    const { t } = useTranslation();
+    const viewAllItem = menuItems.find((menuItem) => menuItem.isViewAllLink && menuItem.link !== null);
+    const categoryItems = menuItems.filter((menuItem) => !menuItem.isViewAllLink);
+
     return (
-        <div aria-hidden={isHidden} className={twJoin('w-90 divide-y divide-border-less px-5', className)} id={id}>
-            {menuItems.map((navigationItem) => (
-                <DropdownMenuListItem
-                    key={(navigationItem.link ?? navigationItem.name) + navigationItem.name + id}
-                    isHidden={isHidden}
-                    navigationItem={navigationItem}
-                    onExpand={() => onExpand(navigationItem)}
-                    onNavigate={onNavigate}
-                />
-            ))}
+        <div aria-hidden={isHidden} className={twJoin('w-full px-5', className)} id={id}>
+            <div className="mb-2 flex items-center justify-between gap-3">
+                <p
+                    aria-hidden={!title}
+                    className={twJoin(
+                        'min-w-0 truncate font-secondary font-semibold text-text-less text-xs uppercase',
+                        !title && 'invisible',
+                    )}
+                >
+                    {title}
+                </p>
+
+                {viewAllItem?.link && (
+                    <ExtendedNextLink
+                        aria-label={viewAllItem.name}
+                        className="inline-flex shrink-0 items-center gap-1 rounded-md py-1 font-secondary font-semibold text-link-default text-xs no-underline hover:underline"
+                        href={viewAllItem.link}
+                        skeletonType={DEFAULT_SKELETON_TYPE}
+                        tabIndex={isHidden ? -1 : undefined}
+                        onClick={onNavigate}
+                    >
+                        <span>{t('View all')}</span>
+                        <ArrowIcon className="size-4 -rotate-90" />
+                    </ExtendedNextLink>
+                )}
+            </div>
+
+            <div className="flex flex-col gap-2">
+                {categoryItems.map((navigationItem) => (
+                    <DropdownMenuListItem
+                        key={(navigationItem.link ?? navigationItem.name) + navigationItem.name + id}
+                        isHidden={isHidden}
+                        navigationItem={navigationItem}
+                        onExpand={() => onExpand(navigationItem)}
+                        onNavigate={onNavigate}
+                    />
+                ))}
+            </div>
         </div>
     );
 };

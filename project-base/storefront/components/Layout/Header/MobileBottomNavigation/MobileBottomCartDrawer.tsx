@@ -8,7 +8,7 @@ type MobileBottomCartDrawerProps = {
 };
 
 export const MobileBottomCartDrawer: FC<MobileBottomCartDrawerProps> = ({ isActive, setIsActive, title }) => (
-    <Drawer isActive={isActive} setIsActive={setIsActive} title={title}>
-        <CartInHeaderList />
+    <Drawer className="flex flex-col overflow-hidden" isActive={isActive} setIsActive={setIsActive} title={title}>
+        <CartInHeaderList hideFocusTrap isDrawer />
     </Drawer>
 );

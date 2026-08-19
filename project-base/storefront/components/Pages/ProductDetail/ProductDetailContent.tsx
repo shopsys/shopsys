@@ -110,6 +110,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                     description={product.description}
                     files={product.files}
                     parameters={product.parameters}
+                    product={product}
                     relatedProducts={product.relatedProducts}
                 />
 
@@ -119,7 +120,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         recommendationType={TypeRecommendationType.ItemDetail}
                         render={(recommendedProductsContent) => (
                             <Webline>
-                                <h2 className="h5 mb-3">{t('Recommended for you')}</h2>
+                                <h2 className="h3 mb-3">{t('Recommended for you')}</h2>
                                 {recommendedProductsContent}
                             </Webline>
                         )}

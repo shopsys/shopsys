@@ -21,12 +21,16 @@ export const DeleteCustomerUserPopup: FC<DeleteCustomerUserPopupProps> = ({ dele
             <div className="flex flex-row flex-nowrap justify-between">
                 <Button
                     data-tid={TIDs.customer_users_delete_cancel_button}
-                    variant="inverted"
+                    variant="secondary"
                     onClick={closePortalContent}
                 >
                     {t('No')}
                 </Button>
-                <Button data-tid={TIDs.customer_users_delete_confirm_button} onClick={deleteCustomerUserHandler}>
+                <Button
+                    data-tid={TIDs.customer_users_delete_confirm_button}
+                    variant="danger"
+                    onClick={deleteCustomerUserHandler}
+                >
                     {t('Yes')}
                 </Button>
             </div>

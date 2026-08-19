@@ -45,40 +45,32 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 {isProductGift && <GiftBadge />}
 
                 {hasProductDetailLink ? (
-                    <>
-                        <ExtendedNextLink
-                            className="flex w-20 items-center justify-center"
-                            href={productSlug}
-                            tabIndex={-1}
-                            tid={TIDs.header_cart_list_item_image}
-                            type="product"
-                            aria-label={t('Go to product page of {{ productName }}', {
-                                ns: 'accessibility',
-                                productName: product.fullName,
-                            })}
+                    <ExtendedNextLink
+                        className="group/product-link flex flex-1 cursor-pointer items-center gap-x-6 text-text-default no-underline outline-hidden hover:text-text-default hover:no-underline"
+                        href={productSlug}
+                        type="product"
+                        aria-label={t('Go to product page of {{ productName }}', {
+                            ns: 'accessibility',
+                            productName: product.fullName,
+                        })}
+                    >
+                        <div
+                            className="flex w-20 shrink-0 items-center justify-center"
+                            data-tid={TIDs.header_cart_list_item_image}
                         >
                             <Image
-                                alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
+                                alt=""
                                 className="size-20 object-contain"
                                 height={80}
                                 src={product.mainImage?.url}
                                 width={80}
                             />
-                        </ExtendedNextLink>
+                        </div>
 
-                        <ExtendedNextLink
-                            className="flex-1 cursor-pointer font-secondary font-semibold text-sm text-text-default no-underline outline-hidden hover:text-link-default hover:underline"
-                            href={productSlug}
-                            tabIndex={0}
-                            type="product"
-                            aria-label={t('Go to product page of {{ productName }}', {
-                                ns: 'accessibility',
-                                productName: product.fullName,
-                            })}
-                        >
+                        <span className="flex-1 font-secondary font-semibold text-sm group-hover/product-link:underline group-focus-visible/product-link:underline">
                             {product.fullName}
-                        </ExtendedNextLink>
-                    </>
+                        </span>
+                    </ExtendedNextLink>
                 ) : (
                     <>
                         <div className="flex w-20 items-center justify-center">
@@ -99,7 +91,10 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
 
                 {!isProductGift && (
                     <RemoveCartItemButton
-                        ariaLabel={t(`Remove from cart ${product.fullName}`, { ns: 'accessibility' })}
+                        ariaLabel={t('Remove from cart product {{ productName }}', {
+                            ns: 'accessibility',
+                            productName: product.fullName,
+                        })}
                         className="cursor-pointer text-icon-less hover:text-icon-default"
                         disabled={isRemovingFromCart}
                         title={t('Remove from cart')}

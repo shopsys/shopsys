@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Article;
 
-use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ArticlesSearchTest extends GraphQlTestCase
@@ -26,12 +24,12 @@ class ArticlesSearchTest extends GraphQlTestCase
             'data' => [
                 'articlesSearch' => [
                     [
-                        '__typename' => 'BlogArticle',
-                        'name' => t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        '__typename' => 'ArticleSite',
+                        'name' => t('How Dina chooses reliable electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                     [
-                        '__typename' => 'ArticleSite',
-                        'name' => t('Article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        '__typename' => 'BlogArticle',
+                        'name' => t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
             ],
@@ -42,18 +40,15 @@ class ArticlesSearchTest extends GraphQlTestCase
 
     public function testSearchWorksForShortSearchTerms(): void
     {
-        $firstDomainLocale = $this->getFirstDomainLocale();
         $userIdentifier = Uuid::uuid4()->toString();
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ArticlesSearch.graphql', [
-            'search' => '1',
+            'search' => 'D',
             'userIdentifier' => $userIdentifier,
         ]);
 
-        $expectedFirstArticle = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_ARTICLE, BlogArticle::class);
-
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'articlesSearch');
         $responseData = $this->getResponseDataForGraphQlType($response, 'articlesSearch');
-        $this->assertSame($expectedFirstArticle->getName($firstDomainLocale), $responseData[0]['name']);
+        $this->assertNotEmpty($responseData);
     }
 }

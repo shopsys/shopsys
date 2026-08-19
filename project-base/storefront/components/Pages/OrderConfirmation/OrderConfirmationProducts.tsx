@@ -22,9 +22,7 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
             <span className="h4">{t('Your order')}</span>
 
             <div className="relative">
-                <ul
-                    className={twJoin('flex max-h-[500px] flex-col gap-2 overflow-y-auto', items.length > 3 && 'pb-10')}
-                >
+                <ul className={twJoin('flex max-h-125 flex-col gap-2 overflow-y-auto', items.length > 3 && 'pb-10')}>
                     {items.map((item) => {
                         if (item.type === TypeOrderItemTypeEnum.Product && item.product) {
                             return (

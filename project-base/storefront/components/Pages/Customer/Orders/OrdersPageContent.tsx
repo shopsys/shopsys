@@ -47,7 +47,7 @@ export const OrdersPageContent: FC<OrdersPageContentProps> = ({ paginationScroll
     }));
 
     return (
-        <div className="flex scroll-mt-5 flex-col gap-5" ref={paginationScrollTargetRef}>
+        <div className="flex scroll-mt-fixed-header flex-col gap-5" ref={paginationScrollTargetRef}>
             <OrdersFilter orderStatusCounts={orderStatusCounts} />
 
             <OrdersContent

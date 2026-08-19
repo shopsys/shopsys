@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { EditIcon } from 'components/Basic/Icon/EditIcon';
+import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { EditProfileContent } from 'components/Pages/Customer/EditProfile/EditProfileContent';
@@ -36,7 +36,7 @@ const EditProfilePage: FC = () => {
                 {currentCustomerUserData !== undefined && (
                     <>
                         <PageHero
-                            icon={EditIcon}
+                            icon={UserEditIcon}
                             title={userProfileSectionLabel}
                             description={t(
                                 'Edit your profile information to keep your account secure and enjoy personalized services.',

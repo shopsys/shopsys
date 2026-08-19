@@ -1,5 +1,6 @@
 import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
+import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { TIDs } from 'cypress/tids';
 import {
@@ -36,7 +37,6 @@ type SpinboxProps = {
     minValueDecreaseIcon?: ReactNode;
     minValueDecreaseTitle?: string;
     minValueDecreaseAriaLabel?: string;
-    maxValueReachedTitle?: string;
     onMinValueDecrease?: () => void;
     inputAriaLabel?: string;
     liveAnnouncement?: string;
@@ -61,7 +61,6 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             minValueDecreaseIcon,
             minValueDecreaseTitle,
             minValueDecreaseAriaLabel,
-            maxValueReachedTitle,
             onMinValueDecrease,
             inputAriaLabel,
             decreaseAriaLabel,
@@ -264,7 +263,6 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const isDecreaseDisabled = isDecreaseOnMinValue && onMinValueDecrease === undefined;
         const isIncreaseDisabled = isIncreaseOnMaxValue;
         const descriptionId = `${id}-quantity-input-description`;
-
         const onDecreaseClick = () => {
             if (isDecreaseOnMinValue) {
                 lastReportedValueRef.current = value;
@@ -313,7 +311,8 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     disabled={isDecreaseDisabled}
                     size={size}
                     tid={TIDs.forms_spinbox_decrease}
-                    title={isDecreaseOnMinValue && minValueDecreaseTitle ? minValueDecreaseTitle : t('Decrease')}
+                    tooltipLabel={minValueDecreaseIcon ? minValueDecreaseTitle : undefined}
+                    isTooltipDisabled={!isDecreaseOnMinValue}
                     onClick={onDecreaseClick}
                     onMouseDown={() => {
                         if (!isDecreaseOnMinValue) {
@@ -354,11 +353,9 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     {ariaDescription ?? t('Type in a number or use arrow up or arrow down to change the quantity')}
                 </span>
 
-                {liveAnnouncement && (
-                    <span aria-atomic="true" aria-live="polite" className="sr-only" role="status">
-                        {liveAnnouncement}
-                    </span>
-                )}
+                <span className="sr-only" role="status">
+                    {liveAnnouncement}
+                </span>
 
                 <SpinboxButton
                     ariaLabel={increaseAriaLabel ?? t('Increase quantity', { ns: 'accessibility' })}
@@ -369,7 +366,6 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     disabled={isIncreaseDisabled}
                     size={size}
                     tid={TIDs.forms_spinbox_increase}
-                    title={isIncreaseOnMaxValue && maxValueReachedTitle ? maxValueReachedTitle : t('Increase')}
                     hasPendingLook={hasPendingLook}
                     onClick={() => {
                         if (!isIncreaseDisabled) {
@@ -398,12 +394,13 @@ type SpinboxButtonProps = {
     onMouseDown: () => void;
     onMouseUp: () => void;
     onMouseLeave: () => void;
-    title: string;
     disabled: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
     ariaLabel: string;
     className: string;
     hasPendingLook?: boolean;
+    isTooltipDisabled?: boolean;
+    tooltipLabel?: string;
 };
 
 const SpinboxButton: FC<SpinboxButtonProps> = ({
@@ -411,22 +408,25 @@ const SpinboxButton: FC<SpinboxButtonProps> = ({
     disabled,
     size,
     tid,
-    title,
     ariaLabel,
     className,
     hasPendingLook,
+    isTooltipDisabled,
+    tooltipLabel,
     ...props
-}) => (
-    <span className="inline-flex" title={title}>
+}) => {
+    const button = (
         <button
             aria-disabled={disabled}
             aria-label={ariaLabel}
             data-tid={tid}
             tabIndex={disabled ? -1 : 0}
-            title={title}
             className={twMergeCustom([
                 'relative flex cursor-pointer items-center justify-center rounded-input border-none',
-                size === 'xlarge' ? 'h-14 w-14' : 'size-9',
+                size === 'small' && 'size-9',
+                size === 'medium' && 'size-9',
+                size === 'large' && 'size-9 sm:size-10',
+                size === 'xlarge' && 'size-10 sm:size-14',
                 className,
                 hasPendingLook && 'opacity-70',
                 disabled && 'pointer-events-none',
@@ -435,5 +435,14 @@ const SpinboxButton: FC<SpinboxButtonProps> = ({
         >
             {children}
         </button>
-    </span>
-);
+    );
+    const buttonWrapper = <span className="inline-flex">{button}</span>;
+
+    return tooltipLabel ? (
+        <Tooltip disabled={isTooltipDisabled} label={tooltipLabel}>
+            {buttonWrapper}
+        </Tooltip>
+    ) : (
+        buttonWrapper
+    );
+};

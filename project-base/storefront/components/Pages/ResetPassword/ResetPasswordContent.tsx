@@ -51,50 +51,49 @@ export const ResetPasswordContent: FC = () => {
     return (
         <Webline width="lg">
             <VerticalStack gap="sm">
-                {isSuccess && (
-                    <PageHero description={formMeta.messages.success} icon={MailIcon} title={t('Check your email')} />
-                )}
+                <PageHero
+                    description={
+                        isSuccess
+                            ? formMeta.messages.success
+                            : t(
+                                  'Forgot your password? Enter your email address below and we will send you a link to create a new password.',
+                              )
+                    }
+                    descriptionRole="status"
+                    icon={isSuccess ? MailIcon : LockIcon}
+                    title={isSuccess ? t('Check your email') : t('Reset your password')}
+                />
 
                 {!isSuccess && (
-                    <>
-                        <PageHero
-                            icon={LockIcon}
-                            title={t('Reset your password')}
-                            description={t(
-                                'Forgot your password? Enter your email address below and we will send you a link to create a new password.',
-                            )}
-                        />
+                    <FormProvider {...formProviderMethods}>
+                        <Form
+                            className="flex w-full justify-center"
+                            formName={formMeta.formName}
+                            onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}
+                        >
+                            <FormContentWrapper>
+                                <FormBlockWrapper>
+                                    <TextInputControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.email.name}
+                                        textInputProps={{
+                                            label: formMeta.fields.email.label,
+                                            required: true,
+                                            type: 'email',
+                                            autoComplete: 'email',
+                                        }}
+                                    />
+                                </FormBlockWrapper>
 
-                        <FormProvider {...formProviderMethods}>
-                            <Form
-                                className="flex w-full justify-center"
-                                formName={formMeta.formName}
-                                onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}
-                            >
-                                <FormContentWrapper>
-                                    <FormBlockWrapper>
-                                        <TextInputControlled
-                                            control={formProviderMethods.control}
-                                            formName={formMeta.formName}
-                                            name={formMeta.fields.email.name}
-                                            textInputProps={{
-                                                label: formMeta.fields.email.label,
-                                                required: true,
-                                                type: 'email',
-                                                autoComplete: 'email',
-                                            }}
-                                        />
-                                    </FormBlockWrapper>
-
-                                    <FormButtonWrapper>
-                                        <SubmitButton hasDisabledCursor={!!error || value.length === 0}>
-                                            {t('Reset password')}
-                                        </SubmitButton>
-                                    </FormButtonWrapper>
-                                </FormContentWrapper>
-                            </Form>
-                        </FormProvider>
-                    </>
+                                <FormButtonWrapper>
+                                    <SubmitButton hasDisabledCursor={!!error || value.length === 0}>
+                                        {t('Reset password')}
+                                    </SubmitButton>
+                                </FormButtonWrapper>
+                            </FormContentWrapper>
+                        </Form>
+                    </FormProvider>
                 )}
             </VerticalStack>
         </Webline>

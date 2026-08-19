@@ -27,7 +27,7 @@ export const OrderedItemsContent: FC<OrderedItemsContentProps> = ({ areOrderedIt
     }
 
     return (
-        <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
+        <div className="scroll-mt-fixed-header" ref={paginationScrollTargetRef}>
             {areOrderedItemsFetching ? (
                 <SkeletonModuleCustomerComplaints />
             ) : (

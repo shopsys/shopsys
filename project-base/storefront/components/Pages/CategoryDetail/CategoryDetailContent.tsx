@@ -7,6 +7,7 @@ import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavig
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
@@ -47,6 +48,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 description={category.description}
                 imageName={category.images[0]?.name || category.name}
                 imageUrl={category.images[0]?.url}
+                textClassName="max-w-5xl"
                 title={title}
             />
 
@@ -68,10 +70,18 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     totalCount={category.products.totalCount}
                 />
 
-                <div className="flex flex-1 flex-col gap-5" id="product-list" tabIndex={-1}>
+                <div
+                    className="flex flex-1 scroll-mt-fixed-header flex-col gap-5 focus-visible:outline-hidden"
+                    data-tid={TIDs.product_list}
+                    id="product-list"
+                    tabIndex={-1}
+                >
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <div className="flex scroll-mt-5 vl:flex-col flex-col-reverse" ref={paginationScrollTargetRef}>
+                    <div
+                        className="flex scroll-mt-fixed-header vl:flex-col flex-col-reverse"
+                        ref={paginationScrollTargetRef}
+                    >
                         <DeferredFilterSelectedParameters filterOptions={category.products.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

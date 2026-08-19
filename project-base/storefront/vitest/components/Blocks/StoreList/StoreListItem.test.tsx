@@ -137,4 +137,24 @@ describe('StoreListItem', () => {
         );
         expect(screen.getByRole('radio', { name: 'Select store Test store' })).toHaveAttribute('aria-checked', 'true');
     });
+
+    test('keeps the store info toggle appearance consistent when expanded', () => {
+        const { container } = render(
+            <StoreListItem isDistanceFromSearchText={false} isSelected={false} store={store} />,
+        );
+        const collapsedToggle = container.querySelector<HTMLButtonElement>(
+            'button[aria-label="Expand store info Test store"]',
+        )!;
+
+        expect(collapsedToggle).toHaveClass('size-8', 'rounded-md');
+        expect(collapsedToggle).not.toHaveClass('rounded-none');
+
+        fireEvent.click(collapsedToggle);
+
+        const expandedToggle = container.querySelector<HTMLButtonElement>(
+            'button[aria-label="Collapse store info Test store"]',
+        )!;
+        expect(expandedToggle).toHaveClass('size-8', 'rounded-md');
+        expect(expandedToggle).not.toHaveClass('rounded-none');
+    });
 });

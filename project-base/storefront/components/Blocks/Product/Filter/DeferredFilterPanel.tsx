@@ -6,7 +6,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useDeferredRender } from 'utils/useDeferredRender';
 import { FilterPanelProps } from './FilterPanel';
-import { scrollToSelectedFilters } from './filterElementIds';
+import { scrollToProductListControls } from './filterElementIds';
 
 const FilterPanel = dynamic(() => import('./FilterPanel').then((component) => component.FilterPanel), {
     ssr: false,
@@ -29,7 +29,7 @@ export const DeferredFilterPanel: FC<FilterPanelProps> = (props) => {
                 ariaLabel={t('Product filters', { ns: 'accessibility' })}
                 className="w-[calc(100vw-2.5rem)] min-w-0 max-w-100 p-0"
                 isActive={isFilterPanelOpen}
-                onClose={scrollToSelectedFilters}
+                onClose={scrollToProductListControls}
                 setIsActive={setIsFilterPanelOpen}
                 shouldRenderHeader={false}
             >

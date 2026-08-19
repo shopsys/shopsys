@@ -119,8 +119,13 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
 
                                         <IconButton
                                             Icon={TrashCanIcon}
+                                            ariaLabel={t('Remove file')}
                                             disabled={disabled}
+                                            shape="rounded"
+                                            size="small"
                                             title={t('Remove file')}
+                                            tooltipLabel={t('Remove file')}
+                                            variant="ghost"
                                             onClick={() => removeFile(file)}
                                         />
                                     </li>

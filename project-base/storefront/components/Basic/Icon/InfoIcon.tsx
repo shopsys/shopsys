@@ -1,25 +1,41 @@
 export const InfoIcon: SvgFC = (props) => (
-    <svg {...props} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-        <path
-            d="M494.29 256c0 131.604-106.686 238.29-238.29 238.29-131.604 0-238.29-106.686-238.29-238.29C17.71 124.397 124.396 17.71 256 17.71c131.604 0 238.29 106.686 238.29 238.29z"
-            fill="transparent"
+    <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle
+            cx="12"
+            cy="12.0003"
+            r="9.00375"
             stroke="currentColor"
+            strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="30.42"
         />
         <path
-            clipRule="evenodd"
-            d="M293.913 349.123H275.5V220.239c0-1.43-.161-2.822-.472-4.158-1.883-8.166-9.202-14.254-17.938-14.254h-36.825c-10.169 0-18.412 8.243-18.412 18.412 0 10.168 8.243 18.412 18.412 18.412h18.412v110.472h-18.412c-10.169 0-18.412 8.243-18.412 18.413 0 10.166 8.243 18.41 18.412 18.41h73.648c10.17 0 18.41-8.244 18.41-18.41 0-10.17-8.24-18.413-18.41-18.413z"
-            fill="currentColor"
-            fillRule="evenodd"
-        />
-        <path
-            d="M256 134.318h.369"
+            d="M10.9996 15.5017H13.3099"
             stroke="currentColor"
+            strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="45.63"
+        />
+        <path
+            d="M12.159 15.5018V11.25H11.0085"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M12.1 8.24581C12.1 8.38394 11.9881 8.49592 11.8499 8.49592C11.7118 8.49592 11.5998 8.38394 11.5998 8.24581C11.5998 8.10769 11.7118 7.99571 11.8499 7.99571"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M11.8499 7.99576C11.988 7.99576 12.1 8.10774 12.1 8.24587"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
         />
     </svg>
 );

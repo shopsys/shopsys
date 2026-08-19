@@ -6,6 +6,6 @@ export const SkeletonModuleCustomerChangePassword: FC = () => (
     <SkeletonModuleCustomer>
         <SkeletonModulePageHero />
 
-        <Skeleton className="h-[250px] rounded-xl" />
+        <Skeleton className="h-62.5 rounded-xl" />
     </SkeletonModuleCustomer>
 );

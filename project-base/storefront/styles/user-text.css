@@ -28,8 +28,8 @@
             @apply mt-10 mb-5 lg:mt-12 lg:mb-6;
         }
 
-        h2[id] {
-            @apply scroll-mt-3;
+        [id] {
+            @apply scroll-mt-fixed-header;
         }
 
         h3 {
@@ -153,8 +153,8 @@
         }
 
         .gjs-button-link {
-            @apply my-3 block h-fit w-fit cursor-pointer items-center justify-center gap-2 rounded-lg border-2 text-center leading-[18px] font-semibold no-underline outline-hidden transition-all hover:no-underline;
-            @apply border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default! [&>div]:text-button-primary-text-default! px-3 py-[7px];
+            @apply my-3 block h-fit w-fit cursor-pointer items-center justify-center gap-2 rounded-lg border-2 text-center leading-4.5 font-semibold no-underline outline-hidden transition-all hover:no-underline;
+            @apply border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default! [&>div]:text-button-primary-text-default! px-3 py-1.75;
             @apply hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered;
         }
 

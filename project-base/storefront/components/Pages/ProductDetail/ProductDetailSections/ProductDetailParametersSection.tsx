@@ -1,6 +1,7 @@
 import { ColorPreview } from 'components/Basic/ColorPreview/ColorPreview';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { TIDs } from 'cypress/tids';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { TypeParameterTypeEnum } from 'graphql/types';
 import { Fragment, RefObject } from 'react';
@@ -15,8 +16,15 @@ type ProductDetailParametersSectionProps = {
 
 const renderParameterValues = (parameter: TypeParameterFragment) =>
     parameter.values.map((value, index) => (
-        <div key={value.uuid} className="inline-flex items-center gap-1">
-            {index > 0 && <span>|</span>}
+        <div key={value.uuid} className="inline-flex items-center gap-2">
+            {index > 0 && (
+                <>
+                    <span className="sr-only">, </span>
+                    <span aria-hidden="true" className="text-text-less">
+                        ,
+                    </span>
+                </>
+            )}
             {parameter.type === TypeParameterTypeEnum.Color && (
                 <ColorPreview colorIcon={value.colorIcon} rgbHex={value.rgbHex} />
             )}
@@ -24,6 +32,36 @@ const renderParameterValues = (parameter: TypeParameterFragment) =>
             {parameter.unit?.name && ` ${parameter.unit.name}`}
         </div>
     ));
+
+type ParameterTableProps = {
+    parameters: TypeParameterFragment[];
+};
+
+const ParameterTable = ({ parameters }: ParameterTableProps) => (
+    <Table
+        className="overflow-hidden rounded-xl border border-border-less bg-background-more"
+        tableClassName="md:table-fixed"
+    >
+        {parameters.map((parameter) => (
+            <Row
+                key={parameter.uuid}
+                className="block border-border-less border-b bg-transparent last:border-b-0 odd:bg-transparent md:table-row"
+            >
+                <Cell
+                    isHead
+                    className="block px-4 pt-4 pb-1 text-left align-top md:table-cell md:w-[42%] md:border-border-less md:border-r md:px-6 md:py-4"
+                    scope="row"
+                >
+                    <span className="font-normal text-sm">{parameter.name}</span>
+                </Cell>
+
+                <Cell className="block bg-background-default px-4 pt-0 pb-4 align-top text-sm md:table-cell md:px-6 md:py-4">
+                    <div className="inline-flex flex-wrap gap-x-3 gap-y-1">{renderParameterValues(parameter)}</div>
+                </Cell>
+            </Row>
+        ))}
+    </Table>
+);
 
 export const ProductDetailParametersSection = ({ parameters, sectionRef }: ProductDetailParametersSectionProps) => {
     const { t } = useTranslation();
@@ -49,68 +87,29 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
 
     return (
         <div
-            className="scroll-mt-[calc(var(--sticky-navigation-offset,0)+5rem)]"
+            className="scroll-mt-fixed-header-with-navigation"
+            data-tid={`${TIDs.product_detail_section_}${PRODUCT_DETAIL_SECTIONS_IDS.parameters}`}
             id={PRODUCT_DETAIL_SECTIONS_IDS.parameters}
             ref={sectionRef}
         >
-            <Webline>
+            <Webline width="vl">
                 <ProductDetailSectionHeading>{t('Parameters')}</ProductDetailSectionHeading>
 
-                <div className="mx-auto max-w-[700px]">
-                    {groupParameters.map(({ groupName, groupParameters }) => (
-                        <Fragment key={groupName}>
-                            <p className="h4 py-5">{groupName}</p>
+                {groupParameters.map(({ groupName, groupParameters }) => (
+                    <Fragment key={groupName}>
+                        <h3 className="h4 pt-6 pb-4">{groupName}</h3>
 
-                            <Table>
-                                {groupParameters.map((parameter) => (
-                                    <Row
-                                        key={parameter.uuid}
-                                        className="border-none bg-table-bg-default odd:bg-table-bg-contrast"
-                                    >
-                                        <Cell className="hidden w-60 px-5 py-2.5 align-top lg:table-cell">
-                                            <span className="h6 leading-5">{parameter.name}</span>
-                                        </Cell>
+                        <ParameterTable parameters={groupParameters} />
+                    </Fragment>
+                ))}
 
-                                        <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:flex-row">
-                                            <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
+                {individualParameters.length > 0 && (
+                    <Fragment key="other-parameters">
+                        {!!groupParameters.length && <h3 className="h4 pt-6 pb-4">{t('Other parameters')}</h3>}
 
-                                            <div className="inline-flex flex-wrap gap-1">
-                                                {renderParameterValues(parameter)}
-                                            </div>
-                                        </Cell>
-                                    </Row>
-                                ))}
-                            </Table>
-                        </Fragment>
-                    ))}
-
-                    {individualParameters.length > 0 && (
-                        <Fragment key="other-parameters">
-                            {!!groupParameters.length && <p className="h4 py-5">{t('Other parameters')}</p>}
-
-                            <Table>
-                                {individualParameters.map((parameter) => (
-                                    <Row
-                                        key={parameter.uuid}
-                                        className="border-none bg-table-bg-default odd:bg-table-bg-contrast"
-                                    >
-                                        <Cell className="hidden w-60 px-5 py-2.5 align-top lg:table-cell">
-                                            <span className="h6 leading-5">{parameter.name}</span>
-                                        </Cell>
-
-                                        <Cell className="flex flex-col gap-1 px-5 py-2.5 text-sm lg:flex-row">
-                                            <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
-
-                                            <div className="inline-flex flex-wrap gap-1">
-                                                {renderParameterValues(parameter)}
-                                            </div>
-                                        </Cell>
-                                    </Row>
-                                ))}
-                            </Table>
-                        </Fragment>
-                    )}
-                </div>
+                        <ParameterTable parameters={individualParameters} />
+                    </Fragment>
+                )}
             </Webline>
         </div>
     );

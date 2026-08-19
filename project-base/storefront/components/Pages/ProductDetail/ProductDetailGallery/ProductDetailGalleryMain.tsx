@@ -132,7 +132,6 @@ export const ProductDetailGalleryMain: FC<ProductDetailGalleryMainProps> = ({
                         alt={generateProductImageAlt(productName, categoryName)}
                         className="vl:size-125 h-80 w-full object-contain lg:h-125"
                         height={500}
-                        sizes="(max-width: 1023px) 100vw, 500px"
                         src={undefined}
                         width={500}
                     />
@@ -141,16 +140,16 @@ export const ProductDetailGalleryMain: FC<ProductDetailGalleryMainProps> = ({
                 {hasMultipleItems && (
                     <>
                         <MediaCarouselNavigationButton
-                            className="absolute top-1/2 left-2 z-above vl:flex hidden -translate-y-1/2 bg-background-default p-2 shadow-md transition hover:text-icon-accent focus-visible:bg-orange-500"
+                            className="absolute top-1/2 left-2 z-above vl:flex hidden -translate-y-1/2"
                             direction="previous"
-                            iconClassName="size-8"
+                            size="large"
                             title={t('Previous')}
                             onClick={selectPreviousItem}
                         />
                         <MediaCarouselNavigationButton
-                            className="absolute top-1/2 right-2 z-above vl:flex hidden -translate-y-1/2 bg-background-default p-2 shadow-md transition hover:text-icon-accent focus-visible:bg-orange-500"
+                            className="absolute top-1/2 right-2 z-above vl:flex hidden -translate-y-1/2"
                             direction="next"
-                            iconClassName="size-8"
+                            size="large"
                             title={t('Next')}
                             onClick={selectNextItem}
                         />

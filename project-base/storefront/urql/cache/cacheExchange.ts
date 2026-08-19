@@ -96,6 +96,7 @@ export const cache = cacheExchange({
         Transport: keyUuid,
         Unit: keyName,
         Variant: keyUuid,
+        VideoToken: keyNull,
         ProductList: keyUuid,
         SalesRepresentative: keyUuid,
         OrderPaymentsConfig: keyUuid,

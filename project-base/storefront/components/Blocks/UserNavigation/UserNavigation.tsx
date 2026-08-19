@@ -10,7 +10,7 @@ export const UserNavigation: FC = () => {
 
     return (
         <aside>
-            <div className="min-w-[275px]">
+            <div className="min-w-68.75">
                 <UserMenu hideFocusTrap className="hidden lg:flex" />
             </div>
 

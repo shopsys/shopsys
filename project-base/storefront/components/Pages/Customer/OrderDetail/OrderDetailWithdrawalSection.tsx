@@ -68,10 +68,10 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
     if (canRequestWithdrawal) {
         return (
             <div className="flex flex-col items-center gap-2">
-                <p className="mx-auto max-w-[520px] text-balance text-center text-sm">
+                <p className="mx-auto max-w-130 text-balance text-center text-sm">
                     {t('You can withdraw from this order within 14 days of delivery.')}
                 </p>
-                <LinkButton href={withdrawalFormUrl} size="small" type="order-withdrawal" variant="inverted">
+                <LinkButton href={withdrawalFormUrl} size="small" type="order-withdrawal" variant="secondary">
                     {t('Request withdrawal')}
                 </LinkButton>
             </div>

@@ -142,7 +142,7 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({
                 <SearchInput
                     aria-haspopup="listbox"
                     ariaLabelForSearchButton={t('Go to search page', { ns: 'accessibility' })}
-                    className={twMergeCustom('w-full', inputClassName)}
+                    className={twMergeCustom('w-full border-white', inputClassName)}
                     inputId={inputId}
                     inputRef={searchInputRef}
                     label={t('Write what you are looking for...')}

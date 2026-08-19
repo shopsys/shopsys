@@ -37,7 +37,7 @@ export const IgnoredErrorsManager: FC = () => {
                 <p className="text-text-secondary">
                     {t('{{ count }} error type(s) being ignored', { count: ignoredErrors.length })}
                 </p>
-                <Button size="small" variant="inverted" onClick={handleClearAll}>
+                <Button size="small" variant="tertiary" onClick={handleClearAll}>
                     {t('Clear all')}
                 </Button>
             </div>

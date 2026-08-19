@@ -66,14 +66,13 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $categoriesForGadgets = [
                 1 => [
                     CategoryDataFixture::CATEGORY_PC,
-                    CategoryDataFixture::CATEGORY_TV,
+                    CategoryDataFixture::CATEGORY_PRINTERS,
                 ],
                 2 => [
-                    CategoryDataFixture::CATEGORY_PRINTERS,
+                    CategoryDataFixture::CATEGORY_TV,
                     CategoryDataFixture::CATEGORY_PHOTO,
                 ],
                 3 => [
-                    CategoryDataFixture::CATEGORY_COFFEE,
                     CategoryDataFixture::CATEGORY_PHONES,
                 ],
             ];
@@ -92,9 +91,6 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $categoriesForBookworm = [
                 1 => [
                     CategoryDataFixture::CATEGORY_BOOKS,
-                ],
-                2 => [
-                    CategoryDataFixture::CATEGORY_PRINTERS,
                 ],
             ];
             $this->addCategoriesToNavigationItem($navigationItemData, $categoriesForBookworm);

@@ -6,7 +6,7 @@ import { FunctionComponentProps } from 'types/globals';
 type ToggleSwitchControlledProps<TFieldValues extends FieldValues, TTransformedValues> = {
     ariaLabel: string;
     name: FieldPath<TFieldValues>;
-    render: (input: ReactElement) => ReactElement<any, any> | null;
+    render: (input: ReactElement, inputId: string) => ReactElement<any, any> | null;
     control: Control<TFieldValues, any, TTransformedValues>;
     formName: string;
 };
@@ -21,5 +21,5 @@ export const ToggleSwitchControlled = <TFieldValues extends FieldValues, TTransf
     const { field } = useController({ name, control });
     const toggleSwitchId = `${formName}-${name}`;
 
-    return render(<ToggleSwitch {...field} ariaLabel={ariaLabel} id={toggleSwitchId} />);
+    return render(<ToggleSwitch {...field} ariaLabel={ariaLabel} id={toggleSwitchId} />, toggleSwitchId);
 };

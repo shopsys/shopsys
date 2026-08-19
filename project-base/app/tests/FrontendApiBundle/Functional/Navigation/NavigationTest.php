@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemTypeEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class NavigationTest extends GraphQlTestCase
+final class NavigationTest extends GraphQlTestCase
 {
     public function testNavigation(): void
     {
@@ -26,31 +26,44 @@ class NavigationTest extends GraphQlTestCase
                     [
                         'columnNumber' => 1,
                         'categories' => [
-                            [
-                                'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
-                            [
-                                'name' => t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
-                            [
-                                'name' => t('Newest toys in stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
+                            $this->getExpectedCategory('Electronics', [
+                                'TV, audio',
+                                'Cameras & Photo',
+                                'Printers',
+                                'Personal Computers & accessories',
+                                'Mobile Phones',
+                                'Coffee Machines',
+                            ]),
+                            $this->getExpectedCategory('Books', [
+                                'Fiction',
+                                'Non-fiction',
+                                'Children\'s books',
+                            ]),
+                            $this->getExpectedCategory('Toys', [
+                                'Building sets',
+                                'Board games',
+                                'Outdoor toys',
+                            ]),
                         ],
                     ],
                     [
                         'columnNumber' => 2,
                         'categories' => [
-                            [
-                                'name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
+                            $this->getExpectedCategory('Garden tools', [
+                                'Hand tools',
+                                'Power tools',
+                                'Watering systems',
+                            ]),
                         ],
                     ],
                     [
                         'columnNumber' => 3,
                         'categories' => [
-                            [
-                                'name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
+                            $this->getExpectedCategory('Food', [
+                                'Snacks',
+                                'Coffee & tea',
+                                'Pantry staples',
+                            ]),
                         ],
                     ],
                 ],
@@ -64,34 +77,41 @@ class NavigationTest extends GraphQlTestCase
                     [
                         'columnNumber' => 1,
                         'categories' => [
-                            [
-                                'name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
-                            [
-                                'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
+                            $this->getExpectedCategory('Personal Computers & accessories', [
+                                'Laptops',
+                                'Desktop computers',
+                                'Computer accessories',
+                            ]),
+                            $this->getExpectedCategory('Printers', [
+                                'Inkjet printers',
+                                'Laser printers',
+                                'Printer supplies',
+                            ]),
                         ],
                     ],
                     [
                         'columnNumber' => 2,
                         'categories' => [
-                            [
-                                'name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
-                            [
-                                'name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
+                            $this->getExpectedCategory('TV, audio', [
+                                'Televisions',
+                                'Headphones',
+                                'Home cinema systems',
+                            ]),
+                            $this->getExpectedCategory('Cameras & Photo', [
+                                'Digital cameras',
+                                'Camera lenses',
+                                'Camera accessories',
+                            ]),
                         ],
                     ],
                     [
                         'columnNumber' => 3,
                         'categories' => [
-                            [
-                                'name' => t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
-                            [
-                                'name' => t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
+                            $this->getExpectedCategory('Mobile Phones', [
+                                'Smartphones',
+                                'Mobile phone accessories',
+                                'Smartwatches',
+                            ]),
                         ],
                     ],
                 ],
@@ -105,17 +125,11 @@ class NavigationTest extends GraphQlTestCase
                     [
                         'columnNumber' => 1,
                         'categories' => [
-                            [
-                                'name' => t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
-                        ],
-                    ],
-                    [
-                        'columnNumber' => 2,
-                        'categories' => [
-                            [
-                                'name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
+                            $this->getExpectedCategory('Books', [
+                                'Fiction',
+                                'Non-fiction',
+                                'Children\'s books',
+                            ]),
                         ],
                     ],
                 ],
@@ -136,17 +150,21 @@ class NavigationTest extends GraphQlTestCase
                     [
                         'columnNumber' => 1,
                         'categories' => [
-                            [
-                                'name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
+                            $this->getExpectedCategory('Food', [
+                                'Snacks',
+                                'Coffee & tea',
+                                'Pantry staples',
+                            ]),
                         ],
                     ],
                     [
                         'columnNumber' => 2,
                         'categories' => [
-                            [
-                                'name' => t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                            ],
+                            $this->getExpectedCategory('Coffee Machines', [
+                                'Automatic coffee machines',
+                                'Capsule coffee machines',
+                                'Coffee grinders',
+                            ]),
                         ],
                     ],
                 ],
@@ -157,6 +175,28 @@ class NavigationTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'navigation');
 
         $this->assertSame($expectedData, $responseData);
+    }
+
+    /**
+     * @param string[] $children
+     * @return array{name: string, children: array<int, array{name: string}>}
+     */
+    private function getExpectedCategory(string $name, array $children): array
+    {
+        return [
+            'name' => t($name, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            'children' => array_map(
+                fn (string $childName) => [
+                    'name' => t(
+                        $childName,
+                        [],
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                        $this->getFirstDomainLocale(),
+                    ),
+                ],
+                $children,
+            ),
+        ];
     }
 
     private function getLink(string $categoryReferenceName): string

@@ -4,7 +4,6 @@ import { SelectOptionType } from './selectOptions';
 
 export type NewsletterFormType = {
     email: string;
-    privacyPolicy: boolean;
 };
 
 export type RegistrationAfterOrderFormType = {

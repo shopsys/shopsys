@@ -6,6 +6,7 @@ import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisit
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 import { useRef } from 'react';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
@@ -45,7 +46,8 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 />
 
                 <div
-                    className="flex flex-1 scroll-mt-5 flex-col gap-5"
+                    className="flex flex-1 scroll-mt-fixed-header flex-col gap-5 focus-visible:outline-hidden"
+                    data-tid={TIDs.product_list}
                     id="product-list"
                     ref={paginationScrollTargetRef}
                     tabIndex={-1}

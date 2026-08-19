@@ -2,13 +2,15 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { type RefObject, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { twMergeCustom } from 'utils/twMerge';
 
 type CollapsibleTextProps = {
     text: string;
     scrollTargetRef: RefObject<HTMLDivElement | null>;
+    textClassName?: string;
 };
 
-export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRef }) => {
+export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRef, textClassName }) => {
     const { t } = useTranslation();
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [shouldShowButton, setShouldShowButton] = useState(false);
@@ -25,7 +27,6 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
         setShowFullDescription((prev) => {
             if (prev) {
                 if (scrollTargetRef.current) {
-                    scrollTargetRef.current.style.scrollMarginTop = '116px';
                     scrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
                 }
             }
@@ -36,7 +37,10 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
 
     return (
         <div className="flex w-full flex-col items-start gap-2">
-            <div className={twJoin('relative max-w-2xl', showFullDescription ? '' : 'line-clamp-4')} ref={textRef}>
+            <div
+                className={twMergeCustom('relative max-w-2xl', !showFullDescription && 'line-clamp-4', textClassName)}
+                ref={textRef}
+            >
                 <div
                     dangerouslySetInnerHTML={{ __html: text }}
                     className={twJoin(

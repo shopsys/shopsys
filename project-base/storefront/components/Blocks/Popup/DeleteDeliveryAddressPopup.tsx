@@ -18,10 +18,12 @@ export const DeleteDeliveryAddressPopup: FC<DeleteDeliveryAddressPopupProps> = (
             title={t('Do you really want to delete this delivery address?')}
         >
             <div className="flex flex-row flex-nowrap justify-between">
-                <Button variant="inverted" onClick={closePortalContent}>
+                <Button variant="secondary" onClick={closePortalContent}>
                     {t('No')}
                 </Button>
-                <Button onClick={deleteDeliveryAddressHandler}>{t('Yes')}</Button>
+                <Button variant="danger" onClick={deleteDeliveryAddressHandler}>
+                    {t('Yes')}
+                </Button>
             </div>
         </Popup>
     );

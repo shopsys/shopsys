@@ -1,3 +1,4 @@
+import { TooltipProvider } from 'components/Basic/Tooltip/Tooltip';
 import { RouteAccessibilityManager } from 'components/Layout/RouteAccessibilityManager';
 import { RouteAnnouncer } from 'components/Layout/RouteAnnouncer';
 import { AuthorizationProvider } from 'components/providers/AuthorizationProvider';
@@ -73,55 +74,62 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     // The fallback uses MinimalErrorContent which has NO dependencies (no translations, no context).
     if (!domainConfig) {
         return (
-            <CachedI18nProvider pageProps={pageProps}>
-                <ErrorBoundary
-                    fallbackRender={({ error }) => (
-                        <MinimalErrorContent
-                            err={error.message}
-                            showDebugInfo={isWithErrorDebugging}
-                            statusCode={500}
-                        />
-                    )}
-                    onError={logErrorBoundary}
-                >
-                    <Component {...pageProps} />
-                </ErrorBoundary>
-            </CachedI18nProvider>
+            <TooltipProvider>
+                <CachedI18nProvider pageProps={pageProps}>
+                    <ErrorBoundary
+                        fallbackRender={({ error }) => (
+                            <MinimalErrorContent
+                                err={error.message}
+                                showDebugInfo={isWithErrorDebugging}
+                                statusCode={500}
+                            />
+                        )}
+                        onError={logErrorBoundary}
+                    >
+                        <Component {...pageProps} />
+                    </ErrorBoundary>
+                </CachedI18nProvider>
+            </TooltipProvider>
         );
     }
 
     return (
-        <CachedI18nProvider pageProps={pageProps}>
-            <ErrorBoundary
-                fallbackRender={({ error, resetErrorBoundary }) => (
-                    <Error500ContentWithBoundary error={error} resetErrorBoundary={resetErrorBoundary} />
-                )}
-                onError={logErrorBoundary}
-            >
-                <UrqlWrapper pageProps={pageProps}>
-                    <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
-                        <DomainConfigProvider domainConfig={domainConfig}>
-                            <PersistStoreProvider>
-                                <CurrentCustomerUserProvider>
-                                    <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
-                                        <GtmProvider ipAddress={pageProps.ipAddress}>
-                                            <MotionConfig reducedMotion="user">
-                                                <LazyMotion features={framerMotionPlugins}>
-                                                    <RouteAccessibilityManager>
-                                                        <RouteAnnouncer />
-                                                        <AppPageContent Component={Component} pageProps={pageProps} />
-                                                    </RouteAccessibilityManager>
-                                                </LazyMotion>
-                                            </MotionConfig>
-                                        </GtmProvider>
-                                    </AuthorizationProvider>
-                                </CurrentCustomerUserProvider>
-                            </PersistStoreProvider>
-                        </DomainConfigProvider>
-                    </CookiesStoreProvider>
-                </UrqlWrapper>
-            </ErrorBoundary>
-        </CachedI18nProvider>
+        <TooltipProvider>
+            <CachedI18nProvider pageProps={pageProps}>
+                <ErrorBoundary
+                    fallbackRender={({ error, resetErrorBoundary }) => (
+                        <Error500ContentWithBoundary error={error} resetErrorBoundary={resetErrorBoundary} />
+                    )}
+                    onError={logErrorBoundary}
+                >
+                    <UrqlWrapper pageProps={pageProps}>
+                        <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
+                            <DomainConfigProvider domainConfig={domainConfig}>
+                                <PersistStoreProvider>
+                                    <CurrentCustomerUserProvider>
+                                        <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
+                                            <GtmProvider ipAddress={pageProps.ipAddress}>
+                                                <MotionConfig reducedMotion="user">
+                                                    <LazyMotion features={framerMotionPlugins}>
+                                                        <RouteAccessibilityManager>
+                                                            <RouteAnnouncer />
+                                                            <AppPageContent
+                                                                Component={Component}
+                                                                pageProps={pageProps}
+                                                            />
+                                                        </RouteAccessibilityManager>
+                                                    </LazyMotion>
+                                                </MotionConfig>
+                                            </GtmProvider>
+                                        </AuthorizationProvider>
+                                    </CurrentCustomerUserProvider>
+                                </PersistStoreProvider>
+                            </DomainConfigProvider>
+                        </CookiesStoreProvider>
+                    </UrqlWrapper>
+                </ErrorBoundary>
+            </CachedI18nProvider>
+        </TooltipProvider>
     );
 }
 

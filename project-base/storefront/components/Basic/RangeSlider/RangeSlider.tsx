@@ -203,9 +203,9 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     onTouchEnd={handleMaxValueThumbCallback}
                 />
                 <div className="relative w-full">
-                    <div className="absolute z-1 h-[2px] w-full rounded-sm bg-border-less" />
+                    <div className="absolute z-1 h-0.5 w-full rounded-sm bg-border-less" />
                     <div className="relative mx-auto flex w-[calc(100%-32px)]">
-                        <div className="absolute z-2 h-[2px] bg-input-fill" ref={range} />
+                        <div className="absolute z-2 h-0.5 bg-input-fill" ref={range} />
                     </div>
                 </div>
             </div>
@@ -251,11 +251,11 @@ type RangeSliderThumbProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 
 const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ disabled, className, ...props }) => {
     const webkitTwClass =
-        '[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-[3] [&::-webkit-slider-thumb]:-my-2 [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:[-webkit-tap-highlight-color:transparent] [&::-webkit-slider-runnable-track]:pointer-events-none';
+        '[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-3 [&::-webkit-slider-thumb]:-my-2 [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:[-webkit-tap-highlight-color:transparent] [&::-webkit-slider-runnable-track]:pointer-events-none';
     const mozTwClass =
-        '[&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative [&::-moz-range-thumb]:z-[3] [&::-moz-range-thumb]:-my-2 [&::-moz-range-thumb]:size-3 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-track]:pointer-events-none';
+        '[&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative [&::-moz-range-thumb]:z-3 [&::-moz-range-thumb]:-my-2 [&::-moz-range-thumb]:size-3 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-track]:pointer-events-none';
     const msTwClass =
-        '[&::-ms-track]:pointer-events-none [&::-ms-fill-lower] [&::-ms-thumb]:z-[3] [&::-ms-thumb]:-my-2 [&::-ms-thumb]:size-4 [&::-ms-thumb]:cursor-pointer [&::-ms-thumb]:rounded-full [&::-ms-fill-upper]:pointer-events-none';
+        '[&::-ms-track]:pointer-events-none [&::-ms-fill-lower] [&::-ms-thumb]:z-3 [&::-ms-thumb]:-my-2 [&::-ms-thumb]:size-4 [&::-ms-thumb]:cursor-pointer [&::-ms-thumb]:rounded-full [&::-ms-fill-upper]:pointer-events-none';
 
     const webkitBgClass =
         '[&::-webkit-slider-thumb]:bg-input-bg-default hover:[&::-webkit-slider-thumb]:bg-input-fill [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-input-fill [&::-webkit-slider-thumb]:border-solid';
@@ -277,7 +277,7 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ disabled, className, ...p
             tabIndex={-1}
             type="range"
             className={twJoin(
-                'pointer-events-none absolute top-[9px] z-3 h-0 w-full appearance-none outline-hidden',
+                'pointer-events-none absolute top-2.25 z-3 h-0 w-full appearance-none outline-hidden',
                 webkitTwClass,
                 mozTwClass,
                 msTwClass,

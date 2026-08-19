@@ -22,12 +22,16 @@ export const FixedHeader: FC<FixedHeaderProps> = ({ fixedHeaderRef, isVisible, n
 
     return (
         <div
+            aria-hidden={!isVisible || undefined}
             className={twJoin(
                 'fixed inset-x-0 top-0 z-1040 bg-background-brand shadow-lg',
                 RemoveScroll.classNames.fullWidth,
-                isVisible ? 'motion-safe:animate-[fixedHeaderSlideDown_200ms_ease-out]' : 'opacity-0',
+                isVisible
+                    ? 'motion-safe:animate-[fixedHeaderSlideDown_200ms_ease-out]'
+                    : 'pointer-events-none invisible -translate-y-full opacity-0',
             )}
-            data-tid={TIDs.fixed_header}
+            data-tid={isVisible ? TIDs.fixed_header : undefined}
+            inert={!isVisible || undefined}
             ref={fixedHeaderRef}
         >
             <Webline>

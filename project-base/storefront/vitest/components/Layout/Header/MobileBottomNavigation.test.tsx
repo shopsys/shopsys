@@ -74,6 +74,7 @@ describe('MobileBottomNavigation', () => {
 
         render(<MobileBottomNavigation />);
 
+        expect(screen.getByRole('navigation', { name: 'Mobile bottom navigation' })).not.toHaveClass('fixed');
         expect(screen.queryByTestId('cart-drawer')).not.toBeInTheDocument();
         expect(screen.queryByTestId('account-drawer')).not.toBeInTheDocument();
         expect(screen.queryByTestId('mobile-menu')).not.toBeInTheDocument();

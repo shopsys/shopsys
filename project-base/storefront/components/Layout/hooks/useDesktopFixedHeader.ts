@@ -2,11 +2,13 @@ import { type RefObject, useCallback, useEffect, useState } from 'react';
 import { isClient } from 'utils/isClient';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
+const FIXED_HEADER_HEIGHT_PROPERTY = '--fixed-header-height';
 const STICKY_NAVIGATION_OFFSET_PROPERTY = '--sticky-navigation-offset';
 
 export const useDesktopFixedHeader = (headerRef: RefObject<HTMLElement | null>) => {
     const isDesktop = useMediaMin('vl');
     const [fixedHeaderElement, setFixedHeaderElement] = useState<HTMLDivElement | null>(null);
+    const [fixedHeaderHeight, setFixedHeaderHeight] = useState(0);
     const [showDesktopFixedHeader, setShowDesktopFixedHeader] = useState(false);
     const [isFixedHeaderVisible, setIsFixedHeaderVisible] = useState(false);
     const fixedHeaderRef = useCallback((element: HTMLDivElement | null) => {
@@ -56,36 +58,52 @@ export const useDesktopFixedHeader = (headerRef: RefObject<HTMLElement | null>) 
     }, [showDesktopFixedHeader]);
 
     useEffect(() => {
-        if (!showDesktopFixedHeader || !fixedHeaderElement) {
+        if (!isDesktop || !fixedHeaderElement) {
+            setFixedHeaderHeight(0);
+            document.documentElement.style.removeProperty(FIXED_HEADER_HEIGHT_PROPERTY);
+
+            return undefined;
+        }
+
+        const updateFixedHeaderHeight = () => {
+            const nextFixedHeaderHeight = fixedHeaderElement.getBoundingClientRect().height;
+            setFixedHeaderHeight(nextFixedHeaderHeight);
+            document.documentElement.style.setProperty(FIXED_HEADER_HEIGHT_PROPERTY, `${nextFixedHeaderHeight}px`);
+        };
+
+        updateFixedHeaderHeight();
+
+        if (typeof ResizeObserver !== 'undefined') {
+            const resizeObserver = new ResizeObserver(updateFixedHeaderHeight);
+            resizeObserver.observe(fixedHeaderElement);
+
+            return () => {
+                resizeObserver.disconnect();
+                document.documentElement.style.removeProperty(FIXED_HEADER_HEIGHT_PROPERTY);
+            };
+        }
+
+        window.addEventListener('resize', updateFixedHeaderHeight);
+
+        return () => {
+            window.removeEventListener('resize', updateFixedHeaderHeight);
+            document.documentElement.style.removeProperty(FIXED_HEADER_HEIGHT_PROPERTY);
+        };
+    }, [fixedHeaderElement, isDesktop]);
+
+    useEffect(() => {
+        if (!showDesktopFixedHeader || fixedHeaderHeight === 0) {
             document.documentElement.style.removeProperty(STICKY_NAVIGATION_OFFSET_PROPERTY);
 
             return undefined;
         }
 
-        const updateStickyNavigationOffset = () => {
-            const fixedHeaderHeight = fixedHeaderElement.getBoundingClientRect().height;
-            document.documentElement.style.setProperty(STICKY_NAVIGATION_OFFSET_PROPERTY, `${fixedHeaderHeight}px`);
-        };
-
-        updateStickyNavigationOffset();
-
-        if (typeof ResizeObserver !== 'undefined') {
-            const resizeObserver = new ResizeObserver(updateStickyNavigationOffset);
-            resizeObserver.observe(fixedHeaderElement);
-
-            return () => {
-                resizeObserver.disconnect();
-                document.documentElement.style.removeProperty(STICKY_NAVIGATION_OFFSET_PROPERTY);
-            };
-        }
-
-        window.addEventListener('resize', updateStickyNavigationOffset);
+        document.documentElement.style.setProperty(STICKY_NAVIGATION_OFFSET_PROPERTY, `${fixedHeaderHeight}px`);
 
         return () => {
-            window.removeEventListener('resize', updateStickyNavigationOffset);
             document.documentElement.style.removeProperty(STICKY_NAVIGATION_OFFSET_PROPERTY);
         };
-    }, [fixedHeaderElement, showDesktopFixedHeader]);
+    }, [fixedHeaderHeight, showDesktopFixedHeader]);
 
-    return { fixedHeaderRef, isDesktop, isFixedHeaderVisible, showDesktopFixedHeader };
+    return { fixedHeaderHeight, fixedHeaderRef, isDesktop, isFixedHeaderVisible, showDesktopFixedHeader };
 };

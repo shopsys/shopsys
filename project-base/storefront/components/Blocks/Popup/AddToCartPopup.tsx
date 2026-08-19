@@ -15,7 +15,6 @@ import { useSessionStore } from 'store/useSessionStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
-import { generateProductImageAlt } from 'utils/productAltText';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
@@ -48,8 +47,8 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
             key={key}
             hideCloseButton
             ariaDescription={ariaDescription}
-            className="w-11/12 max-w-5xl"
-            contentClassName="overflow-y-auto"
+            className="max-h-[85vh] w-11/12 max-w-5xl"
+            contentClassName="overflow-y-auto pb-2"
             title={t('Great choice! We have added your item to the cart')}
         >
             <VerticalStack gap={'xs'}>
@@ -57,44 +56,41 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     aria-labelledby={`added-product-${product.uuid}-name`}
                     className="relative flex flex-row flex-wrap vl:flex-nowrap items-center gap-4 rounded-xl bg-background-more p-4 vl:p-5"
                 >
-                    <div className="flex vl:flex-1 basis-full vl:basis-auto vl:items-center gap-2.5">
-                        <div className="flex size-20 shrink-0">
-                            <ExtendedNextLink
-                                className="relative"
-                                href={productUrl}
-                                tabIndex={-1}
-                                tid={TIDs.add_to_cart_popup_image}
-                                type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
-                            >
-                                <Image
-                                    alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
-                                    className="size-20 object-contain mix-blend-multiply"
-                                    height={80}
-                                    src={product.mainImage?.url}
-                                    width={80}
-                                />
-                            </ExtendedNextLink>
+                    <ExtendedNextLink
+                        className="group/product-link flex vl:flex-1 basis-full vl:basis-auto cursor-pointer vl:items-center gap-2.5 text-text-default no-underline hover:text-text-default hover:no-underline"
+                        href={productUrl}
+                        type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
+                        aria-label={t('Go to product page of {{ productName }}', {
+                            ns: 'accessibility',
+                            productName: product.fullName,
+                        })}
+                    >
+                        <div className="flex size-20 shrink-0" data-tid={TIDs.add_to_cart_popup_image}>
+                            <Image
+                                alt=""
+                                className="size-20 object-contain mix-blend-multiply"
+                                height={80}
+                                src={product.mainImage?.url}
+                                width={80}
+                            />
                         </div>
 
                         <div
                             className="flex vl:w-48 flex-col gap-2 tracking-wide"
                             data-tid={TIDs.blocks_product_addtocartpopup_product_name}
                         >
-                            <ExtendedNextLink
-                                className="font-secondary font-semibold text-text-default no-underline hover:cursor-pointer hover:text-text-accent hover:underline"
-                                href={productUrl}
-                                type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
+                            <h3
+                                className="font-secondary font-semibold text-sm group-hover/product-link:underline group-focus-visible/product-link:underline lg:text-sm"
+                                id={`added-product-${product.uuid}-name`}
                             >
-                                <h3 className="text-sm lg:text-sm" id={`added-product-${product.uuid}-name`}>
-                                    {product.fullName}
-                                </h3>
-                            </ExtendedNextLink>
+                                {product.fullName}
+                            </h3>
 
                             <div className="text-sm text-text-less">
                                 {t('Code')}: {product.catalogNumber}
                             </div>
                         </div>
-                    </div>
+                    </ExtendedNextLink>
 
                     <div className="flex flex-1 items-center justify-end gap-4 vl:gap-6">
                         <div className="font-secondary">
@@ -120,11 +116,10 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
 
                 <ProductGift gifts={product.gifts} />
 
-                <div className="flex flex-col gap-4 text-center md:flex-row md:items-center md:justify-between md:p-0">
+                <div className="flex items-center justify-between gap-4">
                     <Button
                         aria-label={t('Go back to shop', { ns: 'accessibility' })}
-                        className="w-full md:w-auto"
-                        variant="inverted"
+                        variant="tertiary"
                         onClick={handleClosePopup}
                     >
                         {t('Back to shop')}

@@ -1,5 +1,6 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { RefObject } from 'react';
@@ -20,12 +21,13 @@ export const ProductDetailRelatedProductsSection = ({
 
     return (
         <div
-            className="scroll-mt-[calc(var(--sticky-navigation-offset,0)+5rem)]"
+            className="scroll-mt-fixed-header-with-navigation"
+            data-tid={`${TIDs.product_detail_section_}${PRODUCT_DETAIL_SECTIONS_IDS.relatedProducts}`}
             id={PRODUCT_DETAIL_SECTIONS_IDS.relatedProducts}
             ref={sectionRef}
         >
             <Webline>
-                <ProductDetailSectionHeading>{t('Related Products')}</ProductDetailSectionHeading>
+                <ProductDetailSectionHeading className="mb-3">{t('Related Products')}</ProductDetailSectionHeading>
 
                 <ProductsSlider
                     ariaAnchorName="product-slider-related"
