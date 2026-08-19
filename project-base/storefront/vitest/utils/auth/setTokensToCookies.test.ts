@@ -8,7 +8,7 @@ vi.mock('cookies-next', () => ({
 }));
 
 describe('setTokensToCookies', () => {
-    const domainConfig = { domainId: 3 } as never;
+    const domainConfig = { domainId: 3, url: 'https://example.com' } as never;
     const context = {
         req: {} as IncomingMessage,
         res: {} as ServerResponse,

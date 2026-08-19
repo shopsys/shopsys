@@ -20,7 +20,7 @@ const checkRefreshCookieIsProtected = () => {
         expect(cookie).not.to.be.null;
         expect(cookie?.httpOnly).to.be.true;
         expect(cookie?.sameSite).to.equal('lax');
-        expect(cookie?.secure).to.be.true;
+        expect(cookie?.secure).to.equal(Cypress.config('baseUrl')?.startsWith('https') ?? false);
     });
     cy.window()
         .its('document.cookie')
