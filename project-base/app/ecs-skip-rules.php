@@ -2,7 +2,6 @@
 
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
-use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\MethodDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenDoctrineInheritanceSniff;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenDumpSniff;
@@ -11,7 +10,6 @@ use Shopsys\CodingStandards\Sniffs\General\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\General\ValidVariableNameSniff;
 use Shopsys\FrameworkBundle\Command\EntitiesDumpCommand;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
-use SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
@@ -25,7 +23,6 @@ $filesExcludedFromStrictTyping = [
 ];
 
 return [
-    __DIR__ . '/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php',
     RemoveUselessDefaultCommentFixer::class,
     AssignmentInConditionSniff::class => [
         __DIR__ . '/src/Kernel.php',
@@ -78,19 +75,6 @@ return [
     ],
     \Shopsys\CodingStandards\Sniffs\General\ForbiddenExitSniff::class => [
         __DIR__ . '/app/downloadPhing.php',
-    ],
-    MethodDeclarationSniff::class . '.Underscore' => [
-        __DIR__ . '/tests/App/Test/Codeception/Helper/CloseNewlyOpenedWindowsHelper.php',
-        __DIR__ . '/tests/App/Test/Codeception/Helper/DatabaseHelper.php',
-        __DIR__ . '/tests/App/Test/Codeception/Helper/DomainHelper.php',
-        __DIR__ . '/tests/App/Test/Codeception/Helper/LocalizationHelper.php',
-        __DIR__ . '/tests/App/Test/Codeception/Helper/NumberFormatHelper.php',
-        __DIR__ . '/tests/App/Test/Codeception/Helper/SymfonyHelper.php',
-        __DIR__ . '/tests/App/Test/Codeception/Module/Db.php',
-    ],
-    // @deprecated File is excluded as the comments are already missing and deprecated methods will not be in next major
-    DeprecatedAnnotationDeclarationSniff::class => [
-        __DIR__ . '/tests/App/Test/Codeception/Module/StrictWebDriver.php',
     ],
     ForbiddenSuperGlobalSniff::class => [
         __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',

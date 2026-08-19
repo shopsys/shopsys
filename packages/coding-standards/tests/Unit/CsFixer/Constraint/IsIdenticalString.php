@@ -10,8 +10,8 @@ use PHPUnit\Framework\Constraint\IsIdentical;
 use PHPUnit\Framework\ExpectationFailedException;
 
 /**
- * This class was removed from PHP CS Fixer and moved to PHP-CS-Fixer/phpunit-constraint-isidenticalstring package,
- * which install phpunitgoodpractices/polyfill and brakes codeception...
+ * This class was removed from PHP CS Fixer and moved to PHP-CS-Fixer/phpunit-constraint-isidenticalstring package;
+ * this local copy avoids depending on that package and its phpunitgoodpractices/polyfill dependency.
  */
 class IsIdenticalString extends Constraint
 {

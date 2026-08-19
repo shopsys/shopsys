@@ -8,50 +8,8 @@
     "becklyn/ordered-form-bundle": {
         "version": "1.4.0"
     },
-    "behat/gherkin": {
-        "version": "v4.6.0"
-    },
     "brick/math": {
         "version": "0.9.3"
-    },
-    "codeception/codeception": {
-        "version": "2.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "2.3",
-            "ref": "d2a29c0abee586aff913fd45fae1f59b669f4cbe"
-        },
-        "files": [
-            "codeception.yml",
-            "tests/_data/.gitignore",
-            "tests/_output/.gitignore",
-            "tests/_support/AcceptanceTester.php",
-            "tests/_support/FunctionalTester.php",
-            "tests/_support/Helper/Acceptance.php",
-            "tests/_support/Helper/Functional.php",
-            "tests/_support/Helper/Unit.php",
-            "tests/_support/UnitTester.php",
-            "tests/_support/_generated/.gitignore",
-            "tests/acceptance/.gitignore",
-            "tests/functional/.gitignore",
-            "tests/unit/.gitignore",
-            "tests/acceptance.suite.yml",
-            "tests/functional.suite.yml",
-            "tests/unit.suite.yml"
-        ]
-    },
-    "codeception/lib-asserts": {
-        "version": "1.11.0"
-    },
-    "codeception/module-db": {
-        "version": "1.0.1"
-    },
-    "codeception/module-webdriver": {
-        "version": "1.0.3"
-    },
-    "codeception/stub": {
-        "version": "2.1.0"
     },
     "commerceguys/intl": {
         "version": "v1.0.5"
@@ -358,9 +316,6 @@
     },
     "php-parallel-lint/php-parallel-lint": {
         "version": "v1.3.1"
-    },
-    "php-webdriver/webdriver": {
-        "version": "1.8.1"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
