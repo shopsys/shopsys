@@ -157,7 +157,7 @@
 {% endblock %}
 
 {% block grid_row %}
-    <tr class="js-grid-row test-grid-row"
+    <tr class="js-grid-row"
             {% if grid.inlineEdit and row is not null %} data-inline-edit-row-id="{{ grid.getRowId(row)|json_encode() }}"{% endif %}
             {% if (grid.dragAndDrop or grid.multipleDragAndDrop) and row is not null %} data-drag-and-drop-grid-row-id="{{ grid.getRowId(row)|json_encode() }}"{% endif %}
     >
@@ -181,7 +181,7 @@
             </td>
         {% endif %}
         {% for column in grid.columnsById %}
-            <td class="align-middle js-grid-column-{{ column.id }} test-grid-column-{{ column.id }}{% if column.classAttribute %} {{ column.classAttribute }}{% endif %}">
+            <td class="align-middle{% if column.classAttribute %} {{ column.classAttribute }}{% endif %}">
                 {{ gridView.renderCell(column, row, form|default(null)) }}
             </td>
         {% endfor %}
@@ -189,7 +189,7 @@
             <td class="js-inline-edit-unmatched-inputs text-center w-1 text-nowrap align-middle">
                 {% if grid.inlineEdit and form is defined %}
                     <div class="js-inline-edit-buttons">
-                        <a href="#" class="btn btn-icon btn-ghost-success js-inline-edit-save test-inline-edit-save" title="{{ 'Save changes'|trans }}">
+                        <a href="#" class="btn btn-icon btn-ghost-success js-inline-edit-save" title="{{ 'Save changes'|trans }}">
                             {{ ux_icon('checked') }}
                         </a>
                         <a href="#" class="btn btn-icon btn-ghost-secondary js-inline-edit-cancel" title="{{ 'Discard changes'|trans }}">
@@ -201,7 +201,7 @@
                     </div>
                 {% else %}
                     {% if grid.inlineEdit %}
-                        <a href="#" class="px-1 link-secondary js-inline-edit-edit test-inline-edit-edit" title="{{ 'Edit'|trans }}">{{ ux_icon('pencil') }}</a>
+                        <a href="#" class="px-1 link-secondary js-inline-edit-edit" title="{{ 'Edit'|trans }}">{{ ux_icon('pencil') }}</a>
                     {% endif %}
                     {% for actionColumn in grid.actionColumns %}
                         {{ gridView.renderActionCell(actionColumn, row)|raw }}
@@ -228,7 +228,7 @@
         {% set icon = actionColumn.type %}
     {% endif %}
     <a
-            class="px-1 link-secondary{% if actionColumn.classAttribute %} {{ actionColumn.classAttribute }}{% endif %}{% if actionColumn.ajaxConfirm %} js-ajax-confirm{% endif %} test-type-{{ actionColumn.type }}"
+            class="px-1 link-secondary{% if actionColumn.classAttribute %} {{ actionColumn.classAttribute }}{% endif %}{% if actionColumn.ajaxConfirm %} js-ajax-confirm{% endif %}"
             {% if actionColumn.ajaxConfirm %}
                 data-ajax-confirm-on-open="true"
             {% endif %}
@@ -431,7 +431,7 @@
 
 {% block grid_inline_edit_add_button %}
     <div class="ms-auto">
-        <a href="#" class="btn btn-primary js-inline-edit-add test-inline-edit-add">
+        <a href="#" class="btn btn-primary js-inline-edit-add">
             {{ ux_icon('plus') }}
             {{ addEntity|default('Create record'|trans) }}
         </a>
