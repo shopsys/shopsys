@@ -9,9 +9,8 @@ class EnvironmentType
     public const DEVELOPMENT = 'dev';
     public const PRODUCTION = 'prod';
     public const TEST = 'test';
-    public const ACCEPTANCE = 'acc';
 
-    public const ALL = [self::DEVELOPMENT, self::PRODUCTION, self::TEST, self::ACCEPTANCE];
+    public const ALL = [self::DEVELOPMENT, self::PRODUCTION, self::TEST];
 
     public static function isDebug(string $environment): bool
     {

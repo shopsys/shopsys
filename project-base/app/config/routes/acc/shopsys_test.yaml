@@ -1,4 +1,0 @@
-shopsys_shop_tests:
-    prefix: /codeception-acceptance-test
-    resource: ../../../src/Controller/Test/
-    type: attribute

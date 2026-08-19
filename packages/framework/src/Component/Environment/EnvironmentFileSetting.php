@@ -10,11 +10,9 @@ class EnvironmentFileSetting
         EnvironmentType::DEVELOPMENT => 'DEVELOPMENT',
         EnvironmentType::PRODUCTION => 'PRODUCTION',
         EnvironmentType::TEST => 'TEST',
-        EnvironmentType::ACCEPTANCE => 'ACCEPTANCE',
     ];
 
     protected const ENVIRONMENTS_DEFAULT = [
-        EnvironmentType::ACCEPTANCE,
         EnvironmentType::TEST,
         EnvironmentType::DEVELOPMENT,
         EnvironmentType::PRODUCTION,
