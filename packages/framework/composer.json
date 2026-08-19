@@ -150,9 +150,6 @@
             "docker": false
         }
     },
-    "suggest": {
-        "ext-pgsql": "Required for dumping the Postgres database in shopsys:database:dump command"
-    },
     "config": {
         "allow-plugins": {
             "symfony/flex": true,

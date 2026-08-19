@@ -17,7 +17,6 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 #  gd - Image processing for gd extension
 #  intl - Internationalization for intl extension
 #  pdo_pgsql - PostgreSQL driver for PDO
-#  pgsql - PostgreSQL driver
 #  pg_query - SQL query parsing extension used in MCP for parsing SQL queries
 #  redis - Redis extension
 #  zip - Zip archive handling for zip extension
@@ -51,7 +50,7 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 #  icu-dev - Development files for ICU (International Components for Unicode) needed for intl extension
 #  jpeg-dev - Development files for JPEG (image format) needed for gd extension
 #  libpng-dev - Development files for PNG (image format) needed for gd extension
-#  libpq-dev - Development files for PostgreSQL needed for pdo_pgsql and pgsql extensions
+#  libpq-dev - Development files for PostgreSQL needed for pdo_pgsql extension
 #  libzip-dev - Development files for libzip needed for zip extension
 #  make - Required for compiling extensions
 #  openssl-dev - Development files for OpenSSL
@@ -105,7 +104,6 @@ RUN apk add --no-cache \
         gd \
         intl \
         pdo_pgsql \
-        pgsql \
         zip && \
     pie install flow-php/pg-query-ext && \
     rm /usr/local/bin/pie && \
