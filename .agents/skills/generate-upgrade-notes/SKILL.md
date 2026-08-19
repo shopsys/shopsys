@@ -238,6 +238,12 @@ This command uses two specialized subagents (via general-purpose agent with deta
 ## Quality Checks
 
 - **Upgrade notes are instructions, not a changelog** — every bullet must tell the developer what to DO, not describe what was built
+- **Never restate what `#project-base-diff` already shows** — a change that consists of editing a project-base file (config yaml, ES definitions, storefront code) must NOT become its own bullet, and never paste config snippets from the diff
+- Bullets are reserved for exactly three categories:
+    1. package-level BC breaks (signatures, removals, renames) — invisible in the project-base diff
+    2. manual actions invisible in ANY diff (index recreation, exports, cache clears) — phrase them as "after applying the project changes, do X"
+    3. conditional decisions the developer must make
+- Drop speculative "if you customize Y" warnings when the PR did not touch Y
 - Never list new features, additions, or descriptions unless they require developer action
 - Focus exclusively on breaking changes requiring manual action
 - Avoid documenting changes caught by static analysis
