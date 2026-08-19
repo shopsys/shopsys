@@ -18,7 +18,7 @@ export const ContactInformationContent: FC = () => {
     const { goToPreviousStepFromContactInformationPage } = useContactInformationPageNavigation();
     const { createOrder } = useCreateOrder(formProviderMethods, formMeta);
 
-    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.contact_information_page);
+    useErrorPopup(formProviderMethods, formMeta.fields, GtmMessageOriginType.contact_information_page);
 
     return (
         <OrderContentWrapper activeStep={3}>

@@ -15,7 +15,6 @@ import {
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useEffect, useEffectEvent } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { FormMeta } from 'types/formMeta';
@@ -182,17 +181,6 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
         deliveryAddressUuid: pickupPlace ? '' : contactInformationValues.deliveryAddressUuid,
     };
     const formProviderMethods = useFormWrapper(resolver, defaultValues);
-
-    const validatePrefilledEmail = useEffectEvent(() => {
-        if (defaultValues.email) {
-            formProviderMethods.trigger('email', { shouldFocus: false });
-        }
-    });
-
-    // deliberately mount-only, defaultValues.email mirrors every keystroke through the persist store
-    useEffect(() => {
-        validatePrefilledEmail();
-    }, []);
 
     return [formProviderMethods, defaultValues];
 };

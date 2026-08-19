@@ -204,7 +204,7 @@ describe('Contact Information Page Tests', () => {
         cy.getByTID([TIDs.layout_popup]).should('not.exist');
     });
 
-    it('[Invalid Email Prefill] should validate the invalid email restored from local storage right after page load', function () {
+    it('[Invalid Email Prefill] should not report the invalid email restored from local storage until the field is left', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
         cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
@@ -214,6 +214,11 @@ describe('Contact Information Page Tests', () => {
         cy.reloadAndWaitForStableAndInteractiveDOM();
 
         cy.get('#contact-information-form-email').should('have.value', staticData.invalidEmail);
+        cy.getByTID([TIDs.form_line_error]).should('not.exist');
+
+        cy.get('#contact-information-form-email').focus();
+        loseFocus();
+
         checkFormLineError('Please enter a valid email. Example: email@example.com');
     });
 });

@@ -16,14 +16,13 @@ export const useErrorPopup = <T extends FieldValues>(
             label: string | ReactElement;
         };
     },
-    overrideVisibility?: boolean,
     gtmMessageOrigin?: GtmMessageOriginType,
 ) => {
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const { submitCount } = formProviderMethods.formState;
 
     const onShowError = useEffectEvent(() => {
-        if (Object.keys(formProviderMethods.formState.errors).length === 0 && !overrideVisibility) {
+        if (Object.keys(formProviderMethods.formState.errors).length === 0) {
             return;
         }
 
@@ -41,5 +40,5 @@ export const useErrorPopup = <T extends FieldValues>(
         if (submitCount > 0) {
             onShowError();
         }
-    }, [submitCount, overrideVisibility]);
+    }, [submitCount]);
 };
