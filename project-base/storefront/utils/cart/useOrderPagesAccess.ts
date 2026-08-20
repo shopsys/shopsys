@@ -1,14 +1,12 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useCurrentCart } from './useCurrentCart';
 
 export const useOrderPagesAccess = (page: 'transport-and-payment' | 'contact-information') => {
     const router = useRouter();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
-    const authLoading = usePersistStore((s) => s.authLoading);
     const { url } = useDomainConfig();
     const [canContentBeDisplayed, setCanContentBeDisplayed] = useState<boolean | undefined>(undefined);
     const [cartUrl, transportAndPaymentUrl] = getInternationalizedStaticUrls(
@@ -28,7 +26,7 @@ export const useOrderPagesAccess = (page: 'transport-and-payment' | 'contact-inf
                 setCanContentBeDisplayed(true);
             }
         }
-    }, [cart, isCartFetchingOrUnavailable, authLoading, cartUrl, transportAndPaymentUrl, page, router]);
+    }, [cart, isCartFetchingOrUnavailable, cartUrl, transportAndPaymentUrl, page, router]);
 
     return canContentBeDisplayed;
 };

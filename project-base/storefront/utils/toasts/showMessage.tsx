@@ -29,7 +29,7 @@ type ToastMessageContentProps = {
 
 const ToastMessageContent: FC<ToastMessageContentProps> = ({ message, tid }) => (
     <div className="custom-toast-content">
-        <span dangerouslySetInnerHTML={{ __html: message }} data-tid={tid} />
+        <span data-tid={tid}>{message}</span>
     </div>
 );
 

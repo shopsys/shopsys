@@ -78,6 +78,14 @@ import {
     TypeProductListQuery,
     TypeProductListQueryVariables,
 } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
+import {
+    TypeRegistrationByOrderMutation,
+    TypeRegistrationByOrderMutationVariables,
+} from 'graphql/requests/registration/mutations/RegistrationByOrderMutation.generated';
+import {
+    TypeRegistrationMutation,
+    TypeRegistrationMutationVariables,
+} from 'graphql/requests/registration/mutations/RegistrationMutation.generated';
 import { Maybe, TypeProductListInput } from 'graphql/types';
 import { invalidateFields } from './cacheUtils';
 
@@ -86,12 +94,20 @@ type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[Sub
 export const cacheUpdates: UpdatesConfig = {
     Mutation: {
         Login(_result: TypeLoginMutation, _args: TypeLoginMutationVariables, cache) {
-            invalidateFields(cache, ['cart', 'currentCustomerUser']);
-            cache.invalidate('ProductPrice');
+            invalidateAuthenticationDependentFields(cache);
         },
         Logout(_result: TypeLogoutMutation, _args: TypeLogoutMutationVariables, cache) {
-            invalidateFields(cache, ['cart', 'currentCustomerUser']);
-            cache.invalidate('ProductPrice');
+            invalidateAuthenticationDependentFields(cache);
+        },
+        Register(_result: TypeRegistrationMutation, _args: TypeRegistrationMutationVariables, cache) {
+            invalidateAuthenticationDependentFields(cache);
+        },
+        RegisterByOrder(
+            _result: TypeRegistrationByOrderMutation,
+            _args: TypeRegistrationByOrderMutationVariables,
+            cache,
+        ) {
+            invalidateAuthenticationDependentFields(cache);
         },
         DeleteDeliveryAddress(
             result: TypeDeleteDeliveryAddressMutation,
@@ -197,6 +213,11 @@ export const cacheUpdates: UpdatesConfig = {
             invalidateFields(cache, ['complaints']);
         },
     },
+};
+
+const invalidateAuthenticationDependentFields = (cache: Cache) => {
+    invalidateFields(cache, ['cart', 'currentCustomerUser']);
+    cache.invalidate('ProductPrice');
 };
 
 const manuallyUpdateCartQuery = (cache: Cache, newCart: TypeCartFragment, cartUuid: string | null) => {

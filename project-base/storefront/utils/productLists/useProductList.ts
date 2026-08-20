@@ -41,7 +41,6 @@ export const useProductList = (
     const isProductListHydrated = useSessionStore((s) => s.isProductListHydrated);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const productListUuids = usePersistStore((s) => s.productListUuids);
-    const authLoading = usePersistStore((s) => s.authLoading);
     const updateProductListUuid = useUpdateProductListUuid(productListType);
     const productListUuid = productListUuids[productListType] ?? null;
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -52,7 +51,7 @@ export const useProductList = (
 
     const mutatingProductUuidsRef = useRef(new Set<string>());
 
-    const isQueryPaused = !isProductListHydrated || (!productListUuid && !isUserLoggedIn) || authLoading !== null;
+    const isQueryPaused = !isProductListHydrated || (!productListUuid && !isUserLoggedIn);
 
     const [{ data: productListData, fetching }, reexecuteQuery] = useProductListQuery({
         variables: {

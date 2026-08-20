@@ -157,28 +157,27 @@ export const initializePersistStoreInLocalStorageToDefaultValues = () => {
     });
 };
 
-export const checkAndHideSuccessToast = (text?: string) => {
+const checkAndHideToast = (tid: TIDs, text?: string) => {
     if (text) {
-        cy.getByTID([TIDs.toast_success]).should('contain', text).click().should('not.exist');
+        cy.getByTID([tid]).should('be.visible').and('contain', text);
     } else {
-        cy.getByTID([TIDs.toast_success]).should('exist').click().should('not.exist');
+        cy.getByTID([tid]).should('be.visible');
     }
+
+    cy.getByTID([tid]).click({ force: true });
+    cy.getByTID([tid]).should('not.exist');
+};
+
+export const checkAndHideSuccessToast = (text?: string) => {
+    checkAndHideToast(TIDs.toast_success, text);
 };
 
 export const checkAndHideErrorToast = (text?: string) => {
-    if (text) {
-        cy.getByTID([TIDs.toast_error]).should('contain', text).click().should('not.exist');
-    } else {
-        cy.getByTID([TIDs.toast_error]).should('exist').click().should('not.exist');
-    }
+    checkAndHideToast(TIDs.toast_error, text);
 };
 
 export const checkAndHideInfoToast = (text?: string) => {
-    if (text) {
-        cy.getByTID([TIDs.toast_info]).should('contain', text).click().should('not.exist');
-    } else {
-        cy.getByTID([TIDs.toast_info]).should('exist').click().should('not.exist');
-    }
+    checkAndHideToast(TIDs.toast_info, text);
 };
 
 export const checkUrl = (url: string) => {

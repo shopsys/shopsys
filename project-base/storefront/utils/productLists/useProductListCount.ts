@@ -10,10 +10,9 @@ export const useProductListCount = (productListType: TypeProductListTypeEnum): n
     const isProductListHydrated = useSessionStore((s) => s.isProductListHydrated);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const productListUuid = usePersistStore((s) => s.productListUuids[productListType]) ?? null;
-    const authLoading = usePersistStore((s) => s.authLoading);
     const isUserLoggedIn = useIsUserLoggedIn();
 
-    const isQueryPaused = !isProductListHydrated || (!productListUuid && !isUserLoggedIn) || authLoading !== null;
+    const isQueryPaused = !isProductListHydrated || (!productListUuid && !isUserLoggedIn);
 
     const [{ data }, reexecuteQuery] = useProductListCountQuery({
         variables: {

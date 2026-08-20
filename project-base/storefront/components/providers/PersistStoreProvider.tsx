@@ -1,6 +1,5 @@
 import { createContext, ReactNode, useMemo } from 'react';
 import { broadcast } from 'store/broadcast';
-import { AuthLoadingSlice, createAuthLoadingSlice, defaultAuthLoadingState } from 'store/slices/createAuthLoadingSlice';
 import {
     ContactInformationSlice,
     createContactInformationSlice,
@@ -14,7 +13,7 @@ import { create, StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useDomainConfig } from './DomainConfigProvider';
 
-export type PersistStore = AuthLoadingSlice & UserSlice & ContactInformationSlice & PacketerySlice;
+export type PersistStore = UserSlice & ContactInformationSlice & PacketerySlice;
 
 export const PersistStoreContext = createContext<StoreApi<PersistStore> | null>(null);
 
@@ -23,7 +22,7 @@ type PersistStoreProviderProps = {
 };
 
 const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
-const PERSIST_STORE_VERSION = 3;
+const PERSIST_STORE_VERSION = 4;
 
 const createPersistStore = (domainId: number) => {
     const storeName = `${PERSIST_STORE_NAME}-${domainId}`;
@@ -37,11 +36,10 @@ const createPersistStore = (domainId: number) => {
         const legacyData = migrateFromLegacyStore();
         if (legacyData) {
             initialState = {
-                ...defaultAuthLoadingState,
                 ...defaultUserState,
                 ...defaultContactInformationState,
                 ...defaultPacketeryState,
-                ...legacyData,
+                ...removeLegacyAuthState(legacyData),
             };
 
             // Pre-populate the domain-specific store with legacy data
@@ -63,7 +61,6 @@ const createPersistStore = (domainId: number) => {
         persist(
             broadcast(
                 (...store) => ({
-                    ...createAuthLoadingSlice(...store),
                     ...createUserSlice(...store),
                     ...createContactInformationSlice(...store),
                     ...createPacketerySlice(...store),
@@ -80,7 +77,6 @@ const createPersistStore = (domainId: number) => {
                     // Migration from version 0 (no version) to version 1
                     if (version < 1) {
                         migratedPersistedState = {
-                            ...defaultAuthLoadingState,
                             ...defaultUserState,
                             ...defaultContactInformationState,
                             ...defaultPacketeryState,
@@ -99,6 +95,11 @@ const createPersistStore = (domainId: number) => {
                         };
                     }
 
+                    // Auth notifications use tab-scoped session storage since version 4.
+                    if (version < 4) {
+                        migratedPersistedState = removeLegacyAuthState(migratedPersistedState);
+                    }
+
                     return migratedPersistedState as PersistStore;
                 },
             },
@@ -112,6 +113,19 @@ export const PersistStoreProvider: FC<PersistStoreProviderProps> = ({ children }
     const store = useMemo(() => createPersistStore(domainConfig.domainId), [domainConfig.domainId]);
 
     return <PersistStoreContext.Provider value={store}>{children}</PersistStoreContext.Provider>;
+};
+
+const removeLegacyAuthState = (state: object): Partial<PersistStore> => {
+    const {
+        authLoading: _authLoading,
+        authNotification: _authNotification,
+        ...stateWithoutAuth
+    } = state as {
+        authLoading?: unknown;
+        authNotification?: unknown;
+    };
+
+    return stateWithoutAuth as Partial<PersistStore>;
 };
 
 const migrateFromLegacyStore = (): Partial<PersistStore> | null => {

@@ -6,6 +6,7 @@ import {
     clearAndFillInRegstrationFormEmail,
     clearAndFillInRegistrationFormPasswords,
     checkRegistrationValidationErrors,
+    waitForRegistrationRedirect,
 } from './authenticationSupport';
 import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
@@ -56,8 +57,8 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
         });
 
         submitRegistrationForm();
+        waitForRegistrationRedirect();
         checkAndHideSuccessToast(translations.toast.success.accountCreated);
-        checkUrl('/');
         cy.waitForStableAndInteractiveDOM();
 
         goToEditProfileFromHeader();
@@ -94,8 +95,8 @@ describe('Registration Tests (B2B)', { retries: { runMode: 0 } }, () => {
         });
 
         submitRegistrationForm();
+        waitForRegistrationRedirect();
         checkAndHideSuccessToast(translations.toast.success.accountCreated);
-        checkUrl('/');
         cy.waitForStableAndInteractiveDOM();
 
         goToEditProfileFromHeader();
@@ -133,6 +134,7 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         fillInRegstrationForm('commonCustomer', email);
         clearAndFillInRegistrationFormPasswords(staticData.user.password);
         submitRegistrationForm();
+        waitForRegistrationRedirect();
         checkAndHideSuccessToast(translations.toast.success.accountCreated);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedIn();
@@ -154,6 +156,7 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         );
         clearAndFillInRegistrationFormPasswords(staticData.user.password);
         submitRegistrationForm();
+        waitForRegistrationRedirect();
         checkAndHideSuccessToast(translations.toast.success.accountCreated);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedIn();

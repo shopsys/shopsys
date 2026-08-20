@@ -9,7 +9,6 @@ import { getSelectedPickupPlace } from 'utils/cart/pickupPlaceCalculations';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isUserLoggedIn = useIsUserLoggedIn();
-    const authLoading = usePersistStore((s) => s.authLoading);
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
     const isCartHydrated = useSessionStore((s) => s.isCartHydrated);
@@ -23,7 +22,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 
     const [{ data: fetchedCartData, fetching: isCartFetching }, fetchCart] = useCartQuery({
         variables: { cartUuid },
-        pause: !isCartHydrated || !isWithCart || authLoading !== null || !canCreateOrder,
+        pause: !isCartHydrated || !isWithCart || !canCreateOrder,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
@@ -42,7 +41,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
             }
         },
         cart,
-        isCartFetchingOrUnavailable: cart === undefined || isCartFetching || !!authLoading,
+        isCartFetchingOrUnavailable: cart === undefined || isCartFetching,
         transport: cart?.transport ?? null,
         pickupPlace: getSelectedPickupPlace(cart?.transport, cart?.selectedPickupPlaceIdentifier, packeteryPickupPoint),
         payment: cart?.payment ?? null,

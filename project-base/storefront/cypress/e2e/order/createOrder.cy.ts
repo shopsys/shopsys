@@ -16,6 +16,7 @@ import {
     checkOrderDetailFromOrderPageWithComplaintButton,
     checkOrderDetailFromOrderPageWithPromoCode,
 } from './orderSupport';
+import { waitForRegistrationRedirect } from 'e2e/authentication/authenticationSupport';
 import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import { translationKeys } from 'fixtures/translationKeys';
@@ -272,9 +273,9 @@ describe('Create Order Tests', () => {
 
             fillRegistrationInfoAfterOrder(staticData.user.password);
             submitRegistrationFormAfterOrder();
+            waitForRegistrationRedirect();
             checkAndHideSuccessToast(translations.toast.success.accountCreated);
             cy.waitForStableAndInteractiveDOM();
-            checkUrl('/');
 
             cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
             goToOrderDetailFromOrderList();
