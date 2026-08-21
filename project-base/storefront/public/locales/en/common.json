@@ -1,5 +1,7 @@
 {
     "404": "404",
+    "It took a while, so for security reasons this page no longer shows the order details. If you have completed the payment, it will be processed automatically. You will find all the details in the order confirmation e-mail, or after signing in to your account.": "It took a while, so for security reasons this page no longer shows the order details. If you have completed the payment, it will be processed automatically. You will find all the details in the order confirmation e-mail, or after signing in to your account.",
+    "Your order is fine, but we can no longer show it here.": "Your order is fine, but we can no longer show it here.",
     "{{ count }} error type(s) being ignored_one": "{{ count }} error type is being ignored",
     "{{ count }} error type(s) being ignored_other": "{{ count }} error types are being ignored",
     "{{ distance }} km away": "{{ distance }} km away",
@@ -365,7 +367,6 @@
     "or at {{ count }} stores_other": "or at {{ count }} stores",
     "Order": "Order",
     "Order confirmation": "Order confirmation",
-    "Order confirmation can no longer be displayed.": "Order confirmation can no longer be displayed.",
     "Order content has expired. <link>View order details</link>": "Order content has expired. <link>View order details</link>",
     "Order content has expired. Check your email for order details.": "Order content has expired. Check your email for order details.",
     "Order detail": "Order detail",
@@ -421,7 +422,6 @@
     "Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum files count is {{ maxFilesCount }}.": "Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum files count is {{ maxFilesCount }}.",
     "Please check inserted details": "Please, check inserted details",
     "Please check Tax number format": "Please check Tax number format",
-    "Please check your order confirmation e-mail or sign in to your account.": "Please check your order confirmation e-mail or sign in to your account.",
     "Please enter a message": "Please enter a message",
     "Please enter a valid email. Example: email@example.com": "Please enter a valid email. Example: email@example.com",
     "Please enter a valid phone prefix": "Please enter a valid phone prefix",

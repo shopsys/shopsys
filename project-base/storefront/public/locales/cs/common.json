@@ -1,5 +1,7 @@
 {
     "404": "404",
+    "It took a while, so for security reasons this page no longer shows the order details. If you have completed the payment, it will be processed automatically. You will find all the details in the order confirmation e-mail, or after signing in to your account.": "Chvíli to trvalo, a tak už tady z bezpečnostních důvodů podrobnosti objednávky nezobrazujeme. Pokud jste platbu dokončili, zpracuje se automaticky. Všechny podrobnosti najdete v e-mailu s potvrzením objednávky, případně po přihlášení do svého účtu.",
+    "Your order is fine, but we can no longer show it here.": "Vaše objednávka je v pořádku, jen už ji tady nemůžeme zobrazit.",
     "{{ count }} error type(s) being ignored_one": "{{ count }} typ chyby je ignorován",
     "{{ count }} error type(s) being ignored_few": "{{ count }} typy chyb jsou ignorovány",
     "{{ count }} error type(s) being ignored_many": "{{ count }} typů chyb je ignorováno",
@@ -385,7 +387,6 @@
     "or at {{ count }} stores_other": "nebo na {{ count }} prodejnách",
     "Order": "Objednávka",
     "Order confirmation": "Potvrzení objednávky",
-    "Order confirmation can no longer be displayed.": "Potvrzení objednávky již nelze zobrazit.",
     "Order content has expired. <link>View order details</link>": "Platnost obsahu objednávky vypršela. <link>Zobrazit detail objednávky</link>",
     "Order content has expired. Check your email for order details.": "Platnost obsahu objednávky vypršela. Zkontrolujte svůj e-mail pro detail objednávky.",
     "Order detail": "Detail objednávky",
@@ -443,7 +444,6 @@
     "Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum files count is {{ maxFilesCount }}.": "Prosím, přiložte obrázky reklamovaného zboží ve formátu JPG nebo PNG s maximální velikostí souboru {{ max }}. Maximální počet souborů je {{ maxFilesCount }}.",
     "Please check inserted details": "Prosím zkontrolujte zadané údaje.",
     "Please check Tax number format": "Prosím zkontrolujte formát DIČ",
-    "Please check your order confirmation e-mail or sign in to your account.": "Zkontrolujte prosím e-mail s potvrzením objednávky nebo se přihlaste do svého účtu.",
     "Please enter a message": "Vyplňte prosím zprávu",
     "Please enter a valid email. Example: email@example.com": "Vyplňte prosím platný e-mail. Příklad: email@example.com",
     "Please enter a valid phone prefix": "Vyplňte prosím telefonní předvolbu",
