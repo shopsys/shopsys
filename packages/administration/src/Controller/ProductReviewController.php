@@ -48,6 +48,7 @@ class ProductReviewController extends AbstractCrudController
             ->setListDomainControl(CrudListDomainControl::QUICK_FILTER, $enabledDomainIds)
             ->setCustomRoleSection(AdminRoleSectionsProvider::PRODUCTS_CATALOG)
             ->registerHandler(ProductReviewEditHandler::class)
+            ->setTemplate(ActionType::EDIT, '@ShopsysAdministration/content/productReview/edit.html.twig')
             ->disable(!$this->productReviewEnabledChecker->isEnabledOnAnyDomain());
     }
 
@@ -144,12 +145,6 @@ class ProductReviewController extends AbstractCrudController
         $formConfigurator->useFormType(ProductReviewFormType::class, [
             'productReview' => $entity,
         ]);
-    }
-
-    #[Override]
-    protected function getEditTemplate(): string
-    {
-        return '@ShopsysAdministration/content/productReview/edit.html.twig';
     }
 
     #[Route(path: '/product-review/approve/{id}', name: 'admin_crud_product_review_approve', requirements: ['id' => '\d+'], methods: ['GET'])]

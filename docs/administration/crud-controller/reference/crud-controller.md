@@ -228,17 +228,15 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 
     Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
 
-## Templates
+## Templates and parameters
 
 The pages are rendered by the templates in `@ShopsysAdministration/crud/` (`list.html.twig`, `new.html.twig`, `edit.html.twig`, `detail.html.twig`).
-To add content to the edit page, override `getEditTemplate()` in the controller and extend the default template:
+To add content to a page, replace the template of the action with [`setTemplate()`](#settemplateactiontype-actiontype-string-template) in `configure()` and extend the default template:
 
 ```php
-#[Override]
-protected function getEditTemplate(): string
-{
-    return '@ShopsysAdministration/content/productReview/edit.html.twig';
-}
+$config
+    ->setTemplate(ActionType::EDIT, '@ShopsysAdministration/content/productReview/edit.html.twig')
+;
 ```
 
 The templates define empty blocks around the main content, so the extending template only overrides the block at the position it needs — no `parent()` calls required:
@@ -256,7 +254,53 @@ The templates define empty blocks around the main content, so the extending temp
 {% endblock %}
 ```
 
-Extra variables for the template can be provided by overriding `getEditViewData(object $entity): array`.
+The edit page passes the displayed record to the template as `entity`. Other variables the template needs are provided by [`configureTemplateParameters()`](#template-parameters) described below.
+
+### Template parameters
+
+Override `configureTemplateParameters(CrudTemplateParameters $templateParameters): void` to set additional variables passed to the template of the rendered action. Do nothing when the action needs no extra data (the default).
+The context of the rendered action is carried by `$templateParameters` itself, the same way `CrudFormConfigurator` carries `getActionType()` in `configureForm()`.
+
+```php
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
+use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
+
+protected function configureTemplateParameters(CrudTemplateParameters $templateParameters): void
+{
+    if ($templateParameters->isAction(ActionType::EDIT)) {
+        $templateParameters->set(
+            'gridView',
+            $this->createBlogArticlesGrid($templateParameters->getEntity(BlogArticleAuthor::class))->createView(),
+        );
+    }
+}
+```
+
+`getEntity()` returns the displayed entity narrowed to the given class. It throws an exception with a clear message when the action displays no entity or when the entity is of a different class, and PHPStan analyses the returned value with the concrete type, so no `Assert::isInstanceOf()` or `@var` annotation is needed.
+
+Use `hasEntity()` when a variable depends on the displayed record rather than on a specific action, e.g. an extension adding a widget to every page showing an order:
+
+```php
+public function configureTemplateParameters(CrudTemplateParameters $templateParameters): void
+{
+    if ($templateParameters->hasEntity()) {
+        $templateParameters->set(
+            'orderHistoryWidget',
+            $this->createOrderHistoryWidget($templateParameters->getEntity(Order::class)),
+        );
+    }
+}
+```
+
+`CrudTemplateParameters` provides:
+
+- `getActionType()` and `isAction(ActionType ...$actionTypes)` — the rendered action, `isAction()` matches any of the given actions
+- `hasEntity()` and `getEntity(string $entityClass)` — the displayed entity; only the edit action displays one, the list, detail and create actions have none
+- `set(string $name, mixed $value)` — sets a variable, chainable
+- `has(string $name)` and `get(string $name)` — read a variable of the action itself (`title`, `form`, ...) or one set earlier by the controller, e.g. to build on it in an extension
+
+[Extensions](../getting-started/extending-existing-crud-controller.md#templates-and-additional-parameters) provide the same method and are called after the controller, so they can read what the controller has set.
 
 ### Change history on the edit page
 
@@ -377,3 +421,17 @@ $config
     ->setMenuIcon('cart')
 ;
 ```
+
+#### `setTemplate(ActionType $actionType, string $template)`
+
+Overrides the template rendered by the given action (`list`, `detail`, `create`, or `edit` — the `delete` action renders no template and throws an exception).
+The custom template receives the same variables as the default one, extended by [`configureTemplateParameters()`](#template-parameters) of the controller and its extensions.
+
+```php
+$config
+    ->setTemplate(ActionType::EDIT, '@ShopsysAdministration/content/blogArticleAuthor/edit.html.twig')
+;
+```
+
+The default templates live in the `@ShopsysAdministration/crud/` directory — extend them in the custom template to keep the page layout and only override the block where the extra content belongs, see [Templates and parameters](#templates-and-parameters).
+In an [extension](../getting-started/extending-existing-crud-controller.md#templates-and-additional-parameters), `setTemplate()` replaces the template the controller configured, so extend the controller's template instead of the default one.
