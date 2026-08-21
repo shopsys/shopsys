@@ -26,7 +26,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'BAM',
         'BBD',
         'BDT',
-        'BGN',
         'BHD',
         'BIF',
         'BMD',
