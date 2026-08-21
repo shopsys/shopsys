@@ -23,6 +23,12 @@ Follow these whenever you write or modify code in this project.
 - Leverage tested, proven functionality; build complex behavior from simple existing blocks.
 - Use framework conventions; prefer composition over inheritance or duplication.
 
+### Validation & guard clauses
+- Prefer the `Webmozart\Assert\Assert` package over hand-written `if (...) { throw new ... }` guards for argument and state validation. It is already a dependency, keeps the guard on one line, and makes the intent obvious (`Assert::notSame()`, `Assert::isEmpty()`, `Assert::allInstanceOf()`, `Assert::keyExists()`, …).
+- Pass the message as a closure when building it is not trivial — `Assert::isEmpty($keys, fn (): string => sprintf(...))` — so it is only built when the assertion actually fails.
+- The message is passed through `sprintf()` by the library, so avoid a literal `%` in it.
+- Write a dedicated exception class instead when callers need to catch that specific failure — `Assert` always throws `\InvalidArgumentException`.
+
 ### Maintainability first
 - Write code that's easy to understand, modify, and debug; change things in the fewest places.
 - Follow existing conventions; favor long-term maintainability over short-term convenience.

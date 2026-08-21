@@ -7,6 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Config;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Webmozart\Assert\Assert;
 
 /**
  * @phpstan-import-type MenuItemPosition from \Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItemPositioner
@@ -14,10 +15,23 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 final readonly class CrudConfigData
 {
     /**
+     * Actions missing here do not render a template.
+     *
+     * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, string>
+     */
+    private const array DEFAULT_TEMPLATES = [
+        ActionType::LIST->value => '@ShopsysAdministration/crud/list.html.twig',
+        ActionType::DETAIL->value => '@ShopsysAdministration/crud/detail.html.twig',
+        ActionType::CREATE->value => '@ShopsysAdministration/crud/new.html.twig',
+        ActionType::EDIT->value => '@ShopsysAdministration/crud/edit.html.twig',
+    ];
+
+    /**
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType[] $enabledActions
      * @param MenuItemPosition $menuSectionPosition
      * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, null|class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>> $handlerClasses
      * @param int[]|null $listAllowedDomainIds
+     * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, string> $templates
      */
     public function __construct(
         private ?string $entityNameSingular,
@@ -37,6 +51,7 @@ final readonly class CrudConfigData
         private ?string $menuIcon,
         private ?CrudListDomainControl $listDomainControl,
         private ?array $listAllowedDomainIds,
+        private array $templates,
     ) {
         foreach ($this->enabledActions as $action) {
             if (array_key_exists($action->value, $this->handlerClasses) && $this->handlerClasses[$action->value] === null) {
@@ -182,5 +197,20 @@ final readonly class CrudConfigData
     public function getListAllowedDomainIds(): ?array
     {
         return $this->listAllowedDomainIds;
+    }
+
+    /**
+     * Returns the template rendered by the given action — the one set by `CrudConfig::setTemplate()`,
+     * or the default template of the action.
+     */
+    public function getTemplate(ActionType $actionType): string
+    {
+        Assert::keyExists(
+            self::DEFAULT_TEMPLATES,
+            $actionType->value,
+            sprintf('The "%s" action does not render a template.', $actionType->value),
+        );
+
+        return $this->templates[$actionType->value] ?? self::DEFAULT_TEMPLATES[$actionType->value];
     }
 }

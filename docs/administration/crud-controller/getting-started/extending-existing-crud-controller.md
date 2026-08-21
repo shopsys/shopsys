@@ -62,9 +62,10 @@ Extensions can add fields to forms using the `configureForm()` method. This work
 // OrderControllerExtension.php
 
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-public function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+public function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useBuilder()
         ->add('internalNote', TextareaType::class, [
@@ -77,6 +78,37 @@ public function configureForm(CrudFormConfigurator $formConfigurator, ?object $e
 !!! warning
 
     Calling `useBuilder()` in an extension when the controller used `useFormType()` will throw `CrudFormAlreadyConfiguredException`. If you need to extend a form defined via FormType, use [Symfony's form extension mechanism](https://symfony.com/doc/current/form/create_form_type_extension.html) instead.
+
+### Templates and additional parameters
+
+Extensions can replace the template of an action via `setTemplate()` in `configure()` and pass additional variables to it via `getAdditionalTemplateParameters()`.
+Extension parameters are added on top of the additional parameters of the original controller. A key already used by the action itself (`title`, `form`, `topActions`, ...), by the controller, or by another extension throws an exception, so no parameter can be silently overwritten.
+
+```php
+// OrderControllerExtension.php
+
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+
+public function configure(CrudConfig $config): void
+{
+    $config->setTemplate(ActionType::EDIT, 'Admin/Order/edit.html.twig');
+}
+
+public function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
+{
+    if ($actionType !== ActionType::EDIT) {
+        return [];
+    }
+
+    return [
+        'orderItemsGridView' => $this->createOrderItemsGrid($entity)->createView(),
+    ];
+}
+```
+
+See the [CRUD Controller reference](../reference/crud-controller.md#settemplateactiontype-actiontype-string-template) for details.
 
 ### Using Hooks
 

@@ -174,7 +174,7 @@ $datagrid->add('status', [
 
 For fully custom conditions, use `getSelectedListDomainId()` and `getEffectiveListDomainIds()`.
 
-### `configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void`
+### `configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void`
 
 Configure the form for create and edit pages. The `$entity` parameter is `null` for create action and contains the entity being edited for edit action.
 
@@ -183,7 +183,7 @@ The `CrudFormConfigurator` provides two mutually exclusive approaches — you mu
 **Use an existing FormType class:**
 
 ```php
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useFormType(BrandFormType::class, [
         'brand' => $entity,
@@ -194,7 +194,7 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 **Or build the form inline using the builder:**
 
 ```php
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useBuilder()
         ->add('name', TextType::class, [
@@ -211,6 +211,31 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 !!! warning "Mutually exclusive modes"
 
     Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
+
+### `getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array`
+
+Returns additional variables passed to the template of the given action. Return an empty array when the action needs no extra data (the default). The `$entity` parameter is `null` for the list and create actions and contains the displayed entity for the edit action.
+
+Typically used together with a [custom template](#settemplateactiontype-actiontype-string-template) that renders the extra variables.
+
+```php
+protected function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
+{
+    if ($actionType !== ActionType::EDIT) {
+        return [];
+    }
+
+    return [
+        'gridView' => $this->createArticlesGrid($entity)->createView(),
+    ];
+}
+```
+
+[Extensions](../getting-started/extending-existing-crud-controller.md#templates-and-additional-parameters) provide the same method and their parameters are added on top of the controller's ones.
+
+!!! warning
+
+    No parameter can be silently overwritten — an additional parameter whose key is already used by the action itself (`title`, `form`, `topActions`, ...), by the controller, or by another extension throws an exception naming the colliding key and its origin. Rename the additional parameter instead.
 
 ## CRUD Config
 
@@ -329,4 +354,21 @@ Example:
 $config
     ->setMenuIcon('cart')
 ;
+```
+
+#### `setTemplate(ActionType $actionType, string $template)`
+
+Overrides the template rendered by the given action (`list`, `detail`, `create`, or `edit` — the `delete` action renders no template and throws an exception).
+The custom template receives the same variables as the default one, extended by [`getAdditionalTemplateParameters()`](#getadditionaltemplateparametersactiontype-actiontype-presentable-entity-null-array) of the controller and its extensions.
+
+```php
+$config
+    ->setTemplate(ActionType::EDIT, '@ShopsysAdministration/content/blogArticleAuthor/edit.html.twig')
+;
+```
+
+The default templates live in the `@ShopsysAdministration/crud/` directory — extend them in the custom template to keep the page layout and only add the extra content:
+
+```twig
+{% extends '@ShopsysAdministration/crud/edit.html.twig' %}
 ```

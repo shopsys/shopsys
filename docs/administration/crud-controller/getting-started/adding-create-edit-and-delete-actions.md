@@ -228,8 +228,9 @@ You can use an existing FormType class:
 
 ```php
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useFormType(OrderFormType::class, [
         'order' => $entity,
@@ -241,9 +242,10 @@ Or build the form inline using the builder:
 
 ```php
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useBuilder()
         ->add('name', TextType::class, [
@@ -253,4 +255,4 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 }
 ```
 
-See [configureForm reference](../reference/crud-controller.md#configureformcrudformconfigurator-formconfigurator-object-entity--null-void) for more details.
+See [configureForm reference](../reference/crud-controller.md#configureformcrudformconfigurator-formconfigurator-presentable-entity-null-void) for more details.

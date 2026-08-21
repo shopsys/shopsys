@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Controller;
 
 use Override;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
@@ -16,6 +17,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Form\Admin\Blog\BlogArticleAuthorFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
@@ -41,7 +43,8 @@ class BlogArticleAuthorController extends AbstractCrudController
         $config
             ->registerHandler(BlogArticleAuthorCrudHandler::class)
             ->setMenuSection(SideMenuBuilder::SECTION_BLOG)
-            ->setCustomRoleConstant(AdminRoleConstant::ROLE_BLOG_ARTICLE_AUTHOR);
+            ->setCustomRoleConstant(AdminRoleConstant::ROLE_BLOG_ARTICLE_AUTHOR)
+            ->setTemplate(ActionType::EDIT, '@ShopsysAdministration/content/blogArticleAuthor/edit.html.twig');
     }
 
     #[Override]
@@ -55,25 +58,23 @@ class BlogArticleAuthorController extends AbstractCrudController
     }
 
     #[Override]
-    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
     {
         $formConfigurator->useFormType(BlogArticleAuthorFormType::class, [
             'blogArticleAuthor' => $entity,
         ]);
     }
 
-    #[Override]
-    protected function getEditTemplate(): string
-    {
-        return '@ShopsysAdministration/content/blogArticleAuthor/edit.html.twig';
-    }
-
     /**
      * @return array<string, mixed>
      */
     #[Override]
-    protected function getEditViewData(object $entity): array
+    protected function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
     {
+        if ($actionType !== ActionType::EDIT) {
+            return [];
+        }
+
         /** @var \Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor $blogArticleAuthor */
         $blogArticleAuthor = $entity;
 
