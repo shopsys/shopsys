@@ -7,7 +7,7 @@
 {% block h1 %}{{ title }}{% endblock %}
 
 {% block btn %}
-    {{ actions.render(topActions) }}
+    {{ actions.render(topActions, entity|default(null)) }}
 {% endblock %}
 
 {% block main_content %}

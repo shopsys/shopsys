@@ -298,6 +298,7 @@ abstract class AbstractCrudController extends AdminBaseController
         return $this->render($this->getEditTemplate(), [
             'title' => $config->getTitle(ActionType::EDIT, $recordName),
             'topActions' => $this->getConfiguredActions(ActionType::EDIT),
+            'entity' => $entity,
             'form' => $form->createView(),
             ...$this->getEditViewData($entity),
         ]);
