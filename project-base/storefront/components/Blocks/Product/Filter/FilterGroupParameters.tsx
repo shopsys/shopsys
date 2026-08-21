@@ -13,6 +13,7 @@ import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 import {
     FilterGroupContent,
     FilterGroupContentItem,
+    FilterGroupHiddenItems,
     FilterGroupTitle,
     FilterGroupWrapper,
     ShowAllButton,
@@ -56,9 +57,33 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     const [isWithAllItemsShown, setIsWithAllItemsShown] = useState(isWithHiddenCheckedItem);
 
     const shownOptions = isCheckboxType ? parameter.values.slice(0, defaultNumberOfShownParameters) : [];
-    const defaultOptions = isCheckboxType ? (isWithAllItemsShown ? parameter.values : shownOptions) : [];
     const titleWithUnit = title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '');
     const contentId = createAriaParameter('filter-group', titleWithUnit);
+
+    const renderCheckboxOption = (parameterValueOption: (typeof shownOptions)[number], index: number) => {
+        const isChecked = getIsSelectedParameterValue(
+            defaultSelectedParameters,
+            selectedParameter?.values,
+            parameter.uuid,
+            parameterValueOption.uuid,
+        );
+        const id = `parameters.${parameterIndex}.values.${index}.checked`;
+        const isDisabled = parameterValueOption.count === 0 && !isChecked;
+
+        return (
+            <FilterGroupContentItem key={parameterValueOption.uuid} isDisabled={isDisabled}>
+                <Checkbox
+                    count={parameterValueOption.count}
+                    disabled={isDisabled}
+                    id={id}
+                    label={parameterValueOption.text}
+                    name={id}
+                    value={isChecked}
+                    onChange={() => updateFilterParametersQuery(parameter.uuid, parameterValueOption.uuid)}
+                />
+            </FilterGroupContentItem>
+        );
+    };
 
     return (
         <FilterGroupWrapper>
@@ -76,39 +101,17 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                     <FilterGroupContent id={contentId}>
                         {isCheckboxType && (
                             <>
-                                {defaultOptions.map((parameterValueOption, index) => {
-                                    const isChecked = getIsSelectedParameterValue(
-                                        defaultSelectedParameters,
-                                        selectedParameter?.values,
-                                        parameter.uuid,
-                                        parameterValueOption.uuid,
-                                    );
-                                    const id = `parameters.${parameterIndex}.values.${index}.checked`;
-                                    const isDisabled = parameterValueOption.count === 0 && !isChecked;
+                                {shownOptions.map(renderCheckboxOption)}
 
-                                    return (
-                                        <FilterGroupContentItem
-                                            key={parameterValueOption.uuid}
-                                            isDisabled={isDisabled}
-                                            keyName={parameterValueOption.uuid}
-                                        >
-                                            <Checkbox
-                                                count={parameterValueOption.count}
-                                                disabled={isDisabled}
-                                                id={id}
-                                                label={parameterValueOption.text}
-                                                name={id}
-                                                value={isChecked}
-                                                onChange={() =>
-                                                    updateFilterParametersQuery(
-                                                        parameter.uuid,
-                                                        parameterValueOption.uuid,
-                                                    )
-                                                }
-                                            />
-                                        </FilterGroupContentItem>
-                                    );
-                                })}
+                                <AnimatePresence initial={false}>
+                                    {isWithAllItemsShown && (
+                                        <FilterGroupHiddenItems keyName={`${parameter.uuid}-hidden-options`}>
+                                            {hiddenOptions.map((option, index) =>
+                                                renderCheckboxOption(option, index + defaultNumberOfShownParameters),
+                                            )}
+                                        </FilterGroupHiddenItems>
+                                    )}
+                                </AnimatePresence>
 
                                 {!!hiddenOptions.length && (
                                     <ShowAllButton onClick={() => setIsWithAllItemsShown((prev) => !prev)}>

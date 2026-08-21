@@ -30,7 +30,15 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 type SearchProductsConnection = TypeSearchProductsQuery['productsSearch'];
 
-export const useSearchProductsData = (totalProductCount?: number) => {
+type UseSearchProductsDataOptions = {
+    searchProductsDataFromMainQuery?: SearchProductsConnection;
+    totalProductCount?: number;
+};
+
+export const useSearchProductsData = ({
+    searchProductsDataFromMainQuery,
+    totalProductCount,
+}: UseSearchProductsDataOptions = {}) => {
     const client = useClient();
     const currentPage = useCurrentPageQuery();
     const currentFilter = useCurrentFilterQuery();
@@ -39,21 +47,56 @@ export const useSearchProductsData = (totalProductCount?: number) => {
     const currentLoadMore = useCurrentLoadMoreQuery();
     const mappedFilter = mapParametersFilter(currentFilter);
     const parameters = mappedFilter?.parameters?.map((parameter) => parameter.parameter);
+    const userIdentifier = useCookiesStore((store) => store.userIdentifier);
+    const currentFilterSerialized = JSON.stringify(currentFilter);
+    const searchProductsCriteriaKey = JSON.stringify([
+        currentSearchString,
+        currentSort,
+        currentFilterSerialized,
+        userIdentifier,
+    ]);
 
     const previousLoadMoreRef = useRef(currentLoadMore);
     const previousPageRef = useRef(currentPage);
+    const previousSearchProductsCriteriaKeyRef = useRef(searchProductsCriteriaKey);
+    const latestSearchProductsRequestIdRef = useRef(0);
 
-    const [searchProductsData, setSearchProductsData] = useState<TypeSearchProductsQuery | undefined>();
-    const [areSearchProductsFetching, setAreSearchProductsFetching] = useState(!searchProductsData);
+    const [searchProductsData, setSearchProductsData] = useState<TypeSearchProductsQuery | undefined>(
+        searchProductsDataFromMainQuery ? { productsSearch: searchProductsDataFromMainQuery } : undefined,
+    );
+    const [areSearchProductsFetching, setAreSearchProductsFetching] = useState(!searchProductsDataFromMainQuery);
     const [isLoadingMoreSearchProducts, setIsLoadingMoreSearchProducts] = useState(false);
 
-    const userIdentifier = useCookiesStore((store) => store.userIdentifier);
+    useEffect(() => {
+        if (!searchProductsDataFromMainQuery) {
+            return;
+        }
 
-    const currentFilterSerialized = JSON.stringify(currentFilter);
+        setSearchProductsData({ productsSearch: searchProductsDataFromMainQuery });
+        setAreSearchProductsFetching(false);
+        setIsLoadingMoreSearchProducts(false);
+    }, [searchProductsDataFromMainQuery]);
 
     useEffect(() => {
-        if (previousPageRef.current !== currentPage) {
-            previousPageRef.current = currentPage;
+        const searchProductsRequestId = ++latestSearchProductsRequestIdRef.current;
+        const hasSearchCriteriaChanged = previousSearchProductsCriteriaKeyRef.current !== searchProductsCriteriaKey;
+        const hasPageChanged = previousPageRef.current !== currentPage;
+        const hasLoadMoreChanged = previousLoadMoreRef.current !== currentLoadMore;
+        const hasPaginationChanged = hasPageChanged || hasLoadMoreChanged;
+
+        previousSearchProductsCriteriaKeyRef.current = searchProductsCriteriaKey;
+        previousPageRef.current = currentPage;
+        previousLoadMoreRef.current = currentLoadMore;
+
+        if (searchProductsDataFromMainQuery && hasSearchCriteriaChanged) {
+            setAreSearchProductsFetching(true);
+            setIsLoadingMoreSearchProducts(false);
+
+            return;
+        }
+
+        if (searchProductsDataFromMainQuery && !hasPaginationChanged) {
+            return;
         }
 
         const previousProductsFromCache = getPreviousProductsFromCache(
@@ -77,11 +120,10 @@ export const useSearchProductsData = (totalProductCount?: number) => {
         const { pageSize, isMoreThanOnePage } = getPageSizeInfo(!!previousProductsFromCache, currentLoadMore);
         const endCursor = getEndCursor(currentPage, isMoreThanOnePage ? undefined : currentLoadMore);
 
-        if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
+        if (!hasLoadMoreChanged || currentLoadMore === 0) {
             setAreSearchProductsFetching(true);
         } else {
             setIsLoadingMoreSearchProducts(true);
-            previousLoadMoreRef.current = currentLoadMore;
         }
 
         const fetchProducts = async () => {
@@ -97,6 +139,10 @@ export const useSearchProductsData = (totalProductCount?: number) => {
                     parameters,
                 })
                 .toPromise();
+
+            if (searchProductsRequestId !== latestSearchProductsRequestIdRef.current) {
+                return;
+            }
 
             if (!searchProductsResponse.data?.productsSearch) {
                 return;
@@ -128,6 +174,8 @@ export const useSearchProductsData = (totalProductCount?: number) => {
         client,
         userIdentifier,
         totalProductCount,
+        searchProductsCriteriaKey,
+        searchProductsDataFromMainQuery,
     ]);
 
     return {
@@ -222,18 +270,20 @@ export const useSearchQuery = (searchString: string | undefined) => {
     const endCursor = getEndCursor(currentPage, isMoreThanOnePage ? undefined : currentLoadMore);
     const client = useClient();
     const [searchData, setSearchData] = useState<TypeSearchQuery | undefined>(undefined);
-    const [isSearchFetching, setIsSearchFetching] = useState(true);
+    const [loadedSearchString, setLoadedSearchString] = useState<string | undefined>(undefined);
+    const latestSearchRequestIdRef = useRef(0);
 
     const router = useRouter();
     const { url } = useDomainConfig();
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 
     const fetchSearchData = async (
+        requestedSearchString: string,
         mappedFilter: TypeProductFilter | null,
         currentSort: TypeProductOrderingModeEnum | null,
     ) => {
         const searchResponse = await client.query<TypeSearchQuery, TypeSearchQueryVariables>(SearchQueryDocument, {
-            search: searchString!,
+            search: requestedSearchString,
             isAutocomplete: false,
             userIdentifier,
             endCursor,
@@ -246,33 +296,43 @@ export const useSearchQuery = (searchString: string | undefined) => {
         return searchResponse;
     };
 
-    const refetchSearchData = async () => {
+    const refetchSearchData = async (requestedSearchString: string, searchRequestId: number) => {
         router.replace({
             pathname: searchUrl,
-            query: { q: searchString },
+            query: { q: requestedSearchString },
         });
 
-        fetchSearchData(null, null).then((retryResponse) => {
+        fetchSearchData(requestedSearchString, null, null).then((retryResponse) => {
+            if (searchRequestId !== latestSearchRequestIdRef.current) {
+                return;
+            }
+
             setSearchData(retryResponse.data);
-            setIsSearchFetching(false);
+            setLoadedSearchString(requestedSearchString);
         });
     };
 
     const currentFilterSerialized = JSON.stringify(currentFilter);
 
     const onSearch = useEffectEvent(() => {
-        if (searchString && userIdentifier) {
-            setIsSearchFetching(true);
+        const searchRequestId = ++latestSearchRequestIdRef.current;
 
-            fetchSearchData(mappedFilter, currentSort).then((searchResponse) => {
+        if (searchString && userIdentifier) {
+            const requestedSearchString = searchString;
+
+            fetchSearchData(requestedSearchString, mappedFilter, currentSort).then((searchResponse) => {
+                if (searchRequestId !== latestSearchRequestIdRef.current) {
+                    return;
+                }
+
                 if (isExpectedPriceFilterError(searchResponse.error)) {
-                    refetchSearchData();
+                    refetchSearchData(requestedSearchString, searchRequestId);
 
                     return;
                 }
 
                 setSearchData(searchResponse.data);
-                setIsSearchFetching(false);
+                setLoadedSearchString(requestedSearchString);
             });
         }
     });
@@ -283,6 +343,6 @@ export const useSearchQuery = (searchString: string | undefined) => {
 
     return {
         searchData,
-        isSearchFetching,
+        isSearchPageFetching: !!searchString && loadedSearchString !== searchString,
     };
 };

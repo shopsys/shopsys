@@ -81,7 +81,7 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                 </div>
             </div>
 
-            {isSortMenuOpen && <Overlay isActive={isSortMenuOpen} onClick={onSortMenuClose} />}
+            <Overlay isActive={isSortMenuOpen} onClick={onSortMenuClose} />
         </>
     );
 };

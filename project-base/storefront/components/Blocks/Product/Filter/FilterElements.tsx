@@ -1,4 +1,3 @@
-import { AnimateAppearSlideY } from 'components/Basic/Animations/AnimateAppearSlideY';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
@@ -42,14 +41,14 @@ export const FilterGroupContent: FC<{ keyName?: string; id?: string }> = ({ chil
     </AnimateCollapseDiv>
 );
 
-export const FilterGroupContentItem: FC<{ isDisabled: boolean; keyName?: string }> = ({
-    children,
-    isDisabled,
-    keyName,
-}) => (
-    <AnimateAppearSlideY className={twJoin('block!', isDisabled && 'opacity-30')} keyName={keyName}>
+export const FilterGroupContentItem: FC<{ isDisabled: boolean }> = ({ children, isDisabled }) => (
+    <div className={twJoin(isDisabled && 'opacity-30')}>{children}</div>
+);
+
+export const FilterGroupHiddenItems: FC<{ keyName: string }> = ({ children, keyName }) => (
+    <AnimateCollapseDiv className="flex! flex-col gap-2.5" keyName={keyName}>
         {children}
-    </AnimateAppearSlideY>
+    </AnimateCollapseDiv>
 );
 
 export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }) => (
