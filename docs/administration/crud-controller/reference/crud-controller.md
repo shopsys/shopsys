@@ -38,6 +38,12 @@ Crud controller generates pretty URLs for each action. The URL is generated base
 Crud Controller provides several methods that allow you to customize the behavior of the controller.
 These methods can be overridden to customize the controller behavior:
 
+!!! warning "The actions themselves are final"
+
+    `listAction()`, `detailAction()`, `createAction()`, `editAction()` and `deleteAction()` are `final`. They orchestrate the whole flow of the action — they dispatch the [hooks](handlers.md#hooks-system) of all registered extensions and carry the CSRF protection of the delete action — so overriding them would silently break those guarantees for everyone. Customize the actions through the methods described below.
+
+    When an action flow genuinely cannot be expressed by them, opt out of it explicitly: disable the action with `$config->disableAction(ActionType::EDIT)` in `configure()` and register your own action with its own route. To render such an action with the CRUD layout, use the protected `renderAction()` and `getConfiguredActions()` methods.
+
 ### `configure(CrudConfig $config): void`
 
 Configure general behavior of the controller. Customizable options are available [here](#crud-config).
