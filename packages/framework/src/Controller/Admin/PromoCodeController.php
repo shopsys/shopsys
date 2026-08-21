@@ -27,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[ForRole(AdminRoleConstant::ROLE_PROMO_CODE)]
@@ -224,7 +225,7 @@ class PromoCodeController extends AdminBaseController
         ]);
     }
 
-    #[Route(path: '/promo-code/download-mass-generate-batch/{batchId}')]
+    #[Route(path: '/promo-code/download-mass-generate-batch/{batchId}', requirements: ['batchId' => '\d+'])]
     #[CanView]
     public function downloadMassGenerateBatchAction(int $batchId): Response
     {
@@ -238,6 +239,10 @@ class PromoCodeController extends AdminBaseController
     protected function generateCsvFromPromoCodeFromBatchId(int $batchId): string
     {
         $promoCodes = $this->promoCodeFacade->findByMassBatchId($batchId);
+
+        if (count($promoCodes) === 0) {
+            throw new NotFoundHttpException(sprintf('Promo code batch with ID "%d" not found.', $batchId));
+        }
 
         $csv = Writer::fromString();
         $csv->setDelimiter(';');

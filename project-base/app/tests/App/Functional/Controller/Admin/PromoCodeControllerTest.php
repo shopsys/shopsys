@@ -11,6 +11,10 @@ use Tests\App\Test\ApplicationTestCase;
 
 final class PromoCodeControllerTest extends ApplicationTestCase
 {
+    private const string ADMIN_USERNAME = 'admin';
+
+    private const string ADMIN_PASSWORD = 'admin123';
+
     /**
      * @inject
      */
@@ -32,7 +36,7 @@ final class PromoCodeControllerTest extends ApplicationTestCase
         $promoCodeData->massGenerateBatchId = $batchId;
         $this->promoCodeFacade->massCreate($promoCodeData);
 
-        $client = $this->configureCurrentClient('admin', 'admin123');
+        $client = $this->configureCurrentClient(self::ADMIN_USERNAME, self::ADMIN_PASSWORD);
         $client->request('GET', '/admin/promo-code/download-mass-generate-batch/' . $batchId);
         $response = $client->getResponse();
 
@@ -43,12 +47,26 @@ final class PromoCodeControllerTest extends ApplicationTestCase
             $response->headers->get('Content-Disposition'),
         );
 
-        $expectedCsvContent = '';
+        $expectedCodes = [];
 
         foreach ($this->promoCodeFacade->findByMassBatchId($batchId) as $promoCode) {
-            $expectedCsvContent .= $promoCode->getCode() . "\n";
+            $expectedCodes[] = $promoCode->getCode();
         }
+        sort($expectedCodes);
 
-        $this->assertSame($expectedCsvContent, $response->getContent());
+        $downloadedCodes = explode("\n", rtrim((string)$response->getContent(), "\n"));
+        sort($downloadedCodes);
+
+        $this->assertSame($expectedCodes, $downloadedCodes);
+    }
+
+    public function testDownloadingNonExistentBatchReturnsNotFound(): void
+    {
+        $nonExistentBatchId = $this->promoCodeFacade->getMassLastGeneratedBatchId() + 1;
+
+        $client = $this->configureCurrentClient(self::ADMIN_USERNAME, self::ADMIN_PASSWORD);
+        $client->request('GET', '/admin/promo-code/download-mass-generate-batch/' . $nonExistentBatchId);
+
+        $this->assertSame(404, $client->getResponse()->getStatusCode());
     }
 }
