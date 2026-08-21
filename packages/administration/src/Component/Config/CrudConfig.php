@@ -53,6 +53,11 @@ final class CrudConfig
     private ?array $listAllowedDomainIds = null;
 
     /**
+     * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, string>
+     */
+    private array $templates = [];
+
+    /**
      * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>|null>
      */
     private array $handlerClasses = [
@@ -261,6 +266,22 @@ final class CrudConfig
     }
 
     /**
+     * Overrides the template rendered by the given action. The template receives the same variables
+     * as the default one, extended by `configureTemplateParameters()` of the controller and its extensions.
+     *
+     * @param string $template #Template
+     * @return $this
+     */
+    public function setTemplate(ActionType $actionType, string $template): self
+    {
+        Assert::notSame($actionType, ActionType::DELETE, 'The "delete" action does not render a template.');
+
+        $this->templates[$actionType->value] = $template;
+
+        return $this;
+    }
+
+    /**
      * @template T of \Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface
      *
      * Register handler class or classes for CRUD actions.
@@ -352,6 +373,7 @@ final class CrudConfig
             $this->menuIcon,
             $this->listDomainControl,
             $this->listAllowedDomainIds,
+            $this->templates,
         );
     }
 }

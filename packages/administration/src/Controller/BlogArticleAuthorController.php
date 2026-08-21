@@ -6,8 +6,10 @@ namespace Shopsys\AdministrationBundle\Controller;
 
 use Override;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Model\Blog\Author\BlogArticleAuthorCrudHandler;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
@@ -42,7 +44,8 @@ class BlogArticleAuthorController extends AbstractCrudController
     {
         $config
             ->registerHandler(BlogArticleAuthorCrudHandler::class)
-            ->setMenuSection(SideMenuBuilder::SECTION_BLOG);
+            ->setMenuSection(SideMenuBuilder::SECTION_BLOG)
+            ->setTemplate(ActionType::EDIT, '@ShopsysAdministration/content/blogArticleAuthor/edit.html.twig');
     }
 
     #[Override]
@@ -64,23 +67,14 @@ class BlogArticleAuthorController extends AbstractCrudController
     }
 
     #[Override]
-    protected function getEditTemplate(): string
+    protected function configureTemplateParameters(CrudTemplateParameters $templateParameters): void
     {
-        return '@ShopsysAdministration/content/blogArticleAuthor/edit.html.twig';
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    #[Override]
-    protected function getEditViewData(object $entity): array
-    {
-        /** @var \Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor $blogArticleAuthor */
-        $blogArticleAuthor = $entity;
-
-        return [
-            'gridView' => $this->createBlogArticlesGrid($blogArticleAuthor)->createView(),
-        ];
+        if ($templateParameters->isAction(ActionType::EDIT)) {
+            $templateParameters->set(
+                'gridView',
+                $this->createBlogArticlesGrid($templateParameters->getEntity(BlogArticleAuthor::class))->createView(),
+            );
+        }
     }
 
     protected function createBlogArticlesGrid(BlogArticleAuthor $blogArticleAuthor): Grid
