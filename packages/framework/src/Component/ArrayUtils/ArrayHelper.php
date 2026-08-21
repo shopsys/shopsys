@@ -21,6 +21,18 @@ class ArrayHelper
         return is_array($data[$key] ?? null) ? $data[$key] : [];
     }
 
+    /**
+     * Returns the keys that are present in both arrays.
+     *
+     * @param array<array-key, mixed> $array1
+     * @param array<array-key, mixed> $array2
+     * @return list<int|string>
+     */
+    public static function getCommonKeys(array $array1, array $array2): array
+    {
+        return array_keys(array_intersect_key($array1, $array2));
+    }
+
     protected static function normalizeStringOrNull(mixed $value): ?string
     {
         if (!is_string($value) || $value === '') {
