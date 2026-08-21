@@ -203,7 +203,7 @@ abstract class AbstractCrudController extends AdminBaseController
     {
     }
 
-    public function listAction(): Response
+    final public function listAction(): Response
     {
         $listDomainControl = $this->definition->getConfig()->getListDomainControl();
         $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder): void {
@@ -229,7 +229,7 @@ abstract class AbstractCrudController extends AdminBaseController
         ]);
     }
 
-    public function detailAction(int $id): Response
+    final public function detailAction(int $id): Response
     {
         return $this->renderAction(ActionType::DETAIL, [
             'title' => $this->definition->getConfig()->getTitle(ActionType::DETAIL),
@@ -237,7 +237,7 @@ abstract class AbstractCrudController extends AdminBaseController
         ]);
     }
 
-    public function editAction(Request $request, int $id): Response
+    final public function editAction(Request $request, int $id): Response
     {
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface $handler */
         $handler = $this->definition->getHandlerForAction(ActionType::EDIT);
@@ -308,7 +308,7 @@ abstract class AbstractCrudController extends AdminBaseController
         ], $entity);
     }
 
-    public function createAction(Request $request): Response
+    final public function createAction(Request $request): Response
     {
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface $handler */
         $handler = $this->definition->getHandlerForAction(ActionType::CREATE);
@@ -367,7 +367,7 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     #[CsrfProtection]
-    public function deleteAction(int $id): RedirectResponse
+    final public function deleteAction(int $id): RedirectResponse
     {
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\DeleteHandlerInterface $handler */
         $handler = $this->definition->getHandlerForAction(ActionType::DELETE);
