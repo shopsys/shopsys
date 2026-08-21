@@ -23,6 +23,7 @@ export enum SkeletonEnum {
     MyReviews = 'myReviews',
     OrderConfirmation = 'order-confirmation',
     OrderDetail = 'orderDetail',
+    OrderDetailByHash = 'orderDetailByHash',
     OrderList = 'orderList',
     Product = 'product',
     ProductMainVariant = 'productMainVariant',

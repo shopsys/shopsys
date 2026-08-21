@@ -1,18 +1,15 @@
-import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
-import { SkeletonModulePageHero } from './SkeletonModulePageHero';
+import { SkeletonModuleOrderDetail } from './SkeletonModuleOrderDetail';
 
-export const SkeletonPageLogin: FC = () => (
+export const SkeletonPageOrderDetailByHash: FC = () => (
     <>
         <SkeletonModuleBreadcrumbs count={2} />
 
-        <Webline width="sm">
+        <Webline width="lg">
             <VerticalStack gap="sm">
-                <SkeletonModulePageHero />
-
-                <Skeleton className="h-100 w-full" />
+                <SkeletonModuleOrderDetail />
             </VerticalStack>
         </Webline>
     </>
