@@ -1,3 +1,4 @@
+import { CountBadge } from 'components/Basic/CountBadge/CountBadge';
 import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
@@ -114,12 +115,12 @@ export const MobileFilterAction: FC<MobileFilterActionProps> = ({
             <span className="font-secondary font-semibold text-sm">{t('Filter')}</span>
 
             {activeFilterCount > 0 && (
-                <span
+                <CountBadge
                     aria-hidden="true"
-                    className="absolute -top-0.5 -right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-background-warning px-1 font-bold font-secondary text-text-default text-xs leading-normal shadow-sm"
+                    className="absolute -top-0.5 -right-0.5 bg-background-warning text-text-default"
                 >
                     {activeFilterCount}
-                </span>
+                </CountBadge>
             )}
         </Button>
     );
