@@ -295,7 +295,7 @@ class PromoCodeFacade
 
     public function massCreate(PromoCodeData $promoCodeData): void
     {
-        $existingPromoCodeCodes = $this->promoCodeRepository->getAllPromoCodeCodes();
+        $existingPromoCodeCodes = $this->promoCodeRepository->getPromoCodeCodes();
         $generatedPromoCodeCount = 0;
 
         while ($generatedPromoCodeCount < $promoCodeData->quantity) {
@@ -321,11 +321,11 @@ class PromoCodeFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]|null
+     * @return string[]
      */
-    public function findByMassBatchId(int $batchId): ?array
+    public function getCodesByMassBatchId(int $batchId): array
     {
-        return $this->promoCodeRepository->findByMassBatchId($batchId);
+        return $this->promoCodeRepository->getPromoCodeCodes($batchId);
     }
 
     public function getHighestLimitByPromoCodeAndTotalPrice(
