@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use League\Csv\Writer;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -227,12 +228,11 @@ class PromoCodeController extends AdminBaseController
     #[CanView]
     public function downloadMassGenerateBatchAction(int $batchId): Response
     {
-        $tempFileName = tempnam(sys_get_temp_dir(), 'promoCodesCsv');
-        file_put_contents($tempFileName, $this->generateCsvFromPromoCodeFromBatchId($batchId));
-
-        $fileName = 'promoCodesBatch-' . $batchId;
-
-        return $this->file($tempFileName, $fileName);
+        return new DownloadFileResponse(
+            'promoCodesBatch-' . $batchId . '.csv',
+            $this->generateCsvFromPromoCodeFromBatchId($batchId),
+            'text/csv',
+        );
     }
 
     protected function generateCsvFromPromoCodeFromBatchId(int $batchId): string
