@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
+import { clearOrderConfirmationContext } from 'utils/order/orderConfirmationContextStorage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export const useLogout = () => {
@@ -22,6 +23,7 @@ export const useLogout = () => {
 
         if (logoutResult.data?.Logout) {
             resetContactInformation();
+            clearOrderConfirmationContext();
             updateProductListUuids({});
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
             updateAuthLoadingState('logout-loading');
