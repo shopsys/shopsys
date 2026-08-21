@@ -85,6 +85,13 @@ protected function configureActions(ActionsConfig $actions): void
 
     You can implement your own reusable actions by extending the `Shopsys\AdministrationBundle\Component\Action\AbstractAction` class.
 
+### What the closures receive
+
+The `displayIf()` and `linkToRoute()` closures receive the data of the page the action is displayed on:
+
+- `ActionType::EDIT` — the edited entity
+- `ActionType::LIST`, `ActionType::CREATE`, and `ActionType::DETAIL` — `null` (there is no single entity on these pages; for per-row actions in the list grid use row actions instead — their closures receive the data of the grid row they are rendered in)
+
 ### Configuration
 
 ```php
