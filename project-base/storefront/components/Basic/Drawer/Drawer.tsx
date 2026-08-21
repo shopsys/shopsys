@@ -45,7 +45,7 @@ export const Drawer: FC<DrawerProps> = ({
     };
     const drawerRole = role ?? 'dialog';
 
-    useFocusTrap(isActive ? drawerRef : undefined);
+    useFocusTrap(isActive && portalElement ? drawerRef : undefined);
 
     useEffect(() => {
         setPortalElement(document.getElementById(OVERLAY_PORTAL_ROOT_ID) ?? document.body);
@@ -103,7 +103,7 @@ export const Drawer: FC<DrawerProps> = ({
         <>
             <Overlay isActive={isActive} onClick={closeDrawer} />
 
-            <AnimatePresence initial={false}>
+            <AnimatePresence>
                 {isActive && (
                     <m.div
                         animate={{ translateX: '0%' }}

@@ -16,12 +16,12 @@ export const PromoCode: FC = () => {
     const [isContentVisible, setIsContentVisible] = useState(hasAppliedPromoCode);
     const [wasContentRequested, setWasContentRequested] = useState(hasAppliedPromoCode);
 
-    const togglePromoCodeVisibility = () => {
+    const toggleContentVisibility = () => {
         if (!isContentVisible) {
             setWasContentRequested(true);
         }
 
-        setIsContentVisible(!isContentVisible);
+        setIsContentVisible((currentValue) => !currentValue);
     };
 
     if (hasAppliedPromoCode) {
@@ -38,7 +38,7 @@ export const PromoCode: FC = () => {
                     data-tid={TIDs.blocks_promocode_add_button}
                     label={t('I have a discount coupon')}
                     value={isContentVisible}
-                    onChange={togglePromoCodeVisibility}
+                    onChange={toggleContentVisibility}
                 />
             </div>
 

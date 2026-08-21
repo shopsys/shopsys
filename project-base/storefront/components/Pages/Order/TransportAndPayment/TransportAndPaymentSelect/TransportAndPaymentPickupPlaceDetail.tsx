@@ -102,7 +102,7 @@ export const TransportAndPaymentPickupPlaceDetail: FC<TransportAndPaymentPickupP
                             <ArrowIcon
                                 aria-hidden="true"
                                 className={twJoin(
-                                    'size-4 min-w-4 text-link-default transition group-hover:text-link-hovered',
+                                    'size-4 min-w-4 text-link-default transition group-hover:text-link-hovered motion-reduce:transition-none',
                                     areOpeningHoursExpanded && 'rotate-180',
                                 )}
                             />

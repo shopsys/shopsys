@@ -41,7 +41,7 @@ export const collapseExpandAnimationWithMargin: Variants = {
 
 export const fadeAnimation: Variants = {
     visible: {
-        opacity: 100,
+        opacity: 1,
     },
     hidden: {
         opacity: 0,

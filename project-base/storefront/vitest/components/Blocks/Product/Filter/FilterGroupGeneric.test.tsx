@@ -47,7 +47,6 @@ vi.mock('store/useSessionStore', () => ({
 
 vi.mock('components/Blocks/Product/Filter/utils/useFilterShowLess', () => ({
     useFilterShowLess: (options: any, defaultNumberOfShownItems: number) => ({
-        defaultOptions: options?.slice(0, mockFilterShowLess.numberOfShownItems || defaultNumberOfShownItems) || [],
         isShowLessMoreShown:
             (options?.length || 0) > (mockFilterShowLess.numberOfShownItems || defaultNumberOfShownItems),
         isWithAllItemsShown: mockFilterShowLess.isShownMore,

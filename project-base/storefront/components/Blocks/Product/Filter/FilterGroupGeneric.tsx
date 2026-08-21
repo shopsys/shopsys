@@ -10,6 +10,7 @@ import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 import {
     FilterGroupContent,
     FilterGroupContentItem,
+    FilterGroupHiddenItems,
     FilterGroupTitle,
     FilterGroupWrapper,
     ShowAllButton,
@@ -46,11 +47,13 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     const selectedItems = currentFilter?.[filterField];
     const contentId = createAriaParameter('filter-group', title);
 
-    const { defaultOptions, isShowLessMoreShown, isWithAllItemsShown, setAreAllItemsShown } = useFilterShowLess(
+    const { isShowLessMoreShown, isWithAllItemsShown, setAreAllItemsShown } = useFilterShowLess(
         options,
         defaultNumberOfShownItems,
         selectedItems,
     );
+    const shownOptions = options.slice(0, defaultNumberOfShownItems);
+    const hiddenOptions = options.slice(defaultNumberOfShownItems);
 
     const handleCheck = (uuid: string) => {
         switch (filterField) {
@@ -61,6 +64,35 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                 updateFilterFlagsQuery(uuid);
                 break;
         }
+    };
+
+    const renderOption = (option: MappedFilterOption, index: number) => {
+        const isFlagAndSelectedByDefault = filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
+        const isChecked = !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
+        const isDisabled = option.count === 0 && !isChecked;
+
+        const optionLabel =
+            filterField === 'flags' ? (
+                <Flag className="flex h-5 w-fit items-center leading-0" rgbBgColor={option.rgbColor}>
+                    {option.name}
+                </Flag>
+            ) : (
+                option.name
+            );
+
+        return (
+            <FilterGroupContentItem key={option.uuid} isDisabled={isDisabled}>
+                <Checkbox
+                    count={option.count}
+                    disabled={isDisabled}
+                    id={`${filterField}.${index}.checked`}
+                    label={optionLabel}
+                    name={`${filterField}.${index}.checked`}
+                    value={isChecked}
+                    onChange={() => handleCheck(option.uuid)}
+                />
+            </FilterGroupContentItem>
+        );
     };
 
     return (
@@ -76,52 +108,22 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
             <AnimatePresence initial={false}>
                 {isGroupOpen && (
                     <FilterGroupContent id={contentId}>
-                        {defaultOptions && (
-                            <AnimatePresence initial={false}>
-                                {defaultOptions.map((option, index) => {
-                                    const isFlagAndSelectedByDefault =
-                                        filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
-                                    const isChecked =
-                                        !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
-                                    const isDisabled = option.count === 0 && !isChecked;
+                        {shownOptions.map(renderOption)}
 
-                                    const optionLabel =
-                                        filterField === 'flags' ? (
-                                            <Flag
-                                                className="flex h-5 w-fit items-center leading-0"
-                                                rgbBgColor={option.rgbColor}
-                                            >
-                                                {option.name}
-                                            </Flag>
-                                        ) : (
-                                            option.name
-                                        );
+                        <AnimatePresence initial={false}>
+                            {isWithAllItemsShown && (
+                                <FilterGroupHiddenItems keyName={`${filterField}-hidden-options`}>
+                                    {hiddenOptions.map((option, index) =>
+                                        renderOption(option, index + defaultNumberOfShownItems),
+                                    )}
+                                </FilterGroupHiddenItems>
+                            )}
+                        </AnimatePresence>
 
-                                    return (
-                                        <FilterGroupContentItem
-                                            key={option.uuid}
-                                            isDisabled={isDisabled}
-                                            keyName={option.uuid}
-                                        >
-                                            <Checkbox
-                                                count={option.count}
-                                                disabled={isDisabled}
-                                                id={`${filterField}.${index}.checked`}
-                                                label={optionLabel}
-                                                name={`${filterField}.${index}.checked`}
-                                                value={isChecked}
-                                                onChange={() => handleCheck(option.uuid)}
-                                            />
-                                        </FilterGroupContentItem>
-                                    );
-                                })}
-
-                                {isShowLessMoreShown && (
-                                    <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
-                                        {isWithAllItemsShown ? t('Show less') : t('Show more')}
-                                    </ShowAllButton>
-                                )}
-                            </AnimatePresence>
+                        {isShowLessMoreShown && (
+                            <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
+                                {isWithAllItemsShown ? t('Show less') : t('Show more')}
+                            </ShowAllButton>
                         )}
                     </FilterGroupContent>
                 )}
