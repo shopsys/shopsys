@@ -1,3 +1,4 @@
+import { CountBadge } from 'components/Basic/CountBadge/CountBadge';
 import { HorizontalScrollHint } from 'components/Basic/HorizontalScrollHint/HorizontalScrollHint';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { useRouter } from 'next/router';
@@ -7,7 +8,6 @@ import { ComplaintStatusCount } from 'utils/complaints/useComplaintsData';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { COMPLAINT_STATUS_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { pushQueries } from 'utils/queryParams/pushQueries';
-import { twMergeCustom } from 'utils/twMerge';
 
 type ComplaintsStatusTabsProps = {
     complaintStatusCounts: ComplaintStatusCount[];
@@ -42,16 +42,15 @@ export const ComplaintsStatusTabs: FC<ComplaintsStatusTabsProps> = ({ complaintS
                                 onClick={() => changeStatus(statusTab.statusCode)}
                             >
                                 <span>{statusTab.label}</span>
-                                <span
-                                    className={twMergeCustom(
-                                        'rounded-full px-2 py-0.5 text-xs',
+                                <CountBadge
+                                    className={
                                         isActive
                                             ? 'bg-background-default text-link-default'
-                                            : 'bg-fill-accent-less text-link-default',
-                                    )}
+                                            : 'bg-fill-accent-less text-link-default'
+                                    }
                                 >
                                     {statusTab.count}
-                                </span>
+                                </CountBadge>
                             </Tag>
                         );
                     })}
