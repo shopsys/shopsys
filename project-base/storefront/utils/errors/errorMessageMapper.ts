@@ -25,6 +25,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'product-price-missing': t('Product price is missing.'),
         'register-by-order-is-not-possible': t('It was not possible to create register new user from the order'),
         'store-not-found': t('Store not found.'),
+        'too-many-form-submissions': t('Too many submissions. Try again in a few minutes.'),
         'too-many-login-attempts': t('Too many login attempts. Try again later.'),
         'too-many-store-search-attempts': t('Too many store search attempts. Try again later.'),
         // Cart mutation errors
