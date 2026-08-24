@@ -238,6 +238,45 @@ If your verbosity is set to `toast-and-console`, the error page for 500 errors a
 
 This function will be your friend while logging exceptions anywhere in the app. It checks the current environment and based on it logs it to the console (development) and sends the error to Sentry. You should use it to make sure the errors are correctly displayed both in the console and in Sentry.
 
+## Errors from third-party browser scripts
+
+Scripts injected into the page by someone else — a chat widget, an analytics tag, anything added through Google Tag Manager — run in the same browser context as our own code. When they throw, Sentry captures the error, and by default it is indistinguishable from ours: `@sentry/nextjs` rewrites every stack frame's origin to `app:///`, whatever host the file actually came from. The result is a Sentry issue that looks like a storefront bug and, in production, an auto-created Jira ticket for code we do not ship.
+
+Two independent mechanisms in `instrumentation-client.ts` deal with this.
+
+### Suppressing a known vendor with `denyUrls`
+
+`denyUrls` drops an event outright when its stack points at a matching URL:
+
+```ts
+denyUrls: [/^https?:\/\/([a-z0-9-]+\.)*(smartsupp\.com|smartsuppchat\.com|smartsuppcdn\.com)\//],
+```
+
+Use this for a specific vendor you have identified and decided not to hear from. Anchor the pattern to the vendor's own origins so it can never match a first-party file or route that merely contains the vendor's name in its path. Match the vendor's **real hostname**, not the rewritten `app:///…` path — `denyUrls` is applied by the event-filters integration, which is first in the browser SDK's default integration list, while the frame-rewriting integration is appended last. Event processors run in registration order, so the filter still sees the original URL. Enabling `_experimental.thirdPartyOriginStackFrames` changes that rewriting, so re-check any deny pattern if it is ever turned on.
+
+Note the tradeoff: these events are discarded and cannot be recovered later. Diagnosing a future problem with a suppressed vendor means temporarily narrowing or removing its pattern.
+
+### Tagging everything else with `third_party_code`
+
+For scripts nobody has identified yet, we mark our own code instead of blocklisting theirs. At build time the Sentry bundler plugin stamps every first-party module with an application key, and `thirdPartyErrorFilterIntegration` tags any event whose frames carry none of it:
+
+```ts
+Sentry.thirdPartyErrorFilterIntegration({
+    filterKeys: [SENTRY_APPLICATION_KEY],
+    behaviour: 'apply-tag-if-exclusively-contains-third-party-frames',
+}),
+```
+
+`sentryApplicationKey.js` in the storefront root is the single source of truth for the key. It is a CommonJS module precisely so that `next.config.js` (which passes it to the bundler plugin as `applicationKey`) and `instrumentation-client.ts` (which filters on it) cannot drift apart.
+
+This layer **tags and never drops**, deliberately. A frame without the key reads as third-party, so if key injection ever stopped, every frame would look foreign — under a `drop-*` behaviour that would silently discard all browser errors with no signal. Tagging can only mislabel. Filter the issue stream with `!third_party_code:True`, and note that the production Jira auto-create alert rule excludes tagged events.
+
+The tag only appears in builds where the plugin actually ran, which needs `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT` present and `APP_ENV` other than `development`. To confirm a build is instrumented, look for the key in the output:
+
+```sh
+grep -rl '_sentryBundlerPluginAppKey:shopsys-storefront' .next/static/chunks
+```
+
 ## Run-time error on the server (`getServerSideProps` or `getInitialProps`)
 
 - **In production** - The error is propagated to the `_error.tsx` page with a status code **500**. We do not need to handle the error inside `getServerSideProps` or `getInitialProps`as it is handled inside the error page, where it is available inside `context.err`. The user is only shown `<Error500Content />`, the status code is **500**. A default error message (`500 - Internal Server Error`) is logged into the console, meaning the underlying error is unknown to the user.
