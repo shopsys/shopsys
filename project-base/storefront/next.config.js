@@ -99,6 +99,8 @@ const sentryConfig = {
     widenClientFileUpload: true,
     reactComponentAnnotation: {
         enabled: true,
+        // Keep Sentry annotations from revealing the spam protection field to bots.
+        ignoredComponents: ['HoneyPotInput'],
     },
     disableLogger: true,
     bundleSizeOptimizations: {
