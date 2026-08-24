@@ -36,3 +36,6 @@ framework:
             frontend_api_password_recovery_rate_limiter_cache:
                 adapter: cache.adapter.redis
                 provider: snc_redis.frontend_api_password_recovery_rate_limiter
+            form_spam_protection_rate_limiter_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.form_spam_protection_rate_limiter
