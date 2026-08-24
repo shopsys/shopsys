@@ -7,18 +7,26 @@ import { twMergeCustom } from 'utils/twMerge';
 type OverlayProps = {
     isActive: boolean;
     isHiddenOnDesktop?: boolean;
+    shouldDisablePointerEventsOnExit?: boolean;
     className?: string;
     onClick?: MouseEventHandler;
 };
 
-export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop, className, children }) => {
+export const Overlay: FC<OverlayProps> = ({
+    onClick,
+    isActive,
+    isHiddenOnDesktop,
+    shouldDisablePointerEventsOnExit,
+    className,
+    children,
+}) => {
     return (
         <AnimatePresence>
             {isActive && (
                 <m.div
                     animate="visible"
                     data-tid={TIDs.overlay}
-                    exit="hidden"
+                    exit={shouldDisablePointerEventsOnExit ? { opacity: 0, pointerEvents: 'none' } : 'hidden'}
                     initial="hidden"
                     variants={fadeAnimation}
                     className={twMergeCustom(
