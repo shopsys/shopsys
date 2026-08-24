@@ -219,6 +219,8 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         $this->dispatchFakeKernelResponseEventToTriggerSendMessageToTransport();
         $envelopes = [...$highPriorityTransport->getSent(), ...$regularPriorityTransport->getSent()];
 
+        $processedProductIds = [];
+
         foreach ($envelopes as $envelope) {
             $message = $envelope->getMessage();
 
@@ -229,6 +231,12 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
             if ($allowedProductIds !== null && !in_array($message->productId, $allowedProductIds, true)) {
                 continue;
             }
+
+            if (in_array($message->productId, $processedProductIds, true)) {
+                continue;
+            }
+
+            $processedProductIds[] = $message->productId;
 
             $productRecalculationMessageHandler($message);
         }
