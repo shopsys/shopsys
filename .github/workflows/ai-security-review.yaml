@@ -24,6 +24,13 @@ jobs:
                 with:
                     fetch-depth: 0
 
+            # actions/checkout does not set origin/HEAD; the built-in /security-review baseline
+            # needs it to resolve the merge-base, otherwise it burns turns probing for it
+            -   name: Set origin/HEAD to the PR base branch
+                run: git remote set-head origin "$BASE_REF"
+                env:
+                    BASE_REF: ${{ github.event.pull_request.base.ref }}
+
             -   name: Run Claude security audit
                 uses: anthropics/claude-code-action@v1
                 env:
@@ -34,5 +41,5 @@ jobs:
                     prompt: "/security-audit ${{ github.repository }}#${{ github.event.pull_request.number }}"
                     claude_args: |
                         --model claude-opus-5
-                        --max-turns 100
-                        --allowedTools "Skill(security-review),Read,Grep,Glob,Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git status:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr comment:*),Bash(gh api:*),mcp__github_inline_comment__create_inline_comment"
+                        --max-turns 150
+                        --allowedTools "Skill(security-review),Read,Grep,Glob,Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git status:*),Bash(git rev-parse:*),Bash(git merge-base:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr comment:*),Bash(gh api:*),mcp__github_inline_comment__create_inline_comment"
