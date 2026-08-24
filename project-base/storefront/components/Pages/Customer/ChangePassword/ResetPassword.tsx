@@ -12,7 +12,7 @@ type ResetPasswordProps = {
 
 export const ResetPassword: FC<ResetPasswordProps> = ({ email }) => {
     const { t } = useTranslation();
-    const [, resetPassword] = usePasswordRecoveryMutation();
+    const [{ fetching }, resetPassword] = usePasswordRecoveryMutation();
     const handleError = useErrorHandler();
 
     const onResetPasswordHandler = async () => {
@@ -27,7 +27,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ email }) => {
     };
 
     return (
-        <Button size="small" onClick={onResetPasswordHandler}>
+        <Button disabled={fetching} hasDisabledLook={fetching} size="small" onClick={onResetPasswordHandler}>
             {t('Send me a link to set a new password')}
         </Button>
     );

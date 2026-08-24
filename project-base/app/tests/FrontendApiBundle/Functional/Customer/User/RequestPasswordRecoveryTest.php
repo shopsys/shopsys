@@ -26,6 +26,8 @@ class RequestPasswordRecoveryTest extends GraphQlTestCase
 
     private const string ANY_RATE_LIMITER_KEY = 'any-key';
 
+    private const string DIFFERENT_CLIENT_IP = '10.255.0.1';
+
     private string $existingEmail;
 
     #[Override]
@@ -70,7 +72,7 @@ class RequestPasswordRecoveryTest extends GraphQlTestCase
         );
     }
 
-    public function testAttemptsRejectedByValidationAreCountedTowardsTheRateLimit(): void
+    public function testAttemptsRejectedByValidationAreCountedTowardsTheIpRateLimit(): void
     {
         $this->assertValidationErrorForNotExistingEmail($this->getPasswordRecoveryResponse(self::NOT_EXISTING_EMAIL));
         $remainingTokens = $this->peekRateLimit(self::IP_RATE_LIMITER_SERVICE_ID, $this->getClientIp())
@@ -81,6 +83,43 @@ class RequestPasswordRecoveryTest extends GraphQlTestCase
         $this->assertSame(
             $remainingTokens - 1,
             $this->peekRateLimit(self::IP_RATE_LIMITER_SERVICE_ID, $this->getClientIp())->getRemainingTokens(),
+        );
+    }
+
+    public function testAttemptsRejectedByValidationAreCountedTowardsTheEmailRateLimit(): void
+    {
+        $this->exhaustEmailRateLimit(self::NOT_EXISTING_EMAIL);
+
+        $this->assertUserError(
+            $this->getPasswordRecoveryResponse(self::NOT_EXISTING_EMAIL),
+            self::TOO_MANY_ATTEMPTS_USER_CODE,
+        );
+    }
+
+    public function testEmailRateLimitIsScopedToTheSubmittedEmail(): void
+    {
+        $this->exhaustEmailRateLimit($this->existingEmail);
+
+        $this->assertUserError(
+            $this->getPasswordRecoveryResponse($this->existingEmail),
+            self::TOO_MANY_ATTEMPTS_USER_CODE,
+        );
+        $this->assertPasswordRecoveryRequested(
+            $this->getPasswordRecoveryResponse(
+                CustomerUserDataFixture::USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL,
+            ),
+        );
+    }
+
+    public function testEmailRateLimitAppliesEvenWhenTheClientIpChanges(): void
+    {
+        $this->exhaustEmailRateLimit($this->existingEmail);
+
+        $this->configureCurrentClient(null, null, ['REMOTE_ADDR' => self::DIFFERENT_CLIENT_IP]);
+
+        $this->assertUserError(
+            $this->getPasswordRecoveryResponse($this->existingEmail),
+            self::TOO_MANY_ATTEMPTS_USER_CODE,
         );
     }
 
@@ -128,6 +167,16 @@ class RequestPasswordRecoveryTest extends GraphQlTestCase
         $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
         $this->assertCount(1, $validationErrors);
         $this->assertSame(ExistingEmail::USER_WITH_EMAIL_DOES_NOT_EXIST_ERROR, $validationErrors['email'][0]['code']);
+    }
+
+    private function exhaustEmailRateLimit(string $email): void
+    {
+        $emailRateLimit = $this->peekRateLimit(self::EMAIL_RATE_LIMITER_SERVICE_ID, self::ANY_RATE_LIMITER_KEY)
+            ->getLimit();
+
+        for ($attempt = 0; $attempt < $emailRateLimit; $attempt++) {
+            $this->getPasswordRecoveryResponse($email);
+        }
     }
 
     private function exhaustIpRateLimit(): void
