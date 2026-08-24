@@ -12343,6 +12343,15 @@ Name of the sender
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="contactforminput.subject">subject</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Subject of the message
+
+</td>
+</tr>
 </tbody>
 </table>
 

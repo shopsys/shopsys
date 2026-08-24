@@ -5,7 +5,7 @@ services:
         public: false
 
     Shopsys\FrontendApiBundle\:
-        resource: '../../**/*{Context,Facade,Factory,Helper,Listener,Loader,Mapper,Mutation,Provider,Query,Repository,Subscriber,Transformer,Validator}.php'
+        resource: '../../**/*{Context,Enum,Facade,Factory,Helper,Listener,Loader,Mapper,Mutation,Provider,Query,Repository,Subscriber,Transformer,Validator}.php'
 
     resolverMaps:
         namespace: Shopsys\FrontendApiBundle\
@@ -249,6 +249,10 @@ services:
     Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade:
         arguments:
             $logger: '@monolog.logger'
+
+    Shopsys\FrontendApiBundle\Model\SpamProtection\FormSpamProtectionFacade:
+        arguments:
+            $formSpamProtectionRateLimiter: '@limiter.frontend_api_form_spam_protection'
 
     Shopsys\FrontendApiBundle\Model\Store\StoreSearchTextCoordinatesProvider:
         arguments:

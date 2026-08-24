@@ -1,5 +1,7 @@
 ContactFormInputDecorator:
     type: input-object
+    inherits:
+        - 'HoneyPotInputObject'
     decorator: true
     config:
         fields:

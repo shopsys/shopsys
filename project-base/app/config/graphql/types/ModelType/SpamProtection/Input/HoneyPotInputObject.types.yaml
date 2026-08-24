@@ -1,0 +1,4 @@
+HoneyPotInputObject:
+    type: input-object
+    inherits:
+        - 'HoneyPotInputObjectDecorator'

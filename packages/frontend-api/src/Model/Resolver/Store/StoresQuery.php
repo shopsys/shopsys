@@ -10,13 +10,13 @@ use Overblog\GraphQLBundle\Relay\Connection\Output\Connection;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrontendApiBundle\Component\HttpFoundation\ClientIpProvider;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Store\Exception\TooManyStoreSearchAttemptsUserError;
 use Shopsys\FrontendApiBundle\Model\Store\StoreConnection;
 use Shopsys\FrontendApiBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Model\Store\StoreSearchTextCoordinatesProvider;
 use Shopsys\FrontendApiBundle\Model\Store\StoresFilterOptions;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
 class StoresQuery extends AbstractQuery
@@ -26,7 +26,7 @@ class StoresQuery extends AbstractQuery
         protected readonly Domain $domain,
         protected readonly StoreSearchTextCoordinatesProvider $storeSearchTextCoordinatesProvider,
         protected readonly RateLimiterFactoryInterface $storesSearchRateLimiter,
-        protected readonly RequestStack $requestStack,
+        protected readonly ClientIpProvider $clientIpProvider,
     ) {
     }
 
@@ -93,11 +93,8 @@ class StoresQuery extends AbstractQuery
 
     protected function checkStoresSearchRateLimit(): void
     {
-        $request = $this->requestStack->getCurrentRequest();
-        $clientIp = $request?->getClientIp() ?? 'unknown';
-
         $limit = $this->storesSearchRateLimiter
-            ->create('stores-search:' . $clientIp)
+            ->create('stores-search:' . $this->clientIpProvider->getClientIp())
             ->consume();
 
         if (!$limit->isAccepted()) {

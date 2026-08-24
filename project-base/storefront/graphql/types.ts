@@ -1023,6 +1023,8 @@ export type TypeContactFormInput = {
   message: Scalars['String']['input'];
   /** Name of the sender */
   name: Scalars['String']['input'];
+  /** Subject of the message */
+  subject?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type TypeCoordinates = {

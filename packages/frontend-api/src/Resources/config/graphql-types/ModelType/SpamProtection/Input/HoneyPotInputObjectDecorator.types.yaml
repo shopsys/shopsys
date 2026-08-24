@@ -1,0 +1,8 @@
+HoneyPotInputObjectDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            subject:
+                type: "String"
+                description: "Subject of the message"
