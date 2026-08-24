@@ -13,9 +13,9 @@ class MoneyDataTypeFormatter extends AbstractChangeSetFormatter
      */
     public function formatChanges(array $changes): string
     {
-        $changes['oldReadableValue'] = $this->formatCode($changes['oldReadableValue'] ? Money::create($changes['oldReadableValue'])->round(2)->getAmount() : t('empty value'));
-        $changes['newReadableValue'] = $this->formatCode($changes['newReadableValue'] ? Money::create($changes['newReadableValue'])->round(2)->getAmount() : t('empty value'));
-
-        return t('from oldReadableValue to newReadableValue', $changes);
+        return $this->formatFromToChanges(
+            $changes['oldReadableValue'] ? Money::create($changes['oldReadableValue'])->round(2)->getAmount() : t('empty value'),
+            $changes['newReadableValue'] ? Money::create($changes['newReadableValue'])->round(2)->getAmount() : t('empty value'),
+        );
     }
 }

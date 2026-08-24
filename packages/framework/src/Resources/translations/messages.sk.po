@@ -3805,8 +3805,8 @@ msgstr "prázdna hodnota"
 msgid "exists"
 msgstr "existuje"
 
-msgid "from oldReadableValue to newReadableValue"
-msgstr "z oldReadableValue na newReadableValue"
+msgid "from %oldReadableValue% to %newReadableValue%"
+msgstr "z %oldReadableValue% na %newReadableValue%"
 
 msgid "full"
 msgstr "plný"

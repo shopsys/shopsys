@@ -19,9 +19,9 @@ class DateTimeDataTypeFormatter extends AbstractChangeSetFormatter
      */
     public function formatChanges(array $changes): string
     {
-        $changes['oldReadableValue'] = $this->formatCode($changes['oldValue'] ? $this->dateTimeFormatterExtension->formatDateTime(new DatePoint($changes['oldValue'])) : t('empty value'));
-        $changes['newReadableValue'] = $this->formatCode($changes['newValue'] ? $this->dateTimeFormatterExtension->formatDateTime(new DatePoint($changes['newValue'])) : t('empty value'));
-
-        return t('from oldReadableValue to newReadableValue', $changes);
+        return $this->formatFromToChanges(
+            $changes['oldValue'] ? $this->dateTimeFormatterExtension->formatDateTime(new DatePoint($changes['oldValue'])) : t('empty value'),
+            $changes['newValue'] ? $this->dateTimeFormatterExtension->formatDateTime(new DatePoint($changes['newValue'])) : t('empty value'),
+        );
     }
 }

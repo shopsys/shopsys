@@ -124,12 +124,38 @@ class ResolvedChangesFormatterTest extends TestCase
         );
     }
 
-    private function injectTranslatorStub(): void
+    public function testTranslationReferencingRawValuesDoesNotInjectUnescapedHtml(): void
+    {
+        // simulates a project translation where the translator mistakenly referenced the raw values instead of the readable ones
+        $this->injectTranslatorStub([
+            'from %oldReadableValue% to %newReadableValue%' => 'z %oldValue% na %newValue%',
+        ]);
+
+        $formattedChanges = $this->resolvedChangesFormatter->formatResolvedChanges([
+            'note' => [
+                'dataType' => 'string',
+                'oldReadableValue' => '<img src=x onerror="alert(document.domain)">',
+                'newReadableValue' => 'harmless note',
+                'oldValue' => '<img src=x onerror="alert(document.domain)">',
+                'newValue' => 'harmless note',
+            ],
+        ]);
+
+        $this->assertSame(
+            'Attribute <code>note</code> was changed z %oldValue% na %newValue%',
+            $formattedChanges,
+        );
+    }
+
+    /**
+     * @param array<string, string> $translations
+     */
+    private function injectTranslatorStub(array $translations = []): void
     {
         $translator = $this->createStub(Translator::class);
         $translator
             ->method('trans')
-            ->willReturnCallback(static fn (string $id, array $parameters = []): string => strtr($id, $parameters));
+            ->willReturnCallback(static fn (string $id, array $parameters = []): string => strtr($translations[$id] ?? $id, $parameters));
 
         Translator::injectSelf($translator);
     }
