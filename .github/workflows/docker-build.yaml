@@ -617,46 +617,6 @@ jobs:
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
-    tests-acceptance:
-        name: Run acceptance tests
-        needs: [build-php-fpm-image, build-elasticsearch-image]
-        if: |
-            always() && !failure() && !cancelled() &&
-            (
-                github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
-                github.ref_protected == true
-            ) &&
-            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
-            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
-        runs-on: ubuntu-22.04
-        steps:
-            -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v7
-                with:
-                    ref: ${{ github.ref }}
-            -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v8
-                with:
-                    name: docker-compose
-            -   name: Build application
-                run: |
-                    docker compose pull webserver postgres elasticsearch redis php-fpm selenium-server
-                    docker compose up -d webserver postgres elasticsearch redis php-fpm selenium-server
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
-            -   name: Run acceptance tests
-                run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests-acceptance
-            -   name: PHP-FPM container logs
-                if: ${{ failure() }}
-                run: docker compose logs php-fpm
-            -   name: Copy Codeception logs from container
-                if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
-            -   name: Upload Codeception logs to artifacts
-                if: ${{ failure() }}
-                uses: actions/upload-artifact@v7
-                with:
-                    name: acceptance-logs
-                    path: ./project-base/app/var/log/
     tests-storefront-smoke:
         name: Run Cypress smoke tests
         needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
@@ -1109,13 +1069,11 @@ jobs:
                         docker compose exec -T -e COMPOSER_GITHUB_TOKEN php-fpm sh -c 'composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"'
                     fi
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create assets npm build-version-generate db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create assets npm build-version-generate db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
             -   name: Check standards
                 run: docker compose exec -T php-fpm php phing standards
             -   name: Run tests
                 run: docker compose exec -T php-fpm php phing tests
-            -   name: Run acceptance tests
-                run: docker compose exec -T php-fpm php phing tests-acceptance
             -   name: Check translations are dumped
                 run: |
                     docker compose exec -T php-fpm php phing translations-dump
@@ -1156,15 +1114,6 @@ jobs:
             -   name: Storefront container logs
                 if: ${{ failure() }}
                 run: docker compose logs storefront
-            -   name: Copy Codeception logs from container
-                if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
-            -   name: Upload Codeception logs to artifacts
-                if: ${{ failure() }}
-                uses: actions/upload-artifact@v7
-                with:
-                    name: acceptance-logs
-                    path: ./project-base/app/var/log/
             -   name: Build Storefront part of application
                 run: |
                     docker compose cp ./project-base/app/schema.graphql storefront:/home/node/app/schema.graphql
@@ -1401,7 +1350,7 @@ jobs:
         if: |
             always()
         name: Build successful
-        needs: [tests-acceptance, standards, tests-unit-functional-smoke, tests-unit-functional-smoke-first-czech-domain, check-demo-data-limited-domains, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-smoke, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, push-regenerated-snapshots, unit-test-storefront, check-upgrade-notes]
+        needs: [standards, tests-unit-functional-smoke, tests-unit-functional-smoke-first-czech-domain, check-demo-data-limited-domains, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-smoke, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, push-regenerated-snapshots, unit-test-storefront, check-upgrade-notes]
         runs-on: ubuntu-22.04
         env:
             BUILD_FORK_RESULT: ${{ needs.build-fork-docker-images.result }}
@@ -1409,7 +1358,6 @@ jobs:
             TESTS_RESULT: ${{ needs.tests-unit-functional-smoke.result }}
             TESTS_CZECH_RESULT: ${{ needs.tests-unit-functional-smoke-first-czech-domain.result }}
             CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT: ${{ needs.check-demo-data-limited-domains.result }}
-            TESTS_ACCEPTANCE_RESULT: ${{ needs.tests-acceptance.result }}
             STANDARDS_STOREFRONT_RESULT: ${{ needs.standards-storefront.result }}
             TRANSLATIONS_DUMP_RESULT: ${{ needs.translations-dump-check.result }}
             REVIEW_RESULT: ${{ needs.review.result }}
@@ -1427,5 +1375,5 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
-                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} ${CHECK_UPGRADE_NOTES_RESULT} > /dev/null ; echo $?`
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} ${CHECK_UPGRADE_NOTES_RESULT} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"

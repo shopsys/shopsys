@@ -19,7 +19,7 @@ For your code to be accepted, you should follow our guidelines mentioned above,
 and the code must pass [coding standards](https://docs.shopsys.com/en/latest/contributing/coding-standards/) checks and tests:
 
 ```
-php phing standards tests tests-acceptance
+php phing standards tests
 ```
 
 Your code may not infringe the copyrights of any third party.
@@ -28,4 +28,4 @@ Apply the same procedure if you make the changes in the Dockerfile or docker-com
 
 These rules ensure that the code will remain consistent and that the project is maintainable in the future.
 
-_Tip: Read more about automatic checks in [Console Commands for Application Management (Phing Targets)](https://docs.shopsys.com/en/latest/introduction/console-commands-for-application-management-phing-targets/) and [Running Acceptance Tests](https://docs.shopsys.com/en/latest/introduction/running-acceptance-tests/)._
+_Tip: Read more about automatic checks in [Console Commands for Application Management (Phing Targets)](https://docs.shopsys.com/en/latest/introduction/console-commands-for-application-management-phing-targets/)._

@@ -10,7 +10,6 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SplFileInfo;
-use Tests\CodingStandards\Unit\CsFixer\Constraint\IsIdenticalString;
 use function is_string;
 
 abstract class AbstractFixerTestCase extends TestCase
@@ -39,10 +38,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
             $fixer->fix($file, $tokens);
 
-            static::assertThat(
-                $tokens->generateCode(),
-                new IsIdenticalString($expected),
-            );
+            static::assertSame($expected, $tokens->generateCode());
             static::assertTrue(
                 $tokens->isChanged(),
                 'Tokens collection built on input code must be marked as changed after fixing.',
@@ -65,10 +61,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $fixer->fix($file, $tokens);
 
-        static::assertThat(
-            $tokens->generateCode(),
-            new IsIdenticalString($expected),
-        );
+        static::assertSame($expected, $tokens->generateCode());
         static::assertFalse(
             $tokens->isChanged(),
             'Tokens collection built on expected code must not be marked as changed after fixing.',

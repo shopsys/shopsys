@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="NotInspected" pattern="file:src/Shopsys/ShopBundle/Component/Validator/ValidatorBuilder.php||file[ShopSys]:src/Shopsys/ShopBundle/Tests/Test/Codeception/_generated//*" />
-</component>

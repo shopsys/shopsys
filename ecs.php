@@ -108,7 +108,6 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Component/Doctrine/MoneyType.php',
                 __DIR__ . '/packages/framework/src/Component/EntityExtension/QueryBuilder.php',
                 __DIR__ . '/packages/administration/src/Component/Action/AbstractAction.php',
-                __DIR__ . '/packages/framework/tests/Test/Codeception/ActorInterface.php',
             ],
             ClassLengthSniff::class => [
                 __DIR__ . '/packages/framework/src/Form/Admin/Product/ProductFormType.php',
@@ -200,7 +199,6 @@ return ECSConfig::configure()
             ],
             ValidVariableNameSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/HttpFoundation/Exception/NotFoundRedirectToStorefrontException.php',
-                __DIR__ . '/packages/framework/tests/Test/Codeception/ActorInterface.php',
             ],
             ForbiddenSuperGlobalSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/HttpFoundation/Exception/NotFoundRedirectToStorefrontException.php',
@@ -210,11 +208,7 @@ return ECSConfig::configure()
             ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_USELESS_ANNOTATION => $pathsExcludedFromStrictTyping,
             ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT => $pathsExcludedFromStrictTyping,
             ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_USELESS_ANNOTATION => $pathsExcludedFromStrictTyping,
-            ReturnTypeHintSniff::class . '.' . ReturnTypeHintSniff::CODE_MISSING_ANY_TYPE_HINT => [
-                __DIR__ . '/packages/framework/tests/Test/Codeception/ActorInterface.php',
-            ],
             ObjectIsCreatedByFactorySniff::class => [
-                __DIR__ . '/packages/framework/src/Component/Domain/DomainFactoryOverwritingDomainUrl.php',
                 __DIR__ . '/packages/framework/src/Component/EntityExtension/EntityExtensionListener.php',
                 __DIR__ . '/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php',
                 __DIR__ . '/packages/framework/src/Model/Order/Preview/OrderPreviewCalculation.php',

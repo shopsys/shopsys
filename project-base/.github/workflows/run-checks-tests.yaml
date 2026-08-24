@@ -27,20 +27,9 @@ jobs:
                 run: docker compose exec -T php-fpm php phing standards
             -   name: Run tests
                 run: docker compose exec -T php-fpm php phing tests
-            -   name: Run acceptance tests
-                run: docker compose exec -T php-fpm php phing tests-acceptance
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
-            -   name: Copy Codeception logs from container
-                if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./app/var/log
-            -   name: Upload Codeception logs to artifacts
-                if: ${{ failure() }}
-                uses: actions/upload-artifact@v7
-                with:
-                    name: acceptance-logs
-                    path: ./app/var/log
 
             -   name: Build Storefront part of application
                 run: |
@@ -123,20 +112,9 @@ jobs:
                 run: docker compose exec -T php-fpm php phing standards
             -   name: Run tests
                 run: docker compose exec -T php-fpm php phing tests
-            -   name: Run acceptance tests
-                run: docker compose exec -T php-fpm php phing tests-acceptance
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
-            -   name: Copy Codeception logs from container
-                if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./app/var/log
-            -   name: Upload Codeception logs to artifacts
-                if: ${{ failure() }}
-                uses: actions/upload-artifact@v7
-                with:
-                    name: acceptance-logs
-                    path: ./app/var/log
 
             -   name: Build Storefront part of application
                 run: |

@@ -3,7 +3,6 @@
 /nbproject
 /.npm-global
 /.ralph
-/var/cache/test-db-dump.sql
 /vendor
 /.php_cs.cache
 /.phpcs-cache

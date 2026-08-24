@@ -788,7 +788,7 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDeduplicationFacade:
         arguments:
             $redisClient: '@snc_redis.product_recalculation_queue'
-            $isDeduplicationActive: '@=env("defined:MESSENGER_TRANSPORT_DSN") and not (parameter("kernel.environment") matches "/^(test|acc)$/")'
+            $isDeduplicationActive: '@=env("defined:MESSENGER_TRANSPORT_DSN") and parameter("kernel.environment") !== "test"'
 
     Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageFailedListener:
         arguments:

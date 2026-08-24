@@ -1,6 +1,6 @@
 {% block advanced_search_form %}
     {{ form_start(advancedSearchForm) }}
-        <div id="js-advanced-search-rules-box">
+        <div>
             {% block advanced_search_rules_container %}
                 <div id="js-advanced-search-rules-container" data-rule-form-url="{{ ruleFormUrl|default(url('admin_advancedsearch_getruleform', {entityType: advancedSearchForm.vars.entity_type})) }}">
                     {% block advanced_search_rules_form %}

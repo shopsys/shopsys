@@ -59,7 +59,7 @@
                     {% for tab in orderDetailTabs %}
                         {% set isActive = activeTab == tab.id %}
                         {% set isDisabled = tab.isDisabled(order) %}
-                        <div class="tab-pane js-order-detail-tab-pane{% if isActive %} show active{% endif %} p-3"
+                        <div class="tab-pane{% if isActive %} show active{% endif %} p-3"
                              id="tab-{{ tab.id }}"
                              role="tabpanel"
                              aria-labelledby="nav-{{ tab.id }}"

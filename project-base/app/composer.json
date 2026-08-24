@@ -114,12 +114,7 @@
         "webmozart/assert": "^2.1"
     },
     "require-dev": {
-        "ext-pgsql": "*",
         "ext-zip": "*",
-        "codeception/codeception": "^5.3.0",
-        "codeception/module-db": "^3.2.2",
-        "codeception/module-webdriver": "^4.0.3",
-        "codeception/phpunit-wrapper": "^9.0.7",
         "phpstan/phpstan": "^2.1.16",
         "phpstan/phpstan-doctrine": "^2.0.3",
         "phpstan/phpstan-phpunit": "^2.0.6",

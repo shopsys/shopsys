@@ -7,23 +7,8 @@ parameters:
 
     ignoreErrors:
         -
-            # Ignore annotations in generated code
-            message: '#^PHPDoc tag @(param|return) has invalid value (.|\n)+ expected type at offset \d+$#'
-            path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
-        -
-            # Ignore annotations in generated code
-            message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
-            path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
-        -
-            # Ignore annotations in generated code
-            message: '#^PHPDoc tag @param for parameter \$function with type callable is not subtype of native type Closure.$#'
-            path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
-        -
             message: '#^Service "test.service_container" is not registered in the container.$#'
             path: %currentWorkingDirectory%/tests/*
-    excludePaths:
-        # Exclude coding standards for generated files
-        - %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

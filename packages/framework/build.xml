@@ -8,18 +8,13 @@
     <property name="path.build" value="${path.root}/build"/>
     <property name="path.build.properties.local" value="${path.build}/build.local.properties"/>
     <property name="path.build.stats" value="${path.build}/stats"/>
-    <property name="path.chromedriver.executable" value="chromedriver"/>
-    <property name="path.codeception.configuration" value="${path.build}/codeception.yml"/>
-    <property name="path.codeception.executable" value="${path.bin}/codecept"/>
     <property name="path.composer.executable" value="composer"/>
     <property name="path.config" value="${path.root}/config"/>
-    <property name="path.env.acc" value="${path.root}/ACCEPTANCE"/>
     <property name="path.framework" value="${project.basedir}"/>
     <property name="path.framework.assets" value="${path.framework}/assets"/>
     <property name="npm-export-translations.extra-args" value=""/>
     <property name="path.git.executable" value="git"/>
     <property name="path.npm.executable" value="npm"/>
-    <property name="path.pg_dump.executable" value="pg_dump"/>
     <property name="path.php.executable" value="php"/>
     <property name="path.ecs.executable" value="${path.bin}/ecs"/>
     <property name="path.phplint.executable" value="${path.bin}/parallel-lint"/>
@@ -30,7 +25,6 @@
     <property name="path.src" value="${path.root}/src"/>
     <property name="path.assets" value="${path.root}/assets"/>
     <property name="path.templates" value="${path.root}/templates"/>
-    <property name="path.test.database.dump" value="var/cache/test-db-dump.sql"/>
     <property name="path.tests" value="${path.root}/tests"/>
     <property name="path.tests.failed" value="${path.var}/PHING_TESTS_FAILED"/>
     <property name="path.tests.functional" value="${path.tests}/App/Functional/"/>
@@ -56,16 +50,6 @@
             <property name="dev.null" value="/dev/null"/>
         </else>
     </if>
-
-    <target name="acceptance-elasticsearch-export" description="Exports indexes data into elasticsearch for acceptance environment.">
-        <property name="elasticsearch.index" value=""/>
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="--env=acc"/>
-            <arg value="shopsys:elasticsearch:data-export"/>
-            <arg value="${elasticsearch.index}"/>
-        </exec>
-    </target>
 
     <target name="admin-locales-load" description="Load admin locales configuration into Phing properties." hidden="true">
         <exec executable="${path.php.executable}" outputProperty="admin-locales" error="${dev.null}">
@@ -139,9 +123,9 @@
 
     <target name="build-demo" depends="production-protection,environment-change-prod,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,demo-data,warmup,clean-redis-old" description="Builds application for production with clean demo DB."/>
 
-    <target name="build-demo-ci" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,demo-data,tests-acceptance-build,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
+    <target name="build-demo-ci" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,demo-data,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
 
-    <target name="build-demo-dev" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,demo-data,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development with clean demo DB and runs checks on changed files."/>
+    <target name="build-demo-dev" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,demo-data,clean-redis-old,checks" description="Builds application for development with clean demo DB and runs checks on changed files."/>
 
     <target name="build-demo-dev-quick" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,dirs-create,test-dirs-create,assets,npm,demo-data,clean-redis-old" description="Builds application for development with clean demo DB while skipping nonessential steps."/>
 
@@ -151,7 +135,7 @@
 
     <target name="build-deploy-part-3-non-blocking" depends="run-post-deploy-tasks" description="Third part of application build for production. Non-blocking tasks that run after maintenance page is turned off."/>
 
-    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-recreate,elasticsearch-export,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
+    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-recreate,elasticsearch-export,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
 
     <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
 
@@ -175,7 +159,7 @@
 
     <target name="checks" depends="checks-internal,standards,tests" description="Runs internal checks, coding standards and runs unit, DB and smoke tests."/>
 
-    <target name="checks-ci" depends="checks-internal,test-demo-data,tests-functional,tests-smoke,tests-acceptance" description="Runs internal checks and runs DB, smoke and acceptance tests."/>
+    <target name="checks-ci" depends="checks-internal,test-demo-data,tests-functional,tests-smoke" description="Runs internal checks and runs DB and smoke tests."/>
 
     <target name="checks-diff" depends="checks-internal,standards-diff,tests" description="Runs internal checks, coding standards on changed files and runs unit, DB and smoke tests."/>
 
@@ -486,14 +470,7 @@
             <arg path="${path.assets}"/>
         </exec>
 
-        <property name="diff.files.all" value="${git.files.changed}${line.separator}${git.files.unstaged}">
-            <filterchain>
-                <!-- ignore Codeception generated class for running acceptance tests -->
-                <linecontainsregexp>
-                    <regexp pattern="^(?!tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php).+$"/>
-                </linecontainsregexp>
-            </filterchain>
-        </property>
+        <property name="diff.files.all" value="${git.files.changed}${line.separator}${git.files.unstaged}"/>
 
         <property name="diff.files.js" value="${diff.files.all}">
             <filterchain>
@@ -718,7 +695,7 @@
         <if>
             <not><isset property="change.environment"/></not>
             <then>
-                <input propertyName="change.environment" validArgs="dev, prod, test, acc" defaultValue="prod" message="Select environment you want to change to"/>
+                <input propertyName="change.environment" validArgs="dev, prod, test" defaultValue="prod" message="Select environment you want to change to"/>
             </then>
         </if>
         <phingcall target="maintenance-on"/>
@@ -927,7 +904,7 @@
         </if>
     </target>
 
-    <target name="phpstan" depends="warmup,tests-acceptance-build" description="Performs static analysis of PHP files using PHPStan." hidden="true">
+    <target name="phpstan" depends="warmup" description="Performs static analysis of PHP files using PHPStan." hidden="true">
         <exec executable="${path.phpstan.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="analyze"/>
 
@@ -1005,13 +982,6 @@
         </exec>
     </target>
 
-    <target name="selenium-run" description="Runs the Selenium server for acceptance testing. ChromeDriver is required. Only for native installation (Selenium is always running in Docker setup).">
-        <exec executable="${path.chromedriver.executable}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="--port=4444"/>
-            <arg value="--url-base=wd/hub"/>
-        </exec>
-    </target>
-
     <target name="server-run" description="Runs Symfony Local Web Server for the first domain. Only for native installation (webserver is always running in Docker setup).">
         <exec executable="symfony" passthru="true" returnProperty="symfony.return.code">
             <arg value="server:start"/>
@@ -1077,17 +1047,6 @@
     </target>
 
     <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-friendly-url-entity-mapping-check,test-plugin-demo-data-load" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
-
-    <target name="test-db-dump" depends="production-protection" description="Dumps current test database into a file to be used in acceptance tests." hidden="true">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="--env=test"/>
-            <arg value="shopsys:database:dump"/>
-            <arg value="--pgdump-bin=${path.pg_dump.executable}"/>
-            <arg value="${path.test.database.dump}"/>
-            <arg value="--verbose"/>
-        </exec>
-    </target>
 
     <target name="test-db-fixtures-demo" depends="production-protection" description="Loads demo data fixtures into test DB." hidden="true">
          <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -1263,87 +1222,6 @@
     </target>
 
     <target name="tests" depends="test-demo-data,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
-
-    <target name="tests-acceptance" depends="production-protection,clean,test-clean-redis" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
-        <phingcall target="tests-acceptance-before"/>
-        <trycatch>
-            <try>
-                <exec executable="${path.codeception.executable}" logoutput="true" passthru="true" checkreturn="true">
-                    <arg value="run"/>
-                    <arg value="--config=${path.codeception.configuration}"/>
-                </exec>
-            </try>
-            <finally>
-                <phingcall target="tests-acceptance-after"/>
-            </finally>
-        </trycatch>
-    </target>
-
-    <target name="tests-acceptance-after" description="Actions necessary to run after acceptance tests." hidden="true">
-        <available file="${path.env.acc}" type="file" property="path.env.acc.existed"/>
-        <if>
-            <equals arg1="${path.env.acc.existed}" arg2="true"/>
-            <then>
-                <delete file="${path.root}/ACCEPTANCE"/>
-            </then>
-        </if>
-        <phingcall target="test-elasticsearch-export"/>
-    </target>
-
-    <target name="tests-acceptance-before" description="Actions necessary to run before acceptance tests." hidden="true">
-        <available file="${path.env.acc}" type="file" property="path.env.acc.existed"/>
-        <if>
-            <not>
-                <equals arg1="${path.env.acc.existed}" arg2="true"/>
-            </not>
-            <then>
-                <touch file="${path.root}/ACCEPTANCE"/>
-            </then>
-        </if>
-        <phingcall target="test-db-dump"/>
-        <phingcall target="acceptance-elasticsearch-export"/>
-        <delete failonerror="false" includeemptydirs="true">
-            <fileset dir="${path.var}/log/codeception/">
-                <exclude name="/"/>
-            </fileset>
-        </delete>
-    </target>
-
-    <target name="tests-acceptance-build" depends="production-protection" description="Generates AcceptanceTesterActions.php (execute after change of Codeception modules, eg. StrictWebDriver)." hidden="true">
-        <exec executable="${path.codeception.executable}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="build"/>
-            <arg value="--config=${path.codeception.configuration}"/>
-        </exec>
-    </target>
-
-    <target name="tests-acceptance-single" depends="production-protection,clean,test-clean-redis" description="Runs single suite or test depending on user input.">
-        <if>
-            <not><isset property="test"/></not>
-            <then>
-                <input propertyName="test" message="Enter acceptance suite name (eg. OrderCest) or specific test (eg. OrderCest::testFormRemembersFirstName)"/>
-            </then>
-        </if>
-        <if>
-            <equals arg1="${test}" arg2=""/>
-            <then>
-                <fail message="Test name not provided"/>
-            </then>
-        </if>
-        <phingcall target="tests-acceptance-before"/>
-        <trycatch>
-            <try>
-                <exec executable="${path.codeception.executable}" logoutput="true" passthru="true" checkreturn="true">
-                    <arg value="run"/>
-                    <arg value="--config=${path.codeception.configuration}"/>
-                    <arg value="acceptance"/>
-                    <arg value="${test}"/>
-                </exec>
-            </try>
-            <finally>
-                <phingcall target="tests-acceptance-after"/>
-            </finally>
-        </trycatch>
-    </target>
 
     <target name="tests-check-failed">
         <available file="${path.tests.failed}" type="file" property="tests.failed"/>

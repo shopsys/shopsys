@@ -261,23 +261,7 @@ Automatically fixes some coding standards violations in all or only changed file
 
 Runs unit, database and smoke tests on a newly built test database.
 
-Creates a new test database with demo data and runs all tests except acceptance and performance (they are more time-consuming).
-
-#### tests-acceptance
-
-Runs acceptance tests. Running Selenium server is required.
-
-More on this topic can be found in [Running Acceptance Tests](../automated-testing/running-acceptance-tests.md).
-
-#### tests-acceptance-single
-
-Runs single acceptance test. Fastest way to run test without need of running whole acceptance suit
-
-Can be called as `php phing tests-acceptance-single -D test=OrderCest::testFormRemembersFirstName`.
-
-#### selenium-run
-
-Runs the Selenium server for acceptance testing. [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) is required.
+Creates a new test database with demo data and runs all tests except performance (they are more time-consuming).
 
 #### tests-performance-run
 
@@ -382,12 +366,6 @@ For example, if you want to call a `new-task` every time an `overwritten-task` i
 ## Local customization of Phing properties (paths etc.)
 
 You can customize any property defined in `build.xml` via a configuration file `build/build.local.properties` (use `build/build.local.properties.dist` as a template).
-
-For example, you may define the path to your installed ChromeDriver (required for running acceptance tests) on Windows by:
-
-```
-path.chromedriver.executable=C:/Tools/chromedriver.exe
-```
 
 Since the `build/build.local.properties` file is not versioned, the changes will only apply to the local machine.
 

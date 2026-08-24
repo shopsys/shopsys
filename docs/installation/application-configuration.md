@@ -60,12 +60,6 @@ You may want to set some settings in a different way (such as production, test, 
 `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK` (default: `'0'`)
 : set to `true` if you want to allow administrators to log in with default credentials
 
-`OVERWRITE_DOMAIN_URL` (default: `'http://webserver:8080'`)
-: overwrites URL of all domains for acceptance testing (set to `~` to disable)
-
-`SELENIUM_SERVER_HOST` (default: `'selenium-server'`)
-: with native installation the selenium server is on `localhost`
-
 `SHOPSYS_CONTENT_DIR_NAME` (default: `'content-test'`)
 : web/content-test/ directory is used instead of web/content/ during the tests
 

@@ -1,13 +1,12 @@
 # Introduction to Automated Testing
 
 Testing is a crucial part of the development and maintenance of reliable software.  
-For this reason, Shopsys Platform comes with 6 types of automated tests:
+For this reason, Shopsys Platform comes with 5 types of automated tests:
 
 - [Unit tests](#unit-tests)
 - [Functional tests](#functional-tests)
 - [Application tests](#application-tests)
 - [HTTP smoke tests](#http-smoke-tests)
-- [Acceptance tests](#acceptance-tests-aka-functional-tests-or-selenium-tests)
 - [Performance tests](#performance-tests)
 
 Software testing, in general, is a very broad topic and requires learning and practice.
@@ -22,7 +21,7 @@ Existing tests give you the confidence to make changes and refactoring without b
 They will notify you when something previously worked no longer works and help you localize the error.
 
 Tests can also help you when reading new code written by someone else. Tests can be seen as runnable documentation that shows how the code should be used.
-High-level tests (e.g., [acceptance tests](#acceptance-tests-aka-functional-tests-or-selenium-tests)) can be used to discover how users can interact with the application.
+High-level tests can be used to discover how users can interact with the application.
 
 ## Rules of thumb for what should be tested
 
@@ -31,11 +30,11 @@ High-level tests (e.g., [acceptance tests](#acceptance-tests-aka-functional-test
 If the answer is yes, then you should test the feature thoroughly.
 It would be best if you write automated tests for all crucial scenarios.
 
-You can even test the part using multiple types of tests (e.g., both [unit tests](#unit-tests) and [acceptance tests](#acceptance-tests-aka-functional-tests-or-selenium-tests)).
+You can even test the part using multiple types of tests (e.g., both [unit tests](#unit-tests) and [functional tests](#functional-tests)).
 Let's say that we consider promo codes to be a crucial part of the business.
 There will be two types of promo codes: fixed price (e.g., $10 from the total price) and percentage (e.g., 15% from the total price).  
 We could write unit tests to calculate the discount for both promo code types.
-But if working promo codes are essential for us, we should also write an end-to-end acceptance test to verify that the user can add a promo code to the order and that the discount is really applied to a created order.
+But if working promo codes are essential for us, we should also write an end-to-end test to verify that the user can add a promo code to the order and that the discount is really applied to a created order.
 
 ### Does some part of the application break often?
 
@@ -182,36 +181,6 @@ See configuration of HTTP smoke (and [performance](#performance-tests)) tests in
 !!! tip
 
     You can read more about the customization of HTTP smoke tests in their [own documentation on GitHub](https://github.com/shopsys/http-smoke-testing).
-
-### Acceptance tests (a.k.a. functional tests or Selenium tests)
-
-Provide a way of fully end-to-end testing your application as if a real human used it.
-
-Built on [Selenium](http://www.seleniumhq.org/) and [Codeception](http://codeception.com/), running in [Google Chrome](https://www.google.com/chrome/) browser.
-
-More information can be found in [Running Acceptance Tests](running-acceptance-tests.md).
-
-#### Advantages:
-
-- end-to-end testing
-- cover errors that occur only in the browser
-- can test JavaScript code
-- demo data can be used for testing with [`PersistentReferenceFacade`]({{github.link}}/packages/framework/src/Component/DataFixture/PersistentReferenceFacade.php)
-
-#### Disadvantages:
-
-- take a while to execute
-- whole application is switched to _ACCEPTANCE_ environment
-- occasional false negative reports (due to WebDriver brittleness)
-- requires installation of [Google Chrome](https://www.google.com/chrome/browser/desktop/) and [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/)
-
-#### Great for:
-
-- validating business-critical scenarios (e.g., order creation)
-
-#### Example:
-
-See acceptance test for product filter in administration in [`\Tests\App\Acceptance\acceptance\AdminProductAdvancedSearchCest`]({{github.link}}/project-base/app/tests/App/Acceptance/acceptance/AdminProductAdvancedSearchCest.php). Notice the usage of auto-wired Page objects [`LoginPage`]({{github.link}}/project-base/app/tests/App/Acceptance/acceptance/PageObject/Admin/LoginPage.php) and [`ProductAdvancedSearchPage`]({{github.link}}/project-base/app/tests/App/Acceptance/acceptance/PageObject/Admin/ProductAdvancedSearchPage.php). They provide a way to reuse code that interacts with user interface.
 
 ### Performance tests
 

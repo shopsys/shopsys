@@ -6,7 +6,7 @@
                 <div class="row">
                     {% block advanced_search_rule_subject %}
                         <div class="col-md mb-2">
-                            {{ form_widget(ruleForm.subject, { attr: { class: 'js-advanced-search-rule-subject test-advanced-search-rule-subject' } }) }}
+                            {{ form_widget(ruleForm.subject, { attr: { class: 'js-advanced-search-rule-subject' } }) }}
                         </div>
                     {% endblock %}
 
@@ -18,7 +18,7 @@
 
                     {% block advanced_search_rule_value %}
                         <div class="col-md mb-2">
-                            <div class="js-advanced-search-rule-value test-advanced-search-rule-value">
+                            <div class="js-advanced-search-rule-value">
                                 {{ form_widget(ruleForm.value) }}
                             </div>
                         </div>

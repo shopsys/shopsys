@@ -21,18 +21,6 @@ parameters:
             path: %currentWorkingDirectory%/packages/framework/*
         # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base
         -
-            # Ignore annotations in generated code
-            message: '#^PHPDoc tag @(param|return) has invalid value (.|\n)+ expected type at offset \d+$#'
-            path: %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
-        -
-            # Ignore annotations in generated code
-            message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
-            path: %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
-        -
-            # Ignore annotations in generated code
-            message: '#^PHPDoc tag @param for parameter \$function with type callable is not subtype of native type Closure.$#'
-            path: %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
-        -
             message: '#^Service "test.service_container" is not registered in the container.$#'
             path: %currentWorkingDirectory%/*/tests/*
     excludePaths:
@@ -42,8 +30,6 @@ parameters:
         - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/ClassExtension/Source/*
         # Exclude intentionally invalid entity test data used by MCP PHPStan rule tests
         - %currentWorkingDirectory%/packages/mcp/tests/Unit/Phpstan/data/*
-        # Exclude coding standards for generated files
-        - %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/*
         # Exclude template files for generating code via maker commands
         - %currentWorkingDirectory%/packages/maker/templates/*
 includes:

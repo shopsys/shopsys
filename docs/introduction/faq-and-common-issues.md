@@ -176,10 +176,6 @@ _Note: Gmail rewrites the `From:` header to the authenticated account, so emails
 
 _Note: If you revoke the App Password at any time from your Google account settings, relaying simply stops working without affecting your main Google login._
 
-## Can I see what is really happening in the Codeception acceptance tests when using Docker?
-
-Yes, you can! Check [the quick guide](../automated-testing/running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
-
 ## Why is there a faked PHP 8.5 platform in the Composer config?
 
 As a general rule, packages and libraries that depend on PHP 8.5 will work as expected even on any higher 8.x version, but not vice versa.

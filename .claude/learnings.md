@@ -296,7 +296,6 @@ class MyTest extends FunctionalTestCase
 | Functional tests  | `project-base/app/tests/App/Functional/`               |
 | Smoke tests       | `project-base/app/tests/App/Smoke/`                    |
 | GraphQL API tests | `project-base/app/tests/FrontendApiBundle/Functional/` |
-| Acceptance tests  | `project-base/app/tests/App/Acceptance/`               |
 
 ---
 
