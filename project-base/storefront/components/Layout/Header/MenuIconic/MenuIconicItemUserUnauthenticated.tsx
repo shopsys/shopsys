@@ -25,7 +25,7 @@ export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthentic
 }) => {
     const { t } = useTranslation();
     const [isActive, setIsActive] = useState(false);
-    const isActiveDelayed = useDebounce(isActive, 200);
+    const isActiveDelayed = useDebounce(isActive, isActive ? 200 : 0);
     const isDesktop = useMediaMin('vl');
 
     return (
@@ -39,8 +39,7 @@ export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthentic
                 role="button"
                 tabIndex={0}
                 className={twMergeCustom(
-                    'group min-size-12 rounded-md outline-hidden lg:relative lg:flex',
-                    isActive && 'z-aboveOverlay',
+                    'group min-size-12 rounded-md outline-hidden group-has-[[aria-haspopup=menu][aria-expanded=true]]/header:z-aboveOverlay lg:relative lg:flex',
                 )}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
                 onMouseLeave={(e) => isDesktop && !isBrowserPasswordManagerHovered(e) && setIsActive(false)}
@@ -104,7 +103,13 @@ export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthentic
                 </MenuIconicItemUserPopover>
             </div>
 
-            {isDesktop && <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />}
+            {isDesktop && (
+                <Overlay
+                    shouldDisablePointerEventsOnExit
+                    isActive={isActiveDelayed}
+                    onClick={() => setIsActive(false)}
+                />
+            )}
         </>
     );
 };

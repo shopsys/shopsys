@@ -23,7 +23,7 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                 </div>
             ) : (
                 <div
-                    className="flex flex-wrap items-center vl:gap-x-7 gap-y-3 pt-3 vl:pt-6 pb-3 vl:pb-1"
+                    className="group/header flex flex-wrap items-center vl:gap-x-7 gap-y-3 pt-3 vl:pt-6 pb-3 vl:pb-1"
                     data-tid={TIDs.header}
                 >
                     <Logo />
