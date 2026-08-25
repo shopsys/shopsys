@@ -69,6 +69,20 @@ When storefront `.tsx` files change (adding TIDs), the make command automaticall
 
 **Reference site** for inspecting page structure: `https://19-0.odin.shopsys.cloud/`
 
+## CRITICAL RULE: Search Existing Interaction Patterns First
+
+Before writing or changing a Cypress interaction, search the whole Cypress codebase for the same component,
+TID, helper, and interaction type. Trace the complete user flow — setup, opening, input, submission, closing,
+navigation, and assertions — rather than copying only its primary action.
+
+- Reuse an established helper or support-file pattern whenever one exists.
+- Search for equivalent real-event usage such as `realMouseMove`, `realPress`, or other interaction-specific
+  commands before introducing `trigger()` or custom event simulation.
+- Inspect the relevant React component when lifecycle behavior matters. Verify desktop/mobile variants,
+  popovers versus drawers, portals, mounted versus merely hidden content, disabled/loading states, debounce,
+  and animations before choosing assertions.
+- Add a new interaction pattern only when no project pattern fits, and model it on the closest verified flow.
+
 ## CRITICAL RULE: Always Use cy.getByTID()
 
 Every element interaction MUST use `cy.getByTID()` or scope via TIDs. This is the single most important convention.
@@ -848,14 +862,15 @@ order/createOrder.cy.ts, contactInformation.cy.ts, orderRepeat.cy.ts
 
 ## Workflow for Writing Tests
 
-1. **Inspect the page** with `/playwright-cli` on localhost or `https://ssfwcc.dev.shopsys.cloud/` to verify DOM structure and existing TIDs
-2. **Check existing TIDs** in `project-base/storefront/cypress/tids.ts` — reuse what exists
-3. **Add missing TIDs** to `tids.ts` + React components (use `data-tid` for HTML elements, `tid` prop for Button/LinkButton)
-4. **Create support file** if test has reusable helpers (co-locate as `featureNameSupport.ts`)
-5. **Write test** using `cy.getByTID()` consistently, `initializePersistStoreInLocalStorageToDefaultValues()` in beforeEach
-6. **Add SNAPSHOT_GROUP** if new category (unique number in support/index.ts enum)
-7. **Run test** with `make run-specific-test-base SPEC=e2e/path/to/test.cy.ts`
-8. **Fix errors** and re-run until passing
+1. **Search existing complete flows** across `project-base/storefront/cypress/` by component, TID, helper, and interaction type; reuse the closest verified pattern
+2. **Inspect the page and component** with `/playwright-cli` on localhost or `https://ssfwcc.dev.shopsys.cloud/` and read the relevant React implementation when lifecycle behavior affects the test
+3. **Check existing TIDs** in `project-base/storefront/cypress/tids.ts` — reuse what exists
+4. **Add missing TIDs** to `tids.ts` + React components (use `data-tid` for HTML elements, `tid` prop for Button/LinkButton)
+5. **Create or extend a support file** for reusable helpers (co-locate as `featureNameSupport.ts`)
+6. **Write test** using `cy.getByTID()` consistently, `initializePersistStoreInLocalStorageToDefaultValues()` in beforeEach
+7. **Add SNAPSHOT_GROUP** if new category (unique number in support/index.ts enum)
+8. **Run test** with `make run-specific-test-base SPEC=e2e/path/to/test.cy.ts`
+9. **Fix errors** and re-run until passing
 
 ## Real-World Example: Complete Test + Support File
 
