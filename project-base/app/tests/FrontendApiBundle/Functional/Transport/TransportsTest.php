@@ -6,11 +6,13 @@ namespace Tests\FrontendApiBundle\Functional\Transport;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\TransportGroupDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
@@ -51,6 +53,26 @@ class TransportsTest extends GraphQlTestCase
         foreach ($expectedTransportsData as $key => $expectedTransport) {
             $this->assertSame($expectedTransport['name'], $responseData[$key]['name']);
         }
+    }
+
+    public function testTransportPriceForCartOverTheWeightLimitReturnsUserError(): void
+    {
+        $czechPostTransport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
+        // 'PROMO3PLUS1' from the demo data — 12 kg, heavier than every Czech post weight tier
+        $heavyProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 154, Product::class);
+
+        $addToCartResponse = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $heavyProduct->getUuid(),
+            'quantity' => 1,
+        ]);
+        $cartUuid = $this->getResponseDataForGraphQlType($addToCartResponse, 'AddToCart')['cart']['uuid'];
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/TransportQuery.graphql', [
+            'uuid' => $czechPostTransport->getUuid(),
+            'cartUuid' => $cartUuid,
+        ]);
+
+        $this->assertUserError($response, 'transport-price-missing');
     }
 
     public function testTransports(): void

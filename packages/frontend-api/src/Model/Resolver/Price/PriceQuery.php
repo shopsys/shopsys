@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
@@ -19,6 +20,7 @@ use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Transport\Exception\TransportPriceMissingUserError;
 
 class PriceQuery extends AbstractQuery
 {
@@ -103,7 +105,11 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentTransportPrice($transport);
         }
 
-        return $this->transportPriceProvider->getTransportPrice($cart, $transport, $this->domain->getCurrentDomainConfig());
+        try {
+            return $this->transportPriceProvider->getTransportPrice($cart, $transport, $this->domain->getCurrentDomainConfig());
+        } catch (TransportPriceNotFoundException) {
+            throw new TransportPriceMissingUserError('The transport has no price for the given cart, e.g. because the cart exceeds its weight limit.');
+        }
     }
 
     protected function calculateIndependentTransportPrice(Transport $transport): PriceInterface
