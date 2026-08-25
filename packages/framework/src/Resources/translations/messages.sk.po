@@ -3752,13 +3752,13 @@ msgid "VAT settings modified"
 msgstr "Nastavenie DPH bolo upravené"
 
 msgid "Valid from"
-msgstr "Planosť od"
+msgstr "Platnosť od"
 
 msgid "Valid to"
-msgstr "Planosť do"
+msgstr "Platnosť do"
 
 msgid "Valid until"
-msgstr "Planosť do"
+msgstr "Platnosť do"
 
 msgid "Value"
 msgstr "Hodnota"
