@@ -138,7 +138,7 @@
     .Toastify {
         --toastify-toast-min-height: 48px;
         --toastify-font-family: sans-serif;
-        --toastify-z-index: 10100;
+        --toastify-z-index: 10200;
         --toastify-toast-width: 480px;
 
         @variant lg {

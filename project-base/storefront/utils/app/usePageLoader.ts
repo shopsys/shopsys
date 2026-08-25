@@ -3,6 +3,7 @@ import Nprogress from 'nprogress';
 import { useEffect, useEffectEvent, useRef } from 'react';
 import type { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
+import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { getSkeletonTypeFromRouteUrl } from 'utils/skeleton/getSkeletonTypeFromRouteUrl';
 import {
     getSkeletonTypeFromRouteState,
@@ -13,7 +14,9 @@ export const usePageLoader = () => {
     const router = useRouter();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const resetLoginFormEmail = useSessionStore((s) => s.resetLoginFormEmail);
     const pendingNavigationSkeletonType = useRef<PageType | undefined>(undefined);
+    const currentPathRef = useRef(getUrlWithoutGetParameters(router.asPath));
 
     const onRouteChangeStart = useEffectEvent((targetUrl: string, { shallow }: { shallow: boolean }) => {
         const currentPageLoadingState = useSessionStore.getState();
@@ -29,6 +32,11 @@ export const usePageLoader = () => {
     });
 
     const onRouteChangeStop = useEffectEvent((targetUrl: string, { shallow }: { shallow: boolean }) => {
+        const targetPath = getUrlWithoutGetParameters(targetUrl);
+        if (currentPathRef.current !== targetPath) {
+            resetLoginFormEmail();
+        }
+        currentPathRef.current = targetPath;
         const redirectPageType = pendingNavigationSkeletonType.current ?? getSkeletonTypeFromRouteUrl(targetUrl);
 
         updateCurrentHistoryStateSkeletonType(redirectPageType);

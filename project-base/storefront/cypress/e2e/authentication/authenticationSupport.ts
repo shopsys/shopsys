@@ -3,12 +3,15 @@ import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkFormLineError,
     checkUrl,
+    getHeaderElementByTID,
     openHeaderUserMenu,
     translations,
 } from 'support';
 import { TIDs } from 'tids';
 
 const preventScrollOptions = { scrollBehavior: false } as const;
+const headerLoginFormParentTIDs = [TIDs.header, TIDs.my_account_link];
+const headerLoginFormTIDs = [...headerLoginFormParentTIDs, TIDs.login_form];
 
 const fillInEmailAndPasswordInScopedLoginForm = (
     email: string | undefined,
@@ -32,6 +35,11 @@ const getVisibleLoginFormWithEnabledEmail = (parentTIDs: TIDs[]) =>
         .filter(':has(input[name="email"]:enabled)')
         .should('have.length.at.least', 1)
         .first();
+
+const withinHeaderLoginForm = (callback: () => void) => {
+    openHeaderUserMenu();
+    getVisibleLoginFormWithEnabledEmail(headerLoginFormParentTIDs).within(callback);
+};
 
 const goToRegistrationPageFromHeaderTID = (headerTID: TIDs.header | TIDs.fixed_header) => {
     cy.getByTID([headerTID, TIDs.my_account_link])
@@ -82,9 +90,27 @@ export const logoutFromCustomerMenu = () => {
     cy.getByTID([TIDs.user_menu_logout]).click();
 };
 
+export const fillInHeaderLoginForm = (email: string, password: string) => {
+    withinHeaderLoginForm(() => {
+        fillInEmailAndPasswordInScopedLoginForm(email, password, preventScrollOptions);
+    });
+};
+
+export const closeHeaderLoginForm = () => {
+    cy.realPress('{esc}');
+    getHeaderElementByTID(TIDs.my_account_link).should('have.attr', 'aria-expanded', 'false');
+    cy.getByTID(headerLoginFormTIDs).should('not.exist');
+};
+
+export const checkHeaderLoginFormValues = (email: string, password: string) => {
+    withinHeaderLoginForm(() => {
+        cy.get('input[name="email"]').should('have.value', email);
+        cy.get('input[name="password"]').should('have.value', password);
+    });
+};
+
 export const loginFromHeader = (email: string | undefined, password: string) => {
-    openHeaderUserMenu();
-    getVisibleLoginFormWithEnabledEmail([TIDs.header, TIDs.my_account_link]).within(() => {
+    withinHeaderLoginForm(() => {
         fillInEmailAndPasswordInScopedLoginForm(email, password, preventScrollOptions);
         submitScopedLoginForm(preventScrollOptions);
     });

@@ -1,5 +1,8 @@
 import {
+    checkHeaderLoginFormValues,
+    closeHeaderLoginForm,
     fillInEmailAndPasswordOnLoginPage,
+    fillInHeaderLoginForm,
     loginFromHeader,
     logoutFromCustomerMenu,
     logoutFromHeader,
@@ -14,6 +17,7 @@ import {
     initializePersistStoreInLocalStorageToDefaultValues,
     translations,
 } from 'support';
+import { TIDs } from 'tids';
 
 const checkRefreshCookieIsProtected = () => {
     cy.getCookie('refreshToken-1').should((cookie) => {
@@ -75,5 +79,22 @@ describe('Login Tests', () => {
         checkUrl('/');
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedOut();
+    });
+
+    it('[Header Email Draft] should preserve email in the login flyout until navigating to another page', () => {
+        const emailDraft = 'unfinished-login@shopsys.com';
+
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+
+        fillInHeaderLoginForm(emailDraft, staticData.user.password);
+        closeHeaderLoginForm();
+        checkHeaderLoginFormValues(emailDraft, '');
+
+        closeHeaderLoginForm();
+        cy.getByTID([TIDs.header, TIDs.header_stores_link]).should('be.visible').click();
+        checkUrl(url.stores);
+        cy.waitForStableAndInteractiveDOM();
+
+        checkHeaderLoginFormValues('', '');
     });
 });
