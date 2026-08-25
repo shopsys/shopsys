@@ -559,7 +559,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Change first domain locale to CS
-                uses: mikefarah/yq@v4.53.3
+                uses: mikefarah/yq@v4.53.6
                 with:
                     cmd: yq e -i '( .domains[] | select(.id == 1) ).locale = "cs" | ( .domains[] | select(.id == 2) ).locale = "en"' ./project-base/app/config/domains.yaml
             -   name: Change first domain currency to CZK
@@ -601,7 +601,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Set load_demo_data to false for domains 2 and 3
-                uses: mikefarah/yq@v4.53.3
+                uses: mikefarah/yq@v4.53.6
                 with:
                     cmd: yq e -i '( .domains[] | select(.id == 2) ).load_demo_data = false | ( .domains[] | select(.id == 3) ).load_demo_data = false' ./project-base/app/config/domains.yaml
             -   name: Download docker-compose.yml from artifacts
