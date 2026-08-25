@@ -44,6 +44,8 @@ class CustomerUserPasswordRecoveryMutation extends AbstractMutation
 
     public function recoverPasswordMutation(Argument $argument, InputValidator $validator): LoginResultData
     {
+        $this->consumeRateLimit($this->passwordRecoveryIpRateLimiter, $this->getClientIp());
+
         $validator->validate();
 
         $input = $argument['input'];
@@ -70,10 +72,13 @@ class CustomerUserPasswordRecoveryMutation extends AbstractMutation
 
     protected function checkPasswordRecoveryRateLimit(string $email): void
     {
-        $clientIp = $this->requestStack->getCurrentRequest()?->getClientIp() ?? 'unknown';
-
-        $this->consumeRateLimit($this->passwordRecoveryIpRateLimiter, $clientIp);
+        $this->consumeRateLimit($this->passwordRecoveryIpRateLimiter, $this->getClientIp());
         $this->consumeRateLimit($this->passwordRecoveryEmailRateLimiter, $this->getEmailRateLimitKeyPart($email));
+    }
+
+    protected function getClientIp(): string
+    {
+        return $this->requestStack->getCurrentRequest()?->getClientIp() ?? 'unknown';
     }
 
     protected function consumeRateLimit(RateLimiterFactoryInterface $rateLimiterFactory, string $key): void

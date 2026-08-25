@@ -8,23 +8,17 @@ use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\FrontendApi\Model\Component\Constraints\ExistingEmail;
 use App\Model\Customer\User\CustomerUser;
 use Override;
-use Symfony\Component\RateLimiter\RateLimit;
-use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RequestPasswordRecoveryTest extends GraphQlTestCase
 {
+    use PasswordRecoveryRateLimitTrait;
+
     private const string EMAIL_RATE_LIMITER_SERVICE_ID = 'limiter.frontend_api_password_recovery_email';
 
-    private const string IP_RATE_LIMITER_SERVICE_ID = 'limiter.frontend_api_password_recovery_ip';
-
-    private const string RATE_LIMITER_CACHE_POOL_SERVICE_ID = 'frontend_api_password_recovery_rate_limiter_cache';
+    private const string ANY_RATE_LIMITER_KEY = 'any-key';
 
     private const string NOT_EXISTING_EMAIL = 'does-not-exist@shopsys.com';
-
-    private const string TOO_MANY_ATTEMPTS_USER_CODE = 'too-many-password-recovery-attempts';
-
-    private const string ANY_RATE_LIMITER_KEY = 'any-key';
 
     private const string DIFFERENT_CLIENT_IP = '10.255.0.1';
 
@@ -35,9 +29,7 @@ class RequestPasswordRecoveryTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        /** @var \Psr\Cache\CacheItemPoolInterface $rateLimiterCachePool */
-        $rateLimiterCachePool = self::getContainer()->get(self::RATE_LIMITER_CACHE_POOL_SERVICE_ID);
-        $rateLimiterCachePool->clear();
+        $this->clearRateLimits();
 
         $this->existingEmail = $this->getReference(
             CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH,
@@ -177,35 +169,5 @@ class RequestPasswordRecoveryTest extends GraphQlTestCase
         for ($attempt = 0; $attempt < $emailRateLimit; $attempt++) {
             $this->getPasswordRecoveryResponse($email);
         }
-    }
-
-    private function exhaustIpRateLimit(): void
-    {
-        $rateLimiter = $this->getRateLimiterFactory(self::IP_RATE_LIMITER_SERVICE_ID)->create($this->getClientIp());
-
-        do {
-            $rateLimit = $rateLimiter->consume();
-        } while ($rateLimit->isAccepted());
-    }
-
-    private function peekRateLimit(string $rateLimiterServiceId, string $key): RateLimit
-    {
-        return $this->getRateLimiterFactory($rateLimiterServiceId)->create($key)->consume(0);
-    }
-
-    private function getClientIp(): string
-    {
-        /** @var \Symfony\Component\HttpFoundation\Request $request */
-        $request = self::getCurrentClient()->getRequest();
-
-        return (string)$request->getClientIp();
-    }
-
-    private function getRateLimiterFactory(string $rateLimiterServiceId): RateLimiterFactoryInterface
-    {
-        /** @var \Symfony\Component\RateLimiter\RateLimiterFactoryInterface $rateLimiterFactory */
-        $rateLimiterFactory = self::getContainer()->get($rateLimiterServiceId);
-
-        return $rateLimiterFactory;
     }
 }
