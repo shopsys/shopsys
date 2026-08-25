@@ -92,6 +92,10 @@ The `displayIf()` and `linkToRoute()` closures receive the data of the page the 
 - `ActionType::EDIT` — the edited entity
 - `ActionType::LIST`, `ActionType::CREATE`, and `ActionType::DETAIL` — `null` (there is no single entity on these pages; for per-row actions in the list grid use row actions instead — their closures receive the data of the grid row they are rendered in)
 
+!!! note
+
+    When the route linked via `linkToRoute()` is protected by the `#[CsrfProtection]` attribute, the CSRF token is appended to the generated URL automatically (unless you provide it yourself in the parameters).
+
 ### Configuration
 
 ```php
