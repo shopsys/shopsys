@@ -147,13 +147,15 @@ class PaymentRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAllWithEagerLoadedDomainsAndTranslations(DomainConfig $domainConfig): array
+    public function getAllWithEagerLoadedTransportsAndDomainsAndTranslations(DomainConfig $domainConfig): array
     {
         return $this->getQueryBuilderForAll()
             ->addSelect('pd')
             ->addSelect('pt')
+            ->addSelect('t')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
+            ->leftJoin('p.transports', 't')
             ->setParameter('locale', $domainConfig->getLocale())
             ->setParameter('domainId', $domainConfig->getId())
             ->getQuery()->getResult();

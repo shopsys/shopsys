@@ -31,7 +31,7 @@ class ProductFacade
             static::SELLABLE_PRODUCT_CACHE_NAMESPACE,
             function () use ($uuid, $domainId, $pricingGroup): Product {
                 try {
-                    return $this->productRepository->getSellableByUuid($uuid, $domainId, $pricingGroup);
+                    return $this->productRepository->getSellableByUuidWithEagerLoadedDomains($uuid, $domainId, $pricingGroup);
                 } catch (ProductNotFoundException) {
                     throw new ProductNotFoundUserError(sprintf('Product with UUID "%s" not found', $uuid));
                 }

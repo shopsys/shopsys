@@ -85,7 +85,7 @@ class PaymentFacade
      */
     public function getVisibleOnCurrentDomain(): array
     {
-        $allPayments = $this->paymentRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig());
+        $allPayments = $this->paymentRepository->getAllWithEagerLoadedTransportsAndDomainsAndTranslations($this->domain->getCurrentDomainConfig());
 
         return $this->paymentVisibilityCalculation->filterVisible($allPayments, $this->domain->getId());
     }
