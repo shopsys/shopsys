@@ -1,0 +1,8 @@
+query BlogArticleBreadcrumbQuery($uuid: Uuid!) {
+    blogArticle(uuid: $uuid) {
+        breadcrumb {
+            name
+            slug
+        }
+    }
+}

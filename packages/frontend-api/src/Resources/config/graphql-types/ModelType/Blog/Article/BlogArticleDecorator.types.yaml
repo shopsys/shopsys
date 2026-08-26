@@ -59,6 +59,7 @@ BlogArticleDecorator:
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=query("breadcrumbQuery", value["id"], "front_blogarticle_detail")'
             images:
                 type: "[Image!]!"
                 description: "Blog article images"

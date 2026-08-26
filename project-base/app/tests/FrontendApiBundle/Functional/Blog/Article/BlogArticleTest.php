@@ -11,16 +11,36 @@ use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
+use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogArticleTest extends GraphQlTestCase
 {
+    private const string RENAMED_BLOG_CATEGORY_NAME = 'Renamed ancestor blog category';
+
     /**
      * @inject
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
+
+    /**
+     * @inject
+     */
+    private BlogCategoryFacade $blogCategoryFacade;
+
+    /**
+     * @inject
+     */
+    private BlogCategoryDataFactory $blogCategoryDataFactory;
+
+    /**
+     * @inject
+     */
+    private BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade;
 
     private BlogArticle $blogArticle;
 
@@ -249,6 +269,40 @@ class BlogArticleTest extends GraphQlTestCase
 
         $this->assertArrayHasKey('author', $responseData);
         $this->assertNull($responseData['author']);
+    }
+
+    public function testBlogArticleBreadcrumbReflectsRenamedAncestorBlogCategoryWithoutReexport(): void
+    {
+        $locale = $this->getFirstDomainLocale();
+        $rootBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class);
+        $ancestorBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class);
+        $televisionsBlogCategory = $this->getReference(BlogArticleDataFixture::BLOG_CATEGORY_TELEVISIONS, BlogCategory::class);
+        $screenTechnologiesBlogCategory = $this->getReference(BlogArticleDataFixture::BLOG_CATEGORY_SCREEN_TECHNOLOGIES, BlogCategory::class);
+
+        $blogArticlesData = $this->blogArticleElasticsearchFacade->getByBlogCategory($screenTechnologiesBlogCategory, 0, 1);
+        $this->assertNotEmpty($blogArticlesData);
+        $blogArticleData = array_shift($blogArticlesData);
+
+        $blogCategoryData = $this->blogCategoryDataFactory->createFromBlogCategory($ancestorBlogCategory);
+        $blogCategoryData->names[$locale] = self::RENAMED_BLOG_CATEGORY_NAME;
+        $this->blogCategoryFacade->edit($ancestorBlogCategory->getId(), $blogCategoryData);
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/BlogArticleBreadcrumbQuery.graphql',
+            ['uuid' => $blogArticleData['uuid']],
+        );
+        $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticle');
+
+        $this->assertSame(
+            [
+                $rootBlogCategory->getName($locale),
+                self::RENAMED_BLOG_CATEGORY_NAME,
+                $televisionsBlogCategory->getName($locale),
+                $screenTechnologiesBlogCategory->getName($locale),
+                $blogArticleData['name'],
+            ],
+            array_column($responseData['breadcrumb'], 'name'),
+        );
     }
 
     private function getExpectedBlogArticleArray(): array
