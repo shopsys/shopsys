@@ -16,20 +16,22 @@ type ProductDetailParametersSectionProps = {
 
 const renderParameterValues = (parameter: TypeParameterFragment) =>
     parameter.values.map((value, index) => (
-        <div key={value.uuid} className="inline-flex items-center gap-2">
-            {index > 0 && (
+        <div key={value.uuid} className="inline-flex items-center">
+            <span className="inline-flex items-center gap-2">
+                {parameter.type === TypeParameterTypeEnum.Color && (
+                    <ColorPreview colorIcon={value.colorIcon} rgbHex={value.rgbHex} />
+                )}
+                <span>
+                    {value.text}
+                    {parameter.unit?.name && ` ${parameter.unit.name}`}
+                </span>
+            </span>
+            {index < parameter.values.length - 1 && (
                 <>
                     <span className="sr-only">, </span>
-                    <span aria-hidden="true" className="text-text-less">
-                        ,
-                    </span>
+                    <span aria-hidden="true">,</span>
                 </>
             )}
-            {parameter.type === TypeParameterTypeEnum.Color && (
-                <ColorPreview colorIcon={value.colorIcon} rgbHex={value.rgbHex} />
-            )}
-            {value.text}
-            {parameter.unit?.name && ` ${parameter.unit.name}`}
         </div>
     ));
 
@@ -56,7 +58,7 @@ const ParameterTable = ({ parameters }: ParameterTableProps) => (
                 </Cell>
 
                 <Cell className="block bg-background-default px-4 pt-0 pb-4 align-top text-sm md:table-cell md:px-6 md:py-4">
-                    <div className="inline-flex flex-wrap gap-x-3 gap-y-1">{renderParameterValues(parameter)}</div>
+                    <div className="inline-flex flex-wrap gap-1">{renderParameterValues(parameter)}</div>
                 </Cell>
             </Row>
         ))}
