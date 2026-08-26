@@ -20,6 +20,10 @@ services:
             $crudControllers: '%shopsys.admin.crud_controllers%'
             $crudControllerExtensions: '%shopsys.admin.crud_controllers_extensions%'
 
+    Shopsys\AdministrationBundle\Component\Crud\CrudRoleConstantProvider:
+        arguments:
+            $roleConstants: '%shopsys.admin.crud_role_constants%'
+
     Shopsys\AdministrationBundle\Component\Menu\CrudMenuSubscriber:
         tags:
             - { name: kernel.event_subscriber }

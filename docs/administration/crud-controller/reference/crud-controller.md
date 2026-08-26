@@ -33,6 +33,22 @@ Crud controller generates pretty URLs for each action. The URL is generated base
 | `edit`     | `admin_crud_{controller_name}_edit`   | `/admin/{controller-name}/edit/{entityId}`   |
 | `delete`   | `admin_crud_{controller_name}_delete` | `/admin/{controller-name}/delete/{entityId}` |
 
+### Role constant
+
+Role constant used for permission checking is generated automatically from the controller name (e.g. `PriceListController` -> `ROLE_CRUD_PRICE_LIST`) and registered in the administrator role matrix.
+If you want the controller to use an existing role instead, declare it with the `#[ForRole]` attribute on the controller class:
+
+```php
+#[CrudController(TransportGroup::class)]
+#[ForRole(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)]
+class TransportGroupController extends AbstractCrudController
+```
+
+The role is then used by the built-in CRUD actions as well as by permission attributes on custom routes, and the controller does not register its own role in the role matrix — the referenced role must be provisioned by a role provider.
+The attribute can also be placed on a [CRUD Controller extension](../getting-started/extending-existing-crud-controller.md) class to override the role of the extended controller.
+
+See [Admin Rights and Access Control](../../admin-rights.md)
+
 ## Methods
 
 Crud Controller provides several methods that allow you to customize the behavior of the controller.
@@ -268,12 +284,6 @@ If you want for example to disable the `delete` action you can simply call `$con
 #### `disable(bool $disabled)`
 
 Fully disable the CRUD Controller that will not be accessible by the user.
-
-#### `setCustomRoleConstant(?string $roleConstant)`
-
-Role constant is generated automatically from the controller name by default. If you want to use a custom role constant for permission checking, you can set it using this method.
-
-See [Admin Rights and Access Control](../../admin-rights.md)
 
 #### `setCustomRoleSection(string $roleSection)`
 

@@ -41,8 +41,6 @@ final class CrudConfig
 
     private ?string $routePrefix = null;
 
-    private ?string $customRoleConstant = null;
-
     private ?string $customRoleSection = null;
 
     private ?string $menuIcon = null;
@@ -63,8 +61,13 @@ final class CrudConfig
         ActionType::CREATE->value => null,
     ];
 
-    public function __construct(private readonly string $entityName)
-    {
+    /**
+     * @param string|null $customRoleConstant role declared by the ForRole attribute on the CRUD controller (or its extension), resolved at compile time
+     */
+    public function __construct(
+        private readonly string $entityName,
+        private readonly ?string $customRoleConstant = null,
+    ) {
         $this->enabledActions = new ArrayCollection([
             ActionType::LIST,
         ]);
@@ -206,19 +209,6 @@ final class CrudConfig
     public function setRoutePrefix(?string $routePrefix): self
     {
         $this->routePrefix = $routePrefix;
-
-        return $this;
-    }
-
-    /**
-     * Set custom role constant for the CRUD controller. This will be used for access control checks.
-     * If not set, role constant will be generated from the controller name automatically.
-     *
-     * @return $this
-     */
-    public function setCustomRoleConstant(?string $roleConstant): self
-    {
-        $this->customRoleConstant = $roleConstant;
 
         return $this;
     }
