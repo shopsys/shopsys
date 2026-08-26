@@ -50,13 +50,16 @@ class ArticleFacade
 
         $this->em->persist($article);
         $this->em->flush();
-        $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-            'front_article_detail',
-            $article->getId(),
-            $article->getName(),
-            $article->getDomainId(),
-        );
-        $this->em->flush();
+
+        if (!$article->isLinkType()) {
+            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                'front_article_detail',
+                $article->getId(),
+                $article->getName(),
+                $article->getDomainId(),
+            );
+            $this->em->flush();
+        }
 
         $this->articleExportMessageDispatcher->dispatchArticleExportMessage($article->getId(), $article->getDomainId());
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
@@ -69,14 +72,16 @@ class ArticleFacade
         $article = $this->articleRepository->getById($articleId);
 
         $article->edit($articleData);
-        $this->friendlyUrlFacade->saveUrlListFormData('front_article_detail', $article->getId(), $articleData->urls);
 
-        $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-            'front_article_detail',
-            $article->getId(),
-            $article->getName(),
-            $article->getDomainId(),
-        );
+        if (!$article->isLinkType()) {
+            $this->friendlyUrlFacade->saveUrlListFormData('front_article_detail', $article->getId(), $articleData->urls);
+            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                'front_article_detail',
+                $article->getId(),
+                $article->getName(),
+                $article->getDomainId(),
+            );
+        }
         $this->em->flush();
 
         $this->articleExportMessageDispatcher->dispatchArticleExportMessage($article->getId(), $article->getDomainId());

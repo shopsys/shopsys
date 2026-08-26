@@ -40,7 +40,9 @@ class ArticleDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
             )
             ->setParameter('routeName', static::ROUTE_NAME)
             ->where('f.entityId IS NULL AND a.domainId = :domainId')
-            ->setParameter('domainId', $domainConfig->getId());
+            ->setParameter('domainId', $domainConfig->getId())
+            ->andWhere('a.type = :type')
+            ->setParameter('type', Article::TYPE_SITE);
         $scalarData = $queryBuilder->getQuery()->getScalarResult();
 
         $friendlyUrlsData = [];
