@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator\Mail;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
@@ -19,7 +18,6 @@ class TwoFactorAuthenticationMail implements MessageFactoryInterface
 
     public function __construct(
         protected readonly Setting $setting,
-        protected readonly Domain $domain,
     ) {
     }
 

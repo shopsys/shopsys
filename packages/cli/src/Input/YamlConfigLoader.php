@@ -17,7 +17,7 @@ final class YamlConfigLoader
     ) {
     }
 
-    public function load(string $configPath, string $projectPath): CoreProjectConfig
+    public function load(string $configPath): CoreProjectConfig
     {
         if (!file_exists($configPath)) {
             throw new InvalidArgumentException(sprintf('Configuration file not found: %s', $configPath));
@@ -39,6 +39,6 @@ final class YamlConfigLoader
             throw new RuntimeException('At least one domain is required');
         }
 
-        return CoreProjectConfig::fromArray($data, $projectPath, $this->registry);
+        return CoreProjectConfig::fromArray($data, $this->registry);
     }
 }

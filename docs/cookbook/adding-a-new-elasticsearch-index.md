@@ -215,10 +215,70 @@ Also, we can use `./phing elasticsearch-index-recreate` or `./phing elasticsearc
 Creating and deleting the index is nice, but it is not really useful.
 As the next step, we will implement methods `getTotalCount()` and `getExportDataForBatch()` to be able to export data.
 
-We can use the already existing method in `\Shopsys\FrameworkBundle\Model\Category\CategoryRepository::getTranslatedVisibleSubcategoriesByDomain()`.
-The method `getTranslatedVisibleSubcategoriesByDomain()` needs as a second argument an instance of `DomainConfig`, so we need to inject an instance of `Domain` class along with the instance of `CategoryRepository` into `CategoryIndex`.
+The framework's `CategoryRepository` does not provide a query tailored to this export, so we will create our own repository class `CategoryExportRepository` in `src/Model/Category/Elasticsearch` and define the query there.
+Its method `getTranslatedVisibleSubcategoriesByDomain()` loads the visible subcategories of the given category on the given domain, together with the translation for the domain locale.
 
 ```php
+declare(strict_types=1);
+
+namespace App\Model\Category\Elasticsearch;
+
+use App\Model\Category\Category;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+
+class CategoryExportRepository
+{
+    /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    protected $entityManager;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @param \App\Model\Category\Category $parentCategory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Category\Category[]
+     */
+    public function getTranslatedVisibleSubcategoriesByDomain(
+        Category $parentCategory,
+        DomainConfig $domainConfig
+    ): array {
+        return $this->entityManager->createQueryBuilder()
+            ->select('c, ct')
+            ->from(Category::class, 'c')
+            ->join('c.domains', 'cd')
+            ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
+            ->where('cd.domainId = :domainId')
+            ->andWhere('cd.visible = TRUE')
+            ->andWhere('c.parent = :parentCategory')
+            ->orderBy('c.lft')
+            ->setParameter('domainId', $domainConfig->getId())
+            ->setParameter('locale', $domainConfig->getLocale())
+            ->setParameter('parentCategory', $parentCategory)
+            ->getQuery()
+            ->getResult();
+    }
+}
+```
+
+The method `getTranslatedVisibleSubcategoriesByDomain()` needs as a second argument an instance of `DomainConfig`, so we need to inject an instance of `Domain` class along with the instance of `CategoryExportRepository` into `CategoryIndex`.
+We will also inject the framework's `CategoryRepository` because we will use it to get the root category (and later to load categories by their IDs).
+
+```php
+/**
+ * @var \App\Model\Category\Elasticsearch\CategoryExportRepository
+ */
+protected $categoryExportRepository;
+
 /**
  * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
  */
@@ -230,13 +290,18 @@ protected $categoryRepository;
 protected $domain;
 
 /**
+ * @param \App\Model\Category\Elasticsearch\CategoryExportRepository $categoryExportRepository
  * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
  * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  */
-public function __construct(CategoryRepository $categoryRepository, Domain $domain)
-{
-   $this->categoryRepository = $categoryRepository;
-   $this->domain = $domain;
+public function __construct(
+    CategoryExportRepository $categoryExportRepository,
+    CategoryRepository $categoryRepository,
+    Domain $domain
+) {
+    $this->categoryExportRepository = $categoryExportRepository;
+    $this->categoryRepository = $categoryRepository;
+    $this->domain = $domain;
 }
 ```
 
@@ -249,7 +314,7 @@ When we have injected services we may implement `getTotalCount()`
  */
 public function getTotalCount(int $domainId): int
 {
-    return count($this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
+    return count($this->categoryExportRepository->getTranslatedVisibleSubcategoriesByDomain(
         $this->categoryRepository->getRootCategory(),
         $this->domain->getDomainConfigById($domainId)
     ));
@@ -268,7 +333,7 @@ and also a `getExportDataForBatch()` with a private converting method `convertTo
 public function getExportDataForBatch(int $domainId,int $lastProcessedId,int $batchSize) : array
 {
     $domainConfig = $this->domain->getDomainConfigById($domainId);
-    $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
+    $categories = $this->categoryExportRepository->getTranslatedVisibleSubcategoriesByDomain(
         $this->categoryRepository->getRootCategory(),
         $domainConfig
     );
@@ -485,7 +550,7 @@ class CategoryIndex extends AbstractIndex implements IndexSupportChangesOnlyInte
     */
     public function getChangedIdsForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
-        $allCategories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
+        $allCategories = $this->categoryExportRepository->getTranslatedVisibleSubcategoriesByDomain(
             $this->categoryRepository->getRootCategory(),
             $this->domain->getDomainConfigById($domainId)
         );

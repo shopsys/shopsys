@@ -6,12 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Feed\Exception\TemplateBlockNotFoundException;
-use Twig\Environment;
 use Twig\TemplateWrapper;
 
 class FeedRenderer
 {
-    public function __construct(protected readonly Environment $twig, protected readonly TemplateWrapper $template)
+    public function __construct(protected readonly TemplateWrapper $template)
     {
     }
 

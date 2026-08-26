@@ -27,14 +27,6 @@ class ProductStockFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
-    public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
-    {
-        return $this->productStockRepository->getProductStocksByProductAndDomainId($product, $domainId);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
-     */
     public function getProductStocksByProductIndexedByStockId(Product $product): array
     {
         $productStocks = $this->getProductStocksByProduct($product);

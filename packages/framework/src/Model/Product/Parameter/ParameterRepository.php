@@ -23,7 +23,6 @@ class ParameterRepository
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterValueFactory $parameterValueFactory,
-        protected readonly ParameterValueDataFactory $parameterValueDataFactory,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
@@ -41,11 +40,6 @@ class ParameterRepository
     protected function getParameterGroupRepository(): EntityRepository
     {
         return $this->em->getRepository(ParameterGroup::class);
-    }
-
-    protected function getProductParameterValueRepository(): EntityRepository
-    {
-        return $this->em->getRepository(ProductParameterValue::class);
     }
 
     public function findById(int $parameterId): ?Parameter
@@ -115,17 +109,6 @@ class ParameterRepository
         }
 
         return $parameterValue;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
-     */
-    public function getAll(): array
-    {
-        return $this->getAllQueryBuilder()
-            ->orderBy('p.orderingPriority', 'DESC')
-            ->getQuery()
-            ->getResult();
     }
 
     /**
@@ -577,28 +560,6 @@ class ParameterRepository
             ->where('p.parameterType != :parameterType')
             ->setParameter('parameterType', Parameter::PARAMETER_TYPE_SLIDER)
             ->orderBy('p.orderingPriority', 'DESC');
-
-        $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
-     */
-    public function getParameterValuesUsedByProductsInCategoryByParameter(
-        Category $category,
-        Parameter $parameter,
-        int $domainId,
-        string $locale,
-    ): array {
-        $queryBuilder = $this->getParameterValueRepository()->createQueryBuilder('pv')
-            ->select('pv')
-            ->andWhere('ppv.parameter = :parameter')
-            ->setParameter('parameter', $parameter)
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
-            ->setParameter(':locale', $locale)
-            ->groupBy('pv');
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
 

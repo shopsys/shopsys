@@ -3,6 +3,35 @@ parameters:
     parallel:
         maximumNumberOfProcesses: 5
     treatPhpDocTypesAsCertain: false
+    shipmonkDeadCode:
+        usageExcluders:
+            tests:
+                # usages coming only from tests do not keep production code alive
+                enabled: true
+    shopsysDeadCodeDetection:
+        dispatchAttributeClassNames:
+            - Mcp\Capability\Attribute\McpTool
+        dispatchedMethodNamesByClassName:
+            # crud controller actions are routed by CrudRouteProvider via generateController
+            Shopsys\AdministrationBundle\Controller\AbstractCrudController: [listAction, detailAction, editAction, createAction, deleteAction]
+            # tagged shopsys.role_section_provider services are indexed by the AutowireIterator defaultIndexMethod
+            Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider: [getTargetContext]
+            # maker MakeCommandRegistrationPass reads the command description via method_exists
+            Symfony\Bundle\MakerBundle\MakerInterface: [getCommandDescription]
+            # page objects are constructed by the Codeception dependency injection when declared as Cest method parameters
+            Tests\App\Acceptance\acceptance\PageObject\AbstractPage: [__construct]
+        dispatchedMethodSuffixesByClassName:
+            # getAliases() exposes every suffixed method to the GraphQL resolver maps
+            Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation: [Mutation]
+            Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery: [Query]
+        phpTemplateDirectoryPaths:
+            - %currentWorkingDirectory%/packages/maker/templates
+        twigTemplateDirectoryPaths:
+            - %currentWorkingDirectory%/packages
+            - %currentWorkingDirectory%/project-base/app
+        yamlConfigDirectoryPaths:
+            - %currentWorkingDirectory%/packages
+            - %currentWorkingDirectory%/project-base/app/config
     symfony:
         containerXmlPath: '%currentWorkingDirectory%/project-base/app/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false
@@ -28,15 +57,21 @@ parameters:
         - %currentWorkingDirectory%/packages/coding-standards/*
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/ClassExtension/Source/*
+        # Exclude translation extractor test fixtures whose exact source line numbers are asserted by tests
+        - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/Translation/Resources/*
         # Exclude intentionally invalid entity test data used by MCP PHPStan rule tests
         - %currentWorkingDirectory%/packages/mcp/tests/Unit/Phpstan/data/*
         # Exclude template files for generating code via maker commands
         - %currentWorkingDirectory%/packages/maker/templates/*
 includes:
+    - phpstan-dead-code.neon
+    - project-base/app/phpstan-dead-code.neon
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/shipmonk/dead-code-detector/rules.neon
+    - %currentWorkingDirectory%/packages/coding-standards/dead-code-detection.neon
     - %currentWorkingDirectory%/packages/coding-standards/extension.neon
     - %currentWorkingDirectory%/packages/mcp/extension.neon
 rules:

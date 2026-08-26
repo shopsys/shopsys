@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -39,11 +38,6 @@ class BlogArticleFacade
     public function getById(int $blogArticleId): BlogArticle
     {
         return $this->blogArticleRepository->getById($blogArticleId);
-    }
-
-    public function getAllArticlesCountByDomainId(int $domainId): int
-    {
-        return $this->blogArticleRepository->getAllBlogArticlesCountByDomainId($domainId);
     }
 
     public function create(BlogArticleData $blogArticleData): BlogArticle
@@ -163,14 +157,6 @@ class BlogArticleFacade
             $domainId,
             $locale,
         );
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
-     */
-    public function getAllVisibleOnDomain(DomainConfig $domainConfig): array
-    {
-        return $this->blogArticleRepository->getAllVisibleOnDomain($domainConfig);
     }
 
     public function getQueryBuilderForQuickSearch(

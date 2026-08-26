@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Product\Price;
 
 use Override;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,7 +19,6 @@ final class ProductPricesWithVatSelectType extends AbstractType
 {
     public function __construct(
         protected readonly VatFacade $vatFacade,
-        protected readonly ProductFacade $productFacade,
     ) {
     }
 

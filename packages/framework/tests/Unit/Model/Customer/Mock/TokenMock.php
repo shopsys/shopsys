@@ -16,15 +16,6 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function serialize(): ?string
-    {
-        return null;
-    }
-
-    public function unserialize(string $data): void
-    {
-    }
-
     public function __toString(): string
     {
         return '';
@@ -34,10 +25,6 @@ class TokenMock implements TokenInterface
     public function getRoleNames(): array
     {
         return [];
-    }
-
-    public function getCredentials(): void
-    {
     }
 
     #[Override]
@@ -51,15 +38,6 @@ class TokenMock implements TokenInterface
      */
     #[Override]
     public function setUser($user): void
-    {
-    }
-
-    public function isAuthenticated(): bool
-    {
-        return true;
-    }
-
-    public function setAuthenticated(bool $isAuthenticated): void
     {
     }
 
@@ -106,11 +84,6 @@ class TokenMock implements TokenInterface
 
     public function __unserialize(array $data): void
     {
-    }
-
-    public function getUsername(): string
-    {
-        return '';
     }
 
     #[Override]

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Inquiry;
 
 use Overblog\GraphQLBundle\Definition\Argument;
-use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryData;
@@ -21,7 +20,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundU
 class CreateInquiryMutation extends AbstractMutation
 {
     public function __construct(
-        protected readonly LoggerInterface $logger,
         protected readonly InquiryDataFactory $inquiryDataFactory,
         protected readonly InquiryFacade $inquiryFacade,
         protected readonly ProductFacade $productFacade,

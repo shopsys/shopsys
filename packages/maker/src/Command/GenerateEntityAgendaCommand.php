@@ -7,7 +7,6 @@ namespace Shopsys\MakerBundle\Command;
 use Exception;
 use Override;
 use RuntimeException;
-use Shopsys\MakerBundle\EntityConfig\EntityConfigFactory;
 use Shopsys\MakerBundle\Maker\BaseMaker;
 use Shopsys\MakerBundle\Maker\DataFixtureMaker;
 use Shopsys\MakerBundle\Maker\EntityMaker;
@@ -28,11 +27,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class GenerateEntityAgendaCommand extends Command
 {
-    public function __construct(protected readonly EntityConfigFactory $entityConfigFactory)
-    {
-        parent::__construct();
-    }
-
     /**
      * {@inheritdoc}
      */

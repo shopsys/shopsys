@@ -75,7 +75,7 @@ final class RoleSectionDataTransformer implements DataTransformerInterface
         $result = [];
 
         // Collect identifiers from all role rows in this section
-        foreach ($value as $roleConstant => $roleData) {
+        foreach ($value as $roleData) {
             if (is_array($roleData)) {
                 $result = array_merge($result, $roleData);
             }

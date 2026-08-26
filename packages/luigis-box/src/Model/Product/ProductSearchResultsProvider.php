@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderInterface;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
-use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadResult;
 use Shopsys\LuigisBoxBundle\Model\Facet\FacetFactory;
@@ -26,7 +25,6 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
     public function __construct(
         string $enabledDomainIds,
         protected readonly ProductConnectionFactory $productConnectionFactory,
-        protected readonly LuigisBoxClient $client,
         protected readonly Domain $domain,
         protected readonly ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,

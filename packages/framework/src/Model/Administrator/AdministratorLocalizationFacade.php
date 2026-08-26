@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Localization\Exception\AdminLocaleNotFoundException;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class AdministratorLocalizationFacade
 {
@@ -16,7 +15,6 @@ class AdministratorLocalizationFacade
      * @param string[] $allowedAdminLocales
      */
     public function __construct(
-        protected readonly Localization $localization,
         protected readonly array $allowedAdminLocales,
         protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
         protected readonly EntityManagerInterface $em,

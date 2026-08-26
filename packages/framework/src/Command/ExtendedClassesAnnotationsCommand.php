@@ -8,7 +8,6 @@ use LimitIterator;
 use Override;
 use Roave\BetterReflection\Reflection\ReflectionObject;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder;
-use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry;
 use Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory;
@@ -56,7 +55,6 @@ class ExtendedClassesAnnotationsCommand extends Command
         protected readonly PropertyAnnotationsFactory $propertyAnnotationsFactory,
         protected readonly MethodAnnotationsFactory $methodAnnotationsAdder,
         protected readonly AnnotationsReplacer $annotationsReplacer,
-        protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly AnnotationsAdder $annotationsAdder,
         protected readonly StaleAnnotationsRemover $staleAnnotationsRemover,
     ) {

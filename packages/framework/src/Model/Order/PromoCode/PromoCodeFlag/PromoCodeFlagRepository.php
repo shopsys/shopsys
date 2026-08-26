@@ -32,14 +32,4 @@ class PromoCodeFlagRepository
             ->getQuery()
             ->getResult();
     }
-
-    public function deleteByPromoCodeId(int $id): void
-    {
-        $this->getQueryBuilder()
-            ->delete(PromoCodeFlag::class, 'pcf')
-            ->where('pcf.promoCode = :promoCodeId')
-            ->setParameter('promoCodeId', $id)
-            ->getQuery()
-            ->execute();
-    }
 }

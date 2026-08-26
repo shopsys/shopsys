@@ -3,6 +3,5 @@ twig:
     # form_themes:
     # Uncomment the previous line and add your form themes here
     globals:
-        globalMultipleFormSetting: '@Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting'
         usersnapApiKey: '%env(USERSNAP_PROJECT_API_KEY)%'
     strict_variables: true

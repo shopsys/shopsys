@@ -143,11 +143,6 @@ class CronModule
         $this->enabled = true;
     }
 
-    public function setStatusFailed(): void
-    {
-        $this->status = self::CRON_STATUS_ERROR;
-    }
-
     public function setStatusOk(): void
     {
         $this->status = self::CRON_STATUS_OK;

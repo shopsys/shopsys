@@ -28,7 +28,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[ForRole(AdminRoleConstant::ROLE_BLOG_ARTICLE)]
 class BlogArticleController extends AdminBaseController
@@ -42,7 +41,6 @@ class BlogArticleController extends AdminBaseController
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly Localization $localization,
         protected readonly Domain $domain,
-        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 

@@ -25,11 +25,17 @@
         "slevomat/coding-standard": "^8.27",
         "squizlabs/php_codesniffer": "^4.0",
         "symfony/finder": "^7.4",
+        "symfony/yaml": "^7.4",
         "symplify/easy-coding-standard": "^13.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.5",
-        "nikic/php-parser": "^5.1"
+        "nikic/php-parser": "^5.1",
+        "shipmonk/dead-code-detector": "^1.3"
+    },
+    "suggest": {
+        "shipmonk/dead-code-detector": "Required to use the dead code member usage providers from the Phpstan namespace",
+        "shopsys/phpunit-injector": "Needed if you want to use PhpStan extension to understand injected dependencies in tests"
     },
     "autoload": {
         "psr-4": {
@@ -40,9 +46,6 @@
         "psr-4": {
             "Tests\\CodingStandards\\": "tests/"
         }
-    },
-    "suggest": {
-        "shopsys/phpunit-injector": "Needed if you want to use PhpStan extension to understand injected dependencies in tests"
     },
     "config": {
         "allow-plugins": {

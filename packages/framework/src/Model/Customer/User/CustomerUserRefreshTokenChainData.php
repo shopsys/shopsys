@@ -7,11 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 class CustomerUserRefreshTokenChainData
 {
     /**
-     * @var string|null
-     */
-    public $uuid;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public $customerUser;

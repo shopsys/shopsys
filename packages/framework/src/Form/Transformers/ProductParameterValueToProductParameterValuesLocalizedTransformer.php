@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
 use Override;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedDataFactory;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -15,7 +14,6 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
 {
     public function __construct(
         protected readonly ProductParameterValueDataFactory $productParameterValueDataFactory,
-        protected readonly ParameterValueDataFactory $parameterValueDataFactory,
         protected readonly ProductParameterValuesLocalizedDataFactory $productParameterValuesLocalizedDataFactory,
     ) {
     }

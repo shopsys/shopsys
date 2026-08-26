@@ -22,7 +22,6 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
-        protected readonly string $catalogNumber,
         protected readonly string $availabilityText,
         protected readonly int $availabilityRank,
         protected readonly Money $price,
@@ -34,7 +33,6 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
         protected readonly bool $isMainVariant,
         protected readonly array $flagNames,
         protected readonly array $productParameterValuesIndexedByName,
-        protected readonly ?string $mainCategoryName,
         protected readonly ?string $ean,
         protected readonly ?string $catnum,
         protected readonly ?string $brandName,
@@ -169,11 +167,6 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
     public function getEan(): ?string
     {
         return $this->ean;
-    }
-
-    public function getSku(): string
-    {
-        return $this->catalogNumber;
     }
 
     public function getProductCode(): ?string

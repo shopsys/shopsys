@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -23,7 +22,6 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
 
     public function __construct(
         protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly CurrencyFacade $currencyFacade,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
     }

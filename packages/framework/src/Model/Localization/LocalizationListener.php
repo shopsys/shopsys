@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -19,7 +18,6 @@ class LocalizationListener implements EventSubscriberInterface
     public function __construct(
         protected readonly Domain $domain,
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
-        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
         protected readonly ContextResolverInterface $contextResolver,
     ) {
     }

@@ -25,7 +25,6 @@ class ParameterFacade
         protected readonly CategoryParameterRepository $categoryParameterRepository,
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,
-        protected readonly ParameterValueFactory $parameterValueFactory,
         protected readonly DeleteReadyCategorySeoMixFacade $deleteReadyCategorySeoMixFacade,
         protected readonly ParameterSortingHelper $parameterSortingHelper,
     ) {
@@ -44,14 +43,6 @@ class ParameterFacade
     public function getParameterValueByUuid(string $uuid): ParameterValue
     {
         return $this->parameterRepository->getParameterValueByUuid($uuid);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
-     */
-    public function getAll(): array
-    {
-        return $this->parameterRepository->getAll();
     }
 
     /**

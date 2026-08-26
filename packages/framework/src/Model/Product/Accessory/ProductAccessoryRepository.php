@@ -49,19 +49,6 @@ class ProductAccessoryRepository
         return $this->getProductAccessoryRepository()->findBy(['product' => $product], ['position' => 'asc']);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getAllOfferedAccessoriesByProduct(
-        Product $product,
-        int $domainId,
-        PricingGroup $pricingGroup,
-    ): array {
-        return $this->getAllOfferedAccessoriesByProductQueryBuilder($product, $domainId, $pricingGroup)
-            ->getQuery()
-            ->getResult();
-    }
-
     protected function getAllOfferedAccessoriesByProductQueryBuilder(
         Product $product,
         int $domainId,
@@ -79,15 +66,5 @@ class ProductAccessoryRepository
             ->orderBy('pa.position', 'ASC');
 
         return $queryBuilder;
-    }
-
-    public function findByProductAndAccessory(
-        Product $product,
-        Product $accessory,
-    ): ?ProductAccessory {
-        return $this->getProductAccessoryRepository()->findOneBy([
-            'product' => $product,
-            'accessory' => $accessory,
-        ]);
     }
 }

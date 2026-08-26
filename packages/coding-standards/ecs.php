@@ -119,6 +119,7 @@ use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInCallSniff;
 use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInClosureUseSniff;
 use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInDeclarationSniff;
+use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
@@ -129,6 +130,8 @@ use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
+use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
+use SlevomatCodingStandard\Sniffs\Variables\UselessVariableSniff;
 use Symplify\CodingStandard\Fixer\Annotation\RemovePropertyVariableNameDescriptionFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
@@ -263,9 +266,14 @@ return ECSConfig::configure()
         RequireOverrideAttributeSniff::class,
         ParameterTypeHintSniff::class,
         ReturnTypeHintSniff::class,
+        UnusedInheritedVariablePassedToClosureSniff::class,
+        UselessVariableSniff::class,
     ])
     ->withConfiguredRule(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
+    ])
+    ->withConfiguredRule(UnusedVariableSniff::class, [
+        'ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach' => true,
     ])
     ->withConfiguredRule(SpaceAfterCastSniff::class, [
         'spacing' => 0,

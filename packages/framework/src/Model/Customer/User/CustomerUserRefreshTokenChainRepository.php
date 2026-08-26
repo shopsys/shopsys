@@ -24,14 +24,6 @@ class CustomerUserRefreshTokenChainRepository
         return $this->em->getRepository(CustomerUserRefreshTokenChain::class);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain[]
-     */
-    public function findCustomersTokenChains(CustomerUser $customerUser): array
-    {
-        return $this->getCustomerUserRefreshTokenChainRepository()->findBy(['customerUser' => $customerUser]);
-    }
-
     public function removeCustomerUserRefreshTokenChainsByDeviceId(string $deviceId): void
     {
         $this->em->createQueryBuilder()

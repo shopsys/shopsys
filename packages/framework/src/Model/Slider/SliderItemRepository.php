@@ -48,14 +48,6 @@ class SliderItemRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAll(): array
-    {
-        return $this->getSliderItemRepository()->findAll();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
-     */
     public function getAllVisibleByDomainId(int $domainId): array
     {
         $dateToday = $this->clock->now()->format('Y-m-d 00:00:00');

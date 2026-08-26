@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 class ProductFilterConfigFactory
 {
     public function __construct(
-        protected readonly ParameterFilterChoiceRepository $parameterFilterChoiceRepository,
         protected readonly FlagFilterChoiceRepository $flagFilterChoiceRepository,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly BrandFilterChoiceRepository $brandFilterChoiceRepository,

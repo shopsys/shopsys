@@ -38,7 +38,6 @@ class ExposedSchemaProvider
 
     public function __construct(
         protected readonly Connection $mcpConnection,
-        protected readonly AllowedDatabaseTablesProvider $allowedDatabaseTablesProvider,
         protected readonly AllowedDatabaseColumnsProvider $allowedDatabaseColumnsProvider,
         protected readonly SchemaNameNormalizer $schemaNameNormalizer,
         protected readonly string $cacheDir,

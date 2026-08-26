@@ -4,15 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-
 class ParameterValueConversionDataFactory
 {
-    public function __construct(
-        protected readonly Domain $domain,
-    ) {
-    }
-
     protected function createInstance(): ParameterValueConversionData
     {
         return new ParameterValueConversionData();

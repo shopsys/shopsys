@@ -35,17 +35,6 @@ class ProductElasticsearchRepository
         }
     }
 
-    public function addRelevance(QueryBuilder $productQueryBuilder, ?string $searchText): void
-    {
-        $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
-
-        if (count($productIds) > 0) {
-            $productQueryBuilder->addSelect('field(p.id, ' . implode(',', $productIds) . ') AS HIDDEN relevance');
-        } else {
-            $productQueryBuilder->addSelect('-1 AS HIDDEN relevance');
-        }
-    }
-
     /**
      * @return int[]
      */
@@ -75,13 +64,6 @@ class ProductElasticsearchRepository
         $result = $this->client->search($parameters);
 
         return $this->extractIds($result);
-    }
-
-    public function getSortedProductIdsByFilterQuery(FilterQuery $filterQuery): ProductIdsResult
-    {
-        $result = $this->client->search($filterQuery->getQuery());
-
-        return new ProductIdsResult($this->extractTotalCount($result), $this->extractIds($result));
     }
 
     public function getSortedProductsResultByFilterQuery(FilterQuery $filterQuery): ProductsResult

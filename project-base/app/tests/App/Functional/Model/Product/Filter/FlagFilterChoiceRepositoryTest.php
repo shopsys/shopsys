@@ -118,13 +118,11 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
      */
     private function getFlagIds(array $flagFilterChoices): array
     {
-        $ids = array_map(
+        return array_map(
             static function (Flag $flag) {
                 return $flag->getId();
             },
             $flagFilterChoices,
         );
-
-        return $ids;
     }
 }

@@ -223,19 +223,10 @@ msgstr ""
 msgid "Selected complaint resolution requires bank account number to be filled"
 msgstr ""
 
-msgid "Selected payment price has changed"
-msgstr ""
-
-msgid "Selected pickup place is not available"
-msgstr ""
-
 msgid "Selected transport is not available"
 msgstr ""
 
 msgid "Selected transport needs to have pickup place identifier set"
-msgstr ""
-
-msgid "Selected transport price has changed"
 msgstr ""
 
 msgid "Selected transport weight limit has been exceeded"

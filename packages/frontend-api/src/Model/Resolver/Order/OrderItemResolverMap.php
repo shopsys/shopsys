@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
-use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -14,7 +13,6 @@ class OrderItemResolverMap extends ResolverMap
 {
     public function __construct(
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
-        protected readonly DataLoaderInterface $firstImageBatchLoader,
     ) {
     }
 

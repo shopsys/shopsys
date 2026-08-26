@@ -268,9 +268,7 @@ class OrderDataFixture
             TransportDataFixture::TRANSPORT_PERSONAL,
         ]);
 
-        $randomTransport = $this->persistentReferenceFacade->getReference($randomTransportReferenceName, Transport::class);
-
-        return $randomTransport;
+        return $this->persistentReferenceFacade->getReference($randomTransportReferenceName, Transport::class);
     }
 
     private function getRandomPayment(): Payment
@@ -281,9 +279,7 @@ class OrderDataFixture
             PaymentDataFixture::PAYMENT_CASH,
         ]);
 
-        $randomPayment = $this->persistentReferenceFacade->getReference($randomPaymentReferenceName, Payment::class);
-
-        return $randomPayment;
+        return $this->persistentReferenceFacade->getReference($randomPaymentReferenceName, Payment::class);
     }
 
     private function getRandomCountryFromFirstDomain(): Country
@@ -293,8 +289,6 @@ class OrderDataFixture
             CountryDataFixture::COUNTRY_SLOVAKIA,
         ]);
 
-        $randomCountry = $this->persistentReferenceFacade->getReference($randomCountryReferenceName, Country::class);
-
-        return $randomCountry;
+        return $this->persistentReferenceFacade->getReference($randomCountryReferenceName, Country::class);
     }
 }

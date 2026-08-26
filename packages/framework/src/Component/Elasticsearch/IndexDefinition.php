@@ -9,8 +9,6 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchInval
 
 class IndexDefinition
 {
-    protected AbstractIndex $index;
-
     public function __construct(
         protected readonly string $indexName,
         protected readonly string $definitionsDirectory,

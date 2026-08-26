@@ -8,10 +8,9 @@ use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
-use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
-class QueryPaginator implements PaginatorInterface
+class QueryPaginator
 {
     protected bool $includeMetaColumns = false;
 
@@ -25,7 +24,6 @@ class QueryPaginator implements PaginatorInterface
     ) {
     }
 
-    #[Override]
     public function getResult(
         int $page = 1,
         ?int $pageSize = null,
@@ -84,7 +82,6 @@ class QueryPaginator implements PaginatorInterface
         return $this;
     }
 
-    #[Override]
     public function getTotalCount(): int
     {
         $totalNativeQuery = $this->getTotalNativeQuery($this->queryBuilder);

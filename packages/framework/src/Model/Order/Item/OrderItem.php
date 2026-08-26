@@ -506,7 +506,7 @@ class OrderItem
 
     protected function checkTypeRounding(): void
     {
-        $this->checkTypeOf(OrderItemTypeEnum::TYPE_DISCOUNT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_ROUNDING);
     }
 
     protected function checkTypePromotion(): void

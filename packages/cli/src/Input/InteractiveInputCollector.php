@@ -20,13 +20,13 @@ final class InteractiveInputCollector
     ) {
     }
 
-    public function collect(string $projectPath, SymfonyStyle $io): CoreProjectConfig
+    public function collect(SymfonyStyle $io): CoreProjectConfig
     {
         $this->displayHeader($io);
 
         $domains = $this->collectDomains($io);
 
-        $config = new CoreProjectConfig($projectPath, $domains);
+        $config = new CoreProjectConfig($domains);
 
         foreach ($this->registry->getProjectConfigSections() as $projectConfigSection) {
             $projectConfigSection->collectInteractive($io);

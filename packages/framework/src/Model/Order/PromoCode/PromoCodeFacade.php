@@ -79,14 +79,6 @@ class PromoCodeFacade
         return $this->promoCodeRepository->findByCodeAndDomainId($code, $domainId);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
-     */
-    public function getAll(): array
-    {
-        return $this->promoCodeRepository->getAll();
-    }
-
     protected function refreshPromoCodeRelations(PromoCode $promoCode, PromoCodeData $promoCodeData): void
     {
         $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);

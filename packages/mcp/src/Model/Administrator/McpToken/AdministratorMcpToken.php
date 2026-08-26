@@ -97,8 +97,6 @@ class AdministratorMcpToken
         $this->clientId = $administratorMcpTokenData->clientId;
         $this->label = $administratorMcpTokenData->label;
         $this->createdAt = $administratorMcpTokenData->createdAt;
-        $this->lastUsedAt = $administratorMcpTokenData->lastUsedAt;
-        $this->revokedAt = $administratorMcpTokenData->revokedAt;
         $this->expiresAt = $administratorMcpTokenData->expiresAt;
     }
 

@@ -7,13 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ProductSellingDeniedRecalculator
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly Domain $domain,
     ) {
     }
 

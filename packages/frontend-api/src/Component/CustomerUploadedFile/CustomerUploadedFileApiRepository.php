@@ -6,13 +6,11 @@ namespace Shopsys\FrontendApiBundle\Component\CustomerUploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
-use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class CustomerUploadedFileApiRepository
 {
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
-        protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 

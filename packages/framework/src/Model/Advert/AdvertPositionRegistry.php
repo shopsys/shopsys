@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
-use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertPositionNotKnownException;
-
 class AdvertPositionRegistry
 {
     public const POSITION_CATEGORIES_SECOND_ROW_PRODUCT_LIST = 'productListSecondRow';
@@ -39,17 +37,5 @@ class AdvertPositionRegistry
     public static function isCategoryPosition(string $positionName): bool
     {
         return in_array($positionName, self::getCategoryPosition(), true);
-    }
-
-    public function assertPositionNameIsKnown(string $positionName): void
-    {
-        $knownPositionsNames = array_keys($this->getAllLabelsIndexedByNames());
-
-        if (!in_array($positionName, $knownPositionsNames, true)) {
-            throw new AdvertPositionNotKnownException(
-                $positionName,
-                $knownPositionsNames,
-            );
-        }
     }
 }

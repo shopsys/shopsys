@@ -6,13 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
 use Nette\Utils\Json;
 use Psr\Log\LoggerInterface;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 class DispatchProductIdsBatchMessageHandler
 {
     public function __construct(
-        protected readonly ProductRepository $productRepository,
         protected readonly ProductRecalculationDispatcherExecutor $productRecalculationDispatcherExecutor,
         protected readonly LoggerInterface $logger,
     ) {

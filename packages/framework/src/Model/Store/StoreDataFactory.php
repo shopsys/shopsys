@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Store;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
@@ -12,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
 class StoreDataFactory
 {
     public function __construct(
-        protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
         protected readonly OpeningHoursDataFactory $openingHourDataFactory,

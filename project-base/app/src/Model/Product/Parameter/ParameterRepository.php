@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseP
  * @method string[][] getParameterValuesIndexedByProductIdAndParameterNameForProducts(\App\Model\Product\Product[] $products, string $locale)
  * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductQueryBuilder(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] getParametersUsedByProductsInCategoryWithoutSlider(\App\Model\Category\Category $category, int $domainId)
- * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] getParameterValuesUsedByProductsInCategoryByParameter(\App\Model\Category\Category $category, \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter, int $domainId, string $locale)
  * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder(\App\Model\Product\Product $product, string $locale)
  * @method array getProductParameterValuesDataByProducts(\App\Model\Product\Product[] $products, string $locale)
  */

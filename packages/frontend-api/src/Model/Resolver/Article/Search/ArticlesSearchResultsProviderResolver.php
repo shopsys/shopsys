@@ -16,7 +16,7 @@ class ArticlesSearchResultsProviderResolver extends SearchResultsProviderResolve
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderInterface[] $articlesSearchResultsProviders
      */
     public function __construct(
-        protected readonly iterable $articlesSearchResultsProviders,
+        iterable $articlesSearchResultsProviders,
     ) {
         parent::__construct($articlesSearchResultsProviders);
     }

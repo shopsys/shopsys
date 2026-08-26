@@ -84,29 +84,6 @@ class ProductConnectionFactory
         );
     }
 
-    public function createConnectionForBrand(
-        Brand $brand,
-        callable $retrieveProductClosure,
-        int $countOfProducts,
-        Argument $argument,
-        ProductFilterData $productFilterData,
-    ): ProductConnection {
-        $productFilterOptionsClosure = function () use ($brand, $productFilterData) {
-            return $this->productFilterOptionsFactory->createProductFilterOptionsForBrand(
-                $brand,
-                $this->productFilterFacade->getProductFilterConfigForBrand($brand),
-                $productFilterData,
-            );
-        };
-
-        return $this->createConnection(
-            $retrieveProductClosure,
-            $countOfProducts,
-            $argument,
-            $productFilterOptionsClosure,
-        );
-    }
-
     public function getProductFilterOptionsClosure(ProductFilterData $productFilterData, mixed $searchText): Closure
     {
         return function () use ($productFilterData, $searchText) {

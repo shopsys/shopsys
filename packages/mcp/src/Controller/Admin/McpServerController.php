@@ -7,7 +7,6 @@ namespace Shopsys\McpBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Form\Admin\Mcp\GenerateManualTokenFormType;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
@@ -26,7 +25,6 @@ class McpServerController extends AdminBaseController
     public function __construct(
         protected readonly AdministratorMcpTokenFacade $administratorMcpTokenFacade,
         protected readonly McpTokenGridFactory $mcpTokenGridFactory,
-        protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }

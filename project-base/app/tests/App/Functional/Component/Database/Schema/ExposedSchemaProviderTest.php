@@ -27,7 +27,6 @@ class ExposedSchemaProviderTest extends AbstractDatabaseSchemaFunctionalTestCase
         $allowedDatabaseColumnsProvider = new AllowedDatabaseColumnsProvider($allowedDatabaseTablesProvider, $schemaNameNormalizer);
         $exposedSchemaProvider = new ExposedSchemaProvider(
             $this->em->getConnection(),
-            $allowedDatabaseTablesProvider,
             $allowedDatabaseColumnsProvider,
             $schemaNameNormalizer,
             'dummySchemaFilePath', // irrelevant for this test

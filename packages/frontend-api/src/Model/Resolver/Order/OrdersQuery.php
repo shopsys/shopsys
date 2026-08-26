@@ -10,7 +10,6 @@ use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
@@ -24,7 +23,6 @@ class OrdersQuery extends AbstractQuery
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly OrderApiFacade $orderApiFacade,
-        protected readonly CustomerFacade $customerFacade,
         protected readonly Security $security,
         protected readonly OrderFilterFactory $orderFilterFactory,
         protected readonly Domain $domain,

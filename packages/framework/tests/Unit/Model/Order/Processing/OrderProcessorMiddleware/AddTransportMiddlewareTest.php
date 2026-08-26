@@ -98,7 +98,6 @@ class AddTransportMiddlewareTest extends MiddlewareTestCase
     {
         return new AddTransportMiddleware(
             $this->createTransportPriceCalculationStub($transportPrice),
-            $this->createCurrencyFacade(),
             $this->createOrderItemDataFactory(),
         );
     }

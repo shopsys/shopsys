@@ -43,7 +43,7 @@ class CustomerUserListAdminRepository
 
         $phoneExpr = PhoneNumberSearchHelper::getDqlExpression('cu');
 
-        $queryBuilder = $this->em->createQueryBuilder()
+        return $this->em->createQueryBuilder()
             ->select('
                 ba.id AS billingAddressId,
                 c.id AS customerId,
@@ -71,8 +71,6 @@ class CustomerUserListAdminRepository
             )')
             ->where('cu.id IS NOT NULL')
             ->setParameter('selectedDomainId', $domainId);
-
-        return $queryBuilder;
     }
 
     public function getCustomerUserListQueryBuilderByQuickSearchData(

@@ -8,15 +8,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
@@ -27,7 +22,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
@@ -38,35 +32,21 @@ use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeExcepti
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
-use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Webmozart\Assert\Assert;
 
 class OrderFacade
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly OrderNumberSequenceRepository $orderNumberSequenceRepository,
         protected readonly OrderRepository $orderRepository,
-        protected readonly OrderUrlGenerator $orderUrlGenerator,
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly OrderMailFacade $orderMailFacade,
-        protected readonly OrderHashGeneratorRepository $orderHashGeneratorRepository,
-        protected readonly Setting $setting,
         protected readonly Localization $localization,
-        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
-        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
-        protected readonly CartFacade $cartFacade,
-        protected readonly CustomerUserFacade $customerUserFacade,
-        protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly HeurekaFacade $heurekaFacade,
         protected readonly Domain $domain,
-        protected readonly OrderFactory $orderFactory,
         protected readonly OrderPriceCalculation $orderPriceCalculation,
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
-        protected readonly NumberFormatterExtension $numberFormatterExtension,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
-        protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly OrderItemFactory $orderItemFactory,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly OrderDataFactory $orderDataFactory,
@@ -195,11 +175,6 @@ class OrderFacade
     public function getByUrlHashAndDomain(string $urlHash, int $domainId): Order
     {
         return $this->orderRepository->getByUrlHashAndDomain($urlHash, $domainId);
-    }
-
-    public function getByOrderNumberAndUser(string $orderNumber, CustomerUser $customerUser): Order
-    {
-        return $this->orderRepository->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
     }
 
     public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): QueryBuilder

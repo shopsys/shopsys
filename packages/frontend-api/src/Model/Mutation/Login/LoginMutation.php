@@ -6,21 +6,14 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Login;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
-use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
-use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
-use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidCredentialsUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\TooManyLoginAttemptsUserError;
 use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
-use Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory;
 use Shopsys\FrontendApiBundle\Model\Security\TokensData;
-use Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory;
-use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -32,15 +25,8 @@ class LoginMutation extends AbstractMutation
     public function __construct(
         protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
         protected readonly UserPasswordHasherInterface $userPasswordHasher,
-        protected readonly TokenFacade $tokenFacade,
         protected readonly DefaultLoginRateLimiter $loginRateLimiter,
         protected readonly RequestStack $requestStack,
-        protected readonly ProductListFacade $productListFacade,
-        protected readonly MergeCartFacade $mergeCartFacade,
-        protected readonly TokensDataFactory $tokensDataFactory,
-        protected readonly LoginResultDataFactory $loginResultDataFactory,
-        protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
-        protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
         protected readonly LoginAsUserFacade $loginAsUserFacade,
     ) {
     }

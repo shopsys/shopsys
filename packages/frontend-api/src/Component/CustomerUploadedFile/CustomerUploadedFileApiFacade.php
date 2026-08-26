@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\CustomerUploadedFile;
 
-use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
-
 class CustomerUploadedFileApiFacade
 {
     public function __construct(
-        protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
         protected readonly CustomerUploadedFileApiRepository $customerUploadedFileApiRepository,
     ) {
     }

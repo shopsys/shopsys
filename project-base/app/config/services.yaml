@@ -310,9 +310,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository:
         alias: App\Model\Product\Filter\FlagFilterChoiceRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository:
-        alias: App\Model\Product\Filter\ParameterFilterChoiceRepository
-
     Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository:
         alias: App\Model\Product\Filter\PriceRangeRepository
 

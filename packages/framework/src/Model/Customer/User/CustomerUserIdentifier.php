@@ -32,15 +32,4 @@ class CustomerUserIdentifier
     {
         return $this->customerUser;
     }
-
-    public function getObjectHash(): string
-    {
-        if ($this->customerUser instanceof CustomerUser) {
-            $customerUserId = $this->customerUser->getId();
-        } else {
-            $customerUserId = 'NULL';
-        }
-
-        return 'session:' . $this->cartIdentifier . ';userId:' . $customerUserId . ';';
-    }
 }

@@ -1,5 +1,7 @@
 parameters:
     treatPhpDocTypesAsCertain: false
+    # inline ignores of shipmonk.* errors match only in the monorepo analysis where the dead code detector runs
+    reportUnmatchedIgnoredErrors: false
 
     excludePaths:
         # Exclude template files for generating code via maker commands

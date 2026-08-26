@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\UnsupportedFeatureException;
 
 class ArticleIndex extends AbstractIndex
 {
     public function __construct(
-        protected readonly Domain $domain,
         protected readonly ArticleExportRepository $articleExportRepository,
     ) {
     }

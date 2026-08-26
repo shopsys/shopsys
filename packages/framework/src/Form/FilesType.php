@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 final class FilesType extends AbstractType
@@ -19,7 +18,6 @@ final class FilesType extends AbstractType
     public function __construct(
         protected readonly RouterInterface $router,
         protected readonly FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
-        protected readonly PropertyAccessorInterface $propertyAccessor,
     ) {
     }
 

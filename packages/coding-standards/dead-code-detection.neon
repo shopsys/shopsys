@@ -1,0 +1,59 @@
+parametersSchema:
+    shopsysDeadCodeDetection: structure([
+        dispatchAttributeClassNames: listOf(string())
+        dispatchedMethodNamesByClassName: arrayOf(listOf(string()), string())
+        dispatchedMethodSuffixesByClassName: arrayOf(listOf(string()), string())
+        phpTemplateDirectoryPaths: listOf(string())
+        twigTemplateDirectoryPaths: listOf(string())
+        yamlConfigDirectoryPaths: listOf(string())
+    ])
+
+parameters:
+    shopsysDeadCodeDetection:
+        dispatchAttributeClassNames: []
+        dispatchedMethodNamesByClassName: []
+        dispatchedMethodSuffixesByClassName: []
+        phpTemplateDirectoryPaths: []
+        twigTemplateDirectoryPaths: []
+        yamlConfigDirectoryPaths: []
+
+services:
+    -
+        class: Shopsys\CodingStandards\Phpstan\AttributeDispatchUsageProvider
+        arguments:
+            attributeClassNames: %shopsysDeadCodeDetection.dispatchAttributeClassNames%
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\CodeceptionUsageProvider
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\DispatchedMethodUsageProvider
+        arguments:
+            dispatchedMethodNamesByClassName: %shopsysDeadCodeDetection.dispatchedMethodNamesByClassName%
+            dispatchedMethodSuffixesByClassName: %shopsysDeadCodeDetection.dispatchedMethodSuffixesByClassName%
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\InjectedPropertiesInTestsUsageProvider
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\PhpTemplateUsageProvider
+        arguments:
+            templateDirectoryPaths: %shopsysDeadCodeDetection.phpTemplateDirectoryPaths%
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\TwigTemplateUsageProvider
+        arguments:
+            templateDirectoryPaths: %shopsysDeadCodeDetection.twigTemplateDirectoryPaths%
+        tags:
+            - shipmonk.deadCode.memberUsageProvider
+    -
+        class: Shopsys\CodingStandards\Phpstan\YamlConfigurationUsageProvider
+        arguments:
+            configDirectoryPaths: %shopsysDeadCodeDetection.yamlConfigDirectoryPaths%
+        tags:
+            - shipmonk.deadCode.memberUsageProvider

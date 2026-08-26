@@ -39,15 +39,6 @@ class OrderRepository
             ->getQuery()->getOneOrNullResult();
     }
 
-    protected function findByUuidAndUrlHash(string $uuid, string $urlHash): ?Order
-    {
-        return $this->createOrderQueryBuilder()
-            ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
-            ->andWhere('o.urlHash = :urlHash')->setParameter(':urlHash', $urlHash)
-            ->setMaxResults(1)
-            ->getQuery()->getOneOrNullResult();
-    }
-
     public function getByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser): Order
     {
         $order = $this->findByUuidAndCustomerUser($uuid, $customerUser);

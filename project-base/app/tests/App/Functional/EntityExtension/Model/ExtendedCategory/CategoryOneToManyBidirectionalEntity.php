@@ -31,11 +31,6 @@ class CategoryOneToManyBidirectionalEntity
         return $this->name;
     }
 
-    public function getCategory(): ExtendedCategory
-    {
-        return $this->category;
-    }
-
     public function setCategory(ExtendedCategory $category): void
     {
         $this->category = $category;

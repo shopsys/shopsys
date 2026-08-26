@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
@@ -19,17 +18,6 @@ class PriceRangeRepository
         protected readonly ProductRepository $productRepository,
         protected readonly QueryBuilderExtender $queryBuilderExtender,
     ) {
-    }
-
-    public function getPriceRangeInCategory(int $domainId, PricingGroup $pricingGroup, Category $category): PriceRange
-    {
-        $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
-            $domainId,
-            $pricingGroup,
-            $category,
-        );
-
-        return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
     }
 
     public function getPriceRangeForBrand(int $domainId, PricingGroup $pricingGroup, Brand $brand): PriceRange

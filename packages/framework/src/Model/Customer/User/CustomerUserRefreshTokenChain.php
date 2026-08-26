@@ -55,7 +55,7 @@ class CustomerUserRefreshTokenChain
 
     public function __construct(CustomerUserRefreshTokenChainData $customerUserRefreshTokenChainData)
     {
-        $this->uuid = $customerUserRefreshTokenChainData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = Uuid::uuid4()->toString();
         $this->customerUser = $customerUserRefreshTokenChainData->customerUser;
         $this->tokenChain = $customerUserRefreshTokenChainData->tokenChain;
         $this->deviceId = $customerUserRefreshTokenChainData->deviceId;

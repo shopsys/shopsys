@@ -110,8 +110,6 @@ class MergadoFeedItemTest extends TestCase
         self::assertSame('https://example.com/img/product/1', $mergadoFeedItem->getImageUrl());
         self::assertSame('EUR', $mergadoFeedItem->getCurrencyCode());
         self::assertSame('description', $mergadoFeedItem->getDescription());
-        self::assertThat($mergadoFeedItem->getHighProductPrice()->getPriceWithoutVat(), new IsMoneyEqual(Money::zero()));
-        self::assertThat($mergadoFeedItem->getHighProductPrice()->getPriceWithVat(), new IsMoneyEqual(Money::zero()));
         self::assertNull($mergadoFeedItem->getBrand());
         self::assertSame([], $mergadoFeedItem->getFlags());
         self::assertSame([], $mergadoFeedItem->getParameters());

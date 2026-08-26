@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
-use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
@@ -79,7 +78,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ParameterWithValuesFactory $parameterWithValuesFactory,
         ProductAvailabilityFacade $productAvailabilityFacade,
         HreflangLinksFacade $hreflangLinksFacade,
-        ProductFrontendLimitProvider $productFrontendLimitProvider,
         DataLoaderInterface $productsSellableByIdsBatchLoader,
         ProductVisibilityFacade $productVisibilityFacade,
         DataLoaderInterface $productsVisibleByIdsBatchLoader,
@@ -103,7 +101,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $parameterWithValuesFactory,
             $productAvailabilityFacade,
             $hreflangLinksFacade,
-            $productFrontendLimitProvider,
             $productsSellableByIdsBatchLoader,
             $productVisibilityFacade,
             $productsVisibleByIdsBatchLoader,

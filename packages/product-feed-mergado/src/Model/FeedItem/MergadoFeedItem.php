@@ -31,7 +31,6 @@ class MergadoFeedItem implements FeedItemInterface
         protected readonly array $parameters,
         protected readonly string $currencyCode,
         protected readonly ?string $description,
-        protected readonly PriceInterface $highProductPrice,
         protected readonly array $flags,
         protected readonly string $availability,
         protected readonly ?Brand $brand = null,
@@ -122,11 +121,6 @@ class MergadoFeedItem implements FeedItemInterface
     public function getMainVariantId(): ?int
     {
         return $this->mainVariantId;
-    }
-
-    public function getHighProductPrice(): PriceInterface
-    {
-        return $this->highProductPrice;
     }
 
     /**

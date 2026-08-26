@@ -17,9 +17,7 @@ class ProductFactory
     {
         $entityClassName = $this->entityNameResolver->resolve(Product::class);
 
-        $product = $entityClassName::create($data);
-
-        return $product;
+        return $entityClassName::create($data);
     }
 
     /**
@@ -31,8 +29,6 @@ class ProductFactory
 
         $entityClassName = $this->entityNameResolver->resolve(Product::class);
 
-        $mainVariant = $entityClassName::createMainVariant($data, $variants);
-
-        return $mainVariant;
+        return $entityClassName::createMainVariant($data, $variants);
     }
 }

@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Advert;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertRepository as FrameworkAdvertRepository;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class AdvertRepository
 {
     public function __construct(
-        protected readonly EntityManagerInterface $em,
         protected readonly FrameworkAdvertRepository $advertRepository,
     ) {
     }

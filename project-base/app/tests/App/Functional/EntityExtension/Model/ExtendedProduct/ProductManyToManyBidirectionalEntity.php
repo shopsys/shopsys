@@ -36,14 +36,6 @@ class ProductManyToManyBidirectionalEntity
         return $this->name;
     }
 
-    /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct[]
-     */
-    public function getProducts(): array
-    {
-        return $this->products->getValues();
-    }
-
     public function addProduct(ExtendedProduct $product): void
     {
         $this->products->add($product);

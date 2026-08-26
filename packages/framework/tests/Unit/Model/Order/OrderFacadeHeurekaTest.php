@@ -7,11 +7,6 @@ namespace Tests\FrameworkBundle\Unit\Model\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
-use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
@@ -22,22 +17,15 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderDeliveryDateFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Order\OrderFactory;
-use Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository;
-use Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
-use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class OrderFacadeHeurekaTest extends TestCase
@@ -92,27 +80,15 @@ class OrderFacadeHeurekaTest extends TestCase
 
         return new OrderFacade(
             $this->createStub(EntityManagerInterface::class),
-            $this->createStub(OrderNumberSequenceRepository::class),
             $orderRepositoryStub,
-            $this->createStub(OrderUrlGenerator::class),
             $this->createStub(OrderStatusFacade::class),
             $this->createStub(OrderMailFacade::class),
-            $this->createStub(OrderHashGeneratorRepository::class),
-            $this->createStub(Setting::class),
             $this->createStub(Localization::class),
-            $this->createStub(AdministratorFrontSecurityFacade::class),
-            $this->createStub(CurrentPromoCodeFacade::class),
-            $this->createStub(CartFacade::class),
-            $this->createStub(CustomerUserFacade::class),
-            $this->createStub(CurrentCustomerUser::class),
             $heurekaFacade,
             $this->createDomain(),
-            $this->createStub(OrderFactory::class),
             $this->createStub(OrderPriceCalculation::class),
             $this->createStub(OrderItemPriceCalculation::class),
-            $this->createStub(NumberFormatterExtension::class),
             $this->createStub(PaymentPriceCalculation::class),
-            $this->createStub(TransportPriceCalculation::class),
             $this->createStub(OrderItemFactory::class),
             $this->createStub(OrderItemDataFactory::class),
             $this->createStub(OrderDataFactory::class),

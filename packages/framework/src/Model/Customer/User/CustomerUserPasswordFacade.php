@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
@@ -14,6 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 class CustomerUserPasswordFacade
 {
     public const RESET_PASSWORD_HASH_LENGTH = 50;
+
     public const MINIMUM_PASSWORD_LENGTH = 6;
 
     public function __construct(
@@ -23,7 +23,6 @@ class CustomerUserPasswordFacade
         protected readonly ResetPasswordMailFacade $resetPasswordMailFacade,
         protected readonly HashGenerator $hashGenerator,
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
-        protected readonly ClockInterface $clock,
     ) {
     }
 

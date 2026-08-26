@@ -17,7 +17,6 @@ final class CoreProjectConfig
      * @param array<\Shopsys\Cli\Config\CoreDomainConfig> $domains
      */
     public function __construct(
-        public readonly string $projectPath,
         public readonly array $domains = [],
     ) {
     }
@@ -65,7 +64,7 @@ final class CoreProjectConfig
     /**
      * @param array<string, mixed> $data
      */
-    public static function fromArray(array $data, string $projectPath, ?ConfigSectionRegistry $registry = null): self
+    public static function fromArray(array $data, ?ConfigSectionRegistry $registry = null): self
     {
         $domains = [];
 
@@ -76,7 +75,6 @@ final class CoreProjectConfig
         }
 
         $projectConfig = new self(
-            projectPath: $projectPath,
             domains: $domains,
         );
 

@@ -14,15 +14,17 @@ use Shopsys\MakerBundle\Utils\NamingHelper;
 class RelationProperty extends Property
 {
     public function __construct(
-        public string $propertyName,
+        string $propertyName,
         public EntityRelationTypeEnum $relationType,
         public string $relationOwningClass,
         public string $relationTargetEntity,
-        public EntityTypeEnum $entityType = EntityTypeEnum::ENTITY,
+        EntityTypeEnum $entityType = EntityTypeEnum::ENTITY,
         public bool $isNullable = false,
         public bool $orphanRemoval = false,
         public ?string $inverseProperty = null,
     ) {
+        $this->propertyName = $propertyName;
+        $this->entityType = $entityType;
     }
 
     /**

@@ -7,7 +7,6 @@ namespace App\Model\Product\Filter;
 use App\Component\Doctrine\QueryBuilderExtender;
 use App\Model\Product\ProductRepository;
 use Override;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePriceRangeRepository;
@@ -24,24 +23,6 @@ class PriceRangeRepository extends BasePriceRangeRepository
         QueryBuilderExtender $queryBuilderExtender,
     ) {
         parent::__construct($productRepository, $queryBuilderExtender);
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     */
-    #[Override]
-    public function getPriceRangeInCategory(
-        int $domainId,
-        PricingGroup $pricingGroup,
-        Category $category,
-    ): PriceRange {
-        $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
-            $domainId,
-            $pricingGroup,
-            $category,
-        );
-
-        return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
     }
 
     #[Override]

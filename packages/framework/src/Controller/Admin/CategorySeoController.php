@@ -20,7 +20,6 @@ use Shopsys\FrameworkBundle\Form\Admin\CategorySeo\ReadyCategorySeoCombinationFo
 use Shopsys\FrameworkBundle\Form\Admin\CategorySeo\ReadyCategorySeoCombinationSelectorFormType;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
-use Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFiltersData;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlException;
@@ -47,7 +46,6 @@ class CategorySeoController extends AdminBaseController
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly CategoryFacade $categoryFacade,
-        protected readonly CategorySeoFacade $categorySeoFacade,
         protected readonly ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
         protected readonly ParameterFacade $parameterFacade,
         protected readonly FlagFacade $flagFacade,

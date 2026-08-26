@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Inquiry\Mail;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Mailer\MailerHelper;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -39,7 +38,6 @@ class InquiryMail
     public function __construct(
         protected readonly Setting $setting,
         protected readonly DomainRouterFactory $domainRouterFactory,
-        protected readonly Domain $domain,
         protected readonly ProductImageFacade $productImageFacade,
         protected readonly MailerHelper $mailerHelper,
         protected readonly AdministrationRouter $administrationRouter,

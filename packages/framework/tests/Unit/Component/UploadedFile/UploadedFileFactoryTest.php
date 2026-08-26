@@ -17,9 +17,6 @@ class UploadedFileFactoryTest extends TestCase
     {
         $temporaryFilename = 'temporaryFilename.tmp';
         $temporaryFilepath = 'path/' . $temporaryFilename;
-        $entityId = 1;
-        $entityName = 'entityName';
-        $type = 'default';
 
         $fileUploadMock = $this->getMockBuilder(FileUpload::class)
             ->onlyMethods(['getTemporaryFilePath', 'getTemporaryFilesize'])

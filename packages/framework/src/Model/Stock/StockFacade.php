@@ -34,6 +34,8 @@ class StockFacade
 
         $this->productStockFacade->createProductStockRelationForStockId($stock->getId());
 
+        $this->eventDispatcher->dispatch(new StockEvent($stock), StockEvent::CREATE);
+
         return $stock;
     }
 

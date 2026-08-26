@@ -37,16 +37,6 @@ class AdministratorMcpTokenData
     public $createdAt;
 
     /**
-     * @var \DateTimeImmutable|null
-     */
-    public $lastUsedAt;
-
-    /**
-     * @var \DateTimeImmutable|null
-     */
-    public $revokedAt;
-
-    /**
      * @var \DateTimeImmutable
      */
     public $expiresAt;

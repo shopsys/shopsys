@@ -280,11 +280,6 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
     }
 
-    public function findVisibleMainBlogCategoryIdOnCurrentDomain(): ?int
-    {
-        return $this->blogCategoryRepository->findVisibleMainBlogCategoryIdOnDomain($this->domain->getId());
-    }
-
     public function findVisibleMainBlogCategoryOnCurrentDomain(): ?BlogCategory
     {
         return $this->blogCategoryRepository->findVisibleMainBlogCategoryOnDomain($this->domain->getId());

@@ -47,16 +47,6 @@ class MailTemplateRepository
         return $mailTemplate;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
-     */
-    public function getAllByDomainId(int $domainId): array
-    {
-        $criteria = ['domainId' => $domainId];
-
-        return $this->getMailTemplateRepository()->findBy($criteria);
-    }
-
     public function createQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->getMailTemplateRepository()->createQueryBuilder('mt')

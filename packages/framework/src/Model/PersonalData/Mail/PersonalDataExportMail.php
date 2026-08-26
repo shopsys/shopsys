@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\PersonalData\Mail;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
@@ -24,7 +23,6 @@ class PersonalDataExportMail implements MessageFactoryInterface
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Setting $setting,
-        protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly PersonalDataExportFacade $personalDataExportFacade,
     ) {
     }

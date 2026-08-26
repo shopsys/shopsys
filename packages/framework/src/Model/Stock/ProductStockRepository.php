@@ -40,18 +40,6 @@ class ProductStockRepository
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findProductStockByStockAndProduct(Stock $stock, Product $product): ?ProductStock
-    {
-        return $this->getProductStockQueryBuilderByProduct($product)
-            ->andWhere('ps.stock = :stock')
-            ->setParameter('stock', $stock)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    /**
      * @param int[] $stockIds
      * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
@@ -104,18 +92,6 @@ class ProductStockRepository
         $queryBuilder->setParameter('product', $product);
 
         return $queryBuilder->getQuery()->getSingleScalarResult();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
-     */
-    public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
-    {
-        return $this->getEnabledStocksQueryBuilderByDomainId($domainId)
-            ->andWhere('ps.product = :product')
-            ->setParameter('product', $product)
-            ->getQuery()
-            ->getResult();
     }
 
     /**

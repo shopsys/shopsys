@@ -30,9 +30,4 @@ final class QueryCountingMiddleware implements Middleware
     {
         return $this->queryCount;
     }
-
-    public function resetQueryCount(): void
-    {
-        $this->queryCount = 0;
-    }
 }

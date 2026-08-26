@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportFacade
@@ -22,7 +21,6 @@ class TransportFacade
         protected readonly TransportVisibilityCalculation $transportVisibilityCalculation,
         protected readonly Domain $domain,
         protected readonly ImageFacade $imageFacade,
-        protected readonly CurrencyFacade $currencyFacade,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly TransportFactory $transportFactory,
         protected readonly TransportPriceFactory $transportPriceFactory,

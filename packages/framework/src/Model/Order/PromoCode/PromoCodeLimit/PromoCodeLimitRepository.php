@@ -29,16 +29,6 @@ class PromoCodeLimitRepository
             ->getResult();
     }
 
-    public function deleteByPromoCodeId(int $id): void
-    {
-        $this->getQueryBuilder()
-            ->delete(PromoCodeLimit::class, 'l')
-            ->where('l.promoCode = :promoCodeId')
-            ->setParameter('promoCodeId', $id)
-            ->getQuery()
-            ->execute();
-    }
-
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder();

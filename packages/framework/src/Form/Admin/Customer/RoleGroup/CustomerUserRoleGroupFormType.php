@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Customer\RoleGroup;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
-use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\RolesType;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
@@ -19,10 +18,6 @@ use Symfony\Component\Validator\Constraints;
 
 final class CustomerUserRoleGroupFormType extends AbstractType
 {
-    public function __construct(protected readonly RoleRegistryInterface $roleRegistry)
-    {
-    }
-
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
  * @method void setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface[] getAllProductPricesByDomainId(\App\Model\Product\Product $product, int $domainId)
  * @method void createProductVisibilities(\App\Model\Product\Product $product)
- * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
  * @method void editProductStockRelation(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)

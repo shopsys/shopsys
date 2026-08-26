@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Token;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer;
 use Lcobucci\JWT\Signer\Key;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class JwtConfigurationProvider
@@ -18,7 +17,6 @@ class JwtConfigurationProvider
 
     public function __construct(
         protected readonly ParameterBagInterface $parameterBag,
-        protected readonly Domain $domain,
     ) {
     }
 

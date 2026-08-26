@@ -35,11 +35,6 @@ class FeedExportCreationDataQueue
         return $this->domains[current($this->feedModules)->getDomainId()];
     }
 
-    public function getCurrentFeedModule(): FeedModule
-    {
-        return current($this->feedModules);
-    }
-
     public function next(): bool
     {
         array_shift($this->feedModules);

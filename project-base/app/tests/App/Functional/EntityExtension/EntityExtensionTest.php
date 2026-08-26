@@ -41,6 +41,8 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     protected const ORDER_ITEM_ID = 1;
 
+    protected const ORDER_ID = 1;
+
     /**
      * @inject
      */
@@ -149,6 +151,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->doTestExtendedEntityInstantiation(Product::class, ExtendedProduct::class, self::MAIN_PRODUCT_ID);
         $this->doTestExtendedEntityInstantiation(Category::class, ExtendedCategory::class, self::MAIN_CATEGORY_ID);
         $this->doTestExtendedEntityInstantiation(OrderItem::class, ExtendedOrderItem::class, self::ORDER_ITEM_ID);
+        $this->doTestExtendedEntityInstantiation(Order::class, ExtendedOrder::class, self::ORDER_ID);
         $this->doTestExtendedEntityInstantiation(
             ProductTranslation::class,
             ExtendedProductTranslation::class,

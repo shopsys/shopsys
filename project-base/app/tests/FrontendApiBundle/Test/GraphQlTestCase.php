@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,11 +36,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      * @inject
      */
     protected PriceConverter $priceConverter;
-
-    /**
-     * @inject
-     */
-    protected VatFacade $vatFacade;
 
     /**
      * @inject

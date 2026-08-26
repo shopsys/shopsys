@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class UserConsentPolicyFacade
 {
@@ -16,7 +15,6 @@ class UserConsentPolicyFacade
         protected readonly ArticleFacade $articleFacade,
         protected readonly Setting $setting,
         protected readonly Domain $domain,
-        protected readonly RequestStack $requestStack,
     ) {
     }
 

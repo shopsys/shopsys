@@ -6,13 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 
 class SeoPageDataFactory
 {
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }

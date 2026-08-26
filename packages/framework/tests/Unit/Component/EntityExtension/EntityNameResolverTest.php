@@ -11,11 +11,6 @@ use stdClass;
 
 class EntityNameResolverTest extends TestCase
 {
-    public const PARENT_ENTITY_FQCN = 'Vendor\Bundle\Folder\ParentEntityName';
-    public const CUSTOM_ENTITY_FQCN = 'MyBundle\MyFolder\MyEntityName';
-    public const STRING_WITH_SPACES_ON_BORDERS = ' string ';
-    public const STRING_WITHOUT_SPACES_ON_BORDERS = 'string';
-
     public static function resolvingProvider(): array
     {
         return [

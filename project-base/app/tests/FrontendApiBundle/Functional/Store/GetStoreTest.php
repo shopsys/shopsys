@@ -522,9 +522,7 @@ class GetStoreTest extends GraphQlTestCase
         $closedDayData->name = '';
         $closedDayData->date = $date;
         $closedDayData->excludedStores = array_map(function (string $storeId): Store {
-            $store = $this->getReference(sprintf('%s%s', StoreDataFixture::STORE_PREFIX, $storeId), Store::class);
-
-            return $store;
+            return $this->getReference(sprintf('%s%s', StoreDataFixture::STORE_PREFIX, $storeId), Store::class);
         }, $storesIds);
 
         return $this->closedDayFacade->create($closedDayData);

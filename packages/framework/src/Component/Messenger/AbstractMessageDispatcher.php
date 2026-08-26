@@ -9,8 +9,6 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractMessageDispatcher
 {
-    protected string $transportDsn;
-
     protected MessageBusInterface $messageBus;
 
     /**
@@ -21,7 +19,6 @@ abstract class AbstractMessageDispatcher
     #[Required]
     public function setMessageDispatcherDependency(MessageDispatcherDependency $messageDispatcherDependency): void
     {
-        $this->transportDsn = $messageDispatcherDependency->transportDsn;
         $this->messageBus = $messageDispatcherDependency->messageBus;
     }
 }

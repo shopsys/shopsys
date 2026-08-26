@@ -37,21 +37,6 @@ class FrontendApiUser implements UserInterface
         return $this->roles;
     }
 
-    public function getPassword(): string
-    {
-        return '';
-    }
-
-    public function getSalt(): string
-    {
-        return '';
-    }
-
-    public function getUsername(): string
-    {
-        return $this->email;
-    }
-
     #[Override]
     public function getUserIdentifier(): string
     {

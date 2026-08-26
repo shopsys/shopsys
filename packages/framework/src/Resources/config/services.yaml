@@ -316,7 +316,6 @@ services:
         arguments:
             $disableFields: '%env(bool:DISABLE_FORM_FIELDS_FROM_TRANSFER)%'
 
-    Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting: ~
 
     Shopsys\FrameworkBundle\Component\Form\ResizeFormListener:
         public: true
@@ -396,9 +395,7 @@ services:
             $messageBus: '@Shopsys\FrameworkBundle\Component\Messenger\MessageBusDecorator.inner'
         decorates: 'messenger.bus.default'
 
-    Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency:
-        arguments:
-            $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+    Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency: ~
 
     Shopsys\FrameworkBundle\Component\Packetery\PacketeryClient: ~
 
@@ -688,9 +685,7 @@ services:
             $translationNamespaces: '%env(json:TRANSLATION_NAMESPACES)%'
             $domainLocalesDirectory: '%shopsys.locale_file_dir%'
 
-    Shopsys\FrameworkBundle\Model\Localization\Localization:
-        arguments:
-            $allowedAdminLocales: '%shopsys.allowed_admin_locales%'
+    Shopsys\FrameworkBundle\Model\Localization\Localization: ~
 
     Shopsys\FrameworkBundle\Model\Mail\MailDisplayPriceResolver:
         arguments:

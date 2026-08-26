@@ -13,7 +13,6 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @property \Doctrine\Common\Collections\Collection<int, \App\Model\Cart\Item\CartItem> $items
  * @method void addItem(\App\Model\Cart\Item\CartItem $item)
  * @method \App\Model\Cart\Item\CartItem[] getItems()
- * @method \App\Model\Cart\Item\CartItem getItemById(int $itemId)
  * @method \App\Model\Cart\Item\CartItem|null findSimilarItemByItem(\App\Model\Cart\Item\CartItem $item)
  * @method \App\Model\Customer\User\CustomerUser|null getCustomerUser()
  * @property \App\Model\Transport\Transport|null $transport

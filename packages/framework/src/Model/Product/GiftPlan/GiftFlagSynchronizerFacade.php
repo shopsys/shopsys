@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 
@@ -26,7 +25,6 @@ class GiftFlagSynchronizerFacade
         protected readonly EntityManagerInterface $em,
         protected readonly GiftPlanRepository $giftPlanRepository,
         protected readonly FlagFacade $flagFacade,
-        protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly Domain $domain,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,

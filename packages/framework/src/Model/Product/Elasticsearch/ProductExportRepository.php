@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
@@ -49,7 +48,6 @@ class ProductExportRepository
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly ProductFacade $productFacade,
-        protected readonly FriendlyUrlRepository $friendlyUrlRepository,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly CategoryFacade $categoryFacade,
@@ -232,11 +230,6 @@ class ProductExportRepository
         }
 
         return $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_brand_detail', $product->getBrand()->getId());
-    }
-
-    protected function extractDetailSlug(int $domainId, Product $product): string
-    {
-        return $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_product_detail', $product->getId());
     }
 
     protected function createQueryBuilder(int $domainId): QueryBuilder
