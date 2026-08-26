@@ -231,9 +231,12 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
 
     protected function scheduleArticlesToExportByCategory(BlogCategory $blogCategory): void
     {
+        // articles are indexed with data derived from the whole path to the root, so descendants are affected as well
+        $blogCategoriesWithDescendants = $this->blogCategoryRepository->getBlogCategoryWithDescendants($blogCategory);
+
         foreach ($this->domain->getAll() as $domainConfig) {
-            $articleIds = $this->blogArticleFacade->getBlogArticleIdsByCategory(
-                $blogCategory,
+            $articleIds = $this->blogArticleFacade->getBlogArticleIdsByCategories(
+                $blogCategoriesWithDescendants,
                 $domainConfig->getId(),
                 $domainConfig->getLocale(),
             );

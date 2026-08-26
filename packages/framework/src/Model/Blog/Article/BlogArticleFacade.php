@@ -166,6 +166,19 @@ class BlogArticleFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @return int[]
+     */
+    public function getBlogArticleIdsByCategories(array $blogCategories, int $domainId, string $locale): array
+    {
+        return $this->blogArticleRepository->getBlogArticleIdsByCategories(
+            $blogCategories,
+            $domainId,
+            $locale,
+        );
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
      */
     public function getAllVisibleOnDomain(DomainConfig $domainConfig): array

@@ -232,6 +232,14 @@ class BlogCategoryRepository extends NestedTreeRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
+    public function getBlogCategoryWithDescendants(BlogCategory $blogCategory): array
+    {
+        return $this->getChildren($blogCategory, false, null, 'ASC', true);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     */
     public function getVisibleBlogCategoriesInPathFromRootOnDomain(BlogCategory $blogCategory, int $domainId): array
     {
         $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)

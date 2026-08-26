@@ -232,6 +232,27 @@ class BlogArticleRepository
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @return int[]
+     */
+    public function getBlogArticleIdsByCategories(array $blogCategories, int $domainId, string $locale): array
+    {
+        $result = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select('DISTINCT ba.id')
+            ->join('ba.blogArticleBlogCategoryDomains', 'babcd')
+            ->where('babcd.blogCategory IN (:blogCategories)')
+            ->andWhere('babcd.domainId = :domainId')
+            ->setParameter('blogCategories', $blogCategories)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->getResult();
+
+        return array_column($result, 'id');
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle[]
      */
     public function getAllVisibleOnDomain(DomainConfig $domainConfig): array
