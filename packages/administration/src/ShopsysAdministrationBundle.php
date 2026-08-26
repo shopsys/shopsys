@@ -8,6 +8,7 @@ use Override;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\InitializeControllersCompilerPass;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\LoadControllersExtensionCompilerPass;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\RegisterControllerExtensionsCompilerPass;
+use Shopsys\AdministrationBundle\DependencyInjection\Compiler\ResolveCrudRoleConstantsCompilerPass;
 use Shopsys\AdministrationBundle\DependencyInjection\ShopsysAdministrationExtension;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -33,5 +34,6 @@ class ShopsysAdministrationBundle extends AbstractBundle
         $container->addCompilerPass(new InitializeControllersCompilerPass());
         $container->addCompilerPass(new RegisterControllerExtensionsCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 150);
         $container->addCompilerPass(new LoadControllersExtensionCompilerPass());
+        $container->addCompilerPass(new ResolveCrudRoleConstantsCompilerPass(), priority: -50);
     }
 }

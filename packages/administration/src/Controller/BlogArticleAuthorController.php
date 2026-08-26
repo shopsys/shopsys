@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Blog\BlogArticleAuthorFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
@@ -23,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 #[CrudController(BlogArticleAuthor::class)]
+#[ForRole(AdminRoleConstant::ROLE_BLOG_ARTICLE_AUTHOR)]
 class BlogArticleAuthorController extends AbstractCrudController
 {
     protected const int ARTICLES_GRID_DEFAULT_LIMIT = 10;
@@ -40,8 +42,7 @@ class BlogArticleAuthorController extends AbstractCrudController
     {
         $config
             ->registerHandler(BlogArticleAuthorCrudHandler::class)
-            ->setMenuSection(SideMenuBuilder::SECTION_BLOG)
-            ->setCustomRoleConstant(AdminRoleConstant::ROLE_BLOG_ARTICLE_AUTHOR);
+            ->setMenuSection(SideMenuBuilder::SECTION_BLOG);
     }
 
     #[Override]
