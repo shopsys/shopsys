@@ -37,6 +37,25 @@ class CsvResponseTest extends TestCase
         $this->assertSame("product_catnum,price\n500A,99.9\n", $response->getContent());
     }
 
+    public function testValuesEvaluatedAsFormulasAreEscaped(): void
+    {
+        $response = new CsvResponse(
+            [
+                [
+                    'product_catnum' => '-500A',
+                    'price' => '99.9',
+                ],
+                [
+                    'product_catnum' => '=SUM(A1:A9)',
+                    'price' => '10',
+                ],
+            ],
+            'export.csv',
+        );
+
+        $this->assertSame("product_catnum,price\n'-500A,99.9\n'=SUM(A1:A9),10\n", $response->getContent());
+    }
+
     public function testResponseHeaders(): void
     {
         $response = new CsvResponse(self::EXPORT_DATA, 'export.csv');

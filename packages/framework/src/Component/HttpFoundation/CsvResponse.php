@@ -16,7 +16,7 @@ class CsvResponse extends Response
     public function __construct(array $data, string $fileName, ?array $csvHeaders = null)
     {
         $csvEncoder = new CsvEncoder();
-        $context = [];
+        $context = [CsvEncoder::ESCAPE_FORMULAS_KEY => true];
 
         if ($csvHeaders !== null) {
             $context[CsvEncoder::HEADERS_KEY] = $csvHeaders;
