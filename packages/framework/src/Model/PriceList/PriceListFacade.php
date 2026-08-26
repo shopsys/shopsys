@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use League\Flysystem\MountManager;
+use Shopsys\FrameworkBundle\Component\Csv\CsvHelper;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -264,8 +265,18 @@ class PriceListFacade
         return ',';
     }
 
+    /**
+     * @param array<string, mixed> $row
+     * @return array<string, mixed>
+     */
     protected function preProcessCsvRow(array $row): array
     {
+        foreach ($row as $columnName => $value) {
+            if (is_string($value)) {
+                $row[$columnName] = CsvHelper::unescapeFormula($value);
+            }
+        }
+
         if (!array_key_exists(PriceListCsvColumnsEnum::PRICE, $row)) {
             return $row;
         }
