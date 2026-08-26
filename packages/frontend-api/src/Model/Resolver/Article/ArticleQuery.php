@@ -28,7 +28,7 @@ class ArticleQuery extends AbstractQuery
             if ($uuid !== null) {
                 $articleData = $this->articleElasticsearchFacade->getByUuid($uuid);
             } elseif ($urlSlug !== null) {
-                $articleData = $this->articleElasticsearchFacade->getBySlug(ltrim($urlSlug, '/'));
+                $articleData = $this->articleElasticsearchFacade->getSiteArticleBySlug(ltrim($urlSlug, '/'));
             } else {
                 throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
             }

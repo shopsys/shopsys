@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoResultException;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleElasticsearchRepository
@@ -67,12 +68,12 @@ class ArticleElasticsearchRepository
         return $this->articleElasticsearchDataFetcher->getAllResults($filterQuery);
     }
 
-    public function getBySlug(string $slug): array
+    public function getSiteArticleBySlug(string $slug): array
     {
-        $article = $this->findBySlug($slug);
+        $article = $this->findSiteArticleBySlug($slug);
 
         if ($article === null) {
-            $article = $this->findBySlug($this->transformStringHelper->addOrRemoveTrailingSlashFromString($slug));
+            $article = $this->findSiteArticleBySlug($this->transformStringHelper->addOrRemoveTrailingSlashFromString($slug));
         }
 
         if ($article === null) {
@@ -82,9 +83,9 @@ class ArticleElasticsearchRepository
         return $article;
     }
 
-    protected function findBySlug(string $slug): ?array
+    protected function findSiteArticleBySlug(string $slug): ?array
     {
-        $filterQuery = $this->filterQueryFactory->createFilteredBySlug($slug);
+        $filterQuery = $this->filterQueryFactory->createFilteredBySlug($slug)->filterByType(Article::TYPE_SITE);
 
         try {
             return $this->articleElasticsearchDataFetcher->getSingleResult($filterQuery);
