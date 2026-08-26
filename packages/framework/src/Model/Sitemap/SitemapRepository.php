@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
+use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
@@ -92,6 +93,8 @@ class SitemapRepository
                 AND fu.domainId = :domainId
                 AND fu.main = TRUE',
             )
+            ->andWhere('a.type = :articleType')
+            ->setParameter('articleType', Article::TYPE_SITE)
             ->setParameter('articleDetailRouteName', 'front_article_detail')
             ->setParameter('domainId', $domainConfig->getId());
 
