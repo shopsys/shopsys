@@ -82,7 +82,12 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
 
     if (product.isInquiryType) {
         return (
-            <ProductInquiryButton buttonSize={buttonSize} productName={product.fullName} productUuid={product.uuid} />
+            <ProductInquiryButton
+                buttonSize={buttonSize}
+                className="sm:max-w-60"
+                productName={product.fullName}
+                productUuid={product.uuid}
+            />
         );
     }
 

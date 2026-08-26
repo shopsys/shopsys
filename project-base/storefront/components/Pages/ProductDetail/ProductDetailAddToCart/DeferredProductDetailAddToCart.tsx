@@ -19,9 +19,7 @@ export const DeferredProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (
             {shouldRender ? (
                 <ProductDetailAddToCart {...props} />
             ) : (
-                <div className="w-full sm:max-w-60">
-                    <SkeletonModuleProductDetailAddToCart size={props.buttonSize} />
-                </div>
+                <SkeletonModuleProductDetailAddToCart size={props.buttonSize} />
             )}
         </div>
     );
