@@ -18,12 +18,16 @@
 
 {% block products_widget %}
     {% import _self as self %}
-    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' js-products-picker')|trim}) %}
+    {% if disabled is same as false %}
+        {% set attr = attr|merge({'class': (attr.class|default('') ~ ' js-products-picker')|trim}) %}
+    {% endif %}
     <div
             {{ block('widget_attributes') }}
-            data-products-picker-prototype="{{ self.productsWidgetItem(null, form.vars.prototype, form.vars.sortable, disabled)|e }}"
-            data-products-picker-url="{{ url('admin_productpicker_pickmultiple', {jsInstanceId: '__js_instance_id__', allowMainVariants: allow_main_variants, allowVariants: allow_variants}) }}"
-            data-products-picker-main-product-id="{{ form.vars.main_product ? form.vars.main_product.id : '' }}"
+            {% if disabled is same as false %}
+                data-products-picker-prototype="{{ self.productsWidgetItem(null, form.vars.prototype, form.vars.sortable, disabled)|e }}"
+                data-products-picker-url="{{ url('admin_productpicker_pickmultiple', {jsInstanceId: '__js_instance_id__', allowMainVariants: allow_main_variants, allowVariants: allow_variants}) }}"
+                data-products-picker-main-product-id="{{ form.vars.main_product ? form.vars.main_product.id : '' }}"
+            {% endif %}
     >
         <div class="card-body p-0">
             <div class="list-group list-group-flush list-group-hoverable js-products-picker-items">
@@ -46,7 +50,7 @@
 {% macro productsWidgetItem(product, form, sortable, disabled) %}
     <div class="list-group-item py-2 js-products-picker-item">
         <div class="row align-items-center">
-            {% if sortable %}
+            {% if sortable and disabled is same as false %}
                 <div class="col-auto">
                     <span class="js-products-picker-item-handle cursor-move">
                         {{ ux_icon('move', {class: 'icon icon-sm d-flex'}) }}
