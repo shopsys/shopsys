@@ -16,9 +16,9 @@ class ArticleElasticsearchFacade
         return $this->articleElasticsearchRepository->getByUuid($uuid);
     }
 
-    public function getBySlug(string $slug): array
+    public function getSiteArticleBySlug(string $slug): array
     {
-        return $this->articleElasticsearchRepository->getBySlug($slug);
+        return $this->articleElasticsearchRepository->getSiteArticleBySlug($slug);
     }
 
     /**
