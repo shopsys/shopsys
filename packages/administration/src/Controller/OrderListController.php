@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\AdminOrderStatusFilterFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -38,6 +39,7 @@ class OrderListController extends AdminBaseController
         protected readonly OrderAdvancedSearchFacade $orderAdvancedSearchFacade,
         protected readonly Domain $domain,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
+        protected readonly AdminOrderStatusFilterFacade $adminOrderStatusFilterFacade,
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
@@ -113,6 +115,14 @@ class OrderListController extends AdminBaseController
             $queryBuilder
                 ->andWhere('o.domainId IN (:domainIds)')
                 ->setParameter('domainIds', $this->domain->getAdminEnabledDomainIds());
+        }
+
+        $selectedOrderStatusId = $this->adminOrderStatusFilterFacade->getSelectedOrderStatusId();
+
+        if ($selectedOrderStatusId !== null) {
+            $queryBuilder
+                ->andWhere('o.status = :selectedOrderStatusId')
+                ->setParameter('selectedOrderStatusId', $selectedOrderStatusId);
         }
 
         $grid = $this->getOrdersGrid($queryBuilder);
