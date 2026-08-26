@@ -20,7 +20,7 @@ class ArticleIndex extends AbstractIndex
     #[Override]
     public function getTotalCount(int $domainId): int
     {
-        return $this->articleExportRepository->getVisibleArticleSitesCountByDomainId($domainId);
+        return $this->articleExportRepository->getVisibleArticlesCountByDomainId($domainId);
     }
 
     /**
@@ -38,7 +38,7 @@ class ArticleIndex extends AbstractIndex
         }
         $results = [];
 
-        foreach ($this->articleExportRepository->getAllVisibleArticleSitesByDomainId($domainId, $batchSize, $lastProcessedId) as $article) {
+        foreach ($this->articleExportRepository->getAllVisibleArticlesByDomainId($domainId, $batchSize, $lastProcessedId) as $article) {
             $results[$article->getId()] = $this->articleExportRepository->extractArticle($article);
         }
 
@@ -59,7 +59,7 @@ class ArticleIndex extends AbstractIndex
         }
         $results = [];
 
-        foreach ($this->articleExportRepository->getVisibleArticleSitesByDomainIdAndArticleIds($domainId, $restrictToIds) as $article) {
+        foreach ($this->articleExportRepository->getVisibleArticlesByDomainIdAndArticleIds($domainId, $restrictToIds) as $article) {
             $results[$article->getId()] = $this->articleExportRepository->extractArticle($article);
         }
 
