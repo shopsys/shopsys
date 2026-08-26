@@ -96,6 +96,7 @@ ux_icons:
         user-settings: 'tabler:user-cog'
         visible: 'tabler:eye'
         warning: 'tabler:alert-triangle'
+        world: 'tabler:world'
     default_icon_attributes:
         class: icon
         fill: currentColor

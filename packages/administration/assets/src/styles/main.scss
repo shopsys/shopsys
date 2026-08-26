@@ -40,6 +40,16 @@
     white-space: nowrap;
 }
 
+.status-outline {
+    background: transparent;
+    border: 1px solid var(--tblr-border-color);
+
+    .status-dot {
+        background: transparent;
+        border: 2px solid currentColor;
+    }
+}
+
 .invalid-feedback {
     text-align: left;
 }
@@ -66,5 +76,39 @@
     .icon {
         width: 24px;
         height: 24px;
+    }
+}
+
+.quick-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    > :first-child {
+        position: relative;
+        top: -1px;
+    }
+}
+
+.dropdown-toggle > .quick-filter-row {
+    min-width: 0;
+    margin-inline-start: -0.25rem;
+}
+
+.quick-filter-icon {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    width: 3em;
+    padding-inline: 0.25rem;
+
+    .icon {
+        margin: 0;
+    }
+
+    > .status {
+        width: 100%;
+        justify-content: center;
+        padding-inline: 0;
     }
 }
