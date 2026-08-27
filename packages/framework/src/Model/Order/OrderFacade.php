@@ -112,6 +112,7 @@ class OrderFacade
         $existingConfirmedWithdrawalRequest = $this->withdrawalRequestFacade->findConfirmedByOrder($order);
 
         if ($existingConfirmedWithdrawalRequest !== null) {
+            $orderData->withdrawalRequestData->confirmed = true;
             $this->withdrawalRequestFacade->edit(
                 $existingConfirmedWithdrawalRequest->getId(),
                 $orderData->withdrawalRequestData,
