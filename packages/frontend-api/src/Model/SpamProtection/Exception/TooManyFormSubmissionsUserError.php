@@ -12,6 +12,11 @@ class TooManyFormSubmissionsUserError extends UserError implements UserErrorWith
 {
     protected const CODE = 'too-many-form-submissions';
 
+    public function __construct(string $message = 'Too many submissions of this form. Try again later.')
+    {
+        parent::__construct($message);
+    }
+
     /**
      * {@inheritdoc}
      */

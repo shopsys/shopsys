@@ -62,12 +62,13 @@ class FormSpamProtectionFacade
             ->consume();
 
         if (!$rateLimit->isAccepted()) {
-            throw new TooManyFormSubmissionsUserError('Too many submissions of this form. Try again later.');
+            throw new TooManyFormSubmissionsUserError();
         }
     }
 
     /**
-     * $formName is unused here, because all forms share one configuration — a project can override this method and branch on it.
+     * $formName is unused here, because all forms share one configuration —
+     * a project can override this method and branch on it.
      */
     protected function getRateLimiterFactory(string $formName): RateLimiterFactoryInterface
     {
