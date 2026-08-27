@@ -1999,6 +1999,9 @@ msgstr "Vyhledat dle názvu sekce…"
 msgid "Search by slug..."
 msgstr "Vyhledat podle slugu..."
 
+msgid "Search in transfer issue messages..."
+msgstr "Hledat v textech problémů v přenosech..."
+
 msgid "Search in transfers"
 msgstr "Hledání v přenosech"
 
