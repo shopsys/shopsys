@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
+use Shopsys\AdministrationBundle\Component\Search\SearchConfigFactory;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudController;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension;
 use stdClass;
@@ -71,6 +72,7 @@ final class CrudControllerSearchTest extends TestCase
             $extensions,
             [],
         ));
+        $crudController->searchConfigFactory = new SearchConfigFactory();
 
         return $crudController;
     }
@@ -90,7 +92,7 @@ final class CrudControllerSearchTest extends TestCase
 final class TestSearchCrudController extends AbstractCrudController
 {
     #[Override]
-    protected function configureSearch(SearchConfig $search): void
+    public function configureSearch(SearchConfig $search): void
     {
         $search->enableQuickSearch(fields: ['name']);
     }

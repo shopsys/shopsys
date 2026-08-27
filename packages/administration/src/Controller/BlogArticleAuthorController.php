@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Controller;
 
+use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\OrderingEnum;
+use Shopsys\AdministrationBundle\Component\Search\Filter;
+use Shopsys\AdministrationBundle\Component\Search\FilterRuleCollection;
+use Shopsys\AdministrationBundle\Component\Search\Operator;
 use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
 use Shopsys\AdministrationBundle\Model\Blog\Author\BlogArticleAuthorCrudHandler;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
@@ -56,11 +60,24 @@ class BlogArticleAuthorController extends AbstractCrudController
     }
 
     #[Override]
-    protected function configureSearch(SearchConfig $search): void
+    public function configureSearch(SearchConfig $search): void
     {
         $search->enableQuickSearch(
             fields: ['name'],
             placeholder: t('Search by name…'),
+        );
+
+        $search->addFilter(
+            Filter::create('name', t('Name'))
+                ->withOperators(Operator::CONTAINS, Operator::NOT_CONTAINS)
+                ->apply(static function (QueryBuilder $queryBuilder, FilterRuleCollection $rules): void {
+                    foreach ($rules as $rule) {
+                        $dqlOperator = $rule->operator === Operator::CONTAINS ? 'LIKE' : 'NOT LIKE';
+                        $queryBuilder
+                            ->andWhere(sprintf('NORMALIZED(o.name) %s NORMALIZED(:%s)', $dqlOperator, $rule->param()))
+                            ->setParameter($rule->param(), $rule->getLikeValue());
+                    }
+                }),
         );
     }
 

@@ -22,8 +22,12 @@ use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
+use Shopsys\AdministrationBundle\Component\Search\AdvancedSearchApplier;
+use Shopsys\AdministrationBundle\Component\Search\AdvancedSearchFormFactory;
+use Shopsys\AdministrationBundle\Component\Search\Operator;
 use Shopsys\AdministrationBundle\Component\Search\QuickSearchApplier;
 use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
+use Shopsys\AdministrationBundle\Component\Search\SearchConfigFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -84,6 +88,15 @@ abstract class AbstractCrudController extends AdminBaseController
     #[Required]
     public QuickSearchApplier $quickSearchApplier;
 
+    #[Required]
+    public SearchConfigFactory $searchConfigFactory;
+
+    #[Required]
+    public AdvancedSearchFormFactory $advancedSearchFormFactory;
+
+    #[Required]
+    public AdvancedSearchApplier $advancedSearchApplier;
+
     public function setDefinition(Definition $definition): void
     {
         $this->definition = $definition;
@@ -106,9 +119,9 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     /**
-     * Configure searching on the list page (quick search).
+     * Configure searching on the list page (quick search and advanced search).
      */
-    protected function configureSearch(SearchConfig $search): void
+    public function configureSearch(SearchConfig $search): void
     {
     }
 
@@ -220,13 +233,23 @@ abstract class AbstractCrudController extends AdminBaseController
         $listDomainControl = $this->definition->getConfig()->getListDomainControl();
         $searchConfig = $this->getSearchConfig();
         $quickSearchText = $this->getQuickSearchText();
+        $advancedSearchForm = null;
+        $isAdvancedSearchSubmitted = false;
+
+        if ($searchConfig->hasAdvancedSearch()) {
+            $request = $this->requestStack->getCurrentRequest();
+            $advancedSearchForm = $this->advancedSearchFormFactory->createForm($searchConfig, $request);
+            $isAdvancedSearchSubmitted = $this->advancedSearchFormFactory->isSubmitted($request);
+        }
         $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder): void {
             $this->applyListDomainFilter($queryBuilder);
             $this->configureQuery($queryBuilder);
             $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureQuery($queryBuilder));
         });
 
-        if ($searchConfig->isQuickSearchEnabled() && $quickSearchText !== null) {
+        if ($isAdvancedSearchSubmitted) {
+            $this->advancedSearchApplier->apply($searchConfig, $adapter->getProxyQuery()->getQueryBuilder(), $advancedSearchForm);
+        } elseif ($searchConfig->isQuickSearchEnabled() && $quickSearchText !== null) {
             $this->quickSearchApplier->apply($searchConfig->getQuickSearchDefinition(), $adapter->getProxyQuery(), $quickSearchText);
         }
         $datagrid = $this->datagridFactory->create($adapter, [
@@ -246,17 +269,22 @@ abstract class AbstractCrudController extends AdminBaseController
             'listDomainIds' => $listDomainControl === CrudListDomainControl::QUICK_FILTER ? $this->getListDomainIds() : [],
             'quickSearchDefinition' => $searchConfig->getQuickSearchDefinition(),
             'quickSearchText' => $quickSearchText,
+            'advancedSearchForm' => $advancedSearchForm?->createView(),
+            'isAdvancedSearchSubmitted' => $isAdvancedSearchSubmitted,
+            'advancedSearchRuleFormUrl' => $searchConfig->hasAdvancedSearch() ? $this->generateUrl('admin_crud_search_rule_form', [
+                'crudControllerName' => CrudTransformationHelper::transformToRouteName($this->definition->controllerName),
+            ]) : null,
+            'advancedSearchResetUrl' => $searchConfig->hasAdvancedSearch() ? $this->generateUrl(
+                CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST),
+                [SearchConfig::ADVANCED_SEARCH_FLAG_QUERY_PARAMETER => 1],
+            ) : null,
+            'advancedSearchValuelessOperators' => Operator::getValuelessOperatorValues(),
         ]);
     }
 
     final protected function getSearchConfig(): SearchConfig
     {
-        $searchConfig = new SearchConfig();
-
-        $this->configureSearch($searchConfig);
-        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureSearch($searchConfig));
-
-        return $searchConfig;
+        return $this->searchConfigFactory->create($this, $this->definition);
     }
 
     protected function getQuickSearchText(): ?string

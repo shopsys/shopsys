@@ -79,7 +79,7 @@ final class ProxyQuery
     /**
      * @return string Returns alias of the select
      */
-    private function processDotNotation(string $string): string
+    public function processDotNotation(string $string): string
     {
         [$expression] = $this->resolveFieldPath($string);
         $selectAlias = $this->getAlias($string);

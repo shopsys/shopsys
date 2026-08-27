@@ -45,7 +45,7 @@ class TransportGroupController extends AbstractCrudController
     }
 
     #[Override]
-    protected function configureSearch(SearchConfig $search): void
+    public function configureSearch(SearchConfig $search): void
     {
         $search->enableQuickSearch(
             fields: ['name'],

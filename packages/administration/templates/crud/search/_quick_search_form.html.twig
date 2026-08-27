@@ -1,0 +1,24 @@
+{#
+@var quickSearchDefinition: \Shopsys\AdministrationBundle\Component\Search\QuickSearchDefinition
+@var quickSearchText: ?string
+#}
+<form method="get" action="">
+    <div class="input-group input-group-flat">
+        <input
+            type="text"
+            name="{{ constant('Shopsys\\AdministrationBundle\\Component\\Search\\SearchConfig::QUICK_SEARCH_QUERY_PARAMETER') }}"
+            value="{{ quickSearchText }}"
+            class="form-control"
+            placeholder="{{ quickSearchDefinition.placeholder ?? 'Quick search'|trans }}"
+        >
+        {% if quickSearchDefinition.infoMessage %}
+            <span class="input-group-text">
+                {{ info_icon(quickSearchDefinition.infoMessage) }}
+            </span>
+        {% endif %}
+
+        <button type="submit" class="btn btn-icon" aria-label="{{ 'Search'|trans }}">
+            {{ ux_icon('search') }}
+        </button>
+    </div>
+</form>

@@ -13,7 +13,7 @@ Implement the `configureSearch()` method and declare which fields are searched:
 ```php
 use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
 
-protected function configureSearch(SearchConfig $search): void
+public function configureSearch(SearchConfig $search): void
 {
     $search->enableQuickSearch(
         fields: ['name', 'catnum'],
@@ -34,9 +34,10 @@ When the generated condition is not enough (searching a computed expression, exa
 
 ```php
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Symfony\Component\Uid\Uuid;
 
-protected function configureSearch(SearchConfig $search): void
+public function configureSearch(SearchConfig $search): void
 {
     $search->enableQuickSearch(placeholder: t('Search by name or UUID…'))
         ->queryCallback(static function (QueryBuilder $queryBuilder, string $searchText): void {
@@ -48,7 +49,7 @@ protected function configureSearch(SearchConfig $search): void
 
             $queryBuilder
                 ->andWhere('NORMALIZED(o.name) LIKE NORMALIZED(:searchText)')
-                ->setParameter('searchText', DatabaseSearchingHelper::getLikeSearchString($searchText));
+                ->setParameter('searchText', '%' . DatabaseSearchingHelper::getLikeSearchString($searchText) . '%');
         });
 }
 ```
@@ -60,3 +61,40 @@ The callback receives the list query builder (root alias is always `o`) and the 
     Quick search works only for lists backed by the ORM adapter (the default). Lists backed by an array datasource cannot be searched this way.
 
 Extensions can configure search the same way — `configureSearch()` is available in `AbstractCrudControllerExtension` and receives the same `SearchConfig` instance, so a project can enable or reconfigure the search of an existing CRUD Controller.
+
+## Advanced search
+
+Advanced search lets the administrator combine multiple search rules, each consisting of a subject, an operator, and a value.
+Registering at least one filter in `configureSearch()` displays the Quick search and Advanced search tabs above the list:
+
+```php
+use Shopsys\AdministrationBundle\Component\Search\Filter;
+use Shopsys\AdministrationBundle\Component\Search\FilterRuleCollection;
+use Shopsys\AdministrationBundle\Component\Search\Operator;
+
+public function configureSearch(SearchConfig $search): void
+{
+    $search->addFilter(
+        Filter::create('name', t('Name'))
+            ->withOperators(Operator::CONTAINS, Operator::NOT_CONTAINS)
+            ->apply(static function (QueryBuilder $queryBuilder, FilterRuleCollection $rules): void {
+                foreach ($rules as $rule) {
+                    $dqlOperator = $rule->operator === Operator::CONTAINS ? 'LIKE' : 'NOT LIKE';
+                    $queryBuilder
+                        ->andWhere(sprintf('NORMALIZED(o.name) %s NORMALIZED(:%s)', $dqlOperator, $rule->param()))
+                        ->setParameter($rule->param(), $rule->getLikeValue());
+                }
+            }),
+    );
+}
+```
+
+- `Filter::create()` defines an inline filter: the internal name (used in the URL), the label shown in the subject select, the operators offered to the administrator (`Operator` enum), and the value widget (`withFormType()`, a text input by default).
+- The `apply()` callback receives the list query builder (root alias `o`) and **all rules of this subject at once** as a `FilterRuleCollection`, so the filter decides how multiple rules combine (e.g. OR them into one `IN` condition).
+- `$rule->param()` returns a query parameter name unique to the rule — never invent parameter names yourself, two rules of the same filter would collide.
+- `$rule->getLikeValue()` converts the value to a `LIKE` pattern with `*` / `?` wildcard support.
+- Rules with no operator or an empty value are skipped, and the search never fails on an invalid rule — a filter reports problems with `$rules->addRuleError($rule, ...)`, which shows as a form error on the rule row.
+- For a filter reused across controllers, implement `Shopsys\AdministrationBundle\Component\Search\FilterInterface` in a dedicated class, inject it into the controller constructor, and register it with `addFilter()`.
+
+When both searches are submitted at once, the advanced search wins. The rules are GET parameters, so an advanced search survives paging and sorting, and the Reset filter button clears it.
+The filter preselected in a new rule is the first registered one; override it with `$search->setDefaultFilter('name')`.

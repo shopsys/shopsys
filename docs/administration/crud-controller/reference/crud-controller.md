@@ -107,7 +107,7 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 Configure searching on the list page. See [Adding Search to List Page](../getting-started/adding-search-to-list-page.md) for details.
 
 ```php
-protected function configureSearch(SearchConfig $search): void
+public function configureSearch(SearchConfig $search): void
 {
     $search->enableQuickSearch(
         fields: ['name', 'catnum'],
