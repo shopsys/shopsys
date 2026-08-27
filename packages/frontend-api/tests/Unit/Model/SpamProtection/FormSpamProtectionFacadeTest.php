@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Unit\Model\SpamProtection;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
-use Shopsys\FrameworkBundle\Component\Enum\InvalidEnumCaseException;
 use Shopsys\FrontendApiBundle\Component\HttpFoundation\ClientIpProvider;
+use Shopsys\FrontendApiBundle\Model\SpamProtection\Exception\HoneyPotFieldNameNotConfiguredException;
 use Shopsys\FrontendApiBundle\Model\SpamProtection\Exception\TooManyFormSubmissionsUserError;
 use Shopsys\FrontendApiBundle\Model\SpamProtection\FormSpamProtectionFacade;
 use Shopsys\FrontendApiBundle\Model\SpamProtection\SpamProtectedFormEnum;
@@ -25,6 +26,8 @@ class FormSpamProtectionFacadeTest extends TestCase
     private const string CLIENT_IP = '10.255.0.1';
     private const string SECOND_CLIENT_IP = '10.255.0.2';
     private const string SECOND_FORM_NAME = 'newsletter';
+    private const string SECOND_FORM_HONEY_POT_FIELD_NAME = 'nickname';
+    private const string FORM_NAME_WITHOUT_HONEY_POT_FIELD_NAME = 'unconfigured';
 
     /**
      * @param array<string, mixed> $input
@@ -62,6 +65,19 @@ class FormSpamProtectionFacadeTest extends TestCase
         yield 'text surrounded by whitespace is filled' => [['subject' => '  spam  '], true];
     }
 
+    public function testEveryFormHasItsOwnHoneyPotFieldName(): void
+    {
+        $facade = $this->createFacade(self::CLIENT_IP, self::UNREACHABLE_RATE_LIMIT);
+
+        self::assertFalse($facade->shouldDiscardSubmission(['subject' => 'Cheap pills'], self::SECOND_FORM_NAME));
+        self::assertTrue(
+            $facade->shouldDiscardSubmission(
+                [self::SECOND_FORM_HONEY_POT_FIELD_NAME => 'Cheap pills'],
+                self::SECOND_FORM_NAME,
+            ),
+        );
+    }
+
     public function testSubmissionIsRefusedOnlyAfterTheRateLimitIsReached(): void
     {
         $facade = $this->createFacade(self::CLIENT_IP);
@@ -77,7 +93,7 @@ class FormSpamProtectionFacadeTest extends TestCase
     public function testHoneyPotSubmissionsAreCountedTowardsTheRateLimit(): void
     {
         $facade = $this->createFacade(self::CLIENT_IP);
-        $honeyPotInput = [FormSpamProtectionFacade::HONEY_POT_FIELD_NAME => 'Cheap pills'];
+        $honeyPotInput = ['subject' => 'Cheap pills'];
 
         for ($attempt = 0; $attempt < self::RATE_LIMIT; $attempt++) {
             self::assertTrue($facade->shouldDiscardSubmission($honeyPotInput, SpamProtectedFormEnum::CONTACT_FORM));
@@ -107,12 +123,12 @@ class FormSpamProtectionFacadeTest extends TestCase
         self::assertFalse($facade->shouldDiscardSubmission([], self::SECOND_FORM_NAME));
     }
 
-    public function testUnknownFormNameIsRefused(): void
+    public function testFormWithoutConfiguredHoneyPotFieldNameIsRefused(): void
     {
         $facade = $this->createFacade(self::CLIENT_IP);
 
-        $this->expectException(InvalidEnumCaseException::class);
-        $facade->shouldDiscardSubmission([], 'not-a-protected-form');
+        $this->expectException(HoneyPotFieldNameNotConfiguredException::class);
+        $facade->shouldDiscardSubmission([], self::FORM_NAME_WITHOUT_HONEY_POT_FIELD_NAME);
     }
 
     public function testAllSubmissionsShareOneKeyWhenTheClientIpIsNotKnown(): void
@@ -167,6 +183,18 @@ class FormSpamProtectionFacadeTest extends TestCase
     {
         return new class() extends SpamProtectedFormEnum {
             public const string NEWSLETTER = 'newsletter';
+
+            /**
+             * @return array<string, string>
+             */
+            #[Override]
+            public function getHoneyPotFieldNameIndexedByFormName(): array
+            {
+                return array_merge(
+                    parent::getHoneyPotFieldNameIndexedByFormName(),
+                    [static::NEWSLETTER => 'nickname'],
+                );
+            }
         };
     }
 }

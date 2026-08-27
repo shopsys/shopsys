@@ -6,13 +6,12 @@ namespace Shopsys\FrontendApiBundle\Model\SpamProtection;
 
 use Psr\Log\LoggerInterface;
 use Shopsys\FrontendApiBundle\Component\HttpFoundation\ClientIpProvider;
+use Shopsys\FrontendApiBundle\Model\SpamProtection\Exception\HoneyPotFieldNameNotConfiguredException;
 use Shopsys\FrontendApiBundle\Model\SpamProtection\Exception\TooManyFormSubmissionsUserError;
 use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
 class FormSpamProtectionFacade
 {
-    public const string HONEY_POT_FIELD_NAME = 'subject';
-
     public function __construct(
         protected readonly ClientIpProvider $clientIpProvider,
         protected readonly LoggerInterface $logger,
@@ -24,15 +23,14 @@ class FormSpamProtectionFacade
     /**
      * @param array<string, mixed> $input
      * @param string $formName one of \Shopsys\FrontendApiBundle\Model\SpamProtection\SpamProtectedFormEnum cases
-     * @throws \Shopsys\FrontendApiBundle\Model\SpamProtection\Exception\TooManyFormSubmissionsUserError
      */
     public function shouldDiscardSubmission(array $input, string $formName): bool
     {
-        $this->spamProtectedFormEnum->validateCase($formName);
+        $honeyPotFieldName = $this->getHoneyPotFieldName($formName);
 
         $this->checkRateLimit($formName);
 
-        if (!$this->isHoneyPotFilled($input)) {
+        if (!$this->isHoneyPotFilled($input, $honeyPotFieldName)) {
             return false;
         }
 
@@ -46,9 +44,17 @@ class FormSpamProtectionFacade
         return true;
     }
 
-    /**
-     * @throws \Shopsys\FrontendApiBundle\Model\SpamProtection\Exception\TooManyFormSubmissionsUserError
-     */
+    protected function getHoneyPotFieldName(string $formName): string
+    {
+        $honeyPotFieldNameIndexedByFormName = $this->spamProtectedFormEnum->getHoneyPotFieldNameIndexedByFormName();
+
+        if (!array_key_exists($formName, $honeyPotFieldNameIndexedByFormName)) {
+            throw new HoneyPotFieldNameNotConfiguredException($formName);
+        }
+
+        return $honeyPotFieldNameIndexedByFormName[$formName];
+    }
+
     protected function checkRateLimit(string $formName): void
     {
         $rateLimit = $this->getRateLimiterFactory($formName)
@@ -61,7 +67,7 @@ class FormSpamProtectionFacade
     }
 
     /**
-     * $formName is unused here, because all forms share one limiter — a project can override this method and branch on it.
+     * $formName is unused here, because all forms share one configuration — a project can override this method and branch on it.
      */
     protected function getRateLimiterFactory(string $formName): RateLimiterFactoryInterface
     {
@@ -71,9 +77,9 @@ class FormSpamProtectionFacade
     /**
      * @param array<string, mixed> $input
      */
-    protected function isHoneyPotFilled(array $input): bool
+    protected function isHoneyPotFilled(array $input, string $honeyPotFieldName): bool
     {
-        $honeyPotValue = $input[static::HONEY_POT_FIELD_NAME] ?? null;
+        $honeyPotValue = $input[$honeyPotFieldName] ?? null;
 
         return is_string($honeyPotValue) && trim($honeyPotValue) !== '';
     }

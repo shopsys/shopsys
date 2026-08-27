@@ -12,4 +12,14 @@ use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
 class SpamProtectedFormEnum extends AbstractEnum
 {
     public const string CONTACT_FORM = 'contact-form';
+
+    /**
+     * @return array<string, string>
+     */
+    public function getHoneyPotFieldNameIndexedByFormName(): array
+    {
+        return [
+            static::CONTACT_FORM => 'subject',
+        ];
+    }
 }
