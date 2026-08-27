@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Debug;
 
-use InvalidArgumentException;
 use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 use Override;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
@@ -23,20 +23,40 @@ class ElasticsearchTracer extends AbstractLogger
     {
     }
 
-    protected function extractData(string $requestMessage): mixed
+    protected function extractBody(string $requestMessage): ?string
     {
         $matches = null;
 
-        if (preg_match('/^.* -d \'(?<json>.*)\'$/U', $requestMessage, $matches) === 0) {
+        if (preg_match('/^.* -d \'(?<json>.*)\'$/sU', $requestMessage, $matches) === 0) {
             return null;
         }
 
-        return Json::decode($matches['json'], true);
+        return trim($matches['json']);
     }
 
-    protected function formatData(mixed $requestData): string
+    protected function extractData(string $requestBody): mixed
     {
-        return Json::encode($requestData, JSON_PRETTY_PRINT);
+        // bulk APIs (e.g. _msearch) send NDJSON - multiple JSON objects separated by newlines
+        if (str_contains($requestBody, "\n")) {
+            return array_map(
+                static fn (string $line) => Json::decode($line, true),
+                explode("\n", $requestBody),
+            );
+        }
+
+        return Json::decode($requestBody, true);
+    }
+
+    protected function formatBody(string $requestBody): string
+    {
+        // each NDJSON line is pretty-printed separately so the output stays usable in Kibana,
+        // decoding to objects (not arrays) keeps empty objects as `{}` instead of `[]`
+        $prettyLines = array_map(
+            static fn (string $line) => Json::encode(Json::decode($line), JSON_PRETTY_PRINT),
+            explode("\n", $requestBody),
+        );
+
+        return implode("\n", $prettyLines);
     }
 
     /**
@@ -73,11 +93,15 @@ class ElasticsearchTracer extends AbstractLogger
         $requestJson = null;
         $requestData = null;
 
-        try {
-            $requestData = $this->extractData($this->lastRequestCurl);
-            $requestJson = $this->formatData($requestData);
-        } catch (InvalidArgumentException $exception) {
-            // It's ok, It'll not have formatted dump.
+        $requestBody = $this->extractBody($this->lastRequestCurl);
+
+        if ($requestBody !== null) {
+            try {
+                $requestData = $this->extractData($requestBody);
+                $requestJson = $this->formatBody($requestBody);
+            } catch (JsonException $exception) {
+                // It's ok, It'll not have formatted dump.
+            }
         }
 
         $this->elasticsearchRequestCollection->addRequest(
