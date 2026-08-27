@@ -35,10 +35,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta();
-    const handleError = useErrorHandler({
-        form: formProviderMethods,
-        customMessage: formMeta.messages.error,
-    });
+    const handleError = useErrorHandler({ form: formProviderMethods });
     const {
         fieldState: { error },
         field: { value: newPasswordValue },

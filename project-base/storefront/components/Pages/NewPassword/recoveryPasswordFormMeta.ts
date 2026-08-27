@@ -28,12 +28,11 @@ export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, 
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-export const useRecoveryPasswordFormMeta = (): FormMeta<NewPasswordFormType, { error: string; success: string }> => {
+export const useRecoveryPasswordFormMeta = (): FormMeta<NewPasswordFormType, { success: string }> => {
     const { t } = useTranslation();
     return {
         formName: 'new-password-form',
         messages: {
-            error: t('An error occurred while changing your password'),
             success: t('Your password has been changed successfully'),
         },
         fields: createFields<NewPasswordFormType>({

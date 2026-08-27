@@ -20,12 +20,11 @@ export const usePasswordResetForm = (): [UseFormReturn<PasswordResetFormType>, P
     return [useFormWrapper(resolver, defaultValues), defaultValues];
 };
 
-export const usePasswordResetFormMeta = (): FormMeta<PasswordResetFormType, { error: string; success: string }> => {
+export const usePasswordResetFormMeta = (): FormMeta<PasswordResetFormType, { success: string }> => {
     const { t } = useTranslation();
     return {
         formName: 'password-reset-form',
         messages: {
-            error: t('Could not reset password'),
             success: t(
                 'We have sent password reset instructions to your email address. Please check your inbox and follow the link to create a new password.',
             ),

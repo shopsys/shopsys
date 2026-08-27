@@ -423,6 +423,7 @@ services:
                 - '@snc_redis.blog_article_export_queue'
                 - '@snc_redis.product_recalculation_queue'
                 - '@snc_redis.mcp_oauth'
+                - '@snc_redis.frontend_api_password_recovery_rate_limiter'
 
     Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade:
         arguments:
