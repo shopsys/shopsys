@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchAliasNotFoundException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasAlreadyExistsException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasNotFoundException;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,16 +30,15 @@ class IndexFacade
         ));
 
         $alias = $indexDefinition->getIndexAlias();
+        $existingIndexName = $this->resolveExistingIndexName($indexDefinition);
 
-        try {
-            if (!$this->isIndexUpToDate($indexDefinition)) {
-                throw new ElasticsearchIndexAliasAlreadyExistsException(sprintf(
-                    'There is an index for alias "%s" already. You have to migrate it first due to different definition.',
-                    $alias,
-                ));
-            }
-        } catch (ElasticsearchAliasNotFoundException $exception) {
+        if ($existingIndexName === null) {
             $output->writeln(sprintf('Alias "%s" does not exist', $alias));
+        } elseif ($existingIndexName !== $indexDefinition->getVersionedIndexName()) {
+            throw new ElasticsearchIndexAliasAlreadyExistsException(sprintf(
+                'There is an index for alias "%s" already. You have to migrate it first due to different definition.',
+                $alias,
+            ));
         }
 
         $this->createIndexWhenNeeded($indexDefinition, $output);
@@ -130,12 +128,8 @@ class IndexFacade
             return;
         }
 
-        try {
-            $this->resolveExistingIndexName($indexDefinition);
-        } catch (ElasticsearchAliasNotFoundException $exception) {
-            throw new ElasticsearchIndexAliasNotFoundException(sprintf(
-                $indexDefinition->getIndexAlias(),
-            ));
+        if ($this->resolveExistingIndexName($indexDefinition) === null) {
+            throw new ElasticsearchIndexAliasNotFoundException($indexDefinition->getIndexAlias());
         }
 
         $output->writeln(sprintf(
@@ -177,9 +171,9 @@ class IndexFacade
         $indexName = $indexDefinition->getIndexName();
         $domainId = $indexDefinition->getDomainId();
 
-        try {
-            $existingIndexName = $this->resolveExistingIndexName($indexDefinition);
-        } catch (ElasticsearchAliasNotFoundException $exception) {
+        $existingIndexName = $this->resolveExistingIndexName($indexDefinition);
+
+        if ($existingIndexName === null) {
             $output->writeln(sprintf('No index for alias "%s" was not found on domain "%s"', $indexName, $domainId));
             $this->create($indexDefinition, $output);
 
@@ -243,16 +237,16 @@ class IndexFacade
 
     protected function createIndexWhenNoAliasFound(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
-        try {
-            $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
-        } catch (ElasticsearchAliasNotFoundException $exception) {
-            $output->writeln(sprintf(
-                'Index "%s" does not exist on domain "%s"',
-                $indexDefinition->getIndexName(),
-                $indexDefinition->getDomainId(),
-            ));
-            $this->create($indexDefinition, $output);
+        if ($this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias()) !== null) {
+            return;
         }
+
+        $output->writeln(sprintf(
+            'Index "%s" does not exist on domain "%s"',
+            $indexDefinition->getIndexName(),
+            $indexDefinition->getDomainId(),
+        ));
+        $this->create($indexDefinition, $output);
     }
 
     protected function createIndexWhenNeeded(IndexDefinition $indexDefinition, OutputInterface $output): void
@@ -268,7 +262,7 @@ class IndexFacade
         }
     }
 
-    protected function resolveExistingIndexName(IndexDefinition $indexDefinition): string
+    protected function resolveExistingIndexName(IndexDefinition $indexDefinition): ?string
     {
         return $this->indexRepository->findCurrentIndexNameForAlias(
             $indexDefinition->getIndexAlias(),
