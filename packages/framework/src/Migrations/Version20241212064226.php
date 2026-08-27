@@ -12,7 +12,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 final class Version20241212064226 extends AbstractMigration implements DomainAwareInterface
 {
-    use MultidomainMigrationTrait;
     use MailTemplateMigrationTrait;
 
     #[Override]

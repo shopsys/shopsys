@@ -11,7 +11,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 final class Version20240910054629 extends AbstractMigration implements DomainAwareInterface
 {
-    use MultidomainMigrationTrait;
     use MailTemplateMigrationTrait;
 
     private const string COMPLAINT_STATUS_1 = 'complaint_status_1';
