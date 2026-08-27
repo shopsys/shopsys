@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\HttpFoundation;
 
 use Override;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler;
 
@@ -21,18 +21,11 @@ class FragmentHandler extends LazyLoadingFragmentHandler
     #[Override]
     protected function deliver(Response $response): ?string
     {
-        if (!$response->isRedirection()) {
+        if (!$response instanceof RedirectResponse) {
             return parent::deliver($response);
         }
 
-        /** Same response handling as in @see \Symfony\Component\HttpKernel\Fragment\FragmentHandler::deliver(). */
-        if (!$response instanceof StreamedResponse) {
-            return $response->getContent();
-        }
-
-        $response->sendContent();
-
-        return null;
+        return $response->getContent();
     }
 
     /**

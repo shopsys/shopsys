@@ -19,9 +19,8 @@ class SubRequestListenerTest extends TestCase
     public function getResponseMock(): Response
     {
         $responseMock = $this->getMockBuilder(Response::class)
-            ->onlyMethods(['isRedirection', 'send'])
+            ->onlyMethods(['send'])
             ->getMock();
-        $responseMock->expects($this->once())->method('isRedirection')->willReturn(false);
         $responseMock->expects($this->never())->method('send');
 
         return $responseMock;
@@ -30,10 +29,9 @@ class SubRequestListenerTest extends TestCase
     public function getRedirectResponseMock(bool $send = false): RedirectResponse
     {
         $responseMock = $this->getMockBuilder(RedirectResponse::class)
-            ->onlyMethods(['isRedirection', 'send'])
+            ->onlyMethods(['send'])
             ->disableOriginalConstructor()
             ->getMock();
-        $responseMock->expects($this->once())->method('isRedirection')->willReturn(true);
         $responseMock->expects($send ? $this->once() : $this->never())->method('send');
 
         return $responseMock;
