@@ -15,10 +15,6 @@ import {
 } from 'utils/queryParamNames';
 import { pushQueries } from 'utils/queryParams/pushQueries';
 
-/**
- * Opens the create review popup when the product detail page is visited via the special
- * "write a review" URL from the order detail (or a future e-mail campaign).
- */
 export const useOpenReviewPopupFromUrl = (
     productUuid: string,
     productName: string,
