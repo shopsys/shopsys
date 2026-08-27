@@ -44,6 +44,14 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
             <div className="flex flex-col gap-2.5 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
                 <p className="h4">{t('Withdrawal request was submitted')}</p>
 
+                {!withdrawalRequest.confirmed && (
+                    <p className="text-sm">
+                        {t(
+                            'The request is waiting for confirmation via the link sent to the order email. The link is valid for 24 hours.',
+                        )}
+                    </p>
+                )}
+
                 <div className="flex vl:flex-row flex-col flex-wrap gap-x-10 gap-y-5">
                     <CustomerRecordColumnInfo title={t('Requested on')}>
                         {formatDate(withdrawalRequest.requestedAt)}

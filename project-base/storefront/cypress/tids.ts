@@ -214,6 +214,7 @@ export enum TIDs {
     clear_all_filters_button = 'clear_all_filters_button',
 
     // Order Withdrawal
+    order_withdrawal_confirmation_button = 'order_withdrawal_confirmation_button',
     order_withdrawal_description = 'order_withdrawal_description',
     order_withdrawal_form = 'order_withdrawal_form',
     order_withdrawal_submit_button = 'order_withdrawal_submit_button',

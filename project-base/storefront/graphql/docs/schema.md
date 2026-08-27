@@ -1576,6 +1576,20 @@ Add a transport to the cart, or remove a transport from the cart
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mutation.confirmorderwithdrawalrequest">ConfirmOrderWithdrawalRequest</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Confirm withdrawal from contract for a guest order using the hash received by email, returns the order urlHash
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">confirmationHash</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mutation.contactform">ContactForm</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -1757,7 +1771,7 @@ Subscribe for e-mail newsletter
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
-Request withdrawal from contract for an order
+Request withdrawal from contract for an order. For orders of registered customers the withdrawal request is created directly, for guest orders a confirmation email is sent to the order email
 
 </td>
 </tr>
@@ -7771,6 +7785,15 @@ Order status
 </tr>
 </thead>
 <tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.confirmed">confirmed</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the withdrawal request has been confirmed, requests of guest orders await confirmation via the email link
+
+</td>
+</tr>
 <tr>
 <td colspan="2" valign="top"><strong id="orderwithdrawalrequest.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>

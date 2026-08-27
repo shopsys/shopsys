@@ -1424,6 +1424,8 @@ type Mutation {
   ChangePersonalData(input: ChangePersonalDataInput!): CurrentCustomerUser!
   "Add a transport to the cart, or remove a transport from the cart"
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
+  "Confirm withdrawal from contract for a guest order using the hash received by email, returns the order urlHash"
+  ConfirmOrderWithdrawalRequest(confirmationHash: String!): String!
   "Send message to the site owner"
   ContactForm(input: ContactFormInput!): Boolean!
   "Create a new complaint"
@@ -1450,7 +1452,7 @@ type Mutation {
   Logout: Boolean!
   "Subscribe for e-mail newsletter"
   NewsletterSubscribe(input: NewsletterSubscriptionDataInput!): Boolean!
-  "Request withdrawal from contract for an order"
+  "Request withdrawal from contract for an order. For orders of registered customers the withdrawal request is created directly, for guest orders a confirmation email is sent to the order email"
   OrderWithdrawalRequest(input: OrderWithdrawalRequestInput!): Boolean!
   "Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer"
   PayOrder(
@@ -1906,6 +1908,8 @@ enum OrderStatusEnum {
 }
 
 type OrderWithdrawalRequest {
+  "Whether the withdrawal request has been confirmed, requests of guest orders await confirmation via the email link"
+  confirmed: Boolean!
   "Email address for withdrawal request contact"
   email: String!
   "First name for withdrawal request contact"

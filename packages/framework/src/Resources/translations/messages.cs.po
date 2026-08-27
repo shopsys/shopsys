@@ -1993,6 +1993,9 @@ msgstr "URL odkazu"
 msgid "Link to complete the registration"
 msgstr "Odkaz na dokončení registrace"
 
+msgid "Link to confirm the withdrawal request"
+msgstr "Odkaz pro potvrzení žádosti o odstoupení"
+
 msgid "Link to the log in page"
 msgstr "Odkaz na stránku s přihlášením"
 
@@ -2370,6 +2373,9 @@ msgstr "Stav objednávky"
 
 msgid "Order total rounding"
 msgstr "Zaokrouhlení celkové ceny objednávky"
+
+msgid "Order withdrawal confirmation"
+msgstr "Potvrzení odstoupení od smlouvy"
 
 msgid "Ordering"
 msgstr "Řazení"

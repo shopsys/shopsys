@@ -46,6 +46,9 @@ msgstr ""
 msgid "<p>We acknowledge your withdrawal from the contract for order number <b>{order_number}</b>.</p> <p>We will contact you in the following days regarding the next steps, including the return of the goods.</p> <p><a href=\"{order_detail_url}\" tabindex=\"0\">Show order detail</a></p>"
 msgstr ""
 
+msgid "<p>We have received a request to withdraw from the contract for your order no. {order_number} on {domain}.</p> <p>To confirm the withdrawal request, click the following link: <a href=\"{url}\" tabindex=\"0\">Confirm withdrawal request</a>. The link is valid for 24 hours.</p> <p>If you did not make this request, you can ignore this email.</p>"
+msgstr ""
+
 msgid "<p>You’ve successfully selected a payment method. We’re now waiting for confirmation from the payment provider.</p> <p>If you haven’t completed the payment yet, please check your email for payment instructions.</p> <p><a href=\"{order_detail_url}\" tabindex=\"0\">Show order detail</a></p>"
 msgstr ""
 
@@ -56,6 +59,9 @@ msgid "Authentication code"
 msgstr ""
 
 msgid "Catalog"
+msgstr ""
+
+msgid "Confirm withdrawal from contract - order no. {order_number}"
 msgstr ""
 
 msgid "Dear administrator,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\" tabindex=\"0\">link</a>.<br/><br/> Best regards"

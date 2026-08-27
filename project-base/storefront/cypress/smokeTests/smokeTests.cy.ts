@@ -179,6 +179,7 @@ context('Smoke tests', () => {
         ['/stores/:storeSlug']: { skip: true },
         ['/order-withdrawal/:orderUrlHash']: { skip: true },
         ['/order-withdrawal-success/:orderUrlHash']: { skip: true },
+        ['/order-withdrawal-confirmation/:hash']: { skip: true },
 
         // UUID-based routes
         // Use 'slug' field for regular entities (category, product, brand, flag, store) that return the slug

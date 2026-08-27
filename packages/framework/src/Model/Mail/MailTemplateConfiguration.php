@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailTemplateVariablesProvi
 use Shopsys\FrameworkBundle\Model\Mail\Exception\InvalidMailTemplateVariablesConfigurationException;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
+use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalConfirmationMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail;
@@ -51,6 +52,7 @@ class MailTemplateConfiguration
         $this->registerComplaintStatusMailTemplates();
         $this->registerTwoFactorAuthenticationCodeMailTemplate();
         $this->registerCustomerActivationMailTemplate();
+        $this->registerWithdrawalConfirmationMailTemplate();
         $this->registerInquiryMailTemplates();
         $this->registerWatchdogMailTemplate();
         $this->registerProductQuestionMailTemplates();
@@ -336,6 +338,28 @@ class MailTemplateConfiguration
         $mailTemplateVariables = $this->createCustomerActivationMailTemplateVariables();
 
         $this->addMailTemplateVariables(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateVariables);
+    }
+
+    protected function createWithdrawalConfirmationMailTemplateVariables(): MailTemplateVariables
+    {
+        $mailTemplateVariables = new MailTemplateVariables(t('Order withdrawal confirmation'));
+
+        return $mailTemplateVariables
+            ->addVariable(WithdrawalConfirmationMail::VARIABLE_DOMAIN, t('E-shop name'))
+            ->addVariable(WithdrawalConfirmationMail::VARIABLE_ORDER_NUMBER, t('Order number'))
+            ->addVariable(
+                WithdrawalConfirmationMail::VARIABLE_URL,
+                t('Link to confirm the withdrawal request'),
+                MailTemplateVariables::CONTEXT_BODY,
+                MailTemplateVariables::REQUIRED_BODY,
+            );
+    }
+
+    protected function registerWithdrawalConfirmationMailTemplate(): void
+    {
+        $mailTemplateVariables = $this->createWithdrawalConfirmationMailTemplateVariables();
+
+        $this->addMailTemplateVariables(WithdrawalConfirmationMail::ORDER_WITHDRAWAL_CONFIRMATION_NAME, $mailTemplateVariables);
     }
 
     protected function registerInquiryMailTemplates(): void

@@ -1993,6 +1993,9 @@ msgstr ""
 msgid "Link to complete the registration"
 msgstr ""
 
+msgid "Link to confirm the withdrawal request"
+msgstr ""
+
 msgid "Link to the log in page"
 msgstr ""
 
@@ -2369,6 +2372,9 @@ msgid "Order status"
 msgstr ""
 
 msgid "Order total rounding"
+msgstr ""
+
+msgid "Order withdrawal confirmation"
 msgstr ""
 
 msgid "Ordering"

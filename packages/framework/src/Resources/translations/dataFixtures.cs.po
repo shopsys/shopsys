@@ -46,6 +46,9 @@ msgstr "<p>Platba pro objednávku číslo {number} nebyla úspěšná. <br /> Pr
 msgid "<p>We acknowledge your withdrawal from the contract for order number <b>{order_number}</b>.</p> <p>We will contact you in the following days regarding the next steps, including the return of the goods.</p> <p><a href=\"{order_detail_url}\" tabindex=\"0\">Show order detail</a></p>"
 msgstr "<p>Evidujeme vaše odstoupení od smlouvy u objednávky číslo <b>{order_number}</b>.</p> <p>V následujících dnech Vás budeme kontaktovat ohledně dalšího postupu včetně vrácení daného zboží.</p> <p><a href=\"{order_detail_url}\" tabindex=\"0\">Zobrazit detail objednávky</a></p>"
 
+msgid "<p>We have received a request to withdraw from the contract for your order no. {order_number} on {domain}.</p> <p>To confirm the withdrawal request, click the following link: <a href=\"{url}\" tabindex=\"0\">Confirm withdrawal request</a>. The link is valid for 24 hours.</p> <p>If you did not make this request, you can ignore this email.</p>"
+msgstr "<p>Obdrželi jsme žádost o odstoupení od smlouvy k vaší objednávce č. {order_number} na {domain}.</p> <p>Pro potvrzení žádosti o odstoupení klikněte na následující odkaz: <a href=\"{url}\" tabindex=\"0\">Potvrdit žádost o odstoupení</a>. Odkaz je platný 24 hodin.</p> <p>Pokud jste tuto žádost nepodali, můžete tento email ignorovat.</p>"
+
 msgid "<p>You’ve successfully selected a payment method. We’re now waiting for confirmation from the payment provider.</p> <p>If you haven’t completed the payment yet, please check your email for payment instructions.</p> <p><a href=\"{order_detail_url}\" tabindex=\"0\">Show order detail</a></p>"
 msgstr "<p>Úspěšně jste si zvolili platební metodu. Nyní čekáme na potvrzení od poskytovatele plateb.</p> <p>Pokud jste platbu ještě nedokončili, zkontrolujte prosím svůj e-mail, kde najdete pokyny k platbě.</p> <p><a href=\"{order_detail_url}\" tabindex=\"0\">Zobrazit detail objednávky</a></p>"
 
@@ -57,6 +60,9 @@ msgstr "Autentifikační kód"
 
 msgid "Catalog"
 msgstr "Katalog"
+
+msgid "Confirm withdrawal from contract - order no. {order_number}"
+msgstr "Potvrďte odstoupení od smlouvy - objednávka č. {order_number}"
 
 msgid "Dear administrator,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\" tabindex=\"0\">link</a>.<br/><br/> Best regards"
 msgstr "Vážený administrátore,<br/><br/> můžete si nastavit nové heslo pomocí tohoto <a href=\"{new_password_url}\" tabindex=\"0\">odkazu</a>.<br/><br/> S pozdravem"

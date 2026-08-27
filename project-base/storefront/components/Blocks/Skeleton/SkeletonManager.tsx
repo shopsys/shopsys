@@ -25,6 +25,7 @@ import { SkeletonPageFlag } from './SkeletonPageFlag';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageLogin } from './SkeletonPageLogin';
 import { SkeletonPageOrderWithdrawal } from './SkeletonPageOrderWithdrawal';
+import { SkeletonPageOrderWithdrawalConfirmation } from './SkeletonPageOrderWithdrawalConfirmation';
 import { SkeletonPageOrderWithdrawalSuccess } from './SkeletonPageOrderWithdrawalSuccess';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
@@ -63,6 +64,7 @@ const SKELETON_COMPONENT_MAP: Record<PageType, ComponentType> = {
     [SkeletonEnum.OrderDetail]: SkeletonPageCustomerOrderDetail,
     [SkeletonEnum.OrderList]: SkeletonPageCustomerOrderList,
     [SkeletonEnum.OrderWithdrawal]: SkeletonPageOrderWithdrawal,
+    [SkeletonEnum.OrderWithdrawalConfirmation]: SkeletonPageOrderWithdrawalConfirmation,
     [SkeletonEnum.OrderWithdrawalSuccess]: SkeletonPageOrderWithdrawalSuccess,
     [SkeletonEnum.Product]: SkeletonPageProductDetail,
     [SkeletonEnum.ProductMainVariant]: SkeletonPageProductDetailMainVariant,

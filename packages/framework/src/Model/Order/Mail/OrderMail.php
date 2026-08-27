@@ -78,7 +78,7 @@ class OrderMail implements MessageFactoryInterface
         $bccMail = $mailTemplate->getBccEmail();
 
         if ($mailTemplate->getOrderStatus()?->getType() === OrderStatusTypeEnum::TYPE_WITHDRAWN) {
-            $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+            $withdrawalRequest = $this->withdrawalRequestFacade->findConfirmedByOrder($order);
 
             if ($withdrawalRequest !== null) {
                 $bccMail = $this->getBccEmailsForWithdrawal($mailTemplate, $order, $withdrawalRequest);

@@ -74,7 +74,8 @@ class OrderWithdrawalRequestFilter extends AbstractAdvancedSearchFilter
             $subQuery = $this->em->createQueryBuilder()
                 ->select('1')
                 ->from(WithdrawalRequest::class, 'wr')
-                ->where('wr.order = o');
+                ->where('wr.order = o')
+                ->andWhere('wr.confirmed = TRUE');
 
             if ($ruleData->operator === self::OPERATOR_EXISTS) {
                 $queryBuilder->andWhere($queryBuilder->expr()->exists($subQuery->getDQL()));

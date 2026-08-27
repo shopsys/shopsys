@@ -24,3 +24,6 @@ OrderWithdrawalRequestDecorator:
             requestedAt:
                 type: "DateTime!"
                 description: "Date and time when the withdrawal was requested by customer"
+            confirmed:
+                type: "Boolean!"
+                description: "Whether the withdrawal request has been confirmed, requests of guest orders await confirmation via the email link"

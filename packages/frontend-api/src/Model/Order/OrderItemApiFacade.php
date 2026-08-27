@@ -41,7 +41,7 @@ class OrderItemApiFacade
             ->join('oi.order', 'o')
             ->andWhere('NOT EXISTS(
                SELECT 1 FROM ' . WithdrawalRequest::class . ' wr
-               WHERE wr.order = o
+               WHERE wr.order = o AND wr.confirmed = TRUE
             )');
     }
 

@@ -20,6 +20,9 @@ front_order_payment_status_notify:
     path: /order/payment-status-notify
     methods: [GET]
 
+front_order_withdrawal_confirmation:
+    path: /potvrzeni-odstoupeni-od-smlouvy/{hash}
+
 front_registration_set_new_password:
     path: /nove-heslo
 

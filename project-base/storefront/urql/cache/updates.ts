@@ -184,6 +184,9 @@ export const cacheUpdates: UpdatesConfig = {
         OrderWithdrawalRequest(_result, _args, cache) {
             invalidateFields(cache, ['order']);
         },
+        ConfirmOrderWithdrawalRequest(_result, _args, cache) {
+            invalidateFields(cache, ['order']);
+        },
         AddNewCustomerUser(_result, _args, cache) {
             invalidateFields(cache, ['customerUsers', 'currentCustomerUser']);
         },

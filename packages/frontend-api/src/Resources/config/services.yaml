@@ -75,6 +75,10 @@ services:
         arguments:
             $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
 
+    Shopsys\FrontendApiBundle\Model\Mutation\Order\OrderWithdrawalRequestMutation:
+        arguments:
+            $orderWithdrawalRequestRateLimiter: '@limiter.frontend_api_order_withdrawal_request'
+
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer: ~
 
     Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertResolverMap:

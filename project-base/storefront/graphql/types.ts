@@ -1628,6 +1628,8 @@ export type TypeMutation = {
   ChangePersonalData: TypeCurrentCustomerUser;
   /** Add a transport to the cart, or remove a transport from the cart */
   ChangeTransportInCart: TypeCart;
+  /** Confirm withdrawal from contract for a guest order using the hash received by email, returns the order urlHash */
+  ConfirmOrderWithdrawalRequest: Scalars['String']['output'];
   /** Send message to the site owner */
   ContactForm: Scalars['Boolean']['output'];
   /** Create a new complaint */
@@ -1654,7 +1656,7 @@ export type TypeMutation = {
   Logout: Scalars['Boolean']['output'];
   /** Subscribe for e-mail newsletter */
   NewsletterSubscribe: Scalars['Boolean']['output'];
-  /** Request withdrawal from contract for an order */
+  /** Request withdrawal from contract for an order. For orders of registered customers the withdrawal request is created directly, for guest orders a confirmation email is sent to the order email */
   OrderWithdrawalRequest: Scalars['Boolean']['output'];
   /** Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer */
   PayOrder: TypePaymentSetupCreationData;
@@ -1741,6 +1743,11 @@ export type TypeMutationChangePersonalDataArgs = {
 
 export type TypeMutationChangeTransportInCartArgs = {
   input: TypeChangeTransportInCartInput;
+};
+
+
+export type TypeMutationConfirmOrderWithdrawalRequestArgs = {
+  confirmationHash: Scalars['String']['input'];
 };
 
 
@@ -2329,6 +2336,8 @@ export enum TypeOrderStatusEnum {
 
 export type TypeOrderWithdrawalRequest = {
   __typename?: 'OrderWithdrawalRequest';
+  /** Whether the withdrawal request has been confirmed, requests of guest orders await confirmation via the email link */
+  confirmed: Scalars['Boolean']['output'];
   /** Email address for withdrawal request contact */
   email: Scalars['String']['output'];
   /** First name for withdrawal request contact */
