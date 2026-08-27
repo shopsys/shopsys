@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 class PaymentReturnHashFacade
 {
     protected const int HASH_LENGTH = 64;
-    protected const string HASH_TTL_MODIFIER = '+30 minutes';
+    protected const string HASH_TTL_MODIFIER = '+60 minutes';
 
     public function __construct(
         protected readonly PaymentReturnHashRepository $paymentReturnHashRepository,

@@ -9,6 +9,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { OperationResult } from 'urql';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
+import { clearOrderConfirmationContext } from 'utils/order/orderConfirmationContextStorage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 type LoginHandler = (
@@ -52,6 +53,7 @@ export const useHandleActionsAfterLogin = () => {
     const handleActionsAfterLogin = (showCartMergeInfo: boolean, rewriteUrl: string | undefined) => {
         updateCartUuid(null);
         updateProductListUuids({});
+        clearOrderConfirmationContext();
 
         updateAuthLoadingState(showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading');
         updateUserEntryState('login');
@@ -78,6 +80,7 @@ export const useLoginAfterPasswordRecovery = () => {
     const handleActionsAfterPasswordRecovery = (showCartMergeInfo: boolean) => {
         updateCartUuid(null);
         updateProductListUuids({});
+        clearOrderConfirmationContext();
 
         updateAuthLoadingState(showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading');
         updateUserEntryState('login');
