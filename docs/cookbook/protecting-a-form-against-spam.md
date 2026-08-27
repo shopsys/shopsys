@@ -119,7 +119,7 @@ would never use up its quota and could flood the endpoint without limit.
 const honeyPot = useHoneyPot(formProviderMethods, 'nickname');
 
 const onSubmitHandler: SubmitHandler<NewsletterFormType> = async (values) => {
-    await newsletter({ input: { email: values.email, ...honeyPot.getInput() } });
+    await newsletter({ input: { email: values.email, [honeyPot.fieldName]: honeyPot.value } });
 };
 
 return (
@@ -137,20 +137,19 @@ The name is written in three places — the enum map, the input yaml and this ca
 so a rename changes all of them at once. A storefront left behind then sends a field the input does not declare and the
 mutation fails, instead of quietly sending a name nothing reads.
 
-`useHoneyPot()` hands out both halves of the trap: `Form` renders the hidden input from the object, and `getInput()`
-reads its value for the mutation. Passing the object to `Form` and forgetting `getInput()` is the mistake nothing else
-catches — the form then renders the field without ever sending its value, so it looks protected and is not. Nothing
-detects that at build time, so the hook reports the reverse case through `logException` after the first render, when the
-field it was given was never rendered. Spread `getInput()` wherever the mutation carries the honey pot — inside `input`
-for an input-object mutation, among the top level variables for a mutation with flat ones — and call it inside the
-submit handler, because filling a registered input in does not re-render the form.
+`useHoneyPot()` hands out both halves of the trap: `Form` renders the hidden input from the object, and `value` carries
+what was typed into it. Passing the object to `Form` and forgetting to put `value` into the mutation is the mistake
+nothing else catches — the form then renders the field without ever sending its value, so it looks protected and is not.
+Nothing detects that at build time, so the hook reports the reverse case through `logException` after the first render,
+when the field it was given was never rendered. Put the pair wherever the mutation carries the honey pot — inside
+`input` for an input-object mutation, among the top level variables for a mutation with flat ones.
 
 `honeyPot` is opt-in on purpose: a form that sends its whole form model as the mutation input would otherwise start
 sending a field its GraphQL input does not know.
 
 The value is deliberately kept **out of the typed form model** — it is a trap, not a form field, so it does not belong
 in the form's TypeScript type (`NewsletterFormType` here), the Yup schema or the `*FormMeta` fields. It does reach the
-submit handler at runtime, because `yupResolver` runs with `{ raw: true }`; the helper exists because the form type does
+submit handler at runtime, because `yupResolver` runs with `{ raw: true }`; the hook exists because the form type does
 not declare the field and `values.nickname` would not compile.
 
 `HoneyPotInput` hides the field with `sr-only` plus `aria-hidden`, `tabIndex={-1}` and `autoComplete="off"`, and
