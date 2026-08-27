@@ -79,8 +79,8 @@ NewsletterInput:
             # honey pot of SpamProtectedFormEnum::getHoneyPotFieldNameIndexedByFormName(),
             # nullable and unvalidated on purpose and the mutation never reads it
             nickname:
-                type: "String"
-                description: "Nickname of the subscriber"
+                type: 'String'
+                description: 'Nickname of the subscriber'
 ```
 
 All three properties are load-bearing: nullable, otherwise every existing API client breaks; without a validation
@@ -123,11 +123,7 @@ const onSubmitHandler: SubmitHandler<NewsletterFormType> = async (values) => {
 };
 
 return (
-    <Form
-        formName={formMeta.formName}
-        honeyPot={honeyPot}
-        onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}
-    >
+    <Form formName={formMeta.formName} honeyPot={honeyPot} onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
         {/* ... the real fields */}
     </Form>
 );
