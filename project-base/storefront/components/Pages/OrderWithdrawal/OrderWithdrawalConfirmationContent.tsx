@@ -57,20 +57,26 @@ export const OrderWithdrawalConfirmationContent: FC = () => {
         router.replace(orderWithdrawalSuccessUrl);
     };
 
-    return confirmationError ? (
-        <Webline>
-            <ConfirmationPageContent
-                heading={t('The confirmation link is invalid or expired')}
-                headingIcon={WarningIcon}
-                headingVariant="error"
-                headingDescription={t(
-                    'Submit the withdrawal request again from your order detail to receive a new confirmation email.',
-                )}
-            />
-        </Webline>
-    ) : isConfirmationInProgress ? (
-        <SkeletonPageOrderWithdrawalConfirmation />
-    ) : (
+    if (confirmationError) {
+        return (
+            <Webline>
+                <ConfirmationPageContent
+                    heading={t('The confirmation link is invalid or expired')}
+                    headingIcon={WarningIcon}
+                    headingVariant="error"
+                    headingDescription={t(
+                        'Submit the withdrawal request again from your order detail to receive a new confirmation email.',
+                    )}
+                />
+            </Webline>
+        );
+    }
+
+    if (isConfirmationInProgress) {
+        return <SkeletonPageOrderWithdrawalConfirmation />;
+    }
+
+    return (
         <Webline>
             <div className="mb-4 lg:mt-6">
                 <PageHero
