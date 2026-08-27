@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Unit\Model\SpamProtection;
 
-use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
@@ -25,6 +24,7 @@ class FormSpamProtectionFacadeTest extends TestCase
     private const int UNREACHABLE_RATE_LIMIT = 1000;
     private const string CLIENT_IP = '10.255.0.1';
     private const string SECOND_CLIENT_IP = '10.255.0.2';
+    private const string FIRST_FORM_HONEY_POT_FIELD_NAME = 'subject';
     private const string SECOND_FORM_NAME = 'newsletter';
     private const string SECOND_FORM_HONEY_POT_FIELD_NAME = 'nickname';
     private const string FORM_NAME_WITHOUT_HONEY_POT_FIELD_NAME = 'unconfigured';
@@ -52,24 +52,32 @@ class FormSpamProtectionFacadeTest extends TestCase
     {
         yield 'missing field is not filled' => [['name' => 'Name'], false];
 
-        yield 'null value is not filled' => [['subject' => null], false];
+        yield 'null value is not filled' => [[self::FIRST_FORM_HONEY_POT_FIELD_NAME => null], false];
 
-        yield 'empty string is not filled' => [['subject' => ''], false];
+        yield 'empty string is not filled' => [[self::FIRST_FORM_HONEY_POT_FIELD_NAME => ''], false];
 
-        yield 'whitespace only is not filled' => [['subject' => "  \t\n "], false];
+        yield 'whitespace only is not filled' => [[self::FIRST_FORM_HONEY_POT_FIELD_NAME => "  \t\n "], false];
 
-        yield 'non string value is not filled' => [['subject' => 42], false];
+        yield 'non string value is not filled' => [[self::FIRST_FORM_HONEY_POT_FIELD_NAME => 42], false];
 
-        yield 'text is filled' => [['subject' => 'Cheap pills'], true];
+        yield 'text is filled' => [[self::FIRST_FORM_HONEY_POT_FIELD_NAME => 'Cheap pills'], true];
 
-        yield 'text surrounded by whitespace is filled' => [['subject' => '  spam  '], true];
+        yield 'text surrounded by whitespace is filled' => [
+            [self::FIRST_FORM_HONEY_POT_FIELD_NAME => '  spam  '],
+            true,
+        ];
     }
 
-    public function testEveryFormHasItsOwnHoneyPotFieldName(): void
+    public function testFormReactsOnlyToItsOwnHoneyPotField(): void
     {
         $facade = $this->createFacade(self::CLIENT_IP, self::UNREACHABLE_RATE_LIMIT);
 
-        self::assertFalse($facade->shouldDiscardSubmission(['subject' => 'Cheap pills'], self::SECOND_FORM_NAME));
+        self::assertFalse(
+            $facade->shouldDiscardSubmission(
+                [self::FIRST_FORM_HONEY_POT_FIELD_NAME => 'Cheap pills'],
+                self::SECOND_FORM_NAME,
+            ),
+        );
         self::assertTrue(
             $facade->shouldDiscardSubmission(
                 [self::SECOND_FORM_HONEY_POT_FIELD_NAME => 'Cheap pills'],
@@ -93,7 +101,7 @@ class FormSpamProtectionFacadeTest extends TestCase
     public function testHoneyPotSubmissionsAreCountedTowardsTheRateLimit(): void
     {
         $facade = $this->createFacade(self::CLIENT_IP);
-        $honeyPotInput = ['subject' => 'Cheap pills'];
+        $honeyPotInput = [self::FIRST_FORM_HONEY_POT_FIELD_NAME => 'Cheap pills'];
 
         for ($attempt = 0; $attempt < self::RATE_LIMIT; $attempt++) {
             self::assertTrue($facade->shouldDiscardSubmission($honeyPotInput, SpamProtectedFormEnum::CONTACT_FORM));
@@ -137,7 +145,7 @@ class FormSpamProtectionFacadeTest extends TestCase
             new ClientIpProvider(new RequestStack()),
             new NullLogger(),
             $this->createRateLimiterFactory(self::RATE_LIMIT),
-            $this->createSpamProtectedFormEnum(),
+            $this->createSpamProtectedFormEnumStub(),
         );
 
         $this->exhaustRateLimit($facade, SpamProtectedFormEnum::CONTACT_FORM);
@@ -165,7 +173,7 @@ class FormSpamProtectionFacadeTest extends TestCase
             new ClientIpProvider($requestStack),
             new NullLogger(),
             $rateLimiterFactory ?? $this->createRateLimiterFactory($rateLimit),
-            $this->createSpamProtectedFormEnum(),
+            $this->createSpamProtectedFormEnumStub(),
         );
     }
 
@@ -179,22 +187,14 @@ class FormSpamProtectionFacadeTest extends TestCase
         ], new InMemoryStorage());
     }
 
-    private function createSpamProtectedFormEnum(): SpamProtectedFormEnum
+    private function createSpamProtectedFormEnumStub(): SpamProtectedFormEnum
     {
-        return new class() extends SpamProtectedFormEnum {
-            public const string NEWSLETTER = 'newsletter';
+        $spamProtectedFormEnumStub = $this->createStub(SpamProtectedFormEnum::class);
+        $spamProtectedFormEnumStub->method('getHoneyPotFieldNameIndexedByFormName')->willReturn([
+            SpamProtectedFormEnum::CONTACT_FORM => self::FIRST_FORM_HONEY_POT_FIELD_NAME,
+            self::SECOND_FORM_NAME => self::SECOND_FORM_HONEY_POT_FIELD_NAME,
+        ]);
 
-            /**
-             * @return array<string, string>
-             */
-            #[Override]
-            public function getHoneyPotFieldNameIndexedByFormName(): array
-            {
-                return array_merge(
-                    parent::getHoneyPotFieldNameIndexedByFormName(),
-                    [static::NEWSLETTER => 'nickname'],
-                );
-            }
-        };
+        return $spamProtectedFormEnumStub;
     }
 }
