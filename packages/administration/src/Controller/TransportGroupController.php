@@ -9,6 +9,7 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Search\Filter\TextFilter;
 use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
 use Shopsys\AdministrationBundle\Model\Transport\TransportGroupCrudHandler;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
@@ -51,6 +52,8 @@ class TransportGroupController extends AbstractCrudController
             fields: ['name'],
             placeholder: t('Search by name…'),
         );
+
+        $search->addFilter(TextFilter::create('name', t('Name')));
     }
 
     #[Override]

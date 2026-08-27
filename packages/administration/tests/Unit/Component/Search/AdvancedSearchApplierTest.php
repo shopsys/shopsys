@@ -4,25 +4,29 @@ declare(strict_types=1);
 
 namespace Tests\AdministrationBundle\Unit\Component\Search;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Search\AdvancedSearchApplier;
 use Shopsys\AdministrationBundle\Component\Search\AdvancedSearchFormFactory;
 use Shopsys\AdministrationBundle\Component\Search\Filter;
+use Shopsys\AdministrationBundle\Component\Search\Filter\BooleanFilter;
 use Shopsys\AdministrationBundle\Component\Search\FilterRuleCollection;
 use Shopsys\AdministrationBundle\Component\Search\Operator;
 use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\ProxyQueryFactoryTrait;
 use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 final class AdvancedSearchApplierTest extends TestCase
 {
+    use ProxyQueryFactoryTrait;
     use SetTranslatorTrait;
 
     private AdvancedSearchFormFactory $advancedSearchFormFactory;
@@ -56,7 +60,7 @@ final class AdvancedSearchApplierTest extends TestCase
             'new_1' => ['subject' => 'deleted', 'operator' => 'notSet', 'value' => null],
         ]);
 
-        $this->advancedSearchApplier->apply($searchConfig, $this->createQueryBuilder(), $form);
+        $this->advancedSearchApplier->apply($searchConfig, $this->createSearchProxyQuery(), $form);
 
         $this->assertCount(1, $this->appliedRuleCollectionsByFilterName['name']);
         $nameRules = $this->appliedRuleCollectionsByFilterName['name'][0]->getRules();
@@ -78,10 +82,53 @@ final class AdvancedSearchApplierTest extends TestCase
             '2' => ['subject' => 'name', 'operator' => 'notSet', 'value' => null],
         ]);
 
-        $this->advancedSearchApplier->apply($searchConfig, $this->createQueryBuilder(), $form);
+        $this->advancedSearchApplier->apply($searchConfig, $this->createSearchProxyQuery(), $form);
 
         $this->assertArrayNotHasKey('name', $this->appliedRuleCollectionsByFilterName);
         $this->assertArrayNotHasKey('deleted', $this->appliedRuleCollectionsByFilterName);
+    }
+
+    public function testRuleWithOperatorNotAllowedByTheFilterIsSkipped(): void
+    {
+        $searchConfig = $this->createSearchConfig();
+        // the rule form's operator ChoiceType nulls a disallowed choice before the applier sees it,
+        // so the form is built by hand to drive the applier with a valid operator the filter does not allow
+        $formFactory = Forms::createFormFactory();
+        $form = $formFactory->createNamedBuilder(SearchConfig::ADVANCED_SEARCH_RULES_QUERY_PARAMETER, FormType::class)
+            ->add($formFactory->createNamedBuilder('0', FormType::class)
+                ->add('subject', TextType::class)
+                ->add('operator', TextType::class)
+                ->add('value', TextType::class))
+            ->add($formFactory->createNamedBuilder('1', FormType::class)
+                ->add('subject', TextType::class)
+                ->add('operator', TextType::class)
+                ->add('value', TextType::class))
+            ->getForm();
+        $form->submit([
+            '0' => ['subject' => 'deleted', 'operator' => 'contains', 'value' => 'foo'],
+            '1' => ['subject' => 'deleted', 'operator' => 'notSet', 'value' => null],
+        ]);
+
+        $this->advancedSearchApplier->apply($searchConfig, $this->createSearchProxyQuery(), $form);
+
+        $this->assertCount(1, $this->appliedRuleCollectionsByFilterName['deleted']);
+        $deletedRules = $this->appliedRuleCollectionsByFilterName['deleted'][0]->getRules();
+        $this->assertCount(1, $deletedRules);
+        $this->assertSame(Operator::NOT_SET, $deletedRules[0]->operator);
+    }
+
+    public function testBooleanFilterRuleSubmittedWithoutValueIsApplied(): void
+    {
+        $searchConfig = new SearchConfig();
+        $searchConfig->addFilter(BooleanFilter::create('deleted', 'Deleted')->onFields('id'));
+        $form = $this->createSubmittedForm($searchConfig, [
+            '0' => ['subject' => 'deleted', 'operator' => 'is', 'value' => null],
+        ]);
+        $proxyQuery = $this->createSearchProxyQuery();
+
+        $this->advancedSearchApplier->apply($searchConfig, $proxyQuery, $form);
+
+        $this->assertSame('o.id = true', (string)$proxyQuery->getQueryBuilder()->getDQLPart('where'));
     }
 
     public function testValuelessOperatorRuleIsAppliedWithoutValue(): void
@@ -91,7 +138,7 @@ final class AdvancedSearchApplierTest extends TestCase
             '0' => ['subject' => 'deleted', 'operator' => 'notSet', 'value' => null],
         ]);
 
-        $this->advancedSearchApplier->apply($searchConfig, $this->createQueryBuilder(), $form);
+        $this->advancedSearchApplier->apply($searchConfig, $this->createSearchProxyQuery(), $form);
 
         $this->assertCount(1, $this->appliedRuleCollectionsByFilterName['deleted'][0]->getRules());
     }
@@ -112,7 +159,7 @@ final class AdvancedSearchApplierTest extends TestCase
             'new_0' => ['subject' => 'customerId', 'operator' => 'is', 'value' => '42'],
         ]);
 
-        $this->advancedSearchApplier->apply($searchConfig, $this->createQueryBuilder(), $form);
+        $this->advancedSearchApplier->apply($searchConfig, $this->createSearchProxyQuery(), $form);
 
         $errors = $form->get('new_0')->get('value')->getErrors();
         $this->assertCount(1, $errors);
@@ -150,10 +197,5 @@ final class AdvancedSearchApplierTest extends TestCase
         ]);
 
         return $this->advancedSearchFormFactory->createForm($searchConfig, $request);
-    }
-
-    private function createQueryBuilder(): QueryBuilder
-    {
-        return new QueryBuilder($this->createStub(EntityManagerInterface::class));
     }
 }

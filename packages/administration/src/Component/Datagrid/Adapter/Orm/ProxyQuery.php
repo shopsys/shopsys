@@ -77,6 +77,23 @@ final class ProxyQuery
     }
 
     /**
+     * Resolves a field path whose last part is a to-one association (e.g. "brand", "order.status")
+     * to a DQL expression comparable with entities (e.g. "o.brand"), adding joins only for the intermediate parts.
+     */
+    public function getAssociationTargetExpression(string $fieldPath): string
+    {
+        [$expression, $partType] = $this->resolveFieldPath($fieldPath, false);
+
+        if ($partType !== PartType::ASSOCIATION) {
+            throw new InvalidArgumentException(
+                "Field path '{$fieldPath}' does not end with an association. Use getFieldExpression() for fields.",
+            );
+        }
+
+        return $expression;
+    }
+
+    /**
      * @return string Returns alias of the select
      */
     public function processDotNotation(string $string): string
@@ -90,9 +107,11 @@ final class ProxyQuery
     }
 
     /**
+     * @param bool $joinLastAssociation Whether a path ending with an association joins it and resolves to the join alias,
+     *                                  or resolves to the "alias.field" expression without the join
      * @return array{string, \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PartType} The DQL expression and the type of the last resolved part
      */
-    private function resolveFieldPath(string $fieldPath): array
+    private function resolveFieldPath(string $fieldPath, bool $joinLastAssociation = true): array
     {
         $alias = $this->rootAlias;
         $parts = explode('.', $fieldPath);
@@ -109,6 +128,10 @@ final class ProxyQuery
                     case PartType::FIELD:
                         return ["{$alias}.{$field}", PartType::FIELD];
                     case PartType::ASSOCIATION:
+                        if ($joinLastAssociation === false) {
+                            return ["{$alias}.{$field}", PartType::ASSOCIATION];
+                        }
+
                         $this->joinAssociation($currentClassMetadata, $path, $field, $alias, $joinAlias);
 
                         return [$joinAlias, PartType::ASSOCIATION];

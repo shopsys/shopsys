@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Search;
 
-use Doctrine\ORM\QueryBuilder;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\ProxyQuery;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 
@@ -17,13 +17,19 @@ final class AdvancedSearchApplier
      * Rules are grouped by subject and each filter is called once with all its rules.
      * Problems reported by the filters via FilterRuleCollection::addRuleError() are added as form errors on the rule rows.
      */
-    public function apply(SearchConfig $searchConfig, QueryBuilder $queryBuilder, FormInterface $rulesForm): void
+    public function apply(SearchConfig $searchConfig, ProxyQuery $proxyQuery, FormInterface $rulesForm): void
     {
         $rulesByFilterName = $this->groupRulesByFilterName($searchConfig, $rulesForm->getData() ?? []);
 
         foreach ($rulesByFilterName as $filterName => $rules) {
+            $filter = $searchConfig->getFilter($filterName);
+
+            if ($filter instanceof ProxyQueryAwareFilterInterface) {
+                $filter->setProxyQuery($proxyQuery);
+            }
+
             $ruleCollection = new FilterRuleCollection($rules);
-            $searchConfig->getFilter($filterName)->extendQueryBuilder($queryBuilder, $ruleCollection);
+            $filter->extendQueryBuilder($proxyQuery->getQueryBuilder(), $ruleCollection);
 
             $this->addRuleErrorsToForm($rulesForm, $ruleCollection);
         }

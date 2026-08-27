@@ -165,6 +165,26 @@ final class ProxyQueryTest extends TestCase
         $proxyQuery->getFieldExpression('brand');
     }
 
+    public function testAssociationTargetExpressionNeedsNoJoin(): void
+    {
+        $proxyQuery = $this->createSearchProxyQuery();
+
+        $expression = $proxyQuery->getAssociationTargetExpression('brand');
+
+        $this->assertSame('o.brand', $expression);
+        $this->assertSame([], $proxyQuery->getQueryBuilder()->getDQLPart('join'));
+    }
+
+    public function testAssociationTargetExpressionForFieldThrowsException(): void
+    {
+        $proxyQuery = $this->createSearchProxyQuery();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not end with an association');
+
+        $proxyQuery->getAssociationTargetExpression('catnum');
+    }
+
     public function testFieldExpressionForUnknownFieldThrowsException(): void
     {
         $proxyQuery = $this->createSearchProxyQuery();

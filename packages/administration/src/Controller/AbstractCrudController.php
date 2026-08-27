@@ -248,7 +248,7 @@ abstract class AbstractCrudController extends AdminBaseController
         });
 
         if ($isAdvancedSearchSubmitted) {
-            $this->advancedSearchApplier->apply($searchConfig, $adapter->getProxyQuery()->getQueryBuilder(), $advancedSearchForm);
+            $this->advancedSearchApplier->apply($searchConfig, $adapter->getProxyQuery(), $advancedSearchForm);
         } elseif ($searchConfig->isQuickSearchEnabled() && $quickSearchText !== null) {
             $this->quickSearchApplier->apply($searchConfig->getQuickSearchDefinition(), $adapter->getProxyQuery(), $quickSearchText);
         }
