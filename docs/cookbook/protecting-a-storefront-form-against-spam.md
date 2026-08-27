@@ -257,17 +257,6 @@ Shopsys\FrontendApiBundle\Model\SpamProtection\FormSpamProtectionFacade:
     alias: App\Model\SpamProtection\FormSpamProtectionFacade
 ```
 
-## Prerequisite in production: trusted proxies
-
-The limiter counts submissions per client IP address, so it needs to know which one it is. Behind a CDN or a load
-balancer the real address arrives in the `X-Forwarded-For` header, which is only trusted from the proxies listed in the
-`TRUSTED_PROXIES` environment variable (`127.0.0.1` by default) — set it to the address or range of your proxy. The
-variable itself is described in [Application Configuration](../installation/application-configuration.md).
-
-With a wrong value the limiter fails in one of two ways: if the proxy is not trusted, every visitor shares the proxy's
-address and one bucket, so legitimate people get blocked; if everyone is trusted, anyone can bypass the limit by
-sending a forged `X-Forwarded-For`.
-
 ## Classic Symfony forms in the administration
 
 The steps above apply to the headless Frontend API. A server-rendered Symfony form — in the administration, for
