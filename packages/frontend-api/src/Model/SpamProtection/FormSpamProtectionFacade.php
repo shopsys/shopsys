@@ -38,6 +38,7 @@ class FormSpamProtectionFacade
             'Form submission was discarded because the honey pot field was filled in.',
             [
                 'formName' => $formName,
+                'clientIp' => $this->clientIpProvider->getClientIp(),
             ],
         );
 

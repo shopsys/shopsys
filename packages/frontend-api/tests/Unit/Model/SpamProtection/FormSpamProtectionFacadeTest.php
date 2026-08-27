@@ -24,6 +24,7 @@ class FormSpamProtectionFacadeTest extends TestCase
     private const int UNREACHABLE_RATE_LIMIT = 1000;
     private const string CLIENT_IP = '10.255.0.1';
     private const string SECOND_CLIENT_IP = '10.255.0.2';
+    private const string FIRST_FORM_NAME = 'contact-form';
     private const string FIRST_FORM_HONEY_POT_FIELD_NAME = 'subject';
     private const string SECOND_FORM_NAME = 'newsletter';
     private const string SECOND_FORM_HONEY_POT_FIELD_NAME = 'nickname';
@@ -41,7 +42,7 @@ class FormSpamProtectionFacadeTest extends TestCase
 
         self::assertSame(
             $expectedIsDiscarded,
-            $facade->shouldDiscardSubmission($input, SpamProtectedFormEnum::CONTACT_FORM),
+            $facade->shouldDiscardSubmission($input, self::FIRST_FORM_NAME),
         );
     }
 
@@ -91,11 +92,11 @@ class FormSpamProtectionFacadeTest extends TestCase
         $facade = $this->createFacade(self::CLIENT_IP);
 
         for ($attempt = 0; $attempt < self::RATE_LIMIT; $attempt++) {
-            self::assertFalse($facade->shouldDiscardSubmission([], SpamProtectedFormEnum::CONTACT_FORM));
+            self::assertFalse($facade->shouldDiscardSubmission([], self::FIRST_FORM_NAME));
         }
 
         $this->expectException(TooManyFormSubmissionsUserError::class);
-        $facade->shouldDiscardSubmission([], SpamProtectedFormEnum::CONTACT_FORM);
+        $facade->shouldDiscardSubmission([], self::FIRST_FORM_NAME);
     }
 
     public function testHoneyPotSubmissionsAreCountedTowardsTheRateLimit(): void
@@ -104,11 +105,11 @@ class FormSpamProtectionFacadeTest extends TestCase
         $honeyPotInput = [self::FIRST_FORM_HONEY_POT_FIELD_NAME => 'Cheap pills'];
 
         for ($attempt = 0; $attempt < self::RATE_LIMIT; $attempt++) {
-            self::assertTrue($facade->shouldDiscardSubmission($honeyPotInput, SpamProtectedFormEnum::CONTACT_FORM));
+            self::assertTrue($facade->shouldDiscardSubmission($honeyPotInput, self::FIRST_FORM_NAME));
         }
 
         $this->expectException(TooManyFormSubmissionsUserError::class);
-        $facade->shouldDiscardSubmission($honeyPotInput, SpamProtectedFormEnum::CONTACT_FORM);
+        $facade->shouldDiscardSubmission($honeyPotInput, self::FIRST_FORM_NAME);
     }
 
     public function testRateLimitIsCountedPerClientIp(): void
@@ -117,16 +118,16 @@ class FormSpamProtectionFacadeTest extends TestCase
         $firstClientFacade = $this->createFacade(self::CLIENT_IP, rateLimiterFactory: $rateLimiterFactory);
         $secondClientFacade = $this->createFacade(self::SECOND_CLIENT_IP, rateLimiterFactory: $rateLimiterFactory);
 
-        $this->exhaustRateLimit($firstClientFacade, SpamProtectedFormEnum::CONTACT_FORM);
+        $this->exhaustRateLimit($firstClientFacade, self::FIRST_FORM_NAME);
 
-        self::assertFalse($secondClientFacade->shouldDiscardSubmission([], SpamProtectedFormEnum::CONTACT_FORM));
+        self::assertFalse($secondClientFacade->shouldDiscardSubmission([], self::FIRST_FORM_NAME));
     }
 
     public function testRateLimitIsCountedPerFormName(): void
     {
         $facade = $this->createFacade(self::CLIENT_IP);
 
-        $this->exhaustRateLimit($facade, SpamProtectedFormEnum::CONTACT_FORM);
+        $this->exhaustRateLimit($facade, self::FIRST_FORM_NAME);
 
         self::assertFalse($facade->shouldDiscardSubmission([], self::SECOND_FORM_NAME));
     }
@@ -148,10 +149,10 @@ class FormSpamProtectionFacadeTest extends TestCase
             $this->createSpamProtectedFormEnumStub(),
         );
 
-        $this->exhaustRateLimit($facade, SpamProtectedFormEnum::CONTACT_FORM);
+        $this->exhaustRateLimit($facade, self::FIRST_FORM_NAME);
 
         $this->expectException(TooManyFormSubmissionsUserError::class);
-        $facade->shouldDiscardSubmission([], SpamProtectedFormEnum::CONTACT_FORM);
+        $facade->shouldDiscardSubmission([], self::FIRST_FORM_NAME);
     }
 
     private function exhaustRateLimit(FormSpamProtectionFacade $facade, string $formName): void
@@ -191,7 +192,7 @@ class FormSpamProtectionFacadeTest extends TestCase
     {
         $spamProtectedFormEnumStub = $this->createStub(SpamProtectedFormEnum::class);
         $spamProtectedFormEnumStub->method('getHoneyPotFieldNameIndexedByFormName')->willReturn([
-            SpamProtectedFormEnum::CONTACT_FORM => self::FIRST_FORM_HONEY_POT_FIELD_NAME,
+            self::FIRST_FORM_NAME => self::FIRST_FORM_HONEY_POT_FIELD_NAME,
             self::SECOND_FORM_NAME => self::SECOND_FORM_HONEY_POT_FIELD_NAME,
         ]);
 
