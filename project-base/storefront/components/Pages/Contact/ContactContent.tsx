@@ -42,7 +42,7 @@ export const ContactContent: FC = () => {
                 name,
                 email,
                 message,
-                ...honeyPot.getInput(),
+                [honeyPot.fieldName]: honeyPot.value,
             },
         });
 
