@@ -9,6 +9,7 @@ CRUD controller is built using known Shopsys components like [Grid](../internal-
 ## Getting started
 - [Creating a new CRUD Controller](getting-started/creating-a-new-crud-controller.md)
 - [Configure List page (Datagrid)](getting-started/configure-list-page.md)
+- [Adding Search to List Page](getting-started/adding-search-to-list-page.md)
 - [Adding Create, Edit, and Delete Actions](getting-started/adding-create-edit-and-delete-actions.md)
 - [Extending existing CRUD Controller](getting-started/extending-existing-crud-controller.md)
 

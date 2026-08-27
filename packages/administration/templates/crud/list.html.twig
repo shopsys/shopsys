@@ -11,6 +11,10 @@
 {% endblock %}
 
 {% block main_content %}
+    {% if quickSearchDefinition is not null %}
+        {% include '@ShopsysAdministration/crud/_quick_search.html.twig' %}
+    {% endif %}
+
     {% if listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::QUICK_FILTER')) %}
         {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: listDomainFilterNamespace, domainIds: listDomainIds })) }}
     {% elseif listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::SWITCHER')) %}

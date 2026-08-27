@@ -2,5 +2,6 @@
 
 - [Creating a new CRUD Controller](creating-a-new-crud-controller.md)
 - [Configuring List Page](configure-list-page.md)
+- [Adding Search to List Page](adding-search-to-list-page.md)
 - [Adding Create, Edit, and Delete Actions](adding-create-edit-and-delete-actions.md)
 - [Extending existing CRUD Controller](extending-existing-crud-controller.md)

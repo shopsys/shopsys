@@ -36,6 +36,11 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
         }
     }
 
+    public function getProxyQuery(): ProxyQuery
+    {
+        return $this->proxyQuery;
+    }
+
     /**
      * @return class-string
      */

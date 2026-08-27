@@ -102,6 +102,20 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 }
 ```
 
+### `configureSearch(SearchConfig $search): void`
+
+Configure searching on the list page. See [Adding Search to List Page](../getting-started/adding-search-to-list-page.md) for details.
+
+```php
+protected function configureSearch(SearchConfig $search): void
+{
+    $search->enableQuickSearch(
+        fields: ['name', 'catnum'],
+        placeholder: t('Search by name or catalog number…'),
+    );
+}
+```
+
 ### List domain control
 
 Use `setListDomainControl()` in `configure()` to display a domain control above the datagrid.

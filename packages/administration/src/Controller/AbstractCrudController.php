@@ -22,6 +22,8 @@ use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
+use Shopsys\AdministrationBundle\Component\Search\QuickSearchApplier;
+use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -36,6 +38,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
 use Throwable;
@@ -75,6 +78,12 @@ abstract class AbstractCrudController extends AdminBaseController
     #[Required]
     public Domain $domain;
 
+    #[Required]
+    public RequestStack $requestStack;
+
+    #[Required]
+    public QuickSearchApplier $quickSearchApplier;
+
     public function setDefinition(Definition $definition): void
     {
         $this->definition = $definition;
@@ -93,6 +102,13 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     protected function configureQuery(QueryBuilder $queryBuilder): void
+    {
+    }
+
+    /**
+     * Configure searching on the list page (quick search).
+     */
+    protected function configureSearch(SearchConfig $search): void
     {
     }
 
@@ -202,11 +218,17 @@ abstract class AbstractCrudController extends AdminBaseController
     public function listAction(): Response
     {
         $listDomainControl = $this->definition->getConfig()->getListDomainControl();
+        $searchConfig = $this->getSearchConfig();
+        $quickSearchText = $this->getQuickSearchText();
         $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder): void {
             $this->applyListDomainFilter($queryBuilder);
             $this->configureQuery($queryBuilder);
             $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureQuery($queryBuilder));
         });
+
+        if ($searchConfig->isQuickSearchEnabled() && $quickSearchText !== null) {
+            $this->quickSearchApplier->apply($searchConfig->getQuickSearchDefinition(), $adapter->getProxyQuery(), $quickSearchText);
+        }
         $datagrid = $this->datagridFactory->create($adapter, [
             'crudDefinition' => $this->definition,
             'name' => $this->definition->entityName,
@@ -222,7 +244,26 @@ abstract class AbstractCrudController extends AdminBaseController
             'listDomainControl' => $listDomainControl,
             'listDomainFilterNamespace' => $listDomainControl === CrudListDomainControl::QUICK_FILTER ? $this->getListDomainFilterNamespace() : null,
             'listDomainIds' => $listDomainControl === CrudListDomainControl::QUICK_FILTER ? $this->getListDomainIds() : [],
+            'quickSearchDefinition' => $searchConfig->getQuickSearchDefinition(),
+            'quickSearchText' => $quickSearchText,
         ]);
+    }
+
+    final protected function getSearchConfig(): SearchConfig
+    {
+        $searchConfig = new SearchConfig();
+
+        $this->configureSearch($searchConfig);
+        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureSearch($searchConfig));
+
+        return $searchConfig;
+    }
+
+    protected function getQuickSearchText(): ?string
+    {
+        $searchText = trim($this->requestStack->getCurrentRequest()?->query->getString(SearchConfig::QUICK_SEARCH_QUERY_PARAMETER) ?? '');
+
+        return $searchText === '' ? null : $searchText;
     }
 
     public function detailAction(int $id): Response
