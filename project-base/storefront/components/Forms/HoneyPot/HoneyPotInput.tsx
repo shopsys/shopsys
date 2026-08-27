@@ -1,7 +1,10 @@
 import { useFormContext } from 'react-hook-form';
-import { HONEY_POT_FIELD_NAME } from 'utils/forms/honeyPot';
 
-export const HoneyPotInput: FC = () => {
+type HoneyPotInputProps = {
+    fieldName: string;
+};
+
+export const HoneyPotInput: FC<HoneyPotInputProps> = ({ fieldName }) => {
     const formProviderMethods = useFormContext();
 
     if (!formProviderMethods) {
@@ -10,7 +13,7 @@ export const HoneyPotInput: FC = () => {
 
     return (
         <input
-            {...formProviderMethods.register(HONEY_POT_FIELD_NAME, { value: '' })}
+            {...formProviderMethods.register(fieldName, { value: '' })}
             aria-hidden="true"
             autoComplete="off"
             className="sr-only"

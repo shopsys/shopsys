@@ -25,7 +25,8 @@ export const ContactContent: FC = () => {
     const { t } = useTranslation();
     const [isSuccess, setIsSuccess] = useState(false);
     const [formProviderMethods, defaultValues] = useContactForm();
-    const { renderHoneyPot, getHoneyPotInput } = useHoneyPot(formProviderMethods);
+    // the field name has to match SpamProtectedFormEnum::getHoneyPotFieldNameIndexedByFormName() on the backend
+    const honeyPot = useHoneyPot(formProviderMethods, 'subject');
     const formMeta = useContactFormMeta();
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const [, contactForm] = useContactFormMutation();
@@ -41,7 +42,7 @@ export const ContactContent: FC = () => {
                 name,
                 email,
                 message,
-                ...getHoneyPotInput(),
+                ...honeyPot.getInput(),
             },
         });
 
@@ -87,7 +88,7 @@ export const ContactContent: FC = () => {
                         <FormProvider {...formProviderMethods}>
                             <Form
                                 formName={formMeta.formName}
-                                renderHoneyPot={renderHoneyPot}
+                                honeyPot={honeyPot}
                                 onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}
                             >
                                 <FormContentWrapper>
