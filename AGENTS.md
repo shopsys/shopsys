@@ -54,6 +54,7 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
     - `packages/`: `protected` (not `private`), no typehints/return types in entities & data objects, no `final` (except FormType, which requires it) — because these are extended in project-base.
       Full detail → `.agents/skills/coding-conventions/SKILL.md`.
 - **Multi-domain/multi-language** is supported by default — consider it when changing entities, forms, and the API.
+- **Commits** — every commit or commit message you produce (incl. amend/reword/split, and commits made on the user's behalf by other skills) follows `.agents/skills/commit-conventions/SKILL.md`: atomic functional units, Shopsys message format, never `Co-Authored-By`. Interactive grouping of the working tree → `/commit`.
 
 ## Key Configuration Files
 
@@ -70,5 +71,6 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 - **Find where code lives / how it works / example patterns** → `.agents/skills/codebase-locator`, `codebase-analyzer`, `codebase-pattern-finder`
 - **Deep research · plan · implement · tests** → `.agents/skills/research-codebase`, `create-plan`, `implement-plan`, `test-writing`
 - **Reading project-authored skills in the monorepo** (package-first + path remap) → `.agents/skills/monorepo-vs-project/SKILL.md`
+- **Commit rules & interactive grouped commits** → `.agents/skills/commit-conventions/SKILL.md`, `.agents/skills/commit/SKILL.md`
 - **Upgrade notes**: when asked to generate them, use `/generate-upgrade-notes` instead of analyzing commits by hand.
 - **More** — the list above isn't exhaustive; browse `.agents/skills/` for the full set.
