@@ -18,4 +18,4 @@
 - [Create Asynchronous Notifier](./create-asynchronous-notifier.md)
 - [Adding a New Order Item Type](./adding-a-new-order-item-type.md)
 - [Extending Order Detail Page](./extending-order-detail-page.md)
-- [Protecting a Form Against Spam](./protecting-a-form-against-spam.md)
+- [Protecting a Storefront Form Against Spam](./protecting-a-form-against-spam.md)

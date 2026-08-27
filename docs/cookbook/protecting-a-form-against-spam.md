@@ -1,4 +1,4 @@
-# Protecting a Form Against Spam
+# Protecting a Storefront Form Against Spam
 
 Public form mutations in the Frontend API can be submitted by anyone, so they attract spam bots.
 `Shopsys\FrontendApiBundle\Model\SpamProtection\FormSpamProtectionFacade` protects them with two layers that already
@@ -19,23 +19,34 @@ would simply stop filling it in — which is also why the honey pot must **not**
 
 ## Protecting another form
 
-Everything below is the complete work needed for one more form. There is nothing to configure — all protected forms
-share one limiter and one error code.
+Everything below is the complete work needed for one more form. All protected forms share one rate limiter
+configuration and one error code, while the quota is counted separately for every form and IP address.
 
-### 1. Name the form
+### 1. Name the form and its honey pot field
 
-The names live in `Shopsys\FrontendApiBundle\Model\SpamProtection\SpamProtectedFormEnum`, so add yours by extending
-it:
+Both live in `Shopsys\FrontendApiBundle\Model\SpamProtection\SpamProtectedFormEnum`, so add yours by extending it:
 
 ```php
 // app/src/Model/SpamProtection/SpamProtectedFormEnum.php
 namespace App\Model\SpamProtection;
 
+use Override;
 use Shopsys\FrontendApiBundle\Model\SpamProtection\SpamProtectedFormEnum as BaseSpamProtectedFormEnum;
 
 class SpamProtectedFormEnum extends BaseSpamProtectedFormEnum
 {
     public const string NEWSLETTER = 'newsletter';
+
+    /**
+     * @return array<string, string>
+     */
+    #[Override]
+    public function getHoneyPotFieldNameIndexedByFormName(): array
+    {
+        return array_merge(parent::getHoneyPotFieldNameIndexedByFormName(), [
+            static::NEWSLETTER => 'nickname',
+        ]);
+    }
 }
 ```
 
@@ -45,12 +56,17 @@ Shopsys\FrontendApiBundle\Model\SpamProtection\SpamProtectedFormEnum:
     alias: App\Model\SpamProtection\SpamProtectedFormEnum
 ```
 
-Without the alias the facade keeps validating against the framework enum and throws `InvalidEnumCaseException` for your
-new name. The name becomes a part of the rate limiter key, so every form counts its own quota.
+Choose a field name that fits the form and reads like an ordinary optional field of it — the bot must not be able to
+tell it apart from the real ones. The map is the only thing that decides whether a form is protected — a form name
+missing from it is refused with `HoneyPotFieldNameNotConfiguredException`, whether or not the enum declares a case for
+it.
+
+The platform ships `contact-form` mapped to `subject` only as the default that matches the `project-base` skeleton. The
+field itself is declared in your own input type, so renaming it is entirely up to your project.
 
 ### 2. Add the honey pot field to the GraphQL input
 
-The field itself is defined once in `HoneyPotInputObject`, so an input only inherits it:
+Declare it as an ordinary field of the form's input:
 
 ```yaml
 # app/config/graphql/types/ModelType/Newsletter/Input/NewsletterInput.types.yaml
@@ -58,13 +74,18 @@ NewsletterInput:
     type: input-object
     inherits:
         - 'NewsletterInputDecorator'
-        - 'HoneyPotInputObject'
+    config:
+        fields:
+            # honey pot of SpamProtectedFormEnum::getHoneyPotFieldNameIndexedByFormName(),
+            # nullable and unvalidated on purpose and the mutation never reads it
+            nickname:
+                type: "String"
+                description: "Nickname of the subscriber"
 ```
 
-`inherits` merges the field into the input at compile time and the inherited type stays out of the public schema, so
-the schema shows a plain nullable `subject: String` with a description of an ordinary field. Both properties are
-load-bearing: nullable, otherwise every existing API client breaks, and plausible, because a client reading the schema
-would otherwise be told where the trap is.
+All three properties are load-bearing: nullable, otherwise every existing API client breaks; without a validation
+constraint, otherwise the error tells the bot where the trap is; and with a plausible name and description, because a
+client reading the schema would otherwise be told the same.
 
 ### 3. Call the facade first in the mutation
 
@@ -95,32 +116,42 @@ would never use up its quota and could flood the endpoint without limit.
 ### 4. Render the hidden field on the storefront
 
 ```tsx
-const { renderHoneyPot, getHoneyPotInput } = useHoneyPot(formProviderMethods);
+const honeyPot = useHoneyPot(formProviderMethods, 'nickname');
 
 const onSubmitHandler: SubmitHandler<NewsletterFormType> = async (values) => {
-    await newsletter({ input: { email: values.email, ...getHoneyPotInput() } });
+    await newsletter({ input: { email: values.email, ...honeyPot.getInput() } });
 };
 
 return (
-    <Form renderHoneyPot={renderHoneyPot} onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
+    <Form
+        formName={formMeta.formName}
+        honeyPot={honeyPot}
+        onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}
+    >
         {/* ... the real fields */}
     </Form>
 );
 ```
 
-`useHoneyPot()` hands out both halves of the trap, because using only one of them is the mistake nothing else catches:
-`renderHoneyPot` alone renders the field without ever sending its value, so the form looks protected and is not.
-Leaving either half unused fails the lint instead. Spread `getHoneyPotInput()` wherever the mutation carries the honey
-pot — inside `input` for an input-object mutation, among the top level variables for a mutation with flat ones — and
-call it inside the submit handler, because filling a registered input in does not re-render the form.
+The name is written in three places — the enum map, the input yaml and this call — and all three belong to your project,
+so a rename changes all of them at once. A storefront left behind then sends a field the input does not declare and the
+mutation fails, instead of quietly sending a name nothing reads.
 
-`renderHoneyPot` is opt-in on purpose: a form that sends its whole form model as the mutation input would otherwise
-start sending a field its GraphQL input does not know.
+`useHoneyPot()` hands out both halves of the trap: `Form` renders the hidden input from the object, and `getInput()`
+reads its value for the mutation. Passing the object to `Form` and forgetting `getInput()` is the mistake nothing else
+catches — the form then renders the field without ever sending its value, so it looks protected and is not. Nothing
+detects that at build time, so the hook reports the reverse case through `logException` after the first render, when the
+field it was given was never rendered. Spread `getInput()` wherever the mutation carries the honey pot — inside `input`
+for an input-object mutation, among the top level variables for a mutation with flat ones — and call it inside the
+submit handler, because filling a registered input in does not re-render the form.
+
+`honeyPot` is opt-in on purpose: a form that sends its whole form model as the mutation input would otherwise start
+sending a field its GraphQL input does not know.
 
 The value is deliberately kept **out of the typed form model** — it is a trap, not a form field, so it does not belong
-in the `*FormType`, the Yup schema or the `*FormMeta` fields. It does reach the submit handler at runtime, because
-`yupResolver` runs with `{ raw: true }`; the helper exists because `*FormType` does not declare the field and
-`values.subject` would not compile.
+in the form's TypeScript type (`NewsletterFormType` here), the Yup schema or the `*FormMeta` fields. It does reach the
+submit handler at runtime, because `yupResolver` runs with `{ raw: true }`; the helper exists because the form type does
+not declare the field and `values.nickname` would not compile.
 
 `HoneyPotInput` hides the field with `sr-only` plus `aria-hidden`, `tabIndex={-1}` and `autoComplete="off"`, and
 carries no `data-tid`. All of it is load-bearing: `display: none` is skipped by some bots, `sr-only` alone would expose
@@ -140,31 +171,23 @@ make generate-schema
 The rate limiter is **not** disabled in the test environment. `ApplicationTestCase` gives every test method its own
 client IP, so test methods do not share a quota and no extra setup is needed in the test of a protected mutation.
 
-Assert both layers, following `ContactFormMutationTest`: a filled honey pot returns success without any effect, and the
-submission after the last allowed one fails with the `too-many-form-submissions` user error.
+Assert both layers on the backend, following `ContactFormMutationTest`: a filled honey pot returns success without any
+effect, and the submission after the last allowed one fails with the `too-many-form-submissions` user error.
+
+Assert on the storefront as well, following `ContactContentHoneyPot.test.tsx`, that a value filled into the hidden
+field reaches the variables of the mutation. That is the half of the trap nothing else checks.
 
 ## One-time configuration
 
-Already in place, listed here because a downstream project has to have it as well. One limiter and one Redis-backed
-pool serve every protected form:
+Already in place, listed here because a downstream project has to have it as well — see
+`app/config/packages/rate_limiter.yaml` for the limits themselves. The limiter stores its counters in a Redis-backed
+pool declared in `cache.yaml` and overridden to a filesystem adapter in `test/cache.yaml`.
 
-```yaml
-# app/config/packages/rate_limiter.yaml
-framework:
-    rate_limiter:
-        frontend_api_form_spam_protection:
-            policy: fixed_window
-            limit: 3
-            interval: '5 minutes'
-            cache_pool: form_spam_protection_rate_limiter_cache
-```
+All protected forms share that one configuration — the policy, the limit, the interval and the storage — but the quota
+is counted separately for every form and IP address, because the form name is a part of the limiter key.
 
-Three submissions per five minutes is a default meant for visitors on their own connections. The quota is counted per
-IP address and shared across domains, so a shop whose visitors come through one corporate or school connection should
-raise it.
-
-The pool is declared in `cache.yaml` over an `snc_redis` client, and overridden to a filesystem adapter in
-`test/cache.yaml`.
+The default is meant for visitors on their own connections. The quota is shared across domains, so a shop whose
+visitors come through one corporate or school connection should raise it.
 
 !!! warning "Always configure the storage explicitly"
 
@@ -177,17 +200,78 @@ The pool is declared in `cache.yaml` over an `snc_redis` client, and overridden 
     quota. In the test environment the pool must not be an `array` adapter either, because that one is thrown away on
     every kernel reboot and a functional test would never reach the limit.
 
-To give one form a limiter of its own, declare a second limiter and override
-`FormSpamProtectionFacade::getRateLimiterFactory()`.
+## Giving one form its own limits
+
+Only needed when the shared configuration does not fit one of the forms.
+
+### 1. Declare a second limiter
+
+Reuse the same `cache_pool`, so that all protected forms keep counting in one storage:
+
+```yaml
+# app/config/packages/rate_limiter.yaml
+framework:
+    rate_limiter:
+        frontend_api_newsletter_spam_protection:
+            policy: fixed_window
+            limit: 10
+            interval: '1 hour'
+            cache_pool: form_spam_protection_rate_limiter_cache
+```
+
+### 2. Inject it into the facade and branch on the form name
+
+```php
+// app/src/Model/SpamProtection/FormSpamProtectionFacade.php
+class FormSpamProtectionFacade extends BaseFormSpamProtectionFacade
+{
+    public function __construct(
+        ClientIpProvider $clientIpProvider,
+        LoggerInterface $logger,
+        RateLimiterFactoryInterface $formSpamProtectionRateLimiter,
+        SpamProtectedFormEnum $spamProtectedFormEnum,
+        protected readonly RateLimiterFactoryInterface $newsletterSpamProtectionRateLimiter,
+    ) {
+        parent::__construct($clientIpProvider, $logger, $formSpamProtectionRateLimiter, $spamProtectedFormEnum);
+    }
+
+    #[Override]
+    protected function getRateLimiterFactory(string $formName): RateLimiterFactoryInterface
+    {
+        if ($formName === SpamProtectedFormEnum::NEWSLETTER) {
+            return $this->newsletterSpamProtectionRateLimiter;
+        }
+
+        return parent::getRateLimiterFactory($formName);
+    }
+}
+```
+
+### 3. Wire both limiters and alias the facade
+
+The mutations ask for the framework class, so the alias is what makes them use yours:
+
+```yaml
+# app/config/services.yaml
+App\Model\SpamProtection\FormSpamProtectionFacade:
+    arguments:
+        $formSpamProtectionRateLimiter: '@limiter.frontend_api_form_spam_protection'
+        $newsletterSpamProtectionRateLimiter: '@limiter.frontend_api_newsletter_spam_protection'
+
+Shopsys\FrontendApiBundle\Model\SpamProtection\FormSpamProtectionFacade:
+    alias: App\Model\SpamProtection\FormSpamProtectionFacade
+```
 
 ## Prerequisite in production: trusted proxies
 
-The limiter depends on `Request::getClientIp()`, which is only as reliable as `framework.trusted_proxies` (the
-`TRUSTED_PROXIES` environment variable, `127.0.0.1` by default).
+The limiter counts submissions per client IP address, so it needs to know which one it is. Behind a CDN or a load
+balancer the real address arrives in the `X-Forwarded-For` header, which is only trusted from the proxies listed in the
+`TRUSTED_PROXIES` environment variable (`127.0.0.1` by default) — set it to the address or range of your proxy. The
+variable itself is described in [Application Configuration](../installation/application-configuration.md).
 
-Behind a CDN or a load balancer it must be set to the address or range of that proxy. Otherwise either every visitor
-collapses into a single IP bucket and legitimate people are blocked, or `X-Forwarded-For` is accepted from anyone and
-the limit can be bypassed by spoofing it.
+With a wrong value the limiter fails in one of two ways: if the proxy is not trusted, every visitor shares the proxy's
+address and one bucket, so legitimate people get blocked; if everyone is trusted, anyone can bypass the limit by
+sending a forged `X-Forwarded-For`.
 
 ## Classic Symfony forms in the administration
 
