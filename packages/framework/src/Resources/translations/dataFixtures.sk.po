@@ -37,11 +37,11 @@ msgstr "<p>Dobrý deň {customerName},</p> <p>Ďakujeme za Vašu otázku k produ
 msgid "<p>Order number {number} has been sent, thank you for your purchase. We will contact you about next order status. <br /><br /> <a href=\"{order_detail_url}\" tabindex=\"0\">Track</a> the status of your order. <br /> {transport_instructions} <br /> {payment_instructions} <br /></p>"
 msgstr "<p>Objednávka číslo {number} bola odoslaná, ďakujeme za váš nákup. Budeme vás kontaktovať ohľadom ďalšieho stavu objednávky. <br /><br /> <a href=\"{order_detail_url}\" tabindex=\"0\">Sledovať</a> stav vašej objednávky. <br /> {transport_instructions} <br /> {payment_instructions} <br /></p>"
 
+msgid "<p>Payment for order number <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a> has failed. <br /> Please contact us to resolve the issue.</p>"
+msgstr "<p>Platba za objednávku číslo <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a> nebola úspešná. <br /> Prosím, kontaktujte nás pre vyriešenie problému.</p>"
+
 msgid "<p>Payment for order number {number} has been successful. <br /> <a href=\"{order_detail_url}\" tabindex=\"0\">Track</a> the status of your order. <br /> {transport_instructions}</p>"
 msgstr "<p>Platba za objednávku číslo {number} bola úspešná. <br /> <a href=\"{order_detail_url}\" tabindex=\"0\">Sledovať</a> stav vašej objednávky. <br /> {transport_instructions}</p>"
-
-msgid "<p>Payment for order number {number} has failed. <br /> Please contact us to resolve the issue.</p>"
-msgstr "<p>Platba za objednávku číslo {number} nebola úspešná. <br /> Prosím, kontaktujte nás pre vyriešenie problému.</p>"
 
 msgid "<p>We acknowledge your withdrawal from the contract for order number <b>{order_number}</b>.</p> <p>We will contact you in the following days regarding the next steps, including the return of the goods.</p> <p><a href=\"{order_detail_url}\" tabindex=\"0\">Show order detail</a></p>"
 msgstr "<p>Potvrdzujeme vaše odstúpenie od zmluvy u objednávky číslo <b>{order_number}</b>. </p> <p> V nasledujúcich dňoch vás budeme kontaktovať ohľadom ďalších krokov, vrátane vrátenia tovaru.</p> <p> <a href=\"{order_detail_url}\" tabindex=\"0\">Zobraziť detail objednávky</a> </p>"
