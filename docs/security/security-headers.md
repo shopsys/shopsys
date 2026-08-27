@@ -109,5 +109,5 @@ For implementation details, see:
 ## Related
 
 Security headers protect the browser. Public form endpoints need protection of their own — see
-[Protecting a Form Against Spam](../cookbook/protecting-a-form-against-spam.md) for the honey pot and per-IP rate limiting
-used by the contact form.
+[Protecting a Storefront Form Against Spam](../cookbook/protecting-a-form-against-spam.md)
+for the honey pot and per-IP rate limiting used by the contact form.
