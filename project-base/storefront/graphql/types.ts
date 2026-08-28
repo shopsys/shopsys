@@ -161,11 +161,26 @@ export type TypeAdvertPosition = {
   positionName: Scalars['String']['output'];
 };
 
-export type TypeApplyPromoCodeToCartInput = {
+/** Gift voucher applied as a form of payment */
+export type TypeAppliedGiftVoucher = {
+  __typename?: 'AppliedGiftVoucher';
+  /** Code of the gift voucher */
+  code: Scalars['String']['output'];
+  /** Name of the purchased gift voucher product the voucher was generated from */
+  productName: Maybe<Scalars['String']['output']>;
+  /** Date and time until the gift voucher is valid */
+  validUntil: Scalars['DateTime']['output'];
+  /** Value of the gift voucher including VAT */
+  valueWithVat: Scalars['Money']['output'];
+  /** Value of the gift voucher excluding VAT, calculated using the VAT rate of the purchased gift voucher product */
+  valueWithoutVat: Scalars['Money']['output'];
+};
+
+export type TypeApplyCodeToCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
-  /** Promo code to be used after checkout */
-  promoCode: Scalars['String']['input'];
+  /** Discount coupon or gift voucher code to be applied */
+  code: Scalars['String']['input'];
 };
 
 /** A connection to a list of items. */
@@ -278,6 +293,8 @@ export type TypeAvailability = {
 
 /** Product Availability statuses */
 export enum TypeAvailabilityStatusEnum {
+  /** Product availability status for electronically delivered products */
+  Digital = 'Digital',
   /** Product is out of stock with a known expected restocking date */
   ExpectedRestock = 'ExpectedRestock',
   /** Product availability status in stock */
@@ -550,6 +567,12 @@ export type TypeBreadcrumb = {
 
 export type TypeCart = {
   __typename?: 'Cart';
+  /** Applied gift vouchers if provided */
+  giftVouchers: Array<TypeAppliedGiftVoucher>;
+  /** Applied gift vouchers exceed the amount payable by them (total price without gift voucher products), so the order cannot be completed */
+  giftVouchersExceedPayableAmount: Scalars['Boolean']['output'];
+  /** Whether the applied gift vouchers cover the whole amount to pay */
+  isNothingLeftToPay: Scalars['Boolean']['output'];
   /** All items in the cart */
   items: Array<TypeCartItem>;
   modifications: TypeCartModificationsResult;
@@ -561,6 +584,10 @@ export type TypeCart = {
   promoCodes: Array<TypePromoCode>;
   /** Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa. */
   remainingAmountForFreeTransport: Maybe<Scalars['Money']['output']>;
+  /** Total price with VAT reduced by applied gift vouchers, never below zero */
+  remainingAmountToPay: Scalars['Money']['output'];
+  /** Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step */
+  remainingItemsAmountToPay: Scalars['Money']['output'];
   /** Rounding amount if payment has rounding allowed */
   roundingPrice: Maybe<TypePrice>;
   /** Selected pickup place identifier if provided */
@@ -579,6 +606,11 @@ export type TypeCart = {
   transport: Maybe<TypeTransport>;
   /** UUID of the cart, null for authenticated user */
   uuid: Maybe<Scalars['Uuid']['output']>;
+};
+
+export type TypeCartGiftVoucherModificationsResult = {
+  __typename?: 'CartGiftVoucherModificationsResult';
+  noLongerApplicableGiftVouchers: Array<Scalars['String']['output']>;
 };
 
 export type TypeCartInput = {
@@ -620,6 +652,7 @@ export enum TypeCartItemTypeEnum {
 
 export type TypeCartModificationsResult = {
   __typename?: 'CartModificationsResult';
+  giftVoucherModifications: TypeCartGiftVoucherModificationsResult;
   itemModifications: TypeCartItemModificationsResult;
   multipleAddedProductModifications: TypeCartMultipleAddedProductModificationsResult;
   paymentModifications: TypeCartPaymentModificationsResult;
@@ -1612,6 +1645,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain */
+  reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
@@ -1626,8 +1661,6 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   slug: Scalars['String']['output'];
   /** Count of quantity on stock */
   stockQuantity: Maybe<Scalars['Int']['output']>;
-  /** List of availabilities in individual stores (empty for main variants) */
-  storeAvailabilities: Array<TypeStoreAvailability>;
   unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
@@ -1659,6 +1692,16 @@ export type TypeMainVariantMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
+
+/** Represents a product */
+export type TypeMainVariantReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
+};
+
 export type TypeMutation = {
   __typename?: 'Mutation';
   /** Add new customer user to customer */
@@ -1669,8 +1712,8 @@ export type TypeMutation = {
   AddProductToList: TypeProductList;
   /** Add product to cart for future checkout */
   AddToCart: TypeAddToCartResult;
-  /** Apply new promo code for the future checkout */
-  ApplyPromoCodeToCart: TypeCart;
+  /** Apply a code as either a promo code or a gift voucher, whichever it matches */
+  ApplyCodeToCart: TypeCart;
   /** Changes customer user company data */
   ChangeCompanyData: TypeCurrentCustomerUser;
   /** Changes customer user password */
@@ -1725,6 +1768,8 @@ export type TypeMutation = {
   Register: TypeLoginResult;
   /** Register new customer user using an order data */
   RegisterByOrder: TypeLoginResult;
+  /** Remove an applied discount coupon or gift voucher code from the cart */
+  RemoveCodeFromCart: TypeCart;
   /** delete customer user */
   RemoveCustomerUser: Scalars['Boolean']['output'];
   /** Remove product from cart */
@@ -1733,8 +1778,6 @@ export type TypeMutation = {
   RemoveProductFromList: Maybe<TypeProductList>;
   /** Removes the product list */
   RemoveProductList: Maybe<TypeProductList>;
-  /** Remove already used promo code from cart */
-  RemovePromoCodeFromCart: TypeCart;
   /** Request password recovery - email with hash will be sent */
   RequestPasswordRecovery: Scalars['String']['output'];
   /** Request access to personal data */
@@ -1768,8 +1811,8 @@ export type TypeMutationAddToCartArgs = {
 };
 
 
-export type TypeMutationApplyPromoCodeToCartArgs = {
-  input: TypeApplyPromoCodeToCartInput;
+export type TypeMutationApplyCodeToCartArgs = {
+  input: TypeApplyCodeToCartInput;
 };
 
 
@@ -1904,6 +1947,11 @@ export type TypeMutationRegisterByOrderArgs = {
 };
 
 
+export type TypeMutationRemoveCodeFromCartArgs = {
+  input: TypeRemoveCodeFromCartInput;
+};
+
+
 export type TypeMutationRemoveCustomerUserArgs = {
   input: TypeRemoveCustomerUserDataInput;
 };
@@ -1921,11 +1969,6 @@ export type TypeMutationRemoveProductFromListArgs = {
 
 export type TypeMutationRemoveProductListArgs = {
   input: TypeProductListInput;
-};
-
-
-export type TypeMutationRemovePromoCodeFromCartArgs = {
-  input: TypeRemovePromoCodeFromCartInput;
 };
 
 
@@ -2113,6 +2156,8 @@ export type TypeOrder = {
   expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Gift vouchers redeemed on the order */
+  giftVouchers: Array<TypeAppliedGiftVoucher>;
   /** Indicates whether the order has an external payment */
   hasExternalPayment: Scalars['Boolean']['output'];
   /** Indicates whether order payment is still being processed with GoPay payment type */
@@ -2121,8 +2166,10 @@ export type TypeOrder = {
   heurekaAgreement: Scalars['Boolean']['output'];
   /** Indicates whether the billing address is other than a delivery address */
   isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['output'];
-  /** Indicates whether the order is paid successfully with GoPay payment type */
+  /** Indicates whether the order is paid (either marked as paid, fully covered by gift vouchers, or paid successfully with GoPay payment type) */
   isPaid: Scalars['Boolean']['output'];
+  /** Returns whether withdrawal cannot be requested because a gift voucher purchased in the order has already been redeemed or cancelled */
+  isWithdrawalBlockedByPurchasedGiftVoucher: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
   items: Array<TypeOrderItem>;
   /** URL for accessing the last payment transaction on a gateway without invoking the new payment transaction. Depending on the payment status, user might see the payment details or even retry the transaction if possible. */
@@ -2147,6 +2194,10 @@ export type TypeOrder = {
   productReviewsAllowed: Scalars['Boolean']['output'];
   /** Promo code (coupon) used in the order */
   promoCode: Maybe<Scalars['String']['output']>;
+  /** Gift vouchers generated from the order */
+  purchasedGiftVouchers: Array<TypePurchasedGiftVoucher>;
+  /** Total price with VAT reduced by redeemed gift vouchers, never below zero */
+  remainingAmountToPay: Scalars['Money']['output'];
   /** Uuids of the order's products that already have a review linked to this order */
   reviewedProductUuids: Array<Scalars['Uuid']['output']>;
   /** Current status of the order */
@@ -2363,6 +2414,8 @@ export enum TypeOrderItemTypeEnum {
 export type TypeOrderItemsFilterInput = {
   /** Filter order items by product catalog number (OR condition with productUuid) */
   catnum?: InputMaybe<Scalars['String']['input']>;
+  /** Exclude order items of products with these product types */
+  excludeProductTypes?: InputMaybe<Array<TypeProductTypeEnum>>;
   /** Filter order items in orders created after this date */
   orderCreatedAfter?: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter orders created after this date */
@@ -2663,6 +2716,7 @@ export type TypePaymentSetupCreationData = {
 export enum TypePaymentTypeEnum {
   BankTransfer = 'bankTransfer',
   Basic = 'basic',
+  GiftVoucher = 'giftVoucher',
   GoPay = 'goPay'
 }
 
@@ -2835,6 +2889,8 @@ export type TypeProduct = {
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain */
+  reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
@@ -2849,8 +2905,6 @@ export type TypeProduct = {
   slug: Scalars['String']['output'];
   /** Count of quantity on stock */
   stockQuantity: Maybe<Scalars['Int']['output']>;
-  /** List of availabilities in individual stores (empty for main variants) */
-  storeAvailabilities: Array<TypeStoreAvailability>;
   unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
@@ -2879,6 +2933,16 @@ export type TypeProductMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
+
+/** Represents a product */
+export type TypeProductReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
+};
+
 /** A connection to a list of items. */
 export type TypeProductConnection = {
   __typename?: 'ProductConnection';
@@ -2893,6 +2957,48 @@ export type TypeProductConnection = {
   productFilterOptions: TypeProductFilterOptions;
   /** Total number of products (-1 means that the total count is not available) */
   totalCount: Scalars['Int']['output'];
+};
+
+/** Delivery option of a transport for a single piece of a product, independent of any cart */
+export type TypeProductDeliveryOption = {
+  __typename?: 'ProductDeliveryOption';
+  /** Expected delivery date of an order with a single piece of the product placed today. For a personal pickup transport the best possible date across all stores is used. Null when no delivery date can be promised. */
+  expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
+  /** Transport price for an order with a single piece of the product */
+  price: TypePrice;
+  /** The transport of this delivery option */
+  transport: TypeTransport;
+};
+
+/** Store where a single piece of a product can be picked up using a personal pickup transport */
+export type TypeProductDeliveryStore = {
+  __typename?: 'ProductDeliveryStore';
+  /** Expected pickup date at this store for an order with a single piece of the product placed today. Null when no pickup date can be promised. */
+  expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
+  /** The store */
+  store: TypeStore;
+};
+
+/** A connection to a list of items. */
+export type TypeProductDeliveryStoreConnection = {
+  __typename?: 'ProductDeliveryStoreConnection';
+  /** Information to aid in pagination. */
+  edges: Maybe<Array<Maybe<TypeProductDeliveryStoreEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: TypePageInfo;
+  /** Coordinates found by the store search text */
+  searchCoordinates: Maybe<TypeStoreSearchCoordinates>;
+  /** Total number of stores */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** An edge in a connection. */
+export type TypeProductDeliveryStoreEdge = {
+  __typename?: 'ProductDeliveryStoreEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Maybe<TypeProductDeliveryStore>;
 };
 
 /** An edge in a connection. */
@@ -3039,6 +3145,8 @@ export type TypeProductReview = {
   __typename?: 'ProductReview';
   /** Date and time when the review was created */
   createdAt: Scalars['DateTime']['output'];
+  /** Photos attached to the review, without the photos rejected in moderation; photos of a not yet approved review are served unresized */
+  images: Array<TypeImage>;
   /** The review is linked to an order of the reviewed product */
   isVerifiedPurchase: Scalars['Boolean']['output'];
   /** Currently associated reviewed product, null when the product no longer exists */
@@ -3049,6 +3157,8 @@ export type TypeProductReview = {
   productUuid: Maybe<Scalars['Uuid']['output']>;
   /** Star rating from 1 to 5 */
   rating: Scalars['Int']['output'];
+  /** Number of photos rejected in moderation, meaningful for the customer's own reviews (public listings always return zero) */
+  rejectedImagesCount: Scalars['Int']['output'];
   /** Reason why the customer's own review was not published, null for reviews that were not rejected */
   rejectionReason: Maybe<Scalars['String']['output']>;
   /** Date and time when the response was published */
@@ -3095,6 +3205,8 @@ export type TypeProductReviewInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   /** First name of the reviewer */
   firstName?: InputMaybe<Scalars['String']['input']>;
+  /** Photos of the review (JPG or PNG, up to 5 files of 10 MB each) */
+  images: Array<Scalars['FileUpload']['input']>;
   /** The review will be published without the reviewer name */
   isAnonymous: Scalars['Boolean']['input'];
   /** Last name of the reviewer */
@@ -3152,8 +3264,12 @@ export type TypeProductReviewsSummary = {
 export enum TypeProductTypeEnum {
   /** Basic product */
   Basic = 'BASIC',
+  /** Gift voucher delivered by email after the order is paid */
+  ElectronicGiftVoucher = 'ELECTRONIC_GIFT_VOUCHER',
   /** Product with inquiry form instead of add to cart button */
-  Inquiry = 'INQUIRY'
+  Inquiry = 'INQUIRY',
+  /** Gift voucher delivered printed as a regular product */
+  PrintedGiftVoucher = 'PRINTED_GIFT_VOUCHER'
 }
 
 /** Cart products grouped by the reason why they cannot be delivered using the transport */
@@ -3184,6 +3300,21 @@ export enum TypePromoCodeTypeEnum {
   /** Discount type percent */
   Percent = 'percent'
 }
+
+/** Gift voucher purchased in the order */
+export type TypePurchasedGiftVoucher = {
+  __typename?: 'PurchasedGiftVoucher';
+  /** Code of the gift voucher */
+  code: Scalars['String']['output'];
+  /** URL for downloading the gift voucher PDF */
+  pdfUrl: Scalars['String']['output'];
+  /** Catalog number of the purchased gift voucher product the voucher was generated from */
+  productCatnum: Maybe<Scalars['String']['output']>;
+  /** Date and time until the gift voucher is valid */
+  validUntil: Scalars['DateTime']['output'];
+  /** Value of the gift voucher including VAT */
+  valueWithVat: Scalars['Money']['output'];
+};
 
 export type TypeQuery = {
   __typename?: 'Query';
@@ -3293,11 +3424,13 @@ export type TypeQuery = {
   personalDataPage: Maybe<TypePersonalDataPage>;
   /** Returns product filtered using UUID or URL slug */
   product: Maybe<TypeProduct>;
+  /** Returns the delivery options usable for a single piece of the given product, independently of any cart */
+  productDeliveryOptions: Array<TypeProductDeliveryOption>;
+  /** Returns the stores where a single piece of the given product can be picked up using the given personal pickup transport, together with the expected pickup dates, independently of any cart */
+  productDeliveryStores: TypeProductDeliveryStoreConnection;
   /** Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list. */
   productList: Maybe<TypeProductList>;
   productListsByType: Array<TypeProductList>;
-  /** Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords */
-  productReviews: TypeProductReviewConnection;
   /** Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords */
   products: TypeProductConnection;
   /** Returns list of products by catalog numbers */
@@ -3524,6 +3657,23 @@ export type TypeQueryProductArgs = {
 };
 
 
+export type TypeQueryProductDeliveryOptionsArgs = {
+  productUuid: Scalars['Uuid']['input'];
+};
+
+
+export type TypeQueryProductDeliveryStoresArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  coordinates?: InputMaybe<TypeCoordinates>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  productUuid: Scalars['Uuid']['input'];
+  searchText?: InputMaybe<Scalars['String']['input']>;
+  transportUuid: Scalars['Uuid']['input'];
+};
+
+
 export type TypeQueryProductListArgs = {
   input: TypeProductListInput;
 };
@@ -3531,16 +3681,6 @@ export type TypeQueryProductListArgs = {
 
 export type TypeQueryProductListsByTypeArgs = {
   productListType: TypeProductListTypeEnum;
-};
-
-
-export type TypeQueryProductReviewsArgs = {
-  after: InputMaybe<Scalars['String']['input']>;
-  before: InputMaybe<Scalars['String']['input']>;
-  first: InputMaybe<Scalars['Int']['input']>;
-  last: InputMaybe<Scalars['Int']['input']>;
-  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
-  productUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -3803,6 +3943,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain */
+  reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
@@ -3817,8 +3959,6 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   slug: Scalars['String']['output'];
   /** Count of quantity on stock */
   stockQuantity: Maybe<Scalars['Int']['output']>;
-  /** List of availabilities in individual stores (empty for main variants) */
-  storeAvailabilities: Array<TypeStoreAvailability>;
   unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
@@ -3847,6 +3987,23 @@ export type TypeRegularProductMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
+
+/** Represents a product */
+export type TypeRegularProductReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
+};
+
+export type TypeRemoveCodeFromCartInput = {
+  /** Cart identifier or null if customer is logged in */
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+  /** Discount coupon or gift voucher code to be removed */
+  code: Scalars['String']['input'];
+};
+
 export type TypeRemoveCustomerUserDataInput = {
   /** Customer user UUID */
   customerUserUuid: Scalars['Uuid']['input'];
@@ -3857,13 +4014,6 @@ export type TypeRemoveFromCartInput = {
   cartItemUuid: Scalars['Uuid']['input'];
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-export type TypeRemovePromoCodeFromCartInput = {
-  /** Cart identifier or null if customer is logged in */
-  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
-  /** Promo code to be removed */
-  promoCode: Scalars['String']['input'];
 };
 
 /** Represents sales representative */
@@ -3961,6 +4111,8 @@ export type TypeSettings = {
   defaultPricingGroupId: Scalars['Int']['output'];
   /** Timezone that is used for displaying time */
   displayTimezone: Scalars['String']['output'];
+  /** Returns the localized description of email delivery for electronic gift vouchers */
+  emailTransportDescription: Maybe<Scalars['String']['output']>;
   /** Returns true if Heureka is available for the current domain */
   heurekaEnabled: Scalars['Boolean']['output'];
   /** Main blog category URL and background image */
@@ -3971,6 +4123,8 @@ export type TypeSettings = {
   pricing: TypePricingSetting;
   /** Returns privacy policy article's url */
   privacyPolicyArticleUrl: Maybe<Scalars['String']['output']>;
+  /** Minimal average rating a product needs to show review stars in product lists, null means no limit */
+  productReviewMinimalAverageRatingForListing: Maybe<Scalars['Float']['output']>;
   /** Returns product review policy article's url */
   productReviewPolicyArticleUrl: Maybe<Scalars['String']['output']>;
   /** Returns true if product reviews are enabled on the current domain */
@@ -4045,7 +4199,7 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   distance: Maybe<Scalars['Int']['output']>;
   /** Store email */
   email: Maybe<Scalars['String']['output']>;
-  /** Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised. */
+  /** Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryStores query instead. */
   expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** Store images */
   images: Array<TypeImage>;
@@ -4088,17 +4242,6 @@ export type TypeStoreImagesArgs = {
 
 export type TypeStoreMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Represents an availability in an individual store */
-export type TypeStoreAvailability = {
-  __typename?: 'StoreAvailability';
-  /** Detailed information about availability */
-  availabilityInformation: Scalars['String']['output'];
-  /** Availability status in a format suitable for usage in the code */
-  availabilityStatus: TypeAvailabilityStatusEnum;
-  /** Store */
-  store: Maybe<TypeStore>;
 };
 
 /** A connection to a list of items. */
@@ -4154,7 +4297,7 @@ export type TypeTransport = {
   __typename?: 'Transport';
   /** Localized transport description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
-  /** Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. */
+  /** Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead. */
   expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** Transport group */
   group: Maybe<TypeTransportGroup>;
@@ -4170,7 +4313,7 @@ export type TypeTransport = {
   payments: Array<TypePayment>;
   /** Transport position */
   position: Scalars['Int']['output'];
-  /** Transport price */
+  /** Transport price based on the current cart state. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead. */
   price: TypePrice;
   /** Cart products that cannot be delivered using this transport, grouped by the reason (empty when the transport can be selected) */
   productsBlockingSelectionInCart: Array<TypeProductsByTransportUnavailabilityReason>;
@@ -4246,12 +4389,15 @@ export type TypeTransportGroupMainImageArgs = {
 /** One of the possible methods of the transport type */
 export enum TypeTransportTypeEnum {
   Common = 'common',
+  Email = 'email',
   Packetery = 'packetery',
   PersonalPickup = 'personal_pickup'
 }
 
 /** Reason why a transport cannot be selected for the given cart */
 export enum TypeTransportUnavailabilityReasonInCartEnum {
+  ElectronicGiftVoucherOnly = 'electronic_gift_voucher_only',
+  EmailTransportNotAllowed = 'email_transport_not_allowed',
   ExcludedForProduct = 'excluded_for_product',
   PersonalPickupRequired = 'personal_pickup_required'
 }
@@ -4358,6 +4504,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain */
+  reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
@@ -4372,8 +4520,6 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   slug: Scalars['String']['output'];
   /** Count of quantity on stock */
   stockQuantity: Maybe<Scalars['Int']['output']>;
-  /** List of availabilities in individual stores (empty for main variants) */
-  storeAvailabilities: Array<TypeStoreAvailability>;
   unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
@@ -4400,6 +4546,16 @@ export type TypeVariantImagesCountArgs = {
 /** Represents a product */
 export type TypeVariantMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Represents a product */
+export type TypeVariantReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
 };
 
 export type TypeVideoToken = {
