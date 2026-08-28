@@ -72,23 +72,17 @@ class ArticleFacade
     public function edit(int $articleId, ArticleData $articleData): Article
     {
         $article = $this->articleRepository->getById($articleId);
-        $originalName = $article->getName();
-        $wasLinkType = $article->isLinkType();
 
         $article->edit($articleData);
 
         if (!$article->isLinkType()) {
             $this->friendlyUrlFacade->saveUrlListFormData('front_article_detail', $article->getId(), $articleData->urls);
-
-            // an article switched back from link to site has no friendly URL of its own, even though its name did not change
-            if ($originalName !== $article->getName() || $wasLinkType) {
-                $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                    'front_article_detail',
-                    $article->getId(),
-                    $article->getName(),
-                    $article->getDomainId(),
-                );
-            }
+            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                'front_article_detail',
+                $article->getId(),
+                $article->getName(),
+                $article->getDomainId(),
+            );
         }
         $this->em->flush();
 
