@@ -1,4 +1,4 @@
-import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
+import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { LockIcon } from 'components/Basic/Icon/LockIcon';
@@ -124,7 +124,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
                                 type="complaintList"
                                 onClick={closeUserMenu}
                             >
-                                <ComplaintsIcon className="size-6" />
+                                <DocumentIcon className="size-6" />
                                 {t('My complaints')}
                             </MenuIconicSubItemLink>
                         </MenuIconicItemUserAuthenticatedContentListItem>

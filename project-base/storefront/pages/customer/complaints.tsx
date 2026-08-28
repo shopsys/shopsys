@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
+import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { CreateComplaintPopupButton } from 'components/Blocks/Complaint/CreateComplaintPopupButton';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
@@ -57,7 +57,7 @@ const ComplaintsPage: FC = () => {
                 title={t('My complaints')}
             >
                 <PageHero
-                    icon={ComplaintsIcon}
+                    icon={DocumentIcon}
                     title={t('My complaints')}
                     description={t(
                         'Track all your complaints, monitor resolutions, and receive updates on every status change.',
