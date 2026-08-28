@@ -72,24 +72,19 @@ class ArticleExportRepository
             'external' => $article->isExternal(),
             'createdAt' => $article->getCreatedAt()->format('Y-m-d H:i:s'),
             'type' => $article->getType(),
+            'slug' => [],
+            'mainSlug' => null,
+            'breadcrumb' => [],
         ];
 
-        // a link type article is indexed only to be listed (e.g. in the footer) and has no friendly URL to derive the fields below from;
-        // the empty values also clear them in a document of an article that has just been switched from the site type
-        if ($article->isLinkType()) {
-            return array_merge($extractedArticle, [
-                'slug' => [],
-                'mainSlug' => null,
-                'breadcrumb' => [],
-            ]);
+        if ($article->isSiteType()) {
+            $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_article_detail', $articleId);
+
+            $extractedArticle['slug'] = $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_article_detail', $articleId);
+            $extractedArticle['mainSlug'] = $mainFriendlyUrl->getSlug();
+            $extractedArticle['breadcrumb'] = $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, 'front_article_detail', $domainId);
         }
 
-        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_article_detail', $articleId);
-
-        return array_merge($extractedArticle, [
-            'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_article_detail', $articleId),
-            'mainSlug' => $mainFriendlyUrl->getSlug(),
-            'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, 'front_article_detail', $domainId),
-        ]);
+        return $extractedArticle;
     }
 }
