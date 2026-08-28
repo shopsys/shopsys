@@ -17,7 +17,6 @@ import { ClockIcon } from 'components/Basic/Icon/ClockIcon';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
-import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformationsIcon';
 import { DeliveryAddressIcon } from 'components/Basic/Icon/DeliveryAddressIcon';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
@@ -132,10 +131,6 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <CompareIcon className="size-10" />
                 <span className="text-center text-xs break-all">CompareIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ComplaintsIcon className="size-10" />
-                <span className="text-center text-xs break-all">ComplaintsIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <ContactInformationsIcon className="size-10" />
