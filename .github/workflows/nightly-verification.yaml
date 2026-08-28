@@ -345,6 +345,23 @@ jobs:
                     claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
                     # full transcript in the job log — permission denials are invisible without it
                     show_full_output: true
+                    # the push allowlist rule needs a trailing glob to cover the date-suffixed branch, but a
+                    # trailing glob also matches extra arguments (a second refspec could reach 20.0) — this
+                    # PreToolUse hook enforces the exact allowed push form; the guard script lives under
+                    # .github/, which the agent itself is forbidden to modify
+                    settings: |
+                        {
+                          "hooks": {
+                            "PreToolUse": [
+                              {
+                                "matcher": "Bash",
+                                "hooks": [
+                                  {"type": "command", "command": "python3 .github/scripts/nightly-triage-push-guard.py"}
+                                ]
+                              }
+                            ]
+                          }
+                        }
                     prompt: "/nightly-triage ${{ github.repository }} ${{ github.run_id }}"
                     # wildcard mcp__jira__* silently does not work in allowedTools — the Jira tools must be listed explicitly.
                     # The allowlist is the security boundary (the skill's guardrails are intent, not enforcement),
@@ -354,7 +371,7 @@ jobs:
                         --model claude-opus-4-8
                         --max-turns 100
                         --mcp-config '{"mcpServers":{"jira":{"type":"stdio","command":"docker","args":["run","--rm","-i","-e","JIRA_URL","-e","JIRA_USERNAME","-e","JIRA_API_TOKEN","ghcr.io/sooperset/mcp-atlassian@sha256:d2bb29af785bc44bbb16eee4e577eceabe208cdbe1bcac80c4be9915864de45d"],"env":{"JIRA_URL":"${{ secrets.JIRA_URL }}","JIRA_USERNAME":"${{ secrets.JIRA_EMAIL }}","JIRA_API_TOKEN":"${{ secrets.JIRA_TOKEN }}"}}}}'
-                        --allowedTools "Read,Grep,Glob,Write,Edit,Skill(adhoc-pr),Skill(commit),Skill(pr-description),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git blame:*),Bash(git status:*),Bash(git fetch:*),Bash(git checkout:*),Bash(git branch:*),Bash(git apply:*),Bash(git add:*),Bash(git rm:*),Bash(git mv:*),Bash(git grep:*),Bash(git rev-parse:*),Bash(git config user.name),Bash(git commit:*),Bash(git push -u origin nightly-autofix/:*),Bash(gh run view:*),Bash(gh run list:*),Bash(gh run download:*),Bash(gh pr list:*),Bash(gh pr view:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh pr close:*),Bash(gh repo view:*),Bash(gh api --method GET:*),Bash(docker pull ghcr.io/shopsys/:*),Bash(docker run -d --name autofix-standards ghcr.io/shopsys/php-fpm:*),Bash(docker run -d --name autofix-translations ghcr.io/shopsys/php-fpm:*),Bash(docker run -d --name autofix-storefront ghcr.io/shopsys/storefront:*),Bash(docker run -d --name autofix-verify ghcr.io/shopsys/php-fpm:*),Bash(docker exec autofix-:*),Bash(docker cp:*),Bash(docker rm -f autofix-:*),Bash(sha1sum:*),Bash(date:*),Bash(cat:*),Bash(tail:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__jira__jira_create_issue,mcp__jira__jira_update_issue,mcp__jira__jira_get_transitions,mcp__jira__jira_transition_issue"
+                        --allowedTools "Read,Grep,Glob,Write,Edit,Skill(adhoc-pr),Skill(commit),Skill(pr-description),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git blame:*),Bash(git status:*),Bash(git fetch:*),Bash(git checkout:*),Bash(git branch:*),Bash(git apply:*),Bash(git add:*),Bash(git rm:*),Bash(git mv:*),Bash(git grep:*),Bash(git rev-parse:*),Bash(git config user.name),Bash(git commit:*),Bash(git push -u origin nightly-autofix/*),Bash(gh run view:*),Bash(gh run list:*),Bash(gh run download:*),Bash(gh pr list:*),Bash(gh pr view:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh pr close:*),Bash(gh repo view:*),Bash(gh api --method GET:*),Bash(docker pull ghcr.io/shopsys/:*),Bash(docker run -d --name autofix-standards ghcr.io/shopsys/php-fpm:*),Bash(docker run -d --name autofix-translations ghcr.io/shopsys/php-fpm:*),Bash(docker run -d --name autofix-storefront ghcr.io/shopsys/storefront:*),Bash(docker run -d --name autofix-verify ghcr.io/shopsys/php-fpm:*),Bash(docker exec autofix-:*),Bash(docker cp:*),Bash(docker rm -f autofix-:*),Bash(sha1sum:*),Bash(date:*),Bash(cat:*),Bash(tail:*),mcp__jira__jira_search,mcp__jira__jira_get_issue,mcp__jira__jira_create_issue,mcp__jira__jira_update_issue,mcp__jira__jira_get_transitions,mcp__jira__jira_transition_issue"
             # the sandbox blocks Claude from writing to $GITHUB_STEP_SUMMARY directly —
             # the skill writes its report to a workspace file and this step publishes it
             -   name: Publish triage report to job summary
