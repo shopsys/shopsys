@@ -20,8 +20,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
  * @method \App\Model\Product\Product getByUuid(string $uuid)
  * @method void editProductStockRelation(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
- * @method void createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
- * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface[][] getAllProductPricesIndexedByDomainId(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface getProductPriceForDefaultPricingGroup(\App\Model\Product\Product $product, int $domainId)

@@ -26,8 +26,6 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
  * @property \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
  * @method \App\Model\Category\Category[] getAllTranslated(string $locale)
  * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch(\App\Model\Category\Category $category, string $locale)
- * @method void createFriendlyUrlsWhenRenamed(\App\Model\Category\Category $category, array $originalNames)
- * @method array getChangedNamesByLocale(\App\Model\Category\Category $category, array $originalNames)
  * @method array<int, \App\Model\Category\Category> getByIds(int[] $categoryIds)
  * @method \App\Model\Category\Category getVisibleOnDomainByUuid(int $domainId, string $categoryUuid)
  * @method \App\Model\Category\Category getProductMainCategoryOnCurrentDomain(\App\Model\Product\Product $product)

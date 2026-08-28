@@ -100,7 +100,6 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
     {
         $rootCategory = $this->getRootCategory();
         $category = $this->categoryRepository->getById($categoryId);
-        $originalNames = $category->getNames();
 
         $category->edit($categoryData);
 
@@ -109,7 +108,7 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
         }
         $this->em->flush();
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_list', $category->getId(), $categoryData->urls);
-        $this->createFriendlyUrlsWhenRenamed($category, $originalNames);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_product_list', $category->getId(), $category->getNames());
 
         $this->imageFacade->manageImages($category, $categoryData->image);
 
@@ -335,34 +334,6 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
             $pricingGroup,
             $domainId,
         );
-    }
-
-    protected function createFriendlyUrlsWhenRenamed(Category $category, array $originalNames): void
-    {
-        $changedNames = $this->getChangedNamesByLocale($category, $originalNames);
-
-        if (count($changedNames) === 0) {
-            return;
-        }
-
-        $this->friendlyUrlFacade->createFriendlyUrls(
-            'front_product_list',
-            $category->getId(),
-            $changedNames,
-        );
-    }
-
-    protected function getChangedNamesByLocale(Category $category, array $originalNames): array
-    {
-        $changedCategoryNames = [];
-
-        foreach ($category->getNames() as $locale => $name) {
-            if ($name !== $originalNames[$locale]) {
-                $changedCategoryNames[$locale] = $name;
-            }
-        }
-
-        return $changedCategoryNames;
     }
 
     public function getProductMainCategoryOnCurrentDomain(Product $product): Category

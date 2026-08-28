@@ -67,19 +67,16 @@ class ArticleFacade
     public function edit(int $articleId, ArticleData $articleData): Article
     {
         $article = $this->articleRepository->getById($articleId);
-        $originalName = $article->getName();
 
         $article->edit($articleData);
         $this->friendlyUrlFacade->saveUrlListFormData('front_article_detail', $article->getId(), $articleData->urls);
 
-        if ($originalName !== $article->getName()) {
-            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_article_detail',
-                $article->getId(),
-                $article->getName(),
-                $article->getDomainId(),
-            );
-        }
+        $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+            'front_article_detail',
+            $article->getId(),
+            $article->getName(),
+            $article->getDomainId(),
+        );
         $this->em->flush();
 
         $this->articleExportMessageDispatcher->dispatchArticleExportMessage($article->getId(), $article->getDomainId());
