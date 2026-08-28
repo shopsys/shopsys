@@ -65,6 +65,10 @@ class FriendlyUrlFacade
 
     protected function resolveUniquenessOfFriendlyUrl(FriendlyUrl $friendlyUrl, string $entityName): void
     {
+        if (!$this->shouldCreateFriendlyUrl($friendlyUrl)) {
+            return;
+        }
+
         $attempt = 0;
 
         do {
@@ -100,6 +104,17 @@ class FriendlyUrlFacade
 
         $this->em->persist($friendlyUrl);
         $this->setFriendlyUrlAsMain($friendlyUrl);
+    }
+
+    protected function shouldCreateFriendlyUrl(FriendlyUrl $friendlyUrl): bool
+    {
+        $mainFriendlyUrl = $this->findMainFriendlyUrl(
+            $friendlyUrl->getDomainId(),
+            $friendlyUrl->getRouteName(),
+            $friendlyUrl->getEntityId(),
+        );
+
+        return $mainFriendlyUrl === null;
     }
 
     /**
