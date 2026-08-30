@@ -91,7 +91,8 @@ const ProductVariantAvailability: FC<ProductVariantAvailabilityProps> = ({ onCli
             isPersonalPickupOnly={variant.isPersonalPickupOnly}
             displayMode="detail"
             isInquiryType={variant.isInquiryType}
-            className="min-w-40 text-center lg:text-left"
+            className="min-w-40 items-center lg:items-start"
+            detailsClassName="pl-0 lg:pl-5"
         />
     );
 
