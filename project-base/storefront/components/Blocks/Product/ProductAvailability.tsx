@@ -11,6 +11,7 @@ type ProductAvailabilityProps = {
     availableStoresCount: number | null;
     displayMode?: 'compact' | 'default' | 'detail';
     isInquiryType: boolean;
+    isPersonalPickupOnly?: boolean;
 };
 
 export const ProductAvailability: FC<ProductAvailabilityProps> = ({
@@ -19,9 +20,15 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
     className,
     displayMode = 'default',
     isInquiryType,
+    isPersonalPickupOnly = false,
 }) => {
     const { t } = useTranslation();
-    const inStockAvailabilityDetails = getInStockAvailabilityDetails(availability.status, availableStoresCount, t);
+    const inStockAvailabilityDetails = getInStockAvailabilityDetails(
+        availability.status,
+        availableStoresCount,
+        isPersonalPickupOnly,
+        t,
+    );
     const availabilityText = isInquiryType
         ? null
         : `${availability.name}${inStockAvailabilityDetails ? `, ${inStockAvailabilityDetails}` : ''}`;

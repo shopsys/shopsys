@@ -56,6 +56,34 @@ describe('ProductAvailability', () => {
         expect(screen.queryByText(/Ready to ship/)).not.toBeInTheDocument();
     });
 
+    test('promises pickup readiness instead of shipping for a personal pickup only product available in stores', () => {
+        render(
+            <ProductAvailability
+                availability={inStockAvailability}
+                availableStoresCount={2}
+                isInquiryType={false}
+                isPersonalPickupOnly={true}
+            />,
+        );
+
+        expect(screen.getByText('Ready for pickup · 2 stores')).toBeInTheDocument();
+        expect(screen.queryByText(/Ready to ship/)).not.toBeInTheDocument();
+    });
+
+    test('promises nothing for a personal pickup only product stocked outside the stores', () => {
+        render(
+            <ProductAvailability
+                availability={inStockAvailability}
+                availableStoresCount={0}
+                isInquiryType={false}
+                isPersonalPickupOnly={true}
+            />,
+        );
+
+        expect(screen.getByText('In stock')).toBeInTheDocument();
+        expect(screen.queryByText(/Ready/)).not.toBeInTheDocument();
+    });
+
     test('keeps store availability details in the compact display', () => {
         render(
             <ProductAvailability

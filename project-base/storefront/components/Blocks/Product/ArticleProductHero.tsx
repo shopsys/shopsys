@@ -127,6 +127,7 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                         <ProductAvailability
                             availability={product.availability}
                             availableStoresCount={product.availableStoresCount}
+                            isPersonalPickupOnly={product.isPersonalPickupOnly}
                             isInquiryType={product.isInquiryType}
                         />
                     )}

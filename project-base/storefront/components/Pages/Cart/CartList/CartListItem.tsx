@@ -252,6 +252,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                         <ProductAvailability
                             availability={product.availability}
                             availableStoresCount={product.availableStoresCount}
+                            isPersonalPickupOnly={product.isPersonalPickupOnly}
                             className="col-start-2 vl:col-start-4 vl:row-span-3 vl:row-start-1 vl:w-44 min-w-0 vl:self-center xl:w-52"
                             isInquiryType={product.isInquiryType}
                         />

@@ -38,6 +38,7 @@ fragment CartItemFragment on CartItem {
             ...ProductPriceFragment
         }
         availableStoresCount
+        isPersonalPickupOnly
         unit {
             name
         }

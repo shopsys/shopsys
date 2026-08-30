@@ -18,6 +18,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
         <ProductAvailability
             availability={product.availability}
             availableStoresCount={product.availableStoresCount}
+            isPersonalPickupOnly={product.isPersonalPickupOnly}
             displayMode="detail"
             isInquiryType={product.isInquiryType}
         />

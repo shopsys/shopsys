@@ -128,6 +128,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                         <ProductAvailability
                             availability={product.availability}
                             availableStoresCount={product.availableStoresCount}
+                            isPersonalPickupOnly={product.isPersonalPickupOnly}
                             className="min-h-10 xs:min-h-15 sm:min-h-10"
                             isInquiryType={product.isInquiryType}
                         />

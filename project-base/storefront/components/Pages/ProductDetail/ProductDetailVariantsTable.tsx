@@ -88,6 +88,7 @@ const ProductVariantAvailability: FC<ProductVariantAvailabilityProps> = ({ onCli
         <ProductAvailability
             availability={variant.availability}
             availableStoresCount={variant.availableStoresCount}
+            isPersonalPickupOnly={variant.isPersonalPickupOnly}
             displayMode="detail"
             isInquiryType={variant.isInquiryType}
             className="min-w-40 text-center lg:text-left"

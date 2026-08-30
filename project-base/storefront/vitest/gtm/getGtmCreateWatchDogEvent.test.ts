@@ -23,6 +23,7 @@ const listedProduct = {
     isSellingDenied: false,
     isCurrentlyOutOfStock: true,
     availableStoresCount: null,
+    isPersonalPickupOnly: false,
     catalogNumber: 'WATCH-1',
     isMainVariant: false,
     isInquiryType: false,

@@ -3,4 +3,5 @@ fragment ProductDetailFragment on RegularProduct {
     shortDescription
     usps
     availableStoresCount
+    isPersonalPickupOnly
 }

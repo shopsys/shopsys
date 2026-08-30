@@ -60,6 +60,7 @@ const product = {
     expectedRestockingDate: null,
     availability: { __typename: 'Availability', name: 'In stock', status: TypeAvailabilityStatusEnum.InStock },
     availableStoresCount: 1,
+    isPersonalPickupOnly: false,
     catalogNumber: 'TEST-42',
     brand: null,
     categories: [{ __typename: 'Category', name: 'Test category' }],

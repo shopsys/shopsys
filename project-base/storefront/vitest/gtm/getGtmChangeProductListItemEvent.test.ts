@@ -32,6 +32,7 @@ const listedProduct = {
     expectedRestockingDate: null,
     availability: { __typename: 'Availability', name: 'In stock', status: TypeAvailabilityStatusEnum.InStock },
     availableStoresCount: 1,
+    isPersonalPickupOnly: false,
     catalogNumber: 'TEST-42',
     brand: { __typename: 'Brand', name: 'Test brand' },
     categories: [{ __typename: 'Category', name: 'Test category' }],
