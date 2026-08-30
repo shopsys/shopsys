@@ -523,6 +523,9 @@ msgstr "CSV súbor"
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr "CSV súbor musí byť v UTF-8 kódovaní so stĺpcami \"{{ columns }}\". Čiarka sa odporúča ako oddeľovač stĺpcov a bodka (.) ako desatinný oddeľovač."
 
+msgid "Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the transport or the store is closed, the date is moved to the nearest allowed day."
+msgstr "Kalendárne dni potrebné na prevoz tovaru na sklad predajne, keď ho predajňa nemá dostatok skladom (alebo nemá priradený sklad). Pripočítavajú sa k očakávanému termínu osobného odberu; ak vo výsledný deň doprava nedoručuje alebo má predajňa zatvorené, termín sa posunie na najbližší povolený deň."
+
 msgid "Cancel"
 msgstr "Zrušiť"
 

@@ -39,6 +39,9 @@ final class StockSettingsFormType extends AbstractType
         $builderStockSettingGroup
             ->add('transfer', TextType::class, [
                 'label' => 'Days for transfer between warehouses',
+                'help' => t(
+                    'Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the transport or the store is closed, the date is moved to the nearest allowed day.',
+                ),
                 'constraints' => [
                     new Constraints\NotBlank(),
                     new Constraints\Regex(pattern: '/^\d+$/'),
