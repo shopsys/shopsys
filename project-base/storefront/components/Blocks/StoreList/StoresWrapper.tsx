@@ -5,7 +5,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { TypeCoordinates } from 'graphql/types';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { MapMarker } from 'types/map';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -53,10 +53,6 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
 }) => {
     const isPickupSelectionVariant = variant === 'pickupSelection';
     const defaultUserCoordinates = useSessionStore((s) => s.coordinates);
-    const updateDefaultUserCoordinates = useSessionStore((s) => s.updateCoordinates);
-    const [internalUserCoordinates, setInternalUserCoordinates] = useState<TypeCoordinates | null>(
-        defaultUserCoordinates,
-    );
     const [internalSelectedStoreUuid, setInternalSelectedStoreUuid] = useState<string | null>(null);
     const { t } = useTranslation();
     const isControlledSelection = selectedStoreUuid !== undefined;
@@ -79,7 +75,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     }, [mappedStores, priorityStore]);
     const displayedStoreList = displayedStores ?? [];
     const loadedStoresCount = mappedStores?.length ?? 0;
-    const resolvedUserCoordinates = userCoordinates ?? defaultUserCoordinates ?? internalUserCoordinates;
+    const resolvedUserCoordinates = userCoordinates ?? defaultUserCoordinates;
     const firstStore = displayedStores?.[0] ?? null;
     const searchCoordinatesForMapFocus =
         stores !== null && isDistanceFromSearchText && stores.searchCoordinates !== null
@@ -99,45 +95,6 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     const mapLatitude = mapFocus !== null ? String(mapFocus.latitude) : null;
     const mapLongitude = mapFocus !== null ? String(mapFocus.longitude) : null;
     const shouldCenterMapToUserCoordinates = mapFocus === null && searchTextValue === '';
-
-    useEffect(() => {
-        if (defaultUserCoordinates == null) {
-            return;
-        }
-
-        setInternalUserCoordinates(defaultUserCoordinates);
-
-        if (userCoordinates == null) {
-            onUserCoordinatesCallback?.(defaultUserCoordinates);
-        }
-    }, [defaultUserCoordinates, onUserCoordinatesCallback, userCoordinates]);
-
-    useEffect(() => {
-        if (defaultUserCoordinates != null || userCoordinates != null) {
-            return;
-        }
-
-        if (typeof navigator === 'undefined' || !navigator.geolocation) {
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const coordinates: TypeCoordinates = {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                };
-                setInternalUserCoordinates(coordinates);
-                updateDefaultUserCoordinates(coordinates);
-                onUserCoordinatesCallback?.(coordinates);
-            },
-            undefined,
-            {
-                maximumAge: 300000,
-                timeout: 10000,
-            },
-        );
-    }, [defaultUserCoordinates, onUserCoordinatesCallback, updateDefaultUserCoordinates, userCoordinates]);
 
     const selectStoreHandler = (uuid: string | null) => {
         if (!isControlledSelection) {
@@ -165,13 +122,10 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
             return;
         }
 
-        const markerCoordinates = {
+        onUserCoordinatesCallback({
             latitude: parseFloat(marker.latitude),
             longitude: parseFloat(marker.longitude),
-        };
-
-        setInternalUserCoordinates(markerCoordinates);
-        onUserCoordinatesCallback(markerCoordinates);
+        });
 
         if (searchTextValue !== '') {
             onSearchTextCallback('');
