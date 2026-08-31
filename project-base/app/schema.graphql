@@ -869,6 +869,8 @@ input ContactFormInput {
   message: String!
   "Name of the sender"
   name: String!
+  "Subject of the message"
+  subject: String
 }
 
 input Coordinates {

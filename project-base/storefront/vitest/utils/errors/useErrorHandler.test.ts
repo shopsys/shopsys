@@ -47,7 +47,7 @@ describe('useErrorHandler', () => {
         );
     });
 
-    test('uses custom message for application errors', () => {
+    test('keeps the mapped message of a known application error even when customMessage is set', () => {
         const { result } = renderHook(() => useErrorHandler({ customMessage: 'Generic complaint error' }));
 
         const error = new CombinedError({
@@ -64,13 +64,36 @@ describe('useErrorHandler', () => {
         result.current(error);
 
         expect(showErrorMessage).toHaveBeenCalledWith(
-            'Generic complaint error',
+            'Invalid credentials.',
             expect.anything(),
             expect.objectContaining({ errorType: 'invalid-credentials' }),
         );
     });
 
-    test('uses custom message only for application toast when validation and application errors are combined', () => {
+    test('uses customMessage for an application error that has no message of its own', () => {
+        const { result } = renderHook(() => useErrorHandler({ customMessage: 'Generic complaint error' }));
+
+        const error = new CombinedError({
+            graphQLErrors: [
+                {
+                    message: 'Something went wrong.',
+                    extensions: {
+                        userCode: 'not-a-registered-error-code',
+                    },
+                },
+            ],
+        });
+
+        result.current(error);
+
+        expect(showErrorMessage).toHaveBeenCalledWith(
+            'Generic complaint error',
+            expect.anything(),
+            expect.objectContaining({ errorType: 'default' }),
+        );
+    });
+
+    test('keeps both the validation message and the mapped application message when they are combined', () => {
         const { result } = renderHook(() => useErrorHandler({ customMessage: 'Generic complaint error' }));
 
         const error = new CombinedError({
@@ -105,7 +128,7 @@ describe('useErrorHandler', () => {
         );
         expect(showErrorMessage).toHaveBeenNthCalledWith(
             2,
-            'Generic complaint error',
+            'Cart not found.',
             expect.anything(),
             expect.objectContaining({ errorType: 'cart-not-found' }),
         );

@@ -20,6 +20,8 @@ abstract class ApplicationTestCase extends WebTestCase
 
     protected static ?Client $client = null;
 
+    private ?string $testMethodClientIp = null;
+
     #[Override]
     protected function setUp(): void
     {
@@ -97,6 +99,13 @@ abstract class ApplicationTestCase extends WebTestCase
         return $client;
     }
 
+    private function getTestMethodClientIp(): string
+    {
+        $this->testMethodClientIp ??= sprintf('10.255.%d.%d', random_int(0, 255), random_int(1, 254));
+
+        return $this->testMethodClientIp;
+    }
+
     private function getClientServerParameters(
         ?string $username,
         ?string $password,
@@ -108,6 +117,7 @@ abstract class ApplicationTestCase extends WebTestCase
             [
                 'HTTP_HOST' => preg_replace('#^https?://#', '', $currentDomainUrl),
                 'HTTPS' => parse_url($currentDomainUrl, PHP_URL_SCHEME) === 'https',
+                'REMOTE_ADDR' => $this->getTestMethodClientIp(),
             ],
             $clientOptions,
         );

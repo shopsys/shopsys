@@ -10,18 +10,23 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { useContactFormMutation } from 'graphql/requests/contact/mutations/ContactFormMutation.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { clearForm } from 'utils/forms/clearForm';
+import { useHoneyPot } from 'utils/forms/honeyPot';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { useContactForm, useContactFormMeta } from './contactFormMeta';
 
 export const ContactContent: FC = () => {
     const { t } = useTranslation();
     const [isSuccess, setIsSuccess] = useState(false);
     const [formProviderMethods, defaultValues] = useContactForm();
+    // the field name has to match SpamProtectedFormEnum::getHoneyPotFieldNameIndexedByFormName() on the backend
+    const honeyPot = useHoneyPot(formProviderMethods, 'subject');
     const formMeta = useContactFormMeta();
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const [, contactForm] = useContactFormMutation();
@@ -37,11 +42,14 @@ export const ContactContent: FC = () => {
                 name,
                 email,
                 message,
+                [honeyPot.fieldName]: honeyPot.value,
             },
         });
 
-        if (contactFormResult.data?.ContactForm !== undefined) {
+        if (contactFormResult.data?.ContactForm === true) {
             setIsSuccess(true);
+        } else if (contactFormResult.data?.ContactForm === false) {
+            showErrorMessage(formMeta.messages.error, GtmMessageOriginType.other);
         }
 
         handleError(contactFormResult.error);
@@ -80,6 +88,7 @@ export const ContactContent: FC = () => {
                         <FormProvider {...formProviderMethods}>
                             <Form
                                 formName={formMeta.formName}
+                                honeyPot={honeyPot}
                                 onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}
                             >
                                 <FormContentWrapper>

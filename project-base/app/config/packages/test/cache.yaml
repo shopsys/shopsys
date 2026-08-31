@@ -22,3 +22,6 @@ framework:
             mcp_rate_limiter_cache:
                 adapter: cache.adapter.array
                 provider: ~
+            form_spam_protection_rate_limiter_cache:
+                adapter: cache.adapter.filesystem
+                provider: ~

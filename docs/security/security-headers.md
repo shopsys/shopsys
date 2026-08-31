@@ -105,3 +105,9 @@ For implementation details, see:
 **In plain English:** nginx normally includes its version number in every response (for example, `Server: nginx/1.25.3`). Turning `server_tokens` off removes the version, so attackers cannot scan for servers running vulnerable nginx versions. Same idea as X-Powered-By above.
 
 - `server_tokens` is disabled to avoid exposing nginx version details in responses
+
+## Related
+
+Security headers protect the browser. Public form endpoints need protection of their own — see
+[Protecting a Storefront Form Against Spam](../cookbook/protecting-a-storefront-form-against-spam.md)
+for the honey pot and per-IP rate limiting used by the contact form.

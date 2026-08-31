@@ -28,6 +28,16 @@ snc_redis:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:doctrine:query:'
                 connection_timeout: 2
                 read_write_timeout: 5
+        form_spam_protection_rate_limiter:
+            type: 'phpredis'
+            alias: 'form_spam_protection_rate_limiter'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
+            options:
+                # the build version is deliberately not part of the prefix, so that a deploy does not grant spammers a fresh quota
+                prefix: '%env(REDIS_PREFIX)%:rate_limiter:form_spam_protection:'
+                connection_timeout: 2
+                read_write_timeout: 5
         frontend_api_refresh_token:
             type: 'phpredis'
             alias: 'frontend_api_refresh_token'
