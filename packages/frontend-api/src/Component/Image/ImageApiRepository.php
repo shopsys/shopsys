@@ -116,4 +116,20 @@ class ImageApiRepository
 
         return $imagesCountsByEntityId;
     }
+
+    /**
+     * @return int[]
+     */
+    public function getEntityIdsWithImageByEntityName(string $entityName): array
+    {
+        $entityIds = $this->entityManager->createQueryBuilder()
+            ->select('DISTINCT i.entityId')
+            ->from($this->entityNameResolver->resolve(Image::class), 'i')
+            ->where('i.entityName = :entityName')->setParameter('entityName', $entityName)
+            ->andWhere('i.type IS NULL')
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        return array_map(static fn ($entityId) => (int)$entityId, $entityIds);
+    }
 }
