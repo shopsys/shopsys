@@ -335,6 +335,10 @@ parameters:
             path: packages/framework/src/Model/LegalConditions/LegalConditionsFacade.php
         -
             identifier: shipmonk.deadMethod
+            message: '#^Unused\ App\\Model\\LegalConditions\\LegalConditionsFacade::getTermsAndConditionsDownloadFilename$#'
+            path: project-base/app/src/Model/LegalConditions/LegalConditionsFacade.php
+        -
+            identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Mail\\Exception\\MailTemplateAlreadyExistsException::getMailTemplate$#'
             path: packages/framework/src/Model/Mail/Exception/MailTemplateAlreadyExistsException.php
         -
@@ -387,6 +391,10 @@ parameters:
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Filter\\FlagFilterChoiceRepository::getFlagFilterChoicesInCategory$#'
             path: packages/framework/src/Model/Product/Filter/FlagFilterChoiceRepository.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ App\\Model\\Product\\Filter\\FlagFilterChoiceRepository::getFlagFilterChoicesInCategory\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: project-base/app/src/Model/Product/Filter/FlagFilterChoiceRepository.php
         -
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Parameter\\ParameterFacade::getParameterValueByUuid$#'

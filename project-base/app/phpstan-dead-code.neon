@@ -29,11 +29,3 @@ parameters:
             identifier: shipmonk.deadMethod
             message: '#^Unused\ App\\Kernel::configureRoutesAdministration$#'
             path: src/Kernel.php
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ App\\Model\\LegalConditions\\LegalConditionsFacade::getTermsAndConditionsDownloadFilename$#'
-            path: src/Model/LegalConditions/LegalConditionsFacade.php
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ App\\Model\\Product\\Filter\\FlagFilterChoiceRepository::getFlagFilterChoicesInCategory\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: src/Model/Product/Filter/FlagFilterChoiceRepository.php
