@@ -1,4 +1,5 @@
 import { getPublicConfigProperty } from 'envConfig';
+import { SENTRY_APPLICATION_KEY } from 'sentryApplicationKey';
 import * as Sentry from '@sentry/nextjs';
 import { getTracePropagationTargetsFromPublicGraphqlEndpoints as getPublicGraphqlTracePropagationTargets } from 'utils/sentry/tracePropagationTargets';
 
@@ -18,7 +19,14 @@ if (isSentryEnabled) {
         environment: environment,
         release: release,
         tracesSampleRate: 0.1,
-        integrations: [Sentry.browserTracingIntegration()],
+        denyUrls: [/^https?:\/\/([a-z0-9-]+\.)*(smartsupp\.com|smartsuppchat\.com|smartsuppcdn\.com)\//],
+        integrations: [
+            Sentry.browserTracingIntegration(),
+            Sentry.thirdPartyErrorFilterIntegration({
+                filterKeys: [SENTRY_APPLICATION_KEY],
+                behaviour: 'apply-tag-if-exclusively-contains-third-party-frames',
+            }),
+        ],
         tracePropagationTargets: tracePropagationTargets,
         replaysSessionSampleRate: enableReplays ? 0.1 : 0,
         replaysOnErrorSampleRate: enableReplays ? 1.0 : 0,

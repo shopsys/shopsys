@@ -3,6 +3,7 @@ const nextTranslate = require('next-translate-plugin');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 });
+const { SENTRY_APPLICATION_KEY } = require('./sentryApplicationKey');
 
 // Sentry feature flags
 const isSentryReplaysEnabled = process.env.SENTRY_REPLAYS_ENABLE === '1';
@@ -79,6 +80,7 @@ const sentryConfig = {
     project: process.env.SENTRY_PROJECT,
     authToken: process.env.SENTRY_AUTH_TOKEN,
     sentryUrl: process.env.SENTRY_URL,
+    applicationKey: SENTRY_APPLICATION_KEY,
     telemetry: false,
     release: {
         name: process.env.SENTRY_RELEASE,
