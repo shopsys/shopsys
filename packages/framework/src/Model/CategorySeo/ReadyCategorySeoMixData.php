@@ -80,4 +80,9 @@ class ReadyCategorySeoMixData
      * @var string|null
      */
     public $categorySeoFilterFormTypeAllQueriesJson;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
+     */
+    public $image;
 }

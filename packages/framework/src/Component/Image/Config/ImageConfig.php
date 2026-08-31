@@ -49,7 +49,7 @@ class ImageConfig
     {
         $entityConfig = $this->getEntityConfigByEntityName($entityName);
 
-        if ($type !== null && !in_array($type, $entityConfig->getTypes(), true)) {
+        if (!$entityConfig->hasType($type)) {
             throw new ImageTypeNotFoundException($entityName, $type);
         }
     }

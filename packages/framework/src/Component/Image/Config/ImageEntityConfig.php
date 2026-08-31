@@ -37,6 +37,11 @@ class ImageEntityConfig
         return $this->types;
     }
 
+    public function hasType(?string $type): bool
+    {
+        return $type === null || in_array($type, $this->types, true);
+    }
+
     public function isMultiple(?string $type): bool
     {
         $key = Utils::ifNull($type, self::WITHOUT_NAME_KEY);

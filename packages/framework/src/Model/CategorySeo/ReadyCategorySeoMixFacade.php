@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
@@ -29,6 +30,7 @@ class ReadyCategorySeoMixFacade
         protected readonly Domain $domain,
         protected readonly FlagFacade $flagFacade,
         protected readonly ParameterFacade $parameterFacade,
+        protected readonly ImageFacade $imageFacade,
     ) {
     }
 
@@ -53,6 +55,8 @@ class ReadyCategorySeoMixFacade
             $readyCategorySeoMix->edit($readyCategorySeoMixData);
             $this->em->flush();
         }
+
+        $this->imageFacade->manageImages($readyCategorySeoMix, $readyCategorySeoMixData->image);
 
         $this->saveReadyCategoryMixFriendlyUrls($readyCategorySeoMix, $urlListData);
 
