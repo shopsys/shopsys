@@ -1,4 +1,4 @@
-import { PublicRuntimeConfig, serializeConfigForHtml } from 'envConfig';
+import { PublicRuntimeConfig, serializeConfigForScriptTag } from 'envConfig';
 import { describe, expect, it } from 'vitest';
 import { defaultTestConfig } from 'vitest/helpers/mockPublicConfig';
 
@@ -22,11 +22,11 @@ function assertRoundtrip(serialized: string, original: PublicRuntimeConfig): voi
     expect(parsed).toEqual(original);
 }
 
-describe('serializeConfigForHtml — XSS & Serialization Security', () => {
+describe('serializeConfigForScriptTag — XSS & Serialization Security', () => {
     describe('</script> injection vectors', () => {
         it('escapes </script> in a string value', () => {
             const config = makeConfig({ cdnDomain: '</script><script>alert(1)</script>' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertValidJsAssignment(result);
@@ -42,7 +42,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
                     },
                 ],
             });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertRoundtrip(result, config);
@@ -57,7 +57,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
                     },
                 ],
             });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertRoundtrip(result, config);
@@ -75,7 +75,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
                 googleMapApiKey: payload,
                 packeteryApiKey: payload,
             });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertRoundtrip(result, config);
@@ -85,7 +85,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
     describe('case-insensitive script tag variations', () => {
         it('escapes </SCRIPT> (uppercase)', () => {
             const config = makeConfig({ cdnDomain: '</SCRIPT>' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertRoundtrip(result, config);
@@ -93,7 +93,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('escapes </ScRiPt> (mixed case)', () => {
             const config = makeConfig({ cdnDomain: '</ScRiPt>' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertRoundtrip(result, config);
@@ -103,7 +103,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
     describe('HTML comment injection', () => {
         it('escapes <!-- in values', () => {
             const config = makeConfig({ cdnDomain: '<!--' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             expect(result).not.toContain('<!--');
             assertRoundtrip(result, config);
@@ -111,7 +111,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('escapes <!--> in values', () => {
             const config = makeConfig({ cdnDomain: '<!-->' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             expect(result).not.toContain('<!-->');
             assertRoundtrip(result, config);
@@ -121,7 +121,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
     describe('backslash interactions', () => {
         it('handles \\</script> (single backslash before <)', () => {
             const config = makeConfig({ cdnDomain: '\\</script>' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertRoundtrip(result, config);
@@ -129,7 +129,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('handles \\\\</script> (double backslash before <)', () => {
             const config = makeConfig({ cdnDomain: '\\\\</script>' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertRoundtrip(result, config);
@@ -137,7 +137,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('handles odd number of backslashes before <', () => {
             const config = makeConfig({ cdnDomain: '\\\\\\</script>' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertRoundtrip(result, config);
@@ -147,7 +147,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
     describe('Unicode bypass attempts', () => {
         it('handles literal \\u003c in env var (double-encoding check)', () => {
             const config = makeConfig({ cdnDomain: '\\u003c/script>' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             const parsed = JSON.parse(result) as PublicRuntimeConfig;
@@ -156,14 +156,14 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('handles fullwidth < (U+FF1C)', () => {
             const config = makeConfig({ cdnDomain: '\uFF1C/script>' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertRoundtrip(result, config);
         });
 
         it('handles math angle bracket (U+27E8)', () => {
             const config = makeConfig({ cdnDomain: '\u27E8/script>' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertRoundtrip(result, config);
         });
@@ -172,7 +172,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
     describe('JSON edge cases', () => {
         it('handles null bytes', () => {
             const config = makeConfig({ cdnDomain: 'before\0after' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertValidJsAssignment(result);
             assertRoundtrip(result, config);
@@ -180,7 +180,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('handles control characters', () => {
             const config = makeConfig({ cdnDomain: '\t\n\r\b\f' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertValidJsAssignment(result);
             assertRoundtrip(result, config);
@@ -188,7 +188,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('handles embedded quotes', () => {
             const config = makeConfig({ cdnDomain: 'say "hello" and \'goodbye\'' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertValidJsAssignment(result);
             assertRoundtrip(result, config);
@@ -196,7 +196,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('handles JSON structural characters', () => {
             const config = makeConfig({ cdnDomain: '{}[],:' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertValidJsAssignment(result);
             assertRoundtrip(result, config);
@@ -204,7 +204,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('handles very long strings (100k characters)', () => {
             const config = makeConfig({ cdnDomain: 'x'.repeat(100_000) });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertValidJsAssignment(result);
             assertRoundtrip(result, config);
@@ -212,7 +212,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
 
         it('handles emoji and multi-byte Unicode', () => {
             const config = makeConfig({ cdnDomain: '🎉🔥💻 Ñoño café résumé' });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertValidJsAssignment(result);
             assertRoundtrip(result, config);
@@ -222,7 +222,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
     describe('roundtrip integrity', () => {
         it('preserves full default config through serialize/parse roundtrip', () => {
             const config = makeConfig();
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertRoundtrip(result, config);
         });
@@ -247,7 +247,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
                     },
                 ],
             });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
 
             assertNoScriptClose(result);
             assertRoundtrip(result, config);
@@ -258,7 +258,7 @@ describe('serializeConfigForHtml — XSS & Serialization Security', () => {
         it('output embedded in window.__ENV=...; does not contain </script>', () => {
             const payload = '</script><script>alert(document.cookie)</script>';
             const config = makeConfig({ cdnDomain: payload, sentryDsn: payload });
-            const result = serializeConfigForHtml(config);
+            const result = serializeConfigForScriptTag(config);
             const fullScript = `window.__ENV=${result};`;
 
             expect(fullScript.toLowerCase()).not.toContain('</script');

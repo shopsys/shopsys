@@ -1,6 +1,6 @@
 import { buildPublicConfig } from 'buildPublicEnvConfig';
 import type { getPublicConfigProperty as GetPublicConfigPropertyFn, PublicRuntimeConfig } from 'envConfig';
-import { serializeConfigForHtml } from 'envConfig';
+import { serializeConfigForScriptTag } from 'envConfig';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { defaultTestConfig } from 'vitest/helpers/mockPublicConfig';
 
@@ -20,7 +20,7 @@ describe('config robustness', () => {
                 ...defaultTestConfig,
                 cdnDomain: '{"constructor":{"prototype":{"polluted":"yes"}}}',
             };
-            const serialized = serializeConfigForHtml(config);
+            const serialized = serializeConfigForScriptTag(config);
             JSON.parse(serialized);
 
             expect(({} as Record<string, unknown>).polluted).toBeUndefined();
