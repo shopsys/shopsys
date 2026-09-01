@@ -1027,6 +1027,9 @@ msgstr "Popis možno nastaviť v detaile produktu hlavného produktu."
 msgid "Description opacity"
 msgstr "Priehladnoť popisu"
 
+msgid "Directions"
+msgstr "Ako sa k nám dostanete"
+
 msgid "Disable two factor authentication"
 msgstr "Zakázať dvojfaktorové overenie"
 
@@ -1975,6 +1978,9 @@ msgstr "Posledné spustenie"
 msgid "Last update"
 msgstr "Posledná aktualizácia"
 
+msgid "Latitude"
+msgstr "Zemepisná šírka"
+
 msgid "Legal conditions"
 msgstr "Právne podmienky"
 
@@ -2022,6 +2028,9 @@ msgstr "Prihlásenie zlyhalo."
 
 msgid "Login name"
 msgstr "Prihlasovacie meno"
+
+msgid "Longitude"
+msgstr "Zemepisná dĺžka"
 
 msgid "Main URL"
 msgstr "Hlavné URL"
@@ -3222,6 +3231,9 @@ msgstr "Niečé položky nemôžu byť importované kvôli chybám:"
 
 msgid "Sorting priority"
 msgstr "Priorita triedenia"
+
+msgid "Special message"
+msgstr "Špeciálne oznámenie"
 
 msgid "Standard"
 msgstr "Štandardný"

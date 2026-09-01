@@ -1027,6 +1027,9 @@ msgstr "Popis můžete nastavit na kartě hlavní varianty."
 msgid "Description opacity"
 msgstr "Průhlednost popisu"
 
+msgid "Directions"
+msgstr "Jak se k nám dostanete"
+
 msgid "Disable two factor authentication"
 msgstr "Vypnout dvoufaktorové ověřování"
 
@@ -1975,6 +1978,9 @@ msgstr "Poslední spuštění"
 msgid "Last update"
 msgstr "Poslední aktualizace"
 
+msgid "Latitude"
+msgstr "Zeměpisná šířka"
+
 msgid "Legal conditions"
 msgstr "Právní podmínky"
 
@@ -2022,6 +2028,9 @@ msgstr "Přihlášení se nepodařilo."
 
 msgid "Login name"
 msgstr "Přihlašovací jméno"
+
+msgid "Longitude"
+msgstr "Zeměpisná délka"
 
 msgid "Main URL"
 msgstr "Hlavní URL"
@@ -3222,6 +3231,9 @@ msgstr "Některé položky nebyly naimportovány kvůli chybám:"
 
 msgid "Sorting priority"
 msgstr "Priorita řazení"
+
+msgid "Special message"
+msgstr "Speciální sdělení"
 
 msgid "Standard"
 msgstr "Standardní"
