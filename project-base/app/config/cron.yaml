@@ -19,10 +19,6 @@ services:
 
     # Services
 
-    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule:
-        tags:
-            - { name: shopsys.cron, cron: '* * * * *', instanceName: service, readableName: 'Delete vats', sentryMonitoring: true, sentryFailureThreshold: 3 }
-
     Shopsys\FrameworkBundle\Component\Cron\DeleteOldCronModuleRunsCronModule:
         tags:
             - { name: shopsys.cron, cron: '* * * * *', instanceName: service, readableName: 'Delete old cron module runs', sentryMonitoring: true, sentryFailureThreshold: 3 }
