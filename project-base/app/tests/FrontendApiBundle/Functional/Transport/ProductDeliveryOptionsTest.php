@@ -9,6 +9,8 @@ use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
+use App\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductFacade;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -56,6 +58,16 @@ final class ProductDeliveryOptionsTest extends GraphQlTestCase
      * @inject
      */
     private TransportExpectedDeliveryDateCalculation $transportExpectedDeliveryDateCalculation;
+
+    /**
+     * @inject
+     */
+    private ProductDataFactory $productDataFactory;
+
+    /**
+     * @inject
+     */
+    private ProductFacade $productFacade;
 
     public function testTransportExcludedForTheProductIsNotReturned(): void
     {
@@ -149,6 +161,24 @@ final class ProductDeliveryOptionsTest extends GraphQlTestCase
         $this->assertNotNull($expectedDeliveryDate);
         $this->assertArrayHasKey($store->getUuid(), $storeNodesByUuid);
         $this->assertSame($expectedDeliveryDate, $storeNodesByUuid[$store->getUuid()]['expectedDeliveryDate']);
+    }
+
+    public function testStoresForTransportExcludedForTheProductReturnUserError(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . self::IN_STOCK_PRODUCT_REFERENCE_ID, Product::class);
+        $personalPickupTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
+
+        $productData = $this->productDataFactory->createFromProduct($product);
+        $productData->excludedTransports = [$personalPickupTransport];
+        $this->productFacade->edit($product->getId(), $productData);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDeliveryStoresQuery.graphql', [
+            'productUuid' => $product->getUuid(),
+            'transportUuid' => $personalPickupTransport->getUuid(),
+        ]);
+
+        // the stores resolve only for the combinations productDeliveryOptions offers
+        $this->assertUserError($response, 'transport-not-found');
     }
 
     public function testStoresForTransportWithoutPersonalPickupReturnUserError(): void

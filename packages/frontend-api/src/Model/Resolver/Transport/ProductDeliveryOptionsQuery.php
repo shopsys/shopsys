@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculation;
-use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -73,7 +72,7 @@ class ProductDeliveryOptionsQuery extends AbstractQuery
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
         );
-        $transport = $this->getEnabledPersonalPickupTransport($transportUuid);
+        $transport = $this->getUsablePersonalPickupTransportForProduct($transportUuid, $product);
 
         return $this->storeConnectionFactory->createProductDeliveryStoreConnection($argument, $transport, $product);
     }
@@ -96,18 +95,26 @@ class ProductDeliveryOptionsQuery extends AbstractQuery
         );
     }
 
-    protected function getEnabledPersonalPickupTransport(string $transportUuid): Transport
+    protected function getUsablePersonalPickupTransportForProduct(string $transportUuid, Product $product): Transport
     {
-        try {
-            $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $this->domain->getId());
-        } catch (TransportNotFoundException $transportNotFoundException) {
-            throw new TransportNotFoundUserError($transportNotFoundException->getMessage());
+        $usableTransports = $this->transportFacade->getUsableForSingleProductOnCurrentDomainWithEagerLoadedDomainsAndTranslations(
+            $product,
+        );
+
+        foreach ($usableTransports as $transport) {
+            if ($transport->getUuid() !== $transportUuid) {
+                continue;
+            }
+
+            if (!$transport->isPersonalPickup()) {
+                throw new InvalidArgumentUserError('The stores can only be resolved for a personal pickup transport.');
+            }
+
+            return $transport;
         }
 
-        if (!$transport->isPersonalPickup()) {
-            throw new InvalidArgumentUserError('The stores can only be resolved for a personal pickup transport.');
-        }
-
-        return $transport;
+        throw new TransportNotFoundUserError(
+            sprintf('Transport with UUID %s is not offered for the product.', $transportUuid),
+        );
     }
 }
