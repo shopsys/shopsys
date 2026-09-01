@@ -2434,12 +2434,6 @@ msgstr "DPH"
 msgid "VAT rate (%)"
 msgstr "Výška DPH (%)"
 
-msgid "VAT rate can't be removed because it is being currently used for conversion to this VAT rate"
-msgstr "Sadzba DPH nemôže byť odstránená, pretože práve prebieha prepočet na túto sadzbu DPH."
-
-msgid "VAT rate is marked for deleting and will be soon automatically removed. Conversion rate is several hundreds of products in 5 minutes."
-msgstr "Sadzba DPH je označená pre zmazanie a čoskoro bude automaticky odstránená. Prepočet prebieha rýchlosťou niekoľko stô produktov za 5 minút."
-
 msgid "VAT rates"
 msgstr "sadzby DPH"
 

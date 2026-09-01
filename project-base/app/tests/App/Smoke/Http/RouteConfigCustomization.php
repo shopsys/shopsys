@@ -12,12 +12,12 @@ use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Administrator\Administrator;
 use App\Model\Order\Order;
 use App\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Component\Cron\DeleteOldCronModuleRunsCronModule;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Shopsys\HttpSmokeTesting\Auth\BasicHttpAuth;
 use Shopsys\HttpSmokeTesting\Auth\NoAuth;
@@ -328,7 +328,7 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_default_crondetail', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet('Use correct ID of cron module.')
-                    ->setParameter('serviceId', VatDeletionCronModule::class);
+                    ->setParameter('serviceId', DeleteOldCronModuleRunsCronModule::class);
             })
             ->customizeByRouteName('admin_blogcategory_edit', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet('It is forbidden to edit blog category with ID 1 as it is the root.')

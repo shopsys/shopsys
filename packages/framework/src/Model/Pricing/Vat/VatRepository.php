@@ -28,7 +28,6 @@ class VatRepository
     {
         return $this->getVatRepository()
             ->createQueryBuilder($vatAlias)
-            ->where($vatAlias . '.replaceWith IS NULL')
             ->orderBy($vatAlias . '.percent');
     }
 
@@ -60,35 +59,6 @@ class VatRepository
             ->setParameter('id', $vatId);
 
         return $qb->getQuery()->getResult();
-    }
-
-    public function existsVatToBeReplacedWith(Vat $vat): bool
-    {
-        $query = $this->em->createQuery('
-            SELECT COUNT(v)
-            FROM ' . Vat::class . ' v
-            WHERE v.replaceWith = :vat')
-            ->setParameter('vat', $vat);
-
-        return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
-     */
-    public function getVatsMarkedForDeletionWithoutReferences(): array
-    {
-        $query = $this->em->createQuery('
-            SELECT v
-            FROM ' . Vat::class . ' v
-            LEFT JOIN ' . ProductDomain::class . ' pd WITH pd.vat = v
-            LEFT JOIN ' . PaymentDomain::class . ' payd WITH payd.vat = v
-            LEFT JOIN ' . TransportDomain::class . ' td WITH td.vat = v
-            WHERE v.replaceWith IS NOT NULL
-            GROUP BY v
-            HAVING COUNT(pd) = 0 AND COUNT(payd) = 0 AND COUNT(td) = 0');
-
-        return $query->getResult();
     }
 
     public function isVatUsed(Vat $vat): bool
@@ -135,19 +105,16 @@ class VatRepository
     {
         $this->replacePaymentsVat($oldVat, $newVat);
         $this->replaceTransportsVat($oldVat, $newVat);
+        $this->replaceProductsVat($oldVat, $newVat);
     }
 
-    public function replaceVatInPaymentsAndTransportsForVatsMarkedForDeletion(): void
+    protected function replaceProductsVat(Vat $oldVat, Vat $newVat): void
     {
-        $query = $this->em->createQuery('
-            SELECT v
-            FROM ' . Vat::class . ' v
-            WHERE v.replaceWith IS NOT NULL
-        ');
-
-        foreach ($query->getResult() as $vat) {
-            $this->replaceVat($vat, $vat->getReplaceWith());
-        }
+        $this->em->createQueryBuilder()
+            ->update(ProductDomain::class, 'pd')
+            ->set('pd.vat', ':newVat')->setParameter('newVat', $newVat)
+            ->where('pd.vat = :oldVat')->setParameter('oldVat', $oldVat)
+            ->getQuery()->execute();
     }
 
     protected function replacePaymentsVat(Vat $oldVat, Vat $newVat): void
