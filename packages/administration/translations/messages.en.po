@@ -2434,12 +2434,6 @@ msgstr ""
 msgid "VAT rate (%)"
 msgstr ""
 
-msgid "VAT rate can't be removed because it is being currently used for conversion to this VAT rate"
-msgstr ""
-
-msgid "VAT rate is marked for deleting and will be soon automatically removed. Conversion rate is several hundreds of products in 5 minutes."
-msgstr ""
-
 msgid "VAT rates"
 msgstr ""
 

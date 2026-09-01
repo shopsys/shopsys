@@ -247,22 +247,6 @@ class ProductRepository
     }
 
     /**
-     * @return iterable<\Shopsys\FrameworkBundle\Model\Product\Product>
-     */
-    public function getProductIteratorForReplaceVat(): iterable
-    {
-        $query = $this->em->createQuery('
-            SELECT DISTINCT p
-            FROM ' . Product::class . ' p
-            JOIN ' . ProductDomain::class . ' pd WITH pd.product = p
-            JOIN pd.vat v
-            WHERE v.replaceWith IS NOT NULL
-        ');
-
-        return $query->toIterable();
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getAllSellableVariantsByMainVariant(

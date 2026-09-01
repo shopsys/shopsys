@@ -6,8 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatMarkedAsDeletedDeleteException;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatWithReplacedDeleteException;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class VatFacade
@@ -68,14 +66,6 @@ class VatFacade
         $oldVat = $this->vatRepository->getById($vatId);
         $newVat = $newVatId ? $this->vatRepository->getById($newVatId) : null;
 
-        if ($oldVat->isMarkedAsDeleted()) {
-            throw new VatMarkedAsDeletedDeleteException();
-        }
-
-        if ($this->vatRepository->existsVatToBeReplacedWith($oldVat)) {
-            throw new VatWithReplacedDeleteException();
-        }
-
         if ($newVat !== null) {
             $newDefaultVat = $this->getDefaultVatForDomain($oldVat->getDomainId());
 
@@ -86,29 +76,14 @@ class VatFacade
             $this->setDefaultVatForDomain($newDefaultVat, $oldVat->getDomainId());
 
             $this->vatRepository->replaceVat($oldVat, $newVat);
-            $oldVat->markForDeletion($newVat);
-        } else {
-            $this->em->remove($oldVat);
         }
 
+        $this->em->remove($oldVat);
         $this->em->flush();
-    }
 
-    public function replaceVatInPaymentsAndTransportsForVatsMarkedForDeletion(): void
-    {
-        $this->vatRepository->replaceVatInPaymentsAndTransportsForVatsMarkedForDeletion();
-    }
-
-    public function deleteAllReplacedVats(): int
-    {
-        $vatsForDelete = $this->vatRepository->getVatsMarkedForDeletionWithoutReferences();
-
-        foreach ($vatsForDelete as $vatForDelete) {
-            $this->em->remove($vatForDelete);
+        if ($newVat !== null) {
+            $this->productRecalculationDispatcher->dispatchAllProducts();
         }
-        $this->em->flush();
-
-        return count($vatsForDelete);
     }
 
     public function getDefaultVatForDomain(int $domainId): Vat

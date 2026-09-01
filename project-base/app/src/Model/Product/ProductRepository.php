@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use Doctrine\ORM\QueryBuilder;
-use Override;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
 
 /**
@@ -35,23 +32,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
  */
 class ProductRepository extends BaseProductRepository
 {
-    /**
-     * @return iterable<\App\Model\Product\Product>
-     */
-    #[Override]
-    public function getProductIteratorForReplaceVat(): iterable
-    {
-        $query = $this->em->createQuery('
-            SELECT distinct p
-            FROM ' . Product::class . ' p
-            JOIN ' . ProductDomain::class . ' pd WITH pd.product = p
-            JOIN pd.vat v
-            WHERE v.replaceWith IS NOT NULL
-        ');
-
-        return $query->toIterable();
-    }
-
     public function getSellableBySearchTextQueryBuilder(
         int $domainId,
         PricingGroup $pricingGroup,
