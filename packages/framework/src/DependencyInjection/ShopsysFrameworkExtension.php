@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfig;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskDescriptor;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskRunEnum;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\RecalculateFileSizesTask;
+use Shopsys\FrameworkBundle\Component\PostDeploy\Task\WebalizeUploadedFileNamesTask;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderInterface;
@@ -124,6 +125,11 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
                         'run' => PostDeployTaskRunEnum::ONE_TIME,
                         'priority' => 100,
                         'service' => RecalculateFileSizesTask::class,
+                    ],
+                    'webalize_uploaded_file_names' => [
+                        'run' => PostDeployTaskRunEnum::ONE_TIME,
+                        'priority' => 110,
+                        'service' => WebalizeUploadedFileNamesTask::class,
                     ],
                 ],
             ],

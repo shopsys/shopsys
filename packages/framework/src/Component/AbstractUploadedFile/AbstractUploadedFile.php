@@ -42,7 +42,10 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
     protected $name {
-        set => Strings::webalize($value, lower: false);
+        set {
+            $webalizedName = Strings::webalize($value, lower: false);
+            $this->name = $webalizedName === '' ? 'file' : $webalizedName;
+        }
     }
 
     /**
