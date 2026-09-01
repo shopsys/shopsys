@@ -1,4 +1,5 @@
 import { CustomerUserAreaEnum } from 'types/customer';
+import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 
 // === Type Definitions ===
 
@@ -99,7 +100,6 @@ export function getServerConfigProperty<K extends keyof ServerRuntimeConfig, T>(
 
 // === Serialization ===
 
-// XSS-safe: replaces < with \u003c to prevent </script> injection in HTML context
-export function serializeConfigForHtml(config: PublicRuntimeConfig): string {
-    return JSON.stringify(config).replace(/</g, '\\u003c');
+export function serializeConfigForScriptTag(config: PublicRuntimeConfig): string {
+    return serializeJsonForScriptTag(config);
 }

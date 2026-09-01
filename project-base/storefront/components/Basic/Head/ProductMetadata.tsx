@@ -1,11 +1,12 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useProductReviewsQuery } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { useProductReviewsQuery } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
 import { TypeAvailabilityStatusEnum, TypeProductReviewOrderingModeEnum } from 'graphql/types';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 
 export const STRUCTURED_DATA_REVIEWS_COUNT = 5;
 
@@ -55,7 +56,7 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                 id="product-metadata"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
+                    __html: serializeJsonForScriptTag({
                         '@context': 'https://schema.org/',
                         '@type': 'Product',
                         name: product.fullName,

@@ -1,4 +1,4 @@
-import { getPublicConfig, PublicRuntimeConfig, serializeConfigForHtml } from 'envConfig';
+import { getPublicConfig, PublicRuntimeConfig, serializeConfigForScriptTag } from 'envConfig';
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document';
 import { getDomainConfig } from 'utils/domain/domainConfig';
 import { logException } from 'utils/errors/logException';
@@ -176,7 +176,7 @@ class MyDocument extends Document<MyDocumentInitialProps> {
     render() {
         const { htmlLang, publicConfig, gtmId } = this.props;
         const warningTranslation = getBrowserWarningTranslation(htmlLang);
-        const envJson = serializeConfigForHtml(publicConfig);
+        const envJson = serializeConfigForScriptTag(publicConfig);
 
         return (
             <Html lang={htmlLang}>
