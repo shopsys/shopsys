@@ -20,19 +20,17 @@ class ArticleExportRepository
     ) {
     }
 
-    public function getVisibleArticleSitesCountByDomainId(int $domainId): int
+    public function getVisibleArticlesCountByDomainId(int $domainId): int
     {
         return (int)($this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
             ->select('COUNT(a)')
-            ->andWhere('a.type = :type')
-            ->setParameter('type', Article::TYPE_SITE)
             ->getQuery()->getSingleScalarResult());
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
-    public function getAllVisibleArticleSitesByDomainId(int $domainId, int $limit, int $lastProcessedId): array
+    public function getAllVisibleArticlesByDomainId(int $domainId, int $limit, int $lastProcessedId): array
     {
         return $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
             ->andWhere('a.id > :lastProcessedId')
@@ -47,7 +45,7 @@ class ArticleExportRepository
      * @param int[] $articleIds
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
-    public function getVisibleArticleSitesByDomainIdAndArticleIds(int $domainId, array $articleIds): array
+    public function getVisibleArticlesByDomainIdAndArticleIds(int $domainId, array $articleIds): array
     {
         return $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
             ->andWhere('a.id IN (:articleIds)')
@@ -60,9 +58,8 @@ class ArticleExportRepository
     {
         $domainId = $article->getDomainId();
         $articleId = $article->getId();
-        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_article_detail', $articleId);
 
-        return [
+        $extractedArticle = [
             'name' => $article->getName(),
             'text' => $this->grapesJsParser->parse($article->getText()),
             'url' => $article->getUrl(),
@@ -71,13 +68,23 @@ class ArticleExportRepository
             'seoH1' => $article->getSeoH1(),
             'seoTitle' => $article->getSeoTitle(),
             'seoMetaDescription' => $article->getSeoMetaDescription(),
-            'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_article_detail', $articleId),
-            'mainSlug' => $mainFriendlyUrl->getSlug(),
             'position' => $article->getPosition(),
-            'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, 'front_article_detail', $domainId),
             'external' => $article->isExternal(),
             'createdAt' => $article->getCreatedAt()->format('Y-m-d H:i:s'),
             'type' => $article->getType(),
+            'slug' => [],
+            'mainSlug' => null,
+            'breadcrumb' => [],
         ];
+
+        if ($article->isSiteType()) {
+            $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_article_detail', $articleId);
+
+            $extractedArticle['slug'] = $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_article_detail', $articleId);
+            $extractedArticle['mainSlug'] = $mainFriendlyUrl->getSlug();
+            $extractedArticle['breadcrumb'] = $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, 'front_article_detail', $domainId);
+        }
+
+        return $extractedArticle;
     }
 }

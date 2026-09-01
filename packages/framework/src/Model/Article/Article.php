@@ -306,6 +306,14 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
     }
 
     /**
+     * @return bool
+     */
+    public function isSiteType()
+    {
+        return $this->type === self::TYPE_SITE;
+    }
+
+    /**
      * @return int
      */
     public function getPosition()
