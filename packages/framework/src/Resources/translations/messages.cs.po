@@ -3430,6 +3430,9 @@ msgstr "Počet dní mezi expedicí objednávky a doručením. 0 znamená doruče
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
 
+msgid "The pickup dates are driven by the weekly opening hours of the <a href=\"%storesUrl%\" target=\"_blank\">stores</a> and by the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> — a store excluded from a closed day hands the orders over even on that day."
+msgstr "Termíny vyzvednutí se řídí týdenní otevírací dobou <a href=\"%storesUrl%\" target=\"_blank\">prodejen</a> a správou <a href=\"%closedDaysUrl%\" target=\"_blank\">Svátky a interní dny</a> — prodejna vyjmutá ze zavřeného dne vydává objednávky i v tento den."
+
 msgid "The selected country is not valid."
 msgstr "Zvolená země není platná."
 

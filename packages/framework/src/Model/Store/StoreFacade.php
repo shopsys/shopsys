@@ -115,6 +115,14 @@ class StoreFacade
         return $this->storeRepository->getStoresByDomainId($domainId, $limit, $offset);
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
+     */
+    public function getStoresByDomainIdWithEagerLoadedOpeningHours(int $domainId): array
+    {
+        return $this->storeRepository->getStoresByDomainIdWithEagerLoadedOpeningHours($domainId);
+    }
+
     public function findByUuidAndDomainId(string $uuid, int $domainId): ?Store
     {
         return $this->storeRepository->findByUuidAndDomainId($uuid, $domainId);

@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\Exception\TransportIsNotPersonalPickupException;
@@ -41,6 +42,7 @@ class TransportExpectedDeliveryDateCalculation
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly StoreFacade $storeFacade,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
     ) {
     }
 
@@ -121,6 +123,10 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         ?Store $store,
     ): ?DateTimeImmutable {
+        if ($store === null && $transport->isPersonalPickup()) {
+            return $this->calculateBestPickupDeliveryDateAcrossStores($transport, $quantifiedProducts, $domainId);
+        }
+
         // the dispatch date does not depend on the transport nor the store, so one set of products resolves it just
         // once per request even when the date is being calculated for a whole transport listing or store picker
         $dispatchDate = $this->inMemoryCache->getOrSaveValue(
@@ -134,13 +140,34 @@ class TransportExpectedDeliveryDateCalculation
             return null;
         }
 
-        $dispatchDate = $this->postponeDispatchDateByTransferDaysIfNeeded($transport, $dispatchDate, $quantifiedProducts, $domainId, $store);
+        $dispatchDate = $this->postponeDispatchDateByTransferDaysIfNeeded($dispatchDate, $quantifiedProducts, $domainId, $store);
 
         $closestPossibleDeliveryDate = $dispatchDate->modify(sprintf('+%d days', $transport->getDaysUntilDelivery()));
 
         $deliveryDate = $this->postponeToFirstAllowedDeliveryDay($transport, $closestPossibleDeliveryDate, $domainId, $store);
 
         return $deliveryDate?->setTimezone(new DateTimeZone('UTC'));
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     */
+    protected function calculateBestPickupDeliveryDateAcrossStores(
+        Transport $transport,
+        array $quantifiedProducts,
+        int $domainId,
+    ): ?DateTimeImmutable {
+        $bestDeliveryDate = null;
+
+        foreach ($this->getStoresByDomainIdCached($domainId) as $store) {
+            $deliveryDate = $this->calculateDeliveryDate($transport, $quantifiedProducts, $domainId, $store);
+
+            if ($deliveryDate !== null && ($bestDeliveryDate === null || $deliveryDate < $bestDeliveryDate)) {
+                $bestDeliveryDate = $deliveryDate;
+            }
+        }
+
+        return $bestDeliveryDate;
     }
 
     /**
@@ -205,7 +232,6 @@ class TransportExpectedDeliveryDateCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      */
     protected function postponeDispatchDateByTransferDaysIfNeeded(
-        Transport $transport,
         DateTimeImmutable $dispatchDate,
         array $quantifiedProducts,
         int $domainId,
@@ -213,7 +239,7 @@ class TransportExpectedDeliveryDateCalculation
     ): DateTimeImmutable {
         if (
             $quantifiedProducts === []
-            || !$this->isTransferNeeded($transport, $quantifiedProducts, $domainId, $store)
+            || !$this->isTransferNeeded($quantifiedProducts, $domainId, $store)
         ) {
             return $dispatchDate;
         }
@@ -224,24 +250,11 @@ class TransportExpectedDeliveryDateCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      */
-    protected function isTransferNeeded(
-        Transport $transport,
-        array $quantifiedProducts,
-        int $domainId,
-        ?Store $store,
-    ): bool {
-        if ($store !== null) {
-            return $this->productAvailabilityFacade->isTransferToStoreNeeded($quantifiedProducts, $store, $domainId);
-        }
-
-        if (!$transport->isPersonalPickup()) {
-            return false;
-        }
-
-        return array_all(
-            $this->getStoresByDomainIdCached($domainId),
-            fn (Store $domainStore): bool => $this->productAvailabilityFacade->isTransferToStoreNeeded($quantifiedProducts, $domainStore, $domainId),
-        );
+    protected function isTransferNeeded(array $quantifiedProducts, int $domainId, ?Store $store): bool
+    {
+        // a carrier transport dispatches from any stock, only a store may need a transfer
+        return $store !== null
+            && $this->productAvailabilityFacade->isTransferToStoreNeeded($quantifiedProducts, $store, $domainId);
     }
 
     protected function postponeToFirstAllowedDeliveryDay(
@@ -317,8 +330,12 @@ class TransportExpectedDeliveryDateCalculation
         ?Store $store,
         array $closedDaysOnDate,
     ): bool {
+        if ($transport->isPersonalPickup() && $store !== null) {
+            return !$this->isStoreClosedOnDate($store, $deliveryDate, $domainId, $closedDaysOnDate);
+        }
+
         return !$this->isDeliveryBlockedByDayOfWeek($transport, $deliveryDate)
-            && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate, $domainId, $store);
+            && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate);
     }
 
     protected function isDeliveryBlockedByDayOfWeek(Transport $transport, DateTimeImmutable $deliveryDate): bool
@@ -329,34 +346,44 @@ class TransportExpectedDeliveryDateCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDaysOnDate
      */
-    protected function isDeliveryBlockedByClosedDays(
-        Transport $transport,
-        array $closedDaysOnDate,
-        int $domainId,
-        ?Store $store,
-    ): bool {
-        $blockingClosedDays = array_filter(
+    protected function isDeliveryBlockedByClosedDays(Transport $transport, array $closedDaysOnDate): bool
+    {
+        return array_any(
             $closedDaysOnDate,
             fn (ClosedDay $closedDay): bool => !$this->isTransportDeliveringOnClosedDay($transport, $closedDay),
         );
+    }
 
-        if ($blockingClosedDays === []) {
-            return false;
-        }
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDaysOnDate
+     */
+    protected function isStoreClosedOnDate(
+        Store $store,
+        DateTimeImmutable $deliveryDate,
+        int $domainId,
+        array $closedDaysOnDate,
+    ): bool {
+        return $this->isStoreClosedByClosedDays($store, $closedDaysOnDate)
+            || $this->isStoreClosedByOpeningHours($store, $deliveryDate, $domainId);
+    }
 
-        if ($store === null && !$transport->isPersonalPickup()) {
+    protected function isStoreClosedByOpeningHours(Store $store, DateTimeImmutable $deliveryDate, int $domainId): bool
+    {
+        $dayOfWeek = (int)$deliveryDate->format('N');
+
+        if (!$this->storeOpeningHoursProvider->isStoreOpenOnDayOfWeek($store, $dayOfWeek)) {
             return true;
         }
 
-        if ($store !== null) {
-            return $this->isStoreClosedByClosedDays($store, $blockingClosedDays);
+        if ($deliveryDate->format(static::DATE_INDEX_FORMAT) !== $this->getToday($domainId)->format(static::DATE_INDEX_FORMAT)) {
+            return false;
         }
 
-        // a personal pickup is blocked only when every store on the domain is closed
-        return array_all(
-            $this->getStoresByDomainIdCached($domainId),
-            fn (Store $domainStore): bool => $this->isStoreClosedByClosedDays($domainStore, $blockingClosedDays),
-        );
+        $nowTime = $this->clock->now()
+            ->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId))
+            ->format('H:i');
+
+        return !$this->storeOpeningHoursProvider->isStoreOpenAfterTimeOnDayOfWeek($store, $dayOfWeek, $nowTime);
     }
 
     /**
@@ -366,7 +393,7 @@ class TransportExpectedDeliveryDateCalculation
     {
         return $this->inMemoryCache->getOrSaveValue(
             static::STORES_CACHE_NAMESPACE,
-            fn (): array => $this->storeFacade->getStoresByDomainId($domainId),
+            fn (): array => $this->storeFacade->getStoresByDomainIdWithEagerLoadedOpeningHours($domainId),
             $domainId,
         );
     }

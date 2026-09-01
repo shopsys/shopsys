@@ -29,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroupFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -108,6 +109,10 @@ final class TransportFormType extends AbstractType
                     new NotBlank(),
                 ],
                 'label' => 'Transport type',
+                'attr' => [
+                    'data-transport-delivery-schedule-target' => 'typeSelect',
+                    'data-action' => 'transport-delivery-schedule#updateScheduleFieldsVisibility',
+                ],
             ])
             ->add('group', ChoiceType::class, [
                 'required' => false,
@@ -137,19 +142,41 @@ final class TransportFormType extends AbstractType
             ])
             ->add('deliveryDaysOfWeek', DaysOfWeekType::class, [
                 'label' => 'Days of the week when the transport delivers',
+                'row_attr' => [
+                    'data-transport-delivery-schedule-target' => 'carrierSchedule',
+                ],
                 'constraints' => [
                     new Constraints\Count(min: 1, minMessage: 'Please choose at least one day'),
                 ],
             ])
             ->add('deliversOnPublicHolidays', YesNoType::class, [
                 'label' => 'Delivers on public holidays as well',
+                'row_attr' => [
+                    'data-transport-delivery-schedule-target' => 'carrierSchedule',
+                ],
             ])
             ->add('deliversOnInternalClosedDays', YesNoType::class, [
                 'label' => 'Delivers on e-shop internal days as well',
+                'row_attr' => [
+                    'data-transport-delivery-schedule-target' => 'carrierSchedule',
+                ],
             ])
             ->add('deliveryDaysInfo', MessageType::class, [
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,
+                'row_attr' => [
+                    'data-transport-delivery-schedule-target' => 'carrierSchedule',
+                ],
                 'data' => t('Public holidays and e-shop internal days are managed in the <a href="%closedDaysUrl%" target="_blank">Holidays and internal days</a> administration; the carrier\'s own days off are not taken into account.', [
+                    '%closedDaysUrl%' => $this->administrationRouter->generate('admin_closedday_list'),
+                ]),
+            ])
+            ->add('pickupDeliveryDaysInfo', MessageType::class, [
+                'message_level' => MessageType::MESSAGE_LEVEL_INFO,
+                'row_attr' => [
+                    'data-transport-delivery-schedule-target' => 'pickupScheduleInfo',
+                ],
+                'data' => t('The pickup dates are driven by the weekly opening hours of the <a href="%storesUrl%" target="_blank">stores</a> and by the <a href="%closedDaysUrl%" target="_blank">Holidays and internal days</a> — a store excluded from a closed day hands the orders over even on that day.', [
+                    '%storesUrl%' => $this->administrationRouter->generate('admin_store_list'),
                     '%closedDaysUrl%' => $this->administrationRouter->generate('admin_closedday_list'),
                 ]),
             ]);
@@ -277,7 +304,11 @@ final class TransportFormType extends AbstractType
             ->setAllowedTypes('transport', [Transport::class, 'null'])
             ->setDefaults([
                 'data_class' => TransportData::class,
-                'attr' => ['novalidate' => 'novalidate'],
+                'attr' => [
+                    'novalidate' => 'novalidate',
+                    'data-controller' => 'transport-delivery-schedule',
+                    'data-transport-delivery-schedule-personal-pickup-type-value' => TransportTypeEnum::TYPE_PERSONAL_PICKUP,
+                ],
                 'constraints' => [
                     new Constraints\Callback(callback: [$this, 'validateTransportPricesOnDomain']),
                 ],

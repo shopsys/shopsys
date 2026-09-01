@@ -1,5 +1,5 @@
 {% block message_row %}
-    <div class="alert alert-{{ form.vars.message_level }}" role="alert">
+    <div{% with {attr: row_attr|merge({class: ('alert alert-' ~ form.vars.message_level ~ ' ' ~ row_attr.class|default(''))|trim, role: 'alert'})} %}{{ block('attributes') }}{% endwith %}>
         <div class="alert-icon">
             {{ ux_icon(form.vars.message_level, {class: 'icon alert-icon'}) }}
         </div>
