@@ -135,12 +135,4 @@ class VatFacade
 
         return $this->vatRepository->isVatUsed($vat);
     }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
-     */
-    public function getAllForDomainIncludingMarkedForDeletion(int $domainId): array
-    {
-        return $this->vatRepository->getAllForDomainIncludingMarkedForDeletion($domainId);
-    }
 }

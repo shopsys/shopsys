@@ -32,14 +32,6 @@ class VatRepository
             ->orderBy($vatAlias . '.percent');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
-     */
-    public function getAllForDomainIncludingMarkedForDeletion(int $domainId): array
-    {
-        return $this->getVatRepository()->findBy(['domainId' => $domainId]);
-    }
-
     public function findById(int $vatId): ?Vat
     {
         return $this->getVatRepository()->find($vatId);
