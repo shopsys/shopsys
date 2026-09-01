@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\ProductReview;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogNoteRegistry;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
@@ -109,5 +110,20 @@ class ProductReviewFacade
         int $domainId,
     ): bool {
         return $this->productReviewRepository->existsByCustomerUserAndProductId($customerUser, $productId, $domainId);
+    }
+
+    public function existsByOrderAndProductId(Order $order, int $productId): bool
+    {
+        return $this->productReviewRepository->existsByOrderAndProductId($order, $productId);
+    }
+
+    /**
+     * Uuids of the order's products that already have a review linked to the order, regardless of the review status
+     *
+     * @return string[]
+     */
+    public function getReviewedProductUuidsByOrder(Order $order): array
+    {
+        return $this->productReviewRepository->getReviewedProductUuidsByOrder($order);
     }
 }

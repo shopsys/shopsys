@@ -225,6 +225,10 @@ class ProductReviewApiFacade
             );
 
             if ($orderItem !== null) {
+                if ($this->productReviewFacade->existsByOrderAndProductId($orderItem->getOrder(), $product->getId())) {
+                    throw new DuplicateProductReviewUserError('The product has already been reviewed from this order.');
+                }
+
                 return $orderItem;
             }
         }

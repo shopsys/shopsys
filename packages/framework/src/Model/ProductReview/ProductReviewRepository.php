@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\ProductReview\Exception\ProductReviewNotFoundException;
@@ -139,6 +140,41 @@ class ProductReviewRepository
             ->getOneOrNullResult();
 
         return $productReviewId !== null;
+    }
+
+    public function existsByOrderAndProductId(Order $order, int $productId): bool
+    {
+        $productReviewId = $this->getProductReviewRepository()->createQueryBuilder('pr')
+            ->select('pr.id')
+            ->join('pr.orderItem', 'oi')
+            ->where('oi.order = :order')
+            ->andWhere('pr.product = :productId')
+            ->setParameter('order', $order)
+            ->setParameter('productId', $productId)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $productReviewId !== null;
+    }
+
+    /**
+     * Uuids of the order's products that already have a review linked to the order, regardless of the review status
+     *
+     * @return string[]
+     */
+    public function getReviewedProductUuidsByOrder(Order $order): array
+    {
+        $rows = $this->getProductReviewRepository()->createQueryBuilder('pr')
+            ->select('DISTINCT p.uuid')
+            ->join('pr.orderItem', 'oi')
+            ->join('pr.product', 'p')
+            ->where('oi.order = :order')
+            ->setParameter('order', $order)
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_column($rows, 'uuid');
     }
 
     protected function createApprovedOnDomainQueryBuilder(int $domainId): QueryBuilder

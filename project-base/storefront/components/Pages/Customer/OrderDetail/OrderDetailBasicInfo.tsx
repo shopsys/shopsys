@@ -32,8 +32,12 @@ type OrderDetailBasicInfoProps = {
 export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const { isLoading: isReviewAvailabilityLoading, reviewedProductUuids } =
+    const { isLoading: isReviewAvailabilityLoading, reviewedProductUuids: currentCustomerUserReviewedProductUuids } =
         useCurrentCustomerUserReviewedProductUuids();
+    const reviewedProductUuids = new Set([
+        ...Array.from(currentCustomerUserReviewedProductUuids),
+        ...order.reviewedProductUuids,
+    ]);
     const { formatDate } = useFormatDate();
     const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
     const { canCreateOrder } = useAuthorization();

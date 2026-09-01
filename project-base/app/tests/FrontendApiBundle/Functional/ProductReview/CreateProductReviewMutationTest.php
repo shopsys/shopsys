@@ -68,6 +68,62 @@ final class CreateProductReviewMutationTest extends GraphQlTestCase
         $this->assertSame($orderItem->getUuid(), $productReview->getOrderItem()->getUuid());
     }
 
+    public function testGuestCannotReviewSameProductFromTheSameOrderTwice(): void
+    {
+        $order = $this->getReferenceForDomain(OrderDataFixture::ORDER_DELIVERED_MONTH_AGO, 1, Order::class);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '15', Product::class);
+
+        $firstResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateProductReviewMutation.graphql', [
+            'input' => [
+                'productUuid' => $product->getUuid(),
+                'rating' => 5,
+                'firstName' => 'April',
+                'lastName' => 'Ryan',
+                'email' => 'april.ryan@example.com',
+                'orderUrlHash' => $order->getUrlHash(),
+            ],
+        ]);
+        $firstData = $this->getResponseDataForGraphQlType($firstResponse, 'CreateProductReview');
+        $this->assertTrue($firstData['isVerifiedPurchase']);
+
+        $secondResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateProductReviewMutation.graphql', [
+            'input' => [
+                'productUuid' => $product->getUuid(),
+                'rating' => 1,
+                'firstName' => 'Zoe',
+                'lastName' => 'Castillo',
+                'email' => 'zoe.castillo@example.com',
+                'orderUrlHash' => $order->getUrlHash(),
+            ],
+        ]);
+
+        $this->assertUserError($secondResponse, 'duplicate-product-review');
+    }
+
+    public function testOrderReturnsUuidsOfProductsReviewedFromTheOrder(): void
+    {
+        $order = $this->getReferenceForDomain(OrderDataFixture::ORDER_DELIVERED_MONTH_AGO, 1, Order::class);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '15', Product::class);
+
+        $this->getResponseContentForGql(__DIR__ . '/graphql/CreateProductReviewMutation.graphql', [
+            'input' => [
+                'productUuid' => $product->getUuid(),
+                'rating' => 5,
+                'firstName' => 'April',
+                'lastName' => 'Ryan',
+                'email' => 'april.ryan@example.com',
+                'orderUrlHash' => $order->getUrlHash(),
+            ],
+        ]);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/OrderReviewedProductUuidsQuery.graphql', [
+            'urlHash' => $order->getUrlHash(),
+        ]);
+
+        $data = $this->getResponseDataForGraphQlType($response, 'order');
+        $this->assertSame([$product->getUuid()], $data['reviewedProductUuids']);
+    }
+
     public function testGuestWithWrongUrlHashCreatesUnverifiedReview(): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '15', Product::class);

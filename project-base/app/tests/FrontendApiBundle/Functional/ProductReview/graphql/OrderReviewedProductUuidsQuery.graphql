@@ -1,0 +1,5 @@
+query OrderReviewedProductUuids($urlHash: String) {
+    order(urlHash: $urlHash) {
+        reviewedProductUuids
+    }
+}
