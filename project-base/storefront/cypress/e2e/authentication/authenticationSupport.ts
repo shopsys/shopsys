@@ -62,6 +62,11 @@ export const submitRegistrationForm = () => {
     cy.getByTID([TIDs.registration_submit_button]).click();
 };
 
+export const waitForRegistrationRedirect = () => {
+    cy.location('pathname').should('eq', '/');
+    cy.waitForHydration();
+};
+
 export const submitLoginForm = () => {
     cy.getByTID([TIDs.login_form])
         .filter(':visible')

@@ -4,11 +4,11 @@ import {
     TypeLoginMutationVariables,
     useLoginMutation,
 } from 'graphql/requests/auth/mutations/LoginMutation.generated';
-import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
-import { useSessionStore } from 'store/useSessionStore';
 import { OperationResult } from 'urql';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
+import { storeAuthNotification } from 'utils/auth/authNotificationStorage';
+import { performAuthHardNavigation } from 'utils/auth/performAuthHardNavigation';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 type LoginHandler = (
@@ -42,10 +42,8 @@ export const useLogin = () => {
 };
 
 export const useHandleActionsAfterLogin = () => {
-    const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
     const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
-    const router = useRouter();
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
     const domainConfig = useDomainConfig();
 
@@ -53,38 +51,31 @@ export const useHandleActionsAfterLogin = () => {
         updateCartUuid(null);
         updateProductListUuids({});
 
-        updateAuthLoadingState(showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading');
+        storeAuthNotification(domainConfig.domainId, showCartMergeInfo ? 'login-with-cart-modifications' : 'login');
         updateUserEntryState('login');
 
         dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
-        if (rewriteUrl) {
-            router.replace(rewriteUrl).then(() => router.reload());
-        } else {
-            router.reload();
-        }
+        performAuthHardNavigation(rewriteUrl);
     };
 
     return handleActionsAfterLogin;
 };
 
 export const useLoginAfterPasswordRecovery = () => {
-    const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
     const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
-    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const domainConfig = useDomainConfig();
 
     const handleActionsAfterPasswordRecovery = (showCartMergeInfo: boolean) => {
         updateCartUuid(null);
         updateProductListUuids({});
 
-        updateAuthLoadingState(showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading');
+        storeAuthNotification(domainConfig.domainId, showCartMergeInfo ? 'login-with-cart-modifications' : 'login');
         updateUserEntryState('login');
-        updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
 
         dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
-        window.location.href = '/';
+        performAuthHardNavigation('/');
     };
 
     return handleActionsAfterPasswordRecovery;

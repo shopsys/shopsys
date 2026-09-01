@@ -7,19 +7,21 @@ import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandle
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
+import { AuthNotification } from 'types/auth';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
+import { storeAuthNotification } from 'utils/auth/authNotificationStorage';
+import { performAuthHardNavigation } from 'utils/auth/performAuthHardNavigation';
 import { blurInput } from 'utils/forms/blurInput';
 
 export const useRegistration = () => {
     const [, registerMutation] = useRegistrationMutation();
     const [, registerByOrderMutation] = useRegistrationByOrderMutation();
     const router = useRouter();
-    const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
-    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const updateUserEntryState = usePersistStore((s) => s.updateUserEntryState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
+    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const domainConfig = useDomainConfig();
 
     const register = async (registrationInput: Omit<TypeRegistrationDataInput, 'productListsUuids'>) => {
@@ -57,19 +59,20 @@ export const useRegistration = () => {
         return registerResult.error;
     };
 
-    function processRegisterResult(registerResultData: TypeLoginResult) {
+    async function processRegisterResult(registerResultData: TypeLoginResult) {
         updateCartUuid(null);
         updateProductListUuids({});
 
-        updateAuthLoadingState(
-            registerResultData.showCartMergeInfo
-                ? 'registration-loading-with-cart-modifications'
-                : 'registration-loading',
-        );
-        updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
+        const authNotification: AuthNotification = registerResultData.showCartMergeInfo
+            ? 'registration-with-cart-modifications'
+            : 'registration';
+        storeAuthNotification(domainConfig.domainId, authNotification);
         updateUserEntryState('registration');
         onGtmSendFormEventHandler(GtmFormType.registration);
-        router.replace('/').then(() => router.reload());
+        updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
+        if (!(await router.replace('/'))) {
+            performAuthHardNavigation('/');
+        }
 
         return undefined;
     }

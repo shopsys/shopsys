@@ -1,9 +1,9 @@
 import 'nprogress/nprogress.css';
-import { useAuthLoader } from 'utils/app/useAuthLoader';
 import { usePageLoader } from 'utils/app/usePageLoader';
+import { useAuthStateSynchronization } from 'utils/auth/useAuthStateSynchronization';
 
 export const Loaders = () => {
-    useAuthLoader();
+    useAuthStateSynchronization();
     usePageLoader();
 
     return null;

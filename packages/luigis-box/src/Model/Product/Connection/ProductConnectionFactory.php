@@ -25,7 +25,7 @@ class ProductConnectionFactory
     }
 
     /**
-     * @param callable(): \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadResult|null $batchLoadResultProvider
+     * @param (callable(): (\Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadResult|null))|null $batchLoadResultProvider
      */
     public function createConnectionPromiseForSearch(
         Closure $retrieveProductClosure,
@@ -52,7 +52,7 @@ class ProductConnectionFactory
     }
 
     /**
-     * @param callable(): \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadResult|null $batchLoadResultProvider
+     * @param (callable(): (\Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadResult|null))|null $batchLoadResultProvider
      */
     protected function getConnectionPromise(
         callable $retrieveClosure,

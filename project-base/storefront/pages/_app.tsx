@@ -1,6 +1,7 @@
 import { TooltipProvider } from 'components/Basic/Tooltip/Tooltip';
 import { RouteAccessibilityManager } from 'components/Layout/RouteAccessibilityManager';
 import { RouteAnnouncer } from 'components/Layout/RouteAnnouncer';
+import { DeferredToastContainer } from 'components/Pages/App/DeferredToastContainer';
 import { AuthorizationProvider } from 'components/providers/AuthorizationProvider';
 import { CachedI18nProvider } from 'components/providers/CachedI18nProvider';
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
@@ -106,6 +107,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
                         <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                             <DomainConfigProvider domainConfig={domainConfig}>
                                 <PersistStoreProvider>
+                                    <DeferredToastContainer />
                                     <CurrentCustomerUserProvider>
                                         <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
                                             <GtmProvider ipAddress={pageProps.ipAddress}>
