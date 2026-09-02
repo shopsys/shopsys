@@ -32,11 +32,15 @@ class ProductVideoTranslations
     protected $productVideo;
 
     /**
-     * @var string
+     * @var string|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', nullable: true)]
-    protected $description;
+    protected $description {
+        set {
+            $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @var string
@@ -70,7 +74,7 @@ class ProductVideoTranslations
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescription()
     {
@@ -78,11 +82,11 @@ class ProductVideoTranslations
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      */
     public function setDescription($description): void
     {
-        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
+        $this->description = $description;
     }
 
     /**

@@ -33,7 +33,11 @@ class ParameterTranslation extends AbstractTranslation
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    protected $name;
+    protected $name {
+        set {
+            $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @return string|null
@@ -48,6 +52,6 @@ class ParameterTranslation extends AbstractTranslation
      */
     public function setName($name): void
     {
-        $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
+        $this->name = $name;
     }
 }

@@ -33,7 +33,11 @@ class ParameterGroupTranslation extends AbstractTranslation
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 100)]
-    protected $name;
+    protected $name {
+        set {
+            $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @return string
@@ -48,6 +52,6 @@ class ParameterGroupTranslation extends AbstractTranslation
      */
     public function setName($name): void
     {
-        $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
+        $this->name = $name;
     }
 }
