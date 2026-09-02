@@ -565,6 +565,7 @@ final class ProductFormType extends AbstractType
         if ($this->isProductMainVariant($product)) {
             $promotionGroup->add('promotionInfo', DisplayOnlyType::class, [
                 'data' => t('Promotion can be set on specific variant.'),
+                'label' => false,
             ]);
 
             return $promotionGroup;

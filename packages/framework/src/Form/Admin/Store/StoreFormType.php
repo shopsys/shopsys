@@ -147,6 +147,7 @@ final class StoreFormType extends AbstractType
 
         $builderUserInformationGroup
             ->add('specialMessage', TextType::class, [
+                'label' => 'Special message',
                 'required' => false,
             ])
             ->add('phone', TextType::class, [
@@ -166,6 +167,7 @@ final class StoreFormType extends AbstractType
                 'required' => false,
             ])
             ->add('directions', CKEditorType::class, [
+                'label' => 'Directions',
                 'required' => false,
             ]);
 
@@ -180,6 +182,7 @@ final class StoreFormType extends AbstractType
 
         $builderMapGroup
             ->add('latitude', NumberType::class, [
+                'label' => 'Latitude',
                 'required' => false,
                 'scale' => 10,
                 'attr' => [
@@ -187,6 +190,7 @@ final class StoreFormType extends AbstractType
                 ],
             ])
             ->add('longitude', NumberType::class, [
+                'label' => 'Longitude',
                 'required' => false,
                 'scale' => 10,
                 'attr' => [

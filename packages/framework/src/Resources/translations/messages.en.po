@@ -1027,6 +1027,9 @@ msgstr ""
 msgid "Description opacity"
 msgstr ""
 
+msgid "Directions"
+msgstr ""
+
 msgid "Disable two factor authentication"
 msgstr ""
 
@@ -1975,6 +1978,9 @@ msgstr ""
 msgid "Last update"
 msgstr ""
 
+msgid "Latitude"
+msgstr ""
+
 msgid "Legal conditions"
 msgstr ""
 
@@ -2021,6 +2027,9 @@ msgid "Log in failed."
 msgstr ""
 
 msgid "Login name"
+msgstr ""
+
+msgid "Longitude"
 msgstr ""
 
 msgid "Main URL"
@@ -3221,6 +3230,9 @@ msgid "Some items cannot be imported due to errors:"
 msgstr ""
 
 msgid "Sorting priority"
+msgstr ""
+
+msgid "Special message"
 msgstr ""
 
 msgid "Standard"

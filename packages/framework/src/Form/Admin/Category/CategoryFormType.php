@@ -200,6 +200,7 @@ final class CategoryFormType extends AbstractType
             ->add('descriptions', MultidomainType::class, [
                 'entry_type' => CKEditorType::class,
                 'required' => false,
+                'label' => false,
             ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
