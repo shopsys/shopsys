@@ -55,30 +55,42 @@ class Watchdog implements DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
-    protected $createdAt;
+    protected $createdAt {
+        set {
+            $this->createdAt = $value ?? new DatePoint();
+        }
+    }
 
     /**
      * @var \DateTimeImmutable
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
-    protected $updatedAt;
+    protected $updatedAt {
+        set {
+            $this->updatedAt = $value ?? new DatePoint();
+        }
+    }
 
     /**
      * @var \DateTimeImmutable
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
-    protected $validUntil;
+    protected $validUntil {
+        set {
+            $this->validUntil = $value ?? new DatePoint(static::VALIDITY_PERIOD);
+        }
+    }
 
     public function __construct(WatchdogData $watchdogData)
     {
         $this->product = $watchdogData->product;
         $this->email = $watchdogData->email;
         $this->domainId = $watchdogData->domainId;
-        $this->createdAt = $watchdogData->createdAt ?? new DatePoint();
-        $this->updatedAt = $watchdogData->updatedAt ?? new DatePoint();
-        $this->validUntil = $watchdogData->validUntil ?? new DatePoint(static::VALIDITY_PERIOD);
+        $this->createdAt = $watchdogData->createdAt;
+        $this->updatedAt = $watchdogData->updatedAt;
+        $this->validUntil = $watchdogData->validUntil;
     }
 
     public function updateValidity(): void
