@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
-use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\String\ByteString;
 
@@ -15,7 +14,6 @@ class CustomerUploadedFileFactory
     public function __construct(
         protected readonly FileUpload $fileUpload,
         protected readonly EntityNameResolver $entityNameResolver,
-        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -43,7 +41,6 @@ class CustomerUploadedFileFactory
             $type,
             pathinfo($temporaryFilepath, PATHINFO_BASENAME),
             $uploadedFilename,
-            $this->transformStringHelper->stringToFriendlyUrlSlug($uploadedFilename),
             $position,
             $hash,
             $filesize,

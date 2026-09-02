@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\AbstractUploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
-use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException;
@@ -16,7 +15,6 @@ abstract class AbstractUploadedFileFacade
     public function __construct(
         protected readonly FilesystemOperator $filesystem,
         protected readonly EntityManagerInterface $em,
-        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -74,7 +72,7 @@ abstract class AbstractUploadedFileFacade
             $filename = pathinfo($fileName, PATHINFO_FILENAME);
 
             $file->setName($filename);
-            $file->setSlug($this->transformStringHelper->stringToFriendlyUrlSlug($filename));
+            $file->setSlug($filename);
 
             $this->em->flush();
         }

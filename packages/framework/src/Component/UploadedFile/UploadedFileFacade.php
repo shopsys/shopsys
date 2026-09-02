@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileL
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
-use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
@@ -32,7 +31,6 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     public function __construct(
         FilesystemOperator $filesystem,
         EntityManagerInterface $em,
-        TransformStringHelper $transformStringHelper,
         protected readonly UploadedFileConfig $uploadedFileConfig,
         protected readonly UploadedFileRepository $uploadedFileRepository,
         protected readonly UploadedFileLocator $uploadedFileLocator,
@@ -41,7 +39,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         protected readonly UploadedFileRelationRepository $uploadedFileRelationRepository,
         protected readonly FileUpload $fileUpload,
     ) {
-        parent::__construct($filesystem, $em, $transformStringHelper);
+        parent::__construct($filesystem, $em);
     }
 
     public function manageFiles(
@@ -391,7 +389,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         $filename = pathinfo($uploadedFileFormData->name, PATHINFO_FILENAME);
 
         $file->setName($filename);
-        $file->setSlug($this->transformStringHelper->stringToFriendlyUrlSlug($filename));
+        $file->setSlug($filename);
 
         $this->updateRelationsForUploadedFileByEntities($file, Product::class, $uploadedFileFormData->products, UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
 
@@ -499,7 +497,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
                 $filename = pathinfo($relationFilename, PATHINFO_FILENAME);
 
                 $uploadedFile->setName($filename);
-                $uploadedFile->setSlug($this->transformStringHelper->stringToFriendlyUrlSlug($filename));
+                $uploadedFile->setSlug($filename);
             }
 
             $uploadedFile->setTranslatedNames($uploadedFileData->relationsNames[$key] ?? []);

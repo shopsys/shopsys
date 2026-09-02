@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Symfony\Component\Clock\DatePoint;
 
@@ -63,7 +64,11 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
-    protected $slug;
+    protected $slug {
+        set {
+            $this->slug = TransformStringHelper::createFriendlyUrlSlug($value);
+        }
+    }
 
     public function getSlugWithExtension(): string
     {
