@@ -168,7 +168,11 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
-    protected $createdAt;
+    protected $createdAt {
+        set {
+            $this->createdAt = $value ?? new DatePoint();
+        }
+    }
 
     /**
      * @var string|null
@@ -187,7 +191,7 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
     public function __construct(ProductReviewData $productReviewData)
     {
         $this->uuid = $productReviewData->uuid;
-        $this->createdAt = $productReviewData->createdAt ?? new DatePoint();
+        $this->createdAt = $productReviewData->createdAt;
         $this->domainId = $productReviewData->domainId;
         $this->product = $productReviewData->product;
         $this->catnum = $productReviewData->catnum;
