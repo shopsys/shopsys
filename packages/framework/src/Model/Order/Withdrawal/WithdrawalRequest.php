@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use Symfony\Component\Clock\DatePoint;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'withdrawal_requests')]
@@ -87,7 +87,11 @@ class WithdrawalRequest
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
-    protected $requestedAt;
+    protected $requestedAt {
+        set {
+            $this->requestedAt = $value ?? new DatePoint();
+        }
+    }
 
     public function __construct(Order $order, WithdrawalRequestData $withdrawalRequestData)
     {
@@ -102,7 +106,7 @@ class WithdrawalRequest
         $this->setTelephoneData($withdrawalRequestData->telephone);
         $this->email = $withdrawalRequestData->email;
         $this->note = $withdrawalRequestData->note;
-        $this->requestedAt = $withdrawalRequestData->requestedAt ?? new DateTimeImmutable();
+        $this->requestedAt = $withdrawalRequestData->requestedAt;
     }
 
     public function edit(WithdrawalRequestData $withdrawalRequestData): void
