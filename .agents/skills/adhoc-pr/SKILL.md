@@ -4,8 +4,8 @@ description: >
   Ad-hoc Pull Request Publisher — commits the current changes, pushes the branch, opens
   a GitHub pull request against the repository's default branch, and creates a matching
   SSP Jira issue in the current sprint following the ad-hoc work convention (summary =
-  PR title + " #<PR number>", PR link in the "Merge Request" field, no description,
-  moved to In Progress). Works for any ad-hoc change — fixes, small improvements,
+  PR title + " #<PR number>", PR link in the "Merge Request" field, description copied
+  from the PR description, moved to In Progress). Works for any ad-hoc change — fixes, small improvements,
   tooling, docs. Use when the user asks to publish/ship the current work end-to-end,
   or invokes /adhoc-pr.
 user_invocable: true
@@ -125,7 +125,12 @@ Use the Atlassian MCP tools with `cloudId: shopsys.atlassian.net`.
    - `issueTypeName`: `PRG bug` (or the argument)
    - `summary`: `<PR title> #<PR number>` — exactly the PR title, then space and
      `#<number>` (e.g. `Fix expanding lazily loaded branches in admin tree selection #4701`)
-   - **no description** — the convention is to leave it empty
+   - `description`: **copy of the PR description** (the GitHub PR body, Markdown as-is) —
+     the convention is that the Jira issue shows what was done without opening GitHub.
+     Fetch it fresh with `gh pr view <number> --json body --jq .body` rather than reusing
+     a draft from earlier steps (the pushed PR body is the source of truth). If the body
+     contains HTML comments from the PR template, strip them; otherwise do not rewrite or
+     summarize the text.
    - `additional_fields`: `{"customfield_10020": <sprintId>, "customfield_10031": "<PR URL>"}`
    - `assignee_account_id`: the user's account id
 4. **Fallback**: if creation rejects `customfield_10031` (field not on the create
@@ -139,9 +144,9 @@ Use the Atlassian MCP tools with `cloudId: shopsys.atlassian.net`.
    initial status and report that to the user instead of guessing another status.
 6. **Verify**: fetch the new issue directly with `getJiraIssue` (not a JQL search —
    search indexing can lag behind for just-created issues) requesting
-   `fields: ["summary", "status", "customfield_10020", "customfield_10031", "assignee"]`,
-   and check the sprint, the Merge Request link, the summary suffix, and that the status
-   is `In Progress`.
+   `fields: ["summary", "description", "status", "customfield_10020", "customfield_10031", "assignee"]`,
+   and check the sprint, the Merge Request link, the summary suffix, that the description
+   is filled (copied from the PR), and that the status is `In Progress`.
 
 ### Step 6: Report
 
@@ -153,7 +158,10 @@ Present to the user: commit hash(es), PR URL, Jira issue key + URL
 - **Never hardcode the default branch** — resolve it each run; it changes with major
   releases (19.0 → 20.0 → …).
 - The Jira summary must **copy the PR title verbatim** and end with ` #<PR number>`.
-- The PR link belongs in the **Merge Request field**, not in the issue description.
+- The issue **description is a verbatim copy of the PR description** — no summarizing,
+  no rewriting; it exists so the reader sees what was done without opening GitHub.
+- The PR link belongs in the **Merge Request field** — the copied description carrying
+  it too (via the PR template) is fine, but the field is the canonical place.
 - Transition the issue to **In Progress** (assigned to the author) — never further; CR,
   testing, and BV statuses are driven by the team workflow, not by this skill.
 - If any step fails, stop and report what was already done (commits, PR, issue) so the
