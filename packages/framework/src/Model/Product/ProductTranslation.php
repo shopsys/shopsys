@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
@@ -33,28 +34,44 @@ class ProductTranslation extends AbstractTranslation
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $name;
+    protected $name {
+        set {
+            $this->name = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @var string|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $variantAlias;
+    protected $variantAlias {
+        set {
+            $this->variantAlias = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @var string|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $namePrefix;
+    protected $namePrefix {
+        set {
+            $this->namePrefix = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @var string|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $nameSuffix;
+    protected $nameSuffix {
+        set {
+            $this->nameSuffix = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @return string|null
@@ -69,7 +86,7 @@ class ProductTranslation extends AbstractTranslation
      */
     public function setName($name): void
     {
-        $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
+        $this->name = $name;
     }
 
     /**
@@ -85,7 +102,7 @@ class ProductTranslation extends AbstractTranslation
      */
     public function setVariantAlias($variantAlias): void
     {
-        $this->variantAlias = TransformStringHelper::getTrimmedStringOrNullOnEmpty($variantAlias);
+        $this->variantAlias = $variantAlias;
     }
 
     /**
