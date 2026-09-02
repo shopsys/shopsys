@@ -50,7 +50,15 @@ class CartItem
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
-    protected $quantity;
+    protected $quantity {
+        set {
+            if ($value <= 0) {
+                throw new InvalidQuantityException($value);
+            }
+
+            $this->quantity = $value;
+        }
+    }
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
@@ -98,10 +106,6 @@ class CartItem
 
     public function changeQuantity(int $newQuantity): void
     {
-        if ($newQuantity <= 0) {
-            throw new InvalidQuantityException($newQuantity);
-        }
-
         $this->quantity = $newQuantity;
     }
 
