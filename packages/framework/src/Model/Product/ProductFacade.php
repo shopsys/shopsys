@@ -117,7 +117,6 @@ class ProductFacade
         string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): Product {
         $product = $this->productRepository->getById($productId);
-        $originalNames = $product->getFullNames();
 
         $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
             $product,
@@ -145,7 +144,7 @@ class ProductFacade
         $this->uploadedFileFacade->manageFiles($product, $productData->files);
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->createFriendlyUrlsWhenRenamed($product, $originalNames);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullNames());
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
@@ -395,34 +394,6 @@ class ProductFacade
     public function getAllByIds(array $ids): array
     {
         return $this->productRepository->getAllByIds($ids);
-    }
-
-    protected function createFriendlyUrlsWhenRenamed(Product $product, array $originalNames): void
-    {
-        $changedNames = $this->getChangedNamesByLocale($product, $originalNames);
-
-        if (count($changedNames) === 0) {
-            return;
-        }
-
-        $this->friendlyUrlFacade->createFriendlyUrls(
-            'front_product_detail',
-            $product->getId(),
-            $changedNames,
-        );
-    }
-
-    protected function getChangedNamesByLocale(Product $product, array $originalNames): array
-    {
-        $changedProductNames = [];
-
-        foreach ($product->getFullNames() as $locale => $name) {
-            if ($name !== null && $name !== $originalNames[$locale]) {
-                $changedProductNames[$locale] = $name;
-            }
-        }
-
-        return $changedProductNames;
     }
 
     public function findByCatnum(string $catnum): ?Product
