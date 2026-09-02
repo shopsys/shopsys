@@ -42,7 +42,11 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int
@@ -182,7 +186,7 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
 
     public function __construct(ProductReviewData $productReviewData)
     {
-        $this->uuid = $productReviewData->uuid ?? Uuid::uuid4()->toString();
+        $this->uuid = $productReviewData->uuid;
         $this->createdAt = $productReviewData->createdAt ?? new DatePoint();
         $this->domainId = $productReviewData->domainId;
         $this->product = $productReviewData->product;

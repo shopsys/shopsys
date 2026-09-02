@@ -34,7 +34,11 @@ class GiftPlan implements DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int
@@ -84,7 +88,7 @@ class GiftPlan implements DomainSeparatedEntityInterface
 
     public function __construct(GiftPlanData $giftPlanData)
     {
-        $this->uuid = $giftPlanData->uuid ?? Uuid::uuid4()->toString();
+        $this->uuid = $giftPlanData->uuid;
         $this->mainProducts = new ArrayCollection();
         $this->domainId = $giftPlanData->domainId;
         $this->setData($giftPlanData);

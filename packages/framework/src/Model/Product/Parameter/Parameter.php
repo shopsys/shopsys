@@ -47,7 +47,11 @@ class Parameter extends AbstractTranslatableEntity
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation>
@@ -89,7 +93,7 @@ class Parameter extends AbstractTranslatableEntity
     public function __construct(ParameterData $parameterData)
     {
         $this->translations = new ArrayCollection();
-        $this->uuid = $parameterData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $parameterData->uuid;
         $this->setData($parameterData);
     }
 

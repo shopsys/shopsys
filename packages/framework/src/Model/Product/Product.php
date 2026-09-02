@@ -179,7 +179,11 @@ class Product extends AbstractTranslatableEntity
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int|null
@@ -249,7 +253,7 @@ class Product extends AbstractTranslatableEntity
             $this->addVariants($variants);
         }
 
-        $this->uuid = $productData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $productData->uuid;
         $this->setData($productData);
     }
 

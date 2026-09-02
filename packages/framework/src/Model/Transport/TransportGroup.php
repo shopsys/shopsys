@@ -44,7 +44,11 @@ class TransportGroup extends AbstractTranslatableEntity implements OrderableEnti
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Transport\TransportGroupTranslation>
@@ -65,7 +69,7 @@ class TransportGroup extends AbstractTranslatableEntity implements OrderableEnti
     {
         $this->translations = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
-        $this->uuid = $transportGroupData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $transportGroupData->uuid;
         $this->setData($transportGroupData);
     }
 
