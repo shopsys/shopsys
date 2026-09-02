@@ -74,7 +74,11 @@ class EntityLog
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'json')]
-    protected $changeSet;
+    protected $changeSet {
+        set {
+            $this->changeSet = json_decode(json_encode($value), true);
+        }
+    }
 
     /**
      * @var string|null
@@ -127,15 +131,10 @@ class EntityLog
         $this->entityId = $entityLogData->entityId;
         $this->entityIdentifier = $entityLogData->entityIdentifier;
         $this->source = $entityLogData->source;
-        $this->changeSet = $this->getSerializedChangeSet($entityLogData->changeSet);
+        $this->changeSet = $entityLogData->changeSet;
         $this->parentEntityName = $entityLogData->parentEntityName;
         $this->parentEntityId = $entityLogData->parentEntityId;
         $this->note = $entityLogData->note;
-    }
-
-    protected function getSerializedChangeSet(array $changeSet): array
-    {
-        return json_decode(json_encode($changeSet), true);
     }
 
     /**
