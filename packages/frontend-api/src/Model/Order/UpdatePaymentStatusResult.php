@@ -30,6 +30,11 @@ class UpdatePaymentStatusResult
         return $this->order->hasPaymentInProcess();
     }
 
+    public function isAwaitingPayment(): bool
+    {
+        return $this->order->isAwaitingPayment();
+    }
+
     public function getLastExternalPaymentUrl(): ?string
     {
         return $this->order->getLastExternalPaymentUrl();

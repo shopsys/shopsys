@@ -1514,4 +1514,13 @@ class Order implements DomainSeparatedEntityInterface
     {
         return !in_array($this->getPayment()->getType(), PaymentTypeEnum::INTERNAL_PAYMENTS, true);
     }
+
+    public function isAwaitingPayment(): bool
+    {
+        return $this->hasExternalPayment()
+            && !$this->isPaid()
+            && !$this->hasPaymentInProcess()
+            && !$this->isCancelled()
+            && !$this->getRemainingAmountToPay()->isZero();
+    }
 }
