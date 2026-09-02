@@ -780,7 +780,7 @@ class Product extends AbstractTranslatableEntity
             $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4ByDomainId[$domainId]);
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5ByDomainId[$domainId]);
             $productDomain->setFlags($productData->flagsByDomainId[$domainId] ?? []);
-            $productDomain->setOrderingPriority((int)$productData->orderingPriorityByDomainId[$domainId]);
+            $productDomain->setOrderingPriority($productData->orderingPriorityByDomainId[$domainId]);
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
         }
     }
