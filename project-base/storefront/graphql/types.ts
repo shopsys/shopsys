@@ -2077,6 +2077,8 @@ export type TypeOrder = {
   hasPaymentInProcess: Scalars['Boolean']['output'];
   /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */
   heurekaAgreement: Scalars['Boolean']['output'];
+  /** Indicates whether the customer is still expected to pay the order online (the order has an unpaid external payment that is not being processed and the order is not cancelled) */
+  isAwaitingPayment: Scalars['Boolean']['output'];
   /** Indicates whether the billing address is other than a delivery address */
   isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['output'];
   /** Indicates whether the order is paid successfully with GoPay payment type */
@@ -4202,6 +4204,8 @@ export type TypeUpdatePaymentStatusResult = {
   confirmationPageContent: TypeOrderConfirmationPageContent;
   /** Indicates whether order payment is still being processed with GoPay payment type */
   hasPaymentInProcess: Scalars['Boolean']['output'];
+  /** Indicates whether the customer is still expected to pay the order online (the order has an unpaid external payment that is not being processed and the order is not cancelled) */
+  isAwaitingPayment: Scalars['Boolean']['output'];
   /** Indicates whether the order is paid successfully with GoPay payment type */
   isPaid: Scalars['Boolean']['output'];
   /** URL for accessing the last payment transaction on a gateway without invoking the new payment transaction */

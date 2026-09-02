@@ -62,8 +62,6 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                 !item.product.isCurrentlyOutOfStock,
         );
 
-    const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
-
     return (
         <CustomerRecordCard>
             <span className="sr-only" id={orderSummaryId}>
@@ -133,7 +131,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
             </div>
 
             <div className="flex shrink-0 gap-4">
-                {showRepeatOrderButton && !notPaid && (
+                {showRepeatOrderButton && !order.isAwaitingPayment && (
                     <Button
                         tid={TIDs.order_list_repeat_order_button}
                         variant="secondary"
@@ -147,7 +145,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     </Button>
                 )}
 
-                {notPaid && (
+                {order.isAwaitingPayment && (
                     <LinkButton
                         href={orderLink}
                         type="orderDetail"

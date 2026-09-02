@@ -169,6 +169,7 @@ describe('getErrorMessage', () => {
             ['invalid-refresh-token', 'Invalid refresh token.'],
             ['max-allowed-limit', 'Max allowed limit reached.'],
             ['max-transaction-count-reached', 'Max transaction count reached.'],
+            ['order-cancelled', 'Order is cancelled.'],
             ['order-emails-not-sent', 'Automatic order emails was not sent.'],
             ['order-empty-cart', 'Cart is empty.'],
             ['order-not-found', 'Order not found.'],

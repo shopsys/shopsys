@@ -5,6 +5,7 @@ fragment UpdatePaymentStatusFragment on UpdatePaymentStatusResult {
     paymentName
     paymentTransactionsCount
     hasPaymentInProcess
+    isAwaitingPayment
     lastExternalPaymentUrl
     lastPaymentStatus
     confirmationPageContent {

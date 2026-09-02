@@ -12,6 +12,7 @@ fragment ListedOrderFragment on Order {
     isPaid
     hasExternalPayment
     hasPaymentInProcess
+    isAwaitingPayment
     status
     note
     items {

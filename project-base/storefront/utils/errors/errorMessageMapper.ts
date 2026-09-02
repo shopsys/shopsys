@@ -15,6 +15,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'invalid-refresh-token': t('Invalid refresh token.'),
         'max-allowed-limit': t('Max allowed limit reached.'),
         'max-transaction-count-reached': t('Max transaction count reached.'),
+        'order-cancelled': t('Order is cancelled.'),
         'order-emails-not-sent': t('Automatic order emails was not sent.'),
         'order-empty-cart': t('Cart is empty.'),
         'order-not-found': t('Order not found.'),

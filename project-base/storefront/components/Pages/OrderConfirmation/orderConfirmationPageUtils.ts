@@ -189,6 +189,7 @@ const getOrderWithUpdatedPaymentStatus = (
         ...order,
         confirmationPageContent: paymentStatusUpdateResult.confirmationPageContent,
         hasPaymentInProcess: paymentStatusUpdateResult.hasPaymentInProcess,
+        isAwaitingPayment: paymentStatusUpdateResult.isAwaitingPayment,
         isPaid: paymentStatusUpdateResult.isPaid,
         lastExternalPaymentUrl: paymentStatusUpdateResult.lastExternalPaymentUrl,
         paymentStatus: paymentStatusUpdateResult.lastPaymentStatus,
@@ -207,8 +208,7 @@ export const getOrderConfirmationPaymentView = (
     const isPaymentReturn =
         orderConfirmationPageContext.type === 'ready' && orderConfirmationPageContext.shouldUpdatePaymentStatus;
 
-    const shouldShowPaymentGateway =
-        !isPaymentReturn && order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
+    const shouldShowPaymentGateway = !isPaymentReturn && order.isAwaitingPayment;
 
     return {
         isPaymentFailed,
