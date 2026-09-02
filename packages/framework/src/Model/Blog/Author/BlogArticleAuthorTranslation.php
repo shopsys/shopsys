@@ -33,14 +33,22 @@ class BlogArticleAuthorTranslation extends AbstractTranslation
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $jobTitle;
+    protected $jobTitle {
+        set {
+            $this->jobTitle = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @var string|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
-    protected $description;
+    protected $description {
+        set {
+            $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @return string|null
@@ -55,7 +63,7 @@ class BlogArticleAuthorTranslation extends AbstractTranslation
      */
     public function setJobTitle($jobTitle): void
     {
-        $this->jobTitle = TransformStringHelper::getTrimmedStringOrNullOnEmpty($jobTitle);
+        $this->jobTitle = $jobTitle;
     }
 
     /**
@@ -71,6 +79,6 @@ class BlogArticleAuthorTranslation extends AbstractTranslation
      */
     public function setDescription($description): void
     {
-        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
+        $this->description = $description;
     }
 }

@@ -33,21 +33,33 @@ class PaymentTranslation extends AbstractTranslation
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $name;
+    protected $name {
+        set {
+            $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @var string|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
-    protected $description;
+    protected $description {
+        set {
+            $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @var string|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
-    protected $instructions;
+    protected $instructions {
+        set {
+            $this->instructions = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @return string|null
@@ -78,7 +90,7 @@ class PaymentTranslation extends AbstractTranslation
      */
     public function setName($name): void
     {
-        $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
+        $this->name = $name;
     }
 
     /**
@@ -86,7 +98,7 @@ class PaymentTranslation extends AbstractTranslation
      */
     public function setDescription($description): void
     {
-        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
+        $this->description = $description;
     }
 
     /**
@@ -94,6 +106,6 @@ class PaymentTranslation extends AbstractTranslation
      */
     public function setInstructions($instructions): void
     {
-        $this->instructions = TransformStringHelper::getTrimmedStringOrNullOnEmpty($instructions);
+        $this->instructions = $instructions;
     }
 }
