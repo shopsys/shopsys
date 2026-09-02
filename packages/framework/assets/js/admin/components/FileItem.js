@@ -1,8 +1,9 @@
-import IconText from 'icons/tabler/file-text.svg';
-import IconDoc from 'icons/tabler/file-type-doc.svg';
-import IconPdf from 'icons/tabler/file-type-pdf.svg';
-import IconXls from 'icons/tabler/file-type-xls.svg';
-import IconXml from 'icons/tabler/file-type-xml.svg';
+import $ from 'jquery';
+import IconText from 'icons/tabler/file-text.svg?raw';
+import IconDoc from 'icons/tabler/file-type-doc.svg?raw';
+import IconPdf from 'icons/tabler/file-type-pdf.svg?raw';
+import IconXls from 'icons/tabler/file-type-xls.svg?raw';
+import IconXml from 'icons/tabler/file-type-xml.svg?raw';
 
 export default class FileItem {
     constructor(uploader, $file, loaded) {

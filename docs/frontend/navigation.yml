@@ -1,6 +1,6 @@
 arrange:
     - index.md
-    - npm-and-webpack.md
+    - npm-and-rsbuild.md
     - design-implementation-and-customization.md
     - introduction-to-less.md
     - frontend-troubleshooting.md

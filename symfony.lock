@@ -754,6 +754,20 @@
     "symfony/property-info": {
         "version": "v3.4.32"
     },
+    "symfony/reprise": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "0.1",
+            "ref": "21dd404be875f26b8384e81a3764e9bd02381e33"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/styles/app.css",
+            "project-base/app/config/packages/reprise.yaml"
+        ]
+    },
     "symfony/routing": {
         "version": "3.3",
         "recipe": {
@@ -910,25 +924,6 @@
             "project-base/config/packages/dev/web_profiler.yaml",
             "project-base/config/packages/test/web_profiler.yaml",
             "project-base/config/routes/dev/web_profiler.yaml"
-        ]
-    },
-    "symfony/webpack-encore-bundle": {
-        "version": "1.6",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.6",
-            "ref": "69e1d805ad95964088bd510c05995e87dc391564"
-        },
-        "files": [
-            "assets/css/app.css",
-            "assets/js/frontend.js",
-            "project-base/config/packages/assets.yaml",
-            "project-base/config/packages/prod/webpack_encore.yaml",
-            "project-base/config/packages/test/webpack_encore.yaml",
-            "project-base/config/packages/webpack_encore.yaml",
-            "package.json",
-            "webpack.config.js"
         ]
     },
     "symfony/workflow": {

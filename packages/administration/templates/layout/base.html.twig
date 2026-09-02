@@ -12,10 +12,10 @@
         <meta name="apple-mobile-web-app-title" content="Shopsys Platform Administration" />
         <link rel="manifest" href="{{ asset('public/admin/favicon/site.webmanifest') }}" />
 
-        {{ encore_entry_link_tags('admin-style') }}
+        {{ reprise_entry_link_tags('admin-style') }}
 
-        {{ encore_entry_script_tags('admin') }}
-        {{ encore_entry_script_tags('administration', attributes={
+        {{ reprise_entry_script_tags('admin') }}
+        {{ reprise_entry_script_tags('administration', attributes={
             defer: true
         }) }}
 
@@ -43,9 +43,5 @@
 
     <body class="{% block body_class %}layout-fluid{% endblock %}">
         {% block html_body %}{% endblock %}
-
-        {% if app.environment is same as('dev') %}
-            <script async src="//localhost:35729/livereload.js"></script>
-        {% endif %}
     </body>
 </html>

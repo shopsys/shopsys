@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Translator from 'bazinga-translator';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';

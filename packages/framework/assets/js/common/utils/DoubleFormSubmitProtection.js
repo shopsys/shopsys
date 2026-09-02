@@ -1,3 +1,4 @@
+import $ from 'jquery';
 const doubleFormSubmitProtectionAttribute = 'submit-protection';
 const RESET_PROTECTION_TIME = 1500;
 

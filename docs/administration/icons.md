@@ -32,10 +32,10 @@ Whenever a new icon is used in a Twig template, it must be locked and committed 
 ### Importing Icons in JavaScript
 
 To use an icon in JavaScript, first import the corresponding SVG file and then include it.
-Thanks to the webpack configuration, the SVG file is automatically inlined in the JavaScript bundle.
+Thanks to the `?raw` import query, the SVG file is automatically inlined in the JavaScript bundle.
 
 ```javascript
-import InfoCircle from 'icons/tabler/info-circle-filled.svg';
+import InfoCircle from 'icons/tabler/info-circle-filled.svg?raw';
 
 $('.some-element').html('<strong>' + InfoCircle + ' This is an info icon</strong>');
 ```

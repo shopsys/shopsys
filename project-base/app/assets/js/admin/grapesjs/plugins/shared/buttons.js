@@ -1,6 +1,8 @@
+import $ from 'jquery';
 import Translator from 'bazinga-translator';
 import FormChangeInfo from 'framework/admin/components/FormChangeInfo';
 import grapesjs from 'grapesjs';
+import juice from 'juice';
 
 const BUTTON_CLOSE = Translator.trans('Close');
 const BUTTON_SAVE = Translator.trans('Save');
@@ -23,7 +25,6 @@ export default grapesjs.plugins.add('buttons', (editor, options) => {
 
     commands.add('export-inlined-html', {
         run(editor, _sender, opts = {}) {
-            const juice = require('juice');
             const tmpl = `${editor.getHtml()}<style>${editor.getCss()}</style>`;
             return juice(tmpl, opts);
         },

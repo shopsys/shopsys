@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { Buffer } from 'buffer';
 import Register from 'framework/common/utils/Register';
 import GrapesMailEditor from './GrapesMailEditor';

@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Register from '../utils/Register';
 import 'flatpickr';
 

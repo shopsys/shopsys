@@ -1,22 +1,22 @@
-# Npm and webpack
+# Npm and Rsbuild
 
-## Introduction to npm, webpack and webpack encore
+## Introduction to npm, Rsbuild and Symfony Reprise
 
 A [npm](https://www.npmjs.com/) is a package manager it allows you to install javascripts packages from other developers and to eventually publish your own packages.
 
-A [webpack](https://webpack.js.org/) is a bundler for javascript and friends.
+A [Rsbuild](https://rsbuild.rs/) is a bundler for javascript and friends.
 Packs many modules into a few bundled assets and allows Code Splitting for loading parts of the application on demand.
 
-A [webpack encore](https://github.com/symfony/webpack-encore) is powerful API for processing & compiling assets built around Webpack.
+A [Symfony Reprise](https://github.com/symfony/reprise) is the Symfony integration layer for modern bundlers - it generates the `entrypoints.json` and `manifest.json` files that the `reprise_entry_*` Twig functions read, and points the templates to the running dev server during development.
 
 ## What do we use them for?
 
 We use npm to manage and install frontend packages.
 
-To compile the code into something the browser understands we bundle the code through Webpack.
+To compile the code into something the browser understands we bundle the code through Rsbuild.
 These build/compile operations are provided as npm script to make them easy to run.
 
-We configure a webpack with a webpack encore.
+We configure the bundler in `rsbuild.config.ts`, where the Symfony Reprise plugin takes care of the Symfony integration.
 
 ## How do we use them?
 
@@ -64,17 +64,16 @@ import './components/CounterUp';
 // ...
 ```
 
-When we are editing a javascript and friends files, the change must go through the bundler (webpack).
+When we are editing a javascript and friends files, the change must go through the bundler (Rsbuild).
 All javascript and friends files are built using the `npm run build` command.
 But it would be impractical if we had to run a command in the console with every change.
 Therefore we can use `npm run watch` for development.
-This command checks if a file has changed and if it does, changes are propagated into the resulting bundle.
-The `npm run watch` command launches the webpack in development mode, which means creating source maps to help you debug your project.
+This command checks if a file has changed and if it does, changes are propagated into the resulting bundle in development mode, which means creating source maps to help you debug your project.
 
-### Livereload
+### Hot module replacement
 
-The watch command is linked to the [livereload plugin](https://github.com/statianzo/webpack-livereload-plugin).
-The [livereload plugin](https://github.com/statianzo/webpack-livereload-plugin) plugin will refresh your page the moment you change any asset.
+Instead of watching, you can run `npm run dev-server` to start the Rsbuild dev server.
+Reprise points the templates to the dev server automatically, and changed modules are hot-swapped in the browser without a full page reload.
 
 ## Constants and translations
 
@@ -84,7 +83,7 @@ Used constants have been moved to utils `assets/js/js/utils/constants.js`.
 It is up to you whether you have constants in this file or in individual files.
 We think that synchronization of frontend and backend constants is not necessary, but this point can be reopened in the future.
 
-By contrast, translations are included in the watch command, and with every change in the js file, the webpack finds the appropriate translations.
+By contrast, translations are included in the watch command, and with every change in the js file, the bundler finds the appropriate translations.
 You can manually generate translations using the `npm run trans` command. The resulting json translation file is created in the `assets/js/translations.json` and frontend works with this json file.
 How to work with translation you can read [translation](../introduction/translations.md) article.
 

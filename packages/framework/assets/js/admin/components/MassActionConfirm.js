@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
 import Translator from 'bazinga-translator';
 import Register from '../../common/utils/Register';

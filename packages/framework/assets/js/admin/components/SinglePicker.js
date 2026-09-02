@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Register from '../../common/utils/Register';
