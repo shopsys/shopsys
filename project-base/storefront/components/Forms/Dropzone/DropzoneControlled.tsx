@@ -1,4 +1,5 @@
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
+import { UploadIcon } from 'components/Basic/Icon/UploadIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -64,7 +65,13 @@ const FilePreview: FC<{ file: File }> = ({ file }) => {
     }, [file]);
 
     return (
-        <Image alt={file.name} className="size-20 rounded-md object-cover" height={80} src={previewUrl} width={80} />
+        <Image
+            alt={file.name}
+            className="size-20 overflow-hidden rounded-md object-contain p-1 mix-blend-multiply"
+            height={80}
+            src={previewUrl}
+            width={80}
+        />
     );
 };
 
@@ -141,17 +148,23 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
     };
 
     const wrapperTwClass = twMergeCustom(
-        'group cursor-pointer rounded-md border-2 border-dashed p-10 text-center',
-        !isDragActive && 'border-input-border-default bg-input-bg-default hover:border-input-border-hovered',
-        isDragActive && 'border-input-border-active bg-input-fill',
+        'group flex cursor-pointer flex-col items-center justify-center gap-3 rounded-md border-2 border-dashed p-10 text-center outline-hidden transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:outline-offset-2 motion-reduce:transition-none',
+        !isDragActive &&
+            'border-input-border-default bg-input-bg-default hover:border-input-border-hovered hover:bg-background-accent-less',
         error && 'border-input-border-error',
+        isDragActive && 'border-white-alpha-100 bg-input-fill text-text-inverted',
         disabled &&
-            'cursor-not-allowed border-input-border-disabled bg-input-bg-disabled text-input-text-disabled hover:border-input-border-disabled',
+            'cursor-not-allowed border-input-border-disabled bg-input-bg-disabled text-input-text-disabled hover:border-input-border-disabled hover:bg-input-bg-disabled',
     );
     const labelTwClass = twMergeCustom(
-        'text-input-placeholder-default group-hover:text-input-placeholder-hovered',
-        isDragActive && 'text-input-placeholder-hovered',
+        'text-input-placeholder-default transition-colors duration-200 group-hover:text-input-placeholder-hovered motion-reduce:transition-none',
+        isDragActive && 'text-text-inverted group-hover:text-text-inverted',
         disabled && 'text-input-placeholder-disabled group-hover:text-input-placeholder-disabled',
+    );
+    const iconTwClass = twMergeCustom(
+        'size-7 text-icon-less transition-colors duration-200 group-hover:text-icon-accent motion-reduce:transition-none',
+        isDragActive && 'text-icon-inverted group-hover:text-icon-inverted',
+        disabled && 'text-icon-disabled group-hover:text-icon-disabled',
     );
     const listItemTwClass = 'flex my-1 justify-between items-center group';
     const fileNameTwClass = 'flex-1 text-gray-800 group-hover:text-link-hovered transition-colors duration-300';
@@ -175,9 +188,10 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
                     <>
                         <div id={dropzoneId} {...getRootProps({ className: wrapperTwClass })}>
                             <input {...getInputProps()} />
+                            <UploadIcon aria-hidden className={iconTwClass} />
                             <p className={labelTwClass}>
-                                {label}
-                                {required && <span className="ml-1 text-text-error">*</span>}
+                                {isDragActive ? t('Drop files here') : label}
+                                {required && !isDragActive && <span className="ml-1 text-text-error">*</span>}
                             </p>
                         </div>
                         {legendText && <p className={legendTwClass}>{legendText}</p>}
