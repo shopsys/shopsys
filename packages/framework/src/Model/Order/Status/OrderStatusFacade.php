@@ -18,7 +18,6 @@ class OrderStatusFacade
         protected readonly OrderRepository $orderRepository,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly OrderStatusFactory $orderStatusFactory,
-        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -129,7 +128,7 @@ class OrderStatusFacade
     {
         foreach ($orderStatusData->name as $name) {
             if ($name !== null && trim($name) !== '') {
-                $code = $this->transformStringHelper->stringToFriendlyUrlSlug($name);
+                $code = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendlyUrlSlug($name);
 
                 if ($code !== '') {
                     return $code;

@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
@@ -32,7 +31,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), $domainRouterFactoryStub),
             $domain,
         );
 
@@ -64,7 +63,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), $domainRouterFactoryStub),
             $domain,
         );
 
@@ -99,7 +98,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), $domainRouterFactoryStub),
             $domain,
         );
 
@@ -147,7 +146,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), $domainRouterFactoryStub),
             $domain,
         );
 

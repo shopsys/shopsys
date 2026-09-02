@@ -18,7 +18,7 @@ class MultipleProductsQueryTest extends GraphQlTestCase
     public function testMultipleProductsQueriesAtOnce(): void
     {
         $translatedName = t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->createFriendlyUrlSlug($translatedName);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/multipleProductsQuery.graphql', [
             'urlSlug' => $slug,

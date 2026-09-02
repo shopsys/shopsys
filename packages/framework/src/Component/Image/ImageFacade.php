@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
@@ -31,7 +32,6 @@ class ImageFacade
         protected readonly ImageFactory $imageFactory,
         protected readonly CdnFacade $cdnFacade,
         protected readonly CacheInterface|AdapterInterface $cache,
-        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -263,6 +263,6 @@ class ImageFacade
             return null;
         }
 
-        return $this->transformStringHelper->stringToFriendlyUrlSlug($seoEntityName);
+        return ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendlyUrlSlug($seoEntityName);
     }
 }
