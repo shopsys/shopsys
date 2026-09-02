@@ -40,7 +40,11 @@ class Brand extends AbstractTranslatableEntity
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var string
@@ -67,7 +71,7 @@ class Brand extends AbstractTranslatableEntity
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
 
-        $this->uuid = $brandData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $brandData->uuid;
 
         $this->createDomains($brandData);
         $this->setData($brandData);

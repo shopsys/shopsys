@@ -43,7 +43,11 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int
@@ -143,7 +147,7 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
     {
         $this->domainId = $articleData->domainId;
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
-        $this->uuid = $articleData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $articleData->uuid;
         $this->setData($articleData);
     }
 

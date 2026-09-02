@@ -48,12 +48,16 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     public function __construct(CustomerUserRoleGroupData $customerUserRoleGroupData)
     {
         $this->translations = new ArrayCollection();
-        $this->uuid = $customerUserRoleGroupData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $customerUserRoleGroupData->uuid;
         $this->setData($customerUserRoleGroupData);
     }
 
