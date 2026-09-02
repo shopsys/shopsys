@@ -50,16 +50,14 @@ class SubRequestListener
 
     protected function processSubResponse(Response $subResponse): void
     {
-        if ($subResponse->isRedirection()) {
+        if ($subResponse instanceof RedirectResponse) {
             if ($this->redirectResponse !== null) {
                 $message = 'Only one subresponse can do a redirect.';
 
                 throw new TooManyRedirectResponsesException($message);
             }
 
-            /** @var \Symfony\Component\HttpFoundation\RedirectResponse $subRedirectResponse */
-            $subRedirectResponse = $subResponse;
-            $this->redirectResponse = $subRedirectResponse;
+            $this->redirectResponse = $subResponse;
         }
     }
 }
