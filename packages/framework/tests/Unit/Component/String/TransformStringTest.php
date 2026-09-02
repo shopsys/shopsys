@@ -105,6 +105,12 @@ class TransformStringTest extends TestCase
         $this->assertSame($expected, $this->transformStringHelper->stringToFriendlyUrlSlug($actual));
     }
 
+    #[DataProvider('stringToFriendlyUrlSlugProvider')]
+    public function testCreateFriendlyUrlSlug(mixed $actual, mixed $expected): void
+    {
+        $this->assertSame($expected, TransformStringHelper::createFriendlyUrlSlug($actual));
+    }
+
     public static function stringToCamelCaseProvider(): array
     {
         return [

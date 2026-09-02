@@ -34,19 +34,22 @@ class TransformStringHelper
         return self::emptyToNull(trim($value));
     }
 
+    public function stringToFriendlyUrlSlug(string $string): string
+    {
+        return static::createFriendlyUrlSlug($string);
+    }
+
     /**
      * @see http://php.vrana.cz/vytvoreni-pratelskeho-url.php
      */
-    public function stringToFriendlyUrlSlug(string $string): string
+    public static function createFriendlyUrlSlug(string $string): string
     {
-        $slug = $string;
-        $slug = preg_replace('~[^\\pL0-9_]+~u', '-', $slug);
+        $slug = preg_replace('~[^\\pL0-9_]+~u', '-', $string);
         $slug = trim($slug, '-');
-        $slug = $this->toAscii($slug);
+        $slug = static::toAscii($slug);
         $slug = strtolower($slug);
-        $slug = preg_replace('~[^-a-z0-9_]+~', '', $slug);
 
-        return $slug;
+        return preg_replace('~[^-a-z0-9_]+~', '', $slug);
     }
 
     public function addOrRemoveTrailingSlashFromString(string $string): string
@@ -83,7 +86,7 @@ class TransformStringHelper
         return $string;
     }
 
-    protected function toAscii(string $string): string
+    protected static function toAscii(string $string): string
     {
         $transliteratorToLatin = Transliterator::create('Any-Latin');
         $transliteratorToAscii = Transliterator::create('Latin-ASCII');
