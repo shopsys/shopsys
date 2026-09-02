@@ -223,6 +223,9 @@ msgstr ""
 msgid "Please choose parameter"
 msgstr ""
 
+msgid "Please choose review status"
+msgstr ""
+
 msgid "Please choose type of limitation"
 msgstr ""
 
@@ -455,6 +458,12 @@ msgid "Please enter promo code"
 msgstr ""
 
 msgid "Please enter quantity"
+msgstr ""
+
+msgid "Please enter reason for content change"
+msgstr ""
+
+msgid "Please enter reason for rejection"
 msgstr ""
 
 msgid "Please enter refund amount."

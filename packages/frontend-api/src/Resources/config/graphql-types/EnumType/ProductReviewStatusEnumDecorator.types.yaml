@@ -1,0 +1,15 @@
+ProductReviewStatusEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of possible moderation statuses of a product review"
+        values:
+            PENDING:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\ProductReview\\ProductReviewStatusEnum::STATUS_PENDING")'
+                description: "The review is waiting for moderation"
+            APPROVED:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\ProductReview\\ProductReviewStatusEnum::STATUS_APPROVED")'
+                description: "The review is approved and publicly visible"
+            REJECTED:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\ProductReview\\ProductReviewStatusEnum::STATUS_REJECTED")'
+                description: "The review was rejected"

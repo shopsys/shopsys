@@ -214,8 +214,14 @@ msgstr "Množstvo musí byť celé číslo"
 msgid "Quantity must be greater than 0"
 msgstr "Množstvo musí byť väčšie ako 0"
 
+msgid "Rating must be between {{ min }} and {{ max }} stars"
+msgstr "Hodnotenie musí byť medzi {{ min }} a {{ max }} hviezdičkami"
+
 msgid "Resolution is required"
 msgstr "Spôsob riešenia je povinný"
+
+msgid "Review text cannot be longer than {{ limit }} characters"
+msgstr "Text recenzie nesmie byť dlhší ako {{ limit }} znakov"
 
 msgid "Selected complaint resolution is not supported"
 msgstr "Vybraný spôsob riešenia reklamácie nie je podporovaný"

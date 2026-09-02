@@ -100,7 +100,7 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
                                         <ExtendedNextLink
                                             aria-label={t('Go to order detail page', { ns: 'accessibility' })}
                                             href={orderDetailUrl}
-                                            type="orderDetail"
+                                            skeletonType="orderDetailByHash"
                                         />
                                     ),
                                 }}

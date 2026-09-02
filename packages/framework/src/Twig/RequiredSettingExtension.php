@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\Settings\PhonePrefixSettingsFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
@@ -48,6 +49,7 @@ class RequiredSettingExtension extends AbstractExtension
         protected readonly SeoSettingFacade $seoSettingFacade,
         protected readonly PaymentFacade $paymentFacade,
         protected readonly TransportFacade $transportFacade,
+        protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
     ) {
     }
 
@@ -239,6 +241,18 @@ class RequiredSettingExtension extends AbstractExtension
                     '<a href="%url%">User consent policy article for domain %domainName% is not set.</a>',
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_userconsentpolicy_setting', $domainId),
+                        '%domainName%' => $domainConfig->getName(),
+                    ],
+                );
+            }
+
+            if ($this->productReviewEnabledChecker->isEnabledForDomain($domainId)
+                && $this->setting->getForDomain(Setting::PRODUCT_REVIEW_POLICY_ARTICLE_ID, $domainConfig->getId()) === null
+            ) {
+                $this->requiredSettingsMessages[] = t(
+                    '<a href="%url%">Product review policy article for domain %domainName% is not set.</a>',
+                    [
+                        '%url%' => $this->generateUrlWithSelectedDomainTab('shopsys_administration_productreviewpolicy_setting', $domainId),
                         '%domainName%' => $domainConfig->getName(),
                     ],
                 );

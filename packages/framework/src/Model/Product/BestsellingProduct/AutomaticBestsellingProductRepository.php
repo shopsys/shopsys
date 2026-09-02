@@ -44,6 +44,7 @@ class AutomaticBestsellingProductRepository
             ->andWhere('pmip.pricingGroup = prv.pricingGroup')
             ->andWhere('os.type = :orderStatusType')
             ->setParameter('orderStatusType', OrderStatusTypeEnum::TYPE_DONE)
+            ->andWhere('o.domainId = :domainId')
             ->andWhere('o.createdAt >= :createdAt')
             ->setParameter('createdAt', $ordersCreatedAtLimit)
             ->orderBy('orderCount', 'DESC')

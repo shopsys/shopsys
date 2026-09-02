@@ -60,6 +60,8 @@ fragment OrderDetailFragment on Order {
     }
     canRequestWithdrawal
     withdrawalDeadline
+    productReviewsAllowed
+    reviewedProductUuids
     customerUser {
         uuid
     }

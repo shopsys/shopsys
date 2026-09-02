@@ -1,4 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ProductReviewsSummaryBadge } from 'components/Blocks/ProductReviews/ProductReviewsSummaryBadge';
+import { TypeProductReviewsSummaryFragment } from 'graphql/requests/productReviews/fragments/ProductReviewsSummaryFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ProductDetailUsps } from './ProductDetailUsps';
 
@@ -8,11 +10,18 @@ type ProductDetailInfoProps = {
         slug: string;
     } | null;
     catalogNumber: string;
+    reviewsSummary?: TypeProductReviewsSummaryFragment | null;
     shortDescription?: string | null;
     usps?: string[];
 };
 
-export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({ brand, catalogNumber, shortDescription, usps }) => {
+export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({
+    brand,
+    catalogNumber,
+    reviewsSummary,
+    shortDescription,
+    usps,
+}) => {
     const { t } = useTranslation();
 
     return (
@@ -20,10 +29,10 @@ export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({ brand, catalogNu
             <div className="flex items-center gap-5 text-sm">
                 {brand && (
                     <div>
-                        <span>{t('Brand')}: </span>
+                        <span className="text-text-less">{t('Brand')}: </span>
 
                         <ExtendedNextLink
-                            className="text-sm"
+                            className="font-semibold text-sm text-text-less no-underline hover:underline"
                             href={brand.slug}
                             title={t('Go to brand page')}
                             type="brand"
@@ -37,10 +46,12 @@ export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({ brand, catalogNu
                     </div>
                 )}
 
-                <div>
+                <span className="text-text-less">
                     {t('Code')}: {catalogNumber}
-                </div>
+                </span>
             </div>
+
+            <ProductReviewsSummaryBadge reviewsSummary={reviewsSummary ?? null} />
 
             {shortDescription && <div className="text-sm">{shortDescription}</div>}
 

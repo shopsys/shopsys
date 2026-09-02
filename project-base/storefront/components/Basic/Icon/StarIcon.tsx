@@ -1,13 +1,14 @@
-export const StarIcon: SvgFC = (props) => (
-    <svg fill="none" {...props} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+export const StarIcon: SvgFC = ({ fill = 'none', stroke = 'currentColor', ...props }) => (
+    <svg {...props} fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path
-            fillRule="evenodd"
             clipRule="evenodd"
-            d="M7.73124 20.8325C7.22417 21.0972 6.61072 21.0506 6.14946 20.7124C5.68819 20.3741 5.45933 19.8031 5.55933 19.2399L6.36867 14.6009L2.96125 11.3356C2.54475 10.9384 2.39211 10.338 2.56835 9.7901C2.74458 9.24222 3.21864 8.84339 3.7886 8.76351L8.51957 8.08723L10.6555 3.82645C10.9087 3.31546 11.4297 2.99219 12 2.99219C12.5703 2.99219 13.0913 3.31546 13.3446 3.82645L15.4805 8.08723L20.2114 8.76351C20.7814 8.84339 21.2555 9.24222 21.4317 9.7901C21.6079 10.338 21.4553 10.9384 21.0388 11.3356L17.6314 14.6009L18.4407 19.2409C18.5407 19.8041 18.3118 20.3751 17.8506 20.7134C17.3893 21.0516 16.7759 21.0982 16.2688 20.8335L12 18.6276L7.73124 20.8325Z"
-            stroke="currentColor"
-            strokeWidth="1.5"
+            d="M12 17.235L6.179 20L7.388 13.88L3 9.392L9.179 8.621L12 3L14.821 8.621L21 9.392L16.612 13.88L17.821 20L12 17.235Z"
+            fill={fill}
+            fillRule="evenodd"
+            stroke={stroke}
             strokeLinecap="round"
             strokeLinejoin="round"
+            strokeWidth="1.5"
         />
     </svg>
 );

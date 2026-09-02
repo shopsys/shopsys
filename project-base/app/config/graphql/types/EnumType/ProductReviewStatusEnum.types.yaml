@@ -1,0 +1,4 @@
+ProductReviewStatusEnum:
+    type: enum
+    inherits:
+        - 'ProductReviewStatusEnumDecorator'

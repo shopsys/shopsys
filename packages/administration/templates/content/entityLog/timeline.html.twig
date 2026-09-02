@@ -1,3 +1,12 @@
+{% macro note(noteText) %}
+    {% if noteText is not empty %}
+        <div class="d-flex gap-2 text-secondary mt-2" title="{{ 'Note'|trans }}">
+            {{ ux_icon('note', { class: 'icon icon-sm flex-shrink-0' }) }}
+            <span class="fst-italic small">{{ noteText }}</span>
+        </div>
+    {% endif %}
+{% endmacro %}
+
 <div {{ attributes }}>
     {% set groups = this.groups %}
 
@@ -52,6 +61,8 @@
                                 {% if formattedChanges is not empty %}
                                     <div class="text-secondary">{{ formattedChanges|raw }}</div>
                                 {% endif %}
+
+                                {{ _self.note(firstLog.note) }}
                             {% else %}
                                 <div class="vstack gap-3">
                                     {% for entityLog in group %}
@@ -68,6 +79,8 @@
                                             {% if formattedChanges is not empty %}
                                                 <div class="text-secondary">{{ formattedChanges|raw }}</div>
                                             {% endif %}
+
+                                            {{ _self.note(entityLog.note) }}
                                         </div>
                                     {% endfor %}
                                 </div>

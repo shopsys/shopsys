@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSettingFacade;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewFacade;
 
 class OrderResolverMap extends ResolverMap
 {
@@ -17,6 +19,8 @@ class OrderResolverMap extends ResolverMap
         protected readonly Domain $domain,
         protected readonly WithdrawalSettingFacade $withdrawalSettingFacade,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
+        protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
+        protected readonly ProductReviewFacade $productReviewFacade,
     ) {
     }
 
@@ -36,6 +40,13 @@ class OrderResolverMap extends ResolverMap
                 },
                 'statusType' => function (Order $order) {
                     return $order->getStatus()->getType();
+                },
+                'productReviewsAllowed' => function (Order $order) {
+                    return $this->productReviewEnabledChecker->isEnabledForDomain($order->getDomainId())
+                        && $order->getStatus()->areProductReviewsAllowed();
+                },
+                'reviewedProductUuids' => function (Order $order) {
+                    return $this->productReviewFacade->getReviewedProductUuidsByOrder($order);
                 },
                 'items' => function (Order $order) {
                     return $order->getItemsSortedWithRelatedItems();

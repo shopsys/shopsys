@@ -7,13 +7,20 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Order\Status;
 use Override;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 final class OrderStatusFormType extends AbstractType
 {
+    public function __construct(
+        private readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
+    ) {
+    }
+
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -29,6 +36,13 @@ final class OrderStatusFormType extends AbstractType
                     ],
                 ],
             ]);
+
+        if ($this->productReviewEnabledChecker->isEnabledOnAnyDomain()) {
+            $builder->add('productReviewsAllowed', CheckboxType::class, [
+                'label' => 'Allow product reviews',
+                'required' => false,
+            ]);
+        }
     }
 
     #[Override]

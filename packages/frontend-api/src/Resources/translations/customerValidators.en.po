@@ -214,7 +214,13 @@ msgstr ""
 msgid "Quantity must be greater than 0"
 msgstr ""
 
+msgid "Rating must be between {{ min }} and {{ max }} stars"
+msgstr ""
+
 msgid "Resolution is required"
+msgstr ""
+
+msgid "Review text cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Selected complaint resolution is not supported"

@@ -11,6 +11,7 @@ import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
+    WRITE_REVIEW_PRODUCT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { Url } from 'utils/staticUrls/getInternationalizedStaticUrl';
@@ -105,6 +106,7 @@ ${customerUrlsToNoIndex.map((customerUrl) => `\nDisallow: ${customerUrl}`).join(
 Disallow: *?${FILTER_QUERY_PARAMETER_NAME}=
 Disallow: *?${LOAD_MORE_QUERY_PARAMETER_NAME}=
 Disallow: *?${SORT_QUERY_PARAMETER_NAME}=
+Disallow: *?${WRITE_REVIEW_PRODUCT_QUERY_PARAMETER_NAME}=
 Disallow: /*?width=
 ${robotsTxtContentFromAdmin || ''}
 

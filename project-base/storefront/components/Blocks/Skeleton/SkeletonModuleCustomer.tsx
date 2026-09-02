@@ -3,7 +3,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 
 export const SkeletonModuleCustomer: FC = ({ children }) => (
-    <Webline>
+    <Webline width="xl">
         <div className="flex flex-row items-stretch gap-10">
             <Skeleton className="hidden h-125 w-68.75 rounded-xl lg:block" />
 

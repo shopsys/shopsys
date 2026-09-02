@@ -18,12 +18,14 @@ import { SkeletonPageCustomerComplaintDetail } from './SkeletonPageCustomerCompl
 import { SkeletonPageCustomerComplaintList } from './SkeletonPageCustomerComplaintList';
 import { SkeletonPageCustomerComplaintNew } from './SkeletonPageCustomerComplaintNew';
 import { SkeletonPageCustomerEditProfile } from './SkeletonPageCustomerEditProfile';
+import { SkeletonPageCustomerMyReviews } from './SkeletonPageCustomerMyReviews';
 import { SkeletonPageCustomerOrderDetail } from './SkeletonPageCustomerOrderDetail';
 import { SkeletonPageCustomerOrderList } from './SkeletonPageCustomerOrderList';
 import { SkeletonPageCustomerUsers } from './SkeletonPageCustomerUsers';
 import { SkeletonPageFlag } from './SkeletonPageFlag';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageLogin } from './SkeletonPageLogin';
+import { SkeletonPageOrderDetailByHash } from './SkeletonPageOrderDetailByHash';
 import { SkeletonPageOrderWithdrawal } from './SkeletonPageOrderWithdrawal';
 import { SkeletonPageOrderWithdrawalSuccess } from './SkeletonPageOrderWithdrawalSuccess';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
@@ -59,8 +61,10 @@ const SKELETON_COMPONENT_MAP: Record<PageType, ComponentType> = {
     [SkeletonEnum.Flag]: SkeletonPageFlag,
     [SkeletonEnum.Homepage]: SkeletonPageHome,
     [SkeletonEnum.Login]: SkeletonPageLogin,
+    [SkeletonEnum.MyReviews]: SkeletonPageCustomerMyReviews,
     [SkeletonEnum.OrderConfirmation]: SkeletonPageConfirmation,
     [SkeletonEnum.OrderDetail]: SkeletonPageCustomerOrderDetail,
+    [SkeletonEnum.OrderDetailByHash]: SkeletonPageOrderDetailByHash,
     [SkeletonEnum.OrderList]: SkeletonPageCustomerOrderList,
     [SkeletonEnum.OrderWithdrawal]: SkeletonPageOrderWithdrawal,
     [SkeletonEnum.OrderWithdrawalSuccess]: SkeletonPageOrderWithdrawalSuccess,

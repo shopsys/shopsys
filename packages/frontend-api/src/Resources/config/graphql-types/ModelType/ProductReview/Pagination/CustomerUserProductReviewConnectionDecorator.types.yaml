@@ -1,0 +1,8 @@
+CustomerUserProductReviewConnectionDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of the customer user's reviews"

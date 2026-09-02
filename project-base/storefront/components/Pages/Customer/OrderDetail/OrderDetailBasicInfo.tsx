@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
+import { useCurrentCustomerUserReviewedProductUuids } from 'components/Blocks/ProductReviews/useCurrentCustomerUserReviewedProductUuids';
 import { Button } from 'components/Forms/Button/Button';
 import {
     CustomerRecordCard,
@@ -8,7 +9,7 @@ import {
     CustomerRecordElementWithImage,
     CustomerRecordRowInfo,
 } from 'components/Pages/Customer/CustomerRecordElements';
-import { OrderPaymentStatusBar } from 'components/Pages/Customer/Orders/OrderPaymentStatusBar';
+import { OrderPaymentStatusBadge } from 'components/Pages/Customer/Orders/OrderPaymentStatusBadge';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
@@ -31,6 +32,12 @@ type OrderDetailBasicInfoProps = {
 export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
+    const { isLoading: isReviewAvailabilityLoading, reviewedProductUuids: currentCustomerUserReviewedProductUuids } =
+        useCurrentCustomerUserReviewedProductUuids();
+    const reviewedProductUuids = new Set([
+        ...Array.from(currentCustomerUserReviewedProductUuids),
+        ...order.reviewedProductUuids,
+    ]);
     const { formatDate } = useFormatDate();
     const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
     const { canCreateOrder } = useAuthorization();
@@ -69,10 +76,10 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 </CustomerRecordColumnInfo>
 
                 {isPriceVisible(order.totalPrice.priceWithVat) && (
-                    <CustomerRecordColumnInfo title={t('Price')}>
-                        {formatPrice(order.totalPrice.priceWithVat)}
+                    <CustomerRecordColumnInfo valueClassName="flex flex-col items-start gap-1" title={t('Price')}>
+                        <span>{formatPrice(order.totalPrice.priceWithVat)}</span>
 
-                        <OrderPaymentStatusBar
+                        <OrderPaymentStatusBadge
                             orderHasExternalPayment={order.hasExternalPayment}
                             orderHasPaymentInProcess={order.hasPaymentInProcess}
                             orderIsPaid={order.isPaid}
@@ -184,7 +191,11 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                             key={orderItem.name}
                             isOrderFromRegisteredCustomer={order.customerUser !== null}
                             orderItem={orderItem}
+                            orderUrlHash={order.urlHash}
                             orderUuid={order.uuid}
+                            productReviewsAllowed={order.productReviewsAllowed}
+                            isReviewAvailabilityLoading={isReviewAvailabilityLoading}
+                            reviewedProductUuids={reviewedProductUuids}
                             isDiscount={
                                 orderItem.type === TypeOrderItemTypeEnum.Discount ||
                                 orderItem.type === TypeOrderItemTypeEnum.Promotion

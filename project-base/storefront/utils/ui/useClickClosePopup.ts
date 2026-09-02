@@ -20,10 +20,10 @@ const useClickClosePopup = (refs: React.RefObject<HTMLElement | null>[], onOutsi
             }
         };
 
-        window.addEventListener('mousedown', handleDocumentMouseDown);
+        window.addEventListener('mousedown', handleDocumentMouseDown, true);
 
         return () => {
-            window.removeEventListener('mousedown', handleDocumentMouseDown);
+            window.removeEventListener('mousedown', handleDocumentMouseDown, true);
         };
     }, [refs]);
 };

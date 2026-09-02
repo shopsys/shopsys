@@ -7,13 +7,13 @@
         {% endif %}
 
         <a href="{{ url }}" target="{{ link_target }}"{% if link_target is same as('_blank') %} rel="noopener"{% endif %} {% with {attr: route_attr} %}{{ block('attributes') }}{% endwith %}>
-            {% if link_target is same as('_blank') %}
-                {{ ux_icon('forward-page') }}
-            {% endif %}
             {% if route_label is not empty %}
                 {{ route_label }}
             {% else %}
                 {{ url }}
+            {% endif %}
+            {% if link_target is same as('_blank') %}
+                {{ ux_icon('forward-page') }}
             {% endif %}
         </a>
     </div>

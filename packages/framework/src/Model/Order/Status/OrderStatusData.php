@@ -11,6 +11,11 @@ class OrderStatusData
      */
     public $name;
 
+    /**
+     * @var bool
+     */
+    public $productReviewsAllowed = false;
+
     public function __construct()
     {
         $this->name = [];

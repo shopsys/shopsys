@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewPolicyFacade;
 use Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,7 @@ class ArticleController extends AdminBaseController
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
         protected readonly LegalConditionsFacade $legalConditionsFacade,
         protected readonly UserConsentPolicyFacade $userConsentPolicyFacade,
+        protected readonly ProductReviewPolicyFacade $productReviewPolicyFacade,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
@@ -183,6 +185,11 @@ class ArticleController extends AdminBaseController
         } elseif ($this->userConsentPolicyFacade->isArticleUsedAsUserConsentPolicyArticle($article)) {
             $message = t(
                 'Article "%name%" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?',
+                ['%name%' => $article->getName()],
+            );
+        } elseif ($this->productReviewPolicyFacade->isArticleUsedAsProductReviewPolicyArticle($article)) {
+            $message = t(
+                'Article "%name%" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?',
                 ['%name%' => $article->getName()],
             );
         } else {

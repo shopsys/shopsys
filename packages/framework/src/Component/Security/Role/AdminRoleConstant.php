@@ -56,6 +56,7 @@ class AdminRoleConstant
     public const string ROLE_PRIVACY_POLICY = 'ROLE_PRIVACY_POLICY';
     public const string ROLE_PERSONAL_DATA = 'ROLE_PERSONAL_DATA';
     public const string ROLE_USER_CONSENT_POLICY = 'ROLE_USER_CONSENT_POLICY';
+    public const string ROLE_PRODUCT_REVIEW_POLICY = 'ROLE_PRODUCT_REVIEW_POLICY';
     public const string ROLE_SEO = 'ROLE_SEO';
     public const string ROLE_SEO_PAGES = 'ROLE_SEO_PAGES';
     public const string ROLE_ROBOTS = 'ROLE_ROBOTS';

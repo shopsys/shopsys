@@ -1,0 +1,9 @@
+{% if status is same as(constant('Shopsys\\FrameworkBundle\\Model\\ProductReview\\ProductReviewStatusEnum::STATUS_PENDING')) %}
+    <span class="badge bg-yellow-lt text-yellow-lt-fg">{{ 'Pending'|trans }}</span>
+{% elseif status is same as(constant('Shopsys\\FrameworkBundle\\Model\\ProductReview\\ProductReviewStatusEnum::STATUS_APPROVED')) %}
+    <span class="badge bg-green-lt text-green-lt-fg">{{ 'Approved'|trans }}</span>
+{% elseif status is same as(constant('Shopsys\\FrameworkBundle\\Model\\ProductReview\\ProductReviewStatusEnum::STATUS_REJECTED')) %}
+    <span class="badge bg-red-lt text-red-lt-fg">{{ 'Rejected'|trans }}</span>
+{% else %}
+    {% block review_status_badge_custom %}<span class="badge">{{ status }}</span>{% endblock %}
+{% endif %}

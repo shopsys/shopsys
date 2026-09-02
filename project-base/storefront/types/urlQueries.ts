@@ -8,6 +8,8 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
+    WRITE_REVIEW_ORDER_HASH_QUERY_PARAMETER_NAME,
+    WRITE_REVIEW_PRODUCT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 import { FilterOptionsUrlQueryType } from './productFilter';
 
@@ -22,4 +24,6 @@ export type UrlQueries = {
     [SORT_QUERY_PARAMETER_NAME]?: TypeProductOrderingModeEnum;
     [PAGE_QUERY_PARAMETER_NAME]?: string;
     [LOAD_MORE_QUERY_PARAMETER_NAME]?: string;
+    [WRITE_REVIEW_PRODUCT_QUERY_PARAMETER_NAME]?: string;
+    [WRITE_REVIEW_ORDER_HASH_QUERY_PARAMETER_NAME]?: string;
 };

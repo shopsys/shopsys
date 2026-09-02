@@ -23,6 +23,12 @@ OrderDecorator:
             statusType:
                 type: "OrderStatusEnum!"
                 description: "Type of the order status"
+            productReviewsAllowed:
+                type: "Boolean!"
+                description: "Products of the order can be reviewed in its current status"
+            reviewedProductUuids:
+                type: "[Uuid!]!"
+                description: "Uuids of the order's products that already have a review linked to this order"
 
             totalPrice:
                 type: "Price!"

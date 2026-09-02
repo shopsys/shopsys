@@ -13,6 +13,7 @@ import { CheckmarkBadgeIcon } from 'components/Basic/Icon/CheckmarkBadgeIcon';
 import { CheckmarkDoneIcon } from 'components/Basic/Icon/CheckmarkDoneIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { ChevronEmptyDotIcon } from 'components/Basic/Icon/ChevronEmptyDotIcon';
+import { ClockIcon } from 'components/Basic/Icon/ClockIcon';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
@@ -50,6 +51,7 @@ import { PackageDeliveredIcon } from 'components/Basic/Icon/PackageDeliveredIcon
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
+import { RejectedIcon } from 'components/Basic/Icon/RejectedIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { SeznamIcon } from 'components/Basic/Icon/SeznamIcon';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
@@ -71,6 +73,7 @@ import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
 import { WithdrawalIcon } from 'components/Basic/Icon/WithdrawalIcon';
+import { WriteIcon } from 'components/Basic/Icon/WriteIcon';
 import { YoutubeIcon } from 'components/Basic/Icon/YoutubeIcon';
 
 export const StyleguideIcons = () => (
@@ -111,6 +114,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <ChevronEmptyDotIcon className="size-10" />
                 <span className="text-center text-xs break-all">ChevronEmptyDotIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <ClockIcon className="size-10" />
+                <span className="text-center text-xs break-all">ClockIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <CloseIcon className="size-10" />
@@ -261,6 +268,10 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">PlusIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <RejectedIcon className="size-10" />
+                <span className="text-center text-xs break-all">RejectedIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <SearchIcon className="size-10" />
                 <span className="text-center text-xs break-all">SearchIcon</span>
             </div>
@@ -343,6 +354,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <WithdrawalIcon className="size-10" />
                 <span className="text-center text-xs break-all">WithdrawalIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <WriteIcon className="size-10" />
+                <span className="text-center text-xs break-all">WriteIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <YoutubeIcon className="size-10" />

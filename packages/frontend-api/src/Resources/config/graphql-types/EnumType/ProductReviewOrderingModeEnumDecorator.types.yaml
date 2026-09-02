@@ -1,0 +1,15 @@
+ProductReviewOrderingModeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of possible ordering modes for product reviews"
+        values:
+            NEWEST:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\ProductReview\\ProductReviewOrderingModeEnum::NEWEST")'
+                description: "Order by date of creation, newest first"
+            HIGHEST_RATING:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\ProductReview\\ProductReviewOrderingModeEnum::HIGHEST_RATING")'
+                description: "Order by rating, highest first"
+            LOWEST_RATING:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\ProductReview\\ProductReviewOrderingModeEnum::LOWEST_RATING")'
+                description: "Order by rating, lowest first"

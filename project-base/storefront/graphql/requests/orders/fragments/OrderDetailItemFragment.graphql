@@ -24,6 +24,7 @@ fragment OrderDetailItemFragment on OrderItem {
         }
     }
     product {
+        uuid
         catalogNumber
         slug
         isVisible

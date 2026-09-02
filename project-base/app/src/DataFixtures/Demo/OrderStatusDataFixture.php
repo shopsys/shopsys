@@ -59,6 +59,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
                 default => throw new UnknownNameTranslationForOrderStatusReferenceNameException($referenceName),
             };
         }
+
         $this->orderStatusFacade->edit($orderStatusId, $orderStatusData);
         $this->addReference($referenceName, $orderStatus);
     }

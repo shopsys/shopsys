@@ -8,7 +8,10 @@ import { Checkbox, CheckboxProps } from './Checkbox';
 type CheckboxControlledProps<TFieldValues extends FieldValues, TTransformedValues> = {
     name: FieldPath<TFieldValues>;
     render?: (input: ReactElement) => ReactElement<any, any> | null;
-    checkboxProps: Pick<CheckboxProps, 'count' | 'disabled' | 'label' | 'required' | 'className'>;
+    checkboxProps: Pick<
+        CheckboxProps,
+        'count' | 'disabled' | 'label' | 'required' | 'className' | 'labelWrapperClassName'
+    >;
     control: Control<TFieldValues, any, TTransformedValues>;
     formName: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;

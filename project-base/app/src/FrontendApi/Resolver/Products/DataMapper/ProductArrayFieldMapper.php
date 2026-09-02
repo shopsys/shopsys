@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
+use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper as BaseProductArrayFieldMapper;
 
 /**
@@ -46,6 +47,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         Domain $domain,
         HreflangLinksFacade $hreflangLinksFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
+        ProductReviewApiFacade $productReviewApiFacade,
         private DataLoaderInterface $categoriesBatchLoader,
         private DataLoaderInterface $flagsBatchLoader,
         private DataLoaderInterface $brandsBatchLoader,
@@ -63,6 +65,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
             $domain,
             $hreflangLinksFacade,
             $productAvailabilityFacade,
+            $productReviewApiFacade,
         );
     }
 

@@ -1,0 +1,6 @@
+ProductReviewConnection:
+    type: relay-connection
+    config:
+        nodeType: ProductReview
+    inherits:
+        - 'ProductReviewConnectionDecorator'

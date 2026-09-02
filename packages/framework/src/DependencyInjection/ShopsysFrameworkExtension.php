@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilt
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderInterface;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Payment\AbstractPaymentTypeEnum;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
 use Shopsys\FrameworkBundle\Model\Transport\AbstractTransportTypeEnum;
 use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
 use Shopsys\FrameworkBundle\Twig\VarDumperExtension;
@@ -93,6 +94,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $this->setAdminContextPathPrefixes($config['admin_context_additional_path_prefixes'], $container);
         $this->setPostDeployTasksConfig($config['post_deploy']['tasks'], $container);
+        $this->setProductReviewEnabledChecker($config['product']['reviews']['enabled_domain_ids'], $container);
     }
 
     protected function configureVarDumperTwigExtension(ContainerBuilder $container): void
@@ -155,6 +157,15 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
     ): void {
         $container->getDefinition(AdminContext::class)
             ->setArgument('$additionalAdminPathPrefixes', $additionalAdminPathPrefixes);
+    }
+
+    /**
+     * @param int[] $enabledDomainIds
+     */
+    protected function setProductReviewEnabledChecker(array $enabledDomainIds, ContainerBuilder $container): void
+    {
+        $container->getDefinition(ProductReviewEnabledChecker::class)
+            ->setArgument('$enabledDomainIds', $enabledDomainIds);
     }
 
     /**

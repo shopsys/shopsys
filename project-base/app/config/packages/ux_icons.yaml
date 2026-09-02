@@ -62,6 +62,7 @@ ux_icons:
         minus: 'tabler:minus'
         mood-confused: 'tabler:mood-confuzed'
         move: 'tabler:arrows-move'
+        note: 'tabler:message-circle'
         notes-off: 'tabler:notes-off'
         pencil: 'tabler:edit'
         person-door-man: 'tabler:user-square'

@@ -261,6 +261,14 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('createComplaintMutation', args, validator)"
                 access: "@=isGranted('create_complaint_voter', args)"
+            CreateProductReview:
+                type: ProductReview!
+                description: "Create a new product review that will be published after moderation"
+                args:
+                    input:
+                        type: ProductReviewInput!
+                        validation: cascade
+                resolve: "@=mutation('createProductReviewMutation', args, validator)"
             CreateWatchdog:
                 type: Boolean!
                 description: "Create a new watchdog or update validity of the current one"

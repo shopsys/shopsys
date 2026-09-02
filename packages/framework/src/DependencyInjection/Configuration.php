@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\DependencyInjection;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskRunEnum;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -18,8 +19,19 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('shopsys_framework');
+        $rootNode = $treeBuilder->getRootNode();
 
-        $treeBuilder->getRootNode()
+        $this->addOrderSection($rootNode);
+        $this->addProductSection($rootNode);
+        $this->addAdminContextSection($rootNode);
+        $this->addPostDeploySection($rootNode);
+
+        return $treeBuilder;
+    }
+
+    protected function addOrderSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
             ->children()
                 ->arrayNode('order')
                     ->children()
@@ -28,9 +40,44 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+            ->end();
+    }
+
+    protected function addProductSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('product')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('reviews')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('enabled_domain_ids')
+                                    ->integerPrototype()->end()
+                                    ->defaultValue([])
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    protected function addAdminContextSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
+            ->children()
                 ->arrayNode('admin_context_additional_path_prefixes')
                     ->scalarPrototype()->end()
                 ->end()
+            ->end();
+    }
+
+    protected function addPostDeploySection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
+            ->children()
                 ->arrayNode('post_deploy')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -74,7 +121,5 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
-
-        return $treeBuilder;
     }
 }

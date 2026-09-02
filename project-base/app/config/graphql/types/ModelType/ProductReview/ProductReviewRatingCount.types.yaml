@@ -1,0 +1,4 @@
+ProductReviewRatingCount:
+    type: object
+    inherits:
+        - 'ProductReviewRatingCountDecorator'

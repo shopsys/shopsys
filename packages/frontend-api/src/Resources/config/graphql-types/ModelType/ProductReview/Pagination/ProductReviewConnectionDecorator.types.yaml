@@ -1,0 +1,14 @@
+ProductReviewConnectionDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of reviews"
+            summary:
+                type: "ProductReviewsSummary!"
+                description: "Aggregated rating of the same set of reviews the connection paginates"
+            orderingMode:
+                type: "ProductReviewOrderingModeEnum!"
+                description: "The current ordering mode"

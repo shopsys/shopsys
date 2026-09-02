@@ -8,7 +8,7 @@ export const SkeletonPageLogin: FC = () => (
     <>
         <SkeletonModuleBreadcrumbs count={2} />
 
-        <Webline width="lg">
+        <Webline width="sm">
             <VerticalStack gap="sm">
                 <SkeletonModulePageHero />
 

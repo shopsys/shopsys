@@ -1,0 +1,9 @@
+query ProductReviewOrderPrefillQuery($urlHash: String) {
+    order(urlHash: $urlHash) {
+        __typename
+        uuid
+        firstName
+        lastName
+        email
+    }
+}

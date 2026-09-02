@@ -24,11 +24,13 @@ class ArticleDataFixture extends AbstractReferenceFixture
     public const string ARTICLE_TERMS_AND_CONDITIONS = 'article_terms_and_conditions';
     public const string ARTICLE_PRIVACY_POLICY = 'article_privacy_policy';
     public const string USER_CONSENT_POLICY_ARTICLE = 'article_user_consent_policy';
+    public const string PRODUCT_REVIEW_POLICY_ARTICLE = 'article_product_review_policy';
 
     private const array ARTICLES_MANDATORY_ON_ALL_DOMAINS = [
         self::ARTICLE_TERMS_AND_CONDITIONS,
         self::ARTICLE_PRIVACY_POLICY,
         self::USER_CONSENT_POLICY_ARTICLE,
+        self::PRODUCT_REVIEW_POLICY_ARTICLE,
     ];
 
     private const string ATTRIBUTE_NAME_KEY = 'name';
@@ -311,6 +313,17 @@ class ArticleDataFixture extends AbstractReferenceFixture
                 self::ATTRIBUTE_PLACEMENT_KEY => $domainConfig->getId() === Domain::SECOND_DOMAIN_ID ? Article::PLACEMENT_FOOTER_2 : Article::PLACEMENT_NONE,
                 self::REFERENCE_NAME_KEY => self::USER_CONSENT_POLICY_ARTICLE,
             ], [
+                self::ATTRIBUTE_PLAIN_NAME_KEY => 'How we work with reviews',
+                self::ATTRIBUTE_NAME_KEY => t('How we work with reviews', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                self::ATTRIBUTE_TEXT_KEY => t(
+                    '<p>Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</p>',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $locale,
+                ),
+                self::ATTRIBUTE_PLACEMENT_KEY => Article::PLACEMENT_NONE,
+                self::REFERENCE_NAME_KEY => self::PRODUCT_REVIEW_POLICY_ARTICLE,
+            ], [
                 self::ATTRIBUTE_PLAIN_NAME_KEY => 'Article for search testing',
                 self::ATTRIBUTE_NAME_KEY => t('Article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 self::ATTRIBUTE_TEXT_KEY => t('<p>Article text for search testing, the search phrase is &#34;Dina&#34;.</p>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -400,6 +413,10 @@ class ArticleDataFixture extends AbstractReferenceFixture
             'User consent policy' => [
                 'intro' => t('Optional consent can be used for clearly described purposes such as personalised marketing or selected analytics.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 'detail' => t('Consent must be voluntary, specific, informed, and easy to withdraw. Refusing optional consent must not prevent completion of an ordinary purchase.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'How we work with reviews' => [
+                'intro' => t('Customer reviews help shoppers make informed decisions and share their experience with purchased products.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'detail' => t('We publish reviews after checking that they comply with our review guidelines. Reviews from customers whose purchase we can confirm are marked as verified purchases.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
         ];
         $contentTranslationKeys = $contentTranslationKeysByArticleName[$articleName];

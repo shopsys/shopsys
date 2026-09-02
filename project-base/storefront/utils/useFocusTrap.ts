@@ -60,6 +60,16 @@ export const useFocusTrap = (containerRef: React.RefObject<HTMLElement | null> |
                 return;
             }
 
+            if (
+                // Password-manager and browser autofill popups render outside the trapped container.
+                e.relatedTarget instanceof HTMLInputElement &&
+                container.contains(e.relatedTarget) &&
+                e.relatedTarget.autocomplete !== '' &&
+                e.relatedTarget.autocomplete !== 'off'
+            ) {
+                return;
+            }
+
             (getFocusableElements(container)[0] ?? container).focus();
         };
 

@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
+use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 
 class ProductArrayFieldMapper
 {
@@ -35,6 +36,7 @@ class ProductArrayFieldMapper
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly ProductReviewApiFacade $productReviewApiFacade,
     ) {
     }
 
@@ -279,5 +281,14 @@ class ProductArrayFieldMapper
     public function getPromotionFreeQuantity(array $data): ?int
     {
         return $data['promotion']['free_quantity'];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return array{average_rating: float|null, total_count: int, rating_counts: array<int, array{rating: int, count: int}>}|null Null for a variant, the summary of the family lives on its main variant
+     */
+    public function getReviewsSummary(array $data): ?array
+    {
+        return $this->productReviewApiFacade->getReviewSummaryForProductArray($data);
     }
 }

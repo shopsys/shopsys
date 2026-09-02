@@ -761,6 +761,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\ProductQuestion\Mail\ProductQuestionMail: ~
 
+    Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker: ~
+
     Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter\:
         resource: '../../Model/Product/AdvancedSearch/Filter/*Filter.php'
 

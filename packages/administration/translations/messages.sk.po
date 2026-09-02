@@ -25,6 +25,9 @@ msgstr "%defaultCurrency% za jednotku"
 msgid "%entityName% (%entityIdentifier%)"
 msgstr "%entityName% (%entityIdentifier%)"
 
+msgid "%rating% out of 5 stars"
+msgstr "%rating% z 5 hviezdičiek"
+
 msgid "2FA"
 msgstr "2FA"
 
@@ -178,6 +181,9 @@ msgstr "Pri odstraňovaní položky „<strong>{{ objectName }}</strong>\" došl
 msgid "An error occurred while saving <strong>{{ objectName }}</strong>."
 msgstr "Pri ukladaní položky „<strong>{{ objectName }}</strong>\" došlo k chybe."
 
+msgid "Anonymous"
+msgstr "Anonymne"
+
 msgid "Applicable variables"
 msgstr "Použiteľné premenné"
 
@@ -186,6 +192,9 @@ msgstr "Použiteľné premenné pre obsah"
 
 msgid "Applicable variables for Subject"
 msgstr "Použiteľné premenné pre predmet"
+
+msgid "Approved"
+msgstr "Schváleno"
 
 msgid "Are you sure?"
 msgstr "Naozaj?"
@@ -639,6 +648,9 @@ msgstr "Prehľad zákazníkov"
 
 msgid "Dashboard"
 msgstr "Dashboard"
+
+msgid "Date and time"
+msgstr "Dátum a čas"
 
 msgid "Date of creation"
 msgstr "Dátum vytvorenia"
@@ -1096,6 +1108,9 @@ msgstr "Udelené"
 msgid "Heureka - Verified by Customer"
 msgstr "Heureka - Overenené zákazníkmi"
 
+msgid "Heureka - Verified by Customer service does not support the language of this domain."
+msgstr "Služba Heureka - Overené zákazníkmi nepodporuje jazyk tejto domény."
+
 msgid "Heureka agreement"
 msgstr "Súhlas s Heurekou"
 
@@ -1116,6 +1131,9 @@ msgstr "Prehľad sviatkov a interných dní"
 
 msgid "Holidays import"
 msgstr "Import sviatkov"
+
+msgid "IP address"
+msgstr "IP adresa"
 
 msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
 msgstr "Ak nemôžete nascánovať QR kód, môžete ručne zadať nasledujúci tajný kľúč:"
@@ -1582,6 +1600,9 @@ msgstr "Otvoriť detail produktu"
 msgid "Open user menu"
 msgstr "Otvoriť menu používateľa"
 
+msgid "Order"
+msgstr "Objednávka"
+
 msgid "Order Nr."
 msgstr "Č. objednávky"
 
@@ -1693,6 +1714,9 @@ msgstr "Platobné transakcie"
 msgid "Payments"
 msgstr "Platby"
 
+msgid "Pending"
+msgstr "Čaká na schválenie"
+
 msgid "Personal data access pages setting"
 msgstr "Nastavenie stránok pre prístup k osobným údajom"
 
@@ -1771,6 +1795,24 @@ msgstr "Produkt spojený s týmto dopytom už nie je dostupný v katalógu."
 msgid "Product not in e-shop."
 msgstr "Produkt nie je v e-shope."
 
+msgid "Product review"
+msgstr "Recenzia produktu"
+
+msgid "Product review policy"
+msgstr "Zásady recenzií"
+
+msgid "Product review policy article setting"
+msgstr "Nastavenie článku so zásadami recenzií"
+
+msgid "Product review policy settings"
+msgstr "Nastavenie zásad recenzií"
+
+msgid "Product review policy settings modified."
+msgstr "Nastavenie zásad recenzií bolo uložené"
+
+msgid "Product reviews"
+msgstr "Recenzie produktov"
+
 msgid "Product with X + Y free promotion"
 msgstr "Produkt s akciou X + Y zadarmo"
 
@@ -1822,6 +1864,9 @@ msgstr "Rýchle hľadanie"
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr "Výšku sadzby nemôže byť upravená. Je potrebné vytvoriť novú sadzbu a starú odstrániť s nahradením za novú."
 
+msgid "Rating"
+msgstr "Hodnotenie"
+
 msgid "Record detail"
 msgstr "Detail položky"
 
@@ -1845,6 +1890,9 @@ msgstr "Refundovaná čiastka"
 
 msgid "Refunded amount has been changed."
 msgstr "Refundovaná čiastka bola zmenená."
+
+msgid "Rejected"
+msgstr "Zamietnuto"
 
 msgid "Remove"
 msgstr "Odstrániť"
@@ -1875,6 +1923,15 @@ msgstr "Resetovať heslo"
 
 msgid "Return back"
 msgstr "Vrátiť späť"
+
+msgid "Reviewed product"
+msgstr "Recenzovaný produkt"
+
+msgid "Reviewer"
+msgstr "Recenzent"
+
+msgid "Reviews are not enabled on this domain"
+msgstr "Recenzie nie sú na tejto doméne povolené"
 
 msgid "Robots.txt"
 msgstr "Robots.txt"
@@ -2215,6 +2272,9 @@ msgstr "Obchodné podmienky"
 msgid "Terms and conditions settings"
 msgstr "Nastavenia Terms and conditions"
 
+msgid "Text review"
+msgstr "Textová recenzia"
+
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr "Aktuálny zoznam URL adries sa nachádza v repozitári projektu v súbore \"storefront/config/routes.ts\"."
 
@@ -2229,6 +2289,9 @@ msgstr "Produkt nemá stanovený názov pre daný jazyk."
 
 msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
 msgstr "Produkt už nie je v katalógu. Toto bolo katalógové číslo v čase dopytovánia."
+
+msgid "The product is no longer in the catalogue."
+msgstr "Produkt už nie je v katalógu."
 
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr "Hodnota sa používa pre: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> nastavenie v Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> nastavenie v Mergado XML feed </li> </ul> Hodnota sa použije iba pri produktoch, ktoré nemajú vyplnený \"Predpokladaný dátum naskladnenia\". Inak sa počet dní odvodzuje z tohto dátumu."
@@ -2395,6 +2458,9 @@ msgstr "Neobmedzené"
 msgid "Unpin"
 msgstr "Odopnúť"
 
+msgid "Unregistered"
+msgstr "Neregistrovaný"
+
 msgid "Unused friendly URL list"
 msgstr "Zoznam Unused friendly URL"
 
@@ -2463,6 +2529,9 @@ msgstr "V"
 
 msgid "Vats"
 msgstr "DPH"
+
+msgid "Verified purchase"
+msgstr "Overený nákup"
 
 msgid "Very Weak"
 msgstr "Veľmi slabé"

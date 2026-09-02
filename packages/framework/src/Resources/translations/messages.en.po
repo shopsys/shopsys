@@ -82,6 +82,9 @@ msgstr ""
 msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
 msgstr ""
 
+msgid "<a href=\"%url%\">Product review policy article for domain %domainName% is not set.</a>"
+msgstr ""
+
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr ""
 
@@ -226,6 +229,9 @@ msgstr ""
 msgid "Allow negative stock"
 msgstr ""
 
+msgid "Allow product reviews"
+msgstr ""
+
 msgid "Alternate language domains"
 msgstr ""
 
@@ -265,6 +271,9 @@ msgstr ""
 msgid "Apply to selected products"
 msgstr ""
 
+msgid "Approved"
+msgstr ""
+
 msgid "Approved with zero amount"
 msgstr ""
 
@@ -278,6 +287,9 @@ msgid "Article"
 msgstr ""
 
 msgid "Article \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
+msgstr ""
+
+msgid "Article \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
 msgstr ""
 
 msgid "Article \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
@@ -575,6 +587,9 @@ msgid "Choose author"
 msgstr ""
 
 msgid "Choose product"
+msgstr ""
+
+msgid "Choose the article that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
 msgstr ""
 
 msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
@@ -1244,6 +1259,9 @@ msgid "E-shop identification"
 msgstr ""
 
 msgid "E-shop name"
+msgstr ""
+
+msgid "E-shop response"
 msgstr ""
 
 msgid "EAN"
@@ -2083,6 +2101,9 @@ msgstr ""
 msgid "Minimal duration from all runs in last seven days"
 msgstr ""
 
+msgid "Moderation"
+msgstr ""
+
 msgid "Modifications"
 msgstr ""
 
@@ -2563,6 +2584,9 @@ msgstr ""
 msgid "Payment was not paid in full"
 msgstr ""
 
+msgid "Pending"
+msgstr ""
+
 msgid "Percent"
 msgstr ""
 
@@ -2746,6 +2770,12 @@ msgstr ""
 msgid "Product question sent to customer"
 msgstr ""
 
+msgid "Product review policy"
+msgstr ""
+
+msgid "Product review policy article"
+msgstr ""
+
 msgid "Product settings on the main page successfully changed"
 msgstr ""
 
@@ -2821,10 +2851,19 @@ msgstr ""
 msgid "Published"
 msgstr ""
 
+msgid "Published anonymously"
+msgstr ""
+
 msgid "QR code"
 msgstr ""
 
 msgid "RGB Hex"
+msgstr ""
+
+msgid "Reason for content change"
+msgstr ""
+
+msgid "Reason for rejection"
 msgstr ""
 
 msgid "Redirect target"
@@ -2842,6 +2881,9 @@ msgstr ""
 msgid "Registration confirmation"
 msgstr ""
 
+msgid "Rejected"
+msgstr ""
+
 msgid "Related products"
 msgstr ""
 
@@ -2857,6 +2899,12 @@ msgstr ""
 msgid "Requested at"
 msgstr ""
 
+msgid "Required when the review content is changed. The reason is stored in the review history only."
+msgstr ""
+
+msgid "Required when the review is rejected."
+msgstr ""
+
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr ""
 
@@ -2864,6 +2912,12 @@ msgid "Resolution"
 msgstr ""
 
 msgid "Resolved"
+msgstr ""
+
+msgid "Response published on %date%"
+msgstr ""
+
+msgid "Review content"
 msgstr ""
 
 msgid "Robots.txt"
@@ -3353,6 +3407,9 @@ msgid "Test email sent to %email%."
 msgstr ""
 
 msgid "Text"
+msgstr ""
+
+msgid "Text review"
 msgstr ""
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."

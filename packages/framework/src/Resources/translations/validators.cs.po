@@ -223,6 +223,9 @@ msgstr "Prosím vyberte obrázek"
 msgid "Please choose parameter"
 msgstr "Prosím vyberte parametr"
 
+msgid "Please choose review status"
+msgstr "Prosím vyberte stav recenze"
+
 msgid "Please choose type of limitation"
 msgstr "Prosím vyberte typ omezení"
 
@@ -456,6 +459,12 @@ msgstr "Vyplňte prosím promo kód"
 
 msgid "Please enter quantity"
 msgstr "Vyplňte prosím množství"
+
+msgid "Please enter reason for content change"
+msgstr "Prosím vyplňte důvod změny obsahu"
+
+msgid "Please enter reason for rejection"
+msgstr "Prosím vyplňte důvod zamítnutí"
 
 msgid "Please enter refund amount."
 msgstr "Vyplňte prosím částku k refundaci."

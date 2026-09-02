@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
+use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper as BaseProductEntityFieldMapper;
 
 /**
@@ -64,6 +65,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method \GraphQL\Executor\Promise\Promise getRelatedProductsPromise(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Flag\Flag[] getFlags(\App\Model\Product\Product $product)
  * @method \DateTimeImmutable|null getExpectedRestockingDate(\App\Model\Product\Product $product)
+ * @method array{average_rating: float|null, total_count: int, rating_counts: array<int, array{rating: int, count: int}>}|null getReviewsSummary(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -89,6 +91,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ParameterRepository $parameterRepository,
         ParameterValueFileResolver $parameterValueFileResolver,
         ProductSellableVariantsProvider $productSellableVariantsProvider,
+        ProductReviewApiFacade $productReviewApiFacade,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
@@ -112,6 +115,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $parameterRepository,
             $parameterValueFileResolver,
             $productSellableVariantsProvider,
+            $productReviewApiFacade,
         );
     }
 

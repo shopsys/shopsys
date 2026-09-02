@@ -9,6 +9,7 @@ use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductElasticsearchRepository
@@ -68,7 +69,7 @@ class ProductElasticsearchRepository
 
     public function getSortedProductsResultByFilterQuery(FilterQuery $filterQuery): ProductsResult
     {
-        $result = $this->client->search($filterQuery->getQuery());
+        $result = $this->client->search($this->excludeReviewsFromSource($filterQuery->getQuery()));
 
         return new ProductsResult($this->extractTotalCount($result), $this->extractHits($result));
     }
@@ -121,9 +122,25 @@ class ProductElasticsearchRepository
 
     public function getProductsByFilterQuery(FilterQuery $filterQuery): array
     {
-        $result = $this->client->search($filterQuery->getQuery());
+        $result = $this->client->search($this->excludeReviewsFromSource($filterQuery->getQuery()));
 
         return $this->extractHits($result);
+    }
+
+    /**
+     * The reviews can grow into by far the largest field of the document and no product read uses them,
+     * they are served separately by the frontend API with the pagination done by Elasticsearch
+     *
+     * @param array<string, mixed> $query
+     * @return array<string, mixed>
+     */
+    protected function excludeReviewsFromSource(array $query): array
+    {
+        if (!array_key_exists('_source', $query['body'])) {
+            $query['body']['_source'] = ['excludes' => [ProductExportFieldProvider::REVIEWS]];
+        }
+
+        return $query;
     }
 
     /**

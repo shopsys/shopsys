@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepositor
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
+use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 
 class ProductEntityFieldMapper
 {
@@ -47,6 +48,7 @@ class ProductEntityFieldMapper
         protected readonly ParameterRepository $parameterRepository,
         protected readonly ParameterValueFileResolver $parameterValueFileResolver,
         protected readonly ProductSellableVariantsProvider $productSellableVariantsProvider,
+        protected readonly ProductReviewApiFacade $productReviewApiFacade,
     ) {
     }
 
@@ -325,5 +327,13 @@ class ProductEntityFieldMapper
         ksort($flagsIndexedById);
 
         return array_values($flagsIndexedById);
+    }
+
+    /**
+     * @return array{average_rating: float|null, total_count: int, rating_counts: array<int, array{rating: int, count: int}>}|null Null for a variant, the summary of the family lives on its main variant
+     */
+    public function getReviewsSummary(Product $product): ?array
+    {
+        return $this->productReviewApiFacade->getReviewSummaryForProduct($product);
     }
 }

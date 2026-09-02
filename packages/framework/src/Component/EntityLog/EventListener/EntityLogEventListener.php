@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFa
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver;
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
+use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogNoteRegistry;
 use Symfony\Contracts\Service\ResetInterface;
 use Throwable;
 
@@ -34,11 +35,17 @@ class EntityLogEventListener implements ResetInterface
         protected readonly LoggableEntityConfigFactory $loggableEntityConfigFactory,
         protected readonly ChangeSetResolver $changeSetResolver,
         protected readonly EntityLogFacade $entityLogFacade,
+        protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
     ) {
     }
 
     public function postFlush(PostFlushEventArgs $args): void
     {
+        // `note` explains a single flush
+        // it has to be dropped even when no log was created,
+        // otherwise it could end up on an unrelated later change of the same entity
+        $this->entityLogNoteRegistry->reset();
+
         if (count($this->logs) <= 0) {
             return;
         }

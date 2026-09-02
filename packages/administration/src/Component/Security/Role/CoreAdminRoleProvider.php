@@ -163,6 +163,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
             new Role(AdminRoleConstant::ROLE_PRIVACY_POLICY, t('Privacy policy article setting'), [Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_PERSONAL_DATA, t('Personal data access pages setting'), [Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_USER_CONSENT_POLICY, t('User consent policy article setting'), [Permission::EDIT]),
+            new Role(AdminRoleConstant::ROLE_PRODUCT_REVIEW_POLICY, t('Product review policy article setting'), [Permission::EDIT]),
         ];
     }
 

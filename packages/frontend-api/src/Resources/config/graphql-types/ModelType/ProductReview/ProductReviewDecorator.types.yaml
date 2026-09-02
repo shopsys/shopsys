@@ -1,0 +1,45 @@
+ProductReviewDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Customer review of a product"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            reviewerName:
+                type: "String"
+                description: "Public name of the reviewer in the \"FirstName L.\" form, null when the review is published anonymously"
+            rating:
+                type: "Int!"
+                description: "Star rating from 1 to 5"
+            text:
+                type: "String"
+                description: "Text of the review"
+            createdAt:
+                type: "DateTime!"
+                description: "Date and time when the review was created"
+            isVerifiedPurchase:
+                type: "Boolean!"
+                description: "The review is linked to an order of the reviewed product"
+            responseText:
+                type: "String"
+                description: "Response of the e-shop to the review"
+            responseCreatedAt:
+                type: "DateTime"
+                description: "Date and time when the response was published"
+            status:
+                type: "ProductReviewStatusEnum!"
+                description: "Moderation status, meaningful for the customer's own reviews (public listings contain approved reviews only)"
+            rejectionReason:
+                type: "String"
+                description: "Reason why the customer's own review was not published, null for reviews that were not rejected"
+            productUuid:
+                type: "Uuid"
+                description: "UUID of the reviewed product (the concrete variant), null when the product no longer exists"
+            productName:
+                type: "String!"
+                description: "Name of the reviewed product at the time of the review"
+            product:
+                type: "Product"
+                description: "Currently associated reviewed product, null when the product no longer exists"

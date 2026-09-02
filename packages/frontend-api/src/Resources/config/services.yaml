@@ -75,6 +75,10 @@ services:
         arguments:
             $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
 
+    Shopsys\FrontendApiBundle\Model\Mutation\ProductReview\CreateProductReviewMutation:
+        arguments:
+            $productReviewCreateRateLimiter: '@limiter.frontend_api_product_review_create'
+
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer: ~
 
     Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertResolverMap:
@@ -179,6 +183,12 @@ services:
         arguments:
             $imagesBatchLoader: '@images_batch_loader'
             $firstImageBatchLoader: '@first_image_batch_loader'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\ProductReview\ProductReviewResolverMap:
+        arguments:
+            $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\BestsellingProductsQuery:
         arguments:

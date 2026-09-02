@@ -48,6 +48,8 @@
     * [CreateOrderResult](#createorderresult)
     * [CurrentCompanyCustomerUser](#currentcompanycustomeruser)
     * [CurrentRegularCustomerUser](#currentregularcustomeruser)
+    * [CustomerUserProductReviewConnection](#customeruserproductreviewconnection)
+    * [CustomerUserProductReviewEdge](#customeruserproductreviewedge)
     * [CustomerUserRoleGroup](#customeruserrolegroup)
     * [DeliveryAddress](#deliveryaddress)
     * [File](#file)
@@ -102,6 +104,11 @@
     * [ProductFilterOptions](#productfilteroptions)
     * [ProductList](#productlist)
     * [ProductPrice](#productprice)
+    * [ProductReview](#productreview)
+    * [ProductReviewConnection](#productreviewconnection)
+    * [ProductReviewEdge](#productreviewedge)
+    * [ProductReviewRatingCount](#productreviewratingcount)
+    * [ProductReviewsSummary](#productreviewssummary)
     * [ProductsByTransportUnavailabilityReason](#productsbytransportunavailabilityreason)
     * [PromoCode](#promocode)
     * [RegularCustomerUser](#regularcustomeruser)
@@ -157,6 +164,7 @@
     * [ProductListInput](#productlistinput)
     * [ProductListUpdateInput](#productlistupdateinput)
     * [ProductQuestionInput](#productquestioninput)
+    * [ProductReviewInput](#productreviewinput)
     * [RecoverPasswordInput](#recoverpasswordinput)
     * [RefreshTokenInput](#refreshtokeninput)
     * [RegistrationByOrderInput](#registrationbyorderinput)
@@ -182,6 +190,8 @@
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
+    * [ProductReviewOrderingModeEnum](#productrevieworderingmodeenum)
+    * [ProductReviewStatusEnum](#productreviewstatusenum)
     * [ProductTypeEnum](#producttypeenum)
     * [PromoCodeTypeEnum](#promocodetypeenum)
     * [RecommendationType](#recommendationtype)
@@ -703,6 +713,40 @@ Returns currently logged in customer user
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="query.currentcustomeruserproductreviews">currentCustomerUserProductReviews</strong></td>
+<td valign="top"><a href="#customeruserproductreviewconnection">CustomerUserProductReviewConnection</a>!</td>
+<td>
+
+Returns reviews written by the current customer user, regardless of their moderation status, newest first. When a product UUID is provided, only the reviews of the product and its variants are returned. The list can be paginated using `first`, `last`, `before` and `after` keywords
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="query.currentregularcustomeruser">CurrentRegularCustomerUser</strong></td>
 <td valign="top"><a href="#currentregularcustomeruser">CurrentRegularCustomerUser</a></td>
 <td></td>
@@ -1083,6 +1127,45 @@ Find product list by UUID and type or if customer is logged, try find the the ol
 <tr>
 <td colspan="2" align="right" valign="top">productListType</td>
 <td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query.productreviews">productReviews</strong></td>
+<td valign="top"><a href="#productreviewconnection">ProductReviewConnection</a>!</td>
+<td>
+
+Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderingMode</td>
+<td valign="top"><a href="#productrevieworderingmodeenum">ProductReviewOrderingModeEnum</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -1643,6 +1726,20 @@ Creates complete order with products and addresses
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#orderinput">OrderInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mutation.createproductreview">CreateProductReview</strong></td>
+<td valign="top"><a href="#productreview">ProductReview</a>!</td>
+<td>
+
+Create a new product review that will be published after moderation
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productreviewinput">ProductReviewInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -5307,6 +5404,85 @@ UUID
 </tbody>
 </table>
 
+### CustomerUserProductReviewConnection
+
+A connection to a list of items.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="customeruserproductreviewconnection.edges">edges</strong></td>
+<td valign="top">[<a href="#customeruserproductreviewedge">CustomerUserProductReviewEdge</a>]</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="customeruserproductreviewconnection.pageinfo">pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="customeruserproductreviewconnection.totalcount">totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of the customer user's reviews
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### CustomerUserProductReviewEdge
+
+An edge in a connection.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="customeruserproductreviewedge.cursor">cursor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="customeruserproductreviewedge.node">node</strong></td>
+<td valign="top"><a href="#productreview">ProductReview</a></td>
+<td>
+
+The item at the end of the edge.
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### CustomerUserRoleGroup
 
 <table>
@@ -6402,6 +6578,15 @@ List of related products
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainvariant.reviewssummary">reviewsSummary</strong></td>
+<td valign="top"><a href="#productreviewssummary">ProductReviewsSummary</a></td>
+<td>
+
+Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -7198,11 +7383,29 @@ All product items in the order
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.productreviewsallowed">productReviewsAllowed</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Products of the order can be reviewed in its current status
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.promocode">promoCode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
 Promo code (coupon) used in the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.reviewedproductuuids">reviewedProductUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Uuids of the order's products that already have a review linked to this order
 
 </td>
 </tr>
@@ -9125,6 +9328,314 @@ Total value of VAT
 </tbody>
 </table>
 
+### ProductReview
+
+Customer review of a product
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.createdat">createdAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time when the review was created
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.isverifiedpurchase">isVerifiedPurchase</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+The review is linked to an order of the reviewed product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.product">product</strong></td>
+<td valign="top"><a href="#product">Product</a></td>
+<td>
+
+Currently associated reviewed product, null when the product no longer exists
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.productname">productName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of the reviewed product at the time of the review
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.productuuid">productUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID of the reviewed product (the concrete variant), null when the product no longer exists
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.rating">rating</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Star rating from 1 to 5
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.rejectionreason">rejectionReason</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Reason why the customer's own review was not published, null for reviews that were not rejected
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.responsecreatedat">responseCreatedAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Date and time when the response was published
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.responsetext">responseText</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Response of the e-shop to the review
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.reviewername">reviewerName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Public name of the reviewer in the "FirstName L." form, null when the review is published anonymously
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.status">status</strong></td>
+<td valign="top"><a href="#productreviewstatusenum">ProductReviewStatusEnum</a>!</td>
+<td>
+
+Moderation status, meaningful for the customer's own reviews (public listings contain approved reviews only)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.text">text</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Text of the review
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreview.uuid">uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductReviewConnection
+
+A connection to a list of items.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewconnection.edges">edges</strong></td>
+<td valign="top">[<a href="#productreviewedge">ProductReviewEdge</a>]</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewconnection.orderingmode">orderingMode</strong></td>
+<td valign="top"><a href="#productrevieworderingmodeenum">ProductReviewOrderingModeEnum</a>!</td>
+<td>
+
+The current ordering mode
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewconnection.pageinfo">pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewconnection.summary">summary</strong></td>
+<td valign="top"><a href="#productreviewssummary">ProductReviewsSummary</a>!</td>
+<td>
+
+Aggregated rating of the same set of reviews the connection paginates
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewconnection.totalcount">totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of reviews
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductReviewEdge
+
+An edge in a connection.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewedge.cursor">cursor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewedge.node">node</strong></td>
+<td valign="top"><a href="#productreview">ProductReview</a></td>
+<td>
+
+The item at the end of the edge.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductReviewRatingCount
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewratingcount.count">count</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of reviews with the rating
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewratingcount.rating">rating</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Star rating
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductReviewsSummary
+
+Aggregated rating of the approved reviews of a product and its visible variants
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewssummary.averagerating">averageRating</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+Average rating, null when there are no reviews
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewssummary.ratingcounts">ratingCounts</strong></td>
+<td valign="top">[<a href="#productreviewratingcount">ProductReviewRatingCount</a>!]!</td>
+<td>
+
+Number of reviews per star rating, from 5 stars to 1
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewssummary.totalcount">totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of reviews
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### ProductsByTransportUnavailabilityReason
 
 Cart products grouped by the reason why they cannot be delivered using the transport
@@ -9728,6 +10239,15 @@ List of related products
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.reviewssummary">reviewsSummary</strong></td>
+<td valign="top"><a href="#productreviewssummary">ProductReviewsSummary</a></td>
+<td>
+
+Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -10140,6 +10660,24 @@ Settings related to pricing
 <td>
 
 Returns privacy policy article's url
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="settings.productreviewpolicyarticleurl">productReviewPolicyArticleUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Returns product review policy article's url
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="settings.productreviewsenabled">productReviewsEnabled</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Returns true if product reviews are enabled on the current domain
 
 </td>
 </tr>
@@ -11443,6 +11981,15 @@ Quantity given for free in the buy X + Y free promotion (null when not set)
 <td>
 
 List of related products
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.reviewssummary">reviewsSummary</strong></td>
+<td valign="top"><a href="#productreviewssummary">ProductReviewsSummary</a></td>
+<td>
+
+Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant
 
 </td>
 </tr>
@@ -13507,6 +14054,94 @@ The customer's question about the product
 </tbody>
 </table>
 
+### ProductReviewInput
+
+Represents the input for creating a product review
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewinput.email">email</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Email of the reviewer, required for a customer that is not logged in (the account email is used otherwise)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewinput.firstname">firstName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+First name of the reviewer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewinput.isanonymous">isAnonymous</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+The review will be published without the reviewer name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewinput.lastname">lastName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Last name of the reviewer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewinput.orderurlhash">orderUrlHash</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+URL hash of the order proving the purchase of a customer that is not logged in, the review is created unverified without it
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewinput.productuuid">productUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the reviewed product; a concrete variant has to be chosen for products with variants
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewinput.rating">rating</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Star rating from 1 to 5
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productreviewinput.text">text</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Text of the review
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### RecoverPasswordInput
 
 <table>
@@ -14549,6 +15184,84 @@ Order by priority
 <td>
 
 Order by relevance
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductReviewOrderingModeEnum
+
+One of possible ordering modes for product reviews
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>HIGHEST_RATING</strong></td>
+<td>
+
+Order by rating, highest first
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>LOWEST_RATING</strong></td>
+<td>
+
+Order by rating, lowest first
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>NEWEST</strong></td>
+<td>
+
+Order by date of creation, newest first
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductReviewStatusEnum
+
+One of possible moderation statuses of a product review
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>APPROVED</strong></td>
+<td>
+
+The review is approved and publicly visible
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>PENDING</strong></td>
+<td>
+
+The review is waiting for moderation
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>REJECTED</strong></td>
+<td>
+
+The review was rejected
 
 </td>
 </tr>
@@ -15841,6 +16554,15 @@ Quantity given for free in the buy X + Y free promotion (null when not set)
 <td>
 
 List of related products
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.reviewssummary">reviewsSummary</strong></td>
+<td valign="top"><a href="#productreviewssummary">ProductReviewsSummary</a></td>
+<td>
+
+Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant
 
 </td>
 </tr>

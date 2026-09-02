@@ -31,6 +31,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
+use Shopsys\FrameworkBundle\Model\ProductReview\Elasticsearch\ProductReviewDocumentMapper;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
@@ -39,7 +42,15 @@ use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 class ProductExportRepository
 {
     protected const string TOP_PRODUCTS_CACHE_NAMESPACE = 'top_products';
+    protected const string PRODUCT_REVIEWS_CACHE_NAMESPACE = 'product_reviews';
     protected const string VALUE_SEPARATOR = ' ';
+
+    /**
+     * Aligned with "max_inner_result_window" of the product index — reviews beyond this window could never be paged
+     * to by the API, and an unbounded list would eventually hit the Elasticsearch nested-object limit,
+     * failing the export of the whole product. The reviews summary is intentionally not affected by this cap.
+     */
+    protected const int MAX_EXPORTED_REVIEWS = 1000;
 
     /**
      * @param iterable<\Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface> $productExportDataProviders
@@ -64,6 +75,9 @@ class ProductExportRepository
         protected readonly ParameterValueFileResolver $parameterValueFileResolver,
         protected readonly Domain $domain,
         protected readonly TopProductRepository $topProductRepository,
+        protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
+        protected readonly ProductReviewFacade $productReviewFacade,
+        protected readonly ProductReviewDocumentMapper $productReviewDocumentMapper,
         #[AutowireIterator('shopsys.product_export_data_provider')]
         protected readonly iterable $productExportDataProviders = [],
     ) {
@@ -189,6 +203,13 @@ class ProductExportRepository
             ProductExportFieldProvider::SEARCHING_SEO_META_DESCRIPTIONS => $this->extractSearchingSeoMetaDescriptions($product, $domainId),
             ProductExportFieldProvider::IS_PROMOTED => $this->isProductPromoted($product, $domainId),
             ProductExportFieldProvider::TOP_PRODUCT_POSITION => $this->getTopProductPosition($product, $domainId),
+            ProductExportFieldProvider::REVIEWS => array_map(
+                $this->productReviewDocumentMapper->mapReview(...),
+                array_slice($this->getProductReviewsForExport($product, $domainId), 0, static::MAX_EXPORTED_REVIEWS),
+            ),
+            ProductExportFieldProvider::REVIEW_SUMMARY => $this->productReviewDocumentMapper->mapSummary(
+                $this->getProductReviewsForExport($product, $domainId),
+            ),
 
             default => $this->getExportedFieldValueFromProductExportDataProvider($domainId, $product, $locale, $field),
         };
@@ -503,6 +524,26 @@ class ProductExportRepository
     protected function isProductPromoted(Product $product, int $domainId): bool
     {
         return array_key_exists($product->getId(), $this->getTopProductPositionsForDomain($domainId));
+    }
+
+    /**
+     * Reviews of the whole variant family live on the main variant document only.
+     * Both review fields of a document read the same list, so it is cached for the current product.
+     *
+     * @return \Shopsys\FrameworkBundle\Model\ProductReview\ProductReview[]
+     */
+    protected function getProductReviewsForExport(Product $product, int $domainId): array
+    {
+        if ($product->isVariant() || !$this->productReviewEnabledChecker->isEnabledForDomain($domainId)) {
+            return [];
+        }
+
+        return $this->inMemoryCache->getOrSaveValue(
+            static::PRODUCT_REVIEWS_CACHE_NAMESPACE,
+            fn () => $this->productReviewFacade->getApprovedByMainProductForExport($product, $domainId),
+            $domainId,
+            $product->getId(),
+        );
     }
 
     protected function getTopProductPosition(Product $product, int $domainId): ?int

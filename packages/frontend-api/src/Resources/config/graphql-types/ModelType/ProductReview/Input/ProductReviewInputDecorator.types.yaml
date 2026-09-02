@@ -1,0 +1,68 @@
+ProductReviewInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Represents the input for creating a product review"
+        fields:
+            productUuid:
+                type: "Uuid!"
+                description: "UUID of the reviewed product; a concrete variant has to be chosen for products with variants"
+            rating:
+                type: "Int!"
+                description: "Star rating from 1 to 5"
+                validation:
+                    -   Range:
+                            min: 1
+                            max: 5
+                            notInRangeMessage: "Rating must be between {{ min }} and {{ max }} stars"
+            text:
+                type: "String"
+                description: "Text of the review"
+                defaultValue: null
+                validation:
+                    -   Length:
+                            max: 4096
+                            maxMessage: "Review text cannot be longer than {{ limit }} characters"
+            isAnonymous:
+                type: "Boolean!"
+                description: "The review will be published without the reviewer name"
+                defaultValue: false
+            firstName:
+                type: "String"
+                description: "First name of the reviewer"
+                defaultValue: null
+                validation:
+                    -   NotBlank:
+                            message: "Please enter first name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "First name cannot be longer than {{ limit }} characters"
+            lastName:
+                type: "String"
+                description: "Last name of the reviewer"
+                defaultValue: null
+                validation:
+                    -   NotBlank:
+                            message: "Please enter last name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Last name cannot be longer than {{ limit }} characters"
+            email:
+                type: "String"
+                description: "Email of the reviewer, required for a customer that is not logged in (the account email is used otherwise)"
+                defaultValue: null
+                validation:
+                    -   NotBlank:
+                            message: "Please enter email"
+                            groups: ["guest"]
+                    -   Email:
+                            message: "Please enter valid email"
+                            groups: ["guest"]
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"
+                            groups: ["guest"]
+            orderUrlHash:
+                type: "String"
+                description: "URL hash of the order proving the purchase of a customer that is not logged in, the review is created unverified without it"
+                defaultValue: null

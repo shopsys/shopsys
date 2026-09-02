@@ -104,6 +104,13 @@ class EntityLog
     #[ORM\Column(type: 'datetime_immutable')]
     protected $createdAt;
 
+    /**
+     * @var string|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected $note;
+
     public function __construct(
         EntityLogData $entityLogData,
     ) {
@@ -123,6 +130,7 @@ class EntityLog
         $this->changeSet = $this->getSerializedChangeSet($entityLogData->changeSet);
         $this->parentEntityName = $entityLogData->parentEntityName;
         $this->parentEntityId = $entityLogData->parentEntityId;
+        $this->note = $entityLogData->note;
     }
 
     protected function getSerializedChangeSet(array $changeSet): array
@@ -216,6 +224,14 @@ class EntityLog
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNote()
+    {
+        return $this->note;
     }
 
     /**

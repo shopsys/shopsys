@@ -25,6 +25,9 @@ msgstr ""
 msgid "%entityName% (%entityIdentifier%)"
 msgstr ""
 
+msgid "%rating% out of 5 stars"
+msgstr ""
+
 msgid "2FA"
 msgstr ""
 
@@ -178,6 +181,9 @@ msgstr ""
 msgid "An error occurred while saving <strong>{{ objectName }}</strong>."
 msgstr ""
 
+msgid "Anonymous"
+msgstr ""
+
 msgid "Applicable variables"
 msgstr ""
 
@@ -185,6 +191,9 @@ msgid "Applicable variables for Content"
 msgstr ""
 
 msgid "Applicable variables for Subject"
+msgstr ""
+
+msgid "Approved"
 msgstr ""
 
 msgid "Are you sure?"
@@ -638,6 +647,9 @@ msgid "Customers overview"
 msgstr ""
 
 msgid "Dashboard"
+msgstr ""
+
+msgid "Date and time"
 msgstr ""
 
 msgid "Date of creation"
@@ -1096,6 +1108,9 @@ msgstr ""
 msgid "Heureka - Verified by Customer"
 msgstr ""
 
+msgid "Heureka - Verified by Customer service does not support the language of this domain."
+msgstr ""
+
 msgid "Heureka agreement"
 msgstr ""
 
@@ -1115,6 +1130,9 @@ msgid "Holidays and internal days overview"
 msgstr ""
 
 msgid "Holidays import"
+msgstr ""
+
+msgid "IP address"
 msgstr ""
 
 msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
@@ -1582,6 +1600,9 @@ msgstr ""
 msgid "Open user menu"
 msgstr ""
 
+msgid "Order"
+msgstr ""
+
 msgid "Order Nr."
 msgstr ""
 
@@ -1693,6 +1714,9 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
+msgid "Pending"
+msgstr ""
+
 msgid "Personal data access pages setting"
 msgstr ""
 
@@ -1771,6 +1795,24 @@ msgstr ""
 msgid "Product not in e-shop."
 msgstr ""
 
+msgid "Product review"
+msgstr ""
+
+msgid "Product review policy"
+msgstr ""
+
+msgid "Product review policy article setting"
+msgstr ""
+
+msgid "Product review policy settings"
+msgstr ""
+
+msgid "Product review policy settings modified."
+msgstr ""
+
+msgid "Product reviews"
+msgstr ""
+
 msgid "Product with X + Y free promotion"
 msgstr ""
 
@@ -1822,6 +1864,9 @@ msgstr ""
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr ""
 
+msgid "Rating"
+msgstr ""
+
 msgid "Record detail"
 msgstr ""
 
@@ -1844,6 +1889,9 @@ msgid "Refunded amount"
 msgstr ""
 
 msgid "Refunded amount has been changed."
+msgstr ""
+
+msgid "Rejected"
 msgstr ""
 
 msgid "Remove"
@@ -1874,6 +1922,15 @@ msgid "Reset password"
 msgstr ""
 
 msgid "Return back"
+msgstr ""
+
+msgid "Reviewed product"
+msgstr ""
+
+msgid "Reviewer"
+msgstr ""
+
+msgid "Reviews are not enabled on this domain"
 msgstr ""
 
 msgid "Robots.txt"
@@ -2215,6 +2272,9 @@ msgstr ""
 msgid "Terms and conditions settings"
 msgstr ""
 
+msgid "Text review"
+msgstr ""
+
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr ""
 
@@ -2228,6 +2288,9 @@ msgid "The product has no specified name for the locale."
 msgstr ""
 
 msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
+msgstr ""
+
+msgid "The product is no longer in the catalogue."
 msgstr ""
 
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
@@ -2395,6 +2458,9 @@ msgstr ""
 msgid "Unpin"
 msgstr ""
 
+msgid "Unregistered"
+msgstr ""
+
 msgid "Unused friendly URL list"
 msgstr ""
 
@@ -2462,6 +2528,9 @@ msgid "Variant [abbreviation]"
 msgstr "V"
 
 msgid "Vats"
+msgstr ""
+
+msgid "Verified purchase"
 msgstr ""
 
 msgid "Very Weak"

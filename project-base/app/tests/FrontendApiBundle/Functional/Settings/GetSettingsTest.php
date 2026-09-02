@@ -67,6 +67,7 @@ CONTENT,
             'termsAndConditionsArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
             'privacyPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
             'userConsentPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+            'productReviewPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('How we work with reviews', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
         ];
     }
 }

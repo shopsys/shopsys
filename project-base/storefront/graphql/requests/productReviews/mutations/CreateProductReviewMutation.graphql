@@ -1,0 +1,5 @@
+mutation CreateProductReviewMutation($input: ProductReviewInput!) {
+    CreateProductReview(input: $input) {
+        ...CustomerUserProductReviewFragment
+    }
+}

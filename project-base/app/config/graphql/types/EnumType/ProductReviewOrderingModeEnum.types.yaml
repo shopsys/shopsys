@@ -1,0 +1,4 @@
+ProductReviewOrderingModeEnum:
+    type: enum
+    inherits:
+        - 'ProductReviewOrderingModeEnumDecorator'

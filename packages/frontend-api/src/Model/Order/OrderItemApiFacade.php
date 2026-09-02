@@ -10,7 +10,9 @@ use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class OrderItemApiFacade
 {
@@ -31,6 +33,59 @@ class OrderItemApiFacade
             ->indexBy('oi', 'oi.uuid')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * The purchase belongs to the whole customer, so any of its users can be verified by it,
+     * no matter who of them placed the order
+     */
+    public function findNewestReviewableOrderItemByCustomer(
+        Customer $customer,
+        Product $product,
+        int $domainId,
+    ): ?OrderItem {
+        return $this->createNewestReviewableOrderItemQueryBuilder($product, $domainId)
+            ->andWhere('o.customer = :customer')
+            ->setParameter('customer', $customer)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * The url hash authorizes an unregistered customer the same way it does for the order detail page
+     */
+    public function findNewestReviewableOrderItemByOrderUrlHash(
+        string $orderUrlHash,
+        Product $product,
+        int $domainId,
+    ): ?OrderItem {
+        return $this->createNewestReviewableOrderItemQueryBuilder($product, $domainId)
+            ->andWhere('o.urlHash = :orderUrlHash')
+            ->setParameter('orderUrlHash', $orderUrlHash)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    protected function createNewestReviewableOrderItemQueryBuilder(Product $product, int $domainId): QueryBuilder
+    {
+        return $this->createProductOrderItemOnDomainQueryBuilder($domainId)
+            ->join('o.status', 'os')
+            ->andWhere('os.productReviewsAllowed = TRUE')
+            ->andWhere('oi.product = :product')
+            ->setParameter('product', $product)
+            ->orderBy('o.createdAt', 'DESC')
+            ->addOrderBy('oi.id', 'DESC')
+            ->setMaxResults(1);
+    }
+
+    protected function createProductOrderItemOnDomainQueryBuilder(int $domainId): QueryBuilder
+    {
+        return $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
+            ->andWhere('o.deleted = FALSE')
+            ->andWhere('o.domainId = :domainId')
+            ->andWhere('oi.type = :productItemType')
+            ->setParameter('domainId', $domainId)
+            ->setParameter('productItemType', OrderItemTypeEnum::TYPE_PRODUCT);
     }
 
     protected function createOrderItemExcludingOrdersWithWithdrawalQueryBuilder(): QueryBuilder

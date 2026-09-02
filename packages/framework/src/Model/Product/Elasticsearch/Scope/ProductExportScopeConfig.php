@@ -30,6 +30,7 @@ class ProductExportScopeConfig
 
     public const string SCOPE_DOMAIN_URL = 'product_domain_url_scope';
     public const string SCOPE_TOP_PRODUCT = 'product_top_product_scope';
+    public const string SCOPE_PRODUCT_REVIEWS = 'product_reviews_scope';
 
     public const string PRECONDITION_VISIBILITY_RECALCULATION = 'visibility_recalculation';
     public const string PRECONDITION_SELLING_DENIED_RECALCULATION = 'selling_denied_recalculation';
@@ -163,6 +164,10 @@ class ProductExportScopeConfig
         $this->addNewExportScopeRule(self::SCOPE_TOP_PRODUCT, [
             ProductExportFieldProvider::IS_PROMOTED,
             ProductExportFieldProvider::TOP_PRODUCT_POSITION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_PRODUCT_REVIEWS, [
+            ProductExportFieldProvider::REVIEWS,
+            ProductExportFieldProvider::REVIEW_SUMMARY,
         ]);
 
         $this->addProductExportDataProviderFieldsToScopeRules();

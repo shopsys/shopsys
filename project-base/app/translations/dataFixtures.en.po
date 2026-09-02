@@ -310,6 +310,9 @@ msgstr ""
 msgid "A good partnership starts with reliable data, clear commercial terms, and responsible customer support. Potential partners can contact our demo purchasing team."
 msgstr "A good partnership starts with reliable data, clear commercial terms, and responsible customer support. Potential partners can contact our demo purchasing team."
 
+msgid "A great product for a very reasonable price."
+msgstr ""
+
 msgid "A personal computer (PC) is a general-purpose computer whose size, capabilities, and original sale price make it useful for individuals, and is intended to be operated directly by an end-user with no intervening computer time-sharing models that allowed larger, more expensive minicomputer and mainframe systems to be used by many people, usually at the same time."
 msgstr ""
 
@@ -562,6 +565,9 @@ msgstr ""
 msgid "Catalog user"
 msgstr ""
 
+msgid "Channel tuning was confusing and took much longer than expected."
+msgstr ""
+
 msgid "Check the details that affect daily use"
 msgstr "Check the details that affect daily use"
 
@@ -628,6 +634,9 @@ msgstr ""
 msgid "Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers."
 msgstr ""
 
+msgid "Compact, easy to set up and ideal for a smaller room."
+msgstr ""
+
 msgid "Compare dimensions, controls, connectivity, energy consumption, and warranty conditions before making the final choice."
 msgstr "Compare dimensions, controls, connectivity, energy consumption, and warranty conditions before making the final choice."
 
@@ -686,6 +695,9 @@ msgid "Customer care will explain the next steps, including delivery to a servic
 msgstr "Customer care will explain the next steps, including delivery to a service centre, assessment, repair, replacement, or another available resolution."
 
 msgid "Customer manager"
+msgstr ""
+
+msgid "Customer reviews help shoppers make informed decisions and share their experience with purchased products."
 msgstr ""
 
 msgid "Cyklocomputer – cyklonavigation with preset maps, color display 3\", training programmes, WiFi"
@@ -807,6 +819,9 @@ msgstr ""
 
 msgid "Dina is preparing a comfortable home office and compares a monitor, headphones, and practical accessories before ordering."
 msgstr "Dina is preparing a comfortable home office and compares a monitor, headphones, and practical accessories before ordering."
+
+msgid "Discontinued product"
+msgstr ""
 
 msgid "Discover new products, useful features, and updates from the world of electronics."
 msgstr "Discover new products, useful features, and updates from the world of electronics."
@@ -1144,6 +1159,18 @@ msgstr "How to choose the right TV for your living room"
 msgid "How to clean a television screen safely"
 msgstr "How to clean a television screen safely"
 
+msgid "How we work with reviews"
+msgstr ""
+
+msgid "I have mixed feelings about this variant."
+msgstr ""
+
+msgid "I need a few more days to form a final opinion."
+msgstr ""
+
+msgid "I would like to see this product available again."
+msgstr ""
+
 msgid "ISO"
 msgstr ""
 
@@ -1178,6 +1205,9 @@ msgid "Interface"
 msgstr ""
 
 msgid "Intuitive operation with its easy to handle even a novice in this field. Another big advantage is the use of technology burning \"on the fly\", which is spared not only your time but also the capacity of the disk, because the process does not create any storage (temporary) files on your hard disk."
+msgstr ""
+
+msgid "It does the job, but I expected a bit more."
 msgstr ""
 
 msgid "Items on sale"
@@ -1370,6 +1400,9 @@ msgid "Mpx"
 msgstr ""
 
 msgid "Multimedia"
+msgstr ""
+
+msgid "My daughter loves it and the Full HD picture is surprisingly good for this size."
 msgstr ""
 
 msgid "NFC"
@@ -1586,6 +1619,9 @@ msgid "Pick up your order at the service desk near the entrance. The team can al
 msgstr ""
 
 msgid "Pick-up counter is right behind the main entrance. Parking is available in the courtyard for short stops."
+msgstr ""
+
+msgid "Please contact our support team. We will guide you through the channel setup step by step."
 msgstr ""
 
 msgid "Pocket-friendly"
@@ -2095,6 +2131,15 @@ msgstr ""
 msgid "Terms and conditions of eshop"
 msgstr ""
 
+msgid "Thank you for the feedback. We have passed your note about the remote control to the manufacturer."
+msgstr ""
+
+msgid "Thank you for your review. We are sorry the product did not fully meet your expectations."
+msgstr ""
+
+msgid "That is wonderful to hear. Thank you for choosing our shop."
+msgstr ""
+
 msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
 msgstr ""
 
@@ -2106,6 +2151,12 @@ msgstr ""
 
 msgid "The checkout always shows the current price and estimated delivery time before the order is confirmed."
 msgstr "The checkout always shows the current price and estimated delivery time before the order is confirmed."
+
+msgid "The colors are vivid and the size is just right for a desk."
+msgstr ""
+
+msgid "The design is lovely, but the built-in speakers sound weaker than I expected."
+msgstr ""
 
 msgid "The filter carbon OPK-4360/4390"
 msgstr ""
@@ -2128,7 +2179,28 @@ msgstr "The most useful innovations improve picture, sound, comfort, or energy e
 msgid "The pickup desk is inside the shopping passage on the first floor. For bulky orders, please call the store before arrival."
 msgstr ""
 
+msgid "The picture is sharp and the pink design looks great in the children's room."
+msgstr ""
+
 msgid "The printer uses ChromaLife100 ink system with four colors of ink hidden two print cartridges"
+msgstr ""
+
+msgid "The product arrived in good condition."
+msgstr ""
+
+msgid "The product exceeded my expectations and was delivered quickly."
+msgstr ""
+
+msgid "The quality is excellent and the product works exactly as described."
+msgstr ""
+
+msgid "The review contains promotional content unrelated to the product."
+msgstr ""
+
+msgid "The review does not meet our review guidelines."
+msgstr ""
+
+msgid "The selected variant did not meet my needs."
 msgstr ""
 
 msgid "The selections below demonstrate how product recommendations can be embedded directly into editorial content."
@@ -2147,6 +2219,9 @@ msgid "The telescopic hood is very elegant and practical variant of the classica
 msgstr ""
 
 msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
+msgstr ""
+
+msgid "The television works well, but the remote control buttons could be easier to read."
 msgstr ""
 
 msgid "These demonstration store terms summarise reservations, personal collection, payment, returns, and complaint handling at sample branches."
@@ -2183,6 +2258,18 @@ msgid "This pot holder is used to hold pots. No more burnt kitchen tables!"
 msgstr ""
 
 msgid "This product is not an independently functional unit and may require professional installation."
+msgstr ""
+
+msgid "This product is terrible, and anyone who buys it has no idea what they are doing."
+msgstr ""
+
+msgid "This review contains an external advertisement."
+msgstr ""
+
+msgid "This review contains content that cannot be published."
+msgstr ""
+
+msgid "This review contains content that is not suitable for publication."
 msgstr ""
 
 msgid "Three new televisions worth knowing about"
@@ -2299,11 +2386,23 @@ msgstr ""
 msgid "Watering systems"
 msgstr "Watering systems"
 
+msgid "We are glad the television found the perfect place in your home."
+msgstr ""
+
 msgid "We are looking forward to your visit."
+msgstr ""
+
+msgid "We are sorry the selected variant did not meet your needs. Our customer care team will be happy to help you choose a more suitable product."
+msgstr ""
+
+msgid "We are sorry the sound did not meet your expectations. Our support team can help you choose compatible external speakers."
 msgstr ""
 
 msgid "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
 msgstr "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
+
+msgid "We publish reviews after checking that they comply with our review guidelines. Reviews from customers whose purchase we can confirm are marked as verified purchases."
+msgstr ""
 
 msgid "We welcome curious people who enjoy improving online shopping and solving practical customer problems."
 msgstr "We welcome curious people who enjoy improving online shopping and solving practical customer problems."

@@ -47,6 +47,9 @@ ProductDecorator:
             flags:
                 type: "[Flag!]!"
                 description: "List of flags"
+            reviewsSummary:
+                type: "ProductReviewsSummary"
+                description: "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
             price:
                 type: "ProductPrice!"
                 description: "Product price"
