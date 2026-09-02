@@ -101,13 +101,17 @@ class BillingAddress
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     public function __construct(BillingAddressData $billingAddressData)
     {
         $this->customer = $billingAddressData->customer;
         $this->activated = $billingAddressData->activated;
-        $this->uuid = $billingAddressData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $billingAddressData->uuid;
         $this->setData($billingAddressData);
     }
 

@@ -41,7 +41,11 @@ class Advert implements DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int
@@ -132,7 +136,7 @@ class Advert implements DomainSeparatedEntityInterface
         $this->link = $advertData->link;
         $this->positionName = $advertData->positionName;
         $this->hidden = $advertData->hidden;
-        $this->uuid = $advertData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $advertData->uuid;
 
         $this->datetimeVisibleFrom = $advertData->datetimeVisibleFrom;
         $this->datetimeVisibleTo = $advertData->datetimeVisibleTo;
