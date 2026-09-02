@@ -41,6 +41,8 @@ services:
         alias: Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
     Tests\App\Test\Client:
 
+    Tests\FrontendApiBundle\Functional\Order\OrderCancellationTestHelper: ~
+
     Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory:
         arguments:
             $clientConfigs: '%env(json:GOPAY_CONFIG)%'

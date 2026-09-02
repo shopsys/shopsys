@@ -122,6 +122,9 @@ OrderDecorator:
             hasPaymentInProcess:
                 type: "Boolean!"
                 description: "Indicates whether order payment is still being processed with GoPay payment type"
+            isAwaitingPayment:
+                type: "Boolean!"
+                description: "Indicates whether the customer is still expected to pay the order online (the order has an unpaid external payment that is not being processed and the order is not cancelled)"
             paymentTransactionsCount:
                 type: "Int!"
                 description: "Number of payment transactions created for the order"
