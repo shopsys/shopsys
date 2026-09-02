@@ -38,6 +38,6 @@ class ParameterValueConversionDataFactory
         $value = str_replace([',', ' '], ['.', ''], $value);
         $value = preg_replace('/[^0-9.]/', '', $value);
 
-        return $value ?? '0';
+        return is_numeric($value) ? $value : '0';
     }
 }
