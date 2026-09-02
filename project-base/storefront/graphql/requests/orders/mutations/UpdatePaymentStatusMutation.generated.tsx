@@ -21,7 +21,7 @@ export type TypeUpdatePaymentStatusMutationVariables = Exact<{
 }>;
 
 
-export type TypeUpdatePaymentStatusMutation = { UpdatePaymentStatus: { __typename: 'UpdatePaymentStatusResult', isPaid: boolean, orderNumber: string, paymentName: string, paymentTransactionsCount: number, hasPaymentInProcess: boolean, lastExternalPaymentUrl: string | null, lastPaymentStatus: string | null, confirmationPageContent: { __typename: 'OrderConfirmationPageContent', content: string, status: Types.TypeOrderConfirmationPageContentStatusEnum } } };
+export type TypeUpdatePaymentStatusMutation = { UpdatePaymentStatus: { __typename: 'UpdatePaymentStatusResult', isPaid: boolean, orderNumber: string, paymentName: string, paymentTransactionsCount: number, hasPaymentInProcess: boolean, isAwaitingPayment: boolean, lastExternalPaymentUrl: string | null, lastPaymentStatus: string | null, confirmationPageContent: { __typename: 'OrderConfirmationPageContent', content: string, status: Types.TypeOrderConfirmationPageContentStatusEnum } } };
 
 
 export const UpdatePaymentStatusMutationDocument = gql`

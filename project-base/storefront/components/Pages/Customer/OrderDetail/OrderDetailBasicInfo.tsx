@@ -60,8 +60,6 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
     const showRepeatOrderButton =
         canCreateOrder && filteredOrderItems.some((item) => item.product !== null && isProductSellable(item.product));
 
-    const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
-
     return (
         <>
             <CustomerRecordCard className="gap-5">
@@ -87,7 +85,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
                 <CustomerRecordColumnInfo title={t('Status')}>{order.status}</CustomerRecordColumnInfo>
 
-                {showRepeatOrderButton && !notPaid && (
+                {showRepeatOrderButton && !order.isAwaitingPayment && (
                     <div className="flex shrink-0 gap-4">
                         <Button
                             tid={TIDs.order_detail_repeat_order_button}
@@ -103,7 +101,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     </div>
                 )}
 
-                {notPaid && (
+                {order.isAwaitingPayment && (
                     <div className="flex flex-col items-center justify-start gap-2.5 xl:flex-row xl:gap-5">
                         <div
                             className={twJoin(
@@ -125,7 +123,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 <ExpectedDeliveryDateSummary expectedDeliveryDate={order.expectedDeliveryDate} />
             )}
 
-            {canCreateOrder && notPaid && <PaymentsInOrderSelect orderUrlHash={order.urlHash} orderUuid={order.uuid} />}
+            {canCreateOrder && order.isAwaitingPayment && (
+                <PaymentsInOrderSelect orderUrlHash={order.urlHash} orderUuid={order.uuid} />
+            )}
 
             {orderTransport && (
                 <OrderDetailRowInfo tid={TIDs.order_detail_transport} title={t('Transport')}>
