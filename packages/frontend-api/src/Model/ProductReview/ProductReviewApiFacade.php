@@ -51,9 +51,14 @@ class ProductReviewApiFacade
 
     public function checkProductReviewsEnabledOnCurrentDomain(): void
     {
-        if (!$this->productReviewEnabledChecker->isEnabledForDomain($this->domain->getId())) {
+        if (!$this->areProductReviewsEnabledOnCurrentDomain()) {
             throw new ProductReviewsDisabledUserError('Product reviews are not enabled on this domain.');
         }
+    }
+
+    public function areProductReviewsEnabledOnCurrentDomain(): bool
+    {
+        return $this->productReviewEnabledChecker->isEnabledForDomain($this->domain->getId());
     }
 
     /**
