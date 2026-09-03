@@ -47,4 +47,18 @@ final class QueryableEntity
     #[ORM\JoinColumn(name: 'non_queryable_relation_id', referencedColumnName: 'id', nullable: true)]
     #[ORM\ManyToOne(targetEntity: NonQueryableRelationEntity::class)]
     private ?NonQueryableRelationEntity $nonQueryableRelation = null;
+
+    #[AsMcpColumn]
+    #[ORM\Embedded(class: QueryableEmbeddable::class, columnPrefix: 'embedded_')]
+    private QueryableEmbeddable $embedded;
+
+    #[AsMcpColumn(exposed: false)]
+    #[ORM\Embedded(class: QueryableEmbeddable::class, columnPrefix: 'hidden_embedded_')]
+    private QueryableEmbeddable $hiddenEmbedded;
+
+    public function __construct()
+    {
+        $this->embedded = new QueryableEmbeddable();
+        $this->hiddenEmbedded = new QueryableEmbeddable();
+    }
 }

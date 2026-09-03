@@ -29,8 +29,12 @@ class AllowedDatabaseColumnsProviderTest extends AbstractDatabaseSchemaFunctiona
         $this->assertArrayHasKey('queryable_relation_id', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
         $this->assertArrayHasKey('non_queryable_relation_id', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
         $this->assertArrayHasKey('visible_value', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
+        $this->assertArrayHasKey('embedded_value', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
+        $this->assertArrayHasKey('embedded_note_text', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
         $this->assertArrayNotHasKey('blacklisted_queryable_relation_id', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
         $this->assertArrayNotHasKey('hidden_value', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
+        $this->assertArrayNotHasKey('hidden_embedded_value', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
+        $this->assertArrayNotHasKey('hidden_embedded_note_text', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
     }
 
     public function testGetAllAllowedColumnsSetIndexedByTableNamesIncludesColumnsInheritedFromMappedSuperclassWithPropertyLevelMcpAttributes(): void
