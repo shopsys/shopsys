@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\AbstractUploadedFile;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nette\Utils\Strings;
 use Override;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
@@ -40,7 +41,12 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
-    protected $name;
+    protected $name {
+        set {
+            $webalizedName = Strings::webalize($value, lower: false);
+            $this->name = $webalizedName === '' ? 'file' : $webalizedName;
+        }
+    }
 
     /**
      * @var int
