@@ -36,7 +36,7 @@ class EntitiesDumpCommand extends Command
     {
         $entitiesFilepaths = [];
 
-        foreach ($this->em->getConfiguration()->getMetadataDriverImpl()->getAllClassNames() as $className) {
+        foreach ($this->getEntityAndEmbeddableClassNames() as $className) {
             $reflection = new ReflectionClass($className);
             $entitiesFilepaths[] = $reflection->getFileName();
         }
@@ -54,5 +54,23 @@ class EntitiesDumpCommand extends Command
         ));
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * Embeddable classes are transient for the metadata driver, so they are collected from the entity metadata instead
+     *
+     * @return string[]
+     */
+    protected function getEntityAndEmbeddableClassNames(): array
+    {
+        $classNames = $this->em->getConfiguration()->getMetadataDriverImpl()->getAllClassNames();
+
+        foreach ($this->em->getMetadataFactory()->getAllMetadata() as $classMetadata) {
+            foreach ($classMetadata->embeddedClasses as $embeddedClassMapping) {
+                $classNames[] = $embeddedClassMapping->class;
+            }
+        }
+
+        return array_unique($classNames);
     }
 }
