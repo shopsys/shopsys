@@ -77,6 +77,12 @@ export const staticData = {
         televisionPhilipsM: {
             uuid: 'f9c91468-c6b1-5b3f-b34e-1a2eef918504',
         },
+        televisionHyundaiM: {
+            uuid: '0c625610-00b3-5a9a-bccd-a271db880461',
+            outOfStockVariantCatnum: '9176578',
+            expectedRestockVariantCatnum: '91765782',
+            inStockVariantCatnum: '9176554',
+        },
         a4techMouse: {
             uuid: 'd5a669ed-46aa-5c55-b1fe-54e7b81de4cd',
             catnum: '5960453',

@@ -1,5 +1,6 @@
 import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
 import { Button, getButtonIconClassName } from 'components/Forms/Button/Button';
+import { TIDs } from 'cypress/tids';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
@@ -51,6 +52,7 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, si
                 productName: product.fullName,
             })}
             className={twJoin('whitespace-nowrap', className)}
+            tid={TIDs.blocks_product_watchdog_button}
             title={t('Watchdog popup')}
             size={size}
             variant="primary"
