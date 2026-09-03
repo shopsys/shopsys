@@ -309,7 +309,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixData(
             $selectedCategorySeoMixCombination,
         );
-        $readyCategorySeoMixData->h1 = $h1;
+        $readyCategorySeoMixData->seo->h1 = $h1;
 
         $this->readyCategorySeoMixDataFactory->fillValuesFromSelectedCategorySeoMixCombination(
             $readyCategorySeoMixData,
@@ -318,8 +318,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $readyCategorySeoMixData->showInCategory = true;
         $readyCategorySeoMixData->description = $description;
         $readyCategorySeoMixData->shortDescription = $shortDescription;
-        $readyCategorySeoMixData->title = $title;
-        $readyCategorySeoMixData->metaDescription = $metaDescription;
+        $readyCategorySeoMixData->seo->title = $title;
+        $readyCategorySeoMixData->seo->metaDescription = $metaDescription;
 
         $urlListData = new UrlListData();
         $urlListData->newUrls = [];

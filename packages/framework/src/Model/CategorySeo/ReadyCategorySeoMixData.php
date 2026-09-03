@@ -37,9 +37,9 @@ class ReadyCategorySeoMixData
     public $readyCategorySeoMixParameterParameterValues = [];
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData
      */
-    public $h1;
+    public $seo;
 
     /**
      * @var string|null
@@ -50,16 +50,6 @@ class ReadyCategorySeoMixData
      * @var string|null
      */
     public $description;
-
-    /**
-     * @var string|null
-     */
-    public $title;
-
-    /**
-     * @var string|null
-     */
-    public $metaDescription;
 
     /**
      * @var bool
