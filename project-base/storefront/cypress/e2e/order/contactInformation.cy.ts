@@ -5,6 +5,7 @@ import {
     checkTransportSelectionIsNotVisible,
     checkTransportSelectionIsVisible,
     clearPostcodeInThirdStep,
+    clickOnSendOrderButton,
     fillBillingAdressInThirdStep,
     fillCustomerInformationInThirdStep,
     fillEmailInThirdStep,
@@ -16,6 +17,7 @@ import { changeExpectedDeliveryDateMessagesToStaticDemodata } from 'e2e/transpor
 import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
+    checkFormLineError,
     checkUrl,
     clickOnLabel,
     getSnapshotIndexingFunction,
@@ -170,5 +172,53 @@ describe('Contact Information Page Tests', () => {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
         checkThatContactInformationWasRemovedFromLocalStorage();
+    });
+
+    it('[Invalid Email] should not reopen the closed error popup while the invalid email is being corrected', function () {
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
+
+        fillEmailInThirdStep(staticData.invalidEmail);
+        fillCustomerInformationInThirdStep(
+            staticData.customer1.phone,
+            staticData.customer1.firstName,
+            staticData.customer1.lastName,
+        );
+        fillBillingAdressInThirdStep(
+            staticData.customer1.billingStreet,
+            staticData.customer1.billingCity,
+            staticData.customer1.billingPostCode,
+        );
+        clickOnSendOrderButton();
+
+        cy.getByTID([TIDs.layout_popup]).should('be.visible');
+        checkFormLineError('Please enter a valid email. Example: email@example.com');
+
+        cy.realPress('{esc}');
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
+
+        cy.get('#contact-information-form-email').type('shopsys');
+        checkFormLineError('Please enter a valid email. Example: email@example.com');
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
+    });
+
+    it('[Invalid Email Prefill] should not report the invalid email restored from local storage until the field is left', function () {
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
+
+        fillEmailInThirdStep(staticData.invalidEmail);
+        cy.reloadAndWaitForStableAndInteractiveDOM();
+
+        cy.get('#contact-information-form-email').should('have.value', staticData.invalidEmail);
+        cy.getByTID([TIDs.form_line_error]).should('not.exist');
+
+        cy.get('#contact-information-form-email').focus();
+        loseFocus();
+
+        checkFormLineError('Please enter a valid email. Example: email@example.com');
     });
 });

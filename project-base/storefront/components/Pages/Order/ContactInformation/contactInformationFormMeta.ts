@@ -15,7 +15,6 @@ import {
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { FormMeta } from 'types/formMeta';
@@ -182,14 +181,6 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
         deliveryAddressUuid: pickupPlace ? '' : contactInformationValues.deliveryAddressUuid,
     };
     const formProviderMethods = useFormWrapper(resolver, defaultValues);
-
-    useEffect(() => {
-        if (defaultValues.email && defaultValues.email.length > 0) {
-            formProviderMethods.trigger('email', { shouldFocus: false });
-        } else {
-            formProviderMethods.clearErrors('email');
-        }
-    }, [defaultValues.email, formProviderMethods]);
 
     return [formProviderMethods, defaultValues];
 };
