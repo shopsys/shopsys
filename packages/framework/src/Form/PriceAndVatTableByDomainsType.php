@@ -7,9 +7,7 @@ namespace Shopsys\FrameworkBundle\Form;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\NotNegativeMoneyAmount;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +18,7 @@ use Symfony\Component\Validator\Constraints;
 
 final class PriceAndVatTableByDomainsType extends AbstractType
 {
-    public function __construct(private readonly Domain $domain, private readonly VatFacade $vatFacade)
+    public function __construct(private readonly Domain $domain)
     {
     }
 
@@ -57,15 +55,8 @@ final class PriceAndVatTableByDomainsType extends AbstractType
         ]);
 
         foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
-            $vatsIndexedByDomainId->add((string)$domainConfig->getId(), ChoiceType::class, [
-                'required' => true,
-                'choices' => $this->vatFacade->getAllForDomain($domainConfig->getId()),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new Constraints\NotBlank(message: 'Please enter VAT rate'),
-                ],
-                'label' => 'VAT',
+            $vatsIndexedByDomainId->add((string)$domainConfig->getId(), VatChoiceType::class, [
+                'domain_id' => $domainConfig->getId(),
             ]);
 
             $entityPricesByDomainId->add((string)$domainConfig->getId(), MoneyType::class, [

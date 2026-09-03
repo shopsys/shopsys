@@ -6,22 +6,14 @@ namespace Shopsys\FrameworkBundle\Form;
 
 use Override;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\Price\PriceWithLimitType;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class TransportInputPricesType extends AbstractType
 {
-    public function __construct(
-        protected readonly VatFacade $vatFacade,
-    ) {
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -29,16 +21,9 @@ final class TransportInputPricesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('vat', ChoiceType::class, [
+            ->add('vat', VatChoiceType::class, [
                 'block_prefix' => 'prices_select_vat_input',
-                'required' => true,
-                'choices' => $this->vatFacade->getAllForDomainIncludingMarkedForDeletion($options['domain_id']),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new NotBlank(message: 'Please enter VAT rate'),
-                ],
-                'label' => 'VAT',
+                'domain_id' => $options['domain_id'],
             ])
             ->add(
                 'pricesWithLimits',
