@@ -128,16 +128,13 @@ class Brand extends AbstractTranslatableEntity
     protected function setDomains(BrandData $brandData): void
     {
         foreach ($this->domains as $brandDomain) {
-            $domainId = $brandDomain->getDomainId();
-            $brandDomain->setSeoTitle($brandData->seoTitles[$domainId]);
-            $brandDomain->setSeoH1($brandData->seoH1s[$domainId]);
-            $brandDomain->setSeoMetaDescription($brandData->seoMetaDescriptions[$domainId]);
+            $brandDomain->getSeoAttributes()->edit($brandData->seo[$brandDomain->getDomainId()]);
         }
     }
 
     protected function createDomains(BrandData $brandData): void
     {
-        $domainIds = array_keys($brandData->seoTitles);
+        $domainIds = array_keys($brandData->seo);
 
         foreach ($domainIds as $domainId) {
             $brandDomain = new BrandDomain($this, $domainId);
@@ -162,11 +159,19 @@ class Brand extends AbstractTranslatableEntity
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
+     */
+    public function getSeoAttributes(int $domainId)
+    {
+        return $this->getBrandDomain($domainId)->getSeoAttributes();
+    }
+
+    /**
      * @return string|null
      */
     public function getSeoTitle(int $domainId)
     {
-        return $this->getBrandDomain($domainId)->getSeoTitle();
+        return $this->getSeoAttributes($domainId)->getTitle();
     }
 
     /**
@@ -174,7 +179,7 @@ class Brand extends AbstractTranslatableEntity
      */
     public function getSeoMetaDescription(int $domainId)
     {
-        return $this->getBrandDomain($domainId)->getSeoMetaDescription();
+        return $this->getSeoAttributes($domainId)->getMetaDescription();
     }
 
     /**
@@ -182,7 +187,7 @@ class Brand extends AbstractTranslatableEntity
      */
     public function getSeoH1(int $domainId)
     {
-        return $this->getBrandDomain($domainId)->getSeoH1();
+        return $this->getSeoAttributes($domainId)->getH1();
     }
 
     /**

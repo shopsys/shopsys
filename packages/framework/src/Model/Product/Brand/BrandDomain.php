@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -39,25 +40,11 @@ class BrandDomain
     protected $domainId;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoTitle;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoMetaDescription;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoH1;
+    #[ORM\Embedded(class: SeoAttributes::class)]
+    protected $seo;
 
     /**
      * @param int $domainId
@@ -66,6 +53,7 @@ class BrandDomain
     {
         $this->brand = $brand;
         $this->domainId = $domainId;
+        $this->seo = new SeoAttributes();
     }
 
     /**
@@ -77,50 +65,10 @@ class BrandDomain
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoTitle()
+    public function getSeoAttributes()
     {
-        return $this->seoTitle;
-    }
-
-    /**
-     * @param string|null $seoTitle
-     */
-    public function setSeoTitle($seoTitle): void
-    {
-        $this->seoTitle = $seoTitle;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription()
-    {
-        return $this->seoMetaDescription;
-    }
-
-    /**
-     * @param string|null $seoMetaDescription
-     */
-    public function setSeoMetaDescription($seoMetaDescription): void
-    {
-        $this->seoMetaDescription = $seoMetaDescription;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoH1()
-    {
-        return $this->seoH1;
-    }
-
-    /**
-     * @param string|null $seoH1
-     */
-    public function setSeoH1($seoH1): void
-    {
-        $this->seoH1 = $seoH1;
+        return $this->seo;
     }
 }

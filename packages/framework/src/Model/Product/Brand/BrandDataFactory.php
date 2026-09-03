@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class BrandDataFactory
 {
@@ -14,6 +15,7 @@ class BrandDataFactory
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
     }
 
@@ -35,9 +37,7 @@ class BrandDataFactory
         $brandData->image = $this->imageUploadDataFactory->create();
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $brandData->seoMetaDescriptions[$domainId] = null;
-            $brandData->seoTitles[$domainId] = null;
-            $brandData->seoH1s[$domainId] = null;
+            $brandData->seo[$domainId] = $this->seoAttributesDataFactory->create();
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -66,9 +66,9 @@ class BrandDataFactory
         }
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $brandData->seoH1s[$domainId] = $brand->getSeoH1($domainId);
-            $brandData->seoTitles[$domainId] = $brand->getSeoTitle($domainId);
-            $brandData->seoMetaDescriptions[$domainId] = $brand->getSeoMetaDescription($domainId);
+            $brandData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
+                $brand->getSeoAttributes($domainId),
+            );
 
             $brandData->urls->mainFriendlyUrlsByDomainId[$domainId] =
                 $this->friendlyUrlFacade->findMainFriendlyUrl(

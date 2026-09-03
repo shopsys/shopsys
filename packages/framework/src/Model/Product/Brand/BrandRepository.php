@@ -107,7 +107,7 @@ class BrandRepository
         $this->addDomain($queryBuilder, $this->domain->getId());
 
         $queryBuilder->andWhere(
-            'NORMALIZED(b.name) LIKE NORMALIZED(:searchText) OR NORMALIZED(bd.seoH1) LIKE NORMALIZED(:searchText) OR NORMALIZED(bd.seoTitle) LIKE NORMALIZED(:searchText) OR NORMALIZED(bd.seoMetaDescription) LIKE NORMALIZED(:searchText)',
+            'NORMALIZED(b.name) LIKE NORMALIZED(:searchText) OR NORMALIZED(bd.seo.h1) LIKE NORMALIZED(:searchText) OR NORMALIZED(bd.seo.title) LIKE NORMALIZED(:searchText) OR NORMALIZED(bd.seo.metaDescription) LIKE NORMALIZED(:searchText)',
         );
 
         if (mb_strlen($searchText) < SearchSetting::SIMPLE_SEARCH_THRESHOLD) {

@@ -32,8 +32,8 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     {
         $brandData = $this->brandDataFactory->create();
 
-        $brandData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $brandData->seoH1s[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $brandData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $brandData->seo[self::SECOND_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
 
         /** @var \App\Model\Product\Brand\Brand $brand */
         $brand = $this->brandFactory->create($brandData);
@@ -51,8 +51,8 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     {
         $brandData = $this->brandDataFactory->create();
 
-        $brandData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $brandData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $brandData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $brandData->seo[self::FIRST_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
 
         /** @var \App\Model\Product\Brand\Brand $brand */
         $brand = $this->brandFactory->create($brandData);
