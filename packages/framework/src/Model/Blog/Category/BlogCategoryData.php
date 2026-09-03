@@ -14,19 +14,9 @@ class BlogCategoryData
     public $names;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData[]
      */
-    public $seoTitles;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoMetaDescriptions;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoH1s;
+    public $seo;
 
     /**
      * @var string[]|null[]
@@ -61,9 +51,7 @@ class BlogCategoryData
     public function __construct()
     {
         $this->names = [];
-        $this->seoTitles = [];
-        $this->seoMetaDescriptions = [];
-        $this->seoH1s = [];
+        $this->seo = [];
         $this->parent = null;
         $this->descriptions = [];
         $this->enabled = [];
