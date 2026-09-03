@@ -491,9 +491,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $domainId = $domainConfig->getId();
 
             $blogArticleData->blogCategoriesByDomainId[$domainId] = $blogCategories;
-            $blogArticleData->seoTitles[$domainId] = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domainId] = $articleTitlesByLocale[$locale];
-            $blogArticleData->seoMetaDescriptions[$domainId] = t('Read practical advice in the article: %articleTitle%', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seo[$domainId]->title = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seo[$domainId]->h1 = $articleTitlesByLocale[$locale];
+            $blogArticleData->seo[$domainId]->metaDescription = t('Read practical advice in the article: %articleTitle%', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->assignBlogArticleAuthor($blogArticleData);
@@ -578,9 +578,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
                 $mainPageBlogCategory,
                 $buyingGuideCategory,
             ];
-            $blogArticleData->seoTitles[$domainId] = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitle], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domainId] = $articleTitle;
-            $blogArticleData->seoMetaDescriptions[$domainId] = $blogArticleData->perexes[$locale];
+            $blogArticleData->seo[$domainId]->title = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitle], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seo[$domainId]->h1 = $articleTitle;
+            $blogArticleData->seo[$domainId]->metaDescription = $blogArticleData->perexes[$locale];
         }
 
         return $this->blogArticleFacade->create($blogArticleData);
