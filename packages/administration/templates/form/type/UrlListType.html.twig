@@ -12,7 +12,7 @@
     <div class="js-entity-url-list mb-3">
         {{ form_errors(form.newUrls) }}
 
-        {% for domainId, friendlyUrlForms in form.toDelete %}
+        {% for domainId, domainUrl in form.vars.domainUrlsById %}
             <div class="card mb-3 js-entity-url-list-domain-{{ domainId }}">
                 <div class="card-header card-header-light py-2">
                     <span>
@@ -22,65 +22,70 @@
                     </span>
                 </div>
                 <div class="card-body js-entity-url-list-container">
-                    {% set mainUrl = findUrlByDomainId(form.vars.routeName, { id: entityId }, domainId) %}
-                    {% for slug, friendlyUrlForm in friendlyUrlForms %}
-                        {% set absoluteUrl = form.vars.absoluteUrlsByDomainIdAndSlug[domainId][friendlyUrlForm.vars.value] %}
-                        {% set isMainUrl = mainUrl is same as(absoluteUrl) %}
-                        <div class="row align-items-baseline js-entity-url-list-friendly-url">
-                            <div class="col-auto{% if isMainUrl %} fw-bold{% endif %}">
-                                {% set mainUrlRadioButton = form.mainFriendlyUrlsByDomainId[domainId][slug] %}
-                                {{ form_widget(mainUrlRadioButton, { label: absoluteUrl, attr: { class: 'js-entity-url-list-select-main' }, label_attr: { class: 'js-entity-url-list-row-label' } }) }}
-                                <div class="d-none">
-                                    {{ form_widget(friendlyUrlForm, {attr: {class: 'js-entity-url-list-row-checkbox'}}) }}
+                    {% if form.toDelete.children[domainId] is defined %}
+                        {% set mainUrlSlug = form.vars.mainUrlsSlugsOnDomains[domainId] ?? null %}
+                        {% for childName, friendlyUrlForm in form.toDelete.children[domainId] %}
+                            {% set slug = friendlyUrlForm.vars.value %}
+                            {% set absoluteUrl = form.vars.absoluteUrlsByDomainIdAndSlug[domainId][slug] %}
+                            {% set isMainUrl = slug is same as(mainUrlSlug) %}
+                            <div class="row align-items-baseline js-entity-url-list-friendly-url">
+                                <div class="col-auto{% if isMainUrl %} fw-bold{% endif %}">
+                                    {% set mainUrlRadioButton = form.mainFriendlyUrlsByDomainId[domainId][childName] %}
+                                    {{ form_widget(mainUrlRadioButton, { label: absoluteUrl, attr: { class: 'js-entity-url-list-select-main' }, label_attr: { class: 'js-entity-url-list-row-label' } }) }}
+                                    <div class="d-none">
+                                        {{ form_widget(friendlyUrlForm, {attr: {class: 'js-entity-url-list-row-checkbox'}}) }}
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="{{ absoluteUrl }}"
+                                       title="{{ 'Open in a new tab'|trans }}"
+                                       target="_blank"
+                                       rel="noopener"
+                                    >
+                                        {{ ux_icon('forward-page') }}
+                                    </a>
+                                </div>
+
+                                <div class="col-auto js-entity-url-list-info-main-delete" style="display: none">
+                                    {{ info_icon('Main URL can\'t be deleted'|trans) }}
+                                </div>
+
+                                <div class="col-auto js-entity-url-list-row-delete-revert-wrapper">
+                                    <span class="js-entity-url-list-row-delete-block">
+                                        <button class="btn btn-sm btn-icon btn-link js-entity-url-list-row-delete-block-button" type="button">
+                                           {{ ux_icon('delete', {class: 'icon ms-3'}) }}
+                                        </button>
+                                    </span>
+                                    <span class="js-entity-url-list-row-revert-block" style="display: none">
+                                        <button class="btn btn-sm btn-link js-entity-url-list-row-revert-block-button" type="button">
+                                            {{ ux_icon('revert') }}
+                                            {{ 'Return back'|trans }}
+                                        </button>
+                                    </span>
+                                </div>
+
+                                <div class="col-auto js-entity-url-list-row-revert-block" style="display: none">
+                                    {{ info_icon('URL will be deleted after saving.'|trans) }}
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <a href="{{ absoluteUrl }}"
-                                   title="{{ 'Open in a new tab'|trans }}"
-                                   target="_blank"
-                                   rel="noopener"
-                                >
-                                    {{ ux_icon('forward-page') }}
-                                </a>
-                            </div>
+                        {% endfor %}
+                    {% endif %}
 
-                            <div class="col-auto js-entity-url-list-info-main-delete" style="display: none">
-                                {{ info_icon('Main URL can\'t be deleted'|trans) }}
-                            </div>
+                    {% set newUrlsForm = form.newUrls.children[domainId] %}
+                    <div class="js-entity-url-list-new-urls mb-2"
+                         data-new-url-prototype="{{ form_widget(newUrlsForm.vars.prototype, { domainUrl: domainUrl })|e }}"
+                    >
+                        {% for newUrlForm in newUrlsForm %}
+                            {{ form_widget(newUrlForm, { domainUrl: domainUrl }) }}
+                        {% endfor %}
+                    </div>
 
-                            <div class="col-auto js-entity-url-list-row-delete-revert-wrapper">
-                                <span class="js-entity-url-list-row-delete-block">
-                                    <button class="btn btn-sm btn-icon btn-link js-entity-url-list-row-delete-block-button" type="button">
-                                       {{ ux_icon('delete', {class: 'icon ms-3'}) }}
-                                    </button>
-                                </span>
-                                <span class="js-entity-url-list-row-revert-block" style="display: none">
-                                    <button class="btn btn-sm btn-link js-entity-url-list-row-revert-block-button" type="button">
-                                        {{ ux_icon('revert') }}
-                                        {{ 'Return back'|trans }}
-                                    </button>
-                                </span>
-                            </div>
-
-                            <div class="col-auto js-entity-url-list-row-revert-block" style="display: none">
-                                {{ info_icon('URL will be deleted after saving.'|trans) }}
-                            </div>
-                        </div>
-                    {% endfor %}
+                    <button type="button" class="js-entity-url-list-button-add-url btn">
+                        {{ ux_icon('plus') }}
+                        {{ 'Add URL'|trans }}
+                    </button>
                 </div>
             </div>
         {% endfor %}
-        <div id="{{ form.newUrls.vars.id }}"
-             class="js-entity-url-list-new-urls mb-3"
-             data-new-url-prototype="{{ form_widget(form.newUrls.vars.prototype)|e }}"
-        >
-            {% for newUrlForm in form.newUrls %}
-                {{ form_widget(newUrlForm) }}
-            {% endfor %}
-        </div>
-        <button type="button" class="js-entity-url-list-button-add-url btn">
-            {{ ux_icon('plus') }}
-            {{ 'Add URL'|trans }}
-        </button>
     </div>
 {% endblock %}
