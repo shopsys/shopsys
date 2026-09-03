@@ -15,17 +15,25 @@ import {
 import { SkeletonModuleProductReviews } from 'components/Blocks/Skeleton/SkeletonModuleProductReviews';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeProductReviewConnectionFragment } from 'graphql/requests/productReviews/fragments/ProductReviewConnectionFragment.generated';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { clamp } from 'utils/numbers/clamp';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export type ProductReviewsContentProps = {
+    initialProductReviews?: TypeProductReviewConnectionFragment | null;
     productUuid: string;
     productName: string;
     variants?: ReviewedProductVariantType[];
 };
 
-export const ProductReviewsContent: FC<ProductReviewsContentProps> = ({ productUuid, productName, variants }) => {
+export const ProductReviewsContent: FC<ProductReviewsContentProps> = ({
+    initialProductReviews,
+    productUuid,
+    productName,
+    variants,
+}) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [customerMyReviewsUrl] = getInternationalizedStaticUrls(['/customer/my-reviews'], url);
@@ -42,7 +50,7 @@ export const ProductReviewsContent: FC<ProductReviewsContentProps> = ({ productU
         setOrderingMode,
         summary,
         totalCount,
-    } = useProductReviewsData(productUuid);
+    } = useProductReviewsData(productUuid, initialProductReviews ?? undefined);
     const {
         isLoading: isWriteReviewAvailabilityLoading,
         pendingOwnReviews,
@@ -50,7 +58,7 @@ export const ProductReviewsContent: FC<ProductReviewsContentProps> = ({ productU
         reviewedProductUuids,
     } = useCurrentCustomerUserProductFamilyReviews(productUuid);
 
-    if (areProductReviewsFetching || isWriteReviewAvailabilityLoading) {
+    if (areProductReviewsFetching) {
         return <SkeletonModuleProductReviews />;
     }
 
@@ -58,10 +66,12 @@ export const ProductReviewsContent: FC<ProductReviewsContentProps> = ({ productU
 
     // a logged in customer cannot review the same product twice, so offer only what is left to review
     const unreviewedVariants = variants?.filter((variant) => !reviewedProductUuids.has(variant.uuid));
-    const canWriteReview = variants?.length
-        ? unreviewedVariants !== undefined && unreviewedVariants.length > 0
-        : !reviewedProductUuids.has(productUuid);
-    const hasAlreadyReviewed = reviewedProductUuids.size > 0 && !canWriteReview;
+    const canWriteReview =
+        !isWriteReviewAvailabilityLoading &&
+        (variants?.length
+            ? unreviewedVariants !== undefined && unreviewedVariants.length > 0
+            : !reviewedProductUuids.has(productUuid));
+    const hasAlreadyReviewed = !isWriteReviewAvailabilityLoading && reviewedProductUuids.size > 0 && !canWriteReview;
     const reviewedProductReviewUrl = reviewedProductReviewUuid
         ? `${customerMyReviewsUrl}#${getProductReviewHtmlId(reviewedProductReviewUuid)}`
         : null;
@@ -75,7 +85,11 @@ export const ProductReviewsContent: FC<ProductReviewsContentProps> = ({ productU
     };
 
     const remainingCount = clamp(totalCount - reviews.length, 0, PRODUCT_REVIEWS_LOAD_MORE_PAGE_SIZE);
-    const hasReviewActions = canWriteReview || hasAlreadyReviewed || productReviewPolicyArticleUrl !== null;
+    const hasReviewActions =
+        isWriteReviewAvailabilityLoading ||
+        canWriteReview ||
+        hasAlreadyReviewed ||
+        productReviewPolicyArticleUrl !== null;
 
     if (totalCount === 0 && pendingOwnReviews.length === 0) {
         return (
@@ -84,6 +98,7 @@ export const ProductReviewsContent: FC<ProductReviewsContentProps> = ({ productU
                     <ProductReviewsActions
                         canWriteReview={canWriteReview}
                         hasAlreadyReviewed={hasAlreadyReviewed}
+                        isLoading={isWriteReviewAvailabilityLoading}
                         reviewedProductReviewUrl={reviewedProductReviewUrl}
                         policyArticleUrl={productReviewPolicyArticleUrl}
                         onWriteReview={handleWriteReview}
@@ -100,6 +115,7 @@ export const ProductReviewsContent: FC<ProductReviewsContentProps> = ({ productU
                     <ProductReviewsActions
                         canWriteReview={canWriteReview}
                         hasAlreadyReviewed={hasAlreadyReviewed}
+                        isLoading={isWriteReviewAvailabilityLoading}
                         reviewedProductReviewUrl={reviewedProductReviewUrl}
                         policyArticleUrl={productReviewPolicyArticleUrl}
                         onWriteReview={handleWriteReview}
@@ -117,11 +133,14 @@ export const ProductReviewsContent: FC<ProductReviewsContentProps> = ({ productU
                 reviews={reviews}
             />
 
+            {isLoadingMoreReviews &&
+                createEmptyArray(3).map((_, index) => <SkeletonModuleProductReviews key={index} />)}
+
             {hasMoreReviews && (
                 <Button
                     className="self-center"
                     disabled={isLoadingMoreReviews}
-                    shouldShowSpinner={isLoadingMoreReviews}
+                    hasDisabledLook={isLoadingMoreReviews}
                     variant="secondary"
                     onClick={loadMoreReviews}
                 >

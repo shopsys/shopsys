@@ -3,6 +3,7 @@ import { TypeCustomerUserProductReviewFragment } from 'graphql/requests/productR
 import { useCurrentCustomerUserProductReviewsQuery } from 'graphql/requests/productReviews/queries/CurrentCustomerUserProductReviewsQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { TypeProductReviewStatusEnum } from 'graphql/types';
+import { useEffect, useState } from 'react';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
 const OWN_REVIEWS_OF_PRODUCT_LIMIT = 50;
@@ -21,7 +22,15 @@ type CurrentCustomerUserProductFamilyReviews = {
 export const useCurrentCustomerUserProductFamilyReviews = (
     productUuid: string,
 ): CurrentCustomerUserProductFamilyReviews => {
-    const [{ data: currentCustomerUserData, fetching: isCurrentCustomerUserFetching }] = useCurrentCustomerUserQuery();
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    const [{ data: currentCustomerUserData, fetching: isCurrentCustomerUserFetching }] = useCurrentCustomerUserQuery({
+        pause: !isMounted,
+    });
     const isUserLoggedIn = !!currentCustomerUserData?.currentCustomerUser;
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const areProductReviewsEnabled = settingsData?.settings?.productReviewsEnabled === true;
@@ -29,16 +38,16 @@ export const useCurrentCustomerUserProductFamilyReviews = (
     const [{ data: currentCustomerUserProductReviewsData, fetching: areOwnReviewsFetching }] =
         useCurrentCustomerUserProductReviewsQuery({
             variables: { productUuid, first: OWN_REVIEWS_OF_PRODUCT_LIMIT },
-            pause: !isUserLoggedIn || !areProductReviewsEnabled,
+            pause: !isMounted || !isUserLoggedIn || !areProductReviewsEnabled,
         });
 
     const ownReviews =
         mapConnectionEdges<TypeCustomerUserProductReviewFragment>(
-            currentCustomerUserProductReviewsData?.currentCustomerUserProductReviews.edges ?? undefined,
+            isMounted ? currentCustomerUserProductReviewsData?.currentCustomerUserProductReviews.edges : undefined,
         ) ?? [];
 
     return {
-        isLoading: isCurrentCustomerUserFetching || (isUserLoggedIn && areOwnReviewsFetching),
+        isLoading: !isMounted || isCurrentCustomerUserFetching || (isUserLoggedIn && areOwnReviewsFetching),
         pendingOwnReviews: ownReviews.filter((review) => review.status === TypeProductReviewStatusEnum.Pending),
         reviewedProductReviewUuid:
             ownReviews.find((review) => review.productUuid === productUuid)?.uuid ?? ownReviews[0]?.uuid ?? null,

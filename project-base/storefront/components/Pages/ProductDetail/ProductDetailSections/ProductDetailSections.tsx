@@ -2,6 +2,7 @@ import type { ReviewedProductVariantType } from 'components/Blocks/ProductReview
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
+import { TypeProductReviewConnectionFragment } from 'graphql/requests/productReviews/fragments/ProductReviewConnectionFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
@@ -21,6 +22,7 @@ type ProductDetailSectionsProps = {
     relatedProducts: TypeListedProductFragment[];
     files: TypeFileFragment[];
     product?: TypeProductDetailFragment;
+    initialProductReviews?: TypeProductReviewConnectionFragment | null;
     productUuid: string;
     productFullName: string;
     productVariants?: ReviewedProductVariantType[];
@@ -41,6 +43,7 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     relatedProducts,
     files,
     product,
+    initialProductReviews,
     productUuid,
     productFullName,
     productVariants,
@@ -102,6 +105,7 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
 
                 {areProductReviewsEnabled && (
                     <ProductDetailReviewsSection
+                        initialProductReviews={initialProductReviews}
                         productName={productFullName}
                         productUuid={productUuid}
                         sectionRef={reviewsRef}

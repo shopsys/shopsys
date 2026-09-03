@@ -1,6 +1,6 @@
-import { TypeProductReviewsQuery } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
+import { TypeProductReviewConnectionFragment } from 'graphql/requests/productReviews/fragments/ProductReviewConnectionFragment.generated';
 
-type ProductReviewConnectionType = TypeProductReviewsQuery['productReviews'];
+type ProductReviewConnectionType = TypeProductReviewConnectionFragment;
 
 export const mergeProductReviewConnections = (
     currentConnection: ProductReviewConnectionType,
