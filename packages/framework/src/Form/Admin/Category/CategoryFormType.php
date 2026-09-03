@@ -8,28 +8,24 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
+use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
-use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
-use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -42,7 +38,6 @@ final class CategoryFormType extends AbstractType
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
         private readonly Domain $domain,
-        private readonly SeoSettingFacade $seoSettingFacade,
         private readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         private readonly Localization $localization,
         private readonly ParameterRepository $parameterRepository,
@@ -53,34 +48,6 @@ final class CategoryFormType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $seoTitlesOptionsByDomainId = [];
-        $seoMetaDescriptionsOptionsByDomainId = [];
-        $seoH1OptionsByDomainId = [];
-
-        foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-
-            $seoTitlesOptionsByDomainId[$domainId] = [
-                'attr' => [
-                    'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['category']),
-                    'data-js-placeholder-source-input-id' => 'category_form_settings_name_' . $domainConfig->getLocale(),
-                    'data-js-recommended-length' => 60,
-                ],
-            ];
-            $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
-                'attr' => [
-                    'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
-                    'data-js-recommended-length' => 155,
-                ],
-            ];
-            $seoH1OptionsByDomainId[$domainId] = [
-                'attr' => [
-                    'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['category']),
-                    'data-js-placeholder-source-input-id' => 'category_form_settings_name_' . $domainConfig->getLocale(),
-                ],
-            ];
-        }
-
         if ($options['category'] !== null) {
             $parentChoices = $this->categoryFacade->getAllTranslatedWithoutBranch(
                 $options['category'],
@@ -152,45 +119,13 @@ final class CategoryFormType extends AbstractType
                 },
             ]);
 
-        $builderSeoGroup = $builder->create('seo', GroupType::class, [
-            'label' => 'SEO',
+        $builderSeoGroup = $builder->create('seoGroup', SeoGroupType::class, [
+            'placeholder_source_input_id' => 'category_form_settings_name_{locale}',
+            'url_list_options' => $options['scenario'] === self::SCENARIO_EDIT ? [
+                'route_name' => 'front_product_list',
+                'entity_id' => $options['category']?->getId(),
+            ] : null,
         ]);
-
-        $builderSeoGroup
-            ->add('seoTitles', MultidomainType::class, [
-                'entry_type' => TextType::class,
-                'required' => false,
-                'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'label' => 'Page title',
-            ])
-            ->add('seoMetaDescriptions', MultidomainType::class, [
-                'entry_type' => TextareaType::class,
-                'required' => false,
-                'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'label' => 'Meta description',
-            ])
-            ->add('seoH1s', MultidomainType::class, [
-                'required' => false,
-                'entry_options' => [
-                    'constraints' => [
-                        new Constraints\Length(
-                            max: 255,
-                            maxMessage: 'Heading (H1) cannot be longer than {{ limit }} characters',
-                        ),
-                    ],
-                ],
-                'options_by_domain_id' => $seoH1OptionsByDomainId,
-                'label' => 'Heading (H1)',
-            ]);
-
-        if ($options['scenario'] === self::SCENARIO_EDIT) {
-            $builderSeoGroup
-                ->add('urls', UrlListType::class, [
-                    'route_name' => 'front_product_list',
-                    'entity_id' => $options['category']?->getId(),
-                    'label' => 'URL addresses',
-                ]);
-        }
 
         $builderDescriptionGroup = $builder->create('description', GroupType::class, [
             'label' => 'Description',
@@ -248,13 +183,6 @@ final class CategoryFormType extends AbstractType
                 'data_class' => CategoryData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
-    }
-
-    private function getCategoryNameForPlaceholder(DomainConfig $domainConfig, ?Category $category = null): string
-    {
-        $domainLocale = $domainConfig->getLocale();
-
-        return $category === null ? '' : $category->getName($domainLocale) ?? '';
     }
 
     protected function buildFilterParameters(

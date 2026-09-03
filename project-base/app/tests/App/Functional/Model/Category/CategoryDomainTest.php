@@ -78,9 +78,9 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     {
         $categoryData = $this->categoryDataFactory->create();
 
-        $categoryData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $categoryData->seoMetaDescriptions[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
-        $categoryData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $categoryData->seo[self::SECOND_DOMAIN_ID]->metaDescription = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
 
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFactory->create($categoryData, null);
@@ -103,9 +103,9 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     {
         $categoryData = $this->categoryDataFactory->create();
 
-        $categoryData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $categoryData->seoMetaDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
-        $categoryData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->metaDescription = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
 
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFactory->create($categoryData, null);
