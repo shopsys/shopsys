@@ -7,17 +7,13 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Product\Brand;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
-use Shopsys\FormTypesBundle\MultidomainType;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,45 +21,11 @@ use Symfony\Component\Validator\Constraints;
 
 final class BrandFormType extends AbstractType
 {
-    public function __construct(
-        private readonly Domain $domain,
-        private readonly SeoSettingFacade $seoSettingFacade,
-    ) {
-    }
-
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null $brand */
         $brand = $options['brand'];
-
-        $seoTitlesOptionsByDomainId = [];
-        $seoMetaDescriptionsOptionsByDomainId = [];
-        $seoH1sOptionsByDomainId = [];
-
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-
-            $seoTitlesOptionsByDomainId[$domainId] = [
-                'attr' => [
-                    'placeholder' => $this->getTitlePlaceholder($brand),
-                    'data-js-placeholder-source-input-id' => 'brand_form_basicInformation_name',
-                    'data-js-recommended-length' => 60,
-                ],
-            ];
-            $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
-                'attr' => [
-                    'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
-                    'data-js-recommended-length' => 155,
-                ],
-            ];
-            $seoH1sOptionsByDomainId[$domainId] = [
-                'attr' => [
-                    'placeholder' => $this->getTitlePlaceholder($brand),
-                    'data-js-placeholder-source-input-id' => 'brand_form_basicInformation_name',
-                ],
-            ];
-        }
 
         $builderBasicInformationGroup = $builder->create('basicInformation', GroupType::class, [
             'label' => 'Basic information',
@@ -95,36 +57,13 @@ final class BrandFormType extends AbstractType
                 'label' => 'Description',
             ]);
 
-        $builderSeoGroup = $builder->create('seo', GroupType::class, [
-            'label' => 'SEO',
-        ]);
-        $builderSeoGroup
-            ->add('seoTitles', MultidomainType::class, [
-                'entry_type' => TextType::class,
-                'required' => false,
-                'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'label' => 'Page title',
-            ])
-            ->add('seoMetaDescriptions', MultidomainType::class, [
-                'entry_type' => TextareaType::class,
-                'required' => false,
-                'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'label' => 'Meta description',
-            ])
-            ->add('seoH1s', MultidomainType::class, [
-                'entry_type' => TextType::class,
-                'required' => false,
-                'options_by_domain_id' => $seoH1sOptionsByDomainId,
-                'label' => 'Heading (H1)',
-            ]);
-
-        if ($brand) {
-            $builderSeoGroup->add('urls', UrlListType::class, [
+        $builderSeoGroup = $builder->create('seoGroup', SeoGroupType::class, [
+            'placeholder_source_input_id' => 'brand_form_basicInformation_name',
+            'url_list_options' => $brand !== null ? [
                 'route_name' => 'front_brand_detail',
                 'entity_id' => $brand->getId(),
-                'label' => 'URL addresses',
-            ]);
-        }
+            ] : null,
+        ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
             'label' => 'Image',
@@ -164,10 +103,5 @@ final class BrandFormType extends AbstractType
             ->setDefaults([
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
-    }
-
-    private function getTitlePlaceholder(?Brand $brand = null): string
-    {
-        return $brand?->getName() ?? '';
     }
 }
