@@ -20,19 +20,9 @@ class BlogArticleData
     public $blogCategoriesByDomainId;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData[]
      */
-    public $seoTitles;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoMetaDescriptions;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoH1s;
+    public $seo;
 
     /**
      * @var string[]|null[]
@@ -98,9 +88,7 @@ class BlogArticleData
     {
         $this->names = [];
         $this->blogCategoriesByDomainId = [];
-        $this->seoTitles = [];
-        $this->seoMetaDescriptions = [];
-        $this->seoH1s = [];
+        $this->seo = [];
         $this->descriptions = [];
         $this->categories = [];
         $this->enabled = [];
