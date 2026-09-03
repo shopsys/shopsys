@@ -58,25 +58,26 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
 
     protected function validateExists(array $values, UniqueSlugsOnDomains $constraint): void
     {
-        foreach ($values as $urlData) {
-            $domainId = $urlData[UrlListData::FIELD_DOMAIN];
+        foreach ($values as $domainId => $newUrlsData) {
             $domainConfig = $this->domain->getDomainConfigById($domainId);
-            $slug = FriendlyUrlSlugNormalizer::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
-
             $domainRouter = $this->domainRouterFactory->getRouter($domainId);
 
-            try {
-                $domainRouter->match('/' . $slug);
-            } catch (ResourceNotFoundException $e) {
-                continue;
-            }
+            foreach ($newUrlsData as $urlData) {
+                $slug = FriendlyUrlSlugNormalizer::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
 
-            $this->context->addViolation(
-                $constraint->message,
-                [
-                    '{{ url }}' => $domainConfig->getUrl() . '/' . $slug,
-                ],
-            );
+                try {
+                    $domainRouter->match('/' . $slug);
+                } catch (ResourceNotFoundException $e) {
+                    continue;
+                }
+
+                $this->context->addViolation(
+                    $constraint->message,
+                    [
+                        '{{ url }}' => $domainConfig->getUrl() . '/' . $slug,
+                    ],
+                );
+            }
         }
     }
 
@@ -87,19 +88,20 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     {
         $slugsCountByDomainId = [];
 
-        foreach ($values as $urlData) {
-            $domainId = $urlData[UrlListData::FIELD_DOMAIN];
-            $slug = FriendlyUrlSlugNormalizer::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
+        foreach ($values as $domainId => $newUrlsData) {
+            foreach ($newUrlsData as $urlData) {
+                $slug = FriendlyUrlSlugNormalizer::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
 
-            if (!array_key_exists($domainId, $slugsCountByDomainId)) {
-                $slugsCountByDomainId[$domainId] = [];
+                if (!array_key_exists($domainId, $slugsCountByDomainId)) {
+                    $slugsCountByDomainId[$domainId] = [];
+                }
+
+                if (!array_key_exists($slug, $slugsCountByDomainId[$domainId])) {
+                    $slugsCountByDomainId[$domainId][$slug] = 0;
+                }
+
+                $slugsCountByDomainId[$domainId][$slug]++;
             }
-
-            if (!array_key_exists($slug, $slugsCountByDomainId[$domainId])) {
-                $slugsCountByDomainId[$domainId][$slug] = 0;
-            }
-
-            $slugsCountByDomainId[$domainId][$slug]++;
         }
 
         return $slugsCountByDomainId;

@@ -325,8 +325,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $urlListData->newUrls = [];
 
         foreach ($slugs as $slug) {
-            $urlListData->newUrls[] = [
-                'domain' => $domainId,
+            $urlListData->newUrls[$domainId][] = [
                 'slug' => $slug,
             ];
         }
