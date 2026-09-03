@@ -172,12 +172,13 @@ class FriendlyUrlFacade
             }
         }
 
-        foreach ($urlListData->newUrls as $urlData) {
-            $domainId = $urlData[UrlListData::FIELD_DOMAIN];
-            $newSlug = $urlData[UrlListData::FIELD_SLUG];
-            $newFriendlyUrl = $this->friendlyUrlFactory->create($routeName, $entityId, $domainId, $newSlug);
-            $this->em->persist($newFriendlyUrl);
-            $toFlush[] = $newFriendlyUrl;
+        foreach ($urlListData->newUrls as $domainId => $newUrlsData) {
+            foreach ($newUrlsData as $urlData) {
+                $newSlug = $urlData[UrlListData::FIELD_SLUG];
+                $newFriendlyUrl = $this->friendlyUrlFactory->create($routeName, $entityId, $domainId, $newSlug);
+                $this->em->persist($newFriendlyUrl);
+                $toFlush[] = $newFriendlyUrl;
+            }
         }
 
         if (count($toFlush) > 0) {

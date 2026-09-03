@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 class UrlListData
 {
-    public const FIELD_DOMAIN = 'domain';
     public const FIELD_SLUG = 'slug';
 
     /**
@@ -20,13 +19,13 @@ class UrlListData
     public $mainFriendlyUrlsByDomainId;
 
     /**
-     * @var array<int, array<string, mixed>>
+     * @var array<int, array<int, array<string, string>>>
      *
-     * Format:
+     * Format (indexed by domain id):
      * [
-     *     [
-     *         'domain' => 1,
-     *         'slug' => 'slug-for-the-first-domain',
+     *     1 => [
+     *         ['slug' => 'slug-for-the-first-domain'],
+     *         ...
      *     ],
      *     ...
      * ]
