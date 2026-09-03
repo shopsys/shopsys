@@ -29,7 +29,7 @@ const getProjectPages = () => {
 };
 
 export default defineConfig({
-    viewportWidth: 1280,
+    viewportWidth: 1600,
     viewportHeight: 720,
     defaultCommandTimeout: 20000,
     screenshotsFolder: 'screenshots',
@@ -63,6 +63,12 @@ export default defineConfig({
             });
 
             on('before:browser:launch', (browser, launchOptions) => {
+                if (browser.name === 'electron' && browser.isHeadless) {
+                    // The browser window must fit the viewport to avoid clipping screenshots.
+                    launchOptions.preferences.width = config.viewportWidth;
+                    launchOptions.preferences.height = config.viewportHeight;
+                }
+
                 if (browser.family === 'chromium' && browser.name !== 'electron') {
                     launchOptions.args.push(
                         '--font-render-hinting=none',
