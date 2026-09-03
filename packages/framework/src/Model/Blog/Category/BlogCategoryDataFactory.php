@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class BlogCategoryDataFactory
 {
@@ -14,6 +15,7 @@ class BlogCategoryDataFactory
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
     }
 
@@ -36,9 +38,7 @@ class BlogCategoryDataFactory
     protected function fillNew(BlogCategoryData $blogCategoryData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
-            $blogCategoryData->seoMetaDescriptions[$domainId] = null;
-            $blogCategoryData->seoTitles[$domainId] = null;
-            $blogCategoryData->seoH1s[$domainId] = null;
+            $blogCategoryData->seo[$domainId] = $this->seoAttributesDataFactory->create();
             $blogCategoryData->enabled[$domainId] = true;
         }
 
@@ -60,9 +60,9 @@ class BlogCategoryDataFactory
         $blogCategoryData->image = $this->imageUploadDataFactory->createFromEntityAndType($blogCategory);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $blogCategoryData->seoMetaDescriptions[$domainId] = $blogCategory->getSeoMetaDescription($domainId);
-            $blogCategoryData->seoTitles[$domainId] = $blogCategory->getSeoTitle($domainId);
-            $blogCategoryData->seoH1s[$domainId] = $blogCategory->getSeoH1($domainId);
+            $blogCategoryData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
+                $blogCategory->getSeoAttributes($domainId),
+            );
             $blogCategoryData->enabled[$domainId] = $blogCategory->isEnabled($domainId);
 
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_blogcategory_detail', $blogCategory->getId());
