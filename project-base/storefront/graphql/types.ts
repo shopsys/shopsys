@@ -1244,6 +1244,26 @@ export type TypeCurrentRegularCustomerUser = TypeBaseCustomerUser & TypeCurrentC
   uuid: Scalars['Uuid']['output'];
 };
 
+/** A connection to a list of items. */
+export type TypeCustomerUserProductReviewConnection = {
+  __typename?: 'CustomerUserProductReviewConnection';
+  /** Information to aid in pagination. */
+  edges: Maybe<Array<Maybe<TypeCustomerUserProductReviewEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: TypePageInfo;
+  /** Total number of the customer user's reviews */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** An edge in a connection. */
+export type TypeCustomerUserProductReviewEdge = {
+  __typename?: 'CustomerUserProductReviewEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Maybe<TypeProductReview>;
+};
+
 /** Available customer user roles */
 export enum TypeCustomerUserRoleEnum {
   RoleApiAll = 'ROLE_API_ALL',
@@ -1592,6 +1612,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
+  reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -1671,6 +1693,8 @@ export type TypeMutation = {
   CreateInquiry: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
   CreateOrder: TypeCreateOrderResult;
+  /** Create a new product review that will be published after moderation */
+  CreateProductReview: TypeProductReview;
   /** Create a new watchdog or update validity of the current one */
   CreateWatchdog: Scalars['Boolean']['output'];
   /** Delete delivery address by Uuid */
@@ -1799,6 +1823,11 @@ export type TypeMutationCreateInquiryArgs = {
 
 export type TypeMutationCreateOrderArgs = {
   input: TypeOrderInput;
+};
+
+
+export type TypeMutationCreateProductReviewArgs = {
+  input: TypeProductReviewInput;
 };
 
 
@@ -2109,12 +2138,16 @@ export type TypeOrder = {
   postcode: Scalars['String']['output'];
   /** All product items in the order */
   productItems: Array<TypeOrderItem>;
+  /** Products of the order can be reviewed in its current status */
+  productReviewsAllowed: Scalars['Boolean']['output'];
   /** Promo code (coupon) used in the order */
   promoCode: Maybe<Scalars['String']['output']>;
   /** Gift vouchers generated from the order */
   purchasedGiftVouchers: Array<TypePurchasedGiftVoucher>;
   /** Total price with VAT reduced by redeemed gift vouchers, never below zero */
   remainingAmountToPay: Scalars['Money']['output'];
+  /** Uuids of the order's products that already have a review linked to this order */
+  reviewedProductUuids: Array<Scalars['Uuid']['output']>;
   /** Current status of the order */
   status: Scalars['String']['output'];
   /** Type of the order status */
@@ -2789,6 +2822,8 @@ export type TypeProduct = {
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
+  reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -2986,6 +3021,120 @@ export type TypeProductQuestionInput = {
   question: Scalars['String']['input'];
 };
 
+/** Customer review of a product */
+export type TypeProductReview = {
+  __typename?: 'ProductReview';
+  /** Date and time when the review was created */
+  createdAt: Scalars['DateTime']['output'];
+  /** The review is linked to an order of the reviewed product */
+  isVerifiedPurchase: Scalars['Boolean']['output'];
+  /** Currently associated reviewed product, null when the product no longer exists */
+  product: Maybe<TypeProduct>;
+  /** Name of the reviewed product at the time of the review */
+  productName: Scalars['String']['output'];
+  /** UUID of the reviewed product (the concrete variant), null when the product no longer exists */
+  productUuid: Maybe<Scalars['Uuid']['output']>;
+  /** Star rating from 1 to 5 */
+  rating: Scalars['Int']['output'];
+  /** Reason why the customer's own review was not published, null for reviews that were not rejected */
+  rejectionReason: Maybe<Scalars['String']['output']>;
+  /** Date and time when the response was published */
+  responseCreatedAt: Maybe<Scalars['DateTime']['output']>;
+  /** Response of the e-shop to the review */
+  responseText: Maybe<Scalars['String']['output']>;
+  /** Public name of the reviewer in the "FirstName L." form, null when the review is published anonymously */
+  reviewerName: Maybe<Scalars['String']['output']>;
+  /** Moderation status, meaningful for the customer's own reviews (public listings contain approved reviews only) */
+  status: TypeProductReviewStatusEnum;
+  /** Text of the review */
+  text: Maybe<Scalars['String']['output']>;
+  /** UUID */
+  uuid: Scalars['Uuid']['output'];
+};
+
+/** A connection to a list of items. */
+export type TypeProductReviewConnection = {
+  __typename?: 'ProductReviewConnection';
+  /** Information to aid in pagination. */
+  edges: Maybe<Array<Maybe<TypeProductReviewEdge>>>;
+  /** The current ordering mode */
+  orderingMode: TypeProductReviewOrderingModeEnum;
+  /** Information to aid in pagination. */
+  pageInfo: TypePageInfo;
+  /** Aggregated rating of the same set of reviews the connection paginates */
+  summary: TypeProductReviewsSummary;
+  /** Total number of reviews */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** An edge in a connection. */
+export type TypeProductReviewEdge = {
+  __typename?: 'ProductReviewEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Maybe<TypeProductReview>;
+};
+
+/** Represents the input for creating a product review */
+export type TypeProductReviewInput = {
+  /** Email of the reviewer, required for a customer that is not logged in (the account email is used otherwise) */
+  email?: InputMaybe<Scalars['String']['input']>;
+  /** First name of the reviewer */
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  /** The review will be published without the reviewer name */
+  isAnonymous: Scalars['Boolean']['input'];
+  /** Last name of the reviewer */
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  /** URL hash of the order proving the purchase of a customer that is not logged in, the review is created unverified without it */
+  orderUrlHash?: InputMaybe<Scalars['String']['input']>;
+  /** UUID of the reviewed product; a concrete variant has to be chosen for products with variants */
+  productUuid: Scalars['Uuid']['input'];
+  /** Star rating from 1 to 5 */
+  rating: Scalars['Int']['input'];
+  /** Text of the review */
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** One of possible ordering modes for product reviews */
+export enum TypeProductReviewOrderingModeEnum {
+  /** Order by rating, highest first */
+  HighestRating = 'HIGHEST_RATING',
+  /** Order by rating, lowest first */
+  LowestRating = 'LOWEST_RATING',
+  /** Order by date of creation, newest first */
+  Newest = 'NEWEST'
+}
+
+export type TypeProductReviewRatingCount = {
+  __typename?: 'ProductReviewRatingCount';
+  /** Number of reviews with the rating */
+  count: Scalars['Int']['output'];
+  /** Star rating */
+  rating: Scalars['Int']['output'];
+};
+
+/** One of possible moderation statuses of a product review */
+export enum TypeProductReviewStatusEnum {
+  /** The review is approved and publicly visible */
+  Approved = 'APPROVED',
+  /** The review is waiting for moderation */
+  Pending = 'PENDING',
+  /** The review was rejected */
+  Rejected = 'REJECTED'
+}
+
+/** Aggregated rating of the approved reviews of a product and its visible variants */
+export type TypeProductReviewsSummary = {
+  __typename?: 'ProductReviewsSummary';
+  /** Average rating, null when there are no reviews */
+  averageRating: Maybe<Scalars['Float']['output']>;
+  /** Number of reviews per star rating, from 5 stars to 1 */
+  ratingCounts: Array<TypeProductReviewRatingCount>;
+  /** Total number of reviews */
+  totalCount: Scalars['Int']['output'];
+};
+
 /** One of possible product types */
 export enum TypeProductTypeEnum {
   /** Basic product */
@@ -3110,6 +3259,8 @@ export type TypeQuery = {
   countries: Array<TypeCountry>;
   /** Returns currently logged in customer user */
   currentCustomerUser: Maybe<TypeCurrentCustomerUser>;
+  /** Returns reviews written by the current customer user, regardless of their moderation status, newest first. When a product UUID is provided, only the reviews of the product and its variants are returned. The list can be paginated using `first`, `last`, `before` and `after` keywords */
+  currentCustomerUserProductReviews: TypeCustomerUserProductReviewConnection;
   /** Returns all customer user role groups */
   customerUserRoleGroups: Array<TypeCustomerUserRoleGroup>;
   /** Returns all customer users assigned to the current customer */
@@ -3151,6 +3302,8 @@ export type TypeQuery = {
   /** Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list. */
   productList: Maybe<TypeProductList>;
   productListsByType: Array<TypeProductList>;
+  /** Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords */
+  productReviews: TypeProductReviewConnection;
   /** Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords */
   products: TypeProductConnection;
   /** Returns list of products by catalog numbers */
@@ -3295,6 +3448,15 @@ export type TypeQueryCouldBeCustomerRegisteredQueryArgs = {
 };
 
 
+export type TypeQueryCurrentCustomerUserProductReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  productUuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
 export type TypeQueryFlagArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
@@ -3375,6 +3537,16 @@ export type TypeQueryProductListArgs = {
 
 export type TypeQueryProductListsByTypeArgs = {
   productListType: TypeProductListTypeEnum;
+};
+
+
+export type TypeQueryProductReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
+  productUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -3635,6 +3807,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
+  reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -3792,6 +3966,10 @@ export type TypeSettings = {
   pricing: TypePricingSetting;
   /** Returns privacy policy article's url */
   privacyPolicyArticleUrl: Maybe<Scalars['String']['output']>;
+  /** Returns product review policy article's url */
+  productReviewPolicyArticleUrl: Maybe<Scalars['String']['output']>;
+  /** Returns true if product reviews are enabled on the current domain */
+  productReviewsEnabled: Scalars['Boolean']['output'];
   /** Settings related to SEO */
   seo: TypeSeoSetting;
   /** Returns available social network logins */
@@ -4176,6 +4354,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
+  reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */

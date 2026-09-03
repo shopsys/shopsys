@@ -1084,6 +1084,24 @@ type CurrentRegularCustomerUser implements BaseCustomerUser & CurrentCustomerUse
   uuid: Uuid!
 }
 
+"A connection to a list of items."
+type CustomerUserProductReviewConnection {
+  "Information to aid in pagination."
+  edges: [CustomerUserProductReviewEdge]
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "Total number of the customer user's reviews"
+  totalCount: Int!
+}
+
+"An edge in a connection."
+type CustomerUserProductReviewEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: ProductReview
+}
+
 "Available customer user roles"
 enum CustomerUserRoleEnum {
   ROLE_API_ALL
@@ -1403,6 +1421,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
+  "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
+  reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
   seoH1: String
   "Seo meta description of product"
@@ -1465,6 +1485,8 @@ type Mutation {
   CreateInquiry(input: CreateInquiryInput!): Boolean!
   "Creates complete order with products and addresses"
   CreateOrder(input: OrderInput!): CreateOrderResult!
+  "Create a new product review that will be published after moderation"
+  CreateProductReview(input: ProductReviewInput!): ProductReview!
   "Create a new watchdog or update validity of the current one"
   CreateWatchdog(input: CreateWatchdogInput!): Boolean!
   "Delete delivery address by Uuid"
@@ -1694,12 +1716,16 @@ type Order {
   postcode: String!
   "All product items in the order"
   productItems: [OrderItem!]!
+  "Products of the order can be reviewed in its current status"
+  productReviewsAllowed: Boolean!
   "Promo code (coupon) used in the order"
   promoCode: String
   "Gift vouchers generated from the order"
   purchasedGiftVouchers: [PurchasedGiftVoucher!]!
   "Total price with VAT reduced by redeemed gift vouchers, never below zero"
   remainingAmountToPay: Money!
+  "Uuids of the order's products that already have a review linked to this order"
+  reviewedProductUuids: [Uuid!]!
   "Current status of the order"
   status: String!
   "Type of the order status"
@@ -2333,6 +2359,8 @@ interface Product {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
+  "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
+  reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
   seoH1: String
   "Seo meta description of product"
@@ -2493,6 +2521,115 @@ input ProductQuestionInput {
   question: String!
 }
 
+"Customer review of a product"
+type ProductReview {
+  "Date and time when the review was created"
+  createdAt: DateTime!
+  "The review is linked to an order of the reviewed product"
+  isVerifiedPurchase: Boolean!
+  "Currently associated reviewed product, null when the product no longer exists"
+  product: Product
+  "Name of the reviewed product at the time of the review"
+  productName: String!
+  "UUID of the reviewed product (the concrete variant), null when the product no longer exists"
+  productUuid: Uuid
+  "Star rating from 1 to 5"
+  rating: Int!
+  "Reason why the customer's own review was not published, null for reviews that were not rejected"
+  rejectionReason: String
+  "Date and time when the response was published"
+  responseCreatedAt: DateTime
+  "Response of the e-shop to the review"
+  responseText: String
+  "Public name of the reviewer in the \"FirstName L.\" form, null when the review is published anonymously"
+  reviewerName: String
+  "Moderation status, meaningful for the customer's own reviews (public listings contain approved reviews only)"
+  status: ProductReviewStatusEnum!
+  "Text of the review"
+  text: String
+  "UUID"
+  uuid: Uuid!
+}
+
+"A connection to a list of items."
+type ProductReviewConnection {
+  "Information to aid in pagination."
+  edges: [ProductReviewEdge]
+  "The current ordering mode"
+  orderingMode: ProductReviewOrderingModeEnum!
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "Aggregated rating of the same set of reviews the connection paginates"
+  summary: ProductReviewsSummary!
+  "Total number of reviews"
+  totalCount: Int!
+}
+
+"An edge in a connection."
+type ProductReviewEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: ProductReview
+}
+
+"Represents the input for creating a product review"
+input ProductReviewInput {
+  "Email of the reviewer, required for a customer that is not logged in (the account email is used otherwise)"
+  email: String = null
+  "First name of the reviewer"
+  firstName: String = null
+  "The review will be published without the reviewer name"
+  isAnonymous: Boolean! = false
+  "Last name of the reviewer"
+  lastName: String = null
+  "URL hash of the order proving the purchase of a customer that is not logged in, the review is created unverified without it"
+  orderUrlHash: String = null
+  "UUID of the reviewed product; a concrete variant has to be chosen for products with variants"
+  productUuid: Uuid!
+  "Star rating from 1 to 5"
+  rating: Int!
+  "Text of the review"
+  text: String = null
+}
+
+"One of possible ordering modes for product reviews"
+enum ProductReviewOrderingModeEnum {
+  "Order by rating, highest first"
+  HIGHEST_RATING
+  "Order by rating, lowest first"
+  LOWEST_RATING
+  "Order by date of creation, newest first"
+  NEWEST
+}
+
+type ProductReviewRatingCount {
+  "Number of reviews with the rating"
+  count: Int!
+  "Star rating"
+  rating: Int!
+}
+
+"Aggregated rating of the approved reviews of a product and its visible variants"
+type ProductReviewsSummary {
+  "Average rating, null when there are no reviews"
+  averageRating: Float
+  "Number of reviews per star rating, from 5 stars to 1"
+  ratingCounts: [ProductReviewRatingCount!]!
+  "Total number of reviews"
+  totalCount: Int!
+}
+
+"One of possible moderation statuses of a product review"
+enum ProductReviewStatusEnum {
+  "The review is approved and publicly visible"
+  APPROVED
+  "The review is waiting for moderation"
+  PENDING
+  "The review was rejected"
+  REJECTED
+}
+
 "Cart products grouped by the reason why they cannot be delivered using the transport"
 type ProductsByTransportUnavailabilityReason {
   "Cart products that cannot be delivered using the transport for this reason"
@@ -2616,6 +2753,8 @@ type Query {
   CurrentCompanyCustomerUser: CurrentCompanyCustomerUser
   "Returns currently logged in customer user"
   currentCustomerUser: CurrentCustomerUser
+  "Returns reviews written by the current customer user, regardless of their moderation status, newest first. When a product UUID is provided, only the reviews of the product and its variants are returned. The list can be paginated using `first`, `last`, `before` and `after` keywords"
+  currentCustomerUserProductReviews(after: String, before: String, first: Int, last: Int, productUuid: Uuid): CustomerUserProductReviewConnection!
   CurrentRegularCustomerUser: CurrentRegularCustomerUser
   "Returns all customer user role groups"
   customerUserRoleGroups: [CustomerUserRoleGroup!]!
@@ -2668,6 +2807,8 @@ type Query {
   "Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."
   productList(input: ProductListInput!): ProductList
   productListsByType(productListType: ProductListTypeEnum!): [ProductList!]!
+  "Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords"
+  productReviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null, productUuid: Uuid!): ProductReviewConnection!
   "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
   products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
   "Returns list of products by catalog numbers"
@@ -2905,6 +3046,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
+  "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
+  reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
   seoH1: String
   "Seo meta description of product"
@@ -3034,6 +3177,10 @@ type Settings {
   pricing: PricingSetting!
   "Returns privacy policy article's url"
   privacyPolicyArticleUrl: String
+  "Returns product review policy article's url"
+  productReviewPolicyArticleUrl: String
+  "Returns true if product reviews are enabled on the current domain"
+  productReviewsEnabled: Boolean!
   "Settings related to SEO"
   seo: SeoSetting!
   "Returns available social network logins"
@@ -3346,6 +3493,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
+  "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
+  reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
   seoH1: String
   "Seo meta description of product"
