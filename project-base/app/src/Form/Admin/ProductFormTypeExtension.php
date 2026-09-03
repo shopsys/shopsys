@@ -25,16 +25,7 @@ final class ProductFormTypeExtension extends AbstractTypeExtension
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->setSeoGroup($builder);
-
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
-    }
-
-    private function setSeoGroup(FormBuilderInterface $builder): void
-    {
-        $builderSeoGroup = $builder->get('seoGroup');
-
-        $builderSeoGroup->remove('seoH1s');
     }
 
     /**

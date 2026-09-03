@@ -78,9 +78,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
-            $productData->seoH1s[$domain->getId()] = t('Hello Kitty Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
-            $productData->seoTitles[$domain->getId()] = t('Hello Kitty TV', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
-            $productData->seoMetaDescriptions[$domain->getId()] = t('Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->seo[$domain->getId()]->h1 = t('Hello Kitty Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->seo[$domain->getId()]->title = t('Hello Kitty TV', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->seo[$domain->getId()]->metaDescription = t('Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_SCREEN_SIZE => '27',
@@ -2153,9 +2153,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns. You can cash it at any exchange office', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns. You can cash it at any exchange office', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
-            $productData->seoH1s[$domain->getId()] = t('Ticket for 100 Czech crowns', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
-            $productData->seoTitles[$domain->getId()] = t('Ticket for 100 CZK', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
-            $productData->seoMetaDescriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->seo[$domain->getId()]->h1 = t('Ticket for 100 Czech crowns', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->seo[$domain->getId()]->title = t('Ticket for 100 CZK', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->seo[$domain->getId()]->metaDescription = t('Coupon valued to 100 Czech crowns.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Compact Design, Big Value', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->shortDescriptionUsp2ByDomainId[$domain->getId()] = t('No Expiry', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);

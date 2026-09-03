@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFac
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoRepository;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -38,6 +39,7 @@ class ProductDataFactory
         protected readonly ProductVideoDataFactory $productVideoDataFactory,
         protected readonly ProductVideoRepository $productVideoRepository,
         protected readonly ProductPromotionXyDataFactory $productPromotionXyDataFactory,
+        protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
     }
 
@@ -79,9 +81,10 @@ class ProductDataFactory
         $productData->parameters = $productParameterValuesData;
 
         $nullForAllDomains = $this->getNullForAllDomains();
-        $productData->seoTitles = $nullForAllDomains;
-        $productData->seoH1s = $nullForAllDomains;
-        $productData->seoMetaDescriptions = $nullForAllDomains;
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productData->seo[$domainId] = $this->seoAttributesDataFactory->create();
+        }
         $productData->descriptions = $nullForAllDomains;
         $productData->shortDescriptions = $nullForAllDomains;
         $productData->accessories = [];
@@ -121,9 +124,9 @@ class ProductDataFactory
         foreach ($this->domain->getAllIds() as $domainId) {
             $productData->shortDescriptions[$domainId] = $product->getShortDescription($domainId);
             $productData->descriptions[$domainId] = $product->getDescription($domainId);
-            $productData->seoH1s[$domainId] = $product->getSeoH1($domainId);
-            $productData->seoTitles[$domainId] = $product->getSeoTitle($domainId);
-            $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
+            $productData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
+                $product->getSeoAttributes($domainId),
+            );
             $productData->shortDescriptionUsp1ByDomainId[$domainId] = $product->getShortDescriptionUsp1($domainId);
             $productData->shortDescriptionUsp2ByDomainId[$domainId] = $product->getShortDescriptionUsp2($domainId);
             $productData->shortDescriptionUsp3ByDomainId[$domainId] = $product->getShortDescriptionUsp3($domainId);

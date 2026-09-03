@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Price\ProductPricesWithVatSelectType;
+use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStockFormType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductCatnum;
@@ -29,7 +30,6 @@ use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
-use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -38,7 +38,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
-use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -61,7 +60,6 @@ final class ProductFormType extends AbstractType
         private readonly FlagFacade $flagFacade,
         private readonly UnitFacade $unitFacade,
         private readonly Domain $domain,
-        private readonly SeoSettingFacade $seoSettingFacade,
         private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
         private readonly PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         private readonly ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer,
@@ -585,61 +583,13 @@ final class ProductFormType extends AbstractType
 
     private function createSeoGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
-        $seoTitlesOptionsByDomainId = [];
-        $seoMetaDescriptionsOptionsByDomainId = [];
-        $seoH1OptionsByDomainId = [];
-
-        foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
-            $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
-
-            $seoTitlesOptionsByDomainId[$domainId] = [
-                'attr' => [
-                    'placeholder' => $this->getTitlePlaceholder($locale, $product),
-                    'data-js-placeholder-source-input-id' => 'product_form_name_' . $locale,
-                    'data-js-recommended-length' => 60,
-                ],
-            ];
-            $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
-                'attr' => [
-                    'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
-                    'data-js-recommended-length' => 155,
-                ],
-            ];
-            $seoH1OptionsByDomainId[$domainId] = $seoTitlesOptionsByDomainId[$domainId];
-        }
-        $builderSeoGroup = $builder->create('seoGroup', GroupType::class, [
-            'label' => 'SEO',
-        ]);
-
-        $builderSeoGroup
-            ->add('seoTitles', MultidomainType::class, [
-                'entry_type' => TextType::class,
-                'required' => false,
-                'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'label' => 'Page title',
-            ])
-            ->add('seoMetaDescriptions', MultidomainType::class, [
-                'entry_type' => TextareaType::class,
-                'required' => false,
-                'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'label' => 'Meta description',
-            ])
-            ->add('seoH1s', MultidomainType::class, [
-                'entry_type' => TextType::class,
-                'required' => false,
-                'options_by_domain_id' => $seoH1OptionsByDomainId,
-                'label' => 'Heading (H1)',
-            ]);
-
-        if ($product) {
-            $builderSeoGroup->add('urls', UrlListType::class, [
+        return $builder->create('seoGroup', SeoGroupType::class, [
+            'placeholder_source_input_id' => 'product_form_name_{locale}',
+            'url_list_options' => $product !== null ? [
                 'route_name' => 'front_product_detail',
                 'entity_id' => $product->getId(),
-                'label' => 'URL settings',
-            ]);
-        }
-
-        return $builderSeoGroup;
+            ] : null,
+        ]);
     }
 
     private function createVariantGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
@@ -687,11 +637,6 @@ final class ProductFormType extends AbstractType
         }
 
         return $variantGroup;
-    }
-
-    private function getTitlePlaceholder(string $locale, ?Product $product = null): string
-    {
-        return $product?->getName($locale) ?? '';
     }
 
     private function isProductMainVariant(?Product $product): bool
