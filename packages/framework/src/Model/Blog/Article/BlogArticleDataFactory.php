@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class BlogArticleDataFactory
 {
@@ -16,6 +17,7 @@ class BlogArticleDataFactory
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
         protected readonly EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper,
+        protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
     }
 
@@ -40,9 +42,7 @@ class BlogArticleDataFactory
         $blogArticleData->image = $this->imageUploadDataFactory->create();
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $blogArticleData->seoMetaDescriptions[$domainId] = null;
-            $blogArticleData->seoTitles[$domainId] = null;
-            $blogArticleData->seoH1s[$domainId] = null;
+            $blogArticleData->seo[$domainId] = $this->seoAttributesDataFactory->create();
             $blogArticleData->enabled[$domainId] = true;
             $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_DRAFT;
             $blogArticleData->publishDates[$domainId] = null;
@@ -73,9 +73,9 @@ class BlogArticleDataFactory
         $blogArticleData->image = $this->imageUploadDataFactory->createFromEntityAndType($blogArticle);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $blogArticleData->seoMetaDescriptions[$domainId] = $blogArticle->getSeoMetaDescription($domainId);
-            $blogArticleData->seoTitles[$domainId] = $blogArticle->getSeoTitle($domainId);
-            $blogArticleData->seoH1s[$domainId] = $blogArticle->getSeoH1($domainId);
+            $blogArticleData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
+                $blogArticle->getSeoAttributes($domainId),
+            );
             $blogArticleData->statuses[$domainId] = $blogArticle->getStatus($domainId);
             $blogArticleData->publishDates[$domainId] = $blogArticle->getPublishDate($domainId);
 
