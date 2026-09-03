@@ -114,14 +114,9 @@ class ProductData
     public $images;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData[]
      */
-    public $seoTitles;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoMetaDescriptions;
+    public $seo;
 
     /**
      * @var string[]|null[]
@@ -152,11 +147,6 @@ class ProductData
      * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public $variants;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoH1s;
 
     /**
      * @var array<string, mixed>
@@ -264,15 +254,13 @@ class ProductData
         $this->variantAlias = [];
         $this->parameters = [];
         $this->productInputPricesByDomain = [];
-        $this->seoTitles = [];
-        $this->seoMetaDescriptions = [];
+        $this->seo = [];
         $this->descriptions = [];
         $this->shortDescriptions = [];
         $this->urls = new UrlListData();
         $this->accessories = [];
         $this->relatedProducts = [];
         $this->variants = [];
-        $this->seoH1s = [];
         $this->pluginData = [];
         $this->orderingPriorityByDomainId = [];
         $this->shortDescriptionUsp1ByDomainId = [];
