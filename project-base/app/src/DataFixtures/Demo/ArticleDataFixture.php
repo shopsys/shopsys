@@ -507,9 +507,9 @@ class ArticleDataFixture extends AbstractReferenceFixture
         $articleData->name = $data[self::ATTRIBUTE_NAME_KEY];
         $articleData->text = $data[self::ATTRIBUTE_TEXT_KEY];
         $articleData->placement = $data[self::ATTRIBUTE_PLACEMENT_KEY];
-        $articleData->seoH1 = $data[self::ATTRIBUTE_SEO_H1_KEY] ?? null;
-        $articleData->seoTitle = $data[self::ATTRIBUTE_SEO_TITLE_KEY] ?? null;
-        $articleData->seoMetaDescription = $data[self::ATTRIBUTE_SEO_META_DESCRIPTION_KEY] ?? null;
+        $articleData->seo->h1 = $data[self::ATTRIBUTE_SEO_H1_KEY] ?? null;
+        $articleData->seo->title = $data[self::ATTRIBUTE_SEO_TITLE_KEY] ?? null;
+        $articleData->seo->metaDescription = $data[self::ATTRIBUTE_SEO_META_DESCRIPTION_KEY] ?? null;
         $articleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $data[self::ATTRIBUTE_PLAIN_NAME_KEY] . $domainId)->toString();
 
         $this->createArticleFromArticleData($articleData, $data[self::REFERENCE_NAME_KEY] ?? null);
