@@ -29,9 +29,9 @@ class ArticleTest extends TransactionFunctionalTestCase
 
         $articleData->name = 'Demonstrative name';
         $articleData->placement = Article::PLACEMENT_FOOTER_1;
-        $articleData->seoTitle = 'Demonstrative seo title';
-        $articleData->seoMetaDescription = 'Demonstrative seo description';
-        $articleData->seoH1 = 'Demonstrative seo H1';
+        $articleData->seo->title = 'Demonstrative seo title';
+        $articleData->seo->metaDescription = 'Demonstrative seo description';
+        $articleData->seo->h1 = 'Demonstrative seo H1';
         $articleData->createdAt = new DatePoint('2000-01-01T01:01:01');
 
         $article = $this->articleFactory->create($articleData);
