@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class ReadyCategorySeoMixDataFactory
 {
@@ -22,12 +23,16 @@ class ReadyCategorySeoMixDataFactory
         protected readonly ReadyCategorySeoMixParameterParameterValueFactory $readyCategorySeoMixParameterValueFactory,
         protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
     }
 
     protected function createInstance(): ReadyCategorySeoMixData
     {
-        return new ReadyCategorySeoMixData();
+        $readyCategorySeoMixData = new ReadyCategorySeoMixData();
+        $readyCategorySeoMixData->seo = $this->seoAttributesDataFactory->create();
+
+        return $readyCategorySeoMixData;
     }
 
     public function create(): ReadyCategorySeoMixData
@@ -101,11 +106,11 @@ class ReadyCategorySeoMixDataFactory
         ReadyCategorySeoMixData $readyCategorySeoMixData,
         ReadyCategorySeoMix $readyCategorySeoMix,
     ): void {
-        $readyCategorySeoMixData->h1 = $readyCategorySeoMix->getH1();
+        $readyCategorySeoMixData->seo = $this->seoAttributesDataFactory->createFromSeoAttributes(
+            $readyCategorySeoMix->getSeoAttributes(),
+        );
         $readyCategorySeoMixData->shortDescription = $readyCategorySeoMix->getShortDescription();
         $readyCategorySeoMixData->description = $readyCategorySeoMix->getDescription();
-        $readyCategorySeoMixData->title = $readyCategorySeoMix->getTitle();
-        $readyCategorySeoMixData->metaDescription = $readyCategorySeoMix->getMetaDescription();
         $readyCategorySeoMixData->showInCategory = $readyCategorySeoMix->showInCategory();
         $readyCategorySeoMixData->image = $this->imageUploadDataFactory->createFromEntityAndType($readyCategorySeoMix);
     }
