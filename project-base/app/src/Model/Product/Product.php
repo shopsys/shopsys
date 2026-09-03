@@ -79,7 +79,7 @@ class Product extends BaseProduct
     #[Override]
     protected function createDomains(BaseProductData $productData): void
     {
-        $domainIds = array_keys($productData->seoTitles);
+        $domainIds = array_keys($productData->seo);
 
         foreach ($domainIds as $domainId) {
             $productDomain = new ProductDomain($this, $domainId);
