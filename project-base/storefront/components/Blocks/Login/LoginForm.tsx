@@ -8,6 +8,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import type { ChangeEventHandler } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { LoginFormType } from 'types/form';
@@ -24,6 +25,7 @@ export type LoginFormProps = {
     formName?: string;
     formWrapperClassName?: string;
     formContentWrapperClassName?: string;
+    onEmailChange?: ChangeEventHandler<HTMLInputElement>;
 };
 
 export const LoginForm: FC<LoginFormProps> = ({
@@ -32,6 +34,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     formName,
     formWrapperClassName,
     formContentWrapperClassName,
+    onEmailChange,
 }) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
@@ -86,6 +89,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                                 type: 'email',
                                 autoComplete: 'email',
                                 'aria-describedby': descriptionId,
+                                onChange: onEmailChange,
                             }}
                         />
 

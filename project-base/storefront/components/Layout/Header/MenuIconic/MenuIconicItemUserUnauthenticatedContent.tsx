@@ -5,6 +5,7 @@ import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useRef } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useFocusTrap } from 'utils/useFocusTrap';
@@ -75,6 +76,8 @@ export const MenuIconicItemUserUnauthenticatedContent: FC<MenuIconicItemUserUnau
     const { url } = useDomainConfig();
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
     const contentRef = useRef<HTMLDivElement>(null);
+    const loginFormEmail = useSessionStore((store) => store.loginFormEmail);
+    const setLoginFormEmail = useSessionStore((store) => store.setLoginFormEmail);
 
     useFocusTrap(hideFocusTrap ? undefined : contentRef);
 
@@ -83,7 +86,11 @@ export const MenuIconicItemUserUnauthenticatedContent: FC<MenuIconicItemUserUnau
             <div className="vl:order-2 vl:w-91 w-full">
                 <h3 className="h4 mb-5">{t('Log in to your account')}</h3>
 
-                <LoginForm formName={loginFormName} />
+                <LoginForm
+                    defaultEmail={loginFormEmail}
+                    formName={loginFormName}
+                    onEmailChange={(event) => setLoginFormEmail(event.currentTarget.value)}
+                />
             </div>
 
             <RegistrationBenefits
