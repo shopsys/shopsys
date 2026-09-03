@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -20,6 +21,7 @@ class ReadyCategorySeoMixDataFactory
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ReadyCategorySeoMixParameterParameterValueFactory $readyCategorySeoMixParameterValueFactory,
         protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 
@@ -30,7 +32,10 @@ class ReadyCategorySeoMixDataFactory
 
     public function create(): ReadyCategorySeoMixData
     {
-        return $this->createInstance();
+        $readyCategorySeoMixData = $this->createInstance();
+        $readyCategorySeoMixData->image = $this->imageUploadDataFactory->create();
+
+        return $readyCategorySeoMixData;
     }
 
     public function createReadyCategorySeoMixData(
@@ -45,6 +50,7 @@ class ReadyCategorySeoMixDataFactory
         $readyCategorySeoMixData = $this->createInstance();
 
         $readyCategorySeoMixData->urls = new UrlListData();
+        $readyCategorySeoMixData->image = $this->imageUploadDataFactory->create();
 
         if ($readyCategorySeoMix !== null) {
             $this->fillValuesFromReadyCategorySeoMix($readyCategorySeoMixData, $readyCategorySeoMix);
@@ -101,5 +107,6 @@ class ReadyCategorySeoMixDataFactory
         $readyCategorySeoMixData->title = $readyCategorySeoMix->getTitle();
         $readyCategorySeoMixData->metaDescription = $readyCategorySeoMix->getMetaDescription();
         $readyCategorySeoMixData->showInCategory = $readyCategorySeoMix->showInCategory();
+        $readyCategorySeoMixData->image = $this->imageUploadDataFactory->createFromEntityAndType($readyCategorySeoMix);
     }
 }

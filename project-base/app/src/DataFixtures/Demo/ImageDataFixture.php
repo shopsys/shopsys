@@ -26,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
@@ -113,6 +114,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     {
         $this->processBrandsImages();
         $this->processCategoriesImages();
+        $this->processReadyCategorySeoMixImages();
         $this->processPaymentsImages();
         $this->processTransportsImages();
         $this->processTransportGroupsImages();
@@ -196,6 +198,33 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             }
 
             $this->saveImageIntoDb($category->getId(), 'category', $imageId, $names);
+        }
+    }
+
+    private function processReadyCategorySeoMixImages(): void
+    {
+        $readyCategorySeoMixImagesData = [
+            800 => ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION,
+            801 => ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_FROM_CHEAPEST,
+            802 => ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_BLACK_ELECTRONICS,
+        ];
+
+        $firstAllowedDomainId = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getId();
+
+        foreach ($readyCategorySeoMixImagesData as $imageId => $readyCategorySeoMixReferenceName) {
+            $readyCategorySeoMix = $this->getReferenceForDomain(
+                $readyCategorySeoMixReferenceName,
+                $firstAllowedDomainId,
+                ReadyCategorySeoMix::class,
+            );
+
+            $names = [];
+
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = $readyCategorySeoMix->getH1();
+            }
+
+            $this->saveImageIntoDb($readyCategorySeoMix->getId(), 'readyCategorySeoMix', $imageId, $names);
         }
     }
 
@@ -623,6 +652,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             BrandDataFixture::class,
             CategoryDataFixture::class,
             PaymentDataFixture::class,
+            ReadyCategorySeoDataFixture::class,
             SalesRepresentativeDataFixture::class,
             TransportDataFixture::class,
             TransportGroupDataFixture::class,

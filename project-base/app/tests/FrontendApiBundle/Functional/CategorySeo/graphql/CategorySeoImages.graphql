@@ -1,0 +1,14 @@
+query CategorySeoImagesQuery(
+    $urlSlug: String!
+) {
+    category(urlSlug: $urlSlug) {
+        images {
+            url
+            name
+        }
+        mainImage {
+            url
+            name
+        }
+    }
+}

@@ -99,6 +99,38 @@ class CategorySeoTest extends GraphQlTestCase
         $this->assertSame($arrayExpected, $data);
     }
 
+    public function testReadyCategorySeoMixWithOwnImageReturnsIt(): void
+    {
+        $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION, 1, ReadyCategorySeoMix::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategorySeoImages.graphql', [
+            'urlSlug' => $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]),
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'category');
+
+        $this->assertCount(1, $data['images']);
+        $this->assertStringContainsString('/readyCategorySeoMix/', $data['images'][0]['url']);
+        $this->assertSame($data['images'][0], $data['mainImage']);
+    }
+
+    public function testReadyCategorySeoMixWithoutOwnImageFallsBackToCategoryImages(): void
+    {
+        $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_IN_SALE, 1, ReadyCategorySeoMix::class);
+
+        $responseForSeoMix = $this->getResponseContentForGql(__DIR__ . '/graphql/CategorySeoImages.graphql', [
+            'urlSlug' => $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]),
+        ]);
+        $dataForSeoMix = $this->getResponseDataForGraphQlType($responseForSeoMix, 'category');
+
+        $responseForCategory = $this->getResponseContentForGql(__DIR__ . '/graphql/CategorySeoImages.graphql', [
+            'urlSlug' => $this->urlGenerator->generate('front_product_list', ['id' => $readyCategorySeoMix->getCategory()->getId()]),
+        ]);
+        $dataForCategory = $this->getResponseDataForGraphQlType($responseForCategory, 'category');
+
+        $this->assertNotEmpty($dataForCategory['images']);
+        $this->assertSame($dataForCategory, $dataForSeoMix);
+    }
+
     public function testReadyCategorySeoMixProductsOrdering(): void
     {
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_FROM_CHEAPEST, 1, ReadyCategorySeoMix::class);
