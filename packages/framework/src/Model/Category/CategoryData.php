@@ -14,19 +14,9 @@ class CategoryData
     public $name;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData[]
      */
-    public $seoTitles;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoMetaDescriptions;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoH1s;
+    public $seo;
 
     /**
      * @var string[]|null[]
@@ -81,9 +71,7 @@ class CategoryData
     public function __construct()
     {
         $this->name = [];
-        $this->seoTitles = [];
-        $this->seoMetaDescriptions = [];
-        $this->seoH1s = [];
+        $this->seo = [];
         $this->descriptions = [];
         $this->enabled = [];
         $this->urls = new UrlListData();

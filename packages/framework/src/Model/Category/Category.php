@@ -253,11 +253,19 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
+     */
+    public function getSeoAttributes(int $domainId)
+    {
+        return $this->getCategoryDomain($domainId)->getSeoAttributes();
+    }
+
+    /**
      * @return string|null
      */
     public function getSeoTitle(int $domainId)
     {
-        return $this->getCategoryDomain($domainId)->getSeoTitle();
+        return $this->getSeoAttributes($domainId)->getTitle();
     }
 
     /**
@@ -265,7 +273,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
      */
     public function getSeoH1(int $domainId)
     {
-        return $this->getCategoryDomain($domainId)->getSeoH1();
+        return $this->getSeoAttributes($domainId)->getH1();
     }
 
     /**
@@ -290,7 +298,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
      */
     public function getSeoMetaDescription(int $domainId)
     {
-        return $this->getCategoryDomain($domainId)->getSeoMetaDescription();
+        return $this->getSeoAttributes($domainId)->getMetaDescription();
     }
 
     /**
@@ -335,9 +343,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     {
         foreach ($this->domains as $categoryDomain) {
             $domainId = $categoryDomain->getDomainId();
-            $categoryDomain->setSeoTitle($categoryData->seoTitles[$domainId]);
-            $categoryDomain->setSeoH1($categoryData->seoH1s[$domainId]);
-            $categoryDomain->setSeoMetaDescription($categoryData->seoMetaDescriptions[$domainId]);
+            $categoryDomain->getSeoAttributes()->edit($categoryData->seo[$domainId]);
             $categoryDomain->setDescription($categoryData->descriptions[$domainId]);
             $categoryDomain->setEnabled($categoryData->enabled[$domainId]);
         }
@@ -345,7 +351,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
 
     protected function createDomains(CategoryData $categoryData): void
     {
-        $domainIds = array_keys($categoryData->seoTitles);
+        $domainIds = array_keys($categoryData->seo);
 
         foreach ($domainIds as $domainId) {
             $categoryDomain = new CategoryDomain($this, $domainId);
