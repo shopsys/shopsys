@@ -2521,9 +2521,11 @@ msgstr ""
 msgid "Unpin"
 msgstr ""
 
-msgid "Unregistered"
 msgid "Unredeemed"
 msgstr ""
+
+msgid "Unregistered"
+msgstr "-"
 
 msgid "Unused friendly URL list"
 msgstr ""

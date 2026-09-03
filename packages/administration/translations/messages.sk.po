@@ -2521,10 +2521,11 @@ msgstr "Nezaplatené"
 msgid "Unpin"
 msgstr "Odopnúť"
 
-msgid "Unregistered"
-msgstr "Neregistrovaný"
 msgid "Unredeemed"
 msgstr "Neuplatnený"
+
+msgid "Unregistered"
+msgstr "Neregistrovaný"
 
 msgid "Unused friendly URL list"
 msgstr "Zoznam Unused friendly URL"

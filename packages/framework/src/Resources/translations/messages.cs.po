@@ -2910,6 +2910,7 @@ msgstr "Publikováno"
 
 msgid "Published anonymously"
 msgstr "Zveřejněno anonymně"
+
 msgid "Purchased in order"
 msgstr "Zakoupen v objednávce"
 
@@ -2924,6 +2925,7 @@ msgstr "Důvod změny obsahu"
 
 msgid "Reason for rejection"
 msgstr "Důvod zamítnutí"
+
 msgid "Redeemed"
 msgstr "Uplatněný"
 
@@ -3487,6 +3489,7 @@ msgstr "Text"
 
 msgid "Text review"
 msgstr "Textová recenze"
+
 msgid "The gift voucher applies to all goods and services. The gift voucher cannot be redeemed after the stated validity date; after the validity expires, its value is forfeited without any right to compensation. The voucher cannot be exchanged for cash. The goods or services must be of equal or higher value."
 msgstr "Dárkový poukaz platí na veškerý sortiment zboží a služeb. Dárkový poukaz nelze uplatnit po uvedeném datu platnosti, po vypršení platnosti jeho hodnota propadá bez nároku na náhradu. Poukaz nelze směnit za peníze. Zboží či služba musí být ve stejné nebo vyšší hodnotě."
 

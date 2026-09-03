@@ -2909,6 +2909,8 @@ msgid "Published"
 msgstr ""
 
 msgid "Published anonymously"
+msgstr "-"
+
 msgid "Purchased in order"
 msgstr ""
 
@@ -2922,6 +2924,8 @@ msgid "Reason for content change"
 msgstr ""
 
 msgid "Reason for rejection"
+msgstr "-"
+
 msgid "Redeemed"
 msgstr ""
 
@@ -3484,6 +3488,8 @@ msgid "Text"
 msgstr ""
 
 msgid "Text review"
+msgstr "-"
+
 msgid "The gift voucher applies to all goods and services. The gift voucher cannot be redeemed after the stated validity date; after the validity expires, its value is forfeited without any right to compensation. The voucher cannot be exchanged for cash. The goods or services must be of equal or higher value."
 msgstr ""
 
