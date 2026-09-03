@@ -1,4 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeProductReviewFragment } from 'graphql/requests/productReviews/fragments/ProductReviewFragment.generated';
 import { useProductReviewsQuery } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
@@ -6,6 +7,7 @@ import { TypeAvailabilityStatusEnum, TypeProductReviewOrderingModeEnum } from 'g
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { mapConnectionEdges } from 'utils/mappers/connection';
 import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 
 export const STRUCTURED_DATA_REVIEWS_COUNT = 5;
@@ -31,23 +33,23 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
         pause: !hasReviews,
     });
 
-    const reviews = (productReviewsData?.productReviews.edges ?? [])
-        .flatMap((edge) => (edge?.node ? [edge.node] : []))
-        .map((productReview) => ({
-            '@type': 'Review',
-            author: {
-                '@type': 'Person',
-                name: productReview.reviewerName ?? t('Anonymous customer'),
-            },
-            datePublished: productReview.createdAt.slice(0, 10),
-            ...(productReview.text !== null && { reviewBody: productReview.text }),
-            reviewRating: {
-                '@type': 'Rating',
-                ratingValue: productReview.rating,
-                bestRating: 5,
-                worstRating: 1,
-            },
-        }));
+    const reviews = (
+        mapConnectionEdges<TypeProductReviewFragment>(productReviewsData?.product?.reviews?.edges ?? undefined) ?? []
+    ).map((productReview) => ({
+        '@type': 'Review',
+        author: {
+            '@type': 'Person',
+            name: productReview.reviewerName ?? t('Anonymous customer'),
+        },
+        datePublished: productReview.createdAt.slice(0, 10),
+        ...(productReview.text !== null && { reviewBody: productReview.text }),
+        reviewRating: {
+            '@type': 'Rating',
+            ratingValue: productReview.rating,
+            bestRating: 5,
+            worstRating: 1,
+        },
+    }));
 
     return (
         <Head>

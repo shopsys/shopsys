@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { useProductReviewsData } from 'components/Blocks/ProductReviews/useProductReviewsData';
+import { TypeProductReviewConnectionFragment } from 'graphql/requests/productReviews/fragments/ProductReviewConnectionFragment.generated';
 import { TypeProductReviewsQuery } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
 import { TypeProductReviewOrderingModeEnum } from 'graphql/types';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
@@ -31,10 +32,7 @@ const createReviewEdge = (index: number) => ({
     },
 });
 
-const createProductReviews = (
-    reviewIndexes: number[],
-    totalCount: number,
-): TypeProductReviewsQuery['productReviews'] => ({
+const createProductReviews = (reviewIndexes: number[], totalCount: number): TypeProductReviewConnectionFragment => ({
     totalCount,
     orderingMode: TypeProductReviewOrderingModeEnum.Newest,
     summary: {
@@ -55,13 +53,13 @@ const createProductReviews = (
 describe('useProductReviewsData', () => {
     beforeEach(() => {
         testState.queryData = {
-            productReviews: createProductReviews([1, 2, 3, 4, 5], 6),
+            product: { reviews: createProductReviews([1, 2, 3, 4, 5], 6) },
         };
         testState.clientQueryMock.mockReset();
         testState.clientQueryMock.mockReturnValue({
             toPromise: vi.fn().mockResolvedValue({
                 data: {
-                    productReviews: createProductReviews([6], 6),
+                    product: { reviews: createProductReviews([6], 6) },
                 },
             }),
         });
