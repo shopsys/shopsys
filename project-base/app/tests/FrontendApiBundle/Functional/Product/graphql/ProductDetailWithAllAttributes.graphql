@@ -117,5 +117,9 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
             }
             totalCount
         }
+        reviews {
+            totalCount
+            orderingMode
+        }
     }
 }

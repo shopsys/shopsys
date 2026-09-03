@@ -8,7 +8,9 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Model\ProductReview\Connection\ProductReviewConnection;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewElasticsearchRepository;
@@ -25,20 +27,27 @@ class ProductReviewsQuery extends AbstractQuery
     ) {
     }
 
-    public function productReviewsQuery(Argument $argument): ProductReviewConnection
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array<string, mixed> $product
+     */
+    public function productReviewsByProductQuery(Product|array $product, Argument $argument): ?ProductReviewConnection
     {
+        if (!$this->productReviewApiFacade->areProductReviewsEnabledOnCurrentDomain()) {
+            return null;
+        }
+
         $this->pageSizeValidator->checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);
-        $this->productReviewApiFacade->checkProductReviewsEnabledOnCurrentDomain();
 
+        $reviewsProductId = $this->getProductIdCarryingReviews($product);
         $orderingMode = $argument['orderingMode'] ?? ProductReviewOrderingModeEnum::NEWEST;
         $pageResult = null;
 
         try {
             $paginator = new Paginator(
-                function (int $offset, int $limit) use ($argument, $orderingMode, &$pageResult) {
+                function (int $offset, int $limit) use ($reviewsProductId, $orderingMode, &$pageResult) {
                     $pageResult = $this->productReviewElasticsearchRepository->getReviewsPage(
-                        $argument['productUuid'],
+                        $reviewsProductId,
                         $orderingMode,
                         $offset,
                         $limit,
@@ -49,9 +58,9 @@ class ProductReviewsQuery extends AbstractQuery
             );
             // for the forward pagination the total comes from the very same search that fetched the page,
             // the backward pagination asks for the total first, so a minimal search has to provide it
-            $connection = $paginator->auto($argument, function () use ($argument, $orderingMode, &$pageResult) {
+            $connection = $paginator->auto($argument, function () use ($reviewsProductId, $orderingMode, &$pageResult) {
                 $pageResult ??= $this->productReviewElasticsearchRepository->getReviewsPage(
-                    $argument['productUuid'],
+                    $reviewsProductId,
                     $orderingMode,
                     0,
                     1,
@@ -70,6 +79,24 @@ class ProductReviewsQuery extends AbstractQuery
             $orderingMode,
             $connection->getTotalCount(),
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array<string, mixed> $product
+     */
+    protected function getProductIdCarryingReviews(Product|array $product): int
+    {
+        if ($product instanceof Product) {
+            return $product->isVariant() ? $product->getMainVariant()->getId() : $product->getId();
+        }
+
+        if ($product[ProductExportFieldProvider::IS_VARIANT] === true
+            && $product[ProductExportFieldProvider::MAIN_VARIANT_ID] !== null
+        ) {
+            return $product[ProductExportFieldProvider::MAIN_VARIANT_ID];
+        }
+
+        return $product[ProductExportFieldProvider::ID];
     }
 
     /**

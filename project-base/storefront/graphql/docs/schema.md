@@ -1130,45 +1130,6 @@ Find product list by UUID and type or if customer is logged, try find the the ol
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="query.productreviews">productReviews</strong></td>
-<td valign="top"><a href="#productreviewconnection">ProductReviewConnection</a>!</td>
-<td>
-
-Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">after</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">last</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderingMode</td>
-<td valign="top"><a href="#productrevieworderingmodeenum">ProductReviewOrderingModeEnum</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">productUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="query.products">products</strong></td>
 <td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
@@ -6578,6 +6539,40 @@ List of related products
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainvariant.reviews">reviews</strong></td>
+<td valign="top"><a href="#productreviewconnection">ProductReviewConnection</a></td>
+<td>
+
+Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderingMode</td>
+<td valign="top"><a href="#productrevieworderingmodeenum">ProductReviewOrderingModeEnum</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.reviewssummary">reviewsSummary</strong></td>
 <td valign="top"><a href="#productreviewssummary">ProductReviewsSummary</a></td>
 <td>
@@ -10257,6 +10252,40 @@ List of related products
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.reviews">reviews</strong></td>
+<td valign="top"><a href="#productreviewconnection">ProductReviewConnection</a></td>
+<td>
+
+Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderingMode</td>
+<td valign="top"><a href="#productrevieworderingmodeenum">ProductReviewOrderingModeEnum</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.reviewssummary">reviewsSummary</strong></td>
 <td valign="top"><a href="#productreviewssummary">ProductReviewsSummary</a></td>
 <td>
@@ -12001,6 +12030,40 @@ Quantity given for free in the buy X + Y free promotion (null when not set)
 List of related products
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.reviews">reviews</strong></td>
+<td valign="top"><a href="#productreviewconnection">ProductReviewConnection</a></td>
+<td>
+
+Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderingMode</td>
+<td valign="top"><a href="#productrevieworderingmodeenum">ProductReviewOrderingModeEnum</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="variant.reviewssummary">reviewsSummary</strong></td>
@@ -16583,6 +16646,40 @@ Quantity given for free in the buy X + Y free promotion (null when not set)
 List of related products
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.reviews">reviews</strong></td>
+<td valign="top"><a href="#productreviewconnection">ProductReviewConnection</a></td>
+<td>
+
+Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderingMode</td>
+<td valign="top"><a href="#productrevieworderingmodeenum">ProductReviewOrderingModeEnum</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="product.reviewssummary">reviewsSummary</strong></td>

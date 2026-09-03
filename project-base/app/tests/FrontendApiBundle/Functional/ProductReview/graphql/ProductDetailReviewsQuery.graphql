@@ -1,0 +1,37 @@
+query ProductDetailReviews($productUuid: Uuid!, $first: Int, $after: String, $orderingMode: ProductReviewOrderingModeEnum) {
+    product(uuid: $productUuid) {
+        uuid
+        reviews(first: $first, after: $after, orderingMode: $orderingMode) {
+            totalCount
+            orderingMode
+            summary {
+                averageRating
+                totalCount
+                ratingCounts {
+                    rating
+                    count
+                }
+            }
+            edges {
+                node {
+                    uuid
+                    reviewerName
+                    rating
+                    text
+                    createdAt
+                    isVerifiedPurchase
+                    responseText
+                    responseCreatedAt
+                    status
+                    rejectedImagesCount
+                    productUuid
+                    productName
+                }
+            }
+            pageInfo {
+                hasNextPage
+                endCursor
+            }
+        }
+    }
+}

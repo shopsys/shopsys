@@ -461,7 +461,10 @@ class ProductTest extends GraphQlTestCase
                 ],
                 'totalCount' => 9,
             ],
-
+            'reviews' => [
+                'totalCount' => 9,
+                'orderingMode' => 'NEWEST',
+            ],
         ];
     }
 

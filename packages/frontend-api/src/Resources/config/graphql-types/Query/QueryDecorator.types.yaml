@@ -39,11 +39,6 @@ QueryDecorator:
                     urlSlug:
                         type: "String"
                 description: "Returns product filtered using UUID or URL slug"
-            productReviews:
-                type: "ProductReviewConnection!"
-                argsBuilder: "ProductReviewPaginatorArgumentsBuilder"
-                resolve: "@=query('productReviewsQuery', args)"
-                description: "Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords"
             currentCustomerUserProductReviews:
                 type: "CustomerUserProductReviewConnection!"
                 argsBuilder: "Relay::Connection"
