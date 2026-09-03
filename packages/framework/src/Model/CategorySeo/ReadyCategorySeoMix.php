@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -76,11 +77,11 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
     protected $readyCategorySeoMixParameterParameterValues;
 
     /**
-     * @var string
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: false)]
-    protected $h1;
+    #[ORM\Embedded(class: SeoAttributes::class)]
+    protected $seo;
 
     /**
      * @var string|null
@@ -95,20 +96,6 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
     #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $title;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $metaDescription;
 
     /**
      * @var bool
@@ -127,6 +114,7 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
     public function __construct(ReadyCategorySeoMixData $readyCategorySeoMixData)
     {
         $this->readyCategorySeoMixParameterParameterValues = new ArrayCollection();
+        $this->seo = new SeoAttributes();
 
         $this->category = $readyCategorySeoMixData->category;
         $this->flag = $readyCategorySeoMixData->flag;
@@ -134,11 +122,9 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
         $this->domainId = $readyCategorySeoMixData->domainId;
         $this->selectedCategorySeoMixCombinationJson = $readyCategorySeoMixData->selectedCategorySeoMixCombinationJson;
 
-        $this->h1 = $readyCategorySeoMixData->h1;
+        $this->seo->edit($readyCategorySeoMixData->seo);
         $this->shortDescription = $readyCategorySeoMixData->shortDescription;
         $this->description = $readyCategorySeoMixData->description;
-        $this->title = $readyCategorySeoMixData->title;
-        $this->metaDescription = $readyCategorySeoMixData->metaDescription;
         $this->showInCategory = $readyCategorySeoMixData->showInCategory;
 
         $this->uuid = Uuid::uuid4()->toString();
@@ -150,11 +136,9 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
         $this->flag = $readyCategorySeoMixData->flag;
         $this->ordering = $readyCategorySeoMixData->ordering;
 
-        $this->h1 = $readyCategorySeoMixData->h1;
+        $this->seo->edit($readyCategorySeoMixData->seo);
         $this->shortDescription = $readyCategorySeoMixData->shortDescription;
         $this->description = $readyCategorySeoMixData->description;
-        $this->title = $readyCategorySeoMixData->title;
-        $this->metaDescription = $readyCategorySeoMixData->metaDescription;
         $this->showInCategory = $readyCategorySeoMixData->showInCategory;
     }
 
@@ -219,7 +203,15 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
      */
     public function getH1()
     {
-        return $this->h1;
+        return $this->seo->getH1();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
+     */
+    public function getSeoAttributes()
+    {
+        return $this->seo;
     }
 
     /**
@@ -243,7 +235,7 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
      */
     public function getTitle()
     {
-        return $this->title;
+        return $this->seo->getTitle();
     }
 
     /**
@@ -251,7 +243,7 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
      */
     public function getMetaDescription()
     {
-        return $this->metaDescription;
+        return $this->seo->getMetaDescription();
     }
 
     /**
