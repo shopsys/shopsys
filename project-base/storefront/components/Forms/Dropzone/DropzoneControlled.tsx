@@ -92,7 +92,7 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
         fieldState: { error },
         field: { onChange, value },
     } = useController({ name, control });
-    const [, setFiles] = useState<File[]>([]);
+    const selectedFiles: File[] = value ?? [];
 
     const isFileAlreadySelected = (selectedFiles: File[], file: File) =>
         selectedFiles.some(
@@ -104,19 +104,15 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop: (acceptedFiles) => {
-            setFiles((currentFiles) => {
-                const updatedFiles = [...currentFiles];
+            const updatedFiles = [...selectedFiles];
 
-                for (const acceptedFile of acceptedFiles) {
-                    if (!isFileAlreadySelected(updatedFiles, acceptedFile)) {
-                        updatedFiles.push(acceptedFile);
-                    }
+            for (const acceptedFile of acceptedFiles) {
+                if (!isFileAlreadySelected(updatedFiles, acceptedFile)) {
+                    updatedFiles.push(acceptedFile);
                 }
+            }
 
-                onChange(updatedFiles);
-
-                return updatedFiles;
-            });
+            onChange(updatedFiles);
         },
         accept: {
             'image/jpeg': [],
@@ -126,13 +122,7 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
     });
 
     const removeFile = (fileToRemove: File) => {
-        setFiles((currentFiles) => {
-            const updatedFiles = currentFiles.filter((file) => file !== fileToRemove);
-
-            onChange(updatedFiles);
-
-            return updatedFiles;
-        });
+        onChange(selectedFiles.filter((file) => file !== fileToRemove));
     };
 
     const formatError = (error: FieldError) => {
