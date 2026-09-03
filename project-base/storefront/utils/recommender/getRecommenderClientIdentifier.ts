@@ -2,7 +2,10 @@ import { logException } from 'utils/errors/logException';
 
 const RECOMMENDER_PATHNAMES = {
     '/': 'homepage',
+    '/articles/[articleSlug]': 'article-detail',
     '/blogArticles/[blogArticleSlug]': 'blog-article-detail',
+    '/blogCategories/[blogCategorySlug]': 'blog-category-detail',
+    '/brands/[brandSlug]': 'brand-detail',
     '/cart': 'cart',
     '/categories/[categorySlug]': 'category-detail',
     '/flags/[flagSlug]': 'flag-detail',

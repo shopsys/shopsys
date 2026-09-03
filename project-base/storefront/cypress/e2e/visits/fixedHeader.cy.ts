@@ -6,7 +6,7 @@ const FOCUSABLE_ELEMENTS_SELECTOR =
 const STICKY_NAVIGATION_OFFSET_PROPERTY = '--sticky-navigation-offset';
 const ARTICLE_HEADING_ID = 'start-with-screen-size-and-viewing-distance';
 const BLOG_ARTICLE_PATH = '/how-to-choose-the-right-tv-for-your-living-room';
-const BLOG_CATEGORY_PATH = '/advice-and-inspiration';
+const BLOG_CATEGORY_PATH = '/blog';
 const PRODUCT_PATH = '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma';
 const CATEGORY_PATH = '/tv-audio';
 
