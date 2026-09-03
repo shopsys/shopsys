@@ -34,23 +34,6 @@ class SeoSettingFacade
         return $this->setting->getForDomain(self::SEO_META_DESCRIPTION_MAIN_PAGE, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
-     * @return string[]
-     */
-    public function getDescriptionsMainPageIndexedByDomainIds(array $domainConfigs): array
-    {
-        $descriptionsMainPageByDomainIds = [];
-
-        foreach ($domainConfigs as $domainConfig) {
-            $descriptionsMainPageByDomainIds[$domainConfig->getId()] = $this->getDescriptionMainPage(
-                $domainConfig->getId(),
-            );
-        }
-
-        return $descriptionsMainPageByDomainIds;
-    }
-
     public function getTitleAddOn(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::SEO_TITLE_ADD_ON, $domainId);
