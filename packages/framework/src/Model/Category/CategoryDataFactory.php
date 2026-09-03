@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class CategoryDataFactory
 {
@@ -17,6 +18,7 @@ class CategoryDataFactory
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
         protected readonly CategoryParameterRepository $categoryParameterRepository,
+        protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
     }
 
@@ -46,9 +48,7 @@ class CategoryDataFactory
         $categoryData->image = $this->imageUploadDataFactory->create();
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $categoryData->seoMetaDescriptions[$domainId] = null;
-            $categoryData->seoTitles[$domainId] = null;
-            $categoryData->seoH1s[$domainId] = null;
+            $categoryData->seo[$domainId] = $this->seoAttributesDataFactory->create();
             $categoryData->descriptions[$domainId] = null;
             $categoryData->enabled[$domainId] = true;
         }
@@ -64,9 +64,9 @@ class CategoryDataFactory
         $categoryData->parent = $category->getParent();
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $categoryData->seoMetaDescriptions[$domainId] = $category->getSeoMetaDescription($domainId);
-            $categoryData->seoTitles[$domainId] = $category->getSeoTitle($domainId);
-            $categoryData->seoH1s[$domainId] = $category->getSeoH1($domainId);
+            $categoryData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
+                $category->getSeoAttributes($domainId),
+            );
             $categoryData->descriptions[$domainId] = $category->getDescription($domainId);
             $categoryData->enabled[$domainId] = $category->isEnabled($domainId);
 

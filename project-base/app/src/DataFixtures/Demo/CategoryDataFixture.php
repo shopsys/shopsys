@@ -95,19 +95,19 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 $locale,
             );
 
-            $categoryData->seoH1s[$domainConfig->getId()] = t(
+            $categoryData->seo[$domainConfig->getId()]->h1 = t(
                 'Electronic devices',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale,
             );
-            $categoryData->seoTitles[$domainConfig->getId()] = t(
+            $categoryData->seo[$domainConfig->getId()]->title = t(
                 'Electronic stuff',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale,
             );
-            $categoryData->seoMetaDescriptions[$domainConfig->getId()] = t(
+            $categoryData->seo[$domainConfig->getId()]->metaDescription = t(
                 'All kind of electronic devices.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
