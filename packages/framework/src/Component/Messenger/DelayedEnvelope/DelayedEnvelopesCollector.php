@@ -13,9 +13,20 @@ class DelayedEnvelopesCollector
      */
     protected array $delayedEnvelopes = [];
 
+    /**
+     * @var \Symfony\Component\Messenger\Envelope[]
+     */
+    protected array $confirmedEnvelopes = [];
+
     public function addEnvelope(Envelope $envelope): void
     {
         $this->delayedEnvelopes[] = $envelope;
+    }
+
+    public function confirmEnvelopes(): void
+    {
+        array_push($this->confirmedEnvelopes, ...$this->delayedEnvelopes);
+        $this->delayedEnvelopes = [];
     }
 
     /**
@@ -23,7 +34,19 @@ class DelayedEnvelopesCollector
      */
     public function popEnvelopes(): array
     {
-        $envelopes = $this->delayedEnvelopes;
+        $envelopes = [...$this->confirmedEnvelopes, ...$this->delayedEnvelopes];
+
+        $this->resetEnvelopes();
+
+        return $envelopes;
+    }
+
+    /**
+     * @return \Symfony\Component\Messenger\Envelope[]
+     */
+    public function popConfirmedEnvelopes(): array
+    {
+        $envelopes = $this->confirmedEnvelopes;
 
         $this->resetEnvelopes();
 
@@ -33,5 +56,6 @@ class DelayedEnvelopesCollector
     public function resetEnvelopes(): void
     {
         $this->delayedEnvelopes = [];
+        $this->confirmedEnvelopes = [];
     }
 }
