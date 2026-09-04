@@ -130,6 +130,9 @@ parameters:
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Model/Security/TimelimitLoginInterface.php
         -
+            identifier: shipmonk.deadConstant
+            path: packages/framework/src/Model/Seo/SeoMetaRobotsEnum.php
+        -
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Model/Transfer/TransferLogger.php
         -

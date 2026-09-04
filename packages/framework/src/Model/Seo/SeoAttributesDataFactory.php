@@ -23,6 +23,8 @@ class SeoAttributesDataFactory
         $seoAttributesData->title = $seoAttributes->getTitle();
         $seoAttributesData->metaDescription = $seoAttributes->getMetaDescription();
         $seoAttributesData->h1 = $seoAttributes->getH1();
+        $seoAttributesData->metaRobots = $seoAttributes->getMetaRobots();
+        $seoAttributesData->canonicalUrl = $seoAttributes->getCanonicalUrl();
 
         return $seoAttributesData;
     }
