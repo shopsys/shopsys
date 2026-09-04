@@ -38,8 +38,24 @@ fragment ListedProductFragment on Product {
     }
     isMainVariant
     isInquiryType
+    reviewsSummary {
+        __typename
+        averageRating
+        totalCount
+    }
 
     ... on MainVariant {
         variantsCount
+    }
+
+    ... on Variant {
+        mainVariant {
+            __typename
+            reviewsSummary {
+                __typename
+                averageRating
+                totalCount
+            }
+        }
     }
 }

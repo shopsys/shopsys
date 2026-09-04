@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\ProductReview;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogNoteRegistry;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
@@ -21,6 +22,7 @@ class ProductReviewFacade
         protected readonly ProductReviewFactory $productReviewFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -68,6 +70,10 @@ class ProductReviewFacade
             [$productId],
             ProductRecalculationPriorityEnum::HIGH,
             [ProductExportScopeConfig::SCOPE_PRODUCT_REVIEWS],
+        );
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(
+            CleanStorefrontCacheFacade::PROMOTED_PRODUCTS_QUERY_KEY_PART,
         );
     }
 

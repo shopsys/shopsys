@@ -2,6 +2,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import Head from 'next/head';
 import { getStringWithoutLeadingSlash } from 'utils/parsing/stringWIthoutSlash';
+import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 
 type BreadcrumbsMetadataProps = {
     breadcrumbs: TypeBreadcrumbFragment[];
@@ -17,7 +18,7 @@ export const BreadcrumbsMetadata: FC<BreadcrumbsMetadataProps> = ({ breadcrumbs 
                 id="breadcrumbs-metadata"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
+                    __html: serializeJsonForScriptTag({
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: breadcrumbs.map((breadcrumb, index) => {

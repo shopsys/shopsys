@@ -8,6 +8,7 @@ import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
+import { ProductListReviewsSummaryLink } from 'components/Blocks/ProductReviews/ProductListReviewsSummaryLink';
 import { ProductActionSkeleton } from 'components/Blocks/Skeleton/ProductActionSkeleton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -136,6 +137,8 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                     )}
                 </div>
             </ExtendedNextLink>
+
+            <ProductListReviewsSummaryLink className="mb-2 md:col-start-2" product={product} />
 
             <div className="absolute top-5 right-5 z-above flex justify-end">
                 <ProductCompareButton

@@ -2,6 +2,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
+import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 
 type ArticleMetadataProps = {
     headline: string;
@@ -29,7 +30,7 @@ export const ArticleMetadata: FC<ArticleMetadataProps> = ({
                 id="article-metadata"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
+                    __html: serializeJsonForScriptTag({
                         '@context': 'https://schema.org/',
                         '@type': 'Article',
                         headline,

@@ -8,6 +8,22 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class ProductsByCatnumsTest extends ProductsGraphQlTestCase
 {
+    public function testVariantReturnsReviewsSummaryThroughMainVariant(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/productVariantReviewsSummaryByCatnum.graphql',
+            [
+                'catnums' => ['9176544M', '9176522'],
+            ],
+        );
+        $data = $this->getResponseDataForGraphQlType($response, 'productsByCatnums');
+
+        $this->assertSame('MainVariant', $data[0]['__typename']);
+        $this->assertSame('Variant', $data[1]['__typename']);
+        $this->assertNull($data[1]['reviewsSummary']);
+        $this->assertSame($data[0]['reviewsSummary'], $data[1]['mainVariant']['reviewsSummary']);
+    }
+
     public function testProductsByCatnums(): void
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();

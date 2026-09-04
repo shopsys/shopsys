@@ -10664,6 +10664,15 @@ Returns privacy policy article's url
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="settings.productreviewminimalaverageratingforlisting">productReviewMinimalAverageRatingForListing</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+Minimal average rating a product needs to show review stars in product lists, null means no limit
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="settings.productreviewpolicyarticleurl">productReviewPolicyArticleUrl</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
