@@ -86,6 +86,9 @@ class RouteConfigCustomization
             ->customizeByRouteName('admin_domainfilter_selectdomain', function (RouteConfig $config): void {
                 $config->skipRoute('Used only for internal setting of selected domain by tab control in admin.');
             })
+            ->customizeByRouteName('admin_orderstatusfilter_selectorderstatus', function (RouteConfig $config): void {
+                $config->skipRoute('Used only for internal setting of selected order status by quick filter in admin.');
+            })
             ->customizeByRouteName('admin_feed_generate', function (RouteConfig $config): void {
                 $config->skipRoute('Do not rewrite XML feed by test products.');
             })

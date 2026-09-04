@@ -1,0 +1,53 @@
+{% set selectedOrderStatusId = selectedOrderStatus is null ? null : selectedOrderStatus.id %}
+
+<div class="text-nowrap">{{ 'Status'|trans }}</div>
+<div class="dropdown">
+    <a href="#"
+       class="btn dropdown-toggle w-100 justify-content-between"
+       data-bs-toggle="dropdown"
+       role="button"
+    >
+        <span class="quick-filter-row">
+            {% if selectedOrderStatus is null %}
+                <span class="quick-filter-icon">
+                    <span class="status status-outline">
+                        <span class="status-dot"></span>
+                    </span>
+                </span>
+                <span class="text-truncate">{{ 'All statuses'|trans }}</span>
+            {% else %}
+                <span class="quick-filter-icon">
+                    <span class="status status-{{ selectedOrderStatus.type|order_status_color }}">
+                        <span class="status-dot"></span>
+                    </span>
+                </span>
+                <span class="text-truncate">{{ selectedOrderStatus.name }}</span>
+            {% endif %}
+        </span>
+    </a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item quick-filter-row{% if selectedOrderStatusId is null %} active{% endif %}"
+           href="{{ url('admin_orderstatusfilter_selectorderstatus') }}"
+        >
+            <span class="quick-filter-icon">
+                <span class="status status-outline">
+                    <span class="status-dot"></span>
+                </span>
+            </span>
+            {{ 'All statuses'|trans }}
+        </a>
+
+        {% for orderStatus in orderStatuses %}
+            <a class="dropdown-item quick-filter-row{% if orderStatus.id == selectedOrderStatusId %} active{% endif %}"
+               href="{{ url('admin_orderstatusfilter_selectorderstatus', { orderStatusId: orderStatus.id }) }}"
+            >
+                <span class="quick-filter-icon">
+                    <span class="status status-{{ orderStatus.type|order_status_color }}">
+                        <span class="status-dot"></span>
+                    </span>
+                </span>
+                {{ orderStatus.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>

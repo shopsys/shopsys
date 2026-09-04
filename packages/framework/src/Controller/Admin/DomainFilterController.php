@@ -27,7 +27,31 @@ class DomainFilterController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function domainFilterTabsAction(string $namespace, ?array $domainIds = null): Response
     {
-        return $this->render('@ShopsysAdministration/partial/quick_domain_filter.html.twig', [
+        return $this->render(
+            '@ShopsysAdministration/partial/quick_domain_filter.html.twig',
+            $this->getQuickDomainFilterParameters($namespace, $domainIds),
+        );
+    }
+
+    /**
+     * @param int[]|null $domainIds
+     */
+    #[RequireRole(SystemRole::ADMIN)]
+    public function domainFilterSelectAction(string $namespace, ?array $domainIds = null): Response
+    {
+        return $this->render(
+            '@ShopsysAdministration/partial/quick_domain_filter_select.html.twig',
+            $this->getQuickDomainFilterParameters($namespace, $domainIds),
+        );
+    }
+
+    /**
+     * @param int[]|null $domainIds
+     * @return array<string, mixed>
+     */
+    protected function getQuickDomainFilterParameters(string $namespace, ?array $domainIds): array
+    {
+        return [
             'domainConfigs' => $domainIds === null
                 ? $this->domain->getAdminEnabledDomains()
                 : array_filter(
@@ -36,7 +60,7 @@ class DomainFilterController extends AdminBaseController
                 ),
             'namespace' => $namespace,
             'selectedDomainId' => $this->adminDomainFilterTabsFacade->getSelectedDomainId($namespace, $domainIds),
-        ]);
+        ];
     }
 
     #[Route(path: '/multidomain/filter-domain/{namespace}/{domainId}', requirements: ['domainId' => '\d+'])]
