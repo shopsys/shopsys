@@ -8,10 +8,12 @@ use App\DataFixtures\Demo\AdditionalServiceDataFixture;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use DateTimeImmutable;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -24,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculation;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
@@ -76,6 +79,11 @@ class AdditionalServiceOrderTest extends GraphQlTestCase
      */
     private ProductDataFactory $productDataFactory;
 
+    /**
+     * @inject
+     */
+    private TransportExpectedDeliveryDateCalculation $transportExpectedDeliveryDateCalculation;
+
     private AdditionalService $assemblyAdditionalService;
 
     private AdditionalService $giftWrappingAdditionalService;
@@ -113,10 +121,14 @@ class AdditionalServiceOrderTest extends GraphQlTestCase
         $this->addCzechPostTransportToCart(CartDataFixture::CART_UUID);
         $this->addCashOnDeliveryPaymentToCart(CartDataFixture::CART_UUID);
 
+        $expectedDeliveryDate = $this->getExpectedDeliveryDate($cart);
+
         $response = $this->getCreateOrderMutationResponseFromCart();
         $orderUuid = $this->getResponseDataForGraphQlType($response, 'CreateOrder')['order']['uuid'];
 
         $order = $this->orderApiFacade->getByUuid($orderUuid);
+
+        self::assertEquals($expectedDeliveryDate, $order->getExpectedDeliveryDate());
 
         $additionalServiceItems = $this->getItemsByType($order, OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE);
         self::assertCount(3, $additionalServiceItems);
@@ -202,7 +214,10 @@ class AdditionalServiceOrderTest extends GraphQlTestCase
 
     private function assertOrderItemsFromApi(Order $order): void
     {
-        $orderItemsFromApi = $this->getOrderItemsFromApiByUrlHash($order->getUrlHash());
+        $orderFromApi = $this->getOrderFromApiByUrlHash($order->getUrlHash());
+        self::assertSame($order->getExpectedDeliveryDate()?->format(DATE_ATOM), $orderFromApi['expectedDeliveryDate']);
+
+        $orderItemsFromApi = $orderFromApi['items'];
         $productItemsFromApi = array_values(array_filter(
             $orderItemsFromApi,
             static fn (array $orderItemFromApi) => $orderItemFromApi['type'] === OrderItemTypeEnum::TYPE_PRODUCT,
@@ -220,15 +235,29 @@ class AdditionalServiceOrderTest extends GraphQlTestCase
     }
 
     /**
-     * @return array<int, array<string, mixed>>
+     * @return array<string, mixed>
      */
-    private function getOrderItemsFromApiByUrlHash(string $urlHash): array
+    private function getOrderFromApiByUrlHash(string $urlHash): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/OrderItemsWithRelatedItemsQuery.graphql', [
             'urlHash' => $urlHash,
         ]);
 
-        return $this->getResponseDataForGraphQlType($response, 'order')['items'];
+        return $this->getResponseDataForGraphQlType($response, 'order');
+    }
+
+    private function getExpectedDeliveryDate(Cart $cart): DateTimeImmutable
+    {
+        $transport = $cart->getTransport();
+        self::assertNotNull($transport);
+        $expectedDeliveryDate = $this->transportExpectedDeliveryDateCalculation->calculateExpectedDeliveryDate(
+            $transport,
+            $cart,
+            Domain::FIRST_DOMAIN_ID,
+        );
+        self::assertNotNull($expectedDeliveryDate);
+
+        return $expectedDeliveryDate;
     }
 
     public function testSeparateSupplyAdditionalServiceKeepsItsOwnVatRate(): void

@@ -1677,6 +1677,8 @@ type Order {
   deliveryTelephoneData: PhoneData
   "The customer's email address"
   email: String!
+  "Expected delivery date captured when the order was created; null when no delivery date could be promised"
+  expectedDeliveryDate: DateTime
   "The customer's first name"
   firstName: String
   "Indicates whether the order has an external payment"

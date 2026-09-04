@@ -96,6 +96,13 @@ class Order implements DomainSeparatedEntityInterface
     protected $deliveredAt;
 
     /**
+     * @var \DateTimeImmutable|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected $expectedDeliveryDate;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
      */
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
@@ -461,6 +468,7 @@ class Order implements DomainSeparatedEntityInterface
         $this->deleted = false;
 
         $this->createdAt = $orderData->createdAt;
+        $this->expectedDeliveryDate = $orderData->expectedDeliveryDate;
         $this->domainId = $orderData->domainId;
         $this->urlHash = $urlHash;
         $this->createdAsAdministrator = $orderData->createdAsAdministrator;
@@ -902,6 +910,14 @@ class Order implements DomainSeparatedEntityInterface
     public function getDeliveredAt()
     {
         return $this->deliveredAt;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getExpectedDeliveryDate()
+    {
+        return $this->expectedDeliveryDate;
     }
 
     /**

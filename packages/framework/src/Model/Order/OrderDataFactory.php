@@ -68,6 +68,7 @@ class OrderDataFactory
 
         $orderData->createdAt = $order->getCreatedAt();
         $orderData->deliveredAt = $order->getDeliveredAt();
+        $orderData->expectedDeliveryDate = $order->getExpectedDeliveryDate();
 
         $orderData->domainId = $order->getDomainId();
         $orderData->currencyCode = $order->getCurrencyCode();

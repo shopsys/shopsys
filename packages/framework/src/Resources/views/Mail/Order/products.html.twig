@@ -72,24 +72,22 @@
                                                 <td class="product-description">
                                                     <strong>{{ orderItem.name }}</strong><br>
                                                     {% if orderItem.isTypeAdditionalService %}
-                                                        {% if orderItem.quantity > 1 %}
-                                                            {% if displayWithoutVat %}
-                                                                {% if not (displayBoth and isZeroPrice) %}
-                                                                    {% trans into orderLocale %}Unit price{% endtrans %}
-                                                                    {% if displayBoth %}
-                                                                        {% trans into orderLocale %}ex VAT{% endtrans %}
-                                                                    {% endif %}
-                                                                    <span style="white-space: nowrap;">{{ orderItem.unitPriceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}</span><br>
-                                                                {% endif %}
-                                                            {% endif %}
-
-                                                            {% if displayWithVat %}
+                                                        {% if displayWithoutVat %}
+                                                            {% if not (displayBoth and isZeroPrice) %}
                                                                 {% trans into orderLocale %}Unit price{% endtrans %}
                                                                 {% if displayBoth %}
-                                                                    {% trans into orderLocale %}inc VAT{% endtrans %}
+                                                                    {% trans into orderLocale %}ex VAT{% endtrans %}
                                                                 {% endif %}
-                                                                <span style="white-space: nowrap;">{{ orderItem.unitPriceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}</span><br>
+                                                                <span style="white-space: nowrap;">{{ orderItem.unitPriceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}</span><br>
                                                             {% endif %}
+                                                        {% endif %}
+
+                                                        {% if displayWithVat %}
+                                                            {% trans into orderLocale %}Unit price{% endtrans %}
+                                                            {% if displayBoth %}
+                                                                {% trans into orderLocale %}inc VAT{% endtrans %}
+                                                            {% endif %}
+                                                            <span style="white-space: nowrap;">{{ orderItem.unitPriceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}</span><br>
                                                         {% endif %}
                                                     {% elseif orderItem.isTypeProduct or orderItem.isTypeProductGift %}
                                                         {% trans into orderLocale %}Amount{% endtrans %}: {{ orderItem.quantity|formatNumber(orderLocale) }} {{ orderItem.unitName }}<br>

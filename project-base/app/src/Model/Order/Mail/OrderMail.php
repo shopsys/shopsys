@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail as BaseOrderMail;
  * @method string getAddressesHtml(\App\Model\Order\Order $order)
  * @method string getFormattedPriceWithoutVat(\App\Model\Order\Order $order)
  * @method string[] getBccEmailsForWithdrawal(\App\Model\Mail\MailTemplate $mailTemplate, \App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest)
+ * @method string getFormattedExpectedDeliveryDate(\App\Model\Order\Order $order)
  */
 class OrderMail extends BaseOrderMail
 {

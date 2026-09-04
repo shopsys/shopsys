@@ -7377,6 +7377,15 @@ The customer's email address
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.expecteddeliverydate">expectedDeliveryDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected delivery date captured when the order was created; null when no delivery date could be promised
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>

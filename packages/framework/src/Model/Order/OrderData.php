@@ -151,6 +151,11 @@ class OrderData
     public $deliveredAt;
 
     /**
+     * @var \DateTimeImmutable|null
+     */
+    public $expectedDeliveryDate;
+
+    /**
      * @var int|null
      */
     public $domainId;

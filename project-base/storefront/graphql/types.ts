@@ -2109,6 +2109,8 @@ export type TypeOrder = {
   deliveryTelephoneData: Maybe<TypePhoneData>;
   /** The customer's email address */
   email: Scalars['String']['output'];
+  /** Expected delivery date captured when the order was created; null when no delivery date could be promised */
+  expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
   /** Indicates whether the order has an external payment */
