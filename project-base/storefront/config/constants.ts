@@ -1,6 +1,6 @@
 import { TypeOrderItemTypeEnum, TypeProductOrderingModeEnum } from 'graphql/types';
 
-export const DEFAULT_PAGE_SIZE = 28;
+export const DEFAULT_PAGE_SIZE = 30;
 export const DEFAULT_ORDERS_SIZE = 28;
 export const DEFAULT_BLOG_PAGE_SIZE = 6;
 export const DEFAULT_SORT = TypeProductOrderingModeEnum.Priority as const;

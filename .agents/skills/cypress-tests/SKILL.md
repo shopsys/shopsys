@@ -1021,7 +1021,8 @@ make generate-snapshots-info-table
 
 ## Cypress Config Highlights
 
-- **Viewport**: 1280x720
+- **Viewport**: 1600x720 (covers the five-column product grid at the 1560px `xxl` breakpoint)
+- **Headless Electron window**: Matches the configured viewport in `before:browser:launch` so screenshots are not clipped to the default 1280px window width.
 - **Default command timeout**: 20s
 - **Video**: enabled
 - **Visual regression error threshold**: 0.005 (0.5%)

@@ -116,11 +116,11 @@ describe('getOffsetPageAndLoadMore tests', () => {
 
         expect(getOffsetPageAndLoadMore(1, 1, 50)).toBe(undefined);
 
-        expect(getOffsetPageAndLoadMore(2, 10, undefined, 310)).toBe(undefined);
+        expect(getOffsetPageAndLoadMore(2, 10, undefined, 11 * DEFAULT_PAGE_SIZE)).toBe(undefined);
 
-        expect(getOffsetPageAndLoadMore(2, 10, undefined, 310)).toBe(undefined);
+        expect(getOffsetPageAndLoadMore(2, 10, undefined, 11 * DEFAULT_PAGE_SIZE)).toBe(undefined);
 
-        expect(getOffsetPageAndLoadMore(1, 10, undefined, 310)).toBe(undefined);
+        expect(getOffsetPageAndLoadMore(1, 10, undefined, 11 * DEFAULT_PAGE_SIZE)).toBe(undefined);
     });
 
     test('loading too many products offsets the page', () => {
@@ -144,12 +144,12 @@ describe('getOffsetPageAndLoadMore tests', () => {
             updatedLoadMore: 5,
         });
 
-        expect(getOffsetPageAndLoadMore(1, 11, undefined, 310)).toStrictEqual({
+        expect(getOffsetPageAndLoadMore(1, 11, undefined, 11 * DEFAULT_PAGE_SIZE)).toStrictEqual({
             updatedPage: 2,
             updatedLoadMore: 10,
         });
 
-        expect(getOffsetPageAndLoadMore(2, 11, undefined, 310)).toStrictEqual({
+        expect(getOffsetPageAndLoadMore(2, 11, undefined, 11 * DEFAULT_PAGE_SIZE)).toStrictEqual({
             updatedPage: 3,
             updatedLoadMore: 10,
         });
