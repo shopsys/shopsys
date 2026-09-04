@@ -5,7 +5,7 @@ msgstr ""
 "Language: cs\n"
 
 msgid "Additional services"
-msgstr ""
+msgstr "Doplňkové služby"
 
 msgid "Amount"
 msgstr "Množství"
