@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SeoGroupType extends AbstractType
@@ -50,6 +52,12 @@ final class SeoGroupType extends AbstractType
         if ($options['url_list_options'] !== null) {
             $builder->add('urls', UrlListType::class, ['label' => 'URL addresses'] + $options['url_list_options']);
         }
+    }
+
+    #[Override]
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['multidomain'] = $options['multidomain'];
     }
 
     #[Override]
