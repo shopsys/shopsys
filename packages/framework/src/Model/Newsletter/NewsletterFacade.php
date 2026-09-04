@@ -36,7 +36,7 @@ class NewsletterFacade
     }
 
     /**
-     * @return iterable<array{email: string, createdAt: \DateTimeInterface}>
+     * @return iterable<array{email: string, createdAt: string}>
      */
     public function getAllEmailsDataIteratorByDomainId(int $domainId): iterable
     {

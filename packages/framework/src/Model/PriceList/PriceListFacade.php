@@ -22,6 +22,9 @@ use Throwable;
 
 class PriceListFacade
 {
+    // mirrors the private CsvEncoder::FORMULAS_START_CHARACTERS used by the export to escape the values
+    protected const array FORMULA_TRIGGER_CHARACTERS = ['=', '-', '+', '@', "\t", "\r", "\n"];
+
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PriceListFactory $priceListFactory,
@@ -264,8 +267,18 @@ class PriceListFacade
         return ',';
     }
 
+    /**
+     * @param array<string, mixed> $row
+     * @return array<string, mixed>
+     */
     protected function preProcessCsvRow(array $row): array
     {
+        foreach ($row as $columnName => $value) {
+            if (is_string($value)) {
+                $row[$columnName] = $this->unescapeFormula($value);
+            }
+        }
+
         if (!array_key_exists(PriceListCsvColumnsEnum::PRICE, $row)) {
             return $row;
         }
@@ -273,6 +286,18 @@ class PriceListFacade
         $row[PriceListCsvColumnsEnum::PRICE] = str_replace(',', '.', $row[PriceListCsvColumnsEnum::PRICE]);
 
         return $row;
+    }
+
+    /**
+     * Removes the apostrophe that the CSV export prepends to values that spreadsheet software would evaluate as formulas
+     */
+    protected function unescapeFormula(string $value): string
+    {
+        if (str_starts_with($value, "'") && in_array(substr($value, 1, 1), static::FORMULA_TRIGGER_CHARACTERS, true)) {
+            return substr($value, 1);
+        }
+
+        return $value;
     }
 
     protected function processCsvRow(
