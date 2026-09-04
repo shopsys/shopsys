@@ -985,6 +985,9 @@ msgstr ""
 msgid "Declined in the 3DS server"
 msgstr ""
 
+msgid "Default (not set)"
+msgstr ""
+
 msgid "Default VAT rate"
 msgstr ""
 
@@ -2201,6 +2204,9 @@ msgid "Message text"
 msgstr ""
 
 msgid "Meta description"
+msgstr ""
+
+msgid "Meta robots"
 msgstr ""
 
 msgid "Min duration"
@@ -3661,6 +3667,9 @@ msgstr ""
 msgid "This email was sent from the contact form located below the panel of categories."
 msgstr ""
 
+msgid "This is a cross-domain canonical URL – it points to a different domain than the one being edited."
+msgstr ""
+
 msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
 msgstr ""
 
@@ -3767,9 +3776,6 @@ msgid "Type"
 msgstr ""
 
 msgid "URL"
-msgstr ""
-
-msgid "URL Settings"
 msgstr ""
 
 msgid "URL addresses"
@@ -3983,6 +3989,9 @@ msgid "Wednesday"
 msgstr ""
 
 msgid "Weight (g)"
+msgstr ""
+
+msgid "When left empty, the storefront keeps its built-in behavior for this page type."
 msgstr ""
 
 msgid "Withdrawal Request"

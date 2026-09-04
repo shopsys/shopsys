@@ -985,6 +985,9 @@ msgstr "Zamietnuté bankou - nesprávne číslo karty"
 msgid "Declined in the 3DS server"
 msgstr "Zamietnuté na 3DS serveri"
 
+msgid "Default (not set)"
+msgstr "Predvolené (nenastavené)"
+
 msgid "Default VAT rate"
 msgstr "Predvolená sadzba DPH"
 
@@ -2202,6 +2205,9 @@ msgstr "Text správy"
 
 msgid "Meta description"
 msgstr "Meta popis"
+
+msgid "Meta robots"
+msgstr "Meta robots"
 
 msgid "Min duration"
 msgstr "Minimálne trvanie"
@@ -3661,6 +3667,9 @@ msgstr "Táto mena nemôže byť odstránená, je nastavená ako predvolená ale
 msgid "This email was sent from the contact form located below the panel of categories."
 msgstr "Tento e-mail bol odoslaný z kontaktného formulára umiestneného pod panelom kategórií."
 
+msgid "This is a cross-domain canonical URL – it points to a different domain than the one being edited."
+msgstr "Toto je canonical URL smerujúca na inú doménu, než ktorú práve upravujete."
+
 msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
 msgstr "Toto sa používa na zoradenie parametrov v detaile produktu a zoradenie parametrov na vyhladavacej stránke pri použití Luigi's Box. Pre zoradenie parametrov vo filtri použite nastavenia v kategórii."
 
@@ -3768,9 +3777,6 @@ msgstr "Typ"
 
 msgid "URL"
 msgstr "URL"
-
-msgid "URL Settings"
-msgstr "Nastavenia URL"
 
 msgid "URL addresses"
 msgstr "URL adresy"
@@ -3984,6 +3990,9 @@ msgstr "Streda"
 
 msgid "Weight (g)"
 msgstr "Hmotnosť (g)"
+
+msgid "When left empty, the storefront keeps its built-in behavior for this page type."
+msgstr "Ak zostane prázdne, storefront zachová svoje predvolené správanie pre tento typ stránky."
 
 msgid "Withdrawal Request"
 msgstr "Žiadosť o odstúpenie od zmluvy"
