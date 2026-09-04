@@ -188,6 +188,9 @@
             "in_stock": {
                 "type": "boolean"
             },
+            "is_digital": {
+                "type": "boolean"
+            },
             "prices": {
                 "type": "nested",
                 "properties": {

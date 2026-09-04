@@ -2,10 +2,10 @@ mutation RemovePromoCodeFromCart(
     $cartUuid: Uuid,
     $promoCode: String!
 ) {
-    RemovePromoCodeFromCart(
+    RemoveCodeFromCart(
         input: {
             cartUuid: $cartUuid
-            promoCode: $promoCode
+            code: $promoCode
         }
     ) {
        uuid

@@ -10,6 +10,7 @@ import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 export type TypePaymentTypeEnum =
   | 'bankTransfer'
   | 'basic'
+  | 'giftVoucher'
   | 'goPay';
 
 export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null };

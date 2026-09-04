@@ -14,12 +14,13 @@ class MailTemplateBuilder
         protected readonly MailSettingFacade $mailSettingFacade,
         protected readonly Domain $domain,
         protected readonly CdnFacade $cdnFacade,
+        protected readonly string $mailImagesUrlPrefix,
     ) {
     }
 
     public function getMailImageSrc(int $domainId, string $imageNameWithExtension): string
     {
-        return $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($domainId)) . '/public/frontend/mail/' . $imageNameWithExtension;
+        return $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($domainId)) . $this->mailImagesUrlPrefix . $imageNameWithExtension;
     }
 
     protected function getFooterTextTableRow(int $domainId): string

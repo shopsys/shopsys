@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use DateTimeImmutable;
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\Exception\GiftVoucherNotRedeemableException;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\Exception\GiftVouchersExceedPayableAmountException;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
@@ -28,12 +34,22 @@ class PlaceOrderFacade
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly PromoCodeFacade $promoCodeFacade,
+        protected readonly OrderPaidStatusFacade $orderPaidStatusFacade,
     ) {
     }
 
     public function placeOrder(
         OrderData $orderData,
         ?string $deliveryAddressUuid = null,
+    ): Order {
+        return $this->em->wrapInTransaction(
+            fn () => $this->placeOrderWithinTransaction($orderData, $deliveryAddressUuid),
+        );
+    }
+
+    protected function placeOrderWithinTransaction(
+        OrderData $orderData,
+        ?string $deliveryAddressUuid,
     ): Order {
         $alreadyDecreasedPromoCodeIds = [];
 
@@ -62,6 +78,8 @@ class PlaceOrderFacade
 
         $order = $this->createOrderOnly($orderData);
 
+        $this->redeemGiftVouchers($order, $orderData);
+
         $customerUser = $order->getCustomerUser();
 
         if ($customerUser !== null) {
@@ -78,6 +96,64 @@ class PlaceOrderFacade
         $this->placedOrderMessageDispatcher->dispatchPlacedOrderMessage($order->getId());
 
         return $order;
+    }
+
+    protected function checkGiftVouchersDoNotExceedPayableAmount(OrderData $orderData): void
+    {
+        if ($orderData->giftVouchers === []) {
+            return;
+        }
+
+        $giftVouchersTotalValue = Money::zero();
+
+        foreach ($orderData->giftVouchers as $giftVoucher) {
+            $giftVouchersTotalValue = $giftVouchersTotalValue->add($giftVoucher->getValueWithVat());
+        }
+
+        $payableAmount = $orderData->totalPrice->getPriceWithVat()
+            ->subtract($orderData->getGiftVoucherProductItemsTotalPrice()->getPriceWithVat());
+
+        if ($giftVouchersTotalValue->isGreaterThan($payableAmount)) {
+            throw new GiftVouchersExceedPayableAmountException();
+        }
+    }
+
+    protected function redeemGiftVouchers(Order $order, OrderData $orderData): void
+    {
+        if ($orderData->giftVouchers === []) {
+            return;
+        }
+
+        $giftVouchersSortedById = $orderData->giftVouchers;
+        usort(
+            $giftVouchersSortedById,
+            static fn (GiftVoucher $firstGiftVoucher, GiftVoucher $secondGiftVoucher) => $firstGiftVoucher->getId() <=> $secondGiftVoucher->getId(),
+        );
+
+        $redeemedAt = new DateTimeImmutable();
+
+        foreach ($giftVouchersSortedById as $giftVoucher) {
+            $this->em->refresh($giftVoucher, LockMode::PESSIMISTIC_WRITE);
+
+            if (
+                !$giftVoucher->isUnredeemed()
+                || !$giftVoucher->isValidAt($redeemedAt)
+                || $giftVoucher->getDomainId() !== $orderData->domainId
+                || $giftVoucher->getCurrencyCode() !== $orderData->currencyCode
+            ) {
+                throw new GiftVoucherNotRedeemableException($giftVoucher->getCode());
+            }
+
+            $giftVoucher->markAsRedeemed($order, $redeemedAt);
+        }
+
+        $this->checkGiftVouchersDoNotExceedPayableAmount($orderData);
+
+        $this->em->flush();
+
+        if ($order->getRemainingAmountToPay()->isZero()) {
+            $this->orderPaidStatusFacade->markOrderAsPaid($order);
+        }
     }
 
     public function createOrderOnly(OrderData $orderData): Order

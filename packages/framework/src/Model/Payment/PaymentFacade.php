@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Payment\Exception\GiftVoucherPaymentCannotBeDeletedException;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -68,6 +69,11 @@ class PaymentFacade
     public function deleteById(int $id): void
     {
         $payment = $this->getById($id);
+
+        if ($payment->isGiftVoucherType()) {
+            throw new GiftVoucherPaymentCannotBeDeletedException();
+        }
+
         $payment->markAsDeleted();
         $this->em->flush();
     }
@@ -175,6 +181,17 @@ class PaymentFacade
         return $this->paymentRepository->getAll();
     }
 
+    public function getGiftVoucherPayment(): Payment
+    {
+        $giftVoucherPayment = array_first($this->paymentRepository->getAllByType(PaymentTypeEnum::TYPE_GIFT_VOUCHER));
+
+        if ($giftVoucherPayment === null) {
+            throw new PaymentNotFoundException('Payment of type gift voucher not found.');
+        }
+
+        return $giftVoucherPayment;
+    }
+
     /**
      * @return int[]
      */
@@ -246,7 +263,12 @@ class PaymentFacade
      */
     public function getVisibleForOrder(Order $order): array
     {
-        return $this->getVisibleOnDomainByTransport($order->getDomainId(), $order->getTransport());
+        $visiblePayments = $this->getVisibleOnDomainByTransport($order->getDomainId(), $order->getTransport());
+
+        return array_values(array_filter(
+            $visiblePayments,
+            static fn (Payment $payment) => !$payment->isGiftVoucherType(),
+        ));
     }
 
     /**

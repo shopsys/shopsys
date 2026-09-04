@@ -328,7 +328,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
     ): array {
         $response = $this->applyPromoCodeToCart($promoCode, $cartUuid);
 
-        return $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        return $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
     }
 
     private function applyPromoCodeToCart(string $promoCode, string $cartUuid = CartDataFixture::CART_UUID): array

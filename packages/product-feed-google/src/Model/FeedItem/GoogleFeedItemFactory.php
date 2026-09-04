@@ -6,6 +6,9 @@ namespace Shopsys\ProductFeed\GoogleBundle\Model\FeedItem;
 
 use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -16,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
 class GoogleFeedItemFactory
 {
@@ -26,6 +30,8 @@ class GoogleFeedItemFactory
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly SpecialPriceFacade $specialPriceFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly TransportFacade $transportFacade,
+        protected readonly CountryFacade $countryFacade,
     ) {
     }
 
@@ -48,6 +54,42 @@ class GoogleFeedItemFactory
             $product->getPartno(),
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
             $availabilityDate,
+            $this->getShippingServiceName($product, $domainConfig),
+            $this->getShippingPrice($product, $domainConfig),
+            $this->getShippingCountryCodes($product, $domainConfig),
+        );
+    }
+
+    protected function getShippingServiceName(Product $product, DomainConfig $domainConfig): ?string
+    {
+        if (!$product->isElectronicGiftVoucher()) {
+            return null;
+        }
+
+        return $this->transportFacade->findEmailTransport()?->getName($domainConfig->getLocale());
+    }
+
+    protected function getShippingPrice(Product $product, DomainConfig $domainConfig): ?Money
+    {
+        if (!$product->isElectronicGiftVoucher()) {
+            return null;
+        }
+
+        return $this->transportFacade->findEmailTransportLowestPriceWithVatByDomainId($domainConfig->getId());
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getShippingCountryCodes(Product $product, DomainConfig $domainConfig): array
+    {
+        if (!$product->isElectronicGiftVoucher()) {
+            return [];
+        }
+
+        return array_map(
+            static fn (Country $country) => $country->getCode(),
+            $this->countryFacade->getAllEnabledOnDomain($domainConfig->getId()),
         );
     }
 

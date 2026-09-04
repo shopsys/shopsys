@@ -37,6 +37,7 @@ class PaymentsTest extends GraphQlTestCase
                 'transports' => [
                     ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Email', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => [
                     'identifier' => 'PAYMENT_CARD',
@@ -177,6 +178,25 @@ class PaymentsTest extends GraphQlTestCase
                 ],
                 'transports' => [
                     ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                ],
+                'goPayPaymentMethod' => null,
+                'vatPercent' => '0.000000',
+            ],
+            [
+                'name' => t('Voucher', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'description' => null,
+                'instructions' => null,
+                'position' => 7,
+                'type' => 'giftVoucher',
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
+                'images' => [],
+                'transports' => [
+                    ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Email', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => null,
                 'vatPercent' => '0.000000',

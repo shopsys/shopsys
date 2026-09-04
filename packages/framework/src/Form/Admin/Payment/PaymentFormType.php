@@ -110,7 +110,8 @@ final class PaymentFormType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'label' => 'Type',
-                'choices' => $this->paymentTypeProvider->getAllIndexedByTranslations(),
+                'choices' => $this->getTypeChoices($payment),
+                'disabled' => $payment instanceof Payment && $payment->isGiftVoucherType(),
                 'multiple' => false,
                 'expanded' => false,
                 'required' => true,
@@ -259,6 +260,26 @@ final class PaymentFormType extends AbstractType
         }
 
         return $optionsByDomainId;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getTypeChoices(?Payment $payment): array
+    {
+        $typeChoices = $this->paymentTypeProvider->getAllIndexedByTranslations();
+
+        if ($payment instanceof Payment && $payment->isGiftVoucherType()) {
+            return array_filter(
+                $typeChoices,
+                static fn (string $type): bool => $type === PaymentTypeEnum::TYPE_GIFT_VOUCHER,
+            );
+        }
+
+        return array_filter(
+            $typeChoices,
+            static fn (string $type): bool => $type !== PaymentTypeEnum::TYPE_GIFT_VOUCHER,
+        );
     }
 
     #[Override]

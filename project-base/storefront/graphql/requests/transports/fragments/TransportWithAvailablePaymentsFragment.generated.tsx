@@ -11,16 +11,20 @@ import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFra
 export type TypePaymentTypeEnum =
   | 'bankTransfer'
   | 'basic'
+  | 'giftVoucher'
   | 'goPay';
 
 /** One of the possible methods of the transport type */
 export type TypeTransportTypeEnum =
   | 'common'
+  | 'email'
   | 'packetery'
   | 'personal_pickup';
 
 /** Reason why a transport cannot be selected for the given cart */
 export type TypeTransportUnavailabilityReasonInCartEnum =
+  | 'electronic_gift_voucher_only'
+  | 'email_transport_not_allowed'
   | 'excluded_for_product'
   | 'personal_pickup_required';
 

@@ -1,5 +1,5 @@
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmChangeProductListItemEvent } from 'gtm/factories/getGtmChangeProductListItemEvent';
@@ -37,6 +37,7 @@ const listedProduct = {
     categories: [{ __typename: 'Category', name: 'Test category' }],
     isMainVariant: false,
     isInquiryType: false,
+    productType: TypeProductTypeEnum.Basic,
     unit: { __typename: 'Unit', name: 'pcs' },
 } satisfies TypeListedProductFragment;
 
@@ -73,6 +74,7 @@ describe('getGtmChangeProductListItemEvent', () => {
                         url: 'https://example.com/test-product',
                         brand: 'Test brand',
                         categories: ['Test category'],
+                        productType: 'product',
                         quantity: 1,
                         listIndex: 3,
                     },

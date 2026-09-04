@@ -7,6 +7,7 @@ import { useOrderUrlHashByReturnHashQuery } from 'graphql/requests/orders/querie
 import { TypeOrderConfirmationPageContentStatusEnum, TypeOrderItemTypeEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { isPriceVisible } from 'utils/mappers/price';
 import {
     clearOrderConfirmationContext,
     getValidOrderConfirmationContext,
@@ -208,7 +209,11 @@ export const getOrderConfirmationPaymentView = (
         orderConfirmationPageContext.type === 'ready' && orderConfirmationPageContext.shouldUpdatePaymentStatus;
 
     const shouldShowPaymentGateway =
-        !isPaymentReturn && order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
+        !isPaymentReturn &&
+        order.hasExternalPayment &&
+        !order.isPaid &&
+        !order.hasPaymentInProcess &&
+        (!isPriceVisible(order.remainingAmountToPay) || Number(order.remainingAmountToPay) > 0);
 
     return {
         isPaymentFailed,

@@ -146,6 +146,7 @@ class OrderListController extends AdminBaseController
         $grid->addColumn('created_at', 'o.createdAt', t('Created'), true);
         $grid->addColumn('customer_name', 'customerName', t('Customer'), true);
         $grid->addColumn('status_name', 'statusName', t('Status'), true);
+        $grid->addColumn('paid', 'o.paid', t('Paid'), true);
         $grid->addColumn('total_price', 'o.totalPriceWithVat', t('Total price'))
             ->setClassAttribute('text-end text-nowrap');
 

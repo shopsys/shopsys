@@ -96,8 +96,8 @@ export const clickOnPromoCodeButton = () => {
     cy.getByTID([TIDs.blocks_promocode_add_button]).click();
 };
 
-export const applyPromoCodeOnCartPage = (promoCode: string) => {
-    cy.get('#promoCode-form-promoCode').should('be.visible').clear({ force: true }).type(promoCode, { force: true });
+export const applyCodeOnCartPage = (code: string) => {
+    cy.get('#apply-code-form-code').should('be.visible').clear({ force: true }).type(code, { force: true });
     cy.getByTID([TIDs.blocks_promocode_apply_button]).click();
 };
 

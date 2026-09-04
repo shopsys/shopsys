@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Ramsey\Uuid\Uuid;
@@ -31,6 +33,8 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const string TRANSPORT_PERSONAL = 'transport_personal';
     public const string TRANSPORT_DRONE = 'transport_drone';
     public const string TRANSPORT_PACKETERY = 'transport_packetery';
+    public const string TRANSPORT_EMAIL = 'transport_email';
+    public const string TRANSPORT_EMAIL_UUID = 'ecd99cd8-efca-4981-bbb0-0638d7243cef';
 
     /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
@@ -40,6 +44,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         private readonly TransportDataFactory $transportDataFactory,
         private readonly PriceConverter $priceConverter,
         private readonly TransportInputPricesDataFactory $transportInputPricesDataFactory,
+        private readonly EntityManagerInterface $em,
     ) {
     }
 
@@ -143,6 +148,37 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->setPriceForAllDomains($transportData, Money::zero());
         $transportData->group = $this->getReference(TransportGroupDataFixture::TRANSPORT_GROUP_DELIVERY_TO_ADDRESS, TransportGroup::class);
         $this->createTransport(self::TRANSPORT_DRONE, $transportData);
+
+        $this->addReferenceToEmailTransportCreatedByMigration();
+    }
+
+    private function addReferenceToEmailTransportCreatedByMigration(): void
+    {
+        $emailTransport = $this->transportFacade->findEmailTransport();
+
+        $this->setDeterministicUuidToEmailTransport($emailTransport);
+        $this->moveEmailTransportBehindTransportsCreatedByThisFixture($emailTransport);
+
+        $this->addReference(self::TRANSPORT_EMAIL, $emailTransport);
+    }
+
+    private function setDeterministicUuidToEmailTransport(Transport $emailTransport): void
+    {
+        $this->em->getConnection()->executeStatement(
+            'UPDATE transports SET uuid = :uuid WHERE id = :id',
+            [
+                'uuid' => self::TRANSPORT_EMAIL_UUID,
+                'id' => $emailTransport->getId(),
+            ],
+        );
+
+        $this->em->refresh($emailTransport);
+    }
+
+    private function moveEmailTransportBehindTransportsCreatedByThisFixture(Transport $emailTransport): void
+    {
+        $emailTransport->setPosition(Transport::GEDMO_SORTABLE_LAST_POSITION);
+        $this->em->flush();
     }
 
     /**

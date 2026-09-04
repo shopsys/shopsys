@@ -328,6 +328,9 @@ msgstr "Vypočítané ceny"
 msgid "Cancel"
 msgstr "Zrušiť"
 
+msgid "Cancelled"
+msgstr "Stornovaný"
+
 msgid "Catalog number"
 msgstr "Katalógové číslo"
 
@@ -355,6 +358,9 @@ msgstr "Kat.č."
 msgid "Change for"
 msgstr "Zmeniť za"
 
+msgid "Change log"
+msgstr "Log zmien"
+
 msgid "Choose"
 msgstr "Vybrať"
 
@@ -381,6 +387,9 @@ msgstr "Sviatky a interné dni"
 
 msgid "Closing modules"
 msgstr "Zatvárací moduly"
+
+msgid "Code"
+msgstr "Kód"
 
 msgid "Code can't be modified because it is used for pairing with existing orders."
 msgstr "Kód nemôže byť upravený, pretože je spárovaný s existujúcim objednávkami."
@@ -501,6 +510,9 @@ msgstr "Vytvoriť menu"
 
 msgid "Create flag"
 msgstr "Vytvoriť značku"
+
+msgid "Create gift voucher"
+msgstr "Vytvoriť darčekový poukaz"
 
 msgid "Create new administrator"
 msgstr "Vytvoriť nového administrátora"
@@ -739,6 +751,9 @@ msgstr "Naozaj chcete odstrániť tento súbor? Bude trvalo odstránený a odpoj
 msgid "Do you really want to delete this item?"
 msgstr "Naozaj chcete odstrániť túto položku?"
 
+msgid "Do you really want to mark the order as paid? This cannot be undone."
+msgstr "Naozaj chcete označiť objednávku ako zaplatenú? Túto akciu nie je možné vrátiť späť."
+
 msgid "Do you really want to remove the order?"
 msgstr "Naozaj chcete odstrániť objednávku?"
 
@@ -753,6 +768,9 @@ msgstr "Filter domén"
 
 msgid "Download"
 msgstr "Stiahnuť"
+
+msgid "Download PDF"
+msgstr "Stiahnuť PDF"
 
 msgid "Draft"
 msgstr "Rozpracované"
@@ -885,6 +903,9 @@ msgstr "Úprava značky"
 
 msgid "Editing gift plan"
 msgstr "Úprava darčekového plánu"
+
+msgid "Editing gift voucher"
+msgstr "Editácia darčekového poukazu"
 
 msgid "Editing holiday / internal day"
 msgstr "Úprava sviatku / interného dňa"
@@ -1080,6 +1101,12 @@ msgstr "Darčekové plány"
 
 msgid "Gift price"
 msgstr "Cena darčeka"
+
+msgid "Gift voucher"
+msgstr "Darčekový poukaz"
+
+msgid "Gift vouchers"
+msgstr "Darčekové poukazy"
 
 msgid "Go to Frontend"
 msgstr "Prejsť na Frontend"
@@ -1381,6 +1408,9 @@ msgstr "Nová značka"
 msgid "New gift plan"
 msgstr "Nový darčekový plán"
 
+msgid "New gift voucher"
+msgstr "Nový darčekový poukaz"
+
 msgid "New navigation item"
 msgstr "Nová navigačná položka"
 
@@ -1497,6 +1527,9 @@ msgstr "Neboli nájdené žiadne príznaky. Musíte najskôr nejaký vytvoriť."
 
 msgid "No gift plan found. You have to create some first."
 msgstr "Neboli nájdené žiadne darčekové plány. Musíte najskôr nejaký vytvoriť."
+
+msgid "No gift vouchers found."
+msgstr "Neboli nájdené žiadne darčekové poukazy."
 
 msgid "No inquiries found."
 msgstr "Neboli nájdené žiadne poptávky."
@@ -1621,6 +1654,9 @@ msgstr "Stránka potvrdenia objednávky"
 msgid "Order detail"
 msgstr "Detail objednávky"
 
+msgid "Order has been marked as paid."
+msgstr "Objednávka bola označená ako zaplatená."
+
 msgid "Order has not been sent to GoPay"
 msgstr "Objednávka nebola odoslaná do GoPay"
 
@@ -1669,6 +1705,9 @@ msgstr "Pôvod"
 msgid "Overview"
 msgstr "Prehľad"
 
+msgid "Paid"
+msgstr "Zaplatené"
+
 msgid "Paid amount"
 msgstr "Zaplatená suma"
 
@@ -1707,6 +1746,9 @@ msgstr "Pokyny k platbe"
 
 msgid "Payment method"
 msgstr "Platobná metóda"
+
+msgid "Payment of type Gift voucher cannot be deleted, exactly one must always exist."
+msgstr "Platbu typu Darčekový poukaz nie je možné zmazať, vždy musí existovať práve jedna."
 
 msgid "Payment transactions"
 msgstr "Platobné transakcie"
@@ -1849,6 +1891,9 @@ msgstr "Zverejnené"
 msgid "Published (invisible)"
 msgstr "Zverejnené (neviditeľné)"
 
+msgid "Purchased gift vouchers will be generated and sent."
+msgstr "Zakúpené darčekové poukazy budú vygenerované a odoslané."
+
 msgid "Quantity"
 msgstr "Množstvo"
 
@@ -1872,6 +1917,15 @@ msgstr "Detail položky"
 
 msgid "Record is not present in the Elasticsearch for the selected entity and domain."
 msgstr "Záznam nie je uložený v Elasticsearch pre zvolenú entitu a doménu."
+
+msgid "Redeemed"
+msgstr "Uplatnený"
+
+msgid "Redeemed at"
+msgstr "Uplatnené"
+
+msgid "Redeemed gift vouchers"
+msgstr "Uplatnené darčekové poukazy"
 
 msgid "Refund has been sent."
 msgstr "Refundácia bola odoslaná."
@@ -2026,6 +2080,9 @@ msgstr "Hľadať"
 msgid "Search by author name..."
 msgstr "Hľadať podľa mena autora..."
 
+msgid "Search by code or customer email..."
+msgstr "Hľadať podľa kódu alebo e-mailu zákazníka..."
+
 msgid "Search by code..."
 msgstr "Hľadať podľa kódu..."
 
@@ -2166,6 +2223,9 @@ msgstr "Doprava"
 
 msgid "Shipping instructions"
 msgstr "Pokyny na dopravu"
+
+msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
+msgstr "Dopravu typu E-mail nie je možné zmazať, vždy musí existovať práve jedna."
 
 msgid "Shippings"
 msgstr "Doprava"
@@ -2455,8 +2515,14 @@ msgstr "Je uložená neznáma telefónna predvoľba \"%prefix%\". Prosím, overt
 msgid "Unlimited"
 msgstr "Neobmedzené"
 
+msgid "Unpaid"
+msgstr "Nezaplatené"
+
 msgid "Unpin"
 msgstr "Odopnúť"
+
+msgid "Unredeemed"
+msgstr "Neuplatnený"
 
 msgid "Unregistered"
 msgstr "Neregistrovaný"

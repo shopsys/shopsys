@@ -8,6 +8,7 @@ import { twJoin } from 'tailwind-merge';
 import { normalizeTelephone } from 'utils/formaters/normalizeTelephone';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getOrderTransportItem } from 'utils/mappers/order';
+import { isEmailTransport } from 'utils/packetery';
 import { isPickupPlaceTransport } from 'utils/transport';
 
 type OrderCustomerInfoProps = {
@@ -18,6 +19,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
     const { t } = useTranslation();
     const orderTransport = getOrderTransportItem(order.items);
     const isPickupPlaceOrder = orderTransport && isPickupPlaceTransport(orderTransport.transport?.transportTypeCode);
+    const isEmailDeliveryOrder = isEmailTransport(orderTransport?.transport?.transportTypeCode);
 
     return (
         <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-xl bg-background-more p-5 lg:grid-cols-2">
@@ -42,19 +44,25 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                 heading={isPickupPlaceOrder ? t('Pickup place') : t('Delivery address')}
                 icon={<DeliveryAddressIcon className="size-8" />}
             >
-                <span>
-                    {order.deliveryCompanyName && `${order.deliveryCompanyName}, `} {order.deliveryFirstName}{' '}
-                    {order.deliveryLastName}
-                </span>
-                <span>{normalizeTelephone(order.deliveryTelephone)}</span>
+                {isEmailDeliveryOrder ? (
+                    <span>{t('Delivered by email')}</span>
+                ) : (
+                    <>
+                        <span>
+                            {order.deliveryCompanyName && `${order.deliveryCompanyName}, `} {order.deliveryFirstName}{' '}
+                            {order.deliveryLastName}
+                        </span>
+                        <span>{normalizeTelephone(order.deliveryTelephone)}</span>
 
-                <span>{order.deliveryStreet}</span>
+                        <span>{order.deliveryStreet}</span>
 
-                <span>
-                    {order.deliveryCity}, {order.deliveryPostcode}
-                </span>
+                        <span>
+                            {order.deliveryCity}, {order.deliveryPostcode}
+                        </span>
 
-                <span>{order.deliveryCountry?.name}</span>
+                        <span>{order.deliveryCountry?.name}</span>
+                    </>
+                )}
             </InformationCard>
 
             <InformationCard heading={t('Billing address')} icon={<BillingAddressIcon className="size-8" />}>

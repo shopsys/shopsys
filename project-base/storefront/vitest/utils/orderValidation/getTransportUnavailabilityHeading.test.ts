@@ -25,4 +25,22 @@ describe('getTransportUnavailabilityHeading test', () => {
             getTransportUnavailabilityHeading('unknown_reason' as TypeTransportUnavailabilityReasonInCartEnum, mockT),
         ).toBe('These products cannot be delivered using this transport:');
     });
+
+    test('returns the email-only heading for the ElectronicGiftVoucherOnly reason', () => {
+        expect(
+            getTransportUnavailabilityHeading(
+                TypeTransportUnavailabilityReasonInCartEnum.ElectronicGiftVoucherOnly,
+                mockT,
+            ),
+        ).toBe('These products can only be delivered by email:');
+    });
+
+    test('returns the email-not-allowed heading for the EmailTransportNotAllowed reason', () => {
+        expect(
+            getTransportUnavailabilityHeading(
+                TypeTransportUnavailabilityReasonInCartEnum.EmailTransportNotAllowed,
+                mockT,
+            ),
+        ).toBe('These products cannot be delivered by email:');
+    });
 });

@@ -109,21 +109,21 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <CustomerRecordColumnInfo title={t('State')}>{order.status}</CustomerRecordColumnInfo>
                 </div>
 
-                {orderPayment && (
-                    <CustomerRecordRowInfo title={t('Payment')}>
-                        <CustomerRecordElementWithImage
-                            image={orderPayment.payment?.mainImage?.url}
-                            name={orderPayment.payment?.name || ''}
-                            tid={TIDs.order_list_transport_and_payment_image}
-                        />
-                    </CustomerRecordRowInfo>
-                )}
-
                 {orderTransport && (
                     <CustomerRecordRowInfo title={t('Transport')}>
                         <CustomerRecordElementWithImage
                             image={orderTransport.transport?.mainImage?.url}
                             name={orderTransport.transport?.name || ''}
+                            tid={TIDs.order_list_transport_and_payment_image}
+                        />
+                    </CustomerRecordRowInfo>
+                )}
+
+                {orderPayment && (
+                    <CustomerRecordRowInfo title={t('Payment')}>
+                        <CustomerRecordElementWithImage
+                            image={orderPayment.payment?.mainImage?.url}
+                            name={orderPayment.payment?.name || ''}
                             tid={TIDs.order_list_transport_and_payment_image}
                         />
                     </CustomerRecordRowInfo>

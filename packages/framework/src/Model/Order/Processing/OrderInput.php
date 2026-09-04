@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Processing;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -30,6 +31,11 @@ class OrderInput
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
      */
     protected array $promoCodes = [];
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[]
+     */
+    protected array $giftVouchers = [];
 
     /**
      * @var array<int, mixed>
@@ -72,6 +78,19 @@ class OrderInput
     public function addPromoCode(PromoCode $promoCode): void
     {
         $this->promoCodes[] = $promoCode;
+    }
+
+    public function addGiftVoucher(GiftVoucher $giftVoucher): void
+    {
+        $this->giftVouchers[] = $giftVoucher;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[]
+     */
+    public function getGiftVouchers(): array
+    {
+        return $this->giftVouchers;
     }
 
     /**

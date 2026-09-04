@@ -38,6 +38,7 @@ project-base/storefront/cypress/
 | customerUsers/       | customerUsers                                                                | customerUsersSupport.ts       |
 | filterAndSort/       | categoryDetailFilterAndSort, parameterFilter                                 | —                             |
 | freeShipping/        | freeShipping                                                                 | freeShippingSupport.ts        |
+| giftVouchers/        | giftVouchers                                                                 | giftVouchersSupport.ts        |
 | giftWithProduct/     | giftWithProduct                                                              | giftWithProductSupport.ts     |
 | graphql/             | graphQLErrorHandling                                                         | —                             |
 | limitedUser/         | limitedUser                                                                  | limitedUserSupport.ts         |
@@ -457,6 +458,7 @@ staticData.products.philips54CRT; // { uuid, catnum: '9176588' }
 staticData.products.panasonicDmcFt5ep; // { catnum: '5965907', name: 'PANASONIC DMC FT5EP' }
 staticData.products.delonghi; // { uuid, catnum: '9771339', name } — has gift plan (gift: giftTicket100czk)
 staticData.products.giftTicket100czk; // { uuid, catnum: '9176544MS', name } — gift product
+staticData.products.electronicGiftVoucher1000; // { uuid, catnum: 'VOUCHER1000', name } — electronic gift voucher product (voucher-only carts skip transport)
 ```
 
 ### Categories
@@ -491,6 +493,7 @@ staticData.deliveryAddress2; // { firstName: 'Tomáš', ... }
 staticData.payment.creditCard.uuid;
 staticData.payment.cash.uuid;
 staticData.payment.onDelivery.uuid;
+staticData.payment.goPayCreditCard.uuid;
 
 staticData.transport.personalCollection.uuid;
 staticData.transport.personalCollection.storeOstrava; // { uuid, name }
@@ -538,6 +541,10 @@ staticData.transport.ppl.uuid;
 
 ```typescript
 staticData.promoCode; // 'test'
+staticData.giftVouchers.unredeemed1000; // 'HAPPYDAY2345' — 1000 CZK demo gift voucher (apply/remove in cart, do NOT complete orders with it)
+staticData.giftVouchers.fullPaymentMatchingOrderTotal; // 'MAXPAY234567' — gift voucher whose value matches the test order total exactly, dedicated to full-payment order tests
+staticData.giftVouchers.lastOrderCashMatchingCartTotal; // 'CASHLASTPAY1' — gift voucher matching the A4tech mouse with free personal collection and cash payment
+staticData.giftVouchers.lastOrderVoucherMatchingOrderTotal; // 'VOUCHERLAST1' — gift voucher matching an order that is repeated without its voucher
 staticData.openingHours; // '09:00 - 11:00, 13:00 - 17:00'
 staticData.orderNote; // 'Just a tiny note in the order.'
 staticData.expectedDeliveryDateMessage; // 'Delivery on Tuesday 10/26'

@@ -1,9 +1,12 @@
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
 import { Form, FormContentWrapper } from 'components/Forms/Form/Form';
+import { GiftVouchersExceedPayableAmountWarning } from 'components/Pages/Order/GiftVouchersExceedPayableAmountWarning';
 import { TIDs } from 'cypress/tids';
+import { TypeProductTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { FormProvider } from 'react-hook-form';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ContactInformationFormContent } from './ContactInformationFormContent';
@@ -17,6 +20,13 @@ export const ContactInformationContent: FC = () => {
     const formMeta = useContactInformationFormMeta();
     const { goToPreviousStepFromContactInformationPage } = useContactInformationPageNavigation();
     const { createOrder } = useCreateOrder(formProviderMethods, formMeta);
+    const { cart } = useCurrentCart();
+    const giftVouchersExceedPayableAmount = !!cart?.giftVouchersExceedPayableAmount;
+    const cartContainsGiftVoucherProducts = !!cart?.items.some(
+        (cartItem) =>
+            cartItem.product.productType === TypeProductTypeEnum.ElectronicGiftVoucher ||
+            cartItem.product.productType === TypeProductTypeEnum.PrintedGiftVoucher,
+    );
 
     useErrorPopup(formProviderMethods, formMeta.fields, GtmMessageOriginType.contact_information_page);
 
@@ -32,6 +42,14 @@ export const ContactInformationContent: FC = () => {
                     onSubmit={formProviderMethods.handleSubmit(createOrder)}
                 >
                     <FormContentWrapper>
+                        {giftVouchersExceedPayableAmount && (
+                            <div className="mb-5">
+                                <GiftVouchersExceedPayableAmountWarning
+                                    cartContainsGiftVoucherProducts={cartContainsGiftVoucherProducts}
+                                />
+                            </div>
+                        )}
+
                         <ContactInformationFormContent />
 
                         <ContactInformationSendOrderButton />
@@ -41,7 +59,8 @@ export const ContactInformationContent: FC = () => {
                             buttonBack={t('Back')}
                             buttonNext={t('Submit order')}
                             hasDisabledCursor={!formProviderMethods.formState.isValid}
-                            hasDisabledLook={!formProviderMethods.formState.isValid}
+                            hasDisabledLook={!formProviderMethods.formState.isValid || giftVouchersExceedPayableAmount}
+                            isDisabled={giftVouchersExceedPayableAmount}
                         />
                     </FormContentWrapper>
                 </Form>

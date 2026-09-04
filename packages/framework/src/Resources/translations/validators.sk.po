@@ -499,6 +499,12 @@ msgstr "Prosím, zadajte kladnú hodnotu."
 msgid "Please enter the quantity."
 msgstr "Prosím, zadajte množstvo."
 
+msgid "Please enter the validity date"
+msgstr "Zadajte prosím dátum platnosti"
+
+msgid "Please enter the value"
+msgstr "Zadajte prosím hodnotu"
+
 msgid "Please enter the whole number."
 msgstr "Prosím, zadajte celé číslo."
 

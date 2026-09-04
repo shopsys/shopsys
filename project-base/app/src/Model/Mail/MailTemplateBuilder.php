@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder as BaseMailTemplateBu
 
 /**
  * @property \App\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
- * @method __construct(\App\Model\Mail\Setting\MailSettingFacade $mailSettingFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade)
+ * @method __construct(\App\Model\Mail\Setting\MailSettingFacade $mailSettingFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade, string $mailImagesUrlPrefix)
  */
 class MailTemplateBuilder extends BaseMailTemplateBuilder
 {

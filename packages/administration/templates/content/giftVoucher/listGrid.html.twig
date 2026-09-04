@@ -1,0 +1,21 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No gift vouchers found.'|trans }}
+{% endblock %}
+
+{% block grid_value_cell_id_code %}
+    <a href="{{ url('admin_giftvoucher_edit', { id: row.gv.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_value_cell_id_value %}
+    {{ value|priceWithCurrencyByDomainId(row['domainId']) }}
+{% endblock %}
+
+{% block grid_value_cell_id_status %}
+    {% include '@ShopsysAdministration/content/giftVoucher/statusBadge.html.twig' with { status: row.gv.status, isExpired: row.gv.isExpired } only %}
+{% endblock %}
+
+{% block grid_value_cell_id_customerEmail %}
+    {{ value ?: '-' }}
+{% endblock %}

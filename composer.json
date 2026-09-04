@@ -155,6 +155,7 @@
         "scheb/2fa-google-authenticator": "^7.6.0",
         "sentry/sentry": "^4.10.0",
         "sentry/sentry-symfony": "^5.0.1",
+        "setasign/fpdf": "^1.8.6",
         "shopsys/deployment": "^5.0.0",
         "snc/redis-bundle": "^4.8.0",
         "spatie/holidays": "^1.23",

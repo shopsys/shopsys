@@ -86,6 +86,7 @@ class TransportsTest extends GraphQlTestCase
                 'payments' => [
                     ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Voucher', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
@@ -110,6 +111,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Voucher', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
@@ -132,6 +134,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Voucher', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',
@@ -160,6 +163,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Voucher', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => [
                     'edges' => [
@@ -230,6 +234,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Voucher', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
                 'vatPercent' => '21.000000',

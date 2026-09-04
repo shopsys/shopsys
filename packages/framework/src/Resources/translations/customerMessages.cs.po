@@ -19,6 +19,9 @@ msgstr "Přehled značek"
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
+msgid "Delivered by email"
+msgstr "Doručeno e-mailem"
+
 msgid "Delivery address"
 msgstr "Dodací adresa"
 
@@ -39,6 +42,9 @@ msgstr "Zdarma"
 
 msgid "Gift"
 msgstr "Dárek"
+
+msgid "Gift voucher"
+msgstr "Dárkový poukaz"
 
 msgid "In stock"
 msgstr "Skladem"
@@ -66,6 +72,12 @@ msgstr "Export osobních údajů"
 
 msgid "Personal information overview"
 msgstr "Přehled osobních údajů"
+
+msgid "Remaining to pay"
+msgstr "Zbývá zaplatit"
+
+msgid "Sent by email after payment"
+msgstr "Zasíláme e-mailem po zaplacení"
 
 msgid "Transport"
 msgstr "Doprava"

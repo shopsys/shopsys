@@ -240,6 +240,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             713 => TransportDataFixture::TRANSPORT_PERSONAL,
             714 => TransportDataFixture::TRANSPORT_DRONE,
             715 => TransportDataFixture::TRANSPORT_PACKETERY,
+            716 => TransportDataFixture::TRANSPORT_EMAIL,
         ];
 
         foreach ($transportsImagesData as $imageId => $transportName) {
@@ -342,6 +343,32 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
                 ),
                 null,
                 $positions[$productId],
+            );
+        }
+
+        $giftVoucherProductsIdsIndexedByImagesIds = [
+            741 => 155,
+            742 => 156,
+            743 => 157,
+            744 => 158,
+            745 => 159,
+        ];
+
+        foreach ($giftVoucherProductsIdsIndexedByImagesIds as $imageId => $productId) {
+            $names = [];
+
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = 'Product ' . $productId . ' image';
+            }
+
+            $this->saveImageIntoDb(
+                $productId,
+                'product',
+                $imageId,
+                $names,
+                null,
+                Image::DEFAULT_IMAGE_POSITION,
+                self::IMAGE_TYPE_PNG,
             );
         }
     }

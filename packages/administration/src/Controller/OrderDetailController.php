@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderPaidStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,7 @@ class OrderDetailController extends AdminBaseController
         protected readonly OrderDataFactory $orderDataFactory,
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly OrderDetailTabRegistry $orderDetailTabRegistry,
+        protected readonly OrderPaidStatusFacade $orderPaidStatusFacade,
     ) {
     }
 
@@ -151,6 +153,24 @@ class OrderDetailController extends AdminBaseController
         $orderData->status = $status;
         $this->orderFacade->edit($id, $orderData);
         $this->addSuccessFlash(t('Order status has been changed.'));
+
+        return $this->redirectToRoute('admin_order_edit', ['id' => $id]);
+    }
+
+    #[Route(
+        path: '/order/edit/{id}/mark-as-paid',
+        requirements: ['id' => '\d+'],
+        methods: ['GET'],
+        name: 'admin_order_edit_markaspaid',
+    )]
+    #[CanEdit]
+    #[CsrfProtection]
+    public function markAsPaidAction(int $id): Response
+    {
+        $order = $this->orderFacade->getById($id);
+
+        $this->orderPaidStatusFacade->markOrderAsPaid($order);
+        $this->addSuccessFlash(t('Order has been marked as paid.'));
 
         return $this->redirectToRoute('admin_order_edit', ['id' => $id]);
     }

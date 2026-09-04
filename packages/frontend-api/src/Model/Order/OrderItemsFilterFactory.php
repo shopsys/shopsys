@@ -31,6 +31,7 @@ class OrderItemsFilterFactory
             $filter['catnum'] ?? null,
             $filter['productUuid'] ?? null,
             $filter['type'] ?? null,
+            $filter['excludeProductTypes'] ?? null,
         );
     }
 }

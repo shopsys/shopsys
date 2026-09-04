@@ -11,6 +11,7 @@
     * [AdvertCode](#advertcode)
     * [AdvertImage](#advertimage)
     * [AdvertPosition](#advertposition)
+    * [AppliedGiftVoucher](#appliedgiftvoucher)
     * [ArticleConnection](#articleconnection)
     * [ArticleEdge](#articleedge)
     * [ArticleLink](#articlelink)
@@ -25,6 +26,7 @@
     * [Brand](#brand)
     * [BrandFilterOption](#brandfilteroption)
     * [Cart](#cart)
+    * [CartGiftVoucherModificationsResult](#cartgiftvouchermodificationsresult)
     * [CartItem](#cartitem)
     * [CartItemModificationsResult](#cartitemmodificationsresult)
     * [CartModificationsResult](#cartmodificationsresult)
@@ -111,6 +113,7 @@
     * [ProductReviewsSummary](#productreviewssummary)
     * [ProductsByTransportUnavailabilityReason](#productsbytransportunavailabilityreason)
     * [PromoCode](#promocode)
+    * [PurchasedGiftVoucher](#purchasedgiftvoucher)
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
     * [SalesRepresentative](#salesrepresentative)
@@ -134,7 +137,7 @@
     * [AddNewCustomerUserDataInput](#addnewcustomeruserdatainput)
     * [AddOrderItemsToCartInput](#addorderitemstocartinput)
     * [AddToCartInput](#addtocartinput)
-    * [ApplyPromoCodeToCartInput](#applypromocodetocartinput)
+    * [ApplyCodeToCartInput](#applycodetocartinput)
     * [CartInput](#cartinput)
     * [ChangeCompanyDataInput](#changecompanydatainput)
     * [ChangePasswordInput](#changepasswordinput)
@@ -169,9 +172,9 @@
     * [RefreshTokenInput](#refreshtokeninput)
     * [RegistrationByOrderInput](#registrationbyorderinput)
     * [RegistrationDataInput](#registrationdatainput)
+    * [RemoveCodeFromCartInput](#removecodefromcartinput)
     * [RemoveCustomerUserDataInput](#removecustomeruserdatainput)
     * [RemoveFromCartInput](#removefromcartinput)
-    * [RemovePromoCodeFromCartInput](#removepromocodefromcartinput)
     * [SearchInput](#searchinput)
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
@@ -1561,17 +1564,17 @@ Add product to cart for future checkout
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="mutation.applypromocodetocart">ApplyPromoCodeToCart</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.applycodetocart">ApplyCodeToCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
 
-Apply new promo code for the future checkout
+Apply a code as either a promo code or a gift voucher, whichever it matches
 
 </td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#applypromocodetocartinput">ApplyPromoCodeToCartInput</a>!</td>
+<td valign="top"><a href="#applycodetocartinput">ApplyCodeToCartInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -1957,6 +1960,20 @@ Register new customer user using an order data
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mutation.removecodefromcart">RemoveCodeFromCart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Remove an applied discount coupon or gift voucher code from the cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#removecodefromcartinput">RemoveCodeFromCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mutation.removecustomeruser">RemoveCustomerUser</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -2010,20 +2027,6 @@ Removes the product list
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="mutation.removepromocodefromcart">RemovePromoCodeFromCart</strong></td>
-<td valign="top"><a href="#cart">Cart</a>!</td>
-<td>
-
-Remove already used promo code from cart
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#removepromocodefromcartinput">RemovePromoCodeFromCartInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -2349,6 +2352,68 @@ Description of advert position
 <td>
 
 Position of advert
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### AppliedGiftVoucher
+
+Gift voucher applied as a form of payment
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="appliedgiftvoucher.code">code</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Code of the gift voucher
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="appliedgiftvoucher.productname">productName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name of the purchased gift voucher product the voucher was generated from
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="appliedgiftvoucher.validuntil">validUntil</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time until the gift voucher is valid
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="appliedgiftvoucher.valuewithoutvat">valueWithoutVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Value of the gift voucher excluding VAT, calculated using the VAT rate of the purchased gift voucher product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="appliedgiftvoucher.valuewithvat">valueWithVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Value of the gift voucher including VAT
 
 </td>
 </tr>
@@ -3498,6 +3563,33 @@ If true than count parameter is number of products that will be displayed if thi
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="cart.giftvouchers">giftVouchers</strong></td>
+<td valign="top">[<a href="#appliedgiftvoucher">AppliedGiftVoucher</a>!]!</td>
+<td>
+
+Applied gift vouchers if provided
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.giftvouchersexceedpayableamount">giftVouchersExceedPayableAmount</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Applied gift vouchers exceed the amount payable by them (total price without gift voucher products), so the order cannot be completed
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.isnothinglefttopay">isNothingLeftToPay</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the applied gift vouchers cover the whole amount to pay
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cart.items">items</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td>
@@ -3544,6 +3636,24 @@ Applied promo codes if provided
 <td>
 
 Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.remainingamounttopay">remainingAmountToPay</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Total price with VAT reduced by applied gift vouchers, never below zero
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.remainingitemsamounttopay">remainingItemsAmountToPay</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step
 
 </td>
 </tr>
@@ -3627,6 +3737,26 @@ Selected transport if transport provided
 UUID of the cart, null for authenticated user
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### CartGiftVoucherModificationsResult
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="cartgiftvouchermodificationsresult.nolongerapplicablegiftvouchers">noLongerApplicableGiftVouchers</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -3735,6 +3865,11 @@ Cart item UUID
 </tr>
 </thead>
 <tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="cartmodificationsresult.giftvouchermodifications">giftVoucherModifications</strong></td>
+<td valign="top"><a href="#cartgiftvouchermodificationsresult">CartGiftVoucherModificationsResult</a>!</td>
+<td></td>
+</tr>
 <tr>
 <td colspan="2" valign="top"><strong id="cartmodificationsresult.itemmodifications">itemModifications</strong></td>
 <td valign="top"><a href="#cartitemmodificationsresult">CartItemModificationsResult</a>!</td>
@@ -7248,6 +7383,15 @@ The customer's first name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.giftvouchers">giftVouchers</strong></td>
+<td valign="top">[<a href="#appliedgiftvoucher">AppliedGiftVoucher</a>!]!</td>
+<td>
+
+Gift vouchers redeemed on the order
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.hasexternalpayment">hasExternalPayment</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -7288,7 +7432,16 @@ Indicates whether the billing address is other than a delivery address
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
-Indicates whether the order is paid successfully with GoPay payment type
+Indicates whether the order is paid (either marked as paid, fully covered by gift vouchers, or paid successfully with GoPay payment type)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.iswithdrawalblockedbypurchasedgiftvoucher">isWithdrawalBlockedByPurchasedGiftVoucher</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Returns whether withdrawal cannot be requested because a gift voucher purchased in the order has already been redeemed or cancelled
 
 </td>
 </tr>
@@ -7397,6 +7550,24 @@ Products of the order can be reviewed in its current status
 <td>
 
 Promo code (coupon) used in the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.purchasedgiftvouchers">purchasedGiftVouchers</strong></td>
+<td valign="top">[<a href="#purchasedgiftvoucher">PurchasedGiftVoucher</a>!]!</td>
+<td>
+
+Gift vouchers generated from the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.remainingamounttopay">remainingAmountToPay</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Total price with VAT reduced by redeemed gift vouchers, never below zero
 
 </td>
 </tr>
@@ -9707,6 +9878,68 @@ Total discount provided by this promo code
 <td>
 
 Type of the promo code
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PurchasedGiftVoucher
+
+Gift voucher purchased in the order
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.code">code</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Code of the gift voucher
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.pdfurl">pdfUrl</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+URL for downloading the gift voucher PDF
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.productcatnum">productCatnum</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Catalog number of the purchased gift voucher product the voucher was generated from
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.validuntil">validUntil</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time until the gift voucher is valid
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="purchasedgiftvoucher.valuewithvat">valueWithVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Value of the gift voucher including VAT
 
 </td>
 </tr>
@@ -12282,7 +12515,7 @@ Item quantity
 </tbody>
 </table>
 
-### ApplyPromoCodeToCartInput
+### ApplyCodeToCartInput
 
 <table>
 <thead>
@@ -12294,7 +12527,7 @@ Item quantity
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong id="applypromocodetocartinput.cartuuid">cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="applycodetocartinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -12303,11 +12536,11 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="applypromocodetocartinput.promocode">promoCode</strong></td>
+<td colspan="2" valign="top"><strong id="applycodetocartinput.code">code</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Promo code to be used after checkout
+Discount coupon or gift voucher code to be applied
 
 </td>
 </tr>
@@ -13630,6 +13863,15 @@ Filter order items by product catalog number (OR condition with productUuid)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="orderitemsfilterinput.excludeproducttypes">excludeProductTypes</strong></td>
+<td valign="top">[<a href="#producttypeenum">ProductTypeEnum</a>!]</td>
+<td>
+
+Exclude order items of products with these product types
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="orderitemsfilterinput.ordercreatedafter">orderCreatedAfter</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
@@ -14443,6 +14685,38 @@ The customer's telephone
 </tbody>
 </table>
 
+### RemoveCodeFromCartInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="removecodefromcartinput.cartuuid">cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart identifier or null if customer is logged in
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="removecodefromcartinput.code">code</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Discount coupon or gift voucher code to be removed
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### RemoveCustomerUserDataInput
 
 <table>
@@ -14492,38 +14766,6 @@ Cart item UUID
 <td>
 
 Cart identifier, new cart will be created if not provided and customer is not logged in
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### RemovePromoCodeFromCartInput
-
-<table>
-<thead>
-<tr>
-<th colspan="2" align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong id="removepromocodefromcartinput.cartuuid">cartUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td>
-
-Cart identifier or null if customer is logged in
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="removepromocodefromcartinput.promocode">promoCode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Promo code to be removed
 
 </td>
 </tr>
@@ -14643,6 +14885,14 @@ Product Availability statuses
 </tr>
 </thead>
 <tbody>
+<tr>
+<td valign="top"><strong>Digital</strong></td>
+<td>
+
+Product availability status for electronically delivered products
+
+</td>
+</tr>
 <tr>
 <td valign="top"><strong>ExpectedRestock</strong></td>
 <td>
@@ -15067,6 +15317,10 @@ One of the possible methods of the payment type
 <td></td>
 </tr>
 <tr>
+<td valign="top"><strong>giftVoucher</strong></td>
+<td></td>
+</tr>
+<tr>
 <td valign="top"><strong>goPay</strong></td>
 <td></td>
 </tr>
@@ -15289,10 +15543,26 @@ Basic product
 </td>
 </tr>
 <tr>
+<td valign="top"><strong>ELECTRONIC_GIFT_VOUCHER</strong></td>
+<td>
+
+Gift voucher delivered by email after the order is paid
+
+</td>
+</tr>
+<tr>
 <td valign="top"><strong>INQUIRY</strong></td>
 <td>
 
 Product with inquiry form instead of add to cart button
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>PRINTED_GIFT_VOUCHER</strong></td>
+<td>
+
+Gift voucher delivered printed as a regular product
 
 </td>
 </tr>
@@ -15466,6 +15736,10 @@ One of the possible methods of the transport type
 <td></td>
 </tr>
 <tr>
+<td valign="top"><strong>email</strong></td>
+<td></td>
+</tr>
+<tr>
 <td valign="top"><strong>packetery</strong></td>
 <td></td>
 </tr>
@@ -15488,6 +15762,14 @@ Reason why a transport cannot be selected for the given cart
 </tr>
 </thead>
 <tbody>
+<tr>
+<td valign="top"><strong>electronic_gift_voucher_only</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>email_transport_not_allowed</strong></td>
+<td></td>
+</tr>
 <tr>
 <td valign="top"><strong>excluded_for_product</strong></td>
 <td></td>

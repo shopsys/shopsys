@@ -38,6 +38,7 @@ fragment ListedProductFragment on Product {
     }
     isMainVariant
     isInquiryType
+    productType
 
     ... on MainVariant {
         variantsCount

@@ -2,6 +2,7 @@ import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmProductInterface } from 'gtm/types/objects';
 import { getGtmAvailability } from 'gtm/utils/getGtmAvailability';
 import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibility';
+import { mapGtmProductType } from 'gtm/utils/mapGtmProductType';
 import { ProductInterfaceType } from 'types/product';
 import { getFallbackTimezoneByDomainUrl } from 'utils/domain/domainConfig';
 import { getIsoDate } from 'utils/formaters/getIsoDate';
@@ -41,6 +42,7 @@ export const mapGtmProductInterface = (
         brand: 'brand' in productInterface ? (productInterface.brand?.name ?? '') : '',
         categories:
             'categories' in productInterface ? productInterface.categories.map((category) => category.name) : [],
+        productType: mapGtmProductType(productInterface.productType),
         ...(zboziCategory !== undefined && { zboziCategory }),
     };
 };

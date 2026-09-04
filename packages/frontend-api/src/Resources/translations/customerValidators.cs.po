@@ -73,6 +73,9 @@ msgstr "Nové heslo musí mít minimálně {{ limit }} znaků"
 msgid "Old password must be at least {{ limit }} characters long"
 msgstr "Staré heslo musí mít minimálně {{ limit }} znaků"
 
+msgid "Only one promo code can be applied in the cart."
+msgstr "V košíku lze uplatnit pouze jeden slevový kupón."
+
 msgid "Order is required"
 msgstr "Objednávka je povinná"
 
@@ -261,6 +264,18 @@ msgstr "Telefonní předvolba nesmí být delší než {{ limit }} znaků"
 
 msgid "The file {{ fileName }} is too big."
 msgstr "Soubor {{ fileName }} je příliš velký."
+
+msgid "The gift voucher has already been redeemed or cancelled."
+msgstr "Dárkový poukaz už byl uplatněn nebo stornován."
+
+msgid "The gift voucher is already applied in the current cart."
+msgstr "Dárkový poukaz je již v košíku uplatněn."
+
+msgid "The gift voucher is no longer valid. Check it, please."
+msgstr "Dárkový poukaz již není platný. Zkontrolujte jej, prosím."
+
+msgid "The gift voucher is not valid. Check it, please."
+msgstr "Dárkový poukaz není platný. Zkontrolujte jej, prosím."
 
 msgid "The payment is not allowed in combination with already selected transport"
 msgstr "Platba není povolena v kombinaci s již vybranou dopravou"

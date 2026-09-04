@@ -1,5 +1,13 @@
 {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
+{% block grid_action_cell_type_delete %}
+    {% if row is not empty and row.isEmailTransport is defined and row.isEmailTransport %}
+        {{ info_icon('Shipping of type Email cannot be deleted, exactly one must always exist.'|trans) }}
+    {% else %}
+        {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}
+
 {% block grid_value_cell_id_name %}
     <a href="{{ url('admin_transport_edit', { id: row.t.id }) }}">{{ value|nameWithFallbackOnEmpty() }}</a>
 {% endblock %}

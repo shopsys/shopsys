@@ -29,7 +29,7 @@ export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticated
     const setIsGlobalUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
     const isUserMenuOpen = shouldUseLocalUserMenuState ? isLocalUserMenuOpen : isGlobalUserMenuOpen;
     const setIsUserMenuOpen = shouldUseLocalUserMenuState ? setIsLocalUserMenuOpen : setIsGlobalUserMenuOpen;
-    const isActiveDelayed = useDebounce(isUserMenuOpen, 200);
+    const isActiveDelayed = useDebounce(isUserMenuOpen, isUserMenuOpen ? 200 : 0);
     const isDesktop = useMediaMin('vl');
 
     return (
@@ -106,7 +106,13 @@ export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticated
                 </MenuIconicItemUserPopover>
             </div>
 
-            {isDesktop && <Overlay isActive={isActiveDelayed} onClick={() => setIsUserMenuOpen(false)} />}
+            {isDesktop && (
+                <Overlay
+                    shouldDisablePointerEventsOnExit
+                    isActive={isActiveDelayed}
+                    onClick={() => setIsUserMenuOpen(false)}
+                />
+            )}
         </>
     );
 };

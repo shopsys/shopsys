@@ -3,6 +3,7 @@ import { changeBlogArticleDynamicPartsToStaticDemodata } from 'e2e/visits/visits
 import { staticData } from 'fixtures/demodata';
 import {
     checkNumberOfApiRequestsTriggeredByActions,
+    getHeaderElementByTID,
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
@@ -95,5 +96,32 @@ describe('Cart In Header Tests', () => {
             [TIDs.header_cart_list_item_, staticData.products.giftTicket100czk.catnum],
             TIDs.forms_spinbox_decrease,
         ]).should('not.exist');
+    });
+
+    it('[Cart Header Hover] should switch between cart and customer menu popovers', function () {
+        getHeaderElementByTID(TIDs.header_cart)
+            .should('be.visible')
+            .realHover()
+            .should('have.attr', 'aria-expanded', 'true');
+        cy.getByTID([TIDs.overlay]).should('be.visible');
+
+        getHeaderElementByTID(TIDs.my_account_link)
+            .should('be.visible')
+            .realHover()
+            .should('have.attr', 'aria-expanded', 'true');
+        getHeaderElementByTID(TIDs.header_cart).should('have.attr', 'aria-expanded', 'false');
+        cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.login_form]).filter(':visible').should('exist');
+
+        getHeaderElementByTID(TIDs.header_cart)
+            .realHover()
+            .should('have.attr', 'aria-expanded', 'true');
+        getHeaderElementByTID(TIDs.my_account_link).should('have.attr', 'aria-expanded', 'false');
+        cy.getByTID([
+            TIDs.header,
+            TIDs.header_cart,
+            [TIDs.header_cart_list_item_, staticData.products.helloKitty.catnum],
+        ])
+            .filter(':visible')
+            .should('exist');
     });
 });

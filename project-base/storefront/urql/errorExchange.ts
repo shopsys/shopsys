@@ -37,15 +37,15 @@ const MUTATION_ERROR_CONFIG: Partial<Record<string, MutationErrorConfig>> = {
         errorType: 'add-order-items-error',
         gtmOrigin: GtmMessageOriginType.other,
     },
-    ApplyPromoCodeToCartMutation: {
-        errorType: 'promo-code-apply-error',
+    ApplyCodeToCartMutation: {
+        errorType: 'apply-code-error',
         gtmOrigin: GtmMessageOriginType.cart,
-        validationFields: ['promoCode'],
+        validationFields: ['promoCode', 'giftVoucherCode'],
     },
-    RemovePromoCodeFromCartMutation: {
-        errorType: 'promo-code-remove-error',
+    RemoveCodeFromCartMutation: {
+        errorType: 'remove-code-error',
         gtmOrigin: GtmMessageOriginType.cart,
-        validationFields: ['promoCode'],
+        validationFields: ['promoCode', 'giftVoucherCode'],
     },
     RemoveFromCartMutation: {
         errorType: 'remove-from-cart-error',
@@ -200,9 +200,14 @@ const handleErrorMessagesForMutation = (error: CombinedError, t: Translate, oper
         }
     }
 
-    // Show generic error message for this mutation type
-    showErrorMessage(getErrorMessage(config.errorType, t), config.gtmOrigin, {
-        errorType: config.errorType,
+    const codeApplicationRateLimitError =
+        parsedErrors.applicationError?.type === 'too-many-code-application-attempts'
+            ? parsedErrors.applicationError
+            : undefined;
+    const errorType = codeApplicationRateLimitError?.type ?? config.errorType;
+
+    showErrorMessage(codeApplicationRateLimitError?.message ?? getErrorMessage(config.errorType, t), config.gtmOrigin, {
+        errorType,
     });
 };
 

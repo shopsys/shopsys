@@ -275,6 +275,12 @@ class OrderItemApiFacade
                 ->setParameter(':type', $filter->getType());
         }
 
+        if ($filter->getExcludeProductTypes() !== null && count($filter->getExcludeProductTypes()) > 0) {
+            $queryBuilder->leftJoin('oi.product', 'excludedTypeProduct')
+                ->andWhere('excludedTypeProduct.productType IS NULL OR excludedTypeProduct.productType NOT IN (:excludedProductTypes)')
+                ->setParameter(':excludedProductTypes', $filter->getExcludeProductTypes());
+        }
+
         $orX = [];
 
         if ($filter->getCatnum() !== null) {

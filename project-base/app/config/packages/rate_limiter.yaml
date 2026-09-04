@@ -1,5 +1,10 @@
 framework:
     rate_limiter:
+        apply_code_to_cart:
+            policy: sliding_window
+            limit: 5
+            interval: '1 minute'
+            cache_pool: apply_code_to_cart_rate_limiter_cache
         frontend_api_product_review_create:
             policy: fixed_window
             limit: 20
@@ -23,3 +28,9 @@ framework:
             limit: 300
             interval: '1 minute'
             cache_pool: mcp_rate_limiter_cache
+
+when@test:
+    framework:
+        rate_limiter:
+            apply_code_to_cart:
+                policy: no_limit

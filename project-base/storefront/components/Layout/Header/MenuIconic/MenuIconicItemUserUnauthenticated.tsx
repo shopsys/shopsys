@@ -25,7 +25,7 @@ export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthentic
 }) => {
     const { t } = useTranslation();
     const [isActive, setIsActive] = useState(false);
-    const isActiveDelayed = useDebounce(isActive, 200);
+    const isActiveDelayed = useDebounce(isActive, isActive ? 200 : 0);
     const isDesktop = useMediaMin('vl');
 
     return (
@@ -104,7 +104,13 @@ export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthentic
                 </MenuIconicItemUserPopover>
             </div>
 
-            {isDesktop && <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />}
+            {isDesktop && (
+                <Overlay
+                    shouldDisablePointerEventsOnExit
+                    isActive={isActiveDelayed}
+                    onClick={() => setIsActive(false)}
+                />
+            )}
         </>
     );
 };

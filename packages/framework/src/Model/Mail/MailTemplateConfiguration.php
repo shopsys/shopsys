@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\Mail\GiftVoucherMail;
 use Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMail;
 use Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailTemplateVariablesProvider;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\InvalidMailTemplateVariablesConfigurationException;
@@ -54,6 +55,7 @@ class MailTemplateConfiguration
         $this->registerInquiryMailTemplates();
         $this->registerWatchdogMailTemplate();
         $this->registerProductQuestionMailTemplates();
+        $this->registerGiftVoucherMailTemplate();
     }
 
     public function getMailTemplateVariablesBySlug(string $slug): MailTemplateVariables
@@ -157,6 +159,11 @@ class MailTemplateConfiguration
             ->addVariable(
                 OrderMail::VARIABLE_ROUNDING_INFO,
                 t('Information about order rounding item (empty if there is no rounding)'),
+                MailTemplateVariables::CONTEXT_BODY,
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_GIFT_VOUCHERS_INFO,
+                t('Information about redeemed gift vouchers and the remaining amount to pay (empty if there are no gift vouchers)'),
                 MailTemplateVariables::CONTEXT_BODY,
             )
             ->addVariable(
@@ -351,6 +358,12 @@ class MailTemplateConfiguration
     {
         $watchdogMailTemplateVariables = $this->watchdogMailTemplateVariablesProvider->create();
         $this->addMailTemplateVariables(WatchdogMail::WATCHDOG_MAIL_TEMPLATE_NAME, $watchdogMailTemplateVariables);
+    }
+
+    protected function registerGiftVoucherMailTemplate(): void
+    {
+        $giftVoucherMailTemplateVariables = new MailTemplateVariables(t('Gift voucher'));
+        $this->addMailTemplateVariables(GiftVoucherMail::GIFT_VOUCHER_MAIL_TEMPLATE_NAME, $giftVoucherMailTemplateVariables);
     }
 
     protected function registerProductQuestionMailTemplates(): void

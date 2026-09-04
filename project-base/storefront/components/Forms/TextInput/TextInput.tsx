@@ -60,7 +60,14 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         },
         textInputForwarderRef,
     ) => (
-        <LabelWrapper className={className} htmlFor={id} inputType="text-input" label={label} required={required}>
+        <LabelWrapper
+            className={className}
+            htmlFor={id}
+            inputSize={inputSize}
+            inputType="text-input"
+            label={label}
+            required={required}
+        >
             <input
                 aria-describedby={ariaDescribedby}
                 aria-hidden={ariaHidden}
@@ -80,7 +87,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer w-full rounded-input border-2 px-3 pt-5 font-semibold transition [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:text-transparent focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop',
+                    'peer w-full rounded-input border-2 px-3 font-semibold transition [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:text-transparent focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop',
                     'border-input-border-default bg-input-bg-default text-input-text-default',
                     'disabled:border-input-border-disabled disabled:bg-input-bg-disabled disabled:text-input-text-disabled',
                     !hasError && 'hover:border-input-border-hovered hover:text-input-text-hovered',
@@ -88,7 +95,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                     '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:bg-input-bg-default! [&:-webkit-autofill]:shadow-inner!',
                     '[&:-webkit-autofill]:hover:bg-input-fill! [&:-webkit-autofill]:hover:shadow-inner!',
                     '[&:-webkit-autofill]:focus:bg-input-fill! [&:-webkit-autofill]:focus:shadow-inner!',
-                    inputSize === 'small' ? 'h-12 text-small' : 'h-14',
+                    inputSize === 'small' ? 'h-12 pt-3.5 text-sm' : 'h-14 pt-5',
                     hasError && 'border-input-border-error bg-input-bg-default shadow-none',
                     hasWarning &&
                         'border-input-border-warning bg-input-bg-default shadow-none hover:border-input-border-warning focus:border-input-border-warning',

@@ -103,8 +103,8 @@ export type OrderWithdrawalFormType = {
 
 export type UserConsentFormType = Record<keyof GtmConsentInfoType, boolean>;
 
-export type PromoCodeFormType = {
-    promoCode: string;
+export type ApplyCodeFormType = {
+    code: string;
 };
 
 export type LoginFormType = {

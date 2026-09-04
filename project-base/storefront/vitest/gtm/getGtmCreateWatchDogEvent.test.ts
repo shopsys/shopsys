@@ -1,5 +1,5 @@
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { getGtmCreateWatchDogEvent } from 'gtm/factories/getGtmCreateWatchDogEvent';
 import { WatchdogFormType } from 'types/form';
@@ -26,6 +26,7 @@ const listedProduct = {
     catalogNumber: 'WATCH-1',
     isMainVariant: false,
     isInquiryType: false,
+    productType: TypeProductTypeEnum.Basic,
     unit: {
         __typename: 'Unit',
         name: 'pcs',
@@ -99,6 +100,7 @@ describe('getGtmCreateWatchDogEvent', () => {
                         url: 'https://test1.example.com/watched-product',
                         brand: 'Watch Brand',
                         categories: ['Watches'],
+                        productType: 'product',
                         imageUrl: 'https://cdn.example.com/watched-product.jpg',
                         quantity: 1,
                         listIndex: 2,

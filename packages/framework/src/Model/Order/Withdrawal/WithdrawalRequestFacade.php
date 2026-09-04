@@ -54,6 +54,11 @@ class WithdrawalRequestFacade
         return $this->withdrawalRequestRepository->getById($id);
     }
 
+    public function isWithdrawalBlockedByPurchasedGiftVoucher(Order $order): bool
+    {
+        return $this->withdrawalChecker->isWithdrawalBlockedByPurchasedGiftVoucher($order);
+    }
+
     public function canRequestWithdrawal(Order $order): bool
     {
         try {

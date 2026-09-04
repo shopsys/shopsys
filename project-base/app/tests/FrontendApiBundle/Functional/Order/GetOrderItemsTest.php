@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Product\Product;
 use DateTimeInterface;
@@ -33,7 +34,7 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
     private WithdrawalRequestDataFactory $withdrawalRequestDataFactory;
 
     /**
-     * @param int[] $expectedOrderItemsIds
+     * @param array<int|\Tests\FrontendApiBundle\Test\ReferenceDataAccessor> $expectedOrderItemsIds
      */
     #[DataProvider('getOrderItemsDataProvider')]
     public function testGetOrderItems(
@@ -48,9 +49,17 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
 
         $responseData = $this->getResponseDataForGraphQlType($response, 'orderItems');
 
-        $expectedOrderItems = $this->getExpectedOrderItems($expectedOrderItemsIds);
+        $resolvedExpectedOrderItemsIds = [];
 
-        $this->assertOrderItemConnection($responseData, $expectedOrderItems, $expectedOrderItemsIds);
+        foreach ($this->resolveReferenceDataAccessors($expectedOrderItemsIds) as $resolvedIds) {
+            foreach ((array)$resolvedIds as $resolvedId) {
+                $resolvedExpectedOrderItemsIds[] = $resolvedId;
+            }
+        }
+
+        $expectedOrderItems = $this->getExpectedOrderItems($resolvedExpectedOrderItemsIds);
+
+        $this->assertOrderItemConnection($responseData, $expectedOrderItems, $resolvedExpectedOrderItemsIds);
     }
 
     public function testGetOrderItemsExcludesItemsFromOrdersWithWithdrawalRequest(): void
@@ -95,7 +104,25 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
         ];
 
         // filter by order status
-        yield [['last' => 4, 'filter' => ['orderStatus' => OrderStatusTypeEnum::TYPE_DONE]], [4, 3, 2, 1]];
+        yield [
+            [
+                'filter' => [
+                    'orderStatus' => OrderStatusTypeEnum::TYPE_DONE,
+                    'orderUuid' => new ReferenceDataAccessor(
+                        OrderDataFixture::ORDER_WITH_GIFT_VOUCHER_PRODUCTS,
+                        fn (Order $order) => $order->getUuid(),
+                    ),
+                ],
+            ],
+            [
+                new ReferenceDataAccessor(
+                    OrderDataFixture::ORDER_WITH_GIFT_VOUCHER_PRODUCTS,
+                    fn (Order $order) => array_reverse(
+                        array_map(static fn (OrderItem $orderItem) => $orderItem->getId(), $order->getItems()),
+                    ),
+                ),
+            ],
+        ];
 
         // filter by order item catnum
         yield [

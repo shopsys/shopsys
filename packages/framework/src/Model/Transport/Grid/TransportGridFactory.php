@@ -40,9 +40,10 @@ class TransportGridFactory implements GridFactoryInterface
             $queryBuilder,
             't.id',
             function ($row) {
-                $transport = $this->transportRepository->findById($row['t']['id']);
+                $transport = $this->transportRepository->getById($row['t']['id']);
                 $row['prices'] = $this->getDisplayPrices($transport);
                 $row['domainId'] = $this->adminDomainTabsFacade->getSelectedDomainId();
+                $row['isEmailTransport'] = $transport->isEmailType();
 
                 return $row;
             },

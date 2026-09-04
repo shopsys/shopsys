@@ -48,6 +48,10 @@ class ProductAvailabilityFacade
 
     public function getProductAvailabilityInfoByProduct(Product $product, int $domainId): ProductAvailabilityInfo
     {
+        if ($this->isTreatedAsDigitalProduct($product, $domainId)) {
+            return $this->createDigitalProductAvailabilityInfo($domainId);
+        }
+
         return $this->createProductAvailabilityInfo(
             $this->isProductAvailableOnDomainCached($product, $domainId),
             $this->findValidExpectedRestockingDate($product, $domainId),
@@ -91,6 +95,14 @@ class ProductAvailabilityFacade
     protected function createProductAvailabilityInfoInstance(string $name, string $status): ProductAvailabilityInfo
     {
         return new ProductAvailabilityInfo($name, $status);
+    }
+
+    public function createDigitalProductAvailabilityInfo(int $domainId): ProductAvailabilityInfo
+    {
+        return $this->createProductAvailabilityInfoInstance(
+            $this->getDigitalText($this->domain->getDomainConfigById($domainId)->getLocale()),
+            AvailabilityStatusEnum::DIGITAL,
+        );
     }
 
     protected function getProductAvailabilityDaysForFeedsByDomainId(Product $product, int $domainId): int
@@ -153,7 +165,7 @@ class ProductAvailabilityFacade
 
     public function getAvailableStoresCount(Product $product, int $domainId): ?int
     {
-        if ($product->isMainVariant()) {
+        if ($product->isMainVariant() || $product->isElectronicGiftVoucher()) {
             return null;
         }
 
@@ -185,18 +197,53 @@ class ProductAvailabilityFacade
 
     protected function isProductAvailableOnDomain(Product $product, int $domainId): bool
     {
+        if ($this->isTreatedAsDigitalProduct($product, $domainId)) {
+            return true;
+        }
+
         if (!$product->isMainVariant()) {
             return $this->productStockFacade->isProductAvailableOnDomain($product, $domainId);
         }
 
-        $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
+        $sellableVariants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
+
+        if ($this->hasElectronicGiftVoucherVariant($sellableVariants)) {
+            return true;
+        }
+
         $stockQuantitiesIndexedByProductId = $this->productStockFacade
-            ->getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId($variants, $domainId);
+            ->getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(
+                $sellableVariants,
+                $domainId,
+            );
 
         return array_any(
             $stockQuantitiesIndexedByProductId,
             static fn (int $stockQuantity): bool => $stockQuantity > 0,
         );
+    }
+
+    public function isTreatedAsDigitalProduct(Product $product, int $domainId): bool
+    {
+        if (!$product->isMainVariant()) {
+            return $product->isElectronicGiftVoucher();
+        }
+
+        $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
+
+        if ($variants === []) {
+            return $product->isElectronicGiftVoucher();
+        }
+
+        return array_all($variants, static fn (Product $variant): bool => $variant->isElectronicGiftVoucher());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
+     */
+    protected function hasElectronicGiftVoucherVariant(array $variants): bool
+    {
+        return array_any($variants, static fn (Product $variant): bool => $variant->isElectronicGiftVoucher());
     }
 
     /**
@@ -206,7 +253,7 @@ class ProductAvailabilityFacade
         Product $product,
         int $domainId,
     ): array {
-        if ($product->isMainVariant()) {
+        if ($product->isMainVariant() || $product->isElectronicGiftVoucher()) {
             return [];
         }
 
@@ -409,10 +456,19 @@ class ProductAvailabilityFacade
         return $this->clock->now() >= $firstMomentAfterRestockingDay;
     }
 
+    public function getDigitalText(string $domainLocale): string
+    {
+        return t('Sent by email after payment', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $domainLocale);
+    }
+
     public function getNotOnStockQuantity(Product $product, int $domainId, int $quantityToAdd): ?int
     {
         if ($product->isMainVariant()) {
             return null;
+        }
+
+        if ($product->isElectronicGiftVoucher()) {
+            return 0;
         }
 
         $notOnStockQuantity = 0;

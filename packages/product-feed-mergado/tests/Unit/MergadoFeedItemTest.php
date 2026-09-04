@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPricesResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\ProductFeed\MergadoBundle\Model\FeedItem\MergadoFeedItem;
 use Shopsys\ProductFeed\MergadoBundle\Model\FeedItem\MergadoFeedItemFactory;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -159,6 +160,7 @@ class MergadoFeedItemTest extends TestCase
         $categoryFacadeStub->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')->willReturn(['category1', 'category2']);
 
         return new MergadoFeedItemFactory(
+            $this->createStub(TransportFacade::class),
             $this->productUrlsBatchLoaderMock,
             $this->createStub(ProductParametersBatchLoader::class),
             $categoryFacadeStub,

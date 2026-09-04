@@ -529,6 +529,9 @@ msgstr ""
 msgid "Canceled"
 msgstr ""
 
+msgid "Cancelled"
+msgstr ""
+
 msgid "Cannot read file."
 msgstr ""
 
@@ -619,6 +622,9 @@ msgstr ""
 msgid "Code"
 msgstr ""
 
+msgid "Code for redemption"
+msgstr ""
+
 msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
@@ -692,6 +698,9 @@ msgid "Complement to title"
 msgstr ""
 
 msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
+msgstr ""
+
+msgid "Conditions"
 msgstr ""
 
 msgid "Confirm code and disable two-factor authentication"
@@ -1216,6 +1225,9 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
+msgid "Download PDF"
+msgstr ""
+
 msgid "Download file"
 msgstr ""
 
@@ -1373,6 +1385,12 @@ msgid "Editing gift plan"
 msgstr ""
 
 msgid "Editing gift plan - %name%"
+msgstr ""
+
+msgid "Editing gift voucher"
+msgstr ""
+
+msgid "Editing gift voucher - %code%"
 msgstr ""
 
 msgid "Editing holiday / internal day - {{ name }}"
@@ -1705,6 +1723,9 @@ msgstr ""
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
 msgstr ""
 
+msgid "For the electronic gift voucher type, stock levels are ignored and the product is always available."
+msgstr ""
+
 msgid "Forgotten administrator password sending"
 msgstr ""
 
@@ -1772,6 +1793,24 @@ msgid "Gift price saved"
 msgstr ""
 
 msgid "Gift product"
+msgstr ""
+
+msgid "Gift voucher"
+msgstr ""
+
+msgid "Gift voucher - electronic"
+msgstr ""
+
+msgid "Gift voucher - printed"
+msgstr ""
+
+msgid "Gift voucher <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
+msgstr ""
+
+msgid "Gift voucher <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
+msgstr ""
+
+msgid "Gift vouchers"
 msgstr ""
 
 msgid "GoPay"
@@ -1907,6 +1946,9 @@ msgid "Individual roles"
 msgstr ""
 
 msgid "Information about order rounding item (empty if there is no rounding)"
+msgstr ""
+
+msgid "Information about redeemed gift vouchers and the remaining amount to pay (empty if there are no gift vouchers)"
 msgstr ""
 
 msgid "Information for customers"
@@ -2221,6 +2263,9 @@ msgstr ""
 msgid "New gift plan"
 msgstr ""
 
+msgid "New gift voucher"
+msgstr ""
+
 msgid "New item"
 msgstr ""
 
@@ -2446,6 +2491,9 @@ msgstr ""
 msgid "Page title"
 msgstr ""
 
+msgid "Paid"
+msgstr ""
+
 msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
@@ -2569,6 +2617,12 @@ msgstr ""
 msgid "Payment not completed yet"
 msgstr ""
 
+msgid "Payment of type Gift voucher cannot be created, exactly one must always exist."
+msgstr ""
+
+msgid "Payment of type Gift voucher cannot be deleted, exactly one must always exist."
+msgstr ""
+
 msgid "Payment paid"
 msgstr ""
 
@@ -2579,6 +2633,9 @@ msgid "Payment refunded"
 msgstr ""
 
 msgid "Payment successful page content"
+msgstr ""
+
+msgid "Payment type cannot be changed from or to type Gift voucher, exactly one payment of type Gift voucher must always exist."
 msgstr ""
 
 msgid "Payment was not paid in full"
@@ -2852,6 +2909,9 @@ msgid "Published"
 msgstr ""
 
 msgid "Published anonymously"
+msgstr "-"
+
+msgid "Purchased in order"
 msgstr ""
 
 msgid "QR code"
@@ -2864,6 +2924,15 @@ msgid "Reason for content change"
 msgstr ""
 
 msgid "Reason for rejection"
+msgstr "-"
+
+msgid "Redeemed"
+msgstr ""
+
+msgid "Redeemed in order"
+msgstr ""
+
+msgid "Redemption:"
 msgstr ""
 
 msgid "Redirect target"
@@ -3238,6 +3307,15 @@ msgstr ""
 msgid "Shipping instructions"
 msgstr ""
 
+msgid "Shipping of type Email cannot be created, exactly one must always exist."
+msgstr ""
+
+msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
+msgstr ""
+
+msgid "Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist."
+msgstr ""
+
 msgid "Shippings and payments"
 msgstr ""
 
@@ -3410,6 +3488,9 @@ msgid "Text"
 msgstr ""
 
 msgid "Text review"
+msgstr "-"
+
+msgid "The gift voucher applies to all goods and services. The gift voucher cannot be redeemed after the stated validity date; after the validity expires, its value is forfeited without any right to compensation. The voucher cannot be exchanged for cash. The goods or services must be of equal or higher value."
 msgstr ""
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
@@ -3598,6 +3679,9 @@ msgstr ""
 msgid "Unknown prefix"
 msgstr ""
 
+msgid "Unredeemed"
+msgstr ""
+
 msgid "Unsaved changes"
 msgstr ""
 
@@ -3679,6 +3763,9 @@ msgstr ""
 msgid "Valid until"
 msgstr ""
 
+msgid "Value"
+msgstr ""
+
 msgid "Variable symbol"
 msgstr ""
 
@@ -3698,6 +3785,12 @@ msgid "Visibility"
 msgstr ""
 
 msgid "Visible on homepage"
+msgstr ""
+
+msgid "Voucher"
+msgstr ""
+
+msgid "Voucher value"
 msgstr ""
 
 msgid "Waiting for an offline transfer to be finished"
@@ -3854,6 +3947,9 @@ msgid "edit"
 msgstr ""
 
 msgid "empty value"
+msgstr ""
+
+msgid "enter the code in the cart into the field for discount coupons and gift vouchers."
 msgstr ""
 
 msgid "exists"

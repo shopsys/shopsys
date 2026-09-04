@@ -6,6 +6,7 @@ namespace Shopsys\ProductFeed\GoogleBundle\Model\FeedItem;
 
 use DateTimeImmutable;
 use Override;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
@@ -19,6 +20,9 @@ class GoogleFeedItem implements FeedItemInterface
     public const string AVAILABILITY_IN_STOCK = 'in_stock';
     public const string AVAILABILITY_BACKORDER = 'backorder';
 
+    /**
+     * @param string[] $shippingCountryCodes
+     */
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
@@ -33,6 +37,9 @@ class GoogleFeedItem implements FeedItemInterface
         protected readonly ?string $partno = null,
         protected readonly ?string $imgUrl = null,
         protected readonly ?DateTimeImmutable $availabilityDate = null,
+        protected readonly ?string $shippingServiceName = null,
+        protected readonly ?Money $shippingPrice = null,
+        protected readonly array $shippingCountryCodes = [],
     ) {
     }
 
@@ -95,6 +102,24 @@ class GoogleFeedItem implements FeedItemInterface
     public function getCurrency(): Currency
     {
         return $this->currency;
+    }
+
+    public function getShippingServiceName(): ?string
+    {
+        return $this->shippingServiceName;
+    }
+
+    public function getShippingPrice(): ?Money
+    {
+        return $this->shippingPrice;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getShippingCountryCodes(): array
+    {
+        return $this->shippingCountryCodes;
     }
 
     /**

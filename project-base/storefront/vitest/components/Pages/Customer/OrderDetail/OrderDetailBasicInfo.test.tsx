@@ -78,6 +78,9 @@ describe('OrderDetailBasicInfo', () => {
             trackingUrl: null,
             promoCode: null,
             note: null,
+            giftVouchers: [],
+            purchasedGiftVouchers: [],
+            remainingAmountToPay: '0',
             items: [
                 {
                     name: 'Reviewed product',

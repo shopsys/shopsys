@@ -78,6 +78,7 @@ class ProductExportRepository
         protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
         protected readonly ProductReviewFacade $productReviewFacade,
         protected readonly ProductReviewDocumentMapper $productReviewDocumentMapper,
+        protected readonly ProductTypeEnum $productTypeEnum,
         #[AutowireIterator('shopsys.product_export_data_provider')]
         protected readonly iterable $productExportDataProviders = [],
     ) {
@@ -159,6 +160,7 @@ class ProductExportRepository
                 $domainId,
             )->getId(),
             ProductExportFieldProvider::IN_STOCK => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
+            ProductExportFieldProvider::IS_DIGITAL => $this->productAvailabilityFacade->isTreatedAsDigitalProduct($product, $domainId),
             ProductExportFieldProvider::PRICES => $this->extractPrices($domainId, $product),
             ProductExportFieldProvider::SPECIAL_PRICES => $this->extractSpecialPrices($domainId, $product),
             ProductExportFieldProvider::PARAMETERS => $this->extractParametersIncludedVariants($product, $locale, $domainId),
@@ -334,9 +336,15 @@ class ProductExportRepository
     protected function extractProductType(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
+            $variantProductTypes = [];
+
             foreach ($this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId) as $variant) {
-                if ($variant->getProductType() === ProductTypeEnum::TYPE_BASIC) {
-                    return ProductTypeEnum::TYPE_BASIC;
+                $variantProductTypes[$variant->getProductType()] = true;
+            }
+
+            foreach ($this->productTypeEnum->getAllOrderedByMainVariantPriority() as $productType) {
+                if (array_key_exists($productType, $variantProductTypes)) {
+                    return $productType;
                 }
             }
 
@@ -353,7 +361,9 @@ class ProductExportRepository
         $isProductAvailable = $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId);
 
         return match ($productType) {
-            ProductTypeEnum::TYPE_BASIC => $isProductAvailable ? 20 : 5,
+            ProductTypeEnum::TYPE_BASIC,
+            ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER,
+            ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER => $isProductAvailable ? 20 : 5,
             ProductTypeEnum::TYPE_INQUIRY => $isProductAvailable ? 10 : 0,
             default => $isProductAvailable ? -100 : -200,
         };

@@ -512,7 +512,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
     {
         $filterData = new ProductFilterData();
         $countData = new ProductFilterCountData();
-        $countData->countInStock = 5;
+        $countData->countInStock = 6;
         $countData->countByBrandId = [
             $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 6,
             $this->getReference(BrandDataFixture::BRAND_HP, Brand::class)->getId() => 2,
@@ -607,7 +607,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $filterData = new ProductFilterData();
         $filterData->inStock = true;
         $countData = new ProductFilterCountData();
-        $countData->countInStock = 5;
+        $countData->countInStock = 6;
         $countData->countByBrandId = [
             $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 4,
             $this->getReference(BrandDataFixture::BRAND_HP, Brand::class)->getId() => 1,

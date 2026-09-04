@@ -1,0 +1,4 @@
+CartGiftVoucherModificationsResult:
+    type: object
+    inherits:
+        - 'CartGiftVoucherModificationsResultDecorator'

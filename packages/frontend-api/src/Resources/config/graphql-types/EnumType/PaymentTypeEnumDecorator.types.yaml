@@ -10,3 +10,5 @@ PaymentTypeEnumDecorator:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_GOPAY")'
             bankTransfer:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_BANK_TRANSFER")'
+            giftVoucher:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_GIFT_VOUCHER")'

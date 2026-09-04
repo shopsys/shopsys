@@ -44,10 +44,10 @@ class OrderDetailTabProvider implements OrderDetailTabProviderInterface
 
         yield new OrderDetailTab(
             'payment_transactions',
-            t('Payment transactions'),
+            t('Payments'),
             PaymentTransactionsTabComponent::COMPONENT_NAME,
             30,
-            static fn (Order $order): bool => $order->getPaymentTransactionsCount() === 0,
+            static fn (Order $order): bool => $order->getPaymentTransactionsCount() === 0 && $order->getRedeemedGiftVouchers() === [],
         );
 
         yield new OrderDetailTab(

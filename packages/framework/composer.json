@@ -87,6 +87,7 @@
         "scheb/2fa-bundle": "^7.6.0",
         "scheb/2fa-email": "^7.6.0",
         "scheb/2fa-google-authenticator": "^7.6.0",
+        "setasign/fpdf": "^1.8.6",
         "shopsys/form-types-bundle": "20.0.x-dev",
         "shopsys/mcp-attributes": "20.0.x-dev",
         "shopsys/migrations": "20.0.x-dev",

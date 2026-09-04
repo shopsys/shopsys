@@ -27,7 +27,19 @@ class ZboziFeedItem implements FeedItemInterface
         protected readonly int|string|null $deliveryDate = null,
         protected readonly ?Money $cpc = null,
         protected readonly ?Money $cpcSearch = null,
+        protected readonly ?string $deliveryId = null,
+        protected readonly ?Money $deliveryPrice = null,
     ) {
+    }
+
+    public function getDeliveryId(): ?string
+    {
+        return $this->deliveryId;
+    }
+
+    public function getDeliveryPrice(): ?Money
+    {
+        return $this->deliveryPrice;
     }
 
     #[Override]

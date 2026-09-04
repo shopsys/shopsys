@@ -1,13 +1,16 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
+import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { Link } from 'components/Basic/Link/Link';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
+import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import { TypeOrderItemTypeEnum } from 'graphql/types';
+import { TypeOrderItemTypeEnum, TypeProductTypeEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
@@ -27,6 +30,7 @@ type OrderDetailOrderItemProps = {
     productReviewsAllowed: boolean;
     reviewedProductUuids: Set<string>;
     isReviewAvailabilityLoading: boolean;
+    purchasedGiftVouchers: TypeOrderDetailFragment['purchasedGiftVouchers'];
     isDiscount?: boolean;
     isOrderFromRegisteredCustomer: boolean;
 };
@@ -38,6 +42,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     productReviewsAllowed,
     reviewedProductUuids,
     isReviewAvailabilityLoading,
+    purchasedGiftVouchers,
     isDiscount,
     isOrderFromRegisteredCustomer,
 }) => {
@@ -52,7 +57,8 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
         isUserLoggedIn &&
         isOrderFromRegisteredCustomer &&
         orderItem.order.withdrawalRequest === null &&
-        orderItem.type === TypeOrderItemTypeEnum.Product;
+        orderItem.type === TypeOrderItemTypeEnum.Product &&
+        orderItem.product?.productType !== TypeProductTypeEnum.ElectronicGiftVoucher;
     const canShowProductReviewAction =
         !isReviewAvailabilityLoading &&
         settingsData?.settings?.productReviewsEnabled === true &&
@@ -74,6 +80,12 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
 
         return `${orderItem.product?.slug}?${writeReviewQueryParams.toString()}`;
     };
+    const purchasedGiftVouchersForItem =
+        isUserLoggedIn && isOrderFromRegisteredCustomer && orderItem.type === TypeOrderItemTypeEnum.Product
+            ? purchasedGiftVouchers.filter(
+                  (giftVoucher) => giftVoucher.productCatnum === orderItem.product?.catalogNumber,
+              )
+            : [];
 
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const openCreateComplaintPopup = async (
@@ -107,7 +119,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     return (
         <div
             className={twJoin(
-                'relative flex items-center gap-3 vl:gap-5 font-secondary font-semibold first:border-none',
+                'relative flex flex-col gap-3 font-secondary font-semibold first:border-none',
                 'border-t border-t-border-default py-5 first:pt-0 last:pb-0',
             )}
         >
@@ -115,7 +127,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
 
             <div
                 className={twMergeCustom(
-                    'flex vl:grid w-full vl:grid-cols-[3fr_2fr_1fr_2fr] flex-wrap items-center justify-between gap-3 vl:gap-5 border-b last:border-none',
+                    'flex vl:grid w-full vl:grid-cols-[3fr_2fr_1fr_2fr] flex-wrap items-center justify-between gap-3 vl:gap-5',
                 )}
             >
                 <div className="flex vl:w-auto w-full items-center gap-5">
@@ -200,6 +212,26 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                     <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
                 )}
             </div>
+
+            {purchasedGiftVouchersForItem.length > 0 && (
+                <div className="-ml-4 vl:ml-0 flex w-full flex-wrap items-center gap-2">
+                    {purchasedGiftVouchersForItem.map((giftVoucher, giftVoucherIndex) => (
+                        <Link
+                            key={giftVoucher.pdfUrl}
+                            isButton
+                            isExternal
+                            buttonVariant="tertiary"
+                            href={giftVoucher.pdfUrl}
+                            tid={TIDs.order_detail_download_gift_voucher_button_ + giftVoucherIndex}
+                        >
+                            <DownloadIcon className="size-4" />
+                            {purchasedGiftVouchersForItem.length > 1
+                                ? `${t('Voucher')} ${giftVoucherIndex + 1}`
+                                : t('Download gift voucher')}
+                        </Link>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

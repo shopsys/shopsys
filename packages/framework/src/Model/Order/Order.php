@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
@@ -17,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
@@ -367,11 +369,32 @@ class Order implements DomainSeparatedEntityInterface
     protected $paymentTransactions;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher>
+     */
+    #[ORM\OneToMany(targetEntity: GiftVoucher::class, mappedBy: 'redeemedOnOrder')]
+    #[ORM\OrderBy(['id' => 'ASC'])]
+    protected $redeemedGiftVouchers;
+
+    /**
      * @var string|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
     protected $goPayBankSwift;
+
+    /**
+     * @var bool
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'boolean')]
+    protected $paid;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected $paidAt;
 
     /**
      * @var bool
@@ -458,6 +481,7 @@ class Order implements DomainSeparatedEntityInterface
 
         $this->setCustomerUser($customerUser);
         $this->deleted = false;
+        $this->paid = false;
 
         $this->createdAt = $orderData->createdAt;
         $this->domainId = $orderData->domainId;
@@ -468,6 +492,7 @@ class Order implements DomainSeparatedEntityInterface
         $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
         $this->setTotalPrices(Price::zero(), Price::zero());
         $this->paymentTransactions = new ArrayCollection();
+        $this->redeemedGiftVouchers = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
 
@@ -540,6 +565,11 @@ class Order implements DomainSeparatedEntityInterface
 
     public function isPaid(): bool
     {
+        return $this->paid;
+    }
+
+    public function hasPaidPaymentTransaction(): bool
+    {
         foreach ($this->paymentTransactions as $paymentTransaction) {
             if ($paymentTransaction->isPaid()) {
                 return true;
@@ -547,6 +577,86 @@ class Order implements DomainSeparatedEntityInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getPaidAt()
+    {
+        return $this->paidAt;
+    }
+
+    public function hasElectronicGiftVoucherProductItems(): bool
+    {
+        foreach ($this->getProductItems() as $orderItem) {
+            $product = $orderItem->getProduct();
+
+            if ($product !== null && $product->isElectronicGiftVoucher()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasOnlyElectronicGiftVoucherProductItems(): bool
+    {
+        $productItems = $this->getProductItems();
+
+        if ($productItems === []) {
+            return false;
+        }
+
+        foreach ($productItems as $orderItem) {
+            $product = $orderItem->getProduct();
+
+            if ($product === null || !$product->isElectronicGiftVoucher()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[]
+     */
+    public function getRedeemedGiftVouchers()
+    {
+        return $this->redeemedGiftVouchers->getValues();
+    }
+
+    public function addRedeemedGiftVoucher(GiftVoucher $giftVoucher): void
+    {
+        if (!$this->redeemedGiftVouchers->contains($giftVoucher)) {
+            $this->redeemedGiftVouchers->add($giftVoucher);
+        }
+    }
+
+    public function getRemainingAmountToPay(): Money
+    {
+        $remainingAmountToPay = $this->getTotalPriceWithVat();
+
+        foreach ($this->getRedeemedGiftVouchers() as $giftVoucher) {
+            $remainingAmountToPay = $remainingAmountToPay->subtract($giftVoucher->getValueWithVat());
+        }
+
+        if ($remainingAmountToPay->isNegative()) {
+            return Money::zero();
+        }
+
+        return $remainingAmountToPay;
+    }
+
+    public function markAsPaid(DateTimeImmutable $paidAt): void
+    {
+        if ($this->paid) {
+            return;
+        }
+
+        $this->paid = true;
+        $this->paidAt = $paidAt;
     }
 
     public function hasPaymentInProcess(): bool

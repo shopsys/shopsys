@@ -9,7 +9,6 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Order\Order;
 use App\Model\Payment\Payment;
-use GoPay\Definition\Response\PaymentStatus;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -19,10 +18,9 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder;
+use Tests\FrontendApiBundle\Functional\Order\OrderPaidTestHelper;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ChangePaymentInOrderMutationTest extends GraphQlTestCase
@@ -30,12 +28,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
     /**
      * @inject
      */
-    private PaymentTransactionDataFactory $paymentTransactionDataFactory;
-
-    /**
-     * @inject
-     */
-    private PaymentTransactionFacade $paymentTransactionFacade;
+    private OrderPaidTestHelper $orderPaidTestHelper;
 
     /**
      * @inject
@@ -170,12 +163,8 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 
     public function testChangePaymentInOrderValidationAlreadyPaidGoPayOrder(): void
     {
-        // set transaction as paid
-        $paymentTransaction = $this->paymentTransactionFacade->getById(1);
-        $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
-        $paymentTransactionData->externalPaymentStatus = PaymentStatus::PAID;
-        $this->paymentTransactionFacade->edit(1, $paymentTransactionData);
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $this->orderPaidTestHelper->markOrderAsPaidByPaymentTransactions($order);
         $paymentLater = $this->getReference(PaymentDataFixture::PAYMENT_LATER, Payment::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [

@@ -76,6 +76,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'main_category_id',
             'main_category_path',
             'in_stock',
+            'is_digital',
             'prices',
             'special_prices',
             'parameters',

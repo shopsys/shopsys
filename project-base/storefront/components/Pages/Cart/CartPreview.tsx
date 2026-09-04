@@ -6,7 +6,7 @@ import { TIDs } from 'cypress/tids';
 import { RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCart';
+import { useRemoveCodeFromCart } from 'utils/cart/useRemoveCodeFromCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
@@ -28,9 +28,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
     const { cart, promoCodes, transport, payment, roundingPrice } = useCurrentCart();
     const { goToNextStepFromCartPage } = useCartPageNavigation();
 
-    const { removePromoCodeFromCart, isRemovingPromoCodeFromCart } = useRemovePromoCodeFromCart({
-        success: t('Promo code was removed from the order.'),
-    });
+    const { removeCodeFromCart, isRemovingCodeFromCart } = useRemoveCodeFromCart();
 
     if (!cart?.items.length) {
         return null;
@@ -57,6 +55,8 @@ export const CartPreview: FC<CartPreviewProps> = ({
         ? isPriceVisible(cart.totalItemsPrice.priceWithoutVat) && formatPrice(cart.totalItemsPrice.priceWithoutVat)
         : isPriceVisible(cart.totalPrice.priceWithoutVat) && formatPrice(cart.totalPrice.priceWithoutVat);
 
+    const remainingAmountToPay = isFirstStep ? cart.remainingItemsAmountToPay : cart.remainingAmountToPay;
+
     return (
         <div
             className={twJoin(
@@ -64,7 +64,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
                 !isFirstStep && 'text-sm',
             )}
         >
-            {(isRemovingPromoCodeFromCart || isTransportOrPaymentLoading) && (
+            {(isRemovingCodeFromCart || isTransportOrPaymentLoading) && (
                 <LoaderWithOverlay className="size-5" overlayClassName="rounded-xl" />
             )}
 
@@ -134,7 +134,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             className="flex w-full items-center gap-2"
                             data-tid={TIDs.blocks_promocode_promocodeinfo_code}
                         >
-                            <span>{t('Promo code')}</span>
+                            <span>{t('Discount coupon')}</span>
 
                             <Flag className={hasPromoCodeDiscount ? '' : 'ml-auto'} type="discount">
                                 {promoCodes[0].code}
@@ -149,7 +149,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
                                         ns: 'accessibility',
                                         promoCode: promoCodes[0].code,
                                     })}
-                                    onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
+                                    onClick={() => removeCodeFromCart(promoCodes[0].code)}
                                 >
                                     {t('Remove')}
                                 </button>
@@ -200,6 +200,63 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             {totalPriceWithoutVat} {t('without VAT')}
                         </span>
                     </div>
+                </div>
+            )}
+
+            {cart.giftVouchers.length > 0 && (
+                <div className="flex flex-col gap-4 border-border-less border-t-1 pt-4">
+                    {cart.giftVouchers.map((giftVoucher) => (
+                        <div
+                            key={giftVoucher.code}
+                            className="flex w-full items-center gap-2"
+                            data-tid={TIDs.blocks_promocode_giftvoucherinfo_code}
+                        >
+                            <span>{t('Gift voucher')}</span>
+
+                            <Flag type="discount">{giftVoucher.code}</Flag>
+
+                            {isFirstStep && (
+                                <button
+                                    className="cursor-pointer text-link-default text-xs underline hover:text-link-hovered hover:no-underline"
+                                    data-tid={TIDs.blocks_promocode_giftvoucher_remove_button}
+                                    tabIndex={0}
+                                    aria-label={t('Remove gift voucher {{ giftVoucherCode }}', {
+                                        ns: 'accessibility',
+                                        giftVoucherCode: giftVoucher.code,
+                                    })}
+                                    onClick={() => removeCodeFromCart(giftVoucher.code)}
+                                >
+                                    {t('Remove')}
+                                </button>
+                            )}
+
+                            {isPriceVisible(giftVoucher.valueWithVat) && (
+                                <span className="ml-auto whitespace-nowrap text-price-discounted">
+                                    {`-${formatPrice(giftVoucher.valueWithVat)}`}
+                                </span>
+                            )}
+                        </div>
+                    ))}
+
+                    {isPriceVisible(remainingAmountToPay) && (
+                        <div
+                            className="flex items-baseline justify-between gap-2 border-border-less border-t-[3px] pt-4"
+                            data-tid={TIDs.cart_preview_remaining_amount_to_pay}
+                        >
+                            <span className={twJoin(isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg')}>
+                                {t('Remaining to pay')}
+                            </span>
+
+                            <span
+                                className={twJoin(
+                                    'whitespace-nowrap text-price-default',
+                                    isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg',
+                                )}
+                            >
+                                {formatPrice(remainingAmountToPay, { explicitZero: true })}
+                            </span>
+                        </div>
+                    )}
                 </div>
             )}
 

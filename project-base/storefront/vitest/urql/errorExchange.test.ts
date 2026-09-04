@@ -119,4 +119,46 @@ describe('getErrorExchange', () => {
         expect(removeAccessTokenFromCookiesMock).not.toHaveBeenCalled();
         expect(clearAuthCookiesMock).not.toHaveBeenCalled();
     });
+
+    test('should show the specific application error for a configured mutation', async () => {
+        const domainConfig = {
+            url: 'http://example.com',
+        };
+        const operation = {
+            key: 1,
+            kind: 'mutation',
+            query: parse('mutation ApplyCodeToCartMutation { __typename }'),
+            variables: {},
+            context: {},
+        } as Operation;
+        const error = new CombinedError({
+            response: new Response(null, { status: 200 }),
+            graphQLErrors: [
+                {
+                    message: 'Too many attempts to apply a code. Try again later.',
+                    extensions: { userCode: 'too-many-code-application-attempts' },
+                },
+            ],
+        });
+        const exchange = getErrorExchange(
+            ((value: string) => value) as never,
+            domainConfig as never,
+        )({
+            forward: () =>
+                fromValue({
+                    operation,
+                    error,
+                } as never),
+        } as never);
+
+        showErrorMessageMock.mockClear();
+
+        await toPromise(exchange(fromValue(operation)));
+
+        expect(showErrorMessageMock).toHaveBeenCalledWith(
+            'Too many attempts to apply a code. Try again later.',
+            'cart',
+            { errorType: 'too-many-code-application-attempts' },
+        );
+    });
 });

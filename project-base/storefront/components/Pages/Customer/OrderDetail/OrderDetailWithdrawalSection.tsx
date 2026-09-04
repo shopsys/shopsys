@@ -35,7 +35,15 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
         url,
     );
 
-    if (!canRequestWithdrawal && !hasWithdrawalRequested && !isCancelled && !withdrawalDeadline) {
+    const isWithdrawalBlockedByPurchasedGiftVoucher = order.isWithdrawalBlockedByPurchasedGiftVoucher;
+
+    if (
+        !canRequestWithdrawal &&
+        !hasWithdrawalRequested &&
+        !isCancelled &&
+        !withdrawalDeadline &&
+        !isWithdrawalBlockedByPurchasedGiftVoucher
+    ) {
         return null;
     }
 
@@ -80,6 +88,19 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
 
     if (isCancelled) {
         return null;
+    }
+
+    if (isWithdrawalBlockedByPurchasedGiftVoucher) {
+        return (
+            <div className="flex items-center gap-2 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
+                <InfoIcon className="size-5 text-icon-warning" />
+                <p className="text-sm">
+                    {t(
+                        'Withdrawal is not possible because a gift voucher purchased in this order has already been redeemed.',
+                    )}
+                </p>
+            </div>
+        );
     }
 
     return (

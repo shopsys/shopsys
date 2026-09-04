@@ -1,0 +1,22 @@
+query CartPricesQuery(
+    $cartUuid: Uuid,
+) {
+    cart(
+        cartInput: {
+            cartUuid: $cartUuid
+        }) {
+        uuid
+        totalPrice {
+            priceWithVat
+        }
+        totalItemsPrice {
+            priceWithVat
+        }
+        totalDiscountPrice {
+            priceWithVat
+        }
+        remainingAmountToPay
+        remainingItemsAmountToPay
+        giftVouchersExceedPayableAmount
+    }
+}

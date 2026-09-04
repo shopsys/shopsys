@@ -57,6 +57,9 @@ class OrderResolverMap extends ResolverMap
                 'canRequestWithdrawal' => function (Order $order) {
                     return $this->withdrawalRequestFacade->canRequestWithdrawal($order);
                 },
+                'isWithdrawalBlockedByPurchasedGiftVoucher' => function (Order $order) {
+                    return $this->withdrawalRequestFacade->isWithdrawalBlockedByPurchasedGiftVoucher($order);
+                },
                 'withdrawalDeadline' => function (Order $order) {
                     return $this->withdrawalSettingFacade->getWithdrawalDeadline($order);
                 },

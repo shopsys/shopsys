@@ -44,7 +44,7 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
     const [isActive, setIsActive] = useState(false);
-    const isActiveDelayed = useDebounce(isActive, 200);
+    const isActiveDelayed = useDebounce(isActive, isActive ? 200 : 0);
     const isDesktop = useMediaMin('vl');
 
     const isPriceVisibleOrEmtpyCart = isPriceVisible(cart?.totalItemsPrice.priceWithVat) || !cart?.items.length;
@@ -169,7 +169,13 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                 </CartInHeaderPopover>
             </div>
 
-            {isDesktop && <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />}
+            {isDesktop && (
+                <Overlay
+                    shouldDisablePointerEventsOnExit
+                    isActive={isActiveDelayed}
+                    onClick={() => setIsActive(false)}
+                />
+            )}
         </>
     );
 };

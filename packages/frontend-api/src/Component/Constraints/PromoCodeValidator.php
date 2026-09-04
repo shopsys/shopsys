@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
@@ -14,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NoLongerValidPromoCo
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NotAvailableForCustomerUserPricingGroup;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -25,6 +28,8 @@ class PromoCodeValidator extends ConstraintValidator
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
         protected readonly CartApiFacade $cartApiFacade,
+        protected readonly PromoCodeFacade $promoCodeFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -43,6 +48,19 @@ class PromoCodeValidator extends ConstraintValidator
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
 
+        $promoCode = $this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCodeCode, $this->domain->getId());
+
+        if ($promoCode === null) {
+            $this->addViolationWithCodeToContext($constraint->invalidMessage, PromoCode::INVALID_ERROR);
+
+            return;
+        }
+
+        $this->validatePromoCode($promoCodeCode, $cart, $constraint);
+    }
+
+    protected function validatePromoCode(string $promoCodeCode, Cart $cart, PromoCode $constraint): void
+    {
         try {
             $this->currentPromoCodeFacade->getValidatedPromoCode($promoCodeCode, $cart);
         } catch (InvalidPromoCodeException $ex) {
@@ -63,6 +81,8 @@ class PromoCodeValidator extends ConstraintValidator
 
         if ($cart->isPromoCodeApplied($promoCodeCode)) {
             $this->addViolationWithCodeToContext($constraint->alreadyAppliedPromoCodeMessage, PromoCode::ALREADY_APPLIED_PROMO_CODE_ERROR);
+        } elseif ($cart->getAllAppliedPromoCodes() !== []) {
+            $this->addViolationWithCodeToContext($constraint->onlySinglePromoCodeAllowedMessage, PromoCode::ONLY_SINGLE_PROMO_CODE_ALLOWED_ERROR);
         }
     }
 

@@ -32,6 +32,13 @@
         {% endfor %}
         <g:adult>no</g:adult>
         <g:condition>new</g:condition>
+        {% for shippingCountryCode in item.shippingCountryCodes -%}
+            <g:shipping>
+                <g:country>{{ shippingCountryCode }}</g:country>
+                <g:service>{{ item.shippingServiceName }}</g:service>
+                <g:price>{{ item.shippingPrice is not null ? item.shippingPrice|moneyFormat(2) : 0 }} {{ item.currency.code }}</g:price>
+            </g:shipping>
+        {% endfor -%}
     </item>
 {% endblock %}
 

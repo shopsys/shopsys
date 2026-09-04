@@ -1,0 +1,7 @@
+CartGiftVoucherModificationsResultDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            noLongerApplicableGiftVouchers:
+                type: "[String!]!"

@@ -18,7 +18,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
     use OrderTestTrait;
 
-    private const EXPECTED_ORDER_IDS = [4, 5, 3, 1, 2, 6];
+    private const EXPECTED_ORDER_IDS = [4, 5, 3, 1, 46, 2, 6];
 
     #[DataProvider('getOrdersDataProvider')]
     public function testGetAllCustomerUserOrders(
@@ -70,10 +70,10 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         yield [['first' => 1], 0, 1];
 
         // last 1 order
-        yield [['last' => 1], 5, 1];
+        yield [['last' => 1], 6, 1];
 
         // last 2 orders
-        yield [['last' => 2], 4, 2];
+        yield [['last' => 2], 5, 2];
 
         // filter by order item catnum
         yield [
@@ -86,7 +86,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                     ),
                 ],
             ],
-            4,
+            5,
             1,
         ];
 
@@ -101,7 +101,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                     ),
                 ],
             ],
-            4,
+            5,
             1,
         ];
 
@@ -109,7 +109,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         yield [['filter' => ['createdAfter' => (new DatePoint())->modify('-1 year')->format(DateTimeInterface::ATOM)]], null, null];
 
         // filter by order created before date
-        yield [['filter' => ['createdBefore' => (new DatePoint())->modify('-10 days')->format(DateTimeInterface::ATOM)]], 4, 2];
+        yield [['filter' => ['createdBefore' => (new DatePoint())->modify('-10 days')->format(DateTimeInterface::ATOM)]], 5, 2];
 
         // filter by order number search
         yield [
@@ -121,7 +121,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                     ),
                 ],
             ],
-            4,
+            5,
             1,
         ];
 
@@ -160,7 +160,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                 ],
             ],
             1,
-            5,
+            6,
         ];
     }
 
@@ -197,7 +197,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             [
                 OrderStatusDataFixture::ORDER_STATUS_NEW => 3,
                 OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS => 1,
-                OrderStatusDataFixture::ORDER_STATUS_DONE => 2,
+                OrderStatusDataFixture::ORDER_STATUS_DONE => 3,
                 OrderStatusDataFixture::ORDER_STATUS_CANCELED => 0,
                 OrderStatusDataFixture::ORDER_STATUS_WITHDRAWN => 0,
             ],

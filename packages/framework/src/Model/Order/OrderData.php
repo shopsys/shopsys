@@ -208,6 +208,11 @@ class OrderData
     /**
      * @var bool
      */
+    public $paid;
+
+    /**
+     * @var bool
+     */
     public $heurekaAgreement;
 
     /**
@@ -261,6 +266,11 @@ class OrderData
     public $promoCode;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher[]
+     */
+    public $giftVouchers;
+
+    /**
      * @var string|null
      */
     public $password;
@@ -286,10 +296,13 @@ class OrderData
         $this->heurekaAgreement = false;
         $this->isCompanyCustomer = false;
         $this->freeTransportAndPaymentApplied = false;
+        $this->paid = false;
 
         $this->totalPrice = Price::zero();
         $this->basicTotalItemsPrice = Price::zero();
         $this->totalProductPriceAdjustmentsDiscount = Price::zero();
+
+        $this->giftVouchers = [];
     }
 
     /**
@@ -370,6 +383,19 @@ class OrderData
             OrderItemTypeEnum::TYPE_DISCOUNT,
             OrderItemTypeEnum::TYPE_PROMOTION,
         ]);
+    }
+
+    public function getGiftVoucherProductItemsTotalPrice(): Price
+    {
+        $giftVoucherProductItemsPrice = Price::zero();
+
+        foreach ($this->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $productItemData) {
+            if ($productItemData->product !== null && $productItemData->product->isGiftVoucher()) {
+                $giftVoucherProductItemsPrice = $giftVoucherProductItemsPrice->add($productItemData->getTotalPrice());
+            }
+        }
+
+        return $giftVoucherProductItemsPrice;
     }
 
     /**

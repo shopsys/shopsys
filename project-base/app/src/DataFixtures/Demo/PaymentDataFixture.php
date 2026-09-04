@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentDataFactory;
 use App\Model\Transport\Transport;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Ramsey\Uuid\Uuid;
@@ -24,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
 class PaymentDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -36,15 +39,20 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const string PAYMENT_GOPAY_BANK_ACCOUNT = 'goPay_bank_account_transfer';
     public const string PAYMENT_LATER = 'payment_later';
     public const string PAYMENT_BANK_TRANSFER = 'payment_bank_transfer';
+    public const string PAYMENT_GIFT_VOUCHER = 'payment_gift_voucher';
+    public const string PAYMENT_GIFT_VOUCHER_UUID = '2f9e0a48-3f7c-4b0e-9a5d-6c1e8b24d7a3';
 
     /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly PaymentDataFactory $paymentDataFactory,
         private readonly PriceConverter $priceConverter,
         private readonly CurrencyFacade $currencyFacade,
+        private readonly TransportFacade $transportFacade,
+        private readonly EntityManagerInterface $em,
     ) {
     }
 
@@ -157,6 +165,44 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
         $this->createPayment(self::PAYMENT_LATER, $paymentData, [TransportDataFixture::TRANSPORT_DRONE]);
+
+        $this->addReferenceToGiftVoucherPaymentCreatedByMigration();
+    }
+
+    private function addReferenceToGiftVoucherPaymentCreatedByMigration(): void
+    {
+        $giftVoucherPayment = $this->paymentFacade->getGiftVoucherPayment();
+
+        $this->setDeterministicUuidToGiftVoucherPayment($giftVoucherPayment);
+        $this->linkGiftVoucherPaymentToAllTransports($giftVoucherPayment);
+        $this->moveGiftVoucherPaymentBehindPaymentsCreatedByThisFixture($giftVoucherPayment);
+
+        $this->addReference(self::PAYMENT_GIFT_VOUCHER, $giftVoucherPayment);
+    }
+
+    private function setDeterministicUuidToGiftVoucherPayment(Payment $giftVoucherPayment): void
+    {
+        $this->em->getConnection()->executeStatement(
+            'UPDATE payments SET uuid = :uuid WHERE id = :id',
+            [
+                'uuid' => self::PAYMENT_GIFT_VOUCHER_UUID,
+                'id' => $giftVoucherPayment->getId(),
+            ],
+        );
+
+        $this->em->refresh($giftVoucherPayment);
+    }
+
+    private function linkGiftVoucherPaymentToAllTransports(Payment $giftVoucherPayment): void
+    {
+        $giftVoucherPayment->setTransports($this->transportFacade->getAll());
+        $this->em->flush();
+    }
+
+    private function moveGiftVoucherPaymentBehindPaymentsCreatedByThisFixture(Payment $giftVoucherPayment): void
+    {
+        $giftVoucherPayment->setPosition(Payment::GEDMO_SORTABLE_LAST_POSITION);
+        $this->em->flush();
     }
 
     /**
@@ -283,6 +329,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createPayment(self::PAYMENT_GOPAY_CARD, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_PPL,
+            TransportDataFixture::TRANSPORT_EMAIL,
         ]);
     }
 }

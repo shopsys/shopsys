@@ -55,6 +55,7 @@ fragment ProductDetailInterfaceFragment on Product {
     }
     isMainVariant
     isInquiryType
+    productType
     productVideos {
         ...VideoTokenFragment
     }

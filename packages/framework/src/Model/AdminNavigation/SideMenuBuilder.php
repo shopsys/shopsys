@@ -41,6 +41,9 @@ class SideMenuBuilder
     public const string NEW_PROMO_CODE = 'promo_codes_new';
     public const string EDIT_PROMO_CODE = 'promo_codes_edit';
     public const string GENERATE_PROMO_CODE_BATCH = 'promo_codes_newmassgenerate';
+    public const string LIST_GIFT_VOUCHER = 'gift_vouchers';
+    public const string NEW_GIFT_VOUCHER = 'gift_vouchers_new';
+    public const string EDIT_GIFT_VOUCHER = 'gift_vouchers_edit';
     public const string LIST_CUSTOMER_USER_ROLE_GROUP = 'customer_user_role_group';
     public const string NEW_CUSTOMER_USER_ROLE_GROUP = 'admin_superadmin_customer_user_role_group_new';
     public const string EDIT_CUSTOMER_USER_ROLE_GROUP = 'admin_superadmin_customer_user_role_group_edit';
@@ -410,6 +413,21 @@ class SideMenuBuilder
             'route' => 'admin_promocode_newmassgenerate',
             'label' => t('Bulk creation of promo codes'),
             'display' => false,
+        ]);
+
+        $giftVoucherMenu = $menu->addChild(static::LIST_GIFT_VOUCHER, [
+            'route' => 'admin_giftvoucher_list',
+            'label' => t('Gift vouchers'),
+        ]);
+        $giftVoucherMenu->addChild(static::NEW_GIFT_VOUCHER, [
+            'route' => 'admin_giftvoucher_new',
+            'display' => false,
+            'label' => t('New gift voucher'),
+        ]);
+        $giftVoucherMenu->addChild(static::EDIT_GIFT_VOUCHER, [
+            'route' => 'admin_giftvoucher_edit',
+            'display' => false,
+            'label' => t('Editing gift voucher'),
         ]);
 
         $roleGroupMenu = $menu->addChild(static::LIST_CUSTOMER_USER_ROLE_GROUP, [

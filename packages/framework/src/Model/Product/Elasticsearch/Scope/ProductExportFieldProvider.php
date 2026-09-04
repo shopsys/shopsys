@@ -23,6 +23,7 @@ class ProductExportFieldProvider
     public const string CATEGORIES = 'categories';
     public const string MAIN_CATEGORY_ID = 'main_category_id';
     public const string IN_STOCK = 'in_stock';
+    public const string IS_DIGITAL = 'is_digital';
     public const string PRICES = 'prices';
     public const string SPECIAL_PRICES = 'special_prices';
     public const string PARAMETERS = 'parameters';

@@ -83,6 +83,7 @@ describe('OrderDetailOrderItem', () => {
                 orderUrlHash="order-url-hash"
                 orderUuid="order-uuid"
                 productReviewsAllowed
+                purchasedGiftVouchers={[]}
                 isReviewAvailabilityLoading={false}
                 reviewedProductUuids={new Set([productUuid])}
             />,
@@ -103,6 +104,7 @@ describe('OrderDetailOrderItem', () => {
                 orderUrlHash="order-url-hash"
                 orderUuid="order-uuid"
                 productReviewsAllowed
+                purchasedGiftVouchers={[]}
                 reviewedProductUuids={new Set()}
             />,
         );

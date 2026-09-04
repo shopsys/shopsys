@@ -4,83 +4,115 @@
 {% form_theme form '@ShopsysAdministration/form/vertical.html.twig' %}
 
 <div {{ attributes }}>
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ 'Payment transactions'|trans }}</h3>
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-vcenter table-nowrap table-hover card-table">
-                    <thead>
-                        <tr>
-                            <th>{{ 'Payment method'|trans }}</th>
-                            <th class="text-wrap">{{ 'External transaction ID'|trans }}</th>
-                            <th>{{ 'Status'|trans }}</th>
-                            <th class="text-wrap text-end w-1">{{ 'Paid amount'|trans }}</th>
-                            <th class="text-wrap text-end w-1">{{ 'Refunded amount'|trans }}</th>
-                            <th class="text-wrap text-end w-1">{{ 'Refundable amount'|trans }}</th>
-
-                            {% if canEdit %}
-                                <th class="text-end w-1">{{ 'Actions'|trans }}</th>
-                            {% endif %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for paymentTransaction in order.paymentTransactions %}
+    {% if order.paymentTransactions is not empty %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'Payment transactions'|trans }}</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-vcenter table-nowrap table-hover card-table">
+                        <thead>
                             <tr>
-                                <td>
-                                    <div class="fw-medium">{{ paymentTransaction.payment ? paymentTransaction.payment.name : '-' }}</div>
-                                </td>
-                                <td>
-                                    {{ paymentTransaction.externalPaymentIdentifier ?: '-' }}
-                                </td>
-                                <td>
-                                    {% if paymentTransaction.externalPaymentStatus %}
-                                        <span class="badge {{ paymentTransaction.externalPaymentStatus|gopay_payment_status_badge_class }}">
-                                            {{ paymentTransaction.externalPaymentStatus|translate_payment_transaction_status }}
-                                        </span>
-                                    {% else %}
-                                        -
-                                    {% endif %}
-                                    {% if paymentTransaction.externalPaymentSubStatus %}
-                                        <div class="text-secondary small mt-1">
-                                            {{ paymentTransaction.externalPaymentSubStatus|translate_payment_transaction_sub_status }}
-                                        </div>
-                                    {% endif %}
-                                </td>
-                                <td class="text-end">
-                                    {{ paymentTransaction.paidAmount|priceWithCurrencyByOrder(order) }}
-                                </td>
-                                <td class="text-end">
-                                    {{ paymentTransaction.refundedAmount|priceWithCurrencyByOrder(order) }}
-                                </td>
-                                <td class="text-end">
-                                    {{ paymentTransaction.refundableAmount|priceWithCurrencyByOrder(order) }}
-                                </td>
+                                <th>{{ 'Payment method'|trans }}</th>
+                                <th class="text-wrap">{{ 'External transaction ID'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th class="text-wrap text-end w-1">{{ 'Paid amount'|trans }}</th>
+                                <th class="text-wrap text-end w-1">{{ 'Refunded amount'|trans }}</th>
+                                <th class="text-wrap text-end w-1">{{ 'Refundable amount'|trans }}</th>
 
                                 {% if canEdit %}
-                                    <td class="text-end">
-                                        {% if paymentTransaction.isRefundable %}
-                                            {{ component('Admin:LiveActionButton', {
-                                                action: 'openRefundModal',
-                                                label: 'Manage refund'|trans,
-                                                icon: 'refund',
-                                                buttonClass: 'btn btn-outline-primary btn-sm',
-                                                preventDefault: false,
-                                                liveParams: {
-                                                    'payment-transaction-id': paymentTransaction.id,
-                                                },
-                                            }) }}
-                                        {% endif %}
-                                    </td>
+                                    <th class="text-end w-1">{{ 'Actions'|trans }}</th>
                                 {% endif %}
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for paymentTransaction in order.paymentTransactions %}
+                                <tr>
+                                    <td>
+                                        <div class="fw-medium">{{ paymentTransaction.payment ? paymentTransaction.payment.name : '-' }}</div>
+                                    </td>
+                                    <td>
+                                        {{ paymentTransaction.externalPaymentIdentifier ?: '-' }}
+                                    </td>
+                                    <td>
+                                        {% if paymentTransaction.externalPaymentStatus %}
+                                            <span class="badge {{ paymentTransaction.externalPaymentStatus|gopay_payment_status_badge_class }}">
+                                                {{ paymentTransaction.externalPaymentStatus|translate_payment_transaction_status }}
+                                            </span>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                        {% if paymentTransaction.externalPaymentSubStatus %}
+                                            <div class="text-secondary small mt-1">
+                                                {{ paymentTransaction.externalPaymentSubStatus|translate_payment_transaction_sub_status }}
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-end">
+                                        {{ paymentTransaction.paidAmount|priceWithCurrencyByOrder(order) }}
+                                    </td>
+                                    <td class="text-end">
+                                        {{ paymentTransaction.refundedAmount|priceWithCurrencyByOrder(order) }}
+                                    </td>
+                                    <td class="text-end">
+                                        {{ paymentTransaction.refundableAmount|priceWithCurrencyByOrder(order) }}
+                                    </td>
+
+                                    {% if canEdit %}
+                                        <td class="text-end">
+                                            {% if paymentTransaction.isRefundable %}
+                                                {{ component('Admin:LiveActionButton', {
+                                                    action: 'openRefundModal',
+                                                    label: 'Manage refund'|trans,
+                                                    icon: 'refund',
+                                                    buttonClass: 'btn btn-outline-primary btn-sm',
+                                                    preventDefault: false,
+                                                    liveParams: {
+                                                        'payment-transaction-id': paymentTransaction.id,
+                                                    },
+                                                }) }}
+                                            {% endif %}
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
+
+    {% if order.redeemedGiftVouchers is not empty %}
+        <div class="card mt-3">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'Redeemed gift vouchers'|trans }}</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-vcenter table-nowrap card-table">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Code'|trans }}</th>
+                                <th class="text-wrap text-end w-1">{{ 'Value'|trans }}</th>
+                                <th>{{ 'Redeemed at'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for giftVoucher in order.redeemedGiftVouchers %}
+                                <tr>
+                                    <td><span class="fw-medium">{{ giftVoucher.code }}</span></td>
+                                    <td class="text-end">{{ giftVoucher.valueWithVat|priceWithCurrencyByOrder(order) }}</td>
+                                    <td>{{ giftVoucher.redeemedAt ? giftVoucher.redeemedAt|formatDateTime : '-' }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     {% if canEdit %}
         <div class="modal modal-blur fade"

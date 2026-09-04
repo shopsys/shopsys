@@ -59,7 +59,6 @@ class TransferIssueController extends AdminBaseController
 
         $grid = $this->gridFactory->create('transferIssueList', $dataSource, AdminRoleConstant::ROLE_TRANSFER);
         $grid->enablePaging();
-        $grid->setDefaultOrder('createdAt DESC, id');
 
         $grid->addColumn('transfer', 't.name', t('Transfer'));
         $grid->addColumn('message', 'ti.message', t('Message text'));

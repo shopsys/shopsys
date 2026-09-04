@@ -1,0 +1,18 @@
+query GiftVoucherCartModifications(
+    $cartUuid: Uuid,
+) {
+    cart(
+        cartInput: {
+            cartUuid: $cartUuid
+        }) {
+        uuid
+        giftVouchers {
+            code
+        }
+        modifications {
+            giftVoucherModifications {
+                noLongerApplicableGiftVouchers
+            }
+        }
+    }
+}

@@ -46,11 +46,60 @@
                 {{ order.status.name }}
             </span>
         {% endif %}
+
+        {% if order.isPaid %}
+            <span class="status status-green">
+                <span class="status-dot"></span>
+                {{ 'Paid'|trans }}
+            </span>
+        {% elseif canEdit %}
+            {% set markAsPaidConfirmMessage = 'Do you really want to mark the order as paid? This cannot be undone.'|trans %}
+            {% if order.hasElectronicGiftVoucherProductItems %}
+                {% set markAsPaidConfirmMessage = markAsPaidConfirmMessage ~ '<p class="mt-3 mb-0"><strong>' ~ 'Purchased gift vouchers will be generated and sent.'|trans ~ '</strong></p>' %}
+            {% endif %}
+            <div class="dropdown d-inline-block">
+                <a href="#" class="status status-yellow" data-bs-toggle="dropdown" role="button">
+                    <span class="status-dot"></span>
+                    {{ 'Unpaid'|trans }}
+                    {{ ux_icon('chevron-down', { class: 'icon icon-sm' }) }}
+                </a>
+                <div class="dropdown-menu">
+                    <span class="dropdown-item active">
+                        <span class="status status-yellow">
+                            <span class="status-dot"></span>
+                        </span>
+                        {{ 'Unpaid'|trans }}
+                    </span>
+                    <a href="{{ protectedUrl('admin_order_edit_markaspaid', {id: order.id,}) }}"
+                       class="dropdown-item"
+                       data-confirm-window
+                       data-confirm-message="{{ markAsPaidConfirmMessage }}"
+                       data-confirm-style="warning"
+                    >
+                        <span class="status status-green">
+                            <span class="status-dot"></span>
+                        </span>
+                        {{ 'Paid'|trans }}
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <span class="status status-yellow">
+                <span class="status-dot"></span>
+                {{ 'Unpaid'|trans }}
+            </span>
+        {% endif %}
     </div>
 
     <div class="text-secondary">
         {{ 'Created'|trans }}: {{ order.createdAt|formatDateTime }}
     </div>
+
+    {% if order.paidAt %}
+        <div class="text-secondary">
+            {{ 'Paid'|trans }}: {{ order.paidAt|formatDateTime }}
+        </div>
+    {% endif %}
 
     {% if order.promoCode %}
         <div class="text-secondary">{{ 'Promo code'|trans }}: {{ order.promoCode }}</div>
