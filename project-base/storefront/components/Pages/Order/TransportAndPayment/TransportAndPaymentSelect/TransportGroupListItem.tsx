@@ -118,7 +118,7 @@ export const TransportGroupListItem: FC<TransportGroupListItemProps> = ({
                 <span className="flex min-w-0 items-center gap-4">
                     <span
                         className={twJoin(
-                            'flex size-5 min-w-5 items-center justify-center text-icon-accent transition',
+                            'flex size-5 min-w-5 items-center justify-center text-icon-accent transition motion-reduce:transition-none',
                             isSelected && 'rotate-180',
                         )}
                         aria-hidden="true"
