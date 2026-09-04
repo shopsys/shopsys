@@ -389,6 +389,11 @@ services:
 
     Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector: ~
 
+    Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\SegmentedHandlersLocator:
+        arguments:
+            $handlersLocator: '@Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\SegmentedHandlersLocator.inner'
+        decorates: 'messenger.bus.default.messenger.handlers_locator'
+
     Shopsys\FrameworkBundle\Component\Messenger\MessageBusDecorator:
         arguments:
             $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
