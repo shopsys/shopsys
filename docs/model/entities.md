@@ -8,6 +8,7 @@ This article describes how we work with entities and our specialities.
 1. For language-specific data we use [translation entities](#translation-entity).
 1. Data that we need for entity construction are encapsulated in [entity data](#entity-data).
 1. Entity data are created by [entity data factories](#entity-data-factory).
+1. Values that must always be sanitized, validated or defaulted are handled by [property hooks](#property-hooks).
 
 ## Entity factory
 
@@ -487,3 +488,52 @@ $brand = $this->brandFactory->create($brandData);
 
     To speedup your implemetation, you can use our custom Symfony makers that can generate new entities and related classes.
     Check [Generating code with Symfony makers](../introduction/generating-code-with-symfony-makers.md) for more information.
+
+## Property hooks
+
+When a value must be normalized on every write (a translated name is trimmed, an e-mail is lowercased, a uuid is generated when missing), the logic lives in a `set` [property hook](https://www.php.net/manual/en/language.oop5.property-hooks.php), not in the setter.
+A setter can be bypassed by a constructor, an `edit()` method or a subclass; a hook runs for every assignment.
+The public setter stays as a plain assignment.
+
+```php
+// FrameworkBundle/Model/Product/ProductTranslation.php
+
+/**
+ * @var string|null
+ */
+#[ORM\Column(type: 'string', length: 255, nullable: true)]
+protected $name {
+    set {
+        $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+    }
+}
+```
+
+Use a hook for sanitization, validation of a single property, or a fallback for a missing value.
+Do not use it when the write touches other properties, when the property is a collection or an array, or when the logic needs a service.
+
+Keep in mind:
+
+- the hook must assign the property, otherwise Doctrine refuses to map it
+- only static helpers and `$this->` methods are available, services cannot be injected into entities
+- Doctrine never runs hooks, so existing rows are not rewritten when a hook is added
+
+### Changing a framework hook in your project
+
+Hooks are inherited.
+A redeclared property without a hook keeps the framework behavior.
+Declare your own `set` hook to replace it, or call the parent hook from yours to extend it:
+
+```php
+class UploadedFile extends BaseUploadedFile
+{
+    /**
+     * @var string
+     */
+    protected $name {
+        set {
+            parent::$name::set(Strings::lower($value));
+        }
+    }
+}
+```

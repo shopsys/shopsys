@@ -32,7 +32,11 @@ class ProductList
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
@@ -73,7 +77,7 @@ class ProductList
     public function __construct(ProductListData $productListData)
     {
         $this->customerUser = $productListData->customerUser;
-        $this->uuid = $productListData->uuid ?? Uuid::uuid4()->toString();
+        $this->uuid = $productListData->uuid;
         $this->type = $productListData->type;
         $this->items = new ArrayCollection();
         $this->createdAt = new DatePoint();

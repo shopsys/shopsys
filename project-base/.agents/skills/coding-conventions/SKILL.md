@@ -107,6 +107,10 @@ public function transform(mixed $value): array { /* ... */ }
 - In functional and GraphQL test cases, inject services with the `@inject` annotation — **not** `$this->getContainer()->get(...)`.
 - See `.agents/skills/test-writing/SKILL.md` for the full testing guide.
 
+## Entity property hooks
+
+Sanitization, single-property validation and null fallbacks of an entity property live in a `set` property hook, never only in a setter (a constructor, `edit()` or a subclass can bypass a setter). Rules and examples: `docs/model/entities.md#property-hooks`.
+
 ## Visibility & typing
 
 Your project code is a final version used as-is, with no downstream extension surface to preserve:

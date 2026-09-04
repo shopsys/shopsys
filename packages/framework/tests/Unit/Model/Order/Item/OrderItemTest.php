@@ -158,6 +158,32 @@ class OrderItemTest extends TestCase
         $this->createOrderProduct($mainVariant);
     }
 
+    public function testVatPercentIsNormalizedToSixDecimalPlacesOnConstruct(): void
+    {
+        $orderItem = $this->createOrderProduct();
+
+        $this->assertSame('0.200000', $orderItem->getVatPercent());
+    }
+
+    public function testProductGiftItemAcceptsProduct(): void
+    {
+        $orderItem = new OrderItem(
+            $this->createOrderStub(),
+            '',
+            new Price(Money::create(10), Money::create(12)),
+            '0.2',
+            1,
+            OrderItemTypeEnum::TYPE_PRODUCT_GIFT,
+            null,
+            null,
+        );
+        $product = $this->createProductStub();
+
+        $orderItem->setProductGift($product);
+
+        $this->assertSame($product, $orderItem->getProductGift());
+    }
+
     private function createOrderPayment(): OrderItem
     {
         $orderPayment = new OrderItem(

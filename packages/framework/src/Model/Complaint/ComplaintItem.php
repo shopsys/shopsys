@@ -30,7 +30,11 @@ class ComplaintItem
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Complaint\Complaint
@@ -96,7 +100,7 @@ class ComplaintItem
 
     protected function setData(ComplaintItemData $complaintItemData): void
     {
-        $this->uuid = $complaintItemData->uuid ?? Uuid::uuid4()->toString();
+        $this->uuid = $complaintItemData->uuid;
         $this->orderItem = $complaintItemData->orderItem;
         $this->product = $complaintItemData->product;
         $this->productName = $complaintItemData->productName;

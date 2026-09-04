@@ -33,7 +33,11 @@ class BrandTranslation extends AbstractTranslation
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
-    protected $description;
+    protected $description {
+        set {
+            $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @return string|null
@@ -48,6 +52,6 @@ class BrandTranslation extends AbstractTranslation
      */
     public function setDescription($description): void
     {
-        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
+        $this->description = $description;
     }
 }

@@ -97,7 +97,11 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var string
@@ -115,7 +119,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->createDomains($paymentData);
         $this->prices = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
-        $this->uuid = $paymentData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $paymentData->uuid;
         $this->setData($paymentData);
     }
 

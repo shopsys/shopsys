@@ -31,7 +31,11 @@ class SalesRepresentative
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var string
@@ -77,7 +81,7 @@ class SalesRepresentative
 
     public function __construct(SalesRepresentativeData $salesRepresentativeData)
     {
-        $this->uuid = $salesRepresentativeData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $salesRepresentativeData->uuid;
         $this->setData($salesRepresentativeData);
     }
 

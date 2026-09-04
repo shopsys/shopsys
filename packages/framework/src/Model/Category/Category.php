@@ -46,7 +46,11 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation>
@@ -115,7 +119,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
         $this->children = new ArrayCollection();
 
         $this->createDomains($categoryData);
-        $this->uuid = $categoryData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $categoryData->uuid;
         $this->setData($categoryData);
     }
 

@@ -15,7 +15,7 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
 {
     public function testPreRemoveDeleteFile(): void
     {
-        $uploadedFile = new UploadedFile('dummy.txt', 'dummy.txt', 'dummy', ['en' => 'dummy'], 0);
+        $uploadedFile = new UploadedFile('dummy.txt', 'dummy.txt', ['en' => 'dummy'], 0);
 
         $uploadedFileFacadeMock = $this->getMockBuilder(UploadedFileFacade::class)
             ->onlyMethods(['deleteFileFromFilesystem'])

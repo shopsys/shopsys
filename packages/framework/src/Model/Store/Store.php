@@ -40,7 +40,11 @@ class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int
@@ -178,7 +182,7 @@ class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface
     public function __construct(StoreData $storeData)
     {
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
-        $this->uuid = $storeData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $storeData->uuid;
         $this->openingHours = new ArrayCollection();
         $this->domainId = $storeData->domainId;
         $this->setData($storeData);

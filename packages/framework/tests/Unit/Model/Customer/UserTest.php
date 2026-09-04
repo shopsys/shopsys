@@ -26,6 +26,33 @@ class UserTest extends TestCase
         $this->assertSame('companyName', $customerUser->getFullName());
     }
 
+    public function testEmailIsLowercasedWhenSet(): void
+    {
+        $customerUserData = TestCustomerProvider::getTestCustomerUserData();
+        $customerUserData->email = 'No-Reply@Shopsys.COM';
+        $customerUser = new CustomerUser($customerUserData);
+
+        $this->assertSame('no-reply@shopsys.com', $customerUser->getEmail());
+
+        $customerUser->setEmail('Another.User@Example.ORG');
+
+        $this->assertSame('another.user@example.org', $customerUser->getEmail());
+    }
+
+    public function testEmailIsLowercasedWhenUnserialized(): void
+    {
+        $customerUser = TestCustomerProvider::getTestCustomerUser();
+        $customerUser->__unserialize([
+            'id' => 1,
+            'email' => 'Mixed.Case@Example.COM',
+            'password' => 'hash',
+            'timestamp' => 0,
+            'domainId' => 1,
+        ]);
+
+        $this->assertSame('mixed.case@example.com', $customerUser->getEmail());
+    }
+
     public static function isResetPasswordHashValidProvider(): array
     {
         return [

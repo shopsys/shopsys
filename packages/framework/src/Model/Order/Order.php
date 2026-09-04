@@ -63,7 +63,11 @@ class Order implements DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var string
@@ -465,7 +469,7 @@ class Order implements DomainSeparatedEntityInterface
         $this->createdAsAdministrator = $orderData->createdAsAdministrator;
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
         $this->origin = $orderData->origin;
-        $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $orderData->uuid;
         $this->setTotalPrices(Price::zero(), Price::zero());
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;

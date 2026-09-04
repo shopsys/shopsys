@@ -96,7 +96,11 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     public function __construct(BlogCategoryData $blogCategoryData)
     {
@@ -106,7 +110,7 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
         $this->children = new ArrayCollection();
 
         $this->setTranslations($blogCategoryData);
-        $this->uuid = $blogCategoryData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $blogCategoryData->uuid;
     }
 
     public function edit(BlogCategoryData $blogCategoryData): void

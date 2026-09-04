@@ -74,7 +74,11 @@ class BlogArticle extends AbstractTranslatableEntity
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor|null
@@ -94,7 +98,7 @@ class BlogArticle extends AbstractTranslatableEntity
 
         $this->createdAt = $blogArticleData->createdAt;
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
-        $this->uuid = $blogArticleData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $blogArticleData->uuid;
         $this->blogArticleAuthor = $blogArticleData->blogArticleAuthor;
     }
 

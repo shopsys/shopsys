@@ -45,7 +45,11 @@ class FriendlyUrl implements DomainSeparatedEntityInterface
     #[AsMcpColumn]
     #[ORM\Column(type: 'text')]
     #[ORM\Id]
-    protected $slug;
+    protected $slug {
+        set {
+            $this->slug = FriendlyUrlSlugNormalizer::normalize($value);
+        }
+    }
 
     /**
      * @var bool
@@ -90,7 +94,7 @@ class FriendlyUrl implements DomainSeparatedEntityInterface
         $this->routeName = $routeName;
         $this->entityId = $entityId;
         $this->domainId = $domainId;
-        $this->slug = FriendlyUrlSlugNormalizer::normalize($slug);
+        $this->slug = $slug;
         $this->main = false;
     }
 
