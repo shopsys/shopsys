@@ -27,6 +27,9 @@ export const Image: FC<ImageProps> = ({ src, hash, tid, unoptimized, ...props })
     const imageUrl = src ?? null;
     const [error, setError] = useState<SyntheticEvent<HTMLImageElement, Event> | null>(null);
     const shouldLoadFallbackImage = !!error || !imageUrl;
+    // a data URL (e.g. a client-side upload preview) carries the image itself, so there is nothing to resize
+    // and appending the width query would corrupt it
+    const isDataUrl = typeof imageUrl === 'string' && imageUrl.startsWith('data:');
     const onError = (err: SyntheticEvent<HTMLImageElement, Event> | null) => setError(err);
 
     const loader: ImageLoader = ({ src, width }) => {
@@ -52,7 +55,7 @@ export const Image: FC<ImageProps> = ({ src, hash, tid, unoptimized, ...props })
             loader={loader}
             overrideSrc={finalSrc}
             src={finalImageUrl}
-            unoptimized={shouldSkipOptimization}
+            unoptimized={shouldSkipOptimization || isDataUrl}
             onError={onError}
             {...props}
         />

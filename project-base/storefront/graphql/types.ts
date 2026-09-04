@@ -1579,6 +1579,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain */
+  reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
@@ -1624,6 +1626,16 @@ export type TypeMainVariantImagesCountArgs = {
 /** Represents a product */
 export type TypeMainVariantMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Represents a product */
+export type TypeMainVariantReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
 };
 
 export type TypeMutation = {
@@ -2778,6 +2790,8 @@ export type TypeProduct = {
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain */
+  reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
@@ -2820,6 +2834,16 @@ export type TypeProductImagesCountArgs = {
 /** Represents a product */
 export type TypeProductMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Represents a product */
+export type TypeProductReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
 };
 
 /** A connection to a list of items. */
@@ -2982,6 +3006,8 @@ export type TypeProductReview = {
   __typename?: 'ProductReview';
   /** Date and time when the review was created */
   createdAt: Scalars['DateTime']['output'];
+  /** Photos attached to the review, without the photos rejected in moderation; photos of a not yet approved review are served unresized */
+  images: Array<TypeImage>;
   /** The review is linked to an order of the reviewed product */
   isVerifiedPurchase: Scalars['Boolean']['output'];
   /** Currently associated reviewed product, null when the product no longer exists */
@@ -2992,6 +3018,8 @@ export type TypeProductReview = {
   productUuid: Maybe<Scalars['Uuid']['output']>;
   /** Star rating from 1 to 5 */
   rating: Scalars['Int']['output'];
+  /** Number of photos rejected in moderation, meaningful for the customer's own reviews (public listings always return zero) */
+  rejectedImagesCount: Scalars['Int']['output'];
   /** Reason why the customer's own review was not published, null for reviews that were not rejected */
   rejectionReason: Maybe<Scalars['String']['output']>;
   /** Date and time when the response was published */
@@ -3038,6 +3066,8 @@ export type TypeProductReviewInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   /** First name of the reviewer */
   firstName?: InputMaybe<Scalars['String']['input']>;
+  /** Photos of the review (JPG or PNG, up to 5 files of 10 MB each) */
+  images: Array<Scalars['FileUpload']['input']>;
   /** The review will be published without the reviewer name */
   isAnonymous: Scalars['Boolean']['input'];
   /** Last name of the reviewer */
@@ -3239,8 +3269,6 @@ export type TypeQuery = {
   /** Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list. */
   productList: Maybe<TypeProductList>;
   productListsByType: Array<TypeProductList>;
-  /** Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords */
-  productReviews: TypeProductReviewConnection;
   /** Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords */
   products: TypeProductConnection;
   /** Returns list of products by catalog numbers */
@@ -3474,16 +3502,6 @@ export type TypeQueryProductListArgs = {
 
 export type TypeQueryProductListsByTypeArgs = {
   productListType: TypeProductListTypeEnum;
-};
-
-
-export type TypeQueryProductReviewsArgs = {
-  after: InputMaybe<Scalars['String']['input']>;
-  before: InputMaybe<Scalars['String']['input']>;
-  first: InputMaybe<Scalars['Int']['input']>;
-  last: InputMaybe<Scalars['Int']['input']>;
-  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
-  productUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -3744,6 +3762,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain */
+  reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
@@ -3786,6 +3806,16 @@ export type TypeRegularProductImagesCountArgs = {
 /** Represents a product */
 export type TypeRegularProductMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Represents a product */
+export type TypeRegularProductReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
 };
 
 export type TypeRemoveCustomerUserDataInput = {
@@ -4288,6 +4318,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
+  /** Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain */
+  reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
   /** Seo first level heading of product */
@@ -4330,6 +4362,16 @@ export type TypeVariantImagesCountArgs = {
 /** Represents a product */
 export type TypeVariantMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Represents a product */
+export type TypeVariantReviewsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  orderingMode?: InputMaybe<TypeProductReviewOrderingModeEnum>;
 };
 
 export type TypeVideoToken = {

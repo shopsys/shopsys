@@ -7,7 +7,6 @@ namespace Tests\FrontendApiBundle\Functional\ProductReview;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\ProductReviewDataFixture;
 use App\Model\Product\Product;
-use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -19,11 +18,11 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $productReview = $this->getReferenceForDomain(ProductReviewDataFixture::PRODUCT_REVIEW_APPROVED_TV_SHARP_PICTURE, 1, ProductReview::class);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductReviewsQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDetailReviewsQuery.graphql', [
             'productUuid' => $product->getUuid(),
         ]);
 
-        $data = $this->getResponseDataForGraphQlType($response, 'productReviews');
+        $data = $this->getResponseDataForGraphQlType($response, 'product')['reviews'];
         $this->assertSame(9, $data['totalCount']);
         $this->assertSame('NEWEST', $data['orderingMode']);
         $this->assertSame([
@@ -46,6 +45,7 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
             ),
             'responseCreatedAt' => '2026-06-02T09:00:00+00:00',
             'status' => 'APPROVED',
+            'rejectedImagesCount' => 0,
             'productUuid' => $product->getUuid(),
             'productName' => $product->getName($this->getFirstDomainLocale()),
         ], $data['edges'][0]['node']);
@@ -55,11 +55,11 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductReviewsQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDetailReviewsQuery.graphql', [
             'productUuid' => $product->getUuid(),
         ]);
 
-        $data = $this->getResponseDataForGraphQlType($response, 'productReviews');
+        $data = $this->getResponseDataForGraphQlType($response, 'product')['reviews'];
         $this->assertSame([
             'averageRating' => 3.44,
             'totalCount' => 9,
@@ -78,15 +78,15 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
         $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
         $variant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148', Product::class);
 
-        $responseForMainVariant = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductReviewsQuery.graphql', [
+        $responseForMainVariant = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDetailReviewsQuery.graphql', [
             'productUuid' => $mainVariant->getUuid(),
         ]);
-        $responseForVariant = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductReviewsQuery.graphql', [
+        $responseForVariant = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDetailReviewsQuery.graphql', [
             'productUuid' => $variant->getUuid(),
         ]);
 
-        $dataForMainVariant = $this->getResponseDataForGraphQlType($responseForMainVariant, 'productReviews');
-        $dataForVariant = $this->getResponseDataForGraphQlType($responseForVariant, 'productReviews');
+        $dataForMainVariant = $this->getResponseDataForGraphQlType($responseForMainVariant, 'product')['reviews'];
+        $dataForVariant = $this->getResponseDataForGraphQlType($responseForVariant, 'product')['reviews'];
         $this->assertSame($dataForMainVariant, $dataForVariant);
         $this->assertSame(1, $dataForMainVariant['totalCount']);
 
@@ -101,12 +101,12 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         foreach (self::getExpectedRatingsByOrderingMode() as $orderingMode => $expectedRatings) {
-            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductReviewsQuery.graphql', [
+            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDetailReviewsQuery.graphql', [
                 'productUuid' => $product->getUuid(),
                 'orderingMode' => $orderingMode,
             ]);
 
-            $data = $this->getResponseDataForGraphQlType($response, 'productReviews');
+            $data = $this->getResponseDataForGraphQlType($response, 'product')['reviews'];
             $this->assertSame($orderingMode, $data['orderingMode']);
             $this->assertSame(
                 $expectedRatings,
@@ -120,24 +120,24 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
-        $firstPageResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductReviewsQuery.graphql', [
+        $firstPageResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDetailReviewsQuery.graphql', [
             'productUuid' => $product->getUuid(),
             'first' => 5,
         ]);
 
-        $firstPage = $this->getResponseDataForGraphQlType($firstPageResponse, 'productReviews');
+        $firstPage = $this->getResponseDataForGraphQlType($firstPageResponse, 'product')['reviews'];
         $this->assertSame(9, $firstPage['totalCount']);
         $this->assertCount(5, $firstPage['edges']);
         $this->assertSame(4, $firstPage['edges'][0]['node']['rating']);
         $this->assertTrue($firstPage['pageInfo']['hasNextPage']);
 
-        $secondPageResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductReviewsQuery.graphql', [
+        $secondPageResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDetailReviewsQuery.graphql', [
             'productUuid' => $product->getUuid(),
             'first' => 10,
             'after' => $firstPage['pageInfo']['endCursor'],
         ]);
 
-        $secondPage = $this->getResponseDataForGraphQlType($secondPageResponse, 'productReviews');
+        $secondPage = $this->getResponseDataForGraphQlType($secondPageResponse, 'product')['reviews'];
         $this->assertCount(4, $secondPage['edges']);
         $this->assertSame(3, $secondPage['edges'][0]['node']['rating']);
         $this->assertFalse($secondPage['pageInfo']['hasNextPage']);
@@ -161,25 +161,16 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
         $productWithRejectedReviewOnly = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '9', Product::class);
 
         foreach ([$productWithPendingReviewOnly, $productWithRejectedReviewOnly] as $product) {
-            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductReviewsQuery.graphql', [
+            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDetailReviewsQuery.graphql', [
                 'productUuid' => $product->getUuid(),
             ]);
 
-            $data = $this->getResponseDataForGraphQlType($response, 'productReviews');
+            $data = $this->getResponseDataForGraphQlType($response, 'product')['reviews'];
             $this->assertSame(0, $data['totalCount']);
             $this->assertSame([], $data['edges']);
             $this->assertSame(0, $data['summary']['totalCount']);
             $this->assertNull($data['summary']['averageRating']);
         }
-    }
-
-    public function testUnknownProductReturnsNotFoundError(): void
-    {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductReviewsQuery.graphql', [
-            'productUuid' => Uuid::uuid4()->toString(),
-        ]);
-
-        $this->assertUserError($response, 'product-not-found', 404);
     }
 
     public function testCurrentCustomerUserProductReviewsRequireLogin(): void

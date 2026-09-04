@@ -11,6 +11,10 @@
     cursor: pointer;
 }
 
+.product-review-image-approval-switch:not(:checked):not(:disabled) {
+    background-color: var(--tblr-gray-400);
+}
+
 .form-check-hoverable .form-check {
     border-radius: var(--tblr-border-radius);
 

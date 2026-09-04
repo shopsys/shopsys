@@ -81,10 +81,7 @@ const CATEGORY_PAGE_DEFER_WAVES = [
 const PRODUCT_PAGE_DEFER_WAVES = [
     [150, ['loaders']],
     [300, ['secondary_loaders', 'footer', 'add_to_cart', 'countdown', 'comparison_and_wishlist_button']],
-    [
-        500,
-        ['tertiary_loaders', 'related_products_tab', 'reviews', 'recommended_products', 'accessories', 'last_visited'],
-    ],
+    [500, ['tertiary_loaders', 'related_products_tab', 'recommended_products', 'accessories', 'last_visited']],
     [700, ['autocomplete_search', 'cart_in_header', 'menu_iconic']],
     [850, ['navigation', 'mobile_menu']],
     [1000, ['newsletter', 'user_consent', 'gtm_head_script']],

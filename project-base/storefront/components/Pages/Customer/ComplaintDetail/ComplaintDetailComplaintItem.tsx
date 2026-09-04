@@ -1,8 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { ModalGallery } from 'components/Basic/ModalGallery/ModalGallery';
 import { CustomerRecordRowInfo } from 'components/Pages/Customer/CustomerRecordElements';
 import { TypeComplaintItemFragment } from 'graphql/requests/complaints/fragments/ComplaintItemFragment.generated';
+import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -14,6 +14,11 @@ type ComplaintDetailComplaintItemProps = {
 };
 
 const GALLERY_SHOWN_ITEMS_COUNT = 5;
+const ModalGallery = dynamic(
+    () => import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
+    { ssr: false },
+);
+
 export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps> = ({ complaintItem }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();

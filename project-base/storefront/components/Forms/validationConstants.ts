@@ -12,6 +12,7 @@ export const VALIDATION_CONSTANTS = {
     passwordMinLength: 6,
     fileMaxSize: 10485760,
     maxFilesCount: 10,
+    reviewMaxFilesCount: 5,
     complaintManualDocumentNumberMaxLength: 255,
     manualComplaintItemNameMaxLength: 255,
     manualComplaintItemCatnumMaxLength: 255,

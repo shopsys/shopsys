@@ -1147,6 +1147,9 @@ msgstr "Obrázok"
 msgid "Image will be deleted after saving"
 msgstr "Obrázok bude po uložení zmazaný."
 
+msgid "Images"
+msgstr "Obrázky"
+
 msgid "Import CSV"
 msgstr "Importovať CSV"
 
@@ -2283,6 +2286,9 @@ msgstr "Tieto dni sa používajú na zobrazenie správnych otváracích hodín o
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
 msgstr "Odkaz na resetovanie hesla je neplatný, expirovaný alebo už bol použitý."
+
+msgid "The photo file is missing"
+msgstr "Súbor fotografie chýba"
 
 msgid "The product has no specified name for the locale."
 msgstr "Produkt nemá stanovený názov pre daný jazyk."

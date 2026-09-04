@@ -66,3 +66,15 @@ ProductReviewInputDecorator:
                 type: "String"
                 description: "URL hash of the order proving the purchase of a customer that is not logged in, the review is created unverified without it"
                 defaultValue: null
+            images:
+                type: "[FileUpload!]!"
+                description: "Photos of the review (JPG or PNG, up to 5 files of 10 MB each)"
+                defaultValue: []
+                validation:
+                    -   Count:
+                            max: 5
+                            maxMessage: "You can upload up to {{ limit }} photos"
+                    -   \Shopsys\FrontendApiBundle\Component\Constraints\FileUpload:
+                            mimeTypes: ['image/jpeg', 'image/png']
+                            extensions: ['jpg', 'jpeg', 'png']
+                            maxSize: 10485760

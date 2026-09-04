@@ -9,17 +9,23 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageData;
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageDataFactory;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewData;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewDataFactory;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewFacade;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewFactory;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewStatusEnum;
 use Symfony\Component\Clock\DatePoint;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class ProductReviewDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -52,6 +58,10 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
         private readonly ProductReviewDataFactory $productReviewDataFactory,
         private readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
         private readonly ProductReviewFactory $productReviewFactory,
+        private readonly ProductReviewFacade $productReviewFacade,
+        private readonly ProductReviewImageDataFactory $productReviewImageDataFactory,
+        private readonly CustomerUploadedFileDataFactory $customerUploadedFileDataFactory,
+        private readonly FileUpload $fileUpload,
     ) {
     }
 
@@ -93,6 +103,11 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
         $productReviewData->status = ProductReviewStatusEnum::STATUS_APPROVED;
         $productReviewData->responseText = t('Thank you for your review. We are sorry the product did not fully meet your expectations.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $productReviewData->responseCreatedAt = new DatePoint('2026-05-30 09:00:00');
+        $productReviewData->images = [
+            $this->createProductReviewImageData('420.jpg'),
+            $this->createProductReviewImageData('421.jpg'),
+            $this->createProductReviewImageData('422.jpg'),
+        ];
         $this->createProductReview($manager, self::PRODUCT_REVIEW_APPROVED_WITHOUT_TEXT, $productReviewData);
 
         $productReviewData = $this->createProductReviewDataForProductReference('148', $domainConfig);
@@ -105,6 +120,13 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
         $productReviewData->status = ProductReviewStatusEnum::STATUS_APPROVED;
         $productReviewData->responseText = t('We are sorry the selected variant did not meet your needs. Our customer care team will be happy to help you choose a more suitable product.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $productReviewData->responseCreatedAt = new DatePoint('2026-05-29 09:00:00');
+        $productReviewData->images = [
+            $this->createProductReviewImageData('420.jpg'),
+            $this->createProductReviewImageData('421.jpg'),
+            $this->createProductReviewImageData('422.jpg'),
+            $this->createProductReviewImageData('423.jpg'),
+            $this->createProductReviewImageData('424.jpg'),
+        ];
         $this->createProductReview($manager, self::PRODUCT_REVIEW_APPROVED_ANONYMOUS_VARIANT, $productReviewData);
     }
 
@@ -146,6 +168,9 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
         $productReviewData->ipAddress = '192.0.2.5';
         $productReviewData->createdAt = new DatePoint('2026-05-27 15:00:00');
         $productReviewData->status = ProductReviewStatusEnum::STATUS_APPROVED;
+        $productReviewData->images = [
+            $this->createProductReviewImageData('424.jpg'),
+        ];
         $this->createProductReview($manager, self::PRODUCT_REVIEW_APPROVED_GUEST, $productReviewData);
 
         $productReviewData = $this->createProductReviewDataForProductReference('1', $domainConfig);
@@ -157,6 +182,13 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
         $productReviewData->ipAddress = '192.0.2.6';
         $productReviewData->createdAt = new DatePoint('2026-05-26 09:00:00');
         $productReviewData->status = ProductReviewStatusEnum::STATUS_APPROVED;
+        $productReviewData->images = [
+            $this->createProductReviewImageData('423.jpg'),
+            $this->createProductReviewImageData(
+                '425.jpg',
+                t('The photo does not meet our review guidelines.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ),
+        ];
         $this->createProductReview($manager, self::PRODUCT_REVIEW_APPROVED_SECOND_OF_SAME_PRODUCT, $productReviewData);
     }
 
@@ -183,6 +215,13 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
         $productReviewData->ipAddress = '192.0.2.6';
         $productReviewData->createdAt = new DatePoint('2026-06-05 10:00:00');
         $productReviewData->status = ProductReviewStatusEnum::STATUS_PENDING;
+        $productReviewData->images = [
+            $this->createProductReviewImageData('422.jpg'),
+            $this->createProductReviewImageData(
+                '423.jpg',
+                t('The photo does not meet our review guidelines.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ),
+        ];
         $this->createProductReview($manager, self::PRODUCT_REVIEW_PENDING_CUSTOMER, $productReviewData);
 
         $productReviewData = $this->createProductReviewDataForProductReference('7', $domainConfig);
@@ -229,6 +268,7 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
          *     createdAt: \DateTimeImmutable,
          *     responseText: string|null,
          *     responseCreatedAt: \DateTimeImmutable|null,
+         *     images?: \Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageData[],
          * }> $reviewsData
          */
         $reviewsData = [
@@ -245,6 +285,10 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
                 'createdAt' => new DatePoint('2026-05-31 16:00:00'),
                 'responseText' => t('We are glad the television found the perfect place in your home.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 'responseCreatedAt' => new DatePoint('2026-06-02 09:00:00'),
+                'images' => [
+                    $this->createProductReviewImageData('420.jpg'),
+                    $this->createProductReviewImageData('421.jpg'),
+                ],
             ],
             [
                 'referenceName' => self::PRODUCT_REVIEW_APPROVED_TV_COMPACT_SIZE,
@@ -360,6 +404,7 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
             $productReviewData->responseText = $reviewData['responseText'];
             $productReviewData->responseCreatedAt = $reviewData['responseCreatedAt'];
             $productReviewData->status = ProductReviewStatusEnum::STATUS_APPROVED;
+            $productReviewData->images = $reviewData['images'] ?? [];
             $this->createProductReview($manager, $reviewData['referenceName'], $productReviewData);
         }
     }
@@ -391,6 +436,9 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
         $productReviewData->rejectionReason = t('The review contains promotional content unrelated to the product.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $productReviewData->createdAt = new DatePoint('2026-06-04 11:00:00');
         $productReviewData->status = ProductReviewStatusEnum::STATUS_REJECTED;
+        $productReviewData->images = [
+            $this->createProductReviewImageData('425.jpg'),
+        ];
         $this->createProductReview($manager, self::PRODUCT_REVIEW_REJECTED_GUEST, $productReviewData);
 
         $productReviewData = $this->createProductReviewDataForProductReference('148', $domainConfig);
@@ -449,7 +497,27 @@ final class ProductReviewDataFixture extends AbstractReferenceFixture implements
 
         $manager->persist($productReview);
         $manager->flush();
+
+        $this->productReviewFacade->createImages($productReview, $productReviewData->images);
+
         $this->addReferenceForDomain($referenceName, $productReview, $domainId);
+    }
+
+    private function createProductReviewImageData(
+        string $imageFilename,
+        ?string $rejectionReason = null,
+    ): ProductReviewImageData {
+        $temporaryFilePath = tempnam(sys_get_temp_dir(), 'product_review_demo_data_');
+        copy(__DIR__ . '/../resources/customer_uploaded_files/productReview/' . $imageFilename, $temporaryFilePath);
+        $uploadedFile = new UploadedFile($temporaryFilePath, $imageFilename);
+
+        $productReviewImageData = $this->productReviewImageDataFactory->create();
+        $productReviewImageData->rejectionReason = $rejectionReason;
+        $productReviewImageData->file = $this->customerUploadedFileDataFactory->create();
+        $productReviewImageData->file->uploadedFiles[] = $this->fileUpload->upload($uploadedFile);
+        $productReviewImageData->file->uploadedFilenames[] = $uploadedFile->getClientOriginalName();
+
+        return $productReviewImageData;
     }
 
     private function getCustomerUser(int $domainId): CustomerUser

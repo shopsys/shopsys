@@ -13,6 +13,7 @@ query CurrentCustomerUserProductReviews($productUuid: Uuid, $first: Int, $after:
                 responseCreatedAt
                 status
                 rejectionReason
+                rejectedImagesCount
                 productUuid
                 productName
                 product {

@@ -70,4 +70,7 @@ fragment ProductDetailInterfaceFragment on Product {
     reviewsSummary {
         ...ProductReviewsSummaryFragment
     }
+    reviews(first: 5, orderingMode: NEWEST) {
+        ...ProductReviewConnectionFragment
+    }
 }

@@ -50,6 +50,15 @@ ProductDecorator:
             reviewsSummary:
                 type: "ProductReviewsSummary"
                 description: "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
+            reviews:
+                type: "ProductReviewConnection"
+                argsBuilder: "Relay::Connection"
+                args:
+                    orderingMode:
+                        type: "ProductReviewOrderingModeEnum"
+                        defaultValue: null
+                resolve: '@=query("productReviewsByProductQuery", value, args)'
+                description: "Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain"
             price:
                 type: "ProductPrice!"
                 description: "Product price"

@@ -6,15 +6,15 @@ import {
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const testState = vi.hoisted(() => ({
-    currentCustomerUserProductReviewsQueryMock: vi.fn(),
+    currentCustomerUserReviewedProductUuidsQueryMock: vi.fn(),
 }));
 
 vi.mock('graphql/requests/customer/queries/CurrentCustomerUserQuery.generated', () => ({
     useCurrentCustomerUserQuery: () => [{ data: { currentCustomerUser: {} }, fetching: false }],
 }));
 
-vi.mock('graphql/requests/productReviews/queries/CurrentCustomerUserProductReviewsQuery.generated', () => ({
-    useCurrentCustomerUserProductReviewsQuery: testState.currentCustomerUserProductReviewsQueryMock,
+vi.mock('graphql/requests/productReviews/queries/CurrentCustomerUserReviewedProductUuidsQuery.generated', () => ({
+    useCurrentCustomerUserReviewedProductUuidsQuery: testState.currentCustomerUserReviewedProductUuidsQueryMock,
 }));
 
 vi.mock('graphql/requests/settings/queries/SettingsQuery.generated', () => ({
@@ -24,7 +24,7 @@ vi.mock('graphql/requests/settings/queries/SettingsQuery.generated', () => ({
 describe('useCurrentCustomerUserReviewedProductUuids', () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        testState.currentCustomerUserProductReviewsQueryMock.mockReturnValue([
+        testState.currentCustomerUserReviewedProductUuidsQueryMock.mockReturnValue([
             {
                 data: {
                     currentCustomerUserProductReviews: {
@@ -40,7 +40,7 @@ describe('useCurrentCustomerUserReviewedProductUuids', () => {
         const { result } = renderHook(() => useCurrentCustomerUserReviewedProductUuids());
 
         expect(result.current.reviewedProductUuids).toEqual(new Set(['reviewed-product-uuid']));
-        expect(testState.currentCustomerUserProductReviewsQueryMock).toHaveBeenCalledWith({
+        expect(testState.currentCustomerUserReviewedProductUuidsQueryMock).toHaveBeenCalledWith({
             variables: { first: CURRENT_CUSTOMER_USER_REVIEWS_LIMIT },
             pause: false,
             requestPolicy: 'cache-and-network',

@@ -88,6 +88,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                 <ProductDetailSections
                     description={product.description}
                     files={product.files}
+                    initialProductReviews={product.reviews}
                     parameters={product.parameters}
                     productFullName={product.fullName}
                     productUuid={product.uuid}

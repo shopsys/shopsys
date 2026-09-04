@@ -1,0 +1,10 @@
+query CurrentCustomerUserReviewedProductUuidsQuery($first: Int) {
+    currentCustomerUserProductReviews(first: $first) {
+        edges {
+            node {
+                uuid
+                productUuid
+            }
+        }
+    }
+}

@@ -1,4 +1,5 @@
 import { mergeProductReviewConnections } from 'components/Blocks/ProductReviews/mergeProductReviewConnections';
+import { TypeProductReviewConnectionFragment } from 'graphql/requests/productReviews/fragments/ProductReviewConnectionFragment.generated';
 import { TypeProductReviewFragment } from 'graphql/requests/productReviews/fragments/ProductReviewFragment.generated';
 import {
     ProductReviewsQueryDocument,
@@ -13,7 +14,10 @@ import { mapConnectionEdges } from 'utils/mappers/connection';
 const PRODUCT_REVIEWS_INITIAL_PAGE_SIZE = 5;
 export const PRODUCT_REVIEWS_LOAD_MORE_PAGE_SIZE = 10;
 
-export const useProductReviewsData = (productUuid: string) => {
+export const useProductReviewsData = (
+    productUuid: string,
+    initialProductReviews?: TypeProductReviewConnectionFragment,
+) => {
     const client = useClient();
     const [orderingMode, setOrderingMode] = useState(TypeProductReviewOrderingModeEnum.Newest);
     const [isLoadingMoreReviews, setIsLoadingMoreReviews] = useState(false);
@@ -33,10 +37,11 @@ export const useProductReviewsData = (productUuid: string) => {
     >({
         query: ProductReviewsQueryDocument,
         variables: queryVariables,
+        pause: initialProductReviews !== undefined && orderingMode === TypeProductReviewOrderingModeEnum.Newest,
     });
 
-    const [productReviews, setProductReviews] = useState<TypeProductReviewsQuery['productReviews'] | null>(
-        data?.productReviews ?? null,
+    const [productReviews, setProductReviews] = useState<TypeProductReviewConnectionFragment | null>(
+        initialProductReviews ?? data?.product?.reviews ?? null,
     );
 
     useEffect(() => {
@@ -45,10 +50,12 @@ export const useProductReviewsData = (productUuid: string) => {
     }, [queryKey]);
 
     useEffect(() => {
-        if (data?.productReviews) {
-            setProductReviews(data.productReviews);
+        if (initialProductReviews && orderingMode === TypeProductReviewOrderingModeEnum.Newest) {
+            setProductReviews(initialProductReviews);
+        } else if (data?.product?.reviews) {
+            setProductReviews(data.product.reviews);
         }
-    }, [data]);
+    }, [data, initialProductReviews, orderingMode]);
 
     const reviews = mapConnectionEdges<TypeProductReviewFragment>(productReviews?.edges ?? undefined) ?? [];
     const hasMoreReviews = (productReviews?.totalCount ?? 0) > reviews.length;
@@ -76,7 +83,7 @@ export const useProductReviewsData = (productUuid: string) => {
                 })
                 .toPromise();
 
-            const nextProductReviews = reviewsResponse.data?.productReviews;
+            const nextProductReviews = reviewsResponse.data?.product?.reviews;
 
             if (queryKeyRef.current !== requestedQueryKey || !nextProductReviews) {
                 return;

@@ -259,6 +259,9 @@ msgstr "Telefon nesmí být delší než {{ limit }} znaků"
 msgid "Telephone prefix cannot be longer than {{ limit }} characters"
 msgstr "Telefonní předvolba nesmí být delší než {{ limit }} znaků"
 
+msgid "The file {{ fileName }} has an unsupported extension."
+msgstr "Soubor {{ fileName }} má nepodporovanou příponu."
+
 msgid "The file {{ fileName }} is too big."
 msgstr "Soubor {{ fileName }} je příliš velký."
 
@@ -297,6 +300,9 @@ msgstr "Doprava se zadaným UUID není dostupná"
 
 msgid "Type of file {{ fileName }} is unsupported."
 msgstr "Typ souboru {{ fileName }} není podporován."
+
+msgid "You can upload up to {{ limit }} photos"
+msgstr "Můžete nahrát nejvýše {{ limit }} fotografií"
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"
 msgstr "Musíte být přihlášen, pokud chcete poskytnout UUID dodací adresy jako vstup pro vytvoření objednávky"

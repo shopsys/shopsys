@@ -61,6 +61,7 @@ import { StoreIcon } from 'components/Basic/Icon/StoreIcon';
 import { ThumbUpIcon } from 'components/Basic/Icon/ThumbUpIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { TruckClockIcon } from 'components/Basic/Icon/TruckClockIcon';
+import { UploadIcon } from 'components/Basic/Icon/UploadIcon';
 import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { UspFifthIcon } from 'components/Basic/Icon/UspFifthIcon';
@@ -306,6 +307,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <TruckClockIcon className="size-10" />
                 <span className="text-center text-xs break-all">TruckClockIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <UploadIcon className="size-10" />
+                <span className="text-center text-xs break-all">UploadIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <UserEditIcon className="size-10" />

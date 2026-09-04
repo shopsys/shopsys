@@ -1390,6 +1390,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
+  "Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain"
+  reviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null): ProductReviewConnection
   "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
   reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
@@ -2317,6 +2319,8 @@ interface Product {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
+  "Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain"
+  reviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null): ProductReviewConnection
   "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
   reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
@@ -2483,6 +2487,8 @@ input ProductQuestionInput {
 type ProductReview {
   "Date and time when the review was created"
   createdAt: DateTime!
+  "Photos attached to the review, without the photos rejected in moderation; photos of a not yet approved review are served unresized"
+  images: [Image!]!
   "The review is linked to an order of the reviewed product"
   isVerifiedPurchase: Boolean!
   "Currently associated reviewed product, null when the product no longer exists"
@@ -2493,6 +2499,8 @@ type ProductReview {
   productUuid: Uuid
   "Star rating from 1 to 5"
   rating: Int!
+  "Number of photos rejected in moderation, meaningful for the customer's own reviews (public listings always return zero)"
+  rejectedImagesCount: Int!
   "Reason why the customer's own review was not published, null for reviews that were not rejected"
   rejectionReason: String
   "Date and time when the response was published"
@@ -2537,6 +2545,8 @@ input ProductReviewInput {
   email: String = null
   "First name of the reviewer"
   firstName: String = null
+  "Photos of the review (JPG or PNG, up to 5 files of 10 MB each)"
+  images: [FileUpload!]! = []
   "The review will be published without the reviewer name"
   isAnonymous: Boolean! = false
   "Last name of the reviewer"
@@ -2747,8 +2757,6 @@ type Query {
   "Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."
   productList(input: ProductListInput!): ProductList
   productListsByType(productListType: ProductListTypeEnum!): [ProductList!]!
-  "Returns approved reviews of the product and its visible variants that can be paginated using `first`, `last`, `before` and `after` keywords"
-  productReviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null, productUuid: Uuid!): ProductReviewConnection!
   "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
   products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
   "Returns list of products by catalog numbers"
@@ -2986,6 +2994,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
+  "Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain"
+  reviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null): ProductReviewConnection
   "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
   reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"
@@ -3430,6 +3440,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
+  "Returns approved reviews of the product and its visible variants when reviews are enabled on the current domain"
+  reviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null): ProductReviewConnection
   "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
   reviewsSummary: ProductReviewsSummary
   "Seo first level heading of product"

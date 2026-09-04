@@ -9,8 +9,6 @@ overblog_graphql:
                     class: Shopsys\FrontendApiBundle\Component\Arguments\ProductSearchPaginatorArgumentsBuilder
                 -   alias: "BlogArticlePaginatorArgumentsBuilder"
                     class: Shopsys\FrontendApiBundle\Component\Arguments\BlogArticlePaginatorArgumentsBuilder
-                -   alias: "ProductReviewPaginatorArgumentsBuilder"
-                    class: Shopsys\FrontendApiBundle\Component\Arguments\ProductReviewPaginatorArgumentsBuilder
         cache_dir: '%kernel.project_dir%/var/overblogCompiledClasses'
         mappings:
             types:

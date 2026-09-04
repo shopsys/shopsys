@@ -433,6 +433,14 @@ parameters:
             path: packages/framework/src/Model/Product/TopProduct/TopProduct.php
         -
             identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\ProductReview\\Image\\ProductReviewImage::getProductReview$#'
+            path: packages/framework/src/Model/ProductReview/Image/ProductReviewImage.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\ProductReview\\Image\\ProductReviewImage::getPosition$#'
+            path: packages/framework/src/Model/ProductReview/Image/ProductReviewImage.php
+        -
+            identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\ProductVideo\\ProductVideoTranslations::getProductVideo$#'
             path: packages/framework/src/Model/ProductVideo/ProductVideoTranslations.php
         -

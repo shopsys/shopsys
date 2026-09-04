@@ -12,3 +12,9 @@
     types:
         -   name: default
             multiple: true
+
+-   name: productReviewImage
+    class: Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImage
+    types:
+        -   name: default
+            multiple: false

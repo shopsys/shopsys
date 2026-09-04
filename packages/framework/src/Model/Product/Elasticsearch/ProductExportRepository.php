@@ -32,6 +32,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
 use Shopsys\FrameworkBundle\Model\ProductReview\Elasticsearch\ProductReviewDocumentMapper;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
@@ -204,7 +205,7 @@ class ProductExportRepository
             ProductExportFieldProvider::IS_PROMOTED => $this->isProductPromoted($product, $domainId),
             ProductExportFieldProvider::TOP_PRODUCT_POSITION => $this->getTopProductPosition($product, $domainId),
             ProductExportFieldProvider::REVIEWS => array_map(
-                $this->productReviewDocumentMapper->mapReview(...),
+                fn (ProductReview $productReview) => $this->productReviewDocumentMapper->mapReview($productReview, $domainId),
                 array_slice($this->getProductReviewsForExport($product, $domainId), 0, static::MAX_EXPORTED_REVIEWS),
             ),
             ProductExportFieldProvider::REVIEW_SUMMARY => $this->productReviewDocumentMapper->mapSummary(

@@ -259,6 +259,9 @@ msgstr ""
 msgid "Telephone prefix cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "The file {{ fileName }} has an unsupported extension."
+msgstr ""
+
 msgid "The file {{ fileName }} is too big."
 msgstr ""
 
@@ -296,6 +299,9 @@ msgid "Transport with provided UUID is not available"
 msgstr ""
 
 msgid "Type of file {{ fileName }} is unsupported."
+msgstr ""
+
+msgid "You can upload up to {{ limit }} photos"
 msgstr ""
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"
