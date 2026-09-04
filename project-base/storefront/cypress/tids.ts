@@ -114,6 +114,7 @@ export enum TIDs {
     contact_information_form = 'contact_information_form',
     transport_and_payment_list_item_image = 'transport_and_payment_list_item_image',
     expected_delivery_date_message = 'expected_delivery_date_message',
+    expected_delivery_date_summary = 'expected_delivery_date_summary',
     pages_orderconfirmation = 'pages_orderconfirmation',
     order_confirmation_page_text_wrapper = 'order_confirmation_page_text_wrapper',
     order_summary_cart_item_image = 'order_summary_cart_item_image',

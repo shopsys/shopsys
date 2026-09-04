@@ -12,8 +12,8 @@ import { describe, expect, test, vi } from 'vitest';
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
     default: () => ({
         t: (key: string, options?: Record<string, string | number>) => {
-            if (key === '+{{ count }} working days' && options?.count === 1) {
-                return '+1 working day';
+            if (key === 'Extends delivery by {{ count }} working days' && options?.count === 1) {
+                return 'Extends delivery by 1 working day';
             }
 
             return Object.entries(options ?? {}).reduce(
@@ -73,7 +73,7 @@ const createOrderItemAdditionalService = (
 });
 
 describe('AdditionalServiceSummaryList', () => {
-    test('shows delivery extension only for services that have it', () => {
+    test('shows delivery extension only when explicitly enabled', () => {
         const services = mapCartItemAdditionalServiceSummaryLines(
             [createAdditionalService('with-extension', 1), createAdditionalService('without-extension', null)],
             2,
@@ -81,18 +81,23 @@ describe('AdditionalServiceSummaryList', () => {
             (price) => `€${price}`,
         );
 
-        render(<AdditionalServiceSummaryList services={services} />);
+        const { rerender } = render(<AdditionalServiceSummaryList services={services} />);
 
-        expect(screen.getByText('+1 working day')).toBeInTheDocument();
+        expect(screen.queryByText('Extends delivery by 1 working day')).not.toBeInTheDocument();
+
+        rerender(<AdditionalServiceSummaryList showDeliveryDaysExtension services={services} />);
+
+        expect(screen.getByText('Extends delivery by 1 working day')).toBeInTheDocument();
         expect(screen.getAllByText('€20')[0]).toHaveClass('text-price-default');
         expect(screen.getAllByText('€20')[0]).not.toHaveClass('text-text-default');
+        expect(screen.getAllByText('2 × €10 / pcs')).toHaveLength(2);
         expect(screen.getByText('Service with-extension').parentElement).toContainElement(
-            screen.getByText('+1 working day'),
+            screen.getByText('Extends delivery by 1 working day'),
         );
         expect(screen.getByText('Service without-extension').parentElement).not.toHaveTextContent('working days');
     });
 
-    test('shows delivery extension for services mapped from an order', () => {
+    test('shows unit price and hides delivery extension for services mapped from an order', () => {
         const services = mapOrderItemAdditionalServiceSummaryLines(
             [createOrderItemAdditionalService('with-extension', 1)],
             (price) => `€${price}`,
@@ -100,10 +105,22 @@ describe('AdditionalServiceSummaryList', () => {
 
         render(<AdditionalServiceSummaryList isPriceHighlighted={false} services={services} />);
 
-        expect(screen.getByText('Service with-extension').parentElement).toContainElement(
-            screen.getByText('+1 working day'),
-        );
+        expect(screen.queryByText('Extends delivery by 1 working day')).not.toBeInTheDocument();
+        expect(screen.getByText('2 × €10 / pcs')).toBeInTheDocument();
         expect(screen.getByText('€20')).toHaveClass('text-text-default');
         expect(screen.getByText('€20')).not.toHaveClass('text-price-default');
+    });
+
+    test('keeps the quantity and unit price visible together with item details', () => {
+        const services = mapOrderItemAdditionalServiceSummaryLines(
+            [createOrderItemAdditionalService('with-details', null)],
+            (price) => `€${price}`,
+            { includeItemDetails: true },
+        );
+
+        render(<AdditionalServiceSummaryList services={services} />);
+
+        expect(screen.getByText('2 × €10 / pcs')).toBeInTheDocument();
+        expect(screen.getByText('Code: SERVICE-with-details')).toBeInTheDocument();
     });
 });

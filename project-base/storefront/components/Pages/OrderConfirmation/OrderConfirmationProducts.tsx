@@ -1,3 +1,4 @@
+import { ExpectedDeliveryDateSummary } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateSummary';
 import { OrderItemDiscountCard } from 'components/Blocks/OrderItemDiscountCard/OrderItemDiscountCard';
 import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';
@@ -9,10 +10,11 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapOrderItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
 
 type OrderConfirmationProductsProps = {
+    expectedDeliveryDate: string | null;
     items: TypeOrderDetailItemFragment[] | undefined;
 };
 
-export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ items }) => {
+export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ expectedDeliveryDate, items }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
@@ -23,6 +25,8 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
     return (
         <div className="flex flex-col gap-2">
             <span className="h4">{t('Your order')}</span>
+
+            <ExpectedDeliveryDateSummary expectedDeliveryDate={expectedDeliveryDate} />
 
             <div className="relative">
                 <ul className={twJoin('flex max-h-125 flex-col gap-2 overflow-y-auto', items.length > 3 && 'pb-10')}>

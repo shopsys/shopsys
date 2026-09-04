@@ -19,10 +19,11 @@ export const mapCartItemAdditionalServiceSummaryLines = (
         name: additionalService.name,
         deliveryDaysExtension: additionalService.deliveryDaysExtension,
         imageUrl: additionalService.mainImage?.url ?? null,
-        unitPriceLabel:
-            quantity > 1 && isPriceVisible(additionalService.price.priceWithVat)
-                ? `${formatPrice(additionalService.price.priceWithVat)} / ${unitName}`
-                : undefined,
+        quantity,
+        unitName,
+        unitPriceLabel: isPriceVisible(additionalService.price.priceWithVat)
+            ? formatPrice(additionalService.price.priceWithVat)
+            : undefined,
         priceLabel: isPriceVisible(additionalService.price.priceWithVat)
             ? formatPrice(mapPriceForCalculations(additionalService.price.priceWithVat) * quantity)
             : null,
@@ -45,17 +46,11 @@ export const mapOrderItemAdditionalServiceSummaryLines = (
             code: options.includeItemDetails ? serviceItem.catnum : undefined,
             deliveryDaysExtension: serviceItem.deliveryDaysExtension,
             imageUrl: serviceItem.mainImage?.url ?? null,
-            quantityLabel: options.includeItemDetails
-                ? `${serviceItem.quantity} ${serviceItem.unit ?? ''}`.trim()
+            quantity: serviceItem.quantity,
+            unitName: serviceItem.unit,
+            unitPriceLabel: isPriceVisible(serviceItem.unitPrice.priceWithVat)
+                ? formatPrice(serviceItem.unitPrice.priceWithVat)
                 : undefined,
-            unitPriceLabel:
-                !options.includeItemDetails &&
-                serviceItem.quantity > 1 &&
-                isPriceVisible(serviceItem.unitPrice.priceWithVat)
-                    ? serviceItem.unit
-                        ? `${formatPrice(serviceItem.unitPrice.priceWithVat)} / ${serviceItem.unit}`
-                        : formatPrice(serviceItem.unitPrice.priceWithVat)
-                    : undefined,
             priceLabel: isPriceVisible(serviceItem.totalPrice.priceWithVat)
                 ? formatPrice(serviceItem.totalPrice.priceWithVat)
                 : null,

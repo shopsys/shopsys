@@ -98,7 +98,7 @@ describe('AdditionalServices', () => {
         const checkboxVisual = checkboxLabel?.children[0];
         const serviceName = screen.getByText('Service 1');
         const serviceNameLabel = serviceName.closest('label');
-        const deliveryExtensionLabel = screen.getByText('+1 working days').closest('label');
+        const deliveryExtensionLabel = screen.getByText('Extends delivery by 1 working days').closest('label');
         const serviceContent = serviceName.closest('label')?.parentElement?.parentElement;
         const serviceImage = screen.getByTestId('/service-1.jpg');
         expect(checkbox.closest('li')).not.toHaveClass('py-2');
@@ -133,7 +133,7 @@ describe('AdditionalServices', () => {
 
         onToggleService.mockClear();
         fireEvent.click(serviceImage);
-        fireEvent.click(screen.getByText('+1 working days'));
+        fireEvent.click(screen.getByText('Extends delivery by 1 working days'));
 
         expect(onToggleService).toHaveBeenCalledTimes(2);
         expect(onToggleService).toHaveBeenNthCalledWith(1, additionalService, true);
@@ -282,7 +282,7 @@ describe('AdditionalServices', () => {
         expect(screen.queryByText('€10 / pcs')).not.toBeInTheDocument();
     });
 
-    test('shows the unit and total prices without a redundant quantity for a selected service in the cart list', () => {
+    test('shows the quantity with unit and total prices for a selected service in the cart list', () => {
         const additionalService = createAdditionalService(1);
 
         render(
@@ -312,9 +312,10 @@ describe('AdditionalServices', () => {
             screen.getByText('Service 1'),
         );
         expect(screen.queryByText('+ €10')).not.toBeInTheDocument();
-        const [mobileUnitPrice, desktopUnitPrice] = screen.getAllByText('€10');
+        const mobileQuantityAndUnitPrice = screen.getByText('3 × €10');
+        const desktopUnitPrice = screen.getByText('€10');
         const [mobileUnit] = screen.getAllByText('/ pcs');
-        expect(mobileUnitPrice).toHaveClass('font-semibold', 'text-text-default');
+        expect(mobileQuantityAndUnitPrice).toHaveClass('font-semibold', 'text-text-default');
         expect(mobileUnit).toHaveClass('text-text-less');
         expect(screen.getAllByText('€30')[0]).toHaveClass('text-price-default');
         expect(screen.getAllByText('€30')[0].parentElement).toHaveClass(
@@ -324,9 +325,14 @@ describe('AdditionalServices', () => {
             'vl:hidden',
         );
         expect(checkbox.closest('li')).toHaveClass('vl:contents');
-        expect(mobileUnitPrice.closest('div')).toHaveClass('col-start-3', 'row-start-2', 'vl:contents');
+        expect(mobileQuantityAndUnitPrice.closest('div')).toHaveClass('col-start-3', 'row-start-2', 'vl:contents');
+        expect(screen.getByText('3', { selector: '.vl\\:col-start-2' })).toHaveClass(
+            'vl:block',
+            'hidden',
+            'min-w-35',
+            'text-center',
+        );
         expect(desktopUnitPrice.parentElement).toHaveClass('hidden', 'vl:col-start-3', 'vl:block');
-        expect(screen.queryByText('3')).not.toBeInTheDocument();
         expect(screen.getAllByText('€30')[1]).toHaveClass('text-price-default');
         expect(screen.getAllByText('€30')[1].parentElement).toHaveClass('hidden', 'vl:col-start-4', 'vl:flex');
     });
@@ -376,7 +382,7 @@ describe('AdditionalServices', () => {
         expect(desktopPrice.closest('label')).toBeNull();
     });
 
-    test('shows unit and total prices without multiplication for one selected cart service', () => {
+    test('shows quantity with unit and total prices for one selected cart service', () => {
         const additionalService = createAdditionalService(1);
         const onToggleService = vi.fn();
 
@@ -391,13 +397,13 @@ describe('AdditionalServices', () => {
             />,
         );
 
-        const [mobileUnitPrice] = screen.getAllByText('€10');
-        const mobilePriceRow = mobileUnitPrice.parentElement?.parentElement;
+        const mobileQuantityAndUnitPrice = screen.getByText('1 × €10');
+        const mobilePriceRow = mobileQuantityAndUnitPrice.parentElement?.parentElement;
         expect(mobilePriceRow).toHaveClass('w-full', 'justify-between', 'vl:hidden');
-        expect(mobilePriceRow).toContainElement(screen.getAllByText('€10')[0]);
-        expect(screen.queryByText('1 × €10')).not.toBeInTheDocument();
+        expect(mobilePriceRow).toContainElement(mobileQuantityAndUnitPrice);
+        expect(screen.getByText('1', { selector: '.vl\\:col-start-2' })).toBeInTheDocument();
 
-        fireEvent.click(mobileUnitPrice);
+        fireEvent.click(mobileQuantityAndUnitPrice);
 
         expect(onToggleService).not.toHaveBeenCalled();
     });

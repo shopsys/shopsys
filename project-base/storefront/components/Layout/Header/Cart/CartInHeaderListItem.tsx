@@ -149,6 +149,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                     </div>
 
                     <AdditionalServiceSummaryList
+                        showDeliveryDaysExtension
                         services={mapCartItemAdditionalServiceSummaryLines(
                             cartItem.additionalServices,
                             quantity,

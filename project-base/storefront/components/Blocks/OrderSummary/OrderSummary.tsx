@@ -1,3 +1,4 @@
+import { ExpectedDeliveryDateSummary } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateSummary';
 import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
@@ -10,10 +11,11 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapCartItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
 
 type OrderSummaryProps = {
+    activeStep: number;
     isTransportOrPaymentLoading?: boolean;
 };
 
-export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
+export const OrderSummary: FC<OrderSummaryProps> = ({ activeStep, isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
@@ -29,6 +31,10 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
     return (
         <div className="vl:sticky vl:top-2 vl:col-span-1 flex flex-col gap-2 vl:self-start">
             <span className="h4">{t('Your order')}</span>
+
+            {activeStep >= 3 && (
+                <ExpectedDeliveryDateSummary expectedDeliveryDate={cart.transport?.expectedDeliveryDate} />
+            )}
 
             <div className="relative">
                 <ul

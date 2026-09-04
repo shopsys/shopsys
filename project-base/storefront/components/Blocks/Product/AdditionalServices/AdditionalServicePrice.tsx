@@ -61,13 +61,17 @@ export const AdditionalServiceCartPrice: FC<AdditionalServiceCartPriceProps> = (
         <>
             <span className="flex vl:hidden w-full items-baseline justify-between whitespace-nowrap font-secondary md:w-auto md:flex-col md:items-end">
                 <span className="inline-flex items-baseline gap-1 text-sm">
-                    <span className="font-semibold text-text-default">{formatPrice(priceWithVat)}</span>
+                    <span className="font-semibold text-text-default">
+                        {quantity} × {formatPrice(priceWithVat)}
+                    </span>
                     <span className="text-text-less">/ {unitName}</span>
                 </span>
                 <span className="ml-auto font-semibold text-price-default text-sm md:ml-0">
                     {formatPrice(displayedPrice)}
                 </span>
             </span>
+
+            <span className="vl:col-start-2 vl:block hidden min-w-35 text-center">{quantity}</span>
 
             <span className="vl:col-start-3 vl:block hidden whitespace-nowrap font-secondary">
                 <span className="font-semibold">{formatPrice(priceWithVat)}</span>

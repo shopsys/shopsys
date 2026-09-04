@@ -76,7 +76,7 @@ export const AdditionalServiceLabel: FC<AdditionalServiceLabelProps> = ({
                     )}
                     htmlFor={checkboxId}
                 >
-                    {t('+{{ count }} working days', {
+                    {t('Extends delivery by {{ count }} working days', {
                         count: additionalService.deliveryDaysExtension,
                     })}
                 </label>
