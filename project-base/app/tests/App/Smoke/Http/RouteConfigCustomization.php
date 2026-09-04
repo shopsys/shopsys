@@ -257,6 +257,10 @@ class RouteConfigCustomization
             ->customizeByRouteName('admin_pricinggroup_delete', function (RouteConfig $config): void {
                 $config->skipRoute('Deleting pricing group is not necessary.');
             })
+            ->customizeByRouteName('admin_promocode_downloadmassgeneratebatch', function (RouteConfig $config): void {
+                $config->changeDefaultRequestDataSet('Demo data contain no mass generated promo code batch, so the download returns 404.')
+                    ->setExpectedStatusCode(404);
+            })
             ->customizeByRouteName('admin_product_edit', function (RouteConfig $config): void {
                 $config->addExtraRequestDataSet('Edit product that is a main variant (ID 82).')
                     ->setParameter('id', 82);

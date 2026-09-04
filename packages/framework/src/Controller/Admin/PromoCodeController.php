@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use League\Csv\Writer;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -26,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[ForRole(AdminRoleConstant::ROLE_PROMO_CODE)]
@@ -223,21 +225,24 @@ class PromoCodeController extends AdminBaseController
         ]);
     }
 
-    #[Route(path: '/promo-code/download-mass-generate-batch/{batchId}')]
+    #[Route(path: '/promo-code/download-mass-generate-batch/{batchId}', requirements: ['batchId' => '\d+'])]
     #[CanView]
     public function downloadMassGenerateBatchAction(int $batchId): Response
     {
-        $tempFileName = tempnam(sys_get_temp_dir(), 'promoCodesCsv');
-        file_put_contents($tempFileName, $this->generateCsvFromPromoCodeFromBatchId($batchId));
-
-        $fileName = 'promoCodesBatch-' . $batchId;
-
-        return $this->file($tempFileName, $fileName);
+        return new DownloadFileResponse(
+            'promoCodesBatch-' . $batchId . '.csv',
+            $this->generateCsvFromPromoCodeFromBatchId($batchId),
+            'text/csv',
+        );
     }
 
     protected function generateCsvFromPromoCodeFromBatchId(int $batchId): string
     {
         $promoCodes = $this->promoCodeFacade->findByMassBatchId($batchId);
+
+        if (count($promoCodes) === 0) {
+            throw new NotFoundHttpException(sprintf('Promo code batch with ID "%d" not found.', $batchId));
+        }
 
         $csv = Writer::fromString();
         $csv->setDelimiter(';');

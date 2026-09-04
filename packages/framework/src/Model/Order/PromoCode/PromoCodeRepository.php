@@ -74,9 +74,9 @@ class PromoCodeRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
      */
-    public function findByMassBatchId(int $batchId): ?array
+    public function findByMassBatchId(int $batchId): array
     {
         return $this->getPromoCodeRepository()->findBy(['massGenerateBatchId' => $batchId]);
     }
