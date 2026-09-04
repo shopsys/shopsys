@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -35,13 +34,12 @@ final class SeoPageFormType extends AbstractType
         $seoPage = $options['seoPage'];
 
         $builderMainGroup = $this->createBasicInformationGroup($builder, $seoPage);
-        $builderAttributesGroup = $this->createSeoAttributesGroup($builder);
-        $builderImageGroup = $this->createImageGroup($builder, $seoPage);
+        $builderOpenGraphGroup = $this->createOpenGraphGroup($builder, $seoPage);
 
         $builder
             ->add($builderMainGroup)
-            ->add($builderAttributesGroup)
-            ->add($builderImageGroup)
+            ->add('seoGroup', SeoGroupType::class)
+            ->add($builderOpenGraphGroup)
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_seopage_list',
                 'entity' => $options['seoPage'],
@@ -110,39 +108,13 @@ final class SeoPageFormType extends AbstractType
         return $group;
     }
 
-    private function createSeoAttributesGroup(FormBuilderInterface $builder): FormBuilderInterface
+    private function createOpenGraphGroup(FormBuilderInterface $builder, ?SeoPage $seoPage): FormBuilderInterface
     {
-        $group = $builder->create('attributes', GroupType::class, [
-            'label' => 'SEO',
+        $builderOpenGraphGroup = $builder->create('openGraphGroup', GroupType::class, [
+            'label' => 'Open Graph',
         ]);
 
-        $group
-            ->add('seoTitlesIndexedByDomainId', MultidomainType::class, [
-                'entry_type' => TextType::class,
-                'required' => false,
-                'entry_options' => [
-                    'attr' => ['data-js-recommended-length' => 60],
-                ],
-                'label' => 'Page title',
-            ])
-            ->add('seoMetaDescriptionsIndexedByDomainId', MultidomainType::class, [
-                'entry_type' => TextareaType::class,
-                'required' => false,
-                'entry_options' => [
-                    'attr' => ['data-js-recommended-length' => 155],
-                ],
-                'label' => 'Meta description',
-            ])
-            ->add('canonicalUrlsIndexedByDomainId', MultidomainType::class, [
-                'entry_type' => UrlType::class,
-                'entry_options' => [
-                    'constraints' => [
-                        new Constraints\Url(message: 'Link must be valid URL address'),
-                    ],
-                ],
-                'required' => false,
-                'label' => 'Canonical URL',
-            ])
+        $builderOpenGraphGroup
             ->add('seoOgTitlesIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'required' => false,
@@ -158,18 +130,7 @@ final class SeoPageFormType extends AbstractType
                     'attr' => ['data-js-recommended-length' => 155],
                 ],
                 'label' => 'Open Graph description',
-            ]);
-
-        return $group;
-    }
-
-    private function createImageGroup(FormBuilderInterface $builder, ?SeoPage $seoPage): FormBuilderInterface
-    {
-        $builderImageGroup = $builder->create('image', GroupType::class, [
-            'label' => 'Image',
-        ]);
-
-        $builderImageGroup
+            ])
             ->add('seoOgImage', ImageUploadType::class, [
                 'required' => false,
                 'image_entity_class' => SeoPage::class,
@@ -186,6 +147,6 @@ final class SeoPageFormType extends AbstractType
                 'label' => false,
             ]);
 
-        return $builderImageGroup;
+        return $builderOpenGraphGroup;
     }
 }

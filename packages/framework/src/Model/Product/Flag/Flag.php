@@ -10,6 +10,7 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -76,17 +77,26 @@ class Flag extends AbstractTranslatableEntity
     #[ORM\ManyToOne(targetEntity: ProductPromotionXy::class)]
     protected $promotionXy;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDomain>
+     */
+    #[ORM\OneToMany(targetEntity: FlagDomain::class, mappedBy: 'flag', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
+    protected $domains;
+
     public function __construct(FlagData $flagData)
     {
         $this->uuid = $flagData->uuid ?: Uuid::uuid4()->toString();
 
         $this->translations = new ArrayCollection();
+        $this->domains = new ArrayCollection();
+        $this->createDomains($flagData);
         $this->setData($flagData);
         $this->lockedForDeletion = false;
     }
 
     public function edit(FlagData $flagData): void
     {
+        $this->setDomains($flagData);
         $this->setData($flagData);
     }
 
@@ -167,6 +177,47 @@ class Flag extends AbstractTranslatableEntity
     public function getPromotionXy()
     {
         return $this->promotionXy;
+    }
+
+    protected function setDomains(FlagData $flagData): void
+    {
+        foreach ($this->domains as $flagDomain) {
+            $flagDomain->getSeoAttributes()->edit($flagData->seo[$flagDomain->getDomainId()]);
+        }
+    }
+
+    protected function createDomains(FlagData $flagData): void
+    {
+        $domainIds = array_keys($flagData->seo);
+
+        foreach ($domainIds as $domainId) {
+            $flagDomain = new FlagDomain($this, $domainId);
+            $this->domains->add($flagDomain);
+        }
+
+        $this->setDomains($flagData);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDomain
+     */
+    protected function getFlagDomain(int $domainId)
+    {
+        foreach ($this->domains as $domain) {
+            if ($domain->getDomainId() === $domainId) {
+                return $domain;
+            }
+        }
+
+        throw new FlagDomainNotFoundException($domainId, $this->id);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
+     */
+    public function getSeoAttributes(int $domainId)
+    {
+        return $this->getFlagDomain($domainId)->getSeoAttributes();
     }
 
     protected function setTranslations(FlagData $flagData): void

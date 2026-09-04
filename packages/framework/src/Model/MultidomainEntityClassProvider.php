@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Country\CountryDomain;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDomain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDomain;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDomain;
@@ -42,6 +43,7 @@ class MultidomainEntityClassProvider implements MultidomainEntityClassProviderIn
         return [
             BrandDomain::class,
             CategoryDomain::class,
+            FlagDomain::class,
             MailTemplate::class,
             PaymentDomain::class,
             ProductDomain::class,
