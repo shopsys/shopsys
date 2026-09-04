@@ -7275,6 +7275,15 @@ Determines whether the customer agrees with sending satisfaction questionnaires 
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.isawaitingpayment">isAwaitingPayment</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicates whether the customer is still expected to pay the order online (the order has an unpaid external payment that is not being processed and the order is not cancelled)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.isdeliveryaddressdifferentfrombilling">isDeliveryAddressDifferentFromBilling</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -11578,6 +11587,15 @@ Content to be displayed on the order confirmation page
 <td>
 
 Indicates whether order payment is still being processed with GoPay payment type
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="updatepaymentstatusresult.isawaitingpayment">isAwaitingPayment</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicates whether the customer is still expected to pay the order online (the order has an unpaid external payment that is not being processed and the order is not cancelled)
 
 </td>
 </tr>

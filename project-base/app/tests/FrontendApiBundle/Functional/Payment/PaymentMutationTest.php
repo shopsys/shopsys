@@ -10,6 +10,7 @@ use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Payment\ReturnHash\PaymentReturnHashFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
+use Tests\FrontendApiBundle\Functional\Order\OrderCancellationTestHelper;
 use Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClient;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 use Uri\Rfc3986\Uri;
@@ -30,6 +31,11 @@ class PaymentMutationTest extends GraphQlTestCase
      * @inject
      */
     private PaymentReturnHashFacade $paymentReturnHashFacade;
+
+    /**
+     * @inject
+     */
+    private OrderCancellationTestHelper $orderCancellationTestHelper;
 
     public function testPayOrderWithGoPay(): void
     {
@@ -90,6 +96,7 @@ class PaymentMutationTest extends GraphQlTestCase
         $content = $this->getResponseDataForGraphQlType($response, 'UpdatePaymentStatus');
 
         $this->assertTrue($content['isPaid']);
+        $this->assertFalse($content['isAwaitingPayment']);
         $this->assertSame($order->getNumber(), $content['orderNumber']);
         $this->assertSame(
             $order->getPayment()->getName($this->getLocaleForFirstDomain()),
@@ -138,5 +145,23 @@ class PaymentMutationTest extends GraphQlTestCase
         );
 
         $this->assertUserError($response, 'max-transaction-count-reached');
+    }
+
+    public function testOrderCannotBePaidForCancelledOrder(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $this->orderCancellationTestHelper->cancelOrder($order);
+        GoPayClient::$lastRawPayment = null;
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/PayOrderMutation.graphql',
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+            ],
+        );
+
+        $this->assertUserError($response, 'order-cancelled');
+        $this->assertNull(GoPayClient::$lastRawPayment, 'Payment gateway must not be called for a cancelled order');
     }
 }

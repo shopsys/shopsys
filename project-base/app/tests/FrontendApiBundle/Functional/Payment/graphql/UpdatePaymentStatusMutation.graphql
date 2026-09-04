@@ -6,5 +6,6 @@ mutation UpdatePaymentStatus($orderUuid: Uuid!, $orderUrlHash: String) {
         lastPaymentStatus
         paymentTransactionsCount
         hasPaymentInProcess
+        isAwaitingPayment
     }
 }

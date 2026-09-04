@@ -47,6 +47,7 @@ fragment OrderDetailFragment on Order {
     isPaid
     hasExternalPayment
     hasPaymentInProcess
+    isAwaitingPayment
     paymentTransactionsCount
     lastExternalPaymentUrl
     paymentStatus

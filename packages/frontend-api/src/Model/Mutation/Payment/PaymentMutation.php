@@ -15,6 +15,7 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\OrderAlreadyPaidU
 use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\OrderWaitingForProcessPaymentUserError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\UpdatePaymentStatusResult;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderCancelledUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderConfirmationPageContentQuery;
 use Throwable;
 
@@ -31,6 +32,10 @@ class PaymentMutation extends AbstractMutation
     public function payOrderMutation(Argument $argument): PaymentSetupCreationData
     {
         $order = $this->orderApiFacade->getAuthorizedOrder($argument['orderUuid'], $argument['orderUrlHash']);
+
+        if ($order->isCancelled()) {
+            throw new OrderCancelledUserError('Order is cancelled');
+        }
 
         if ($order->isPaid()) {
             throw new OrderAlreadyPaidUserError('Order is already paid');
