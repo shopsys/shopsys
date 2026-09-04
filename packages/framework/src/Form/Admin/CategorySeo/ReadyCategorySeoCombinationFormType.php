@@ -33,6 +33,7 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
                     'required' => true,
                     'route_name' => 'front_category_seo',
                     'entity_id' => $readyCategorySeoMix?->getId(),
+                    'limit_domains_by_ids' => $options['domain_id'] !== null ? [$options['domain_id']] : [],
                     'constraints' => [
                         new NotBlank(),
                     ],
@@ -62,9 +63,11 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired(['readyCategorySeoMix', 'new_combination_url'])
+            ->setRequired(['readyCategorySeoMix', 'new_combination_url', 'domain_id'])
             ->addAllowedTypes('readyCategorySeoMix', [ReadyCategorySeoMix::class, 'null'])
             ->addAllowedTypes('new_combination_url', 'string')
+            ->addAllowedTypes('domain_id', ['int', 'null'])
+            ->setInfo('domain_id', 'The SEO mix always belongs to a single domain, its URL addresses are limited to it.')
             ->setDefaults([
                 'data_class' => ReadyCategorySeoMixData::class,
                 'attr' => ['novalidate' => 'novalidate'],
