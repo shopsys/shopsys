@@ -1,0 +1,38 @@
+{#
+@var advancedSearchForm: \Symfony\Component\Form\FormView
+@var advancedSearchRuleFormUrl: string
+@var advancedSearchResetUrl: string
+@var advancedSearchValuelessOperators: string[]
+#}
+{{ form_start(advancedSearchForm, { attr: {
+    novalidate: 'novalidate',
+    'data-controller': 'advanced-search',
+    'data-advanced-search-rule-form-url-value': advancedSearchRuleFormUrl,
+    'data-advanced-search-valueless-operators-value': advancedSearchValuelessOperators|json_encode,
+} }) }}
+    <div data-advanced-search-target="rulesContainer">
+        {% for ruleKey, ruleForm in advancedSearchForm %}
+            {% if ruleKey == '__template__' %}
+                <template data-advanced-search-target="ruleTemplate">
+                    {% include '@ShopsysAdministration/crud/search/_rule.html.twig' with { ruleForm: ruleForm } %}
+                </template>
+            {% else %}
+                {% include '@ShopsysAdministration/crud/search/_rule.html.twig' with { ruleForm: ruleForm } %}
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-sm btn-secondary" data-action="advanced-search#addRule">
+                {{ ux_icon('circle-plus') }} {{ 'Add requirement'|trans }}
+            </button>
+            <a href="{{ advancedSearchResetUrl }}" class="btn btn-sm">
+                {{ ux_icon('circle-cross') }} {{ 'Reset filter'|trans }}
+            </a>
+        </div>
+        <div class="col-auto">
+            <input type="submit" value="{{ 'Search [verb]'|trans }}" class="btn btn-primary">
+        </div>
+    </div>
+{{ form_end(advancedSearchForm) }}

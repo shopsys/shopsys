@@ -1,0 +1,23 @@
+{#
+@var ruleForm: \Symfony\Component\Form\FormView One advanced search rule (subject, operator, value)
+#}
+<div class="row g-2 mb-2" data-advanced-search-target="rule">
+    <div class="col-md">
+        {{ form_widget(ruleForm.subject, { attr: { 'data-action': 'advanced-search#changeSubject' } }) }}
+    </div>
+
+    <div class="col-md">
+        {{ form_widget(ruleForm.operator, { attr: { 'data-action': 'advanced-search#changeOperator' } }) }}
+    </div>
+
+    <div class="col-md" data-advanced-search-target="value">
+        {{ form_widget(ruleForm.value) }}
+        {{ form_errors(ruleForm.value) }}
+    </div>
+
+    <div class="col-auto">
+        <button type="button" class="btn btn-icon" title="{{ 'Remove rule'|trans }}" data-action="advanced-search#removeRule">
+            {{ ux_icon('circle-cross') }}
+        </button>
+    </div>
+</div>

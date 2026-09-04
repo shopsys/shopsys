@@ -9,6 +9,8 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Search\Filter\TextFilter;
+use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
 use Shopsys\AdministrationBundle\Model\Transport\TransportGroupCrudHandler;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportGroupFormType;
@@ -41,6 +43,17 @@ class TransportGroupController extends AbstractCrudController
             ]);
 
         $datagrid->enableDragAndDrop('position');
+    }
+
+    #[Override]
+    public function configureSearch(SearchConfig $search): void
+    {
+        $search->enableQuickSearch(
+            fields: ['name'],
+            placeholder: t('Search by name…'),
+        );
+
+        $search->addFilter(TextFilter::create('name', t('Name')));
     }
 
     #[Override]

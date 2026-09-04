@@ -46,6 +46,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "project-base/app/tests/",
+            "Tests\\AdministrationBundle\\": "packages/administration/tests/",
             "Tests\\CodingStandards\\": "packages/coding-standards/tests/",
             "Tests\\FrameworkBundle\\": "packages/framework/tests/",
             "Tests\\FrontendApiBundle\\": "packages/frontend-api/tests/",
