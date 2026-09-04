@@ -171,7 +171,10 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                         </div>
 
                         <div className="vl:col-span-1 flex flex-1 flex-col gap-2.5">
-                            <OrderConfirmationProducts items={order.items} />
+                            <OrderConfirmationProducts
+                                expectedDeliveryDate={order.expectedDeliveryDate}
+                                items={order.items}
+                            />
 
                             <OrderConfirmationSummary
                                 promoCode={order.promoCode}

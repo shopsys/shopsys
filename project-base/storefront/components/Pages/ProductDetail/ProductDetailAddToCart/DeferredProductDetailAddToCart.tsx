@@ -15,7 +15,7 @@ export const DeferredProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (
     const shouldRender = useDeferredRender('add_to_cart');
 
     return (
-        <div className="w-full sm:max-w-60">
+        <div className="w-full">
             {shouldRender ? (
                 <ProductDetailAddToCart {...props} />
             ) : (

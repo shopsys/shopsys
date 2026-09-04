@@ -7,6 +7,7 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\FeedItem;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductAdditionalServicesBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -20,6 +21,7 @@ class ZboziFeedItemFactory
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly ProductAdditionalServicesBatchLoader $productAdditionalServicesBatchLoader,
     ) {
     }
 
@@ -52,7 +54,16 @@ class ZboziFeedItemFactory
             ),
             $cpc,
             $cpcSearch,
+            $this->getAdditionalServices($product, $domainConfig),
         );
+    }
+
+    /**
+     * @return array<int, array{extraMessage: string, customText: string|null}>
+     */
+    protected function getAdditionalServices(Product $product, DomainConfig $domainConfig): array
+    {
+        return $this->productAdditionalServicesBatchLoader->getShownInFeedsZboziEntries($product, $domainConfig);
     }
 
     protected function getPrice(Product $product, DomainConfig $domainConfig): PriceInterface

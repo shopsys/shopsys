@@ -9,4 +9,10 @@ fragment CartItemModificationsFragment on CartItemModificationsResult {
     cartItemsWithChangedQuantity {
         ...CartItemFragment
     }
+    cartItemsWithRemovedAdditionalServices {
+        ...CartItemFragment
+    }
+    cartItemsWithModifiedAdditionalServicePrices {
+        ...CartItemFragment
+    }
 }

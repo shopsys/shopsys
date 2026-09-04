@@ -95,6 +95,11 @@ class MailTemplateConfiguration
         return $mailTemplateVariables
             ->addVariable(OrderMail::VARIABLE_NUMBER, t('Order number'))
             ->addVariable(OrderMail::VARIABLE_DATE, t('Date and time of order creation'))
+            ->addVariable(
+                OrderMail::VARIABLE_EXPECTED_DELIVERY_DATE,
+                t('Expected delivery date'),
+                MailTemplateVariables::CONTEXT_BODY,
+            )
             ->addVariable(OrderMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(
                 OrderMail::VARIABLE_TRANSPORT,

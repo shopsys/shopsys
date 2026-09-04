@@ -32,6 +32,9 @@
         {% endfor %}
         <g:adult>no</g:adult>
         <g:condition>new</g:condition>
+        {% if item.customLabel0 is not null -%}
+            <g:custom_label_0>{{ item.customLabel0 }}</g:custom_label_0>
+        {% endif -%}
     </item>
 {% endblock %}
 

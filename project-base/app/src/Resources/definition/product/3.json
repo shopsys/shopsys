@@ -358,6 +358,9 @@
             "accessories": {
                 "type": "integer"
             },
+            "additional_services": {
+                "type": "integer"
+            },
             "name_prefix": {
                 "type": "text"
             },

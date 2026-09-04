@@ -2,6 +2,7 @@ import { Button } from 'components/Forms/Button/Button';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { twMergeCustom } from 'utils/twMerge';
 
 const InquiryPopup = dynamic(
     () => import('components/Blocks/Popup/InquiryPopup').then((component) => component.InquiryPopup),
@@ -23,6 +24,7 @@ export const ProductInquiryButton: FC<ProductInquiryButtonProps> = ({
     productName,
     buttonSize,
     skipKeyboardNavigation = false,
+    className,
 }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
@@ -35,7 +37,7 @@ export const ProductInquiryButton: FC<ProductInquiryButtonProps> = ({
     return (
         <Button
             aria-haspopup="dialog"
-            className="w-full"
+            className={twMergeCustom('w-full', className)}
             size={buttonSize}
             tabIndex={skipKeyboardNavigation ? -1 : 0}
             title={t('Inquire popup')}

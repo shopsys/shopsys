@@ -33,6 +33,8 @@ class CartWithModificationsResult
         'noLongerListableCartItems' => [],
         'cartItemsWithModifiedPrice' => [],
         'cartItemsWithChangedQuantity' => [],
+        'cartItemsWithRemovedAdditionalServices' => [],
+        'cartItemsWithModifiedAdditionalServicePrices' => [],
     ];
 
     /**
@@ -130,6 +132,16 @@ class CartWithModificationsResult
     public function addCartItemWithChangedQuantity(CartItem $cartItem): void
     {
         $this->itemModifications['cartItemsWithChangedQuantity'][] = $cartItem;
+    }
+
+    public function addCartItemWithRemovedAdditionalServices(CartItem $cartItem): void
+    {
+        $this->itemModifications['cartItemsWithRemovedAdditionalServices'][] = $cartItem;
+    }
+
+    public function addCartItemWithModifiedAdditionalServicePrices(CartItem $cartItem): void
+    {
+        $this->itemModifications['cartItemsWithModifiedAdditionalServicePrices'][] = $cartItem;
     }
 
     public function setCartHasRemovedProducts(): void
@@ -317,7 +329,9 @@ class CartWithModificationsResult
     {
         return count($this->itemModifications['noLongerListableCartItems']) > 0
             || count($this->itemModifications['cartItemsWithModifiedPrice']) > 0
-            || count($this->itemModifications['cartItemsWithChangedQuantity']) > 0;
+            || count($this->itemModifications['cartItemsWithChangedQuantity']) > 0
+            || count($this->itemModifications['cartItemsWithRemovedAdditionalServices']) > 0
+            || count($this->itemModifications['cartItemsWithModifiedAdditionalServicePrices']) > 0;
     }
 
     /**

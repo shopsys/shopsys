@@ -62,6 +62,7 @@ const orderItem = {
         priceWithoutVat: '8',
         vatAmount: '2',
     },
+    relatedItems: [],
     order: {
         withdrawalRequest: null,
     },

@@ -48,9 +48,11 @@
             {% endif %}
 
             {% if grid.dragAndDrop %}
-                <div class="card-footer card-footer-no-bg d-flex align-items-center flex-wrap gap-3" data-js-unsaved-changes-container>
-                    <button class="{% if grid.multipleDragAndDrop %}js-drag-and-drop-grid-submit-all{% else %}js-drag-and-drop-grid-submit{% endif%} ms-auto btn" disabled type="button">{{ 'Save changes in order'|trans }}</button>
-                </div>
+                {% block grid_drag_and_drop_save_button %}
+                    <div class="card-footer card-footer-no-bg d-flex align-items-center flex-wrap gap-3 sticky-bottom bg-surface" data-js-unsaved-changes-container>
+                        <button class="{% if grid.multipleDragAndDrop %}js-drag-and-drop-grid-submit-all{% else %}js-drag-and-drop-grid-submit{% endif %} ms-auto btn" disabled type="button">{{ 'Save changes in order'|trans }}</button>
+                    </div>
+                {% endblock %}
             {% endif %}
         {% else %}
             <div class="empty">

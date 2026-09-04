@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Shopsys\FrontendApiBundle\Model\AdditionalService\AdditionalServicesBatchLoadData;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 
@@ -37,7 +38,18 @@ class ProductArrayFieldMapper
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly ProductReviewApiFacade $productReviewApiFacade,
+        protected readonly DataLoaderInterface $additionalServicesByIdsBatchLoader,
     ) {
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function getAdditionalServices(array $data): Promise
+    {
+        return $this->additionalServicesByIdsBatchLoader->load(
+            new AdditionalServicesBatchLoadData($data['id'], $data['additional_services']),
+        );
     }
 
     public function getShortDescription(array $data): ?string

@@ -179,6 +179,7 @@
     "Show {{ count }} more bestseller {{ items }}_few": "Show {{ count }} more bestsellers {{ items }}_few",
     "Show {{ count }} more bestseller {{ items }}_many": "Show {{ count }} more bestsellers {{ items }}_many",
     "Show {{ count }} more bestseller {{ items }}_other": "Show {{ count }} more bestsellers {{ items }}_other",
+    "Show description of {{ serviceName }}": "Show description of {{ serviceName }}",
     "Show less": "Show less",
     "Show next product in comparison": "Show next product in comparison",
     "Show next products in slider": "Show next products in slider",

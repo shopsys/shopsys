@@ -157,6 +157,15 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('removeFromCartMutation', args, validator)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
+            SetCartItemAdditionalServices:
+                type: Cart!
+                description: "Set the chosen additional services of a cart item"
+                args:
+                    input:
+                        type: SetCartItemAdditionalServicesInput!
+                        validation: cascade
+                resolve: "@=mutation('setCartItemAdditionalServicesMutation', args, validator)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             AddOrderItemsToCart:
                 type: Cart!
                 description: "Fills cart based on a given order, possibly merging it with the current cart"

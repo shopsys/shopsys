@@ -71,6 +71,8 @@ class OrderItemDataFactory
             $orderItemData->product = $orderItem->getProduct();
         } elseif ($orderItem->isTypeProductGift()) {
             $orderItemData->product = $orderItem->getProductGift();
+        } elseif ($orderItem->isTypeAdditionalService()) {
+            $orderItemData->additionalService = $orderItem->getAdditionalService();
         }
     }
 

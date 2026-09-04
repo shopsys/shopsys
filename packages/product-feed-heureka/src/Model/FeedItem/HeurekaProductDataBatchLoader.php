@@ -6,9 +6,11 @@ namespace Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductAdditionalServicesNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductImageUrlNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductParametersNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductUrlNotLoadedException;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductAdditionalServicesBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -25,6 +27,7 @@ class HeurekaProductDataBatchLoader
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
         protected readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
+        protected readonly ProductAdditionalServicesBatchLoader $productAdditionalServicesBatchLoader,
     ) {
     }
 
@@ -35,6 +38,7 @@ class HeurekaProductDataBatchLoader
     {
         $this->productUrlsBatchLoader->loadForProducts($products, $domainConfig);
         $this->productParametersBatchLoader->loadForProducts($products, $domainConfig);
+        $this->productAdditionalServicesBatchLoader->loadShownInFeedsForProducts($products, $domainConfig);
 
         $heurekaProductDomainByProductId = $this->heurekaProductDomainFacade->getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(
             $products,
@@ -81,6 +85,18 @@ class HeurekaProductDataBatchLoader
             return $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig);
         } catch (ProductUrlNotLoadedException $e) {
             throw new HeurekaProductDataNotLoadedException($product, $domainConfig, 'URL', $e);
+        }
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getProductAdditionalServiceSpecialServiceNames(Product $product, DomainConfig $domainConfig): array
+    {
+        try {
+            return $this->productAdditionalServicesBatchLoader->getShownInFeedsSpecialServiceNames($product, $domainConfig);
+        } catch (ProductAdditionalServicesNotLoadedException $e) {
+            throw new HeurekaProductDataNotLoadedException($product, $domainConfig, 'additional services', $e);
         }
     }
 

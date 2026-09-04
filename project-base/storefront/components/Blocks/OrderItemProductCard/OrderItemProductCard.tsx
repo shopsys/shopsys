@@ -1,4 +1,8 @@
 import { Image } from 'components/Basic/Image/Image';
+import {
+    AdditionalServiceSummaryLine,
+    AdditionalServiceSummaryList,
+} from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CartItemPartialAvailability } from 'components/Blocks/Product/CartItemPartialAvailability';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
@@ -19,6 +23,8 @@ type OrderItemProductCardProps = {
     unit: string | null;
     price: TypeProductPriceFragment;
     product?: TypeCartItemFragment['product'];
+    additionalServices?: AdditionalServiceSummaryLine[];
+    areAdditionalServicePricesHighlighted?: boolean;
 };
 
 export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
@@ -30,6 +36,8 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
     unit,
     price,
     product,
+    additionalServices,
+    areAdditionalServicePricesHighlighted,
 }) => {
     return (
         <li className="flex flex-col gap-1 rounded-xl bg-background-more p-4 font-secondary">
@@ -73,6 +81,15 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
             </div>
 
             <OrderItemProductPrice freeQuantity={freeQuantity} productPrice={price} quantity={quantity} unit={unit} />
+
+            {additionalServices && (
+                <AdditionalServiceSummaryList
+                    className="mt-2.5 border-border-less border-t pt-2.5"
+                    isPriceHighlighted={areAdditionalServicePricesHighlighted}
+                    services={additionalServices}
+                    showHeading
+                />
+            )}
         </li>
     );
 };

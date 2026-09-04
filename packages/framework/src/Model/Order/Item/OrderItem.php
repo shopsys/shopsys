@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrderedException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasOnlyOneTotalPriceException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
@@ -155,6 +156,14 @@ class OrderItem
     #[ORM\JoinColumn(nullable: true, name: 'product_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService|null
+     */
+    #[AsMcpColumn]
+    #[ORM\JoinColumn(nullable: true, name: 'additional_service_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: AdditionalService::class)]
+    protected $additionalService;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
@@ -405,6 +414,26 @@ class OrderItem
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService|null
+     */
+    public function getAdditionalService()
+    {
+        $this->checkTypeAdditionalService();
+
+        return $this->additionalService;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService|null $additionalService
+     */
+    public function setAdditionalService($additionalService): void
+    {
+        $this->checkTypeAdditionalService();
+
+        $this->additionalService = $additionalService;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      */
     public function setProduct($product): void
@@ -472,6 +501,11 @@ class OrderItem
         return $this->isType(OrderItemTypeEnum::TYPE_PROMOTION);
     }
 
+    public function isTypeAdditionalService(): bool
+    {
+        return $this->isType(OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE);
+    }
+
     protected function checkTypeOf(string $type): void
     {
         if ($this->type !== $type) {
@@ -497,6 +531,11 @@ class OrderItem
     protected function checkTypeProductGift(): void
     {
         $this->checkTypeOf(OrderItemTypeEnum::TYPE_PRODUCT_GIFT);
+    }
+
+    protected function checkTypeAdditionalService(): void
+    {
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE);
     }
 
     protected function checkTypeDiscount(): void

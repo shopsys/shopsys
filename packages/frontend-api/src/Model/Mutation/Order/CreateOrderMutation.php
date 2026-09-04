@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\SetDeliveryAddressByDeliveryAddressUuidMiddleware;
+use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculation;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult;
@@ -41,6 +42,7 @@ class CreateOrderMutation extends AbstractMutation
         protected readonly OrderProcessor $orderProcessor,
         protected readonly PlaceOrderFacade $placeOrderFacade,
         protected readonly OrderInputFactory $orderInputFactory,
+        protected readonly TransportExpectedDeliveryDateCalculation $transportExpectedDeliveryDateCalculation,
     ) {
     }
 
@@ -112,7 +114,15 @@ class CreateOrderMutation extends AbstractMutation
         $orderData = $this->orderDataFactory->createOrderDataFromArgument($argument);
         $orderInput = $this->createOrderInputFromCart($cart, $deliveryAddressUuid);
 
-        return $this->orderProcessor->process($orderInput, $orderData);
+        $processedOrderData = $this->orderProcessor->process($orderInput, $orderData);
+        $transport = $cart->getTransport();
+
+        if ($transport !== null) {
+            $processedOrderData->expectedDeliveryDate = $this->transportExpectedDeliveryDateCalculation
+                ->calculateExpectedDeliveryDate($transport, $cart, $this->domain->getId());
+        }
+
+        return $processedOrderData;
     }
 
     protected function createOrderInputFromCart(Cart $cart, ?string $deliveryAddressUuid): OrderInput

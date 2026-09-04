@@ -71,7 +71,7 @@ export type GtmCartInfoType = {
     currencyCode: string;
     valueWithoutVat: number | null;
     valueWithVat: number | null;
-    products: GtmCartItemType[] | undefined;
+    products: GtmCartProductOrServiceType[] | undefined;
     promoCodes?: string[];
 };
 
@@ -123,6 +123,7 @@ export type GtmProductInterface = {
     categories: string[];
     zboziCategory?: string;
     imageUrl?: string;
+    productType: 'product';
 };
 
 export type GtmListedProductType = GtmProductInterface & {
@@ -133,6 +134,19 @@ export type GtmCartItemType = GtmListedProductType & {
     quantity: number;
     variant?: string;
 };
+
+export type GtmServiceCartItemType = {
+    id: number;
+    sku: string;
+    productType: 'service';
+    name: string;
+    sourceProductIds: number[];
+    priceWithoutVat: number | null;
+    priceWithVat: number | null;
+    quantity: number;
+};
+
+export type GtmCartProductOrServiceType = GtmCartItemType | GtmServiceCartItemType;
 
 export type GtmShippingInfoType = {
     transportDetail: string;

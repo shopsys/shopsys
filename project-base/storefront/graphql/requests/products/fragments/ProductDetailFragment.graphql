@@ -6,4 +6,7 @@ fragment ProductDetailFragment on RegularProduct {
         ...SimpleStoreAvailabilityFragment
     }
     availableStoresCount
+    additionalServices {
+        ...AdditionalServiceFragment
+    }
 }

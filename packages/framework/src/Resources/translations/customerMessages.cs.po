@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "Additional services"
+msgstr "Doplňkové služby"
+
 msgid "Amount"
 msgstr "Množství"
 

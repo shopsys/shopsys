@@ -9,6 +9,7 @@ use DateTimeZone;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicesDeliveryDaysExtensionCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -41,6 +42,7 @@ class TransportExpectedDeliveryDateCalculation
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly StoreFacade $storeFacade,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly AdditionalServicesDeliveryDaysExtensionCalculation $additionalServicesDeliveryDaysExtensionCalculation,
     ) {
     }
 
@@ -94,9 +96,18 @@ class TransportExpectedDeliveryDateCalculation
             return null;
         }
 
-        $closestPossibleDeliveryDate = $dispatchDate->modify(sprintf('+%d days', $transport->getDaysUntilDelivery()));
+        $closestPossibleDeliveryDate = $dispatchDate->modify(sprintf(
+            '+%d days',
+            $transport->getDaysUntilDelivery(),
+        ));
 
-        $deliveryDate = $this->postponeToFirstAllowedDeliveryDay($transport, $closestPossibleDeliveryDate, $domainId, $store);
+        $deliveryDate = $this->postponeToFirstAllowedDeliveryDay(
+            $transport,
+            $closestPossibleDeliveryDate,
+            $domainId,
+            $store,
+            $this->getAdditionalServicesDeliveryDaysExtension($cart),
+        );
 
         return $deliveryDate?->setTimezone(new DateTimeZone('UTC'));
     }
@@ -118,6 +129,15 @@ class TransportExpectedDeliveryDateCalculation
         );
 
         return spl_object_id($cart) . '|' . implode(',', $cartItemParts);
+    }
+
+    protected function getAdditionalServicesDeliveryDaysExtension(?Cart $cart): int
+    {
+        if ($cart === null) {
+            return 0;
+        }
+
+        return $this->additionalServicesDeliveryDaysExtensionCalculation->calculateHighestDeliveryDaysExtension($cart);
     }
 
     protected function findStoreSelectedInCartForTransport(Transport $transport, ?Cart $cart, int $domainId): ?Store
@@ -160,30 +180,33 @@ class TransportExpectedDeliveryDateCalculation
         DateTimeImmutable $deliveryDate,
         int $domainId,
         ?Store $store,
+        int $deliveryDaysExtension = 0,
     ): ?DateTimeImmutable {
         $closedDaysIndexedByDate = $this->getClosedDaysForPostponeWindowIndexedByDate($domainId, $deliveryDate);
 
-        $postponedDays = 0;
+        $remainingDeliveryDaysExtension = $deliveryDaysExtension;
 
-        while (
-            $postponedDays < static::MAX_POSTPONE_DAYS
-            && !$this->isDeliveryAllowedOnDate(
+        for ($postponedDays = 0; $postponedDays < static::MAX_POSTPONE_DAYS; $postponedDays++) {
+            $isDeliveryAllowed = $this->isDeliveryAllowedOnDate(
                 $transport,
                 $deliveryDate,
                 $domainId,
                 $store,
                 $closedDaysIndexedByDate[$deliveryDate->format(static::DATE_INDEX_FORMAT)] ?? [],
-            )
-        ) {
+            );
+
+            if ($isDeliveryAllowed) {
+                if ($remainingDeliveryDaysExtension === 0) {
+                    return $deliveryDate;
+                }
+
+                $remainingDeliveryDaysExtension--;
+            }
+
             $deliveryDate = $deliveryDate->modify('+1 day');
-            $postponedDays++;
         }
 
-        if ($postponedDays === static::MAX_POSTPONE_DAYS) {
-            return null;
-        }
-
-        return $deliveryDate;
+        return null;
     }
 
     /**

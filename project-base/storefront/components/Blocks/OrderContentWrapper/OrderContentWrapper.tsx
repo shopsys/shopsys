@@ -21,7 +21,7 @@ export const OrderContentWrapper: FC<OrderContentWrapperProps> = ({
             <section className="grid vl:grid-cols-3 vl:gap-10">
                 <div className="vl:col-span-2">{children}</div>
 
-                <OrderSummary isTransportOrPaymentLoading={isTransportOrPaymentLoading} />
+                <OrderSummary activeStep={activeStep} isTransportOrPaymentLoading={isTransportOrPaymentLoading} />
             </section>
         </>
     );

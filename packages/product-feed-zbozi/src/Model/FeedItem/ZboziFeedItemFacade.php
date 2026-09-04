@@ -6,6 +6,7 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductAdditionalServicesBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade;
@@ -22,6 +23,7 @@ class ZboziFeedItemFacade
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
         protected readonly ZboziProductDomainFacade $zboziProductDomainFacade,
         protected readonly ZboziCategoryFacade $zboziCategoryFacade,
+        protected readonly ProductAdditionalServicesBatchLoader $productAdditionalServicesBatchLoader,
     ) {
     }
 
@@ -31,6 +33,7 @@ class ZboziFeedItemFacade
         $products = $this->zboziProductRepository->getProducts($domainConfig, $pricingGroup, $lastSeekId, $maxResults);
         $this->productUrlsBatchLoader->loadForProducts($products, $domainConfig);
         $this->productParametersBatchLoader->loadForProducts($products, $domainConfig);
+        $this->productAdditionalServicesBatchLoader->loadShownInFeedsForProducts($products, $domainConfig);
 
         $zboziProductDomains = $this->zboziProductDomainFacade->getZboziProductDomainsByProductsAndDomainIndexedByProductId(
             $products,

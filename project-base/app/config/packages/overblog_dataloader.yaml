@@ -2,6 +2,12 @@ overblog_dataloader:
     defaults:
         promise_adapter: "overblog_dataloader.webonyx_graphql_sync_promise_adapter"
     loaders:
+        additionalServicesByIdsBatchLoader:
+            alias: "additional_services_by_ids_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\AdditionalService\\AdditionalServicesBatchLoader:loadByProductIdAndAdditionalServiceIds"
+        additionalServicesByProductIdBatchLoader:
+            alias: "additional_services_by_product_id_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\AdditionalService\\AdditionalServicesBatchLoader:loadByProductIds"
         blogCategorySlugBatchLoader:
             alias: "blog_category_slug_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadBlogCategorySlugs"
@@ -50,6 +56,9 @@ overblog_dataloader:
         luigisBoxBatchLoader:
             alias: "luigis_box_batch_loader"
             batch_load_fn: "@Shopsys\\LuigisBoxBundle\\Model\\Batch\\LuigisBoxBatchLoader:loadByBatchData"
+        orderItemRelatedItemsBatchLoader:
+            alias: "order_item_related_items_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Order\\OrderItemRelatedItemsBatchLoader:loadByOrderItems"
         productGiftsByMainProductIdsBatchLoader:
             alias: "product_gifts_by_main_product_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadProductGiftsByMainProductIds"

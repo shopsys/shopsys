@@ -6,6 +6,7 @@ namespace Tests\ProductFeed\MergadoBundle\Unit;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -19,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductAdditionalServicesBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
@@ -38,6 +40,8 @@ class MergadoFeedItemTest extends TestCase
     private CurrencyFacade|MockObject $currencyFacadeMock;
 
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
+
+    private Stub|ProductAdditionalServicesBatchLoader $productAdditionalServicesBatchLoaderStub;
 
     private MergadoFeedItemFactory $mergadoFeedItemFactory;
 
@@ -115,6 +119,36 @@ class MergadoFeedItemTest extends TestCase
         self::assertSame([], $mergadoFeedItem->getParameters());
         self::assertSame([], $mergadoFeedItem->getGalleryImageUrls());
         self::assertNull($mergadoFeedItem->getMainVariantId());
+        self::assertSame([], $mergadoFeedItem->getSpecialServices());
+        self::assertSame([], $mergadoFeedItem->getZboziAdditionalServiceEntries());
+    }
+
+    public function testMergadoFeedItemWithAdditionalServices(): void
+    {
+        $this->doSetUp(true);
+
+        $this->productAdditionalServicesBatchLoaderStub->method('getShownInFeedsSpecialServiceNames')
+            ->willReturn(['Engraving']);
+        $this->productAdditionalServicesBatchLoaderStub->method('getShownInFeedsZboziEntries')
+            ->willReturn([
+                [
+                    'extraMessage' => 'custom',
+                    'customText' => 'Custom engraving of the product',
+                ],
+            ]);
+
+        $mergadoFeedItem = $this->mergadoFeedItemFactory->createForProduct($this->defaultProduct, $this->defaultDomain);
+
+        self::assertSame(['Engraving'], $mergadoFeedItem->getSpecialServices());
+        self::assertSame(
+            [
+                [
+                    'extraMessage' => 'custom',
+                    'customText' => 'Custom engraving of the product',
+                ],
+            ],
+            $mergadoFeedItem->getZboziAdditionalServiceEntries(),
+        );
     }
 
     /**
@@ -129,6 +163,8 @@ class MergadoFeedItemTest extends TestCase
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
         $productAvailabilityFacadeStub->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
         $productAvailabilityFacadeStub->method('getProductAvailabilityDaysOrDateForFeedsByDomainId')->willReturn($isProductAvailableOnStock ? 0 : self::MOCKED_SETTING_FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS);
+
+        $this->productAdditionalServicesBatchLoaderStub = $this->createStub(ProductAdditionalServicesBatchLoader::class);
 
         $this->mergadoFeedItemFactory = $this->createMergadoFeedItemFactory($productAvailabilityFacadeStub);
 
@@ -167,6 +203,7 @@ class MergadoFeedItemTest extends TestCase
             $this->createStub(ImageFacade::class),
             $this->currencyFacadeMock,
             $this->createStub(LoggerInterface::class),
+            $this->productAdditionalServicesBatchLoaderStub,
         );
     }
 

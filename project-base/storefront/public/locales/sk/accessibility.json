@@ -183,6 +183,7 @@
     "Show {{ count }} more bestseller {{ items }}_few": "Zobraziť {{ count }} ďalšie najprodávanejšie {{ items }}_few",
     "Show {{ count }} more bestseller {{ items }}_many": "Zobraziť {{ count }} ďalších najprodávanejších {{ items }}_many",
     "Show {{ count }} more bestseller {{ items }}_other": "Zobraziť {{ count }} ďalších najprodávanejších {{ items }}_other",
+    "Show description of {{ serviceName }}": "Zobraziť popis {{ serviceName }}",
     "Show less": "Zobraziť menej",
     "Show next product in comparison": "Zobraziť ďalší produkt v porovnaní",
     "Show next products in slider": "Zobraziť ďalšie produkty v slideri",

@@ -11,6 +11,7 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** One of possible types of the order item */
 export type TypeOrderItemTypeEnum =
+  | 'additionalService'
   | 'discount'
   | 'payment'
   | 'product'
@@ -66,7 +67,7 @@ export type TypeSearchOrderedItemsQueryVariables = Exact<{
 }>;
 
 
-export type TypeSearchOrderedItemsQuery = { orderItemsSearch: { totalCount: number, edges: Array<{ node: { uuid: string, name: string, quantity: number, unit: string | null, totalPrice: { priceWithVat: string }, order: { uuid: string, number: string, creationDate: string }, product:
+export type TypeSearchOrderedItemsQuery = { orderItemsSearch: { totalCount: number, edges: Array<{ node: { uuid: string, name: string, quantity: number, unit: string | null, totalPrice: { priceWithVat: string }, relatedItems: Array<{ __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, order: { uuid: string, number: string, creationDate: string }, product:
           | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
           | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
           | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }

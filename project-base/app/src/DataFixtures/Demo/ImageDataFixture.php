@@ -21,6 +21,7 @@ use LogicException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
@@ -117,6 +118,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processTransportsImages();
         $this->processTransportGroupsImages();
         $this->processProductsImages();
+        $this->processAdditionalServicesImages();
         $this->processSliderItemsImages();
         $this->processAdvertImages();
         $this->processStoresImages();
@@ -342,6 +344,37 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
                 ),
                 null,
                 $positions[$productId],
+            );
+        }
+    }
+
+    private function processAdditionalServicesImages(): void
+    {
+        $additionalServicesImagesData = [
+            800 => AdditionalServiceDataFixture::ADDITIONAL_SERVICE_ASSEMBLY,
+            801 => AdditionalServiceDataFixture::ADDITIONAL_SERVICE_EXTENDED_WARRANTY,
+            802 => AdditionalServiceDataFixture::ADDITIONAL_SERVICE_GIFT_WRAPPING,
+            803 => AdditionalServiceDataFixture::ADDITIONAL_SERVICE_ENGRAVING,
+            804 => AdditionalServiceDataFixture::ADDITIONAL_SERVICE_APPLIANCE_REMOVAL,
+        ];
+
+        foreach ($additionalServicesImagesData as $imageId => $additionalServiceReferenceName) {
+            $additionalService = $this->getReference($additionalServiceReferenceName, AdditionalService::class);
+
+            $names = [];
+
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = $additionalService->getName($locale) ?? $additionalServiceReferenceName;
+            }
+
+            $this->saveImageIntoDb(
+                $additionalService->getId(),
+                'additionalService',
+                $imageId,
+                $names,
+                null,
+                Image::DEFAULT_IMAGE_POSITION,
+                self::IMAGE_TYPE_PNG,
             );
         }
     }
@@ -617,6 +650,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     public function getDependencies(): array
     {
         return [
+            AdditionalServiceDataFixture::class,
             AdvertDataFixture::class,
             BlogArticleAuthorDataFixture::class,
             BlogArticleDataFixture::class,

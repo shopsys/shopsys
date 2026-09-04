@@ -8,6 +8,7 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceDomain;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDomain;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
@@ -92,9 +93,10 @@ class VatRepository
             LEFT JOIN ' . ProductDomain::class . ' pd WITH pd.vat = v
             LEFT JOIN ' . PaymentDomain::class . ' payd WITH payd.vat = v
             LEFT JOIN ' . TransportDomain::class . ' td WITH td.vat = v
+            LEFT JOIN ' . AdditionalServiceDomain::class . ' asd WITH asd.vat = v
             WHERE v.replaceWith IS NOT NULL
             GROUP BY v
-            HAVING COUNT(pd) = 0 AND COUNT(payd) = 0 AND COUNT(td) = 0');
+            HAVING COUNT(pd) = 0 AND COUNT(payd) = 0 AND COUNT(td) = 0 AND COUNT(asd) = 0');
 
         return $query->getResult();
     }
@@ -103,7 +105,19 @@ class VatRepository
     {
         return $this->existsPaymentWithVat($vat)
             || $this->existsTransportWithVat($vat)
-            || $this->existsProductWithVat($vat);
+            || $this->existsProductWithVat($vat)
+            || $this->existsAdditionalServiceWithVat($vat);
+    }
+
+    protected function existsAdditionalServiceWithVat(Vat $vat): bool
+    {
+        $query = $this->em->createQuery('
+            SELECT COUNT(asd.additionalService)
+            FROM ' . AdditionalServiceDomain::class . ' asd
+            WHERE asd.vat = :vat')
+            ->setParameter('vat', $vat);
+
+        return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
     protected function existsPaymentWithVat(Vat $vat): bool
@@ -143,9 +157,19 @@ class VatRepository
     {
         $this->replacePaymentsVat($oldVat, $newVat);
         $this->replaceTransportsVat($oldVat, $newVat);
+        $this->replaceAdditionalServicesVat($oldVat, $newVat);
     }
 
-    public function replaceVatInPaymentsAndTransportsForVatsMarkedForDeletion(): void
+    protected function replaceAdditionalServicesVat(Vat $oldVat, Vat $newVat): void
+    {
+        $this->em->createQueryBuilder()
+            ->update(AdditionalServiceDomain::class, 'asd')
+            ->set('asd.vat', ':newVat')->setParameter('newVat', $newVat)
+            ->where('asd.vat = :oldVat')->setParameter('oldVat', $oldVat)
+            ->getQuery()->execute();
+    }
+
+    public function replaceVatForVatsMarkedForDeletion(): void
     {
         $query = $this->em->createQuery('
             SELECT v

@@ -88,11 +88,32 @@ class OrderItemApiFacade
             ->setParameter('productItemType', OrderItemTypeEnum::TYPE_PRODUCT);
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderItems
+     */
+    public function initializeRelatedItems(array $orderItems): void
+    {
+        if ($orderItems === []) {
+            return;
+        }
+
+        $this->em->createQueryBuilder()
+            ->select('oi', 'ri', 'additionalService')
+            ->from(OrderItem::class, 'oi')
+            ->leftJoin('oi.relatedItems', 'ri')
+            ->leftJoin('ri.additionalService', 'additionalService')
+            ->where('oi IN (:orderItems)')
+            ->setParameter('orderItems', $orderItems)
+            ->getQuery()
+            ->getResult();
+    }
+
     protected function createOrderItemExcludingOrdersWithWithdrawalQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
-            ->select('oi')
+            ->select('oi', 'additionalService')
             ->from(OrderItem::class, 'oi')
+            ->leftJoin('oi.additionalService', 'additionalService')
             ->join('oi.order', 'o')
             ->andWhere('NOT EXISTS(
                SELECT 1 FROM ' . WithdrawalRequest::class . ' wr

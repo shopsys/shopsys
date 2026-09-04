@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
+import { ExpectedDeliveryDateSummary } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateSummary';
 import { useCurrentCustomerUserReviewedProductUuids } from 'components/Blocks/ProductReviews/useCurrentCustomerUserReviewedProductUuids';
 import { Button } from 'components/Forms/Button/Button';
 import {
@@ -47,9 +48,12 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
     const filteredOrderItems = order.items.filter(
         (orderItem) =>
-            ![TypeOrderItemTypeEnum.Payment, TypeOrderItemTypeEnum.Transport, TypeOrderItemTypeEnum.Rounding].includes(
-                orderItem.type,
-            ),
+            ![
+                TypeOrderItemTypeEnum.Payment,
+                TypeOrderItemTypeEnum.Transport,
+                TypeOrderItemTypeEnum.Rounding,
+                TypeOrderItemTypeEnum.AdditionalService,
+            ].includes(orderItem.type),
     );
 
     const showRepeatOrderButton =
@@ -122,6 +126,8 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     </div>
                 )}
             </CustomerRecordCard>
+
+            <ExpectedDeliveryDateSummary expectedDeliveryDate={order.expectedDeliveryDate} />
 
             {canCreateOrder && notPaid && <PaymentsInOrderSelect orderUrlHash={order.urlHash} orderUuid={order.uuid} />}
 

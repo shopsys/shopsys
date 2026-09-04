@@ -160,11 +160,17 @@ msgstr "Přidat variantu"
 msgid "Added"
 msgstr "Přidáno"
 
+msgid "Additional description for Zboží.cz"
+msgstr "Doplňkový popis pro Zboží.cz"
+
 msgid "Additional information"
 msgstr "Doplňkové informace"
 
 msgid "Additional login info"
 msgstr "Doplňující informace k přihlášení"
+
+msgid "Additional services"
+msgstr "Doplňkové služby"
 
 msgid "Address"
 msgstr "Adresa"
@@ -246,6 +252,9 @@ msgstr "E-mail s šesticiferným kódem byl odeslán na vaši e-mailovou adresu.
 
 msgid "Ancestor category"
 msgstr "Rodičovská kategorie"
+
+msgid "Applies to Heureka, Google, Zboží.cz and Mergado feeds together."
+msgstr "Platí společně pro feedy Heureka, Google, Zboží.cz a Mergado."
 
 msgid "Apply"
 msgstr "Použít"
@@ -342,6 +351,9 @@ msgstr "Ověřovací kód"
 
 msgid "Author"
 msgstr "Autor"
+
+msgid "Authorized service"
+msgstr "Autorizovaný servis"
 
 msgid "Autocomplete favorites"
 msgstr "Oblíbené položky v našeptávači"
@@ -513,6 +525,9 @@ msgstr "Kupované množství"
 
 msgid "By flag"
 msgstr "Dle příznaku"
+
+msgid "By how many working days the service extends the estimated delivery time of the order."
+msgstr "O kolik pracovních dní služba prodlouží předpokládaný termín doručení objednávky."
 
 msgid "CMS"
 msgstr "CMS"
@@ -985,6 +1000,9 @@ msgstr "Výchozí jednotka bude použita při vytvoření nového produktu"
 msgid "Default warehouse"
 msgstr "Výchozí sklad"
 
+msgid "Deferred payment option"
+msgstr "Možnost odložené platby"
+
 msgid "Delete"
 msgstr "Smazat"
 
@@ -1017,6 +1035,9 @@ msgstr "Doručovací adresa je stejná jako fakturační adresa"
 
 msgid "Delivery city"
 msgstr "Město pro doručení"
+
+msgid "Delivery extension in working days"
+msgstr "Prodloužení doručení v pracovních dnech"
 
 msgid "Delivery last name"
 msgstr "Příjmení pro doručení"
@@ -1549,6 +1570,9 @@ msgstr "Současná ikona"
 msgid "Expand"
 msgstr "Rozbalit"
 
+msgid "Expected delivery date"
+msgstr "Předpokládaný termín doručení"
+
 msgid "Expected maximum duration"
 msgstr "Očekávané maximální trvání"
 
@@ -1572,6 +1596,12 @@ msgstr "Rozšířená SEO kategorie - filtry"
 
 msgid "Extended SEO category - set combinations with SEO values"
 msgstr "Rozšířená SEO kategorie - kombinace s nastavenými SEO hodnotami"
+
+msgid "Extended return period"
+msgstr "Prodloužená doba na vrácení"
+
+msgid "Extended warranty"
+msgstr "Prodloužená záruka"
 
 msgid "External ID"
 msgstr "Externí ID"
@@ -1714,8 +1744,23 @@ msgstr "Zaslání zapomenutého hesla"
 msgid "Fourth column categories"
 msgstr "Kategorie čtvrtého sloupce"
 
+msgid "Free accessories"
+msgstr "Příslušenství zdarma"
+
+msgid "Free case"
+msgstr "Pouzdro zdarma"
+
+msgid "Free gift"
+msgstr "Dárek zdarma"
+
+msgid "Free installation"
+msgstr "Montáž zdarma"
+
 msgid "Free quantity"
 msgstr "Množství zdarma"
+
+msgid "Free return shipping"
+msgstr "Vrácení s dopravou zdarma"
 
 msgid "Free shipping and payment"
 msgstr "Doprava a platba zdarma"
@@ -1752,6 +1797,9 @@ msgstr "Vygenerováno"
 
 msgid "Generated batches"
 msgstr "Vygenerované dávky"
+
+msgid "Gift packaging"
+msgstr "Dárkové balení"
 
 msgid "Gift plan <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
 msgstr "Dárkový plán <a href=\"{{ url }}\"><strong>{{ name }}<strong></a> byl vytvořen"
@@ -1935,6 +1983,9 @@ msgstr "Informace o poptávce odesílaná zákazníkovi"
 
 msgid "Instagram URL"
 msgstr "Instagram URL"
+
+msgid "Installment purchase option"
+msgstr "Možnost nákupu na splátky"
 
 msgid "Instructions"
 msgstr "Pokyny"
@@ -2125,6 +2176,9 @@ msgstr "Název"
 msgid "Name %locale%"
 msgstr "Název %locale%"
 
+msgid "Name for price comparison feeds"
+msgstr "Název pro zbožové srovnávače"
+
 msgid "Name has not been entered in your current language"
 msgstr "Název ve vašem aktuálním jazyce není vyplněn"
 
@@ -2148,6 +2202,9 @@ msgstr "Sufix názvu"
 
 msgid "Names"
 msgstr "Názvy (web)"
+
+msgid "Names for price comparison feeds of the chosen services are exported to the Google feed custom label with a recommended maximum length of 100 characters (including the separators between the names)."
+msgstr "Názvy pro srovnávače zboží u zvolených služeb se exportují do custom labelu v google feedu s doporučenou maximální délkou 100 znaků (včetně oddělovačů mezi názvy)."
 
 msgid "Namespace"
 msgstr "Jmenný prostor"
@@ -2332,8 +2389,14 @@ msgstr "Počet hlídacích psů"
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
 msgstr "Pokusili jste se přihlásit výchozími přihlašovacími údaji. V produkčním prostředí toto není dovoleno. Pokud jste hacker, běžte prosím jinam. Pokud jste oprávněný uživatel, použijte jiný účet nebo kontaktujte vývojáře, aby vám změnili heslo."
 
+msgid "Old appliance removal"
+msgstr "Odvoz starého spotřebiče"
+
 msgid "One domain cannot be used in two groups"
 msgstr "Stejná doména nemůže být použita ve dvou skupinách"
+
+msgid "Only 100 characters will be exported to the Google feed custom label, so not all chosen services may appear in it."
+msgstr "Do custom labelu v google feedu se vyexportuje jen 100 znaků, nemusí se v něm tedy projevit všechny zvolené služby."
 
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
@@ -2668,6 +2731,9 @@ msgstr "Náhled"
 msgid "Price"
 msgstr "Cena"
 
+msgid "Price comparison feeds"
+msgstr "Zbožové srovnávače"
+
 msgid "Price including VAT"
 msgstr "Cena s DPH"
 
@@ -2697,6 +2763,9 @@ msgstr "Ceníky"
 
 msgid "Prices"
 msgstr "Ceny"
+
+msgid "Prices and VAT"
+msgstr "Ceny a DPH"
 
 msgid "Pricing"
 msgstr "Cenotvorba"
@@ -2802,6 +2871,9 @@ msgstr "Produkty s tímto příznakem"
 
 msgid "Products without this flag"
 msgstr "Produkty bez tohoto příznaku"
+
+msgid "Professional appliance installation"
+msgstr "Odborná instalace spotřebiče"
 
 msgid "Promo code"
 msgstr "Slevový kupón"
@@ -3214,6 +3286,9 @@ msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-
 msgid "Seo"
 msgstr "Seo"
 
+msgid "Service type for Zboží.cz"
+msgstr "Typ služby pro Zboží.cz"
+
 msgid "Set"
 msgstr "Nastavit"
 
@@ -3261,6 +3336,9 @@ msgstr "Zobrazit kombinace"
 
 msgid "Show detail"
 msgstr "Zobrazit detail"
+
+msgid "Show in price comparison feeds"
+msgstr "Zobrazovat ve feedech pro zbožové srovnávače"
 
 msgid "Show in the category"
 msgstr "Zobrazit v rozcestníku"
@@ -3643,6 +3721,9 @@ msgstr "Na poptávku"
 msgid "Url address"
 msgstr "Url adresa"
 
+msgid "Use VAT rate of the product"
+msgstr "Použít sazbu DPH z produktu"
+
 msgid "User consent policy"
 msgstr "Správa osobních údajů"
 
@@ -3699,6 +3780,9 @@ msgstr "Viditelnost"
 
 msgid "Visible on homepage"
 msgstr "Viditelný na domovské stránce"
+
+msgid "Voucher for next purchase"
+msgstr "Voucher na další nákup"
 
 msgid "Waiting for an offline transfer to be finished"
 msgstr "Čekáme na provedení offline platby"
@@ -3780,6 +3864,9 @@ msgstr "Rok"
 
 msgid "Yes"
 msgstr "Ano"
+
+msgid "Yes = the service is an ancillary supply and takes over the VAT rate of the product it is attached to in the cart. No = the service is a separate supply with its own VAT rate."
+msgstr "Ano = služba je vedlejší plnění a přebírá sazbu DPH produktu, ke kterému je v košíku připojena. Ne = služba je samostatné plnění s vlastní sazbou DPH."
 
 msgid "You are allowed to disable two factor authentication only to yourself."
 msgstr "Můžete si vypnout dvoufaktorové ověření pouze pro sebe."

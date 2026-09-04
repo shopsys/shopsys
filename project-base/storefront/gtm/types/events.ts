@@ -8,6 +8,7 @@ import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 import {
     GtmCartInfoType,
     GtmCartItemType,
+    GtmCartProductOrServiceType,
     GtmConsentInfoType,
     GtmListedProductType,
     GtmPageInfoType,
@@ -58,7 +59,7 @@ type GtmAddToCartEventType = GtmEventInterface<
             currencyCode: string;
             valueWithoutVat: number | null;
             valueWithVat: number | null;
-            products: GtmCartItemType[] | undefined;
+            products: GtmCartProductOrServiceType[] | undefined;
             arePricesHidden: boolean;
         };
         cart?: GtmCartInfoType | null;
@@ -73,7 +74,7 @@ type GtmRemoveFromCartEventType = GtmEventInterface<
             currencyCode: string;
             valueWithoutVat: number | null;
             valueWithVat: number | null;
-            products: GtmCartItemType[] | undefined;
+            products: GtmCartProductOrServiceType[] | undefined;
             arePricesHidden: boolean;
         };
         cart?: GtmCartInfoType | null;
@@ -143,7 +144,7 @@ export type GtmCartViewEventType = GtmEventInterface<
             currencyCode: string;
             valueWithoutVat: number | null;
             valueWithVat: number | null;
-            products: GtmCartItemType[] | undefined;
+            products: GtmCartProductOrServiceType[] | undefined;
             arePricesHidden: boolean;
         };
     }
@@ -192,7 +193,7 @@ export type GtmPaymentAndTransportViewEventType = GtmEventInterface<
             currencyCode: string;
             valueWithoutVat: number | null;
             valueWithVat: number | null;
-            products: GtmCartItemType[] | undefined;
+            products: GtmCartProductOrServiceType[] | undefined;
             arePricesHidden: boolean;
         };
     }
@@ -234,7 +235,7 @@ export type GtmTransportChangeEventType = GtmEventInterface<
             transportType: string;
             transportDetail: string;
             transportExtra: string[];
-            products: GtmCartItemType[];
+            products: GtmCartProductOrServiceType[];
             arePricesHidden: boolean;
         };
     }
@@ -248,7 +249,7 @@ export type GtmContactInformationViewEventType = GtmEventInterface<
             valueWithoutVat: number | null;
             valueWithVat: number | null;
             promoCodes?: string[];
-            products: GtmCartItemType[] | undefined;
+            products: GtmCartProductOrServiceType[] | undefined;
             arePricesHidden: boolean;
         };
     }
@@ -279,7 +280,7 @@ export type GtmPaymentChangeEventType = GtmEventInterface<
             paymentType: string;
             paymentPriceWithoutVat: number | null;
             paymentPriceWithVat: number | null;
-            products: GtmCartItemType[] | undefined;
+            products: GtmCartProductOrServiceType[] | undefined;
             arePricesHidden: boolean;
         };
     }
@@ -300,7 +301,7 @@ export type GtmCreateOrderEventOrderPartType = {
     discountAmount: number | null;
     paymentType: string;
     reviewConsents?: GtmReviewConsentsType;
-    products: GtmCartItemType[] | undefined;
+    products: GtmCartProductOrServiceType[] | undefined;
 };
 
 export type GtmPurchaseEventPaymentPartType = {

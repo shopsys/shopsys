@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductAdditionalServicesBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
@@ -34,6 +35,8 @@ class ZboziFeedItemTest extends TestCase
 
     private Stub|ProductParametersBatchLoader $productParametersBatchLoaderStub;
 
+    private Stub|ProductAdditionalServicesBatchLoader $productAdditionalServicesBatchLoaderStub;
+
     private ZboziFeedItemFactory $zboziFeedItemFactory;
 
     private DomainConfig $defaultDomain;
@@ -50,12 +53,14 @@ class ZboziFeedItemTest extends TestCase
         $this->productParametersBatchLoaderStub = $this->createStub(ProductParametersBatchLoader::class);
         $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
         $productAvailabilityFacadeStub->method('getProductAvailabilityDaysOrDateForFeedsByDomainId')->willReturn(0);
+        $this->productAdditionalServicesBatchLoaderStub = $this->createStub(ProductAdditionalServicesBatchLoader::class);
 
         $this->zboziFeedItemFactory = new ZboziFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->productUrlsBatchLoaderMock,
             $this->productParametersBatchLoaderStub,
             $productAvailabilityFacadeStub,
+            $this->productAdditionalServicesBatchLoaderStub,
         );
 
         $this->defaultDomain = $this->createDomainConfigStub(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');
@@ -105,6 +110,30 @@ class ZboziFeedItemTest extends TestCase
         self::assertEquals([], $zboziFeedItem->getParams());
         self::assertNull($zboziFeedItem->getMaxCpc());
         self::assertNull($zboziFeedItem->getMaxCpcSearch());
+        self::assertEquals([], $zboziFeedItem->getAdditionalServices());
+    }
+
+    public function testZboziFeedItemWithAdditionalServices(): void
+    {
+        $this->productAdditionalServicesBatchLoaderStub->method('getShownInFeedsZboziEntries')
+            ->willReturn([
+                [
+                    'extraMessage' => 'free_installation',
+                    'customText' => 'Professional installation of the appliance',
+                ],
+            ]);
+
+        $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
+
+        self::assertSame(
+            [
+                [
+                    'extraMessage' => 'free_installation',
+                    'customText' => 'Professional installation of the appliance',
+                ],
+            ],
+            $zboziFeedItem->getAdditionalServices(),
+        );
     }
 
     /**
@@ -123,6 +152,7 @@ class ZboziFeedItemTest extends TestCase
             $this->productUrlsBatchLoaderMock,
             $this->productParametersBatchLoaderStub,
             $productAvailabilityFacadeMock,
+            $this->productAdditionalServicesBatchLoaderStub,
         );
 
         $zboziFeedItem = $zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);

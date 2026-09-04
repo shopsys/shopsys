@@ -9,3 +9,7 @@ CartItemModificationsResultDecorator:
                 type: "[CartItem!]!"
             cartItemsWithChangedQuantity:
                 type: "[CartItem!]!"
+            cartItemsWithRemovedAdditionalServices:
+                type: "[CartItem!]!"
+            cartItemsWithModifiedAdditionalServicePrices:
+                type: "[CartItem!]!"

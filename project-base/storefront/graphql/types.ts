@@ -67,6 +67,33 @@ export type TypeAddToCartResult = {
   cart: TypeCart;
 };
 
+/** Represents an additional service offered with a product */
+export type TypeAdditionalService = {
+  __typename?: 'AdditionalService';
+  /** Catalog number of the additional service */
+  catnum: Scalars['String']['output'];
+  /** By how many working days the additional service extends the estimated delivery time of the order */
+  deliveryDaysExtension: Maybe<Scalars['Int']['output']>;
+  /** Description of the additional service */
+  description: Maybe<Scalars['String']['output']>;
+  /** Additional service id */
+  id: Scalars['Int']['output'];
+  /** Additional service image */
+  mainImage: Maybe<TypeImage>;
+  /** Name of the additional service */
+  name: Scalars['String']['output'];
+  /** Price of the additional service for one unit of the product it accompanies */
+  price: TypePrice;
+  /** UUID of the additional service */
+  uuid: Scalars['Uuid']['output'];
+};
+
+
+/** Represents an additional service offered with a product */
+export type TypeAdditionalServiceMainImageArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type TypeAdvert = {
   /** Restricted categories of the advert (the advert is shown in these categories only) */
   categories: Array<TypeCategory>;
@@ -562,6 +589,8 @@ export type TypeCartInput = {
 /** Represent one item in the cart */
 export type TypeCartItem = {
   __typename?: 'CartItem';
+  /** Additional services chosen for the cart item */
+  additionalServices: Array<TypeAdditionalService>;
   /** Quantity of free items from X+Y promotion */
   freeQuantity: Scalars['Int']['output'];
   /** Product in the cart */
@@ -577,7 +606,9 @@ export type TypeCartItem = {
 export type TypeCartItemModificationsResult = {
   __typename?: 'CartItemModificationsResult';
   cartItemsWithChangedQuantity: Array<TypeCartItem>;
+  cartItemsWithModifiedAdditionalServicePrices: Array<TypeCartItem>;
   cartItemsWithModifiedPrice: Array<TypeCartItem>;
+  cartItemsWithRemovedAdditionalServices: Array<TypeCartItem>;
   noLongerListableCartItems: Array<TypeCartItem>;
 };
 
@@ -1512,6 +1543,8 @@ export type TypeMainBlogCategoryData = {
 export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
   __typename?: 'MainVariant';
   accessories: Array<TypeProduct>;
+  /** Additional services offered with the product on the current domain */
+  additionalServices: Array<TypeAdditionalService>;
   availability: TypeAvailability;
   /** Number of the stores where the product is available (null for main variants) */
   availableStoresCount: Maybe<Scalars['Int']['output']>;
@@ -1706,6 +1739,8 @@ export type TypeMutation = {
   RequestPasswordRecovery: Scalars['String']['output'];
   /** Request access to personal data */
   RequestPersonalDataAccess: TypePersonalDataPage;
+  /** Set the chosen additional services of a cart item */
+  SetCartItemAdditionalServices: TypeCart;
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: TypeCurrentCustomerUser;
   /** check payment status of order after callback from payment service */
@@ -1904,6 +1939,11 @@ export type TypeMutationRequestPersonalDataAccessArgs = {
 };
 
 
+export type TypeMutationSetCartItemAdditionalServicesArgs = {
+  input: TypeSetCartItemAdditionalServicesInput;
+};
+
+
 export type TypeMutationSetDefaultDeliveryAddressArgs = {
   deliveryAddressUuid: Scalars['Uuid']['input'];
 };
@@ -2069,6 +2109,8 @@ export type TypeOrder = {
   deliveryTelephoneData: Maybe<TypePhoneData>;
   /** The customer's email address */
   email: Scalars['String']['output'];
+  /** Expected delivery date captured when the order was created; null when no delivery date could be promised */
+  expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
   /** Indicates whether the order has an external payment */
@@ -2247,6 +2289,10 @@ export type TypeOrderItem = {
   __typename?: 'OrderItem';
   /** Catalog number of the order item product */
   catnum: Maybe<Scalars['String']['output']>;
+  /** By how many working days the additional service extends the estimated delivery time of the order */
+  deliveryDaysExtension: Maybe<Scalars['Int']['output']>;
+  /** Main image of the product, additional service, transport or payment the order item represents */
+  mainImage: Maybe<TypeImage>;
   /** Name of the order item */
   name: Scalars['String']['output'];
   /** Order to which the order item belongs */
@@ -2257,6 +2303,8 @@ export type TypeOrderItem = {
   product: Maybe<TypeProduct>;
   /** Quantity of order items in the order */
   quantity: Scalars['Int']['output'];
+  /** Order items related to this order item (e.g. additional services of a product item) */
+  relatedItems: Array<TypeOrderItem>;
   /** Total price for the quantity of order item */
   totalPrice: TypePrice;
   /** Transport method applied to the order */
@@ -2271,6 +2319,12 @@ export type TypeOrderItem = {
   uuid: Scalars['Uuid']['output'];
   /** Applied VAT rate percentage applied to the order item */
   vatRate: Scalars['String']['output'];
+};
+
+
+/** Represent one item in the order */
+export type TypeOrderItemMainImageArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A connection to a list of items. */
@@ -2295,6 +2349,7 @@ export type TypeOrderItemEdge = {
 
 /** One of possible types of the order item */
 export enum TypeOrderItemTypeEnum {
+  AdditionalService = 'additionalService',
   Discount = 'discount',
   Payment = 'payment',
   Product = 'product',
@@ -2711,6 +2766,8 @@ export type TypePricingSetting = {
 /** Represents a product */
 export type TypeProduct = {
   accessories: Array<TypeProduct>;
+  /** Additional services offered with the product on the current domain */
+  additionalServices: Array<TypeAdditionalService>;
   availability: TypeAvailability;
   /** Number of the stores where the product is available (null for main variants) */
   availableStoresCount: Maybe<Scalars['Int']['output']>;
@@ -3677,6 +3734,8 @@ export type TypeRegularCustomerUser = TypeBaseCustomerUser & {
 export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
   __typename?: 'RegularProduct';
   accessories: Array<TypeProduct>;
+  /** Additional services offered with the product on the current domain */
+  additionalServices: Array<TypeAdditionalService>;
   availability: TypeAvailability;
   /** Number of the stores where the product is available (null for main variants) */
   availableStoresCount: Maybe<Scalars['Int']['output']>;
@@ -3880,6 +3939,15 @@ export type TypeSeoSetting = {
   title: Maybe<Scalars['String']['output']>;
   /** Complement to title */
   titleAddOn: Maybe<Scalars['String']['output']>;
+};
+
+export type TypeSetCartItemAdditionalServicesInput = {
+  /** UUIDs of the additional services chosen for the cart item. The previously chosen services are replaced by the provided set. */
+  additionalServiceUuids: Array<Scalars['Uuid']['input']>;
+  /** Cart item UUID */
+  cartItemUuid: Scalars['Uuid']['input'];
+  /** Cart identifier, new cart will be created if not provided and customer is not logged in */
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 /** Represents settings of the current domain */
@@ -4220,6 +4288,8 @@ export type TypeUpdatePaymentStatusResult = {
 export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
   __typename?: 'Variant';
   accessories: Array<TypeProduct>;
+  /** Additional services offered with the product on the current domain */
+  additionalServices: Array<TypeAdditionalService>;
   availability: TypeAvailability;
   /** Number of the stores where the product is available (null for main variants) */
   availableStoresCount: Maybe<Scalars['Int']['output']>;

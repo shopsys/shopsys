@@ -20,7 +20,11 @@ use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceDataFactory;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -65,6 +69,16 @@ class CartModificationsResultTest extends GraphQlTestCase
      * @inject
      */
     private PaymentDataFactory $paymentDataFactory;
+
+    /**
+     * @inject
+     */
+    private AdditionalServiceFacade $additionalServiceFacade;
+
+    /**
+     * @inject
+     */
+    private AdditionalServiceDataFactory $additionalServiceDataFactory;
 
     public static function getTransportWithExceededWeightLimitDataProvider(): iterable
     {
@@ -169,6 +183,93 @@ class CartModificationsResultTest extends GraphQlTestCase
         self::assertEquals($this->testingProduct->getUuid(), $itemModifications['cartItemsWithModifiedPrice'][0]['product']['uuid']);
 
         self::assertEmpty($itemModifications['noLongerListableCartItems']);
+    }
+
+    public function testCartItemWithRemovedAdditionalServicesIsReported(): void
+    {
+        $additionalService = $this->createAdditionalServiceAssignedToTestingProduct();
+
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        $cartItemUuid = $newlyCreatedCart['items'][0]['uuid'];
+
+        $this->setAdditionalServicesToCartItem($newlyCreatedCart['uuid'], $cartItemUuid, [$additionalService->getUuid()]);
+
+        $this->unassignAdditionalServicesFromTestingProduct();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+        ]);
+        $itemModifications = $response['data']['cart']['modifications']['itemModifications'];
+
+        self::assertNotEmpty($itemModifications['cartItemsWithRemovedAdditionalServices']);
+        self::assertEquals(
+            $this->testingProduct->getUuid(),
+            $itemModifications['cartItemsWithRemovedAdditionalServices'][0]['product']['uuid'],
+        );
+        self::assertSame([], $itemModifications['cartItemsWithRemovedAdditionalServices'][0]['additionalServices']);
+    }
+
+    public function testCartItemWithDeletedAdditionalServicesIsReported(): void
+    {
+        $additionalService = $this->createAdditionalServiceAssignedToTestingProduct();
+
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        $cartItemUuid = $newlyCreatedCart['items'][0]['uuid'];
+
+        $this->setAdditionalServicesToCartItem($newlyCreatedCart['uuid'], $cartItemUuid, [$additionalService->getUuid()]);
+
+        $this->additionalServiceFacade->deleteById($additionalService->getId());
+        $this->em->clear();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+        ]);
+        $itemModifications = $response['data']['cart']['modifications']['itemModifications'];
+
+        self::assertNotEmpty($itemModifications['cartItemsWithRemovedAdditionalServices']);
+        self::assertEquals(
+            $this->testingProduct->getUuid(),
+            $itemModifications['cartItemsWithRemovedAdditionalServices'][0]['product']['uuid'],
+        );
+        self::assertSame([], $itemModifications['cartItemsWithRemovedAdditionalServices'][0]['additionalServices']);
+    }
+
+    public function testCartItemWithModifiedAdditionalServicePriceIsReported(): void
+    {
+        $additionalService = $this->createAdditionalServiceAssignedToTestingProduct();
+
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        $cartItemUuid = $newlyCreatedCart['items'][0]['uuid'];
+
+        $this->setAdditionalServicesToCartItem($newlyCreatedCart['uuid'], $cartItemUuid, [$additionalService->getUuid()]);
+
+        $this->modifyPriceOfAdditionalService($additionalService);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+        ]);
+        $itemModifications = $response['data']['cart']['modifications']['itemModifications'];
+
+        self::assertNotEmpty($itemModifications['cartItemsWithModifiedAdditionalServicePrices']);
+        self::assertEquals(
+            $this->testingProduct->getUuid(),
+            $itemModifications['cartItemsWithModifiedAdditionalServicePrices'][0]['product']['uuid'],
+        );
+        self::assertEquals(
+            $additionalService->getUuid(),
+            $itemModifications['cartItemsWithModifiedAdditionalServicePrices'][0]['additionalServices'][0]['uuid'],
+        );
+        self::assertEmpty($itemModifications['cartItemsWithRemovedAdditionalServices']);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+        ]);
+        $itemModifications = $response['data']['cart']['modifications']['itemModifications'];
+
+        self::assertEmpty(
+            $itemModifications['cartItemsWithModifiedAdditionalServicePrices'],
+            'The modified price is expected to be reported only once',
+        );
     }
 
     public function testTransportWithModifiedPriceIsReported(): void
@@ -321,6 +422,75 @@ class CartModificationsResultTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'AddToCart');
 
         return $data['cart'];
+    }
+
+    /**
+     * @param string[] $additionalServiceUuids
+     */
+    private function setAdditionalServicesToCartItem(
+        string $cartUuid,
+        string $cartItemUuid,
+        array $additionalServiceUuids,
+    ): void {
+        $this->getResponseContentForQuery('
+            mutation ($cartUuid: Uuid, $cartItemUuid: Uuid!, $additionalServiceUuids: [Uuid!]!) {
+                SetCartItemAdditionalServices(input: {
+                    cartUuid: $cartUuid,
+                    cartItemUuid: $cartItemUuid,
+                    additionalServiceUuids: $additionalServiceUuids
+                }) {
+                    uuid
+                }
+            }
+        ', [
+            'cartUuid' => $cartUuid,
+            'cartItemUuid' => $cartItemUuid,
+            'additionalServiceUuids' => $additionalServiceUuids,
+        ]);
+    }
+
+    private function createAdditionalServiceAssignedToTestingProduct(): AdditionalService
+    {
+        $additionalServiceData = $this->additionalServiceDataFactory->create();
+        $additionalServiceData->catnum = 'SERVICE-CART-MODIFICATION';
+
+        foreach (array_keys($additionalServiceData->name) as $locale) {
+            $additionalServiceData->name[$locale] = 'Cart modification service';
+        }
+
+        foreach (array_keys($additionalServiceData->enabledByDomainId) as $domainId) {
+            $additionalServiceData->pricesIndexedByDomainId[$domainId] = Money::create(100);
+        }
+
+        $additionalService = $this->additionalServiceFacade->create($additionalServiceData);
+
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $productData = $this->productDataFactory->createFromProduct($product);
+        $productData->additionalServicesByDomainId[Domain::FIRST_DOMAIN_ID][] = $additionalService;
+        $this->productFacade->edit($product->getId(), $productData);
+        $this->handleDispatchedRecalculationMessages();
+
+        return $additionalService;
+    }
+
+    private function modifyPriceOfAdditionalService(AdditionalService $additionalService): void
+    {
+        $additionalServiceData = $this->additionalServiceDataFactory->createFromAdditionalService($additionalService);
+
+        foreach (array_keys($additionalServiceData->pricesIndexedByDomainId) as $domainId) {
+            $additionalServiceData->pricesIndexedByDomainId[$domainId] = Money::create(200);
+        }
+
+        $this->additionalServiceFacade->edit($additionalService->getId(), $additionalServiceData);
+    }
+
+    private function unassignAdditionalServicesFromTestingProduct(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $productData = $this->productDataFactory->createFromProduct($product);
+        $productData->additionalServicesByDomainId[Domain::FIRST_DOMAIN_ID] = [];
+        $this->productFacade->edit($product->getId(), $productData);
+        $this->handleDispatchedRecalculationMessages();
     }
 
     private function hideTestingProduct(): void

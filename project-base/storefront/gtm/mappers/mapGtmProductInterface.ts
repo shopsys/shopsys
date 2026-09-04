@@ -42,6 +42,7 @@ export const mapGtmProductInterface = (
         categories:
             'categories' in productInterface ? productInterface.categories.map((category) => category.name) : [],
         ...(zboziCategory !== undefined && { zboziCategory }),
+        productType: 'product',
     };
 };
 

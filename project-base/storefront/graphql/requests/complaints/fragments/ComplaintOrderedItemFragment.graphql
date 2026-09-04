@@ -6,6 +6,24 @@ fragment ComplaintOrderedItemFragment on OrderItem {
     totalPrice {
         priceWithVat
     }
+    relatedItems {
+        __typename
+        uuid
+        name
+        catnum
+        quantity
+        unit
+        type
+        mainImage {
+            ...ImageFragment
+        }
+        unitPrice {
+            ...PriceFragment
+        }
+        totalPrice {
+            ...PriceFragment
+        }
+    }
     order {
         uuid
         number

@@ -6,7 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
@@ -30,6 +32,7 @@ class CartFacade
         protected readonly CartRepository $cartRepository,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly GiftCartFacade $giftCartFacade,
+        protected readonly AdditionalServicePriceCalculation $additionalServicePriceCalculation,
     ) {
     }
 
@@ -148,5 +151,41 @@ class CartFacade
         $this->em->flush();
 
         return $cart;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[] $additionalServices
+     */
+    public function setItemAdditionalServicesInExistingCartByUuid(
+        string $cartItemUuid,
+        array $additionalServices,
+        Cart $cart,
+    ): Cart {
+        $cartItem = $cart->getItemByUuid($cartItemUuid);
+
+        $cartItem->setAdditionalServices($additionalServices);
+        $cartItem->setWatchedAdditionalServicePrices($this->calculateAdditionalServicesWatchedPrices($cartItem));
+        $cart->setModifiedNow();
+
+        $this->em->flush();
+
+        return $cart;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function calculateAdditionalServicesWatchedPrices(CartItem $cartItem): array
+    {
+        $watchedAdditionalServicePrices = [];
+
+        foreach ($cartItem->getAdditionalServices() as $additionalService) {
+            $watchedAdditionalServicePrices[$additionalService->getId()] = $this->additionalServicePriceCalculation
+                ->calculatePrice($additionalService, $cartItem->getProduct(), $this->domain->getId())
+                ->getPriceWithVat()
+                ->getAmount();
+        }
+
+        return $watchedAdditionalServicePrices;
     }
 }

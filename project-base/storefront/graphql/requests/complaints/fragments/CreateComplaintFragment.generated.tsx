@@ -18,6 +18,7 @@ export type TypeAvailabilityStatusEnum =
 
 /** One of possible types of the order item */
 export type TypeOrderItemTypeEnum =
+  | 'additionalService'
   | 'discount'
   | 'payment'
   | 'product'
@@ -32,7 +33,7 @@ export type TypeTransportTypeEnum =
   | 'packetery'
   | 'personal_pickup';
 
-export type TypeCreateComplaintFragment = { uuid: string, number: string, deliveryFirstName: string, deliveryLastName: string, deliveryCompanyName: string | null, deliveryTelephone: string, deliveryStreet: string, deliveryCity: string, deliveryPostcode: string, createdAt: string, bankAccountNumber: string | null, deliveryCountry: { __typename: 'Country', name: string, code: string }, items: Array<{ uuid: string, quantity: number, description: string, catnum: string | null, productName: string, orderItem: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { uuid: string, number: string, creationDate: string, customerUser:
+export type TypeCreateComplaintFragment = { uuid: string, number: string, deliveryFirstName: string, deliveryLastName: string, deliveryCompanyName: string | null, deliveryTelephone: string, deliveryStreet: string, deliveryCity: string, deliveryPostcode: string, createdAt: string, bankAccountNumber: string | null, deliveryCountry: { __typename: 'Country', name: string, code: string }, items: Array<{ uuid: string, quantity: number, description: string, catnum: string | null, productName: string, orderItem: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, catnum: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, relatedItems: Array<{ __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, deliveryDaysExtension: number | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, order: { uuid: string, number: string, creationDate: string, customerUser:
           | { uuid: string }
           | { uuid: string }
           | { uuid: string }

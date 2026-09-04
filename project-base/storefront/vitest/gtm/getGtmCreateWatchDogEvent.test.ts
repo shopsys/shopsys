@@ -100,6 +100,7 @@ describe('getGtmCreateWatchDogEvent', () => {
                         brand: 'Watch Brand',
                         categories: ['Watches'],
                         imageUrl: 'https://cdn.example.com/watched-product.jpg',
+                        productType: 'product',
                         quantity: 1,
                         listIndex: 2,
                     },

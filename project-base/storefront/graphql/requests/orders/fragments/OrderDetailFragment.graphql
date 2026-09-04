@@ -3,6 +3,7 @@ fragment OrderDetailFragment on Order {
     uuid
     number
     creationDate
+    expectedDeliveryDate
     items {
         ...OrderDetailItemFragment
     }

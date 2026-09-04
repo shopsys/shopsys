@@ -202,6 +202,7 @@ class Cart
     {
         $quantifiedProduct = new QuantifiedProduct($cartItem->getProduct(), $cartItem->getQuantity());
         $quantifiedProduct->setAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY, $cartItem->getType());
+        $quantifiedProduct->setAdditionalData(QuantifiedProduct::ADDITIONAL_SERVICES_KEY, $cartItem->getAdditionalServices());
 
         return $quantifiedProduct;
     }

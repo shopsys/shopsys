@@ -6,8 +6,14 @@ namespace Shopsys\FrontendApiBundle\Model\Cart;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceFacade;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -32,6 +38,8 @@ class CartWatcherFacade
         protected readonly OrderFacade $orderFacade,
         protected readonly CartWithModificationsResultFactory $cartWithModificationsResultFactory,
         protected readonly GiftCartFacade $giftCartFacade,
+        protected readonly AdditionalServiceFacade $additionalServiceFacade,
+        protected readonly AdditionalServicePriceCalculation $additionalServicePriceCalculation,
     ) {
     }
 
@@ -44,6 +52,7 @@ class CartWatcherFacade
         $this->checkProductGiftCartItemsValidity($cart);
         $this->checkModifiedPrices($cart);
         $this->checkStockQuantities($cart);
+        $this->checkAdditionalServicesValidity($cart);
         $this->checkPromoCodeValidity($cart);
 
         $this->em->flush();
@@ -143,6 +152,130 @@ class CartWatcherFacade
                 }
             }
         }
+    }
+
+    protected function checkAdditionalServicesValidity(Cart $cart): void
+    {
+        $productIdsWithAdditionalServices = [];
+
+        foreach ($cart->getItems() as $cartItem) {
+            if ($this->isCartItemSubjectToAdditionalServicesCheck($cartItem)) {
+                $productIdsWithAdditionalServices[] = $cartItem->getProduct()->getId();
+            }
+        }
+
+        if ($productIdsWithAdditionalServices === []) {
+            return;
+        }
+
+        $offeredAdditionalServicesIndexedByProductId = $this->additionalServiceFacade->getEnabledIndexedByProductIds(
+            $productIdsWithAdditionalServices,
+            $this->domain->getId(),
+        );
+
+        foreach ($cart->getItems() as $cartItem) {
+            if (!$this->isCartItemSubjectToAdditionalServicesCheck($cartItem)) {
+                continue;
+            }
+
+            $this->checkCartItemAdditionalServices(
+                $cartItem,
+                $offeredAdditionalServicesIndexedByProductId[$cartItem->getProduct()->getId()] ?? [],
+            );
+        }
+    }
+
+    protected function isCartItemSubjectToAdditionalServicesCheck(CartItem $cartItem): bool
+    {
+        return $this->canCartItemCarryAdditionalServices($cartItem)
+            && ($cartItem->getAdditionalServices() !== [] || $cartItem->getWatchedAdditionalServicePrices() !== []);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[] $offeredAdditionalServices
+     */
+    protected function checkCartItemAdditionalServices(CartItem $cartItem, array $offeredAdditionalServices): void
+    {
+        $chosenAdditionalServices = $cartItem->getAdditionalServices();
+        $offeredAdditionalServiceIds = array_map(
+            static fn (AdditionalService $offeredAdditionalService) => $offeredAdditionalService->getId(),
+            $offeredAdditionalServices,
+        );
+        $stillOfferedAdditionalServices = array_values(array_filter(
+            $chosenAdditionalServices,
+            static fn (AdditionalService $additionalService) => in_array($additionalService->getId(), $offeredAdditionalServiceIds, true),
+        ));
+
+        if ($this->hasCartItemRemovedAdditionalServices($cartItem, $stillOfferedAdditionalServices)) {
+            $this->cartWithModificationsResult->addCartItemWithRemovedAdditionalServices($cartItem);
+        }
+
+        if (count($stillOfferedAdditionalServices) !== count($chosenAdditionalServices)) {
+            $cartItem->setAdditionalServices($stillOfferedAdditionalServices);
+        }
+
+        $this->watchAdditionalServicePrices($cartItem, $stillOfferedAdditionalServices);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[] $stillOfferedAdditionalServices
+     */
+    protected function hasCartItemRemovedAdditionalServices(
+        CartItem $cartItem,
+        array $stillOfferedAdditionalServices,
+    ): bool {
+        $chosenAdditionalServices = $cartItem->getAdditionalServices();
+
+        if (count($stillOfferedAdditionalServices) !== count($chosenAdditionalServices)) {
+            return true;
+        }
+
+        $chosenAdditionalServiceIds = array_map(
+            static fn (AdditionalService $additionalService) => $additionalService->getId(),
+            $chosenAdditionalServices,
+        );
+
+        return array_any(
+            array_keys($cartItem->getWatchedAdditionalServicePrices()),
+            static fn (int $watchedAdditionalServiceId): bool => !in_array($watchedAdditionalServiceId, $chosenAdditionalServiceIds, true),
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[] $stillOfferedAdditionalServices
+     */
+    protected function watchAdditionalServicePrices(CartItem $cartItem, array $stillOfferedAdditionalServices): void
+    {
+        $watchedAdditionalServicePrices = $cartItem->getWatchedAdditionalServicePrices();
+        $newWatchedAdditionalServicePrices = [];
+        $hasModifiedAdditionalServicePrice = false;
+
+        foreach ($stillOfferedAdditionalServices as $additionalService) {
+            $priceWithVat = $this->additionalServicePriceCalculation
+                ->calculatePrice($additionalService, $cartItem->getProduct(), $this->domain->getId())
+                ->getPriceWithVat();
+            $watchedAdditionalServicePrice = $watchedAdditionalServicePrices[$additionalService->getId()] ?? null;
+
+            if (
+                $watchedAdditionalServicePrice !== null
+                && !$priceWithVat->equals(Money::create($watchedAdditionalServicePrice))
+            ) {
+                $hasModifiedAdditionalServicePrice = true;
+            }
+
+            $newWatchedAdditionalServicePrices[$additionalService->getId()] = $priceWithVat->getAmount();
+        }
+
+        if ($hasModifiedAdditionalServicePrice) {
+            $this->cartWithModificationsResult->addCartItemWithModifiedAdditionalServicePrices($cartItem);
+        }
+
+        $cartItem->setWatchedAdditionalServicePrices($newWatchedAdditionalServicePrices);
+    }
+
+    protected function canCartItemCarryAdditionalServices(CartItem $cartItem): bool
+    {
+        return $cartItem->getType() === CartItemTypeEnum::TYPE_PRODUCT && $cartItem->hasProduct();
     }
 
     protected function setPromoCodes(Cart $cart): void

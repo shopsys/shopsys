@@ -12,6 +12,9 @@ OrderDecorator:
             creationDate:
                 type: "DateTime!"
                 description: "Date and time when the order was created"
+            expectedDeliveryDate:
+                type: "DateTime"
+                description: "Expected delivery date captured when the order was created; null when no delivery date could be promised"
 
             items:
                 type: "[OrderItem!]!"

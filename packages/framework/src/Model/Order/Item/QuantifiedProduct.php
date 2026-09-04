@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 class QuantifiedProduct
 {
     public const string CART_ITEM_TYPE_KEY = 'cartItemType';
+    public const string ADDITIONAL_SERVICES_KEY = 'additionalServices';
 
     /**
      * @var array<string,mixed>

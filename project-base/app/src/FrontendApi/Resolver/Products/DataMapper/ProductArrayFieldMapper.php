@@ -48,6 +48,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         HreflangLinksFacade $hreflangLinksFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductReviewApiFacade $productReviewApiFacade,
+        DataLoaderInterface $additionalServicesByIdsBatchLoader,
         private DataLoaderInterface $categoriesBatchLoader,
         private DataLoaderInterface $flagsBatchLoader,
         private DataLoaderInterface $brandsBatchLoader,
@@ -66,6 +67,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
             $hreflangLinksFacade,
             $productAvailabilityFacade,
             $productReviewApiFacade,
+            $additionalServicesByIdsBatchLoader,
         );
     }
 

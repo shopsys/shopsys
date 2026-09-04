@@ -39,6 +39,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'promo-code-apply-error': t('There was an error while adding a promo code to the order.'),
         'promo-code-remove-error': t('There was an error while removing the promo code from the order.'),
         'remove-from-cart-error': t('Unable to remove product from cart.'),
+        'set-cart-item-additional-services-error': t('Unable to change additional services of the cart item.'),
         'transport-error': t('There was an error while changing the transport method.'),
     };
 

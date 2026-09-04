@@ -180,6 +180,7 @@ class ProductExportRepository
             ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
             ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
             ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsIds($product),
+            ProductExportFieldProvider::ADDITIONAL_SERVICES => $this->extractAdditionalServiceIds($product, $domainId),
             ProductExportFieldProvider::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId, false),
             ProductExportFieldProvider::PRODUCT_TYPE => $this->extractProductType($product, $domainId),
             ProductExportFieldProvider::PRIORITY_BY_PRODUCT_TYPE => $this->extractPriorityByProductType($product, $domainId),
@@ -462,6 +463,21 @@ class ProductExportRepository
         }
 
         return $relatedProductsIds;
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function extractAdditionalServiceIds(Product $product, int $domainId): array
+    {
+        $additionalServiceIds = [];
+        $additionalServices = $product->getAdditionalServicesIndexedByDomainId()[$domainId] ?? [];
+
+        foreach ($additionalServices as $additionalService) {
+            $additionalServiceIds[] = $additionalService->getId();
+        }
+
+        return $additionalServiceIds;
     }
 
     protected function getResults(QueryBuilder $queryBuilder, array $fields, int $domainId, string $locale): array

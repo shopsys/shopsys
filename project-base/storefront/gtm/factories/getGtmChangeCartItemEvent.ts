@@ -3,7 +3,7 @@ import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmChangeCartItemEventType } from 'gtm/types/events';
-import { GtmCartInfoType } from 'gtm/types/objects';
+import { GtmCartInfoType, GtmServiceCartItemType } from 'gtm/types/objects';
 
 export const getGtmChangeCartItemEvent = (
     event: GtmEventType.add_to_cart | GtmEventType.remove_from_cart,
@@ -16,6 +16,7 @@ export const getGtmChangeCartItemEvent = (
     gtmProductListName: GtmProductListNameType,
     domainUrl: string,
     arePricesHidden: boolean,
+    additionalServiceCartItems: GtmServiceCartItemType[] = [],
     gtmCartInfo?: GtmCartInfoType | null,
 ): GtmChangeCartItemEventType => ({
     event,
@@ -24,7 +25,7 @@ export const getGtmChangeCartItemEvent = (
         currencyCode: currencyCodeCode,
         valueWithoutVat: eventValueWithoutVat,
         valueWithVat: eventValueWithVat,
-        products: [mapGtmCartItemType(cartItem, domainUrl, listIndex, quantity)],
+        products: [mapGtmCartItemType(cartItem, domainUrl, listIndex, quantity), ...additionalServiceCartItems],
         arePricesHidden,
     },
     cart: gtmCartInfo,

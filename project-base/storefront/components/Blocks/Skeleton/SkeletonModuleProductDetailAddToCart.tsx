@@ -9,7 +9,7 @@ export const SkeletonModuleProductDetailAddToCart: FC<SkeletonModuleProductDetai
 }) => (
     <Skeleton
         className={twJoin(
-            'w-full',
+            'w-full sm:max-w-60',
             size === 'small' && 'h-9',
             size === 'medium' && 'h-9',
             size === 'large' && 'h-9 sm:h-10',

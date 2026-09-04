@@ -42,6 +42,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::VISIBILITY] = $product[ProductExportFieldProvider::VISIBILITY] ?? [];
         $result[ProductExportFieldProvider::ACCESSORIES] = $product[ProductExportFieldProvider::ACCESSORIES] ?? [];
         $result[ProductExportFieldProvider::RELATED_PRODUCTS] = $product[ProductExportFieldProvider::RELATED_PRODUCTS] ?? [];
+        $result[ProductExportFieldProvider::ADDITIONAL_SERVICES] = $product[ProductExportFieldProvider::ADDITIONAL_SERVICES] ?? [];
 
         $result[ProductExportFieldProvider::ORDERING_PRIORITY] = $product[ProductExportFieldProvider::ORDERING_PRIORITY] ?? 0;
 

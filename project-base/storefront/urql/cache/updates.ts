@@ -34,6 +34,10 @@ import {
     TypeRemovePromoCodeFromCartMutationVariables,
 } from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
 import {
+    TypeSetCartItemAdditionalServicesMutation,
+    TypeSetCartItemAdditionalServicesMutationVariables,
+} from 'graphql/requests/cart/mutations/SetCartItemAdditionalServicesMutation.generated';
+import {
     CartQueryDocument,
     TypeCartQuery,
     TypeCartQueryVariables,
@@ -162,6 +166,17 @@ export const cacheUpdates: UpdatesConfig = {
         },
         RemoveFromCart(result: TypeRemoveFromCartMutation, _args: TypeRemoveFromCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.RemoveFromCart, result.RemoveFromCart.uuid);
+        },
+        SetCartItemAdditionalServices(
+            result: TypeSetCartItemAdditionalServicesMutation,
+            _args: TypeSetCartItemAdditionalServicesMutationVariables,
+            cache,
+        ) {
+            manuallyUpdateCartQuery(
+                cache,
+                result.SetCartItemAdditionalServices,
+                result.SetCartItemAdditionalServices.uuid,
+            );
         },
         ApplyPromoCodeToCart(
             result: TypeApplyPromoCodeToCartMutation,

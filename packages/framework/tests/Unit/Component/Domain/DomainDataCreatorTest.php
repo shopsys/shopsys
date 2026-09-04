@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundExce
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
@@ -70,6 +71,7 @@ class DomainDataCreatorTest extends TestCase
             $vatDataFactoryStub,
             $vatFacadeStub,
             $vatSettingStub,
+            $this->createStub(AdditionalServiceFacade::class),
         );
         $newDomainsDataCreated = $domainDataCreator->createNewDomainsData();
 
@@ -175,6 +177,7 @@ class DomainDataCreatorTest extends TestCase
             $vatDataFactoryStub,
             $vatFacadeStub,
             $vatSettingStub,
+            $this->createStub(AdditionalServiceFacade::class),
         );
 
         $tFunctionMock->enable();
@@ -246,6 +249,7 @@ class DomainDataCreatorTest extends TestCase
             $vatDataFactoryStub,
             $vatFacadeStub,
             $vatSettingStub,
+            $this->createStub(AdditionalServiceFacade::class),
         );
 
         $domainDataCreator->createNewDomainsData();

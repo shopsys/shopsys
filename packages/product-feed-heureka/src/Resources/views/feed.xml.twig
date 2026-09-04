@@ -35,6 +35,9 @@
         {% if item.cpc is not null -%}
             <HEUREKA_CPC>{{ item.cpc|moneyFormat(2, ',') }}</HEUREKA_CPC>
         {% endif -%}
+        {% for specialService in item.specialServices -%}
+            <SPECIAL_SERVICE>{{ specialService }}</SPECIAL_SERVICE>
+        {% endfor -%}
     </SHOPITEM>
 {% endblock %}
 

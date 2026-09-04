@@ -17,6 +17,8 @@ class MergadoFeedItem implements FeedItemInterface
     /**
      * @param string[] $galleryImageUrls
      * @param string[] $flags
+     * @param string[] $specialServices
+     * @param array<int, array{extraMessage: string, customText: string|null}> $zboziAdditionalServiceEntries
      */
     public function __construct(
         protected readonly int $id,
@@ -36,6 +38,8 @@ class MergadoFeedItem implements FeedItemInterface
         protected readonly ?Brand $brand = null,
         protected readonly ?string $imageUrl = null,
         protected readonly ?int $mainVariantId = null,
+        protected readonly array $specialServices = [],
+        protected readonly array $zboziAdditionalServiceEntries = [],
     ) {
     }
 
@@ -134,5 +138,21 @@ class MergadoFeedItem implements FeedItemInterface
     public function getAvailability(): string
     {
         return $this->availability;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSpecialServices(): array
+    {
+        return $this->specialServices;
+    }
+
+    /**
+     * @return array<int, array{extraMessage: string, customText: string|null}>
+     */
+    public function getZboziAdditionalServiceEntries(): array
+    {
+        return $this->zboziAdditionalServiceEntries;
     }
 }

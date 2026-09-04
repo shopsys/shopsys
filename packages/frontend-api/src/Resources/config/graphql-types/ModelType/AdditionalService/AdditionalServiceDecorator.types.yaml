@@ -1,0 +1,35 @@
+AdditionalServiceDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents an additional service offered with a product"
+        fields:
+            id:
+                type: "Int!"
+                description: "Additional service id"
+            uuid:
+                type: "Uuid!"
+                description: "UUID of the additional service"
+            name:
+                type: "String!"
+                description: "Name of the additional service"
+            catnum:
+                type: "String!"
+                description: "Catalog number of the additional service"
+            description:
+                type: "String"
+                description: "Description of the additional service"
+            price:
+                type: "Price!"
+                description: "Price of the additional service for one unit of the product it accompanies"
+            deliveryDaysExtension:
+                type: "Int"
+                description: "By how many working days the additional service extends the estimated delivery time of the order"
+            mainImage:
+                type: "Image"
+                description: "Additional service image"
+                resolve: '@=query("mainImageByAdditionalServicePromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null

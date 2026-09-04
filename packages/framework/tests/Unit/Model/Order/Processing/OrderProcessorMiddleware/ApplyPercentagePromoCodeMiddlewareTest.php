@@ -92,6 +92,58 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
         }
     }
 
+    public function testAdditionalServiceItemsAreNotDiscounted(): void
+    {
+        $this->setTranslator();
+
+        $orderProcessingData = $this->createOrderProcessingData();
+
+        $promoCodeData = new PromoCodeData();
+        $promoCodeData->code = 'promoCode';
+        $promoCodeData->discountType = PromoCodeTypeEnum::DISCOUNT_TYPE_PERCENT;
+        $promoCode = new PromoCode($promoCodeData);
+
+        $orderProcessingData->orderInput->addPromoCode($promoCode);
+
+        $this->addProductsToOrderData(
+            $orderProcessingData->orderData,
+            [
+                [
+                    'unitPrice' => new Price(Money::create(1000), Money::create(1210)),
+                    'quantity' => 1,
+                    'name' => 'product 1',
+                    'id' => 1,
+                ],
+            ],
+        );
+        $orderProcessingData->orderData->addTotalPrice(new Price(Money::create(1000), Money::create(1210)), OrderItemTypeEnum::TYPE_PRODUCT);
+
+        $this->addAdditionalServiceToOrderData(
+            $orderProcessingData->orderData,
+            new Price(Money::create(100), Money::create(121)),
+        );
+
+        $applyPercentagePromoCodeMiddleware = $this->createApplyPercentagePromoCodeMiddleware(
+            [
+                new Price(Money::create(100), Money::create(121)),
+            ],
+            new Price(Money::create(1000), Money::create(1210)),
+        );
+
+        $result = $applyPercentagePromoCodeMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
+
+        $actualOrderData = $result->orderData;
+        $actualDiscountItems = $actualOrderData->getItemsByType(OrderItemTypeEnum::TYPE_DISCOUNT);
+
+        $this->assertCount(1, $actualDiscountItems);
+        $this->assertSame('Promo code -10% - product 1', array_first($actualDiscountItems)->name);
+
+        $this->assertThat(
+            $actualOrderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE]),
+            new IsPriceEqual(new Price(Money::create(100), Money::create(121))),
+        );
+    }
+
     #[DataProvider('invalidPromoCodeTypeDataProvider')]
     public function testNoPromoCodeIsAdded(?string $promoCodeType): void
     {
@@ -158,9 +210,18 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
 
     private function createApplyPercentagePromoCodeMiddleware(
         array $discountPrices,
+        ?Price $expectedValidatedTotalPrice = null,
     ): ApplyPercentagePromoCodeMiddleware {
-        $currentPromoCodeFacade = $this->createStub(CurrentPromoCodeFacade::class);
-        $currentPromoCodeFacade->method('validatePromoCode')->willReturn([1, 2]);
+        if ($expectedValidatedTotalPrice === null) {
+            $currentPromoCodeFacade = $this->createStub(CurrentPromoCodeFacade::class);
+            $currentPromoCodeFacade->method('validatePromoCode')->willReturn([1, 2]);
+        } else {
+            $currentPromoCodeFacade = $this->createMock(CurrentPromoCodeFacade::class);
+            $currentPromoCodeFacade->expects($this->once())
+                ->method('validatePromoCode')
+                ->with($this->anything(), new IsPriceEqual($expectedValidatedTotalPrice), $this->anything())
+                ->willReturn([1, 2]);
+        }
 
         $promoCodeFacade = $this->createStub(PromoCodeFacade::class);
         $promoCodeFacade->method('getHighestLimitByPromoCodeAndTotalPrice')->willReturn(new PromoCodeLimit('1', '10'));
@@ -179,6 +240,20 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
             $numberFormatterExtension,
             $this->createOrderItemDataFactory(),
         );
+    }
+
+    private function addAdditionalServiceToOrderData(OrderData $orderData, Price $additionalServicePrice): void
+    {
+        $additionalServiceItemData = new OrderItemData();
+        $additionalServiceItemData->type = OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE;
+        $additionalServiceItemData->name = 'additional service';
+        $additionalServiceItemData->setUnitPrice($additionalServicePrice);
+        $additionalServiceItemData->setTotalPrice($additionalServicePrice);
+        $additionalServiceItemData->vatPercent = '21';
+        $additionalServiceItemData->quantity = 1;
+
+        $orderData->addItem($additionalServiceItemData);
+        $orderData->addTotalPrice($additionalServicePrice, OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE);
     }
 
     /**

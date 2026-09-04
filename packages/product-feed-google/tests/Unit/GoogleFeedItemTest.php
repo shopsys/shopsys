@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -20,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductAdditionalServicesBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
@@ -33,6 +35,8 @@ class GoogleFeedItemTest extends TestCase
     private CurrencyFacade|MockObject $currencyFacadeMock;
 
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
+
+    private Stub|ProductAdditionalServicesBatchLoader $productAdditionalServicesBatchLoaderStub;
 
     private GoogleFeedItemFactory $googleFeedItemFactory;
 
@@ -61,6 +65,8 @@ class GoogleFeedItemTest extends TestCase
         $pricingGroupSettingFacadeStub = $this->createStub(PricingGroupSettingFacade::class);
         $pricingGroupSettingFacadeStub->method('getDefaultPricingGroupByDomainId')->willReturn($this->createStub(PricingGroup::class));
 
+        $this->productAdditionalServicesBatchLoaderStub = $this->createStub(ProductAdditionalServicesBatchLoader::class);
+
         $this->googleFeedItemFactory = new GoogleFeedItemFactory(
             $productPriceCalculation,
             $this->currencyFacadeMock,
@@ -68,6 +74,7 @@ class GoogleFeedItemTest extends TestCase
             $productAvailabilityFacadeStub,
             $specialPriceFacade,
             $pricingGroupSettingFacadeStub,
+            $this->productAdditionalServicesBatchLoaderStub,
         );
 
         $defaultCurrency = $this->createCurrencyStub(1, 'EUR');
@@ -132,6 +139,67 @@ class GoogleFeedItemTest extends TestCase
             ->with($product, $domain)->willReturn($url);
     }
 
+    public function testGoogleFeedItemWithCustomLabel0(): void
+    {
+        $this->productAdditionalServicesBatchLoaderStub->method('getShownInFeedsFeedNames')
+            ->willReturn(['Assembly', 'Extended warranty']);
+
+        $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+
+        self::assertSame('Assembly;Extended warranty', $googleFeedItem->getCustomLabel0());
+    }
+
+    public function testGoogleFeedItemCustomLabel0SanitizesSeparatorInFeedNames(): void
+    {
+        $this->productAdditionalServicesBatchLoaderStub->method('getShownInFeedsFeedNames')
+            ->willReturn(['Assembly; anchoring', 'Extended warranty']);
+
+        $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+
+        self::assertSame('Assembly, anchoring;Extended warranty', $googleFeedItem->getCustomLabel0());
+    }
+
+    public function testGoogleFeedItemCustomLabel0IsLimitedTo100Characters(): void
+    {
+        $this->productAdditionalServicesBatchLoaderStub->method('getShownInFeedsFeedNames')
+            ->willReturn([str_repeat('a', 60), str_repeat('b', 39), str_repeat('c', 60)]);
+
+        $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+
+        self::assertSame(str_repeat('a', 60) . ';' . str_repeat('b', 39), $googleFeedItem->getCustomLabel0());
+        self::assertSame(100, mb_strlen($googleFeedItem->getCustomLabel0()));
+    }
+
+    public function testGoogleFeedItemCustomLabel0LeavesOutOverlongFeedNameInsteadOfCuttingIt(): void
+    {
+        $this->productAdditionalServicesBatchLoaderStub->method('getShownInFeedsFeedNames')
+            ->willReturn([str_repeat('a', 101), 'Assembly']);
+
+        $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+
+        self::assertSame('Assembly', $googleFeedItem->getCustomLabel0());
+    }
+
+    public function testGoogleFeedItemCustomLabel0LeavesOutFeedNameNotFittingWithItsSeparator(): void
+    {
+        $this->productAdditionalServicesBatchLoaderStub->method('getShownInFeedsFeedNames')
+            ->willReturn([str_repeat('a', 99), str_repeat('b', 5)]);
+
+        $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+
+        self::assertSame(str_repeat('a', 99), $googleFeedItem->getCustomLabel0());
+    }
+
+    public function testGoogleFeedItemCustomLabel0IsNullWhenNoFeedNameFits(): void
+    {
+        $this->productAdditionalServicesBatchLoaderStub->method('getShownInFeedsFeedNames')
+            ->willReturn([str_repeat('a', 101)]);
+
+        $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+
+        self::assertNull($googleFeedItem->getCustomLabel0());
+    }
+
     public function testMinimalGoogleFeedItemIsCreatable(): void
     {
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
@@ -148,6 +216,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertThat($googleFeedItem->getPrice()->getPriceWithVat(), new IsMoneyEqual(Money::zero()));
         self::assertEquals('EUR', $googleFeedItem->getCurrency()->getCode());
         self::assertEquals([], $googleFeedItem->getIdentifiers());
+        self::assertNull($googleFeedItem->getCustomLabel0());
     }
 
     public function testGoogleFeedItemWithBrand(): void

@@ -25,9 +25,20 @@ OrderItemDecorator:
             type:
                 type: "OrderItemTypeEnum!"
                 description: "Type of the order item"
+            deliveryDaysExtension:
+                type: "Int"
+                description: "By how many working days the additional service extends the estimated delivery time of the order"
             product:
                 type: "Product"
                 description: "Product of the order item"
+            mainImage:
+                type: "Image"
+                description: "Main image of the product, additional service, transport or payment the order item represents"
+                resolve: '@=query("mainImageByOrderItemPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
             uuid:
                 type: "Uuid!"
                 description: "UUID of the order item"
@@ -43,3 +54,6 @@ OrderItemDecorator:
             payment:
                 type: "Payment"
                 description: "Payment method applied to the order"
+            relatedItems:
+                type: "[OrderItem!]!"
+                description: "Order items related to this order item (e.g. additional services of a product item)"
