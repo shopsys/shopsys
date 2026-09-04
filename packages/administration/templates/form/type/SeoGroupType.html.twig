@@ -1,0 +1,56 @@
+{% block seo_group_widget %}
+    {% import '@ShopsysAdministration/form/type/UrlListType.html.twig' as urlList %}
+
+    {% if form.vars.multidomain %}
+        {{ form_errors(form.seo) }}
+
+        {% if form.urls is defined %}
+            {{ form_errors(form.urls) }}
+
+            <div class="js-entity-url-list">
+                {{ form_errors(form.urls.newUrls) }}
+
+                {% for domainId, domainUrl in form.urls.vars.domainUrlsById %}
+                    <div class="card mb-3 js-entity-url-list-domain-{{ domainId }}">
+                        <div class="card-header card-header-light py-2">
+                            <span>
+                                {{ domain_icon(domainId) }}
+                                {{ 'Domain'|trans }}
+                                <strong>{{ getDomainName(domainId) }}</strong>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            {{ form_widget(form.seo.children[domainId]) }}
+
+                            {{ form_label(form.urls, null, { label_attr: { class: 'form-label' } }) }}
+                            <div class="js-entity-url-list-container">
+                                {{ urlList.domainUrls(form.urls, domainId, domainUrl) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            {% for domainId, seoAttributesForm in form.seo.children %}
+                <div class="card mb-3">
+                    <div class="card-header card-header-light py-2">
+                        <span>
+                            {{ domain_icon(domainId) }}
+                            {{ 'Domain'|trans }}
+                            <strong>{{ getDomainName(domainId) }}</strong>
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        {{ form_widget(seoAttributesForm) }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        {{ form_widget(form.seo) }}
+
+        {% if form.urls is defined %}
+            {{ form_row(form.urls) }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
