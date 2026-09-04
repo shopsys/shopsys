@@ -116,30 +116,28 @@ export const TransportGroupListItem: FC<TransportGroupListItemProps> = ({
                 onClick={() => toggleSelectedTransportGroup(group.uuid)}
             >
                 <span className="flex min-w-0 items-center gap-4">
-                    <span
-                        className={twJoin(
-                            'flex size-5 min-w-5 items-center justify-center text-icon-accent transition',
-                            isSelected && 'rotate-180',
-                        )}
-                        aria-hidden="true"
-                    >
-                        <ArrowIcon className="size-5" />
-                    </span>
-
                     <TransportGroupIcon group={group} isOnGreyBackground={!isSelected} />
 
-                    <span className="flex min-h-7 min-w-0 items-center text-left font-secondary font-semibold text-base text-text-default transition">
-                        {group.name}
+                    <span className="flex min-w-0 flex-col text-left">
+                        <span className="font-secondary font-semibold text-base text-text-default">{group.name}</span>
+
+                        {groupPrice !== null && (
+                            <span className="font-secondary font-semibold text-sm text-text-less">
+                                {groupPrice.shouldDisplayFromPrefix && `${t('from')} `}
+                                {formatPrice(groupPrice.price, { explicitZero: groupPrice.shouldDisplayFromPrefix })}
+                            </span>
+                        )}
                     </span>
                 </span>
 
-                <span className="flex min-w-fit items-center gap-4">
-                    {groupPrice !== null && (
-                        <span className="whitespace-nowrap font-secondary font-semibold text-sm text-text-default">
-                            {groupPrice.shouldDisplayFromPrefix && `${t('from')} `}
-                            {formatPrice(groupPrice.price, { explicitZero: groupPrice.shouldDisplayFromPrefix })}
-                        </span>
+                <span
+                    aria-hidden="true"
+                    className={twJoin(
+                        'flex size-5 min-w-5 items-center justify-center text-icon-accent transition',
+                        isSelected && 'rotate-180',
                     )}
+                >
+                    <ArrowIcon className="size-5" />
                 </span>
             </button>
 

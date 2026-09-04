@@ -239,27 +239,6 @@ class ProductEntityFieldMapper
         return $product->isAllowedNegativeStock();
     }
 
-    public function getStoreAvailabilities(Product $product): array
-    {
-        $storeAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId(
-            $product,
-            $this->domain->getId(),
-        );
-
-        $result = [];
-
-        foreach ($storeAvailabilitiesInformation as $storeAvailabilityInformation) {
-            $result[] = [
-                'store_name' => $storeAvailabilityInformation->getStoreName(),
-                'store_id' => $storeAvailabilityInformation->getStoreId(),
-                'availability_information' => $storeAvailabilityInformation->getAvailabilityInformation(),
-                'availability_status' => $storeAvailabilityInformation->getAvailabilityStatus(),
-            ];
-        }
-
-        return $result;
-    }
-
     public function getAvailableStoresCount(Product $product): ?int
     {
         return $this->productAvailabilityFacade->getAvailableStoresCount(

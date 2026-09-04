@@ -186,7 +186,7 @@ class TransportsQuery extends AbstractQuery
     {
         return $this->inMemoryCache->getOrSaveValue(
             self::EXCLUDING_PRODUCTS_CACHE_NAMESPACE,
-            fn (): array => $this->transportVisibilityCalculation->getExcludingProductsByTransportIdForCart($cart),
+            fn (): array => $this->transportVisibilityCalculation->getExcludingProductsByTransportIdForProducts($cart->getProducts()),
             $cartUuid ?? self::CURRENT_CUSTOMER_CART_CACHE_KEY,
         );
     }

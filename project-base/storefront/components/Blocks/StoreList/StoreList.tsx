@@ -7,6 +7,7 @@ type StoreListProps = {
     selectedStoreUuid: string | null;
     isDistanceFromSearchText: boolean;
     itemMode?: 'default' | 'selectOnItemClick';
+    unknownDeliveryDateExplanation?: string;
     onSelectStoreCallback?: (storeUuid: string | null) => void;
 };
 
@@ -15,6 +16,7 @@ export const StoreList: FC<StoreListProps> = ({
     selectedStoreUuid,
     isDistanceFromSearchText,
     itemMode,
+    unknownDeliveryDateExplanation,
     onSelectStoreCallback,
 }) => {
     return (
@@ -22,6 +24,7 @@ export const StoreList: FC<StoreListProps> = ({
             {stores.map((store) => (
                 <StoreListItem
                     key={store.identifier}
+                    unknownDeliveryDateExplanation={unknownDeliveryDateExplanation}
                     isDistanceFromSearchText={isDistanceFromSearchText}
                     isSelected={store.identifier === selectedStoreUuid}
                     mode={itemMode}

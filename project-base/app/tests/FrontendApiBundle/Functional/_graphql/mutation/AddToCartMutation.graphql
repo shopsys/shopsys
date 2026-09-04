@@ -150,13 +150,6 @@ fragment TestProductFragment on Product {
     partNumber
     ean
     usps
-    storeAvailabilities {
-        store {
-            name
-        }
-        availabilityInformation
-        availabilityStatus
-    }
     availableStoresCount
     breadcrumb {
         name
@@ -218,13 +211,6 @@ fragment TestMainVariantFragment on MainVariant {
     partNumber
     ean
     usps
-    storeAvailabilities {
-        store {
-            name
-        }
-        availabilityInformation
-        availabilityStatus
-    }
     availableStoresCount
     breadcrumb {
         name

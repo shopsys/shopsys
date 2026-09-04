@@ -1,8 +1,8 @@
+import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { getAvailabilityTextColorClassName } from 'utils/ui/getAvailabilityTextColorClassName';
 
 type ProductComparisonBodyProps = {
     comparedProducts: TypeProductInProductListFragment[];
@@ -31,14 +31,13 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
                     .filter((product) => !product.isSellingDenied)
                     .map((product) => (
                         <BodyItem key={`availability-${product.uuid}`}>
-                            <div
-                                className={twJoin(
-                                    'wrap-break-word font-bold text-sm sm:text-md',
-                                    getAvailabilityTextColorClassName(product.availability.status),
-                                )}
-                            >
-                                {product.availability.name}
-                            </div>
+                            <ProductAvailability
+                                availability={product.availability}
+                                availableStoresCount={null}
+                                className="wrap-break-word sm:text-md"
+                                displayMode="compact"
+                                isInquiryType={false}
+                            />
                         </BodyItem>
                     ))}
             </tr>

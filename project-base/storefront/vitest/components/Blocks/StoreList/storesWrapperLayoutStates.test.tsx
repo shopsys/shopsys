@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { StoresWrapper } from 'components/Blocks/StoreList/StoresWrapper';
 import { TIDs } from 'cypress/tids';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
@@ -114,43 +114,5 @@ describe('StoresWrapper layout states', () => {
         expect(
             pickupSelectionContainer.querySelector(`[data-tid="${TIDs.stores_map}"]`)?.firstElementChild,
         ).toHaveClass('vl:top-0');
-    });
-
-    test('passes browser geolocation coordinates to the store query callback', async () => {
-        const coordinates = { latitude: 50.087, longitude: 14.421 };
-        const onUserCoordinatesCallback = vi.fn();
-        const originalGeolocation = navigator.geolocation;
-
-        Object.defineProperty(navigator, 'geolocation', {
-            configurable: true,
-            value: {
-                getCurrentPosition: vi.fn((success: PositionCallback) => {
-                    success({
-                        coords: coordinates,
-                    } as GeolocationPosition);
-                }),
-            },
-        });
-
-        render(
-            <StoresWrapper
-                appliedSearchTextValue=""
-                isDistanceFromSearchText={false}
-                searchTextValue=""
-                stores={storesWithoutResults}
-                onSearchTextCallback={vi.fn()}
-                onUserCoordinatesCallback={onUserCoordinatesCallback}
-            />,
-        );
-
-        await waitFor(() => {
-            expect(onUserCoordinatesCallback).toHaveBeenCalledWith(coordinates);
-        });
-        expect(testState.updateCoordinates).toHaveBeenCalledWith(coordinates);
-
-        Object.defineProperty(navigator, 'geolocation', {
-            configurable: true,
-            value: originalGeolocation,
-        });
     });
 });

@@ -21,7 +21,7 @@ TransportDecorator:
                 description: "Transport position"
             price:
                 type: "Price!"
-                description: "Transport price"
+                description: "Transport price based on the current cart state. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead."
                 resolve: '@=query("priceByTransportQuery", value, args["cartUuid"], context)'
                 args:
                     cartUuid:
@@ -78,7 +78,7 @@ TransportDecorator:
                 description: "Transport group"
             expectedDeliveryDate:
                 type: "DateTime"
-                description: "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised."
+                description: "Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead."
                 resolve: '@=query("transportExpectedDeliveryDateQuery", value, args["cartUuid"], context)'
                 args:
                     cartUuid:

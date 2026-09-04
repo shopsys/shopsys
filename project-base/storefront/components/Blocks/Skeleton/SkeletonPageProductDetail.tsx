@@ -3,9 +3,9 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
-import { SkeletonModuleComparisonAndWishlistButtons } from './SkeletonModuleComparisonAndWishlistButtons';
 import { SkeletonModuleLastVisitedProducts } from './SkeletonModuleLastVisitedProducts';
 import { SkeletonModuleProductDetailAddToCart } from './SkeletonModuleProductDetailAddToCart';
+import { SkeletonModuleProductDetailSecondaryActions } from './SkeletonModuleProductDetailSecondaryActions';
 import { SkeletonModuleProductDetailSections } from './SkeletonModuleProductDetailSections';
 
 export const SkeletonPageProductDetail: FC = () => (
@@ -49,7 +49,7 @@ export const SkeletonPageProductDetail: FC = () => (
 
                             <SkeletonModuleProductDetailAddToCart />
 
-                            <SkeletonModuleComparisonAndWishlistButtons />
+                            <SkeletonModuleProductDetailSecondaryActions />
                         </div>
                     </div>
                 </div>

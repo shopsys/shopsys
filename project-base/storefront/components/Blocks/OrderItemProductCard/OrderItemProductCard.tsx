@@ -1,13 +1,12 @@
 import { Image } from 'components/Basic/Image/Image';
 import { CartItemPartialAvailability } from 'components/Blocks/Product/CartItemPartialAvailability';
+import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
-import { twJoin } from 'tailwind-merge';
 import { isCartItemPartiallyAvailable } from 'utils/cart/isCartItemPartiallyAvailable';
 import { generateProductImageAlt } from 'utils/productAltText';
-import { getAvailabilityTextColorClassName } from 'utils/ui/getAvailabilityTextColorClassName';
 import { OrderItemProductPrice } from './OrderItemProductPrice';
 
 type OrderItemProductCardProps = {
@@ -56,14 +55,12 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
                                     unitName={unit ?? ''}
                                 />
                             ) : (
-                                <span
-                                    className={twJoin(
-                                        'font-semibold text-xs',
-                                        getAvailabilityTextColorClassName(product.availability.status),
-                                    )}
-                                >
-                                    {product.availability.name}
-                                </span>
+                                <ProductAvailability
+                                    availability={product.availability}
+                                    availableStoresCount={null}
+                                    displayMode="compact"
+                                    isInquiryType={false}
+                                />
                             ))}
                     </div>
                     <span className="whitespace-nowrap font-semibold text-sm">

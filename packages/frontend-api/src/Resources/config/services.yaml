@@ -232,21 +232,11 @@ services:
         arguments:
             $productSearchResultsProviders: !tagged_iterator 'shopsys.frontend_api.products_search_results_provider'
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreAvailabilityResolverMap:
-        arguments:
-            $storesBatchLoader: '@stores_batch_loader'
-        tags:
-            - { name: overblog_graphql.resolver_map, schema: default }
-
     Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreResolverMap:
         arguments:
             $storeSlugBatchLoader: '@store_slug_batch_loader'
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Store\StoresQuery:
-        arguments:
-            $storesSearchRateLimiter: '@limiter.frontend_api_stores_search'
 
     Shopsys\FrontendApiBundle\Model\Security\RefreshTokenRedisCacheFacade:
         arguments:
@@ -259,6 +249,10 @@ services:
     Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade:
         arguments:
             $logger: '@monolog.logger'
+
+    Shopsys\FrontendApiBundle\Model\Store\StoreConnectionFactory:
+        arguments:
+            $storesSearchRateLimiter: '@limiter.frontend_api_stores_search'
 
     Shopsys\FrontendApiBundle\Model\Store\StoreSearchTextCoordinatesProvider:
         arguments:

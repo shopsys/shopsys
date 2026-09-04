@@ -77,6 +77,7 @@ const ApplicationErrors = {
     'product-not-in-list': 'no-flash-message',
     'ready-category-seo-mix-not-found': 'no-flash-message',
     'transport-not-found': 'no-flash-message',
+    'transport-price-missing': 'no-flash-message',
     'unable-to-generate-breadcrumb-items': 'no-flash-message',
     'WISHLIST-product-list-not-found': 'no-flash-message',
 

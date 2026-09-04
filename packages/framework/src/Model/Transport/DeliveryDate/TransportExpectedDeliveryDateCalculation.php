@@ -10,11 +10,12 @@ use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\Exception\TransportIsNotPersonalPickupException;
@@ -41,6 +42,7 @@ class TransportExpectedDeliveryDateCalculation
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly StoreFacade $storeFacade,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
     ) {
     }
 
@@ -54,7 +56,12 @@ class TransportExpectedDeliveryDateCalculation
     ): ?DateTimeImmutable {
         $storeSelectedInCart = $this->findStoreSelectedInCartForTransport($transport, $cart, $domainId);
 
-        return $this->calculateDeliveryDate($transport, $cart, $domainId, $storeSelectedInCart);
+        return $this->calculateDeliveryDate(
+            $transport,
+            array_values($cart?->getQuantifiedProducts() ?? []),
+            $domainId,
+            $storeSelectedInCart,
+        );
     }
 
     /**
@@ -66,33 +73,74 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         Store $store,
     ): ?DateTimeImmutable {
+        $this->assertPersonalPickupTransport($transport);
+
+        return $this->calculateDeliveryDate(
+            $transport,
+            array_values($cart?->getQuantifiedProducts() ?? []),
+            $domainId,
+            $store,
+        );
+    }
+
+    /**
+     * Returns the expected delivery date of a single piece of the product ordered today, independently of any cart
+     */
+    public function calculateExpectedDeliveryDateForProduct(
+        Transport $transport,
+        Product $product,
+        int $domainId,
+    ): ?DateTimeImmutable {
+        return $this->calculateDeliveryDate($transport, [new QuantifiedProduct($product, 1)], $domainId, null);
+    }
+
+    public function calculateExpectedDeliveryDateForStoreAndProduct(
+        Transport $transport,
+        Product $product,
+        int $domainId,
+        Store $store,
+    ): ?DateTimeImmutable {
+        $this->assertPersonalPickupTransport($transport);
+
+        return $this->calculateDeliveryDate($transport, [new QuantifiedProduct($product, 1)], $domainId, $store);
+    }
+
+    protected function assertPersonalPickupTransport(Transport $transport): void
+    {
         if (!$transport->isPersonalPickup()) {
             throw new TransportIsNotPersonalPickupException(
                 'The expected delivery date for a store can only be calculated for a personal pickup transport.',
             );
         }
-
-        return $this->calculateDeliveryDate($transport, $cart, $domainId, $store);
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     */
     protected function calculateDeliveryDate(
         Transport $transport,
-        ?Cart $cart,
+        array $quantifiedProducts,
         int $domainId,
         ?Store $store,
     ): ?DateTimeImmutable {
-        // the dispatch date does not depend on the transport nor the store, so one cart resolves it just once
-        // per request even when the date is being calculated for a whole transport listing or store picker
+        if ($store === null && $transport->isPersonalPickup()) {
+            return $this->calculateBestPickupDeliveryDateAcrossStores($transport, $quantifiedProducts, $domainId);
+        }
+
+        // the dispatch date does not depend on the transport nor the store, so one set of products resolves it just
+        // once per request even when the date is being calculated for a whole transport listing or store picker
         $dispatchDate = $this->inMemoryCache->getOrSaveValue(
             static::DISPATCH_DATE_CACHE_NAMESPACE,
-            fn (): ?DateTimeImmutable => $this->findDispatchDate($cart, $domainId),
-            $this->getCartCacheKey($cart),
+            fn (): ?DateTimeImmutable => $this->findDispatchDate($quantifiedProducts, $domainId),
+            $this->getQuantifiedProductsCacheKey($quantifiedProducts),
             $domainId,
         );
 
         if ($dispatchDate === null) {
             return null;
         }
+
+        $dispatchDate = $this->postponeDispatchDateByTransferDaysIfNeeded($dispatchDate, $quantifiedProducts, $domainId, $store);
 
         $closestPossibleDeliveryDate = $dispatchDate->modify(sprintf('+%d days', $transport->getDaysUntilDelivery()));
 
@@ -102,22 +150,45 @@ class TransportExpectedDeliveryDateCalculation
     }
 
     /**
-     * The dispatch date is derived from the cart items, so their fingerprint is a part of the cache key —
-     * a mutation modifying the cart and resolving the delivery date within the same request (mutating the
-     * very same cart instance) gets a fresh value; the stocks are considered stable within a request
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      */
-    protected function getCartCacheKey(?Cart $cart): string
-    {
-        if ($cart === null) {
-            return 'no-cart';
+    protected function calculateBestPickupDeliveryDateAcrossStores(
+        Transport $transport,
+        array $quantifiedProducts,
+        int $domainId,
+    ): ?DateTimeImmutable {
+        $bestDeliveryDate = null;
+
+        foreach ($this->getStoresByDomainIdCached($domainId) as $store) {
+            $deliveryDate = $this->calculateDeliveryDate($transport, $quantifiedProducts, $domainId, $store);
+
+            if ($deliveryDate !== null && ($bestDeliveryDate === null || $deliveryDate < $bestDeliveryDate)) {
+                $bestDeliveryDate = $deliveryDate;
+            }
         }
 
-        $cartItemParts = array_map(
-            static fn (CartItem $cartItem): string => $cartItem->getProduct()->getId() . ':' . $cartItem->getQuantity(),
-            $cart->getItems(),
+        return $bestDeliveryDate;
+    }
+
+    /**
+     * The dispatch date is derived from the (product, quantity) pairs, so their fingerprint is the cache key —
+     * a mutation modifying the cart and resolving the delivery date within the same request gets a fresh value;
+     * the stocks are considered stable within a request
+     *
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     */
+    protected function getQuantifiedProductsCacheKey(array $quantifiedProducts): string
+    {
+        if ($quantifiedProducts === []) {
+            return 'none';
+        }
+
+        $quantifiedProductParts = array_map(
+            static fn (QuantifiedProduct $quantifiedProduct): string => $quantifiedProduct->getProduct()->getId() . ':' . $quantifiedProduct->getQuantity(),
+            $quantifiedProducts,
         );
 
-        return spl_object_id($cart) . '|' . implode(',', $cartItemParts);
+        return implode(',', $quantifiedProductParts);
     }
 
     protected function findStoreSelectedInCartForTransport(Transport $transport, ?Cart $cart, int $domainId): ?Store
@@ -136,23 +207,54 @@ class TransportExpectedDeliveryDateCalculation
 
     /**
      * Returns the day the order can be dispatched — today, or the worst expected restocking date
-     * of the awaited cart items; null when an awaited item has no valid restocking date
+     * of the awaited products; null when an awaited product has no valid restocking date
+     *
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      */
-    protected function findDispatchDate(?Cart $cart, int $domainId): ?DateTimeImmutable
+    protected function findDispatchDate(array $quantifiedProducts, int $domainId): ?DateTimeImmutable
     {
-        $awaitedCartItems = $cart === null ? [] : $this->getCartItemsAwaitingRestocking($cart, $domainId);
+        $awaitedQuantifiedProducts = $this->getQuantifiedProductsAwaitingRestocking($quantifiedProducts, $domainId);
 
-        if ($awaitedCartItems === []) {
+        if ($awaitedQuantifiedProducts === []) {
             return $this->getToday($domainId);
         }
 
-        $worstExpectedRestockingDate = $this->findWorstExpectedRestockingDate($awaitedCartItems, $domainId);
+        $worstExpectedRestockingDate = $this->findWorstExpectedRestockingDate($awaitedQuantifiedProducts, $domainId);
 
         if ($worstExpectedRestockingDate === null) {
             return null;
         }
 
         return $this->getStartOfDay($worstExpectedRestockingDate, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     */
+    protected function postponeDispatchDateByTransferDaysIfNeeded(
+        DateTimeImmutable $dispatchDate,
+        array $quantifiedProducts,
+        int $domainId,
+        ?Store $store,
+    ): DateTimeImmutable {
+        if (
+            $quantifiedProducts === []
+            || !$this->isTransferNeeded($quantifiedProducts, $domainId, $store)
+        ) {
+            return $dispatchDate;
+        }
+
+        return $dispatchDate->modify(sprintf('+%d days', $this->productAvailabilityFacade->getTransferDaysByDomainId($domainId)));
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     */
+    protected function isTransferNeeded(array $quantifiedProducts, int $domainId, ?Store $store): bool
+    {
+        // a carrier transport dispatches from any stock, only a store may need a transfer
+        return $store !== null
+            && $this->productAvailabilityFacade->isTransferToStoreNeeded($quantifiedProducts, $store, $domainId);
     }
 
     protected function postponeToFirstAllowedDeliveryDay(
@@ -228,8 +330,12 @@ class TransportExpectedDeliveryDateCalculation
         ?Store $store,
         array $closedDaysOnDate,
     ): bool {
+        if ($transport->isPersonalPickup() && $store !== null) {
+            return !$this->isStoreClosedOnDate($store, $deliveryDate, $domainId, $closedDaysOnDate);
+        }
+
         return !$this->isDeliveryBlockedByDayOfWeek($transport, $deliveryDate)
-            && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate, $domainId, $store);
+            && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate);
     }
 
     protected function isDeliveryBlockedByDayOfWeek(Transport $transport, DateTimeImmutable $deliveryDate): bool
@@ -240,34 +346,44 @@ class TransportExpectedDeliveryDateCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDaysOnDate
      */
-    protected function isDeliveryBlockedByClosedDays(
-        Transport $transport,
-        array $closedDaysOnDate,
-        int $domainId,
-        ?Store $store,
-    ): bool {
-        $blockingClosedDays = array_filter(
+    protected function isDeliveryBlockedByClosedDays(Transport $transport, array $closedDaysOnDate): bool
+    {
+        return array_any(
             $closedDaysOnDate,
             fn (ClosedDay $closedDay): bool => !$this->isTransportDeliveringOnClosedDay($transport, $closedDay),
         );
+    }
 
-        if ($blockingClosedDays === []) {
-            return false;
-        }
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDaysOnDate
+     */
+    protected function isStoreClosedOnDate(
+        Store $store,
+        DateTimeImmutable $deliveryDate,
+        int $domainId,
+        array $closedDaysOnDate,
+    ): bool {
+        return $this->isStoreClosedByClosedDays($store, $closedDaysOnDate)
+            || $this->isStoreClosedByOpeningHours($store, $deliveryDate, $domainId);
+    }
 
-        if ($store === null && !$transport->isPersonalPickup()) {
+    protected function isStoreClosedByOpeningHours(Store $store, DateTimeImmutable $deliveryDate, int $domainId): bool
+    {
+        $dayOfWeek = (int)$deliveryDate->format('N');
+
+        if (!$this->storeOpeningHoursProvider->isStoreOpenOnDayOfWeek($store, $dayOfWeek)) {
             return true;
         }
 
-        if ($store !== null) {
-            return $this->isStoreClosedByClosedDays($store, $blockingClosedDays);
+        if ($deliveryDate->format(static::DATE_INDEX_FORMAT) !== $this->getToday($domainId)->format(static::DATE_INDEX_FORMAT)) {
+            return false;
         }
 
-        // a personal pickup is blocked only when every store on the domain is closed
-        return array_all(
-            $this->getStoresByDomainIdCached($domainId),
-            fn (Store $domainStore): bool => $this->isStoreClosedByClosedDays($domainStore, $blockingClosedDays),
-        );
+        $nowTime = $this->clock->now()
+            ->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId))
+            ->format('H:i');
+
+        return !$this->storeOpeningHoursProvider->isStoreOpenAfterTimeOnDayOfWeek($store, $dayOfWeek, $nowTime);
     }
 
     /**
@@ -277,7 +393,7 @@ class TransportExpectedDeliveryDateCalculation
     {
         return $this->inMemoryCache->getOrSaveValue(
             static::STORES_CACHE_NAMESPACE,
-            fn (): array => $this->storeFacade->getStoresByDomainId($domainId),
+            fn (): array => $this->storeFacade->getStoresByDomainIdWithEagerLoadedOpeningHours($domainId),
             $domainId,
         );
     }
@@ -319,34 +435,39 @@ class TransportExpectedDeliveryDateCalculation
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    protected function getCartItemsAwaitingRestocking(Cart $cart, int $domainId): array
+    protected function getQuantifiedProductsAwaitingRestocking(array $quantifiedProducts, int $domainId): array
     {
-        $cartItems = $cart->getItems();
+        if ($quantifiedProducts === []) {
+            return [];
+        }
 
         $stockQuantitiesIndexedByProductId = $this->productAvailabilityFacade
             ->getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(
-                array_map(static fn (CartItem $cartItem): Product => $cartItem->getProduct(), $cartItems),
+                array_map(static fn (QuantifiedProduct $quantifiedProduct): Product => $quantifiedProduct->getProduct(), $quantifiedProducts),
                 $domainId,
             );
 
         return array_filter(
-            $cartItems,
-            static fn (CartItem $cartItem): bool => $cartItem->getQuantity() > $stockQuantitiesIndexedByProductId[$cartItem->getProduct()->getId()],
+            $quantifiedProducts,
+            static fn (QuantifiedProduct $quantifiedProduct): bool => $quantifiedProduct->getQuantity() > $stockQuantitiesIndexedByProductId[$quantifiedProduct->getProduct()->getId()],
         );
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[] $awaitedCartItems
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $awaitedQuantifiedProducts
      */
-    protected function findWorstExpectedRestockingDate(array $awaitedCartItems, int $domainId): ?DateTimeImmutable
-    {
+    protected function findWorstExpectedRestockingDate(
+        array $awaitedQuantifiedProducts,
+        int $domainId,
+    ): ?DateTimeImmutable {
         $worstExpectedRestockingDate = null;
 
-        foreach ($awaitedCartItems as $cartItem) {
+        foreach ($awaitedQuantifiedProducts as $quantifiedProduct) {
             $expectedRestockingDate = $this->productAvailabilityFacade->findValidExpectedRestockingDate(
-                $cartItem->getProduct(),
+                $quantifiedProduct->getProduct(),
                 $domainId,
             );
 

@@ -20,6 +20,7 @@ import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageReadyEvents/prod
 import { useMemo } from 'react';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { isProductSellable } from 'utils/product/isProductSellable';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
@@ -43,12 +44,7 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
 
     useGtmSliderProductListViewEvent(products, GtmProductListNameType.other);
 
-    const isProductActionDependentOnCart =
-        canCreateOrder &&
-        !product.isSellingDenied &&
-        !product.isCurrentlyOutOfStock &&
-        (product.isMainVariant || !product.isInquiryType) &&
-        !product.isMainVariant;
+    const isProductActionDependentOnCart = canCreateOrder && isProductSellable(product);
     const shouldShowProductActionSkeleton = isProductActionDependentOnCart && isCartFetchingOrUnavailable;
     const handleProductClick = () => {
         if (isTextSelected()) {
@@ -131,6 +127,7 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                         <ProductAvailability
                             availability={product.availability}
                             availableStoresCount={product.availableStoresCount}
+                            isPersonalPickupOnly={product.isPersonalPickupOnly}
                             isInquiryType={product.isInquiryType}
                         />
                     )}

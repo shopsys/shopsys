@@ -243,13 +243,6 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertNull($this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($mainVariant, self::FIRST_DOMAIN_ID));
     }
 
-    public function testMainVariantStoresAvailabilitiesIsEmpty(): void
-    {
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '83', Product::class);
-
-        $this->assertEmpty($this->productAvailabilityFacade->getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId($mainVariant, self::FIRST_DOMAIN_ID));
-    }
-
     public function testMainVariantAvailableStoresCountIsNull(): void
     {
         $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '83', Product::class);

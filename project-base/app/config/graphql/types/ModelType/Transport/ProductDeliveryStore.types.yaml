@@ -1,0 +1,4 @@
+ProductDeliveryStore:
+    type: object
+    inherits:
+        - 'ProductDeliveryStoreDecorator'

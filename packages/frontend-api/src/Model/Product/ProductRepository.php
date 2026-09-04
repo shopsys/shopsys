@@ -15,11 +15,15 @@ class ProductRepository
     {
     }
 
-    public function getSellableByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
-    {
+    public function getSellableByUuidWithEagerLoadedDomains(
+        string $uuid,
+        int $domainId,
+        PricingGroup $pricingGroup,
+    ): Product {
         $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($domainId, $pricingGroup);
         $queryBuilder->andWhere('p.uuid = :uuid');
         $queryBuilder->setParameter('uuid', $uuid);
+        $queryBuilder->addSelect('productDomains')->leftJoin('p.domains', 'productDomains');
 
         $product = $queryBuilder->getQuery()->getOneOrNullResult();
 

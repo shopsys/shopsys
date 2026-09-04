@@ -1,9 +1,10 @@
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
+import { DeliveryOptionsLink } from 'components/Blocks/Popup/DeliveryOptionsPopup/DeliveryOptionsLink';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
 import { ProductGift } from 'components/Blocks/Product/ProductGift';
-import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
+import { showWatchdogButton, WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { useOpenReviewPopupFromUrl } from 'components/Blocks/ProductReviews/useOpenReviewPopupFromUrl';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -14,9 +15,10 @@ import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageRe
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageReadyEvents/useGtmProductDetailViewEvent';
 import { useRouter } from 'next/router';
+import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
-import { DeferredComparisonAndWishlistButtons } from './ComparisonAndWishlistButtons/DeferredComparisonAndWishlistButtons';
+import { isProductSellable } from 'utils/product/isProductSellable';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
@@ -24,7 +26,9 @@ import { ProductDetailTitle } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
+import { DeferredProductDetailSecondaryActions } from './ProductDetailSecondaryActions/DeferredProductDetailSecondaryActions';
 import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
+import { ProductDetailUsps } from './ProductDetailUsps';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
@@ -42,6 +46,12 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
     useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
     useOpenReviewPopupFromUrl(product.uuid, product.fullName);
+
+    const isWatchdogButtonVisible = showWatchdogButton(product);
+    const isPurchaseActionVisible =
+        product.isInquiryType || (!product.isSellingDenied && !product.isCurrentlyOutOfStock);
+    const isDeliveryOptionsVisible = isProductSellable(product);
+    const areMultiplePurchaseActionsVisible = isWatchdogButtonVisible && isPurchaseActionVisible;
 
     return (
         <>
@@ -74,27 +84,39 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             catalogNumber={product.catalogNumber}
                             reviewsSummary={product.reviewsSummary}
                             shortDescription={product.shortDescription}
-                            usps={product.usps}
                         />
+
+                        {product.usps.length > 0 && <ProductDetailUsps usps={product.usps} />}
 
                         <ProductGift gifts={product.gifts} />
 
-                        <div className="flex flex-col gap-4 rounded-xl bg-background-more p-3 sm:p-6">
-                            <ProductDetailPrice productPrice={product.price} />
+                        <div className="flex flex-col gap-4 rounded-xl bg-background-more p-4 sm:p-5">
+                            <div className="flex flex-col gap-2">
+                                <ProductDetailPrice productPrice={product.price} />
+                                <ProductDetailAvailability product={product} />
+                            </div>
 
-                            <ProductDetailAvailability
-                                availability={product.availability}
-                                availableStoresCount={product.availableStoresCount}
-                                isInquiryType={product.isInquiryType}
-                                isSellingDenied={product.isSellingDenied}
-                                storeAvailabilities={product.storeAvailabilities}
-                            />
+                            {(isWatchdogButtonVisible || isPurchaseActionVisible) && (
+                                <div
+                                    className={twJoin(
+                                        'grid items-stretch gap-3',
+                                        areMultiplePurchaseActionsVisible ? 'sm:grid-cols-2' : 'sm:max-w-80',
+                                    )}
+                                >
+                                    {isWatchdogButtonVisible && (
+                                        <WatchDogButton
+                                            className="h-auto min-h-10 w-full text-balance sm:min-h-14"
+                                            product={product}
+                                        />
+                                    )}
 
-                            <WatchDogButton className="self-start" product={product} />
+                                    {isPurchaseActionVisible && <DeferredProductDetailAddToCart product={product} />}
+                                </div>
+                            )}
 
-                            <DeferredProductDetailAddToCart product={product} />
-
-                            <DeferredComparisonAndWishlistButtons product={product} />
+                            {isDeliveryOptionsVisible && (
+                                <DeliveryOptionsLink preselectedProductUuid={product.uuid} products={[product]} />
+                            )}
                         </div>
 
                         {product.promotionBuyQuantity !== null && product.promotionFreeQuantity !== null && (
@@ -107,6 +129,9 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                 </div>
                             </div>
                         )}
+                        <div className="px-4 sm:px-5">
+                            <DeferredProductDetailSecondaryActions product={product} />
+                        </div>
                     </div>
                 </Webline>
 

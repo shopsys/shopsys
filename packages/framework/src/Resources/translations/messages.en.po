@@ -523,6 +523,9 @@ msgstr ""
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr ""
 
+msgid "Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the transport or the store is closed, the date is moved to the nearest allowed day."
+msgstr ""
+
 msgid "Cancel"
 msgstr ""
 
@@ -3425,6 +3428,9 @@ msgid "The number of days between the order dispatch and the delivery. 0 means t
 msgstr ""
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
+msgstr ""
+
+msgid "The pickup dates are driven by the weekly opening hours of the <a href=\"%storesUrl%\" target=\"_blank\">stores</a> and by the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> — a store excluded from a closed day hands the orders over even on that day."
 msgstr ""
 
 msgid "The selected country is not valid."

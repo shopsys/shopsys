@@ -1,0 +1,5 @@
+ProductDeliveryStoreConnectionDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'StoreConnection'

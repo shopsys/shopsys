@@ -118,7 +118,8 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                     <ProductAvailability
                         availability={product.availability}
                         availableStoresCount={product.availableStoresCount}
-                        className="col-span-2 min-h-0 text-sm leading-5 xl:col-span-1 xl:max-w-70 xl:justify-self-start min-[1380px]:max-w-none min-[1380px]:whitespace-nowrap"
+                        isPersonalPickupOnly={product.isPersonalPickupOnly}
+                        className="col-span-2 min-h-10 text-sm xl:col-span-1 xl:w-60 xl:justify-self-start"
                         isInquiryType={product.isInquiryType}
                     />
                 )}

@@ -54,6 +54,33 @@ class StoreOpeningHoursProvider
         }
     }
 
+    public function isStoreOpenOnDayOfWeek(Store $store, int $dayOfWeek): bool
+    {
+        return $this->getOpeningHoursRangesForDayOfWeek($store, $dayOfWeek) !== [];
+    }
+
+    public function isStoreOpenAfterTimeOnDayOfWeek(Store $store, int $dayOfWeek, string $time): bool
+    {
+        return array_any(
+            $this->getOpeningHoursRangesForDayOfWeek($store, $dayOfWeek),
+            static fn (OpeningHoursRange $openingHoursRange): bool => $openingHoursRange->getClosingTime() > $time,
+        );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRange[]
+     */
+    protected function getOpeningHoursRangesForDayOfWeek(Store $store, int $dayOfWeek): array
+    {
+        foreach ($store->getOpeningHours() as $openingHours) {
+            if ($openingHours->getDayOfWeek() === $dayOfWeek) {
+                return $openingHours->getOpeningHoursRanges();
+            }
+        }
+
+        return [];
+    }
+
     protected function getWeekSetting(Store $store): array
     {
         $weekSetting = [];

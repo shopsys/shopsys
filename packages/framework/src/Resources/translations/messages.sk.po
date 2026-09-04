@@ -523,6 +523,9 @@ msgstr "CSV súbor"
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr "CSV súbor musí byť v UTF-8 kódovaní so stĺpcami \"{{ columns }}\". Čiarka sa odporúča ako oddeľovač stĺpcov a bodka (.) ako desatinný oddeľovač."
 
+msgid "Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the transport or the store is closed, the date is moved to the nearest allowed day."
+msgstr "Kalendárne dni potrebné na prevoz tovaru na sklad predajne, keď ho predajňa nemá dostatok skladom (alebo nemá priradený sklad). Pripočítavajú sa k očakávanému termínu osobného odberu; ak vo výsledný deň doprava nedoručuje alebo má predajňa zatvorené, termín sa posunie na najbližší povolený deň."
+
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -3426,6 +3429,9 @@ msgstr "Počet dní medzi expedíciou objednávky a doručením. 0 znamená doru
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimálna veľkosť ikony je 46x26 px. Povolený je len PNG formát."
+
+msgid "The pickup dates are driven by the weekly opening hours of the <a href=\"%storesUrl%\" target=\"_blank\">stores</a> and by the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> — a store excluded from a closed day hands the orders over even on that day."
+msgstr "Termíny vyzdvihnutia sa riadia týždennou otváracou dobou <a href=\"%storesUrl%\" target=\"_blank\">predajní</a> a správou <a href=\"%closedDaysUrl%\" target=\"_blank\">Sviatky a interné dni</a> — predajňa vyňatá zo zatvoreného dňa vydáva objednávky aj v tento deň."
 
 msgid "The selected country is not valid."
 msgstr "Vybraná krajina nie je platná."

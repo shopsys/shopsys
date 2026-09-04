@@ -1,0 +1,4 @@
+ProductDeliveryOption:
+    type: object
+    inherits:
+        - 'ProductDeliveryOptionDecorator'

@@ -1,0 +1,7 @@
+ProductDeliveryStoreConnection:
+    type: relay-connection
+    config:
+        # nodeType cannot be inherited — the relay-connection expansion consumes it before inheritance is applied
+        nodeType: ProductDeliveryStore
+    inherits:
+        - 'ProductDeliveryStoreConnectionDecorator'

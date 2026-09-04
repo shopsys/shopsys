@@ -356,23 +356,6 @@
             "name_suffix": {
                 "type": "text"
             },
-            "store_availabilities_information": {
-                "type": "nested",
-                "properties": {
-                    "store_name": {
-                        "type": "text"
-                    },
-                    "store_id": {
-                        "type": "integer"
-                    },
-                    "availability_information": {
-                        "type": "text"
-                    },
-                    "availability_status": {
-                        "type": "text"
-                    }
-                }
-            },
             "usps": {
                 "type": "text"
             },

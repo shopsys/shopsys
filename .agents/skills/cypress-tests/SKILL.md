@@ -36,6 +36,7 @@ project-base/storefront/cypress/
 | comparison/          | productComparison                                                            | comparisonSupport.ts          |
 | complaints/          | complaints                                                                   | complaintsSupport.ts          |
 | customerUsers/       | customerUsers                                                                | customerUsersSupport.ts       |
+| deliveryOptions/     | deliveryOptionsPopup                                                         | deliveryOptionsSupport.ts     |
 | filterAndSort/       | categoryDetailFilterAndSort, parameterFilter                                 | —                             |
 | freeShipping/        | freeShipping                                                                 | freeShippingSupport.ts        |
 | giftWithProduct/     | giftWithProduct                                                              | giftWithProductSupport.ts     |
@@ -340,6 +341,7 @@ When taking snapshots, NEVER forget to blackout images and icons that may differ
 | Page | TID to blackout |
 | --- | --- |
 | Transport & payment step | `transport_and_payment_list_item_image` |
+| Delivery options popup (product detail) | `transport_and_payment_list_item_image` (shared `TransportAndPaymentItemLabel`), `delivery_options_variant_image` (variant select), `store_opening_status` (pickup store list) |
 | Order summary sidebar | `order_summary_transport_and_payment_image` |
 | Order detail | `order_list_transport_and_payment_image` (shared `ElementWithImage` component) |
 
@@ -367,7 +369,7 @@ changeElementText(TIDs.blog_article_publication_date, staticData.blogArticle.pub
 ```
 
 The expected delivery date message (computed from the current date) is shown on the transport-and-payment
-page and on pickup places. Before EVERY snapshot of that page, call
+page, on pickup places, and in the product-detail delivery options popup. Before EVERY snapshot of those, call
 `changeExpectedDeliveryDateMessagesToStaticDemodata()` from `transportAndPaymentSupport.ts` — it replaces
 each `TIDs.expected_delivery_date_message` element with `staticData.expectedDeliveryDateMessage`, or with
 `staticData.expectedPersonalPickupDateMessage` when the element's real text starts with the translated
@@ -451,9 +453,9 @@ cy.waitForStableAndInteractiveDOM();
 ```typescript
 staticData.products.helloKitty; // { uuid, name, catnum: '9177759' }
 staticData.products.philips32PFL4308; // { uuid, catnum: '9176508' }
-staticData.products.televisionPhilipsM; // { uuid }
+staticData.products.televisionPhilipsM; // { uuid } — main variant with 6 sellable variants (incl. philips54CRT)
 staticData.products.a4techMouse; // { uuid, catnum: '5960453', name }
-staticData.products.philips54CRT; // { uuid, catnum: '9176588' }
+staticData.products.philips54CRT; // { uuid, catnum: '9176588', name: '54" Philips CRT [V]' } — variant of televisionPhilipsM
 staticData.products.panasonicDmcFt5ep; // { catnum: '5965907', name: 'PANASONIC DMC FT5EP' }
 staticData.products.delonghi; // { uuid, catnum: '9771339', name } — has gift plan (gift: giftTicket100czk)
 staticData.products.giftTicket100czk; // { uuid, catnum: '9176544MS', name } — gift product

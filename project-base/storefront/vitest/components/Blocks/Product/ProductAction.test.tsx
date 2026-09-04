@@ -84,6 +84,7 @@ const inStockProduct = {
     isSellingDenied: false,
     isCurrentlyOutOfStock: false,
     availableStoresCount: null,
+    isPersonalPickupOnly: false,
     catalogNumber: 'CAT-1',
     isMainVariant: false,
     isInquiryType: false,

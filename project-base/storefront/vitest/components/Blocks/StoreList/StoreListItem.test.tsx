@@ -26,9 +26,26 @@ vi.mock('components/Blocks/OpeningHours/OpeningStatus', () => ({
     OpeningStatus: () => <div>Opening soon</div>,
 }));
 
+vi.mock('components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateInfo', () => ({
+    ExpectedDeliveryDateInfo: () => <div>Expected delivery date</div>,
+}));
+
+vi.mock('components/Blocks/OpeningHours/OpeningHoursOfPickupDay', () => ({
+    OpeningHoursOfPickupDay: () => <div>Pickup day opening hours</div>,
+}));
+
 vi.mock('components/Forms/Button/LinkButton', () => ({
     LinkButton: ({ children }: { children: ReactNode }) => <a href="/store-detail">{children}</a>,
 }));
+
+const toLocalDateString = (date: Date): string => {
+    const pad = (value: number) => String(value).padStart(2, '0');
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T00:00:00`;
+};
+
+const today = new Date();
+const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
 
 const store: StoreOrPacketeryPoint = {
     __typename: 'Store',
@@ -56,12 +73,22 @@ const store: StoreOrPacketeryPoint = {
         dayOfWeek: 1,
         openingHoursOfDays: [
             {
-                date: '2026-07-07',
+                date: toLocalDateString(today),
                 dayOfWeek: 1,
                 openingHoursRanges: [
                     {
                         openingTime: '07:00',
                         closingTime: '17:00',
+                    },
+                ],
+            },
+            {
+                date: toLocalDateString(tomorrow),
+                dayOfWeek: 2,
+                openingHoursRanges: [
+                    {
+                        openingTime: '08:00',
+                        closingTime: '16:00',
                     },
                 ],
             },
@@ -136,6 +163,54 @@ describe('StoreListItem', () => {
             'border-border-brand',
         );
         expect(screen.getByRole('radio', { name: 'Select store Test store' })).toHaveAttribute('aria-checked', 'true');
+    });
+
+    test('shows the current opening status when the pickup is today', () => {
+        render(
+            <StoreListItem
+                isDistanceFromSearchText={false}
+                isSelected={false}
+                store={{ ...store, expectedDeliveryDate: toLocalDateString(today) }}
+            />,
+        );
+
+        expect(screen.getByText('Opening soon')).toBeInTheDocument();
+        expect(screen.queryByText('Pickup day opening hours')).not.toBeInTheDocument();
+    });
+
+    test('shows the opening hours of the pickup day instead of the current status for another day', () => {
+        render(
+            <StoreListItem
+                isDistanceFromSearchText={false}
+                isSelected={false}
+                store={{ ...store, expectedDeliveryDate: toLocalDateString(tomorrow) }}
+            />,
+        );
+
+        expect(screen.queryByText('Opening soon')).not.toBeInTheDocument();
+        expect(screen.queryByText('7 AM - 5 PM')).not.toBeInTheDocument();
+        expect(screen.getByText('Pickup day opening hours')).toBeInTheDocument();
+    });
+
+    test('shows neither the status nor the hours when the pickup date is unknown', () => {
+        render(
+            <StoreListItem
+                isDistanceFromSearchText={false}
+                isSelected={false}
+                store={{ ...store, expectedDeliveryDate: null }}
+            />,
+        );
+
+        expect(screen.queryByText('Opening soon')).not.toBeInTheDocument();
+        expect(screen.queryByText('7 AM - 5 PM')).not.toBeInTheDocument();
+        expect(screen.queryByText('Pickup day opening hours')).not.toBeInTheDocument();
+    });
+
+    test('keeps the current opening status on the stores page without a pickup date', () => {
+        render(<StoreListItem isDistanceFromSearchText={false} isSelected={false} store={store} />);
+
+        expect(screen.getByText('Opening soon')).toBeInTheDocument();
+        expect(screen.getByText('7 AM - 5 PM')).toBeInTheDocument();
     });
 
     test('keeps the store info toggle appearance consistent when expanded', () => {

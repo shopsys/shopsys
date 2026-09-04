@@ -86,6 +86,19 @@ class StoreRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
+     */
+    public function getStoresByDomainIdWithEagerLoadedOpeningHours(int $domainId): array
+    {
+        return $this->getStoresByDomainIdQueryBuilder($domainId)
+            ->addSelect('oh, ohr')
+            ->leftJoin('s.openingHours', 'oh')
+            ->leftJoin('oh.openingHoursRanges', 'ohr')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findStoreByExternalId(string $externalId): ?Store
     {
         return $this->getStoreRepository()->findOneBy(['externalId' => $externalId]);
@@ -124,20 +137,6 @@ class StoreRepository
         }
 
         return $store;
-    }
-
-    /**
-     * @param int[] $storeIds
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
-     */
-    public function getStoresByIds(array $storeIds): array
-    {
-        $queryBuilder = $this->getAllStoresQueryBuilder()
-            ->select('s')
-            ->where('s.id IN (:storeIds)')
-            ->setParameter('storeIds', $storeIds);
-
-        return $queryBuilder->getQuery()->getResult();
     }
 
     /**

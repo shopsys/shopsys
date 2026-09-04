@@ -1,0 +1,12 @@
+query ProductDeliveryStores($productUuid: Uuid!, $transportUuid: Uuid!, $first: Int) {
+    productDeliveryStores(productUuid: $productUuid, transportUuid: $transportUuid, first: $first) {
+        edges {
+            node {
+                store {
+                    uuid
+                }
+                expectedDeliveryDate
+            }
+        }
+    }
+}

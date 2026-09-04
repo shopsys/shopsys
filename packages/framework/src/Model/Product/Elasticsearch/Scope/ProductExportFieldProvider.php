@@ -50,7 +50,6 @@ class ProductExportFieldProvider
     public const string NAME_PREFIX = 'name_prefix';
     public const string NAME_SUFFIX = 'name_suffix';
     public const string AVAILABLE_STORES_COUNT = 'available_stores_count';
-    public const string STORE_AVAILABILITIES_INFORMATION = 'store_availabilities_information';
     public const string VAT_PERCENT = 'vat_percent';
 
     public const string SELLING_FROM = 'selling_from';

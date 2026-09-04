@@ -88,6 +88,7 @@ describe('isNoFlashMessageError', () => {
         'product-not-in-list',
         'ready-category-seo-mix-not-found',
         'transport-not-found',
+        'transport-price-missing',
         'unable-to-generate-breadcrumb-items',
         'WISHLIST-product-list-not-found',
     ])('should return true for no-flash-message code: %s', (code) => {
@@ -209,6 +210,7 @@ describe('error code classification coverage', () => {
             'product-not-in-list',
             'ready-category-seo-mix-not-found',
             'transport-not-found',
+            'transport-price-missing',
             'unable-to-generate-breadcrumb-items',
             'WISHLIST-product-list-not-found',
             // No-log codes

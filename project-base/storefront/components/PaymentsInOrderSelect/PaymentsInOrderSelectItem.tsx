@@ -1,6 +1,6 @@
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
+import { TransportAndPaymentItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentItemLabel';
 import { TransportAndPaymentListItem } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentListItem';
-import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -29,7 +29,7 @@ export const PaymentsInOrderSelectItem: FC<PaymentsInOrderSelectItemProps> = ({
                 name="payment"
                 value={payment.uuid}
                 label={
-                    <TransportAndPaymentSelectItemLabel
+                    <TransportAndPaymentItemLabel
                         description={payment.description}
                         image={payment.mainImage}
                         name={payment.name}

@@ -67,6 +67,7 @@ export enum TIDs {
     product_gallery_image = 'product_gallery_image',
     product_gallery_video = 'product_gallery_video',
     product_price = 'product_price',
+    product_availability = 'product_availability',
     pages_productdetail_addtocart_button = 'pages_productdetail_addtocart_button',
     pages_productdetail_variant_ = 'pages_productdetail_variant_',
     blocks_product_addtocartpopup_product_name = 'blocks_product_addtocartpopup_product_name',
@@ -223,6 +224,16 @@ export enum TIDs {
 
     // Popups
     popup_confirm_button = 'popup_confirm_button',
+
+    // Delivery options popup
+    product_detail_delivery_options_link = 'product_detail_delivery_options_link',
+    product_detail_delivery_options_popup = 'product_detail_delivery_options_popup',
+    delivery_options_variant_select = 'delivery_options_variant_select',
+    delivery_options_variant_option_ = 'delivery_options_variant_option_',
+    delivery_options_variant_image = 'delivery_options_variant_image',
+    delivery_options_address_panel = 'delivery_options_address_panel',
+    delivery_options_pickup_panel = 'delivery_options_pickup_panel',
+    delivery_options_transport_row_ = 'delivery_options_transport_row_',
 
     // Articles & Blog
     article_creation_date = 'article_creation_date',

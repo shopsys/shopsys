@@ -27,6 +27,7 @@ fragment ListedProductFragment on Product {
         ...AvailabilityFragment
     }
     availableStoresCount
+    isPersonalPickupOnly
     catalogNumber
     brand {
         __typename

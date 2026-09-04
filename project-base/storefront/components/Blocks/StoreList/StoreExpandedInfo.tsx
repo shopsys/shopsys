@@ -39,7 +39,16 @@ export const StoreExpandedInfo: FC<StoreExpandedInfoProps> = ({
                         {t('Opening hours', { ns: 'accessibility' })}
                     </p>
 
-                    <OpeningHours openingHours={store.openingHours} />
+                    <OpeningHours
+                        openingHours={store.openingHours}
+                        pickupDate={
+                            store.expectedDeliveryDate !== undefined
+                                ? store.expectedDeliveryDate !== null
+                                    ? new Date(store.expectedDeliveryDate)
+                                    : null
+                                : undefined
+                        }
+                    />
                 </div>
 
                 <div className="flex flex-wrap gap-2.5">

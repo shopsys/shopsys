@@ -100,6 +100,10 @@
     * [Price](#price)
     * [PricingSetting](#pricingsetting)
     * [ProductConnection](#productconnection)
+    * [ProductDeliveryOption](#productdeliveryoption)
+    * [ProductDeliveryStore](#productdeliverystore)
+    * [ProductDeliveryStoreConnection](#productdeliverystoreconnection)
+    * [ProductDeliveryStoreEdge](#productdeliverystoreedge)
     * [ProductEdge](#productedge)
     * [ProductFilterOptions](#productfilteroptions)
     * [ProductList](#productlist)
@@ -119,7 +123,6 @@
     * [Settings](#settings)
     * [SliderItem](#slideritem)
     * [Store](#store)
-    * [StoreAvailability](#storeavailability)
     * [StoreConnection](#storeconnection)
     * [StoreEdge](#storeedge)
     * [StoreSearchCoordinates](#storesearchcoordinates)
@@ -1103,6 +1106,77 @@ Returns product filtered using UUID or URL slug
 <tr>
 <td colspan="2" align="right" valign="top">uuid</td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query.productdeliveryoptions">productDeliveryOptions</strong></td>
+<td valign="top">[<a href="#productdeliveryoption">ProductDeliveryOption</a>!]!</td>
+<td>
+
+Returns the delivery options usable for a single piece of the given product, independently of any cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query.productdeliverystores">productDeliveryStores</strong></td>
+<td valign="top"><a href="#productdeliverystoreconnection">ProductDeliveryStoreConnection</a>!</td>
+<td>
+
+Returns the stores where a single piece of the given product can be picked up using the given personal pickup transport, together with the expected pickup dates, independently of any cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">coordinates</td>
+<td valign="top"><a href="#coordinates">Coordinates</a></td>
+<td>
+
+Returns stores with distance from given coordinates
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">searchText</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Search for city or post code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">transportUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -6641,15 +6715,6 @@ Count of quantity on stock
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="mainvariant.storeavailabilities">storeAvailabilities</strong></td>
-<td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
-<td>
-
-List of availabilities in individual stores (empty for main variants)
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a>!</td>
 <td></td>
@@ -9091,6 +9156,173 @@ Total number of products (-1 means that the total count is not available)
 </tbody>
 </table>
 
+### ProductDeliveryOption
+
+Delivery option of a transport for a single piece of a product, independent of any cart
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliveryoption.expecteddeliverydate">expectedDeliveryDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected delivery date of an order with a single piece of the product placed today. For a personal pickup transport the best possible date across all stores is used. Null when no delivery date can be promised.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliveryoption.price">price</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Transport price for an order with a single piece of the product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliveryoption.transport">transport</strong></td>
+<td valign="top"><a href="#transport">Transport</a>!</td>
+<td>
+
+The transport of this delivery option
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductDeliveryStore
+
+Store where a single piece of a product can be picked up using a personal pickup transport
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliverystore.expecteddeliverydate">expectedDeliveryDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected pickup date at this store for an order with a single piece of the product placed today. Null when no pickup date can be promised.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliverystore.store">store</strong></td>
+<td valign="top"><a href="#store">Store</a>!</td>
+<td>
+
+The store
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductDeliveryStoreConnection
+
+A connection to a list of items.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliverystoreconnection.edges">edges</strong></td>
+<td valign="top">[<a href="#productdeliverystoreedge">ProductDeliveryStoreEdge</a>]</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliverystoreconnection.pageinfo">pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliverystoreconnection.searchcoordinates">searchCoordinates</strong></td>
+<td valign="top"><a href="#storesearchcoordinates">StoreSearchCoordinates</a></td>
+<td>
+
+Coordinates found by the store search text
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliverystoreconnection.totalcount">totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of stores
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductDeliveryStoreEdge
+
+An edge in a connection.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliverystoreedge.cursor">cursor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productdeliverystoreedge.node">node</strong></td>
+<td valign="top"><a href="#productdeliverystore">ProductDeliveryStore</a></td>
+<td>
+
+The item at the end of the edge.
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### ProductEdge
 
 An edge in a connection.
@@ -10302,15 +10534,6 @@ Count of quantity on stock
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="regularproduct.storeavailabilities">storeAvailabilities</strong></td>
-<td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
-<td>
-
-List of availabilities in individual stores (empty for main variants)
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a>!</td>
 <td></td>
@@ -10924,7 +11147,7 @@ Store email
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
 
-Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised.
+Expected delivery date of an order picked up at this store when the given transport is used. When a cart is provided, the expected restocking dates of its items are taken into account. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryStores query instead.
 
 </td>
 </tr>
@@ -11058,50 +11281,6 @@ Store address street
 <td>
 
 UUID
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### StoreAvailability
-
-Represents an availability in an individual store
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong id="storeavailability.availabilityinformation">availabilityInformation</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Detailed information about availability
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="storeavailability.availabilitystatus">availabilityStatus</strong></td>
-<td valign="top"><a href="#availabilitystatusenum">AvailabilityStatusEnum</a>!</td>
-<td>
-
-Availability status in a format suitable for usage in the code
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="storeavailability.store">store</strong></td>
-<td valign="top"><a href="#store">Store</a></td>
-<td>
-
-Store
 
 </td>
 </tr>
@@ -11282,7 +11461,7 @@ Localized transport description (domain dependent)
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
 
-Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised.
+Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead.
 
 </td>
 </tr>
@@ -11369,7 +11548,7 @@ Transport position
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
-Transport price
+Transport price based on the current cart state. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead.
 
 </td>
 </tr>
@@ -12044,15 +12223,6 @@ Product URL slug
 <td>
 
 Count of quantity on stock
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="variant.storeavailabilities">storeAvailabilities</strong></td>
-<td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
-<td>
-
-List of availabilities in individual stores (empty for main variants)
 
 </td>
 </tr>
@@ -16617,15 +16787,6 @@ Product URL slug
 <td>
 
 Count of quantity on stock
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="product.storeavailabilities">storeAvailabilities</strong></td>
-<td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
-<td>
-
-List of availabilities in individual stores (empty for main variants)
 
 </td>
 </tr>

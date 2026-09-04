@@ -23,6 +23,7 @@ export const showWatchdogButton = (product: WatchDogProductType): boolean =>
         product.isSellingDenied);
 
 type WatchDogButtonProps = {
+    className?: string;
     product: WatchDogProductType;
     listIndex?: number;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
@@ -51,7 +52,7 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, si
                 ns: 'accessibility',
                 productName: product.fullName,
             })}
-            className={twJoin('whitespace-nowrap', className)}
+            className={twJoin('whitespace-normal', className)}
             tid={TIDs.blocks_product_watchdog_button}
             title={t('Watchdog popup')}
             size={size}

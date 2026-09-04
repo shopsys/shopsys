@@ -100,7 +100,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'accessories',
             'name_prefix',
             'name_suffix',
-            'store_availabilities_information',
             'usps',
             ...$this->getSearchingFields(),
             'available_stores_count',

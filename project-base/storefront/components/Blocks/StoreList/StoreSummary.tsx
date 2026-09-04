@@ -1,9 +1,11 @@
 import { ExpectedDeliveryDateInfo } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateInfo';
+import { OpeningHoursOfPickupDay } from 'components/Blocks/OpeningHours/OpeningHoursOfPickupDay';
 import OpeningHoursToday from 'components/Blocks/OpeningHours/OpeningHoursToday';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { TIDs } from 'cypress/tids';
 import { type KeyboardEvent, type MouseEvent } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { findOpeningHoursOfDayForDate, isSameLocalDay } from 'utils/openingHours/openingHoursOfDay';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -15,6 +17,7 @@ type StoreSummaryProps = {
     isSelected: boolean;
     hasTodayOpeningHours: boolean;
     isSelectionMode: boolean;
+    unknownDeliveryDateExplanation?: string;
     onClick: (event: MouseEvent<HTMLDivElement>) => void;
     onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => void;
 };
@@ -27,10 +30,24 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
     isSelected,
     hasTodayOpeningHours,
     isSelectionMode,
+    unknownDeliveryDateExplanation,
     onClick,
     onKeyDown,
 }) => {
     const { t } = useTranslation();
+    // a store listing showing the pickup date makes the current opening status irrelevant unless the pickup
+    // is today — for another day the opening hours of that day are shown instead, for an unknown date nothing
+    const isPickupDateShown = store.expectedDeliveryDate !== undefined;
+    const pickupDate =
+        store.expectedDeliveryDate !== undefined && store.expectedDeliveryDate !== null
+            ? new Date(store.expectedDeliveryDate)
+            : null;
+    const isPickupToday = pickupDate !== null && isSameLocalDay(pickupDate, new Date());
+    const shouldShowCurrentOpeningStatus = !isPickupDateShown || isPickupToday;
+    const openingHoursOfPickupDay =
+        isPickupDateShown && !isPickupToday && pickupDate !== null
+            ? findOpeningHoursOfDayForDate(store.openingHours.openingHoursOfDays, pickupDate)
+            : null;
     const ariaLabel = isSelectionMode
         ? t('Select store {{storeName}}', { ns: 'accessibility', storeName: store.name })
         : isExpanded
@@ -75,19 +92,31 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
                             isPersonalPickup
                             className="text-xs"
                             expectedDeliveryDate={store.expectedDeliveryDate}
+                            unknownDeliveryDateExplanation={unknownDeliveryDateExplanation}
                         />
                     )}
                 </div>
 
                 <div className="flex flex-wrap items-center gap-1 md:flex-col md:items-end">
-                    <span className="shrink-0" data-tid={TIDs.store_opening_status}>
-                        <OpeningStatus status={store.openingHours.status} />
-                    </span>
+                    {shouldShowCurrentOpeningStatus && (
+                        <>
+                            <span className="shrink-0" data-tid={TIDs.store_opening_status}>
+                                <OpeningStatus status={store.openingHours.status} />
+                            </span>
 
-                    {hasTodayOpeningHours && (
-                        <OpeningHoursToday
-                            className="ml-0 shrink-0 whitespace-nowrap text-xs"
-                            openingHours={store.openingHours}
+                            {hasTodayOpeningHours && (
+                                <OpeningHoursToday
+                                    className="ml-0 shrink-0 whitespace-nowrap text-xs"
+                                    openingHours={store.openingHours}
+                                />
+                            )}
+                        </>
+                    )}
+
+                    {openingHoursOfPickupDay !== null && (
+                        <OpeningHoursOfPickupDay
+                            className="shrink-0 whitespace-nowrap"
+                            openingHoursOfPickupDay={openingHoursOfPickupDay}
                         />
                     )}
                 </div>

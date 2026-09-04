@@ -1,5 +1,8 @@
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Select } from 'components/Forms/Select/Select';
+import { domAnimation, LazyMotion } from 'framer-motion';
+import { StrictMode, useState } from 'react';
 import { describe, expect, test, vi } from 'vitest';
 import { renderWithTooltipProvider as render } from 'vitest/helpers/renderWithTooltipProvider';
 
@@ -64,6 +67,106 @@ describe('Select reset action', () => {
         );
 
         expect(screen.queryByRole('button', { name: 'Clear selected option' })).not.toBeInTheDocument();
+    });
+});
+
+const colorOptions = [
+    { label: 'Ocean', value: { name: 'Ocean', availability: 'Available', price: '100 Kč' } },
+    { label: 'Forest', value: { name: 'Forest', availability: 'On request', price: '200 Kč' } },
+];
+
+const ColorSelect = ({ richContent = false }: { richContent?: boolean }) => {
+    const [activeOption, setActiveOption] = useState<(typeof colorOptions)[number] | null>(null);
+    const renderColor = ({ value }: (typeof colorOptions)[number]) => (
+        <span>
+            {value.name} <span>{value.availability}</span> <span>{value.price}</span>
+        </span>
+    );
+
+    return (
+        <LazyMotion features={domAnimation}>
+            {/* JSDOM does not load Tailwind; SelectList uses block! to override the animation's display: none. */}
+            <style>{'.block\\! { display: block !important; }'}</style>
+            <Select
+                activeOption={activeOption}
+                ariaLabel="Choose color"
+                label="Color"
+                options={colorOptions}
+                renderOption={richContent ? renderColor : undefined}
+                renderValue={richContent ? renderColor : undefined}
+                tid="color-select"
+                onSelectOption={setActiveOption}
+            />
+        </LazyMotion>
+    );
+};
+
+describe('Select content and keyboard interaction', () => {
+    test.each([
+        { richContent: false, selectedName: 'ColorForest', optionName: 'Forest' },
+        { richContent: true, selectedName: 'Forest On request 200 Kč', optionName: 'Forest On request 200 Kč' },
+    ])('selects and displays a value with rich content: $richContent', async ({
+        richContent,
+        selectedName,
+        optionName,
+    }) => {
+        const user = userEvent.setup();
+        render(<ColorSelect richContent={richContent} />);
+
+        await user.click(screen.getByRole('button', { name: 'Choose color' }));
+        await user.click(await screen.findByRole('option', { name: optionName }));
+
+        expect(screen.getByRole('button', { name: selectedName })).toBeInTheDocument();
+        await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument());
+        expect(screen.getByRole('button', { name: 'Choose color' })).toHaveFocus();
+    });
+
+    test('opens with arrows, navigates with Home and End, and selects with Space', async () => {
+        const user = userEvent.setup();
+        render(
+            <StrictMode>
+                <ColorSelect richContent />
+            </StrictMode>,
+        );
+        const trigger = screen.getByRole('button', { name: 'Choose color' });
+
+        await user.tab();
+        expect(trigger).toHaveFocus();
+        await user.keyboard('{ArrowDown}');
+        expect(await screen.findByRole('option', { name: 'Ocean Available 100 Kč' })).toHaveFocus();
+        await user.keyboard('{End}');
+        expect(await screen.findByRole('option', { name: 'Forest On request 200 Kč' })).toHaveFocus();
+        await user.keyboard('{Home}');
+        expect(screen.getByRole('option', { name: 'Ocean Available 100 Kč' })).toHaveFocus();
+        await user.keyboard('{ArrowDown} ');
+
+        expect(screen.getByRole('button', { name: 'Forest On request 200 Kč' })).toBeInTheDocument();
+        await waitFor(() => expect(trigger).toHaveFocus());
+    });
+
+    test('Escape closes the list and restores focus before reaching the surrounding popup', async () => {
+        const user = userEvent.setup();
+        const onWindowKeyDown = vi.fn();
+        render(<ColorSelect richContent />);
+        const trigger = screen.getByRole('button', { name: 'Choose color' });
+        await user.tab();
+        await user.keyboard('{ArrowUp}');
+        expect(await screen.findByRole('option', { name: 'Forest On request 200 Kč' })).toHaveFocus();
+        window.addEventListener('keydown', onWindowKeyDown);
+
+        try {
+            await user.keyboard('{Escape}');
+
+            expect(onWindowKeyDown).not.toHaveBeenCalled();
+            await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument());
+            expect(trigger).toHaveFocus();
+
+            await user.keyboard('{Escape}');
+
+            expect(onWindowKeyDown).toHaveBeenCalledOnce();
+        } finally {
+            window.removeEventListener('keydown', onWindowKeyDown);
+        }
     });
 });
 

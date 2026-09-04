@@ -1,0 +1,17 @@
+fragment ProductDeliveryOptionFragment on ProductDeliveryOption {
+    __typename
+    transport {
+        __typename
+        uuid
+        name
+        description
+        mainImage {
+            ...ImageFragment
+        }
+        transportTypeCode
+    }
+    price {
+        ...PriceFragment
+    }
+    expectedDeliveryDate
+}

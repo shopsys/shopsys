@@ -83,6 +83,3 @@ overblog_dataloader:
         storeSlugBatchLoader:
             alias: "store_slug_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadStoreSlugs"
-        storesBatchLoader:
-            alias: "stores_batch_loader"
-            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Store\\StoresBatchLoader:loadByIds"

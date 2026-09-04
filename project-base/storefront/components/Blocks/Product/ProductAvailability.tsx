@@ -1,71 +1,89 @@
-import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
-import { useId } from 'react';
+import { TIDs } from 'cypress/tids';
+import { TypeAvailability } from 'graphql/types';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getInStockAvailabilityDetails } from 'utils/product/getInStockAvailabilityDetails';
 import { twMergeCustom } from 'utils/twMerge';
 import { getAvailabilityTextColorClassName } from 'utils/ui/getAvailabilityTextColorClassName';
+import { ProductAvailabilityIcon } from './ProductAvailabilityIcon';
 
 type ProductAvailabilityProps = {
     availability: TypeAvailability;
     availableStoresCount: number | null;
+    displayMode?: 'compact' | 'default' | 'detail';
     isInquiryType: boolean;
-    onClick?: () => void;
+    isPersonalPickupOnly?: boolean;
+    /**
+     * Classes of the second line (the shipping/pickup readiness), e.g. to drop its indentation under the name
+     * when the availability is centered
+     */
+    detailsClassName?: string;
 };
 
 export const ProductAvailability: FC<ProductAvailabilityProps> = ({
     availability,
     availableStoresCount,
     className,
+    displayMode = 'default',
     isInquiryType,
-    onClick,
+    isPersonalPickupOnly = false,
+    detailsClassName,
 }) => {
     const { t } = useTranslation();
-    const availabilityId = useId();
-    const availabilityText = getProductAvailabilityText(availability, availableStoresCount, isInquiryType, t);
+    const inStockAvailabilityDetails = getInStockAvailabilityDetails(
+        availability.status,
+        availableStoresCount,
+        isPersonalPickupOnly,
+        t,
+    );
+    const availabilityText = isInquiryType
+        ? null
+        : `${availability.name}${inStockAvailabilityDetails ? `, ${inStockAvailabilityDetails}` : ''}`;
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            onClick?.();
-        }
-    };
-
-    const isInteractive = onClick !== undefined && availability.status === TypeAvailabilityStatusEnum.InStock;
+    const isCompactDisplay = displayMode === 'compact';
+    const isDetailDisplay = displayMode === 'detail';
 
     return (
-        <div
-            {...(isInteractive && {
-                'aria-describedby': availabilityId,
-                'aria-haspopup': 'dialog',
-                'aria-label': t('Open stores availability popup', { ns: 'accessibility' }),
-                role: 'button',
-                tabIndex: 0,
-                title: t('Show stores availability'),
-                onClick: onClick,
-                onKeyDown: handleKeyDown,
-            })}
+        <span
+            data-tid={TIDs.product_availability}
             className={twMergeCustom(
                 'flex text-left text-sm',
+                isCompactDisplay ? 'items-center gap-1 text-xs' : 'flex-col gap-0.5',
                 getAvailabilityTextColorClassName(availability.status),
                 className,
             )}
         >
-            {availabilityText && <span id={availabilityId}>{availabilityText}</span>}
-        </div>
+            {availabilityText &&
+                (isCompactDisplay ? (
+                    <>
+                        <ProductAvailabilityIcon className="size-3 shrink-0" status={availability.status} />
+
+                        <span className="font-semibold">{availabilityText}</span>
+                    </>
+                ) : (
+                    <>
+                        <span className="flex min-w-0 items-start gap-1">
+                            <ProductAvailabilityIcon
+                                className="mt-0.5 size-4 shrink-0 [&_path]:stroke-2"
+                                status={availability.status}
+                            />
+
+                            <span className="font-secondary font-semibold">{availability.name}</span>
+                        </span>
+
+                        {inStockAvailabilityDetails && (
+                            <span
+                                className={twMergeCustom(
+                                    // indented under the name, past the icon
+                                    'pl-5 font-secondary text-text-less',
+                                    isDetailDisplay ? 'underline hover:text-link-default' : 'text-xs',
+                                    detailsClassName,
+                                )}
+                            >
+                                {inStockAvailabilityDetails}
+                            </span>
+                        )}
+                    </>
+                ))}
+        </span>
     );
-};
-
-const getProductAvailabilityText = (
-    availability: TypeAvailability,
-    availableStoresCount: number | null,
-    isInquiryType: boolean,
-    t: ReturnType<typeof useTranslation>['t'],
-): string | null => {
-    if (isInquiryType) {
-        return null;
-    }
-
-    return `${availability.name}${
-        availability.status === TypeAvailabilityStatusEnum.InStock && availableStoresCount !== null
-            ? `, ${t('ready to ship immediately')} ${availableStoresCount !== 0 ? t('or at {{ count }} stores', { count: availableStoresCount }) : ''}`
-            : ''
-    }`;
 };

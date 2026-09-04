@@ -95,6 +95,15 @@ class ProductStockFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return array<int, array<int, int>> stock quantities indexed by product id and stock id
+     */
+    public function getStockQuantitiesByProductsIndexedByProductIdAndStockId(array $products): array
+    {
+        return $this->productStockRepository->getStockQuantitiesByProductsIndexedByProductIdAndStockId($products);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return array<int, int>
      */
     public function getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(

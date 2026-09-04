@@ -1,0 +1,12 @@
+ProductDeliveryStoreDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Store where a single piece of a product can be picked up using a personal pickup transport"
+        fields:
+            store:
+                type: "Store!"
+                description: "The store"
+            expectedDeliveryDate:
+                type: "DateTime"
+                description: "Expected pickup date at this store for an order with a single piece of the product placed today. Null when no pickup date can be promised."

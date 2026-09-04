@@ -5,8 +5,10 @@ import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragm
 import { TypeCoordinates } from 'graphql/types';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
+const KNOWN_COORDINATES: TypeCoordinates = { latitude: 50, longitude: 14 };
+
 const testState = vi.hoisted(() => ({
-    defaultCoordinates: { latitude: 50, longitude: 14 },
+    defaultCoordinates: { latitude: 50, longitude: 14 } as { latitude: number; longitude: number } | null,
     queryVariables: [] as Array<Record<string, unknown>>,
 }));
 
@@ -14,7 +16,9 @@ vi.mock('store/useSessionStore', () => ({
     useSessionStore: (selector: (state: unknown) => unknown) =>
         selector({
             coordinates: testState.defaultCoordinates,
-            updateCoordinates: vi.fn(),
+            updateCoordinates: (coordinates: { latitude: number; longitude: number } | null) => {
+                testState.defaultCoordinates = coordinates;
+            },
         }),
 }));
 
@@ -45,9 +49,33 @@ const renderStoreConnectionHook = () =>
 
 const getLatestQueryVariables = () => testState.queryVariables.at(-1);
 
+const mockBrowserGeolocation = (coordinates: TypeCoordinates | null) => {
+    const originalGeolocation = navigator.geolocation;
+
+    Object.defineProperty(navigator, 'geolocation', {
+        configurable: true,
+        value:
+            coordinates === null
+                ? undefined
+                : {
+                      getCurrentPosition: vi.fn((success: PositionCallback) => {
+                          success({ coords: coordinates } as GeolocationPosition);
+                      }),
+                  },
+    });
+
+    return () => {
+        Object.defineProperty(navigator, 'geolocation', {
+            configurable: true,
+            value: originalGeolocation,
+        });
+    };
+};
+
 describe('usePaginatedStoreConnection', () => {
     beforeEach(() => {
         testState.queryVariables = [];
+        testState.defaultCoordinates = KNOWN_COORDINATES;
     });
 
     test('uses default user coordinates when there is no search text', () => {
@@ -55,8 +83,72 @@ describe('usePaginatedStoreConnection', () => {
 
         expect(getLatestQueryVariables()).toMatchObject({
             searchText: null,
-            coordinates: testState.defaultCoordinates as TypeCoordinates,
+            coordinates: KNOWN_COORDINATES,
         });
+    });
+
+    test('asks the browser for the coordinates when the session does not know them yet', () => {
+        testState.defaultCoordinates = null;
+        const browserCoordinates: TypeCoordinates = { latitude: 49.2, longitude: 16.6 };
+        const restoreGeolocation = mockBrowserGeolocation(browserCoordinates);
+
+        const { rerender } = renderStoreConnectionHook();
+        rerender();
+
+        expect(testState.defaultCoordinates).toEqual(browserCoordinates);
+        expect(getLatestQueryVariables()).toMatchObject({ coordinates: browserCoordinates });
+
+        restoreGeolocation();
+    });
+
+    test('queries without coordinates when the browser cannot provide them', () => {
+        testState.defaultCoordinates = null;
+        const restoreGeolocation = mockBrowserGeolocation(null);
+
+        renderStoreConnectionHook();
+
+        expect(getLatestQueryVariables()).toMatchObject({ coordinates: null });
+
+        restoreGeolocation();
+    });
+
+    test('switches to the shared coordinates once they become known', () => {
+        testState.defaultCoordinates = null;
+        const restoreGeolocation = mockBrowserGeolocation(null);
+
+        const { rerender } = renderStoreConnectionHook();
+        expect(getLatestQueryVariables()).toMatchObject({ coordinates: null });
+
+        testState.defaultCoordinates = KNOWN_COORDINATES;
+        rerender();
+
+        expect(getLatestQueryVariables()).toMatchObject({ coordinates: KNOWN_COORDINATES });
+
+        restoreGeolocation();
+    });
+
+    test('keeps locally overridden coordinates instead of the shared ones', () => {
+        const overriddenCoordinates: TypeCoordinates = { latitude: 48.1, longitude: 17.1 };
+        const { result } = renderStoreConnectionHook();
+
+        act(() => result.current.setUserCoordinates(overriddenCoordinates));
+
+        expect(getLatestQueryVariables()).toMatchObject({ coordinates: overriddenCoordinates });
+    });
+
+    test('keeps the local override even when the shared coordinates arrive later', () => {
+        testState.defaultCoordinates = null;
+        const restoreGeolocation = mockBrowserGeolocation(null);
+        const overriddenCoordinates: TypeCoordinates = { latitude: 48.1, longitude: 17.1 };
+        const { result, rerender } = renderStoreConnectionHook();
+
+        act(() => result.current.setUserCoordinates(overriddenCoordinates));
+        testState.defaultCoordinates = KNOWN_COORDINATES;
+        rerender();
+
+        expect(getLatestQueryVariables()).toMatchObject({ coordinates: overriddenCoordinates });
+
+        restoreGeolocation();
     });
 
     test('does not send user coordinates while searching by text', () => {

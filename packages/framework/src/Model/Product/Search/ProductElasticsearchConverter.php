@@ -70,7 +70,6 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::NAME_PREFIX] = $product[ProductExportFieldProvider::NAME_PREFIX] ?? null;
         $result[ProductExportFieldProvider::NAME_SUFFIX] = $product[ProductExportFieldProvider::NAME_SUFFIX] ?? $product['name_sufix'] ?? null;
 
-        $result[ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION] = $product[ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION] ?? [];
         $result[ProductExportFieldProvider::AVAILABLE_STORES_COUNT] = $product[ProductExportFieldProvider::AVAILABLE_STORES_COUNT] ?? null;
         $result[ProductExportFieldProvider::STOCK_QUANTITY] = $product[ProductExportFieldProvider::STOCK_QUANTITY] ?? null;
         $result[ProductExportFieldProvider::IS_ALLOWED_NEGATIVE_STOCK] = $product[ProductExportFieldProvider::IS_ALLOWED_NEGATIVE_STOCK] ?? true;

@@ -1,36 +1,24 @@
 import { Image } from 'components/Basic/Image/Image';
+import { useOpenDeliveryOptionsPopup } from 'components/Blocks/Popup/DeliveryOptionsPopup/useOpenDeliveryOptionsPopup';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import dynamic from 'next/dynamic';
-import { useSessionStore } from 'store/useSessionStore';
-import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-
-const ProductVariantsAvailabilityPopup = dynamic(
-    () =>
-        import('components/Blocks/Popup/ProductVariantsAvailabilityPopup').then(
-            (component) => component.ProductVariantsAvailabilityPopup,
-        ),
-    {
-        ssr: false,
-    },
-);
+import { isProductSellable } from 'utils/product/isProductSellable';
 
 type ProductVariantsTableProps = {
+    deliveryOptionsProducts: TypeMainVariantDetailFragment['variants'];
     variants: TypeMainVariantDetailFragment['variants'];
 };
 
-export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }) => {
+export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ deliveryOptionsProducts, variants }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
+    const openDeliveryOptionsPopup = useOpenDeliveryOptionsPopup();
 
     if (variants.length === 0) {
         return <p>{t('Currently, it is not possible to purchase any variant of this product.')}</p>;
@@ -60,28 +48,10 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                             {variant.fullName}
                         </div>
 
-                        {!variant.isSellingDenied && (
-                            <ProductAvailability
-                                availability={variant.availability}
-                                availableStoresCount={variant.availableStoresCount}
-                                isInquiryType={variant.isInquiryType}
-                                className={twJoin(
-                                    'min-w-40 text-center lg:text-left',
-                                    variant.availability.status === TypeAvailabilityStatusEnum.InStock &&
-                                        'cursor-pointer',
-                                )}
-                                onClick={() => {
-                                    if (variant.availability.status === TypeAvailabilityStatusEnum.InStock) {
-                                        storeCurrentFocus();
-                                        updatePortalContent(
-                                            <ProductVariantsAvailabilityPopup
-                                                storeAvailabilities={variant.storeAvailabilities}
-                                            />,
-                                        );
-                                    }
-                                }}
-                            />
-                        )}
+                        <ProductVariantAvailability
+                            variant={variant}
+                            onClick={() => openDeliveryOptionsPopup(deliveryOptionsProducts, variant.uuid)}
+                        />
 
                         <div className="flex flex-col items-center justify-end gap-2.5 lg:ml-auto lg:min-w-96 lg:flex-row">
                             <ProductPrice className="lg:flex-col lg:items-end" productPrice={variant.price} />
@@ -101,5 +71,38 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                 ))}
             </ul>
         </Webline>
+    );
+};
+
+type ProductVariantAvailabilityProps = {
+    onClick: () => void;
+    variant: TypeMainVariantDetailFragment['variants'][number];
+};
+
+const ProductVariantAvailability: FC<ProductVariantAvailabilityProps> = ({ onClick, variant }) => {
+    if (variant.isSellingDenied) {
+        return null;
+    }
+
+    const productAvailability = (
+        <ProductAvailability
+            availability={variant.availability}
+            availableStoresCount={variant.availableStoresCount}
+            isPersonalPickupOnly={variant.isPersonalPickupOnly}
+            displayMode="detail"
+            isInquiryType={variant.isInquiryType}
+            className="min-w-40 items-center lg:items-start"
+            detailsClassName="pl-0 lg:pl-5"
+        />
+    );
+
+    if (!isProductSellable(variant)) {
+        return productAvailability;
+    }
+
+    return (
+        <button aria-haspopup="dialog" className="cursor-pointer rounded-md" type="button" onClick={onClick}>
+            {productAvailability}
+        </button>
     );
 };

@@ -7,9 +7,6 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-msgid "Available immediately"
-msgstr ""
-
 msgid "Billing address"
 msgstr ""
 
@@ -70,9 +67,6 @@ msgstr ""
 msgid "Transport"
 msgstr ""
 
-msgid "Unavailable"
-msgstr ""
-
 msgid "Unit price"
 msgstr ""
 
@@ -80,8 +74,5 @@ msgid "ex VAT"
 msgstr ""
 
 msgid "inc VAT"
-msgstr ""
-
-msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
 msgstr ""
 

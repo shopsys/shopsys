@@ -534,57 +534,6 @@ class RetrieveCartTest extends GraphQlTestCase
                     $firstDomainLocale,
                 ),
             ],
-            'storeAvailabilities' => [
-                [
-                    'store' => [
-                        'name' => 'Ostrava',
-                    ],
-                    'availabilityInformation' => t('Available immediately', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                    'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
-                ], [
-                    'store' => [
-                        'name' => 'Pardubice',
-                    ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                    'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
-                ], [
-                    'store' => [
-                        'name' => 'Brno',
-                    ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                    'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
-                ], [
-                    'store' => [
-                        'name' => 'Praha',
-                    ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                    'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
-                ], [
-                    'store' => [
-                        'name' => 'Hradec Králové',
-                    ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                    'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
-                ], [
-                    'store' => [
-                        'name' => 'Olomouc',
-                    ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                    'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
-                ], [
-                    'store' => [
-                        'name' => 'Liberec',
-                    ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                    'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
-                ], [
-                    'store' => [
-                        'name' => 'Plzeň',
-                    ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                    'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
-                ],
-            ],
             'availableStoresCount' => 1,
             'breadcrumb' => [
                 [
@@ -659,13 +608,6 @@ class RetrieveCartTest extends GraphQlTestCase
             partNumber
             ean
             usps
-            storeAvailabilities {
-                store {
-                    name
-                }
-                availabilityInformation
-                availabilityStatus
-            }
             availableStoresCount
             breadcrumb {
                 name

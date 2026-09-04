@@ -4,9 +4,9 @@ import { DocumentNode } from 'graphql';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { TypeCoordinates } from 'graphql/types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSessionStore } from 'store/useSessionStore';
 import { CombinedError, RequestPolicy, useClient, useQuery } from 'urql';
 import { useDebounce } from 'utils/useDebounce';
+import { useUserCoordinates } from 'utils/useUserCoordinates';
 
 type StoreConnectionQueryVariables = {
     searchText?: string | null;
@@ -34,8 +34,9 @@ export const usePaginatedStoreConnection = <
     type QueryVariables = StoreConnectionQueryVariables & TAdditionalQueryVariables;
 
     const client = useClient();
-    const defaultUserCoordinates = useSessionStore((s) => s.coordinates);
+    const defaultUserCoordinates = useUserCoordinates();
     const [searchTextValue, setSearchTextValue] = useState<string>('');
+    // the coordinates can be overridden locally (e.g. by clicking a map marker), the shared ones are just the default
     const [userCoordinates, setUserCoordinates] = useState<TypeCoordinates | null>(defaultUserCoordinates);
     const [isLoadingMoreStores, setIsLoadingMoreStores] = useState(false);
     const [loadMoreStoresError, setLoadMoreStoresError] = useState<CombinedError | undefined>();
@@ -67,6 +68,13 @@ export const usePaginatedStoreConnection = <
     });
     const initialStoreConnection = getStoreConnectionFromData(data);
     const [stores, setStores] = useState<TypeListedStoreConnectionFragment | null>(initialStoreConnection ?? null);
+
+    useEffect(() => {
+        if (defaultUserCoordinates !== null) {
+            // the shared coordinates only fill the gap — a local override made in the meantime has to survive them
+            setUserCoordinates((currentUserCoordinates) => currentUserCoordinates ?? defaultUserCoordinates);
+        }
+    }, [defaultUserCoordinates]);
 
     useEffect(() => {
         queryKeyRef.current = queryKey;
