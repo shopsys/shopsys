@@ -663,6 +663,7 @@ services:
         arguments:
             $logoFilepath: '%shopsys.gift_voucher_pdf_logo_filepath%'
             $backgroundFilepath: '%shopsys.gift_voucher_pdf_background_filepath%'
+            $fontDir: '%shopsys.gift_voucher_pdf_font_dir%'
 
     Shopsys\FrameworkBundle\Model\GiftVoucher\Mail\GiftVoucherMail: ~
 

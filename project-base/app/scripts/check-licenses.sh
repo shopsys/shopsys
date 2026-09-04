@@ -43,9 +43,9 @@ composer_name_license_tsv() {
 }
 
 # Basic permissive licenses always allowed
-BASIC_LICENSES="0BSD,Apache-2.0,Artistic-1.0,BlueOak-1.0.0,BSD*,BSD-2-Clause,BSD-3-Clause,CC-BY-3.0,CC-BY-4.0,CC0-1.0,ISC,LGPL-2.1,LGPL-2.1-or-later,LGPL-3.0-or-later,MIT,MIT*,MIT-0,MPL-2.0,Python-2.0,UNLICENSED,WTFPL"
+BASIC_LICENSES="0BSD,Apache-2.0,Artistic-1.0,BlueOak-1.0.0,BSD*,BSD-2-Clause,BSD-3-Clause,CC-BY-3.0,CC-BY-4.0,CC0-1.0,ISC,MIT,MIT*,MIT-0,MPL-2.0,Python-2.0,UNLICENSED,WTFPL"
 # GPL licenses for project builds (not for framework)
-GPL_LICENSES="GPL-2.0-only,GPL-3.0-only"
+GPL_LICENSES="GPL-2.0-only,GPL-3.0-only,LGPL-2.1-only,LGPL-3.0"
 
 get_allowed_licenses() {
     # Use ALLOWED if explicitly set

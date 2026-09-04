@@ -17,6 +17,7 @@ parameters:
     shopsys.framework.root_dir: '%kernel.project_dir%/vendor/shopsys/framework'
     shopsys.front_design_image_url_prefix: /public/frontend/images/
     shopsys.gift_voucher_pdf_background_filepath: '%shopsys.framework.resources_dir%/views/Mail/GiftVoucher/giftVoucherPdfBackground.png'
+    shopsys.gift_voucher_pdf_font_dir: '%shopsys.framework.resources_dir%/fonts/giftVoucher'
     shopsys.gift_voucher_pdf_logo_filepath: '%shopsys.web_dir%%shopsys.mail_images_url_prefix%logo.png'
     shopsys.image_dir: '/web%shopsys.image_url_prefix%'
     shopsys.image_url_prefix: '/%shopsys.content_dir_name%/images/'
