@@ -1,0 +1,23 @@
+<div class="text-nowrap">{{ 'Domain'|trans }}</div>
+<div class="dropdown">
+    <a href="#"
+       class="btn dropdown-toggle w-100 justify-content-between"
+       data-bs-toggle="dropdown"
+       role="button"
+    >
+        <span class="quick-filter-row">
+            {{ domain_icon(selectedDomainId) }}
+            <span class="text-truncate">{{ getDomainName(selectedDomainId) }}</span>
+        </span>
+    </a>
+    <div class="dropdown-menu">
+        {% for domainConfig in domainConfigs %}
+            <a class="dropdown-item quick-filter-row{% if domainConfig.id == selectedDomainId %} active{% endif %}"
+               href="{{ url('admin_domain_selectdomain', { id: domainConfig.id }) }}"
+            >
+                {{ domain_icon(domainConfig.id) }}
+                {{ domainConfig.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
