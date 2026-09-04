@@ -1,3 +1,4 @@
+import { CountBadge } from 'components/Basic/CountBadge/CountBadge';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { StoreIcon } from 'components/Basic/Icon/StoreIcon';
@@ -35,8 +36,7 @@ export const MenuIconic: FC<MenuIconicProps> = ({
     const wishlistCount = useProductListCount(TypeProductListTypeEnum.Wishlist);
     const isUserLoggedIn = useIsUserLoggedIn();
 
-    const menuCountTwClass =
-        'absolute -right-3 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent-red px-0.5 font-secondary text-xs font-bold leading-normal text-text-inverted lg:top-[-6.5px]';
+    const menuCountTwClass = 'absolute -right-3 -top-2 bg-icon-accent-red text-text-inverted lg:top-[-6.5px]';
     const userPopoverTopClassName = isCompact ? 'top-10' : undefined;
 
     return (
@@ -68,7 +68,9 @@ export const MenuIconic: FC<MenuIconicProps> = ({
                         >
                             <div className="relative">
                                 <CompareIcon className="size-6" />
-                                {!!comparisonCount && <span className={menuCountTwClass}>{comparisonCount}</span>}
+                                {!!comparisonCount && (
+                                    <CountBadge className={menuCountTwClass}>{comparisonCount}</CountBadge>
+                                )}
                             </div>
                             {!isCompact && <span className="max-lg:hidden">{t('Comparison')}</span>}
                         </MenuIconicItemLink>
@@ -85,7 +87,9 @@ export const MenuIconic: FC<MenuIconicProps> = ({
                         >
                             <div className="relative">
                                 <HeartIcon className="size-6" />
-                                {!!wishlistCount && <span className={menuCountTwClass}>{wishlistCount}</span>}
+                                {!!wishlistCount && (
+                                    <CountBadge className={menuCountTwClass}>{wishlistCount}</CountBadge>
+                                )}
                             </div>
                             {!isCompact && <span className="max-lg:hidden">{t('Wishlist')}</span>}
                         </MenuIconicItemLink>

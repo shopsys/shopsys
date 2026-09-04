@@ -1,3 +1,4 @@
+import { CountBadge } from 'components/Basic/CountBadge/CountBadge';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
@@ -147,9 +148,9 @@ export const CustomerRecordProductImage: FC<CustomerRecordProductImageProps> = (
             )}
 
             {quantity > 1 && (
-                <span className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent-brand-less px-0.5 font-semibold text-text-inverted text-xs">
+                <CountBadge className="absolute -top-2 -right-2 bg-icon-accent-brand-less text-text-inverted">
                     {quantity}
-                </span>
+                </CountBadge>
             )}
         </div>
     );

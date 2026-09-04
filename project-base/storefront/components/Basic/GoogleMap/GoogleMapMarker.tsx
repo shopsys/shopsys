@@ -1,3 +1,4 @@
+import { CountBadge } from 'components/Basic/CountBadge/CountBadge';
 import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
 import { GoogleMapSearchMarkerIcon } from 'components/Basic/Icon/GoogleMapSearchMarkerIcon';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
@@ -20,9 +21,7 @@ const ClusterMarker: FC<{ count: number; onClick: () => void }> = ({ count, onCl
             >
                 <GoogleMapMarkerIcon className="size-11" />
 
-                <span className="absolute -top-1 right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent px-0.5 text-text-inverted text-xs leading-normal">
-                    {count}
-                </span>
+                <CountBadge className="absolute -top-1 right-0.5 bg-icon-accent text-text-inverted">{count}</CountBadge>
             </button>
         </Tooltip>
     );
