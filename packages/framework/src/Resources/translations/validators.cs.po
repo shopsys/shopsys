@@ -43,6 +43,9 @@ msgstr "Číslo bankovního účtu nesmí být delší než {{ limit }} znaků"
 msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
 msgstr "IČO {{ company_number }} již pro doménu {{ domain_id }} existuje."
 
+msgid "Canonical URL must be an absolute https:// URL"
+msgstr "Canonical URL musí být absolutní adresa začínající https://"
+
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
 
@@ -117,9 +120,6 @@ msgstr "Název příznaku nesmí být delší než {{ limit }} znaků"
 
 msgid "Full name cannot be longer than {{ limit }} characters"
 msgstr "Celé jméno nesmí být delší než {{ limit }} znaků"
-
-msgid "Heading (H1) cannot be longer than {{ limit }} characters"
-msgstr "Nadpis H1 nesmí být delší než {{ limit }} znaků"
 
 msgid "Heureka API must be {{ limit }} characters"
 msgstr "Heureka API klíč musí mít právě {{ limit }} znaků"
@@ -363,6 +363,9 @@ msgstr "Prosím zadejte název příznaku ve všech jazycích"
 
 msgid "Please enter full name"
 msgstr "Vyplňte prosím celé jméno"
+
+msgid "Please enter heading (H1)"
+msgstr "Vyplňte prosím nadpis (H1)"
 
 msgid "Please enter identification number"
 msgstr "Vyplňte prosím IČ"

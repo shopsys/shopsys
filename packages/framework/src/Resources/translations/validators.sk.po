@@ -43,6 +43,9 @@ msgstr "Číslo bankového účtu nemôže byť dlþhšie ako {{ limit }} znakov
 msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
 msgstr "Fakturačné číslo spoločnosti {{ company_number }} už existuje pre doménu {{ domain_id }}."
 
+msgid "Canonical URL must be an absolute https:// URL"
+msgstr "Canonical URL musí byť absolútna adresa začínajúca https://"
+
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr "Katalógové číslo nemôže byť dlþhšie ako {{ limit }} znakov"
 
@@ -117,9 +120,6 @@ msgstr "Názov príznaku nemôže byť dlhší ako {{ limit }} znakov"
 
 msgid "Full name cannot be longer than {{ limit }} characters"
 msgstr "Celé meno nemôže byť dlhšie ako {{ limit }} znakov"
-
-msgid "Heading (H1) cannot be longer than {{ limit }} characters"
-msgstr "Nadpis (H1) nemôže byť dlhší ako {{ limit }} znakov"
 
 msgid "Heureka API must be {{ limit }} characters"
 msgstr "Heureka API musí mať {{ limit }} znakov"
@@ -230,7 +230,7 @@ msgid "Please choose unit"
 msgstr "Prosím, vyberte jednotku"
 
 msgid "Please define at least one URL."
-msgstr "Definujte aspoň jednu URL adresu."
+msgstr "Definujte prosím aspoň jednu URL adresu."
 
 msgid "Please enter BIC/SWIFT for domain %domainName%."
 msgstr "Zadajte, prosím, BIC/SWIFT pre doménu %domainName%."
@@ -363,6 +363,9 @@ msgstr "Prosím, zadajte názov príznaku vo všetkých jazykoch"
 
 msgid "Please enter full name"
 msgstr "Prosím, zadajte celé meno"
+
+msgid "Please enter heading (H1)"
+msgstr "Vyplňte prosím nadpis (H1)"
 
 msgid "Please enter identification number"
 msgstr "Prosím, zadajte identifikačné číslo"

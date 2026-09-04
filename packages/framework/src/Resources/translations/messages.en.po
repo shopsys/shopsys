@@ -940,6 +940,9 @@ msgstr ""
 msgid "Declined in the 3DS server"
 msgstr ""
 
+msgid "Default (not set)"
+msgstr ""
+
 msgid "Default VAT rate"
 msgstr ""
 
@@ -2063,6 +2066,9 @@ msgid "Message text"
 msgstr ""
 
 msgid "Meta description"
+msgstr ""
+
+msgid "Meta robots"
 msgstr ""
 
 msgid "Min duration"
@@ -3484,9 +3490,6 @@ msgstr ""
 msgid "URL"
 msgstr ""
 
-msgid "URL Settings"
-msgstr ""
-
 msgid "URL addresses"
 msgstr ""
 
@@ -3680,6 +3683,9 @@ msgid "Wednesday"
 msgstr ""
 
 msgid "Weight (g)"
+msgstr ""
+
+msgid "When left empty, the storefront keeps its built-in behavior for this page type."
 msgstr ""
 
 msgid "Withdrawal Request"

@@ -43,6 +43,9 @@ msgstr ""
 msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
 msgstr ""
 
+msgid "Canonical URL must be an absolute https:// URL"
+msgstr ""
+
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -116,9 +119,6 @@ msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Full name cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Heading (H1) cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Heureka API must be {{ limit }} characters"
@@ -362,6 +362,9 @@ msgid "Please enter flag name in all languages"
 msgstr ""
 
 msgid "Please enter full name"
+msgstr ""
+
+msgid "Please enter heading (H1)"
 msgstr ""
 
 msgid "Please enter identification number"

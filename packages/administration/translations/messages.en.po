@@ -2254,6 +2254,9 @@ msgstr ""
 msgid "This flag cannot be deleted."
 msgstr ""
 
+msgid "This is a cross-domain canonical URL – it points to a different domain than the one being edited."
+msgstr ""
+
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr ""
 

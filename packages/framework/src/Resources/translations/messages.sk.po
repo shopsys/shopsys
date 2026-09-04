@@ -940,6 +940,9 @@ msgstr "Zamietnuté bankou - nesprávne číslo karty"
 msgid "Declined in the 3DS server"
 msgstr "Zamietnuté na 3DS serveri"
 
+msgid "Default (not set)"
+msgstr "Predvolené (nenastavené)"
+
 msgid "Default VAT rate"
 msgstr "Predvolená sadzba DPH"
 
@@ -2064,6 +2067,9 @@ msgstr "Text správy"
 
 msgid "Meta description"
 msgstr "Meta popis"
+
+msgid "Meta robots"
+msgstr "Meta robots"
 
 msgid "Min duration"
 msgstr "Minimálne trvanie"
@@ -3484,9 +3490,6 @@ msgstr "Typ"
 msgid "URL"
 msgstr "URL"
 
-msgid "URL Settings"
-msgstr "Nastavenia URL"
-
 msgid "URL addresses"
 msgstr "URL adresy"
 
@@ -3681,6 +3684,9 @@ msgstr "Streda"
 
 msgid "Weight (g)"
 msgstr "Hmotnosť (g)"
+
+msgid "When left empty, the storefront keeps its built-in behavior for this page type."
+msgstr "Ak zostane prázdne, storefront zachová svoje predvolené správanie pre tento typ stránky."
 
 msgid "Withdrawal Request"
 msgstr "Žiadosť o odstúpenie od zmluvy"

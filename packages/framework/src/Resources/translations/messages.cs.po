@@ -940,6 +940,9 @@ msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu c
 msgid "Declined in the 3DS server"
 msgstr "Zamítnutí platby v systému 3D Secure banky zákazníka"
 
+msgid "Default (not set)"
+msgstr "Výchozí (nenastaveno)"
+
 msgid "Default VAT rate"
 msgstr "Výchozí sazba DPH"
 
@@ -2064,6 +2067,9 @@ msgstr "Text zprávy"
 
 msgid "Meta description"
 msgstr "Meta description"
+
+msgid "Meta robots"
+msgstr "Meta robots"
 
 msgid "Min duration"
 msgstr "Min. trvání"
@@ -3484,9 +3490,6 @@ msgstr "Typ"
 msgid "URL"
 msgstr "URL"
 
-msgid "URL Settings"
-msgstr "Nastavení URL"
-
 msgid "URL addresses"
 msgstr "URL adresy"
 
@@ -3681,6 +3684,9 @@ msgstr "Středa"
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
+
+msgid "When left empty, the storefront keeps its built-in behavior for this page type."
+msgstr "Pokud zůstane prázdné, storefront zachová své výchozí chování pro tento typ stránky."
 
 msgid "Withdrawal Request"
 msgstr "Žádost o odstoupení od smlouvy"

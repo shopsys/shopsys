@@ -2254,6 +2254,9 @@ msgstr "Tento příznak nelze smazat, protože se používá v definici"
 msgid "This flag cannot be deleted."
 msgstr "Tento příznak nelze smazat."
 
+msgid "This is a cross-domain canonical URL – it points to a different domain than the one being edited."
+msgstr "Toto je canonical URL směřující na jinou doménu, než kterou právě upravujete."
+
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr "Toto je poslední zákaznický účet. Odstraní všechna související data. Opravdu to chcete smazat?"
 
