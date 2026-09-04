@@ -27,11 +27,25 @@ class SeoAttributes
     #[ORM\Column(type: 'text', nullable: true)]
     protected $h1;
 
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 30, nullable: true)]
+    protected $metaRobots;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected $canonicalUrl;
+
     public function edit(SeoAttributesData $seoAttributesData): void
     {
         $this->title = $seoAttributesData->title;
         $this->metaDescription = $seoAttributesData->metaDescription;
         $this->h1 = $seoAttributesData->h1;
+        $this->metaRobots = $seoAttributesData->metaRobots;
+        $this->canonicalUrl = $seoAttributesData->canonicalUrl;
     }
 
     /**
@@ -56,5 +70,21 @@ class SeoAttributes
     public function getH1()
     {
         return $this->h1;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMetaRobots()
+    {
+        return $this->metaRobots;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCanonicalUrl()
+    {
+        return $this->canonicalUrl;
     }
 }

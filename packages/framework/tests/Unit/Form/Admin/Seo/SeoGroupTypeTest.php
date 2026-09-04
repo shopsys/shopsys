@@ -7,9 +7,11 @@ namespace Tests\FrameworkBundle\Unit\Form\Admin\Seo;
 use Override;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoAttributesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData;
+use Shopsys\FrameworkBundle\Model\Seo\SeoMetaRobotsEnum;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
@@ -41,15 +43,22 @@ class SeoGroupTypeTest extends TypeTestCase
 
         $this->setTranslator();
 
-        $domainConfigs = [];
+        $domainConfigsByDomainId = [];
 
         foreach (self::LOCALES_BY_DOMAIN_ID as $domainId => $locale) {
-            $domainConfigs[] = DomainConfigHelper::getDomainConfig(id: $domainId, locale: $locale);
+            $domainConfigsByDomainId[$domainId] = DomainConfigHelper::getDomainConfig(
+                id: $domainId,
+                url: self::getDomainUrl($domainId),
+                locale: $locale,
+            );
         }
 
         $this->domain = $this->createStub(Domain::class);
         $this->domain->method('getAdminEnabledDomainIds')->willReturn(array_keys(self::LOCALES_BY_DOMAIN_ID));
-        $this->domain->method('getAdminEnabledDomains')->willReturn($domainConfigs);
+        $this->domain->method('getAdminEnabledDomains')->willReturn(array_values($domainConfigsByDomainId));
+        $this->domain->method('getDomainConfigById')->willReturnCallback(
+            static fn (int $domainId) => $domainConfigsByDomainId[$domainId],
+        );
 
         parent::setUp();
     }
@@ -64,7 +73,7 @@ class SeoGroupTypeTest extends TypeTestCase
     public function testPlaceholderSourceInputIdIsAppliedToTitleAndH1ForSingleDomain(): void
     {
         $form = $this->createFormWithSeoGroup([
-            'multidomain' => false,
+            'domain_id' => Domain::FIRST_DOMAIN_ID,
             'placeholder_source_input_id' => self::PLACEHOLDER_SOURCE_INPUT_ID,
         ]);
 
@@ -111,6 +120,11 @@ class SeoGroupTypeTest extends TypeTestCase
         }
     }
 
+    private static function getDomainUrl(int $domainId): string
+    {
+        return sprintf('https://example-%d.com', $domainId);
+    }
+
     #[Override]
     protected function getExtensions(): array
     {
@@ -119,6 +133,7 @@ class SeoGroupTypeTest extends TypeTestCase
             new PreloadedExtension(
                 [
                     new SeoGroupType($this->domain),
+                    new SeoAttributesFormType(new SeoMetaRobotsEnum(), $this->domain),
                     new MultidomainType($this->domain, new FormTypeLayout()),
                 ],
                 [],
@@ -131,9 +146,7 @@ class SeoGroupTypeTest extends TypeTestCase
      */
     private function createFormWithSeoGroup(array $seoGroupOptions = []): FormInterface
     {
-        $multidomain = $seoGroupOptions['multidomain'] ?? true;
-
-        if ($multidomain) {
+        if (($seoGroupOptions['domain_id'] ?? null) === null) {
             $seoData = [];
 
             foreach (array_keys(self::LOCALES_BY_DOMAIN_ID) as $domainId) {

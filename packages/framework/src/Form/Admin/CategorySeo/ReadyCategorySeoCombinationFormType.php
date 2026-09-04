@@ -27,13 +27,12 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
 
         $builder
             ->add('seoGroup', SeoGroupType::class, [
-                'multidomain' => false,
                 'h1_required' => true,
+                'domain_id' => $options['domain_id'],
                 'url_list_options' => [
                     'required' => true,
                     'route_name' => 'front_category_seo',
                     'entity_id' => $readyCategorySeoMix?->getId(),
-                    'limit_domains_by_ids' => $options['domain_id'] !== null ? [$options['domain_id']] : [],
                     'constraints' => [
                         new NotBlank(),
                     ],
@@ -66,8 +65,7 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
             ->setRequired(['readyCategorySeoMix', 'new_combination_url', 'domain_id'])
             ->addAllowedTypes('readyCategorySeoMix', [ReadyCategorySeoMix::class, 'null'])
             ->addAllowedTypes('new_combination_url', 'string')
-            ->addAllowedTypes('domain_id', ['int', 'null'])
-            ->setInfo('domain_id', 'The SEO mix always belongs to a single domain, its URL addresses are limited to it.')
+            ->addAllowedTypes('domain_id', 'int')
             ->setDefaults([
                 'data_class' => ReadyCategorySeoMixData::class,
                 'attr' => ['novalidate' => 'novalidate'],

@@ -20,4 +20,14 @@ class SeoAttributesData
      * @var string|null
      */
     public $h1;
+
+    /**
+     * @var string|null
+     */
+    public $metaRobots;
+
+    /**
+     * @var string|null
+     */
+    public $canonicalUrl;
 }

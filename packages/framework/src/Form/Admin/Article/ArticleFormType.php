@@ -139,12 +139,11 @@ final class ArticleFormType extends AbstractType
             ]);
 
         $builderSeoData = $builder->create('seoGroup', SeoGroupType::class, [
-            'multidomain' => false,
             'placeholder_source_input_id' => 'article_form_articleData_name',
+            'domain_id' => $article?->getDomainId() ?? $options['domain_id'],
             'url_list_options' => $article !== null ? [
                 'route_name' => 'front_article_detail',
                 'entity_id' => $article->getId(),
-                'limit_domains_by_ids' => [$article->getDomainId()],
             ] : null,
             'row_attr' => [
                 'data-js-article-type-content' => 'site',

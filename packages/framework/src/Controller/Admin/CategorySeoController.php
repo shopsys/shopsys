@@ -281,6 +281,7 @@ class CategorySeoController extends AdminBaseController
             'method' => 'POST',
             'new_combination_url' => $newCombinationsUrl,
             'readyCategorySeoMix' => $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
+            'domain_id' => $selectedCategorySeoMixCombination->getDomainId(),
         ]);
 
         $readyCategorySeoCombinationFormType->handleRequest($request);
