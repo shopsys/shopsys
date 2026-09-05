@@ -85,7 +85,7 @@
         </span>
     {% else %}
         {% if row.isVisible %}
-            <a href="{{ findUrlByDomainId('front_product_detail', { id: row.id }, getFirstDomain().id) }}">
+            <a href="{{ findUrlByDomainId('front_product_detail', { id: row.id }, getFirstDomain().id) }}" target="_blank" rel="noopener">
                 {{ _self.singleDomainIcon(visibilityTitle, visibilityClass, visibilityIcon) }}
                 {{ _self.singleDomainIcon(sellabilityTitle, sellabilityClass, sellabilityIcon) }}
             </a>
