@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Ajax from '../../common/utils/Ajax';
 
 export default class ConfirmDelete {

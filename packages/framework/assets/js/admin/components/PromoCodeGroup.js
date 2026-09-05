@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Translator from 'bazinga-translator';
 import Register from '../../common/utils/Register';
 
@@ -70,4 +71,4 @@ import Register from '../../common/utils/Register';
             promoCodeGroup.init();
         }
     });
-})(jQuery);
+})($);

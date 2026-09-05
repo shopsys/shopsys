@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';

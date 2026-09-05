@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Tagify from '@yaireo/tagify';
 import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';

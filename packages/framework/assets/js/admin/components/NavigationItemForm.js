@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Register from '../../common/utils/Register';
 
 const NAVIGATION_ITEM_TYPE_CATEGORIES = 'categories';

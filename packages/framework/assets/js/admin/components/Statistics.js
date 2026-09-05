@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Translator from 'bazinga-translator';
 import { Chart } from 'chart.js/auto';
 import Register from '../../common/utils/Register';

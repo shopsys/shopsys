@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';

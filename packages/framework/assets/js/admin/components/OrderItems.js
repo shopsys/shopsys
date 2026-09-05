@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
 import { getComponent } from '@symfony/ux-live-component';
 import { Tooltip } from '@tabler/core';

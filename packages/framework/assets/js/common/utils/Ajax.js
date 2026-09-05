@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 
@@ -87,7 +88,7 @@ export default class Ajax {
     }
 
     static setLoadingState(loaderElement) {
-        if (!(loaderElement instanceof jQuery) || !loaderElement) {
+        if (!(loaderElement instanceof $) || !loaderElement) {
             return;
         }
 
