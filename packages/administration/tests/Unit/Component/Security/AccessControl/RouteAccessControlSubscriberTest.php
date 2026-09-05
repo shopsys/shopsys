@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\AdministrationBundle\Unit\Component\Security\AccessControl;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\AdministrationBundle\Component\Crud\CrudRoleConstantProvider;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlSubscriber;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
@@ -84,7 +85,7 @@ final class RouteAccessControlSubscriberTest extends TestCase
         return new RouteAccessControlSubscriber(
             $routeAccessChecker ?? $this->createStub(RouteAccessCheckerInterface::class),
             $this->createAdminContextResolver(),
-            new AttributeProcessor(new AccessControlRuleFactory($this->createRoleRegistry())),
+            new AttributeProcessor(new AccessControlRuleFactory($this->createRoleRegistry()), new CrudRoleConstantProvider()),
             $security ?? $this->createStub(Security::class),
         );
     }

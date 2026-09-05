@@ -7,6 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Security\Attribute;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionMethod;
+use Shopsys\AdministrationBundle\Component\Crud\CrudRoleConstantProvider;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
@@ -27,6 +28,7 @@ final class AttributeProcessor
 {
     public function __construct(
         private readonly AccessControlRuleFactory $accessControlRuleFactory,
+        private readonly CrudRoleConstantProvider $crudRoleConstantProvider,
     ) {
     }
 
@@ -75,8 +77,9 @@ final class AttributeProcessor
             $rules[] = $this->accessControlRuleFactory->create($roleWithPermission, $attribute->getMethods());
         }
 
-        // Get class-level role if ForRole attribute is present
-        $classRole = $this->getClassAttribute($class, ForRole::class)?->role;
+        // CRUD controllers use their role constant (generated, or set by ForRole — resolved at compile time including extension overrides) so custom routes are guarded by the same role as the built-in actions, other classes read the ForRole attribute directly
+        $classRole = $this->crudRoleConstantProvider->findRoleConstant($class->getName())
+            ?? $this->getClassAttribute($class, ForRole::class)?->role;
 
         // Process CRUD attributes
         $this->processPermissionAttributes($method, $rules, CanView::class, $classRole);

@@ -10,12 +10,14 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Model\Transport\TransportGroupCrudHandler;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportGroupFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
 
 #[CrudController(TransportGroup::class)]
+#[ForRole(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)]
 class TransportGroupController extends AbstractCrudController
 {
     #[Override]
@@ -28,7 +30,6 @@ class TransportGroupController extends AbstractCrudController
                 SideMenuBuilder::SECTION_LISTS,
                 ['after' => SideMenuBuilder::LIST_TRANSPORT_AND_PAYMENT],
             )
-            ->setCustomRoleConstant(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)
             ->registerHandler(TransportGroupCrudHandler::class);
     }
 

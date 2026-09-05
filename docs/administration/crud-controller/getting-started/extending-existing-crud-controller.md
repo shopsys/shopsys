@@ -141,3 +141,15 @@ You can also specify multiple extension classes for one CRUD Controller. This is
 For that purpose, you can use the `priority` parameter in the `#[CrudControllerExtension]` attribute.
 
 A higher priority value means that the extension will be executed later. The default priority is `0`. Extension from the `App` namespace will be automatically registered with the highest priority if the `priority` parameter is not set.
+
+## Overriding the role constant
+
+An extension can override the [role constant](../reference/crud-controller.md#role-constant) of the extended controller by declaring the `#[ForRole]` attribute on the extension class:
+
+```php
+#[CrudControllerExtension(crudController: OrderCrudController::class)]
+#[ForRole(CustomRoleConstant::ROLE_ORDER_MANAGER)]
+class OrderCrudControllerExtension extends AbstractCrudControllerExtension
+```
+
+When multiple extensions declare the attribute, the one executed last (the highest priority) wins.

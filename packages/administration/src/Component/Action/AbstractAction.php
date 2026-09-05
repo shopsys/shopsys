@@ -45,7 +45,10 @@ abstract class AbstractAction
     /**
      * Set function that will determine if action should be displayed
      *
-     * @param \Closure(): bool $function Function must return boolean value. If function returns false, action will not be displayed
+     * @param \Closure(mixed): bool $function Function must return boolean value. If function returns false, action will not be displayed.
+     *      The closure receives the data the action is built with, depending on the action kind:
+     *      a top action (Action) gets the data of the current page — the entity on the edit page, null on the list, create, and detail pages;
+     *      a row action (RowAction) gets the data of the grid row it is rendered in
      */
     public function displayIf(Closure $function): static
     {

@@ -30,6 +30,9 @@ final class LoadControllersExtensionCompilerPass implements CompilerPassInterfac
             }
         }
 
+        // ascending priority is the order the extensions are applied in, consumers rely on it instead of sorting again
+        usort($extensions, static fn (array $a, array $b): int => $a['priority'] <=> $b['priority']);
+
         $container->setParameter(
             CrudControllerRegistry::CRUD_CONTROLLERS_EXTENSIONS_PARAMETER,
             $extensions,

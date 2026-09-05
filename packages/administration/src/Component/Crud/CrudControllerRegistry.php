@@ -9,7 +9,6 @@ use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use SplPriorityQueue;
 use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Webmozart\Assert\Assert;
@@ -36,10 +35,11 @@ final class CrudControllerRegistry
 
     /**
      * @param array<int, array{class: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, entityClass: string}> $crudControllers
-     * @param array<int, array{extensionClass: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension>, controllerClass: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, priority: int}> $crudControllerExtensions
+     * @param array<int, array{extensionClass: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension>, controllerClass: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, priority: int}> $crudControllerExtensions sorted by ascending priority
      */
     public function __construct(
         private readonly EntityNameResolver $entityNameResolver,
+        private readonly CrudRoleConstantProvider $crudRoleConstantProvider,
         #[TaggedLocator('shopsys.admin.crud_controllers')]
         private readonly ServiceLocator $controllers,
         #[TaggedLocator('shopsys.admin.crud_handler')]
@@ -113,7 +113,7 @@ final class CrudControllerRegistry
         /** @var \Shopsys\AdministrationBundle\Controller\AbstractCrudController $crudController */
         $crudController = $this->controllers->get($controllerClass);
 
-        $config = new CrudConfig($meta['entityName']);
+        $config = new CrudConfig($meta['entityName'], $this->crudRoleConstantProvider->findCustomRoleConstant($controllerClass));
         $crudController->configure($config);
 
         foreach ($extensions as $extension) {
@@ -153,23 +153,9 @@ final class CrudControllerRegistry
     {
         if ($this->resolvedExtensions === null) {
             $this->resolvedExtensions = [];
-            $queueByController = [];
 
             foreach ($this->crudControllerExtensions as $extension) {
-                if (isset($queueByController[$extension['controllerClass']]) === false) {
-                    $queueByController[$extension['controllerClass']] = new SplPriorityQueue();
-                }
-
-                $queueByController[$extension['controllerClass']]->insert(
-                    $this->controllers->get($extension['extensionClass']),
-                    $extension['priority'],
-                );
-            }
-
-            foreach ($queueByController as $controller => $queue) {
-                $queue->top();
-                $queue->setExtractFlags(SplPriorityQueue::EXTR_DATA);
-                $this->resolvedExtensions[$controller] = array_reverse(iterator_to_array($queue));
+                $this->resolvedExtensions[$extension['controllerClass']][] = $this->controllers->get($extension['extensionClass']);
             }
         }
 

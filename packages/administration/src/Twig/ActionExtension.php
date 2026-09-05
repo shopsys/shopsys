@@ -10,6 +10,7 @@ use Shopsys\AdministrationBundle\Component\Action\RouteData\ActionRouteInterface
 use Shopsys\AdministrationBundle\Component\Action\RouteData\CrudActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\RouteActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\UrlActionRouteData;
+use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlDataProviderInterface;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
@@ -23,6 +24,7 @@ class ActionExtension extends AbstractExtension
         protected readonly AdministrationRouter $router,
         protected readonly RouteAccessCheckerInterface $routeAccessChecker,
         protected readonly RouteCsrfProtector $csrfProtector,
+        protected readonly AccessControlDataProviderInterface $accessControlDataProvider,
     ) {
     }
 
@@ -65,7 +67,19 @@ class ActionExtension extends AbstractExtension
         }
 
         if ($actionRoute instanceof RouteActionRouteData) {
-            return $this->router->generate($actionRoute->getRouteName(), $actionRoute->getRouteParameters($data));
+            $parameters = $actionRoute->getRouteParameters($data);
+            $routeData = $this->accessControlDataProvider->findRouteByName($actionRoute->getRouteName());
+
+            if (
+                $routeData !== null
+                && class_exists($routeData->controllerClass)
+                && method_exists($routeData->controllerClass, $routeData->controllerMethod)
+                && $this->csrfProtector->isActionProtected($routeData->controllerClass, $routeData->controllerMethod)
+            ) {
+                $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] ??= $this->csrfProtector->getCsrfTokenByRoute($actionRoute->getRouteName());
+            }
+
+            return $this->router->generate($actionRoute->getRouteName(), $parameters);
         }
 
         throw new InvalidArgumentException('Action has invalid route type');

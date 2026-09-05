@@ -9,6 +9,7 @@ use Override;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use Shopsys\AdministrationBundle\Component\Crud\CrudRoleConstantProvider;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
@@ -37,7 +38,18 @@ class AttributeProcessorTest extends TestCase
     {
         $this->roleRegistry = $this->createStub(RoleRegistryInterface::class);
         $accessControlRuleFactory = new AccessControlRuleFactory($this->roleRegistry);
-        $this->processor = new AttributeProcessor($accessControlRuleFactory);
+        $this->processor = new AttributeProcessor($accessControlRuleFactory, new CrudRoleConstantProvider());
+    }
+
+    /**
+     * @param array<class-string, array{roleConstant: string, customRoleConstant: string|null}> $crudRoleConstants as resolved by ResolveCrudRoleConstantsCompilerPass
+     */
+    private function createProcessorWithCrudRoleConstants(array $crudRoleConstants): AttributeProcessor
+    {
+        return new AttributeProcessor(
+            new AccessControlRuleFactory($this->roleRegistry),
+            new CrudRoleConstantProvider($crudRoleConstants),
+        );
     }
 
     /**
@@ -165,6 +177,34 @@ class AttributeProcessorTest extends TestCase
 
         $reflectionClass = new ReflectionClass($testClass);
         $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
+
+        $this->assertCount(1, $rules);
+        $this->assertEquals('ROLE_EDITOR_VIEW', $rules[0]->getRoleIdentifier());
+    }
+
+    public function testProcessMethodOnCrudControllerFallsBackToControllerRoleConstant(): void
+    {
+        $this->setupRoleRegistry(['ROLE_CRUD_ATTRIBUTE_FIXTURE_VIEW' => 'ROLE_CRUD_ATTRIBUTE_FIXTURE']);
+        $processor = $this->createProcessorWithCrudRoleConstants([
+            AttributeFixtureCrudController::class => ['roleConstant' => 'ROLE_CRUD_ATTRIBUTE_FIXTURE', 'customRoleConstant' => null],
+        ]);
+
+        $reflectionClass = new ReflectionClass(AttributeFixtureCrudController::class);
+        $rules = $processor->processMethod($reflectionClass, $reflectionClass->getMethod('customAction'));
+
+        $this->assertCount(1, $rules);
+        $this->assertEquals('ROLE_CRUD_ATTRIBUTE_FIXTURE_VIEW', $rules[0]->getRoleIdentifier());
+    }
+
+    public function testForRoleOnCrudControllerIsUsedAsItsRoleConstant(): void
+    {
+        $this->setupRoleRegistry(['ROLE_EDITOR_VIEW' => 'ROLE_EDITOR']);
+        $processor = $this->createProcessorWithCrudRoleConstants([
+            AttributeFixtureWithForRoleCrudController::class => ['roleConstant' => 'ROLE_EDITOR', 'customRoleConstant' => 'ROLE_EDITOR'],
+        ]);
+
+        $reflectionClass = new ReflectionClass(AttributeFixtureWithForRoleCrudController::class);
+        $rules = $processor->processMethod($reflectionClass, $reflectionClass->getMethod('customAction'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_EDITOR_VIEW', $rules[0]->getRoleIdentifier());
@@ -455,5 +495,23 @@ class AttributeProcessorTest extends TestCase
         $this->assertEquals('ROLE_USER_EDIT', $rules[0]->getRoleIdentifier());
         $this->assertCount(1, $rules[0]->httpMethods);
         $this->assertEquals([HttpMethod::GET], $rules[0]->httpMethods);
+    }
+}
+
+// named fixtures — CRUD role fallback needs classes registered in the role constant provider by their class name
+class AttributeFixtureCrudController
+{
+    #[CanView]
+    public function customAction(): void
+    {
+    }
+}
+
+#[ForRole('ROLE_EDITOR')]
+class AttributeFixtureWithForRoleCrudController
+{
+    #[CanView]
+    public function customAction(): void
+    {
     }
 }

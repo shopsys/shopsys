@@ -176,6 +176,7 @@ When multiple security attributes are applied to the same method, they follow a 
 - **SuperAdminOnly at class-level** takes precedence over all method-level attributes
 - **PublicAccess at class-level** can be overridden by method-level security attributes
 - **ForRole** provides default role for CRUD attributes but can be overridden per method
+- **On a CRUD controller** `#[ForRole]` sets the role of the whole controller: the built-in CRUD actions and permission attributes on custom routes are all guarded by that role, and the controller does not register its own generated role in the role matrix — pass a role directly in the permission attribute when a single route needs a different one
 
 ### 2. Access Type Priority
 
