@@ -1,5 +1,7 @@
 # Backward Compatibility Promise
 
+[TOC]
+
 Smooth and safe upgrades of your e-commerce project are very important to us.
 At the same time, we need to improve Shopsys Platform for you by adding functionality, enhancing or simplifying current functions, and fixing bugs.
 After reading this promise, you'll understand backward compatibility, what changes you can expect, and how we plan to make changes in the future.

@@ -1,5 +1,7 @@
 # Entities
 
+[TOC]
+
 This article describes how we work with entities and our specialities.
 
 1. Entity is a class encapsulating data and you can read more what is an entity in the [model architecture article](introduction-to-model-architecture.md).

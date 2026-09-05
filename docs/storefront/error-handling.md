@@ -1,5 +1,7 @@
 # Error handling on Storefront
 
+[TOC]
+
 This document describes how errors flow from the Backend API through the Storefront and how they are displayed to users.
 
 ## Architecture Overview

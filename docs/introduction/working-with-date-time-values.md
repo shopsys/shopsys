@@ -1,5 +1,7 @@
 # Working with date-time values
 
+[TOC]
+
 Shopsys Platform internally works with dates in UTC timezone.
 That is for better portability and integration with other systems.
 Also, it allows you to work with time values more freely.

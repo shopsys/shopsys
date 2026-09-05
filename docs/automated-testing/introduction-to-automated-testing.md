@@ -1,5 +1,7 @@
 # Introduction to Automated Testing
 
+[TOC]
+
 Testing is a crucial part of the development and maintenance of reliable software.  
 For this reason, Shopsys Platform comes with 5 types of automated tests:
 
