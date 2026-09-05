@@ -7,6 +7,8 @@ type RoutesForSmokeTestsType = {
     skip?: boolean;
     logged?: boolean;
     test?: null | (() => void);
+    // for routes that do not render an HTML page, the raw response is checked via cy.request() instead of cy.visit()
+    responseTest?: (response: Cypress.Response<string>) => void;
     loginCredentials?: {
         email: string;
         password: string;
@@ -150,6 +152,22 @@ context('Smoke tests', () => {
             params: { ['q']: 'television' },
             test: () => {
                 checktHeadlineText('Search results for');
+            },
+        },
+        ['/security.txt']: {
+            skip: false,
+            responseTest: (response) => {
+                const expectValidSecurityTxt = (securityTxtResponse: Cypress.Response<string>) => {
+                    expect(securityTxtResponse.headers['content-type']).to.include('text/plain');
+                    expect(securityTxtResponse.body).to.match(/^Contact: .+$/m);
+                    expect(securityTxtResponse.body).to.match(/^Expires: .+$/m);
+                };
+
+                expectValidSecurityTxt(response);
+
+                // the canonical location defined by RFC 9116 is served via a rewrite
+                // (the Expires value is generated per request, so the two bodies cannot be compared for equality)
+                cy.request('/.well-known/security.txt').then(expectValidSecurityTxt);
             },
         },
         ['/social-login']: { skip: true },
@@ -317,6 +335,17 @@ context('Smoke tests', () => {
                         routeToRequest = `${routeToRequest}?${searchParams.toString()}`;
                     }
                 });
+            }
+
+            const responseTest = isCustomRoute ? filteredRoutes[routeName]?.responseTest : undefined;
+
+            if (responseTest) {
+                cy.request(routeToRequest).then((response) => {
+                    expect(response.status, '❌ Response status').to.equal(200);
+                    responseTest(response);
+                });
+
+                return;
             }
 
             const consoleErrors: string[] = [];
