@@ -1,4 +1,7 @@
-import { changeExpectedDeliveryDateMessagesToStaticDemodata } from '../transportAndPayment/transportAndPaymentSupport';
+import {
+    changeExpectedDeliveryDateMessagesToStaticDemodata,
+    getStaticOpeningHoursOfDays,
+} from '../transportAndPayment/transportAndPaymentSupport';
 import {
     changeDayOfWeekInProductDeliveryStoresApiResponse,
     checkDeliveryOptionsPanelsAreNotPresent,
@@ -24,6 +27,7 @@ const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.
 describe('Delivery Options Popup Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
+        cy.clock(new Date(getStaticOpeningHoursOfDays()[0].date).getTime(), ['Date']);
     });
 
     it('[Regular Product] should open the delivery options popup without a variant select', () => {
@@ -37,7 +41,7 @@ describe('Delivery Options Popup Tests', () => {
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'popup for a regular product', {
             capture: TIDs.layout_popup,
-            blackout: [{ tid: TIDs.transport_and_payment_list_item_image }, { tid: TIDs.store_opening_status }],
+            blackout: [{ tid: TIDs.transport_and_payment_list_item_image }],
         });
     });
 

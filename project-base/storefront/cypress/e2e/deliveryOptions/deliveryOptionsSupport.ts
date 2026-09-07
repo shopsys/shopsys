@@ -10,6 +10,7 @@ export const changeDayOfWeekInProductDeliveryStoresApiResponse = (dayOfWeek: num
 
             stores?.edges?.forEach((edge) => {
                 if (edge?.node?.store.openingHours) {
+                    edge.node.expectedDeliveryDate = getStaticOpeningHoursOfDays()[1].date;
                     edge.node.store.openingHours.status = 'OPEN' as TypeStoreOpeningStatusEnum;
                     edge.node.store.openingHours.dayOfWeek = dayOfWeek;
                     edge.node.store.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();

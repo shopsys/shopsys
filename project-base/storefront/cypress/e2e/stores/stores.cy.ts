@@ -1,8 +1,7 @@
 import {
-    changeStoreOpeningHoursToStaticDemodata,
-    changeStoreOpeningStatusToStaticDemodata,
     expandFirstStoreAndClickDetail,
     navigateToStoresFromHeader,
+    useStaticStoreOpeningHours,
 } from './storesSupport';
 import {
     getSnapshotIndexingFunction,
@@ -18,18 +17,16 @@ const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.
 describe('Stores Tests (SSP-1741)', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
+        useStaticStoreOpeningHours();
     });
 
     it('[Stores To Store Detail] should navigate from homepage to stores, then to store detail', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         navigateToStoresFromHeader();
-        changeStoreOpeningHoursToStaticDemodata();
-        changeStoreOpeningStatusToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'stores page', {
             blackout: [
                 { tid: TIDs.stores_map },
-                { tid: TIDs.store_opening_status },
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
@@ -37,12 +34,9 @@ describe('Stores Tests (SSP-1741)', () => {
         });
 
         expandFirstStoreAndClickDetail();
-        changeStoreOpeningStatusToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'store detail page', {
             blackout: [
                 { tid: TIDs.stores_map },
-                { tid: TIDs.store_opening_status },
-                { tid: TIDs.opening_hours },
                 { tid: TIDs.store_gallery_images },
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
