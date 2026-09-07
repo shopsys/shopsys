@@ -1,4 +1,17 @@
 fragment SeoSettingFragment on SeoSetting {
     __typename
+    organization {
+        name
+        companyTaxNumber
+        companyVatNumber
+        companyNumber
+        description
+        street
+        city
+        postcode
+        country
+        logo
+        socialNetworkUrls
+    }
     titleAddOn
 }
