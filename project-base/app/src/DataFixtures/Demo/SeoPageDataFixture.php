@@ -108,12 +108,11 @@ class SeoPageDataFixture extends AbstractReferenceFixture
             $canonicalUrl = $domainConfig->getUrl() . '/' . $seoPageSlug;
         }
 
-        $seoPageData->seoTitlesIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'title', $locale);
-        $seoPageData->seoMetaDescriptionsIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'meta description', $locale);
+        $seoPageData->seo[$domainId]->title = $this->formatAttributeValue($pageName, 'title', $locale);
+        $seoPageData->seo[$domainId]->metaDescription = $this->formatAttributeValue($pageName, 'meta description', $locale);
+        $seoPageData->seo[$domainId]->canonicalUrl = $canonicalUrl;
         $seoPageData->seoOgTitlesIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'og title', $locale);
         $seoPageData->seoOgDescriptionsIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'og description', $locale);
-
-        $seoPageData->canonicalUrlsIndexedByDomainId[$domainId] = $canonicalUrl;
     }
 
     private function formatAttributeValue(string $pageName, string $value, string $locale): string

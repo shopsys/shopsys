@@ -85,7 +85,15 @@ class SeoPage
      */
     public function getSeoTitle(int $domainId)
     {
-        return $this->getSeoPageDomain($domainId)->getSeoTitle();
+        return $this->getSeoAttributes($domainId)->getTitle();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
+     */
+    public function getSeoAttributes(int $domainId)
+    {
+        return $this->getSeoPageDomain($domainId)->getSeoAttributes();
     }
 
     /**
@@ -93,7 +101,7 @@ class SeoPage
      */
     public function getSeoMetaDescription(int $domainId)
     {
-        return $this->getSeoPageDomain($domainId)->getSeoMetaDescription();
+        return $this->getSeoAttributes($domainId)->getMetaDescription();
     }
 
     /**
@@ -101,7 +109,7 @@ class SeoPage
      */
     public function getCanonicalUrl(int $domainId)
     {
-        return $this->getSeoPageDomain($domainId)->getCanonicalUrl();
+        return $this->getSeoAttributes($domainId)->getCanonicalUrl();
     }
 
     /**
@@ -147,7 +155,7 @@ class SeoPage
 
     protected function createDomains(SeoPageData $seoPageData): void
     {
-        $domainIds = array_keys($seoPageData->seoTitlesIndexedByDomainId);
+        $domainIds = array_keys($seoPageData->seo);
 
         foreach ($domainIds as $domainId) {
             $seoPageDomain = new SeoPageDomain($domainId, $this);
@@ -163,9 +171,7 @@ class SeoPage
         foreach ($this->domains as $seoPageDomain) {
             $domainId = $seoPageDomain->getDomainId();
 
-            $seoPageDomain->setSeoTitle($seoPageData->seoTitlesIndexedByDomainId[$domainId]);
-            $seoPageDomain->setSeoMetaDescription($seoPageData->seoMetaDescriptionsIndexedByDomainId[$domainId]);
-            $seoPageDomain->setCanonicalUrl($seoPageData->canonicalUrlsIndexedByDomainId[$domainId]);
+            $seoPageDomain->getSeoAttributes()->edit($seoPageData->seo[$domainId]);
             $seoPageDomain->setSeoOgTitle($seoPageData->seoOgTitlesIndexedByDomainId[$domainId]);
             $seoPageDomain->setSeoOgDescription($seoPageData->seoOgDescriptionsIndexedByDomainId[$domainId]);
         }
