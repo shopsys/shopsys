@@ -231,22 +231,6 @@ class ReadyCategorySeoMix implements DomainSeparatedEntityInterface
     }
 
     /**
-     * @return string|null
-     */
-    public function getTitle()
-    {
-        return $this->seo->getTitle();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getMetaDescription()
-    {
-        return $this->seo->getMetaDescription();
-    }
-
-    /**
      * @return int
      */
     #[Override]
