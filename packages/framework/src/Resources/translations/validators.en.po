@@ -151,9 +151,6 @@ msgstr ""
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Link must be valid URL address"
-msgstr ""
-
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr ""
 
