@@ -3,9 +3,13 @@ query PromotedCategoriesQuery($firstProducts: Int!) {
         name
         description
         slug
-        seoH1
-        seoTitle
-        seoMetaDescription
+        seo {
+            title
+            metaDescription
+            h1
+            metaRobots
+            canonicalUrl
+        }
         bestsellers {
             name
         }
