@@ -87,6 +87,7 @@ class StoreController extends AdminBaseController
 
         $form = $this->createForm(StoreFormType::class, $storeData, [
             'store' => null,
+            'domain_id' => $domainId,
         ]);
         $form->handleRequest($request);
 
@@ -123,6 +124,7 @@ class StoreController extends AdminBaseController
 
         $form = $this->createForm(StoreFormType::class, $storeData, [
             'store' => $store,
+            'domain_id' => $store->getDomainId(),
         ]);
         $form->handleRequest($request);
 
