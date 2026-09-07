@@ -307,6 +307,9 @@ msgstr "Dobré partnerství začíná spolehlivými daty, jasnými obchodními p
 msgid "A great product for a very reasonable price."
 msgstr "Skvělý produkt za velmi rozumnou cenu."
 
+msgid "A home is made of small everyday moments: a favourite song, a shared film, a photograph worth keeping. At Demo shop, we bring together electronics and accessories that help you enjoy them. Our team makes choosing easier with clear product information and friendly advice."
+msgstr "Domov tvoří drobné každodenní chvíle: oblíbená písnička, společný film nebo fotografie, kterou si chcete uchovat. V Demo shopu vybíráme elektroniku a příslušenství, se kterými si je užijete naplno. Srozumitelné informace o produktech a vstřícné poradenství vám usnadní výběr."
+
 msgid "A personal computer (PC) is a general-purpose computer whose size, capabilities, and original sale price make it useful for individuals, and is intended to be operated directly by an end-user with no intervening computer time-sharing models that allowed larger, more expensive minicomputer and mainframe systems to be used by many people, usually at the same time."
 msgstr "Počítač je zařízení a výpočetní technika, která zpracovává data pomocí předem vytvořeného programu. Současný počítač je elektronický a skládá se z hardwaru, který představuje fyzické části počítače (mikroprocesor, klávesnice, monitor atd.) a ze softwaru (operační systém a programy). Počítač je zpravidla ovládán uživatelem, který poskytuje počítači data ke zpracování prostřednictvím jeho vstupních zařízení a počítač výsledky prezentuje pomocí výstupních zařízení. V současnosti jsou počítače využívány téměř ve všech oborech lidské činnosti."
 
@@ -376,6 +379,9 @@ msgstr "Alternativní pohled na %productName%"
 msgid "Annual energy consumption"
 msgstr "Roční spotřeba energie"
 
+msgid "Any video footage or interview requirements"
+msgstr "Požadavky na videozáběry nebo rozhovor"
+
 msgid "Apple iPhone 5S 64GB, gold"
 msgstr "Apple iPhone 5S 64GB, zlatý"
 
@@ -441,6 +447,9 @@ msgstr "Knihy"
 
 msgid "Bookworm"
 msgstr "Knihomolové"
+
+msgid "Bring your story to life with photographs of electronics in everyday settings. For publication-ready files and image credits, contact our press team and let us know which pictures you would like to use."
+msgstr "Doplňte svůj článek fotografiemi elektroniky v každodenním prostředí. O soubory pro publikaci a údaje o autorství požádejte náš tým pro média a uveďte, které snímky chcete použít."
 
 msgid "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
 msgstr "Stavějte škálovatelné B2C a B2B e-shopy na otevřené e-commerce platformě navržené pro komplexní projekty."
@@ -752,10 +761,7 @@ msgid "Demo shop is a sample electronics retailer built to demonstrate a complet
 msgstr "Demo shop je ukázkový prodejce elektroniky vytvořený pro předvedení kompletního moderního nákupního procesu."
 
 msgid "Demo shop presentation"
-msgstr ""
-
-msgid "Demo shop presents a complete sample e-commerce experience, from product discovery and content to ordering and after-sales care."
-msgstr "Demo shop představuje kompletní ukázkový e-shop od objevování produktů a obsahu po objednávku a následnou péči."
+msgstr "Představení Demo shopu"
 
 msgid "Demo stores provide personal collection, product advice, and selected customer-care services."
 msgstr "Ukázkové prodejny nabízejí osobní odběr, poradenství k produktům a vybrané služby zákaznické péče."
@@ -833,7 +839,7 @@ msgid "Done"
 msgstr "Vyřízena"
 
 msgid "Downloadable Demo shop press image"
-msgstr ""
+msgstr "Fotografie Demo shopu pro média ke stažení"
 
 msgid "Downloadable images"
 msgstr "Obrázky ke stažení"
@@ -979,14 +985,14 @@ msgstr "Jídlo"
 msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
 msgstr "Potravina je výrobek nebo látka určená pro výživu lidí a konzumovaná ústy v nezměněném nebo upraveném stavu. Potraviny se dělí na poživatiny a pochutiny. Potraviny mohou být rostlinného, živočišného nebo jiného původu."
 
-msgid "For interviews, comments, and background information, contact press@demo-shop.example."
-msgstr "Pro rozhovory, komentáře a podklady kontaktujte press@demo-shop.example."
-
 msgid "For press"
 msgstr "Pro média"
 
 msgid "Frequently Asked Questions FAQ"
 msgstr "Nejčastější dotazy FAQ"
+
+msgid "From a cosy film night to capturing a weekend away, the right technology makes everyday moments more enjoyable. Explore our selection of televisions and accessories for your next story."
+msgstr "Od pohodového filmového večera po zachycení víkendových zážitků – správná technika zpříjemní každodenní chvíle. Prohlédněte si náš výběr televizorů a příslušenství pro svůj další článek."
 
 msgid "Front view of %productName%"
 msgstr "Přední pohled na %productName%"
@@ -1258,6 +1264,9 @@ msgstr "Notebooky"
 msgid "Laser printers"
 msgstr "Laserové tiskárny"
 
+msgid "Let us help with your story"
+msgstr "Pomůžeme vám s vaším článkem"
+
 msgid "Limited user"
 msgstr "Limitovaný uživatel"
 
@@ -1272,6 +1281,9 @@ msgstr "Logitech S120 black"
 
 msgid "Look beyond the first impression and compare durability, running costs, service options, and features you will genuinely use."
 msgstr "Nedívejte se jen na první dojem a porovnejte odolnost, provozní náklady, servis a funkce, které skutečně využijete."
+
+msgid "Looking for footage to accompany your story? Contact our press team to discuss product demonstrations and video materials for your publication."
+msgstr "Hledáte záběry, které doplní váš článek? Kontaktujte náš tým pro média a domluvte se na ukázkách produktů a videomateriálech pro vaše médium."
 
 msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
 msgstr "JURA Impressa J9 TFT Carbon Automatický kávovar/espresso,barevný LCD"
@@ -1326,6 +1338,9 @@ msgstr "Kontakt pro média"
 
 msgid "Media type"
 msgstr "Typ média"
+
+msgid "Meet our team and see the products up close. Please arrange interviews, photography, and filming in advance with our press contact so we can prepare for your visit."
+msgstr "Seznamte se s naším týmem a prohlédněte si produkty zblízka. Rozhovory, fotografování a natáčení prosím domluvte předem s naším kontaktem pro média, abychom se na vaši návštěvu mohli připravit."
 
 msgid "Meet the latest generation of LED TVs Philips, which include the thin Smart TV running Android."
 msgstr "Televize PHILIPS 32PFL4308 3D LED TV 4300 series, 81 cm, Full HD, 200PMR, DVB-T/C, HDMI, USB, Full HD LED TV, Na kvalitě obrazu záleží"
@@ -1612,11 +1627,17 @@ msgstr "Objednávku si vyzvednete u servisního pultu poblíž vchodu. Tým při
 msgid "Pick-up counter is right behind the main entrance. Parking is available in the courtyard for short stops."
 msgstr "Výdejní pult je hned za hlavním vchodem. Pro krátké zastavení je k dispozici parkování ve dvoře."
 
+msgid "Planning an interview or looking for a comment on home electronics? Write to press@demo-shop.example with your topic and deadline. Our press team will help you find the right information."
+msgstr "Plánujete rozhovor nebo hledáte komentář k domácí elektronice? Napište na press@demo-shop.example a uveďte téma a termín. Náš tým pro média vám pomůže najít potřebné informace."
+
 msgid "Please contact our support team. We will guide you through the channel setup step by step."
 msgstr "Kontaktujte prosím naši podporu. Provedeme vás nastavením kanálů krok za krokem."
 
 msgid "Pocket-friendly"
 msgstr "Kapesní vydání"
+
+msgid "Possible dates for a store visit or a product demonstration"
+msgstr "Možné termíny návštěvy prodejny nebo předvedení produktů"
 
 msgid "Pot holder, black"
 msgstr "Držák na hrnce, černý"
@@ -1695,6 +1716,9 @@ msgstr "Produkt neodpovídá popisu, chci vrátit celou objednávku."
 
 msgid "Product gift"
 msgstr "Dárkový produkt"
+
+msgid "Product inspiration"
+msgstr "Inspirace pro váš článek"
 
 msgid "Product materials"
 msgstr "Produktové materiály"
@@ -2161,6 +2185,9 @@ msgstr "Filtr uhlíkový OPP-1060"
 msgid "The filter carbon OPP-2060"
 msgstr "Filtr uhlíkový OPP-2060"
 
+msgid "The images and file formats you need"
+msgstr "Požadované obrázky a formáty souborů"
+
 msgid "The minimum space requirements excels sub-mounting range hood OPP-2060th"
 msgstr "Minimální prostorovou náročností vyniká podstavný odsavač par OPP-2060."
 
@@ -2193,9 +2220,6 @@ msgstr "Recenze neodpovídá našim pravidlům pro recenze."
 
 msgid "The selected variant did not meet my needs."
 msgstr "Vybraná varianta nesplnila mé potřeby."
-
-msgid "The selections below demonstrate how product recommendations can be embedded directly into editorial content."
-msgstr "Níže uvedené výběry ukazují, jak lze doporučení produktů vložit přímo do redakčního obsahu."
 
 msgid "The store is located in the city center close to the tram stop. Larger orders can be loaded from the side entrance."
 msgstr "Prodejna se nachází v centru města blízko tramvajové zastávky. Větší objednávky lze naložit u bočního vchodu."
@@ -2389,6 +2413,9 @@ msgstr "Mrzí nás, že vybraná varianta nesplnila vaše potřeby. Náš tým z
 msgid "We are sorry the sound did not meet your expectations. Our support team can help you choose compatible external speakers."
 msgstr "Mrzí nás, že zvuk nesplnil vaše očekávání. Naše podpora vám pomůže vybrat kompatibilní externí reproduktory."
 
+msgid "We can help you select products for a comparison, explain their features, and prepare supporting materials. Tell us who you are writing for so we can tailor the selection to your readers."
+msgstr "Pomůžeme vám vybrat produkty do srovnání, vysvětlit jejich funkce a připravit doprovodné podklady. Dejte nám vědět, pro koho píšete, abychom výběr přizpůsobili vašim čtenářům."
+
 msgid "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
 msgstr "Zaměřujeme se na srozumitelné informace o produktech, jednoduchou objednávku a užitečnou péči od výběru po doručení."
 
@@ -2424,6 +2451,9 @@ msgstr "Co je nového u bezdrátových sluchátek"
 
 msgid "What it means in everyday use"
 msgstr "Co to znamená při každodenním používání"
+
+msgid "What to include in your request"
+msgstr "Co uvést v žádosti"
 
 msgid "What you should know"
 msgstr "Co byste měli vědět"
@@ -2484,6 +2514,15 @@ msgstr "Ano"
 
 msgid "You will be welcomed by friendly staff!"
 msgstr "Uvítá Vás milý personál!"
+
+msgid "Your audience and the products you are interested in"
+msgstr "Cílovou skupinu a produkty, které vás zajímají"
+
+msgid "Your deadline and preferred contact details"
+msgstr "Termín a preferovaný způsob kontaktu"
+
+msgid "Your publication and the topic of your story"
+msgstr "Název média a téma článku"
 
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr "ZN-8009 napařovací žehlička Ferratte nerez 2200 W modrá"
