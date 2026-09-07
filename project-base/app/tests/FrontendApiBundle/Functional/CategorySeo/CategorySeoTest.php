@@ -81,9 +81,13 @@ class CategorySeoTest extends GraphQlTestCase
         $arrayExpected = [
             'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             'slug' => '/' . t('electronics-without-hdmi-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            'seoH1' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            'seoTitle' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            'seoMetaDescription' => t('All kind of electronic devices.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            'seo' => [
+                'title' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'metaDescription' => t('All kind of electronic devices.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'h1' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'metaRobots' => null,
+                'canonicalUrl' => null,
+            ],
             'bestsellers' => [
                 ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
                 ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],

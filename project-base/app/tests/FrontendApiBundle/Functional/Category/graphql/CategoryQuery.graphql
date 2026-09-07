@@ -3,9 +3,13 @@ query CategoryQuery ($categoryUuid: Uuid, $firstProducts: Int! = 0) {
         name
         description
         slug
-        seoH1
-        seoTitle
-        seoMetaDescription
+        seo {
+            title
+            metaDescription
+            h1
+            metaRobots
+            canonicalUrl
+        }
         bestsellers {
             name
         }
