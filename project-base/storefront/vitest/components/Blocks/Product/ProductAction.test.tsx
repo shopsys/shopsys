@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { PRODUCT_VARIANTS_ID, ProductAction } from 'components/Blocks/Product/ProductAction';
 import { getButtonIconClassName } from 'components/Forms/Button/Button';
 import type { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
@@ -87,6 +87,7 @@ const inStockProduct = {
     catalogNumber: 'CAT-1',
     isMainVariant: false,
     isInquiryType: false,
+    productType: TypeProductTypeEnum.Basic,
     unit: { __typename: 'Unit', name: 'pcs' },
     flags: [],
     mainImage: null,

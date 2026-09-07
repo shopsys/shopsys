@@ -94,7 +94,7 @@ describe('OrderDetailBasicInfo', () => {
                     },
                 },
             ],
-        } as TypeOrderDetailFragment;
+        } as unknown as TypeOrderDetailFragment;
 
         render(<OrderDetailBasicInfo order={order} />);
 
