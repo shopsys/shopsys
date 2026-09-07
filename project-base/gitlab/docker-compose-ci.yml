@@ -120,6 +120,10 @@ services:
         ports:
             - "15672:15672"
 
+    gotenberg:
+        image: gotenberg/gotenberg:8
+        container_name: shopsys-framework-gotenberg
+
 volumes:
     web-volume:
     postgres-data:
