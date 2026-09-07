@@ -56,13 +56,10 @@ final class SeoGroupType extends AbstractType
             return;
         }
 
-        $urlListOptions = $options['url_list_options'];
-
-        if ($options['domain_id'] !== null && !array_key_exists('limit_domains_by_ids', $urlListOptions)) {
-            $urlListOptions['limit_domains_by_ids'] = [$options['domain_id']];
-        }
-
-        $builder->add('urls', UrlListType::class, ['label' => 'URL addresses'] + $urlListOptions);
+        $builder->add('urls', UrlListType::class, [
+            'label' => 'URL addresses',
+            'domain_id' => $options['domain_id'],
+        ] + $options['url_list_options']);
     }
 
     #[Override]
@@ -101,7 +98,7 @@ final class SeoGroupType extends AbstractType
         );
         $resolver->setInfo(
             'url_list_options',
-            'Options passed to UrlListType (route_name, entity_id, limit_domains_by_ids, required, constraints, …); null means the group has no "urls" field.',
+            'Options passed to UrlListType (route_name, entity_id, required, constraints, …); null means the group has no "urls" field.',
         );
     }
 
