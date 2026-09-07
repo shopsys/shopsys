@@ -4,9 +4,13 @@ query BrandQuery($uuid: Uuid!) {
         slug
         description
         link
-        seoTitle
-        seoMetaDescription
-        seoH1
+        seo {
+            title
+            metaDescription
+            h1
+            metaRobots
+            canonicalUrl
+        }
         products (first: 5) {
             orderingMode
             edges {
