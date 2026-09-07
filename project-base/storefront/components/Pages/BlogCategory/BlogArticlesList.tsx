@@ -8,6 +8,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { getImageAlt } from 'utils/imageAltText';
 
 type BlogArticlesListProps = {
     blogArticles: TypeListedBlogArticleFragment[];
@@ -30,7 +31,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                     >
                         <div className="w-full overflow-hidden rounded-xl text-center md:w-62.5 lg:w-80">
                             <Image
-                                alt={blogArticle.mainImage?.name || blogArticle.name}
+                                alt={getImageAlt(blogArticle.mainImage?.name, blogArticle.name)}
                                 className="transition-transform duration-300 ease-out group-hover:scale-105"
                                 height={351}
                                 sizes="(max-width: 599px) 85vw, (max-width: 768px) 250px, 320px"

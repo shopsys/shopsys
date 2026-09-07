@@ -36,7 +36,14 @@ query SearchQuery(
             parameters: $parameters
         }
     ) {
-        ...ListedCategoryConnectionFragment
+        edges {
+            node {
+                ...SimpleCategoryFragment
+                mainImage {
+                    ...ImageFragment
+                }
+            }
+        }
     }
     # This is here for Luigi's Box to correctly relate categories, articles, and brands to
     # products displayed on search page. It has to exactly match the query definition inside

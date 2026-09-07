@@ -14,6 +14,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
@@ -77,7 +78,11 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                                 data-tid={TIDs.comparison_product_image}
                             >
                                 <Image
-                                    alt=""
+                                    alt={generateProductImageAlt(
+                                        product.fullName,
+                                        product.mainCategory?.name,
+                                        product.mainImage?.name,
+                                    )}
                                     className="max-h-full w-auto"
                                     height={185}
                                     src={product.mainImage?.url}

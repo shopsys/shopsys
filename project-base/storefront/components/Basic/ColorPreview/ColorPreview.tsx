@@ -4,14 +4,22 @@ import { twMergeCustom } from 'utils/twMerge';
 
 type ColorPreviewProps = {
     rgbHex: string | null | undefined;
-    colorIcon: { url: string; anchorText?: string | null } | null | undefined;
+    imageUrl: string | null | undefined;
+    imageAlt: string;
     className?: string;
     imageClassName?: string;
     children?: ReactNode;
 };
 
-export const ColorPreview: FC<ColorPreviewProps> = ({ rgbHex, colorIcon, className, imageClassName, children }) => {
-    const hasImage = colorIcon?.url && colorIcon.url !== '';
+export const ColorPreview: FC<ColorPreviewProps> = ({
+    rgbHex,
+    imageUrl,
+    imageAlt,
+    className,
+    imageClassName,
+    children,
+}) => {
+    const hasImage = !!imageUrl;
     const hasColor = rgbHex && rgbHex !== '';
 
     if (!hasImage && !hasColor) {
@@ -29,10 +37,10 @@ export const ColorPreview: FC<ColorPreviewProps> = ({ rgbHex, colorIcon, classNa
         >
             {hasImage && (
                 <Image
-                    alt={colorIcon.anchorText ?? 'Color icon'}
+                    alt={imageAlt}
                     className={twMergeCustom('size-full object-cover', imageClassName)}
                     height={16}
-                    src={colorIcon.url}
+                    src={imageUrl}
                     width={16}
                 />
             )}

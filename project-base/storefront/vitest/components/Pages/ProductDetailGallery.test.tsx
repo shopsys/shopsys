@@ -231,7 +231,7 @@ describe('ProductDetailGallery', () => {
         expect(modalGalleryElement.props.items).toEqual(manyImages);
     });
 
-    test('renders gallery media as decorative inside descriptively labelled buttons', () => {
+    test('uses configured image and video descriptions for gallery media', () => {
         const { container } = renderGallery(images, [video]);
 
         const galleryButtons = [
@@ -240,7 +240,10 @@ describe('ProductDetailGallery', () => {
         ];
 
         expect(galleryButtons).toHaveLength(5);
-        expect(container.querySelectorAll('[data-alt=""]')).toHaveLength(4);
-        expect(container.querySelectorAll('[data-alt="Front view"]')).toHaveLength(1);
+        expect(container.querySelectorAll('[data-alt=""]')).toHaveLength(0);
+        expect(container.querySelectorAll('[data-alt="Front view"]')).toHaveLength(2);
+        expect(container.querySelectorAll('[data-alt="Side view"]')).toHaveLength(1);
+        expect(container.querySelectorAll('[data-alt="Back view"]')).toHaveLength(1);
+        expect(container.querySelectorAll('[data-alt="Product video"]')).toHaveLength(1);
     });
 });

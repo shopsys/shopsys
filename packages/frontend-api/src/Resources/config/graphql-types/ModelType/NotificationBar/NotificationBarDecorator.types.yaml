@@ -10,6 +10,9 @@ NotificationBarDecorator:
             text:
                 type: "String!"
                 description: "Message of the notification"
+            plainText:
+                type: "String!"
+                description: "Message of the notification without HTML markup"
             rgbColor:
                 type: "String!"
                 description: "Color of the notification"

@@ -10,6 +10,7 @@ import { twJoin } from 'tailwind-merge';
 import { getAccessTokenFromCookies } from 'utils/auth/getTokensFromCookies';
 import { useLogout } from 'utils/auth/useLogout';
 import { getYIQContrastTextColor } from 'utils/colors/colors';
+import { getImageAlt } from 'utils/imageAltText';
 import { useNotificationBarsWithRevalidation } from 'utils/useNotificationBarRevalidation';
 
 export const NotificationBars: FC = () => {
@@ -43,12 +44,13 @@ export const NotificationBars: FC = () => {
                             )}
                         >
                             {!!item.mainImage && (
-                                <div className="mr-3 flex h-11 w-11 items-center justify-center">
+                                <div className="relative mr-3 size-11 shrink-0">
                                     <Image
-                                        alt={item.mainImage.name || item.text}
-                                        height={44}
+                                        fill
+                                        alt={getImageAlt(item.mainImage.name, item.plainText)}
+                                        className="object-contain"
+                                        sizes="44px"
                                         src={item.mainImage.url}
-                                        width={44}
                                     />
                                 </div>
                             )}

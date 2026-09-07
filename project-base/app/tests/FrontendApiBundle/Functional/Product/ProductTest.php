@@ -143,6 +143,9 @@ class ProductTest extends GraphQlTestCase
             'imagesCount' => 2,
             'isAllowedNegativeStock' => true,
             'expectedRestockingDate' => null,
+            'mainCategory' => [
+                'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            ],
             'categories' => [
                 [
                     'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

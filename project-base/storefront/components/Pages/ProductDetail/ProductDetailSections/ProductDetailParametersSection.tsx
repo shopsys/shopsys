@@ -19,7 +19,7 @@ const renderParameterValues = (parameter: TypeParameterFragment) =>
         <div key={value.uuid} className="inline-flex items-center">
             <span className="inline-flex items-center gap-2">
                 {parameter.type === TypeParameterTypeEnum.Color && (
-                    <ColorPreview colorIcon={value.colorIcon} rgbHex={value.rgbHex} />
+                    <ColorPreview imageAlt={value.text} imageUrl={value.colorIcon?.url} rgbHex={value.rgbHex} />
                 )}
                 <span>
                     {value.text}

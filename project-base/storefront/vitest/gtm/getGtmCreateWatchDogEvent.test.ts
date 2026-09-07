@@ -18,6 +18,7 @@ const listedProduct = {
     uuid: 'd6316f87-b06a-45f1-92b4-4a6a347817db',
     slug: '/watched-product',
     fullName: 'Watched Product',
+    mainCategory: { name: 'Main category' },
     stockQuantity: 0,
     isAllowedNegativeStock: false,
     isSellingDenied: false,
@@ -43,6 +44,7 @@ const listedProduct = {
     ],
     mainImage: {
         __typename: 'Image',
+        name: null,
         url: 'https://cdn.example.com/watched-product.jpg',
     },
     price: {
