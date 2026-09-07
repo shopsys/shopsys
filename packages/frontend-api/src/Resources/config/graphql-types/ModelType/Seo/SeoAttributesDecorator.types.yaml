@@ -1,0 +1,21 @@
+SeoAttributesDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "SEO attributes of a page"
+        fields:
+            title:
+                type: "String"
+                description: "Document's title that is shown in a browser's title"
+            metaDescription:
+                type: "String"
+                description: "Description for meta tag, falls back to the entity description when not set"
+            h1:
+                type: "String"
+                description: "Main heading of the page"
+            metaRobots:
+                type: "String"
+                description: "Value for the robots meta tag (e.g. \"noindex, nofollow\"), null keeps the storefront default"
+            canonicalUrl:
+                type: "String"
+                description: "Absolute canonical URL of the page"
