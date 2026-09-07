@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -32,25 +33,11 @@ class SeoPageDomain
     protected $domainId;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoTitle;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoMetaDescription;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $canonicalUrl;
+    #[ORM\Embedded(class: SeoAttributes::class)]
+    protected $seo;
 
     /**
      * @var string|null
@@ -87,6 +74,7 @@ class SeoPageDomain
     ) {
         $this->domainId = $domainId;
         $this->seoPage = $seoPage;
+        $this->seo = new SeoAttributes();
     }
 
     /**
@@ -114,51 +102,11 @@ class SeoPageDomain
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoTitle()
+    public function getSeoAttributes()
     {
-        return $this->seoTitle;
-    }
-
-    /**
-     * @param string|null $seoTitle
-     */
-    public function setSeoTitle($seoTitle): void
-    {
-        $this->seoTitle = $seoTitle;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription()
-    {
-        return $this->seoMetaDescription;
-    }
-
-    /**
-     * @param string|null $seoMetaDescription
-     */
-    public function setSeoMetaDescription($seoMetaDescription): void
-    {
-        $this->seoMetaDescription = $seoMetaDescription;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCanonicalUrl()
-    {
-        return $this->canonicalUrl;
-    }
-
-    /**
-     * @param string|null $canonicalUrl
-     */
-    public function setCanonicalUrl($canonicalUrl): void
-    {
-        $this->canonicalUrl = $canonicalUrl;
+        return $this->seo;
     }
 
     /**
