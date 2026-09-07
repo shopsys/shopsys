@@ -30,13 +30,13 @@ class SeoPageTest extends TransactionFunctionalTestCase
         $seoPageData = $this->seoPageDataFactory->createFromSeoPage($seoPage);
 
         $seoPageSlug = $seoPageData->pageSlugsIndexedByDomainId[$domainId];
-        $seoPageTitle = $seoPageData->seoTitlesIndexedByDomainId[$domainId];
+        $seoPageTitle = $seoPageData->seo[$domainId]->title;
 
         $proposedPageSlug = 'new-homepage-slug';
         $proposedSeoPageTitle = 'new homepage title';
 
         $seoPageData->pageSlugsIndexedByDomainId[$domainId] = $proposedPageSlug;
-        $seoPageData->seoTitlesIndexedByDomainId[$domainId] = $proposedSeoPageTitle;
+        $seoPageData->seo[$domainId]->title = $proposedSeoPageTitle;
 
         $this->seoPageFacade->edit($seoPage->getId(), $seoPageData);
         $updatedSeoPageId = $seoPage->getId();
@@ -47,7 +47,7 @@ class SeoPageTest extends TransactionFunctionalTestCase
         $updatedSeoPageData = $this->seoPageDataFactory->createFromSeoPage($updatedSeoPage);
 
         $updatedSeoPageSlug = $updatedSeoPageData->pageSlugsIndexedByDomainId[$domainId];
-        $updatedSeoPageTitle = $updatedSeoPageData->seoTitlesIndexedByDomainId[$domainId];
+        $updatedSeoPageTitle = $updatedSeoPageData->seo[$domainId]->title;
 
         $this->assertNotEquals($seoPageSlug, $proposedPageSlug);
         $this->assertNotEquals($seoPageTitle, $proposedSeoPageTitle);
