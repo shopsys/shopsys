@@ -1,5 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import Head from 'next/head';
+import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const SearchMetadata: FC = () => {
@@ -13,7 +14,7 @@ export const SearchMetadata: FC = () => {
                 id="search-metadata"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
+                    __html: serializeJsonForScriptTag({
                         '@context': 'https://schema.org',
                         '@type': 'WebSite',
                         url,

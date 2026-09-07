@@ -26,7 +26,7 @@ overblog_graphql:
     security:
         enable_introspection: '%kernel.debug%'
         handle_cors: false
-        query_max_complexity: 1500
+        query_max_complexity: 1700
         query_max_depth: 15
     services:
         promise_adapter: "webonyx_graphql.sync_promise_adapter"

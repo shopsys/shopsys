@@ -258,20 +258,33 @@ class ArticleDataFixture extends AbstractReferenceFixture
     {
         $intro = t('Welcome to the Demo shop press centre. Here you can find company information, product selections, visual materials, and contacts for media enquiries.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mediaContact = t('Media contact', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mediaContactText = t('For interviews, comments, and background information, contact press@demo-shop.example.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mediaContactText = t('Planning an interview or looking for a comment on home electronics? Write to press@demo-shop.example with your topic and deadline. Our press team will help you find the right information.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $assets = t('Product materials', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $assetsText = t('The selections below demonstrate how product recommendations can be embedded directly into editorial content.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $assetsText = t('We can help you select products for a comparison, explain their features, and prepare supporting materials. Tell us who you are writing for so we can tailor the selection to your readers.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $markets = t('3 language versions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $categories = t('Electronics and home', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $support = t('Customer care every workday', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $aboutHeading = t('About Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $aboutText = t('Demo shop presents a complete sample e-commerce experience, from product discovery and content to ordering and after-sales care.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $aboutText = t('A home is made of small everyday moments: a favourite song, a shared film, a photograph worth keeping. At Demo shop, we bring together electronics and accessories that help you enjoy them. Our team makes choosing easier with clear product information and friendly advice.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $aboutImageAlt = t('Demo shop presentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $factsHeading = t('Key facts', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $videoHeading = t('Video materials', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $storesHeading = t('Stores and locations', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $imagesHeading = t('Downloadable images', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $downloadableImageAlt = t('Downloadable Demo shop press image', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $inspirationHeading = t('Product inspiration', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $inspirationText = t('From a cosy film night to capturing a weekend away, the right technology makes everyday moments more enjoyable. Explore our selection of televisions and accessories for your next story.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $pressHeading = t('Let us help with your story', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $checklistHeading = t('What to include in your request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $requestTopic = t('Your publication and the topic of your story', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $requestAudience = t('Your audience and the products you are interested in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $requestDeadline = t('Your deadline and preferred contact details', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $requestImages = t('The images and file formats you need', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $requestVideo = t('Any video footage or interview requirements', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $requestVisit = t('Possible dates for a store visit or a product demonstration', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $videoText = t('Looking for footage to accompany your story? Contact our press team to discuss product demonstrations and video materials for your publication.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $storesText = t('Meet our team and see the products up close. Please arrange interviews, photography, and filming in advance with our press contact so we can prepare for your visit.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $imagesText = t('Bring your story to life with photographs of electronics in everyday settings. For publication-ready files and image credits, contact our press team and let us know which pictures you would like to use.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $moreProducts = t('Explore electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         return str_replace(['    ', PHP_EOL], '', trim(<<<EOT
@@ -280,48 +293,49 @@ class ArticleDataFixture extends AbstractReferenceFixture
                 <div data-product="9177759" class="gjs-product"></div>
                 <div data-product="5964035" class="gjs-product"></div>
             </div>
-            <div class="gjs-products" data-products="9177759,9176508,5965879P,532564,1532564,5960453">
+            <div class="gjs-text-ckeditor"><h2>{$inspirationHeading}</h2><p>{$inspirationText}</p></div>
+            <div class="gjs-products" data-products="9177759,9176508,5965879P,532564">
                 <div data-product="9177759" class="gjs-product"></div>
                 <div data-product="9176508" class="gjs-product"></div>
                 <div data-product="5965879P" class="gjs-product"></div>
                 <div data-product="532564" class="gjs-product"></div>
-                <div data-product="1532564" class="gjs-product"></div>
-                <div data-product="5960453" class="gjs-product"></div>
-            </div>
-            <div class="row">
-                <div class="column"><div class="gjs-text-ckeditor" style="text-align: center"><strong>{$mediaContact}</strong><br />{$mediaContactText}</div></div>
-                <div class="column"><div class="gjs-text-ckeditor" style="text-align: center"><strong>{$assets}</strong><br />{$assetsText}</div></div>
-            </div>
-            <div class="row">
-                <div class="column" style="text-align: center"><div class="gjs-text-ckeditor">{$markets}</div></div>
-                <div class="column" style="text-align: center"><div class="gjs-text-ckeditor">{$categories}</div></div>
-                <div class="column" style="text-align: center"><div class="gjs-text-ckeditor">{$support}</div></div>
             </div>
             <div class="gjs-text-ckeditor"><h2>{$aboutHeading}</h2></div>
             <div class="gjs-text-with-image gjs-text-with-image-float-left">
-                <img src="{$homepageUrl}content/images/blogArticle/default/600.jpg" class="image" alt="{$aboutImageAlt}" />
-                <div class="gjs-text-ckeditor text">{$aboutText}</div>
+                <img src="{$homepageUrl}content/images/blogArticle/600.jpg" class="image" alt="{$aboutImageAlt}" />
+                <div class="gjs-text-ckeditor text"><p>{$aboutText}</p></div>
             </div>
             <div class="gjs-text-ckeditor"><h3>{$factsHeading}</h3></div>
+            <div class="row">
+                <div class="column"><div class="gjs-text-ckeditor">{$markets}</div></div>
+                <div class="column"><div class="gjs-text-ckeditor">{$categories}</div></div>
+                <div class="column"><div class="gjs-text-ckeditor">{$support}</div></div>
+            </div>
+            <div class="gjs-text-ckeditor"><h2>{$pressHeading}</h2></div>
+            <div class="row">
+                <div class="column"><div class="gjs-text-ckeditor"><h3>{$mediaContact}</h3><p>{$mediaContactText}</p></div></div>
+                <div class="column"><div class="gjs-text-ckeditor"><h3>{$assets}</h3><p>{$assetsText}</p></div></div>
+            </div>
+            <div class="gjs-text-ckeditor"><h3>{$checklistHeading}</h3></div>
             <div class="row" role="list">
                 <div class="column" role="presentation">
-                    <div role="listitem"><div class="gjs-text-ckeditor text">{$markets}</div></div>
-                    <div role="listitem"><div class="gjs-text-ckeditor text">{$categories}</div></div>
-                    <div role="listitem"><div class="gjs-text-ckeditor text">{$support}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$requestTopic}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$requestAudience}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$requestDeadline}</div></div>
                 </div>
                 <div class="column" role="presentation">
-                    <div role="listitem"><div class="gjs-text-ckeditor text">{$mediaContact}</div></div>
-                    <div role="listitem"><div class="gjs-text-ckeditor text">{$assets}</div></div>
-                    <div role="listitem"><div class="gjs-text-ckeditor text">{$assetsText}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$requestImages}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$requestVideo}</div></div>
+                    <div role="listitem"><div class="gjs-text-ckeditor text">{$requestVisit}</div></div>
                 </div>
             </div>
-            <div class="gjs-text-ckeditor"><h4>{$videoHeading}</h4></div>
-            <video src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImZpbGw6IHJnYmEoMCwwLDAsMC4xNSk7IHRyYW5zZm9ybTogc2NhbGUoMC43NSkiPgogICAgICAgIDxwYXRoIGQ9Ik04LjUgMTMuNWwyLjUgMyAzLjUtNC41IDQuNSA2SDVtMTYgMVY1YTIgMiAwIDAgMC0yLTJINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMnoiPjwvcGF0aD4KICAgICAgPC9zdmc+" controls></video>
-            <div class="gjs-text-ckeditor"><h5>{$storesHeading}</h5></div>
+            <div class="gjs-text-ckeditor"><h2>{$videoHeading}</h2><p>{$videoText}</p></div>
+            <video poster="{$homepageUrl}content/images/blogArticle/600.jpg" controls preload="none"></video>
+            <div class="gjs-text-ckeditor"><h2>{$storesHeading}</h2><p>{$storesText}</p></div>
             <iframe src="https://maps.google.com/maps?&z=1&t=q&output=embed" style="height: 350px; width: 100%; border: 0"></iframe>
-            <div class="gjs-text-ckeditor"><h6>{$imagesHeading}</h6></div>
-            <img src="{$homepageUrl}content/images/blogArticle/default/601.jpg" class="image-position-left" alt="{$downloadableImageAlt}" />
-            <a class="gjs-button-link button-link-position-center" title="{$moreProducts}" href="{$categoryUrl}"><div class="gjs-text-ckeditor text">{$moreProducts}</div></a>
+            <div class="gjs-text-ckeditor"><h2>{$imagesHeading}</h2><p>{$imagesText}</p></div>
+            <img src="{$homepageUrl}content/images/blogArticle/601.jpg" class="image-position-left" alt="{$downloadableImageAlt}" />
+            <a class="gjs-button-link button-link-position-left" title="{$moreProducts}" href="{$categoryUrl}"><div class="gjs-text-ckeditor text">{$moreProducts}</div></a>
         EOT));
     }
 

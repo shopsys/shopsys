@@ -307,6 +307,9 @@ msgstr "A good partnership starts with reliable data, clear commercial terms, an
 msgid "A great product for a very reasonable price."
 msgstr ""
 
+msgid "A home is made of small everyday moments: a favourite song, a shared film, a photograph worth keeping. At Demo shop, we bring together electronics and accessories that help you enjoy them. Our team makes choosing easier with clear product information and friendly advice."
+msgstr "A home is made of small everyday moments: a favourite song, a shared film, a photograph worth keeping. At Demo shop, we bring together electronics and accessories that help you enjoy them. Our team makes choosing easier with clear product information and friendly advice."
+
 msgid "A personal computer (PC) is a general-purpose computer whose size, capabilities, and original sale price make it useful for individuals, and is intended to be operated directly by an end-user with no intervening computer time-sharing models that allowed larger, more expensive minicomputer and mainframe systems to be used by many people, usually at the same time."
 msgstr ""
 
@@ -376,6 +379,9 @@ msgstr ""
 msgid "Annual energy consumption"
 msgstr ""
 
+msgid "Any video footage or interview requirements"
+msgstr "Any video footage or interview requirements"
+
 msgid "Apple iPhone 5S 64GB, gold"
 msgstr ""
 
@@ -441,6 +447,9 @@ msgstr ""
 
 msgid "Bookworm"
 msgstr ""
+
+msgid "Bring your story to life with photographs of electronics in everyday settings. For publication-ready files and image credits, contact our press team and let us know which pictures you would like to use."
+msgstr "Bring your story to life with photographs of electronics in everyday settings. For publication-ready files and image credits, contact our press team and let us know which pictures you would like to use."
 
 msgid "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
 msgstr "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
@@ -752,10 +761,7 @@ msgid "Demo shop is a sample electronics retailer built to demonstrate a complet
 msgstr "Demo shop is a sample electronics retailer built to demonstrate a complete modern shopping experience."
 
 msgid "Demo shop presentation"
-msgstr ""
-
-msgid "Demo shop presents a complete sample e-commerce experience, from product discovery and content to ordering and after-sales care."
-msgstr "Demo shop presents a complete sample e-commerce experience, from product discovery and content to ordering and after-sales care."
+msgstr "Demo shop presentation"
 
 msgid "Demo stores provide personal collection, product advice, and selected customer-care services."
 msgstr "Demo stores provide personal collection, product advice, and selected customer-care services."
@@ -833,7 +839,7 @@ msgid "Done"
 msgstr ""
 
 msgid "Downloadable Demo shop press image"
-msgstr ""
+msgstr "Downloadable Demo shop press image"
 
 msgid "Downloadable images"
 msgstr "Downloadable images"
@@ -979,14 +985,14 @@ msgstr ""
 msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
 msgstr ""
 
-msgid "For interviews, comments, and background information, contact press@demo-shop.example."
-msgstr "For interviews, comments, and background information, contact press@demo-shop.example."
-
 msgid "For press"
 msgstr ""
 
 msgid "Frequently Asked Questions FAQ"
 msgstr ""
+
+msgid "From a cosy film night to capturing a weekend away, the right technology makes everyday moments more enjoyable. Explore our selection of televisions and accessories for your next story."
+msgstr "From a cosy film night to capturing a weekend away, the right technology makes everyday moments more enjoyable. Explore our selection of televisions and accessories for your next story."
 
 msgid "Front view of %productName%"
 msgstr ""
@@ -1258,6 +1264,9 @@ msgstr "Laptops"
 msgid "Laser printers"
 msgstr "Laser printers"
 
+msgid "Let us help with your story"
+msgstr "Let us help with your story"
+
 msgid "Limited user"
 msgstr ""
 
@@ -1272,6 +1281,9 @@ msgstr ""
 
 msgid "Look beyond the first impression and compare durability, running costs, service options, and features you will genuinely use."
 msgstr "Look beyond the first impression and compare durability, running costs, service options, and features you will genuinely use."
+
+msgid "Looking for footage to accompany your story? Contact our press team to discuss product demonstrations and video materials for your publication."
+msgstr "Looking for footage to accompany your story? Contact our press team to discuss product demonstrations and video materials for your publication."
 
 msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
 msgstr ""
@@ -1326,6 +1338,9 @@ msgstr "Media contact"
 
 msgid "Media type"
 msgstr ""
+
+msgid "Meet our team and see the products up close. Please arrange interviews, photography, and filming in advance with our press contact so we can prepare for your visit."
+msgstr "Meet our team and see the products up close. Please arrange interviews, photography, and filming in advance with our press contact so we can prepare for your visit."
 
 msgid "Meet the latest generation of LED TVs Philips, which include the thin Smart TV running Android."
 msgstr ""
@@ -1612,11 +1627,17 @@ msgstr ""
 msgid "Pick-up counter is right behind the main entrance. Parking is available in the courtyard for short stops."
 msgstr ""
 
+msgid "Planning an interview or looking for a comment on home electronics? Write to press@demo-shop.example with your topic and deadline. Our press team will help you find the right information."
+msgstr "Planning an interview or looking for a comment on home electronics? Write to press@demo-shop.example with your topic and deadline. Our press team will help you find the right information."
+
 msgid "Please contact our support team. We will guide you through the channel setup step by step."
 msgstr ""
 
 msgid "Pocket-friendly"
 msgstr ""
+
+msgid "Possible dates for a store visit or a product demonstration"
+msgstr "Possible dates for a store visit or a product demonstration"
 
 msgid "Pot holder, black"
 msgstr ""
@@ -1695,6 +1716,9 @@ msgstr ""
 
 msgid "Product gift"
 msgstr ""
+
+msgid "Product inspiration"
+msgstr "Product inspiration"
 
 msgid "Product materials"
 msgstr "Product materials"
@@ -2161,6 +2185,9 @@ msgstr ""
 msgid "The filter carbon OPP-2060"
 msgstr ""
 
+msgid "The images and file formats you need"
+msgstr "The images and file formats you need"
+
 msgid "The minimum space requirements excels sub-mounting range hood OPP-2060th"
 msgstr ""
 
@@ -2193,9 +2220,6 @@ msgstr ""
 
 msgid "The selected variant did not meet my needs."
 msgstr ""
-
-msgid "The selections below demonstrate how product recommendations can be embedded directly into editorial content."
-msgstr "The selections below demonstrate how product recommendations can be embedded directly into editorial content."
 
 msgid "The store is located in the city center close to the tram stop. Larger orders can be loaded from the side entrance."
 msgstr ""
@@ -2389,6 +2413,9 @@ msgstr ""
 msgid "We are sorry the sound did not meet your expectations. Our support team can help you choose compatible external speakers."
 msgstr ""
 
+msgid "We can help you select products for a comparison, explain their features, and prepare supporting materials. Tell us who you are writing for so we can tailor the selection to your readers."
+msgstr "We can help you select products for a comparison, explain their features, and prepare supporting materials. Tell us who you are writing for so we can tailor the selection to your readers."
+
 msgid "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
 msgstr "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
 
@@ -2424,6 +2451,9 @@ msgstr "What is new in wireless headphones"
 
 msgid "What it means in everyday use"
 msgstr "What it means in everyday use"
+
+msgid "What to include in your request"
+msgstr "What to include in your request"
 
 msgid "What you should know"
 msgstr "What you should know"
@@ -2484,6 +2514,15 @@ msgstr ""
 
 msgid "You will be welcomed by friendly staff!"
 msgstr ""
+
+msgid "Your audience and the products you are interested in"
+msgstr "Your audience and the products you are interested in"
+
+msgid "Your deadline and preferred contact details"
+msgstr "Your deadline and preferred contact details"
+
+msgid "Your publication and the topic of your story"
+msgstr "Your publication and the topic of your story"
 
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr ""

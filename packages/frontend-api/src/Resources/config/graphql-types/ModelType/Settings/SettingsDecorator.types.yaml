@@ -48,6 +48,10 @@ SettingsDecorator:
                 type: String
                 resolve: "@=query('productReviewPolicyArticleUrlQuery')"
                 description: "Returns product review policy article's url"
+            productReviewMinimalAverageRatingForListing:
+                type: Float
+                resolve: "@=query('productReviewMinimalAverageRatingForListingQuery')"
+                description: "Minimal average rating a product needs to show review stars in product lists, null means no limit"
             socialNetworkLoginConfig:
                 type: "[LoginTypeEnum!]!"
                 resolve: "@=query('socialNetworkLoginConfigQuery')"

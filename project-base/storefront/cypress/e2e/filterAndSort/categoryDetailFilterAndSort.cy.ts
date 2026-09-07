@@ -183,9 +183,12 @@ describe('Product Filtering E2E Tests', () => {
         cy.getByTID([TIDs.blocks_product_list_view_list]).should('have.attr', 'aria-pressed', 'true');
 
         cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]]).within(() => {
-            cy.getByTID([TIDs.product_list_item_image]).should('be.visible');
+            cy.getByTID([TIDs.product_list_item_image])
+                .should('be.visible')
+                .closest('a')
+                .should('have.length', 1)
+                .and('contain.text', staticData.products.helloKitty.catnum);
             cy.contains(staticData.products.helloKitty.catnum).should('be.visible');
-            cy.get('a').should('have.length', 1);
         });
         cy.getByTID([
             [TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum],

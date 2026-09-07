@@ -140,8 +140,8 @@ Cypress.on('uncaught:exception', (err) => {
         /Minified React error #421/.test(err.message) ||
         /Minified React error #418/.test(err.message)
     ) {
-        cy.log('💦 React hydration error', err.message);
-        cy.log('💦 React hydration error', err.stack);
+        Cypress.log({ name: '💦 React hydration error', message: err.message });
+        Cypress.log({ name: '💦 React hydration error', message: err.stack ?? '' });
         return false;
     }
     return true;

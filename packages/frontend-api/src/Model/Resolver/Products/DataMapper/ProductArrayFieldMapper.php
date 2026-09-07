@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
@@ -27,7 +26,6 @@ class ProductArrayFieldMapper
         protected readonly CategoryFacade $categoryFacade,
         protected readonly FlagFacade $flagFacade,
         protected readonly BrandFacade $brandFacade,
-        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
         protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
         protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -199,9 +197,10 @@ class ProductArrayFieldMapper
         return $this->productsVisibleCountByIdsBatchLoader->load($data['variants']);
     }
 
-    public function getMainVariant(array $data): array
+    public function getMainVariant(array $data): Promise
     {
-        return $this->productElasticsearchProvider->getVisibleProductArrayById($data['main_variant_id']);
+        return $this->productsVisibleByIdsBatchLoader->load([$data['main_variant_id']])
+            ->then(static fn (array $products) => $products[0] ?? null);
     }
 
     public function getHreflangLinks(array $data): array

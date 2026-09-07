@@ -21,7 +21,7 @@ export type TypeLoginTypeEnum =
 export type TypeSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TypeSettingsQuery = { settings: { contactFormMainText: string | null, displayTimezone: string, heurekaEnabled: boolean, productReviewsEnabled: boolean, privacyPolicyArticleUrl: string | null, productReviewPolicyArticleUrl: string | null, termsAndConditionsArticleUrl: string | null, userConsentPolicyArticleUrl: string | null, socialNetworkLoginConfig: Array<Types.TypeLoginTypeEnum>, cspHeader: string, defaultPricingGroupId: number, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string | null, titleAddOn: string | null, metaDescription: string | null }, mainBlogCategoryData: { mainBlogCategoryName: string | null, mainBlogCategoryUrl: string | null, mainBlogCategoryMainImage: { url: string } | null } } | null };
+export type TypeSettingsQuery = { settings: { contactFormMainText: string | null, displayTimezone: string, heurekaEnabled: boolean, productReviewsEnabled: boolean, privacyPolicyArticleUrl: string | null, productReviewPolicyArticleUrl: string | null, productReviewMinimalAverageRatingForListing: number | null, termsAndConditionsArticleUrl: string | null, userConsentPolicyArticleUrl: string | null, socialNetworkLoginConfig: Array<Types.TypeLoginTypeEnum>, cspHeader: string, defaultPricingGroupId: number, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string | null, titleAddOn: string | null, metaDescription: string | null }, mainBlogCategoryData: { mainBlogCategoryName: string | null, mainBlogCategoryUrl: string | null, mainBlogCategoryMainImage: { url: string } | null } } | null };
 
 
 export const SettingsQueryDocument = gql`
@@ -46,6 +46,7 @@ export const SettingsQueryDocument = gql`
     }
     privacyPolicyArticleUrl
     productReviewPolicyArticleUrl
+    productReviewMinimalAverageRatingForListing
     termsAndConditionsArticleUrl
     userConsentPolicyArticleUrl
     socialNetworkLoginConfig

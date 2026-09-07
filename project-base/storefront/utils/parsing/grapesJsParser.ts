@@ -4,7 +4,7 @@ const GJS_PRODUCT_SEPARATOR = ',';
 
 export const parseCatnums = (text: string): string[] => {
     const dividedText = text.split(GJS_PRODUCTS_SEPARATOR).filter(Boolean);
-    const productsRegex = new RegExp(/\[gjc-comp-ProductList&#61;(.+)]/g);
+    const productsRegex = new RegExp(/\[gjc-comp-ProductList&#61;(.+)]/);
     const productCatnums: string[] = [];
 
     dividedText.forEach((textPart) => {

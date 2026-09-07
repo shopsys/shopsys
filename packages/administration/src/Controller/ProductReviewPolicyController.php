@@ -45,19 +45,28 @@ class ProductReviewPolicyController extends AdminBaseController
         }
 
         $productReviewPolicyArticle = $this->productReviewPolicyFacade->findProductReviewPolicyArticleByDomainId($selectedDomainId);
+        $minimalAverageRatingForListing = $this->productReviewPolicyFacade->findMinimalAverageRatingForListingByDomainId($selectedDomainId);
 
         $form = $this->createForm(
             ProductReviewPolicySettingFormType::class,
-            [ProductReviewPolicySettingFormType::PRODUCT_REVIEW_POLICY_ARTICLE_FIELD_NAME => $productReviewPolicyArticle],
+            [
+                ProductReviewPolicySettingFormType::PRODUCT_REVIEW_POLICY_ARTICLE_FIELD_NAME => $productReviewPolicyArticle,
+                ProductReviewPolicySettingFormType::MINIMAL_AVERAGE_RATING_FOR_LISTING_FIELD_NAME => $minimalAverageRatingForListing,
+            ],
             ['domain_id' => $selectedDomainId],
         );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productReviewPolicyArticle = $form->getData()[ProductReviewPolicySettingFormType::PRODUCT_REVIEW_POLICY_ARTICLE_FIELD_NAME];
+            $minimalAverageRatingForListing = $form->getData()[ProductReviewPolicySettingFormType::MINIMAL_AVERAGE_RATING_FOR_LISTING_FIELD_NAME];
 
             $this->productReviewPolicyFacade->setProductReviewPolicyArticleOnDomain(
                 $productReviewPolicyArticle,
+                $selectedDomainId,
+            );
+            $this->productReviewPolicyFacade->setMinimalAverageRatingForListingOnDomain(
+                $minimalAverageRatingForListing === null ? null : (float)$minimalAverageRatingForListing,
                 $selectedDomainId,
             );
 

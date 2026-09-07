@@ -11,10 +11,6 @@ type CurrentCustomerUserReviewedProductUuids = {
     reviewedProductUuids: Set<string>;
 };
 
-/**
- * Uuids of products the logged in customer has already reviewed (regardless of the review status).
- * Serves as a UX hint only — the duplicate review rule is enforced by the CreateProductReview mutation.
- */
 export const useCurrentCustomerUserReviewedProductUuids = (): CurrentCustomerUserReviewedProductUuids => {
     const [{ data: currentCustomerUserData, fetching: isCurrentCustomerUserFetching }] = useCurrentCustomerUserQuery();
     const isUserLoggedIn = !!currentCustomerUserData?.currentCustomerUser;

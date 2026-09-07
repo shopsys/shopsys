@@ -45,6 +45,31 @@ class ProductReviewPolicyFacade
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SETTINGS_QUERY_KEY_PART);
     }
 
+    public function findMinimalAverageRatingForListingByDomainId(int $domainId): ?float
+    {
+        $minimalAverageRating = $this->setting->getForDomain(
+            Setting::PRODUCT_REVIEW_MINIMAL_AVERAGE_RATING_FOR_LISTING,
+            $domainId,
+        );
+
+        if ($minimalAverageRating === null) {
+            return null;
+        }
+
+        return (float)$minimalAverageRating;
+    }
+
+    public function setMinimalAverageRatingForListingOnDomain(?float $minimalAverageRating, int $domainId): void
+    {
+        $this->setting->setForDomain(
+            Setting::PRODUCT_REVIEW_MINIMAL_AVERAGE_RATING_FOR_LISTING,
+            $minimalAverageRating,
+            $domainId,
+        );
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SETTINGS_QUERY_KEY_PART);
+    }
+
     public function isArticleUsedAsProductReviewPolicyArticle(Article $article): bool
     {
         return array_any(
