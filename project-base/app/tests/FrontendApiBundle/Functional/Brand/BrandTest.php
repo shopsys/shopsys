@@ -45,14 +45,18 @@ class BrandTest extends GraphQlTestCase
                 $this->getFirstDomainLocale(),
             ),
             'link' => $this->getFullUrlPath('/canon'),
-            'seoTitle' => t('%brandName% SEO Title', ['%brandName%' => 'Canon'], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            'seoMetaDescription' => t(
-                'This is SEO meta description of brand %brandName%.',
-                ['%brandName%' => 'Canon'],
-                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $this->getFirstDomainLocale(),
-            ),
-            'seoH1' => t('%brandName% SEO H1', ['%brandName%' => 'Canon'], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            'seo' => [
+                'title' => t('%brandName% SEO Title', ['%brandName%' => 'Canon'], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'metaDescription' => t(
+                    'This is SEO meta description of brand %brandName%.',
+                    ['%brandName%' => 'Canon'],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $this->getFirstDomainLocale(),
+                ),
+                'h1' => t('%brandName% SEO H1', ['%brandName%' => 'Canon'], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'metaRobots' => null,
+                'canonicalUrl' => null,
+            ],
             'products' => [
                 'orderingMode' => 'PRIORITY',
                 'edges' => [
