@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreData;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
@@ -53,6 +54,7 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
         $storeData->street = $street;
         $storeData->postcode = $postcode;
         $storeData->country = $country;
+        $storeData->seo = new SeoAttributesData();
         $store = new Store($storeData);
 
         $personalPickupPointMiddleware = $this->createPersonalPickupPointMiddleware($store);
