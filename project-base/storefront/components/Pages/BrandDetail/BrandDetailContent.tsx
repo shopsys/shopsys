@@ -9,6 +9,7 @@ import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 import { useRef } from 'react';
+import { getImageAlt } from 'utils/imageAltText';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
@@ -30,7 +31,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
             <CollapsibleDescriptionWithImage
                 currentPage={currentPage}
                 description={brand.description}
-                imageName={brand.mainImage?.name || brand.name}
+                imageName={getImageAlt(brand.mainImage?.name, brand.name)}
                 imageUrl={brand.mainImage?.url}
                 title={title}
             />

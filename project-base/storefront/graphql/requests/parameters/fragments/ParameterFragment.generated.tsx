@@ -10,7 +10,7 @@ export type TypeParameterTypeEnum =
   | 'COLOR'
   | 'SLIDER';
 
-export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> };
+export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string } | null }> };
 
 export const ParameterFragment = gql`
     fragment ParameterFragment on Parameter {
@@ -30,7 +30,6 @@ export const ParameterFragment = gql`
     rgbHex
     colorIcon {
       url
-      anchorText
     }
   }
 }

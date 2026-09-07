@@ -7,8 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -132,6 +134,11 @@ class NotificationBar implements DomainSeparatedEntityInterface
     public function getText()
     {
         return $this->text;
+    }
+
+    public function getPlainText(): string
+    {
+        return ExtendedClassNameResolver::resolve(TransformStringHelper::class)::convertHtmlToPlainText($this->text);
     }
 
     /**

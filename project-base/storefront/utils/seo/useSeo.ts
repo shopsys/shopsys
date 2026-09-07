@@ -2,6 +2,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useSeoPageQuery } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { useRouter } from 'next/router';
+import { getImageAlt } from 'utils/imageAltText';
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { CanonicalQueryParameters, generateCanonicalUrl } from 'utils/seo/generateCanonicalUrl';
 
@@ -37,14 +38,18 @@ export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams 
     const fallbackTitleSuffix = settingsData?.settings?.seo.titleAddOn;
 
     const canonicalUrl = preferredCanonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
+    const title = preferredTitle ?? defaultTitle ?? fallbackTitle ?? '';
 
     return {
-        title: preferredTitle ?? defaultTitle ?? fallbackTitle ?? '',
+        title,
         titleSuffix: fallbackTitleSuffix ?? '',
         description: preferredDescription ?? defaultDescription ?? fallbackDescription ?? '',
         ogTitle: preferredOgTitle,
         ogDescription: preferredOgDescription,
         ogImageUrl: preferredOgImageUrl,
+        ogImageAlt: preferredOgImageUrl
+            ? getImageAlt(seoPageData?.seoPage?.ogImage?.name, getImageAlt(preferredOgTitle, title))
+            : undefined,
         hreflangLinks: seoPageData?.seoPage?.hreflangLinks,
         canonicalUrl,
     };

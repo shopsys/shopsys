@@ -4,6 +4,9 @@ fragment ListedProductFragment on Product {
     uuid
     slug
     fullName
+    mainCategory {
+        name
+    }
     stockQuantity
     isAllowedNegativeStock
     unit {
@@ -16,8 +19,7 @@ fragment ListedProductFragment on Product {
         ...SimpleFlagFragment
     }
     mainImage {
-        __typename
-        url
+        ...ImageFragment
     }
     price {
         ...ListedProductPriceFragment

@@ -8,6 +8,7 @@ import {
 import { ModalGalleryVideo } from 'components/Basic/ModalGallery/ModalGalleryVideo';
 import { forwardRef, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 
 type ModalGalleryTrackProps = {
     items: MediaCarouselItem[];
@@ -70,7 +71,7 @@ export const ModalGalleryTrack = forwardRef<MediaCarouselTrackHandle, ModalGalle
                             {isLoaded && isImage && (
                                 <Image
                                     fill
-                                    alt={galleryItem.name || `${galleryName}-${index}`}
+                                    alt={getImageAlt(galleryItem.name, galleryName)}
                                     className="max-h-full object-contain mix-blend-multiply"
                                     draggable={false}
                                     hash={galleryItem.url.split('?')[1]}

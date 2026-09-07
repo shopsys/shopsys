@@ -7,6 +7,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -60,7 +61,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
     const imageContent = itemImage ? (
         <div data-tid={TIDs.simple_navigation_image} className={imageWrapperClassName}>
             <Image
-                alt={itemImage.name || category.name}
+                alt={getImageAlt(itemImage.name, category.name)}
                 className="size-full object-contain mix-blend-multiply"
                 height={imageSize}
                 src={itemImage.url}

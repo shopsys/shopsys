@@ -5,6 +5,7 @@ import { TypeProductInProductListFragment } from 'graphql/requests/productLists/
 import { ReactNode, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { useScrollTop } from 'utils/ui/useScrollTop';
 import { PRODUCT_COMPARISON_END_TRIGGER_ID, PRODUCT_COMPARISON_STICKY_TRIGGER_ID } from './ProductComparisonHead';
 
@@ -76,7 +77,11 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
                                     })}
                                 >
                                     <Image
-                                        alt=""
+                                        alt={generateProductImageAlt(
+                                            product.fullName,
+                                            product.mainCategory?.name,
+                                            product.mainImage?.name,
+                                        )}
                                         className="hidden size-10 shrink-0 object-contain sm:block"
                                         height={40}
                                         src={product.mainImage?.url}

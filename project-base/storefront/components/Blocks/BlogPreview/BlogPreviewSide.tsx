@@ -6,6 +6,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { ArticleLink } from './BlogPreviewElements';
 
 type SideProps = {
@@ -33,7 +34,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                 >
                     <div className="aspect-video w-full shrink-0 overflow-hidden rounded-xl xl:h-24 xl:w-36">
                         <Image
-                            alt={article.mainImage?.name || article.name}
+                            alt={getImageAlt(article.mainImage?.name, article.name)}
                             className="size-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                             height={96}
                             src={article.mainImage?.url}

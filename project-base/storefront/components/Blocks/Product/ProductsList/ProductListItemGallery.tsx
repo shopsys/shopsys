@@ -7,6 +7,7 @@ import { useProductListItemImagesQuery } from 'graphql/requests/products/queries
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 
 type ProductListItemGalleryProps = {
     imageAlt: string;
@@ -53,7 +54,7 @@ export const ProductListItemGallery = forwardRef<ProductListItemGalleryHandle, P
         const galleryItems = useMemo<TypeImageFragment[]>(() => {
             const mainImage: TypeImageFragment = {
                 __typename: 'Image',
-                name: null,
+                name: product.mainImage?.name ?? null,
                 url: product.mainImage?.url ?? '',
             };
 
@@ -175,7 +176,7 @@ export const ProductListItemGallery = forwardRef<ProductListItemGalleryHandle, P
                     renderItem={(galleryItem, _index, isLoaded) =>
                         isLoaded && galleryItem.__typename === 'Image' && galleryItem.url ? (
                             <Image
-                                alt={galleryItem.name || imageAlt}
+                                alt={getImageAlt(galleryItem.name, imageAlt)}
                                 className="h-full w-full object-contain mix-blend-multiply"
                                 draggable={false}
                                 height={imageSize}

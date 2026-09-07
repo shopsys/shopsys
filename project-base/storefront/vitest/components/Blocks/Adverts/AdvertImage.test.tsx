@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { AdvertImage } from 'components/Blocks/Adverts/AdvertImage';
 import type { TypeAdvertsFragment_AdvertImage } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
 import { type ComponentProps, createElement } from 'react';
@@ -39,6 +39,26 @@ const advert = {
 } satisfies TypeAdvertsFragment_AdvertImage;
 
 describe('AdvertImage', () => {
+    test('uses the ALT of the displayed variant after resizing', async () => {
+        window.innerWidth = 1024;
+        render(
+            <AdvertImage
+                advert={{ ...advert, mainImageMobile: { ...advert.mainImageMobile, name: 'Mobile offer' } }}
+            />,
+        );
+
+        const image = screen.getByRole('img');
+        expect(image).toHaveAttribute('alt', advert.mainImage.name);
+
+        window.innerWidth = 768;
+        fireEvent(window, new Event('resize'));
+        await waitFor(() => expect(image).toHaveAttribute('alt', 'Mobile offer'));
+
+        window.innerWidth = 1024;
+        fireEvent(window, new Event('resize'));
+        await waitFor(() => expect(image).toHaveAttribute('alt', advert.mainImage.name));
+    });
+
     test('renders responsive sources as one semantic image', () => {
         const { container } = render(<AdvertImage advert={advert} />);
 

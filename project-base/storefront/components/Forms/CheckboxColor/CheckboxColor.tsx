@@ -13,14 +13,12 @@ type CheckboxColorProps = NativeProps & {
     label?: string;
     bgColor?: string;
     imageUrl?: string;
-    imageName?: string;
     count?: number;
 };
 
 export const CheckboxColor: FC<CheckboxColorProps> = ({
     bgColor = '#d4d4d4',
     imageUrl,
-    imageName,
     label,
     id,
     name,
@@ -36,7 +34,6 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
         count={count}
         disabled={disabled}
         htmlFor={id}
-        imageName={imageName}
         imageUrl={imageUrl}
         label={label}
     >

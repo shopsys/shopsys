@@ -49,7 +49,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ activeStep, isTransportOrP
                                 <OrderItemGiftCard
                                     key={item.uuid}
                                     availability={item.product.availability}
-                                    categoryName={item.product.categories[0]?.name ?? ''}
+                                    categoryName={item.product.mainCategory?.name ?? ''}
                                     fullName={item.product.fullName}
                                     mainImage={item.product.mainImage}
                                     price={item.product.giftPrice}
@@ -68,7 +68,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ activeStep, isTransportOrP
                                     item.product.unit.name,
                                     formatPrice,
                                 )}
-                                categoryName={item.product.categories[0]?.name ?? ''}
+                                categoryName={item.product.mainCategory?.name ?? ''}
                                 freeQuantity={item.freeQuantity}
                                 fullName={item.product.fullName}
                                 mainImage={item.product.mainImage}

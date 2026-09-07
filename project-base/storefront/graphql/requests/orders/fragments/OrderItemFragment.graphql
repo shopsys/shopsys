@@ -2,6 +2,10 @@ fragment OrderItemFragment on OrderItem {
     __typename
     quantity
     product {
+        fullName
+        mainCategory {
+            name
+        }
         __typename
         name
         isVisible

@@ -1,7 +1,7 @@
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { getRGBColorString, getYIQContrastTextColor } from 'utils/colors/colors';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { twMergeCustom } from 'utils/twMerge';
 import { BannerImage } from './BannerImage';
 
@@ -38,16 +38,13 @@ const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, classNa
 );
 
 export const Banner: FC<BannerProps> = ({ banner, order, isFirst }) => {
-    const { t } = useTranslation();
-    const imageAlt = `${t('Promotional banner')}: ${banner.name}`;
-
     return (
         <div key={banner.link} className="flex flex-[1_0_100%] basis-full vl:flex-row flex-col" style={{ order }}>
             <BannerImage
-                desktopAlt={imageAlt}
+                desktopAlt={getImageAlt(banner.webMainImage.name, banner.name)}
                 desktopSrc={banner.webMainImage.url}
                 isFirst={isFirst}
-                mobileAlt={imageAlt}
+                mobileAlt={getImageAlt(banner.mobileMainImage.name, banner.name)}
                 mobileSrc={banner.mobileMainImage.url}
             >
                 {banner.description && <BannerContent banner={banner} className="hidden lg:flex" />}

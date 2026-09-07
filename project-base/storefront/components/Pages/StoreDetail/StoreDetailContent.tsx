@@ -10,6 +10,7 @@ import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/Store
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 
 type StoreDetailContentProps = {
     store: TypeStoreDetailFragment;
@@ -144,7 +145,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 onClick={() => openGallery(index)}
                             >
                                 <Image
-                                    alt={image.name || `${t('Store image of')} ${store.storeName} - ${index + 1}`}
+                                    alt={getImageAlt(image.name, store.storeName)}
                                     className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                                     height={190}
                                     loading="lazy"

@@ -13,6 +13,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
 import { useMemo } from 'react';
 import { getArticleHtmlHeadingAnchors } from 'utils/articleHeadingAnchors';
+import { getImageAlt } from 'utils/imageAltText';
 
 type BlogArticleDetailContentProps = {
     blogArticle: TypeBlogArticleDetailFragment;
@@ -39,7 +40,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                     <div className="flex overflow-hidden rounded-xl">
                         <Image
                             priority
-                            alt={blogArticle.mainImage.name || blogArticle.name}
+                            alt={getImageAlt(blogArticle.mainImage.name, blogArticle.name)}
                             height={600}
                             sizes="(max-width: 1239px) 100vw, 840px"
                             src={blogArticle.mainImage.url}
@@ -59,7 +60,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                         <div className="mr-3.5 flex items-center gap-2" data-tid={TIDs.blog_article_author}>
                             {blogArticle.author.mainImage ? (
                                 <Image
-                                    alt=""
+                                    alt={getImageAlt(blogArticle.author.mainImage.name, blogArticle.author.name)}
                                     className="size-6 rounded-full object-cover"
                                     height={24}
                                     src={blogArticle.author.mainImage.url}

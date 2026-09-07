@@ -15,6 +15,7 @@ import { useId } from 'react';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { getOrderPaymentItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPriceVisible } from 'utils/mappers/price';
 import { isProductSellable } from 'utils/product/isProductSellable';
@@ -105,6 +106,10 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <CustomerRecordRowInfo title={t('Transport')}>
                         <CustomerRecordElementWithImage
                             image={orderTransport.transport?.mainImage?.url}
+                            imageAlt={getImageAlt(
+                                orderTransport.transport?.mainImage?.name,
+                                orderTransport.transport?.name || '',
+                            )}
                             name={orderTransport.transport?.name || ''}
                             tid={TIDs.order_list_transport_and_payment_image}
                         />
@@ -115,6 +120,10 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <CustomerRecordRowInfo title={t('Payment')}>
                         <CustomerRecordElementWithImage
                             image={orderPayment.payment?.mainImage?.url}
+                            imageAlt={getImageAlt(
+                                orderPayment.payment?.mainImage?.name,
+                                orderPayment.payment?.name || '',
+                            )}
                             name={orderPayment.payment?.name || ''}
                             tid={TIDs.order_list_transport_and_payment_image}
                         />

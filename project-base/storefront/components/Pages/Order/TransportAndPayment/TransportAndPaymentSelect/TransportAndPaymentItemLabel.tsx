@@ -9,6 +9,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { getImageAlt } from 'utils/imageAltText';
 import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
@@ -61,7 +62,7 @@ export const TransportAndPaymentItemLabel: FC<TransportAndPaymentItemLabelProps>
             )}
         >
             <Image
-                alt={image?.name ?? name}
+                alt={getImageAlt(image?.name, name)}
                 className="aspect-video h-7 object-contain object-center mix-blend-multiply"
                 height={28}
                 src={image?.url}

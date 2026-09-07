@@ -40,7 +40,7 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                                         formatPrice,
                                     )}
                                     areAdditionalServicePricesHighlighted={false}
-                                    categoryName={item.product.categories[0]?.name}
+                                    categoryName={item.product.mainCategory?.name}
                                     freeQuantity={null}
                                     fullName={item.name}
                                     mainImage={item.product.mainImage}
@@ -55,7 +55,7 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                             return (
                                 <OrderItemGiftCard
                                     key={item.uuid}
-                                    categoryName={item.product.categories[0]?.name}
+                                    categoryName={item.product.mainCategory?.name}
                                     fullName={item.name}
                                     mainImage={item.product.mainImage}
                                     price={item.product.giftPrice}
