@@ -177,11 +177,7 @@ export const CartListItem: FC<CartListItemProps> = ({
         <>
             <div className="absolute inset-y-0 left-0 flex size-20 shrink-0" data-tid={TIDs.cart_list_item_image}>
                 <Image
-                    alt={
-                        hasProductDetailLink
-                            ? ''
-                            : generateProductImageAlt(product.fullName, product.categories[0]?.name)
-                    }
+                    alt={generateProductImageAlt(product.fullName, product.mainCategory?.name, product.mainImage?.name)}
                     className="size-20 object-contain mix-blend-multiply"
                     height={80}
                     src={product.mainImage?.url}

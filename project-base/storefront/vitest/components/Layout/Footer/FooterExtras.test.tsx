@@ -3,11 +3,13 @@ import { FooterExtras } from 'components/Layout/Footer/FooterExtras';
 import { describe, expect, test, vi } from 'vitest';
 import { renderWithTooltipProvider } from 'vitest/helpers/renderWithTooltipProvider';
 
+const transportImage = vi.hoisted(() => ({ name: 'dpd-logo' as string | null }));
+
 vi.mock('graphql/requests/transports/queries/TransportsImage.generated', () => ({
     useTransportsImage: () => [
         {
             data: {
-                transports: [{ name: 'DPD', mainImage: { name: 'dpd-logo', url: '/dpd.png' } }],
+                transports: [{ name: 'DPD', mainImage: { name: transportImage.name, url: '/dpd.png' } }],
             },
             fetching: false,
         },
@@ -19,10 +21,17 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({
 }));
 
 describe('FooterExtras', () => {
-    test('uses the transport name as the accessible image label', () => {
+    test.each<[string | null, string]>([
+        ['dpd-logo', 'dpd-logo'],
+        [null, 'DPD'],
+        ['', 'DPD'],
+        ['   ', 'DPD'],
+    ])('uses the image ALT %j or falls back to the transport name', (name, expected) => {
+        transportImage.name = name;
+
         renderWithTooltipProvider(<FooterExtras />);
 
-        expect(screen.getByRole('img', { name: 'DPD' })).toBeInTheDocument();
+        expect(screen.getByRole('img', { name: expected })).toBeInTheDocument();
     });
 
     test('uses distinct demo destinations for social links', () => {

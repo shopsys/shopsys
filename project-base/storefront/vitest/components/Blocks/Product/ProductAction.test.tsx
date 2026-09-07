@@ -79,6 +79,7 @@ const inStockProduct = {
     uuid: 'e2d0a3b0-2f5e-4f0a-9d2b-2f1f0b6c9a11',
     slug: '/product',
     fullName: 'Product',
+    mainCategory: { name: 'Main category' },
     stockQuantity: 10,
     isAllowedNegativeStock: false,
     isSellingDenied: false,

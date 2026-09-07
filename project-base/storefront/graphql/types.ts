@@ -1623,6 +1623,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
+  /** The deepest visible category of the product on the current domain */
+  mainCategory: Maybe<TypeCategory>;
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
   /** Localized product name (domain dependent) */
@@ -2055,6 +2057,8 @@ export type TypeNotificationBar = {
   images: Array<TypeImage>;
   /** Notification bar image by params */
   mainImage: Maybe<TypeImage>;
+  /** Message of the notification without HTML markup */
+  plainText: Scalars['String']['output'];
   /** Color of the notification */
   rgbColor: Scalars['String']['output'];
   /** Message of the notification */
@@ -2869,6 +2873,8 @@ export type TypeProduct = {
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
+  /** The deepest visible category of the product on the current domain */
+  mainCategory: Maybe<TypeCategory>;
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
   /** Localized product name (domain dependent) */
@@ -3923,6 +3929,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
+  /** The deepest visible category of the product on the current domain */
+  mainCategory: Maybe<TypeCategory>;
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
   /** Localized product name (domain dependent) */
@@ -4485,6 +4493,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
+  /** The deepest visible category of the product on the current domain */
+  mainCategory: Maybe<TypeCategory>;
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
   mainVariant: Maybe<TypeMainVariant>;

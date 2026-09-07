@@ -3,6 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 const INITIAL_VISIBLE_PRODUCTS_COUNT = 2;
 
@@ -31,7 +32,11 @@ export const TransportUnavailabilityInfo: FC<TransportUnavailabilityInfoProps> =
                     <li key={product.uuid} className="flex items-center gap-2.5">
                         <div className="flex size-7 items-center justify-center rounded-full">
                             <Image
-                                alt={product.fullName}
+                                alt={generateProductImageAlt(
+                                    product.fullName,
+                                    product.mainCategory?.name,
+                                    product.mainImage?.name,
+                                )}
                                 className="size-auto max-h-7 max-w-7 mix-blend-multiply"
                                 height={24}
                                 src={product.mainImage?.url}

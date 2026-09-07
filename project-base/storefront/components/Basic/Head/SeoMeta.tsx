@@ -37,6 +37,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
         ogTitle: ogTitleFromProps,
         ogDescription: ogDescriptionFromProps,
         ogImageUrl: ogImageUrlFromProps,
+        ogImageAlt,
         canonicalUrl,
         hreflangLinks: hreflangLinksSeoPage,
     } = useSeo({
@@ -88,6 +89,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
             {ogTitle && <meta content={ogTitle} property="og:title" />}
             {ogDescription && <meta content={ogDescription} property="og:description" />}
             {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
+            {ogImageUrl && ogImageAlt && <meta content={ogImageAlt} property="og:image:alt" />}
 
             <meta content="summary_large_image" name="twitter:card" />
             <meta content={url} name="twitter:domain" />
@@ -95,6 +97,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
             {ogTitle && <meta content={ogTitle} name="twitter:title" />}
             {ogDescription && <meta content={ogDescription} name="twitter:description" />}
             {ogImageUrl && <meta content={ogImageUrl} name="twitter:image" />}
+            {ogImageUrl && ogImageAlt && <meta content={ogImageAlt} name="twitter:image:alt" />}
 
             {children}
         </Head>

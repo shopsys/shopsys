@@ -59,9 +59,15 @@ overblog_dataloader:
         orderItemRelatedItemsBatchLoader:
             alias: "order_item_related_items_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Order\\OrderItemRelatedItemsBatchLoader:loadByOrderItems"
+        parameterValueIconsBatchLoader:
+            alias: "parameter_value_icons_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Parameter\\ParameterValueIconsBatchLoader:loadByParameterValues"
         productGiftsByMainProductIdsBatchLoader:
             alias: "product_gifts_by_main_product_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadProductGiftsByMainProductIds"
+        productMainCategoriesBatchLoader:
+            alias: "product_main_categories_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Category\\ProductMainCategoriesBatchLoader:loadByProductIds"
         productSlugBatchLoader:
             alias: "product_slug_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadProductSlugs"

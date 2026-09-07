@@ -1,0 +1,11 @@
+query ProductMainCategoryQuery($productUuid: Uuid!) {
+    product(uuid: $productUuid) {
+        mainCategory {
+            uuid
+            name
+        }
+        categories {
+            uuid
+        }
+    }
+}

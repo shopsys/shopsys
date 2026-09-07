@@ -10,6 +10,7 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapOrderItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
 import { isPriceVisible } from 'utils/mappers/price';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 type ComplaintDetailComplaintItemProps = {
     complaintItem: TypeComplaintItemFragment;
@@ -75,7 +76,11 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                 <div className="flex vl:w-auto w-full min-w-0 items-center gap-5">
                     <div className="flex size-20 shrink-0">
                         <Image
-                            alt={complaintItem.product?.mainImage?.name ?? complaintItem.productName}
+                            alt={generateProductImageAlt(
+                                complaintItem.product?.fullName ?? complaintItem.productName,
+                                complaintItem.product?.mainCategory?.name,
+                                complaintItem.product?.mainImage?.name,
+                            )}
                             className="size-full object-contain mix-blend-multiply"
                             height={80}
                             src={complaintItem.product?.mainImage?.url}

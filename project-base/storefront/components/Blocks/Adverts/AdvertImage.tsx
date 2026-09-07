@@ -4,6 +4,8 @@ import { TypeAdvertsFragment_AdvertImage } from 'graphql/requests/adverts/fragme
 import { TypeImage } from 'graphql/types';
 import { getImageProps, type ImageLoader } from 'next/image';
 import { twJoin } from 'tailwind-merge';
+import { getImageAlt } from 'utils/imageAltText';
+import { useMediaMin } from 'utils/ui/useMediaMin';
 
 type ImageComponentProps = {
     mainImage: TypeImage | null;
@@ -19,6 +21,7 @@ type AdvertImageProps = {
 const advertImageLoader: ImageLoader = ({ src, width }) => `${src}?width=${width || '0'}`;
 
 const ImageComponent = ({ mainImage, mainImageMobile, altBackup, positionName }: ImageComponentProps) => {
+    const isDesktop = useMediaMin('lg');
     const isFooterAdvert = positionName === 'footer';
     const isHeaderAdvert = positionName === 'header';
     const isProductListAdvert = positionName === 'productListSecondRow';
@@ -47,7 +50,8 @@ const ImageComponent = ({ mainImage, mainImageMobile, altBackup, positionName }:
           }).props.srcSet
         : undefined;
     const fallbackImage = mainImageMobile ?? mainImage;
-    const imageAlt = mainImage?.name || mainImageMobile?.name || altBackup;
+    const displayedImage = isDesktop === false ? fallbackImage : (mainImage ?? fallbackImage);
+    const imageAlt = getImageAlt(displayedImage?.name, altBackup);
 
     return (
         <div

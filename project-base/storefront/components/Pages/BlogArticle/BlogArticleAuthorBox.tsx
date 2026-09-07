@@ -3,6 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import { TypeBlogArticleAuthorFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleAuthorFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 
 type BlogArticleAuthorBoxProps = {
     author: TypeBlogArticleAuthorFragment;
@@ -18,7 +19,7 @@ export const BlogArticleAuthorBox: FC<BlogArticleAuthorBoxProps> = ({ author }) 
             <div className="flex items-start gap-4">
                 {author.mainImage ? (
                     <Image
-                        alt=""
+                        alt={getImageAlt(author.mainImage.name, author.name)}
                         className="size-16 shrink-0 rounded-full object-cover"
                         height={64}
                         src={author.mainImage.url}

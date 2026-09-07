@@ -22,6 +22,7 @@ import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { getOrderPaymentItem, getOrderRoundingItem, getOrderTransportItem } from 'utils/mappers/order';
 import { isPriceVisible } from 'utils/mappers/price';
 import { isProductSellable } from 'utils/product/isProductSellable';
@@ -133,6 +134,10 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         <div className="flex flex-col gap-2">
                             <CustomerRecordElementWithImage
                                 image={orderTransport.transport?.mainImage?.url}
+                                imageAlt={getImageAlt(
+                                    orderTransport.transport?.mainImage?.name,
+                                    orderTransport.transport?.name || orderTransport.name,
+                                )}
                                 name={orderTransport.name}
                                 tid={TIDs.order_list_transport_and_payment_image}
                             />
@@ -168,6 +173,10 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     <div className="flex w-full justify-between">
                         <CustomerRecordElementWithImage
                             image={orderPayment.payment?.mainImage?.url}
+                            imageAlt={getImageAlt(
+                                orderPayment.payment?.mainImage?.name,
+                                orderPayment.payment?.name || orderPayment.name,
+                            )}
                             name={orderPayment.name}
                             tid={TIDs.order_list_transport_and_payment_image}
                         />

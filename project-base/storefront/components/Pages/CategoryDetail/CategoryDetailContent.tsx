@@ -14,6 +14,7 @@ import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyE
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper/DeferredCategoryDetailProductsWrapper';
@@ -46,7 +47,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
             <CollapsibleDescriptionWithImage
                 currentPage={currentPage}
                 description={category.description}
-                imageName={category.images[0]?.name || category.name}
+                imageName={getImageAlt(category.images[0]?.name, category.name)}
                 imageUrl={category.images[0]?.url}
                 textClassName="max-w-5xl"
                 title={title}

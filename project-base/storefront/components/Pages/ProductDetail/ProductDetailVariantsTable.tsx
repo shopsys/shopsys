@@ -12,6 +12,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useProductAdditionalServices } from 'utils/cart/useProductAdditionalServices';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isProductSellable } from 'utils/product/isProductSellable';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 type ProductVariant = TypeMainVariantDetailFragment['variants'][number];
 
@@ -78,7 +79,11 @@ const ProductVariantRow: FC<ProductVariantRowProps> = ({ variant, index, onAvail
                     <Image
                         fill
                         priority
-                        alt={variant.mainImage?.name || variant.fullName}
+                        alt={generateProductImageAlt(
+                            variant.fullName,
+                            variant.mainCategory?.name,
+                            variant.mainImage?.name,
+                        )}
                         className="object-contain"
                         sizes="(max-width: 599px) 100vw, (max-width: 768px) 50vw, 64px"
                         src={variant.mainImage?.url}

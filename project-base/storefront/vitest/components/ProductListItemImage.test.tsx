@@ -39,12 +39,13 @@ const product = {
     uuid: 'f7888ef5-ae16-4f5c-b98d-4a6c947a9f71',
     slug: '/test-product',
     fullName: 'Test product',
+    mainCategory: { name: 'Main category' },
     stockQuantity: 10,
     isAllowedNegativeStock: false,
     isSellingDenied: false,
     isCurrentlyOutOfStock: false,
     flags: [],
-    mainImage: { __typename: 'Image', url: '/main.jpg' },
+    mainImage: { __typename: 'Image', name: null, url: '/main.jpg' },
     price: {
         __typename: 'ProductPrice',
         priceWithVat: '121',
@@ -91,6 +92,18 @@ const renderProductImage = (isWithImageGallery = true) =>
     );
 
 describe('ProductListItemImage', () => {
+    test.each([null, '', '   ', 'Custom image ALT'])('honors the individual image ALT %j', (name) => {
+        render(
+            <ProductListItemImage
+                product={{ ...product, mainImage: { ...product.mainImage, name } }}
+                size="large"
+                visibleItemsConfig={{ flags: true }}
+            />,
+        );
+
+        expect(screen.getByRole('img')).toHaveAttribute('aria-label', name?.trim() || 'Main category - Test product');
+    });
+
     beforeEach(() => {
         vi.clearAllMocks();
         productImagesQueryMocks.data = undefined;

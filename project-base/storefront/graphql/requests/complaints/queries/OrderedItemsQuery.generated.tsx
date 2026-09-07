@@ -70,9 +70,9 @@ export type TypeOrderedItemsQueryVariables = Exact<{
 
 
 export type TypeOrderedItemsQuery = { orderItems: { __typename: 'OrderItemConnection', totalCount: number, edges: Array<{ __typename: 'OrderItemEdge', node: { uuid: string, name: string, quantity: number, unit: string | null, totalPrice: { priceWithVat: string }, relatedItems: Array<{ __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, order: { uuid: string, number: string, creationDate: string }, product:
-          | { isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-          | { isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-          | { isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+          | { fullName: string, isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+          | { fullName: string, isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+          | { fullName: string, isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
          | null } | null } | null> | null } };
 
 

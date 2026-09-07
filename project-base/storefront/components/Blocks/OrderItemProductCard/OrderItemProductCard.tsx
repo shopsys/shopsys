@@ -16,7 +16,7 @@ import { OrderItemProductPrice } from './OrderItemProductPrice';
 type OrderItemProductCardProps = {
     mainImage?: TypeImageFragment | null;
     fullName: string;
-    categoryName: string;
+    categoryName?: string;
     quantity: number;
     freeQuantity: number | null;
     unit: string | null;
@@ -43,7 +43,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
             <div className="flex items-center gap-2.5">
                 <div className="flex size-20 items-center justify-center">
                     <Image
-                        alt={generateProductImageAlt(fullName, categoryName)}
+                        alt={generateProductImageAlt(fullName, categoryName, mainImage?.name)}
                         className="size-auto max-h-20 max-w-20 mix-blend-multiply"
                         height={80}
                         src={mainImage?.url}

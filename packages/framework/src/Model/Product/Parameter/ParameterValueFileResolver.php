@@ -43,7 +43,10 @@ class ParameterValueFileResolver
             $firstFile = array_first($parameterValueFiles);
             $resolvedFileData = $this->uploadedFileDataExtractor->extractUploadedFileData($firstFile, $domainConfig);
 
-            $parameterValuesData[$key]['parameter_value_icon_anchor_text'] = $resolvedFileData['anchorText'];
+            $translatedName = trim($firstFile->getTranslatedName($domainConfig->getLocale()) ?? '');
+            $parameterValuesData[$key]['parameter_value_icon_anchor_text'] = $translatedName !== ''
+                ? $translatedName
+                : $parameterValueData['parameter_value_text'];
             $parameterValuesData[$key]['parameter_value_icon_url'] = $resolvedFileData['url'];
             $parameterValuesData[$key]['parameter_value_icon_view_url'] = $resolvedFileData['viewUrl'];
             $parameterValuesData[$key]['parameter_value_icon_filesize'] = $resolvedFileData['filesize'];

@@ -88,6 +88,7 @@ services:
 
     App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper:
         arguments:
+            $productMainCategoriesBatchLoader: '@product_main_categories_batch_loader'
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
             $categoriesBatchLoader: '@categories_batch_loader'
             $flagsBatchLoader: '@flags_batch_loader'
@@ -98,6 +99,7 @@ services:
 
     App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper:
         arguments:
+            $productMainCategoriesBatchLoader: '@product_main_categories_batch_loader'
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
             $productSlugBatchLoader: '@product_slug_batch_loader'
             $categoriesBatchLoader: '@categories_batch_loader'

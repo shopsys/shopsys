@@ -220,6 +220,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper:
         arguments:
+            $productMainCategoriesBatchLoader: '@product_main_categories_batch_loader'
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
             $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
             $productsVisibleCountByIdsBatchLoader: '@products_visible_count_by_ids_batch_loader'
@@ -227,6 +228,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper:
         arguments:
+            $productMainCategoriesBatchLoader: '@product_main_categories_batch_loader'
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
             $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
             $productsVisibleCountByIdsBatchLoader: '@products_visible_count_by_ids_batch_loader'
@@ -235,7 +237,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ParameterValueFilesQuery:
         arguments:
-            $filesBatchLoader: '@first_file_batch_loader'
+            $filesBatchLoader: '@parameter_value_icons_batch_loader'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
         arguments:
