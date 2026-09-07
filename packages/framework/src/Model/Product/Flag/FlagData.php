@@ -38,6 +38,11 @@ class FlagData
      */
     public $promotionXy;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData[]
+     */
+    public $seo;
+
     public function __construct()
     {
         $this->name = [];
@@ -45,5 +50,6 @@ class FlagData
         $this->rgbColor = '';
         $this->urls = new UrlListData();
         $this->promotionXy = null;
+        $this->seo = [];
     }
 }
