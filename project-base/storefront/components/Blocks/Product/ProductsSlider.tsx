@@ -209,7 +209,10 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     return (
         <>
-            <div className="relative" data-tid={tid}>
+            <div
+                className={twMergeCustom('relative', variant === 'article' && isWithControls && 'vl:pt-10')}
+                data-tid={tid}
+            >
                 <AccessibleLink
                     className="w-auto"
                     href={`#${ariaAnchorName}`}
@@ -217,7 +220,12 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 />
 
                 {isWithControls && (
-                    <div className="absolute -top-10 right-0 vl:flex hidden items-center justify-center gap-2">
+                    <div
+                        className={twMergeCustom(
+                            'absolute -top-10 right-0 vl:flex hidden items-center justify-center gap-2',
+                            variant === 'article' && 'top-0',
+                        )}
+                    >
                         <SliderButton
                             ariaLabel={t('Show previous products in slider', { ns: 'accessibility' })}
                             title={t('Previous products')}
