@@ -768,6 +768,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $redColorParameterValue = $this->getReference(ParameterColorValueDataFixture::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $this->firstDomainLocale, ParameterValue::class);
         $allFilesArray = $this->getFilesByEntity($redColorParameterValue);
 
-        return array_first($allFilesArray);
+        return array_replace(array_first($allFilesArray), ['anchorText' => $redColorParameterValue->getText()]);
     }
 }

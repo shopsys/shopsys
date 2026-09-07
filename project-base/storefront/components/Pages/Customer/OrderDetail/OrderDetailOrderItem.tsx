@@ -19,6 +19,7 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapOrderItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
+import { generateProductImageAlt } from 'utils/productAltText';
 import {
     WRITE_REVIEW_ORDER_HASH_QUERY_PARAMETER_NAME,
     WRITE_REVIEW_PRODUCT_QUERY_PARAMETER_NAME,
@@ -136,7 +137,11 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                     <div className="flex vl:w-auto w-full items-center gap-5">
                         <div className="flex size-20 shrink-0" data-tid={TIDs.order_detail_item_image}>
                             <Image
-                                alt={orderItem.name}
+                                alt={generateProductImageAlt(
+                                    orderItem.product?.fullName ?? orderItem.name,
+                                    orderItem.product?.mainCategory?.name,
+                                    orderItem.product?.mainImage?.name,
+                                )}
                                 className="size-20 object-contain mix-blend-multiply"
                                 height={80}
                                 src={orderItem.product?.mainImage?.url}

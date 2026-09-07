@@ -9,6 +9,10 @@ fragment ComplaintItemFragment on ComplaintItem {
         ...FileFragment
     }
     product {
+        fullName
+        mainCategory {
+            name
+        }
         mainImage {
             ...ImageFragment
         }

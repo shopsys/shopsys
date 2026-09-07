@@ -69,11 +69,11 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
 
                     <div className="order-2 vl:order-1 min-w-0">
                         <ProductDetailGallery
-                            categoryName={product.categories[0]?.name}
+                            categoryName={product.mainCategory?.name}
                             flags={product.flags}
                             images={mainVariantImagesWithVariantImages}
                             percentageDiscount={product.price.percentageDiscount}
-                            productName={product.name}
+                            productName={product.fullName}
                             videoIds={product.productVideos}
                         />
                     </div>

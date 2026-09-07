@@ -18,6 +18,7 @@ import { useProductAdditionalServices } from 'utils/cart/useProductAdditionalSer
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type AddToCartPopupProps = {
@@ -73,7 +74,11 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
                         >
                             <div className="flex size-20 shrink-0" data-tid={TIDs.add_to_cart_popup_image}>
                                 <Image
-                                    alt=""
+                                    alt={generateProductImageAlt(
+                                        product.fullName,
+                                        product.mainCategory?.name,
+                                        product.mainImage?.name,
+                                    )}
                                     className="size-20 object-contain mix-blend-multiply"
                                     height={80}
                                     src={product.mainImage?.url}

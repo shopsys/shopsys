@@ -44,6 +44,9 @@ ProductDecorator:
             categories:
                 type: "[Category!]!"
                 description: "List of categories"
+            mainCategory:
+                type: "Category"
+                description: "The deepest visible category of the product on the current domain"
             flags:
                 type: "[Flag!]!"
                 description: "List of flags"

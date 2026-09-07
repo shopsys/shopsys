@@ -25,6 +25,7 @@ final class ParameterValueFormType extends AbstractType
             'label' => 'RGB Hex',
         ])->add('colorIcon', FileUploadType::class, [
             'label' => 'Color pattern icon',
+            'names_help' => null,
             'info_text' => t('The icon takes precedence over the RGB color value. You can upload a PNG, JPG, GIF, or SVG file.'),
             'required' => false,
             'file_constraints' => [

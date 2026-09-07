@@ -8,6 +8,7 @@ import { KeyboardEvent, MouseEvent } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { TransportListItem } from './TransportSelectListItem';
@@ -70,7 +71,7 @@ const TransportGroupIcon: FC<TransportGroupIconProps> = ({ group, isOnGreyBackgr
     return (
         <span className={wrapperClassName}>
             <Image
-                alt={group.mainImage.name ?? group.name}
+                alt={getImageAlt(group.mainImage.name, group.name)}
                 className="h-6 object-contain object-center mix-blend-multiply"
                 height={24}
                 src={group.mainImage.url}

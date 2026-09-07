@@ -37,6 +37,7 @@ class ProductArrayFieldMapper
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly ProductReviewApiFacade $productReviewApiFacade,
         protected readonly DataLoaderInterface $additionalServicesByIdsBatchLoader,
+        protected readonly DataLoaderInterface $productMainCategoriesBatchLoader,
     ) {
     }
 
@@ -71,6 +72,11 @@ class ProductArrayFieldMapper
     public function getCategories(array $data): array
     {
         return $this->categoryFacade->getByIds($data['categories']);
+    }
+
+    public function getMainCategoryPromise(array $data): Promise
+    {
+        return $this->productMainCategoriesBatchLoader->load($data['id']);
     }
 
     /**

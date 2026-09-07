@@ -4,6 +4,7 @@ import { TIDs } from 'cypress/tids';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'utils/twMerge';
 import { getLinkType } from './simpleNavigationUtils';
@@ -39,7 +40,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({ li
                 <div className="shrink-0" data-tid={TIDs.simple_navigation_image}>
                     <Image
                         priority
-                        alt={itemImage.name || listedItem.name}
+                        alt={getImageAlt(itemImage.name, listedItem.name)}
                         className="size-15 object-contain mix-blend-multiply"
                         height={60}
                         src={itemImage.url}

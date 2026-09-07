@@ -143,6 +143,9 @@ class ProductTest extends GraphQlTestCase
             'imagesCount' => 2,
             'isAllowedNegativeStock' => true,
             'expectedRestockingDate' => null,
+            'mainCategory' => [
+                'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            ],
             'categories' => [
                 [
                     'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -495,6 +498,6 @@ class ProductTest extends GraphQlTestCase
         $redColorParameterValue = $this->getReference(ParameterColorValueDataFixture::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $locale, ParameterValue::class);
         $allFilesArray = $this->getFilesByEntity($redColorParameterValue);
 
-        return array_first($allFilesArray);
+        return array_replace(array_first($allFilesArray), ['anchorText' => $redColorParameterValue->getText()]);
     }
 }

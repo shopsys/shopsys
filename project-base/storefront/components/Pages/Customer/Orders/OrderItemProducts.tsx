@@ -3,6 +3,7 @@ import { CustomerRecordProductImage, CustomerRecordRowInfo } from 'components/Pa
 import { TIDs } from 'cypress/tids';
 import { TypeOrderItemFragment } from 'graphql/requests/orders/fragments/OrderItemFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 type OrderItemProductsProps = {
     items: TypeOrderItemFragment[];
@@ -30,7 +31,11 @@ export const OrderItemProducts = ({ items, orderLink }: OrderItemProductsProps) 
                     <CustomerRecordProductImage
                         key={product.link}
                         image={product.mainImage.url}
-                        imageAlt={product.mainImage.name ?? ''}
+                        imageAlt={generateProductImageAlt(
+                            product.fullName,
+                            product.mainCategory?.name,
+                            product.mainImage.name,
+                        )}
                         isVisible={product.isVisible}
                         link={product.link}
                         quantity={item.quantity}

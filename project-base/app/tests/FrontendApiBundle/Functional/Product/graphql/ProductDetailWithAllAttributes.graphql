@@ -20,6 +20,9 @@ query ProductDetailWithAllAttributes($uuid: Uuid!) {
         imagesCount
         isAllowedNegativeStock
         expectedRestockingDate
+        mainCategory {
+            name
+        }
         categories {
             name
         }

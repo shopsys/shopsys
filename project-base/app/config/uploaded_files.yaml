@@ -20,7 +20,7 @@
     types:
         -   name: default
             multiple: false
-            require_friendly_name: false
+            require_friendly_name: true
 
 
 -   name: product

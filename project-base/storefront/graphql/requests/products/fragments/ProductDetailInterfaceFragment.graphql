@@ -4,6 +4,9 @@ fragment ProductDetailInterfaceFragment on Product {
     uuid
     slug
     fullName
+    mainCategory {
+        name
+    }
     name
     namePrefix
     nameSuffix
