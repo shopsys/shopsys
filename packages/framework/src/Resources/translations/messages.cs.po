@@ -2467,6 +2467,9 @@ msgstr "Zobrazují se pouze produkty s datem vložení mladším než %count% dn
 msgid "Only products with active special price from a price list be displayed"
 msgstr "Zobrazují se pouze produkty s aktivní speciální cenou z ceníku"
 
+msgid "Open Graph"
+msgstr "Open Graph"
+
 msgid "Open Graph description"
 msgstr "Open Graph popis"
 
@@ -3379,9 +3382,6 @@ msgstr "Zaslat e-mail pro reset hesla"
 msgid "Sending emails is turned off, no email will be sent from the app."
 msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-mail."
 
-msgid "Seo"
-msgstr "Seo"
-
 msgid "Service type for Zboží.cz"
 msgstr "Typ služby pro Zboží.cz"
 
@@ -3619,6 +3619,9 @@ msgstr "Termíny vyzvednutí se řídí týdenní otevírací dobou <a href=\"%s
 msgid "The selected country is not valid."
 msgstr "Zvolená země není platná."
 
+msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
+msgstr ""
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
 
@@ -3744,9 +3747,6 @@ msgstr "URL"
 
 msgid "URL addresses"
 msgstr "URL adresy"
-
-msgid "URL settings"
-msgstr "Nastavení URL"
 
 msgid "Unable to add"
 msgstr "Nelze přidat"
@@ -3954,9 +3954,6 @@ msgstr "Středa"
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
-
-msgid "When left empty, the storefront keeps its built-in behavior for this page type."
-msgstr "Pokud zůstane prázdné, storefront zachová své výchozí chování pro tento typ stránky."
 
 msgid "Withdrawal Request"
 msgstr "Žádost o odstoupení od smlouvy"
