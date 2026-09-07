@@ -3,6 +3,13 @@
     "type": "project",
     "description": "Full-featured basis for your e-commerce project on Shopsys Platform",
     "license": "proprietary",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/shopsys/deployment.git",
+            "no-api": true
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": [
@@ -63,7 +70,7 @@
         "psr/simple-cache": "^3.0",
         "sentry/sentry-symfony": "^5.0.1",
         "sentry/sentry": "^4.10.0",
-        "shopsys/deployment": "^5.0.0",
+        "shopsys/deployment": "dev-add-gotenberg-service as 5.0.99",
         "shopsys/form-types-bundle": "20.0.x-dev",
         "shopsys/framework": "20.0.x-dev",
         "shopsys/frontend-api": "20.0.x-dev",
