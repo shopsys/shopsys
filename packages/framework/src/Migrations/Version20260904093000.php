@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-final class Version20260710080000 extends AbstractMigration implements DomainAwareInterface
+final class Version20260904093000 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 
@@ -28,9 +28,9 @@ final class Version20260710080000 extends AbstractMigration implements DomainAwa
         }
 
         $this->sql(
-            'INSERT INTO transports (hidden, deleted, position, uuid, days_until_delivery, type)
-                VALUES (FALSE, FALSE, (SELECT COALESCE(MAX(position), -1) + 1 FROM transports t), uuid_generate_v4(), 0, :type)',
-            ['type' => TransportTypeEnum::TYPE_EMAIL],
+            'INSERT INTO transports (hidden, deleted, position, uuid, days_until_delivery, type, delivery_days_of_week, delivers_on_public_holidays, delivers_on_internal_closed_days)
+                VALUES (FALSE, FALSE, (SELECT COALESCE(MAX(position), -1) + 1 FROM transports t), uuid_generate_v4(), 0, :type, :deliveryDaysOfWeek, FALSE, FALSE)',
+            ['type' => TransportTypeEnum::TYPE_EMAIL, 'deliveryDaysOfWeek' => '[]'],
         );
         $transportId = (int)$this->connection->lastInsertId();
 
