@@ -86,6 +86,7 @@
     * [OrderStatus](#orderstatus)
     * [OrderStatusCount](#orderstatuscount)
     * [OrderWithdrawalRequest](#orderwithdrawalrequest)
+    * [OrganizationSetting](#organizationsetting)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
     * [ParameterCheckboxFilterOption](#parametercheckboxfilteroption)
@@ -2753,6 +2754,29 @@ If the the article should be open in a new tab
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="articlesite.mainimage">mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+The article image
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="articlesite.modifiedat">modifiedAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Date and time of the last article modification
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="articlesite.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -2767,6 +2791,15 @@ Name of article
 <td>
 
 Placement of article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="articlesite.publishdate">publishDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Actual publication date of the article
 
 </td>
 </tr>
@@ -3017,6 +3050,15 @@ Blog article image by params
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="blogarticle.modifiedat">modifiedAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Date and time of the last article modification
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="blogarticle.name">name</strong></td>
@@ -8459,6 +8501,113 @@ Telephone number data split into country code, prefix, and number
 </tbody>
 </table>
 
+### OrganizationSetting
+
+Organization settings for the current domain
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.city">city</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+City
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.companynumber">companyNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Company registration number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.companytaxnumber">companyTaxNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Tax number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.country">country</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Country
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.description">description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Company description
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.logo">logo</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Absolute organization logo URL
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.name">name</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Company name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.postcode">postcode</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Postcode
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.socialnetworkurls">socialNetworkUrls</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
+<td>
+
+Social network profile URLs
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.street">street</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Street and house number
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### PageInfo
 
 Information about pagination in a connection.
@@ -11235,6 +11384,15 @@ Represents settings of SEO
 <td>
 
 Description of the content of a web page
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="seosetting.organization">organization</strong></td>
+<td valign="top"><a href="#organizationsetting">OrganizationSetting</a>!</td>
+<td>
+
+Organization details for structured data on the current domain
 
 </td>
 </tr>

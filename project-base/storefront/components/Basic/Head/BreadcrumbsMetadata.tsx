@@ -1,6 +1,7 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import Head from 'next/head';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringWithoutLeadingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 
@@ -10,6 +11,8 @@ type BreadcrumbsMetadataProps = {
 
 export const BreadcrumbsMetadata: FC<BreadcrumbsMetadataProps> = ({ breadcrumbs }) => {
     const { url } = useDomainConfig();
+    const { t } = useTranslation();
+    const items = [{ name: t('Home page'), slug: '/' }, ...breadcrumbs];
 
     return (
         <Head>
@@ -21,14 +24,14 @@ export const BreadcrumbsMetadata: FC<BreadcrumbsMetadataProps> = ({ breadcrumbs 
                     __html: serializeJsonForScriptTag({
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
-                        itemListElement: breadcrumbs.map((breadcrumb, index) => {
+                        itemListElement: items.map((breadcrumb, index) => {
                             const breadcrumbAbsoluteUrl = url + getStringWithoutLeadingSlash(breadcrumb.slug);
 
                             return {
                                 '@type': 'ListItem',
                                 position: index + 1,
                                 name: breadcrumb.name,
-                                item: index === breadcrumbs.length - 1 ? undefined : breadcrumbAbsoluteUrl,
+                                item: index === items.length - 1 ? undefined : breadcrumbAbsoluteUrl,
                             };
                         }),
                     }),

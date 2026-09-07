@@ -8,6 +8,9 @@ import { describe, expect, test } from 'vitest';
 
 const articleDetail = {
     __typename: 'ArticleSite',
+    mainImage: null,
+    modifiedAt: null,
+    publishDate: null,
     uuid: '4ed28a90-3570-41f1-a6ba-0f81dca66dc4',
     slug: '/test-article',
     placement: 'footer',
@@ -35,6 +38,7 @@ const productDetail = {
 
 const blogArticleDetail = {
     __typename: 'BlogArticle',
+    modifiedAt: null,
     id: 123,
     uuid: 'a1c1d337-b707-4e7e-9a9a-6875e1f5e708',
     name: 'Test blog article',

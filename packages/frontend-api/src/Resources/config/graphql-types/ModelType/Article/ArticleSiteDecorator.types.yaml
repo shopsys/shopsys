@@ -10,6 +10,20 @@ ArticleSiteDecorator:
             - 'NotBlogArticleInterface'
             - 'ArticleInterface'
         fields:
+            mainImage:
+                type: "Image"
+                description: "The article image"
+                resolve: '@=query("mainImageByArticlePromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+            modifiedAt:
+                type: "DateTime"
+                description: "Date and time of the last article modification"
+            publishDate:
+                type: "DateTime"
+                description: "Actual publication date of the article"
             createdAt:
                 type: "DateTime!"
                 description: "Date and time of the article creation"

@@ -1,11 +1,9 @@
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import Head from 'next/head';
-import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
+import { useOrganizationMetadata } from 'utils/seo/useOrganizationMetadata';
 import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 
 export const LogoMetadata: FC = () => {
-    const { url } = useDomainConfig();
-    const logoUrl = `${getStringWithoutTrailingSlash(url)}/images/logo.svg`;
+    const organization = useOrganizationMetadata();
 
     return (
         <Head>
@@ -16,9 +14,7 @@ export const LogoMetadata: FC = () => {
                 dangerouslySetInnerHTML={{
                     __html: serializeJsonForScriptTag({
                         '@context': 'https://schema.org',
-                        '@type': 'Organization',
-                        url,
-                        logo: logoUrl,
+                        ...organization,
                     }),
                 }}
             />
