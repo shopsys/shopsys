@@ -12,6 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Event\WorkerMessageFailedEvent;
 use Symfony\Component\Messenger\Event\WorkerMessageHandledEvent;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -28,6 +29,16 @@ class DispatchCollectedEnvelopesSubscriber implements EventSubscriberInterface
     public function handleCollectedMessageEnvelopes(): void
     {
         foreach ($this->delayedEnvelopesCollector->popEnvelopes() as $envelope) {
+            $this->redispatchEnvelopeIgnoringMailerException($envelope);
+        }
+    }
+
+    /**
+     * Only the envelopes confirmed by successfully finished handlers are sent, see SegmentedHandlersLocator
+     */
+    public function handleConfirmedMessageEnvelopes(): void
+    {
+        foreach ($this->delayedEnvelopesCollector->popConfirmedEnvelopes() as $envelope) {
             $this->redispatchEnvelopeIgnoringMailerException($envelope);
         }
     }
@@ -68,6 +79,9 @@ class DispatchCollectedEnvelopesSubscriber implements EventSubscriberInterface
             KernelEvents::RESPONSE => ['handleCollectedMessageEnvelopes', -10],
             ConsoleEvents::TERMINATE => ['handleCollectedMessageEnvelopes', -10],
             WorkerMessageHandledEvent::class => ['handleCollectedMessageEnvelopes', 10],
+            // handlers that succeeded will not run again on retry, so their confirmed envelopes must be sent now,
+            // the unconfirmed envelopes belong to the failed handlers and will be dispatched again on retry
+            WorkerMessageFailedEvent::class => ['handleConfirmedMessageEnvelopes', 10],
         ];
     }
 }
