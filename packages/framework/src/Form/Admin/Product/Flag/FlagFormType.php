@@ -7,10 +7,10 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Product\Flag;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 use Symfony\Component\Form\AbstractType;
@@ -55,20 +55,13 @@ final class FlagFormType extends AbstractType
 
         $builder->add($builderBasicInformationGroup);
 
-        if ($options['flag'] !== null) {
-            $builderSeoInformationGroup = $builder->create('seoGroup', GroupType::class, [
-                'label' => 'Seo',
-            ]);
-
-            $builderSeoInformationGroup
-                ->add('urls', UrlListType::class, [
-                    'route_name' => 'front_flag_detail',
-                    'entity_id' => $options['flag']->getId(),
-                    'label' => 'URL addresses',
-                ]);
-
-            $builder->add($builderSeoInformationGroup);
-        }
+        $builder->add('seoGroup', SeoGroupType::class, [
+            'placeholder_source_input_id' => 'flag_form_name_{locale}',
+            'url_list_options' => $options['flag'] !== null ? [
+                'route_name' => 'front_flag_detail',
+                'entity_id' => $options['flag']->getId(),
+            ] : null,
+        ]);
 
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_flag_list',

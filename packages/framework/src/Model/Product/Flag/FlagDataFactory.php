@@ -6,12 +6,14 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class FlagDataFactory
 {
     public function __construct(
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
     }
 
@@ -32,6 +34,10 @@ class FlagDataFactory
     {
         foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = null;
+        }
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $flagData->seo[$domainId] = $this->seoAttributesDataFactory->create();
         }
     }
 
@@ -60,6 +66,9 @@ class FlagDataFactory
         foreach ($this->domain->getAllIds() as $domainId) {
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_flag_detail', $flag->getId());
             $flagData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
+            $flagData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
+                $flag->getSeoAttributes($domainId),
+            );
         }
     }
 }
