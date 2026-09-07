@@ -316,6 +316,9 @@ msgstr "Článek <strong>{{ name }}</strong> byl smazán"
 msgid "Article data"
 msgstr "Údaje článku"
 
+msgid "Article image"
+msgstr "Obrázek článku"
+
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr "Článek je přístupný pouze přes přímý odkaz, s noindex/nofollow."
 
@@ -679,6 +682,9 @@ msgstr "Firemní zákazník"
 msgid "Company data"
 msgstr "Firemní údaje"
 
+msgid "Company description"
+msgstr "Popis firmy"
+
 msgid "Company name"
 msgstr "Název firmy"
 
@@ -834,6 +840,9 @@ msgstr "Měna <strong>{{ name }}</strong> byla smazána"
 
 msgid "Currency settings modified"
 msgstr "Nastavení měn bylo upraveno"
+
+msgid "Current organization logo URL"
+msgstr "URL aktuálního loga firmy"
 
 msgid "Custom"
 msgstr "Vlastní"
@@ -1017,6 +1026,9 @@ msgstr "Možnost odložené platby"
 
 msgid "Delete"
 msgstr "Smazat"
+
+msgid "Delete organization logo"
+msgstr "Smazat logo firmy"
 
 msgid "Delivered at"
 msgstr "Doručeno dne"
@@ -2047,6 +2059,9 @@ msgstr "Interní poznámka"
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr "Je vysoce doporučeno toto nastavení otestovat na vývojovém nebo CI serveru před tím, než bude použita v produkci!"
 
+msgid "JPG or PNG, up to 8 MB. Recommended size: 1200×630 px (1.91:1), acceptable minimum: 600×315 px, required minimum: 200×200 px."
+msgstr "JPG nebo PNG, maximálně 8 MB. Doporučené rozměry: 1200×630 px (1,91:1), přijatelné minimum: 600×315 px, povinné minimum: 200×200 px."
+
 msgid "Job title"
 msgstr "Pracovní pozice"
 
@@ -2529,6 +2544,12 @@ msgstr "Objednávky"
 
 msgid "Orders value"
 msgstr "Hodnota objednávek"
+
+msgid "Organization"
+msgstr "Firma"
+
+msgid "Organization logo"
+msgstr "Logo firmy"
 
 msgid "Original translation"
 msgstr "Původní překlad"
@@ -3534,6 +3555,9 @@ msgstr "Prodejny"
 
 msgid "Street"
 msgstr "Ulice"
+
+msgid "Street and house number"
+msgstr "Ulice a číslo domu"
 
 msgid "Subcategories"
 msgstr "Podkategorie"

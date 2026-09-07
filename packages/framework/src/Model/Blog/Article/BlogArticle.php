@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @method translation($locale = null): BlogArticleTranslation
@@ -84,12 +85,28 @@ class BlogArticle extends AbstractTranslatableEntity
     #[ORM\JoinColumn(name: 'blog_article_author_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     protected $blogArticleAuthor;
 
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected $modifiedAt;
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getModifiedAt()
+    {
+        return $this->modifiedAt;
+    }
+
     public function __construct(BlogArticleData $blogArticleData)
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
         $this->blogArticleBlogCategoryDomains = new ArrayCollection();
 
+        $this->modifiedAt = new DatePoint();
         $this->setTranslations($blogArticleData);
 
         $this->createdAt = $blogArticleData->createdAt;
@@ -102,6 +119,7 @@ class BlogArticle extends AbstractTranslatableEntity
         BlogArticleData $blogArticleData,
         BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
     ): void {
+        $this->modifiedAt = new DatePoint();
         $this->setTranslations($blogArticleData);
         $this->setDomains($blogArticleData);
         $this->setCategories($blogArticleBlogCategoryDomainFactory, $blogArticleData->blogCategoriesByDomainId);

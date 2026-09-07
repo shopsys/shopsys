@@ -91,6 +91,7 @@ class BlogArticleExportRepository
             'text' => $this->grapesJsParser->parse($blogArticle->getDescription($locale)),
             'uuid' => $blogArticle->getUuid(),
             'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
+            'modifiedAt' => $blogArticle->getModifiedAt()?->format(DATE_ATOM),
             'visibleOnHomepage' => $blogArticle->isVisibleOnHomepage(),
             'publishDate' => $blogArticle->getPublishDate($domainId)?->format('Y-m-d H:i:s'),
             'status' => $blogArticle->getStatus($domainId),

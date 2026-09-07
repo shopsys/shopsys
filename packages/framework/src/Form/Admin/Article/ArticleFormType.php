@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Article\Article;
@@ -49,6 +50,23 @@ final class ArticleFormType extends AbstractType
 
         $seoMetaDescriptionAttributes = $this->getSeoMetaDescriptionAttributes($options);
 
+        $builderArticleData = $this->createArticleDataGroup($builder, $article, $options['domain_id']);
+        $builderSeoData = $this->createSeoGroup($builder, $article, $seoMetaDescriptionAttributes);
+
+        $builder
+            ->add($builderArticleData)
+            ->add($builderSeoData)
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_article_list',
+                'entity' => $article,
+            ]);
+    }
+
+    private function createArticleDataGroup(
+        FormBuilderInterface $builder,
+        ?Article $article,
+        int $domainId,
+    ): FormBuilderInterface {
         $builderArticleData = $builder->create('articleData', GroupType::class, [
             'label' => 'Article data',
         ]);
@@ -57,7 +75,7 @@ final class ArticleFormType extends AbstractType
             $builderArticleData
                 ->add('domainId', DomainType::class, [
                     'required' => true,
-                    'data' => $options['domain_id'],
+                    'data' => $domainId,
                     'label' => 'Domain',
                 ])
                 ->add('placement', ChoiceType::class, [
@@ -103,7 +121,16 @@ final class ArticleFormType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'label' => 'Type',
-            ])
+            ]);
+        $this->addArticleContentFields($builderArticleData);
+        $this->addArticleDateFields($builderArticleData);
+
+        return $builderArticleData;
+    }
+
+    private function addArticleContentFields(FormBuilderInterface $builderArticleData): void
+    {
+        $builderArticleData
             ->add('url', UrlType::class, [
                 'required' => true,
                 'constraints' => [
@@ -131,6 +158,16 @@ final class ArticleFormType extends AbstractType
                 'row_attr' => [
                     'data-js-article-type-content' => 'site',
                 ],
+            ]);
+    }
+
+    private function addArticleDateFields(FormBuilderInterface $builderArticleData): void
+    {
+        $builderArticleData
+            ->add('publishDate', DatePickerType::class, [
+                'required' => false,
+                'label' => 'Date of publication',
+                'row_attr' => ['data-js-article-type-content' => 'site'],
             ])
             ->add('createdAt', DatePickerType::class, [
                 'required' => true,
@@ -142,7 +179,16 @@ final class ArticleFormType extends AbstractType
                     'data-js-article-type-content' => 'site',
                 ],
             ]);
+    }
 
+    /**
+     * @param array<string, int|string|null> $seoMetaDescriptionAttributes
+     */
+    private function createSeoGroup(
+        FormBuilderInterface $builder,
+        ?Article $article,
+        array $seoMetaDescriptionAttributes,
+    ): FormBuilderInterface {
         $builderSeoData = $builder->create('seo', GroupType::class, [
             'label' => 'SEO',
             'row_attr' => [
@@ -151,6 +197,19 @@ final class ArticleFormType extends AbstractType
         ]);
 
         $builderSeoData
+            ->add('image', ImageUploadType::class, [
+                'required' => false,
+                'file_constraints' => [
+                    new Constraints\File(
+                        maxSize: '15M',
+                        maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ),
+                ],
+                'label' => 'Article image',
+                'entity' => $article,
+                'image_entity_class' => Article::class,
+            ])
             ->add('seoTitle', TextType::class, [
                 'required' => false,
                 'attr' => [
@@ -182,13 +241,7 @@ final class ArticleFormType extends AbstractType
                 ]);
         }
 
-        $builder
-            ->add($builderArticleData)
-            ->add($builderSeoData)
-            ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_article_list',
-                'entity' => $article,
-            ]);
+        return $builderSeoData;
     }
 
     #[Override]

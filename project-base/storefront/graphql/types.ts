@@ -253,10 +253,16 @@ export type TypeArticleSite = TypeArticleInterface & TypeBreadcrumb & TypeNotBlo
   createdAt: Scalars['DateTime']['output'];
   /** If the the article should be open in a new tab */
   external: Scalars['Boolean']['output'];
+  /** The article image */
+  mainImage: Maybe<TypeImage>;
+  /** Date and time of the last article modification */
+  modifiedAt: Maybe<Scalars['DateTime']['output']>;
   /** Name of article */
   name: Scalars['String']['output'];
   /** Placement of article */
   placement: Scalars['String']['output'];
+  /** Actual publication date of the article */
+  publishDate: Maybe<Scalars['DateTime']['output']>;
   /** Seo first level heading of article */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of article */
@@ -269,6 +275,11 @@ export type TypeArticleSite = TypeArticleInterface & TypeBreadcrumb & TypeNotBlo
   text: Maybe<Scalars['String']['output']>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+};
+
+
+export type TypeArticleSiteMainImageArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Autocomplete favorites data structure */
@@ -366,6 +377,8 @@ export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHrefla
   mainBlogCategoryUuid: Scalars['Uuid']['output'];
   /** Blog article image by params */
   mainImage: Maybe<TypeImage>;
+  /** Date and time of the last article modification */
+  modifiedAt: Maybe<Scalars['DateTime']['output']>;
   /** The blog article title */
   name: Scalars['String']['output'];
   /** The blog article perex */
@@ -2504,6 +2517,31 @@ export type TypeOrderWithdrawalRequestInput = {
   telephone?: InputMaybe<TypePhoneDataInput>;
 };
 
+/** Organization settings for the current domain */
+export type TypeOrganizationSetting = {
+  __typename?: 'OrganizationSetting';
+  /** Country */
+  addressCountry: Maybe<Scalars['String']['output']>;
+  /** City */
+  addressLocality: Maybe<Scalars['String']['output']>;
+  /** Company registration number */
+  companyNumber: Maybe<Scalars['String']['output']>;
+  /** Company description */
+  description: Maybe<Scalars['String']['output']>;
+  /** Absolute organization logo URL */
+  logo: Maybe<Scalars['String']['output']>;
+  /** Company name */
+  name: Maybe<Scalars['String']['output']>;
+  /** Postcode */
+  postalCode: Maybe<Scalars['String']['output']>;
+  /** Social network profile URLs */
+  sameAs: Array<Scalars['String']['output']>;
+  /** Street and house number */
+  streetAddress: Maybe<Scalars['String']['output']>;
+  /** Tax number */
+  vatId: Maybe<Scalars['String']['output']>;
+};
+
 /** Information about pagination in a connection. */
 export type TypePageInfo = {
   __typename?: 'PageInfo';
@@ -4085,6 +4123,8 @@ export type TypeSeoSetting = {
   __typename?: 'SeoSetting';
   /** Description of the content of a web page */
   metaDescription: Maybe<Scalars['String']['output']>;
+  /** Organization details for structured data on the current domain */
+  organization: TypeOrganizationSetting;
   /** Robots.txt's file content */
   robotsTxtContent: Maybe<Scalars['String']['output']>;
   /** Document's title that is shown in a browser's title */

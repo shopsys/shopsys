@@ -12,6 +12,7 @@ fragment BlogArticleDetailFragment on BlogArticle {
         ...BreadcrumbFragment
     }
     text
+    modifiedAt
     publishDate
     status
     seoTitle

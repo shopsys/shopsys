@@ -8,19 +8,26 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\NotInArray;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Model\Seo\OrganizationSettingFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 
 final class SeoSettingFormType extends AbstractType
 {
     public function __construct(
         private readonly Domain $domain,
         private readonly SeoSettingFacade $seoSettingFacade,
+        private readonly OrganizationSettingFacade $organizationSettingFacade,
     ) {
     }
 
@@ -81,10 +88,76 @@ final class SeoSettingFormType extends AbstractType
                 'label' => 'Meta description',
             ]);
 
+        $builder->add($builderSettingsGroup);
+        $this->addOrganizationFields($builder, $options['domain_id']);
+
         $builder
-            ->add($builderSettingsGroup)
             ->add('actionBar', ActionBarType::class, [
                 'save_label' => t('Save changes'),
+            ]);
+    }
+
+    private function addOrganizationFields(FormBuilderInterface $builder, int $domainId): void
+    {
+        $organization = $builder->create('organization', FormType::class, [
+            'label' => 'Organization',
+            'required' => false,
+        ]);
+        $organization->add('name', TextType::class, [
+            'label' => 'Company name',
+            'required' => false,
+        ]);
+        $organization->add('vatId', TextType::class, [
+            'label' => 'Tax number',
+            'required' => false,
+        ]);
+        $organization->add('companyNumber', TextType::class, [
+            'label' => 'Company number',
+            'required' => false,
+        ]);
+        $organization->add('description', TextareaType::class, [
+            'label' => 'Company description',
+            'required' => false,
+        ]);
+        $organization->add('streetAddress', TextType::class, [
+            'label' => 'Street and house number',
+            'required' => false,
+        ]);
+        $organization->add('addressLocality', TextType::class, [
+            'label' => 'City',
+            'required' => false,
+        ]);
+        $organization->add('postalCode', TextType::class, [
+            'label' => 'Postcode',
+            'required' => false,
+        ]);
+        $organization->add('addressCountry', TextType::class, [
+            'label' => 'Country',
+            'required' => false,
+        ]);
+
+        $builder->add($organization);
+        $this->addOrganizationLogoFields($builder, $domainId);
+    }
+
+    private function addOrganizationLogoFields(FormBuilderInterface $builder, int $domainId): void
+    {
+        $builder
+            ->add('currentOrganizationLogo', DisplayOnlyType::class, [
+                'label' => 'Current organization logo URL',
+                'data' => $this->organizationSettingFacade->getOrganization($domainId)['logo'],
+            ])
+            ->add('organizationLogo', ImageUploadType::class, [
+                'label' => 'Organization logo',
+                'required' => false,
+                'file_constraints' => [
+                    new Constraints\Image(maxSize: '8M', extensions: ['jpg', 'jpeg', 'png'], minWidth: 200, minHeight: 200),
+                ],
+                'info_text' => t('JPG or PNG, up to 8 MB. Recommended size: 1200×630 px (1.91:1), acceptable minimum: 600×315 px, required minimum: 200×200 px.'),
+            ])
+            ->add('deleteOrganizationLogo', CheckboxType::class, [
+                'label' => 'Delete organization logo',
+                'required' => false,
             ]);
     }
 

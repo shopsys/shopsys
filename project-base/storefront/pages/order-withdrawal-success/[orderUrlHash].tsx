@@ -44,7 +44,11 @@ const OrderWithdrawalSuccessPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
             <PageGuard errorRedirectUrl={orderDetailUrl} isWithAccess={hasAccess}>
-                <CommonLayout pageTypeOverride="order-withdrawal-success" title={t('Withdrawal request submitted')}>
+                <CommonLayout
+                    isNoIndex
+                    pageTypeOverride="order-withdrawal-success"
+                    title={t('Withdrawal request submitted')}
+                >
                     <Webline>
                         <ConfirmationPageContent
                             content={orderData?.order?.withdrawalInstructions}

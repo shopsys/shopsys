@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\HreflangSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoRobotsSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoSettingFormType;
+use Shopsys\FrameworkBundle\Model\Seo\OrganizationSettingFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ class SeoController extends AdminBaseController
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly OrganizationSettingFacade $organizationSettingFacade,
     ) {
     }
 
@@ -35,6 +37,7 @@ class SeoController extends AdminBaseController
             'title' => $this->seoSettingFacade->getTitleMainPage($domainId),
             'metaDescription' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
             'titleAddOn' => $this->seoSettingFacade->getTitleAddOn($domainId),
+            'organization' => $this->organizationSettingFacade->getSettings($domainId),
         ];
 
         $form = $this->createForm(SeoSettingFormType::class, $seoSettingData, ['domain_id' => $domainId]);
@@ -46,6 +49,13 @@ class SeoController extends AdminBaseController
             $this->seoSettingFacade->setTitleMainPage($seoSettingData['title'], $domainId);
             $this->seoSettingFacade->setDescriptionMainPage($seoSettingData['metaDescription'], $domainId);
             $this->seoSettingFacade->setTitleAddOn($seoSettingData['titleAddOn'], $domainId);
+
+            $this->organizationSettingFacade->saveSettings(
+                $seoSettingData['organization'],
+                $seoSettingData['organizationLogo'],
+                $seoSettingData['deleteOrganizationLogo'],
+                $domainId,
+            );
 
             $this->addSuccessFlash(t('SEO attributes settings modified'));
 

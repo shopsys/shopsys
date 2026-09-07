@@ -8,6 +8,9 @@ BlogArticleDecorator:
             - 'ArticleInterface'
             - 'Hreflang'
         fields:
+            modifiedAt:
+                type: "DateTime"
+                description: "Date and time of the last article modification"
             id:
                 type: "Int!"
                 description: "ID of blog article"

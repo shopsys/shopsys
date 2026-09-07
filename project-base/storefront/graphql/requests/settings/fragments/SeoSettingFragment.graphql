@@ -1,5 +1,17 @@
 fragment SeoSettingFragment on SeoSetting {
     __typename
+    organization {
+        name
+        vatId
+        companyNumber
+        description
+        streetAddress
+        addressLocality
+        postalCode
+        addressCountry
+        logo
+        sameAs
+    }
     title
     titleAddOn
     metaDescription

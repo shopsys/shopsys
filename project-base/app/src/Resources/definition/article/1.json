@@ -227,6 +227,12 @@
             "external": {
                 "type": "boolean"
             },
+            "modifiedAt": {
+                "type": "text"
+            },
+            "publishDate": {
+                "type": "text"
+            },
             "createdAt": {
                 "type": "text"
             },

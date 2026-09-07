@@ -52,6 +52,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
         <>
             {shouldNoIndex && <MetaRobots content="noindex, nofollow" />}
             <CommonLayout
+                isNoIndex={shouldNoIndex}
                 breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
                 breadcrumbsType="blogCategory"
                 canonicalQueryParams={[]}
@@ -64,13 +65,19 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
             >
                 {!!blogArticleData?.blogArticle && (
                     <>
-                        <ArticleMetadata
-                            authorName={blogArticleData.blogArticle.author?.name}
-                            datePublished={blogArticleData.blogArticle.publishDate}
-                            description={blogArticleData.blogArticle.seoMetaDescription}
-                            headline={blogArticleData.blogArticle.seoTitle || blogArticleData.blogArticle.name}
-                            imageUrl={blogArticleData.blogArticle.mainImage?.url}
-                        />
+                        {!shouldNoIndex && (
+                            <ArticleMetadata
+                                type="BlogPosting"
+                                dateModified={blogArticleData.blogArticle.modifiedAt}
+                                authorJobTitle={blogArticleData.blogArticle.author?.jobTitle}
+                                authorImage={blogArticleData.blogArticle.author?.mainImage?.url}
+                                authorName={blogArticleData.blogArticle.author?.name}
+                                datePublished={blogArticleData.blogArticle.publishDate}
+                                description={blogArticleData.blogArticle.seoMetaDescription}
+                                headline={blogArticleData.blogArticle.seoTitle || blogArticleData.blogArticle.name}
+                                imageUrl={blogArticleData.blogArticle.mainImage?.url}
+                            />
+                        )}
                         <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
                     </>
                 )}

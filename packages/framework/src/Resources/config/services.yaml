@@ -830,6 +830,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\LoginSuccessEvent, method: onSecurityInteractiveLogin }
 
+    Shopsys\FrameworkBundle\Model\Seo\OrganizationSettingFacade:
+        arguments:
+            $domainImagesDirectory: '%shopsys.domain_images_dir%'
+            $domainImagesUrlPrefix: '%shopsys.domain_images_url_prefix%'
+
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory:
         arguments:
             - '@event_dispatcher'

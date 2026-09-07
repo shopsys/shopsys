@@ -316,6 +316,9 @@ msgstr ""
 msgid "Article data"
 msgstr ""
 
+msgid "Article image"
+msgstr ""
+
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr ""
 
@@ -679,6 +682,9 @@ msgstr ""
 msgid "Company data"
 msgstr ""
 
+msgid "Company description"
+msgstr ""
+
 msgid "Company name"
 msgstr ""
 
@@ -833,6 +839,9 @@ msgid "Currency <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Currency settings modified"
+msgstr ""
+
+msgid "Current organization logo URL"
 msgstr ""
 
 msgid "Custom"
@@ -1016,6 +1025,9 @@ msgid "Deferred payment option"
 msgstr ""
 
 msgid "Delete"
+msgstr ""
+
+msgid "Delete organization logo"
 msgstr ""
 
 msgid "Delivered at"
@@ -2047,6 +2059,9 @@ msgstr ""
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr ""
 
+msgid "JPG or PNG, up to 8 MB. Recommended size: 1200×630 px (1.91:1), acceptable minimum: 600×315 px, required minimum: 200×200 px."
+msgstr ""
+
 msgid "Job title"
 msgstr ""
 
@@ -2528,6 +2543,12 @@ msgid "Orders"
 msgstr ""
 
 msgid "Orders value"
+msgstr ""
+
+msgid "Organization"
+msgstr ""
+
+msgid "Organization logo"
 msgstr ""
 
 msgid "Original translation"
@@ -3533,6 +3554,9 @@ msgid "Stores"
 msgstr ""
 
 msgid "Street"
+msgstr ""
+
+msgid "Street and house number"
 msgstr ""
 
 msgid "Subcategories"
