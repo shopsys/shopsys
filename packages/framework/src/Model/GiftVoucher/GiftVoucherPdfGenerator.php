@@ -5,26 +5,27 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\GiftVoucher;
 
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+use Sensiolabs\GotenbergBundle\Enumeration\Unit;
+use Sensiolabs\GotenbergBundle\GotenbergPdfInterface;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Twig\Environment;
 
 class GiftVoucherPdfGenerator
 {
+    protected const float PAGE_WIDTH_IN_POINTS = 596.0;
+    protected const float PAGE_HEIGHT_IN_POINTS = 420.0;
+
     public function __construct(
-        protected readonly Environment $twig,
+        protected readonly GotenbergPdfInterface $gotenbergPdf,
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly CurrencyFormatterFactory $currencyFormatterFactory,
         protected readonly CurrencyRepositoryInterface $intlCurrencyRepository,
         protected readonly string $logoFilepath,
-        protected readonly string $backgroundFilepath,
     ) {
     }
 
@@ -34,35 +35,29 @@ class GiftVoucherPdfGenerator
         $domainConfig = $this->domain->getDomainConfigById($domainId);
         $formattedValueParts = $this->splitFormattedValue($this->formatValue($giftVoucher, $domainConfig->getLocale()));
 
-        $html = $this->twig->render('@ShopsysFramework/Mail/GiftVoucher/giftVoucherPdf.html.twig', [
-            'giftVoucher' => $giftVoucher,
-            'shopName' => $domainConfig->getName(),
-            'shopUrl' => $this->getShopUrl($domainId),
-            'logoDataUri' => $this->findLogoDataUri(),
-            'backgroundDataUri' => $this->getBackgroundDataUri(),
-            'domainLocale' => $domainConfig->getLocale(),
-            'formattedValuePrefix' => $formattedValueParts['prefix'],
-            'formattedValueMain' => $formattedValueParts['main'],
-            'formattedValueSuffix' => $formattedValueParts['suffix'],
-        ]);
+        $result = $this->gotenbergPdf->html()
+            ->content('@ShopsysFramework/Mail/GiftVoucher/giftVoucherPdf.html.twig', [
+                'giftVoucher' => $giftVoucher,
+                'shopName' => $domainConfig->getName(),
+                'shopUrl' => $this->getShopUrl($domainId),
+                'logoDataUri' => $this->findLogoDataUri(),
+                'domainLocale' => $domainConfig->getLocale(),
+                'formattedValuePrefix' => $formattedValueParts['prefix'],
+                'formattedValueMain' => $formattedValueParts['main'],
+                'formattedValueSuffix' => $formattedValueParts['suffix'],
+            ])
+            ->paperSize(self::PAGE_WIDTH_IN_POINTS, self::PAGE_HEIGHT_IN_POINTS, Unit::Points)
+            ->margins(0, 0, 0, 0, Unit::Points)
+            ->printBackground()
+            ->nativePageRanges('1-1')
+            ->generate();
 
-        $dompdf = $this->createDompdf();
-        $dompdf->loadHtml($html, 'UTF-8');
-        $dompdf->render();
+        $streamedResponse = $result->stream();
 
-        return (string)$dompdf->output();
-    }
+        ob_start();
+        $streamedResponse->sendContent();
 
-    protected function createDompdf(): Dompdf
-    {
-        $dompdfOptions = new Options();
-        $dompdfOptions->setDefaultFont('DejaVu Sans');
-        $dompdfOptions->setIsRemoteEnabled(false);
-
-        $dompdf = new Dompdf($dompdfOptions);
-        $dompdf->setPaper('A5', 'landscape');
-
-        return $dompdf;
+        return (string)ob_get_clean();
     }
 
     protected function formatValue(GiftVoucher $giftVoucher, string $locale): string
@@ -114,11 +109,6 @@ class GiftVoucherPdfGenerator
         );
 
         return rtrim((string)preg_replace('~^https?://~', '', $shopUrl), '/');
-    }
-
-    protected function getBackgroundDataUri(): string
-    {
-        return 'data:image/png;base64,' . base64_encode((string)file_get_contents($this->backgroundFilepath));
     }
 
     protected function findLogoDataUri(): ?string

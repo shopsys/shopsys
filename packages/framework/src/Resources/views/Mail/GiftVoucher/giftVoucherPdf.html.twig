@@ -25,6 +25,7 @@
                 left: 0;
                 width: 240pt;
                 height: 420pt;
+                background: linear-gradient(180deg, rgb(25, 13, 175) 0%, rgb(12, 0, 134) 100%);
             }
 
             .voucher__value-panel {
@@ -51,14 +52,14 @@
                 top: 62pt;
                 left: 34pt;
                 width: 38pt;
-                height: 0;
-                border: 1pt solid #02cac0;
+                height: 1.5pt;
+                background-color: #02cac0;
                 border-radius: 1pt;
             }
 
             .voucher__value-label {
                 position: absolute;
-                top: 192pt;
+                top: 196pt;
                 left: 34pt;
                 color: #c9cdf2;
                 font-size: 9.5pt;
@@ -67,7 +68,7 @@
 
             .voucher__value {
                 position: absolute;
-                top: 197pt;
+                top: 210pt;
                 left: 34pt;
                 width: 186pt;
                 color: #ffffff;
@@ -113,7 +114,7 @@
                 position: absolute;
                 top: 0;
                 left: 214pt;
-                width: 12pt;
+                width: 14pt;
                 height: 12pt;
                 background-color: #fbfbfd;
                 border: 0.1pt solid #fbfbfd;
@@ -124,7 +125,7 @@
                 position: absolute;
                 top: 408pt;
                 left: 214pt;
-                width: 12pt;
+                width: 14pt;
                 height: 12pt;
                 background-color: #fbfbfd;
                 border: 0.1pt solid #fbfbfd;
@@ -137,6 +138,7 @@
                 left: 256pt;
                 width: 310pt;
                 height: 390pt;
+                line-height: 1.5;
             }
 
             .voucher__header {
@@ -235,12 +237,12 @@
                 margin-top: 2pt;
                 font-size: 8.5pt;
                 color: #5f6075;
-                line-height: 1.35;
+                line-height: 1.7;
             }
         </style>
     </head>
     <body>
-        <img class="voucher__value-panel-background" alt="" src="{{ backgroundDataUri }}">
+        <div class="voucher__value-panel-background"></div>
 
         <div class="voucher__decorative-ring-outer"></div>
         <div class="voucher__decorative-ring-inner"></div>

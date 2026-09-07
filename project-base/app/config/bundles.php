@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['all' => true],
@@ -53,4 +51,5 @@ return [
     Shopsys\MakerBundle\ShopsysMakerBundle::class => ['dev' => true],
     Shopsys\McpBundle\ShopsysMcpBundle::class => ['all' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
+    Sensiolabs\GotenbergBundle\SensiolabsGotenbergBundle::class => ['all' => true],
 ];

@@ -662,7 +662,6 @@ services:
     Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucherPdfGenerator:
         arguments:
             $logoFilepath: '%shopsys.gift_voucher_pdf_logo_filepath%'
-            $backgroundFilepath: '%shopsys.gift_voucher_pdf_background_filepath%'
 
     Shopsys\FrameworkBundle\Model\GiftVoucher\Mail\GiftVoucherMail: ~
 
