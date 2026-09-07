@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
@@ -44,6 +45,23 @@ final class ArticleFormType extends AbstractType
         /** @var \Shopsys\FrameworkBundle\Model\Article\Article|null $article */
         $article = $options['article'];
 
+        $builderArticleData = $this->createArticleDataGroup($builder, $article, $options['domain_id']);
+        $builderSeoData = $this->createSeoGroup($builder, $article, $options['domain_id']);
+
+        $builder
+            ->add($builderArticleData)
+            ->add($builderSeoData)
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_article_list',
+                'entity' => $article,
+            ]);
+    }
+
+    private function createArticleDataGroup(
+        FormBuilderInterface $builder,
+        ?Article $article,
+        int $domainId,
+    ): FormBuilderInterface {
         $builderArticleData = $builder->create('articleData', GroupType::class, [
             'label' => 'Article data',
         ]);
@@ -52,7 +70,7 @@ final class ArticleFormType extends AbstractType
             $builderArticleData
                 ->add('domainId', DomainType::class, [
                     'required' => true,
-                    'data' => $options['domain_id'],
+                    'data' => $domainId,
                     'label' => 'Domain',
                 ])
                 ->add('placement', ChoiceType::class, [
@@ -98,7 +116,16 @@ final class ArticleFormType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'label' => 'Type',
-            ])
+            ]);
+        $this->addArticleContentFields($builderArticleData);
+        $this->addArticleDateFields($builderArticleData);
+
+        return $builderArticleData;
+    }
+
+    private function addArticleContentFields(FormBuilderInterface $builderArticleData): void
+    {
+        $builderArticleData
             ->add('url', UrlType::class, [
                 'required' => true,
                 'constraints' => [
@@ -126,6 +153,16 @@ final class ArticleFormType extends AbstractType
                 'row_attr' => [
                     'data-js-article-type-content' => 'site',
                 ],
+            ]);
+    }
+
+    private function addArticleDateFields(FormBuilderInterface $builderArticleData): void
+    {
+        $builderArticleData
+            ->add('publishDate', DatePickerType::class, [
+                'required' => false,
+                'label' => 'Date of publication',
+                'row_attr' => ['data-js-article-type-content' => 'site'],
             ])
             ->add('createdAt', DatePickerType::class, [
                 'required' => true,
@@ -137,26 +174,39 @@ final class ArticleFormType extends AbstractType
                     'data-js-article-type-content' => 'site',
                 ],
             ]);
+    }
 
+    private function createSeoGroup(
+        FormBuilderInterface $builder,
+        ?Article $article,
+        int $domainId,
+    ): FormBuilderInterface {
         $builderSeoData = $builder->create('seoGroup', SeoGroupType::class, [
             'placeholder_source_path' => ['articleData', 'name'],
-            'domain_id' => $article?->getDomainId() ?? $options['domain_id'],
+            'domain_id' => $article?->getDomainId() ?? $domainId,
             'url_list_options' => $article !== null ? [
                 'route_name' => 'front_article_detail',
                 'entity_id' => $article->getId(),
             ] : null,
-            'row_attr' => [
-                'data-js-article-type-content' => 'site',
-            ],
+            'row_attr' => ['data-js-article-type-content' => 'site'],
         ]);
 
-        $builder
-            ->add($builderArticleData)
-            ->add($builderSeoData)
-            ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_article_list',
+        $builderSeoData
+            ->add('image', ImageUploadType::class, [
+                'required' => false,
+                'file_constraints' => [
+                    new Constraints\File(
+                        maxSize: '2M',
+                        maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ),
+                ],
+                'label' => 'Article image',
                 'entity' => $article,
+                'image_entity_class' => Article::class,
             ]);
+
+        return $builderSeoData;
     }
 
     #[Override]
@@ -185,8 +235,4 @@ final class ArticleFormType extends AbstractType
                 },
             ]);
     }
-
-    /**
-     * @return array<string, int|string|null>
-     */
 }

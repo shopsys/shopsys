@@ -313,6 +313,9 @@ msgstr "Článek <strong>{{ name }}</strong> byl smazán"
 msgid "Article data"
 msgstr "Údaje článku"
 
+msgid "Article image"
+msgstr "Obrázek článku"
+
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr "Článek je přístupný pouze přes přímý odkaz, s noindex/nofollow."
 
@@ -679,11 +682,17 @@ msgstr "Firemní zákazník"
 msgid "Company data"
 msgstr "Firemní údaje"
 
+msgid "Company description"
+msgstr "Popis firmy"
+
 msgid "Company name"
 msgstr "Název firmy"
 
 msgid "Company number"
 msgstr "IČ"
+
+msgid "Company registration number, e.g. 12345678. Do not confuse it with the tax identification number or VAT identification number."
+msgstr "Identifikační číslo firmy (IČO), např. 12345678. Nezaměňujte s DIČ ani identifikačním číslem pro DPH."
 
 msgid "Complaint"
 msgstr "Reklamace"
@@ -1822,6 +1831,9 @@ msgstr "Plný přístup (pouze prohlížení)"
 msgid "Full name"
 msgstr "Celé jméno"
 
+msgid "General tax identification number (DIČ in Slovakia, e.g. 2120123456). Enter the VAT identification number separately."
+msgstr "Obecné daňové identifikační číslo (na Slovensku DIČ, např. 2120123456). Identifikační číslo pro DPH zadejte samostatně."
+
 msgid "Generate"
 msgstr "Vygenerovat"
 
@@ -2052,6 +2064,9 @@ msgstr "Interní poznámka"
 
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr "Je vysoce doporučeno toto nastavení otestovat na vývojovém nebo CI serveru před tím, než bude použita v produkci!"
+
+msgid "JPG or PNG, up to 8 MB. Recommended size: 1200×630 px (1.91:1), acceptable minimum: 600×315 px, required minimum: 200×200 px."
+msgstr "JPG nebo PNG, maximálně 8 MB. Doporučené rozměry: 1200×630 px (1,91:1), přijatelné minimum: 600×315 px, povinné minimum: 200×200 px."
 
 msgid "Job title"
 msgstr "Pracovní pozice"
@@ -2550,6 +2565,12 @@ msgstr "Objednávky"
 
 msgid "Orders value"
 msgstr "Hodnota objednávek"
+
+msgid "Organization"
+msgstr "Firma"
+
+msgid "Organization logo"
+msgstr "Logo firmy"
 
 msgid "Original translation"
 msgstr "Původní překlad"
@@ -3568,6 +3589,9 @@ msgstr "Prodejny"
 msgid "Street"
 msgstr "Ulice"
 
+msgid "Street and house number"
+msgstr "Ulice a číslo domu"
+
 msgid "Subcategories"
 msgstr "Podkategorie"
 
@@ -3600,6 +3624,9 @@ msgstr "Podporované formáty: /url-adresa, url-adresa, https://example.com/url-
 
 msgid "System data"
 msgstr "Systémové údaje"
+
+msgid "Tax identification number"
+msgstr "DIČ"
 
 msgid "Tax number"
 msgstr "DIČ"
@@ -3894,6 +3921,12 @@ msgstr "DPH <strong>{{ name }}</strong> bylo smazáno"
 
 msgid "VAT <strong>{{ name }}</strong> deleted and replaced by <strong>{{ newName }}</strong>."
 msgstr "DPH <strong>{{ name }}</strong> bylo smazáno a bylo nahrazeno <strong>{{ newName }}</strong>."
+
+msgid "VAT identification number"
+msgstr "Identifikační číslo pro DPH"
+
+msgid "VAT identification number including the country prefix (IČ DPH in Slovakia, e.g. SK2120123456). Leave empty if the organization has no VAT identification number."
+msgstr "Identifikační číslo pro DPH včetně prefixu země (na Slovensku IČ DPH, např. SK2120123456). Pokud organizace toto číslo nemá, ponechte prázdné."
 
 msgid "VAT settings modified"
 msgstr "Nastavení DPH bylo upraveno"

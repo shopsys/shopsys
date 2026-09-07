@@ -313,6 +313,9 @@ msgstr ""
 msgid "Article data"
 msgstr ""
 
+msgid "Article image"
+msgstr ""
+
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr ""
 
@@ -679,10 +682,16 @@ msgstr ""
 msgid "Company data"
 msgstr ""
 
+msgid "Company description"
+msgstr ""
+
 msgid "Company name"
 msgstr ""
 
 msgid "Company number"
+msgstr ""
+
+msgid "Company registration number, e.g. 12345678. Do not confuse it with the tax identification number or VAT identification number."
 msgstr ""
 
 msgid "Complaint"
@@ -1822,6 +1831,9 @@ msgstr ""
 msgid "Full name"
 msgstr ""
 
+msgid "General tax identification number (DIČ in Slovakia, e.g. 2120123456). Enter the VAT identification number separately."
+msgstr ""
+
 msgid "Generate"
 msgstr ""
 
@@ -2051,6 +2063,9 @@ msgid "Internal note"
 msgstr ""
 
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
+msgstr ""
+
+msgid "JPG or PNG, up to 8 MB. Recommended size: 1200×630 px (1.91:1), acceptable minimum: 600×315 px, required minimum: 200×200 px."
 msgstr ""
 
 msgid "Job title"
@@ -2549,6 +2564,12 @@ msgid "Orders"
 msgstr ""
 
 msgid "Orders value"
+msgstr ""
+
+msgid "Organization"
+msgstr ""
+
+msgid "Organization logo"
 msgstr ""
 
 msgid "Original translation"
@@ -3568,6 +3589,9 @@ msgstr ""
 msgid "Street"
 msgstr ""
 
+msgid "Street and house number"
+msgstr ""
+
 msgid "Subcategories"
 msgstr ""
 
@@ -3599,6 +3623,9 @@ msgid "Supported formats: /url-address, url-address, https://example.com/url-add
 msgstr ""
 
 msgid "System data"
+msgstr ""
+
+msgid "Tax identification number"
 msgstr ""
 
 msgid "Tax number"
@@ -3893,6 +3920,12 @@ msgid "VAT <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "VAT <strong>{{ name }}</strong> deleted and replaced by <strong>{{ newName }}</strong>."
+msgstr ""
+
+msgid "VAT identification number"
+msgstr ""
+
+msgid "VAT identification number including the country prefix (IČ DPH in Slovakia, e.g. SK2120123456). Leave empty if the organization has no VAT identification number."
 msgstr ""
 
 msgid "VAT settings modified"

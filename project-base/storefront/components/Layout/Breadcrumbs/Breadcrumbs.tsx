@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
@@ -30,8 +29,6 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 
     return (
         <Webline className="mb-4">
-            <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
-
             <nav
                 aria-label={t('Breadcrumb navigation', { ns: 'accessibility' })}
                 className={twMergeCustom(breadcrumbsTwClass, className)}
