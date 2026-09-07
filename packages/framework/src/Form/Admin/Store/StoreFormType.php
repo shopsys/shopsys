@@ -8,12 +8,12 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
+use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours\OpeningHoursRangeCollectionFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
-use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -64,6 +64,7 @@ final class StoreFormType extends AbstractType
             ->add($this->createBasicInformationGroup($builder, $options['store']))
             ->add($this->createAddressGroup($builder))
             ->add($this->createUserInformationGroup($builder))
+            ->add($this->createSeoGroup($builder, $options))
             ->add($this->createMapGroup($builder))
             ->add($this->createImagesGroup($builder, $options))
             ->add('actionBar', ActionBarType::class, [
@@ -88,12 +89,6 @@ final class StoreFormType extends AbstractType
                     'required' => false,
                     'data' => $store->isDefault() ? t('Yes') : t('No'),
                     'label' => 'Default store',
-                ])
-                ->add('urls', UrlListType::class, [
-                    'route_name' => StoreFriendlyUrlProvider::ROUTE_NAME,
-                    'entity_id' => $store->getId(),
-                    'label' => 'URL settings',
-                    'limit_domains_by_ids' => [$store->getDomainId()],
                 ]);
         }
 
@@ -137,6 +132,23 @@ final class StoreFormType extends AbstractType
             ]);
 
         return $builderBasicInformationGroup;
+    }
+
+    /**
+     * @param array<string, mixed> $options
+     */
+    private function createSeoGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    {
+        $store = $options['store'];
+
+        return $builder->create('seoGroup', SeoGroupType::class, [
+            'placeholder_source_input_id' => 'store_form_basicInformationGroup_name',
+            'domain_id' => $store?->getDomainId() ?? $options['domain_id'],
+            'url_list_options' => $store !== null ? [
+                'route_name' => StoreFriendlyUrlProvider::ROUTE_NAME,
+                'entity_id' => $store->getId(),
+            ] : null,
+        ]);
     }
 
     private function createUserInformationGroup(FormBuilderInterface $builder): FormBuilderInterface
@@ -287,8 +299,9 @@ final class StoreFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired(['store'])
+            ->setRequired(['store', 'domain_id'])
             ->setAllowedTypes('store', [Store::class, 'null'])
+            ->setAllowedTypes('domain_id', 'int')
             ->setDefaults([
                 'data_class' => StoreData::class,
                 'attr' => ['novalidate' => 'novalidate'],
