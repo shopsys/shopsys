@@ -42,7 +42,19 @@ Each message passed through this middleware is then stamped with the `Shopsys\Fr
 You can read more about message stamps in the [Symfony documentation](https://symfony.com/doc/5.4/messenger.html#envelopes-stamps).
 
 The real sending of the messages is done in the subscriber `Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DispatchCollectedEnvelopesSubscriber`,
-which listens to the `kernel.response`, `console.terminate`, and `Symfony\Component\Messenger\Event\WorkerMessageHandledEvent` events (e.g., when the response is sent, when the console command is finished, or when the message is processed by the worker).
+which listens to the `kernel.response`, `console.terminate`, `Symfony\Component\Messenger\Event\WorkerMessageHandledEvent`, and `Symfony\Component\Messenger\Event\WorkerMessageFailedEvent` events (e.g., when the response is sent, when the console command is finished, or when the message is processed by the worker).
+
+#### What happens when a message handler fails?
+
+Thanks to `Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\SegmentedHandlersLocator`, the messages dispatched by a handler are confirmed in the collector once the handler finishes successfully.
+When the worker fails the message, only the confirmed messages are sent, the messages dispatched by the failed handler are dropped.
+
+This mirrors the retry behavior of Symfony Messenger, which retries only the failed handlers and skips the ones that already succeeded:
+
+- the failed handler is called again on retry and dispatches its messages again
+- the successful handler is not called again, so its messages must be sent right away - otherwise they would be lost
+
+Batch handlers (`Symfony\Component\Messenger\Handler\BatchHandlerInterface`) are not wrapped, so their messages are never confirmed - they are sent when the message is handled successfully and dropped when it fails.
 
 #### What if I really need to dispatch a message immediately?
 

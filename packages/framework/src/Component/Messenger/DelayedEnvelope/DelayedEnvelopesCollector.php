@@ -9,13 +9,66 @@ use Symfony\Component\Messenger\Envelope;
 class DelayedEnvelopesCollector
 {
     /**
+     * Envelopes dispatched outside of any running handler
+     *
      * @var \Symfony\Component\Messenger\Envelope[]
      */
     protected array $delayedEnvelopes = [];
 
+    /**
+     * Envelopes dispatched by handlers that already succeeded
+     *
+     * @var \Symfony\Component\Messenger\Envelope[]
+     */
+    protected array $confirmedEnvelopes = [];
+
+    /**
+     * Envelopes dispatched by handlers whose outcome is not known yet, keyed by handler name in the order the handlers started.
+     * The last started handler receives the dispatched envelopes.
+     *
+     * @var array<string, \Symfony\Component\Messenger\Envelope[]>
+     */
+    protected array $envelopesByRunningHandler = [];
+
     public function addEnvelope(Envelope $envelope): void
     {
-        $this->delayedEnvelopes[] = $envelope;
+        $runningHandlerName = array_key_last($this->envelopesByRunningHandler);
+
+        if ($runningHandlerName === null) {
+            $this->delayedEnvelopes[] = $envelope;
+
+            return;
+        }
+
+        $this->envelopesByRunningHandler[$runningHandlerName][] = $envelope;
+    }
+
+    public function startHandler(string $handlerName): void
+    {
+        $this->envelopesByRunningHandler[$handlerName] ??= [];
+    }
+
+    /**
+     * The envelopes dispatched by the handler will be sent even if another handler of the same message fails
+     */
+    public function confirmHandler(string $handlerName): void
+    {
+        array_push($this->confirmedEnvelopes, ...($this->envelopesByRunningHandler[$handlerName] ?? []));
+
+        $this->finishHandler($handlerName);
+    }
+
+    /**
+     * The envelopes dispatched by the handler are dropped, the handler dispatches them again when it is retried
+     */
+    public function discardHandler(string $handlerName): void
+    {
+        $this->finishHandler($handlerName);
+    }
+
+    protected function finishHandler(string $handlerName): void
+    {
+        unset($this->envelopesByRunningHandler[$handlerName]);
     }
 
     /**
@@ -23,7 +76,25 @@ class DelayedEnvelopesCollector
      */
     public function popEnvelopes(): array
     {
-        $envelopes = $this->delayedEnvelopes;
+        $envelopes = [...$this->confirmedEnvelopes, ...$this->delayedEnvelopes];
+
+        foreach ($this->envelopesByRunningHandler as $handlerEnvelopes) {
+            array_push($envelopes, ...$handlerEnvelopes);
+        }
+
+        $this->resetEnvelopes();
+
+        return $envelopes;
+    }
+
+    /**
+     * Envelopes of the handlers that did not succeed are dropped
+     *
+     * @return \Symfony\Component\Messenger\Envelope[]
+     */
+    public function popConfirmedEnvelopes(): array
+    {
+        $envelopes = $this->confirmedEnvelopes;
 
         $this->resetEnvelopes();
 
@@ -33,5 +104,7 @@ class DelayedEnvelopesCollector
     public function resetEnvelopes(): void
     {
         $this->delayedEnvelopes = [];
+        $this->confirmedEnvelopes = [];
+        $this->envelopesByRunningHandler = [];
     }
 }
