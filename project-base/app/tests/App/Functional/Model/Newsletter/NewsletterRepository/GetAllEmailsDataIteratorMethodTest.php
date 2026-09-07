@@ -31,7 +31,7 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param iterable<array{email: string, createdAt: \DateTimeInterface}> $iterator
+     * @param iterable<array{email: string, createdAt: string}> $iterator
      */
     private function assertContainsNewsletterSubscriber(iterable $iterator, string $email): void
     {
@@ -45,7 +45,7 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param iterable<array{email: string, createdAt: \DateTimeInterface}> $iterator
+     * @param iterable<array{email: string, createdAt: string}> $iterator
      */
     private function assertNotContainsNewsletterSubscriber(iterable $iterator, string $email): void
     {
