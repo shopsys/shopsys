@@ -151,9 +151,6 @@ msgstr "Priezvisko nemôže byť dlhšie ako {{ limit }} znakov"
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Priezvisko kontaktnej osoby nemôže byť dlhšie ako {{ limit }} znakov"
 
-msgid "Link must be valid URL address"
-msgstr "Odkaz musí byť platná URL adresa"
-
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr "Názov nemôže byť dlhší ako {{ limit }} znakov"
 

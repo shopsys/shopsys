@@ -2467,6 +2467,9 @@ msgstr ""
 msgid "Only products with active special price from a price list be displayed"
 msgstr ""
 
+msgid "Open Graph"
+msgstr ""
+
 msgid "Open Graph description"
 msgstr ""
 
@@ -3379,9 +3382,6 @@ msgstr ""
 msgid "Sending emails is turned off, no email will be sent from the app."
 msgstr ""
 
-msgid "Seo"
-msgstr ""
-
 msgid "Service type for Zboží.cz"
 msgstr ""
 
@@ -3619,6 +3619,9 @@ msgstr ""
 msgid "The selected country is not valid."
 msgstr ""
 
+msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
+msgstr ""
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr ""
 
@@ -3743,9 +3746,6 @@ msgid "URL"
 msgstr ""
 
 msgid "URL addresses"
-msgstr ""
-
-msgid "URL settings"
 msgstr ""
 
 msgid "Unable to add"
@@ -3953,9 +3953,6 @@ msgid "Wednesday"
 msgstr ""
 
 msgid "Weight (g)"
-msgstr ""
-
-msgid "When left empty, the storefront keeps its built-in behavior for this page type."
 msgstr ""
 
 msgid "Withdrawal Request"
