@@ -233,22 +233,6 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     }
 
     /**
-     * @return string|null
-     */
-    public function getSeoTitle(int $domainId)
-    {
-        return $this->getSeoAttributes($domainId)->getTitle();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoH1(int $domainId)
-    {
-        return $this->getSeoAttributes($domainId)->getH1();
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
     public function getSeoAttributes(int $domainId)
@@ -271,14 +255,6 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     public function isVisible(int $domainId)
     {
         return $this->getDomain($domainId)->isVisible();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
-    {
-        return $this->getSeoAttributes($domainId)->getMetaDescription();
     }
 
     /**
