@@ -74,7 +74,10 @@ ProductReviewInputDecorator:
                     -   Count:
                             max: 5
                             maxMessage: "You can upload up to {{ limit }} photos"
-                    -   \Shopsys\FrontendApiBundle\Component\Constraints\FileUpload:
-                            mimeTypes: ['image/jpeg', 'image/png']
-                            extensions: ['jpg', 'jpeg', 'png']
-                            maxSize: 10485760
+                    -   All:
+                            -   File:
+                                    extensions: ['jpg', 'jpeg', 'png']
+                                    maxSize: 10485760
+                                    mimeTypesMessage: "Type of file {{ name }} is unsupported."
+                                    extensionsMessage: "Type of file {{ name }} is unsupported."
+                                    maxSizeMessage: "The file {{ name }} is too big."
