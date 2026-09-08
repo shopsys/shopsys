@@ -11,6 +11,42 @@
 {% endblock %}
 
 {% block main_content %}
+    {% if advancedSearchForm is not null %}
+        {% set isAdvancedSearchTabActive = isAdvancedSearchSubmitted or quickSearchDefinition is null %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs" role="tablist">
+                    {% if quickSearchDefinition is not null %}
+                        <li class="nav-item" role="presentation">
+                            <a href="#crud-quick-search" class="nav-link{{ isAdvancedSearchTabActive ? '' : ' active' }}" data-bs-toggle="tab" role="tab">
+                                {{ 'Quick search'|trans }}
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item" role="presentation">
+                        <a href="#crud-advanced-search" class="nav-link{{ isAdvancedSearchTabActive ? ' active' : '' }}" data-bs-toggle="tab" role="tab">
+                            {{ 'Advanced search'|trans }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    {% if quickSearchDefinition is not null %}
+                        <div class="tab-pane{{ isAdvancedSearchTabActive ? '' : ' active show' }}" id="crud-quick-search" role="tabpanel">
+                            {% include '@ShopsysAdministration/crud/search/_quick_search_form.html.twig' %}
+                        </div>
+                    {% endif %}
+                    <div class="tab-pane{{ isAdvancedSearchTabActive ? ' active show' : '' }}" id="crud-advanced-search" role="tabpanel">
+                        {% include '@ShopsysAdministration/crud/search/_advanced_search.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elseif quickSearchDefinition is not null %}
+        {% include '@ShopsysAdministration/crud/search/_quick_search.html.twig' %}
+    {% endif %}
+
     {% if listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::QUICK_FILTER')) %}
         {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: listDomainFilterNamespace, domainIds: listDomainIds })) }}
     {% elseif listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::SWITCHER')) %}

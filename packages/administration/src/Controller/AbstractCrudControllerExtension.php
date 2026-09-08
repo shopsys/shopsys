@@ -9,6 +9,7 @@ use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
@@ -28,6 +29,10 @@ abstract class AbstractCrudControllerExtension extends AdminBaseController
     }
 
     public function configureQuery(QueryBuilder $queryBuilder): void
+    {
+    }
+
+    public function configureSearch(SearchConfig $search): void
     {
     }
 

@@ -10,6 +10,8 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\OrderingEnum;
+use Shopsys\AdministrationBundle\Component\Search\Filter\TextFilter;
+use Shopsys\AdministrationBundle\Component\Search\SearchConfig;
 use Shopsys\AdministrationBundle\Model\Blog\Author\BlogArticleAuthorCrudHandler;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -52,6 +54,18 @@ class BlogArticleAuthorController extends AbstractCrudController
         ]);
 
         $datagrid->setDefaultOrder('name', OrderingEnum::ASC);
+    }
+
+    #[Override]
+    public function configureSearch(SearchConfig $search): void
+    {
+        $search->enableQuickSearch(
+            fields: ['name'],
+            placeholder: t('Search by name…'),
+        );
+
+        $search->addFilter(TextFilter::create('name', t('Name')));
+        $search->addFilter(TextFilter::create('jobTitle', t('Job title')));
     }
 
     #[Override]

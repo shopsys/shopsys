@@ -58,12 +58,63 @@ final class ProxyQuery
     }
 
     /**
+     * Resolves a field path in dot notation (e.g. "catnum", "items.catnum", "translations.name")
+     * to a DQL expression usable in query conditions, adding the necessary joins.
+     */
+    public function getFieldExpression(string $fieldPath): string
+    {
+        [$expression, $partType] = $this->resolveFieldPath($fieldPath);
+
+        if ($partType === PartType::ASSOCIATION) {
+            $parts = explode('.', $fieldPath);
+
+            throw new InvalidArgumentException(
+                "Field path '{$fieldPath}' ends with association '" . end($parts) . "', which cannot be used in a condition directly. Use a field of the association instead.",
+            );
+        }
+
+        return $expression;
+    }
+
+    /**
+     * Resolves a field path whose last part is a to-one association (e.g. "brand", "order.status")
+     * to a DQL expression comparable with entities (e.g. "o.brand"), adding joins only for the intermediate parts.
+     */
+    public function getAssociationTargetExpression(string $fieldPath): string
+    {
+        [$expression, $partType] = $this->resolveFieldPath($fieldPath, false);
+
+        if ($partType !== PartType::ASSOCIATION) {
+            throw new InvalidArgumentException(
+                "Field path '{$fieldPath}' does not end with an association. Use getFieldExpression() for fields.",
+            );
+        }
+
+        return $expression;
+    }
+
+    /**
      * @return string Returns alias of the select
      */
-    private function processDotNotation(string $string): string
+    public function processDotNotation(string $string): string
+    {
+        [$expression] = $this->resolveFieldPath($string);
+        $selectAlias = $this->getAlias($string);
+
+        $this->queryBuilder->addSelect("{$expression} AS {$selectAlias}");
+
+        return $selectAlias;
+    }
+
+    /**
+     * @param bool $joinLastAssociation Whether a path ending with an association joins it and resolves to the join alias,
+     *                                  or resolves to the "alias.field" expression without the join
+     * @return array{string, \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PartType} The DQL expression and the type of the last resolved part
+     */
+    private function resolveFieldPath(string $fieldPath, bool $joinLastAssociation = true): array
     {
         $alias = $this->rootAlias;
-        $parts = explode('.', $string);
+        $parts = explode('.', $fieldPath);
 
         $currentClassMetadata = $this->entityManager->getClassMetadata($this->entityClass);
 
@@ -75,31 +126,25 @@ final class ProxyQuery
             if ($this->isLastPart($parts, $index)) {
                 switch ($this->getPartType($currentClassMetadata, $field)) {
                     case PartType::FIELD:
-                        $this->queryBuilder->addSelect("{$alias}.{$field} AS {$this->getAlias($path)}");
-
-                        break;
+                        return ["{$alias}.{$field}", PartType::FIELD];
                     case PartType::ASSOCIATION:
+                        if ($joinLastAssociation === false) {
+                            return ["{$alias}.{$field}", PartType::ASSOCIATION];
+                        }
+
                         $this->joinAssociation($currentClassMetadata, $path, $field, $alias, $joinAlias);
-                        $this->queryBuilder->addSelect("{$joinAlias} AS {$this->getAlias($path)}");
 
-                        break;
+                        return [$joinAlias, PartType::ASSOCIATION];
                     case PartType::TRANSLATION:
-                        $this->joinAssociation($currentClassMetadata, $path . '_tr', 'translations', $alias, $alias . '_tr');
-                        $this->queryBuilder->addSelect("{$alias}_tr.{$field} AS {$this->getAlias($path)}");
+                        $this->joinAssociation($currentClassMetadata, $alias . '_tr', 'translations', $alias, $alias . '_tr');
 
-                        break;
+                        return ["{$alias}_tr.{$field}", PartType::TRANSLATION];
                 }
-
-                return $this->getAlias($path);
             }
 
-            // If next part is last and is primary key, select it as identity without join
+            // If next part is last and is primary key, resolve it as identity without join
             if ($this->isNextPartLastAndIdentity($parts, $index, $currentClassMetadata)) {
-                $path = implode('.', $parts);
-
-                $this->queryBuilder->addSelect("IDENTITY({$alias}.{$field}) AS {$this->getAlias($path)}");
-
-                return $this->getAlias($path);
+                return ["IDENTITY({$alias}.{$field})", PartType::FIELD];
             }
 
             $this->joinAssociation($currentClassMetadata, $path, $field, $alias, $joinAlias);
@@ -109,7 +154,7 @@ final class ProxyQuery
         }
 
         throw new RuntimeException(
-            "Error processing dot notation for string '{$string}' in entity '{$this->entityClass}'. Ensure the field or association exists in the mapping.",
+            "Error processing dot notation for string '{$fieldPath}' in entity '{$this->entityClass}'. Ensure the field or association exists in the mapping.",
         );
     }
 

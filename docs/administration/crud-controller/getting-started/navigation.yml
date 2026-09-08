@@ -2,5 +2,6 @@ arrange:
   - index.md
   - creating-a-new-crud-controller.md
   - configure-list-page.md
+  - adding-search-to-list-page.md
   - adding-create-edit-and-delete-actions.md
   - extending-existing-crud-controller.md
