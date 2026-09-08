@@ -234,30 +234,42 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presen
 
     Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
 
-### `getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array`
+### `configureTemplateParameters(CrudTemplateParameters $templateParameters, ActionType $actionType, ?Presentable $entity = null): void`
 
-Returns additional variables passed to the template of the given action. Return an empty array when the action needs no extra data (the default). The `$entity` parameter is `null` for the list and create actions and contains the displayed entity for the edit action.
+Sets additional variables passed to the template of the given action. Do nothing when the action needs no extra data (the default). The `$entity` parameter is `null` for the list and create actions and contains the displayed entity for the edit action.
 
 Typically used together with a [custom template](#settemplateactiontype-actiontype-string-template) that renders the extra variables.
 
 ```php
-protected function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
-{
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+
+protected function configureTemplateParameters(
+    CrudTemplateParameters $templateParameters,
+    ActionType $actionType,
+    ?Presentable $entity = null,
+): void {
     if ($actionType !== ActionType::EDIT) {
-        return [];
+        return;
     }
 
-    return [
-        'gridView' => $this->createArticlesGrid($entity)->createView(),
-    ];
+    $templateParameters
+        ->set('gridView', $this->createArticlesGrid($entity)->createView())
+        ->set('entityLogEntityName', $this->entityLogFacade->getEntityNameByEntity(Brand::class));
 }
 ```
 
-[Extensions](../getting-started/extending-existing-crud-controller.md#templates-and-additional-parameters) provide the same method and their parameters are added on top of the controller's ones.
+`CrudTemplateParameters` provides:
+
+- `set(string $name, mixed $value)` — sets a variable, chainable
+- `has(string $name)` and `get(string $name)` — read a variable of the action itself (`title`, `form`, ...) or one set earlier by the controller, e.g. to build on it in an extension
+
+[Extensions](../getting-started/extending-existing-crud-controller.md#templates-and-additional-parameters) provide the same method and are called after the controller, so they can read what the controller has set.
 
 !!! warning
 
-    No parameter can be silently overwritten — an additional parameter whose key is already used by the action itself (`title`, `form`, `topActions`, ...), by the controller, or by another extension throws an exception naming the colliding key and its origin. Rename the additional parameter instead.
+    No variable can be silently overwritten — `set()` with a name already used by the action itself (`title`, `form`, `topActions`, ...), by the controller, or by another extension throws an exception naming the colliding variable and both its sources. Choose a different name instead.
 
 ## CRUD Config
 
@@ -375,7 +387,7 @@ $config
 #### `setTemplate(ActionType $actionType, string $template)`
 
 Overrides the template rendered by the given action (`list`, `detail`, `create`, or `edit` — the `delete` action renders no template and throws an exception).
-The custom template receives the same variables as the default one, extended by [`getAdditionalTemplateParameters()`](#getadditionaltemplateparametersactiontype-actiontype-presentable-entity-null-array) of the controller and its extensions.
+The custom template receives the same variables as the default one, extended by [`configureTemplateParameters()`](#configuretemplateparameterscrudtemplateparameters-templateparameters-actiontype-actiontype-presentable-entity-null-void) of the controller and its extensions.
 
 ```php
 $config

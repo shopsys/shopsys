@@ -19,7 +19,7 @@ use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionI
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
-use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParametersCollector;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
@@ -188,15 +188,16 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     /**
-     * Returns additional variables passed to the template of the given action.
-     * A key already used by the action itself (`title`, `form`, ...) or by an extension throws an exception.
+     * Sets additional variables passed to the template of the given action via `$templateParameters->set()`.
+     * A name already used by the action itself (`title`, `form`, ...) or by an extension throws an exception.
      *
      * @param \Shopsys\FrameworkBundle\Component\Utils\Presentable|null $entity Null for the list and create actions, the displayed entity otherwise
-     * @return array<string, mixed>
      */
-    protected function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
-    {
-        return [];
+    protected function configureTemplateParameters(
+        CrudTemplateParameters $templateParameters,
+        ActionType $actionType,
+        ?Presentable $entity = null,
+    ): void {
     }
 
     final public function listAction(): Response
@@ -414,7 +415,7 @@ abstract class AbstractCrudController extends AdminBaseController
 
     /**
      * Renders the configured template of the given action with the base parameters extended
-     * by `getAdditionalTemplateParameters()` of the controller and of its extensions.
+     * by `configureTemplateParameters()` of the controller and of its extensions.
      *
      * @param array<string, mixed> $parameters
      * @param \Shopsys\FrameworkBundle\Component\Utils\Presentable|null $entity Null for the list and create actions, the displayed entity otherwise
@@ -424,16 +425,20 @@ abstract class AbstractCrudController extends AdminBaseController
         array $parameters,
         ?Presentable $entity = null,
     ): Response {
-        $parametersCollector = new CrudTemplateParametersCollector($actionType, $parameters);
-        $parametersCollector->addAdditionalParameters(static::class, $this->getAdditionalTemplateParameters($actionType, $entity));
+        $templateParameters = new CrudTemplateParameters($actionType, $parameters);
+        $templateParameters->collectFrom(
+            static::class,
+            fn () => $this->configureTemplateParameters($templateParameters, $actionType, $entity),
+        );
 
-        $this->executeExtensions(function (AbstractCrudControllerExtension $extension) use ($parametersCollector, $actionType, $entity): void {
-            $parametersCollector->addAdditionalParameters($extension::class, $extension->getAdditionalTemplateParameters($actionType, $entity));
-        });
+        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $templateParameters->collectFrom(
+            $extension::class,
+            fn () => $extension->configureTemplateParameters($templateParameters, $actionType, $entity),
+        ));
 
         return $this->render(
             $this->definition->getConfig()->getTemplate($actionType),
-            $parametersCollector->getParameters(),
+            $templateParameters->toArray(),
         );
     }
 

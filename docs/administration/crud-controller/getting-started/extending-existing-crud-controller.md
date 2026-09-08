@@ -81,14 +81,15 @@ public function configureForm(CrudFormConfigurator $formConfigurator, ?Presentab
 
 ### Templates and additional parameters
 
-Extensions can replace the template of an action via `setTemplate()` in `configure()` and pass additional variables to it via `getAdditionalTemplateParameters()`.
-Extension parameters are added on top of the additional parameters of the original controller. A key already used by the action itself (`title`, `form`, `topActions`, ...), by the controller, or by another extension throws an exception, so no parameter can be silently overwritten.
+Extensions can replace the template of an action via `setTemplate()` in `configure()` and pass additional variables to it via `configureTemplateParameters()`.
+Extensions are called after the original controller, so they can read its variables with `has()` and `get()`. Setting a name already used by the action itself (`title`, `form`, `topActions`, ...), by the controller, or by another extension throws an exception, so no variable can be silently overwritten.
 
 ```php
 // OrderControllerExtension.php
 
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 
 public function configure(CrudConfig $config): void
@@ -96,15 +97,14 @@ public function configure(CrudConfig $config): void
     $config->setTemplate(ActionType::EDIT, 'Admin/Order/edit.html.twig');
 }
 
-public function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
-{
+public function configureTemplateParameters(
+    CrudTemplateParameters $templateParameters,
+    ActionType $actionType,
+    ?Presentable $entity = null,
+): void {
     if ($actionType === ActionType::EDIT) {
-        return [
-            'orderItemsGridView' => $this->createOrderItemsGrid($entity)->createView(),
-        ];
+        $templateParameters->set('orderItemsGridView', $this->createOrderItemsGrid($entity)->createView());
     }
-
-    return [];
 }
 ```
 

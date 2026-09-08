@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudController;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
@@ -47,7 +48,7 @@ final class CrudRenderActionTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
-            'Additional template parameters of "%s" collide with the parameters of the "list" action: "title" (a base parameter).',
+            'Template parameter "title" cannot be set by "%s" as it is a base parameter of the "list" action.',
             TestRenderCrudController::class,
         ));
 
@@ -62,7 +63,7 @@ final class CrudRenderActionTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
-            'Additional template parameters of "%s" collide with the parameters of the "edit" action: "form" (a base parameter).',
+            'Template parameter "form" cannot be set by "%s" as it is a base parameter of the "edit" action.',
             TestRenderCrudControllerExtension::class,
         ));
 
@@ -77,7 +78,7 @@ final class CrudRenderActionTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
-            'Additional template parameters of "%s" collide with the parameters of the "list" action: "gridView" (already added by "%s").',
+            'Template parameter "gridView" cannot be set by "%s" as it is already set by "%s" for the "list" action.',
             TestRenderCrudControllerExtension::class,
             TestRenderCrudController::class,
         ));
@@ -134,13 +135,15 @@ final class TestRenderCrudController extends AbstractCrudController
         return $this->renderAction($actionType, $parameters);
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     #[Override]
-    protected function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
-    {
-        return $this->additionalTemplateParameters;
+    protected function configureTemplateParameters(
+        CrudTemplateParameters $templateParameters,
+        ActionType $actionType,
+        ?Presentable $entity = null,
+    ): void {
+        foreach ($this->additionalTemplateParameters as $name => $value) {
+            $templateParameters->set($name, $value);
+        }
     }
 }
 
@@ -151,12 +154,14 @@ final class TestRenderCrudControllerExtension extends AbstractCrudControllerExte
      */
     public array $additionalTemplateParameters = [];
 
-    /**
-     * @return array<string, mixed>
-     */
     #[Override]
-    public function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
-    {
-        return $this->additionalTemplateParameters;
+    public function configureTemplateParameters(
+        CrudTemplateParameters $templateParameters,
+        ActionType $actionType,
+        ?Presentable $entity = null,
+    ): void {
+        foreach ($this->additionalTemplateParameters as $name => $value) {
+            $templateParameters->set($name, $value);
+        }
     }
 }

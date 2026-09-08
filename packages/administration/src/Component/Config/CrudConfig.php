@@ -267,7 +267,7 @@ final class CrudConfig
 
     /**
      * Overrides the template rendered by the given action. The template receives the same variables
-     * as the default one, extended by `getAdditionalTemplateParameters()` of the controller and its extensions.
+     * as the default one, extended by `configureTemplateParameters()` of the controller and its extensions.
      *
      * @param string $template #Template
      * @return $this

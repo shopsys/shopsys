@@ -7,13 +7,16 @@ namespace Shopsys\AdministrationBundle\Controller;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
 use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Form\Admin\ProductReview\ProductReviewFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
@@ -40,6 +43,7 @@ class ProductReviewController extends AbstractCrudController
             ->setListDomainControl(CrudListDomainControl::QUICK_FILTER, $enabledDomainIds)
             ->setCustomRoleSection(AdminRoleSectionsProvider::PRODUCTS_CATALOG)
             ->registerHandler(ProductReviewEditHandler::class)
+            ->setTemplate(ActionType::EDIT, '@ShopsysAdministration/content/productReview/edit.html.twig')
             ->disable(!$this->productReviewEnabledChecker->isEnabledOnAnyDomain());
     }
 
@@ -116,7 +120,7 @@ class ProductReviewController extends AbstractCrudController
     }
 
     #[Override]
-    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
     {
         $formConfigurator->useFormType(ProductReviewFormType::class, [
             'productReview' => $entity,
@@ -124,23 +128,15 @@ class ProductReviewController extends AbstractCrudController
     }
 
     #[Override]
-    protected function getEditTemplate(): string
-    {
-        return '@ShopsysAdministration/content/productReview/edit.html.twig';
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    #[Override]
-    protected function getEditViewData(object $entity): array
-    {
-        /** @var \Shopsys\FrameworkBundle\Model\ProductReview\ProductReview $productReview */
-        $productReview = $entity;
-
-        return [
-            'entityLogEntityName' => $this->entityLogFacade->getEntityNameByEntity(ProductReview::class),
-            'productReview' => $productReview,
-        ];
+    protected function configureTemplateParameters(
+        CrudTemplateParameters $templateParameters,
+        ActionType $actionType,
+        ?Presentable $entity = null,
+    ): void {
+        if ($actionType === ActionType::EDIT) {
+            $templateParameters
+                ->set('entityLogEntityName', $this->entityLogFacade->getEntityNameByEntity(ProductReview::class))
+                ->set('productReview', $entity);
+        }
     }
 }

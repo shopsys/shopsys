@@ -9,6 +9,7 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\OrderingEnum;
 use Shopsys\AdministrationBundle\Model\Blog\Author\BlogArticleAuthorCrudHandler;
@@ -66,22 +67,18 @@ class BlogArticleAuthorController extends AbstractCrudController
         ]);
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     #[Override]
-    protected function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
-    {
-        if ($actionType !== ActionType::EDIT) {
-            return [];
+    protected function configureTemplateParameters(
+        CrudTemplateParameters $templateParameters,
+        ActionType $actionType,
+        ?Presentable $entity = null,
+    ): void {
+        if ($actionType === ActionType::EDIT) {
+            /** @var \Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor $blogArticleAuthor */
+            $blogArticleAuthor = $entity;
+
+            $templateParameters->set('gridView', $this->createBlogArticlesGrid($blogArticleAuthor)->createView());
         }
-
-        /** @var \Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor $blogArticleAuthor */
-        $blogArticleAuthor = $entity;
-
-        return [
-            'gridView' => $this->createBlogArticlesGrid($blogArticleAuthor)->createView(),
-        ];
     }
 
     protected function createBlogArticlesGrid(BlogArticleAuthor $blogArticleAuthor): Grid

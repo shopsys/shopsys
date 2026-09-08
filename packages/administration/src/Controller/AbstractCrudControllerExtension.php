@@ -9,6 +9,7 @@ use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
@@ -38,15 +39,16 @@ abstract class AbstractCrudControllerExtension extends AdminBaseController
     }
 
     /**
-     * Returns additional variables passed to the template of the given action.
-     * A key already used by the action itself (`title`, `form`, ...), by the CRUD controller
+     * Sets additional variables passed to the template of the given action via `$templateParameters->set()`.
+     * A name already used by the action itself (`title`, `form`, ...), by the CRUD controller
      * or by another extension throws an exception.
      *
      * @param \Shopsys\FrameworkBundle\Component\Utils\Presentable|null $entity Null for the list and create actions, the displayed entity otherwise
-     * @return array<string, mixed>
      */
-    public function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
-    {
-        return [];
+    public function configureTemplateParameters(
+        CrudTemplateParameters $templateParameters,
+        ActionType $actionType,
+        ?Presentable $entity = null,
+    ): void {
     }
 }
