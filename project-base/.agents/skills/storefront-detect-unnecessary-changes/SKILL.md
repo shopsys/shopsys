@@ -7,7 +7,7 @@ description: Audits current storefront worktree or branch changes for code and a
 
 # Storefront Detect Unnecessary Changes
 
-Review storefront changes immediately before committing them and identify only changes that can be proven unnecessary. Keep this audit separate from committing and from full PR review.
+Review storefront changes immediately before committing them and identify changes that can be proven unnecessary. Also report focused JSX readability suggestions separately from unnecessary-code findings. Keep this audit separate from committing and from full PR review.
 
 ## Safety
 
@@ -63,6 +63,14 @@ Report actionable findings only for proven dead/speculative, equivalent/redundan
 
 Keep ambiguous items out of actionable findings and state what context would resolve them.
 
+## 5. Check JSX Readability
+
+- In changed components, recommend extracting inline event handlers with multiple steps, branching, state updates, or asynchronous error handling into named functions above the JSX (for example, `handleUndo` or `handleBlur`). Name them by the action they perform.
+- Keep short calls and simple argument forwarding inline, such as `onFocus={() => toast.pause({ id })}` or `onClick={() => onRemove(product)}`. Do not extract callbacks solely because they span several formatted lines.
+- Move nontrivial filtering or derived-value calculations out of JSX when a descriptive name makes the rendered structure easier to read. Ordinary rendering with `map` can stay inline.
+- A named handler does not require a custom hook or `useCallback`. Suggest a hook only when it separates cohesive state and behavior, not merely to relocate a function.
+- Preserve event arguments, closures, async sequencing, focus handling, and unmount protection. Report concrete locations and the smallest useful extraction under **Readability suggestions**, not **Proven unnecessary changes**. These are behavior-preserving suggestions, not evidence of dead code, and the audit must not apply them automatically.
+
 ## Output
 
 ```markdown
@@ -74,6 +82,9 @@ Keep ambiguous items out of actionable findings and state what context would res
 
 ## Ambiguous changes
 - [file:line] Missing evidence needed to decide.
+
+## Readability suggestions
+- [file:line] Inline logic to extract, suggested name, and why it improves readability. Omit this section when there are no concrete suggestions.
 
 ## Required changes checked
 - Suspicious-looking changes that were traced and found necessary.
