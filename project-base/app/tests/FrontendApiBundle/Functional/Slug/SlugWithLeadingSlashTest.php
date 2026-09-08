@@ -85,9 +85,9 @@ class SlugWithLeadingSlashTest extends GraphQlTestCase
 
     private function getSeoPageTitleByPageSlug(string $pageSlug): string
     {
-        $response = $this->getResponseContentForQuery(sprintf('{ seoPage(pageSlug: "%s") { title } }', $pageSlug));
+        $response = $this->getResponseContentForQuery(sprintf('{ seoPage(pageSlug: "%s") { seo { title } } }', $pageSlug));
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'seoPage');
 
-        return $this->getResponseDataForGraphQlType($response, 'seoPage')['title'];
+        return $this->getResponseDataForGraphQlType($response, 'seoPage')['seo']['title'];
     }
 }

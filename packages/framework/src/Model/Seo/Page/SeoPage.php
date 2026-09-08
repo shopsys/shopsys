@@ -81,35 +81,11 @@ class SeoPage
     }
 
     /**
-     * @return string|null
-     */
-    public function getSeoTitle(int $domainId)
-    {
-        return $this->getSeoAttributes($domainId)->getTitle();
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
     public function getSeoAttributes(int $domainId)
     {
         return $this->getSeoPageDomain($domainId)->getSeoAttributes();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
-    {
-        return $this->getSeoAttributes($domainId)->getMetaDescription();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCanonicalUrl(int $domainId)
-    {
-        return $this->getSeoAttributes($domainId)->getCanonicalUrl();
     }
 
     /**
