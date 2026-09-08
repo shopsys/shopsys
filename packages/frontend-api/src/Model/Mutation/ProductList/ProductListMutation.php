@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductNotInListExcepti
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductAlreadyInListUserError;
@@ -58,11 +59,7 @@ class ProductListMutation extends AbstractMutation
             $productList = $this->productListFacade->create($productListData);
         }
 
-        try {
-            $product = $this->productFacade->getByUuid($productUuid);
-        } catch (ProductNotFoundException $exception) {
-            throw new ProductNotFoundUserError(sprintf('Product with UUID "%s" not found', $productUuid));
-        }
+        $product = $this->getProductByUuid($productUuid);
 
         try {
             return $this->productListFacade->addProductToList($productList, $product);
@@ -82,16 +79,33 @@ class ProductListMutation extends AbstractMutation
             throw new ProductListNotFoundUserError('Product list not found', $productListType);
         }
 
-        $productUuid = $input['productUuid'];
-
-        try {
-            $product = $this->productFacade->getByUuid($productUuid);
-        } catch (ProductNotFoundException $exception) {
-            throw new ProductNotFoundUserError(sprintf('Product with UUID "%s" not found', $productUuid));
-        }
+        $product = $this->getProductByUuid($input['productUuid']);
 
         try {
             return $this->productListFacade->removeProductFromList($productList, $product);
+        } catch (ProductNotInListException $exception) {
+            throw new ProductNotInListUserError($exception->getMessage(), $productListType);
+        }
+    }
+
+    public function moveProductInListMutation(Argument $argument): ProductList
+    {
+        $input = $argument['input'];
+        $productListInput = $input['productListInput'];
+        $productListType = $productListInput['type'];
+        $productList = $this->productListApiFacade->findProductListByInputData($productListInput);
+
+        if ($productList === null) {
+            throw new ProductListNotFoundUserError('Product list not found', $productListType);
+        }
+
+        $product = $this->getProductByUuid($input['productUuid']);
+
+        $afterProductUuid = $input['afterProductUuid'] ?? null;
+        $afterProduct = $afterProductUuid === null ? null : $this->getProductByUuid($afterProductUuid);
+
+        try {
+            return $this->productListFacade->moveProduct($productList, $product, $afterProduct);
         } catch (ProductNotInListException $exception) {
             throw new ProductNotInListUserError($exception->getMessage(), $productListType);
         }
@@ -110,5 +124,14 @@ class ProductListMutation extends AbstractMutation
         $this->productListFacade->removeProductList($productList);
 
         return null;
+    }
+
+    protected function getProductByUuid(string $productUuid): Product
+    {
+        try {
+            return $this->productFacade->getByUuid($productUuid);
+        } catch (ProductNotFoundException $exception) {
+            throw new ProductNotFoundUserError(sprintf('Product with UUID "%s" not found', $productUuid));
+        }
     }
 }

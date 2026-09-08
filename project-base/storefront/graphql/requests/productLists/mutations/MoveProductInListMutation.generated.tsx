@@ -1,0 +1,82 @@
+// @ts-nocheck
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+import * as Types from '../../../types';
+
+import gql from 'graphql-tag';
+import { ProductListFragment } from '../fragments/ProductListFragment.generated';
+import * as Urql from 'urql';
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+/** Product Availability statuses */
+export type TypeAvailabilityStatusEnum =
+  /** Product availability status for electronically delivered products */
+  | 'Digital'
+  /** Product is out of stock with a known expected restocking date */
+  | 'ExpectedRestock'
+  /** Product availability status in stock */
+  | 'InStock'
+  /** Product availability status out of stock */
+  | 'OutOfStock';
+
+/** Represents the type of the parameter */
+export type TypeParameterTypeEnum =
+  | 'CHECKBOX'
+  | 'COLOR'
+  | 'SLIDER';
+
+export type TypeProductListInput = {
+  /** Product list type */
+  type: TypeProductListTypeEnum;
+  /** Product list identifier */
+  uuid?: string | null | undefined;
+};
+
+export type TypeProductListMoveProductInput = {
+  /** Product after which the moved product is placed, null moves it to the top */
+  afterProductUuid?: string | null | undefined;
+  productListInput: TypeProductListInput;
+  /** Product to move */
+  productUuid: string;
+};
+
+/** One of possible types of the product list */
+export type TypeProductListTypeEnum =
+  | 'COMPARISON'
+  | 'WISHLIST';
+
+/** One of possible product types */
+export type TypeProductTypeEnum =
+  /** Basic product */
+  | 'BASIC'
+  /** Gift voucher delivered by email after the order is paid */
+  | 'ELECTRONIC_GIFT_VOUCHER'
+  /** Product with inquiry form instead of add to cart button */
+  | 'INQUIRY'
+  /** Gift voucher delivered printed as a regular product */
+  | 'PRINTED_GIFT_VOUCHER';
+
+export type TypeMoveProductInListMutationVariables = Exact<{
+  input: Types.TypeProductListMoveProductInput;
+}>;
+
+
+export type TypeMoveProductInListMutation = { MoveProductInList: { __typename: 'ProductList', uuid: string, products: Array<
+      | { __typename: 'MainVariant', imagesCount: number, variantsCount: number, id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, expectedRestockingDate: string | null, availableStoresCount: number | null, isPersonalPickupOnly: boolean, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }>, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null }
+      | { __typename: 'RegularProduct', imagesCount: number, id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, expectedRestockingDate: string | null, availableStoresCount: number | null, isPersonalPickupOnly: boolean, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }>, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null }
+      | { __typename: 'Variant', imagesCount: number, id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, expectedRestockingDate: string | null, availableStoresCount: number | null, isPersonalPickupOnly: boolean, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }>, mainVariant: { __typename: 'MainVariant', reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null } | null, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null }
+    > } };
+
+
+export const MoveProductInListMutationDocument = gql`
+    mutation MoveProductInListMutation($input: ProductListMoveProductInput!) {
+  MoveProductInList(input: $input) {
+    ...ProductListFragment
+  }
+}
+    ${ProductListFragment}`;
+
+export function useMoveProductInListMutation() {
+  return Urql.useMutation<TypeMoveProductInListMutation, TypeMoveProductInListMutationVariables>(MoveProductInListMutationDocument);
+};
