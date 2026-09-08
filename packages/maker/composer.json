@@ -30,7 +30,7 @@
         "doctrine/collections": "^2.6",
         "doctrine/data-fixtures": "^2.2",
         "doctrine/dbal": "^4.4",
-        "doctrine/orm": "^3.6",
+        "doctrine/orm": "^3.7",
         "doctrine/persistence": "^4.1",
         "prezent/doctrine-translatable": "^5.0",
         "ramsey/uuid": "^4.3.1",

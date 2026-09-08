@@ -36,7 +36,7 @@
         "doctrine/collections": "^2.6",
         "doctrine/dbal": "^4.4",
         "doctrine/doctrine-bundle": "^3.2",
-        "doctrine/orm": "^3.6",
+        "doctrine/orm": "^3.7",
         "doctrine/persistence": "^4.1",
         "shopsys/form-types-bundle": "20.0.x-dev",
         "shopsys/framework": "20.0.x-dev",
@@ -47,6 +47,7 @@
         "symfony/dependency-injection": "^7.4",
         "symfony/form": "^7.4",
         "symfony/http-kernel": "^7.4",
+        "symfony/polyfill-php86": "^1.37.0",
         "symfony/service-contracts": "^3.5",
         "symfony/translation": "^7.4",
         "twig/twig": "^3.14.0"
