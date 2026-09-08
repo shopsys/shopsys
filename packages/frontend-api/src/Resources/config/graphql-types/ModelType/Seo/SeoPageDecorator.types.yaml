@@ -4,17 +4,12 @@ SeoPageDecorator:
     config:
         interfaces:
             - "Hreflang"
+            - "Seo"
         description: "Represents SEO settings for specific page"
         fields:
-            title:
-                type: "String"
-                description: "Document's title that is shown in a browser's title"
-            metaDescription:
-                type: "String"
-                description: "Description for meta tag"
-            canonicalUrl:
-                type: "String"
-                description: "Page's canonical link"
+            seo:
+                type: "SeoAttributes!"
+                description: "SEO attributes of the page"
             ogTitle:
                 type: "String"
                 description: "Title for og:title meta tag"
