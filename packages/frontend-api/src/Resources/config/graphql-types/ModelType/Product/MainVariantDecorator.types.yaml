@@ -12,6 +12,7 @@ MainVariantDecorator:
                 type: '[Variant!]!'
         interfaces:
             - 'Product'
+            - 'Seo'
             - 'Hreflang'
             - 'Breadcrumb'
             - 'Slug'
