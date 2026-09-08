@@ -27,6 +27,8 @@ class BlogArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetch
         $result['seoTitle'] = $data['seoTitle'] ?? null;
         $result['seoMetaDescription'] = $data['seoMetaDescription'] ?? null;
         $result['seoH1'] = $data['seoH1'] ?? null;
+        $result['seoMetaRobots'] = $data['seoMetaRobots'] ?? null;
+        $result['seoCanonicalUrl'] = $data['seoCanonicalUrl'] ?? null;
         $result['categories'] = $data['categories'] ?? [];
         $result['mainSlug'] = $data['mainSlug'] ?? '';
         $result['products'] = $data['products'] ?? [];

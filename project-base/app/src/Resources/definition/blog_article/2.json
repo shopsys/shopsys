@@ -202,6 +202,13 @@
             "seoMetaDescription": {
                 "type": "text"
             },
+            "seoMetaRobots": {
+                "type": "keyword"
+            },
+            "seoCanonicalUrl": {
+                "type": "keyword",
+                "index": false
+            },
             "seoH1": {
                 "type": "text",
                 "analyzer": "edge_ngram_without_diacritic",
