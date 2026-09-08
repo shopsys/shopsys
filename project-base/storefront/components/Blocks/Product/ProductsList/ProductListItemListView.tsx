@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
+import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
@@ -105,10 +106,6 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                         </span>
                     </h3>
 
-                    <div className="col-start-2 row-start-4 mt-1.5 text-text-less text-xs">
-                        {t('Code')}: {product.catalogNumber}
-                    </div>
-
                     {product.__typename === 'MainVariant' && (
                         <div className="col-start-2 row-start-5 mt-1 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
                             <VariantIcon className="size-3 text-text-accent" />
@@ -126,6 +123,13 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                         />
                     )}
                 </ExtendedNextLink>
+
+                <SelectableCode
+                    className="relative z-above col-start-2 row-start-4 mt-1.5 w-fit text-xs"
+                    label={t('Code')}
+                    value={product.catalogNumber}
+                    tabIndex={allowKeyboardFocus ? 0 : -1}
+                />
 
                 {visibleItemsConfig.reviews && (
                     <ProductListReviewsSummaryLink
