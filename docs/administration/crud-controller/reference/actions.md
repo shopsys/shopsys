@@ -85,6 +85,23 @@ protected function configureActions(ActionsConfig $actions): void
 
     You can implement your own reusable actions by extending the `Shopsys\AdministrationBundle\Component\Action\AbstractAction` class.
 
+### What the closures receive
+
+The `displayIf()` and `linkToRoute()` closures receive the data of the page the action is displayed on:
+
+- `ActionType::EDIT` — the edited entity
+- `ActionType::LIST`, `ActionType::CREATE`, and `ActionType::DETAIL` — `null` (there is no single entity on these pages; for per-row actions in the list grid use row actions instead — their closures receive the data of the grid row they are rendered in)
+
+!!! note
+
+    When the route linked via `linkToRoute()` is protected by the `#[CsrfProtection]` attribute, the CSRF token is appended to the generated URL automatically (unless you provide it yourself in the parameters).
+
+!!! note
+
+    Permission attributes (`#[CanView]`, `#[CanEdit]`, ...) on custom routes defined in a Crud Controller do not need an explicit role 
+    — they fall back to the controller's role constant (the generated one, or the one declared by the class-level `#[ForRole]` attribute), the same role the built-in CRUD actions use.
+    You only need to pass a role explicitly when the route should be guarded by a different role.
+
 ### Configuration
 
 ```php
