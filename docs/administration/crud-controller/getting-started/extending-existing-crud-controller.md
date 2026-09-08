@@ -98,13 +98,13 @@ public function configure(CrudConfig $config): void
 
 public function getAdditionalTemplateParameters(ActionType $actionType, ?Presentable $entity = null): array
 {
-    if ($actionType !== ActionType::EDIT) {
-        return [];
+    if ($actionType === ActionType::EDIT) {
+        return [
+            'orderItemsGridView' => $this->createOrderItemsGrid($entity)->createView(),
+        ];
     }
 
-    return [
-        'orderItemsGridView' => $this->createOrderItemsGrid($entity)->createView(),
-    ];
+    return [];
 }
 ```
 
