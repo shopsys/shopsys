@@ -51,7 +51,7 @@ class FlagRepository
      */
     public function getByIds(array $flagIds): array
     {
-        return $this->getFlagRepository()->findBy(['id' => $flagIds], ['id' => 'asc']);
+        return $this->getFlagRepository()->findBy(['id' => $flagIds], ['id' => SortDirection::Ascending]);
     }
 
     public function getByUuid(string $uuid): Flag
@@ -70,7 +70,7 @@ class FlagRepository
      */
     public function getAll(): array
     {
-        return $this->getFlagRepository()->findBy([], ['id' => 'asc']);
+        return $this->getFlagRepository()->findBy([], ['id' => SortDirection::Ascending]);
     }
 
     /**

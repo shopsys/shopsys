@@ -49,7 +49,7 @@ class BrandRepository
      */
     public function getAll(): array
     {
-        return $this->getBrandRepository()->findBy([], ['name' => 'asc']);
+        return $this->getBrandRepository()->findBy([], ['name' => SortDirection::Ascending]);
     }
 
     public function getOneByUuid(string $uuid): Brand

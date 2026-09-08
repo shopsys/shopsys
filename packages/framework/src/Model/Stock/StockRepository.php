@@ -72,7 +72,7 @@ class StockRepository
      */
     public function getAllStocks(): array
     {
-        return $this->getStockRepository()->findBy([], ['position' => 'ASC']);
+        return $this->getStockRepository()->findBy([], ['position' => SortDirection::Ascending]);
     }
 
     public function getAllStocksQueryBuilder(): QueryBuilder

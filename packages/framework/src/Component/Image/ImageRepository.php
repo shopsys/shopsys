@@ -29,8 +29,8 @@ class ImageRepository
                 'type' => $type,
             ],
             [
-                'position' => 'asc',
-                'id' => 'asc',
+                'position' => SortDirection::Ascending,
+                'id' => SortDirection::Ascending,
             ],
         );
     }

@@ -161,6 +161,6 @@ class GiftPlanRepository
      */
     public function findByGiftProductId(int $giftProductId): array
     {
-        return $this->getRepository()->findBy(['giftProduct' => $giftProductId], ['id' => 'ASC']);
+        return $this->getRepository()->findBy(['giftProduct' => $giftProductId], ['id' => SortDirection::Ascending]);
     }
 }

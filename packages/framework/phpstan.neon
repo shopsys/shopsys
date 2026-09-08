@@ -8,6 +8,11 @@ parameters:
         -
             message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/src/*
+        # doctrine/orm accepts SortDirection in findBy()/findOneBy() ordering since 3.7 but still declares the parameter as array<string, string>
+        -
+            message: '#^Parameter \#2 \$orderBy of method Doctrine\\ORM\\EntityRepository<.+>::find(One)?By\(\) expects array<string, string>\|null, array<string, SortDirection::(Ascending|Descending)> given\.$#'
+            identifier: argument.type
+            path: %currentWorkingDirectory%/src/*
         -
             identifier: trait.unused
             path: %currentWorkingDirectory%/src/DependencyInjection/SetterInjectionTrait.php

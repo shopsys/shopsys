@@ -330,7 +330,7 @@ class ParameterRepository
         }
 
         $parametersByUuid = [];
-        $parameters = $this->getParameterRepository()->findBy(['uuid' => $uuids], ['orderingPriority' => 'DESC']);
+        $parameters = $this->getParameterRepository()->findBy(['uuid' => $uuids], ['orderingPriority' => SortDirection::Descending]);
 
         foreach ($parameters as $parameter) {
             $parametersByUuid[$parameter->getUuid()] = $parameter;

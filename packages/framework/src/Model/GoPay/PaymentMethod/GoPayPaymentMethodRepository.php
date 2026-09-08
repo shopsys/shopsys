@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwift;
+use SortDirection;
 
 class GoPayPaymentMethodRepository
 {
@@ -25,7 +26,7 @@ class GoPayPaymentMethodRepository
      */
     public function getAll(): array
     {
-        return $this->getPaymentMethodRepository()->findBy([], ['available' => 'desc']);
+        return $this->getPaymentMethodRepository()->findBy([], ['available' => SortDirection::Descending]);
     }
 
     /**

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Category\TopCategory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use SortDirection;
 
 class TopCategoryRepository
 {
@@ -27,6 +28,6 @@ class TopCategoryRepository
      */
     public function getAllByDomainId(int $domainId): array
     {
-        return $this->getTopCategoryRepository()->findBy(['domainId' => $domainId], ['position' => 'ASC']);
+        return $this->getTopCategoryRepository()->findBy(['domainId' => $domainId], ['position' => SortDirection::Ascending]);
     }
 }

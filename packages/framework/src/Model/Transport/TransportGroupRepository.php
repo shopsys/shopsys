@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportGroupNotFoundException;
+use SortDirection;
 
 class TransportGroupRepository
 {
@@ -30,6 +31,6 @@ class TransportGroupRepository
      */
     public function getAll(): array
     {
-        return $this->em->getRepository(TransportGroup::class)->findBy([], ['position' => 'asc']);
+        return $this->em->getRepository(TransportGroup::class)->findBy([], ['position' => SortDirection::Ascending]);
     }
 }

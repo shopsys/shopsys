@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
+use SortDirection;
 
 class OrderStatusRepository
 {
@@ -94,7 +95,7 @@ class OrderStatusRepository
      */
     public function getAll(): array
     {
-        return $this->getOrderStatusRepository()->findBy([], ['id' => 'asc']);
+        return $this->getOrderStatusRepository()->findBy([], ['id' => SortDirection::Ascending]);
     }
 
     /**

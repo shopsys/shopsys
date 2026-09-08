@@ -47,7 +47,7 @@ class ProductAccessoryRepository
      */
     public function getAllByProduct(Product $product): array
     {
-        return $this->getProductAccessoryRepository()->findBy(['product' => $product], ['position' => 'asc']);
+        return $this->getProductAccessoryRepository()->findBy(['product' => $product], ['position' => SortDirection::Ascending]);
     }
 
     protected function getAllOfferedAccessoriesByProductQueryBuilder(

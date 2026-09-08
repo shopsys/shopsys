@@ -48,6 +48,11 @@ parameters:
         -
             message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/packages/framework/*
+        # doctrine/orm accepts SortDirection in findBy()/findOneBy() ordering since 3.7 but still declares the parameter as array<string, string>
+        -
+            message: '#^Parameter \#2 \$orderBy of method Doctrine\\ORM\\EntityRepository<.+>::find(One)?By\(\) expects array<string, string>\|null, array<string, SortDirection::(Ascending|Descending)> given\.$#'
+            identifier: argument.type
+            path: %currentWorkingDirectory%/packages/framework/*
         # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base
         -
             message: '#^Service "test.service_container" is not registered in the container.$#'

@@ -10,6 +10,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
+use SortDirection;
 
 class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
 {
@@ -48,8 +49,8 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
                 'type' => $type,
             ],
             [
-                'position' => 'asc',
-                'id' => 'asc',
+                'position' => SortDirection::Ascending,
+                'id' => SortDirection::Ascending,
             ],
         );
     }

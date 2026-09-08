@@ -53,7 +53,7 @@ class ProductListRepository
             $criteria['uuid'] = $uuid;
         }
 
-        return $this->getRepository()->findOneBy($criteria, ['createdAt' => 'asc']);
+        return $this->getRepository()->findOneBy($criteria, ['createdAt' => SortDirection::Ascending]);
     }
 
     /**
