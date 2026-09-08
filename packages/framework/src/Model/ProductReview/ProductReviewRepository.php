@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\ProductReview\Exception\ProductReviewNotFoundException;
+use SortDirection;
 
 class ProductReviewRepository
 {
@@ -59,8 +60,8 @@ class ProductReviewRepository
             ->andWhere('p = :mainProduct OR p.mainVariant = :mainProduct')
             ->andWhere(sprintf('EXISTS (%s)', $visibleProductSubquery->getDQL()))
             ->setParameter('mainProduct', $mainProduct)
-            ->orderBy('pr.createdAt', 'DESC')
-            ->addOrderBy('pr.id', 'DESC')
+            ->orderBy('pr.createdAt', SortDirection::Descending)
+            ->addOrderBy('pr.id', SortDirection::Descending)
             ->getQuery()
             ->getResult();
     }
@@ -77,8 +78,8 @@ class ProductReviewRepository
         int $offset,
     ): array {
         return $this->createCustomerUserQueryBuilder($customerUser, $domainId, $productIds)
-            ->orderBy('pr.createdAt', 'DESC')
-            ->addOrderBy('pr.id', 'DESC')
+            ->orderBy('pr.createdAt', SortDirection::Descending)
+            ->addOrderBy('pr.id', SortDirection::Descending)
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()

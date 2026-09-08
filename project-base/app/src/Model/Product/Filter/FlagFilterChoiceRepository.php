@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository as BaseFlagFilterChoiceRepository;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use SortDirection;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
@@ -116,7 +117,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->andWhere($flagsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), SortDirection::Ascending)
             ->setParameter('locale', $locale);
 
         foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {

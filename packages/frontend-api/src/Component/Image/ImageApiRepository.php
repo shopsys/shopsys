@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Image;
+use SortDirection;
 
 class ImageApiRepository
 {
@@ -72,8 +73,8 @@ class ImageApiRepository
             ->createQueryBuilder('i')
             ->andWhere('i.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('i.entityId IN (:entities)')->setParameter('entities', $entityIds)
-            ->addOrderBy('i.position', 'asc')
-            ->addOrderBy('i.id', 'asc');
+            ->addOrderBy('i.position', SortDirection::Ascending)
+            ->addOrderBy('i.id', SortDirection::Ascending);
 
         if ($type === null) {
             $queryBuilder->andWhere('i.type IS NULL');

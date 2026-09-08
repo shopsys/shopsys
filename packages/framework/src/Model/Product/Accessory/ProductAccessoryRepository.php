@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use SortDirection;
 
 class ProductAccessoryRepository
 {
@@ -63,7 +64,7 @@ class ProductAccessoryRepository
         );
         $queryBuilder
             ->setParameter('product', $product)
-            ->orderBy('pa.position', 'ASC');
+            ->orderBy('pa.position', SortDirection::Ascending);
 
         return $queryBuilder;
     }

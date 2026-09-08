@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundE
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
+use SortDirection;
 
 class ParameterRepository
 {
@@ -120,7 +121,7 @@ class ParameterRepository
             ->addSelect('pt')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $locale)
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), SortDirection::Ascending)
             ->getQuery()
             ->getResult();
     }
@@ -191,10 +192,10 @@ class ParameterRepository
             ->join('ppv.value', 'pv')
             ->leftJoin('p.group', 'pg')
             ->where('ppv.product = :product_id')
-            ->orderBy('CASE WHEN pg.position IS NULL THEN 1 ELSE 0 END', 'DESC')
-            ->addOrderBy('pg.position', 'ASC')
-            ->addOrderBy('p.id', 'ASC')
-            ->addOrderBy('pv.locale', 'ASC')
+            ->orderBy('CASE WHEN pg.position IS NULL THEN 1 ELSE 0 END', SortDirection::Descending)
+            ->addOrderBy('pg.position', SortDirection::Ascending)
+            ->addOrderBy('p.id', SortDirection::Ascending)
+            ->addOrderBy('pv.locale', SortDirection::Ascending)
             ->addOrderBy('IDENTITY(p.group)')
             ->setParameter('product_id', $product->getId());
     }
@@ -213,8 +214,8 @@ class ParameterRepository
             ->andWhere('pt.locale = :locale')
             ->setParameter('product_id', $product->getId())
             ->setParameter('locale', $locale)
-            ->orderBy('p.orderingPriority', 'DESC')
-            ->addOrderBy('pg.position', 'ASC')
+            ->orderBy('p.orderingPriority', SortDirection::Descending)
+            ->addOrderBy('pg.position', SortDirection::Ascending)
             ->addOrderBy('pt.name');
     }
 
@@ -370,8 +371,8 @@ class ParameterRepository
             ->where('p.id IN (:parameterIds)')
             ->setParameter('parameterIds', $parameterIds)
             ->setParameter('locale', $locale)
-            ->orderBy('p.orderingPriority', 'DESC')
-            ->addOrderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), 'asc');
+            ->orderBy('p.orderingPriority', SortDirection::Descending)
+            ->addOrderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), SortDirection::Ascending);
 
         return $parametersQueryBuilder->getQuery()->getResult();
     }
@@ -559,7 +560,7 @@ class ParameterRepository
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
             ->where('p.parameterType != :parameterType')
             ->setParameter('parameterType', Parameter::PARAMETER_TYPE_SLIDER)
-            ->orderBy('p.orderingPriority', 'DESC');
+            ->orderBy('p.orderingPriority', SortDirection::Descending);
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
 
@@ -613,7 +614,7 @@ class ParameterRepository
             ->setParameter('uuids', $uuids);
 
         if ($entityName === Parameter::class) {
-            $queryBuilder->orderBy('p.orderingPriority', 'DESC');
+            $queryBuilder->orderBy('p.orderingPriority', SortDirection::Descending);
         }
 
         $idsIndexedByUuids = [];
@@ -644,7 +645,7 @@ class ParameterRepository
         return $this->em->createQueryBuilder()
             ->select('pg')
             ->from(ParameterGroup::class, 'pg')
-            ->orderBy('pg.position', 'ASC')
+            ->orderBy('pg.position', SortDirection::Ascending)
             ->getQuery()
             ->getResult();
     }
@@ -657,7 +658,7 @@ class ParameterRepository
             ->join('pg.translations', 'pgt')
             ->where('pgt.locale = :locale')
             ->setParameter('locale', $locale)
-            ->orderBy('pg.position', 'ASC');
+            ->orderBy('pg.position', SortDirection::Ascending);
     }
 
     public function existsParameterGroupByName(
@@ -723,9 +724,9 @@ class ParameterRepository
             ->leftJoin('pu.translations', 'put', Join::WITH, 'put.locale = :locale AND put.name IS NOT NULL')
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->where('ppv.product IN (:products)')
-            ->orderBy('group_position', 'ASC')
-            ->addOrderBy('ordering_priority', 'DESC')
-            ->addOrderBy($collatedParameterName, 'ASC')
+            ->orderBy('group_position', SortDirection::Ascending)
+            ->addOrderBy('ordering_priority', SortDirection::Descending)
+            ->addOrderBy($collatedParameterName, SortDirection::Ascending)
             ->setParameter('products', $products)
             ->setParameter('locale', $locale)
             ->getQuery()

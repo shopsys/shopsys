@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use SortDirection;
 
 class ComplaintRepository
 {
@@ -29,8 +30,8 @@ class ComplaintRepository
         ComplaintFilter $filter,
     ): array {
         $queryBuilder = $this->createCustomerUserComplaintsQueryBuilder($customerUser)
-            ->orderBy('c.createdAt', 'DESC')
-            ->addOrderBy('c.id', 'DESC')
+            ->orderBy('c.createdAt', SortDirection::Descending)
+            ->addOrderBy('c.id', SortDirection::Descending)
             ->setMaxResults($limit)
             ->setFirstResult($offset);
 
@@ -49,8 +50,8 @@ class ComplaintRepository
         ComplaintFilter $filter,
     ): array {
         $queryBuilder = $this->createCustomerComplaintsQueryBuilder($customer)
-            ->orderBy('c.createdAt', 'DESC')
-            ->addOrderBy('c.id', 'DESC')
+            ->orderBy('c.createdAt', SortDirection::Descending)
+            ->addOrderBy('c.id', SortDirection::Descending)
             ->setMaxResults($limit)
             ->setFirstResult($offset);
 

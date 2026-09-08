@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
+use SortDirection;
 
 class OrderRepository
 {
@@ -69,7 +70,7 @@ class OrderRepository
         }
 
         return $queryBuilder
-            ->orderBy('o.createdAt', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()
@@ -141,8 +142,8 @@ class OrderRepository
         $queryBuilder = $this->createOrderQueryBuilder()
             ->andWhere('o.customer = :customer')
             ->setParameter('customer', $customer)
-            ->orderBy('o.createdAt', 'DESC')
-            ->addOrderBy('o.id', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
+            ->addOrderBy('o.id', SortDirection::Descending)
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 

@@ -12,6 +12,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Model\Country\Exception\CountryNotFoundException;
+use SortDirection;
 
 class CountryRepository
 {
@@ -31,8 +32,8 @@ class CountryRepository
         return $this->getCountryRepository()->createQueryBuilder('c')
             ->join('c.domains', 'cd', Join::WITH, 'cd.domainId = :domainId')
             ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
-            ->orderBy('cd.priority', 'desc')
-            ->addOrderBy($this->orderByCollationHelper->createOrderByForLocale('ct.name', $locale), 'asc')
+            ->orderBy('cd.priority', SortDirection::Descending)
+            ->addOrderBy($this->orderByCollationHelper->createOrderByForLocale('ct.name', $locale), SortDirection::Ascending)
             ->setParameter('locale', $locale)
             ->setParameter('domainId', $domainId);
     }

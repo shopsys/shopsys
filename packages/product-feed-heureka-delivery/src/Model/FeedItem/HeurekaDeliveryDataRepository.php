@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
+use SortDirection;
 
 class HeurekaDeliveryDataRepository
 {
@@ -36,7 +37,7 @@ class HeurekaDeliveryDataRepository
             ->join('s.domains', 'sd', Join::WITH, 's.id = sd.stock AND sd.domainId = :domainId AND sd.isEnabled = TRUE')
             ->having('SUM(ps.productQuantity) > 0')
             ->groupBy('p.id')
-            ->orderBy('p.id', 'asc')
+            ->orderBy('p.id', SortDirection::Ascending)
             ->setMaxResults($maxResults);
 
         if ($lastSeekId !== null) {

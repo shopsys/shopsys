@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use SortDirection;
 
 class ProductStockRepository
 {
@@ -72,7 +73,7 @@ class ProductStockRepository
     {
         return $this->getProductStockQueryBuilderByProduct($product)
             ->join('ps.stock', 's')
-            ->orderBy('s.position', 'ASC')
+            ->orderBy('s.position', SortDirection::Ascending)
             ->getQuery()
             ->getResult();
     }

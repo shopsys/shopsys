@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
+use SortDirection;
 
 class TransportPriceRepository
 {
@@ -28,7 +29,7 @@ class TransportPriceRepository
             ->setParameter('transport', $transport)
             ->setParameter('domainId', $domainId)
             ->setParameter('cartTotalWeight', $cartTotalWeight)
-            ->orderBy('tp.maxWeight', 'ASC')
+            ->orderBy('tp.maxWeight', SortDirection::Ascending)
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

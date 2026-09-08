@@ -10,6 +10,7 @@ use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\Exception\GiftPlanNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use SortDirection;
 
 class GiftPlanRepository
 {
@@ -99,7 +100,7 @@ class GiftPlanRepository
             ->setParameter('mainProduct', $mainProduct)
             ->setParameter('now', $now)
             ->setParameter('domainId', $domainId)
-            ->orderBy('gp.id', 'ASC');
+            ->orderBy('gp.id', SortDirection::Ascending);
 
         return $qb->getQuery()->getResult();
     }
@@ -127,8 +128,8 @@ class GiftPlanRepository
             ->setParameter('mainProductIds', $mainProductIds)
             ->setParameter('domainId', $domainId)
             ->setParameter('now', $now)
-            ->orderBy('mp.id', 'ASC')
-            ->addOrderBy('gift.id', 'ASC');
+            ->orderBy('mp.id', SortDirection::Ascending)
+            ->addOrderBy('gift.id', SortDirection::Ascending);
 
         $rows = $qb->getQuery()->getArrayResult();
 

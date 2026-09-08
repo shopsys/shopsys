@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\Exception\CurrentAdministratorActivityNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
+use SortDirection;
 
 class AdministratorActivityRepository
 {
@@ -29,7 +30,7 @@ class AdministratorActivityRepository
 
         $lastActivitiesQueryBuilder
             ->where('aa.administrator = :administrator')->setParameter('administrator', $administrator)
-            ->orderBy('aa.loginTime', 'DESC')
+            ->orderBy('aa.loginTime', SortDirection::Descending)
             ->setMaxResults($maxResults);
 
         return $lastActivitiesQueryBuilder;

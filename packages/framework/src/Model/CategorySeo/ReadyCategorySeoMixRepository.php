@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use SortDirection;
 
 class ReadyCategorySeoMixRepository
 {
@@ -165,7 +166,7 @@ class ReadyCategorySeoMixRepository
             ->andWhere('rcsm.category IN(:categories)')
             ->andWhere('rcsm.domainId = :domainId')
             ->andWhere('rcsm.showInCategory = true')
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('rcsm.h1', $domainConfig->getLocale()), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('rcsm.h1', $domainConfig->getLocale()), SortDirection::Ascending)
             ->setParameter('categories', $categoryIds)
             ->setParameter('domainId', $domainConfig->getId())
             ->getQuery()

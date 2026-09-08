@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use SortDirection;
 
 class ParameterGridFactory implements GridFactoryInterface
 {
@@ -90,8 +91,8 @@ class ParameterGridFactory implements GridFactoryInterface
             ->leftJoin('p.group', 'pg')
             ->leftJoin('pg.translations', 'pgt', Join::WITH, 'pgt.locale = :locale')
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities())
-            ->orderBy('p.orderingPriority', 'DESC')
-            ->addOrderBy('pt.name', 'ASC');
+            ->orderBy('p.orderingPriority', SortDirection::Descending)
+            ->addOrderBy('pt.name', SortDirection::Ascending);
 
         foreach ($locales as $locale) {
             if ($locale !== $this->localization->getCurrentLocaleForTranslatableEntities()) {

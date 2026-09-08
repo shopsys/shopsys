@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use SortDirection;
 
 class GoogleProductRepository
 {
@@ -28,7 +29,7 @@ class GoogleProductRepository
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->leftJoin(GoogleProductDomain::class, 'gpd', Join::WITH, 'gpd.product = p AND gpd.domainId = :domainId')
             ->andWhere('gpd IS NULL OR gpd.show = TRUE')
-            ->orderBy('p.id', 'asc')
+            ->orderBy('p.id', SortDirection::Ascending)
             ->setMaxResults($maxResults);
 
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());

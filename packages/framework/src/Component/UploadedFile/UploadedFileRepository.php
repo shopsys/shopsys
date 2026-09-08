@@ -11,6 +11,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
+use SortDirection;
 
 class UploadedFileRepository implements UploadedFileRepositoryInterface
 {
@@ -39,8 +40,8 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
             ->setParameter('entityName', $entityName)
             ->andWhere('ur.entityId = :entityId')
             ->setParameter('entityId', $entityId)
-            ->addOrderBy('ur.position', 'asc')
-            ->addOrderBy('ur.id', 'asc');
+            ->addOrderBy('ur.position', SortDirection::Ascending)
+            ->addOrderBy('ur.id', SortDirection::Ascending);
 
         return $queryBuilder
             ->getQuery()
@@ -160,8 +161,8 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
             ->andWhere('ur.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('ur.type = :type')->setParameter('type', $type)
             ->andWhere('ur.entityId IN (:entities)')->setParameter('entities', $entityIds)
-            ->addOrderBy('ur.position', 'asc')
-            ->addOrderBy('u.id', 'asc');
+            ->addOrderBy('ur.position', SortDirection::Ascending)
+            ->addOrderBy('u.id', SortDirection::Ascending);
 
         if ($requiredLocale !== null) {
             $queryBuilder

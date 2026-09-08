@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Stock\StockDomain;
 use Shopsys\FrameworkBundle\Model\Watchdog\Exception\WatchdogNotFoundException;
+use SortDirection;
 
 class WatchdogRepository
 {
@@ -101,7 +102,7 @@ class WatchdogRepository
                 ->andWhere('sd.domainId = w.domainId')
                 ->groupBy('w.id')
                 ->having('SUM(ps.productQuantity) > 0')
-                ->orderBy('w.createdAt', 'DESC')
+                ->orderBy('w.createdAt', SortDirection::Descending)
                 ->setMaxResults(1);
             $result = $queryBuilder->getQuery()->getOneOrNullResult();
 

@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use SortDirection;
 
 class OrderRepository
 {
@@ -147,7 +148,7 @@ class OrderRepository
             ->join('o.status', 'os')
             ->join('os.translations', 'ost')
             ->andWhere('o.customerUser = :customerUser')
-            ->orderBy('o.createdAt', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
             ->setParameter('customerUser', $customerUser)
             ->getQuery()->getResult();
     }
@@ -162,7 +163,7 @@ class OrderRepository
             ->join('o.status', 'os')
             ->join('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
             ->andWhere('o.customer = :customer')
-            ->orderBy('o.createdAt', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
             ->setParameter('customer', $customer)
             ->setParameter('locale', $locale)
             ->setMaxResults($limit)
@@ -177,7 +178,7 @@ class OrderRepository
         return $this->getOrderListQueryBuilder()
             ->andWhere('o.domainId = :domain')
             ->andWhere('o.email = :email OR cu.email = :email')
-            ->orderBy('o.createdAt', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
             ->setParameter('email', $email)
             ->setParameter('domain', $domainId)
             ->getQuery()->getResult();

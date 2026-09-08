@@ -11,6 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
+use SortDirection;
 
 class CustomerRepository
 {
@@ -58,7 +59,7 @@ class CustomerRepository
         return
             $this->getCustomerUsersQueryBuilder($customer)
             ->select('cu')
-            ->addOrderBy('cu.lastName, cu.firstName', 'ASC')
+            ->addOrderBy('cu.lastName, cu.firstName', SortDirection::Ascending)
             ->getQuery()
             ->getResult();
     }

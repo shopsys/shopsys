@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
+use SortDirection;
 
 class AutocompleteFavoriteRepository
 {
@@ -62,7 +63,7 @@ class AutocompleteFavoriteRepository
         $queryBuilder = $this->getCategoryRepository()
             ->createQueryBuilder('afc')
             ->where('afc.domainId = :domainId')
-            ->orderBy('afc.position', 'ASC')
+            ->orderBy('afc.position', SortDirection::Ascending)
             ->setParameter('domainId', $domainId);
 
         return $queryBuilder->getQuery()->getResult();
@@ -103,7 +104,7 @@ class AutocompleteFavoriteRepository
         $queryBuilder = $this->getBrandRepository()
             ->createQueryBuilder('afb')
             ->where('afb.domainId = :domainId')
-            ->orderBy('afb.position', 'ASC')
+            ->orderBy('afb.position', SortDirection::Ascending)
             ->setParameter('domainId', $domainId);
 
         if ($limit !== null) {
@@ -148,7 +149,7 @@ class AutocompleteFavoriteRepository
         return $this->getProductRepository()
             ->createQueryBuilder('afp')
             ->where('afp.domainId = :domainId')
-            ->orderBy('afp.position', 'ASC')
+            ->orderBy('afp.position', SortDirection::Ascending)
             ->setParameter('domainId', $domainId);
     }
 }

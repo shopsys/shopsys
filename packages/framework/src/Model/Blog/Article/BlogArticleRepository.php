@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use SortDirection;
 
 class BlogArticleRepository
 {
@@ -78,7 +79,7 @@ class BlogArticleRepository
             ->from(BlogArticle::class, 'ba')
             ->join('ba.translations', 'bat', Join::WITH, 'bat.locale = :locale')
             ->setParameter('locale', $locale)
-            ->orderBy('ba.createdAt', 'DESC');
+            ->orderBy('ba.createdAt', SortDirection::Descending);
     }
 
     public function getAllBlogArticlesByLocaleQueryBuilder(string $locale): QueryBuilder
@@ -88,7 +89,7 @@ class BlogArticleRepository
             ->from(BlogArticle::class, 'ba')
             ->join('ba.translations', 'bat', Join::WITH, 'bat.locale = :locale')
             ->setParameter('locale', $locale)
-            ->orderBy('ba.createdAt', 'DESC');
+            ->orderBy('ba.createdAt', SortDirection::Descending);
     }
 
     public function getQueryBuilderForQuickSearch(
@@ -167,7 +168,7 @@ class BlogArticleRepository
     public function getAllByDomainId(int $domainId): array
     {
         return $this->getBlogArticlesByDomainIdQueryBuilder($domainId)
-            ->orderBy('ba.createdAt', 'DESC')
+            ->orderBy('ba.createdAt', SortDirection::Descending)
             ->getQuery()
             ->getResult();
     }
