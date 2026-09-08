@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterfa
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use SortDirection;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'gift_plans')]
@@ -57,7 +58,7 @@ class GiftPlan implements DomainSeparatedEntityInterface
     #[ORM\JoinColumn(name: 'gift_plan_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'main_product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToMany(targetEntity: Product::class)]
-    #[ORM\OrderBy(['id' => 'ASC'])]
+    #[ORM\OrderBy(['id' => SortDirection::Ascending])]
     protected $mainProducts;
 
     /**

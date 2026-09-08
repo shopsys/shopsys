@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryDomainNotF
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use SortDirection;
 
 /**
  * @method translation($locale = null): BlogCategoryTranslation
@@ -58,7 +59,7 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
-    #[ORM\OrderBy(['lft' => 'ASC'])]
+    #[ORM\OrderBy(['lft' => SortDirection::Ascending])]
     protected $children;
 
     /**
