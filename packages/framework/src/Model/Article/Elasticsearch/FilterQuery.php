@@ -42,6 +42,18 @@ class FilterQuery extends AbstractFilterQuery
         return $clone;
     }
 
+    public function filterByType(string $type): static
+    {
+        $clone = clone $this;
+        $clone->filters[] = [
+            'match' => [
+                'type' => $type,
+            ],
+        ];
+
+        return $clone;
+    }
+
     /**
      * @param string[] $placements
      */
