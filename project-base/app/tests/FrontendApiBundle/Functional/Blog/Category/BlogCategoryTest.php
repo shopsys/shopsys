@@ -16,6 +16,10 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogCategoryTest extends GraphQlTestCase
 {
+    private const string BLOG_CATEGORY_QUERY_PATH = __DIR__ . '/graphql/BlogCategoryQuery.graphql';
+
+    private const string BLOG_CATEGORY_ARTICLES_QUERY_PATH = __DIR__ . '/graphql/BlogCategoryArticlesQuery.graphql';
+
     private BlogCategory $blogCategory;
 
     /**
@@ -43,45 +47,14 @@ class BlogCategoryTest extends GraphQlTestCase
 
     public function testGetBlogCategoryByUuid(): void
     {
-        $uuid = $this->blogCategory->getUuid();
-        $query = '
-            query {
-                blogCategory(uuid: "' . $uuid . '") {
-                    uuid
-                    name
-                    description
-                    parent {
-                        name
-                    }
-                    children {
-                        name
-                    }
-                    seo {
-                        title
-                        metaDescription
-                        h1
-                        metaRobots
-                        canonicalUrl
-                    }
-                    link
-                    slug
-                    breadcrumb {
-                        name
-                        slug
-                    }
-                    blogCategoriesTree {
-                        name
-                        children {
-                            name
-                        }
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(self::BLOG_CATEGORY_QUERY_PATH, [
+            'uuid' => $this->blogCategory->getUuid(),
+        ]);
 
-        $arrayExpected = $this->getExpectedBlogCategoryArray();
-
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame(
+            $this->getExpectedBlogCategoryArray(),
+            $this->getResponseDataForGraphQlType($response, 'blogCategory'),
+        );
     }
 
     public function testGetBlogCategoryByUrlSlug(): void
@@ -89,114 +62,43 @@ class BlogCategoryTest extends GraphQlTestCase
         $firstSubsectionName = t('First subsection %locale%', ['%locale%' => $this->getFirstDomainLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
         $firstSubsectionSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($firstSubsectionName);
 
-        $query = '
-            query {
-                blogCategory(urlSlug: "' . $firstSubsectionSlug . '") {
-                    uuid
-                    name
-                    description
-                    parent {
-                        name
-                    }
-                    children {
-                        name
-                    }
-                    seo {
-                        title
-                        metaDescription
-                        h1
-                        metaRobots
-                        canonicalUrl
-                    }
-                    link
-                    slug
-                    breadcrumb {
-                        name
-                        slug
-                    }
-                    blogCategoriesTree {
-                        name
-                        children {
-                            name
-                        }
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(self::BLOG_CATEGORY_QUERY_PATH, [
+            'urlSlug' => $firstSubsectionSlug,
+        ]);
 
-        $arrayExpected = $this->getExpectedBlogCategoryArray();
-
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame(
+            $this->getExpectedBlogCategoryArray(),
+            $this->getResponseDataForGraphQlType($response, 'blogCategory'),
+        );
     }
 
-    public function testGetBlogCategoryArticles(): void
+    #[DataProvider('getBlogCategoryArticlesDataProvider')]
+    public function testGetBlogCategoryArticles(bool $onlyHomepageArticles): void
     {
-        $uuid = $this->blogCategory->getUuid();
-        $query = '
-            query {
-                blogCategory(uuid: "' . $uuid . '") {
-                    blogArticles(first:3) {
-                        edges {
-                            node {
-                              name
-                            }
-                        }
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(self::BLOG_CATEGORY_ARTICLES_QUERY_PATH, [
+            'uuid' => $this->blogCategory->getUuid(),
+            'first' => 3,
+            'onlyHomepageArticles' => $onlyHomepageArticles,
+        ]);
 
         $locale = $this->getFirstDomainLocale();
-        $arrayExpected = [
-            'data' => [
-                'blogCategory' => [
-                    'blogArticles' => [
-                        'edges' => [
-                            ['node' => ['name' => t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                            ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                            ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Laptop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                        ],
-                    ],
+
+        $this->assertSame([
+            'blogArticles' => [
+                'edges' => [
+                    ['node' => ['name' => t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                    ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                    ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Laptop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
                 ],
             ],
-        ];
-
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        ], $this->getResponseDataForGraphQlType($response, 'blogCategory'));
     }
 
-    public function testGetBlogCategoryArticlesForHomepage(): void
+    public static function getBlogCategoryArticlesDataProvider(): iterable
     {
-        $uuid = $this->blogCategory->getUuid();
-        $query = '
-            query {
-                blogCategory(uuid: "' . $uuid . '") {
-                    blogArticles(first:3, onlyHomepageArticles: true) {
-                        edges {
-                            node {
-                              name
-                            }
-                        }
-                    }
-                }
-            }
-        ';
+        yield 'all articles' => ['onlyHomepageArticles' => false];
 
-        $locale = $this->getFirstDomainLocale();
-        $arrayExpected = [
-            'data' => [
-                'blogCategory' => [
-                    'blogArticles' => [
-                        'edges' => [
-                            ['node' => ['name' => t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                            ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                            ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Laptop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        yield 'homepage articles only' => ['onlyHomepageArticles' => true];
     }
 
     public function testGetBlogCategoryReturnsErrorWithWrongUuid(): void
@@ -204,14 +106,9 @@ class BlogCategoryTest extends GraphQlTestCase
         $wrongUuid = '123e4567-e89b-12d3-a456-426614174000';
         $expectedErrorMessage = sprintf('No visible blog category was found by UUID "%s"', $wrongUuid);
 
-        $query = '
-            query {
-                blogCategory(uuid: "' . $wrongUuid . '") {
-                    name
-                }
-            }
-        ';
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(self::BLOG_CATEGORY_QUERY_PATH, [
+            'uuid' => $wrongUuid,
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -225,14 +122,9 @@ class BlogCategoryTest extends GraphQlTestCase
         $wrongSlug = 'wrong-slug';
         $expectedErrorMessage = sprintf('No visible blog category was found by slug "%s"', $wrongSlug);
 
-        $query = '
-            query {
-                blogCategory(urlSlug: "' . $wrongSlug . '") {
-                    name
-                }
-            }
-        ';
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(self::BLOG_CATEGORY_QUERY_PATH, [
+            'urlSlug' => $wrongSlug,
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -245,17 +137,10 @@ class BlogCategoryTest extends GraphQlTestCase
     public function testGetBlogCategoryImage(string $referenceName, ?string $expectedImage): void
     {
         $blogCategory = $this->getReference($referenceName, BlogCategory::class);
-        $query = '
-            query {
-                blogCategory(uuid: "' . $blogCategory->getUuid() . '") {
-                    mainImage {
-                        url
-                    }
-                }
-            }
-        ';
 
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/BlogCategoryMainImageQuery.graphql', [
+            'uuid' => $blogCategory->getUuid(),
+        ]);
         $data = $this->getResponseDataForGraphQlType($response, 'blogCategory');
 
         $this->assertArrayHasKey('mainImage', $data);
@@ -289,53 +174,49 @@ class BlogCategoryTest extends GraphQlTestCase
         $firstBlogCategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogCategory->getId()]);
 
         return [
-            'data' => [
-                'blogCategory' => [
-                    'uuid' => $this->blogCategory->getUuid(),
+            'uuid' => $this->blogCategory->getUuid(),
+            'name' => t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            'description' => t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            'parent' => [
+                'name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ],
+            'children' => [
+                ['name' => t('Televisions and displays', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+                ['name' => t('Audio and headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ],
+            'seo' => [
+                'title' => t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'metaDescription' => t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'h1' => t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'metaRobots' => null,
+                'canonicalUrl' => null,
+            ],
+            'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
+            'slug' => '/' . $friendlyUrl->getSlug(),
+            'breadcrumb' => [
+                [
+                    'name' => $firstBlogCategory->getName($locale),
+                    'slug' => $firstBlogCategorySlug,
+                ],
+                [
                     'name' => t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                    'description' => t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                    'parent' => [
-                        'name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                    ],
+                    'slug' => $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $this->blogCategory->getId()]),
+                ],
+            ],
+            'blogCategoriesTree' => [
+                [
+                    'name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     'children' => [
-                        ['name' => t('Televisions and displays', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-                        ['name' => t('Audio and headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-                    ],
-                    'seo' => [
-                        'title' => t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                        'metaDescription' => t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                        'h1' => t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                        'metaRobots' => null,
-                        'canonicalUrl' => null,
-                    ],
-                    'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
-                    'slug' => '/' . $friendlyUrl->getSlug(),
-                    'breadcrumb' => [
-                        [
-                            'name' => $firstBlogCategory->getName($locale),
-                            'slug' => $firstBlogCategorySlug,
-                        ],
                         [
                             'name' => t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                            'slug' => $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $this->blogCategory->getId()]),
-                        ],
-                    ],
-                    'blogCategoriesTree' => [
-                        [
-                            'name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                            'children' => [
-                                [
-                                    'name' => t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                                ], [
-                                    'name' => t('Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                                ], [
-                                    'name' => t('Product news', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                                ], [
-                                    'name' => t('Care and maintenance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                                ], [
-                                    'name' => t('Technology and trends', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                                ],
-                            ],
+                        ], [
+                            'name' => t('Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                        ], [
+                            'name' => t('Product news', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                        ], [
+                            'name' => t('Care and maintenance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                        ], [
+                            'name' => t('Technology and trends', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                         ],
                     ],
                 ],

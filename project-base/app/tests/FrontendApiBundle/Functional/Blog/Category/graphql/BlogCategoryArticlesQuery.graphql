@@ -1,0 +1,11 @@
+query BlogCategoryArticlesQuery($uuid: Uuid!, $first: Int!, $onlyHomepageArticles: Boolean = false) {
+    blogCategory(uuid: $uuid) {
+        blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {
+            edges {
+                node {
+                    name
+                }
+            }
+        }
+    }
+}
