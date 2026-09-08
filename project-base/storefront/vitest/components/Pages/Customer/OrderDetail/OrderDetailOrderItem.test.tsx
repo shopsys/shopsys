@@ -139,7 +139,7 @@ describe('OrderDetailOrderItem', () => {
             'href',
             '/purchased-voucher.pdf',
         );
-        expect(screen.getByText('Code: CAT-1')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Select code: CAT-1' })).toHaveTextContent('CAT-1');
         expect(screen.queryByRole('link', { name: 'Voucher 2' })).not.toBeInTheDocument();
     });
 });

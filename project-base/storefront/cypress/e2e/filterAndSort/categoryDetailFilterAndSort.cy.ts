@@ -187,8 +187,11 @@ describe('Product Filtering E2E Tests', () => {
                 .should('be.visible')
                 .closest('a')
                 .should('have.length', 1)
-                .and('contain.text', staticData.products.helloKitty.catnum);
-            cy.contains(staticData.products.helloKitty.catnum).should('be.visible');
+                .and('contain.text', staticData.products.helloKitty.name);
+            cy.contains('button', staticData.products.helloKitty.catnum)
+                .should('be.visible')
+                .closest('a')
+                .should('have.length', 0);
         });
         cy.getByTID([
             [TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum],
