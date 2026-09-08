@@ -5,6 +5,7 @@ StoreDecorator:
         interfaces:
             - 'Breadcrumb'
             - 'Slug'
+            - 'Seo'
         fields:
             slug:
                 type: "String!"
@@ -21,6 +22,9 @@ StoreDecorator:
             description:
                 type: "String"
                 description: "Store description"
+            seo:
+                type: "SeoAttributes!"
+                description: "SEO attributes of the store page"
             street:
                 type: "String!"
                 description: "Store address street"
