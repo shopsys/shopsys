@@ -55,9 +55,13 @@ class BlogArticleTest extends GraphQlTestCase
                     visibleOnHomepage    
                     publishDate
                     perex
-                    seoTitle
-                    seoMetaDescription
-                    seoH1
+                    seo {
+                        title
+                        metaDescription
+                        h1
+                        metaRobots
+                        canonicalUrl
+                    }
                     blogCategories {
                         name
                     }
@@ -90,9 +94,13 @@ class BlogArticleTest extends GraphQlTestCase
                     visibleOnHomepage    
                     publishDate
                     perex
-                    seoTitle
-                    seoMetaDescription
-                    seoH1
+                    seo {
+                        title
+                        metaDescription
+                        h1
+                        metaRobots
+                        canonicalUrl
+                    }
                     blogCategories {
                         name
                     }
@@ -260,6 +268,7 @@ class BlogArticleTest extends GraphQlTestCase
         $firstBlogCategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogCategory->getId()]);
 
         $description = $this->grapesJsParser->parse($this->blogArticle->getDescription($locale));
+        $seoAttributes = $this->blogArticle->getSeoAttributes(Domain::FIRST_DOMAIN_ID);
         $articleTitle = t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $firstBlogSubcategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class);
         $firstBlogSubcategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogSubcategory->getId()]);
@@ -274,9 +283,13 @@ class BlogArticleTest extends GraphQlTestCase
                     'visibleOnHomepage' => true,
                     'publishDate' => $this->blogArticle->getPublishDate(Domain::FIRST_DOMAIN_ID)->format(DATE_ATOM),
                     'perex' => $this->blogArticle->getPerex($locale),
-                    'seoTitle' => $this->blogArticle->getSeoTitle(Domain::FIRST_DOMAIN_ID),
-                    'seoMetaDescription' => $this->blogArticle->getSeoMetaDescription(Domain::FIRST_DOMAIN_ID),
-                    'seoH1' => $articleTitle,
+                    'seo' => [
+                        'title' => $seoAttributes->getTitle(),
+                        'metaDescription' => $seoAttributes->getMetaDescription(),
+                        'h1' => $articleTitle,
+                        'metaRobots' => null,
+                        'canonicalUrl' => null,
+                    ],
                     'blogCategories' => [
                         ['name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
                         ['name' => $firstBlogSubcategory->getName($locale)],
