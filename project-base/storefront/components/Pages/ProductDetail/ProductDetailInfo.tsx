@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { ProductReviewsSummaryBadge } from 'components/Blocks/ProductReviews/ProductReviewsSummaryBadge';
 import { TypeProductReviewsSummaryFragment } from 'graphql/requests/productReviews/fragments/ProductReviewsSummaryFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -43,9 +44,7 @@ export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({
                     </div>
                 )}
 
-                <span className="text-text-less">
-                    {t('Code')}: {catalogNumber}
-                </span>
+                <SelectableCode label={t('Code')} value={catalogNumber} />
             </div>
 
             <ProductReviewsSummaryBadge reviewsSummary={reviewsSummary ?? null} />
