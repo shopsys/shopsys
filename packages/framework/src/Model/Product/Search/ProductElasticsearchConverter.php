@@ -65,6 +65,8 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::SEO_H1] = $product[ProductExportFieldProvider::SEO_H1] ?? null;
         $result[ProductExportFieldProvider::SEO_TITLE] = $product[ProductExportFieldProvider::SEO_TITLE] ?? null;
         $result[ProductExportFieldProvider::SEO_META_DESCRIPTION] = $product[ProductExportFieldProvider::SEO_META_DESCRIPTION] ?? null;
+        $result[ProductExportFieldProvider::SEO_META_ROBOTS] = $product[ProductExportFieldProvider::SEO_META_ROBOTS] ?? null;
+        $result[ProductExportFieldProvider::SEO_CANONICAL_URL] = $product[ProductExportFieldProvider::SEO_CANONICAL_URL] ?? null;
         $result[ProductExportFieldProvider::HREFLANG_LINKS] = $product[ProductExportFieldProvider::HREFLANG_LINKS] ?? [];
         $result[ProductExportFieldProvider::PRODUCT_TYPE] = $product[ProductExportFieldProvider::PRODUCT_TYPE] ?? ProductTypeEnum::TYPE_BASIC;
         $result[ProductExportFieldProvider::PRIORITY_BY_PRODUCT_TYPE] = $product[ProductExportFieldProvider::PRIORITY_BY_PRODUCT_TYPE] ?? 0;
