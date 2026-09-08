@@ -10,6 +10,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\FileValidator;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -39,16 +40,27 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
             return;
         }
 
-        if ($value instanceof File === false) {
+        if (!$value instanceof File) {
             $this->context
                 ->buildViolation(t('Unsupported file type'))
                 ->addViolation();
+
+            return;
+        }
+
+        // uploads coming through the request (e.g. GraphQL FileUpload) live in the local PHP tmp dir
+        if ($value instanceof UploadedFile) {
+            $this->fileValidator->validate($value, $constraint);
+
+            return;
         }
 
         if ($this->filesystem->has($value->getPathname()) === false) {
             $this->context
                 ->buildViolation(t('File not found in main filesystem. Please try again later.'))
                 ->addViolation();
+
+            return;
         }
 
         $localPath = $this->getLocalTemporaryDirectory() . '/' . $value->getFilename();
@@ -69,6 +81,8 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
     #[Override]
     public function initialize(ExecutionContextInterface $context): void
     {
+        parent::initialize($context);
+
         $this->fileValidator->initialize($context);
     }
 }
