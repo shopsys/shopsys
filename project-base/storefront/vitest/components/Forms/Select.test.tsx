@@ -1,9 +1,9 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Select } from 'components/Forms/Select/Select';
-import { domAnimation, LazyMotion } from 'framer-motion';
+import { domAnimation, LazyMotion, MotionConfig } from 'framer-motion';
 import { StrictMode, useState } from 'react';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { renderWithTooltipProvider as render } from 'vitest/helpers/renderWithTooltipProvider';
 
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
@@ -84,24 +84,31 @@ const ColorSelect = ({ richContent = false }: { richContent?: boolean }) => {
     );
 
     return (
-        <LazyMotion features={domAnimation}>
-            {/* JSDOM does not load Tailwind; SelectList uses block! to override the animation's display: none. */}
-            <style>{'.block\\! { display: block !important; }'}</style>
-            <Select
-                activeOption={activeOption}
-                ariaLabel="Choose color"
-                label="Color"
-                options={colorOptions}
-                renderOption={richContent ? renderColor : undefined}
-                renderValue={richContent ? renderColor : undefined}
-                tid="color-select"
-                onSelectOption={setActiveOption}
-            />
-        </LazyMotion>
+        <MotionConfig transition={{ duration: 0 }}>
+            <LazyMotion features={domAnimation}>
+                {/* JSDOM does not load Tailwind; SelectList uses block! to override the animation's display: none. */}
+                <style>{'.block\\! { display: block !important; }'}</style>
+                <Select
+                    activeOption={activeOption}
+                    ariaLabel="Choose color"
+                    label="Color"
+                    options={colorOptions}
+                    renderOption={richContent ? renderColor : undefined}
+                    renderValue={richContent ? renderColor : undefined}
+                    tid="color-select"
+                    onSelectOption={setActiveOption}
+                />
+            </LazyMotion>
+        </MotionConfig>
     );
 };
 
 describe('Select content and keyboard interaction', () => {
+    beforeEach(() => {
+        // Motion restores the scroll position after measuring height; JSDOM has no scrolling implementation.
+        vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    });
+
     test.each([
         { richContent: false, selectedName: 'ColorForest', optionName: 'Forest' },
         { richContent: true, selectedName: 'Forest On request 200 Kč', optionName: 'Forest On request 200 Kč' },
