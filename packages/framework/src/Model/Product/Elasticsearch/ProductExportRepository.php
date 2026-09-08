@@ -181,6 +181,8 @@ class ProductExportRepository
             ProductExportFieldProvider::SEO_H1 => $product->getSeoH1($domainId),
             ProductExportFieldProvider::SEO_TITLE => $product->getSeoTitle($domainId),
             ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
+            ProductExportFieldProvider::SEO_META_ROBOTS => $product->getSeoAttributes($domainId)->getMetaRobots(),
+            ProductExportFieldProvider::SEO_CANONICAL_URL => $product->getSeoAttributes($domainId)->getCanonicalUrl(),
             ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
             ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsIds($product),
             ProductExportFieldProvider::ADDITIONAL_SERVICES => $this->extractAdditionalServiceIds($product, $domainId),

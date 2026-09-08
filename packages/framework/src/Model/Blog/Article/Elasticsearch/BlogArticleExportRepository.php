@@ -98,6 +98,8 @@ class BlogArticleExportRepository
             'seoTitle' => $blogArticle->getSeoTitle($domainId),
             'seoMetaDescription' => $blogArticle->getSeoMetaDescription($domainId),
             'seoH1' => $blogArticle->getSeoH1($domainId),
+            'seoMetaRobots' => $blogArticle->getSeoAttributes($domainId)->getMetaRobots(),
+            'seoCanonicalUrl' => $blogArticle->getSeoAttributes($domainId)->getCanonicalUrl(),
             'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId()),
             'categories' => array_map(fn (BlogCategory $blogCategory) => $blogCategory->getId(), $blogArticleCategories),
             'mainSlug' => $mainFriendlyUrl->getSlug(),
