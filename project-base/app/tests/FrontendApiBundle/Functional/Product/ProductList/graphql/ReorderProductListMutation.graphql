@@ -1,0 +1,6 @@
+mutation ReorderProductListMutation($uuid: Uuid!, $type: ProductListTypeEnum!, $productUuids: [Uuid!]!) {
+    ReorderProductList(input: {productListInput: {uuid: $uuid, type: $type}, productUuids: $productUuids}) {
+        uuid
+        products { id }
+    }
+}

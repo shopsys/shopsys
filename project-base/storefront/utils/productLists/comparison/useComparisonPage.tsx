@@ -3,6 +3,8 @@ import {
     ProductComparisonUndoAction,
 } from 'components/Pages/ProductComparison/ProductComparisonUndoAction';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
+import { useReorderProductListMutation } from 'graphql/requests/productLists/mutations/ReorderProductListMutation.generated';
+import { TypeProductListTypeEnum } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmSliderProductListViewEvent';
 import dynamic from 'next/dynamic';
@@ -11,6 +13,7 @@ import { toast } from 'react-toastify';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { useLatest } from 'utils/ui/useLatest';
 
@@ -22,6 +25,7 @@ const RemoveAllProductsPopup = dynamic(
 
 export const useComparisonPage = () => {
     const { t } = useTranslation();
+    const [, reorderProductListMutation] = useReorderProductListMutation();
     const emptyStateRef = useRef<HTMLDivElement>(null);
     const focusEmptyStateAfterRemoval = useRef(false);
     const undoRequests = useRef(new Map<string, (success: boolean) => void>());
@@ -51,7 +55,7 @@ export const useComparisonPage = () => {
             }
         }
     }, [products.length]);
-    
+
     useGtmSliderProductListViewEvent(comparison?.products, GtmProductListNameType.product_comparison_page);
 
     function finishUndo(uuid: string, success: boolean): void {
@@ -103,5 +107,29 @@ export const useComparisonPage = () => {
         );
     };
 
-    return { products, isLoading: isProductListFetching && !comparison, emptyStateRef, handleRemove, handleRemoveAll };
+    const saveOrder = async (productUuids: string[]): Promise<boolean> => {
+        if (!comparison) return false;
+        try {
+            const result = await reorderProductListMutation({
+                input: {
+                    productListInput: { uuid: comparison.uuid, type: TypeProductListTypeEnum.Comparison },
+                    productUuids,
+                },
+            });
+            if (!result.error && result.data?.ReorderProductList) return true;
+        } catch {
+            // Network failures must restore the last confirmed order as well.
+        }
+        showErrorMessage(t('Unable to save product order.'));
+        return false;
+    };
+
+    return {
+        saveOrder,
+        products,
+        isLoading: isProductListFetching && !comparison,
+        emptyStateRef,
+        handleRemove,
+        handleRemoveAll,
+    };
 };

@@ -12,7 +12,7 @@ import { ProductComparisonContent } from './ProductComparisonContent';
 
 export const ProductComparison: FC = () => {
     const { t } = useTranslation();
-    const { products, isLoading, emptyStateRef, handleRemove, handleRemoveAll } = useComparisonPage();
+    const { products, isLoading, emptyStateRef, handleRemove, handleRemoveAll, saveOrder } = useComparisonPage();
     const title = `${t('Product comparison')}${products.length ? ` (${products.length})` : ''}`;
 
     return (
@@ -47,7 +47,11 @@ export const ProductComparison: FC = () => {
                 {isLoading ? (
                     <SkeletonModuleComparison />
                 ) : products.length ? (
-                    <ProductComparisonContent comparedProducts={products} onRemove={handleRemove} />
+                    <ProductComparisonContent
+                        comparedProducts={products}
+                        onRemove={handleRemove}
+                        onSaveOrder={saveOrder}
+                    />
                 ) : (
                     <div data-tid={TIDs.comparison_empty_state} ref={emptyStateRef} tabIndex={-1}>
                         <PageHero

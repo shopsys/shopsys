@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\List;
 
 use DateTimeImmutable;
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\List\Exception\InvalidProductListOrderException;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductAlreadyInListException;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductNotInListException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -42,6 +44,43 @@ class ProductListFacade
         $this->entityManager->flush();
 
         return $productList;
+    }
+
+    /**
+     * @param string[] $productUuids
+     */
+    public function reorderProducts(ProductList $productList, array $productUuids): ProductList
+    {
+        return $this->entityManager->wrapInTransaction(function () use ($productList, $productUuids): ProductList {
+            $this->entityManager->lock($productList, LockMode::PESSIMISTIC_WRITE);
+            $items = $productList->getItems();
+            $itemsByProductUuid = [];
+
+            foreach ($items as $item) {
+                $itemsByProductUuid[$item->getProduct()->getUuid()] = $item;
+            }
+
+            if ($productUuids === [] || count(array_unique($productUuids)) !== count($productUuids)
+                || array_diff($productUuids, array_keys($itemsByProductUuid)) !== []) {
+                throw new InvalidProductListOrderException('Product order must contain distinct products belonging to the list.');
+            }
+
+            $orderedItems = array_map(static fn (string $uuid) => $itemsByProductUuid[$uuid], $productUuids);
+            $nextIndex = 0;
+
+            // Keep products absent from the storefront response in their existing slots.
+            foreach ($items as $position => $item) {
+                if (in_array($item->getProduct()->getUuid(), $productUuids, true)) {
+                    $orderedItems[$nextIndex++]->changePosition($position);
+                } else {
+                    $item->changePosition($position);
+                }
+            }
+
+            $productList->setUpdatedAtToNow();
+
+            return $productList;
+        });
     }
 
     /**

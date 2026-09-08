@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
+import { DragHandleIcon } from 'components/Basic/Icon/DragHandleIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
@@ -12,6 +13,7 @@ import { IconButton } from 'components/Forms/Button/IconButton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
+import { Reorder, useDragControls, useReducedMotion } from 'framer-motion';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -20,6 +22,9 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 type ProductComparisonItemProps = {
+    canReorder?: boolean;
+    onReorderEnd?: () => void;
+    onMove?: (direction: number) => void;
     product: TypeProductInProductListFragment;
     listIndex: number;
     columnIndex?: number;
@@ -29,12 +34,17 @@ type ProductComparisonItemProps = {
 
 export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
     product,
+    canReorder = false,
+    onMove,
+    onReorderEnd,
     listIndex,
     columnIndex,
     stickyTriggerId,
     toggleProductInComparison,
 }) => {
     const { t } = useTranslation();
+    const dragControls = useDragControls();
+    const reducedMotion = useReducedMotion();
     const { url } = useDomainConfig();
     const { canSeePrices } = useAuthorization();
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
@@ -50,8 +60,21 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
     };
 
     return (
-        <div
-            className="relative isolate row-span-8 grid min-w-0 grid-rows-subgrid gap-y-2 border-border-less border-l px-3 pt-4 pb-5 text-left font-normal max-md:nth-2:border-l-0 md:px-5"
+        <Reorder.Item
+            as="div"
+            value={product.uuid}
+            dragListener={false}
+            dragControls={dragControls}
+            drag={canReorder ? 'x' : false}
+            layout="position"
+            initial={false}
+            transition={reducedMotion ? { duration: 0 } : undefined}
+            animate={{ boxShadow: '0 4px 16px rgba(0, 0, 0, 0)' }}
+            onDragEnd={onReorderEnd}
+            whileDrag={{
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.12)',
+            }}
+            className="group/comparison-product relative isolate row-span-8 grid min-w-0 grid-rows-subgrid gap-y-2 border-border-less border-l bg-background-default px-3 pt-4 pb-5 text-left font-normal max-md:nth-2:border-l-0 md:px-5"
             data-tid={TIDs.comparison_product_ + product.catalogNumber}
             data-comparison-product={columnIndex}
         >
@@ -62,6 +85,31 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                     variant="gridHeader"
                 />
                 <div className="col-start-2 -mt-2 -mr-2 flex items-center gap-1">
+                    {canReorder && (
+                        <IconButton
+                            Icon={DragHandleIcon}
+                            className="cursor-grab touch-none opacity-0 focus-visible:opacity-100 active:cursor-grabbing active:opacity-100 group-hover/comparison-product:opacity-100"
+                            shape="rounded"
+                            size="small"
+                            variant="ghost"
+                            title={t('Drag to reorder')}
+                            tooltipLabel={t('Drag to reorder')}
+                            ariaLabel={t('Reorder {{ productName }}. Use left and right arrow keys.', {
+                                productName: product.fullName,
+                            })}
+                            onPointerDown={(event) => {
+                                if (event.button !== 0) return;
+                                event.currentTarget.focus({ preventScroll: true });
+                                dragControls.start(event);
+                            }}
+                            onKeyDown={(event) => {
+                                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                                    event.preventDefault();
+                                    onMove?.(event.key === 'ArrowLeft' ? -1 : 1);
+                                }
+                            }}
+                        />
+                    )}
                     <ProductWishlistButton
                         isProductInWishlist={isProductInWishlist(product.uuid)}
                         productName={product.fullName}
@@ -154,6 +202,6 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 label={t('Code')}
                 value={product.catalogNumber}
             />
-        </div>
+        </Reorder.Item>
     );
 };

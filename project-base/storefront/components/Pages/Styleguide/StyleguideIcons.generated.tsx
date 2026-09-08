@@ -22,6 +22,7 @@ import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformatio
 import { DeliveryAddressIcon } from 'components/Basic/Icon/DeliveryAddressIcon';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
+import { DragHandleIcon } from 'components/Basic/Icon/DragHandleIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { ExternalLinkIcon } from 'components/Basic/Icon/ExternalLinkIcon';
 import { EyeCrossedIcon } from 'components/Basic/Icon/EyeCrossedIcon';
@@ -152,6 +153,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <DownloadIcon className="size-10" />
                 <span className="text-center text-xs break-all">DownloadIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <DragHandleIcon className="size-10" />
+                <span className="text-center text-xs break-all">DragHandleIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <ExitIcon className="size-10" />

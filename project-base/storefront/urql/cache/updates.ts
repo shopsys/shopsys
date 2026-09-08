@@ -69,6 +69,10 @@ import {
     TypeRemoveProductListMutationVariables,
 } from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
 import {
+    TypeReorderProductListMutation,
+    TypeReorderProductListMutationVariables,
+} from 'graphql/requests/productLists/mutations/ReorderProductListMutation.generated';
+import {
     ProductListCountQueryDocument,
     TypeProductListCountQuery,
     TypeProductListCountQueryVariables,
@@ -176,6 +180,15 @@ export const cacheUpdates: UpdatesConfig = {
             cache,
         ) {
             manuallyUpdateCartQuery(cache, result.RemovePromoCodeFromCart, result.RemovePromoCodeFromCart.uuid);
+        },
+        ReorderProductList(
+            result: TypeReorderProductListMutation,
+            args: TypeReorderProductListMutationVariables,
+            cache,
+        ) {
+            if (result.ReorderProductList) {
+                manuallyUpdateProductListQuery(args.input.productListInput, result.ReorderProductList, cache);
+            }
         },
         AddProductToList(result: TypeAddProductToListMutation, args: TypeAddProductToListMutationVariables, cache) {
             manuallyUpdateProductListQuery(args.input.productListInput, result.AddProductToList, cache);

@@ -1700,6 +1700,8 @@ export type TypeMutation = {
   RemoveProductList: Maybe<TypeProductList>;
   /** Remove already used promo code from cart */
   RemovePromoCodeFromCart: TypeCart;
+  /** Updates the order of products in a product list */
+  ReorderProductList: TypeProductList;
   /** Request password recovery - email with hash will be sent */
   RequestPasswordRecovery: Scalars['String']['output'];
   /** Request access to personal data */
@@ -1889,6 +1891,11 @@ export type TypeMutationRemoveProductListArgs = {
 
 export type TypeMutationRemovePromoCodeFromCartArgs = {
   input: TypeRemovePromoCodeFromCartInput;
+};
+
+
+export type TypeMutationReorderProductListArgs = {
+  input: TypeProductListReorderInput;
 };
 
 
@@ -2935,6 +2942,12 @@ export type TypeProductListInput = {
   type: TypeProductListTypeEnum;
   /** Product list identifier */
   uuid?: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+export type TypeProductListReorderInput = {
+  productListInput: TypeProductListInput;
+  /** Distinct product UUIDs in the requested order. Products omitted from the input keep their slots. */
+  productUuids: Array<Scalars['Uuid']['input']>;
 };
 
 /** One of possible types of the product list */

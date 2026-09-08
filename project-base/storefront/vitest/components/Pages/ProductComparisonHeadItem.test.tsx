@@ -1,6 +1,7 @@
-import { screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import { PRODUCT_COMPARISON_STICKY_TRIGGER_ID } from 'components/Pages/ProductComparison/ProductComparisonHead';
 import { ProductComparisonHeadItem } from 'components/Pages/ProductComparison/ProductComparisonHeadItem';
+import { Reorder } from 'framer-motion';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import type React from 'react';
 import { describe, expect, test, vi } from 'vitest';
@@ -105,14 +106,14 @@ describe('ProductComparisonHeadItem', () => {
 
     test('shows the product rating outside the image and product name link', () => {
         render(
-            <div>
+            <Reorder.Group values={[product.uuid]} onReorder={vi.fn()}>
                 <ProductComparisonHeadItem
                     listIndex={0}
                     product={product}
                     stickyTriggerId={PRODUCT_COMPARISON_STICKY_TRIGGER_ID}
                     toggleProductInComparison={vi.fn()}
                 />
-            </div>,
+            </Reorder.Group>,
         );
 
         const productLink = screen.getByRole('link', { name: 'Go to product page of 32" Philips TV' });
@@ -136,5 +137,24 @@ describe('ProductComparisonHeadItem', () => {
         expect(within(productLink).queryByText('Code: ABC123')).not.toBeInTheDocument();
         expect(within(productLink).queryByText('4.5')).not.toBeInTheDocument();
         expect(productNameWrapper).toHaveAttribute('id', PRODUCT_COMPARISON_STICKY_TRIGGER_ID);
+    });
+    test('moves the product with arrow keys using a handle separate from its link', () => {
+        const onMove = vi.fn();
+        render(
+            <Reorder.Group values={[product.uuid]} onReorder={vi.fn()}>
+                <ProductComparisonHeadItem
+                    canReorder
+                    listIndex={0}
+                    product={product}
+                    onMove={onMove}
+                    toggleProductInComparison={vi.fn()}
+                />
+            </Reorder.Group>,
+        );
+        const handle = screen.getByRole('button', { name: /Reorder/ });
+        expect(screen.getByRole('link', { name: /Go to product page/ })).not.toContainElement(handle);
+        fireEvent.keyDown(handle, { key: 'ArrowRight' });
+        fireEvent.keyDown(handle, { key: 'ArrowLeft' });
+        expect(onMove.mock.calls).toEqual([[1], [-1]]);
     });
 });

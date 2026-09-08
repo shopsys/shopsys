@@ -55,6 +55,29 @@ class ProductListItem
     #[ORM\ManyToOne(targetEntity: ProductList::class, inversedBy: 'items', cascade: ['persist'])]
     protected $productList;
 
+    /**
+     * @var int
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'integer')]
+    protected $position = 0;
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function changePosition($position): void
+    {
+        $this->position = $position;
+    }
+
     public function __construct(ProductList $productList, Product $product)
     {
         $this->uuid = Uuid::uuid4()->toString();

@@ -3,6 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { Select } from 'components/Forms/Select/Select';
+import { m } from 'framer-motion';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { CSSProperties, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -16,15 +17,28 @@ import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 
 type ProductComparisonContentProps = {
     comparedProducts: TypeProductInProductListFragment[];
+    onSaveOrder: (uuids: string[]) => Promise<boolean>;
     onRemove: (product: TypeProductInProductListFragment) => void;
 };
 
-export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ comparedProducts, onRemove }) => {
+export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({
+    comparedProducts,
+    onRemove,
+    onSaveOrder,
+}) => {
     const { t } = useTranslation();
     const [onlyDifferences, setOnlyDifferences] = useState(false);
-    const { mobileProducts, visibleProducts, selectMobileProduct } = useComparisonProducts(comparedProducts);
+    const {
+        mobileProducts,
+        visibleProducts,
+        selectMobileProduct,
+        reorderProducts,
+        canReorder,
+        saveProductOrder,
+        parameterSourceProducts,
+    } = useComparisonProducts(comparedProducts, onSaveOrder);
     const { contentRef, handleFocusCapture } = useComparisonFocus(visibleProducts);
-    const parameters = getComparisonParameters(visibleProducts);
+    const parameters = getComparisonParameters(visibleProducts, parameterSourceProducts);
     const table = useComparisonTable(visibleProducts.length);
     const hasMultipleProducts = visibleProducts.length > 1;
     const options = comparedProducts.map((product) => ({ value: product.uuid, label: product.fullName }));
@@ -113,7 +127,8 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
                     tableFirstColumnWidth={table.tableFirstColumnWidth}
                     tableMarginLeft={table.tableMarginLeft}
                 />
-                <section
+                <m.section
+                    layoutScroll
                     aria-label={t('Compared products and parameters')}
                     className="relative overflow-x-auto overscroll-x-contain rounded-lg border border-border-less"
                     ref={table.scrollRef}
@@ -139,6 +154,10 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
                             allProducts={comparedProducts}
                             comparedProducts={visibleProducts}
                             onRemove={onRemove}
+                            onReorder={reorderProducts}
+                            onReorderEnd={saveProductOrder}
+                            canReorder={canReorder}
+                            onProductFocus={table.revealProduct}
                         />
                         {hasMultipleProducts && (
                             <tbody className="block md:table-row-group">
@@ -176,7 +195,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
                             productCount={visibleProducts.length}
                         />
                     </table>
-                </section>
+                </m.section>
             </div>
         </section>
     );

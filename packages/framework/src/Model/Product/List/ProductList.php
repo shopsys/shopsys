@@ -47,7 +47,7 @@ class ProductList
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem>
      */
     #[ORM\OneToMany(targetEntity: ProductListItem::class, mappedBy: 'productList', cascade: ['remove'])]
-    #[ORM\OrderBy(['createdAt' => SortDirection::Descending, 'id' => SortDirection::Descending])]
+    #[ORM\OrderBy(['position' => SortDirection::Ascending, 'id' => SortDirection::Descending])]
     protected $items;
 
     /**
@@ -89,6 +89,8 @@ class ProductList
     public function addItem(ProductListItem $productListItem): void
     {
         $this->setUpdatedAtToNow();
+        $positions = array_map(static fn (ProductListItem $item) => $item->getPosition(), $this->getItems());
+        $productListItem->changePosition($positions === [] ? 0 : min($positions) - 1);
         $this->items->add($productListItem);
     }
 
@@ -144,6 +146,9 @@ class ProductList
      */
     public function getItems()
     {
-        return $this->items->getValues();
+        $items = $this->items->getValues();
+        usort($items, static fn (ProductListItem $first, ProductListItem $second) => $first->getPosition() <=> $second->getPosition());
+
+        return $items;
     }
 }
