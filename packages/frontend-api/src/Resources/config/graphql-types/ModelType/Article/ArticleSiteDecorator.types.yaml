@@ -9,6 +9,7 @@ ArticleSiteDecorator:
             - 'Slug'
             - 'NotBlogArticleInterface'
             - 'ArticleInterface'
+            - 'Seo'
         fields:
             createdAt:
                 type: "DateTime!"

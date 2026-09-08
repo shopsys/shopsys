@@ -13,9 +13,13 @@ query ArticlesQuery(
                     name
                     placement
                     text
-                    seoH1
-                    seoTitle
-                    seoMetaDescription
+                    seo {
+                        title
+                        metaDescription
+                        h1
+                        metaRobots
+                        canonicalUrl
+                    }
                     slug
                     breadcrumb {
                         slug

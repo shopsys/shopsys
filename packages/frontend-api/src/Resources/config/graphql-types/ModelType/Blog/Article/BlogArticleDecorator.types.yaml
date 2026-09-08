@@ -7,6 +7,7 @@ BlogArticleDecorator:
             - 'Slug'
             - 'ArticleInterface'
             - 'Hreflang'
+            - 'Seo'
         fields:
             id:
                 type: "Int!"
@@ -35,15 +36,9 @@ BlogArticleDecorator:
             perex:
                 type: "String"
                 description: "The blog article perex"
-            seoTitle:
-                type: "String"
-                description: "The blog article SEO title"
-            seoMetaDescription:
-                type: "String"
-                description: "The blog article SEO meta description"
-            seoH1:
-                type: "String"
-                description: "The blog article SEO H1 heading"
+            seo:
+                type: "SeoAttributes!"
+                description: "SEO attributes of the blog article page"
             blogCategories:
                 type: "[BlogCategory!]!"
                 description: "The list of the blog article visible categories"
