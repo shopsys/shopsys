@@ -9,7 +9,13 @@ import { useUpdateProductListUuid } from 'utils/productLists/useUpdateProductLis
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
-export const useComparison = () => {
+type ComparisonCallbacks = {
+    onProductRemoved?: (productUuid: string) => void;
+    onProductAdded?: (productUuid: string) => void;
+    onAddProductError?: (productUuid: string) => void;
+};
+
+export const useComparison = ({ onProductRemoved, onProductAdded, onAddProductError }: ComparisonCallbacks = {}) => {
     const { t } = useTranslation();
     const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
     const {
@@ -25,11 +31,15 @@ export const useComparison = () => {
             addProductError: (productUuid) => {
                 clearProductListGtmContext(productUuid);
                 showErrorMessage(t('Unable to add product to comparison.'));
+                onAddProductError?.(productUuid);
             },
             addProductSuccess: (result, productUuid) => {
-                showSuccessMessage(t('Product added to comparison.'));
+                if (!onProductAdded) {
+                    showSuccessMessage(t('Product added to comparison.'));
+                }
                 updateComparisonUuid(result?.uuid ?? null);
                 pushAddProductListGtmEvent(productUuid);
+                onProductAdded?.(productUuid);
             },
             removeError: () => showErrorMessage(t('Unable to clean product comparison.')),
             removeSuccess: () => {
@@ -44,8 +54,11 @@ export const useComparison = () => {
                 if (!result) {
                     updateComparisonUuid(null);
                 }
-                showSuccessMessage(t('Product has been removed from your comparison.'));
+                if (!onProductRemoved) {
+                    showSuccessMessage(t('Product has been removed from your comparison.'));
+                }
                 pushRemoveProductListGtmEvent(productUuid);
+                onProductRemoved?.(productUuid);
             },
         },
     );

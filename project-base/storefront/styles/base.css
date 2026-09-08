@@ -166,6 +166,10 @@
         span {
             @apply focus-visible:outline-hidden;
         }
+
+        button svg {
+            @apply text-current!;
+        }
     }
 
     .Toastify__toast--info {

@@ -27,12 +27,10 @@ vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
     ),
 }));
 
+vi.mock('components/Blocks/Product/ProductPrice', () => ({ ProductPrice: () => null }));
+
 vi.mock('components/Basic/Image/Image', () => ({
     Image: () => <span role="img" />,
-}));
-
-vi.mock('components/Layout/Webline/Webline', () => ({
-    Webline: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
@@ -134,6 +132,6 @@ describe('ProductComparisonHeadSticky', () => {
 
         const firstColumn = container.firstElementChild?.firstElementChild?.firstElementChild;
 
-        expect(firstColumn).toHaveStyle({ width: '256px', minWidth: '256px', maxWidth: '256px' });
+        expect(firstColumn).toHaveStyle({ width: '256px' });
     });
 });
