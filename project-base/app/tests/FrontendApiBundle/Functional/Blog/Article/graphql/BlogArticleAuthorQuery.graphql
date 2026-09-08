@@ -1,0 +1,12 @@
+query BlogArticleAuthorQuery($uuid: Uuid!) {
+    blogArticle(uuid: $uuid) {
+        author {
+            name
+            jobTitle
+            description
+            mainImage {
+                url
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+query BlogArticleImagesQuery($uuid: Uuid!) {
+    blogArticle(uuid: $uuid) {
+        images {
+            url
+        }
+    }
+}
