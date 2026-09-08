@@ -56,9 +56,13 @@ class ProductSourceEqualityTest extends GraphQlTestCase
             name
             slug
             shortDescription
-            seoH1
-            seoTitle
-            seoMetaDescription
+            seo {
+                title
+                metaDescription
+                h1
+                metaRobots
+                canonicalUrl
+            }
             link
             unit {
                 name

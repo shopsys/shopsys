@@ -20,6 +20,8 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\AdditionalService\AdditionalServicesBatchLoadData;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
+use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesResult;
+use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesResultFactory;
 
 class ProductArrayFieldMapper
 {
@@ -37,6 +39,7 @@ class ProductArrayFieldMapper
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly ProductReviewApiFacade $productReviewApiFacade,
         protected readonly DataLoaderInterface $additionalServicesByIdsBatchLoader,
+        protected readonly SeoAttributesResultFactory $seoAttributesResultFactory,
     ) {
     }
 
@@ -183,19 +186,16 @@ class ProductArrayFieldMapper
         return $this->parameterWithValuesFactory->createParametersArrayFromProductArray($data);
     }
 
-    public function getSeoH1(array $data): ?string
+    public function getSeo(array $data): SeoAttributesResult
     {
-        return $data['seo_h1'];
-    }
-
-    public function getSeoTitle(array $data): ?string
-    {
-        return $data['seo_title'];
-    }
-
-    public function getSeoMetaDescription(array $data): ?string
-    {
-        return $data['seo_meta_description'];
+        return $this->seoAttributesResultFactory->create(
+            $data['seo_title'],
+            $data['seo_meta_description'],
+            $data['seo_h1'],
+            $data['seo_meta_robots'],
+            $data['seo_canonical_url'],
+            $data['description'],
+        );
     }
 
     public function getOrderingPriority(array $data): int

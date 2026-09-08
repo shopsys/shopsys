@@ -26,6 +26,8 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
+use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesResult;
+use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesResultFactory;
 
 class ProductEntityFieldMapper
 {
@@ -50,6 +52,7 @@ class ProductEntityFieldMapper
         protected readonly ProductSellableVariantsProvider $productSellableVariantsProvider,
         protected readonly ProductReviewApiFacade $productReviewApiFacade,
         protected readonly DataLoaderInterface $additionalServicesByProductIdBatchLoader,
+        protected readonly SeoAttributesResultFactory $seoAttributesResultFactory,
     ) {
     }
 
@@ -157,19 +160,12 @@ class ProductEntityFieldMapper
         return $this->parameterWithValuesFactory->createParametersArrayFromProductArray(['parameters' => $parameterValuesDataWithIcons]);
     }
 
-    public function getSeoH1(Product $product): ?string
+    public function getSeo(Product $product): SeoAttributesResult
     {
-        return $product->getSeoH1($this->domain->getId());
-    }
-
-    public function getSeoTitle(Product $product): ?string
-    {
-        return $product->getSeoTitle($this->domain->getId());
-    }
-
-    public function getSeoMetaDescription(Product $product): ?string
-    {
-        return $product->getSeoMetaDescription($this->domain->getId());
+        return $this->seoAttributesResultFactory->createFromSeoAttributes(
+            $product->getSeoAttributes($this->domain->getId()),
+            $product->getDescription($this->domain->getId()),
+        );
     }
 
     public function getOrderingPriority(Product $product): int

@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper as BaseProductEntityFieldMapper;
+use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesResultFactory;
 
 /**
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -35,9 +36,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo getAvailability(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getAccessoriesPromise(\App\Model\Product\Product $product)
  * @method string|null getDescription(\App\Model\Product\Product $product)
- * @method string|null getSeoH1(\App\Model\Product\Product $product)
- * @method string|null getSeoTitle(\App\Model\Product\Product $product)
- * @method string|null getSeoMetaDescription(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesResult getSeo(\App\Model\Product\Product $product)
  * @method int getOrderingPriority(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[] getHreflangLinks(\App\Model\Product\Product $product)
  * @method bool isVisible(\App\Model\Product\Product $product)
@@ -93,6 +92,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductSellableVariantsProvider $productSellableVariantsProvider,
         ProductReviewApiFacade $productReviewApiFacade,
         DataLoaderInterface $additionalServicesByProductIdBatchLoader,
+        SeoAttributesResultFactory $seoAttributesResultFactory,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
@@ -118,6 +118,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productSellableVariantsProvider,
             $productReviewApiFacade,
             $additionalServicesByProductIdBatchLoader,
+            $seoAttributesResultFactory,
         );
     }
 
