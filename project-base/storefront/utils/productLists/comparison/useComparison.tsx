@@ -1,3 +1,4 @@
+import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -11,7 +12,7 @@ import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type ComparisonCallbacks = {
     onProductRemoved?: (productUuid: string) => void;
-    onProductAdded?: (productUuid: string) => void;
+    onProductAdded?: (productUuid: string, productList: TypeProductListFragment | null | undefined) => void;
     onAddProductError?: (productUuid: string) => void;
 };
 
@@ -39,7 +40,7 @@ export const useComparison = ({ onProductRemoved, onProductAdded, onAddProductEr
                 }
                 updateComparisonUuid(result?.uuid ?? null);
                 pushAddProductListGtmEvent(productUuid);
-                onProductAdded?.(productUuid);
+                onProductAdded?.(productUuid, result);
             },
             removeError: () => showErrorMessage(t('Unable to clean product comparison.')),
             removeSuccess: () => {

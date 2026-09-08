@@ -1754,6 +1754,8 @@ export type TypeMutation = {
   LoginViaExchangeToken: TypeToken;
   /** Logout user */
   Logout: Scalars['Boolean']['output'];
+  /** Moves a product to another position in a product list */
+  MoveProductInList: TypeProductList;
   /** Subscribe for e-mail newsletter */
   NewsletterSubscribe: Scalars['Boolean']['output'];
   /** Request withdrawal from contract for an order */
@@ -1905,6 +1907,11 @@ export type TypeMutationLoginArgs = {
 
 export type TypeMutationLoginViaExchangeTokenArgs = {
   exchangeToken: Scalars['String']['input'];
+};
+
+
+export type TypeMutationMoveProductInListArgs = {
+  input: TypeProductListMoveProductInput;
 };
 
 
@@ -3064,6 +3071,14 @@ export type TypeProductListInput = {
   type: TypeProductListTypeEnum;
   /** Product list identifier */
   uuid?: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+export type TypeProductListMoveProductInput = {
+  /** Product after which the moved product is placed, null moves it to the top */
+  afterProductUuid?: InputMaybe<Scalars['Uuid']['input']>;
+  productListInput: TypeProductListInput;
+  /** Product to move */
+  productUuid: Scalars['Uuid']['input'];
 };
 
 /** One of possible types of the product list */

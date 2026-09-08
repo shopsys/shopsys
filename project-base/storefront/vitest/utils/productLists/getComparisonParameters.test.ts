@@ -48,4 +48,37 @@ describe('getComparisonParameters', () => {
         expect(result[0].isDifferent).toBe(false);
         expect(getComparisonParameters([])).toEqual([]);
     });
+    test('keeps parameter and group order while moving values with reordered products', () => {
+        const phone = product([parameter('bluetooth', ['Yes'], 'Bluetooth'), parameter('warranty', ['1'], 'Warranty')]);
+        const camera = product([
+            { ...parameter('color', ['Black'], 'Color'), group: null },
+            parameter('warranty', ['5'], 'Warranty'),
+        ]);
+        const original = getComparisonParameters([phone, camera]);
+        const reordered = getComparisonParameters([camera, phone], [phone, camera]);
+
+        expect(reordered.map(({ uuid, group }) => ({ uuid, group }))).toEqual(
+            original.map(({ uuid, group }) => ({ uuid, group })),
+        );
+        expect(reordered.map(({ values }) => values)).toEqual([
+            [null, ['Yes']],
+            [['5'], ['1']],
+            [['Black'], null],
+        ]);
+        expect(reordered.map(({ isDifferent }) => isDifferent)).toEqual(original.map(({ isDifferent }) => isDifferent));
+    });
+
+    test('only shows parameters belonging to the visible pair, in the original order', () => {
+        const hidden = product([parameter('screen', ['27'], 'Screen')]);
+        const phone = product([parameter('bluetooth', ['Yes'], 'Bluetooth')]);
+        const camera = product([parameter('color', ['Black'], 'Color')]);
+
+        const result = getComparisonParameters([camera, phone], [hidden, phone, camera]);
+
+        expect(result.map(({ uuid }) => uuid)).toEqual(['bluetooth', 'color']);
+        expect(result.map(({ values }) => values)).toEqual([
+            [null, ['Yes']],
+            [['Black'], null],
+        ]);
+    });
 });

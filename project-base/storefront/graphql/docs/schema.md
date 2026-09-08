@@ -169,6 +169,7 @@
     * [PhoneDataInput](#phonedatainput)
     * [ProductFilter](#productfilter)
     * [ProductListInput](#productlistinput)
+    * [ProductListMoveProductInput](#productlistmoveproductinput)
     * [ProductListUpdateInput](#productlistupdateinput)
     * [ProductQuestionInput](#productquestioninput)
     * [ProductReviewInput](#productreviewinput)
@@ -1874,6 +1875,20 @@ Exchange one-time token for access and refresh tokens
 Logout user
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mutation.moveproductinlist">MoveProductInList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a>!</td>
+<td>
+
+Moves a product to another position in a product list
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistmoveproductinput">ProductListMoveProductInput</a>!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="mutation.newslettersubscribe">NewsletterSubscribe</strong></td>
@@ -14705,6 +14720,43 @@ Product list type
 <td>
 
 Product list identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductListMoveProductInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistmoveproductinput.afterproductuuid">afterProductUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Product after which the moved product is placed, null moves it to the top
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistmoveproductinput.productlistinput">productListInput</strong></td>
+<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistmoveproductinput.productuuid">productUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Product to move
 
 </td>
 </tr>

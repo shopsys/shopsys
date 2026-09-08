@@ -1,6 +1,7 @@
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { UndoIcon } from 'components/Basic/Icon/UndoIcon';
 import { Button } from 'components/Forms/Button/Button';
+import { TIDs } from 'cypress/tids';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -64,6 +65,7 @@ export const ProductComparisonUndoAction: FC<{ onUndo: () => Promise<boolean> }>
                 className="text-text-default hover:text-text-default active:text-text-default"
                 disabled={pending}
                 size="small"
+                tid={TIDs.comparison_undo_button}
                 variant="tertiary"
                 onClick={handleUndo}
             >

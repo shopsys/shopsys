@@ -1,0 +1,4 @@
+ProductListMoveProductInput:
+    type: input-object
+    inherits:
+        - 'ProductListMoveProductInputDecorator'

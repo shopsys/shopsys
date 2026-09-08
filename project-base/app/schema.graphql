@@ -1529,6 +1529,8 @@ type Mutation {
   LoginViaExchangeToken(exchangeToken: String!): Token!
   "Logout user"
   Logout: Boolean!
+  "Moves a product to another position in a product list"
+  MoveProductInList(input: ProductListMoveProductInput!): ProductList!
   "Subscribe for e-mail newsletter"
   NewsletterSubscribe(input: NewsletterSubscriptionDataInput!): Boolean!
   "Request withdrawal from contract for an order"
@@ -2543,6 +2545,14 @@ input ProductListInput {
   type: ProductListTypeEnum!
   "Product list identifier"
   uuid: Uuid = null
+}
+
+input ProductListMoveProductInput {
+  "Product after which the moved product is placed, null moves it to the top"
+  afterProductUuid: Uuid
+  productListInput: ProductListInput!
+  "Product to move"
+  productUuid: Uuid!
 }
 
 "One of possible types of the product list"

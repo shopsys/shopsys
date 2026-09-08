@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\List;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -53,7 +54,16 @@ class ProductListItem
     #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'product_list_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: ProductList::class, inversedBy: 'items', cascade: ['persist'])]
+    #[Gedmo\SortableGroup]
     protected $productList;
+
+    /**
+     * @var int
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\SortablePosition]
+    protected $position;
 
     public function __construct(ProductList $productList, Product $product)
     {
@@ -61,6 +71,23 @@ class ProductListItem
         $this->productList = $productList;
         $this->product = $product;
         $this->createdAt = new DatePoint();
+        $this->position = 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position): void
+    {
+        $this->position = $position;
     }
 
     /**

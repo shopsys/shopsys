@@ -9,10 +9,20 @@ export type ComparisonParameter = {
     isDifferent: boolean;
 };
 
-export const getComparisonParameters = (products: TypeProductInProductListFragment[]): ComparisonParameter[] => {
+export const getComparisonParameters = (
+    products: TypeProductInProductListFragment[],
+    parameterSourceProducts: TypeProductInProductListFragment[] = products,
+): ComparisonParameter[] => {
+    const visibleParameterUuids = new Set(
+        products.flatMap((product) => product.parameters.map((parameter) => parameter.uuid)),
+    );
     const parameters = new Map<string, TypeProductInProductListFragment['parameters'][number]>();
-    products.forEach((product) => {
-        product.parameters.forEach((parameter) => parameters.set(parameter.uuid, parameter));
+    parameterSourceProducts.forEach((product) => {
+        product.parameters.forEach((parameter) => {
+            if (visibleParameterUuids.has(parameter.uuid)) {
+                parameters.set(parameter.uuid, parameter);
+            }
+        });
     });
 
     return Array.from(parameters.values()).map((parameter) => {

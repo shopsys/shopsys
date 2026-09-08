@@ -3,10 +3,13 @@ import {
     addProductToComparisonFromListing,
     checkComparisonIsEmpty,
     checkComparisonProductCount,
+    checkComparisonProductOrder,
     checkComparisonToastVisible,
     closeComparisonToast,
+    moveComparisonProductLeft,
     removeAllFromComparison,
     removeProductFromComparison,
+    undoComparisonProductRemoval,
     visitComparisonPage,
 } from './comparisonSupport';
 import { staticData } from 'fixtures/demodata';
@@ -105,6 +108,38 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
                 { tid: TIDs.footer_copyright },
             ],
         });
+    });
+
+    it('[Reorder And Undo] should preserve the restored product order after reload', () => {
+        visitEntityByUuid('category', staticData.categories.electronics.uuid);
+
+        addProductToComparisonFromListing(staticData.products.helloKitty.catnum);
+        closeComparisonToast();
+        visitEntityByUuid('product', staticData.products.a4techMouse.uuid);
+        addProductToComparisonFromDetail();
+        closeComparisonToast();
+        visitComparisonPage();
+
+        moveComparisonProductLeft(staticData.products.helloKitty.catnum);
+        checkComparisonProductOrder([
+            staticData.products.helloKitty.catnum,
+            staticData.products.a4techMouse.catnum,
+        ]);
+        cy.getByTID([
+            [TIDs.comparison_product_, staticData.products.a4techMouse.catnum],
+            TIDs.product_compare_button,
+        ]).click({ force: true });
+        undoComparisonProductRemoval();
+        checkComparisonProductOrder([
+            staticData.products.a4techMouse.catnum,
+            staticData.products.helloKitty.catnum,
+        ]);
+
+        cy.reloadAndWaitForStableAndInteractiveDOM();
+        checkComparisonProductOrder([
+            staticData.products.a4techMouse.catnum,
+            staticData.products.helloKitty.catnum,
+        ]);
     });
 
     it('[Remove All] should add products then remove all from comparison', () => {
