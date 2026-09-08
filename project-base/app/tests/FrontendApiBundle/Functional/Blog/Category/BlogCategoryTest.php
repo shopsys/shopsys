@@ -56,9 +56,13 @@ class BlogCategoryTest extends GraphQlTestCase
                     children {
                         name
                     }
-                    seoTitle
-                    seoH1
-                    seoMetaDescription
+                    seo {
+                        title
+                        metaDescription
+                        h1
+                        metaRobots
+                        canonicalUrl
+                    }
                     link
                     slug
                     breadcrumb {
@@ -97,9 +101,13 @@ class BlogCategoryTest extends GraphQlTestCase
                     children {
                         name
                     }
-                    seoTitle
-                    seoH1
-                    seoMetaDescription
+                    seo {
+                        title
+                        metaDescription
+                        h1
+                        metaRobots
+                        canonicalUrl
+                    }
                     link
                     slug
                     breadcrumb {
@@ -293,9 +301,13 @@ class BlogCategoryTest extends GraphQlTestCase
                         ['name' => t('Televisions and displays', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
                         ['name' => t('Audio and headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
                     ],
-                    'seoTitle' => t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                    'seoH1' => t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                    'seoMetaDescription' => t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    'seo' => [
+                        'title' => t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                        'metaDescription' => t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                        'h1' => t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                        'metaRobots' => null,
+                        'canonicalUrl' => null,
+                    ],
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => '/' . $friendlyUrl->getSlug(),
                     'breadcrumb' => [
