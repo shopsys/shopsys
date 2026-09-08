@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
+use SortDirection;
 
 class ImageRepository
 {
@@ -28,8 +29,8 @@ class ImageRepository
                 'type' => $type,
             ],
             [
-                'position' => 'asc',
-                'id' => 'asc',
+                'position' => SortDirection::Ascending,
+                'id' => SortDirection::Ascending,
             ],
         );
     }
@@ -58,8 +59,8 @@ class ImageRepository
             ->leftJoin('i.translations', 'it')
             ->andWhere('i.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('i.entityId = :entityId')->setParameter('entityId', $entityId)
-            ->addOrderBy('i.position', 'asc')
-            ->addOrderBy('i.id', 'asc');
+            ->addOrderBy('i.position', SortDirection::Ascending)
+            ->addOrderBy('i.id', SortDirection::Ascending);
 
         if ($type === null) {
             $queryBuilder->andWhere('i.type IS NULL');
@@ -101,8 +102,8 @@ class ImageRepository
             ->createQueryBuilder('i')
             ->andWhere('i.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('i.entityId IN (:entities)')->setParameter('entities', $entitiesOrEntityIds)
-            ->addOrderBy('i.position', 'desc')
-            ->addOrderBy('i.id', 'desc');
+            ->addOrderBy('i.position', SortDirection::Descending)
+            ->addOrderBy('i.id', SortDirection::Descending);
 
         $imagesByEntityId = [];
 

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use SortDirection;
 
 #[ORM\Entity]
 class ExtendedDummyEntity extends DummyEntity
@@ -17,7 +18,7 @@ class ExtendedDummyEntity extends DummyEntity
      */
     #[ORM\ManyToMany(targetEntity: Flag::class)]
     #[ORM\JoinTable(name: 'dummy_flags')]
-    #[ORM\OrderBy(['id' => 'DESC'])]
+    #[ORM\OrderBy(['id' => SortDirection::Descending])]
     #[Override]
     protected Collection $flags;
 }

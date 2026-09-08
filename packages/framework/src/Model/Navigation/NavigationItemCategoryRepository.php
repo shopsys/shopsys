@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Navigation;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use SortDirection;
 
 class NavigationItemCategoryRepository
 {
@@ -26,8 +27,8 @@ class NavigationItemCategoryRepository
             ->from(NavigationItemCategory::class, 'nic')
             ->where('nic.navigationItem IN(:navigationItems)')
             ->setParameter('navigationItems', $navigationItems)
-            ->orderBy('nic.columnNumber', 'asc')
-            ->addOrderBy('nic.position', 'asc');
+            ->orderBy('nic.columnNumber', SortDirection::Ascending)
+            ->addOrderBy('nic.position', SortDirection::Ascending);
     }
 
     /**

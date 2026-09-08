@@ -39,6 +39,7 @@
         "symfony/dependency-injection": "^7.4",
         "symfony/http-foundation": "^7.4",
         "symfony/http-kernel": "^7.4",
+        "symfony/polyfill-php86": "^1.37.0",
         "symfony/routing": "^7.4"
     },
     "require-dev": {

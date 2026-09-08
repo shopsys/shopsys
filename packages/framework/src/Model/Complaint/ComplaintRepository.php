@@ -10,6 +10,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use SortDirection;
 
 class ComplaintRepository
 {
@@ -29,7 +30,7 @@ class ComplaintRepository
             ->select('bad.id')
             ->from(BillingAddress::class, 'bad')
             ->where('bad.customer = c')
-            ->orderBy('bad.id', 'ASC')
+            ->orderBy('bad.id', SortDirection::Ascending)
             ->setMaxResults(1);
 
         $queryBuilder = $this->getComplaintRepository()->createQueryBuilder('cmp');

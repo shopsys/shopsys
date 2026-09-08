@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use SortDirection;
 use Symfony\Component\Clock\DatePoint;
 
 #[AsMcpTable]
@@ -54,7 +55,7 @@ class Cart
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem>
      */
     #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'cart')]
-    #[ORM\OrderBy(['id' => 'ASC'])]
+    #[ORM\OrderBy(['id' => SortDirection::Ascending])]
     protected $items;
 
     /**
@@ -69,7 +70,7 @@ class Cart
      */
     #[ORM\JoinTable(name: 'cart_promo_codes')]
     #[ORM\ManyToMany(targetEntity: PromoCode::class)]
-    #[ORM\OrderBy(['id' => 'DESC'])]
+    #[ORM\OrderBy(['id' => SortDirection::Descending])]
     protected $promoCodes;
 
     /**

@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewStatusEnum;
+use SortDirection;
 
 #[CrudController(ProductReview::class)]
 class ProductReviewController extends AbstractCrudController
@@ -47,8 +48,8 @@ class ProductReviewController extends AbstractCrudController
     {
         $queryBuilder->addSelect('CASE WHEN o.text IS NULL OR o.text = \'\' THEN false ELSE true END as hasTextReview');
         $queryBuilder->addSelect('CASE WHEN o.status = :pendingStatus THEN 2 WHEN o.status = :approvedStatus THEN 1 ELSE 0 END AS statusPriority');
-        $queryBuilder->addOrderBy('statusPriority', 'DESC');
-        $queryBuilder->addOrderBy('createdAt', 'DESC');
+        $queryBuilder->addOrderBy('statusPriority', SortDirection::Descending);
+        $queryBuilder->addOrderBy('createdAt', SortDirection::Descending);
 
         $queryBuilder
             ->setParameter('pendingStatus', ProductReviewStatusEnum::STATUS_PENDING)

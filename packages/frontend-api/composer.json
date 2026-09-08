@@ -44,6 +44,7 @@
         "symfony/http-foundation": "^7.4",
         "symfony/http-kernel": "^7.4",
         "symfony/clock": "^7.4",
+        "symfony/polyfill-php86": "^1.37.0",
         "symfony/security-core": "^7.4",
         "symfony/security-http": "^7.4",
         "symfony/routing": "^7.4",

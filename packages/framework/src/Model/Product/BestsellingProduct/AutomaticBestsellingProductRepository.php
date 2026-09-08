@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use SortDirection;
 
 class AutomaticBestsellingProductRepository
 {
@@ -47,8 +48,8 @@ class AutomaticBestsellingProductRepository
             ->andWhere('o.domainId = :domainId')
             ->andWhere('o.createdAt >= :createdAt')
             ->setParameter('createdAt', $ordersCreatedAtLimit)
-            ->orderBy('orderCount', 'DESC')
-            ->addOrderBy('pmip.inputPrice', 'DESC')
+            ->orderBy('orderCount', SortDirection::Descending)
+            ->addOrderBy('pmip.inputPrice', SortDirection::Descending)
             ->groupBy('p.id, pmip.product, pmip.pricingGroup')
             ->setMaxResults($maxResults);
 

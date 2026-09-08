@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use SortDirection;
 use Symfony\Component\Clock\DatePoint;
 
 #[AsMcpTable]
@@ -46,7 +47,7 @@ class ProductList
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem>
      */
     #[ORM\OneToMany(targetEntity: ProductListItem::class, mappedBy: 'productList', cascade: ['remove'])]
-    #[ORM\OrderBy(['createdAt' => 'DESC', 'id' => 'DESC'])]
+    #[ORM\OrderBy(['createdAt' => SortDirection::Descending, 'id' => SortDirection::Descending])]
     protected $items;
 
     /**

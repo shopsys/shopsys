@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusNotFoundException;
+use SortDirection;
 
 class ComplaintStatusRepository
 {
@@ -72,7 +73,7 @@ class ComplaintStatusRepository
      */
     public function getAll(): array
     {
-        return $this->getComplaintStatusRepository()->findBy([], ['id' => 'asc']);
+        return $this->getComplaintStatusRepository()->findBy([], ['id' => SortDirection::Ascending]);
     }
 
     /**

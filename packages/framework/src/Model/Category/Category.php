@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryDomainNotFoundExcep
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use SortDirection;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation translation(?string $locale = null)
@@ -68,7 +69,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\Category>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
-    #[ORM\OrderBy(['lft' => 'ASC'])]
+    #[ORM\OrderBy(['lft' => SortDirection::Ascending])]
     protected $children;
 
     /**

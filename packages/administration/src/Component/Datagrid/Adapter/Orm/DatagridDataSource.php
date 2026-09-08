@@ -19,7 +19,10 @@ final class DatagridDataSource extends QueryBuilderWithRowManipulatorDataSource
         string $orderSourceColumnName,
         string $orderDirection,
     ): void {
-        $queryBuilder->orderBy(str_replace('.', '__', $orderSourceColumnName), $orderDirection);
+        $queryBuilder->orderBy(
+            str_replace('.', '__', $orderSourceColumnName),
+            $this->resolveSortDirection($orderDirection),
+        );
     }
 
     #[Override]

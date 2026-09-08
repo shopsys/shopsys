@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use SortDirection;
 
 class CustomerUserLoginTypeRepository
 {
@@ -57,7 +58,7 @@ class CustomerUserLoginTypeRepository
             ->createQueryBuilder('cult')
             ->where('cult.customerUser = :customerUser')
             ->setParameter('customerUser', $customerUser)
-            ->orderBy('cult.lastLoggedInAt', 'DESC');
+            ->orderBy('cult.lastLoggedInAt', SortDirection::Descending);
 
         if ($excludeType !== null) {
             $queryBuilder

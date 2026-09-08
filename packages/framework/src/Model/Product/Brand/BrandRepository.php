@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Search\SearchSetting;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
+use SortDirection;
 
 class BrandRepository
 {
@@ -48,7 +49,7 @@ class BrandRepository
      */
     public function getAll(): array
     {
-        return $this->getBrandRepository()->findBy([], ['name' => 'asc']);
+        return $this->getBrandRepository()->findBy([], ['name' => SortDirection::Ascending]);
     }
 
     public function getOneByUuid(string $uuid): Brand
@@ -78,7 +79,7 @@ class BrandRepository
     public function getBrandsByIds(array $brandsIds): array
     {
         $brandsQueryBuilder = $this->getBrandsByIdsQueryBuilder($brandsIds)
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()), 'asc');
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()), SortDirection::Ascending);
 
         return $brandsQueryBuilder->getQuery()->getResult();
     }

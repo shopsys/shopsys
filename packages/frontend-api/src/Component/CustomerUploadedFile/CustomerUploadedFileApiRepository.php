@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Component\CustomerUploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
+use SortDirection;
 
 class CustomerUploadedFileApiRepository
 {
@@ -28,8 +29,8 @@ class CustomerUploadedFileApiRepository
             ->createQueryBuilder('cuf')
             ->andWhere('cuf.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('cuf.entityId IN (:entities)')->setParameter('entities', $entityIds)
-            ->addOrderBy('cuf.position', 'asc')
-            ->addOrderBy('cuf.id', 'asc');
+            ->addOrderBy('cuf.position', SortDirection::Ascending)
+            ->addOrderBy('cuf.id', SortDirection::Ascending);
 
         if ($type === null) {
             $queryBuilder->andWhere('cuf.type IS NULL');

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use SortDirection;
 
 class PromoCodeMassGeneratedBatchGridFactory
 {
@@ -27,7 +28,7 @@ class PromoCodeMassGeneratedBatchGridFactory
             ->select('DISTINCT pc.massGenerateBatchId AS batchId, pc.prefix')
             ->from(PromoCode::class, 'pc')
             ->andWhere('pc.massGenerateBatchId IS NOT NULL')
-            ->orderBy('batchId', 'DESC');
+            ->orderBy('batchId', SortDirection::Descending);
 
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'pc.id');
 

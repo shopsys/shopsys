@@ -9,6 +9,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use SortDirection;
 
 class UploadedFileAdminListRepository
 {
@@ -24,7 +25,7 @@ class UploadedFileAdminListRepository
             ->from(UploadedFile::class, 'u')
             ->leftJoin('u.translations', 'ut', Join::WITH, 'ut.locale = :locale')
             ->setParameter('locale', $locale)
-            ->orderBy('u.id', 'DESC')
+            ->orderBy('u.id', SortDirection::Descending)
             ->select('u, ut');
     }
 

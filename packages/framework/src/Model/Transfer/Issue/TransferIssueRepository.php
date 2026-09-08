@@ -12,6 +12,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Transfer\Transfer;
+use SortDirection;
 
 class TransferIssueRepository
 {
@@ -54,8 +55,8 @@ class TransferIssueRepository
             ->where('ti.deletedAt IS NULL')
             ->andWhere('ti.createdAt > :fromDateTime')
             ->setParameter('fromDateTime', $fromDateTime)
-            ->orderBy('ti.createdAt', 'DESC')
-            ->addOrderBy('ti.id', 'DESC');
+            ->orderBy('ti.createdAt', SortDirection::Descending)
+            ->addOrderBy('ti.id', SortDirection::Descending);
     }
 
     public function findById(int $id): ?TransferIssue

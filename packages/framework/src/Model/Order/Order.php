@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use SortDirection;
 
 #[AsMcpTable]
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
@@ -98,7 +99,7 @@ class Order implements DomainSeparatedEntityInterface
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
      */
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist'], orphanRemoval: true)]
-    #[ORM\OrderBy(['id' => 'ASC'])]
+    #[ORM\OrderBy(['id' => SortDirection::Ascending])]
     protected $items;
 
     /**
@@ -363,7 +364,7 @@ class Order implements DomainSeparatedEntityInterface
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction>
      */
     #[ORM\OneToMany(targetEntity: PaymentTransaction::class, mappedBy: 'order', cascade: ['persist'])]
-    #[ORM\OrderBy(['id' => 'ASC'])]
+    #[ORM\OrderBy(['id' => SortDirection::Ascending])]
     protected $paymentTransactions;
 
     /**

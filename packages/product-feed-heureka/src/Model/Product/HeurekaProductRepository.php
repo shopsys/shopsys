@@ -7,6 +7,7 @@ namespace Shopsys\ProductFeed\HeurekaBundle\Model\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use SortDirection;
 
 class HeurekaProductRepository
 {
@@ -25,7 +26,7 @@ class HeurekaProductRepository
     ): iterable {
         $queryBuilder = $this->productRepository->getAllSellableWithoutInquiriesQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
-            ->orderBy('p.id', 'asc')
+            ->orderBy('p.id', SortDirection::Ascending)
             ->setMaxResults($maxResults);
 
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());

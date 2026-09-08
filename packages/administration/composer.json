@@ -37,6 +37,7 @@
         "symfony/form": "^7.4",
         "symfony/http-foundation": "^7.4",
         "symfony/http-kernel": "^7.4",
+        "symfony/polyfill-php86": "^1.37.0",
         "symfony/routing": "^7.4",
         "symfony/stimulus-bundle": "^3.0",
         "symfony/string": "^7.4",

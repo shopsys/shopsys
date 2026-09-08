@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use SortDirection;
 
 class CartRepository
 {
@@ -33,7 +34,7 @@ class CartRepository
             $criteria['cartIdentifier'] = $customerUserIdentifier->getCartIdentifier();
         }
 
-        return $this->getCartRepository()->findOneBy($criteria, ['id' => 'desc']);
+        return $this->getCartRepository()->findOneBy($criteria, ['id' => SortDirection::Descending]);
     }
 
     public function deleteOldCartsForUnregisteredCustomerUsers(int $daysLimit): void

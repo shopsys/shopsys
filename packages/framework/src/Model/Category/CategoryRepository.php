@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use SortDirection;
 
 class CategoryRepository extends NestedTreeRepository
 {
@@ -405,8 +406,8 @@ class CategoryRepository extends NestedTreeRepository
                 'pcd.category = c AND pcd.domainId = :domainId',
             )
             ->andWhere('pcd.product IN (:productIds)')
-            ->orderBy('c.level', 'DESC')
-            ->addOrderBy('c.lft', 'ASC')
+            ->orderBy('c.level', SortDirection::Descending)
+            ->addOrderBy('c.lft', SortDirection::Ascending)
             ->setParameter('productIds', $productIds)
             ->getQuery()
             ->getScalarResult();

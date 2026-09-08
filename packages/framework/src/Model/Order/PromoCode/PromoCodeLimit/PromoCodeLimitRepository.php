@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use SortDirection;
 
 class PromoCodeLimitRepository
 {
@@ -45,7 +46,7 @@ class PromoCodeLimitRepository
             ->setParameter('totalPrice', $totalPriceAmount->getAmount())
             ->andWhere('l.promoCode = :promoCode')
             ->setParameter('promoCode', $promoCode)
-            ->orderBy('l.fromPrice', 'desc')
+            ->orderBy('l.fromPrice', SortDirection::Descending)
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

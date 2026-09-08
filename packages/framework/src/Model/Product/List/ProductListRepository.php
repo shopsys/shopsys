@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use SortDirection;
 
 class ProductListRepository
 {
@@ -29,8 +30,8 @@ class ProductListRepository
             ->from(ProductListItem::class, 'pli')
             ->join('pli.product', 'p')
             ->where('pli.productList = :productList')
-            ->orderBy('pli.createdAt', 'DESC')
-            ->addOrderBy('pli.id', 'DESC')
+            ->orderBy('pli.createdAt', SortDirection::Descending)
+            ->addOrderBy('pli.id', SortDirection::Descending)
             ->setParameter('productList', $productList)
             ->getQuery()
             ->getArrayResult();
@@ -52,7 +53,7 @@ class ProductListRepository
             $criteria['uuid'] = $uuid;
         }
 
-        return $this->getRepository()->findOneBy($criteria, ['createdAt' => 'asc']);
+        return $this->getRepository()->findOneBy($criteria, ['createdAt' => SortDirection::Ascending]);
     }
 
     /**

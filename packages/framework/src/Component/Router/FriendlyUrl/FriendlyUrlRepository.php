@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Shopsys\FrameworkBundle\Model\Store\Store;
+use SortDirection;
 
 class FriendlyUrlRepository
 {
@@ -106,8 +107,8 @@ class FriendlyUrlRepository
         return $this->getFriendlyUrlRepository()->findBy(
             $criteria,
             [
-                'domainId' => 'ASC',
-                'slug' => 'ASC',
+                'domainId' => SortDirection::Ascending,
+                'slug' => SortDirection::Ascending,
             ],
         );
     }
@@ -127,8 +128,8 @@ class FriendlyUrlRepository
         return $this->getFriendlyUrlRepository()->findBy(
             $criteria,
             [
-                'domainId' => 'ASC',
-                'slug' => 'ASC',
+                'domainId' => SortDirection::Ascending,
+                'slug' => SortDirection::Ascending,
             ],
         );
     }

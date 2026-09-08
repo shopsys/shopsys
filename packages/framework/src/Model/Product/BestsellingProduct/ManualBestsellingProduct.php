@@ -41,7 +41,7 @@ class ManualBestsellingProduct implements DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: false)]
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'domains')]
+    #[ORM\ManyToOne(targetEntity: Category::class)]
     protected $category;
 
     /**

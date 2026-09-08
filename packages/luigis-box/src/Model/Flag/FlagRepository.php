@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagRepository;
+use SortDirection;
 
 class FlagRepository
 {
@@ -28,7 +29,7 @@ class FlagRepository
             ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('ft.name IN (:flagNames)')
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $this->domain->getLocale()), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $this->domain->getLocale()), SortDirection::Ascending)
             ->setParameter('flagNames', $flagNames)
             ->setParameter('locale', $this->domain->getLocale());
 

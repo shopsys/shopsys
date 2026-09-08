@@ -129,7 +129,7 @@ class CartRepository
             $criteria['cartIdentifier'] = $customerUserIdentifier->getCartIdentifier();
         }
 
-        return $this->getCartRepository()->findOneBy($criteria, ['id' => 'desc']);
+        return $this->getCartRepository()->findOneBy($criteria, ['id' => SortDirection::Descending]);
     }
 
     /**

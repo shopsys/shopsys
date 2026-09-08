@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
+use SortDirection;
 
 class CronModuleRepository
 {
@@ -91,7 +92,7 @@ class CronModuleRepository
         return $this->getCronModuleRunRepository()->createQueryBuilder('cmr')
             ->where('cmr.cronModule = :cronModule')
             ->setParameter('cronModule', $cronModule)
-            ->orderBy('cmr.startedAt', 'ASC')
+            ->orderBy('cmr.startedAt', SortDirection::Ascending)
             ->getQuery()->getResult();
     }
 
@@ -101,7 +102,7 @@ class CronModuleRepository
             ->addSelect('cmr.duration, cmr.status')
             ->where('cmr.cronModule = :cronModule')
             ->setParameter('cronModule', $cronModule)
-            ->orderBy('cmr.startedAt', 'DESC');
+            ->orderBy('cmr.startedAt', SortDirection::Descending);
     }
 
     public function deleteOldCronModuleRuns(int $numberOfDays): void

@@ -26,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use SortDirection;
 
 /**
  * Product
@@ -150,7 +151,7 @@ class Product extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Product>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'mainVariant', cascade: ['persist'])]
-    #[ORM\OrderBy(['id' => 'ASC'])]
+    #[ORM\OrderBy(['id' => SortDirection::Ascending])]
     protected $variants;
 
     /**

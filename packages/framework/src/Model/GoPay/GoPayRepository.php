@@ -10,6 +10,7 @@ use Doctrine\ORM\QueryBuilder;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
+use SortDirection;
 
 class GoPayRepository
 {
@@ -27,7 +28,7 @@ class GoPayRepository
             ->andWhere('p.type = :type')
             ->andWhere('o.createdAt >= :fromDate')
             ->andWhere('pt.externalPaymentStatus NOT IN (:paymentStatuses)')
-            ->orderBy('o.createdAt', 'ASC')
+            ->orderBy('o.createdAt', SortDirection::Ascending)
             ->setParameter('fromDate', $fromDate)
             ->setParameter('paymentStatuses', [PaymentStatus::PAID, PaymentStatus::CANCELED, PaymentStatus::TIMEOUTED])
             ->setParameter('type', PaymentTypeEnum::TYPE_GOPAY);

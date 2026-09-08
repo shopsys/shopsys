@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use SortDirection;
 
 class BrandFilterChoiceRepository
 {
@@ -82,7 +83,7 @@ class BrandFilterChoiceRepository
             ->select('b')
             ->from(Brand::class, 'b')
             ->andWhere($brandsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()), 'asc');
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()), SortDirection::Ascending);
 
         foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {
             $brandsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());

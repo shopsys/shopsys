@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
+use SortDirection;
 
 class FlagRepository
 {
@@ -50,7 +51,7 @@ class FlagRepository
      */
     public function getByIds(array $flagIds): array
     {
-        return $this->getFlagRepository()->findBy(['id' => $flagIds], ['id' => 'asc']);
+        return $this->getFlagRepository()->findBy(['id' => $flagIds], ['id' => SortDirection::Ascending]);
     }
 
     public function getByUuid(string $uuid): Flag
@@ -69,7 +70,7 @@ class FlagRepository
      */
     public function getAll(): array
     {
-        return $this->getFlagRepository()->findBy([], ['id' => 'asc']);
+        return $this->getFlagRepository()->findBy([], ['id' => SortDirection::Ascending]);
     }
 
     /**
@@ -91,7 +92,7 @@ class FlagRepository
             ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('f.id IN (:flagsIds)')
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), SortDirection::Ascending)
             ->setParameter('flagsIds', $flagsIds)
             ->setParameter('locale', $locale);
 
@@ -150,7 +151,7 @@ class FlagRepository
         $flagsQueryBuilder = $this->getVisibleQueryBuilder()
             ->addSelect('f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), SortDirection::Ascending)
             ->setParameter('locale', $locale);
 
         return $flagsQueryBuilder->getQuery()->getResult();

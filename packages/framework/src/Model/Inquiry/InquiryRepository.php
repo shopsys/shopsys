@@ -10,6 +10,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Inquiry\Exception\InquiryNotFoundException;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
+use SortDirection;
 
 class InquiryRepository
 {
@@ -46,6 +47,6 @@ class InquiryRepository
             ->leftJoin('i.product', 'p')
             ->leftJoin('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $locale)
-            ->orderBy('i.createdAt', 'DESC');
+            ->orderBy('i.createdAt', SortDirection::Descending);
     }
 }

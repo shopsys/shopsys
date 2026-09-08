@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Category\CategoryTranslation;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation;
+use SortDirection;
 
 class ReadyCategorySeoMixGridFactory
 {
@@ -67,6 +68,6 @@ class ReadyCategorySeoMixGridFactory
             ->setParameter('locale', $locale)
             ->setParameter('domainId', $domainId)
             ->setParameter('routeName', 'front_category_seo')
-            ->orderBy('rcsm.id', 'DESC');
+            ->orderBy('rcsm.id', SortDirection::Descending);
     }
 }

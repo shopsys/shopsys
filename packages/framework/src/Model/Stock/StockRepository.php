@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Stock\Exception\StockNotFoundException;
+use SortDirection;
 
 class StockRepository
 {
@@ -71,13 +72,13 @@ class StockRepository
      */
     public function getAllStocks(): array
     {
-        return $this->getStockRepository()->findBy([], ['position' => 'ASC']);
+        return $this->getStockRepository()->findBy([], ['position' => SortDirection::Ascending]);
     }
 
     public function getAllStocksQueryBuilder(): QueryBuilder
     {
         return $this->getQueryBuilder()
-            ->orderBy('s.position', 'ASC');
+            ->orderBy('s.position', SortDirection::Ascending);
     }
 
     /**

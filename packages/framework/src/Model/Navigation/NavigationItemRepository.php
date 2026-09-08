@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Navigation\Exception\NavigationItemNotFoundException;
+use SortDirection;
 
 class NavigationItemRepository
 {
@@ -44,6 +45,6 @@ class NavigationItemRepository
         return $this->em->createQueryBuilder()
             ->select('ni')
             ->from(NavigationItem::class, 'ni')
-            ->orderBy('ni.position', 'asc');
+            ->orderBy('ni.position', SortDirection::Ascending);
     }
 }

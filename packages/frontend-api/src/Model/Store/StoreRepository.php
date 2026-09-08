@@ -9,6 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\Store\Store;
+use SortDirection;
 
 class StoreRepository
 {
@@ -52,7 +53,7 @@ class StoreRepository
             ->select('s.latitude AS latitude, s.longitude AS longitude')
             ->andWhere('s.latitude IS NOT NULL')
             ->andWhere('s.longitude IS NOT NULL')
-            ->orderBy('s.position, s.id', 'ASC')
+            ->orderBy('s.position, s.id', SortDirection::Ascending)
             ->setMaxResults(1);
 
         /** @var array{latitude: string|null, longitude: string|null}|null $coordinates */
@@ -92,7 +93,7 @@ class StoreRepository
         ?int $offset = null,
     ): array {
         $queryBuilder = $this->getBasicFilteredQueryBuilder($domainId, $storesFilterOptions);
-        $queryBuilder->orderBy('s.position, s.id', 'ASC');
+        $queryBuilder->orderBy('s.position, s.id', SortDirection::Ascending);
 
         if ($storesFilterOptions->getCoordinates() !== null) {
             $coordinates = $storesFilterOptions->getCoordinates();
@@ -100,7 +101,7 @@ class StoreRepository
             $queryBuilder->addSelect('DISTANCE(s.latitude, s.longitude, :latitude, :longitude) AS distance')
                 ->setParameter('latitude', (float)$coordinates['latitude'])
                 ->setParameter('longitude', (float)$coordinates['longitude'])
-                ->orderBy('distance', 'ASC');
+                ->orderBy('distance', SortDirection::Ascending);
         }
 
         if ($limit !== null) {

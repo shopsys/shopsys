@@ -9,6 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use SortDirection;
 use Symfony\Component\Clock\DatePoint;
 
 class SpecialPriceRepository
@@ -67,11 +68,11 @@ class SpecialPriceRepository
             ->orderBy('CASE
                 WHEN :currentDate BETWEEN pl.validFrom AND pl.validTo THEN 1
                 ELSE 2
-            END', 'ASC') // Current price lists (1) are prioritized over future ones (2)
+            END', SortDirection::Ascending) // Current price lists (1) are prioritized over future ones (2)
             ->addOrderBy('CASE
                 WHEN :currentDate BETWEEN pl.validFrom AND pl.validTo THEN pl.lastUpdate ELSE :minDate
-            END', 'DESC')
-            ->addOrderBy('pl.validFrom', 'ASC') // Current sorted by lastUpdate DESC, future by validFrom ASC
+            END', SortDirection::Descending)
+            ->addOrderBy('pl.validFrom', SortDirection::Ascending) // Current sorted by lastUpdate DESC, future by validFrom ASC
             ->setParameter('minDate', new DatePoint('1970-01-01 00:00:00'));
     }
 }

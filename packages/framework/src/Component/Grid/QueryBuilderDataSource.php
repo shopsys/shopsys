@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
 use Doctrine\ORM\QueryBuilder;
+use InvalidArgumentException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
+use SortDirection;
 
 class QueryBuilderDataSource implements DataSourceInterface
 {
@@ -76,7 +78,16 @@ class QueryBuilderDataSource implements DataSourceInterface
         string $orderSourceColumnName,
         string $orderDirection,
     ): void {
-        $queryBuilder->orderBy($orderSourceColumnName, $orderDirection);
+        $queryBuilder->orderBy($orderSourceColumnName, $this->resolveSortDirection($orderDirection));
+    }
+
+    protected function resolveSortDirection(string $orderDirection): SortDirection
+    {
+        return match (strtolower($orderDirection)) {
+            DataSourceInterface::ORDER_ASC => SortDirection::Ascending,
+            DataSourceInterface::ORDER_DESC => SortDirection::Descending,
+            default => throw new InvalidArgumentException(sprintf('Invalid order direction "%s".', $orderDirection)),
+        };
     }
 
     protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, int|string $rowId): void

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use SortDirection;
 
 class OrderItemApiFacade
 {
@@ -73,8 +74,8 @@ class OrderItemApiFacade
             ->andWhere('os.productReviewsAllowed = TRUE')
             ->andWhere('oi.product = :product')
             ->setParameter('product', $product)
-            ->orderBy('o.createdAt', 'DESC')
-            ->addOrderBy('oi.id', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
+            ->addOrderBy('oi.id', SortDirection::Descending)
             ->setMaxResults(1);
     }
 
@@ -110,8 +111,8 @@ class OrderItemApiFacade
         OrderItemsFilter $filter,
     ): array {
         return $this->createCustomerUserOrderItemsLimitedListQueryBuilder($customerUser, $filter)
-            ->orderBy('o.createdAt', 'DESC')
-            ->addOrderBy('oi.id', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
+            ->addOrderBy('oi.id', SortDirection::Descending)
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
@@ -140,8 +141,8 @@ class OrderItemApiFacade
         $queryBuilder = $this->createCustomerOrderItemsLimitedListQueryBuilder($customer, $filter);
 
         return $queryBuilder
-            ->orderBy('o.createdAt', 'DESC')
-            ->addOrderBy('oi.id', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
+            ->addOrderBy('oi.id', SortDirection::Descending)
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
@@ -169,8 +170,8 @@ class OrderItemApiFacade
         OrderItemsFilter $filter,
     ): array {
         return $this->createCustomerUserOrderItemsLimitedSearchListQueryBuilder($customerUser, $search, $filter)
-            ->orderBy('o.createdAt', 'DESC')
-            ->addOrderBy('oi.id', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
+            ->addOrderBy('oi.id', SortDirection::Descending)
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
@@ -199,8 +200,8 @@ class OrderItemApiFacade
         OrderItemsFilter $filter,
     ): array {
         return $this->createCustomerOrderItemsLimitedSearchListQueryBuilder($customer, $search, $filter)
-            ->orderBy('o.createdAt', 'DESC')
-            ->addOrderBy('oi.id', 'DESC')
+            ->orderBy('o.createdAt', SortDirection::Descending)
+            ->addOrderBy('oi.id', SortDirection::Descending)
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()

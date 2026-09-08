@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use SortDirection;
 
 class LuigisBoxProductRepository
 {
@@ -30,7 +31,7 @@ class LuigisBoxProductRepository
             ->addSelect('v')->join('pd.vat', 'v')
             ->andWhere('p.variantType != :variantTypeVariant')
             ->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT)
-            ->orderBy('p.id', 'asc')
+            ->orderBy('p.id', SortDirection::Ascending)
             ->setMaxResults($maxResults);
 
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());

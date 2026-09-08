@@ -12,6 +12,7 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use SortDirection;
 
 /**
  * @method \Tests\App\Functional\EntityExtension\Model\Category\CategoryTranslation translation(?string $locale = null)
@@ -52,7 +53,7 @@ class Category extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Category\Category>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
-    #[ORM\OrderBy(['lft' => 'ASC'])]
+    #[ORM\OrderBy(['lft' => SortDirection::Ascending])]
     protected Collection $children;
 
     #[Gedmo\TreeLevel]

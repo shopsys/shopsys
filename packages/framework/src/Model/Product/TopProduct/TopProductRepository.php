@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\TopProduct;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use SortDirection;
 
 class TopProductRepository
 {
@@ -27,7 +28,7 @@ class TopProductRepository
      */
     public function getAll(int $domainId): array
     {
-        return $this->getTopProductRepository()->findBy(['domainId' => $domainId], ['position' => 'ASC']);
+        return $this->getTopProductRepository()->findBy(['domainId' => $domainId], ['position' => SortDirection::Ascending]);
     }
 
     /**

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
+use SortDirection;
 
 class StoreRepository
 {
@@ -46,7 +47,7 @@ class StoreRepository
 
     protected function getAllStoresQueryBuilder(): QueryBuilder
     {
-        return $this->getQueryBuilder()->orderBy('s.position, s.id', 'ASC');
+        return $this->getQueryBuilder()->orderBy('s.position, s.id', SortDirection::Ascending);
     }
 
     public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder

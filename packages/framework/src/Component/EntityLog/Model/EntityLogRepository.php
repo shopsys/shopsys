@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\EntityLog\Model;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use SortDirection;
 
 class EntityLogRepository
 {
@@ -26,7 +27,7 @@ class EntityLogRepository
             ->select('el')
             ->where('el.entityName = :entityName AND el.entityId = :entityId')
             ->orWhere('el.parentEntityName = :entityName AND el.parentEntityId = :entityId')
-            ->orderBy('el.id', 'desc')
+            ->orderBy('el.id', SortDirection::Descending)
             ->setParameter('entityName', $entityName)
             ->setParameter('entityId', $entityId);
     }

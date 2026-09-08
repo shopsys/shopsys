@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use SortDirection;
 use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -99,7 +100,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPinnedMenuItem>
      */
     #[ORM\OneToMany(targetEntity: AdministratorPinnedMenuItem::class, mappedBy: 'administrator', cascade: ['persist'], orphanRemoval: true)]
-    #[ORM\OrderBy(['position' => 'ASC'])]
+    #[ORM\OrderBy(['position' => SortDirection::Ascending])]
     protected $pinnedMenuItems;
 
     /**
