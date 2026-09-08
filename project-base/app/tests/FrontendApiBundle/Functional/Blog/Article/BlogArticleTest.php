@@ -17,6 +17,12 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogArticleTest extends GraphQlTestCase
 {
+    private const string BLOG_ARTICLE_QUERY_PATH = __DIR__ . '/graphql/BlogArticleQuery.graphql';
+
+    private const string BLOG_ARTICLE_IMAGES_QUERY_PATH = __DIR__ . '/graphql/BlogArticleImagesQuery.graphql';
+
+    private const string BLOG_ARTICLE_AUTHOR_QUERY_PATH = __DIR__ . '/graphql/BlogArticleAuthorQuery.graphql';
+
     /**
      * @inject
      */
@@ -44,79 +50,28 @@ class BlogArticleTest extends GraphQlTestCase
 
     public function testGetBlogArticleByUuid(): void
     {
-        $uuid = $this->blogArticle->getUuid();
-        $query = '
-            query {
-                blogArticle(uuid: "' . $uuid . '") {
-                    name
-                    uuid
-                    text
-                    createdAt
-                    visibleOnHomepage    
-                    publishDate
-                    perex
-                    seo {
-                        title
-                        metaDescription
-                        h1
-                        metaRobots
-                        canonicalUrl
-                    }
-                    blogCategories {
-                        name
-                    }
-                    link
-                    slug
-                    breadcrumb {
-                        name
-                        slug
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(self::BLOG_ARTICLE_QUERY_PATH, [
+            'uuid' => $this->blogArticle->getUuid(),
+        ]);
 
-        $arrayExpected = $this->getExpectedBlogArticleArray();
-
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame(
+            $this->getExpectedBlogArticleArray(),
+            $this->getResponseDataForGraphQlType($response, 'blogArticle'),
+        );
     }
 
     public function testGetBlogArticleBySlug(): void
     {
         $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(1, 'front_blogarticle_detail', $this->blogArticle->getId());
-        $slug = $friendlyUrl->getSlug();
-        $query = '
-            query {
-                blogArticle(urlSlug: "' . $slug . '") {
-                    name
-                    uuid
-                    text
-                    createdAt
-                    visibleOnHomepage    
-                    publishDate
-                    perex
-                    seo {
-                        title
-                        metaDescription
-                        h1
-                        metaRobots
-                        canonicalUrl
-                    }
-                    blogCategories {
-                        name
-                    }
-                    link
-                    slug
-                    breadcrumb {
-                        name
-                        slug
-                    }
-                }
-            }
-        ';
 
-        $arrayExpected = $this->getExpectedBlogArticleArray();
+        $response = $this->getResponseContentForGql(self::BLOG_ARTICLE_QUERY_PATH, [
+            'urlSlug' => $friendlyUrl->getSlug(),
+        ]);
 
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame(
+            $this->getExpectedBlogArticleArray(),
+            $this->getResponseDataForGraphQlType($response, 'blogArticle'),
+        );
     }
 
     public function testGetBlogArticleReturnsErrorWithWrongUuid(): void
@@ -124,14 +79,9 @@ class BlogArticleTest extends GraphQlTestCase
         $wrongUuid = '123e4567-e89b-12d3-a456-426614174000';
         $expectedErrorMessage = sprintf('Blog article not found by UUID "%s"', $wrongUuid);
 
-        $query = '
-            query {
-                blogArticle(uuid: "' . $wrongUuid . '") {
-                    name
-                }
-            }
-        ';
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(self::BLOG_ARTICLE_QUERY_PATH, [
+            'uuid' => $wrongUuid,
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -145,14 +95,9 @@ class BlogArticleTest extends GraphQlTestCase
         $wrongSlug = 'wrong-slug';
         $expectedErrorMessage = sprintf('Blog article not found by slug "%s"', $wrongSlug);
 
-        $query = '
-            query {
-                blogArticle(urlSlug: "' . $wrongSlug . '") {
-                    name
-                }
-            }
-        ';
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(self::BLOG_ARTICLE_QUERY_PATH, [
+            'urlSlug' => $wrongSlug,
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -163,18 +108,9 @@ class BlogArticleTest extends GraphQlTestCase
 
     public function testGetBlogArticleImages(): void
     {
-        $query = '
-            query {
-                blogArticle(uuid: "' . $this->blogArticle->getUuid() . '") {
-                    name
-                    images {
-                        url
-                    }
-                }
-            }
-        ';
-
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(self::BLOG_ARTICLE_IMAGES_QUERY_PATH, [
+            'uuid' => $this->blogArticle->getUuid(),
+        ]);
         $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticle');
 
         $this->assertArrayHasKey('images', $responseData);
@@ -185,17 +121,9 @@ class BlogArticleTest extends GraphQlTestCase
 
     public function testGetDemoBlogArticleImage(): void
     {
-        $query = '
-            query {
-                blogArticle(uuid: "' . BlogArticleDataFixture::getDemoBlogArticleUuid(1) . '") {
-                    images {
-                        url
-                    }
-                }
-            }
-        ';
-
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(self::BLOG_ARTICLE_IMAGES_QUERY_PATH, [
+            'uuid' => BlogArticleDataFixture::getDemoBlogArticleUuid(1),
+        ]);
         $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticle');
 
         $this->assertCount(1, $responseData['images']);
@@ -208,22 +136,9 @@ class BlogArticleTest extends GraphQlTestCase
         $blogArticleAuthor = $blogArticle->getBlogArticleAuthor();
         $locale = $this->getFirstDomainLocale();
 
-        $query = '
-            query {
-                blogArticle(uuid: "' . $blogArticle->getUuid() . '") {
-                    author {
-                        name
-                        jobTitle
-                        description
-                        mainImage {
-                            url
-                        }
-                    }
-                }
-            }
-        ';
-
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(self::BLOG_ARTICLE_AUTHOR_QUERY_PATH, [
+            'uuid' => $blogArticle->getUuid(),
+        ]);
         $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticle');
 
         $this->assertArrayHasKey('author', $responseData);
@@ -242,17 +157,9 @@ class BlogArticleTest extends GraphQlTestCase
     {
         $blogArticle = $this->getReference(BlogArticleDataFixture::BLOG_ARTICLE_WITHOUT_AUTHOR, BlogArticle::class);
 
-        $query = '
-            query {
-                blogArticle(uuid: "' . $blogArticle->getUuid() . '") {
-                    author {
-                        name
-                    }
-                }
-            }
-        ';
-
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(self::BLOG_ARTICLE_AUTHOR_QUERY_PATH, [
+            'uuid' => $blogArticle->getUuid(),
+        ]);
         $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticle');
 
         $this->assertArrayHasKey('author', $responseData);
@@ -274,42 +181,38 @@ class BlogArticleTest extends GraphQlTestCase
         $firstBlogSubcategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogSubcategory->getId()]);
 
         return [
-            'data' => [
-                'blogArticle' => [
+            'name' => $articleTitle,
+            'uuid' => $this->blogArticle->getUuid(),
+            'text' => $description,
+            'createdAt' => $this->blogArticle->getCreatedAt()->format(DATE_ATOM),
+            'visibleOnHomepage' => true,
+            'publishDate' => $this->blogArticle->getPublishDate(Domain::FIRST_DOMAIN_ID)->format(DATE_ATOM),
+            'perex' => $this->blogArticle->getPerex($locale),
+            'seo' => [
+                'title' => $seoAttributes->getTitle(),
+                'metaDescription' => $seoAttributes->getMetaDescription(),
+                'h1' => $articleTitle,
+                'metaRobots' => null,
+                'canonicalUrl' => null,
+            ],
+            'blogCategories' => [
+                ['name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+                ['name' => $firstBlogSubcategory->getName($locale)],
+            ],
+            'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
+            'slug' => '/' . $friendlyUrl->getSlug(),
+            'breadcrumb' => [
+                [
+                    'name' => $firstBlogCategory->getName($locale),
+                    'slug' => $firstBlogCategorySlug,
+                ],
+                [
+                    'name' => $firstBlogSubcategory->getName($locale),
+                    'slug' => $firstBlogSubcategorySlug,
+                ],
+                [
                     'name' => $articleTitle,
-                    'uuid' => $this->blogArticle->getUuid(),
-                    'text' => $description,
-                    'createdAt' => $this->blogArticle->getCreatedAt()->format(DATE_ATOM),
-                    'visibleOnHomepage' => true,
-                    'publishDate' => $this->blogArticle->getPublishDate(Domain::FIRST_DOMAIN_ID)->format(DATE_ATOM),
-                    'perex' => $this->blogArticle->getPerex($locale),
-                    'seo' => [
-                        'title' => $seoAttributes->getTitle(),
-                        'metaDescription' => $seoAttributes->getMetaDescription(),
-                        'h1' => $articleTitle,
-                        'metaRobots' => null,
-                        'canonicalUrl' => null,
-                    ],
-                    'blogCategories' => [
-                        ['name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-                        ['name' => $firstBlogSubcategory->getName($locale)],
-                    ],
-                    'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => '/' . $friendlyUrl->getSlug(),
-                    'breadcrumb' => [
-                        [
-                            'name' => $firstBlogCategory->getName($locale),
-                            'slug' => $firstBlogCategorySlug,
-                        ],
-                        [
-                            'name' => $firstBlogSubcategory->getName($locale),
-                            'slug' => $firstBlogSubcategorySlug,
-                        ],
-                        [
-                            'name' => $articleTitle,
-                            'slug' => '/' . $friendlyUrl->getSlug(),
-                        ],
-                    ],
                 ],
             ],
         ];
