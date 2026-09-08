@@ -30,6 +30,13 @@ class FlagTest extends GraphQlTestCase
 
         $this->assertSame(t('Made in DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()), $responseData['name']);
         $this->assertSame('#000000', $responseData['rgbColor']);
+        $this->assertSame([
+            'title' => null,
+            'metaDescription' => null,
+            'h1' => null,
+            'metaRobots' => null,
+            'canonicalUrl' => null,
+        ], $responseData['seo']);
         $this->assertSame($this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]), $responseData['slug']);
         $this->assertSame([
             [
