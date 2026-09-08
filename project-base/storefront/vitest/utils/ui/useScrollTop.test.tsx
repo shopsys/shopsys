@@ -67,4 +67,24 @@ describe('useScrollTop', () => {
 
         expect(setIsPastElement).toHaveBeenCalledWith(false);
     });
+
+    test('hides again on upward scrolling when the target stays horizontally clipped', () => {
+        const setIsPastElement = vi.fn();
+        const target = document.getElementById('sticky-trigger')!;
+        const rect = vi.spyOn(target, 'getBoundingClientRect');
+        const { unmount } = renderHook(() => useScrollTop('sticky-trigger', setIsPastElement));
+
+        rect.mockReturnValue({ left: -300, right: -100, bottom: 100 } as DOMRect);
+        act(() => window.dispatchEvent(new Event('scroll')));
+        expect(setIsPastElement).toHaveBeenLastCalledWith(true);
+
+        rect.mockReturnValue({ left: -300, right: -100, bottom: 600 } as DOMRect);
+        act(() => window.dispatchEvent(new Event('scroll')));
+        expect(setIsPastElement).toHaveBeenLastCalledWith(false);
+
+        unmount();
+        setIsPastElement.mockClear();
+        act(() => window.dispatchEvent(new Event('scroll')));
+        expect(setIsPastElement).not.toHaveBeenCalled();
+    });
 });

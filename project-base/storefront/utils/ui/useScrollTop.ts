@@ -22,6 +22,18 @@ export const useScrollTop = (element: string, setTableStickyHeadActive: Dispatch
 
         observer.observe(el);
 
-        return () => observer.disconnect();
+        // A horizontally clipped target can stay non-intersecting throughout vertical scrolling.
+        const updateVerticalPosition = () => {
+            const isPastElement = el.getBoundingClientRect().bottom <= OBSERVER_TOP_OFFSET;
+            startTransition(() => setTableStickyHeadActive(isPastElement));
+        };
+        window.addEventListener('scroll', updateVerticalPosition, { passive: true });
+        window.addEventListener('resize', updateVerticalPosition);
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('scroll', updateVerticalPosition);
+            window.removeEventListener('resize', updateVerticalPosition);
+        };
     }, [element, setTableStickyHeadActive]);
 };
