@@ -46,9 +46,13 @@ class ProductsTest extends ProductsGraphQlTestCase
                         node {
                             name
                             shortDescription
-                            seoH1
-                            seoTitle
-                            seoMetaDescription
+                            seo {
+                                title
+                                metaDescription
+                                h1
+                                metaRobots
+                                canonicalUrl
+                            }
                             link
                             unit {
                                 name
@@ -136,9 +140,13 @@ class ProductsTest extends ProductsGraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
+                'seo' => [
+                    'title' => null,
+                    'metaDescription' => trim(t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+                    'h1' => null,
+                    'metaRobots' => null,
+                    'canonicalUrl' => null,
+                ],
                 'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 77]),
                 'unit' => [
                     'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

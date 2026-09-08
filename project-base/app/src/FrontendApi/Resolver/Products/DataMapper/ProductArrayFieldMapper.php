@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper as BaseProductArrayFieldMapper;
+use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesQueryDtoFactory;
 
 /**
  * @property \App\Model\Category\CategoryFacade $categoryFacade
@@ -48,6 +49,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         ProductReviewApiFacade $productReviewApiFacade,
         DataLoaderInterface $additionalServicesByIdsBatchLoader,
         DataLoaderInterface $categoriesBatchLoader,
+        SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
         private readonly DataLoaderInterface $flagsBatchLoader,
         private readonly DataLoaderInterface $brandsBatchLoader,
     ) {
@@ -66,6 +68,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
             $productReviewApiFacade,
             $additionalServicesByIdsBatchLoader,
             $categoriesBatchLoader,
+            $seoAttributesQueryDtoFactory,
         );
     }
 

@@ -9,6 +9,7 @@ VariantDecorator:
                 type: 'MainVariant'
         interfaces:
             - 'Product'
+            - 'Seo'
             - 'Hreflang'
             - 'Breadcrumb'
             - 'Slug'

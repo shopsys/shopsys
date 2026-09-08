@@ -113,24 +113,13 @@ class ProductTest extends GraphQlTestCase
             'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'slug' => '/' . $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 1], UrlGeneratorInterface::RELATIVE_PATH),
             'shortDescription' => $shortDescription,
-            'seoH1' => t(
-                'Hello Kitty Television',
-                [],
-                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale,
-            ),
-            'seoTitle' => t(
-                'Hello Kitty TV',
-                [],
-                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale,
-            ),
-            'seoMetaDescription' => t(
-                'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
-                [],
-                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale,
-            ),
+            'seo' => [
+                'title' => t('Hello Kitty TV', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'metaDescription' => t('Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'h1' => t('Hello Kitty Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'metaRobots' => null,
+                'canonicalUrl' => null,
+            ],
             'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 1]),
             'unit' => [
                 'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
