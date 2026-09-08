@@ -9,6 +9,13 @@ import gql from 'graphql-tag';
 import { CartFragment } from '../fragments/CartFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type TypeApplyCodeToCartInput = {
+  /** Cart identifier or null if customer is logged in */
+  cartUuid?: string | null | undefined;
+  /** Discount coupon or gift voucher code to be applied */
+  code: string;
+};
+
 /** Product Availability statuses */
 export type TypeAvailabilityStatusEnum =
   /** Product availability status for electronically delivered products */
@@ -58,13 +65,6 @@ export type TypePromoCodeTypeEnum =
   /** Discount type percent */
   | 'percent';
 
-export type TypeRemoveFromCartInput = {
-  /** Cart item UUID */
-  cartItemUuid: string;
-  /** Cart identifier, new cart will be created if not provided and customer is not logged in */
-  cartUuid?: string | null | undefined;
-};
-
 /** Status of store opening */
 export type TypeStoreOpeningStatusEnum =
   /** Store is currently closed */
@@ -90,12 +90,12 @@ export type TypeTransportUnavailabilityReasonInCartEnum =
   | 'excluded_for_product'
   | 'personal_pickup_required';
 
-export type TypeRemoveFromCartMutationVariables = Exact<{
-  input: Types.TypeRemoveFromCartInput;
+export type TypeApplyCodeToCartMutationVariables = Exact<{
+  input: Types.TypeApplyCodeToCartInput;
 }>;
 
 
-export type TypeRemoveFromCartMutation = { RemoveFromCart: { __typename: 'Cart', uuid: string | null, remainingAmountForFreeTransport: string | null, remainingAmountToPay: string, remainingItemsAmountToPay: string, isNothingLeftToPay: boolean, giftVouchersExceedPayableAmount: boolean, selectedPickupPlaceIdentifier: string | null, paymentGoPayBankSwift: string | null, items: Array<{ __typename: 'CartItem', uuid: string, quantity: number, type: Types.TypeCartItemTypeEnum, freeQuantity: number, product:
+export type TypeApplyCodeToCartMutation = { ApplyCodeToCart: { __typename: 'Cart', uuid: string | null, remainingAmountForFreeTransport: string | null, remainingAmountToPay: string, remainingItemsAmountToPay: string, isNothingLeftToPay: boolean, giftVouchersExceedPayableAmount: boolean, selectedPickupPlaceIdentifier: string | null, paymentGoPayBankSwift: string | null, items: Array<{ __typename: 'CartItem', uuid: string, quantity: number, type: Types.TypeCartItemTypeEnum, freeQuantity: number, product:
         | { __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, catalogNumber: string, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, stockQuantity: number | null, isAllowedNegativeStock: boolean, expectedRestockingDate: string | null, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, availableStoresCount: number | null, isPersonalPickupOnly: boolean, vatPercent: string, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }> }
         | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, catalogNumber: string, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, stockQuantity: number | null, isAllowedNegativeStock: boolean, expectedRestockingDate: string | null, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, availableStoresCount: number | null, isPersonalPickupOnly: boolean, vatPercent: string, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }> }
         | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, catalogNumber: string, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, stockQuantity: number | null, isAllowedNegativeStock: boolean, expectedRestockingDate: string | null, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, availableStoresCount: number | null, isPersonalPickupOnly: boolean, vatPercent: string, mainVariant: { slug: string, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null } | null, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, unit: { name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, type: Types.TypeParameterTypeEnum, group: string | null, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string, rgbHex: string | null, colorIcon: { url: string, anchorText: string } | null }> }> }
@@ -122,14 +122,14 @@ export type TypeRemoveFromCartMutation = { RemoveFromCart: { __typename: 'Cart',
         > }> } | null, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } | null, promoCodes: Array<{ __typename: 'PromoCode', code: string, type: Types.TypePromoCodeTypeEnum, discountPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, giftVouchers: Array<{ __typename: 'AppliedGiftVoucher', code: string, valueWithVat: string, valueWithoutVat: string, productName: string | null }>, roundingPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } | null } };
 
 
-export const RemoveFromCartMutationDocument = gql`
-    mutation RemoveFromCartMutation($input: RemoveFromCartInput!) {
-  RemoveFromCart(input: $input) {
+export const ApplyCodeToCartMutationDocument = gql`
+    mutation ApplyCodeToCartMutation($input: ApplyCodeToCartInput!) {
+  ApplyCodeToCart(input: $input) {
     ...CartFragment
   }
 }
     ${CartFragment}`;
 
-export function useRemoveFromCartMutation() {
-  return Urql.useMutation<TypeRemoveFromCartMutation, TypeRemoveFromCartMutationVariables>(RemoveFromCartMutationDocument);
+export function useApplyCodeToCartMutation() {
+  return Urql.useMutation<TypeApplyCodeToCartMutation, TypeApplyCodeToCartMutationVariables>(ApplyCodeToCartMutationDocument);
 };

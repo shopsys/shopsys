@@ -12,6 +12,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** One of the possible methods of the transport type */
 export type TypeTransportTypeEnum =
   | 'common'
+  | 'email'
   | 'packetery'
   | 'personal_pickup';
 

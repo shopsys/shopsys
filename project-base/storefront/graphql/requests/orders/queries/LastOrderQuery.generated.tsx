@@ -22,6 +22,7 @@ export type TypeOrderItemTypeEnum =
 /** One of the possible methods of the transport type */
 export type TypeTransportTypeEnum =
   | 'common'
+  | 'email'
   | 'packetery'
   | 'personal_pickup';
 

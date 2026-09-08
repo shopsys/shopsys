@@ -9,6 +9,7 @@ import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 /** One of the possible methods of the transport type */
 export type TypeTransportTypeEnum =
   | 'common'
+  | 'email'
   | 'packetery'
   | 'personal_pickup';
 
