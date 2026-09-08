@@ -23,24 +23,18 @@ class DelayedEnvelopesCollector
     protected array $confirmedEnvelopes = [];
 
     /**
-     * Envelopes dispatched by handlers whose outcome is not known yet, keyed by handler name
+     * Envelopes dispatched by handlers whose outcome is not known yet, keyed by handler name in the order the handlers started.
+     * The last started handler receives the dispatched envelopes.
      *
      * @var array<string, \Symfony\Component\Messenger\Envelope[]>
      */
     protected array $envelopesByRunningHandler = [];
 
-    /**
-     * Names of the running handlers, the last one receives the dispatched envelopes
-     *
-     * @var string[]
-     */
-    protected array $runningHandlerNames = [];
-
     public function addEnvelope(Envelope $envelope): void
     {
-        $runningHandlerName = end($this->runningHandlerNames);
+        $runningHandlerName = array_key_last($this->envelopesByRunningHandler);
 
-        if ($runningHandlerName === false) {
+        if ($runningHandlerName === null) {
             $this->delayedEnvelopes[] = $envelope;
 
             return;
@@ -52,7 +46,6 @@ class DelayedEnvelopesCollector
     public function startHandler(string $handlerName): void
     {
         $this->envelopesByRunningHandler[$handlerName] ??= [];
-        $this->runningHandlerNames[] = $handlerName;
     }
 
     /**
@@ -76,15 +69,6 @@ class DelayedEnvelopesCollector
     protected function finishHandler(string $handlerName): void
     {
         unset($this->envelopesByRunningHandler[$handlerName]);
-
-        $position = array_search($handlerName, $this->runningHandlerNames, true);
-
-        if ($position === false) {
-            return;
-        }
-
-        unset($this->runningHandlerNames[$position]);
-        $this->runningHandlerNames = array_values($this->runningHandlerNames);
     }
 
     /**
@@ -122,6 +106,5 @@ class DelayedEnvelopesCollector
         $this->delayedEnvelopes = [];
         $this->confirmedEnvelopes = [];
         $this->envelopesByRunningHandler = [];
-        $this->runningHandlerNames = [];
     }
 }
