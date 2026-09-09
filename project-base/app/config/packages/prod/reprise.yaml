@@ -1,0 +1,3 @@
+reprise:
+    # Cache the parsed entrypoints.json in a compiled PHP file (warmed at cache:warmup)
+    cache: true

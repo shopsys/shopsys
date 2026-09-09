@@ -3,16 +3,10 @@ module.exports = {
         [
             '@babel/preset-env',
             {
-                useBuiltIns: "entry",
-                corejs: "3.13",
                 targets: {
-                    node: 'current',
-                    browsers: [
-                        'safari >= 8'
-                    ]
+                    node: 'current'
                 }
             }
         ]
-    ],
-    plugins: ['@babel/plugin-proposal-object-rest-spread']
+    ]
 };

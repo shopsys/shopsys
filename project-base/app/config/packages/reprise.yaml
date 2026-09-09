@@ -1,0 +1,25 @@
+reprise:
+    # The path where Rsbuild is building the assets - i.e. the Symfony() plugin's outputPath
+    output_path: '%kernel.project_dir%/web/build'
+    # Encore did not emit Link preload headers either, and Safari reports the modulepreload/style hints
+    # as "preloaded but not used" on every admin page
+    preload: false
+# If multiple builds are defined (as shown below), you can disable the default build:
+# output_path: false
+
+# if using SRI hashes (the Symfony() plugin's integrity option) and need the crossorigin attribute (default: false, or use 'anonymous' or 'use-credentials')
+# crossorigin: 'anonymous'
+
+# Throw an exception if the entrypoints.json file is missing or an entry is missing from the data
+# strict_mode: false
+
+# if you have multiple builds:
+# builds:
+# pass "frontend" as the build arg to the Twig functions
+# {{ reprise_entry_script_tags('entry1', build='frontend') }}
+
+# frontend: '%kernel.project_dir%/public/frontend/build'
+
+# Cache the entrypoints.json (rebuild Symfony's cache when entrypoints.json changes)
+# Put in config/packages/prod/reprise.yaml
+# cache: true
