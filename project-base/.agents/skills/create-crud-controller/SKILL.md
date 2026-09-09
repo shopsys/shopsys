@@ -192,7 +192,7 @@ configuration reference has the join-vs-subselect guidance.
 
 ```php
 #[Override]
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useFormType(<Entity>FormType::class, ['<entity>' => $entity]);   // $entity is null on create
 }
