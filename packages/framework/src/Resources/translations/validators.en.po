@@ -673,13 +673,7 @@ msgstr ""
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr ""
 
-msgid "Same description is used on another domain"
-msgstr ""
-
 msgid "Same title complement is used on another domain"
-msgstr ""
-
-msgid "Same title is used on another domain"
 msgstr ""
 
 msgid "Seo page with slug {{ pageSlug }} already exists"
