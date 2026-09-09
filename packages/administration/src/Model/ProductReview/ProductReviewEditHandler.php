@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Model\ProductReview;
 
 use Override;
 use Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\ProductReview\Exception\ProductReviewNotFoundException;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewData;
@@ -44,7 +45,7 @@ class ProductReviewEditHandler implements EditHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(object $entity): object
+    public function createDataFromEntity(Presentable $entity): object
     {
         Assert::isInstanceOf($entity, ProductReview::class);
 
@@ -58,7 +59,7 @@ class ProductReviewEditHandler implements EditHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function edit(object $entity, object $data): void
+    public function edit(Presentable $entity, object $data): void
     {
         Assert::isInstanceOf($entity, ProductReview::class);
         Assert::isInstanceOf($data, ProductReviewData::class);
